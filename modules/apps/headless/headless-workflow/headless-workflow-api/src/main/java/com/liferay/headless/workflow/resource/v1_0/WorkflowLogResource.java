@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -72,8 +73,7 @@ public interface WorkflowLogResource {
 		throws Exception;
 
 	@Context
-	public void setContextAcceptLanguage(
-		AcceptLanguage contextAcceptLanguage);
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
 
 	@Context
 	public void setContextCompany(Company contextCompany);

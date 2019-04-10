@@ -18,11 +18,23 @@ import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.dto.v1_0.Keyword;
 import com.liferay.bulk.rest.dto.v1_0.KeywordBulkSelection;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import javax.annotation.Generated;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.PATCH;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -33,18 +45,39 @@ import javax.ws.rs.core.Response;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface KeywordResource {
 
+	@Consumes("application/json")
+	@PATCH
+	@Path("/keywords/batch")
+	@Tags(value = {@Tag(name = "Keyword")})
 	public Response patchKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception;
 
+	@Consumes("application/json")
+	@PUT
+	@Path("/keywords/batch")
+	@Tags(value = {@Tag(name = "Keyword")})
 	public Response putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/keywords/common")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<Keyword> postKeywordsCommonPage(
 			DocumentBulkSelection documentBulkSelection)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

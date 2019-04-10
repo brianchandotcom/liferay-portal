@@ -17,10 +17,31 @@ package com.liferay.data.engine.rest.resource.v1_0;
 import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v1_0.DataLayoutPermission;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -31,33 +52,89 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface DataLayoutResource {
 
+	@Consumes("application/json")
+	@POST
+	@Path("/data-definitions/{dataDefinitionId}/data-layouts")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataLayout")})
 	public DataLayout postDataDefinitionDataLayout(
-			Long dataDefinitionId, DataLayout dataLayout)
+			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId,
+			DataLayout dataLayout)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/data-layout/{dataLayoutId}/data-layout-permissions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataLayout")})
 	public void postDataLayoutDataLayoutPermission(
-			Long dataLayoutId, String operation,
+			@NotNull @PathParam("dataLayoutId") Long dataLayoutId,
+			@NotNull @QueryParam("operation") String operation,
 			DataLayoutPermission dataLayoutPermission)
 		throws Exception;
 
-	public void deleteDataLayout(Long dataLayoutId) throws Exception;
-
-	public DataLayout getDataLayout(Long dataLayoutId) throws Exception;
-
-	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
+	@DELETE
+	@Path("/data-layouts/{dataLayoutId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataLayout")})
+	public void deleteDataLayout(
+			@NotNull @PathParam("dataLayoutId") Long dataLayoutId)
 		throws Exception;
 
+	@GET
+	@Path("/data-layouts/{dataLayoutId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataLayout")})
+	public DataLayout getDataLayout(
+			@NotNull @PathParam("dataLayoutId") Long dataLayoutId)
+		throws Exception;
+
+	@Consumes("application/json")
+	@PUT
+	@Path("/data-layouts/{dataLayoutId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataLayout")})
+	public DataLayout putDataLayout(
+			@NotNull @PathParam("dataLayoutId") Long dataLayoutId,
+			DataLayout dataLayout)
+		throws Exception;
+
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/sites/{siteId}/data-layout")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataLayout")})
 	public Page<DataLayout> getSiteDataLayoutPage(
-			Long siteId, Pagination pagination)
+			@NotNull @PathParam("siteId") Long siteId,
+			@Context Pagination pagination)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/sites/{siteId}/data-layout-permissions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataLayout")})
 	public void postSiteDataLayoutPermission(
-			Long siteId, String operation,
+			@NotNull @PathParam("siteId") Long siteId,
+			@NotNull @QueryParam("operation") String operation,
 			DataLayoutPermission dataLayoutPermission)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

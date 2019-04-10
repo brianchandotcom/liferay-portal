@@ -45,7 +45,11 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/openapi.properties",
+	property = {
+		"api.version=v1.0",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Bulk.REST)",
+		"osgi.jaxrs.resource=true"
+	},
 	service = OpenAPIResourceImpl.class
 )
 @Generated("")

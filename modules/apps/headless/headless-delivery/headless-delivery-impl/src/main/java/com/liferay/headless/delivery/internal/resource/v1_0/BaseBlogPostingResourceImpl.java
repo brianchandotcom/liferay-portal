@@ -18,39 +18,23 @@ import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -58,41 +42,34 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BaseBlogPostingResourceImpl
-	implements BlogPostingResource {
+	implements AopService, BlogPostingResource {
 
 	@Override
-	@DELETE
-	@Path("/blog-postings/{blogPostingId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPosting")})
-	public void deleteBlogPosting(
-			@NotNull @PathParam("blogPostingId") Long blogPostingId)
-		throws Exception {
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Delivery)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
 	}
 
 	@Override
-	@GET
-	@Path("/blog-postings/{blogPostingId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPosting")})
-	public BlogPosting getBlogPosting(
-			@NotNull @PathParam("blogPostingId") Long blogPostingId)
-		throws Exception {
+	public void deleteBlogPosting(Long blogPostingId) throws Exception {
+	}
 
+	@Override
+	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception {
 		return new BlogPosting();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PATCH
-	@Path("/blog-postings/{blogPostingId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting patchBlogPosting(
-			@NotNull @PathParam("blogPostingId") Long blogPostingId,
-			BlogPosting blogPosting)
+			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 
 		BlogPosting existingBlogPosting = getBlogPosting(blogPostingId);
@@ -165,106 +142,65 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/blog-postings/{blogPostingId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting putBlogPosting(
-			@NotNull @PathParam("blogPostingId") Long blogPostingId,
-			BlogPosting blogPosting)
+			Long blogPostingId, BlogPosting blogPosting)
 		throws Exception {
 
 		return new BlogPosting();
 	}
 
 	@Override
-	@DELETE
-	@Path("/blog-postings/{blogPostingId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPosting")})
-	public void deleteBlogPostingMyRating(
-			@NotNull @PathParam("blogPostingId") Long blogPostingId)
-		throws Exception {
+	public void deleteBlogPostingMyRating(Long blogPostingId) throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/blog-postings/{blogPostingId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPosting")})
-	public Rating getBlogPostingMyRating(
-			@NotNull @PathParam("blogPostingId") Long blogPostingId)
+	public Rating getBlogPostingMyRating(Long blogPostingId) throws Exception {
+		return new Rating();
+	}
+
+	@Override
+	public Rating postBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/blog-postings/{blogPostingId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPosting")})
-	public Rating postBlogPostingMyRating(
-			@NotNull @PathParam("blogPostingId") Long blogPostingId,
-			Rating rating)
+	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/blog-postings/{blogPostingId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPosting")})
-	public Rating putBlogPostingMyRating(
-			@NotNull @PathParam("blogPostingId") Long blogPostingId,
-			Rating rating)
-		throws Exception {
-
-		return new Rating();
-	}
-
-	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/sites/{siteId}/blog-postings")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPosting")})
 	public Page<BlogPosting> getSiteBlogPostingsPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			Long siteId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/sites/{siteId}/blog-postings")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPosting")})
-	public BlogPosting postSiteBlogPosting(
-			@NotNull @PathParam("siteId") Long siteId, BlogPosting blogPosting)
+	public BlogPosting postSiteBlogPosting(Long siteId, BlogPosting blogPosting)
 		throws Exception {
 
 		return new BlogPosting();
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -299,13 +235,8 @@ public abstract class BaseBlogPostingResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

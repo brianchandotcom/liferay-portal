@@ -19,10 +19,32 @@ import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -33,58 +55,166 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface MessageBoardMessageResource {
 
-	public void deleteMessageBoardMessage(Long messageBoardMessageId)
+	@DELETE
+	@Path("/message-board-messages/{messageBoardMessageId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public void deleteMessageBoardMessage(
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId)
 		throws Exception;
 
+	@GET
+	@Path("/message-board-messages/{messageBoardMessageId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage getMessageBoardMessage(
-			Long messageBoardMessageId)
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId)
 		throws Exception;
 
+	@Consumes("application/json")
+	@PATCH
+	@Path("/message-board-messages/{messageBoardMessageId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage patchMessageBoardMessage(
-			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
-		throws Exception;
-
-	public MessageBoardMessage putMessageBoardMessage(
-			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
-		throws Exception;
-
-	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
-		throws Exception;
-
-	public Rating getMessageBoardMessageMyRating(Long messageBoardMessageId)
-		throws Exception;
-
-	public Rating postMessageBoardMessageMyRating(
-			Long messageBoardMessageId, Rating rating)
-		throws Exception;
-
-	public Rating putMessageBoardMessageMyRating(
-			Long messageBoardMessageId, Rating rating)
-		throws Exception;
-
-	public Page<MessageBoardMessage>
-			getMessageBoardMessageMessageBoardMessagesPage(
-				Long parentMessageBoardMessageId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			Long parentMessageBoardMessageId,
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId,
 			MessageBoardMessage messageBoardMessage)
 		throws Exception;
 
+	@Consumes("application/json")
+	@PUT
+	@Path("/message-board-messages/{messageBoardMessageId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public MessageBoardMessage putMessageBoardMessage(
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId,
+			MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
+	@DELETE
+	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public void deleteMessageBoardMessageMyRating(
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId)
+		throws Exception;
+
+	@GET
+	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public Rating getMessageBoardMessageMyRating(
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId)
+		throws Exception;
+
+	@Consumes("application/json")
+	@POST
+	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public Rating postMessageBoardMessageMyRating(
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId,
+			Rating rating)
+		throws Exception;
+
+	@Consumes("application/json")
+	@PUT
+	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public Rating putMessageBoardMessageMyRating(
+			@NotNull @PathParam("messageBoardMessageId") Long
+				messageBoardMessageId,
+			Rating rating)
+		throws Exception;
+
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path(
+		"/message-board-messages/{parentMessageBoardMessageId}/message-board-messages"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public Page<MessageBoardMessage>
+			getMessageBoardMessageMessageBoardMessagesPage(
+				@NotNull @PathParam("parentMessageBoardMessageId") Long
+					parentMessageBoardMessageId,
+				@QueryParam("search") String search, @Context Filter filter,
+				@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception;
+
+	@Consumes("application/json")
+	@POST
+	@Path(
+		"/message-board-messages/{parentMessageBoardMessageId}/message-board-messages"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
+			@NotNull @PathParam("parentMessageBoardMessageId") Long
+				parentMessageBoardMessageId,
+			MessageBoardMessage messageBoardMessage)
+		throws Exception;
+
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path(
+		"/message-board-threads/{messageBoardThreadId}/message-board-messages"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
-				Long messageBoardThreadId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				@NotNull @PathParam("messageBoardThreadId") Long
+					messageBoardThreadId,
+				@QueryParam("search") String search, @Context Filter filter,
+				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path(
+		"/message-board-threads/{messageBoardThreadId}/message-board-messages"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
-			Long messageBoardThreadId, MessageBoardMessage messageBoardMessage)
+			@NotNull @PathParam("messageBoardThreadId") Long
+				messageBoardThreadId,
+			MessageBoardMessage messageBoardMessage)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

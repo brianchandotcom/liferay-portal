@@ -17,10 +17,28 @@ package com.liferay.headless.form.resource.v1_0;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.dto.v1_0.FormRecordForm;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -31,20 +49,57 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface FormRecordResource {
 
-	public FormRecord getFormRecord(Long formRecordId) throws Exception;
+	@GET
+	@Path("/form-records/{formRecordId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "FormRecord")})
+	public FormRecord getFormRecord(
+			@NotNull @PathParam("formRecordId") Long formRecordId)
+		throws Exception;
 
-	public FormRecord getFormFetchLatestDraft(Long formId) throws Exception;
+	@GET
+	@Path("/forms/{formId}/fetch-latest-draft")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "FormRecord")})
+	public FormRecord getFormFetchLatestDraft(
+			@NotNull @PathParam("formId") Long formId)
+		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/forms/{formId}/form-records")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "FormRecord")})
 	public Page<FormRecord> getFormFormRecordsPage(
-			Long formId, Pagination pagination)
+			@NotNull @PathParam("formId") Long formId,
+			@Context Pagination pagination)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/forms/{formId}/form-records")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "FormRecord")})
 	public FormRecord postFormFormRecord(
-			Long formId, FormRecordForm formRecordForm)
+			@NotNull @PathParam("formId") Long formId,
+			FormRecordForm formRecordForm)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

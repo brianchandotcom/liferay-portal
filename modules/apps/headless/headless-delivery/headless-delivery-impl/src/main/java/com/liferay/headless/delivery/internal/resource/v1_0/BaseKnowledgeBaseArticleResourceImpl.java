@@ -18,39 +18,23 @@ import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -58,43 +42,38 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BaseKnowledgeBaseArticleResourceImpl
-	implements KnowledgeBaseArticleResource {
+	implements AopService, KnowledgeBaseArticleResource {
 
 	@Override
-	@DELETE
-	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public void deleteKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledgeBaseArticleId") Long
-				knowledgeBaseArticleId)
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Delivery)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
+	public void deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
 		throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledgeBaseArticleId") Long
-				knowledgeBaseArticleId)
+			Long knowledgeBaseArticleId)
 		throws Exception {
 
 		return new KnowledgeBaseArticle();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PATCH
-	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledgeBaseArticleId") Long
-				knowledgeBaseArticleId,
+			Long knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -178,14 +157,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledgeBaseArticleId") Long
-				knowledgeBaseArticleId,
+			Long knowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -193,96 +166,46 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@DELETE
-	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public void deleteKnowledgeBaseArticleMyRating(
-			@NotNull @PathParam("knowledgeBaseArticleId") Long
-				knowledgeBaseArticleId)
+	public void deleteKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
 		throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
-	public Rating getKnowledgeBaseArticleMyRating(
-			@NotNull @PathParam("knowledgeBaseArticleId") Long
-				knowledgeBaseArticleId)
+	public Rating getKnowledgeBaseArticleMyRating(Long knowledgeBaseArticleId)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Rating postKnowledgeBaseArticleMyRating(
-			@NotNull @PathParam("knowledgeBaseArticleId") Long
-				knowledgeBaseArticleId,
-			Rating rating)
+			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Rating putKnowledgeBaseArticleMyRating(
-			@NotNull @PathParam("knowledgeBaseArticleId") Long
-				knowledgeBaseArticleId,
-			Rating rating)
+			Long knowledgeBaseArticleId, Rating rating)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path(
-		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				@NotNull @PathParam("parentKnowledgeBaseArticleId") Long
-					parentKnowledgeBaseArticleId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
+				Long parentKnowledgeBaseArticleId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path(
-		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
-			@NotNull @PathParam("parentKnowledgeBaseArticleId") Long
-				parentKnowledgeBaseArticleId,
+			Long parentKnowledgeBaseArticleId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -290,43 +213,18 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path(
-		"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
-				@NotNull @PathParam("knowledgeBaseFolderId") Long
-					knowledgeBaseFolderId,
-				@QueryParam("flatten") Boolean flatten,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
+				Long knowledgeBaseFolderId, Boolean flatten, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path(
-		"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
-			@NotNull @PathParam("knowledgeBaseFolderId") Long
-				knowledgeBaseFolderId,
+			Long knowledgeBaseFolderId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
@@ -334,44 +232,35 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/sites/{siteId}/knowledge-base-articles")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("flatten") Boolean flatten,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			Long siteId, Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/sites/{siteId}/knowledge-base-articles")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
-			@NotNull @PathParam("siteId") Long siteId,
-			KnowledgeBaseArticle knowledgeBaseArticle)
+			Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
 		return new KnowledgeBaseArticle();
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -407,13 +296,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

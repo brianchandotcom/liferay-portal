@@ -17,39 +17,23 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -57,44 +41,38 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BaseMessageBoardSectionResourceImpl
-	implements MessageBoardSectionResource {
+	implements AopService, MessageBoardSectionResource {
 
 	@Override
-	@DELETE
-	@Path("/message-board-sections/{messageBoardSectionId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardSection")})
-	public void deleteMessageBoardSection(
-			@NotNull @PathParam("messageBoardSectionId") Long
-				messageBoardSectionId)
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Delivery)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
+	public void deleteMessageBoardSection(Long messageBoardSectionId)
 		throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/message-board-sections/{messageBoardSectionId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection getMessageBoardSection(
-			@NotNull @PathParam("messageBoardSectionId") Long
-				messageBoardSectionId)
+			Long messageBoardSectionId)
 		throws Exception {
 
 		return new MessageBoardSection();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PATCH
-	@Path("/message-board-sections/{messageBoardSectionId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection patchMessageBoardSection(
-			@NotNull @PathParam("messageBoardSectionId") Long
-				messageBoardSectionId,
-			MessageBoardSection messageBoardSection)
+			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
 		throws Exception {
 
 		MessageBoardSection existingMessageBoardSection =
@@ -147,57 +125,26 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/message-board-sections/{messageBoardSectionId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection putMessageBoardSection(
-			@NotNull @PathParam("messageBoardSectionId") Long
-				messageBoardSectionId,
-			MessageBoardSection messageBoardSection)
+			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
 		throws Exception {
 
 		return new MessageBoardSection();
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path(
-		"/message-board-sections/{parentMessageBoardSectionId}/message-board-sections"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
-				@NotNull @PathParam("parentMessageBoardSectionId") Long
-					parentMessageBoardSectionId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
+				Long parentMessageBoardSectionId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path(
-		"/message-board-sections/{parentMessageBoardSectionId}/message-board-sections"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
-			@NotNull @PathParam("parentMessageBoardSectionId") Long
-				parentMessageBoardSectionId,
+			Long parentMessageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 
@@ -205,44 +152,35 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/sites/{siteId}/message-board-sections")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("flatten") Boolean flatten,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			Long siteId, Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/sites/{siteId}/message-board-sections")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection postSiteMessageBoardSection(
-			@NotNull @PathParam("siteId") Long siteId,
-			MessageBoardSection messageBoardSection)
+			Long siteId, MessageBoardSection messageBoardSection)
 		throws Exception {
 
 		return new MessageBoardSection();
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -278,13 +216,8 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

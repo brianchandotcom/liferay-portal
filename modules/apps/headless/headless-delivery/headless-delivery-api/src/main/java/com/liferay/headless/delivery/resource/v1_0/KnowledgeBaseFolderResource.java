@@ -16,10 +16,31 @@ package com.liferay.headless.delivery.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -30,41 +51,113 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface KnowledgeBaseFolderResource {
 
-	public void deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
+	@DELETE
+	@Path("/knowledge-base-folders/{knowledgeBaseFolderId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
+	public void deleteKnowledgeBaseFolder(
+			@NotNull @PathParam("knowledgeBaseFolderId") Long
+				knowledgeBaseFolderId)
 		throws Exception;
 
+	@GET
+	@Path("/knowledge-base-folders/{knowledgeBaseFolderId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public KnowledgeBaseFolder getKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId)
+			@NotNull @PathParam("knowledgeBaseFolderId") Long
+				knowledgeBaseFolderId)
 		throws Exception;
 
+	@Consumes("application/json")
+	@PATCH
+	@Path("/knowledge-base-folders/{knowledgeBaseFolderId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception;
-
-	public KnowledgeBaseFolder putKnowledgeBaseFolder(
-			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception;
-
-	public Page<KnowledgeBaseFolder>
-			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
-				Long parentKnowledgeBaseFolderId, Pagination pagination)
-		throws Exception;
-
-	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
-			Long parentKnowledgeBaseFolderId,
+			@NotNull @PathParam("knowledgeBaseFolderId") Long
+				knowledgeBaseFolderId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
 
+	@Consumes("application/json")
+	@PUT
+	@Path("/knowledge-base-folders/{knowledgeBaseFolderId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
+	public KnowledgeBaseFolder putKnowledgeBaseFolder(
+			@NotNull @PathParam("knowledgeBaseFolderId") Long
+				knowledgeBaseFolderId,
+			KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception;
+
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path(
+		"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
+	public Page<KnowledgeBaseFolder>
+			getKnowledgeBaseFolderKnowledgeBaseFoldersPage(
+				@NotNull @PathParam("parentKnowledgeBaseFolderId") Long
+					parentKnowledgeBaseFolderId,
+				@Context Pagination pagination)
+		throws Exception;
+
+	@Consumes("application/json")
+	@POST
+	@Path(
+		"/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
+	public KnowledgeBaseFolder postKnowledgeBaseFolderKnowledgeBaseFolder(
+			@NotNull @PathParam("parentKnowledgeBaseFolderId") Long
+				parentKnowledgeBaseFolderId,
+			KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception;
+
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/sites/{siteId}/knowledge-base-folders")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public Page<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
-			Long siteId, Pagination pagination)
+			@NotNull @PathParam("siteId") Long siteId,
+			@Context Pagination pagination)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/sites/{siteId}/knowledge-base-folders")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
-			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
+			@NotNull @PathParam("siteId") Long siteId,
+			KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

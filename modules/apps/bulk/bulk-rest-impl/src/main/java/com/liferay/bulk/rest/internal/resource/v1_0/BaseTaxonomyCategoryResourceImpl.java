@@ -18,23 +18,18 @@ import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategory;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection;
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -43,15 +38,23 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BaseTaxonomyCategoryResourceImpl
-	implements TaxonomyCategoryResource {
+	implements AopService, TaxonomyCategoryResource {
 
 	@Override
-	@Consumes("application/json")
-	@PATCH
-	@Path("/taxonomy-categories/batch")
-	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Bulk.REST)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
 	public Response patchTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
@@ -62,10 +65,6 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/taxonomy-categories/batch")
-	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Response putTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
@@ -75,8 +74,19 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		return responseBuilder.build();
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -112,13 +122,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

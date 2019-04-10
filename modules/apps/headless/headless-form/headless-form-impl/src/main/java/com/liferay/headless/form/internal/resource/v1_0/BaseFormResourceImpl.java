@@ -18,34 +18,22 @@ import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -53,68 +41,61 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
-public abstract class BaseFormResourceImpl implements FormResource {
+public abstract class BaseFormResourceImpl implements AopService, FormResource {
 
 	@Override
-	@GET
-	@Path("/forms/{formId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Form")})
-	public Form getForm(@NotNull @PathParam("formId") Long formId)
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Form)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
+	public Form getForm(Long formId) throws Exception {
+		return new Form();
+	}
+
+	@Override
+	public Form postFormEvaluateContext(Long formId, Form form)
 		throws Exception {
 
 		return new Form();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/forms/{formId}/evaluate-context")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Form")})
-	public Form postFormEvaluateContext(
-			@NotNull @PathParam("formId") Long formId, Form form)
-		throws Exception {
-
-		return new Form();
-	}
-
-	@Override
-	@Consumes("multipart/form-data")
-	@POST
-	@Path("/forms/{formId}/upload-file")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Form")})
 	public FormDocument postFormUploadFile(
-			@NotNull @PathParam("formId") Long formId,
-			MultipartBody multipartBody)
+			Long formId, MultipartBody multipartBody)
 		throws Exception {
 
 		return new FormDocument();
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
-	@Path("/sites/{siteId}/forms")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Form")})
-	public Page<Form> getSiteFormsPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@Context Pagination pagination)
+	public Page<Form> getSiteFormsPage(Long siteId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(Form form, Form existingForm) {
@@ -148,13 +129,8 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

@@ -17,27 +17,20 @@ package com.liferay.headless.foundation.internal.resource.v1_0;
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.headless.foundation.resource.v1_0.PostalAddressResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -45,48 +38,58 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BasePostalAddressResourceImpl
-	implements PostalAddressResource {
+	implements AopService, PostalAddressResource {
 
 	@Override
-	@GET
-	@Path("/organizations/{organizationId}/postal-addresses")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "PostalAddress")})
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Foundation)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
-			@NotNull @PathParam("organizationId") Long organizationId)
+			Long organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@GET
-	@Path("/postal-addresses/{postalAddressId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "PostalAddress")})
-	public PostalAddress getPostalAddress(
-			@NotNull @PathParam("postalAddressId") Long postalAddressId)
+	public PostalAddress getPostalAddress(Long postalAddressId)
 		throws Exception {
 
 		return new PostalAddress();
 	}
 
 	@Override
-	@GET
-	@Path("/user-accounts/{userAccountId}/postal-addresses")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "PostalAddress")})
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
+			Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -121,13 +124,8 @@ public abstract class BasePostalAddressResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

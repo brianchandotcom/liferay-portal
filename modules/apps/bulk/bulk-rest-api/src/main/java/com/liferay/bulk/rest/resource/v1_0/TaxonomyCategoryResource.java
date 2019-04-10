@@ -16,10 +16,20 @@ package com.liferay.bulk.rest.resource.v1_0;
 
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import javax.annotation.Generated;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.PATCH;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -30,16 +40,32 @@ import javax.ws.rs.core.Response;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface TaxonomyCategoryResource {
 
+	@Consumes("application/json")
+	@PATCH
+	@Path("/taxonomy-categories/batch")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Response patchTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception;
 
+	@Consumes("application/json")
+	@PUT
+	@Path("/taxonomy-categories/batch")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Response putTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

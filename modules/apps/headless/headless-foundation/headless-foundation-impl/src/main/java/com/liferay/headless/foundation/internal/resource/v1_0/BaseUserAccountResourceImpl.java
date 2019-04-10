@@ -17,39 +17,24 @@ package com.liferay.headless.foundation.internal.resource.v1_0;
 import com.liferay.headless.foundation.dto.v1_0.UserAccount;
 import com.liferay.headless.foundation.resource.v1_0.UserAccountResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -57,71 +42,45 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BaseUserAccountResourceImpl
-	implements UserAccountResource {
+	implements AopService, UserAccountResource {
 
 	@Override
-	@GET
-	@Path("/my-user-accounts/{userAccountId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
-	public UserAccount getMyUserAccount(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
-		throws Exception {
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Foundation)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
+	public UserAccount getMyUserAccount(Long userAccountId) throws Exception {
 		return new UserAccount();
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/organizations/{organizationId}/user-accounts")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			@NotNull @PathParam("organizationId") Long organizationId,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			Long organizationId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/user-accounts")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getUserAccountsPage(
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/user-accounts")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
 	public UserAccount postUserAccount(UserAccount userAccount)
 		throws Exception {
 
@@ -129,11 +88,6 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	@Consumes("multipart/form-data")
-	@POST
-	@Path("/user-accounts")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
 	public UserAccount postUserAccount(MultipartBody multipartBody)
 		throws Exception {
 
@@ -141,65 +95,44 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
-	@DELETE
-	@Path("/user-accounts/{userAccountId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
-	public void deleteUserAccount(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
-		throws Exception {
+	public void deleteUserAccount(Long userAccountId) throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/user-accounts/{userAccountId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
-	public UserAccount getUserAccount(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
-		throws Exception {
-
+	public UserAccount getUserAccount(Long userAccountId) throws Exception {
 		return new UserAccount();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/user-accounts/{userAccountId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
 	public UserAccount putUserAccount(
-			@NotNull @PathParam("userAccountId") Long userAccountId,
-			UserAccount userAccount)
+			Long userAccountId, UserAccount userAccount)
 		throws Exception {
 
 		return new UserAccount();
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/web-sites/{webSiteId}/user-accounts")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getWebSiteUserAccountsPage(
-			@NotNull @PathParam("webSiteId") Long webSiteId,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			Long webSiteId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -234,13 +167,8 @@ public abstract class BaseUserAccountResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

@@ -18,11 +18,31 @@ import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -33,23 +53,60 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface BlogPostingImageResource {
 
-	public void deleteBlogPostingImage(Long blogPostingImageId)
+	@DELETE
+	@Path("/blog-posting-images/{blogPostingImageId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPostingImage")})
+	public void deleteBlogPostingImage(
+			@NotNull @PathParam("blogPostingImageId") Long blogPostingImageId)
 		throws Exception;
 
-	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
+	@GET
+	@Path("/blog-posting-images/{blogPostingImageId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPostingImage")})
+	public BlogPostingImage getBlogPostingImage(
+			@NotNull @PathParam("blogPostingImageId") Long blogPostingImageId)
 		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/sites/{siteId}/blog-posting-images")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
-			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			@NotNull @PathParam("siteId") Long siteId,
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
+	@Consumes("multipart/form-data")
+	@POST
+	@Path("/sites/{siteId}/blog-posting-images")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage postSiteBlogPostingImage(
-			Long siteId, MultipartBody multipartBody)
+			@NotNull @PathParam("siteId") Long siteId,
+			MultipartBody multipartBody)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

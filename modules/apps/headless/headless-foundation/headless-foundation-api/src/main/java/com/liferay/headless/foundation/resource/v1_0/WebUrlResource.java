@@ -16,9 +16,22 @@ package com.liferay.headless.foundation.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.WebUrl;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -29,16 +42,39 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface WebUrlResource {
 
-	public Page<WebUrl> getOrganizationWebUrlsPage(Long organizationId)
+	@GET
+	@Path("/organizations/{organizationId}/web-urls")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WebUrl")})
+	public Page<WebUrl> getOrganizationWebUrlsPage(
+			@NotNull @PathParam("organizationId") Long organizationId)
 		throws Exception;
 
-	public Page<WebUrl> getUserAccountWebUrlsPage(Long userAccountId)
+	@GET
+	@Path("/user-accounts/{userAccountId}/web-urls")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WebUrl")})
+	public Page<WebUrl> getUserAccountWebUrlsPage(
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception;
 
-	public WebUrl getWebUrl(Long webUrlId) throws Exception;
+	@GET
+	@Path("/web-urls/{webUrlId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WebUrl")})
+	public WebUrl getWebUrl(@NotNull @PathParam("webUrlId") Long webUrlId)
+		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

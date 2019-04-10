@@ -18,10 +18,32 @@ import com.liferay.headless.foundation.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -32,31 +54,84 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface TaxonomyVocabularyResource {
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/sites/{siteId}/taxonomy-vocabularies")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
-			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			@NotNull @PathParam("siteId") Long siteId,
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/sites/{siteId}/taxonomy-vocabularies")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
-			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
+			@NotNull @PathParam("siteId") Long siteId,
+			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 
-	public void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
+	@DELETE
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
+	public void deleteTaxonomyVocabulary(
+			@NotNull @PathParam("taxonomyVocabularyId") Long
+				taxonomyVocabularyId)
 		throws Exception;
 
-	public TaxonomyVocabulary getTaxonomyVocabulary(Long taxonomyVocabularyId)
+	@GET
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
+	public TaxonomyVocabulary getTaxonomyVocabulary(
+			@NotNull @PathParam("taxonomyVocabularyId") Long
+				taxonomyVocabularyId)
 		throws Exception;
 
+	@Consumes("application/json")
+	@PATCH
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary patchTaxonomyVocabulary(
-			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
+			@NotNull @PathParam("taxonomyVocabularyId") Long
+				taxonomyVocabularyId,
+			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 
+	@Consumes("application/json")
+	@PUT
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary putTaxonomyVocabulary(
-			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
+			@NotNull @PathParam("taxonomyVocabularyId") Long
+				taxonomyVocabularyId,
+			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

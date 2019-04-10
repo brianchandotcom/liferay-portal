@@ -16,9 +16,22 @@ package com.liferay.headless.foundation.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.Phone;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -29,16 +42,39 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface PhoneResource {
 
-	public Page<Phone> getOrganizationPhonesPage(Long organizationId)
+	@GET
+	@Path("/organizations/{organizationId}/phones")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Phone")})
+	public Page<Phone> getOrganizationPhonesPage(
+			@NotNull @PathParam("organizationId") Long organizationId)
 		throws Exception;
 
-	public Phone getPhone(Long phoneId) throws Exception;
-
-	public Page<Phone> getUserAccountPhonesPage(Long userAccountId)
+	@GET
+	@Path("/phones/{phoneId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Phone")})
+	public Phone getPhone(@NotNull @PathParam("phoneId") Long phoneId)
 		throws Exception;
 
+	@GET
+	@Path("/user-accounts/{userAccountId}/phones")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Phone")})
+	public Page<Phone> getUserAccountPhonesPage(
+			@NotNull @PathParam("userAccountId") Long userAccountId)
+		throws Exception;
+
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

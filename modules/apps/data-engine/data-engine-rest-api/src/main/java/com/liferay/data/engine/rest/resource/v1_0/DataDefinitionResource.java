@@ -17,10 +17,31 @@ package com.liferay.data.engine.rest.resource.v1_0;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -31,35 +52,90 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface DataDefinitionResource {
 
-	public void deleteDataDefinition(Long dataDefinitionId) throws Exception;
-
-	public DataDefinition getDataDefinition(Long dataDefinitionId)
+	@DELETE
+	@Path("/data-definitions/{dataDefinitionId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public void deleteDataDefinition(
+			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId)
 		throws Exception;
 
+	@GET
+	@Path("/data-definitions/{dataDefinitionId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public DataDefinition getDataDefinition(
+			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId)
+		throws Exception;
+
+	@Consumes("application/json")
+	@PUT
+	@Path("/data-definitions/{dataDefinitionId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataDefinition")})
 	public DataDefinition putDataDefinition(
-			Long dataDefinitionId, DataDefinition dataDefinition)
+			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId,
+			DataDefinition dataDefinition)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/data-definitions/{dataDefinitionId}/data-definition-permissions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void postDataDefinitionDataDefinitionPermission(
-			Long dataDefinitionId, String operation,
+			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId,
+			@NotNull @QueryParam("operation") String operation,
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/sites/{siteId}/data-definition-permissions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void postSiteDataDefinitionPermission(
-			Long siteId, String operation,
+			@NotNull @PathParam("siteId") Long siteId,
+			@NotNull @QueryParam("operation") String operation,
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/sites/{siteId}/data-definitions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataDefinition")})
 	public Page<DataDefinition> getSiteDataDefinitionsPage(
-			Long siteId, String keywords, Pagination pagination)
+			@NotNull @PathParam("siteId") Long siteId,
+			@QueryParam("keywords") String keywords,
+			@Context Pagination pagination)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/sites/{siteId}/data-definitions")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataDefinition")})
 	public DataDefinition postSiteDataDefinition(
-			Long siteId, DataDefinition dataDefinition)
+			@NotNull @PathParam("siteId") Long siteId,
+			DataDefinition dataDefinition)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

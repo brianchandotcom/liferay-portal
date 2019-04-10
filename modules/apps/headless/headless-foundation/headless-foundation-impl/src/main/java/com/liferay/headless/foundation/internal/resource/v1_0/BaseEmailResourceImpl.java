@@ -17,27 +17,20 @@ package com.liferay.headless.foundation.internal.resource.v1_0;
 import com.liferay.headless.foundation.dto.v1_0.Email;
 import com.liferay.headless.foundation.resource.v1_0.EmailResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -45,46 +38,54 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
-public abstract class BaseEmailResourceImpl implements EmailResource {
+public abstract class BaseEmailResourceImpl
+	implements AopService, EmailResource {
 
 	@Override
-	@GET
-	@Path("/emails/{emailId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Email")})
-	public Email getEmail(@NotNull @PathParam("emailId") Long emailId)
-		throws Exception {
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Foundation)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
+	public Email getEmail(Long emailId) throws Exception {
 		return new Email();
 	}
 
 	@Override
-	@GET
-	@Path("/organizations/{organizationId}/emails")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Email")})
-	public Page<Email> getOrganizationEmailsPage(
-			@NotNull @PathParam("organizationId") Long organizationId)
+	public Page<Email> getOrganizationEmailsPage(Long organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@GET
-	@Path("/user-accounts/{userAccountId}/emails")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Email")})
-	public Page<Email> getUserAccountEmailsPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
+	public Page<Email> getUserAccountEmailsPage(Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(Email email, Email existingEmail) {
@@ -118,13 +119,8 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

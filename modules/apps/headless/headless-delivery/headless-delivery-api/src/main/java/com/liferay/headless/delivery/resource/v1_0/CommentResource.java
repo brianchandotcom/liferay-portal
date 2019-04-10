@@ -18,10 +18,31 @@ import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -32,47 +53,150 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface CommentResource {
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/blog-postings/{blogPostingId}/comments")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getBlogPostingCommentsPage(
-			Long blogPostingId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			@NotNull @PathParam("blogPostingId") Long blogPostingId,
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
-	public Comment postBlogPostingComment(Long blogPostingId, Comment comment)
+	@Consumes("application/json")
+	@POST
+	@Path("/blog-postings/{blogPostingId}/comments")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
+	public Comment postBlogPostingComment(
+			@NotNull @PathParam("blogPostingId") Long blogPostingId,
+			Comment comment)
 		throws Exception;
 
-	public void deleteComment(Long commentId) throws Exception;
+	@DELETE
+	@Path("/comments/{commentId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
+	public void deleteComment(@NotNull @PathParam("commentId") Long commentId)
+		throws Exception;
 
-	public Comment getComment(Long commentId) throws Exception;
+	@GET
+	@Path("/comments/{commentId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
+	public Comment getComment(@NotNull @PathParam("commentId") Long commentId)
+		throws Exception;
 
-	public Comment putComment(Long commentId, Comment comment) throws Exception;
+	@Consumes("application/json")
+	@PUT
+	@Path("/comments/{commentId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
+	public Comment putComment(
+			@NotNull @PathParam("commentId") Long commentId, Comment comment)
+		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/comments/{parentCommentId}/comments")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getCommentCommentsPage(
-			Long parentCommentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			@NotNull @PathParam("parentCommentId") Long parentCommentId,
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
-	public Comment postCommentComment(Long parentCommentId, Comment comment)
+	@Consumes("application/json")
+	@POST
+	@Path("/comments/{parentCommentId}/comments")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
+	public Comment postCommentComment(
+			@NotNull @PathParam("parentCommentId") Long parentCommentId,
+			Comment comment)
 		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/documents/{documentId}/comments")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getDocumentCommentsPage(
-			Long documentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			@NotNull @PathParam("documentId") Long documentId,
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
-	public Comment postDocumentComment(Long documentId, Comment comment)
+	@Consumes("application/json")
+	@POST
+	@Path("/documents/{documentId}/comments")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
+	public Comment postDocumentComment(
+			@NotNull @PathParam("documentId") Long documentId, Comment comment)
 		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/structured-contents/{structuredContentId}/comments")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getStructuredContentCommentsPage(
-			Long structuredContentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			@NotNull @PathParam("structuredContentId") Long structuredContentId,
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/structured-contents/{structuredContentId}/comments")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postStructuredContentComment(
-			Long structuredContentId, Comment comment)
+			@NotNull @PathParam("structuredContentId") Long structuredContentId,
+			Comment comment)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

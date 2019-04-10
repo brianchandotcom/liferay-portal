@@ -16,10 +16,26 @@ package com.liferay.headless.delivery.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -30,25 +46,60 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface KnowledgeBaseAttachmentResource {
 
+	@GET
+	@Path(
+		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public Page<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-				Long knowledgeBaseArticleId)
+				@NotNull @PathParam("knowledgeBaseArticleId") Long
+					knowledgeBaseArticleId)
 		throws Exception;
 
+	@Consumes("multipart/form-data")
+	@POST
+	@Path(
+		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
+	)
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				Long knowledgeBaseArticleId, MultipartBody multipartBody)
+				@NotNull @PathParam("knowledgeBaseArticleId") Long
+					knowledgeBaseArticleId,
+				MultipartBody multipartBody)
 		throws Exception;
 
-	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
+	@DELETE
+	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
+	public void deleteKnowledgeBaseAttachment(
+			@NotNull @PathParam("knowledgeBaseAttachmentId") Long
+				knowledgeBaseAttachmentId)
 		throws Exception;
 
+	@GET
+	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
-			Long knowledgeBaseAttachmentId)
+			@NotNull @PathParam("knowledgeBaseAttachmentId") Long
+				knowledgeBaseAttachmentId)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

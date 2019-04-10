@@ -17,31 +17,21 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -49,70 +39,66 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BaseKnowledgeBaseAttachmentResourceImpl
-	implements KnowledgeBaseAttachmentResource {
+	implements AopService, KnowledgeBaseAttachmentResource {
 
 	@Override
-	@GET
-	@Path(
-		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Delivery)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
 	public Page<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-				@NotNull @PathParam("knowledgeBaseArticleId") Long
-					knowledgeBaseArticleId)
+				Long knowledgeBaseArticleId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("multipart/form-data")
-	@POST
-	@Path(
-		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				@NotNull @PathParam("knowledgeBaseArticleId") Long
-					knowledgeBaseArticleId,
-				MultipartBody multipartBody)
+				Long knowledgeBaseArticleId, MultipartBody multipartBody)
 		throws Exception {
 
 		return new KnowledgeBaseAttachment();
 	}
 
 	@Override
-	@DELETE
-	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
-	public void deleteKnowledgeBaseAttachment(
-			@NotNull @PathParam("knowledgeBaseAttachmentId") Long
-				knowledgeBaseAttachmentId)
+	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
 		throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
-			@NotNull @PathParam("knowledgeBaseAttachmentId") Long
-				knowledgeBaseAttachmentId)
+			Long knowledgeBaseAttachmentId)
 		throws Exception {
 
 		return new KnowledgeBaseAttachment();
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -148,13 +134,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

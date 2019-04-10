@@ -18,10 +18,32 @@ import com.liferay.headless.foundation.dto.v1_0.TaxonomyCategory;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -32,40 +54,112 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface TaxonomyCategoryResource {
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			Long parentTaxonomyCategoryId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			@NotNull @PathParam("parentTaxonomyCategoryId") Long
+				parentTaxonomyCategoryId,
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			@NotNull @PathParam("parentTaxonomyCategoryId") Long
+				parentTaxonomyCategoryId,
+			TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
-	public void deleteTaxonomyCategory(Long taxonomyCategoryId)
+	@DELETE
+	@Path("/taxonomy-categories/{taxonomyCategoryId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public void deleteTaxonomyCategory(
+			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception;
 
-	public TaxonomyCategory getTaxonomyCategory(Long taxonomyCategoryId)
+	@GET
+	@Path("/taxonomy-categories/{taxonomyCategoryId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
+	public TaxonomyCategory getTaxonomyCategory(
+			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception;
 
+	@Consumes("application/json")
+	@PATCH
+	@Path("/taxonomy-categories/{taxonomyCategoryId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory patchTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
+			TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
+	@Consumes("application/json")
+	@PUT
+	@Path("/taxonomy-categories/{taxonomyCategoryId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory putTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
+			TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
-			Long taxonomyVocabularyId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			@NotNull @PathParam("taxonomyVocabularyId") Long
+				taxonomyVocabularyId,
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
-			Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
+			@NotNull @PathParam("taxonomyVocabularyId") Long
+				taxonomyVocabularyId,
+			TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

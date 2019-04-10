@@ -49,16 +49,14 @@ public abstract class BaseWorkflowLogResourceImpl
 		properties.put("api.version", "v1.0");
 		properties.put(
 			"osgi.jaxrs.application.select",
-			"(osgi.jaxrs.name=Liferay.Headless.Workflow");
+			"(osgi.jaxrs.name=Liferay.Headless.Workflow)");
 		properties.put("osgi.jaxrs.resource", true);
 
 		return properties;
 	}
 
 	@Override
-	public WorkflowLog getWorkflowLog(Long workflowLogId)
-		throws Exception {
-
+	public WorkflowLog getWorkflowLog(Long workflowLogId) throws Exception {
 		return new WorkflowLog();
 	}
 
@@ -71,9 +69,7 @@ public abstract class BaseWorkflowLogResourceImpl
 	}
 
 	@Override
-	public void setContextAcceptLanguage(
-		AcceptLanguage contextAcceptLanguage) {
-
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
@@ -120,9 +116,7 @@ public abstract class BaseWorkflowLogResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
-
 	protected Company contextCompany;
-
 	protected UriInfo contextUriInfo;
 
 }

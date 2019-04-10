@@ -17,38 +17,24 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -56,70 +42,64 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BaseBlogPostingImageResourceImpl
-	implements BlogPostingImageResource {
+	implements AopService, BlogPostingImageResource {
 
 	@Override
-	@DELETE
-	@Path("/blog-posting-images/{blogPostingImageId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPostingImage")})
-	public void deleteBlogPostingImage(
-			@NotNull @PathParam("blogPostingImageId") Long blogPostingImageId)
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Delivery)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
+	public void deleteBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/blog-posting-images/{blogPostingImageId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPostingImage")})
-	public BlogPostingImage getBlogPostingImage(
-			@NotNull @PathParam("blogPostingImageId") Long blogPostingImageId)
+	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
 		throws Exception {
 
 		return new BlogPostingImage();
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/sites/{siteId}/blog-posting-images")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			Long siteId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("multipart/form-data")
-	@POST
-	@Path("/sites/{siteId}/blog-posting-images")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage postSiteBlogPostingImage(
-			@NotNull @PathParam("siteId") Long siteId,
-			MultipartBody multipartBody)
+			Long siteId, MultipartBody multipartBody)
 		throws Exception {
 
 		return new BlogPostingImage();
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -155,13 +135,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

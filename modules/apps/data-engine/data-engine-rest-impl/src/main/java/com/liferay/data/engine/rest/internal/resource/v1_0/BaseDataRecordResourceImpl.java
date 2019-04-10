@@ -18,35 +18,21 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -54,97 +40,75 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
-public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
+public abstract class BaseDataRecordResourceImpl
+	implements AopService, DataRecordResource {
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
-	@Path("/data-record-collections/{dataRecordCollectionId}/data-records")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DataRecord")})
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Data.Engine.REST)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
 	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
-			@NotNull @PathParam("dataRecordCollectionId") Long
-				dataRecordCollectionId,
-			@Context Pagination pagination)
+			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/data-record-collections/{dataRecordCollectionId}/data-records")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DataRecord")})
 	public DataRecord postDataRecordCollectionDataRecord(
-			@NotNull @PathParam("dataRecordCollectionId") Long
-				dataRecordCollectionId,
-			DataRecord dataRecord)
+			Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception {
 
 		return new DataRecord();
 	}
 
 	@Override
-	@GET
-	@Path(
-		"/data-record-collections/{dataRecordCollectionId}/data-records/export"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DataRecord")})
 	public String getDataRecordCollectionDataRecordExport(
-			@NotNull @PathParam("dataRecordCollectionId") Long
-				dataRecordCollectionId)
+			Long dataRecordCollectionId)
 		throws Exception {
 
 		return StringPool.BLANK;
 	}
 
 	@Override
-	@DELETE
-	@Path("/data-records/{dataRecordId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DataRecord")})
-	public void deleteDataRecord(
-			@NotNull @PathParam("dataRecordId") Long dataRecordId)
-		throws Exception {
+	public void deleteDataRecord(Long dataRecordId) throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/data-records/{dataRecordId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DataRecord")})
-	public DataRecord getDataRecord(
-			@NotNull @PathParam("dataRecordId") Long dataRecordId)
+	public DataRecord getDataRecord(Long dataRecordId) throws Exception {
+		return new DataRecord();
+	}
+
+	@Override
+	public DataRecord putDataRecord(Long dataRecordId, DataRecord dataRecord)
 		throws Exception {
 
 		return new DataRecord();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/data-records/{dataRecordId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "DataRecord")})
-	public DataRecord putDataRecord(
-			@NotNull @PathParam("dataRecordId") Long dataRecordId,
-			DataRecord dataRecord)
-		throws Exception {
-
-		return new DataRecord();
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -179,13 +143,8 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

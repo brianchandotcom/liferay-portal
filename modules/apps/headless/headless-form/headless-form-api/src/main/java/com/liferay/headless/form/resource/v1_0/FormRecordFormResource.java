@@ -17,8 +17,22 @@ package com.liferay.headless.form.resource.v1_0;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.dto.v1_0.FormRecordForm;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -29,12 +43,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface FormRecordFormResource {
 
+	@Consumes("application/json")
+	@PUT
+	@Path("/form-records/{formRecordId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "FormRecordForm")})
 	public FormRecord putFormRecord(
-			Long formRecordId, FormRecordForm formRecordForm)
+			@NotNull @PathParam("formRecordId") Long formRecordId,
+			FormRecordForm formRecordForm)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

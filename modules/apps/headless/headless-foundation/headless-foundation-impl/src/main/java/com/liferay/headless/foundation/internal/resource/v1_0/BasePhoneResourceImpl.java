@@ -17,27 +17,20 @@ package com.liferay.headless.foundation.internal.resource.v1_0;
 import com.liferay.headless.foundation.dto.v1_0.Phone;
 import com.liferay.headless.foundation.resource.v1_0.PhoneResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -45,46 +38,54 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
-public abstract class BasePhoneResourceImpl implements PhoneResource {
+public abstract class BasePhoneResourceImpl
+	implements AopService, PhoneResource {
 
 	@Override
-	@GET
-	@Path("/organizations/{organizationId}/phones")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Phone")})
-	public Page<Phone> getOrganizationPhonesPage(
-			@NotNull @PathParam("organizationId") Long organizationId)
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Foundation)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
+	public Page<Phone> getOrganizationPhonesPage(Long organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@GET
-	@Path("/phones/{phoneId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Phone")})
-	public Phone getPhone(@NotNull @PathParam("phoneId") Long phoneId)
-		throws Exception {
-
+	public Phone getPhone(Long phoneId) throws Exception {
 		return new Phone();
 	}
 
 	@Override
-	@GET
-	@Path("/user-accounts/{userAccountId}/phones")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Phone")})
-	public Page<Phone> getUserAccountPhonesPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
+	public Page<Phone> getUserAccountPhonesPage(Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(Phone phone, Phone existingPhone) {
@@ -118,13 +119,8 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

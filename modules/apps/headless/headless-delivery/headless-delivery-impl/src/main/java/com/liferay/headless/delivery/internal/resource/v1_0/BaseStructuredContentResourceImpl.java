@@ -19,39 +19,23 @@ import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -59,169 +43,97 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BaseStructuredContentResourceImpl
-	implements StructuredContentResource {
+	implements AopService, StructuredContentResource {
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/content-structures/{contentStructureId}/structured-contents")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Delivery)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
-			@NotNull @PathParam("contentStructureId") Long contentStructureId,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			Long contentStructureId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path("/sites/{siteId}/structured-contents")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getSiteStructuredContentsPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("flatten") Boolean flatten,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			Long siteId, Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/sites/{siteId}/structured-contents")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent postSiteStructuredContent(
-			@NotNull @PathParam("siteId") Long siteId,
-			StructuredContent structuredContent)
+			Long siteId, StructuredContent structuredContent)
 		throws Exception {
 
 		return new StructuredContent();
 	}
 
 	@Override
-	@GET
-	@Path("/sites/{siteId}/structured-contents/by-key/{key}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent getSiteStructuredContentByKey(
-			@NotNull @PathParam("siteId") Long siteId,
-			@NotNull @PathParam("key") String key)
+			Long siteId, String key)
 		throws Exception {
 
 		return new StructuredContent();
 	}
 
 	@Override
-	@GET
-	@Path("/sites/{siteId}/structured-contents/by-uuid/{uuid}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent getSiteStructuredContentByUuid(
-			@NotNull @PathParam("siteId") Long siteId,
-			@NotNull @PathParam("uuid") String uuid)
+			Long siteId, String uuid)
 		throws Exception {
 
 		return new StructuredContent();
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path(
-		"/structured-content-folders/{structuredContentFolderId}/structured-contents"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
-				@NotNull @PathParam("structuredContentFolderId") Long
-					structuredContentFolderId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
+				Long structuredContentFolderId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path(
-		"/structured-content-folders/{structuredContentFolderId}/structured-contents"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent postStructuredContentFolderStructuredContent(
-			@NotNull @PathParam("structuredContentFolderId") Long
-				structuredContentFolderId,
-			StructuredContent structuredContent)
+			Long structuredContentFolderId, StructuredContent structuredContent)
 		throws Exception {
 
 		return new StructuredContent();
 	}
 
 	@Override
-	@DELETE
-	@Path("/structured-contents/{structuredContentId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
-	public void deleteStructuredContent(
-			@NotNull @PathParam("structuredContentId") Long structuredContentId)
+	public void deleteStructuredContent(Long structuredContentId)
 		throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/structured-contents/{structuredContentId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
-	public StructuredContent getStructuredContent(
-			@NotNull @PathParam("structuredContentId") Long structuredContentId)
+	public StructuredContent getStructuredContent(Long structuredContentId)
 		throws Exception {
 
 		return new StructuredContent();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PATCH
-	@Path("/structured-contents/{structuredContentId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent patchStructuredContent(
-			@NotNull @PathParam("structuredContentId") Long structuredContentId,
-			StructuredContent structuredContent)
+			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
 
 		StructuredContent existingStructuredContent = getStructuredContent(
@@ -310,86 +222,62 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/structured-contents/{structuredContentId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent putStructuredContent(
-			@NotNull @PathParam("structuredContentId") Long structuredContentId,
-			StructuredContent structuredContent)
+			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
 
 		return new StructuredContent();
 	}
 
 	@Override
-	@DELETE
-	@Path("/structured-contents/{structuredContentId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
-	public void deleteStructuredContentMyRating(
-			@NotNull @PathParam("structuredContentId") Long structuredContentId)
+	public void deleteStructuredContentMyRating(Long structuredContentId)
 		throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/structured-contents/{structuredContentId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
-	public Rating getStructuredContentMyRating(
-			@NotNull @PathParam("structuredContentId") Long structuredContentId)
+	public Rating getStructuredContentMyRating(Long structuredContentId)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/structured-contents/{structuredContentId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Rating postStructuredContentMyRating(
-			@NotNull @PathParam("structuredContentId") Long structuredContentId,
-			Rating rating)
+			Long structuredContentId, Rating rating)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/structured-contents/{structuredContentId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Rating putStructuredContentMyRating(
-			@NotNull @PathParam("structuredContentId") Long structuredContentId,
-			Rating rating)
+			Long structuredContentId, Rating rating)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@GET
-	@Path(
-		"/structured-contents/{structuredContentId}/rendered-content/{templateId}"
-	)
-	@Produces("text/html")
-	@Tags(value = {@Tag(name = "StructuredContent")})
 	public String getStructuredContentRenderedContentTemplate(
-			@NotNull @PathParam("structuredContentId") Long structuredContentId,
-			@NotNull @PathParam("templateId") Long templateId)
+			Long structuredContentId, Long templateId)
 		throws Exception {
 
 		return StringPool.BLANK;
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -425,13 +313,8 @@ public abstract class BaseStructuredContentResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

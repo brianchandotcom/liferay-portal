@@ -19,10 +19,28 @@ import com.liferay.headless.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -33,39 +51,107 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface WorkflowTaskResource {
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/roles/{roleId}/workflow-tasks")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public Page<WorkflowTask> getRoleWorkflowTasksPage(
-			Long roleId, Pagination pagination)
+			@NotNull @PathParam("roleId") Long roleId,
+			@Context Pagination pagination)
 		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/workflow-tasks/assigned-to-me")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
-			Pagination pagination)
+			@Context Pagination pagination)
 		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/workflow-tasks/assigned-to-my-roles")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public Page<WorkflowTask> getWorkflowTasksAssignedToMyRolesPage(
-			Pagination pagination)
+			@Context Pagination pagination)
 		throws Exception;
 
-	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
+	@GET
+	@Path("/workflow-tasks/{workflowTaskId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public WorkflowTask getWorkflowTask(
+			@NotNull @PathParam("workflowTaskId") Long workflowTaskId)
+		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/workflow-tasks/{workflowTaskId}/assign-to-me")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskAssignToMe(
-			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
+			@NotNull @PathParam("workflowTaskId") Long workflowTaskId,
+			WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/workflow-tasks/{workflowTaskId}/assign-to-user")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskAssignToUser(
-			Long workflowTaskId,
+			@NotNull @PathParam("workflowTaskId") Long workflowTaskId,
 			WorkflowTaskAssignToUser workflowTaskAssignToUser)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/workflow-tasks/{workflowTaskId}/change-transition")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskChangeTransition(
-			Long workflowTaskId, ChangeTransition changeTransition)
+			@NotNull @PathParam("workflowTaskId") Long workflowTaskId,
+			ChangeTransition changeTransition)
 		throws Exception;
 
+	@Consumes("application/json")
+	@POST
+	@Path("/workflow-tasks/{workflowTaskId}/update-due-date")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
-			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
+			@NotNull @PathParam("workflowTaskId") Long workflowTaskId,
+			WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

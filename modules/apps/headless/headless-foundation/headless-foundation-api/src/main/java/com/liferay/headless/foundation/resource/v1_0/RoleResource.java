@@ -16,10 +16,26 @@ package com.liferay.headless.foundation.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.Role;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -30,18 +46,52 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface RoleResource {
 
-	public Page<Role> getMyUserAccountRolesPage(Long userAccountId)
+	@GET
+	@Path("/my-user-accounts/{userAccountId}/roles")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Role")})
+	public Page<Role> getMyUserAccountRolesPage(
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception;
 
-	public Page<Role> getRolesPage(Pagination pagination) throws Exception;
-
-	public Role getRole(Long roleId) throws Exception;
-
-	public Page<Role> getUserAccountRolesPage(Long userAccountId)
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/roles")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Role")})
+	public Page<Role> getRolesPage(@Context Pagination pagination)
 		throws Exception;
 
+	@GET
+	@Path("/roles/{roleId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Role")})
+	public Role getRole(@NotNull @PathParam("roleId") Long roleId)
+		throws Exception;
+
+	@GET
+	@Path("/user-accounts/{userAccountId}/roles")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Role")})
+	public Page<Role> getUserAccountRolesPage(
+			@NotNull @PathParam("userAccountId") Long userAccountId)
+		throws Exception;
+
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

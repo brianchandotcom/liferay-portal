@@ -16,9 +16,22 @@ package com.liferay.headless.foundation.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.Email;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -29,16 +42,39 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface EmailResource {
 
-	public Email getEmail(Long emailId) throws Exception;
-
-	public Page<Email> getOrganizationEmailsPage(Long organizationId)
+	@GET
+	@Path("/emails/{emailId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Email")})
+	public Email getEmail(@NotNull @PathParam("emailId") Long emailId)
 		throws Exception;
 
-	public Page<Email> getUserAccountEmailsPage(Long userAccountId)
+	@GET
+	@Path("/organizations/{organizationId}/emails")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Email")})
+	public Page<Email> getOrganizationEmailsPage(
+			@NotNull @PathParam("organizationId") Long organizationId)
 		throws Exception;
 
+	@GET
+	@Path("/user-accounts/{userAccountId}/emails")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Email")})
+	public Page<Email> getUserAccountEmailsPage(
+			@NotNull @PathParam("userAccountId") Long userAccountId)
+		throws Exception;
+
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

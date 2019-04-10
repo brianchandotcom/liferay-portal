@@ -16,9 +16,22 @@ package com.liferay.headless.foundation.resource.v1_0;
 
 import com.liferay.headless.foundation.dto.v1_0.PostalAddress;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -29,19 +42,40 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface PostalAddressResource {
 
+	@GET
+	@Path("/organizations/{organizationId}/postal-addresses")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "PostalAddress")})
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
-			Long organizationId)
+			@NotNull @PathParam("organizationId") Long organizationId)
 		throws Exception;
 
-	public PostalAddress getPostalAddress(Long postalAddressId)
+	@GET
+	@Path("/postal-addresses/{postalAddressId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "PostalAddress")})
+	public PostalAddress getPostalAddress(
+			@NotNull @PathParam("postalAddressId") Long postalAddressId)
 		throws Exception;
 
+	@GET
+	@Path("/user-accounts/{userAccountId}/postal-addresses")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "PostalAddress")})
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(
-			Long userAccountId)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

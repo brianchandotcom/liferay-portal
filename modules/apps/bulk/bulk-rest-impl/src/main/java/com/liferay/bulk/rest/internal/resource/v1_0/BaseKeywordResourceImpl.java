@@ -19,27 +19,20 @@ import com.liferay.bulk.rest.dto.v1_0.Keyword;
 import com.liferay.bulk.rest.dto.v1_0.KeywordBulkSelection;
 import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -48,14 +41,23 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
-public abstract class BaseKeywordResourceImpl implements KeywordResource {
+public abstract class BaseKeywordResourceImpl
+	implements AopService, KeywordResource {
 
 	@Override
-	@Consumes("application/json")
-	@PATCH
-	@Path("/keywords/batch")
-	@Tags(value = {@Tag(name = "Keyword")})
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Bulk.REST)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
 	public Response patchKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
@@ -65,10 +67,6 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/keywords/batch")
-	@Tags(value = {@Tag(name = "Keyword")})
 	public Response putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
@@ -78,11 +76,6 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/keywords/common")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<Keyword> postKeywordsCommonPage(
 			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
@@ -90,8 +83,19 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		return Page.of(Collections.emptyList());
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(Keyword keyword, Keyword existingKeyword) {
@@ -125,13 +129,8 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

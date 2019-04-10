@@ -18,39 +18,23 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -58,44 +42,38 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BaseMessageBoardMessageResourceImpl
-	implements MessageBoardMessageResource {
+	implements AopService, MessageBoardMessageResource {
 
 	@Override
-	@DELETE
-	@Path("/message-board-messages/{messageBoardMessageId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
-	public void deleteMessageBoardMessage(
-			@NotNull @PathParam("messageBoardMessageId") Long
-				messageBoardMessageId)
+	public Dictionary<String, Object> getProperties() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("api.version", "v1.0");
+		properties.put(
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.Headless.Delivery)");
+		properties.put("osgi.jaxrs.resource", true);
+
+		return properties;
+	}
+
+	@Override
+	public void deleteMessageBoardMessage(Long messageBoardMessageId)
 		throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/message-board-messages/{messageBoardMessageId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage getMessageBoardMessage(
-			@NotNull @PathParam("messageBoardMessageId") Long
-				messageBoardMessageId)
+			Long messageBoardMessageId)
 		throws Exception {
 
 		return new MessageBoardMessage();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PATCH
-	@Path("/message-board-messages/{messageBoardMessageId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage patchMessageBoardMessage(
-			@NotNull @PathParam("messageBoardMessageId") Long
-				messageBoardMessageId,
-			MessageBoardMessage messageBoardMessage)
+			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		MessageBoardMessage existingMessageBoardMessage =
@@ -168,111 +146,54 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/message-board-messages/{messageBoardMessageId}")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage putMessageBoardMessage(
-			@NotNull @PathParam("messageBoardMessageId") Long
-				messageBoardMessageId,
-			MessageBoardMessage messageBoardMessage)
+			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		return new MessageBoardMessage();
 	}
 
 	@Override
-	@DELETE
-	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
-	public void deleteMessageBoardMessageMyRating(
-			@NotNull @PathParam("messageBoardMessageId") Long
-				messageBoardMessageId)
+	public void deleteMessageBoardMessageMyRating(Long messageBoardMessageId)
 		throws Exception {
 	}
 
 	@Override
-	@GET
-	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
-	public Rating getMessageBoardMessageMyRating(
-			@NotNull @PathParam("messageBoardMessageId") Long
-				messageBoardMessageId)
+	public Rating getMessageBoardMessageMyRating(Long messageBoardMessageId)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public Rating postMessageBoardMessageMyRating(
-			@NotNull @PathParam("messageBoardMessageId") Long
-				messageBoardMessageId,
-			Rating rating)
+			Long messageBoardMessageId, Rating rating)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@Consumes("application/json")
-	@PUT
-	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public Rating putMessageBoardMessageMyRating(
-			@NotNull @PathParam("messageBoardMessageId") Long
-				messageBoardMessageId,
-			Rating rating)
+			Long messageBoardMessageId, Rating rating)
 		throws Exception {
 
 		return new Rating();
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path(
-		"/message-board-messages/{parentMessageBoardMessageId}/message-board-messages"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
-				@NotNull @PathParam("parentMessageBoardMessageId") Long
-					parentMessageBoardMessageId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
+				Long parentMessageBoardMessageId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path(
-		"/message-board-messages/{parentMessageBoardMessageId}/message-board-messages"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage postMessageBoardMessageMessageBoardMessage(
-			@NotNull @PathParam("parentMessageBoardMessageId") Long
-				parentMessageBoardMessageId,
+			Long parentMessageBoardMessageId,
 			MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
@@ -280,50 +201,36 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	}
 
 	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
-		}
-	)
-	@Path(
-		"/message-board-threads/{messageBoardThreadId}/message-board-messages"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
-				@NotNull @PathParam("messageBoardThreadId") Long
-					messageBoardThreadId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
+				Long messageBoardThreadId, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
 	@Override
-	@Consumes("application/json")
-	@POST
-	@Path(
-		"/message-board-threads/{messageBoardThreadId}/message-board-messages"
-	)
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public MessageBoardMessage postMessageBoardThreadMessageBoardMessage(
-			@NotNull @PathParam("messageBoardThreadId") Long
-				messageBoardThreadId,
-			MessageBoardMessage messageBoardMessage)
+			Long messageBoardThreadId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		return new MessageBoardMessage();
 	}
 
+	@Override
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo contextUriInfo) {
+		this.contextUriInfo = contextUriInfo;
 	}
 
 	protected void preparePatch(
@@ -359,13 +266,8 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	@Context
 	protected AcceptLanguage contextAcceptLanguage;
-
-	@Context
 	protected Company contextCompany;
-
-	@Context
 	protected UriInfo contextUriInfo;
 
 }

@@ -18,10 +18,27 @@ import com.liferay.headless.foundation.dto.v1_0.Organization;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * To access this resource, run:
@@ -32,27 +49,76 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
+@Path("/v1.0")
 public interface OrganizationResource {
 
+	@GET
+	@Path("/my-user-accounts/{userAccountId}/organizations")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getMyUserAccountOrganizationsPage(
-			Long userAccountId)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/organizations")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
-	public Organization getOrganization(Long organizationId) throws Exception;
+	@GET
+	@Path("/organizations/{organizationId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
+	public Organization getOrganization(
+			@NotNull @PathParam("organizationId") Long organizationId)
+		throws Exception;
 
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+		}
+	)
+	@Path("/organizations/{parentOrganizationId}/organizations")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long parentOrganizationId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			@NotNull @PathParam("parentOrganizationId") Long
+				parentOrganizationId,
+			@QueryParam("search") String search, @Context Filter filter,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception;
 
+	@GET
+	@Path("/user-accounts/{userAccountId}/organizations")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getUserAccountOrganizationsPage(
-			Long userAccountId)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception;
 
+	@Context
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage);
+
+	@Context
 	public void setContextCompany(Company contextCompany);
+
+	@Context
+	public void setContextUriInfo(UriInfo contextUriInfo);
 
 }

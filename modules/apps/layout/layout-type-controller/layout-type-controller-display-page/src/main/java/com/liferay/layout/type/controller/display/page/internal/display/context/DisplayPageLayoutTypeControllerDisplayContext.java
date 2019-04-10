@@ -15,6 +15,7 @@
 package com.liferay.layout.type.controller.display.page.internal.display.context;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -29,7 +30,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,8 +59,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 		_infoDisplayObjectProvider =
 			(InfoDisplayObjectProvider)request.getAttribute(
-				DisplayPageLayoutTypeControllerWebKeys.
-					INFO_DISPLAY_OBJECT_PROVIDER);
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
 
 		InfoDisplayContributor infoDisplayContributor =
 			(InfoDisplayContributor)_request.getAttribute(

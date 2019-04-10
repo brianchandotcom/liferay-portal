@@ -22,4 +22,10 @@ public class AssetDisplayPageWebKeys {
 	public static final String CURRENT_I18N_LANGUAGE_ID =
 		"CURRENT_I18N_LANGUAGE_ID";
 
+	public static final String INFO_DISPLAY_OBJECT_PROVIDER =
+		"INFO_DISPLAY_OBJECT_PROVIDER";
+
+	public static final String INFO_EDIT_URL_PROVIDER =
+		"INFO_EDIT_URL_PROVIDER";
+
 }

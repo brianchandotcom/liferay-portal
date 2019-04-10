@@ -14,11 +14,11 @@
 
 package com.liferay.layout.type.controller.display.page.internal.product.navigation.control.menu;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -107,8 +107,7 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
 			(InfoDisplayObjectProvider)request.getAttribute(
-				DisplayPageLayoutTypeControllerWebKeys.
-					INFO_DISPLAY_OBJECT_PROVIDER);
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.

@@ -14,11 +14,11 @@
 
 package com.liferay.layout.type.controller.display.page.internal.display.context;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.display.contributor.InfoEditURLProvider;
-import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -47,10 +47,9 @@ public class EditDisplayPageMenuDisplayContext {
 
 		_infoDisplayObjectProvider =
 			(InfoDisplayObjectProvider)request.getAttribute(
-				DisplayPageLayoutTypeControllerWebKeys.
-					INFO_DISPLAY_OBJECT_PROVIDER);
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
 		_infoEditURLProvider = (InfoEditURLProvider)request.getAttribute(
-			DisplayPageLayoutTypeControllerWebKeys.INFO_EDIT_URL_PROVIDER);
+			AssetDisplayPageWebKeys.INFO_EDIT_URL_PROVIDER);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

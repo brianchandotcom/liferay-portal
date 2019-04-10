@@ -1,8 +1,5 @@
 Bundle-Name: Liferay Portal Settings Authentication OpenSSO Web
 Bundle-SymbolicName: com.liferay.portal.settings.authentication.opensso.web
 Bundle-Version: 3.0.0
-Provide-Capability:\
-	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.settings.lang)";\
-		resource.bundle.base.name="content.Language"
 Web-ContextPath: /portal-settings-authentication-opensso-web
+-liferay-aggregate-resource-bundles: com.liferay.portal.settings.lang

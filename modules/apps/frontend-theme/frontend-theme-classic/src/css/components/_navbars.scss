@@ -16,7 +16,7 @@
 
 	.navbar-blank {
 		@include media-query(null, $screen-xs-max) {
-			margin-top: 2rem;
+			margin-top: 1rem;
 		}
 	}
 

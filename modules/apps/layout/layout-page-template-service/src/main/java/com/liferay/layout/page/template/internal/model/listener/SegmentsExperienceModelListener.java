@@ -36,7 +36,7 @@ public class SegmentsExperienceModelListener
 
 		try {
 			_layoutPageTemplateStructureRelLocalService.
-				deleteLayoutPageTemplateStructureRels(
+				deleteLayoutPageTemplateStructureRelsBySegmentsExperienceId(
 					segmentsExperience.getSegmentsExperienceId());
 		}
 		catch (Exception e) {

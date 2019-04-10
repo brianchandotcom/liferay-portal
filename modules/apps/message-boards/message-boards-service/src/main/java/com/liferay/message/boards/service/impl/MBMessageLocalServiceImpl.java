@@ -250,6 +250,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		MBMessage parentMBMessage = fetchMBMessage(parentMessageId);
+
+		if ((parentMBMessage != null) && !parentMBMessage.isApproved()) {
+			throw new PortalException("Cannot reply to an unapproved message");
+		}
+
 		// Message
 
 		Group group = groupLocalService.getGroup(groupId);

@@ -134,10 +134,19 @@ public class LayoutPageTemplateStructureRelLocalServiceUtil {
 	}
 
 	public static void deleteLayoutPageTemplateStructureRels(
-		long segmentsExperienceId) {
+		long layoutPageTemplateStructureId) {
 
 		getService().deleteLayoutPageTemplateStructureRels(
-			segmentsExperienceId);
+			layoutPageTemplateStructureId);
+	}
+
+	public static void
+		deleteLayoutPageTemplateStructureRelsBySegmentsExperienceId(
+			long segmentsExperienceId) {
+
+		getService().
+			deleteLayoutPageTemplateStructureRelsBySegmentsExperienceId(
+				segmentsExperienceId);
 	}
 
 	/**

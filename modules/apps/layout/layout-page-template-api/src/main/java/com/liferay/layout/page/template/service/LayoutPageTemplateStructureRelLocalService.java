@@ -120,6 +120,9 @@ public interface LayoutPageTemplateStructureRelLocalService
 		throws PortalException;
 
 	public void deleteLayoutPageTemplateStructureRels(
+		long layoutPageTemplateStructureId);
+
+	public void deleteLayoutPageTemplateStructureRelsBySegmentsExperienceId(
 		long segmentsExperienceId);
 
 	/**

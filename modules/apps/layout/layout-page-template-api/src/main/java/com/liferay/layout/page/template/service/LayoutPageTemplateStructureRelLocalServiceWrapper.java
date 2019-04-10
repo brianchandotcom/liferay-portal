@@ -132,10 +132,20 @@ public class LayoutPageTemplateStructureRelLocalServiceWrapper
 
 	@Override
 	public void deleteLayoutPageTemplateStructureRels(
+		long layoutPageTemplateStructureId) {
+
+		_layoutPageTemplateStructureRelLocalService.
+			deleteLayoutPageTemplateStructureRels(
+				layoutPageTemplateStructureId);
+	}
+
+	@Override
+	public void deleteLayoutPageTemplateStructureRelsBySegmentsExperienceId(
 		long segmentsExperienceId) {
 
 		_layoutPageTemplateStructureRelLocalService.
-			deleteLayoutPageTemplateStructureRels(segmentsExperienceId);
+			deleteLayoutPageTemplateStructureRelsBySegmentsExperienceId(
+				segmentsExperienceId);
 	}
 
 	/**

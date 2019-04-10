@@ -31,6 +31,8 @@ public interface InfoDisplayObject<T> extends Serializable {
 
 	public String getDescription(Locale locale);
 
+	public String getEditURL(HttpServletRequest request) throws Exception;
+
 	public long getGroupId();
 
 	public T getModelEntry();

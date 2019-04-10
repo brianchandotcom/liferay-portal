@@ -51,6 +51,12 @@ public class FileUtil {
 	public static void deleteFiles(String dirName, List<File> files)
 		throws Exception {
 
+		Path dirPath = Paths.get(dirName);
+
+		if (!Files.exists(dirPath)) {
+			return;
+		}
+
 		Set<String> canonicalPaths = new HashSet<>();
 
 		for (File file : files) {
@@ -58,7 +64,7 @@ public class FileUtil {
 		}
 
 		Files.walkFileTree(
-			Paths.get(dirName),
+			dirPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override

@@ -136,7 +136,6 @@ public class RESTBuilder {
 			_createGraphQLQueryFile(context, escapedVersion);
 			_createGraphQLServletDataFile(context, escapedVersion);
 			_createOpenAPIResourceFile(context, escapedVersion);
-			_createPropertiesFile(context, escapedVersion, "openapi");
 
 			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
 				String schemaName = entry.getKey();
@@ -155,9 +154,6 @@ public class RESTBuilder {
 
 				_createBaseResourceImplFile(
 					context, escapedVersion, schemaName);
-				_createPropertiesFile(
-					context, escapedVersion,
-					String.valueOf(context.get("schemaPath")));
 				_createResourceFile(context, escapedVersion, schemaName);
 				_createResourceImplFile(context, escapedVersion, schemaName);
 
@@ -575,28 +571,6 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFileName, "openapi_resource_impl", context));
-	}
-
-	private void _createPropertiesFile(
-			Map<String, Object> context, String escapedVersion,
-			String schemaPath)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(_configYAML.getImplDir());
-		sb.append("/../resources/OSGI-INF/liferay/rest/");
-		sb.append(escapedVersion);
-		sb.append("/");
-		sb.append(StringUtil.toLowerCase(schemaPath));
-		sb.append(".properties");
-
-		File file = new File(sb.toString());
-
-		_files.add(file);
-
-		FileUtil.write(
-			file, FreeMarkerUtil.processTemplate(null, "properties", context));
 	}
 
 	private void _createResourceFile(

@@ -32,7 +32,11 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @generated
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/${escapedVersion}/openapi.properties",
+	property = {
+		"api.version=${openAPIYAML.info.version}",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=${configYAML.application.name})",
+		"osgi.jaxrs.resource=true"
+	},
 	service = OpenAPIResourceImpl.class
 )
 @Generated("")

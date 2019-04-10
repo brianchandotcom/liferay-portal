@@ -28,9 +28,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.resources.TextResource;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
@@ -52,6 +54,22 @@ public class JSDocTask extends ExecuteNodeScriptTask {
 		if (packageJsonFile.exists()) {
 			setPackageJsonFile(packageJsonFile);
 		}
+
+		onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					for (File sourceDir : getSourceDirs()) {
+						if (sourceDir.exists()) {
+							return true;
+						}
+					}
+
+					return false;
+				}
+
+			});
 	}
 
 	@Nested

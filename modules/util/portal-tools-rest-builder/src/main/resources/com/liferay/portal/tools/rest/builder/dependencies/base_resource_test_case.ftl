@@ -626,7 +626,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 					) throws Exception {
 
 					<#if freeMarkerTool.hasPostSiteJavaMethodSignature(javaMethodSignatures, schemaName) && (javaMethodSignature.pathJavaMethodParameters?size == 1) && stringUtil.equals(javaMethodSignature.pathJavaMethodParameters[0].parameterName, "siteId")>
-						return invokePostSite${schemaName}(testGroup.getGroupId(), random${schemaName}());
+						<#assign postSiteJavaMethodSignature = freeMarkerTool.getPostSiteJavaMethodSignature(javaMethodSignatures, schemaName) />
+
+						<#if !freeMarkerTool.hasRequestBodyMediaType(postSiteJavaMethodSignature, "multipart/form-data")>
+							return invokePostSite${schemaName}(testGroup.getGroupId(), random${schemaName}());
+						<#else>
+							throw new UnsupportedOperationException("This method needs to be implemented");
+						</#if>
 					<#else>
 						throw new UnsupportedOperationException("This method needs to be implemented");
 					</#if>

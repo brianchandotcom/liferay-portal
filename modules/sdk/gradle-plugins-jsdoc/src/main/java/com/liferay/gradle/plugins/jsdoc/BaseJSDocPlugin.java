@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.jsdoc;
 
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.util.GradleUtil;
 
@@ -66,6 +67,16 @@ public abstract class BaseJSDocPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
+					File scriptFile = downloadJSDocTask.getScriptFile();
+
+					if (NodePluginUtil.isYarnScriptFile(scriptFile)) {
+						File nodeModulesDir = new File(
+							scriptFile.getParentFile(), "node_modules");
+
+						return new File(
+							new File(nodeModulesDir, "jsdoc"), "jsdoc.js");
+					}
+
 					return new File(
 						downloadJSDocTask.getModuleDir(), "jsdoc.js");
 				}

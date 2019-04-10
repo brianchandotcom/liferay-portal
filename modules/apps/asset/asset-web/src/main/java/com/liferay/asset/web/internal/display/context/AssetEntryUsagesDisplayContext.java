@@ -207,8 +207,12 @@ public class AssetEntryUsagesDisplayContext {
 				GetterUtil.getLong(assetEntryUsage.getContainerKey()));
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.getFragmentEntry(
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
 				fragmentEntryLink.getFragmentEntryId());
+
+		if (fragmentEntry == null) {
+			return StringPool.BLANK;
+		}
 
 		if (fragmentEntry.getType() == FragmentConstants.TYPE_COMPONENT) {
 			return LanguageUtil.format(

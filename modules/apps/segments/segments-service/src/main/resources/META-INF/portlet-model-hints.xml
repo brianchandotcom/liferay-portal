@@ -36,6 +36,7 @@
 		<field name="classPK" type="long" />
 	</model>
 	<model name="com.liferay.segments.model.SegmentsExperience">
+		<field name="uuid" type="String" />
 		<field name="segmentsExperienceId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -49,5 +50,6 @@
 		<field localized="true" name="name" type="String" />
 		<field name="priority" type="int" />
 		<field name="active" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

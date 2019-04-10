@@ -16,6 +16,7 @@ package com.liferay.segments.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -45,6 +46,7 @@ public class SegmentsExperienceWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("segmentsExperienceId", getSegmentsExperienceId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -58,12 +60,19 @@ public class SegmentsExperienceWrapper
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 		attributes.put("active", isActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long segmentsExperienceId = (Long)attributes.get(
 			"segmentsExperienceId");
 
@@ -141,6 +150,12 @@ public class SegmentsExperienceWrapper
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -222,6 +237,16 @@ public class SegmentsExperienceWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the last publish date of this segments experience.
+	 *
+	 * @return the last publish date of this segments experience
+	 */
+	@Override
+	public Date getLastPublishDate() {
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -381,6 +406,16 @@ public class SegmentsExperienceWrapper
 	}
 
 	/**
+	 * Returns the uuid of this segments experience.
+	 *
+	 * @return the uuid of this segments experience
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
+	/**
 	 * Returns <code>true</code> if this segments experience is active.
 	 *
 	 * @return <code>true</code> if this segments experience is active; <code>false</code> otherwise
@@ -473,6 +508,16 @@ public class SegmentsExperienceWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the last publish date of this segments experience.
+	 *
+	 * @param lastPublishDate the last publish date of this segments experience
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -616,6 +661,21 @@ public class SegmentsExperienceWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the uuid of this segments experience.
+	 *
+	 * @param uuid the uuid of this segments experience
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

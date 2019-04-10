@@ -16,6 +16,11 @@ package com.liferay.segments.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -25,8 +30,11 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -235,6 +243,20 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the segments experience matching the UUID and group.
+	 *
+	 * @param uuid the segments experience's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	 */
+	@Override
+	public SegmentsExperience fetchSegmentsExperienceByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return segmentsExperiencePersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the segments experience with the primary key.
 	 *
 	 * @param segmentsExperienceId the primary key of the segments experience
@@ -295,6 +317,101 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 			"segmentsExperienceId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
+
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
+
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
+
+					StagedModelType stagedModelType =
+						exportActionableDynamicQuery.getStagedModelType();
+
+					long referrerClassNameId =
+						stagedModelType.getReferrerClassNameId();
+
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					if ((referrerClassNameId !=
+							StagedModelType.REFERRER_CLASS_NAME_ID_ALL) &&
+						(referrerClassNameId !=
+							StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
+
+						dynamicQuery.add(
+							classNameIdProperty.eq(
+								stagedModelType.getReferrerClassNameId()));
+					}
+					else if (referrerClassNameId ==
+								StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
+
+						dynamicQuery.add(classNameIdProperty.isNotNull());
+					}
+				}
+
+			});
+
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setGroupId(
+			portletDataContext.getScopeGroupId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<SegmentsExperience>() {
+
+				@Override
+				public void performAction(SegmentsExperience segmentsExperience)
+					throws PortalException {
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, segmentsExperience);
+				}
+
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				PortalUtil.getClassNameId(SegmentsExperience.class.getName()),
+				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -311,6 +428,55 @@ public abstract class SegmentsExperienceLocalServiceBaseImpl
 		throws PortalException {
 
 		return segmentsExperiencePersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns all the segments experiences matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the segments experiences
+	 * @param companyId the primary key of the company
+	 * @return the matching segments experiences, or an empty list if no matches were found
+	 */
+	@Override
+	public List<SegmentsExperience> getSegmentsExperiencesByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return segmentsExperiencePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of segments experiences matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the segments experiences
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of segments experiences
+	 * @param end the upper bound of the range of segments experiences (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching segments experiences, or an empty list if no matches were found
+	 */
+	@Override
+	public List<SegmentsExperience> getSegmentsExperiencesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator) {
+
+		return segmentsExperiencePersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the segments experience matching the UUID and group.
+	 *
+	 * @param uuid the segments experience's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching segments experience
+	 * @throws PortalException if a matching segments experience could not be found
+	 */
+	@Override
+	public SegmentsExperience getSegmentsExperienceByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		return segmentsExperiencePersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

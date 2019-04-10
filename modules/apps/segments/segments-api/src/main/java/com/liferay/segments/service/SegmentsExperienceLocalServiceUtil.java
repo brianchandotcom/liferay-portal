@@ -236,10 +236,32 @@ public class SegmentsExperienceLocalServiceUtil {
 		return getService().fetchSegmentsExperience(segmentsExperienceId);
 	}
 
+	/**
+	 * Returns the segments experience matching the UUID and group.
+	 *
+	 * @param uuid the segments experience's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
+	 */
+	public static com.liferay.segments.model.SegmentsExperience
+		fetchSegmentsExperienceByUuidAndGroupId(String uuid, long groupId) {
+
+		return getService().fetchSegmentsExperienceByUuidAndGroupId(
+			uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static
@@ -277,6 +299,22 @@ public class SegmentsExperienceLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getSegmentsExperience(segmentsExperienceId);
+	}
+
+	/**
+	 * Returns the segments experience matching the UUID and group.
+	 *
+	 * @param uuid the segments experience's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching segments experience
+	 * @throws PortalException if a matching segments experience could not be found
+	 */
+	public static com.liferay.segments.model.SegmentsExperience
+			getSegmentsExperienceByUuidAndGroupId(String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getSegmentsExperienceByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	/**
@@ -329,6 +367,41 @@ public class SegmentsExperienceLocalServiceUtil {
 		return getService().getSegmentsExperiences(
 			groupId, segmentsEntryIds, classNameId, classPK, active, start, end,
 			orderByComparator);
+	}
+
+	/**
+	 * Returns all the segments experiences matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the segments experiences
+	 * @param companyId the primary key of the company
+	 * @return the matching segments experiences, or an empty list if no matches were found
+	 */
+	public static java.util.List<com.liferay.segments.model.SegmentsExperience>
+		getSegmentsExperiencesByUuidAndCompanyId(String uuid, long companyId) {
+
+		return getService().getSegmentsExperiencesByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of segments experiences matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the segments experiences
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of segments experiences
+	 * @param end the upper bound of the range of segments experiences (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching segments experiences, or an empty list if no matches were found
+	 */
+	public static java.util.List<com.liferay.segments.model.SegmentsExperience>
+		getSegmentsExperiencesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.segments.model.SegmentsExperience>
+					orderByComparator) {
+
+		return getService().getSegmentsExperiencesByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**

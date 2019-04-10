@@ -14,3 +14,5 @@ create index IX_50DD7CFA on SegmentsExperience (groupId, classNameId, classPK, a
 create unique index IX_8B4A6BC7 on SegmentsExperience (groupId, classNameId, classPK, priority);
 create index IX_5B21AD71 on SegmentsExperience (groupId, segmentsEntryId, classNameId, classPK, active_);
 create index IX_E90B4ACD on SegmentsExperience (segmentsEntryId);
+create index IX_15CA0884 on SegmentsExperience (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_6482E006 on SegmentsExperience (uuid_[$COLUMN_LENGTH:75$], groupId);

@@ -67,9 +67,11 @@ public class SegmentsExperienceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(31);
 
-		sb.append("{segmentsExperienceId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", segmentsExperienceId=");
 		sb.append(segmentsExperienceId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -95,6 +97,8 @@ public class SegmentsExperienceCacheModel
 		sb.append(priority);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -104,6 +108,13 @@ public class SegmentsExperienceCacheModel
 	public SegmentsExperience toEntityModel() {
 		SegmentsExperienceImpl segmentsExperienceImpl =
 			new SegmentsExperienceImpl();
+
+		if (uuid == null) {
+			segmentsExperienceImpl.setUuid("");
+		}
+		else {
+			segmentsExperienceImpl.setUuid(uuid);
+		}
 
 		segmentsExperienceImpl.setSegmentsExperienceId(segmentsExperienceId);
 		segmentsExperienceImpl.setGroupId(groupId);
@@ -145,6 +156,14 @@ public class SegmentsExperienceCacheModel
 		segmentsExperienceImpl.setPriority(priority);
 		segmentsExperienceImpl.setActive(active);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			segmentsExperienceImpl.setLastPublishDate(null);
+		}
+		else {
+			segmentsExperienceImpl.setLastPublishDate(
+				new Date(lastPublishDate));
+		}
+
 		segmentsExperienceImpl.resetOriginalValues();
 
 		return segmentsExperienceImpl;
@@ -152,6 +171,8 @@ public class SegmentsExperienceCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		segmentsExperienceId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -173,10 +194,18 @@ public class SegmentsExperienceCacheModel
 		priority = objectInput.readInt();
 
 		active = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(segmentsExperienceId);
 
 		objectOutput.writeLong(groupId);
@@ -211,8 +240,10 @@ public class SegmentsExperienceCacheModel
 		objectOutput.writeInt(priority);
 
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public String uuid;
 	public long segmentsExperienceId;
 	public long groupId;
 	public long companyId;
@@ -226,5 +257,6 @@ public class SegmentsExperienceCacheModel
 	public String name;
 	public int priority;
 	public boolean active;
+	public long lastPublishDate;
 
 }

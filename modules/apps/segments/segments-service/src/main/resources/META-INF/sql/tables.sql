@@ -31,6 +31,7 @@ create table SegmentsEntryRel (
 );
 
 create table SegmentsExperience (
+	uuid_ VARCHAR(75) null,
 	segmentsExperienceId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -43,5 +44,6 @@ create table SegmentsExperience (
 	classPK LONG,
 	name STRING null,
 	priority INTEGER,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	lastPublishDate DATE null
 );

@@ -34,6 +34,7 @@ public class SegmentsExperienceSoap implements Serializable {
 	public static SegmentsExperienceSoap toSoapModel(SegmentsExperience model) {
 		SegmentsExperienceSoap soapModel = new SegmentsExperienceSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setSegmentsExperienceId(model.getSegmentsExperienceId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -47,6 +48,7 @@ public class SegmentsExperienceSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setActive(model.isActive());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -107,6 +109,14 @@ public class SegmentsExperienceSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setSegmentsExperienceId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getSegmentsExperienceId() {
@@ -217,6 +227,15 @@ public class SegmentsExperienceSoap implements Serializable {
 		_active = active;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _segmentsExperienceId;
 	private long _groupId;
 	private long _companyId;
@@ -230,5 +249,6 @@ public class SegmentsExperienceSoap implements Serializable {
 	private String _name;
 	private int _priority;
 	private boolean _active;
+	private Date _lastPublishDate;
 
 }

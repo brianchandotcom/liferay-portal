@@ -56,9 +56,27 @@ public class TokenWorkflowMetricsIndexer
 		document.addKeyword("classPK", kaleoTaskInstanceToken.getClassPK());
 		document.addKeyword("companyId", kaleoTaskInstanceToken.getCompanyId());
 		document.addKeyword("completed", kaleoTaskInstanceToken.isCompleted());
+
+		Date completionDate = kaleoTaskInstanceToken.getCompletionDate();
+
+		if (kaleoTaskInstanceToken.isCompleted()) {
+			document.addDateSortable("completionDate", completionDate);
+		}
+
+		Date createDate = kaleoTaskInstanceToken.getCreateDate();
+
 		document.addDateSortable(
 			"createDate", kaleoTaskInstanceToken.getCreateDate());
+
 		document.addKeyword("deleted", false);
+
+		if (kaleoTaskInstanceToken.isCompleted()) {
+			Duration duration = Duration.between(
+				createDate.toInstant(), completionDate.toInstant());
+
+			document.addNumber("duration", duration.toMillis());
+		}
+
 		document.addKeyword(
 			"instanceId", kaleoTaskInstanceToken.getKaleoInstanceId());
 		document.addDateSortable(
@@ -70,10 +88,6 @@ public class TokenWorkflowMetricsIndexer
 		if (kaleoDefinition != null) {
 			document.addKeyword(
 				"processId", kaleoDefinition.getKaleoDefinitionId());
-			document.addKeyword(
-				"version",
-				StringBundler.concat(
-					kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
 		}
 
 		document.addKeyword("taskId", kaleoTaskInstanceToken.getKaleoTaskId());
@@ -81,17 +95,11 @@ public class TokenWorkflowMetricsIndexer
 			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 		document.addKeyword("userId", kaleoTaskInstanceToken.getUserId());
 
-		if (kaleoTaskInstanceToken.isCompleted()) {
-			Date completionDate = kaleoTaskInstanceToken.getCompletionDate();
-
-			document.addDateSortable("completionDate", completionDate);
-
-			Date createDate = kaleoTaskInstanceToken.getCreateDate();
-
-			Duration duration = Duration.between(
-				createDate.toInstant(), completionDate.toInstant());
-
-			document.addNumber("duration", duration.toMillis());
+		if (kaleoDefinition != null) {
+			document.addKeyword(
+				"version",
+				StringBundler.concat(
+					kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
 		}
 
 		return document;

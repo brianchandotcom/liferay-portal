@@ -68,14 +68,17 @@ public class NodeWorkflowMetricsIndexer
 		if (kaleoDefinition != null) {
 			document.addKeyword(
 				"processId", kaleoDefinition.getKaleoDefinitionId());
+		}
+
+		document.addKeyword("terminal", kaleoNode.isTerminal());
+		document.addKeyword("type", kaleoNode.getType());
+
+		if (kaleoDefinition != null) {
 			document.addKeyword(
 				"version",
 				StringBundler.concat(
 					kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
 		}
-
-		document.addKeyword("terminal", kaleoNode.isTerminal());
-		document.addKeyword("type", kaleoNode.getType());
 
 		return document;
 	}

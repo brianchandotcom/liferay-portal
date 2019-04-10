@@ -20,11 +20,14 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -34,17 +37,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = ProcessWorkflowMetricsIndexer.class)
-public class ProcessWorkflowMetricsIndexer
-	extends BaseWorkflowMetricsIndexer<KaleoDefinition> {
+public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
-	public void addDocument(KaleoDefinition kaleoDefinition) {
+	public void addDocument(Supplier<Document> documentSupplier) {
+		Document document = documentSupplier.get();
+
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
 				_instanceWorkflowMetricsIndexer.getIndexName(),
-				_createWorkflowMetricsInstanceDocument(kaleoDefinition)) {
+				_createWorkflowMetricsInstanceDocument(
+					GetterUtil.getLong(document.get("companyId")),
+					GetterUtil.getLong(document.get("processId")))) {
 
 				{
 					setType(_instanceWorkflowMetricsIndexer.getIndexType());
@@ -54,7 +60,8 @@ public class ProcessWorkflowMetricsIndexer
 			new IndexDocumentRequest(
 				_slaProcessResultWorkflowMetricsIndexer.getIndexName(),
 				_creatWorkflowMetricsSLAProcessResultDocument(
-					kaleoDefinition)) {
+					GetterUtil.getLong(document.get("companyId")),
+					GetterUtil.getLong(document.get("processId")))) {
 
 				{
 					setType(
@@ -62,9 +69,7 @@ public class ProcessWorkflowMetricsIndexer
 				}
 			});
 		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(
-				getIndexName(), createDocument(kaleoDefinition)) {
-
+			new IndexDocumentRequest(getIndexName(), document) {
 				{
 					setType(getIndexType());
 				}
@@ -73,16 +78,7 @@ public class ProcessWorkflowMetricsIndexer
 		searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
-	@Activate
-	@Override
-	protected void activate() throws Exception {
-		super.activate();
-
-		_instanceWorkflowMetricsIndexer.createIndex();
-	}
-
-	@Override
-	protected Document createDocument(KaleoDefinition kaleoDefinition) {
+	public Document createDocument(KaleoDefinition kaleoDefinition) {
 		Document document = new DocumentImpl();
 
 		document.addUID(
@@ -116,6 +112,14 @@ public class ProcessWorkflowMetricsIndexer
 		return document;
 	}
 
+	@Activate
+	@Override
+	protected void activate() throws Exception {
+		super.activate();
+
+		_instanceWorkflowMetricsIndexer.createIndex();
+	}
+
 	@Override
 	protected String getIndexName() {
 		return "workflow-metrics-processes";
@@ -132,50 +136,40 @@ public class ProcessWorkflowMetricsIndexer
 			_kaleoDefinitionLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoDefinition kaleoDefinition) -> addDocument(kaleoDefinition));
+			(KaleoDefinition kaleoDefinition) -> addDocument(
+				() -> createDocument(kaleoDefinition)));
 
 		actionableDynamicQuery.performActions();
 	}
 
 	private Document _createWorkflowMetricsInstanceDocument(
-		KaleoDefinition kaleoDefinition) {
+		long companyId, long kaleoDefinitionId) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
-			"WorkflowMetricsInstance",
-			digest(
-				kaleoDefinition.getCompanyId(),
-				kaleoDefinition.getKaleoDefinitionId(), 0));
-		document.addKeyword("companyId", kaleoDefinition.getCompanyId());
+			"WorkflowMetricsInstance", digest(companyId, kaleoDefinitionId, 0));
+		document.addKeyword("companyId", companyId);
 		document.addKeyword("completed", false);
-		document.addDateSortable("createDate", kaleoDefinition.getCreateDate());
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", 0);
-		document.addDateSortable(
-			"modifiedDate", kaleoDefinition.getModifiedDate());
-		document.addKeyword(
-			"processId", kaleoDefinition.getKaleoDefinitionId());
-		document.addKeyword("userId", kaleoDefinition.getUserId());
+		document.addKeyword("processId", kaleoDefinitionId);
 
 		return document;
 	}
 
 	private Document _creatWorkflowMetricsSLAProcessResultDocument(
-		KaleoDefinition kaleoDefinition) {
+		long companyId, long kaleoDefinitionId) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
 			"WorkflowMetricsSLAProcessResult",
-			digest(
-				kaleoDefinition.getCompanyId(), 0,
-				kaleoDefinition.getKaleoDefinitionId(), 0));
-		document.addKeyword("companyId", kaleoDefinition.getCompanyId());
+			digest(companyId, 0, kaleoDefinitionId, 0));
+		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", 0);
-		document.addKeyword(
-			"processId", kaleoDefinition.getKaleoDefinitionId());
+		document.addKeyword("processId", kaleoDefinitionId);
 		document.addKeyword("slaDefinitionId", 0);
 
 		return document;

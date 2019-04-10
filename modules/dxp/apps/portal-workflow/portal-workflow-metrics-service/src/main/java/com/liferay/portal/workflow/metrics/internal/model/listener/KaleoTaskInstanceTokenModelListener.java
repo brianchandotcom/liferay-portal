@@ -34,21 +34,24 @@ public class KaleoTaskInstanceTokenModelListener
 	public void onAfterCreate(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _tokenWorkflowMetricsIndexer.addDocument(
-				kaleoTaskInstanceToken));
+				() -> _tokenWorkflowMetricsIndexer.createDocument(
+					kaleoTaskInstanceToken)));
 	}
 
 	@Override
 	public void onAfterRemove(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _tokenWorkflowMetricsIndexer.deleteDocument(
-				kaleoTaskInstanceToken));
+				() -> _tokenWorkflowMetricsIndexer.createDocument(
+					kaleoTaskInstanceToken)));
 	}
 
 	@Override
 	public void onAfterUpdate(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _tokenWorkflowMetricsIndexer.updateDocument(
-				kaleoTaskInstanceToken));
+				() -> _tokenWorkflowMetricsIndexer.createDocument(
+					kaleoTaskInstanceToken)));
 	}
 
 	@Reference

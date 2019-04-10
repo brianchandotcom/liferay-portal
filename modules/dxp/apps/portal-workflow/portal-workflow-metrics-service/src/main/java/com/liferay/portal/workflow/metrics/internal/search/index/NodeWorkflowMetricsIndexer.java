@@ -36,11 +36,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = NodeWorkflowMetricsIndexer.class)
-public class NodeWorkflowMetricsIndexer
-	extends BaseWorkflowMetricsIndexer<KaleoNode> {
+public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
-	@Override
-	protected Document createDocument(KaleoNode kaleoNode) {
+	public Document createDocument(KaleoNode kaleoNode) {
 		Document document = new DocumentImpl();
 
 		document.addUID(
@@ -116,7 +114,8 @@ public class NodeWorkflowMetricsIndexer
 			_kaleoNodeLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoNode kaleoNode) -> addDocument(kaleoNode));
+			(KaleoNode kaleoNode) -> addDocument(
+				() -> createDocument(kaleoNode)));
 
 		actionableDynamicQuery.performActions();
 	}

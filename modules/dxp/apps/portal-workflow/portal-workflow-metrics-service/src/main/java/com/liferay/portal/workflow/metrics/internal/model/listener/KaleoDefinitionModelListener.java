@@ -36,7 +36,9 @@ public class KaleoDefinitionModelListener
 		throws ModelListenerException {
 
 		_workflowMetricsPortalExecutor.execute(
-			() -> _processWorkflowMetricsIndexer.addDocument(kaleoDefinition));
+			() -> _processWorkflowMetricsIndexer.addDocument(
+				() -> _processWorkflowMetricsIndexer.createDocument(
+					kaleoDefinition)));
 	}
 
 	@Override
@@ -45,7 +47,8 @@ public class KaleoDefinitionModelListener
 
 		_workflowMetricsPortalExecutor.execute(
 			() -> _processWorkflowMetricsIndexer.deleteDocument(
-				kaleoDefinition));
+				() -> _processWorkflowMetricsIndexer.createDocument(
+					kaleoDefinition)));
 	}
 
 	@Override
@@ -54,7 +57,8 @@ public class KaleoDefinitionModelListener
 
 		_workflowMetricsPortalExecutor.execute(
 			() -> _processWorkflowMetricsIndexer.updateDocument(
-				kaleoDefinition));
+				() -> _processWorkflowMetricsIndexer.createDocument(
+					kaleoDefinition)));
 	}
 
 	@Reference

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
@@ -27,6 +28,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import java.time.Duration;
 
 import java.util.Date;
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,19 +37,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = InstanceWorkflowMetricsIndexer.class)
-public class InstanceWorkflowMetricsIndexer
-	extends BaseWorkflowMetricsIndexer<KaleoInstance> {
+public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
-	@Override
-	public void deleteDocument(KaleoInstance kaleoInstance) {
-		super.deleteDocument(kaleoInstance);
-
-		_slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
-			kaleoInstance.getCompanyId(), kaleoInstance.getKaleoInstanceId());
-	}
-
-	@Override
-	protected Document createDocument(KaleoInstance kaleoInstance) {
+	public Document createDocument(KaleoInstance kaleoInstance) {
 		Document document = new DocumentImpl();
 
 		document.addUID(
@@ -105,6 +97,17 @@ public class InstanceWorkflowMetricsIndexer
 	}
 
 	@Override
+	public void deleteDocument(Supplier<Document> documentSupplier) {
+		super.deleteDocument(documentSupplier);
+
+		Document document = documentSupplier.get();
+
+		_slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
+			GetterUtil.getLong(document.get("companyId")),
+			GetterUtil.getLong(document.get("instanceId")));
+	}
+
+	@Override
 	protected String getIndexName() {
 		return "workflow-metrics-instances";
 	}
@@ -120,7 +123,8 @@ public class InstanceWorkflowMetricsIndexer
 			_kaleoInstanceLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoInstance kaleoInstance) -> addDocument(kaleoInstance));
+			(KaleoInstance kaleoInstance) -> addDocument(
+				() -> createDocument(kaleoInstance)));
 
 		actionableDynamicQuery.performActions();
 	}

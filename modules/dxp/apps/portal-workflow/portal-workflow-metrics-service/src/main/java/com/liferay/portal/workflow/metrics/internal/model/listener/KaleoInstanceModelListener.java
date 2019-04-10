@@ -33,21 +33,25 @@ public class KaleoInstanceModelListener
 	@Override
 	public void onAfterCreate(KaleoInstance kaleoInstance) {
 		_workflowMetricsPortalExecutor.execute(
-			() -> _instanceWorkflowMetricsIndexer.addDocument(kaleoInstance));
+			() -> _instanceWorkflowMetricsIndexer.addDocument(
+				() -> _instanceWorkflowMetricsIndexer.createDocument(
+					kaleoInstance)));
 	}
 
 	@Override
 	public void onAfterRemove(KaleoInstance kaleoInstance) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _instanceWorkflowMetricsIndexer.deleteDocument(
-				kaleoInstance));
+				() -> _instanceWorkflowMetricsIndexer.createDocument(
+					kaleoInstance)));
 	}
 
 	@Override
 	public void onAfterUpdate(KaleoInstance kaleoInstance) {
 		_workflowMetricsPortalExecutor.execute(
 			() -> _instanceWorkflowMetricsIndexer.updateDocument(
-				kaleoInstance));
+				() -> _instanceWorkflowMetricsIndexer.createDocument(
+					kaleoInstance)));
 	}
 
 	@Reference

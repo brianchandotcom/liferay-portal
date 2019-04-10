@@ -43,44 +43,9 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, service = SLAProcessResultWorkflowMetricsIndexer.class
 )
 public class SLAProcessResultWorkflowMetricsIndexer
-	extends BaseWorkflowMetricsIndexer<WorkflowMetricsSLAProcessResult> {
+	extends BaseWorkflowMetricsIndexer {
 
-	public void deleteDocuments(long companyId, long instanceId) {
-		_deleteDocuments(
-			new BooleanQueryImpl() {
-				{
-					setPreBooleanFilter(
-						new BooleanFilter() {
-							{
-								addRequiredTerm("companyId", companyId);
-								addRequiredTerm("instanceId", instanceId);
-							}
-						});
-				}
-			});
-	}
-
-	public void deleteDocuments(
-		long companyId, long processId, long slaDefinitionId) {
-
-		_deleteDocuments(
-			new BooleanQueryImpl() {
-				{
-					setPreBooleanFilter(
-						new BooleanFilter() {
-							{
-								addRequiredTerm("companyId", companyId);
-								addRequiredTerm("processId", processId);
-								addRequiredTerm(
-									"slaDefinitionId", slaDefinitionId);
-							}
-						});
-				}
-			});
-	}
-
-	@Override
-	protected Document createDocument(
+	public Document createDocument(
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
 
 		Document document = new DocumentImpl();
@@ -123,6 +88,40 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				workflowMetricsSLAProcessResult.getWorkfowMetricsSLAStatus()));
 
 		return document;
+	}
+
+	public void deleteDocuments(long companyId, long instanceId) {
+		_deleteDocuments(
+			new BooleanQueryImpl() {
+				{
+					setPreBooleanFilter(
+						new BooleanFilter() {
+							{
+								addRequiredTerm("companyId", companyId);
+								addRequiredTerm("instanceId", instanceId);
+							}
+						});
+				}
+			});
+	}
+
+	public void deleteDocuments(
+		long companyId, long processId, long slaDefinitionId) {
+
+		_deleteDocuments(
+			new BooleanQueryImpl() {
+				{
+					setPreBooleanFilter(
+						new BooleanFilter() {
+							{
+								addRequiredTerm("companyId", companyId);
+								addRequiredTerm("processId", processId);
+								addRequiredTerm(
+									"slaDefinitionId", slaDefinitionId);
+							}
+						});
+				}
+			});
 	}
 
 	@Override

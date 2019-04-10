@@ -35,11 +35,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = TokenWorkflowMetricsIndexer.class)
-public class TokenWorkflowMetricsIndexer
-	extends BaseWorkflowMetricsIndexer<KaleoTaskInstanceToken> {
+public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
-	@Override
-	protected Document createDocument(
+	public Document createDocument(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 
 		Document document = new DocumentImpl();
@@ -122,7 +120,7 @@ public class TokenWorkflowMetricsIndexer
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoTaskInstanceToken kaleoTaskInstanceToken) -> addDocument(
-				kaleoTaskInstanceToken));
+				() -> createDocument(kaleoTaskInstanceToken)));
 
 		actionableDynamicQuery.performActions();
 	}

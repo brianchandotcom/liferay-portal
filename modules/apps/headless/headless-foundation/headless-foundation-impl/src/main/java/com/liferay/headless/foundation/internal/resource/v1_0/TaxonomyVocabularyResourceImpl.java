@@ -61,11 +61,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletResponse;
-
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.commons.collections.MapUtils;
@@ -125,7 +122,7 @@ public class TaxonomyVocabularyResourceImpl
 
 		ContentLanguageUtil.addContentLanguageHeader(
 			assetVocabulary.getAvailableLanguageIds(),
-			assetVocabulary.getDefaultLanguageId(), _httpServletResponse,
+			assetVocabulary.getDefaultLanguageId(), httpServletResponse,
 			contextAcceptLanguage.getPreferredLocale());
 
 		return _toTaxonomyVocabulary(assetVocabulary);
@@ -473,9 +470,6 @@ public class TaxonomyVocabularyResourceImpl
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
-
-	@Context
-	private HttpServletResponse _httpServletResponse;
 
 	@Reference
 	private Portal _portal;

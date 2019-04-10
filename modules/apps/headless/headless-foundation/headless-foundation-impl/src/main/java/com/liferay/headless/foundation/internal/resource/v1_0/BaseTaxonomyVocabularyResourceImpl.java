@@ -34,6 +34,7 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -167,6 +168,13 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	public void setContextUriInfo(UriInfo contextUriInfo) {
 		this.contextUriInfo = contextUriInfo;
 	}
+
+	@Override
+	public void setHttpServletResponse(HttpServletResponse httpServletResponse) {
+		this.httpServletResponse = httpServletResponse;
+	}
+
+	protected HttpServletResponse httpServletResponse;
 
 	protected void preparePatch(
 		TaxonomyVocabulary taxonomyVocabulary,

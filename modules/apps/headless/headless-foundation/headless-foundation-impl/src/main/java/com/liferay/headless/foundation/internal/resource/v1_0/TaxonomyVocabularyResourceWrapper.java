@@ -25,6 +25,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import javax.servlet.http.HttpServletResponse;
+
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
@@ -119,6 +121,13 @@ public class TaxonomyVocabularyResourceWrapper
 	@Override
 	public void setContextUriInfo(UriInfo contextUriInfo) {
 		_taxonomyVocabularyResource.setContextUriInfo(contextUriInfo);
+	}
+
+	@Override
+	public void setHttpServletResponse(
+		HttpServletResponse httpServletResponse) {
+
+		_taxonomyVocabularyResource.setHttpServletResponse(httpServletResponse);
 	}
 
 	private final EntityModelResource _entityModelResource;

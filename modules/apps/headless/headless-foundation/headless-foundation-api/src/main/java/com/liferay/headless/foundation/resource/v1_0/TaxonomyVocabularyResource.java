@@ -44,6 +44,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * To access this resource, run:
@@ -133,5 +134,8 @@ public interface TaxonomyVocabularyResource {
 
 	@Context
 	public void setContextUriInfo(UriInfo contextUriInfo);
+
+	@Context
+	public void setHttpServletResponse(HttpServletResponse httpServletResponse);
 
 }

@@ -14,13 +14,18 @@
 
 package com.liferay.portal.remote.jaxrs.whiteboard.internal.log;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.remote.jaxrs.whiteboard.internal.util.LiferayClassHelper;
+
+import java.lang.reflect.Field;
 
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.apache.cxf.common.logging.AbstractDelegatingLogger;
+import org.apache.cxf.common.util.ClassHelper;
 
 /**
  * Logger for CXF that maps {@link java.util.logging.Logger} to Liferay {@link
@@ -110,6 +115,22 @@ public class LiferayCXFLogger extends AbstractDelegatingLogger {
 
 	private static final Log _classLog = LogFactoryUtil.getLog(
 		LiferayCXFLogger.class);
+
+	static {
+		try {
+			Class<?> classHelperClass = Class.forName(
+				ClassHelper.class.getName(), true,
+				LiferayCXFLogger.class.getClassLoader());
+
+			Field helperField = ReflectionUtil.getDeclaredField(
+				classHelperClass, "HELPER");
+
+			helperField.set(null, new LiferayClassHelper());
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
 
 	private final Log _log;
 

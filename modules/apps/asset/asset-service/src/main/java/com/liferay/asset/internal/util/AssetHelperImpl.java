@@ -231,8 +231,6 @@ public class AssetHelperImpl implements AssetHelper {
 		long groupId, long plid, PortletURL addPortletURL,
 		boolean addDisplayPageParameter, Layout layout) {
 
-		addPortletURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
 		addPortletURL.setParameter("groupId", String.valueOf(groupId));
 
 		if (addDisplayPageParameter && (layout != null)) {

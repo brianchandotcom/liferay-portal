@@ -134,18 +134,9 @@ public class AssetEntryActionDropdownItemsProvider {
 				redirect = _fullContentRedirect;
 			}
 
-			PortletURL editAssetEntryURL = _assetRenderer.getURLEdit(
+			return _assetRenderer.getURLEdit(
 				_liferayPortletRequest, _liferayPortletResponse,
 				LiferayWindowState.NORMAL, redirect);
-
-			if (editAssetEntryURL == null) {
-				return null;
-			}
-
-			editAssetEntryURL.setParameter(
-				"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-
-			return editAssetEntryURL;
 		}
 		catch (Exception e) {
 		}

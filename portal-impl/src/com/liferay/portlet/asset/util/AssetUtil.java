@@ -464,8 +464,6 @@ public class AssetUtil {
 		long groupId, long plid, PortletURL addPortletURL,
 		boolean addDisplayPageParameter, Layout layout) {
 
-		addPortletURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
 		addPortletURL.setParameter("groupId", String.valueOf(groupId));
 		addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 

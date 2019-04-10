@@ -83,8 +83,6 @@ public class JournalContentPortletToolbarContributor
 			portletRequest, JournalPortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
 		portletURL.setParameter("groupId", String.valueOf(scopeGroupId));
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());

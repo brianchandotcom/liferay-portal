@@ -545,17 +545,6 @@ public class JournalEditArticleDisplayContext {
 		return _changeStructure;
 	}
 
-	public boolean isHideDefaultSuccessMessage() {
-		if (_hideDefaultSuccessMessage != null) {
-			return _hideDefaultSuccessMessage;
-		}
-
-		_hideDefaultSuccessMessage = ParamUtil.getBoolean(
-			_request, "hideDefaultSuccessMessage", false);
-
-		return _hideDefaultSuccessMessage;
-	}
-
 	public boolean isNeverExpire() {
 		if (_neverExpire != null) {
 			return _neverExpire;
@@ -737,7 +726,6 @@ public class JournalEditArticleDisplayContext {
 	private String _ddmTemplateKey;
 	private Long _folderId;
 	private Long _groupId;
-	private Boolean _hideDefaultSuccessMessage;
 	private Long _inheritedWorkflowDDMStructuresFolderId;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _neverExpire;

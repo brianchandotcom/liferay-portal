@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * @author Alan Huang
  * @author Hugo Huijser
  */
-public class JSONScriptsCheck extends BaseFileCheck {
+public class JSONPackageJSONCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

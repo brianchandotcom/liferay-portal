@@ -59,7 +59,7 @@
 		"build": "rimraf build/ && webpack",
 		"format": "prettier-eslint --write 'src/**/*.js' 'src/**/*.js'",
 		"lint": "eslint src/",
-		"test": "karma start karma.conf.js"
+		"test_DISABLED": "karma start karma.conf.js"
 	},
 	"version": "1.0.0"
 }

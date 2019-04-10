@@ -288,6 +288,10 @@ definition {
 			PageEditor.clickPublish();
 		}
 
+		task ("Navigate to the content page's 'Edit Mode'") {
+			ContentPages.clickPencil();
+		}
+
 		task ("Assert the Discard Draft and Publish buttons are now disabled") {
 			AssertVisible(
 				locator1 = "Button#ANY_DISABLED",

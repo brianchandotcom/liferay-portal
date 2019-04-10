@@ -115,7 +115,7 @@
 <!--ASSET_ABSTRACT_DETAIL-->
 <tr>
 	<td>ASSET_ABSTRACT_DETAIL_CONTENT</td>
-	<td>//div[@class='asset-content']</td>
+	<td>//div[contains(@class,'asset-content')]</td>
 	<td></td>
 </tr>
 <tr>

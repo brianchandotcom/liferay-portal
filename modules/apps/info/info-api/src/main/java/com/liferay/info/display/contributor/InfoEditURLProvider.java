@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface InfoEditURLProvider<T> {
 
-	public String getURL(T t, HttpServletRequest request) throws Exception;
+	public String getURL(T t, HttpServletRequest httpServletRequest)
+		throws Exception;
 
 }

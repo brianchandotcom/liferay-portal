@@ -65,14 +65,16 @@ public class AssetInfoDisplayObjectProvider
 
 	@Override
 	public String getKeywords(Locale locale) {
-		String[] tagNames = AssetTagLocalServiceUtil.getTagNames(
+		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			_assetEntry.getClassName(), _assetEntry.getClassPK());
-		String[] categoryNames = AssetCategoryLocalServiceUtil.getCategoryNames(
-			_assetEntry.getClassName(), _assetEntry.getClassPK());
+		String[] assetCategoryNames =
+			AssetCategoryLocalServiceUtil.getCategoryNames(
+				_assetEntry.getClassName(), _assetEntry.getClassPK());
 
-		String[] keywords = new String[tagNames.length + categoryNames.length];
+		String[] keywords =
+			new String[assetTagNames.length + assetCategoryNames.length];
 
-		ArrayUtil.combine(tagNames, categoryNames, keywords);
+		ArrayUtil.combine(assetTagNames, assetCategoryNames, keywords);
 
 		return StringUtil.merge(keywords);
 	}

@@ -36,8 +36,6 @@ JSONArray structureJSONArray = displayPageLayoutTypeControllerDisplayContext.get
 		<%
 		String currentI18nLanguageId = GetterUtil.getString(request.getAttribute(AssetDisplayPageWebKeys.CURRENT_I18N_LANGUAGE_ID), themeDisplay.getLanguageId());
 
-		long[] segmentsExperienceIds = displayPageLayoutTypeControllerDisplayContext.getSegmentExperienceIds();
-
 		try {
 			request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 		%>
@@ -105,7 +103,7 @@ JSONArray structureJSONArray = displayPageLayoutTypeControllerDisplayContext.get
 											defaultFragmentRendererContext.setFieldValues(displayPageLayoutTypeControllerDisplayContext.getInfoDisplayFieldsValues());
 											defaultFragmentRendererContext.setLocale(locale);
 											defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE);
-											defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
+											defaultFragmentRendererContext.setSegmentsExperienceIds(displayPageLayoutTypeControllerDisplayContext.getSegmentExperienceIds());
 										%>
 
 											<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>

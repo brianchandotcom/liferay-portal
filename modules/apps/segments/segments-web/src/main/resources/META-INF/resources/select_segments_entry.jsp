@@ -46,26 +46,32 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-title"
 				name="name"
-				value="<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>"
-			/>
+			>
+				<c:choose>
+					<c:when test="<%= !ArrayUtil.contains(selectSegmentsEntryDisplayContext.getSelectedSegmentsEntryIds(), segmentsEntry.getSegmentsEntryId()) %>">
+
+						<%
+						Map<String, Object> data = new HashMap();
+
+						data.put("entityid", segmentsEntry.getSegmentsEntryId());
+						data.put("entityname", segmentsEntry.getName(locale));
+						%>
+
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-date
 				cssClass="table-cell-expand-smallest table-cell-minw-150 table-cell-ws-nowrap"
 				name="modified-date"
 				value="<%= segmentsEntry.getModifiedDate() %>"
 			/>
-
-			<liferay-ui:search-container-column-text>
-
-				<%
-				Map<String, Object> data = new HashMap();
-
-				data.put("entityid", segmentsEntry.getSegmentsEntryId());
-				data.put("entityname", segmentsEntry.getName(locale));
-				%>
-
-				<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= ArrayUtil.contains(selectSegmentsEntryDisplayContext.getSelectedSegmentsEntryIds(), segmentsEntry.getSegmentsEntryId()) %>" value="choose" />
-			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

@@ -67,6 +67,12 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 				</c:choose>
 			</liferay-ui:search-container-column-text>
 
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-smallest table-cell-minw-150"
+				name="scope"
+				value="<%= HtmlUtil.escape(selectSegmentsEntryDisplayContext.getGroupDescriptiveName(segmentsEntry)) %>"
+			/>
+
 			<liferay-ui:search-container-column-date
 				cssClass="table-cell-expand-smallest table-cell-minw-150 table-cell-ws-nowrap"
 				name="modified-date"

@@ -20,10 +20,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -113,6 +115,15 @@ public class SelectSegmentsEntryDisplayContext {
 					});
 			}
 		};
+	}
+
+	public String getGroupDescriptiveName(SegmentsEntry segmentsEntry)
+		throws PortalException {
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			segmentsEntry.getGroupId());
+
+		return group.getDescriptiveName(_themeDisplay.getLocale());
 	}
 
 	public String getOrderByType() {

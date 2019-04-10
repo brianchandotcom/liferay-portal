@@ -11,6 +11,9 @@ import templates from './AssetCategoriesSelector.soy';
  * that offers the user a tag selection input
  */
 class AssetCategoriesSelector extends Component {
+	_handleInputFocus(event) {
+		this.emit('inputFocus', event);
+	}
 }
 
 AssetCategoriesSelector.STATE = {

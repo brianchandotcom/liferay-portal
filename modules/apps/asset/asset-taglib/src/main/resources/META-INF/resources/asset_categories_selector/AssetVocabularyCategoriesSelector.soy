@@ -9,6 +9,7 @@
 	{@param spritemap: string}
 	{@param? _dataSource: ?}
 	{@param? _handleButtonClicked: any}
+	{@param? _handleInputFocus: any}
 	{@param? _handleInputOnBlur: any}
 	{@param? _handleItemAdded: any}
 	{@param? _handleItemRemoved: any}
@@ -29,6 +30,7 @@
 			{param events: [
 				'selectButtonClick': $_handleButtonClicked,
 				'inputBlur': $_handleInputOnBlur,
+				'filteredItemsChange': $_handleInputFocus,
 				'labelItemAdded': $_handleItemAdded,
 				'labelItemRemoved': $_handleItemRemoved
 			] /}

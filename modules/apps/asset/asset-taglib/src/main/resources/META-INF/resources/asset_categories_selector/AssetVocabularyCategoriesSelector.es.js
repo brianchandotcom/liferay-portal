@@ -83,6 +83,10 @@ class AssetVocabularyCategoriesSelector extends Component {
 		);
 	}
 
+	_handleInputFocus(event) {
+		this.emit('inputFocus', event);
+	}
+
 	/**
 	 * Converts the list of selected categories into a comma-separated serialized
 	 * version to be used as a fallback for old services and implementations

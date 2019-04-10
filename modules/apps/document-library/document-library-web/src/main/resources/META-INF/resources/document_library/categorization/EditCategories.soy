@@ -9,6 +9,7 @@
 	{@param spritemap: string}
 	{@param? _handleCategoriesChange: any}
 	{@param? _handleFormSubmit: any}
+	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
 	{@param? description: string}
 	{@param? multiple: bool}
@@ -34,6 +35,7 @@
 							{param spritemap: $spritemap /}
 							{param vocabularies: $vocabularies /}
 							{param _handleCategoriesChange: $_handleCategoriesChange /}
+							{param _handleInputFocus: $_handleInputFocus /}
 							{param _handleRadioChange: $_handleRadioChange /}
 						{/call}
 					{/if}
@@ -78,6 +80,7 @@
 	{@param selectCategoriesUrl: string}
 	{@param spritemap: string}
 	{@param? _handleCategoriesChange: any}
+	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
 	{@param? description: string}
 	{@param? multiple: bool}
@@ -130,6 +133,7 @@
 			{param eventName: $namespace + 'selectCategories' /}
 			{param events: [
 				'categoryIdsChange': $_handleCategoriesChange,
+				'inputFocus': $_handleInputFocus
 			] /}
 			{param groupIds: $groupIds /}
 			{param id: $namespace + 'assetTagsSelector' /}

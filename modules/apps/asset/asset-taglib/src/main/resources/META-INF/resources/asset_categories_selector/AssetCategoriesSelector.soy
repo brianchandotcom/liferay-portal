@@ -10,6 +10,7 @@
 	{@param portletURL: string}
 	{@param spritemap: string}
 	{@param vocabularies: list<?>}
+	{@param? _handleInputFocus: any}
 
 	<div>
 		{foreach $vocabulary in $vocabularies}
@@ -36,6 +37,7 @@
 				<div class="lfr-tags-selector-content" id="namespace_assetCategoriesSelector_{$vocabulary.id}">
 					{call com.liferay.asset.taglib.AssetVocabularyCategoriesSelector.render data="all"}
 						{param categoryIds: $vocabulary.selectedCategoryIds /}
+						{param events: [ 'inputFocus': $_handleInputFocus ] /}
 						{param groupdIds: $groupIds /}
 						{param id: $id /}
 						{param inputName: $inputName + $vocabulary.id /}

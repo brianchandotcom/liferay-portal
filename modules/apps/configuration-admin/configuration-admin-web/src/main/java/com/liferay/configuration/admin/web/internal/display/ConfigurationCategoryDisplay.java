@@ -16,6 +16,7 @@ package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -52,8 +53,11 @@ public class ConfigurationCategoryDisplay {
 
 	private String _getMessage(Locale locale, String key) {
 		return LanguageUtil.get(
-			ResourceBundleUtil.getBundle(
-				locale, _configurationCategory.getClass()),
+			new AggregateResourceBundle(
+				ResourceBundleUtil.getBundle(
+					locale, _configurationCategory.getClass()),
+				ResourceBundleUtil.getBundle(
+					locale, ConfigurationCategoryDisplay.class)),
 			key);
 	}
 

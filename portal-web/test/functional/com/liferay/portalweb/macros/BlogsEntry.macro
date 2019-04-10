@@ -967,7 +967,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AssetRelatedAssets#HEADER",
-			value1 = "Related Assets:"
+			value1 = "RELATED ASSETS"
 		);
 
 		AssertTextEquals(

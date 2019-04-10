@@ -151,6 +151,10 @@ public class SLAProcessResultWorkflowMetricsIndexer
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
+		if (searchHits.getTotalHits() == 0) {
+			return;
+		}
+
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		Stream.of(

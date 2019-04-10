@@ -90,16 +90,8 @@ public class LayoutPageTemplateStructureRelLocalServiceImpl
 	public void deleteLayoutPageTemplateStructureRelsBySegmentsExperienceId(
 		long segmentsExperienceId) {
 
-		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels =
-			getLayoutPageTemplateStructureRelsBySegmentsExperienceId(
-				segmentsExperienceId);
-
-		for (LayoutPageTemplateStructureRel layoutPageTemplateStructureRel :
-				layoutPageTemplateStructureRels) {
-
-			deleteLayoutPageTemplateStructureRel(
-				layoutPageTemplateStructureRel);
-		}
+		layoutPageTemplateStructureRelPersistence.removeBySegmentsExperienceId(
+			segmentsExperienceId);
 	}
 
 	@Override

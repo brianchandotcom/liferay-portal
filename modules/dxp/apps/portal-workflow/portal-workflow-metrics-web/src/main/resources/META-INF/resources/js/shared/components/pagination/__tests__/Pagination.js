@@ -168,3 +168,15 @@ test('Should test build menu with page 1', () => {
 
 	expect(component).toMatchSnapshot();
 });
+
+test('Should test build menu without parameters', () => {
+	const component = mount(
+		<Router>
+			<div>
+				<Pagination match={{}} maxPages={5} pageSize={5} totalCount={400} />
+			</div>
+		</Router>
+	);
+
+	expect(component).toMatchSnapshot();
+});

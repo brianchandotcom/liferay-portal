@@ -3,11 +3,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="     http://maven.apache.org/POM/4.0.0     http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.liferay</groupId>
-	<artifactId>liferay-talend</artifactId>
+	<artifactId>com.liferay.talend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>Liferay Component Family</name>
-	<description>Talend components for integration with Liferay Commerce</description>
+	<name>Liferay Talend Components</name>
+	<description>Talend components for integration with Liferay DXP</description>
 	<repositories>
 		<repository>
 			<id>liferay</id>
@@ -17,23 +17,7 @@
 	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-		<!--
-	Set it to true if you want the documentation to be rendered as HTML and PDF
-
-	You can also use it on the command line: -Dtalend.documentation.htmlAndPdf=true
-	-->
-
 		<talend.documentation.htmlAndPdf>false</talend.documentation.htmlAndPdf>
-
-		<!--
-	if you want to deploy into the studio you can use the related goal:
-
-	mvn package talend-component:deploy-in-studio -Dtalend.component.studioHome=/path/to/studio
-
-	TIP: it is recommended to set this property into your settings.xml in an active by default profile.
-	-->
-		<talend.component.studioHome/>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -67,12 +51,12 @@
 				<plugin>
 					<groupId>com.liferay</groupId>
 					<artifactId>com.liferay.javadoc.formatter</artifactId>
-					<version>1.0.28</version>
+					<version>1.0.31</version>
 				</plugin>
 				<plugin>
 					<groupId>com.liferay</groupId>
 					<artifactId>com.liferay.source.formatter</artifactId>
-					<version>1.0.819</version>
+					<version>1.0.820</version>
 				</plugin>
 				<plugin>
 					<groupId>com.liferay</groupId>

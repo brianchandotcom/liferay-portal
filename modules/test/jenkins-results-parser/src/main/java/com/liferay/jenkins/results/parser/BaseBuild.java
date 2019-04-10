@@ -2654,7 +2654,10 @@ public abstract class BaseBuild implements Build {
 
 		int consoleTextLength = consoleText.length();
 
-		consoleText = consoleText.substring(stopWatchRecordConsoleReadCursor);
+		if (stopWatchRecordConsoleReadCursor > 0) {
+			consoleText = consoleText.substring(
+				stopWatchRecordConsoleReadCursor);
+		}
 
 		for (String line : consoleText.split("\n")) {
 			Matcher matcher = stopWatchStartTimestampPattern.matcher(line);

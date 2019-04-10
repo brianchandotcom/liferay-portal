@@ -78,12 +78,12 @@ definition {
 
 		var key_assetTitle = "${assetTitle}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TYPE",
 			value1 = "${assetType}"
 		);
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE",
 			value1 = "${assetTitle}"
 		);

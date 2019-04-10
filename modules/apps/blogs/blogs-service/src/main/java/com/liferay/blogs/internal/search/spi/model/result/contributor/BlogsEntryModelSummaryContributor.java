@@ -60,7 +60,11 @@ public class BlogsEntryModelSummaryContributor
 		String title = document.get(prefix + titleField, titleField);
 		String content = document.get(prefix + contentField, contentField);
 
-		return new Summary(title, content);
+		Summary summary = new Summary(title, content);
+
+		summary.setMaxContentLength(200);
+
+		return summary;
 	}
 
 }

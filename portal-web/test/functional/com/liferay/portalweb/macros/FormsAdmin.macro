@@ -145,10 +145,12 @@ definition {
 
 		var key_formDescription = "${formDescription}";
 
-		AssertTextEquals(
-			locator1 = "FormsAdmin#FORMS_TABLE_DESCRIPTION",
-			value1 = "${formDescription}"
-		);
+		if(IsVisible(locator1 = "FormsAdmin#FORMS_TABLE_DESCRIPTION")){
+			AssertTextEquals(
+				locator1 = "FormsAdmin#FORMS_TABLE_DESCRIPTION",
+				value1 = "${formDescription}"
+			);
+		}
 
 		var key_rowEntry = "${formName}";
 

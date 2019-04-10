@@ -48,7 +48,7 @@ public class SegmentsPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (group.isLayoutSetPrototype()) {
+		if (group.isLayoutSetPrototype() || group.isUser()) {
 			return false;
 		}
 

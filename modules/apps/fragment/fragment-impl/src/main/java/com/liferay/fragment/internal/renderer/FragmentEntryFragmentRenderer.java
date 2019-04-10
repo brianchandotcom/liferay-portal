@@ -23,7 +23,7 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
-import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,7 +65,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				fragmentRendererContext);
 
 			FragmentCollection fragmentCollection =
-				FragmentCollectionLocalServiceUtil.getFragmentCollection(
+				_fragmentCollectionLocalService.getFragmentCollection(
 					fragmentEntry.getFragmentCollectionId());
 
 			return fragmentCollection.getFragmentCollectionKey();
@@ -269,6 +269,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		return unsyncStringWriter.toString();
 	}
+
+	@Reference
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

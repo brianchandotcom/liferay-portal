@@ -9,12 +9,12 @@ import {removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {getItemPath, getRowFragmentEntryLinkIds} from '../../../utils/FragmentsEditorGetUtils.es';
-import templates from './SidebarStructurePanel.soy';
+import templates from './SidebarPageStructurePanel.soy';
 
 /**
- * SidebarStructurePanel
+ * SidebarPageStructurePanel
  */
-class SidebarStructurePanel extends Component {
+class SidebarPageStructurePanel extends Component {
 
 	/**
 	 * @param {Object} state
@@ -27,11 +27,11 @@ class SidebarStructurePanel extends Component {
 		return setIn(
 			state,
 			['structure'],
-			SidebarStructurePanel._getTreeNode(
+			SidebarPageStructurePanel._getTreeNode(
 				state,
 				{
 					children: state.layoutData.structure.map(
-						row => SidebarStructurePanel._getRowTree(
+						row => SidebarPageStructurePanel._getRowTree(
 							state,
 							row
 						)
@@ -52,7 +52,7 @@ class SidebarStructurePanel extends Component {
 	 * @static
 	 */
 	static _getColumnTree(state, column) {
-		return SidebarStructurePanel._getTreeNode(
+		return SidebarPageStructurePanel._getTreeNode(
 			state,
 			{
 				children: column.fragmentEntryLinkIds.map(
@@ -60,7 +60,7 @@ class SidebarStructurePanel extends Component {
 				).filter(
 					fragmentEntryLink => fragmentEntryLink
 				).map(
-					fragmentEntryLink => SidebarStructurePanel._getFragmentEntryLinkTree(
+					fragmentEntryLink => SidebarPageStructurePanel._getFragmentEntryLinkTree(
 						state,
 						fragmentEntryLink
 					)
@@ -79,13 +79,13 @@ class SidebarStructurePanel extends Component {
 	 * @static
 	 */
 	static _getFragmentEntryLinkTree(state, fragmentEntryLink) {
-		return SidebarStructurePanel._getTreeNode(
+		return SidebarPageStructurePanel._getTreeNode(
 			state,
 			{
 				children: Object.keys(
 					fragmentEntryLink.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
 				).map(
-					editableValueKey => SidebarStructurePanel._getTreeNode(
+					editableValueKey => SidebarPageStructurePanel._getTreeNode(
 						state,
 						{
 							elementId: `${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
@@ -122,7 +122,7 @@ class SidebarStructurePanel extends Component {
 			];
 
 			if (fragmentEntryLink) {
-				treeNode = SidebarStructurePanel._getFragmentEntryLinkTree(
+				treeNode = SidebarPageStructurePanel._getFragmentEntryLinkTree(
 					state,
 					fragmentEntryLink
 				);
@@ -130,11 +130,11 @@ class SidebarStructurePanel extends Component {
 		}
 
 		if (!treeNode) {
-			treeNode = SidebarStructurePanel._getTreeNode(
+			treeNode = SidebarPageStructurePanel._getTreeNode(
 				state,
 				{
 					children: row.columns.map(
-						column => SidebarStructurePanel._getColumnTree(
+						column => SidebarPageStructurePanel._getColumnTree(
 							state,
 							column
 						)
@@ -192,7 +192,7 @@ class SidebarStructurePanel extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		return SidebarStructurePanel._addStructureToState(state);
+		return SidebarPageStructurePanel._addStructureToState(state);
 	}
 
 	/**
@@ -283,13 +283,13 @@ class SidebarStructurePanel extends Component {
  * @static
  * @type {!Object}
  */
-SidebarStructurePanel.STATE = {
+SidebarPageStructurePanel.STATE = {
 
 	/**
 	 * List of expanded nodes.
 	 * @default ['root']
 	 * @instance
-	 * @memberOf SidebarStructurePanel
+	 * @memberOf SidebarPageStructurePanel
 	 * @review
 	 * @type {string[]}
 	 */
@@ -299,8 +299,8 @@ SidebarStructurePanel.STATE = {
 		.value(['root'])
 };
 
-const ConnectedSidebarStructurePanel = getConnectedComponent(
-	SidebarStructurePanel,
+const ConnectedSidebarPageStructurePanel = getConnectedComponent(
+	SidebarPageStructurePanel,
 	[
 		'activeItemId',
 		'activeItemType',
@@ -312,7 +312,7 @@ const ConnectedSidebarStructurePanel = getConnectedComponent(
 	]
 );
 
-Soy.register(ConnectedSidebarStructurePanel, templates);
+Soy.register(ConnectedSidebarPageStructurePanel, templates);
 
-export {ConnectedSidebarStructurePanel, SidebarStructurePanel};
-export default ConnectedSidebarStructurePanel;
+export {ConnectedSidebarPageStructurePanel, SidebarPageStructurePanel};
+export default ConnectedSidebarPageStructurePanel;

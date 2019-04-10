@@ -3,7 +3,7 @@ import {addMappingAssetEntry} from './mapping.es';
 import {addPortletReducer} from './portlets.es';
 import {addRowReducer, moveRowReducer, removeRowReducer, updateRowColumnsNumberReducer, updateRowColumnsReducer, updateRowConfigReducer} from './rows.es';
 import {createSegmentsExperienceReducer, deleteSegmentsExperienceReducer, editSegmentsExperienceReducer, selectSegmentsExperienceReducer, updateSegmentsExperiencePriorityReducer} from './segmentsExperiences.es';
-import {hideFragmentsEditorSidebarReducer, toggleFragmentsEditorSidebarReducer} from './sidebar.es';
+import {updateSelectedSidebarPanelId} from './sidebar.es';
 import {hideMappingDialogReducer, hideMappingTypeDialogReducer, openAssetTypeDialogReducer, openMappingFieldsDialogReducer, selectMappeableTypeReducer} from './dialogs.es';
 import {languageIdReducer, translationStatusReducer} from './translations.es';
 import {saveChangesReducer} from './changes.es';
@@ -21,7 +21,6 @@ const reducers = [
 	clearFragmentEditorReducer,
 	disableFragmentEditorReducer,
 	enableFragmentEditorReducer,
-	hideFragmentsEditorSidebarReducer,
 	hideMappingDialogReducer,
 	hideMappingTypeDialogReducer,
 	languageIdReducer,
@@ -38,7 +37,6 @@ const reducers = [
 	deleteSegmentsExperienceReducer,
 	editSegmentsExperienceReducer,
 	updateSegmentsExperiencePriorityReducer,
-	toggleFragmentsEditorSidebarReducer,
 	translationStatusReducer,
 	updateActiveItemReducer,
 	updateDropTargetReducer,
@@ -47,7 +45,8 @@ const reducers = [
 	updateHoveredItemReducer,
 	updateRowColumnsNumberReducer,
 	updateRowColumnsReducer,
-	updateRowConfigReducer
+	updateRowConfigReducer,
+	updateSelectedSidebarPanelId
 ];
 
 export {reducers};

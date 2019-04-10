@@ -54,12 +54,12 @@ const ConnectedFragmentsEditorToolbar = getConnectedComponent(
 		'classPK',
 		'discardDraftRedirectURL',
 		'discardDraftURL',
-		'fragmentsEditorSidebarVisible',
 		'lastSaveDate',
 		'portletNamespace',
 		'publishURL',
 		'redirectURL',
 		'savingChanges',
+		'selectedSidebarPanelId',
 		'spritemap'
 	]
 );

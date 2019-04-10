@@ -23,7 +23,7 @@
 	]}
 	{@param? defaultSegmentsExperienceId: string}
 	{@param? dropTargetItemTypes: ?}
-	{@param? fragmentsEditorSidebarVisible: bool}
+	{@param? selectedSidebarPanelId: string}
 	{@param? mappingFieldsURL: string}
 	{@param? store: ?}
 
@@ -38,7 +38,7 @@
 		{sp}fragments-editor__drop-target--sidebar-widget
 		{sp}pt-4
 
-		{if $fragmentsEditorSidebarVisible}
+		{if $selectedSidebarPanelId}
 			{sp}fragment-entry-link-list--padded
 		{/if}
 
@@ -67,7 +67,7 @@
 		</div>
 	{else}
 		{call .noFragmentsMessage}
-			{param fragmentsEditorSidebarVisible: $fragmentsEditorSidebarVisible ?: true /}
+			{param selectedSidebarPanelId: $selectedSidebarPanelId ?: '' /}
 		{/call}
 	{/if}
 {/template}
@@ -76,7 +76,7 @@
  * No fragments message
  */
 {template .noFragmentsMessage}
-	{@param? fragmentsEditorSidebarVisible: bool}
+	{@param? selectedSidebarPanelId: string}
 
 	{let $emptyListClasses kind="text"}
 		fragment-entry-link-list
@@ -89,7 +89,7 @@
 		{sp}no-fragments-message
 		{sp}taglib-empty-result-message
 
-		{if $fragmentsEditorSidebarVisible}
+		{if $selectedSidebarPanelId}
 			{sp}fragment-entry-link-list--padded
 		{/if}
 	{/let}

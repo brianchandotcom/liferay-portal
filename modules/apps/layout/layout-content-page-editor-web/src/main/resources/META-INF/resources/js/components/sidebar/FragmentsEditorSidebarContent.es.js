@@ -1,15 +1,15 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './fragments/SidebarElementsPanel.es';
 import './fragments/SidebarSectionsPanel.es';
 import './layouts/SidebarLayoutsPanel.es';
 import './mapping/SidebarMappingPanel.es';
-import './structure/SidebarStructurePanel.es';
+import './page_structure/SidebarPageStructurePanel.es';
 import './widgets/SidebarWidgetsPanel.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {HIDE_SIDEBAR, TOGGLE_SIDEBAR} from '../../actions/actions.es';
+import {UPDATE_SELECTED_SIDEBAR_PANEL_ID} from '../../actions/actions.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FragmentsEditorSidebarContent.soy';
 
 /**
@@ -19,23 +19,51 @@ import templates from './FragmentsEditorSidebarContent.soy';
 class FragmentsEditorSidebarContent extends Component {
 
 	/**
+	 * @inheritdoc
+	 * @param {object} state
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		let nextState = state;
+
+		if (state.selectedSidebarPanelId && state.sidebarPanels) {
+			const selectedSidebarPanel = state.sidebarPanels.find(
+				sidebarPanel => sidebarPanel.sidebarPanelId === state.selectedSidebarPanelId
+			);
+
+			if (selectedSidebarPanel) {
+				nextState = setIn(
+					nextState,
+					['_selectedSidebarPanel'],
+					selectedSidebarPanel
+				);
+			}
+
+		}
+
+		return nextState;
+	}
+
+	/**
 	 * Updates active panel
 	 * @param {!MouseEvent} event
 	 * @private
 	 * @review
 	 */
 	_handlePanelButtonClick(event) {
-		const data = event.delegateTarget.dataset;
+		const {sidebarPanelId} = event.delegateTarget.dataset;
 
-		if (!this.fragmentsEditorSidebarVisible) {
-			this.store.dispatchAction(TOGGLE_SIDEBAR);
-			this._setActivePanel(data.sidebarPanelId, data.sidebarTitle);
-		}
-		else if (this._sidebarPanelId === data.sidebarPanelId) {
-			this._hideSidebar();
+		if (this.selectedSidebarPanelId === sidebarPanelId) {
+			this.store.dispatchAction(
+				UPDATE_SELECTED_SIDEBAR_PANEL_ID,
+				{sidebarPanelId: ''}
+			);
 		}
 		else {
-			this._setActivePanel(data.sidebarPanelId, data.sidebarTitle);
+			this.store.dispatchAction(
+				UPDATE_SELECTED_SIDEBAR_PANEL_ID,
+				{sidebarPanelId}
+			);
 		}
 	}
 
@@ -45,64 +73,18 @@ class FragmentsEditorSidebarContent extends Component {
 	 * @review
 	 */
 	_hideSidebar() {
-		this.store.dispatchAction(HIDE_SIDEBAR);
-		this._sidebarPanelId = '';
-		this._sidebarTitle = '';
-	}
-
-	/**
-	 * Set as active the panel with the given sidebarPanelId and also set sidebar title
-	 * @param {string} sidebarPanelId
-	 * @param {string} title
-	 * @private
-	 * @review
-	 */
-	_setActivePanel(sidebarPanelId, title) {
-		this._sidebarPanelId = sidebarPanelId;
-		this._sidebarTitle = title;
+		this.store.dispatchAction(
+			UPDATE_SELECTED_SIDEBAR_PANEL_ID,
+			{sidebarPanelId: ''}
+		);
 	}
 
 }
 
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-FragmentsEditorSidebarContent.STATE = {
-
-	/**
-	 * Sidebar active panel ID
-	 * @default sections
-	 * @memberof FragmentsEditorSidebarContent
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-	_sidebarPanelId: Config
-		.string()
-		.internal()
-		.value('sections'),
-
-	/**
-	 * Sidebar active panel title
-	 * @default Sections
-	 * @memberof FragmentsEditorSidebarContent
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-	_sidebarTitle: Config
-		.string()
-		.internal()
-		.value('Sections')
-};
-
 const ConnectedFragmentsEditorSidebarContent = getConnectedComponent(
 	FragmentsEditorSidebarContent,
 	[
-		'fragmentsEditorSidebarVisible',
+		'selectedSidebarPanelId',
 		'sidebarPanels',
 		'spritemap'
 	]

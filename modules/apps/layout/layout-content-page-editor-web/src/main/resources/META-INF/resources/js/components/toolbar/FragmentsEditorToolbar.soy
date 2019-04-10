@@ -12,12 +12,12 @@
 	{@param? discardDraftRedirectURL: string}
 	{@param? discardDraftURL: string}
 	{@param? draft: bool}
-	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? lastSaveDate: string}
 	{@param? portletNamespace: string}
 	{@param? publishURL: string}
 	{@param? redirectURL: string}
 	{@param? savingChanges: bool}
+	{@param? selectedSidebarPanelId: string}
 	{@param? spritemap: string}
 	{@param? store: ?}
 
@@ -27,7 +27,7 @@
 		{sp}navbar
 		{sp}navbar-expand-md
 
-		{if $fragmentsEditorSidebarVisible}
+		{if $selectedSidebarPanelId}
 			{sp}fragments-editor-toolbar--padded
 		{/if}
 	{/let}

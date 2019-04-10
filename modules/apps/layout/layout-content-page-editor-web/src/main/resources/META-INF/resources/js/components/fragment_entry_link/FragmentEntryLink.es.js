@@ -221,6 +221,7 @@ const ConnectedFragmentEntryLink = getConnectedComponent(
 		'layoutData',
 		'portletNamespace',
 		'selectedMappingTypes',
+		'selectedSidebarPanelId',
 		'spritemap'
 	]
 );

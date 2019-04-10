@@ -1,6 +1,5 @@
 import Component from 'metal-component';
-
-import {INITIAL_STATE} from '../../store/state.es';
+import getConnectedComponent from '../../store/ConnectedComponent.es';
 
 /**
  * @type string
@@ -22,23 +21,23 @@ class EditModeWrapper extends Component {
 	 * @inheritdoc
 	 */
 	created() {
-		this._handleSidebarVisibleChanged = this._handleSidebarVisibleChanged.bind(this);
+		this._handleSelectedSidebarPanelIdChanged = this._handleSelectedSidebarPanelIdChanged.bind(this);
 
-		this.on('fragmentsEditorSidebarVisibleChanged', this._handleSidebarVisibleChanged);
+		this.on('selectedSidebarPanelIdChanged', this._handleSelectedSidebarPanelIdChanged);
 
-		this._handleSidebarVisibleChanged();
+		this._handleSelectedSidebarPanelIdChanged();
 	}
 
 	/**
 	 * Callback called when the sidebar visibily changes
 	 */
-	_handleSidebarVisibleChanged() {
+	_handleSelectedSidebarPanelIdChanged() {
 		const wrapper = document.getElementById('wrapper');
 
 		if (wrapper) {
 			wrapper.classList.add(WRAPPER_CLASS);
 
-			if (this.fragmentsEditorSidebarVisible) {
+			if (this.selectedSidebarPanelId) {
 				wrapper.classList.add(WRAPPER_PADDED_CLASS);
 			}
 			else {
@@ -49,15 +48,10 @@ class EditModeWrapper extends Component {
 
 }
 
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-EditModeWrapper.STATE = {
-	fragmentsEditorSidebarVisible: INITIAL_STATE.fragmentsEditorSidebarVisible
-};
+const ConnectedEditModeWrapper = getConnectedComponent(
+	EditModeWrapper,
+	['selectedSidebarPanelId']
+);
 
-export {EditModeWrapper};
-export default EditModeWrapper;
+export {ConnectedEditModeWrapper, EditModeWrapper};
+export default ConnectedEditModeWrapper;

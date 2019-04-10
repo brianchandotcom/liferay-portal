@@ -51,10 +51,11 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
 <aui:script require="<%= sb.toString() %>">
-	StoreModule.createStore(
+	var store = StoreModule.createStore(
 		<%= jsonSerializer.serializeDeep(contentPageEditorDisplayContext.getEditorSoyContext()) %>,
 		ReducersModule.reducers,
 		[
+			'<portlet:namespace />disabledAreaMaskWrapper',
 			'<portlet:namespace />editModeWrapper',
 			'<portlet:namespace />fragmentsEditor',
 			'<portlet:namespace />sidebar',
@@ -62,16 +63,33 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 		]
 	);
 
-	const disabledAreaMask = new DisabledAreaMaskModule.DisabledAreaMask();
-	const editModeWrapper = new EditModeWrapperModule.EditModeWrapper();
+	var editModeComponents = {
+		'<portlet:namespace />disabledAreaMaskWrapper': DisabledAreaMaskModule.default,
+		'<portlet:namespace />editModeWrapper': EditModeWrapperModule.default
+	};
 
-	Liferay.component('<portlet:namespace />editModeWrapper', editModeWrapper);
+	Object.keys(editModeComponents).forEach(
+		function(key) {
+			Liferay.component(
+				key,
+				new editModeComponents[key](
+					{
+						store: store
+					}
+				)
+			);
+		}
+	);
 
 	function handleDestroyPortlet() {
-		disabledAreaMask.dispose();
-		editModeWrapper.dispose();
+		Object.keys(editModeComponents).forEach(
+			function(key) {
+				editModeComponents[key].dispose();
 
-		Liferay.destroyComponent('<portlet:namespace />editModeWrapper');
+				Liferay.destroyComponent(key);
+			}
+		);
+
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}
 

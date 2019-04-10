@@ -133,8 +133,8 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 	}
 
 	protected String getRemovePluginsLists() {
-		return "contextmenu,elementspath,floatingspace,image,link,liststyle,magicline," +
-			"resize,tabletools,toolbar,ae_embed";
+		return "contextmenu,elementspath,floatingspace,image,link,liststyle," +
+			"magicline,resize,tabletools,toolbar,ae_embed";
 	}
 
 	protected JSONObject getStyleFormatJSONObject(

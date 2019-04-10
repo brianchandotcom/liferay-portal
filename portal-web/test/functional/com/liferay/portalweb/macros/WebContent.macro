@@ -473,7 +473,7 @@ definition {
 		}
 
 		if (isSet(webContentImage)) {
-			Click(locator1 = "Button#SELECT");
+			Click(locator1 = "WC#SELECT");
 
 			ItemSelector.uploadFile(
 				navTab = "Web Content Images",
@@ -854,7 +854,7 @@ definition {
 		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
 
 		if (isSet(webContentImage)) {
-			Click(locator1 = "Button#SELECT");
+			Click(locator1 = "WC#SELECT");
 
 			SelectFrameTop(value1 = "relative=top");
 

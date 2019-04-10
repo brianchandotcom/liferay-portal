@@ -66,6 +66,11 @@ public class ProcessUtil {
 	public static final LoggingOutputProcessor LOGGING_OUTPUT_PROCESSOR =
 		new LoggingOutputProcessor();
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * 			   com.liferay.petra.process.ProcessUtil#execute(
+	 * 			   com.liferay.petra.process.OutputProcessor, List)}
+	 */
 	@Deprecated
 	public static <O, E> NoticeableFuture<ObjectValuePair<O, E>> execute(
 			OutputProcessor<O, E> outputProcessor, List<String> arguments)
@@ -102,6 +107,11 @@ public class ProcessUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * 			   com.liferay.petra.process.ProcessUtil#execute(
+	 *		   	   com.liferay.petra.process.OutputProcessor, String...)}
+	 */
 	@Deprecated
 	public static <O, E> NoticeableFuture<ObjectValuePair<O, E>> execute(
 			OutputProcessor<O, E> outputProcessor, String... arguments)
@@ -117,7 +127,6 @@ public class ProcessUtil {
 	public void destroy() {
 	}
 
-	@Deprecated
 	private static String _buildThreadNamePrefix(List<String> arguments) {
 		StringBundler sb = new StringBundler(arguments.size() * 2 + 1);
 

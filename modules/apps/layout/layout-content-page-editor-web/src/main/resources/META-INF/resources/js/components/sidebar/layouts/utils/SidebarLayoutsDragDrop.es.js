@@ -3,6 +3,7 @@ import {Drag, DragDrop} from 'metal-drag-drop';
 import State from 'metal-state';
 
 import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../../../../utils/constants';
+import {initializeDragDrop} from '../../../../utils/FragmentsEditorDragDrop.es';
 
 /**
  * SidebarLayoutsDragDrop
@@ -95,7 +96,7 @@ class SidebarLayoutsDragDrop extends State {
 	 * @review
 	 */
 	_initializeDragAndDrop() {
-		this._dragDrop = new DragDrop(
+		this._dragDrop = initializeDragDrop(
 			{
 				autoScroll: true,
 				dragPlaceholder: Drag.Placeholder.CLONE,

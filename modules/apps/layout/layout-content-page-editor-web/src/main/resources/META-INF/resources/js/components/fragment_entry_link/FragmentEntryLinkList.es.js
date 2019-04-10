@@ -6,12 +6,13 @@ import {Drag, DragDrop} from 'metal-drag-drop';
 
 import '../floating_toolbar/FloatingToolbar.es';
 import './FragmentEntryLinkListRow.es';
+import {CLEAR_DROP_TARGET, MOVE_FRAGMENT_ENTRY_LINK, MOVE_ROW, UPDATE_DROP_TARGET} from '../../actions/actions.es';
+import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {initializeDragDrop} from '../../utils/FragmentsEditorDragDrop.es';
+import {moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentEntryLinkList.soy';
-import {CLEAR_DROP_TARGET, MOVE_FRAGMENT_ENTRY_LINK, MOVE_ROW, UPDATE_DROP_TARGET} from '../../actions/actions.es';
-import {moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
-import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
-import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
 /**
  * FragmentEntryLinkList
@@ -309,7 +310,7 @@ class FragmentEntryLinkList extends Component {
 			this._dragDrop.dispose();
 		}
 
-		this._dragDrop = new DragDrop(
+		this._dragDrop = initializeDragDrop(
 			{
 				autoScroll: true,
 				dragPlaceholder: Drag.Placeholder.CLONE,

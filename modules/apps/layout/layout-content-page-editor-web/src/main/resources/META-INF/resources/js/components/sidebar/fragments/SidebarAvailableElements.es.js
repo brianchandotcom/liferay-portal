@@ -5,18 +5,10 @@ import position from 'metal-position';
 import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarCard.es';
-import {
-	ADD_FRAGMENT_ENTRY_LINK,
-	CLEAR_DROP_TARGET,
-	UPDATE_DROP_TARGET,
-	UPDATE_LAST_SAVE_DATE,
-	UPDATE_SAVING_CHANGES_STATUS
-} from '../../../actions/actions.es';
-import {
-	FRAGMENTS_EDITOR_ITEM_BORDERS,
-	FRAGMENTS_EDITOR_ITEM_TYPES
-} from '../../../utils/constants';
+import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_DROP_TARGET, UPDATE_DROP_TARGET, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS} from '../../../actions/actions.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
+import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
 import templates from './SidebarAvailableElements.soy';
 
 /**
@@ -214,7 +206,7 @@ class SidebarAvailableElements extends Component {
 			this._dragDrop.dispose();
 		}
 
-		this._dragDrop = new DragDrop(
+		this._dragDrop = initializeDragDrop(
 			{
 				autoScroll: true,
 				dragPlaceholder: Drag.Placeholder.CLONE,

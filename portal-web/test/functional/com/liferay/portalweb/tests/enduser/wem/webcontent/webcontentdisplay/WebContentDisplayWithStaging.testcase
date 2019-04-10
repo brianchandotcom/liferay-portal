@@ -105,6 +105,27 @@ definition {
 	@description = "This is a use case for LPS-77769."
 	@priority = "5"
 	test StagingPublishWCWithImageFieldEdit {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Staging Test Page"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Test Site Name"
+		);
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Test Site Name"
+		);
+
+		Staging.viewStagingLocalLivePG();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -160,7 +181,7 @@ definition {
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
+			siteName = "Test Site Name"
 		);
 
 		Portlet.addPG(portletName = "Web Content Display");
@@ -171,7 +192,7 @@ definition {
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
+			siteName = "Test Site Name"
 		);
 
 		WebContentDisplayPortlet.viewImageFieldViaWCD();
@@ -180,13 +201,16 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Test Site Name"
+		);
 
 		WebContentDisplayPortlet.viewImageFieldViaWCD();
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
+			siteName = "Test Site Name"
 		);
 
 		ProductMenu.gotoPortlet(
@@ -206,14 +230,17 @@ definition {
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
+			siteName = "Test Site Name"
 		);
 
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Test Site Name"
+		);
 
 		AssertHTMLSourceTextPresent(value1 = "Web Content Image Description");
 

@@ -127,9 +127,13 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.deleteEntry();
+			AssetListsAdmin.deleteEntry(
+				title = "Manual Asset List Test"
+			);
 
-			AssetListsAdmin.deleteEntry();
+			AssetListsAdmin.deleteEntry(
+				title = "Dynamic Asset List Test"
+			);
 		}
 
 		task ("Assert the taglib that displays when there are no entries displays") {
@@ -158,8 +162,8 @@ definition {
 			);
 
 			AssetListsAdmin.renameAssetList(
-				assetListName = "Manual Asset List Test",
-				title = "Manual Asset List Edit"
+				newTitle = "Manual Asset List Edit",
+				oldTitle = "Manual Asset List Test"
 			);
 		}
 

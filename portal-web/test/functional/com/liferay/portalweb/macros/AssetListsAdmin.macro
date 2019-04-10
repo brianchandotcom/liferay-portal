@@ -26,19 +26,17 @@ definition {
 	}
 
 	macro deleteEntry {
-		AssetListsAdmin.gotoEntryMenuItem(menuItem = "Delete");
-
-		Confirm();
+		LexiconList.delete(
+			listEntry = "${title}"
+		);
 
 		Alert.viewSuccessMessage();
 	}
 
 	macro gotoEntryMenuItem {
-		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
-
-		ClickNoError(
-			locator1 = "MenuItem#ANY_MENU_ITEM",
-			key_menuItem = "${menuItem}"
+		LexiconList.clickEllipsisItem(
+			item = "${item}",
+			listEntry = "${title}"
 		);
 	}
 
@@ -49,11 +47,14 @@ definition {
 	}
 
 	macro renameAssetList {
-		AssetListsAdmin.gotoEntryMenuItem(menuItem = "Rename");
+		AssetListsAdmin.gotoEntryMenuItem(
+			item = "Rename",
+			title = "${oldTitle}"
+		);
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
-			text = "${title}"
+			text = "${newTitle}"
 		);
 
 		Button.clickSave();

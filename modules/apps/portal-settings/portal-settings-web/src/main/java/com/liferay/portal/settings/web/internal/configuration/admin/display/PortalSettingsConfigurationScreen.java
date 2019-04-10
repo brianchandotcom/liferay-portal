@@ -70,6 +70,11 @@ public class PortalSettingsConfigurationScreen implements ConfigurationScreen {
 	}
 
 	@Override
+	public boolean isVisible() {
+		return _portalSettingsConfigurationScreenContributor.isVisible();
+	}
+
+	@Override
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 

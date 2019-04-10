@@ -190,7 +190,7 @@ definition {
 
 	@description = "This is a use case for LPS-72472."
 	@priority = "4"
-	test AssertRelatedAssetsWithGlobalWebConent {
+	test AssertRelatedAssetsWithGlobalWebContent {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

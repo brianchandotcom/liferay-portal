@@ -67,8 +67,8 @@ public class AssetEntryUsageModelImpl
 		{"uuid_", Types.VARCHAR}, {"assetEntryUsageId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"assetEntryId", Types.BIGINT},
-		{"plid", Types.BIGINT}, {"containerType", Types.BIGINT},
-		{"containerKey", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"containerType", Types.BIGINT}, {"containerKey", Types.VARCHAR},
+		{"plid", Types.BIGINT}, {"type_", Types.INTEGER},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
@@ -82,15 +82,15 @@ public class AssetEntryUsageModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("assetEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("containerType", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("containerKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetEntryUsage (uuid_ VARCHAR(75) null,assetEntryUsageId LONG not null primary key,groupId LONG,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,plid LONG,containerType LONG,containerKey VARCHAR(200) null,type_ INTEGER,lastPublishDate DATE null)";
+		"create table AssetEntryUsage (uuid_ VARCHAR(75) null,assetEntryUsageId LONG not null primary key,groupId LONG,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,containerType LONG,containerKey VARCHAR(200) null,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetEntryUsage";
 
@@ -261,10 +261,6 @@ public class AssetEntryUsageModelImpl
 			"assetEntryId",
 			(BiConsumer<AssetEntryUsage, Long>)
 				AssetEntryUsage::setAssetEntryId);
-		attributeGetterFunctions.put("plid", AssetEntryUsage::getPlid);
-		attributeSetterBiConsumers.put(
-			"plid",
-			(BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setPlid);
 		attributeGetterFunctions.put(
 			"containerType", AssetEntryUsage::getContainerType);
 		attributeSetterBiConsumers.put(
@@ -277,6 +273,10 @@ public class AssetEntryUsageModelImpl
 			"containerKey",
 			(BiConsumer<AssetEntryUsage, String>)
 				AssetEntryUsage::setContainerKey);
+		attributeGetterFunctions.put("plid", AssetEntryUsage::getPlid);
+		attributeSetterBiConsumers.put(
+			"plid",
+			(BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setPlid);
 		attributeGetterFunctions.put("type", AssetEntryUsage::getType);
 		attributeSetterBiConsumers.put(
 			"type",
@@ -400,28 +400,6 @@ public class AssetEntryUsageModelImpl
 	}
 
 	@Override
-	public long getPlid() {
-		return _plid;
-	}
-
-	@Override
-	public void setPlid(long plid) {
-		_columnBitmask |= PLID_COLUMN_BITMASK;
-
-		if (!_setOriginalPlid) {
-			_setOriginalPlid = true;
-
-			_originalPlid = _plid;
-		}
-
-		_plid = plid;
-	}
-
-	public long getOriginalPlid() {
-		return _originalPlid;
-	}
-
-	@Override
 	public long getContainerType() {
 		return _containerType;
 	}
@@ -466,6 +444,28 @@ public class AssetEntryUsageModelImpl
 
 	public String getOriginalContainerKey() {
 		return GetterUtil.getString(_originalContainerKey);
+	}
+
+	@Override
+	public long getPlid() {
+		return _plid;
+	}
+
+	@Override
+	public void setPlid(long plid) {
+		_columnBitmask |= PLID_COLUMN_BITMASK;
+
+		if (!_setOriginalPlid) {
+			_setOriginalPlid = true;
+
+			_originalPlid = _plid;
+		}
+
+		_plid = plid;
+	}
+
+	public long getOriginalPlid() {
+		return _originalPlid;
 	}
 
 	@Override
@@ -538,9 +538,9 @@ public class AssetEntryUsageModelImpl
 		assetEntryUsageImpl.setCreateDate(getCreateDate());
 		assetEntryUsageImpl.setModifiedDate(getModifiedDate());
 		assetEntryUsageImpl.setAssetEntryId(getAssetEntryId());
-		assetEntryUsageImpl.setPlid(getPlid());
 		assetEntryUsageImpl.setContainerType(getContainerType());
 		assetEntryUsageImpl.setContainerKey(getContainerKey());
+		assetEntryUsageImpl.setPlid(getPlid());
 		assetEntryUsageImpl.setType(getType());
 		assetEntryUsageImpl.setLastPublishDate(getLastPublishDate());
 
@@ -619,10 +619,6 @@ public class AssetEntryUsageModelImpl
 
 		assetEntryUsageModelImpl._setOriginalAssetEntryId = false;
 
-		assetEntryUsageModelImpl._originalPlid = assetEntryUsageModelImpl._plid;
-
-		assetEntryUsageModelImpl._setOriginalPlid = false;
-
 		assetEntryUsageModelImpl._originalContainerType =
 			assetEntryUsageModelImpl._containerType;
 
@@ -630,6 +626,10 @@ public class AssetEntryUsageModelImpl
 
 		assetEntryUsageModelImpl._originalContainerKey =
 			assetEntryUsageModelImpl._containerKey;
+
+		assetEntryUsageModelImpl._originalPlid = assetEntryUsageModelImpl._plid;
+
+		assetEntryUsageModelImpl._setOriginalPlid = false;
 
 		assetEntryUsageModelImpl._originalType = assetEntryUsageModelImpl._type;
 
@@ -675,8 +675,6 @@ public class AssetEntryUsageModelImpl
 
 		assetEntryUsageCacheModel.assetEntryId = getAssetEntryId();
 
-		assetEntryUsageCacheModel.plid = getPlid();
-
 		assetEntryUsageCacheModel.containerType = getContainerType();
 
 		assetEntryUsageCacheModel.containerKey = getContainerKey();
@@ -686,6 +684,8 @@ public class AssetEntryUsageModelImpl
 		if ((containerKey != null) && (containerKey.length() == 0)) {
 			assetEntryUsageCacheModel.containerKey = null;
 		}
+
+		assetEntryUsageCacheModel.plid = getPlid();
 
 		assetEntryUsageCacheModel.type = getType();
 
@@ -785,14 +785,14 @@ public class AssetEntryUsageModelImpl
 	private long _assetEntryId;
 	private long _originalAssetEntryId;
 	private boolean _setOriginalAssetEntryId;
-	private long _plid;
-	private long _originalPlid;
-	private boolean _setOriginalPlid;
 	private long _containerType;
 	private long _originalContainerType;
 	private boolean _setOriginalContainerType;
 	private String _containerKey;
 	private String _originalContainerKey;
+	private long _plid;
+	private long _originalPlid;
+	private boolean _setOriginalPlid;
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;

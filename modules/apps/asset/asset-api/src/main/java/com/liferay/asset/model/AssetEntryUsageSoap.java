@@ -40,9 +40,9 @@ public class AssetEntryUsageSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAssetEntryId(model.getAssetEntryId());
-		soapModel.setPlid(model.getPlid());
 		soapModel.setContainerType(model.getContainerType());
 		soapModel.setContainerKey(model.getContainerKey());
+		soapModel.setPlid(model.getPlid());
 		soapModel.setType(model.getType());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
@@ -152,14 +152,6 @@ public class AssetEntryUsageSoap implements Serializable {
 		_assetEntryId = assetEntryId;
 	}
 
-	public long getPlid() {
-		return _plid;
-	}
-
-	public void setPlid(long plid) {
-		_plid = plid;
-	}
-
 	public long getContainerType() {
 		return _containerType;
 	}
@@ -174,6 +166,14 @@ public class AssetEntryUsageSoap implements Serializable {
 
 	public void setContainerKey(String containerKey) {
 		_containerKey = containerKey;
+	}
+
+	public long getPlid() {
+		return _plid;
+	}
+
+	public void setPlid(long plid) {
+		_plid = plid;
 	}
 
 	public int getType() {
@@ -198,9 +198,9 @@ public class AssetEntryUsageSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _assetEntryId;
-	private long _plid;
 	private long _containerType;
 	private String _containerKey;
+	private long _plid;
 	private int _type;
 	private Date _lastPublishDate;
 

@@ -5,9 +5,9 @@ create table AssetEntryUsage (
 	createDate DATE null,
 	modifiedDate DATE null,
 	assetEntryId LONG,
-	plid LONG,
 	containerType LONG,
 	containerKey VARCHAR(200) null,
+	plid LONG,
 	type_ INTEGER,
 	lastPublishDate DATE null
 );

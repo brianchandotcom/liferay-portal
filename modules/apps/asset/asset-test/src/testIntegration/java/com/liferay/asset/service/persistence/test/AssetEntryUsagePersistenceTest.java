@@ -134,11 +134,11 @@ public class AssetEntryUsagePersistenceTest {
 
 		newAssetEntryUsage.setAssetEntryId(RandomTestUtil.nextLong());
 
-		newAssetEntryUsage.setPlid(RandomTestUtil.nextLong());
-
 		newAssetEntryUsage.setContainerType(RandomTestUtil.nextLong());
 
 		newAssetEntryUsage.setContainerKey(RandomTestUtil.randomString());
+
+		newAssetEntryUsage.setPlid(RandomTestUtil.nextLong());
 
 		newAssetEntryUsage.setType(RandomTestUtil.nextInt());
 
@@ -167,13 +167,13 @@ public class AssetEntryUsagePersistenceTest {
 			existingAssetEntryUsage.getAssetEntryId(),
 			newAssetEntryUsage.getAssetEntryId());
 		Assert.assertEquals(
-			existingAssetEntryUsage.getPlid(), newAssetEntryUsage.getPlid());
-		Assert.assertEquals(
 			existingAssetEntryUsage.getContainerType(),
 			newAssetEntryUsage.getContainerType());
 		Assert.assertEquals(
 			existingAssetEntryUsage.getContainerKey(),
 			newAssetEntryUsage.getContainerKey());
+		Assert.assertEquals(
+			existingAssetEntryUsage.getPlid(), newAssetEntryUsage.getPlid());
 		Assert.assertEquals(
 			existingAssetEntryUsage.getType(), newAssetEntryUsage.getType());
 		Assert.assertEquals(
@@ -216,24 +216,24 @@ public class AssetEntryUsagePersistenceTest {
 	}
 
 	@Test
-	public void testCountByP_C_C() throws Exception {
-		_persistence.countByP_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
+	public void testCountByC_C_P() throws Exception {
+		_persistence.countByC_C_P(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong());
 
-		_persistence.countByP_C_C(0L, 0L, "null");
+		_persistence.countByC_C_P(0L, "null", 0L);
 
-		_persistence.countByP_C_C(0L, 0L, (String)null);
+		_persistence.countByC_C_P(0L, (String)null, 0L);
 	}
 
 	@Test
-	public void testCountByA_P_C_C() throws Exception {
-		_persistence.countByA_P_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), "");
+	public void testCountByA_C_C_P() throws Exception {
+		_persistence.countByA_C_C_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextLong());
 
-		_persistence.countByA_P_C_C(0L, 0L, 0L, "null");
+		_persistence.countByA_C_C_P(0L, 0L, "null", 0L);
 
-		_persistence.countByA_P_C_C(0L, 0L, 0L, (String)null);
+		_persistence.countByA_C_C_P(0L, 0L, (String)null, 0L);
 	}
 
 	@Test
@@ -263,8 +263,8 @@ public class AssetEntryUsagePersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"AssetEntryUsage", "uuid", true, "assetEntryUsageId", true,
 			"groupId", true, "createDate", true, "modifiedDate", true,
-			"assetEntryId", true, "plid", true, "containerType", true,
-			"containerKey", true, "type", true, "lastPublishDate", true);
+			"assetEntryId", true, "containerType", true, "containerKey", true,
+			"plid", true, "type", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -509,10 +509,6 @@ public class AssetEntryUsagePersistenceTest {
 				existingAssetEntryUsage, "getOriginalAssetEntryId",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingAssetEntryUsage.getPlid()),
-			ReflectionTestUtil.<Long>invoke(
-				existingAssetEntryUsage, "getOriginalPlid", new Class<?>[0]));
-		Assert.assertEquals(
 			Long.valueOf(existingAssetEntryUsage.getContainerType()),
 			ReflectionTestUtil.<Long>invoke(
 				existingAssetEntryUsage, "getOriginalContainerType",
@@ -523,6 +519,10 @@ public class AssetEntryUsagePersistenceTest {
 				ReflectionTestUtil.invoke(
 					existingAssetEntryUsage, "getOriginalContainerKey",
 					new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingAssetEntryUsage.getPlid()),
+			ReflectionTestUtil.<Long>invoke(
+				existingAssetEntryUsage, "getOriginalPlid", new Class<?>[0]));
 	}
 
 	protected AssetEntryUsage addAssetEntryUsage() throws Exception {
@@ -540,11 +540,11 @@ public class AssetEntryUsagePersistenceTest {
 
 		assetEntryUsage.setAssetEntryId(RandomTestUtil.nextLong());
 
-		assetEntryUsage.setPlid(RandomTestUtil.nextLong());
-
 		assetEntryUsage.setContainerType(RandomTestUtil.nextLong());
 
 		assetEntryUsage.setContainerKey(RandomTestUtil.randomString());
+
+		assetEntryUsage.setPlid(RandomTestUtil.nextLong());
 
 		assetEntryUsage.setType(RandomTestUtil.nextInt());
 

@@ -141,20 +141,6 @@ public interface AssetEntryUsageModel extends BaseModel<AssetEntryUsage> {
 	public void setAssetEntryId(long assetEntryId);
 
 	/**
-	 * Returns the plid of this asset entry usage.
-	 *
-	 * @return the plid of this asset entry usage
-	 */
-	public long getPlid();
-
-	/**
-	 * Sets the plid of this asset entry usage.
-	 *
-	 * @param plid the plid of this asset entry usage
-	 */
-	public void setPlid(long plid);
-
-	/**
 	 * Returns the container type of this asset entry usage.
 	 *
 	 * @return the container type of this asset entry usage
@@ -182,6 +168,20 @@ public interface AssetEntryUsageModel extends BaseModel<AssetEntryUsage> {
 	 * @param containerKey the container key of this asset entry usage
 	 */
 	public void setContainerKey(String containerKey);
+
+	/**
+	 * Returns the plid of this asset entry usage.
+	 *
+	 * @return the plid of this asset entry usage
+	 */
+	public long getPlid();
+
+	/**
+	 * Sets the plid of this asset entry usage.
+	 *
+	 * @param plid the plid of this asset entry usage
+	 */
+	public void setPlid(long plid);
 
 	/**
 	 * Returns the type of this asset entry usage.

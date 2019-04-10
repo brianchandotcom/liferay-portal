@@ -51,9 +51,9 @@ public class AssetEntryUsageWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("assetEntryId", getAssetEntryId());
-		attributes.put("plid", getPlid());
 		attributes.put("containerType", getContainerType());
 		attributes.put("containerKey", getContainerKey());
+		attributes.put("plid", getPlid());
 		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -98,12 +98,6 @@ public class AssetEntryUsageWrapper
 			setAssetEntryId(assetEntryId);
 		}
 
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
-		}
-
 		Long containerType = (Long)attributes.get("containerType");
 
 		if (containerType != null) {
@@ -114,6 +108,12 @@ public class AssetEntryUsageWrapper
 
 		if (containerKey != null) {
 			setContainerKey(containerKey);
+		}
+
+		Long plid = (Long)attributes.get("plid");
+
+		if (plid != null) {
+			setPlid(plid);
 		}
 
 		Integer type = (Integer)attributes.get("type");

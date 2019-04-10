@@ -51,12 +51,12 @@ public class AssetEntryUsageLocalServiceWrapper
 
 	@Override
 	public com.liferay.asset.model.AssetEntryUsage addAssetEntryUsage(
-		long groupId, long assetEntryId, long plid, long containerType,
-		String containerKey,
+		long groupId, long assetEntryId, long containerType,
+		String containerKey, long plid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return _assetEntryUsageLocalService.addAssetEntryUsage(
-			groupId, assetEntryId, plid, containerType, containerKey,
+			groupId, assetEntryId, containerType, containerKey, plid,
 			serviceContext);
 	}
 
@@ -115,10 +115,10 @@ public class AssetEntryUsageLocalServiceWrapper
 
 	@Override
 	public void deleteAssetEntryUsages(
-		long plid, long containerType, String containerKey) {
+		long containerType, String containerKey, long plid) {
 
 		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			plid, containerType, containerKey);
+			containerType, containerKey, plid);
 	}
 
 	/**
@@ -234,10 +234,10 @@ public class AssetEntryUsageLocalServiceWrapper
 
 	@Override
 	public com.liferay.asset.model.AssetEntryUsage fetchAssetEntryUsage(
-		long assetEntryId, long plid, long containerType, String containerKey) {
+		long assetEntryId, long containerType, String containerKey, long plid) {
 
 		return _assetEntryUsageLocalService.fetchAssetEntryUsage(
-			assetEntryId, plid, containerType, containerKey);
+			assetEntryId, containerType, containerKey, plid);
 	}
 
 	/**

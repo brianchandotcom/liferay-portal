@@ -79,12 +79,12 @@ public class AssetEntryUsageCacheModel
 		sb.append(modifiedDate);
 		sb.append(", assetEntryId=");
 		sb.append(assetEntryId);
-		sb.append(", plid=");
-		sb.append(plid);
 		sb.append(", containerType=");
 		sb.append(containerType);
 		sb.append(", containerKey=");
 		sb.append(containerKey);
+		sb.append(", plid=");
+		sb.append(plid);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", lastPublishDate=");
@@ -123,7 +123,6 @@ public class AssetEntryUsageCacheModel
 		}
 
 		assetEntryUsageImpl.setAssetEntryId(assetEntryId);
-		assetEntryUsageImpl.setPlid(plid);
 		assetEntryUsageImpl.setContainerType(containerType);
 
 		if (containerKey == null) {
@@ -133,6 +132,7 @@ public class AssetEntryUsageCacheModel
 			assetEntryUsageImpl.setContainerKey(containerKey);
 		}
 
+		assetEntryUsageImpl.setPlid(plid);
 		assetEntryUsageImpl.setType(type);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
@@ -159,10 +159,10 @@ public class AssetEntryUsageCacheModel
 
 		assetEntryId = objectInput.readLong();
 
-		plid = objectInput.readLong();
-
 		containerType = objectInput.readLong();
 		containerKey = objectInput.readUTF();
+
+		plid = objectInput.readLong();
 
 		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
@@ -185,8 +185,6 @@ public class AssetEntryUsageCacheModel
 
 		objectOutput.writeLong(assetEntryId);
 
-		objectOutput.writeLong(plid);
-
 		objectOutput.writeLong(containerType);
 
 		if (containerKey == null) {
@@ -195,6 +193,8 @@ public class AssetEntryUsageCacheModel
 		else {
 			objectOutput.writeUTF(containerKey);
 		}
+
+		objectOutput.writeLong(plid);
 
 		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
@@ -206,9 +206,9 @@ public class AssetEntryUsageCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long assetEntryId;
-	public long plid;
 	public long containerType;
 	public String containerKey;
+	public long plid;
 	public int type;
 	public long lastPublishDate;
 

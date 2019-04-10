@@ -54,12 +54,12 @@ public class AssetEntryUsageLocalServiceUtil {
 	}
 
 	public static com.liferay.asset.model.AssetEntryUsage addAssetEntryUsage(
-		long groupId, long assetEntryId, long plid, long containerType,
-		String containerKey,
+		long groupId, long assetEntryId, long containerType,
+		String containerKey, long plid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return getService().addAssetEntryUsage(
-			groupId, assetEntryId, plid, containerType, containerKey,
+			groupId, assetEntryId, containerType, containerKey, plid,
 			serviceContext);
 	}
 
@@ -111,9 +111,9 @@ public class AssetEntryUsageLocalServiceUtil {
 	}
 
 	public static void deleteAssetEntryUsages(
-		long plid, long containerType, String containerKey) {
+		long containerType, String containerKey, long plid) {
 
-		getService().deleteAssetEntryUsages(plid, containerType, containerKey);
+		getService().deleteAssetEntryUsages(containerType, containerKey, plid);
 	}
 
 	/**
@@ -219,10 +219,10 @@ public class AssetEntryUsageLocalServiceUtil {
 	}
 
 	public static com.liferay.asset.model.AssetEntryUsage fetchAssetEntryUsage(
-		long assetEntryId, long plid, long containerType, String containerKey) {
+		long assetEntryId, long containerType, String containerKey, long plid) {
 
 		return getService().fetchAssetEntryUsage(
-			assetEntryId, plid, containerType, containerKey);
+			assetEntryId, containerType, containerKey, plid);
 	}
 
 	/**

@@ -72,8 +72,8 @@ public interface AssetEntryUsageLocalService
 	public AssetEntryUsage addAssetEntryUsage(AssetEntryUsage assetEntryUsage);
 
 	public AssetEntryUsage addAssetEntryUsage(
-		long groupId, long assetEntryId, long plid, long containerType,
-		String containerKey, ServiceContext serviceContext);
+		long groupId, long assetEntryId, long containerType,
+		String containerKey, long plid, ServiceContext serviceContext);
 
 	public AssetEntryUsage addDefaultAssetEntryUsage(
 		long groupId, long assetEntryId, ServiceContext serviceContext);
@@ -109,7 +109,7 @@ public interface AssetEntryUsageLocalService
 		throws PortalException;
 
 	public void deleteAssetEntryUsages(
-		long plid, long containerType, String containerKey);
+		long containerType, String containerKey, long plid);
 
 	/**
 	 * @throws PortalException
@@ -189,7 +189,7 @@ public interface AssetEntryUsageLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntryUsage fetchAssetEntryUsage(
-		long assetEntryId, long plid, long containerType, String containerKey);
+		long assetEntryId, long containerType, String containerKey, long plid);
 
 	/**
 	 * Returns the asset entry usage matching the UUID and group.

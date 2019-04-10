@@ -141,10 +141,7 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 			return new String[] {applicationKey};
 		}
 
-		String[] applicationKeys = ParamUtil.getStringValues(
-			actionRequest, "applicationKeys");
-
-		return applicationKeys;
+		return ParamUtil.getStringValues(actionRequest, "applicationKeys");
 	}
 
 	protected List<String> getEntityTypes(ActionRequest actionRequest) {
@@ -171,10 +168,8 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 			return new String[] {primaryKey};
 		}
 
-		String[] primaryKeys = ParamUtil.getStringValues(
+		return ParamUtil.getStringValues(
 			actionRequest, "primaryKeys__" + entityType);
-
-		return primaryKeys;
 	}
 
 	protected User getSelectedUser(ActionRequest actionRequest)

@@ -44,15 +44,16 @@ public class DefaultCompanyNameSwapper {
 			return;
 		}
 
-		String propertyCompanyDefaultName = PropsValues.COMPANY_DEFAULT_NAME;
+		String originalCompanyDefaultName = PropsValues.COMPANY_DEFAULT_NAME;
+
 		PropsValues.COMPANY_DEFAULT_NAME = "Liferay DXP";
 
 		try {
 			Company defaultCompany = _companyLocalService.getCompany(
 				PortalInstances.getDefaultCompanyId());
 
-			if (!_isCompanyNameCustomized(
-					defaultCompany, propertyCompanyDefaultName)) {
+			if (!_hasCustomCompanyName(
+					defaultCompany, originalCompanyDefaultName)) {
 
 				_updateCompanyName(defaultCompany);
 			}
@@ -64,8 +65,8 @@ public class DefaultCompanyNameSwapper {
 				defaultCompany = _companyLocalService.getCompanyByWebId(
 					PropsValues.COMPANY_DEFAULT_WEB_ID);
 
-				if (!_isCompanyNameCustomized(
-						defaultCompany, propertyCompanyDefaultName)) {
+				if (!_hasCustomCompanyName(
+						defaultCompany, originalCompanyDefaultName)) {
 
 					_updateCompanyName(defaultCompany);
 				}
@@ -78,8 +79,7 @@ public class DefaultCompanyNameSwapper {
 		}
 	}
 
-	private boolean _isCompanyNameCustomized(
-			Company company, String defaultName)
+	private boolean _hasCustomCompanyName(Company company, String defaultName)
 		throws PortalException {
 
 		String name = company.getName();

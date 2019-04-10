@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should test mouse over 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SummaryCard
+        elementClasses="test"
+        iconColor="black"
+        iconName="test"
+        percentage={10}
+        title="test"
+        total={10}
+      >
+        <a
+          className="process-dashboard-summary-card test"
+          href="#"
+          onMouseOut={[Function]}
+          onMouseOver={[Function]}
+        >
+          <div>
+            <div
+              className="header"
+            >
+              <Icon
+                elementClasses={
+                  Array [
+                    "iconBadge",
+                    "icon-black",
+                    "mr-3",
+                  ]
+                }
+                iconName="test"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-test iconBadge icon-black mr-3"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#test"
+                  />
+                </svg>
+              </Icon>
+              test
+            </div>
+            <div
+              className="body"
+            >
+              10
+            </div>
+            <div
+              className="footer"
+            >
+              10
+            </div>
+          </div>
+        </a>
+      </SummaryCard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;

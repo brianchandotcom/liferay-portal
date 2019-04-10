@@ -3,11 +3,10 @@
 exports[`Should add a tag 1`] = `
 <div
   className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onDoubleClick={[Function]}
   onFocus={[Function]}
 >
   <div
-    className="col-11 p-0"
+    className="col-11 p-0 d-flex flex-wrap"
   >
     <span
       className="label label-dismissible label-secondary"
@@ -141,12 +140,19 @@ exports[`Should add a tag 1`] = `
     </span>
     <input
       className="form-control-inset"
+      onFocus={[Function]}
       onKeyUp={[Function]}
       type="text"
     />
   </div>
   <div
-    className="col-1 mt-1"
+    className="col-1 mt-1 text-right"
+    onClick={[Function]}
+    style={
+      Object {
+        "paddingRight": "0px",
+      }
+    }
   >
     <Icon
       iconName="caret-double"
@@ -158,11 +164,10 @@ exports[`Should add a tag 1`] = `
 exports[`Should hide the dropdown list 1`] = `
 <div
   className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onDoubleClick={[Function]}
   onFocus={[Function]}
 >
   <div
-    className="col-11 p-0"
+    className="col-11 p-0 d-flex flex-wrap"
   >
     <span
       className="label label-dismissible label-secondary"
@@ -270,12 +275,19 @@ exports[`Should hide the dropdown list 1`] = `
     </span>
     <input
       className="form-control-inset"
+      onFocus={[Function]}
       onKeyUp={[Function]}
       type="text"
     />
   </div>
   <div
-    className="col-1 mt-1"
+    className="col-1 mt-1 text-right"
+    onClick={[Function]}
+    style={
+      Object {
+        "paddingRight": "0px",
+      }
+    }
   >
     <Icon
       iconName="caret-double"
@@ -287,11 +299,10 @@ exports[`Should hide the dropdown list 1`] = `
 exports[`Should remove a tag 1`] = `
 <div
   className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onDoubleClick={[Function]}
   onFocus={[Function]}
 >
   <div
-    className="col-11 p-0"
+    className="col-11 p-0 d-flex flex-wrap"
   >
     <span
       className="label label-dismissible label-secondary"
@@ -373,12 +384,19 @@ exports[`Should remove a tag 1`] = `
     </span>
     <input
       className="form-control-inset"
+      onFocus={[Function]}
       onKeyUp={[Function]}
       type="text"
     />
   </div>
   <div
-    className="col-1 mt-1"
+    className="col-1 mt-1 text-right"
+    onClick={[Function]}
+    style={
+      Object {
+        "paddingRight": "0px",
+      }
+    }
   >
     <Icon
       iconName="caret-double"
@@ -390,11 +408,10 @@ exports[`Should remove a tag 1`] = `
 exports[`Should search 1`] = `
 <div
   className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onDoubleClick={[Function]}
   onFocus={[Function]}
 >
   <div
-    className="col-11 p-0"
+    className="col-11 p-0 d-flex flex-wrap"
   >
     <span
       className="label label-dismissible label-secondary"
@@ -476,12 +493,19 @@ exports[`Should search 1`] = `
     </span>
     <input
       className="form-control-inset"
+      onFocus={[Function]}
       onKeyUp={[Function]}
       type="text"
     />
   </div>
   <div
-    className="col-1 mt-1"
+    className="col-1 mt-1 text-right"
+    onClick={[Function]}
+    style={
+      Object {
+        "paddingRight": "0px",
+      }
+    }
   >
     <Icon
       iconName="caret-double"
@@ -493,11 +517,10 @@ exports[`Should search 1`] = `
 exports[`Should show the dropdown list 1`] = `
 <div
   className="is-active align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onDoubleClick={[Function]}
   onFocus={[Function]}
 >
   <div
-    className="col-11 p-0"
+    className="col-11 p-0 d-flex flex-wrap"
   >
     <span
       className="label label-dismissible label-secondary"
@@ -605,12 +628,19 @@ exports[`Should show the dropdown list 1`] = `
     </span>
     <input
       className="form-control-inset"
+      onFocus={[Function]}
       onKeyUp={[Function]}
       type="text"
     />
   </div>
   <div
-    className="col-1 mt-1"
+    className="col-1 mt-1 text-right"
+    onClick={[Function]}
+    style={
+      Object {
+        "paddingRight": "0px",
+      }
+    }
   >
     <Icon
       iconName="caret-double"
@@ -630,7 +660,8 @@ exports[`Should show the dropdown list 1`] = `
       >
         <a
           className="dropdown-item "
-          href="#0"
+          data-senna-off={true}
+          href="javascript:;"
         >
           meeting
         </a>
@@ -642,7 +673,8 @@ exports[`Should show the dropdown list 1`] = `
       >
         <a
           className="dropdown-item "
-          href="#1"
+          data-senna-off={true}
+          href="javascript:;"
         >
           assist
         </a>
@@ -654,7 +686,8 @@ exports[`Should show the dropdown list 1`] = `
       >
         <a
           className="dropdown-item "
-          href="#2"
+          data-senna-off={true}
+          href="javascript:;"
         >
           not real
         </a>
@@ -666,7 +699,8 @@ exports[`Should show the dropdown list 1`] = `
       >
         <a
           className="dropdown-item "
-          href="#3"
+          data-senna-off={true}
+          href="javascript:;"
         >
           much
         </a>
@@ -678,7 +712,8 @@ exports[`Should show the dropdown list 1`] = `
       >
         <a
           className="dropdown-item "
-          href="#4"
+          data-senna-off={true}
+          href="javascript:;"
         >
           so much
         </a>
@@ -690,7 +725,8 @@ exports[`Should show the dropdown list 1`] = `
       >
         <a
           className="dropdown-item "
-          href="#5"
+          data-senna-off={true}
+          href="javascript:;"
         >
           to do any
         </a>
@@ -702,7 +738,9 @@ exports[`Should show the dropdown list 1`] = `
       >
         <a
           className="dropdown-item "
-          href="#6"
+          data-senna-off={true}
+          href="javascript:;"
+          onBlur={[Function]}
         >
           a long component text example to test its overflow behavior.
         </a>
@@ -715,11 +753,10 @@ exports[`Should show the dropdown list 1`] = `
 exports[`Should test component render 1`] = `
 <div
   className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onDoubleClick={[Function]}
   onFocus={[Function]}
 >
   <div
-    className="col-11 p-0"
+    className="col-11 p-0 d-flex flex-wrap"
   >
     <span
       className="label label-dismissible label-secondary"
@@ -827,12 +864,19 @@ exports[`Should test component render 1`] = `
     </span>
     <input
       className="form-control-inset"
+      onFocus={[Function]}
       onKeyUp={[Function]}
       type="text"
     />
   </div>
   <div
-    className="col-1 mt-1"
+    className="col-1 mt-1 text-right"
+    onClick={[Function]}
+    style={
+      Object {
+        "paddingRight": "0px",
+      }
+    }
   >
     <Icon
       iconName="caret-double"
@@ -844,11 +888,10 @@ exports[`Should test component render 1`] = `
 exports[`Should test keydown press 1`] = `
 <div
   className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onDoubleClick={[Function]}
   onFocus={[Function]}
 >
   <div
-    className="col-11 p-0"
+    className="col-11 p-0 d-flex flex-wrap"
   >
     <span
       className="label label-dismissible label-secondary"
@@ -930,12 +973,19 @@ exports[`Should test keydown press 1`] = `
     </span>
     <input
       className="form-control-inset"
+      onFocus={[Function]}
       onKeyUp={[Function]}
       type="text"
     />
   </div>
   <div
-    className="col-1 mt-1"
+    className="col-1 mt-1 text-right"
+    onClick={[Function]}
+    style={
+      Object {
+        "paddingRight": "0px",
+      }
+    }
   >
     <Icon
       iconName="caret-double"
@@ -947,11 +997,10 @@ exports[`Should test keydown press 1`] = `
 exports[`Should test keyenter press 1`] = `
 <div
   className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onDoubleClick={[Function]}
   onFocus={[Function]}
 >
   <div
-    className="col-11 p-0"
+    className="col-11 p-0 d-flex flex-wrap"
   >
     <span
       className="label label-dismissible label-secondary"
@@ -1059,12 +1108,19 @@ exports[`Should test keyenter press 1`] = `
     </span>
     <input
       className="form-control-inset"
+      onFocus={[Function]}
       onKeyUp={[Function]}
       type="text"
     />
   </div>
   <div
-    className="col-1 mt-1"
+    className="col-1 mt-1 text-right"
+    onClick={[Function]}
+    style={
+      Object {
+        "paddingRight": "0px",
+      }
+    }
   >
     <Icon
       iconName="caret-double"
@@ -1076,11 +1132,10 @@ exports[`Should test keyenter press 1`] = `
 exports[`Should test keyup press 1`] = `
 <div
   className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onDoubleClick={[Function]}
   onFocus={[Function]}
 >
   <div
-    className="col-11 p-0"
+    className="col-11 p-0 d-flex flex-wrap"
   >
     <span
       className="label label-dismissible label-secondary"
@@ -1162,12 +1217,19 @@ exports[`Should test keyup press 1`] = `
     </span>
     <input
       className="form-control-inset"
+      onFocus={[Function]}
       onKeyUp={[Function]}
       type="text"
     />
   </div>
   <div
-    className="col-1 mt-1"
+    className="col-1 mt-1 text-right"
+    onClick={[Function]}
+    style={
+      Object {
+        "paddingRight": "0px",
+      }
+    }
   >
     <Icon
       iconName="caret-double"

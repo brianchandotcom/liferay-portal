@@ -100,12 +100,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ENTRY_CONTENT_DESCRIPTIVE-->
-<tr>
-	<td>ENTRY_CONTENT_DESCRIPTIVE_TITLE</td>
-	<td>//*[@data-qa-id='row']//h5</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -59,7 +59,7 @@
 			<extension>
 				<groupId>org.talend.sdk.component</groupId>
 				<artifactId>talend-component-maven-plugin</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.8</version>
 			</extension>
 		</extensions>
 		<pluginManagement>

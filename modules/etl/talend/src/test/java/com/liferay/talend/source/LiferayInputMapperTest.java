@@ -50,7 +50,7 @@ public class LiferayInputMapperTest {
 
 		// .setRestDataSet()
 		// .setTimeout()
-		// .setMaxItemsPerRequest() */;
+		// .setBatchSize() */;
 
 		// We create the component mapper instance using the configuration
 		// filled above

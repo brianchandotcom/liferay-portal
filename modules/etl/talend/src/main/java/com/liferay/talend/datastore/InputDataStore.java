@@ -14,6 +14,8 @@
 
 package com.liferay.talend.datastore;
 
+import java.net.URL;
+
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.action.Checkable;
 import org.talend.sdk.component.api.configuration.condition.ActiveIf;
@@ -25,13 +27,14 @@ import org.talend.sdk.component.api.meta.Documentation;
 
 /**
  * @author Igor Beslic
+ * @author Zoltán Takács
  */
 @Checkable("checkInputDataStore")
 @DataStore("InputDataStore")
 @Documentation("Aggregator data store for authentication stores")
 @GridLayout(
 	{
-		@GridLayout.Row("_authenticationMethod"),
+		@GridLayout.Row("_authenticationMethod"), @GridLayout.Row("_serverURL"),
 		@GridLayout.Row("_basicDataStore"), @GridLayout.Row("_oAuthDataStore")
 	}
 )
@@ -47,6 +50,10 @@ public class InputDataStore {
 
 	public OAuthDataStore getoAuthDataStore() {
 		return _oAuthDataStore;
+	}
+
+	public URL getServerURL() {
+		return _serverURL;
 	}
 
 	public InputDataStore setAuthenticationMethod(
@@ -69,6 +76,12 @@ public class InputDataStore {
 		return this;
 	}
 
+	public InputDataStore setServerURL(URL serverURL) {
+		_serverURL = serverURL;
+
+		return this;
+	}
+
 	@DefaultValue("BASIC")
 	@Documentation("Authentication Method")
 	@Option
@@ -84,5 +97,9 @@ public class InputDataStore {
 	@Documentation("OAuth2 Data Store")
 	@Option
 	private OAuthDataStore _oAuthDataStore;
+
+	@Documentation("TODO fill the documentation for this parameter")
+	@Option
+	private URL _serverURL;
 
 }

@@ -29,13 +29,13 @@ import org.talend.sdk.component.api.meta.Documentation;
 @GridLayout(
 	{
 		@GridLayout.Row("_restDataSet"), @GridLayout.Row("_timeout"),
-		@GridLayout.Row("_maxItemsPerRequest")
+		@GridLayout.Row("_batchSize")
 	}
 )
 public class LiferayInputMapperConfiguration implements Serializable {
 
-	public int getMaxItemsPerRequest() {
-		return _maxItemsPerRequest;
+	public int getBatchSize() {
+		return _batchSize;
 	}
 
 	public RestDataSet getRestDataSet() {
@@ -46,10 +46,8 @@ public class LiferayInputMapperConfiguration implements Serializable {
 		return _timeout;
 	}
 
-	public LiferayInputMapperConfiguration setMaxItemsPerRequest(
-		int maxItemsPerRequest) {
-
-		_maxItemsPerRequest = maxItemsPerRequest;
+	public LiferayInputMapperConfiguration setBatchSize(int batchSize) {
+		_batchSize = batchSize;
 
 		return this;
 	}
@@ -70,7 +68,7 @@ public class LiferayInputMapperConfiguration implements Serializable {
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option
-	private int _maxItemsPerRequest;
+	private int _batchSize;
 
 	@Documentation("TODO fill the documentation for this parameter")
 	@Option

@@ -58,8 +58,10 @@ import org.talend.sdk.component.api.service.http.Response;
 public class UIActionService {
 
 	public HealthCheckStatus checkBasicDataStore(
-		@Option BasicDataStore basicDataStore,
+		@Option InputDataStore inputDataStore,
 		BasicAuthenticationClient basicAuthenticationClient) {
+
+		BasicDataStore basicDataStore = inputDataStore.getBasicDataStore();
 
 		if (_isNull(basicDataStore.getUser()) ||
 			_isNull(basicDataStore.getPassword())) {
@@ -69,7 +71,7 @@ public class UIActionService {
 				"Username and Password are required");
 		}
 
-		URL serverURL = basicDataStore.getServerURL();
+		URL serverURL = inputDataStore.getServerURL();
 
 		if ((serverURL == null) || _isNull(serverURL.toString())) {
 			return new HealthCheckStatus(
@@ -118,14 +120,16 @@ public class UIActionService {
 				inputDataStore.getAuthenticationMethod()) {
 
 			return checkBasicDataStore(
-				inputDataStore.getBasicDataStore(), basicAuthenticationClient);
+				inputDataStore, basicAuthenticationClient);
 		}
 
-		return checkOAuthDataStore(inputDataStore.getoAuthDataStore());
+		return checkOAuthDataStore(inputDataStore);
 	}
 
 	public HealthCheckStatus checkOAuthDataStore(
-		@Option OAuthDataStore oAuthDataStore) {
+		@Option InputDataStore inputDataStore) {
+
+		OAuthDataStore oAuthDataStore = inputDataStore.getoAuthDataStore();
 
 		if (_isNull(oAuthDataStore.getConsumerKey()) ||
 			_isNull(oAuthDataStore.getConsumerSecret())) {
@@ -135,7 +139,7 @@ public class UIActionService {
 				"Consumer key and secret are required");
 		}
 
-		if (oAuthDataStore.getServerURL() == null) {
+		if (inputDataStore.getServerURL() == null) {
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO, "Server URL is required");
 		}

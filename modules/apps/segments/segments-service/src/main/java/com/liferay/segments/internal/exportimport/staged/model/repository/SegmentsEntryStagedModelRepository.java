@@ -53,10 +53,6 @@ public class SegmentsEntryStagedModelRepository
 			serviceContext.setUuid(segmentsEntry.getUuid());
 		}
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			serviceContext.setUuid(segmentsEntry.getUuid());
-		}
-
 		return _segmentsEntryLocalService.addSegmentsEntry(
 			segmentsEntry.getSegmentsEntryKey(), segmentsEntry.getNameMap(),
 			segmentsEntry.getDescriptionMap(), segmentsEntry.isActive(),

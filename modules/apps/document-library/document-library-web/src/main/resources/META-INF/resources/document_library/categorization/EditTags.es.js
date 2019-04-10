@@ -116,7 +116,7 @@ class EditTags extends Component {
 		const modalDialog = this.element.querySelector('.modal-dialog');
 
 		if (modalDialog && dataProvider && !modalDialog.contains(dataProvider.element)) {
-			modalDialog.appendChild(dataProvider.element)
+			this.element.appendChild(dataProvider.element)
 		}
 	}
 

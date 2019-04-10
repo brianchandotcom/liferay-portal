@@ -525,6 +525,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A CSS class for styling the fieldsets.</description>
+			<name>fieldSetCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The bean edited in the form.</description>
 			<name>formModelBean</name>
 			<required>false</required>

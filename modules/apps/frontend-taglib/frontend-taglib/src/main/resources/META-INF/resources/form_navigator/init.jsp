@@ -32,6 +32,7 @@ page import="com.liferay.taglib.util.PortalIncludeUtil" %>
 <%
 String backURL = (String)request.getAttribute("liferay-frontend:form-navigator:backURL");
 String[] categoryKeys = (String[])request.getAttribute("liferay-frontend:form-navigator:categoryKeys");
+String fieldSetCssClass = (String)request.getAttribute("liferay-frontend:form-navigator:fieldSetCssClass");
 Object formModelBean = request.getAttribute("liferay-frontend:form-navigator:formModelBean");
 String id = (String)request.getAttribute("liferay-frontend:form-navigator:id");
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:form-navigator:showButtons"));

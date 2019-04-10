@@ -52,6 +52,10 @@ public class FormNavigatorTag extends IncludeTag {
 		return _backURL;
 	}
 
+	public String getFieldSetCssClass() {
+		return _fieldSetCssClass;
+	}
+
 	public Object getFormModelBean() {
 		return _formModelBean;
 	}
@@ -66,6 +70,10 @@ public class FormNavigatorTag extends IncludeTag {
 
 	public void setBackURL(String backURL) {
 		_backURL = backURL;
+	}
+
+	public void setFieldSetCssClass(String fieldSetCssClass) {
+		_fieldSetCssClass = fieldSetCssClass;
 	}
 
 	public void setFormModelBean(Object formModelBean) {
@@ -92,6 +100,7 @@ public class FormNavigatorTag extends IncludeTag {
 		super.cleanUp();
 
 		_backURL = null;
+		_fieldSetCssClass = null;
 		_formModelBean = null;
 		_id = null;
 		_showButtons = true;
@@ -108,6 +117,9 @@ public class FormNavigatorTag extends IncludeTag {
 			"liferay-frontend:form-navigator:backURL", _getBackURL());
 		request.setAttribute(
 			"liferay-frontend:form-navigator:categoryKeys", _getCategoryKeys());
+		request.setAttribute(
+			"liferay-frontend:form-navigator:fieldSetCssClass",
+			_fieldSetCssClass);
 		request.setAttribute(
 			"liferay-frontend:form-navigator:formModelBean", _formModelBean);
 		request.setAttribute("liferay-frontend:form-navigator:id", _id);
@@ -158,6 +170,7 @@ public class FormNavigatorTag extends IncludeTag {
 	}
 
 	private String _backURL;
+	private String _fieldSetCssClass;
 	private Object _formModelBean;
 	private String _id;
 	private boolean _showButtons = true;

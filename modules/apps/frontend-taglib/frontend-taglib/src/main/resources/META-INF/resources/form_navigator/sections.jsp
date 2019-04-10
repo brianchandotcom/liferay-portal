@@ -34,6 +34,7 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 
 	<liferay-frontend:fieldset
 		collapsible="<%= formNavigatorEntries.size() > 1 %>"
+		cssClass="<%= fieldSetCssClass %>"
 		id="<%= _getSectionId(formNavigatorEntry.getKey()) %>"
 		label="<%= (formNavigatorEntries.size() > 1) ? formNavigatorEntry.getLabel(locale) : StringPool.BLANK %>"
 	>
@@ -72,6 +73,7 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 		<liferay-frontend:fieldset
 			collapsed="<%= true %>"
 			collapsible="<%= true %>"
+			cssClass="<%= fieldSetCssClass %>"
 			id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>"
 			label="<%= curFormNavigatorEntry.getLabel(locale) %>"
 		>

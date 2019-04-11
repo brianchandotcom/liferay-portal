@@ -154,7 +154,19 @@ public abstract class BaseTemplate implements Template {
 			}
 		}
 
-		write(writer);
+		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
+
+		try {
+			doProcessTemplate(writer);
+		}
+		catch (Exception e) {
+			put(TemplateConstants.WRITER, writer);
+
+			handleException(e, writer);
+		}
+		finally {
+			put(TemplateConstants.WRITER, oldWriter);
+		}
 	}
 
 	@Override
@@ -218,22 +230,6 @@ public abstract class BaseTemplate implements Template {
 	protected abstract void processTemplate(
 			TemplateResource templateResource, Writer writer)
 		throws Exception;
-
-	protected void write(Writer writer) throws TemplateException {
-		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
-
-		try {
-			doProcessTemplate(writer);
-		}
-		catch (Exception e) {
-			put(TemplateConstants.WRITER, writer);
-
-			handleException(e, writer);
-		}
-		finally {
-			put(TemplateConstants.WRITER, oldWriter);
-		}
-	}
 
 	protected Map<String, Object> context;
 	protected TemplateResource errorTemplateResource;

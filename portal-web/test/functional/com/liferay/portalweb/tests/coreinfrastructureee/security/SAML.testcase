@@ -614,13 +614,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
-
-		var enableSettingList = "enabled,ldapExportEnabled,ldapImportEnabled,importOnStartup";
+		var enableSettingList = "enabled,ldapImportEnabled,importOnStartup";
 
 		PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
 

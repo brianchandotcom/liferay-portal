@@ -417,9 +417,11 @@ definition {
 			virtualHostsURL = "http://www.able.com:8080"
 		);
 
-		PortalSettings.gotoPortalSettings();
-
-		PortalSettingsNavigator.gotoLDAP();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		FormFields.viewCheckboxChecked(fieldName = "InstanceSettingsPortlet_enabled");
 	}

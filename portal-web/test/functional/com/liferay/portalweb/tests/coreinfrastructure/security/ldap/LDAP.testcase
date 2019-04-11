@@ -32,15 +32,11 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LDAP#ImportLDAPUserWithBlankPassword";
 
-		PortalSettings.gotoPortalSettings();
-
 		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
 		PortalSettings.editLDAPServer(LDAPServerName = "ApacheDS Server");
 
 		PortalSettings.testLDAPConnection();
-
-		PortalSettings.gotoPortalSettings();
 
 		var enableSettingList = "enabled,ldapImportEnabled,importOnStartup";
 
@@ -91,17 +87,13 @@ definition {
 		property custom.properties = "field.enable.com.liferay.portal.kernel.model.Contact.male=true";
 		property test.name.skip.portal.instance = "LDAP#ResetFieldsValueForImportedLDAPUser";
 
-		PortalSettings.gotoPortalSettings();
-
 		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
 		PortalSettings.editLDAPServer(LDAPServerName = "ApacheDS Server");
 
 		PortalSettings.testLDAPConnection();
 
-		PortalSettings.gotoPortalSettings();
-
-		var enableSettingList = "enabled,ldapExportEnabled,ldapImportEnabled,importOnStartup";
+		var enableSettingList = "enabled,ldapImportEnabled,importOnStartup";
 
 		PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
 
@@ -232,8 +224,6 @@ definition {
 		);
 
 		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
-
-		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.configureLDAPSetting(enableSettingList = "enabled");
 

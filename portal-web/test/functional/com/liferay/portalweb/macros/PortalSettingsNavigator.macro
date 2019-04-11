@@ -2,10 +2,4 @@ definition {
 	macro expandAuthenticationPanel {
 		Panel.expandPanel(panel = "Authentication");
 	}
-
-	macro gotoLDAP {
-		PortalSettingsNavigator.expandAuthenticationPanel();
-
-		Navigator.gotoNavTab(navTab = "LDAP");
-	}
 }

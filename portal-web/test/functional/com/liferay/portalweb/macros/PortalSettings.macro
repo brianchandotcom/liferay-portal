@@ -4,7 +4,11 @@ definition {
 	}
 
 	macro addLDAPServer {
-		PortalSettingsNavigator.gotoLDAP();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Servers",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON",
@@ -196,15 +200,36 @@ definition {
 	}
 
 	macro configureLDAPSetting {
-		PortalSettingsNavigator.gotoLDAP();
-
 		for (var enableSetting : list "${enableSettingList}") {
-			var enableSetting = "InstanceSettingsPortlet_${enableSetting}";
 
-			FormFields.enableCheckbox(fieldName = "${enableSetting}");
+			if ("${enableSetting}" == "enabled") {
+				PortalSettings.gotoConfiguration(
+					configurationCategory = "LDAP",
+					configurationName = "General",
+					configurationScope = "Virtual Instance Scope"
+				);
+			}
+
+			if ("${enableSetting}" == "ldapImportEnabled") {
+				PortalSettings.gotoConfiguration(
+					configurationCategory = "LDAP",
+					configurationName = "Import",
+					configurationScope = "Virtual Instance Scope"
+				);
+			}
+
+			if ("${enableSetting}" == "importOnStartup") {
+				PortalSettings.gotoConfiguration(
+					configurationCategory = "LDAP",
+					configurationName = "Import",
+					configurationScope = "Virtual Instance Scope"
+				);
+			}
+
+			FormFields.enableCheckbox(fieldName = "InstanceSettingsPortlet_${enableSetting}");
+
+			PortletEntry.save();
 		}
-
-		PortletEntry.save();
 	}
 
 	macro configureOpenSSO {
@@ -491,7 +516,11 @@ definition {
 	}
 
 	macro editLDAPServer {
-		PortalSettingsNavigator.gotoLDAP();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Servers",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		var key_LDAPServerName = "${LDAPServerName}";
 
@@ -898,13 +927,39 @@ definition {
 	}
 
 	macro viewAuthenticationLDAPCP {
-		PortalSettingsNavigator.gotoLDAP();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Export",
+			configurationScope = "Virtual Instance Scope"
+		);
 
-		for (var fieldName : list "enabled,required,ldapImportEnabled,ldapExportEnabled,passwordPolicyEnabled") {
+		FormFields.viewCheckboxNotChecked(fieldName = "ldapExportEnabled");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope"
+		);
+
+		for (var fieldName : list "enabled,required,passwordPolicyEnabled") {
 			var fieldName = "InstanceSettingsPortlet_${fieldName}";
 
 			FormFields.viewCheckboxNotChecked(fieldName = "${fieldName}");
 		}
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Import",
+			configurationScope = "Virtual Instance Scope"
+		);
+
+		FormFields.viewCheckboxNotChecked(fieldName = "ldapImportEnabled");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Servers",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON",
@@ -1339,12 +1394,33 @@ definition {
 	}
 
 	macro viewEnabledLDAPSetting {
-		PortalSettingsNavigator.gotoLDAP();
-
 		for (var enableSetting : list "${enableSettingList}") {
-			var enableSetting = "InstanceSettingsPortlet_${enableSetting}";
 
-			FormFields.viewCheckboxChecked(fieldName = "${enableSetting}");
+			if ("${enableSetting}" == "enabled") {
+				PortalSettings.gotoConfiguration(
+					configurationCategory = "LDAP",
+					configurationName = "General",
+					configurationScope = "Virtual Instance Scope"
+				);
+			}
+
+			if ("${enableSetting}" == "ldapImportEnabled") {
+				PortalSettings.gotoConfiguration(
+					configurationCategory = "LDAP",
+					configurationName = "Import",
+					configurationScope = "Virtual Instance Scope"
+				);
+			}
+
+			if ("${enableSetting}" == "importOnStartup") {
+				PortalSettings.gotoConfiguration(
+					configurationCategory = "LDAP",
+					configurationName = "Import",
+					configurationScope = "Virtual Instance Scope"
+				);
+			}
+
+			FormFields.viewCheckboxChecked(fieldName = "InstanceSettingsPortlet_${enableSetting}");
 		}
 	}
 

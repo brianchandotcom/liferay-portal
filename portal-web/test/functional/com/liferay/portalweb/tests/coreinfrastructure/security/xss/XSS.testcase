@@ -244,9 +244,11 @@ definition {
 	@description = "This is a use case for LPS-59198."
 	@priority = "3"
 	test ViewLDAP {
-		PortalSettings.gotoPortalSettings();
-
-		PortalSettingsNavigator.gotoLDAP();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Servers",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.addLDAPServer(
 			LDAPServerName = '''<script>alert(123);</script>'''

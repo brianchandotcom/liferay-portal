@@ -104,7 +104,6 @@ class EditTags extends Component {
 				if (responseTags && responseDescription) {
 					this._loading = false;
 					this._commonTags = this._setCommonTags((responseTags.items || []).map(item => item.name));
-					this.description = responseDescription.description;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 				}
 			}
@@ -258,16 +257,6 @@ EditTags.STATE = {
 	 * @type {Boolean}
 	 */
 	_showModal: Config.bool().value(false).internal(),
-
-	/**
-	 * Description
-	 *
-	 * @instance
-	 * @memberof EditTags
-	 * @review
-	 * @type {String}
-	 */
-	description: Config.string(),
 
 	/**
 	 * List of selected file entries.

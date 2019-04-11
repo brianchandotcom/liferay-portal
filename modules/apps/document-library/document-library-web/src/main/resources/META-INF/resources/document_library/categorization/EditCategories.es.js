@@ -135,7 +135,6 @@ class EditCategories extends Component {
 			([responseCategories, responseDescription]) => {
 				if (responseCategories && responseDescription) {
 					this.loading = false;
-					this.description = responseDescription.description;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 					this.vocabularies = this._parseVocabularies(responseCategories.items || []);
 				}
@@ -360,16 +359,6 @@ class EditCategories extends Component {
  * @type {!Object}
  */
 EditCategories.STATE = {
-
-	/**
-	 * Description
-	 *
-	 * @instance
-	 * @memberof EditCategories
-	 * @review
-	 * @type {String}
-	 */
-	description: Config.string(),
 
 	/**
 	 * List of selected file entries.

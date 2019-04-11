@@ -1,19 +1,9 @@
-/**
- * @param {!Date} d
- * @return {!Date}
- */
-
 export function setDateSelected(d) {
 	const newDate = clone(d);
 
 	newDate.setHours(12, 0, 0, 0);
 	return `${newDate.getFullYear()} ${newDate.getMonth()} ${newDate.getDate()}`;
 }
-
-/**
- * @param {!Date} d
- * @return {!Date}
- */
 
 export function formatDate(d) {
 	const dateSplit = d.split(' ');
@@ -22,20 +12,9 @@ export function formatDate(d) {
 	return newDate;
 }
 
-/**
- * Clone a date object.
- * @param {!Date} d The date to clone
- * @return {!Date} The cloned date
- */
-
 export function clone(d) {
 	return new Date(d.getTime());
 }
-
-/**
- * @param {!Date} d
- * @return {!Date}
- */
 
 export function getDaysInMonth(d) {
 	const firstDayOfMonth = new Date(d.getFullYear(), d.getMonth(), 1, 12);
@@ -45,13 +24,6 @@ export function getDaysInMonth(d) {
 
 	return firstDayOfMonth.getDate();
 }
-
-/**
- * Based on https://github.com/gpbl/react-day-picker/blob/master/src/Helpers.js#L55
- * @param {!Date} d
- * @param {!number} firstDayOfWeek
- * @return {!Array}
- */
 
 export function getWeekArray(d, firstDayOfWeek = 0) {
 	const dayArray = [];
@@ -85,8 +57,6 @@ export function getWeekArray(d, firstDayOfWeek = 0) {
 		}
 	);
 
-	// unshift days to start the first week
-
 	const firstWeek = weekArray[0];
 
 	for (let i = 7 - firstWeek.length; i > 0; i -= 1) {
@@ -102,8 +72,6 @@ export function getWeekArray(d, firstDayOfWeek = 0) {
 			}
 		);
 	}
-
-	// push days until the end of the last week
 
 	const lastWeek = weekArray[weekArray.length - 1];
 

@@ -345,10 +345,6 @@ class DatePicker extends Component {
 		)
 	};
 
-	/**
-	 * @inheritDoc
-	 */
-
 	attached() {
 		const {base} = this.refs;
 		const {inputElement} = base.refs;
@@ -362,10 +358,6 @@ class DatePicker extends Component {
 			}
 		);
 	}
-
-	/**
-	 * @inheritDoc
-	 */
 
 	created() {
 		this._eventHandler = new EventHandler();
@@ -391,10 +383,6 @@ class DatePicker extends Component {
 		this._daySelected = Helpers.setDateSelected(value);
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-
 	detached() {
 		this._eventHandler.removeAllListeners();
 	}
@@ -406,11 +394,6 @@ class DatePicker extends Component {
 			this._vanillaTextMask.destroy();
 		}
 	}
-
-	/**
-	 * Returns date format based on user locale from Liefray.AUI.
-	 * @return {!String}
-	 */
 
 	getDateFormat() {
 		const dateFormat = Liferay.AUI.getDateFormat();
@@ -432,11 +415,6 @@ class DatePicker extends Component {
 
 		return dateFormat;
 	}
-
-	/**
-	 * Returns the input mask for the vanillaTextMask plugin.
-	 * @return {!String}
-	 */
 
 	getInputMask() {
 		const dateFormat = this.getDateFormat();
@@ -463,11 +441,6 @@ class DatePicker extends Component {
 		return inputMaskArray;
 	}
 
-	/**
-	 * Generates a range of +/- 5 years based on the current year.
-	 * @return {!Array}
-	 */
-
 	getYears() {
 		const currentYear = this._year;
 		const years = [];
@@ -478,11 +451,6 @@ class DatePicker extends Component {
 
 		return years;
 	}
-
-	/**
-	 * Checks if a given string is empty according to the input mask
-	 * @return {!Boolean}
-	 */
 
 	isEmptyValue(string) {
 		const inputMask = this.getInputMask();
@@ -500,20 +468,12 @@ class DatePicker extends Component {
 		);
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-
 	prepareStateForRender(state) {
 		return {
 			...state,
 			years: this.getYears()
 		};
 	}
-
-	/**
-	 * @inheritDoc
-	 */
 
 	rendered() {
 		if (this._vanillaTextMask) {
@@ -523,10 +483,6 @@ class DatePicker extends Component {
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-
 	syncCurrentMonth(value) {
 		if (value) {
 			this._weeks = Helpers.getWeekArray(value, this.firstDayOfWeek);
@@ -534,10 +490,6 @@ class DatePicker extends Component {
 			this._year = value.getFullYear();
 		}
 	}
-
-	/**
-	 * @inheritDoc
-	 */
 
 	syncExpanded() {
 		if (this.expanded) {
@@ -549,12 +501,6 @@ class DatePicker extends Component {
 			this._eventHandler.removeAllListeners();
 		}
 	}
-
-	/**
-	 * Returns the default value for the "dateFormat" state.
-	 * It converts the format from "%d/%m/%Y" to "DD/MM/YYYY".
-	 * @protected
-	 */
 
 	_dateFormatValueFn() {
 		const dateFormat = this.getDateFormat();
@@ -588,12 +534,6 @@ class DatePicker extends Component {
 		return `${year} ${month} ${day}`;
 	}
 
-	/**
-	 * Handles the click on element of the day
-	 * @param {!Event} event
-	 * @protected
-	 */
-
 	_handleDayClicked(event) {
 		const ariaLabel = event.target.getAttribute('ariaLabel');
 		const selectedDate = Helpers.formatDate(ariaLabel);
@@ -612,12 +552,6 @@ class DatePicker extends Component {
 		this._handleFieldEdited();
 	}
 
-	/**
-	 * Handles the click of the document to hide the datepicker.
-	 * @param {!Event} event
-	 * @protected
-	 */
-
 	_handleDocClick(event) {
 		if (this.element.contains(event.target)) {
 			return;
@@ -625,21 +559,12 @@ class DatePicker extends Component {
 		this.expanded = false;
 	}
 
-	/**
-	 * Handles the click on the dot button.
-	 * @protected
-	 */
-
 	_handleDotClicked() {
 		this._daySelected = this._getCurrentDate();
 		this.currentMonth = Helpers.formatDate(this._daySelected);
 		this.value = this.currentMonth;
 		this._handleFieldEdited();
 	}
-
-	/**
-	 * @inheritdoc
-	 */
 
 	_handleFieldEdited() {
 		let value = Helpers.formatDate(this._daySelected);
@@ -657,33 +582,15 @@ class DatePicker extends Component {
 		);
 	}
 
-	/**
-	 * Handles the blur on the input element.
-	 * @param {!Event} event
-	 * @protected
-	 */
-
 	_handleInputBlurred({target}) {
 		if (!this.isEmptyValue(target.value)) {
 			this.value = Helpers.formatDate(this._daySelected);
 		}
 	}
 
-	/**
-	 * Handles the click on the input element.
-	 * @param {!Event} event
-	 * @protected
-	 */
-
 	_handleInputFocused() {
 		this.expanded = true;
 	}
-
-	/**
-	 * Handles the change of the year and month of the header
-	 * @param {!Event} event
-	 * @protected
-	 */
 
 	_handleNavigateChange(event) {
 		const {month, year} = event.target.form;
@@ -691,22 +598,12 @@ class DatePicker extends Component {
 		this.currentMonth = new Date(year.value, month.value);
 	}
 
-	/**
-	 * Handles the next month button
-	 * @protected
-	 */
-
 	_handleNextMonth() {
 		this.currentMonth = moment(this.currentMonth)
 			.clone()
 			.add(1, 'M')
 			.toDate();
 	}
-
-	/**
-	 * Handles the input change.
-	 * @param {!Event} event
-	 */
 
 	_handleOnInput(event) {
 		const {value} = event.target;
@@ -728,11 +625,6 @@ class DatePicker extends Component {
 		this._handleFieldEdited();
 	}
 
-	/**
-	 * Handles the previous month button
-	 * @protected
-	 */
-
 	_handlePreviousMonth() {
 		this.currentMonth = moment(this.currentMonth)
 			.clone()
@@ -740,21 +632,9 @@ class DatePicker extends Component {
 			.toDate();
 	}
 
-	/**
-	 * Handles datepicker view
-	 * @protected
-	 */
-
 	_handleToggle() {
 		this.expanded = !this.expanded;
 	}
-
-	/**
-	 * Set the current month formatted
-	 * @param {!Date} value
-	 * @protected
-	 * @return {!Date}
-	 */
 
 	_setCurrentMonth(value) {
 		const currentMonth = moment(value)
@@ -765,13 +645,6 @@ class DatePicker extends Component {
 
 		return currentMonth;
 	}
-
-	/**
-	 * Sets the formatted date of the input.
-	 * @param {!Date} value
-	 * @protected
-	 * @return {!String}
-	 */
 
 	_setValue(value) {
 		let newValue;

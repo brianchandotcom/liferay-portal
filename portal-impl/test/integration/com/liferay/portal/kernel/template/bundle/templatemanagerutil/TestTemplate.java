@@ -56,16 +56,6 @@ public class TestTemplate implements Template {
 	}
 
 	@Override
-	public Object get(String key) {
-		return null;
-	}
-
-	@Override
-	public String[] getKeys() {
-		return null;
-	}
-
-	@Override
 	public boolean isEmpty() {
 		return false;
 	}

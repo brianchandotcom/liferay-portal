@@ -65,16 +65,6 @@ public class RestrictedTemplate implements Template {
 	}
 
 	@Override
-	public Object get(String key) {
-		return _template.get(key);
-	}
-
-	@Override
-	public String[] getKeys() {
-		return _template.getKeys();
-	}
-
-	@Override
 	public boolean isEmpty() {
 		return _template.isEmpty();
 	}

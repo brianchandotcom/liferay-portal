@@ -94,22 +94,6 @@ public abstract class BaseTemplate implements Template {
 	}
 
 	@Override
-	public Object get(String key) {
-		if (key == null) {
-			return null;
-		}
-
-		return context.get(key);
-	}
-
-	@Override
-	public String[] getKeys() {
-		Set<String> keys = context.keySet();
-
-		return keys.toArray(new String[keys.size()]);
-	}
-
-	@Override
 	public boolean isEmpty() {
 		return context.isEmpty();
 	}

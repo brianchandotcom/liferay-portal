@@ -38,6 +38,7 @@ class EmptyDropZone extends Component {
 	static propTypes = {
 		canDrop: PropTypes.bool,
 		connectDropTarget: PropTypes.func,
+		empty: PropTypes.bool,
 		hover: PropTypes.bool,
 		onCriterionAdd: PropTypes.func.isRequired,
 		propertyKey: PropTypes.string.isRequired
@@ -47,49 +48,29 @@ class EmptyDropZone extends Component {
 		const {
 			canDrop,
 			connectDropTarget,
+			empty,
 			hover
 		} = this.props;
 
-		const {assetsPath} = this.context;
+		const emptyZoneClasses = getCN(
+			'empty-drop-zone-root',
+			{
+				'empty-drop-zone-dashed border-primary rounded': !canDrop || !hover
+			}
+		);
 
 		const targetClasses = getCN(
-			'empty-drop-zone-target',
+			empty ? 'empty-drop-zone-target' : 'drop-zone-target',
 			{
-				'dnd-hover': canDrop && hover
+				'empty-drop-zone-target-solid dnd-hover border-primary rounded': canDrop && hover
 			}
 		);
 
 		return (
-			<div className="empty-drop-zone-root">
+			<div className={emptyZoneClasses}>
 				{connectDropTarget(
-					<div
-						className={targetClasses}
-					>
+					<div className={targetClasses}>
 						<div className="empty-drop-zone-indicator" />
-
-						<div className="empty-drop-zone-help-message">
-							<div className="message-item">
-								<img
-									className="message-icon"
-									src={`${assetsPath}/drag-and-drop.svg`}
-								/>
-
-								<span>
-									{Liferay.Language.get('drag-and-drop-criterion-from-the-right-to-add-rules')}
-								</span>
-							</div>
-
-							<div className="message-item">
-								<img
-									className="message-icon"
-									src={`${assetsPath}/drag-over.svg`}
-								/>
-
-								<span>
-									{Liferay.Language.get('drag-and-drop-over-an-existing-criteria-to-form-groups')}
-								</span>
-							</div>
-						</div>
 					</div>
 				)}
 			</div>

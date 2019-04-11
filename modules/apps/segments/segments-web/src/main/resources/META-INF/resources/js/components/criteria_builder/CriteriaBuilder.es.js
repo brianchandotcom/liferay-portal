@@ -1,11 +1,11 @@
 import CriteriaGroup from './CriteriaGroup.es';
+import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {
 	insertAtIndex,
 	removeAtIndex,
-	replaceAtIndex,
-	sub
+	replaceAtIndex
 } from '../../utils/utils.es';
 
 const CRITERIA_GROUP_SHAPE = {
@@ -44,6 +44,8 @@ class CriteriaBuilder extends Component {
 			}
 		),
 		editing: PropTypes.bool.isRequired,
+		editingCriteria: PropTypes.bool.isRequired,
+		empty: PropTypes.bool.isRequired,
 
 		/**
 		 * Name of the entity that a set of properties belongs to, for example,
@@ -253,6 +255,9 @@ class CriteriaBuilder extends Component {
 		const {
 			criteria,
 			editing,
+			editingCriteria,
+			editingId,
+			empty,
 			entityName,
 			modelLabel,
 			propertyKey,
@@ -262,32 +267,33 @@ class CriteriaBuilder extends Component {
 			supportedPropertyTypes
 		} = this.props;
 
-		return (
-			<div className="criteria-builder-root sheet">
-				<div className="criteria-builder-toolbar">
-					<div className="criteria-model-label">
-						{sub(
-							Liferay.Language.get('x-properties'),
-							[modelLabel]
-						)}
-					</div>
-				</div>
+		const criteriaBuilderClassNames = getCN(
+			'criteria-builder-root',
+			{
+				'read-only-container-root': !editingCriteria && editing && editingId != undefined
+			}
+		);
 
-				<CriteriaGroup
-					criteria={criteria}
-					editing={editing}
-					entityName={entityName}
-					groupId={criteria && criteria.groupId}
-					modelLabel={modelLabel}
-					onChange={this._handleCriteriaChange}
-					onMove={this._handleCriterionMove}
-					propertyKey={propertyKey}
-					root
-					supportedConjunctions={supportedConjunctions}
-					supportedOperators={supportedOperators}
-					supportedProperties={supportedProperties}
-					supportedPropertyTypes={supportedPropertyTypes}
-				/>
+		return (
+			<div className={criteriaBuilderClassNames}>
+				{(!empty || editing) &&
+					<CriteriaGroup
+						criteria={criteria}
+						editing={editingCriteria}
+						empty={empty}
+						entityName={entityName}
+						groupId={criteria && criteria.groupId}
+						modelLabel={modelLabel}
+						onChange={this._handleCriteriaChange}
+						onMove={this._handleCriterionMove}
+						propertyKey={propertyKey}
+						root
+						supportedConjunctions={supportedConjunctions}
+						supportedOperators={supportedOperators}
+						supportedProperties={supportedProperties}
+						supportedPropertyTypes={supportedPropertyTypes}
+					/>
+				}
 			</div>
 		);
 	}

@@ -165,6 +165,54 @@ public class FreeMarkerTool {
 			schema);
 	}
 
+	public String getResourceArguments(
+		List<JavaMethodParameter> javaMethodParameters) {
+
+		return OpenAPIParserUtil.getArguments(javaMethodParameters);
+	}
+
+	public List<JavaMethodSignature> getResourceJavaMethodSignatures(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
+
+		return ResourceOpenAPIParser.getJavaMethodSignatures(
+			configYAML, openAPIYAML, schemaName);
+	}
+
+	public String getResourceMethodAnnotations(
+		JavaMethodSignature javaMethodSignature) {
+
+		return ResourceOpenAPIParser.getMethodAnnotations(javaMethodSignature);
+	}
+
+	public String getResourceParameters(
+		List<JavaMethodParameter> javaMethodParameters, Operation operation,
+		boolean annotation) {
+
+		return ResourceOpenAPIParser.getParameters(
+			javaMethodParameters, operation, annotation);
+	}
+
+	public String getResourceTestCaseArguments(
+		List<JavaMethodParameter> javaMethodParameters) {
+
+		return OpenAPIParserUtil.getArguments(javaMethodParameters);
+	}
+
+	public List<JavaMethodSignature> getResourceTestCaseJavaMethodSignatures(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
+
+		return ResourceTestCaseOpenAPIParser.getJavaMethodSignatures(
+			configYAML, openAPIYAML, schemaName);
+	}
+
+	public String getResourceTestCaseParameters(
+		List<JavaMethodParameter> javaMethodParameters, Operation operation,
+		boolean annotation) {
+
+		return ResourceTestCaseOpenAPIParser.getParameters(
+			javaMethodParameters, operation, annotation);
+	}
+
 	public JavaMethodSignature getSchemaJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String httpMethod,
 		String parameterName, String schemaName) {
@@ -215,54 +263,6 @@ public class FreeMarkerTool {
 		return null;
 	}
 
-	public String getResourceArguments(
-		List<JavaMethodParameter> javaMethodParameters) {
-
-		return OpenAPIParserUtil.getArguments(javaMethodParameters);
-	}
-
-	public List<JavaMethodSignature> getResourceJavaMethodSignatures(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
-
-		return ResourceOpenAPIParser.getJavaMethodSignatures(
-			configYAML, openAPIYAML, schemaName);
-	}
-
-	public String getResourceMethodAnnotations(
-		JavaMethodSignature javaMethodSignature) {
-
-		return ResourceOpenAPIParser.getMethodAnnotations(javaMethodSignature);
-	}
-
-	public String getResourceParameters(
-		List<JavaMethodParameter> javaMethodParameters, Operation operation,
-		boolean annotation) {
-
-		return ResourceOpenAPIParser.getParameters(
-			javaMethodParameters, operation, annotation);
-	}
-
-	public String getResourceTestCaseArguments(
-		List<JavaMethodParameter> javaMethodParameters) {
-
-		return OpenAPIParserUtil.getArguments(javaMethodParameters);
-	}
-
-	public List<JavaMethodSignature> getResourceTestCaseJavaMethodSignatures(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
-
-		return ResourceTestCaseOpenAPIParser.getJavaMethodSignatures(
-			configYAML, openAPIYAML, schemaName);
-	}
-
-	public String getResourceTestCaseParameters(
-		List<JavaMethodParameter> javaMethodParameters, Operation operation,
-		boolean annotation) {
-
-		return ResourceTestCaseOpenAPIParser.getParameters(
-			javaMethodParameters, operation, annotation);
-	}
-
 	public String getSchemaVarName(String schemaName) {
 		return OpenAPIParserUtil.getSchemaVarName(schemaName);
 	}
@@ -283,20 +283,6 @@ public class FreeMarkerTool {
 			if (isPathParameter(javaMethodParameter, operation)) {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	public boolean hasSchemaJavaMethodSignature(
-		List<JavaMethodSignature> javaMethodSignatures, String httpMethod,
-		String parameterName, String schemaName) {
-
-		JavaMethodSignature javaMethodSignature = getSchemaJavaMethodSignature(
-			javaMethodSignatures, httpMethod, parameterName, schemaName);
-
-		if (javaMethodSignature != null) {
-			return true;
 		}
 
 		return false;
@@ -326,6 +312,20 @@ public class FreeMarkerTool {
 		}
 
 		return true;
+	}
+
+	public boolean hasSchemaJavaMethodSignature(
+		List<JavaMethodSignature> javaMethodSignatures, String httpMethod,
+		String parameterName, String schemaName) {
+
+		JavaMethodSignature javaMethodSignature = getSchemaJavaMethodSignature(
+			javaMethodSignatures, httpMethod, parameterName, schemaName);
+
+		if (javaMethodSignature != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isDTOSchemaProperty(

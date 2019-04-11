@@ -453,7 +453,7 @@ class CriteriaRow extends Component {
 
 							<ClayButton
 								borderless
-								iconName="trash"
+								iconName="times-circle"
 								monospaced
 								onClick={this._handleDelete}
 							/>

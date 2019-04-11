@@ -61,10 +61,14 @@ public class FreeMarkerTemplate extends BaseTemplate {
 
 		super(
 			templateResource, errorTemplateResource, context,
-			templateContextHelper, templateResourceCache);
+			templateContextHelper);
 
 		_configuration = configuration;
 		_templateResourceCache = templateResourceCache;
+
+		if (templateResourceCache.isEnabled()) {
+			cacheTemplateResource(templateResourceCache, templateResource);
+		}
 	}
 
 	@Override

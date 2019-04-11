@@ -19,10 +19,8 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.template.BaseTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
@@ -59,7 +57,7 @@ public class XSLTemplate extends BaseTemplate {
 
 		super(
 			xslTemplateResource, errorTemplateResource, Collections.emptyMap(),
-			templateContextHelper, _DUMMY_TEMPLATE_RESOURCE_CACHE);
+			templateContextHelper);
 
 		if (xslTemplateResource == null) {
 			throw new IllegalArgumentException("XSL template resource is null");
@@ -232,9 +230,6 @@ public class XSLTemplate extends BaseTemplate {
 				e);
 		}
 	}
-
-	private static final TemplateResourceCache _DUMMY_TEMPLATE_RESOURCE_CACHE =
-		ProxyFactory.newDummyInstance(TemplateResourceCache.class);
 
 	private static final ClassLoader _TRANSFORMER_FACTORY_CLASS_LOADER;
 

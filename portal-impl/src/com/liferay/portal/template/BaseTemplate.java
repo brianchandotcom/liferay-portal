@@ -40,8 +40,7 @@ public abstract class BaseTemplate implements Template {
 	public BaseTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
-		TemplateContextHelper templateContextHelper,
-		TemplateResourceCache templateResourceCache) {
+		TemplateContextHelper templateContextHelper) {
 
 		if (templateResource == null) {
 			throw new IllegalArgumentException("Template resource is null");
@@ -64,10 +63,6 @@ public abstract class BaseTemplate implements Template {
 		}
 
 		_templateContextHelper = templateContextHelper;
-
-		if (templateResourceCache.isEnabled()) {
-			cacheTemplateResource(templateResourceCache, templateResource);
-		}
 	}
 
 	@Override

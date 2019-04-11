@@ -28,12 +28,10 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -75,7 +73,7 @@ public class SoyTemplate extends BaseTemplate {
 
 		super(
 			soyTemplateResource, errorTemplateResource, null,
-			templateContextHelper, _DUMMY_TEMPLATE_RESOURCE_CACHE);
+			templateContextHelper);
 
 		if (ListUtil.isEmpty(soyTemplateResource.getTemplateResources())) {
 			throw new IllegalArgumentException("Template resource is null");
@@ -392,9 +390,6 @@ public class SoyTemplate extends BaseTemplate {
 	private void _setBaseContext() {
 		context = _soyContextImpl;
 	}
-
-	private static final TemplateResourceCache _DUMMY_TEMPLATE_RESOURCE_CACHE =
-		ProxyFactory.newDummyInstance(TemplateResourceCache.class);
 
 	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
 

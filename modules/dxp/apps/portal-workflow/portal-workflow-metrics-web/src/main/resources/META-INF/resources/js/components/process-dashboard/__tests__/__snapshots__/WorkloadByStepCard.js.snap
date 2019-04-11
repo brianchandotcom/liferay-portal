@@ -119,7 +119,7 @@ exports[`Should component receive props 1`] = `
                         Workload by Step
                       </span>
                       <Tooltip
-                        message="Workload by step shows the number of items in each step, by SLA deadline. The total number of pending items may not add up, since multiple tasks may occur simultaneously."
+                        message="Workload by step shows the number of items in each step, by SLA deadline. The total number of pending items may not add up since multiple tasks occur simultaneously."
                         position="right"
                         width="288"
                       >
@@ -317,7 +317,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                         Workload by Step
                       </span>
                       <Tooltip
-                        message="Workload by step shows the number of items in each step, by SLA deadline. The total number of pending items may not add up, since multiple tasks may occur simultaneously."
+                        message="Workload by step shows the number of items in each step, by SLA deadline. The total number of pending items may not add up since multiple tasks occur simultaneously."
                         position="right"
                         width="288"
                       >
@@ -519,7 +519,7 @@ exports[`Should render component 1`] = `
                         Workload by Step
                       </span>
                       <Tooltip
-                        message="Workload by step shows the number of items in each step, by SLA deadline. The total number of pending items may not add up, since multiple tasks may occur simultaneously."
+                        message="Workload by step shows the number of items in each step, by SLA deadline. The total number of pending items may not add up since multiple tasks occur simultaneously."
                         position="right"
                         width="288"
                       >

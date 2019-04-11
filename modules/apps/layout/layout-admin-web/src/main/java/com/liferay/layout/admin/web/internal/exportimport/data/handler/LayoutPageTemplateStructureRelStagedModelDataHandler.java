@@ -18,11 +18,15 @@ import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Map;
 
@@ -55,6 +59,18 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 			portletDataContext.getExportDataElement(
 				layoutPageTemplateStructureRel);
 
+		if (layoutPageTemplateStructureRel.getSegmentsExperienceId() !=
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					layoutPageTemplateStructureRel.getSegmentsExperienceId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layoutPageTemplateStructureRel,
+				segmentsExperience, PortletDataContext.REFERENCE_TYPE_STRONG);
+		}
+
 		portletDataContext.addClassedModel(
 			layoutPageTemplateStructureRelElement,
 			ExportImportPathUtil.getModelPath(layoutPageTemplateStructureRel),
@@ -76,6 +92,15 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 			layoutPageTemplateStructureRel.getLayoutPageTemplateStructureId(),
 			layoutPageTemplateStructureRel.getLayoutPageTemplateStructureId());
 
+		Map<Long, Long> segmentsExperienceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				SegmentsExperience.class);
+
+		long segmentsExperienceId = MapUtil.getLong(
+			segmentsExperienceIds,
+			layoutPageTemplateStructureRel.getSegmentsExperienceId(),
+			layoutPageTemplateStructureRel.getSegmentsExperienceId());
+
 		LayoutPageTemplateStructureRel importedLayoutPageTemplateStructureRel =
 			(LayoutPageTemplateStructureRel)
 				layoutPageTemplateStructureRel.clone();
@@ -84,6 +109,8 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 			portletDataContext.getScopeGroupId());
 		importedLayoutPageTemplateStructureRel.setLayoutPageTemplateStructureId(
 			layoutPageTemplateStructureId);
+		importedLayoutPageTemplateStructureRel.setSegmentsExperienceId(
+			segmentsExperienceId);
 
 		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
@@ -119,6 +146,9 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel)",

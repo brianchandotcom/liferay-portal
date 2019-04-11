@@ -143,16 +143,6 @@ public class XSLTemplate extends BaseTemplate {
 	}
 
 	@Override
-	public Object get(Object key) {
-		return context.get(key);
-	}
-
-	@Override
-	public Object get(String key) {
-		return context.get(key);
-	}
-
-	@Override
 	public void processTemplate(Writer writer) throws TemplateException {
 		Thread currentThread = Thread.currentThread();
 
@@ -207,15 +197,6 @@ public class XSLTemplate extends BaseTemplate {
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
-	}
-
-	@Override
-	public Object put(String key, Object value) {
-		if (value == null) {
-			return null;
-		}
-
-		return context.put(key, value);
 	}
 
 	@Override

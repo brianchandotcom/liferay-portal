@@ -58,13 +58,9 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		PortalSettings.gotoPortalSettings();
-
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP(
 			orgName = "Organization Name"
 		);
-
-		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP(
 			orgName = "Organization Name"
@@ -109,13 +105,9 @@ definition {
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
-		PortalSettings.gotoPortalSettings();
-
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsRolesCP(
 			roleTitle = "Roles Regrole Name"
 		);
-
-		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewConfigurationUsersDefaultUserAssociationsRolesCP(
 			roleTitle = "Roles Regrole Name"
@@ -157,13 +149,9 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
-		PortalSettings.gotoPortalSettings();
-
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsSitesCP(
 			siteName = "Site Name"
 		);
-
-		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewConfigurationUsersDefaultUserAssociationsSitesCP(
 			siteName = "Site Name"
@@ -205,13 +193,9 @@ definition {
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
-		PortalSettings.gotoPortalSettings();
-
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsUserGroupsCP(
 			userGroupName = "UG UserGroup Name"
 		);
-
-		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewConfigurationUsersDefaultUserAssociationsUserGroupsCP(
 			userGroupName = "UG UserGroup Name"
@@ -246,8 +230,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPPortalSettings#EnterReservedEmailAddress";
 
-		PortalSettings.gotoPortalSettings();
-
 		PortalSettings.enterReservedEmailAddressCP(
 			userEmailAddress = "userea@liferay.com"
 		);
@@ -270,8 +252,6 @@ definition {
 	test EnterReservedScreenName {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPPortalSettings#EnterReservedScreenName";
-
-		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewReservedCredentialsScreenNamesCP();
 
@@ -505,7 +485,7 @@ definition {
 	test ViewDefaultUserAssociations {
 		property test.name.skip.portal.instance = "CPPortalSettings#ViewDefaultUserAssociations";
 
-		PortalSettings.gotoPortalSettings();
+		Navigator.openURL();
 
 		PortalSettings.viewDefaultUserAssociationsCP();
 	}
@@ -514,7 +494,7 @@ definition {
 	test ViewEmailNotificationsAccountCreatedNotification {
 		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsAccountCreatedNotification";
 
-		PortalSettings.gotoPortalSettings();
+		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsAccountCreatedNotificationCP();
 	}
@@ -523,7 +503,7 @@ definition {
 	test ViewEmailNotificationsPasswordChangedNotification {
 		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsPasswordChangedNotification";
 
-		PortalSettings.gotoPortalSettings();
+		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsPasswordChangedNotificationCP();
 	}
@@ -532,7 +512,7 @@ definition {
 	test ViewEmailNotificationsSender {
 		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsSender";
 
-		PortalSettings.gotoPortalSettings();
+		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsSenderCP();
 	}

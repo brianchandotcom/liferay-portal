@@ -1465,8 +1465,6 @@ definition {
 			orgName = "Organization Site Bravo"
 		);
 
-		PortalSettings.gotoPortalSettings();
-
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsSitesCP(
 			siteName = "Site Name Alpha"
 		);

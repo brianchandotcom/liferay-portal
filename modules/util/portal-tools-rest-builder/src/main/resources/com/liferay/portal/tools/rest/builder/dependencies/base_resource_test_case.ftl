@@ -773,7 +773,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 
 			protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
-				<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, schemaName, schemaName) && stringUtil.equals(javaMethodSignature.methodName, "post" + schemaName + schemaName)>
+				<#assign firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0] />
+
+				<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, firstJavaMethodParameter.parameterName, schemaName) && stringUtil.equals(firstJavaMethodParameter.parameterName, "parent" + schemaName + "Id")>
 					return invokePost${schemaName}${schemaName}(testGet${schemaName}${schemaNames}Page_getParent${schemaName}Id(), ${schemaVarName});
 				<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
 					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />

@@ -15,10 +15,13 @@
 package com.liferay.portal.template;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceCache;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Writer;
 
@@ -35,14 +38,21 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseTemplate implements Template {
 
 	public BaseTemplate(
+		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
-		TemplateContextHelper templateContextHelper) {
+		TemplateContextHelper templateContextHelper,
+		TemplateResourceCache templateResourceCache) {
+
+		if (templateResource == null) {
+			throw new IllegalArgumentException("Template resource is null");
+		}
 
 		if (templateContextHelper == null) {
 			throw new IllegalArgumentException(
 				"Template context helper is null");
 		}
 
+		this.templateResource = templateResource;
 		this.errorTemplateResource = errorTemplateResource;
 
 		this.context = new HashMap<>();
@@ -54,6 +64,10 @@ public abstract class BaseTemplate implements Template {
 		}
 
 		_templateContextHelper = templateContextHelper;
+
+		if (templateResourceCache.isEnabled()) {
+			cacheTemplateResource(templateResourceCache);
+		}
 	}
 
 	@Override
@@ -69,6 +83,19 @@ public abstract class BaseTemplate implements Template {
 	@Override
 	public boolean containsValue(Object value) {
 		return context.containsValue(value);
+	}
+
+	@Override
+	public void doProcessTemplate(Writer writer) throws Exception {
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		put(TemplateConstants.WRITER, unsyncStringWriter);
+
+		processTemplate(templateResource, unsyncStringWriter);
+
+		StringBundler sb = unsyncStringWriter.getStringBundler();
+
+		sb.writeTo(writer);
 	}
 
 	@Override
@@ -117,6 +144,25 @@ public abstract class BaseTemplate implements Template {
 	}
 
 	@Override
+	public void processTemplate(Writer writer) throws TemplateException {
+		if (errorTemplateResource == null) {
+			try {
+				processTemplate(templateResource, writer);
+
+				return;
+			}
+			catch (Exception e) {
+				throw new TemplateException(
+					"Unable to process template " +
+						templateResource.getTemplateId(),
+					e);
+			}
+		}
+
+		write(writer);
+	}
+
+	@Override
 	public Object put(String key, Object value) {
 		if ((key == null) || (value == null)) {
 			return null;
@@ -145,6 +191,36 @@ public abstract class BaseTemplate implements Template {
 		return context.values();
 	}
 
+	protected void cacheTemplateResource(
+		TemplateResourceCache templateResourceCache) {
+
+		TemplateResource cachedTemplateResource =
+			templateResourceCache.getTemplateResource(
+				templateResource.getTemplateId());
+
+		if ((cachedTemplateResource == null) ||
+			!templateResource.equals(cachedTemplateResource)) {
+
+			templateResourceCache.put(
+				templateResource.getTemplateId(), templateResource);
+		}
+
+		if (errorTemplateResource == null) {
+			return;
+		}
+
+		TemplateResource cachedErrorTemplateResource =
+			templateResourceCache.getTemplateResource(
+				errorTemplateResource.getTemplateId());
+
+		if ((cachedErrorTemplateResource == null) ||
+			!errorTemplateResource.equals(cachedErrorTemplateResource)) {
+
+			templateResourceCache.put(
+				errorTemplateResource.getTemplateId(), errorTemplateResource);
+		}
+	}
+
 	protected String getTemplateResourceUUID(
 		TemplateResource templateResource) {
 
@@ -157,6 +233,10 @@ public abstract class BaseTemplate implements Template {
 
 	protected abstract void handleException(Exception exception, Writer writer)
 		throws TemplateException;
+
+	protected abstract void processTemplate(
+			TemplateResource templateResource, Writer writer)
+		throws Exception;
 
 	protected void write(Writer writer) throws TemplateException {
 		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
@@ -176,6 +256,7 @@ public abstract class BaseTemplate implements Template {
 
 	protected Map<String, Object> context;
 	protected TemplateResource errorTemplateResource;
+	protected TemplateResource templateResource;
 
 	private final TemplateContextHelper _templateContextHelper;
 

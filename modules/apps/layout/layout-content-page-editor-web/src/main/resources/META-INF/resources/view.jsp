@@ -47,7 +47,9 @@ sb.append("/js/components/edit_mode/EditModeWrapper.es as EditModeWrapperModule,
 sb.append(npmResolvedPackageName);
 sb.append("/js/reducers/reducers.es as ReducersModule, ");
 sb.append(npmResolvedPackageName);
-sb.append("/js/store/store.es as StoreModule");
+sb.append("/js/store/store.es as StoreModule, ");
+sb.append(npmResolvedPackageName);
+sb.append("/js/utils/FragmentsEditorFetchUtils.es as FragmentsEditorFetchUtilsModule");
 
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
@@ -83,12 +85,16 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 		}
 	);
 
+	FragmentsEditorFetchUtilsModule.setStore(store);
+
 	function handleDestroyPortlet() {
 		Object.keys(editModeComponents).forEach(
 			function(key) {
 				Liferay.destroyComponent(key);
 			}
 		);
+
+		FragmentsEditorFetchUtilsModule.setStore(null);
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

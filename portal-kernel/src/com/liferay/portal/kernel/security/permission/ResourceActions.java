@@ -48,20 +48,6 @@ public interface ResourceActions {
 
 	public String getActionNamePrefix();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public List<String> getActionsNames(
-		HttpServletRequest request, List<String> actions);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public List<String> getActionsNames(
-		HttpServletRequest request, String name, long actionIds);
-
 	public String getCompositeModelName(String... classNames);
 
 	public String getCompositeModelNameSeparator();
@@ -142,13 +128,6 @@ public interface ResourceActions {
 	public void read(
 			String servletContextName, ClassLoader classLoader,
 			String... sources)
-		throws Exception;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public void read(String servletContextName, InputStream inputStream)
 		throws Exception;
 
 	public void readAndCheck(

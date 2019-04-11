@@ -176,54 +176,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		return _ACTION_NAME_PREFIX;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public List<String> getActionsNames(
-		HttpServletRequest request, List<String> actions) {
-
-		Set<String> actionNames = new LinkedHashSet<>();
-
-		for (String action : actions) {
-			actionNames.add(getAction(request, action));
-		}
-
-		return new ArrayList<>(actionNames);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public List<String> getActionsNames(
-		HttpServletRequest request, String name, long actionIds) {
-
-		try {
-			List<ResourceAction> resourceActions =
-				resourceActionLocalService.getResourceActions(name);
-
-			List<String> actions = new ArrayList<>();
-
-			for (ResourceAction resourceAction : resourceActions) {
-				long bitwiseValue = resourceAction.getBitwiseValue();
-
-				if ((actionIds & bitwiseValue) == bitwiseValue) {
-					actions.add(resourceAction.getActionId());
-				}
-			}
-
-			return getActionsNames(request, actions);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return Collections.emptyList();
-		}
-	}
-
 	@Override
 	public String getCompositeModelName(String... classNames) {
 		if (ArrayUtil.isEmpty(classNames)) {
@@ -640,19 +592,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		for (String source : sources) {
 			read(servletContextName, classLoader, source);
 		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public void read(String servletContextName, InputStream inputStream)
-		throws Exception {
-
-		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
-
-		_read(servletContextName, document, null);
 	}
 
 	@Override

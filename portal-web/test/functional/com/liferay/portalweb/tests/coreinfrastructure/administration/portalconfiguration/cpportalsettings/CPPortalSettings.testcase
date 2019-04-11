@@ -273,6 +273,8 @@ definition {
 
 		PortalSettings.gotoPortalSettings();
 
+		PortalSettings.viewReservedCredentialsScreenNamesCP();
+
 		PortalSettings.enterReservedScreenNameCP(userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
@@ -533,14 +535,5 @@ definition {
 		PortalSettings.gotoPortalSettings();
 
 		PortalSettings.viewEmailNotificationsSenderCP();
-	}
-
-	@priority = "3"
-	test ViewReservedCredentialsScreenNames {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewReservedCredentialsScreenNames";
-
-		PortalSettings.gotoPortalSettings();
-
-		PortalSettings.viewReservedCredentialsScreenNamesCP();
 	}
 }

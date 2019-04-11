@@ -14,16 +14,11 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,26 +35,15 @@ public class PoshiAnnotationsOrderCheck extends BaseFileCheck {
 		Matcher matcher = _annotationsPattern.matcher(content);
 
 		if (matcher.find()) {
-			List<String> annotations = ListUtil.fromString(matcher.group());
+			String s = matcher.group();
 
-			Collections.sort(
-				annotations,
-				new Comparator<String>() {
+			String[] annotations = s.split("\n");
 
-					@Override
-					public int compare(String annotation1, String annotation2) {
-						String annotation1Name = StringUtil.extractFirst(
-							annotation1, CharPool.SPACE);
-						String annotation2Name = StringUtil.extractFirst(
-							annotation2, CharPool.SPACE);
+			Arrays.sort(annotations);
 
-						return annotation1Name.compareTo(annotation2Name);
-					}
-
-				});
 			content = StringUtil.replaceFirst(
 				content, matcher.group(0),
-				ListUtil.toString(annotations, StringPool.BLANK, "\n") + "\n");
+				StringUtil.merge(annotations, "\n") + "\n");
 		}
 
 		return content;

@@ -16,10 +16,6 @@ export const generateInstanceId = length => {
 	return text;
 };
 
-/**
- * Makes sure fields have its settings form filled up with some default values.
- */
-
 export const normalizeSettingsContextPages = (pages, editingLanguageId, fieldType, generatedFieldName) => {
 	const visitor = new PagesVisitor(pages);
 

@@ -59,11 +59,6 @@ const withMoveableFields = ChildComponent => {
 			this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragStarted.bind(this));
 		}
 
-		/**
-		 * @param {!Object} data
-		 * @private
-		 */
-
 		_handleDragAndDropEnd({source, target}) {
 			const lastParent = document.querySelector('.ddm-parent-dragging');
 
@@ -99,11 +94,6 @@ const withMoveableFields = ChildComponent => {
 			parentElement.setAttribute('style', `height: ${height}px !important;`);
 			parentElement.classList.add('ddm-parent-dragging');
 		}
-
-		/**
-		 * @param {!Object} payload
-		 * @private
-		 */
 
 		_handleFieldMoved(event) {
 			const {store} = this.context;

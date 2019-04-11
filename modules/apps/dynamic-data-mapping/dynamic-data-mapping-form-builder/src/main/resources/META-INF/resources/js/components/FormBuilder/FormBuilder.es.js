@@ -160,10 +160,6 @@ class FormBuilder extends Component {
 		);
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-
 	render() {
 		const {props} = this;
 		const {
@@ -304,12 +300,6 @@ class FormBuilder extends Component {
 		}
 	}
 
-	/**
-	 * Handles click on plus button. Button shows Sidebar when clicked.
-	 * @param {!Object} index
-	 * @private
-	 */
-
 	_handleAddFieldButtonClicked() {
 		this.openSidebar();
 	}
@@ -333,26 +323,11 @@ class FormBuilder extends Component {
 		}
 	}
 
-	/**
-	 * Handle the cancel field changes modal
-	 * for checking if the user is sure about reseting his focused field
-	 * @param {!Event} event
-	 * @private
-	 */
-
 	_handleCancelFieldChangesModal() {
 		const {cancelChangesModal} = this.refs;
 
 		cancelChangesModal.show();
 	}
-
-	/**
-	 * Event handler for when the user adds a new field to the Form Builder.
-	 * This method creates a new field name based on the label of the FieldType
-	 * added and emits an event with the new field configurations.
-	 * @param {!Event} event
-	 * @private
-	 */
 
 	_handleFieldAdded(event) {
 		const {dispatch} = this.context;
@@ -386,12 +361,6 @@ class FormBuilder extends Component {
 		this.openSidebar();
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Object} index
-	 * @private
-	 */
-
 	_handleFieldClicked(event) {
 		const {dispatch} = this.context;
 
@@ -408,11 +377,6 @@ class FormBuilder extends Component {
 		this.emit('fieldDuplicated', event);
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Object}
-	 * @private
-	 */
 	_handleFocusedFieldUpdated(focusedField) {
 		const {store} = this.context;
 		const settingsContext = focusedField.settingsContext;
@@ -426,10 +390,6 @@ class FormBuilder extends Component {
 		);
 	}
 
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
 	_handleSettingsFieldBlurred({fieldInstance, value}) {
 		const {store} = this.context;
 		const {editingLanguageId} = this.props;
@@ -462,11 +422,6 @@ class FormBuilder extends Component {
 		}
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
 	_handleSidebarFieldBlurred() {
 		const {store} = this.context;
 
@@ -477,12 +432,6 @@ class FormBuilder extends Component {
 		return !dom.closest(node, '.close-modal');
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {Array} pages
-	 * @param {Number} pageIndex
-	 * @private
-	 */
 	_pageHasFields(pages, pageIndex) {
 		const visitor = new PagesVisitor([pages[pageIndex]]);
 

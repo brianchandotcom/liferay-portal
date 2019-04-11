@@ -41,6 +41,13 @@ class LayoutProvider extends Component {
 
 		editingLanguageId: Config.string(),
 
+		/**
+		 * @default {}
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?object}
+		 */
+
 		events: Config.setter('_setEvents'),
 
 		/**
@@ -66,6 +73,7 @@ class LayoutProvider extends Component {
 		 * @memberof LayoutProvider
 		 * @type {object}
 		 */
+
 		initialSuccessPageSettings: Config.shapeOf(
 			{
 				body: Config.object(),
@@ -73,6 +81,13 @@ class LayoutProvider extends Component {
 				title: Config.object()
 			}
 		),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?(array|undefined)}
+		 */
 
 		rules: Config.arrayOf(ruleStructure),
 
@@ -82,6 +97,7 @@ class LayoutProvider extends Component {
 		 * @memberof LayoutProvider
 		 * @type {?(array|undefined)}
 		 */
+
 		spritemap: Config.string()
 
 	};
@@ -143,14 +159,15 @@ class LayoutProvider extends Component {
 
 		rules: Config.arrayOf(ruleStructure).valueFn('_rulesValueFn'),
 
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?(object|undefined)}
+		 */
+
 		successPageSettings: Config.object().valueFn('_successPageSettingsValueFn')
 	};
-
-	/**
-	 * Return a new page object
-	 * @private
-	 * @returns {object}
-	 */
 
 	createNewPage() {
 		const languageId = this.props.editingLanguageId;
@@ -328,11 +345,6 @@ class LayoutProvider extends Component {
 		this.setState(handleColumnResized(state, source, column, direction));
 	}
 
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
-
 	_handleFieldAdded(event) {
 		this.setState(handleFieldAdded(this.props, this.state, event));
 	}
@@ -356,48 +368,23 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	/**
-	 * @param {!Object} data
-	 * @private
-	 */
-
 	_handleFieldClicked(event) {
 		this.setState(handleFieldClicked(this.state, event));
 	}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
 
 	_handleFieldDeleted(event) {
 		this.setState(handleFieldDeleted(this.state, event));
 	}
 
-	/**
-	 * @param {!Object}
-	 * @private
-	 */
-
 	_handleFieldDuplicated(event) {
 		this.setState(handleFieldDuplicated(this.state, event));
 	}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
 
 	_handleFieldEdited(properties) {
 		const {editingLanguageId} = this.props;
 
 		this.setState(handleFieldEdited(this.state, editingLanguageId, properties));
 	}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
 
 	_handleFieldMoved({addedToPlaceholder, target, source}) {
 		let {pages} = this.state;
@@ -458,11 +445,6 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	/**
-	 * @param {!Array} pages
-	 * @private
-	 */
-
 	_handlePageAdded() {
 		const {pages} = this.state;
 
@@ -477,11 +459,6 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	/**
-	 * @param {!Number} pageIndex
-	 * @private
-	 */
-
 	_handlePageDeleted(pageIndex) {
 		const {pages} = this.state;
 
@@ -494,10 +471,6 @@ class LayoutProvider extends Component {
 			}
 		);
 	}
-
-	/**
-	 * @private
-	 */
 
 	_handlePageReset() {
 		this.setState(
@@ -581,12 +554,6 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	/**
-	 * Update the success page settings
-	 * @param {!Object} successPageSettings
-	 * @private
-	 */
-
 	_handleSuccessPageChanged(successPageSettings) {
 		this.setState(
 			{
@@ -610,14 +577,6 @@ class LayoutProvider extends Component {
 
 		return rules;
 	}
-
-	/**
-	 * @param {!Array} pages
-	 * @param {!Object} target
-	 * @param {!Object} field
-	 * @private
-	 * @return {Object}
-	 */
 
 	_setColumnFields(pages, target, fields) {
 		const {columnIndex, pageIndex, rowIndex} = target;

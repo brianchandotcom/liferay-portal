@@ -9,11 +9,6 @@ class PagesVisitor {
 		this._pages = null;
 	}
 
-	/**
-	 * Find a field based on the fieldName property
-	 * @param {string} fieldName
-	 * @returns {object} a form field
-	 */
 	findField(condition) {
 		let conditionField;
 

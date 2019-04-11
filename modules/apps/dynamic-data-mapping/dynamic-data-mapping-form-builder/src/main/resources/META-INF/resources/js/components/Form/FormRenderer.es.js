@@ -52,11 +52,6 @@ class FormRenderer extends Component {
 		spritemap: Config.string().required()
 	};
 
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
-
 	_handleFieldBlurred(event) {
 		this.emit('fieldBlurred', event);
 	}
@@ -64,11 +59,6 @@ class FormRenderer extends Component {
 	_handleFieldClicked(index) {
 		this.emit('fieldClicked', index);
 	}
-
-	/**
-	 * @param {!Object} payload
-	 * @private
-	 */
 
 	_handleFieldEdited(event) {
 		this.emit('fieldEdited', event);
@@ -80,10 +70,6 @@ class FormRenderer extends Component {
 
 		dispatch('activePageUpdated', Number(pageIndex));
 	}
-
-	/**
-	 * @private
-	 */
 
 	_handlePaginationLeftClicked() {
 		const {activePage} = this;
@@ -98,10 +84,6 @@ class FormRenderer extends Component {
 			index
 		);
 	}
-
-	/**
-	 * @private
-	 */
 
 	_handlePaginationRightClicked() {
 		const {activePage} = this;

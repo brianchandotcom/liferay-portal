@@ -13,10 +13,27 @@ const WithEvaluator = ChildComponent => {
 
 	class Evaluator extends Component {
 		static PROPS = {
+
+			/**
+			 * @default undefined
+			 * @memberof Evaluator
+			 * @type {string}
+			 * @required
+			 */
+
+			defaultLanguageId: Config.string(),
+
+			/**
+			 * @default undefined
+			 * @memberof Evaluator
+			 * @type {string}
+			 * @required
+			 */
+
 			editingLanguageId: Config.string(),
 
 			/**
-			 * @instance
+			 * @default undefined
 			 * @memberof Evaluator
 			 * @type {string}
 			 * @required
@@ -25,13 +42,20 @@ const WithEvaluator = ChildComponent => {
 			fieldType: Config.string().required(),
 
 			/**
-			 * @instance
+			 * @default undefined
 			 * @memberof Evaluator
 			 * @type {object}
 			 * @required
 			 */
 
 			formContext: Config.object().required(),
+
+			/**
+			 * @default undefined
+			 * @memberof Evaluator
+			 * @type {string}
+			 * @required
+			 */
 
 			url: Config.string()
 		}
@@ -87,11 +111,6 @@ const WithEvaluator = ChildComponent => {
 			}
 		}
 
-		/**
-		 * Render the call of it's children
-		 * @return {function}
-		 */
-
 		render() {
 			const {pages} = this.state;
 			const {editingLanguageId, events} = this.props;
@@ -120,11 +139,6 @@ const WithEvaluator = ChildComponent => {
 				);
 			}
 		}
-
-		/**
-		 * @param {!Object} event
-		 * @private
-		 */
 
 		_handleFieldEdited(event) {
 			const {fieldInstance} = event;
@@ -164,14 +178,6 @@ const WithEvaluator = ChildComponent => {
 
 			return newValue;
 		}
-
-		/**
-		 * Merges fields from two array of pages. This is used to get new
-		 * information from the evaluator and update fields with it while
-		 * maintaining properties that were not changed by the evaluation
-		 * process.
-		 * @private
-		 */
 
 		_mergePages(sourcePages, newPages) {
 			const {defaultLanguageId, editingLanguageId} = this.props;
@@ -214,10 +220,6 @@ const WithEvaluator = ChildComponent => {
 				}
 			);
 		}
-
-		/**
-		 * @private
-		 */
 
 		_pagesValueFn() {
 			const {formContext} = this.props;

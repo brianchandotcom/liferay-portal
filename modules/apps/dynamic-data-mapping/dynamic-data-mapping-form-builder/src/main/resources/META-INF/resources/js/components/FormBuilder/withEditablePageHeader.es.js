@@ -45,11 +45,6 @@ const withEditablePageHeader = ChildComponent => {
 			);
 		}
 
-		/**
-		 * @param {!Object} event
-		 * @private
-		 */
-
 		_handlePageDescriptionChanged(event) {
 			const {activePage, editingLanguageId, pages} = this.props;
 			const {delegateTarget} = event;
@@ -77,11 +72,6 @@ const withEditablePageHeader = ChildComponent => {
 				)
 			);
 		}
-
-		/**
-		 * @param {!Object} event
-		 * @private
-		 */
 
 		_handlePageTitleChanged(event) {
 			const {activePage, editingLanguageId, pages} = this.props;

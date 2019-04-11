@@ -136,10 +136,6 @@ class RuleList extends Component {
 		);
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-
 	disposeInternal() {
 		super.disposeInternal();
 

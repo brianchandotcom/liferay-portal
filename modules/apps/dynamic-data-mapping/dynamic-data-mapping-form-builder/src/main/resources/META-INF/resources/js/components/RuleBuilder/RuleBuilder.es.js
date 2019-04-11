@@ -171,12 +171,6 @@ class RuleBuilder extends Component {
 		).valueFn('_setRulesValueFn')
 	};
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
-
 	created() {
 		this._eventHandler = new EventHandler();
 
@@ -184,23 +178,11 @@ class RuleBuilder extends Component {
 		this._fetchRoles();
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
-
 	disposeInternal() {
 		super.disposeInternal();
 
 		this._eventHandler.removeAllListeners();
 	}
-
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
 
 	render() {
 		const {
@@ -389,12 +371,6 @@ class RuleBuilder extends Component {
 		);
 	}
 
-	/**
-	 * Show the rule screen to create a new rule
-	 * @param {!Event} event
-	 * @private
-	 */
-
 	_handleAddRuleClick(event) {
 		this._showRuleCreation();
 
@@ -462,12 +438,6 @@ class RuleBuilder extends Component {
 
 		this._showRuleList();
 	}
-
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
 
 	_hideAddRuleButton(element) {
 		dom.addClasses(element, 'hide');

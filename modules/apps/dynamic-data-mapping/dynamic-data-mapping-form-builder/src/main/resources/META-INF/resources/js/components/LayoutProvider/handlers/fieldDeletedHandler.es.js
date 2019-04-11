@@ -53,12 +53,6 @@ const formatRules = (state, pages) => {
 	return rules;
 };
 
-/**
- * @param {!Array} pages
- * @param {!Object} source
- * @private
- * @return {Object}
- */
 const removeEmptyRow = (pages, source) => {
 	const {pageIndex, rowIndex} = source;
 

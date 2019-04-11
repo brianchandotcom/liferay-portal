@@ -142,10 +142,6 @@ class Sidebar extends Component {
 		spritemap: Config.string().required()
 	};
 
-	/**
-	 * @inheritDoc
-	 */
-
 	attached() {
 		this._bindDragAndDrop();
 
@@ -181,11 +177,6 @@ class Sidebar extends Component {
 		this.refs.evaluableForm.evaluate();
 	}
 
-	/**
-	 * Close the Sidebar and remove event to handle document click.
-	 * @public
-	 */
-
 	close() {
 		this.setState(
 			{
@@ -193,10 +184,6 @@ class Sidebar extends Component {
 			}
 		);
 	}
-
-	/**
-	 * @inheritDoc
-	 */
 
 	created() {
 		this._eventHandler = new EventHandler();
@@ -224,10 +211,6 @@ class Sidebar extends Component {
 			this._dragAndDrop.dispose();
 		}
 	}
-
-	/**
-	 * @inheritDoc
-	 */
 
 	disposeInternal() {
 		super.disposeInternal();
@@ -273,11 +256,6 @@ class Sidebar extends Component {
 		return !field.localizable && editingLanguageId !== defaultLanguageId;
 	}
 
-	/**
-	 * Open the Sidebar and attach event to handle document click.
-	 * @public
-	 */
-
 	open() {
 		const {transitionEnd} = this;
 
@@ -313,10 +291,6 @@ class Sidebar extends Component {
 			}
 		);
 	}
-
-	/**
-	 * @inheritDoc
-	 */
 
 	render() {
 		const {activeTab, open} = this.state;
@@ -413,11 +387,6 @@ class Sidebar extends Component {
 		}
 	}
 
-	/**
-	 * Start drag and drop and attach events to manipulate.
-	 * @protected
-	 */
-
 	_bindDragAndDrop() {
 		this._dragAndDrop = new DragDrop(
 			{
@@ -491,13 +460,6 @@ class Sidebar extends Component {
 		);
 	}
 
-	/**
-	 * Checks to see if browser supports CSS3 Transitions and returns the name
-	 * of the transitionend event; returns false if it's not supported
-	 * @protected
-	 * @return {string|boolean} The name of the transitionend event or false
-	 * if not supported
-	 */
 	_getTransitionEndEvent() {
 		const el = document.createElement('metalClayTransitionEnd');
 
@@ -520,29 +482,16 @@ class Sidebar extends Component {
 		return eventName;
 	}
 
-	/**
-	 * Handle click on the dropdown to change the field type.
-	 * @protected
-	 */
 	_handleChangeFieldTypeItemClicked({data}) {
 		const newFieldType = data.item.name;
 
 		this.changeFieldType(newFieldType);
 	}
 
-	/**
-	 * @protected
-	 */
 	_handleCloseButtonClicked() {
 		this.close();
 	}
 
-	/**
-	 * Handle the click of the document and close the sidebar when
-	 * clicking outside the Sidebar.
-	 * @param {Event} event
-	 * @protected
-	 */
 	_handleDocumentMouseDown({target}) {
 		const {transitionEnd} = this;
 		const {open} = this.state;
@@ -568,12 +517,6 @@ class Sidebar extends Component {
 		}
 	}
 
-	/**
-	 * Handle a field move to dispatch the event to add in layout.
-	 * @param {Object} data
-	 * @param {Event} event
-	 * @protected
-	 */
 	_handleDragEnded(data, event) {
 		event.preventDefault();
 
@@ -600,21 +543,12 @@ class Sidebar extends Component {
 		);
 	}
 
-	/**
-	 * Handle with drag and close sidebar when moving.
-	 * @protected
-	 */
 	_handleDragStarted() {
 		this.refreshDragAndDrop();
 
 		this.close();
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {array} data
-	 * @protected
-	 */
 	_handleEvaluatorChanged(pages) {
 		const {focusedField} = this.props;
 
@@ -630,10 +564,6 @@ class Sidebar extends Component {
 		);
 	}
 
-	/**
-	 * Handle click on the field settings dropdown
-	 * @protected
-	 */
 	_handleFieldSettingsClicked({data: {item}}) {
 		const {columnIndex, pageIndex, rowIndex} = this.props.focusedField;
 		const {settingsItem} = item;
@@ -656,10 +586,6 @@ class Sidebar extends Component {
 		}
 	}
 
-	/**
-	 * Handle click on the previous button.
-	 * @protected
-	 */
 	_handlePreviousButtonClicked() {
 		const {transitionEnd} = this;
 
@@ -679,21 +605,10 @@ class Sidebar extends Component {
 		this.emit('settingsFieldBlurred', event);
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {Object} event
-	 * @protected
-	 */
 	_handleSettingsFieldEdited(event) {
 		this.emit('settingsFieldEdited', event);
 	}
 
-	/**
-	 * Handle click on the tab item and manipulate the active tab.
-	 * @param {number} index
-	 * @param {Event} event
-	 * @protected
-	 */
 	_handleTabItemClicked(event) {
 		const {target} = event;
 		const {dataset: {index}} = dom.closest(target, '.nav-item');
@@ -719,13 +634,6 @@ class Sidebar extends Component {
 
 		return closeButton.contains(node);
 	}
-
-	/**
-	 * Checks whether it is safe to go to edit mode.
-	 * @param {string} mode
-	 * @protected
-	 * @return {bool}
-	 */
 
 	_isEditMode() {
 		const {focusedField} = this.props;

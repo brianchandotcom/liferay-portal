@@ -20,20 +20,10 @@ export const generateFieldName = (pages, desiredName, currentName = null) => {
 	return normalizeFieldName(name);
 };
 
-/**
- * Checks if a given character is valid for use in a field name.
- * @param {string} character
- * @return {Boolean} Returns true if the character is invalid.
- */
 export const checkInvalidFieldNameCharacter = character => {
 	return /[\\~`!@#$%^&*(){}[\];:"'<,.>?/\-+=]/g.test(character);
 };
 
-/**
- * Normalizes a field name to contain only valid characters.
- * @param {string} fieldName
- * @return {string} The field name normalized.
- */
 export function normalizeFieldName(fieldName) {
 	let nextUpperCase = false;
 	let normalizedFieldName = '';

@@ -36,4 +36,9 @@ public class WikiPageCustomAttributesDisplay
 		return WikiPage.class.getName();
 	}
 
+	@Override
+	public String getIconCssClass() {
+		return "wiki-page";
+	}
+
 }

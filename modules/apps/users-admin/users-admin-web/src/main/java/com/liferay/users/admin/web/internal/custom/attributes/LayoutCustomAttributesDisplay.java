@@ -38,7 +38,7 @@ public class LayoutCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 
 	@Override
 	public String getIconCssClass() {
-		return "edit-layout";
+		return "page";
 	}
 
 }

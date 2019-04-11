@@ -37,4 +37,9 @@ public class DLFileEntryCustomAttributesDisplay
 		return DLFileEntry.class.getName();
 	}
 
+	@Override
+	public String getIconCssClass() {
+		return "document";
+	}
+
 }

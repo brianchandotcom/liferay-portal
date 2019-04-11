@@ -37,4 +37,9 @@ public class KBArticleCustomAttributesDisplay
 		return KBArticle.class.getName();
 	}
 
+	@Override
+	public String getIconCssClass() {
+		return "info-book";
+	}
+
 }

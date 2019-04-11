@@ -37,4 +37,9 @@ public class BookmarksFolderCustomAttributesDisplay
 		return BookmarksFolder.class.getName();
 	}
 
+	@Override
+	public String getIconCssClass() {
+		return "bookmarks";
+	}
+
 }

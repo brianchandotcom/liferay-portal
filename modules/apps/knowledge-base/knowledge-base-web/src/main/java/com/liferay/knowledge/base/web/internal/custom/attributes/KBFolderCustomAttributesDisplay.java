@@ -39,7 +39,7 @@ public class KBFolderCustomAttributesDisplay
 
 	@Override
 	public String getIconCssClass() {
-		return "folder";
+		return "info-book";
 	}
 
 }

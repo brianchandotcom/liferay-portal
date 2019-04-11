@@ -37,4 +37,9 @@ public class JournalFolderCustomAttributesDisplay
 		return JournalFolder.class.getName();
 	}
 
+	@Override
+	public String getIconCssClass() {
+		return "web-content";
+	}
+
 }

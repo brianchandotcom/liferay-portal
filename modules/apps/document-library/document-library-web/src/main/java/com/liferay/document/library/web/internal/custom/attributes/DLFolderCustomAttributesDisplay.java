@@ -37,4 +37,9 @@ public class DLFolderCustomAttributesDisplay
 		return DLFolder.class.getName();
 	}
 
+	@Override
+	public String getIconCssClass() {
+		return "document";
+	}
+
 }

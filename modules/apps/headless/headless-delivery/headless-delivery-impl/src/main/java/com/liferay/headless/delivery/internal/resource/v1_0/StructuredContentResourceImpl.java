@@ -335,6 +335,9 @@ public class StructuredContentResourceImpl
 			structuredContent.getDatePublished(),
 			journalArticle.getDisplayDate());
 
+		_checkAllContentFieldsExist(
+			structuredContent.getContentFields(), ddmStructure);
+
 		return _toStructuredContent(
 			_journalArticleService.updateArticle(
 				journalArticle.getGroupId(), journalArticle.getFolderId(),
@@ -417,6 +420,9 @@ public class StructuredContentResourceImpl
 			structuredContent.getDatePublished(),
 			journalArticle.getDisplayDate());
 
+		_checkAllContentFieldsExist(
+			structuredContent.getContentFields(), ddmStructure);
+
 		return _toStructuredContent(
 			_journalArticleService.updateArticle(
 				journalArticle.getGroupId(), journalArticle.getFolderId(),
@@ -489,6 +495,9 @@ public class StructuredContentResourceImpl
 					"language " + w3cLanguageId);
 		}
 
+		_checkAllContentFieldsExist(
+			structuredContent.getContentFields(), ddmStructure);
+
 		return _toStructuredContent(
 			_journalArticleService.addArticle(
 				siteId, parentStructuredContentFolderId, 0, 0, null, true,
@@ -524,6 +533,30 @@ public class StructuredContentResourceImpl
 					structuredContent.getKeywords(),
 					structuredContent.getTaxonomyCategoryIds(), siteId,
 					structuredContent.getViewableByAsString())));
+	}
+
+	private void _checkAllContentFieldsExist(
+		ContentField[] contentFields, DDMStructure ddmStructure) {
+
+		if (ArrayUtil.isEmpty(contentFields)) {
+			return;
+		}
+
+		for (ContentField contentField : contentFields) {
+			DDMFormField ddmFormField = _getDDMFormField(
+				ddmStructure, contentField.getName());
+
+			if (ddmFormField == null) {
+				throw new BadRequestException(
+					StringBundler.concat(
+						"Unable to get content field value for \"",
+						contentField.getName(), "\" for content structure ",
+						ddmStructure.getStructureId()));
+			}
+
+			_checkAllContentFieldsExist(
+				contentField.getNestedFields(), ddmStructure);
+		}
 	}
 
 	private DDMStructure _checkDDMStructurePermission(

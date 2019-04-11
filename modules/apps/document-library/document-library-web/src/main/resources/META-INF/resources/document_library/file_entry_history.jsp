@@ -49,7 +49,7 @@
 							<liferay-ui:message key="no-change-log" />
 						</c:when>
 						<c:otherwise>
-							<%= fileVersion.getChangeLog() %>
+							<%= HtmlUtil.escape(fileVersion.getChangeLog()) %>
 						</c:otherwise>
 					</c:choose>
 				</div>

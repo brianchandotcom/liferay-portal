@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -99,13 +100,17 @@ public class DeleteFragmentEntryLinkMVCActionCommand
 				"portletId", StringPool.BLANK);
 
 			if (Validator.isNotNull(portletId)) {
+				String instanceId = jsonObject.getString(
+					"instanceId", StringPool.BLANK);
+
 				_portletPreferencesLocalService.deletePortletPreferences(
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-					portletId);
+					PortletIdCodec.encode(portletId, instanceId));
 
 				_assetEntryUsageLocalService.deleteAssetEntryUsages(
-					_portal.getClassNameId(Portlet.class), portletId,
+					_portal.getClassNameId(Portlet.class),
+					PortletIdCodec.encode(portletId, instanceId),
 					themeDisplay.getPlid());
 			}
 		}

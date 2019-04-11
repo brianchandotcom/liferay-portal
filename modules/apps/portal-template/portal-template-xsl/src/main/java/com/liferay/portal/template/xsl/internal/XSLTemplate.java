@@ -16,13 +16,15 @@ package com.liferay.portal.template.xsl.internal;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
-import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.template.BaseTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.xsl.configuration.XSLEngineConfiguration;
 import com.liferay.portal.xsl.XSLTemplateResource;
@@ -31,6 +33,7 @@ import com.liferay.portal.xsl.XSLURIResolver;
 import java.io.Writer;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -51,13 +54,17 @@ import org.apache.xalan.processor.TransformerFactoryImpl;
  * @author Tina Tian
  * @author Peter Fellwock
  */
-public class XSLTemplate implements Template {
+public class XSLTemplate extends BaseTemplate {
 
 	public XSLTemplate(
 		XSLTemplateResource xslTemplateResource,
 		TemplateResource errorTemplateResource,
 		TemplateContextHelper templateContextHelper,
 		XSLEngineConfiguration xslEngineConfiguration) {
+
+		super(
+			xslTemplateResource, errorTemplateResource, Collections.emptyMap(),
+			templateContextHelper, _DUMMY_TEMPLATE_RESOURCE_CACHE);
 
 		if (xslTemplateResource == null) {
 			throw new IllegalArgumentException("XSL template resource is null");
@@ -284,6 +291,17 @@ public class XSLTemplate implements Template {
 		return _context.values();
 	}
 
+	@Override
+	protected void handleException(Exception exception, Writer writer)
+		throws TemplateException {
+	}
+
+	@Override
+	protected void processTemplate(
+			TemplateResource templateResource, Writer writer)
+		throws Exception {
+	}
+
 	private Transformer _getTransformer(TemplateResource templateResource)
 		throws TemplateException {
 
@@ -307,6 +325,9 @@ public class XSLTemplate implements Template {
 				e);
 		}
 	}
+
+	private static final TemplateResourceCache _DUMMY_TEMPLATE_RESOURCE_CACHE =
+		ProxyFactory.newDummyInstance(TemplateResourceCache.class);
 
 	private static final ClassLoader _TRANSFORMER_FACTORY_CLASS_LOADER;
 

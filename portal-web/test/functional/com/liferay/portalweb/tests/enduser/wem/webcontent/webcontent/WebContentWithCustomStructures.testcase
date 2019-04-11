@@ -1477,7 +1477,7 @@ definition {
 			fieldValue = "English (United States) Title"
 		);
 
-		Click(locator1 = "WC#SELECT");
+		Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
 
 		ItemSelector.uploadFile(
 			navTab = "Web Content Images",

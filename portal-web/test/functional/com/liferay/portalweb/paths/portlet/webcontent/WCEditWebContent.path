@@ -140,6 +140,17 @@
 	<td>//iframe[contains(@id,'selectDisplayPage')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--IMAGE_FIELD-->
+<tr>
+	<td>IMAGE_FIELD_SELECT</td>
+	<td>//div[@class='button-holder']//span[contains(.,'Select')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -146,7 +146,7 @@ definition {
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
-				pageName = "Test Page Name",
+				pageName = "Test Content Page Name",
 				pageTemplateName = "Page Template Name"
 			);
 		}
@@ -157,7 +157,7 @@ definition {
 
 		task ("Navigate to the content page") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-page-name"
+				urlAppend = "web/test-site-name/test-content-page-name"
 			);
 		}
 

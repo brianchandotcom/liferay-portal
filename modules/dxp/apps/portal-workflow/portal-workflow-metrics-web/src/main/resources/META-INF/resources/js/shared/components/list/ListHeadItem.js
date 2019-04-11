@@ -1,15 +1,17 @@
 import { Link, withRouter } from 'react-router-dom';
-import Icon from '../../shared/components/Icon';
+import Icon from '../Icon';
 import pathToRegexp from 'path-to-regexp';
 import React from 'react';
 
 /**
  * @class
- * @memberof process-list
- * */
-class ProcessListHeadItem extends React.Component {
+ * @memberof shared/components/list
+ */
+class ListHeadItem extends React.Component {
 	render() {
 		const {
+			iconColor,
+			iconName,
 			location: { search },
 			match: { params, path },
 			name,
@@ -20,9 +22,9 @@ class ProcessListHeadItem extends React.Component {
 
 		const [field, order] = decodeURIComponent(sort).split(':');
 
-		const isSorted = field === name;
+		const sorted = field === name;
 
-		const nextSort = `${name}:${isSorted && order === 'desc' ? 'asc' : 'desc'}`;
+		const nextSort = `${name}:${sorted && order === 'desc' ? 'asc' : 'desc'}`;
 
 		const sortIcon = order === 'asc' ? 'order-arrow-down' : 'order-arrow-up';
 
@@ -35,10 +37,24 @@ class ProcessListHeadItem extends React.Component {
 				className="inline-item text-truncate-inline"
 				to={{ pathname, search }}
 			>
-				<span className="text-truncate" data-title={title} title={title}>
+				{iconName && (
+					<span className="inline-item inline-item-before mr-2">
+						<span className="sticker sticker-sm">
+							<span className="inline-item">
+								<Icon
+									elementClasses={`icon-${iconColor}`}
+									iconName={iconName}
+								/>
+							</span>
+						</span>
+					</span>
+				)}
+
+				<span className="text-truncate title" data-title={title} title={title}>
 					{title}
 				</span>
-				{isSorted && (
+
+				{sorted && (
 					<span className="inline-item inline-item-after">
 						<Icon iconName={sortIcon} key={`${name}_icon_${sortIcon}`} />
 					</span>
@@ -48,4 +64,4 @@ class ProcessListHeadItem extends React.Component {
 	}
 }
 
-export default withRouter(ProcessListHeadItem);
+export default withRouter(ListHeadItem);

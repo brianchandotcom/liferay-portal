@@ -1,4 +1,4 @@
-import ProcessListHeadItem from './ProcessListHeadItem';
+import ListHeadItem from '../../shared/components/list/ListHeadItem';
 import ProcessListItem from './ProcessListItem';
 import React from 'react';
 
@@ -23,14 +23,14 @@ export default class ProcessListTable extends React.Component {
 								className="table-cell-expand table-head-title"
 								style={{ width: '70%' }}
 							>
-								<ProcessListHeadItem name="title" title={processNameTitle} />
+								<ListHeadItem name="title" title={processNameTitle} />
 							</th>
 
 							<th
 								className="table-cell-expand table-head-title"
 								style={{ width: '15%' }}
 							>
-								<ProcessListHeadItem
+								<ListHeadItem
 									name="overdueInstanceCount"
 									title={overdueTitle}
 								/>
@@ -40,20 +40,14 @@ export default class ProcessListTable extends React.Component {
 								className="table-cell-expand table-head-title"
 								style={{ width: '15%' }}
 							>
-								<ProcessListHeadItem
-									name="onTimeInstanceCount"
-									title={onTimeTitle}
-								/>
+								<ListHeadItem name="onTimeInstanceCount" title={onTimeTitle} />
 							</th>
 
 							<th
 								className="table-cell-expand table-head-title"
 								style={{ width: '15%' }}
 							>
-								<ProcessListHeadItem
-									name="instanceCount"
-									title={totalPendingTitle}
-								/>
+								<ListHeadItem name="instanceCount" title={totalPendingTitle} />
 							</th>
 
 							<th />

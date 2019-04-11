@@ -20,7 +20,7 @@ import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import FieldError from './form/fieldError';
 import FieldLabel from './form/fieldLabel';
 import Icon from '../../shared/components/Icon';
-import LoadingState from '../../shared/components/empty-state/LoadingState';
+import LoadingState from '../../shared/components/loading/LoadingState';
 import MaskedInput from 'react-text-mask';
 import { openErrorToast } from '../../shared/util/toast';
 import React from 'react';

@@ -1,5 +1,5 @@
 import EmptyContent from '../EmptyContent';
-import LoadingState from '../empty-state/LoadingState';
+import LoadingState from '../loading/LoadingState';
 import React from 'react';
 
 /**

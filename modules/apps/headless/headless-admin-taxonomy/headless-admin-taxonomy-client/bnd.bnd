@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Headless Admin Taxonomy Client
+Bundle-SymbolicName: com.liferay.headless.admin.taxonomy.client
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.headless.admin.taxonomy.client.dto.v1_0

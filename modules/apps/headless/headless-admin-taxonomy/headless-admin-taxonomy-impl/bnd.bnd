@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Headless Admin Taxonomy Implementation
+Bundle-SymbolicName: com.liferay.headless.admin.taxonomy.impl
+Bundle-Version: 1.0.0

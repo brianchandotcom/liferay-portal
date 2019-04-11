@@ -1,0 +1,9 @@
+apiDir: "../headless-admin-taxonomy-api/src/main/java"
+apiPackagePath: "com.liferay.headless.admin.taxonomy"
+application:
+    baseURI: "/headless-admin-taxonomy"
+    className: "HeadlessAdminTaxonomyApplication"
+    name: "Liferay.Headless.Admin.Taxonomy"
+author: "Javier Gamarra"
+clientDir: "../headless-admin-taxonomy-client/src/main/java"
+testDir: "../headless-admin-taxonomy-test/src/testIntegration/java"

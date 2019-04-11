@@ -133,9 +133,9 @@ class SLAListCard extends React.Component {
 		);
 		const emptyTitleText = Liferay.Language.get('no-slas-yet');
 
-		const isFetching =
+		const fetching =
 			requestOriginType === REQUEST_ORIGIN_TYPE_FETCH && totalCount === 0;
-		const isLoading = !requestOriginType && totalCount === 0;
+		const loading = !requestOriginType && totalCount === 0;
 
 		return (
 			<SLAListCardContext.Provider value={this.slaContextState}>
@@ -187,8 +187,8 @@ class SLAListCard extends React.Component {
 					<ListView
 						emptyMessageText={emptyMessageText}
 						emptyTitleText={emptyTitleText}
-						isFetching={isFetching}
-						isLoading={isLoading}
+						fetching={fetching}
+						loading={loading}
 					>
 						<SLAListTable items={items} />
 

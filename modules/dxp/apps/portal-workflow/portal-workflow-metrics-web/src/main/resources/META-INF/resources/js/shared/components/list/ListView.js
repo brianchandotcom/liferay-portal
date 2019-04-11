@@ -10,33 +10,63 @@ export default class ListView extends React.Component {
 	render() {
 		const {
 			children,
+			emptyActionButton,
+			emptyMessageClassName,
 			emptyMessageText,
 			emptyTitleText,
-			isFetching,
-			isLoading,
-			isSearching
+			errorMessageText,
+			fetching,
+			loading,
+			searching
 		} = this.props;
 
-		const emptyContentRender = secondaryRender =>
-			isFetching ? (
-				<EmptyContent message={emptyMessageText} title={emptyTitleText} />
+		const hideAnimation = emptyMessageClassName || errorMessageText;
+
+		const errorRender = secondaryRender =>
+			errorMessageText ? (
+				<EmptyState
+					actionButton={emptyActionButton}
+					hideAnimation={hideAnimation}
+					message={errorMessageText}
+					messageClassName={emptyMessageClassName}
+					type="error"
+				/>
 			) : (
 				secondaryRender
 			);
 
-		const emptyLoadingState = secondaryRender =>
-			isLoading ? <LoadingState /> : secondaryRender;
+		const emptyFetchRender = secondaryRender =>
+			fetching ? (
+				<EmptyState
+					hideAnimation={hideAnimation}
+					message={emptyMessageText}
+					messageClassName={emptyMessageClassName}
+					title={emptyTitleText}
+				/>
+			) : (
+				secondaryRender
+			);
 
 		const emptySearchRender = secondaryRender =>
-			isSearching ? (
-				<EmptyContent message={emptyMessageText} type="not-found" />
+			searching ? (
+				<EmptyState
+					hideAnimation={hideAnimation}
+					message={emptyMessageText}
+					messageClassName={emptyMessageClassName}
+					type="not-found"
+				/>
 			) : (
 				secondaryRender
 			);
+
+		const loadingRender = secondaryRender =>
+			loading ? <LoadingState /> : secondaryRender;
 
 		return (
 			<div>
-				{emptyLoadingState(emptySearchRender(emptyContentRender(children)))}
+				{loadingRender(
+					errorRender(emptySearchRender(emptyFetchRender(children)))
+				)}
 			</div>
 		);
 	}

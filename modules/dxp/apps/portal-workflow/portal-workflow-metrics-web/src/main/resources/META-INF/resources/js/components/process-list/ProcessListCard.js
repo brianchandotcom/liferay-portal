@@ -44,7 +44,7 @@ class ProcessListCard extends React.Component {
 	requestData({ page, pageSize, search, sort }) {
 		const { client } = this.context;
 
-		const isSearching = typeof search === 'string' && search ? true : false;
+		const searching = typeof search === 'string' && search ? true : false;
 
 		const params = {
 			page,
@@ -52,13 +52,13 @@ class ProcessListCard extends React.Component {
 			sort: decodeURIComponent(sort)
 		};
 
-		if (isSearching) {
+		if (searching) {
 			params.title = decodeURIComponent(search);
 		}
 
 		return client.get('/processes', { params }).then(({ data }) => {
 			if (data && data.totalCount === 0) {
-				this.requestOriginType = isSearching
+				this.requestOriginType = searching
 					? REQUEST_ORIGIN_TYPE_SEARCH
 					: REQUEST_ORIGIN_TYPE_FETCH;
 			}
@@ -73,13 +73,13 @@ class ProcessListCard extends React.Component {
 		const { page, pageSize } = this.props;
 
 		const emptyTitleText = Liferay.Language.get('no-current-metrics');
-		const isFetching =
+		const fetching =
 			requestOriginType === REQUEST_ORIGIN_TYPE_FETCH && totalCount === 0;
-		const isLoading = !requestOriginType && totalCount === 0;
-		const isSearching =
+		const loading = !requestOriginType && totalCount === 0;
+		const searching =
 			requestOriginType === REQUEST_ORIGIN_TYPE_SEARCH && totalCount === 0;
 
-		const emptyMessageText = isSearching
+		const emptyMessageText = searching
 			? Liferay.Language.get('no-results-were-found')
 			: Liferay.Language.get(
 				'once-there-are-active-processes-metrics-will-appear-here'
@@ -90,7 +90,7 @@ class ProcessListCard extends React.Component {
 				<nav className="management-bar management-bar-light navbar navbar-expand-md">
 					<div className="container-fluid container-fluid-max-xl">
 						<div className="navbar-form navbar-form-autofit">
-							<Search disabled={isFetching} />
+							<Search disabled={fetching} />
 						</div>
 					</div>
 				</nav>
@@ -101,9 +101,9 @@ class ProcessListCard extends React.Component {
 					<ListView
 						emptyMessageText={emptyMessageText}
 						emptyTitleText={emptyTitleText}
-						isFetching={isFetching}
-						isLoading={isLoading}
-						isSearching={isSearching}
+						fetching={fetching}
+						loading={loading}
+						searching={searching}
 					>
 						<ProcessListTable items={items} />
 

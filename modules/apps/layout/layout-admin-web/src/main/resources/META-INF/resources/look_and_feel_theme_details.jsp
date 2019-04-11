@@ -203,7 +203,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 </c:if>
 
 <c:if test="<%= !colorSchemes.isEmpty() %>">
-	<aui:script use="aui-base, aui-event-key">
+	<aui:script use="aui-base,aui-event-key">
 		var colorSchemesContainer = A.one('#<portlet:namespace />colorSchemesContainer');
 
 		colorSchemesContainer.delegate(

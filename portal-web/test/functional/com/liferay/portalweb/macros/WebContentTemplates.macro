@@ -176,6 +176,14 @@ definition {
 		}
 	}
 
+	@summary = "Click on '${templateName}' ellipsis > '${item}'"
+	macro gotoTemplateEllipsisItem {
+		LexiconCard.clickEllipsisItem(
+			card = "${templateName}",
+			item = "${item}"
+		);
+	}
+
 	@summary = "Input a small image with the url '${templateSmallImageURL}'"
 	macro inputSmallImage {
 		if (isSet(templateSmallImageURL)) {

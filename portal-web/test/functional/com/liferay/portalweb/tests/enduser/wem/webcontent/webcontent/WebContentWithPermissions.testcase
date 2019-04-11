@@ -139,9 +139,9 @@ definition {
 			templateName = "WC Template Name"
 		);
 
-		LexiconCard.clickEllipsisItem(
-			card = "WC Template Name",
-			item = "Permissions"
+		WebContentTemplates.gotoTemplateEllipsisItem(
+			item = "Permissions",
+			templateName = "WC Template Name"
 		);
 
 		SelectFrame(locator1 = "IFrame#DIALOG");

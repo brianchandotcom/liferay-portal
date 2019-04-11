@@ -232,32 +232,24 @@ class Sharing extends PortletBase {
 	 * @private
 	 * @review
 	 */
-	_validateEmails(event) {
+	_validateEmail(event) {
 		let {selectedItems, item} = event.data;
 
-		let invalidEmails = [];
+		let itemAdded = item.value;
+
 		this.emailErrorMessage = '';
 		this._inputValue = '';
 
-		selectedItems.reduce((acc, curr, i) => {
-			if (!this._isEmailValid(curr.value)) {
-				invalidEmails.push(curr);
-				selectedItems.splice(i, 1);
-			}
-		}, invalidEmails);
+		if (!this._isEmailValid(itemAdded)) {
+			this.emailErrorMessage = Liferay.Language.get('please-enter-a-valid-email-address');
 
-		if (invalidEmails.length > 0) {
-			this.emailErrorMessage =
-				Liferay.Language.get('please-enter-a-valid-email-address');
-
-			this._inputValue = invalidEmails.map(item => item.value).join(',');
-			this._inputValue = this._inputValue;
+			this._inputValue = itemAdded;
 		}
 		else {
 			this.fetch(
 				this.sharingUserCheckEmailURL,
 				{
-					email: item.value
+					email: itemAdded
 				}
 			).then(
 				response => response.json()
@@ -265,15 +257,16 @@ class Sharing extends PortletBase {
 				result => {
 					let {userEmail, userExists} = result;
 
-					if (!userExists) {
+					if (userExists) {
+						this._userEmailAddresses = selectedItems;
+					}
+					else {
 						this.emailErrorMessage = userEmail + ' does not exists.';
-						this._inputValue = userEmail;
+						this._inputValue = itemAdded;
 					}
 				}
 			);
 		}
-
-		this._userEmailAddresses = selectedItems;
 	}
 }
 

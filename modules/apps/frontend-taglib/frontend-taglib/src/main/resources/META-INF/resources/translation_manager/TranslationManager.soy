@@ -4,12 +4,13 @@
  * Translation Manager Component
  **/
 {template .render}
-	{@param availableLocales: list<string>}
+	{@param availableLocales: list<?>}
 	{@param changeableDefaultLanguage: bool}
 	{@param defaultLocale: string}
-	{@param locales: ?}
+	{@param locales: list<?>}
 	{@param? addLocale: any}
 	{@param? changeDefaultLocale: any}
+	{@param? changeLocale: any}
 	{@param? editingLocale: string}
 	{@param? elementClasses: string}
 	{@param? id: string}
@@ -37,52 +38,59 @@
 {template .defaultLocale}
 	{@param changeableDefaultLanguage: any}
 	{@param defaultLocale: string}
-	{@param locales: ?}
+	{@param locales: list<?>}
 	{@param? changeDefaultLocale: any}
+	{@param? changeLocale: any}
 
-	{let $defaultLocaleObject: $locales[$defaultLocale] /}
+	{foreach $locale in $locales}
+		{if $locale.id == $defaultLocale}
+			{let $optionIcon kind="html"}
+				{if $changeableDefaultLanguage}
+					{call .localesDropdown data="all"}
+						{param onClickDropdownElement: $changeDefaultLocale /}
+						{param icon: 'change' /}
+					{/call}
+				{/if}
+			{/let}
 
-	{let $optionIcon kind="html"}
-		{if $changeableDefaultLanguage}
-			{call .localesDropdown data="all"}
-				{param onClickDropdownElement: $changeDefaultLocale /}
-				{param icon: 'change' /}
+			{call .locale data="all"}
+				{param locale: $locale /}
+				{param optionIcon kind="html"}
+					{$optionIcon}
+				{/param}
+				{param changeLocale: $changeLocale /}
 			{/call}
 		{/if}
-	{/let}
-
-	{call .locale data="all"}
-		{param locale : $defaultLocaleObject /}
-		{param optionIcon kind="html"}
-			{$optionIcon}
-		{/param}
-	{/call}
+	{/foreach}
 {/template}
 
 /**
  * Renders the required list of available locale elements
  */
 {template .availableLocales}
-	{@param availableLocales: list<string>}
+	{@param availableLocales: list<?>}
 	{@param defaultLocale: string}
-	{@param locales: ?}
 	{@param pathThemeImages: string}
 	{@param? removeAvailableLocale: any}
 
 	{foreach $availableLocale in $availableLocales}
-		{if $availableLocale != $defaultLocale}
-			{let $locale: $locales[$availableLocale] /}
-
+		{if $availableLocale.id != $defaultLocale}
 			{call .locale data="all"}
-				{param locale : $locale /}
+				{param locale: $availableLocale /}
 				{param optionIcon kind="html"}
-					<span class="icon-monospaced" data-locale-id="{$locale.id}" data-onclick="{$removeAvailableLocale}" href="javascript:;">
-						<svg class="lexicon-icon">
-							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
+					<a data-locale-id="{$availableLocale.id}" data-onclick="{$removeAvailableLocale}" href="javascript:;">
+						<span>
+							<span class="icon-monospaced">
+								<svg class="lexicon-icon">
+									<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
 
-							<title>{$locale.close ?: $locale.id}</title>
-						</svg>
-					</span>
+									<title>
+										{msg desc=""}delete-{$availableLocale.label ?: $availableLocale.id}{/msg}
+									</title>
+								</svg>
+							</span>
+						</span>
+					</a>
 				{/param}
 			{/call}
 		{/if}
@@ -96,11 +104,12 @@
 	{@param locale: ?}
 	{@param optionIcon: html}
 	{@param pathThemeImages: string}
+	{@param? changeLocale: any}
 	{@param? editingLocale: string}
 
 	<li class="{$editingLocale == $locale.id ? 'active' : ''}">
-		<a href="javascript:;">
-			<span data-locale-id="{$locale.id}" data-onclick="changeLocale">
+		<a data-locale-id="{$locale.id}" data-onclick="{$changeLocale}" href="javascript:;">
+			<span>
 				<span class="icon-monospaced">
 					<svg class="lexicon-icon">
 						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
@@ -108,7 +117,7 @@
 						<title>{$locale.icon}</title>
 					</svg>
 				</span>
-				<span class="">{$locale.code}</span>
+				<span class="">{$locale.label}</span>
 			</span>
 
 			{$optionIcon}
@@ -120,41 +129,20 @@
  * Renders a dropdown with require locale elements
  */
 {template .localesDropdown}
+	{@param locales: list<?>}
 	{@param icon: string}
-	{@param locales: ?}
 	{@param pathThemeImages: string}
 	{@param? onClickDropdownElement: any}
 
-	{call liferay.frontend.Dropdown.render}
-		{param header kind="html"}
-			<a class="icon-monospaced" data-onclick="toggle" href="javascript:;">
-				<svg class="lexicon-icon">
-					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$icon}"></use>
-
-					<title>{$icon}</title>
-				</svg>
-			</a>
-		{/param}
-
-		{param body kind="html"}
-			{foreach $key in keys($locales)}
-				{let $locale: $locales[$key] /}
-				<li data-onclick="toggle">
-					<a data-locale-id="{$locale.id}" data-onclick="{$onClickDropdownElement ?: ''}" href="javascript:;">
-						<span class="icon-monospaced">
-							<svg class="lexicon-icon">
-								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
-
-								<title>{$locale.icon}</title>
-							</svg>
-						</span>
-						{$locale.name}
-					</a>
-				</li>
-			{/foreach}
-		{/param}
-
-		{param position: 0 /}
-		{param positionClassOnMenu: true /}
+	{call ClayDropdown.render}
+		{param items: $locales /}
+		{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+		{param events: [
+			'itemClicked': $onClickDropdownElement
+		] /}
+		{param icon: $icon /}
+		{param itemsIconAlignment: 'right' /}
+		{param triggerClasses: 'icon-monospaced' /}
+		{param preferredAlign: 'BottomCenter' /}
 	{/call}
 {/template}

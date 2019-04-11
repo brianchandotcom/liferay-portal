@@ -98,12 +98,12 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 <aui:script require="metal-uri/src/Uri">
 	const Uri = metalUriSrcUri.default;
 
-	function <portlet:namespace />deleteUserGroups() {
+	window.<portlet:namespace />deleteUserGroups = function() {
 		<portlet:namespace />doDeleteUserGroup(
 			'<%= UserGroup.class.getName() %>',
 			Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
 		);
-	}
+	};
 
 	window.<portlet:namespace />doDeleteUserGroup = function(className, ids) {
 		var status = <%= WorkflowConstants.STATUS_INACTIVE %>;

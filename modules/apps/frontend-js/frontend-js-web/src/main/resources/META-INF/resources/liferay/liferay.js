@@ -105,7 +105,7 @@ Liferay = window.Liferay || {};
 		'dropdownShow',
 		function(event) {
 			if (event.src !== 'BootstrapDropdown') {
-				$('.dropdown.show .dropdown-toggle').dropdown('toggle');
+				$('.dropdown.show .dropdown-toggle[data-toggle="dropdown"]').dropdown('toggle');
 			}
 		}
 	);

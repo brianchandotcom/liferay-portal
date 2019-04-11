@@ -82,6 +82,10 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	}
 
 	public AssetRendererFactory getAssetRendererFactory() {
+		if (_infoDisplayContributor == null) {
+			return null;
+		}
+
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassNameId(
 				_infoDisplayObjectProvider.getClassNameId());

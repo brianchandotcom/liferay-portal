@@ -5,11 +5,17 @@ $c: ".workflow-process-dashboard";
 		color: #272833;
 		font-size: 18px;
 		font-weight: 700;
-		margin-top: 21px;
+		margin-top: 10px;
 
-		svg {
-			color: #A7A9BC;
-			font-size: 16px;
+		.workflow-tooltip {
+			svg {
+				color: #A7A9BC;
+				font-size: 16px;
+			}
+
+			&:hover svg {
+				color: #272833;
+			}
 		}
 	}
 
@@ -52,17 +58,14 @@ $c: ".workflow-process-dashboard";
 
 		.icon-green {
 			background: #EDF9F0;
-			color: #287D3C;
 		}
 
 		.icon-orange {
 			background: #FFF4EC;
-			color: #B95000;
 		}
 
 		.icon-red {
 			background: #FEEFEF;
-			color: #DA1414;
 		}
 
 		&:hover {
@@ -72,6 +75,28 @@ $c: ".workflow-process-dashboard";
 
 		&:last-child {
 			margin-right: 0;
+		}
+	}
+
+	.icon-green {
+		color: #287D3C;
+	}
+
+	.icon-orange {
+		color: #B95000;
+	}
+
+	.icon-red {
+		color: #DA1414;
+	}
+
+	.table-list {
+		td:last-child, th:last-child, td + td, th + th {
+			padding-right: 3rem;
+		}
+
+		th.table-head-title .title {
+			line-height: 24px;
 		}
 	}
 }

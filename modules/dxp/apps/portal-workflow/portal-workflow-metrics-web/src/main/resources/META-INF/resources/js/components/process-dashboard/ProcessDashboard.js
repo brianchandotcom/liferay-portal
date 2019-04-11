@@ -1,5 +1,6 @@
 import PendingItemsCard from './PendingItemsCard';
 import React from 'react';
+import WorkloadByStepCard from './WorkloadByStepCard';
 
 const CLASSNAME = 'workflow-process-dashboard';
 
@@ -14,6 +15,7 @@ export default class ProcessDashboard extends React.Component {
 		return (
 			<div className={CLASSNAME}>
 				<PendingItemsCard processId={processId} />
+				<WorkloadByStepCard processId={processId} {...props} />
 			</div>
 		);
 	}

@@ -166,18 +166,20 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 									var selectedItems = event.newVal;
 
 									if (selectedItems) {
-										Array.prototype.forEach.call(
-											selectedItems,
-											function(item, index) {
-												dom.append(layoutPageTemplateCollectionsFm, item);
-											}
-										);
+										if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
+											Array.prototype.forEach.call(
+												selectedItems,
+												function(item, index) {
+													dom.append(layoutPageTemplateCollectionsFm, item);
+												}
+											);
 
-										<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
-											<portlet:param name="redirect" value="<%= currentURL %>" />
-										</liferay-portlet:actionURL>
+											<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
+												<portlet:param name="redirect" value="<%= currentURL %>" />
+											</liferay-portlet:actionURL>
 
-										submitForm(layoutPageTemplateCollectionsFm, '<%= deleteLayoutPageTemplateCollectionURL %>');
+											submitForm(layoutPageTemplateCollectionsFm, '<%= deleteLayoutPageTemplateCollectionURL %>');
+										}
 									}
 								}
 							},

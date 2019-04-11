@@ -165,17 +165,19 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 								var selectedItems = event.newVal;
 
 								if (selectedItems) {
-									Array.prototype.forEach.call(
-										selectedItems,
-										function(item) {
-											dom.append(fragmentCollectionsFm, item);
-										}
-									);
+									if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
+										Array.prototype.forEach.call(
+											selectedItems,
+											function(item) {
+												dom.append(fragmentCollectionsFm, item);
+											}
+										);
 
-									submitForm(
-										fragmentCollectionsFm,
-										'<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/fragment/delete_fragment_collection"></liferay-portlet:actionURL>'
-									);
+										submitForm(
+											fragmentCollectionsFm,
+											'<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/fragment/delete_fragment_collection"></liferay-portlet:actionURL>'
+										);
+									}
 								}
 							}
 						},

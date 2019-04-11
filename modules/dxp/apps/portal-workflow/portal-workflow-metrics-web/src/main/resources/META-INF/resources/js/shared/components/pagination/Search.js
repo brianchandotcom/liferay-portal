@@ -1,4 +1,5 @@
 import { Redirect, withRouter } from 'react-router-dom';
+import autobind from 'autobind-decorator';
 import Icon from '../Icon';
 import pathToRegexp from 'path-to-regexp';
 import React from 'react';
@@ -11,14 +12,25 @@ class Search extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { redirect: false, value: '' };
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	componentWillReceiveProps({ match: { params } }) {
+		const { search = '' } = params || {};
+		const { value } = this.state;
+
+		if (search !== value) {
+			this.setState({
+				value: search
+			});
+		}
+	}
+
+	@autobind
 	handleChange(event) {
 		this.setState({ value: event.target.value });
 	}
 
+	@autobind
 	handleSubmit(event) {
 		event.preventDefault();
 
@@ -58,11 +70,11 @@ class Search extends React.Component {
 					<div className="input-group-item">
 						<input
 							className="form-control input-group-inset input-group-inset-after"
-							defaultValue={value}
 							disabled={disabled}
-							onKeyPress={this.handleChange}
+							onChange={this.handleChange}
 							placeholder={Liferay.Language.get('search-for')}
 							type="text"
+							value={value}
 						/>
 						<span className="input-group-inset-item input-group-inset-item-after">
 							<button

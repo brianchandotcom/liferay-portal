@@ -2,7 +2,7 @@ import {LocalStorageMechanism, Storage} from 'metal-storage';
 import middlewares from './middlewares/defaults';
 
 // Gateway
-import Client from './Client';
+import Client from './client';
 
 import defaultPlugins from './plugins/defaults';
 import hash from './utils/hash';

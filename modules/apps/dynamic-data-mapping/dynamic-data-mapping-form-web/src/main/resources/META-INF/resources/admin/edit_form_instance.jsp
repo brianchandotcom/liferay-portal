@@ -83,7 +83,12 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	</nav>
 
 	<div class="container-fluid-1280 ddm-translation-manager">
-		<liferay-frontend:translation-manager availableLocales="<%= ddmFormAdminDisplayContext.getAvailableLocales() %>" changeableDefaultLanguage="<%= false %>" defaultLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>" id="translationManager" />
+		<liferay-frontend:translation-manager
+			availableLocales="<%= ddmFormAdminDisplayContext.getAvailableLocales() %>"
+			changeableDefaultLanguage="<%= false %>"
+			defaultLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
+			id="translationManager"
+		/>
 	</div>
 
 	<aui:form action="<%= saveFormInstanceURL %>" cssClass="ddm-form-builder-form" enctype="multipart/form-data" method="post" name="editForm">

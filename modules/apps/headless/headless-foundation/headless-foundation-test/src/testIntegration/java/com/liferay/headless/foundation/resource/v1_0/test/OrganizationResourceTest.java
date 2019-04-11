@@ -19,6 +19,8 @@ import com.liferay.headless.foundation.dto.v1_0.Organization;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.portal.kernel.util.PortalUtil;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -35,7 +38,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
@@ -60,6 +62,13 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		super.setUp();
 
 		_user = UserTestUtil.addGroupAdminUser(testGroup);
+
+		Indexer<com.liferay.portal.kernel.model.Organization> indexer =
+			IndexerRegistryUtil.getIndexer(
+				com.liferay.portal.kernel.model.Organization.class);
+
+		indexer.reindex(
+			new String[] {String.valueOf(PortalUtil.getDefaultCompanyId())});
 	}
 
 	@Override

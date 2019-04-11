@@ -115,52 +115,6 @@ public class DataDefinitionResourceTest
 		};
 	}
 
-	@Override
-	protected DataDefinition testDeleteDataDefinition_addDataDefinition()
-		throws Exception {
-
-		return invokePostSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
-	}
-
-	@Override
-	protected DataDefinition testGetDataDefinition_addDataDefinition()
-		throws Exception {
-
-		return invokePostSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
-	}
-
-	@Override
-	protected DataDefinition testGetSiteDataDefinitionsPage_addDataDefinition(
-			Long siteId, DataDefinition dataDefinition)
-		throws Exception {
-
-		return invokePostSiteDataDefinition(siteId, dataDefinition);
-	}
-
-	@Override
-	protected Long testGetSiteDataDefinitionsPage_getSiteId() throws Exception {
-		return testGroup.getGroupId();
-	}
-
-	@Override
-	protected DataDefinition testPostSiteDataDefinition_addDataDefinition(
-			DataDefinition dataDefinition)
-		throws Exception {
-
-		return invokePostSiteDataDefinition(
-			testGroup.getGroupId(), dataDefinition);
-	}
-
-	@Override
-	protected DataDefinition testPutDataDefinition_addDataDefinition()
-		throws Exception {
-
-		return invokePostSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
-	}
-
 	private static final String _OPERATION_SAVE_PERMISSION = "save";
 
 }

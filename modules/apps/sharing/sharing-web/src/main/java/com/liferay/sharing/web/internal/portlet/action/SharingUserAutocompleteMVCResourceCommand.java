@@ -79,6 +79,28 @@ public class SharingUserAutocompleteMVCResourceCommand
 			resourceRequest, resourceResponse, usersJSONArray);
 	}
 
+	private List<User> _getUsers(
+		HttpServletRequest request, ThemeDisplay themeDisplay) {
+
+		String query = ParamUtil.getString(request, "query");
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin()) {
+			return _userLocalService.search(
+				themeDisplay.getCompanyId(), query,
+				WorkflowConstants.STATUS_APPROVED, new LinkedHashMap<>(), 0, 20,
+				new UserScreenNameComparator());
+		}
+
+		User user = themeDisplay.getUser();
+
+		return _userLocalService.searchSocial(
+			themeDisplay.getCompanyId(), user.getGroupIds(), query, 0, 20,
+			new UserScreenNameComparator());
+	}
+
 	private JSONArray _getUsersJSONArray(HttpServletRequest request)
 		throws PortalException {
 
@@ -113,28 +135,6 @@ public class SharingUserAutocompleteMVCResourceCommand
 		}
 
 		return jsonArray;
-	}
-
-	private List<User> _getUsers(
-		HttpServletRequest request, ThemeDisplay themeDisplay) {
-
-		String query = ParamUtil.getString(request, "query");
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isCompanyAdmin()) {
-			return _userLocalService.search(
-				themeDisplay.getCompanyId(), query,
-				WorkflowConstants.STATUS_APPROVED, new LinkedHashMap<>(), 0, 20,
-				new UserScreenNameComparator());
-		}
-
-		User user = themeDisplay.getUser();
-
-		return _userLocalService.searchSocial(
-			themeDisplay.getCompanyId(), user.getGroupIds(), query, 0, 20,
-			new UserScreenNameComparator());
 	}
 
 	@Reference

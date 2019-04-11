@@ -130,11 +130,11 @@ public class BNDSourceUtil {
 	};
 
 	private static final String[] _BND_BND_DEFINITION_KEYS = {
-		"-jsp", "-metatype-inherit", "-sass", "Bundle-ActivationPolicy",
-		"Can-Redefine-Classes", "Can-Retransform-Classes",
-		"Eclipse-PlatformFilter", "Implementation-Version", "JPM-Command",
-		"Liferay-Configuration-Path", "Liferay-JS-Config",
-		"Liferay-JS-Resources-Top-Head-Authenticated",
+		"-jsp", "-liferay-aggregate-resource-bundles", "-metatype-inherit",
+		"-sass", "Bundle-ActivationPolicy", "Can-Redefine-Classes",
+		"Can-Retransform-Classes", "Eclipse-PlatformFilter",
+		"Implementation-Version", "JPM-Command", "Liferay-Configuration-Path",
+		"Liferay-JS-Config", "Liferay-JS-Resources-Top-Head-Authenticated",
 		"Liferay-JS-Resources-Top-Head", "Liferay-JS-Submodules-Bridge",
 		"Liferay-JS-Submodules-Export", "Liferay-Modules-Compat-Adapters",
 		"Liferay-Releng-App-Description",

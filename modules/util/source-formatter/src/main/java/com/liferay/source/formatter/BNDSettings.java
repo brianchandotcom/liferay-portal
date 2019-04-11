@@ -55,7 +55,9 @@ public class BNDSettings {
 
 		if (_content.matches(
 				"[\\s\\S]*Provide-Capability:[\\s\\S]*liferay\\.resource\\." +
-					"bundle[\\s\\S]*")) {
+					"bundle[\\s\\S]*") ||
+			_content.matches(
+				"[\\s\\S]*-liferay-aggregate-resource-bundles:[\\s\\S]*")) {
 
 			// Return null, in order to skip checking for language keys for
 			// modules that use LanguageExtender. No fix in place for this right

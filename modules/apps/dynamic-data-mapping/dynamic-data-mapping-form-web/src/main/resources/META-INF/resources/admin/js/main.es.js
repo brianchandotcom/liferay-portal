@@ -54,6 +54,7 @@ class Form extends Component {
 		 * @memberof Form
 		 * @type {!array}
 		 */
+
 		dataProviderInstanceParameterSettingsURL: Config.string().required(),
 
 		/**
@@ -63,6 +64,7 @@ class Form extends Component {
 		 * @memberof Form
 		 * @type {!array}
 		 */
+
 		dataProviderInstancesURL: Config.string().required(),
 
 		/**
@@ -181,6 +183,7 @@ class Form extends Component {
 		 * @memberof Form
 		 * @type {!array}
 		 */
+
 		rolesURL: Config.string(),
 
 		/**
@@ -200,6 +203,7 @@ class Form extends Component {
 		 * @memberof Form
 		 * @type {!boolean}
 		 */
+
 		saved: Config.bool(),
 
 		/**
@@ -256,10 +260,6 @@ class Form extends Component {
 
 		saveButtonLabel: Config.string().valueFn('_saveButtonLabelValueFn')
 	}
-
-	/**
-	 * @inheritDoc
-	 */
 
 	attached() {
 		const {layoutProvider} = this.refs;
@@ -435,10 +435,6 @@ class Form extends Component {
 			sel.addRange(range);
 		}
 	}
-
-	/**
-	 * @inheritDoc
-	 */
 
 	render() {
 		const {
@@ -793,11 +789,6 @@ class Form extends Component {
 		return this.checkEditorLimit(event, 120);
 	}
 
-	/**
-	 * @param newVal
-	 * Handles "paginationModeChanged" event. Updates the page mode to use it when form builder is saved.
-	 */
-
 	_handlePaginationModeChanded({newVal}) {
 		this.setState(
 			{
@@ -809,12 +800,6 @@ class Form extends Component {
 	_handlePublishedChanged() {
 		this.togglePublishedAlertsShown();
 	}
-
-	/**
-	 * Handles click on save button. Saves Form when clicked.
-	 * @param {!Event} event
-	 * @private
-	 */
 
 	_handleSaveButtonClicked(event) {
 		event.preventDefault();
@@ -867,12 +852,6 @@ class Form extends Component {
 
 		return label;
 	}
-
-	/*
-	 * Returns the map with all translated names or a map with just "Untitled Form" in case
-	 * there are no translations available.
-	 * @private
-	 */
 
 	_setContext(context) {
 		let {successPageSettings} = context;

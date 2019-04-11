@@ -160,11 +160,6 @@ class Popover extends Component {
 		);
 	}
 
-	/**
-	 * Handle a click on the document in order to close the popover
-	 * @param {Event} event
-	 * @protected
-	 */
 	_handleDocumentMouseDown({target}) {
 		const {alignElement} = this.props;
 		const {displayed} = this.state;

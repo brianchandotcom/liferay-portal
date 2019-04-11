@@ -445,7 +445,6 @@ class CriteriaRow extends Component {
 
 							<ClayButton
 								borderless
-								className="duplicate-button"
 								iconName="paste"
 								monospaced
 								onClick={this._handleDuplicate}

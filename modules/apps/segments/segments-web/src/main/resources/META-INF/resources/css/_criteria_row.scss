@@ -19,10 +19,6 @@
 		margin-right: 8px;
 	}
 
-	.duplicate-button {
-		visibility: hidden;
-	}
-
 	.edit-container {
 		align-items: center;
 		display: flex;
@@ -71,11 +67,5 @@
 
 	&.dnd-hover {
 		border: 2px solid $primary;
-	}
-
-	&:hover {
-		.duplicate-button {
-			visibility: visible;
-		}
 	}
 }

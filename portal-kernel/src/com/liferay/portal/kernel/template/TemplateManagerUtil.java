@@ -60,16 +60,6 @@ public class TemplateManagerUtil {
 			templateManagerName, templateResource, restricted);
 	}
 
-	public static Template getTemplate(
-			String templateManagerName, TemplateResource templateResource,
-			TemplateResource errorTemplateResource, boolean restricted)
-		throws TemplateException {
-
-		return _instance._getTemplate(
-			templateManagerName, templateResource, errorTemplateResource,
-			restricted);
-	}
-
 	public static TemplateManager getTemplateManager(
 		String templateManagerName) {
 
@@ -157,18 +147,6 @@ public class TemplateManagerUtil {
 			templateManagerName);
 
 		return templateManager.getTemplate(templateResource, restricted);
-	}
-
-	private Template _getTemplate(
-			String templateManagerName, TemplateResource templateResource,
-			TemplateResource errorTemplateResource, boolean restricted)
-		throws TemplateException {
-
-		TemplateManager templateManager = _getTemplateManagerChecked(
-			templateManagerName);
-
-		return templateManager.getTemplate(
-			templateResource, errorTemplateResource, restricted);
 	}
 
 	private TemplateManager _getTemplateManager(String templateManagerName) {

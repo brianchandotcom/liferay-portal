@@ -66,14 +66,11 @@ import org.osgi.framework.wiring.BundleWiring;
 public class SoyTemplate extends BaseTemplate {
 
 	public SoyTemplate(
-		SoyTemplateResource soyTemplateResource,
-		TemplateResource errorTemplateResource, Map<String, Object> context,
+		SoyTemplateResource soyTemplateResource, Map<String, Object> context,
 		SoyTemplateContextHelper templateContextHelper,
 		SoyTofuCacheHandler soyTofuCacheHandler) {
 
-		super(
-			soyTemplateResource, errorTemplateResource, null,
-			templateContextHelper);
+		super(soyTemplateResource, null, templateContextHelper);
 
 		if (ListUtil.isEmpty(soyTemplateResource.getTemplateResources())) {
 			throw new IllegalArgumentException("Template resource is null");

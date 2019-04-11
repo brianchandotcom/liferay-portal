@@ -273,14 +273,12 @@ public class VelocityManager extends BaseTemplateManager {
 
 	@Override
 	protected Template doGetTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, boolean restricted,
+		TemplateResource templateResource, boolean restricted,
 		Map<String, Object> helperUtilities) {
 
 		Template template = new VelocityTemplate(
-			templateResource, errorTemplateResource, helperUtilities,
-			_velocityEngine, templateContextHelper,
-			_velocityTemplateResourceCache);
+			templateResource, helperUtilities, _velocityEngine,
+			templateContextHelper, _velocityTemplateResourceCache);
 
 		if (restricted) {
 			template = new RestrictedTemplate(

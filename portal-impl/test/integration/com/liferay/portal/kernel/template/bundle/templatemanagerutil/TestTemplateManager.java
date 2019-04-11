@@ -117,14 +117,6 @@ public class TestTemplateManager implements TemplateManager {
 	}
 
 	@Override
-	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, boolean restricted) {
-
-		return getTemplate(templateResource, restricted);
-	}
-
-	@Override
 	public void init() {
 	}
 

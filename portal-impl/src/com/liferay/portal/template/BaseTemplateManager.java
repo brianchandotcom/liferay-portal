@@ -99,17 +99,8 @@ public abstract class BaseTemplateManager implements TemplateManager {
 	public Template getTemplate(
 		TemplateResource templateResource, boolean restricted) {
 
-		return getTemplate(templateResource, null, restricted);
-	}
-
-	@Override
-	public Template getTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, boolean restricted) {
-
 		return doGetTemplate(
-			templateResource, errorTemplateResource, restricted,
-			getHelperUtilities(restricted));
+			templateResource, restricted, getHelperUtilities(restricted));
 	}
 
 	public void setTemplateContextHelper(
@@ -125,8 +116,7 @@ public abstract class BaseTemplateManager implements TemplateManager {
 	}
 
 	protected abstract Template doGetTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, boolean restricted,
+		TemplateResource templateResource, boolean restricted,
 		Map<String, Object> helperUtilities);
 
 	protected Map<String, Object> getHelperUtilities(boolean restricted) {

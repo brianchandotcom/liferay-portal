@@ -78,15 +78,14 @@ public class XSLManager extends BaseTemplateManager {
 
 	@Override
 	protected Template doGetTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, boolean restricted,
+		TemplateResource templateResource, boolean restricted,
 		Map<String, Object> helperUtilities) {
 
 		XSLTemplateResource xslTemplateResource =
 			(XSLTemplateResource)templateResource;
 
 		return new XSLTemplate(
-			xslTemplateResource, errorTemplateResource, templateContextHelper,
+			xslTemplateResource, templateContextHelper,
 			_xslEngineConfiguration);
 	}
 

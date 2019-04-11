@@ -367,14 +367,12 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 	@Override
 	protected Template doGetTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, boolean restricted,
+		TemplateResource templateResource, boolean restricted,
 		Map<String, Object> helperUtilities) {
 
 		Template template = new FreeMarkerTemplate(
-			templateResource, errorTemplateResource, helperUtilities,
-			_configuration, templateContextHelper,
-			_freeMarkerTemplateResourceCache);
+			templateResource, helperUtilities, _configuration,
+			templateContextHelper, _freeMarkerTemplateResourceCache);
 
 		if (restricted) {
 			template = new RestrictedTemplate(

@@ -39,8 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseTemplate implements Template {
 
 	public BaseTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, Map<String, Object> context,
+		TemplateResource templateResource, Map<String, Object> context,
 		TemplateContextHelper templateContextHelper) {
 
 		if (templateResource == null) {
@@ -53,7 +52,6 @@ public abstract class BaseTemplate implements Template {
 		}
 
 		_templateResource = templateResource;
-		_errorTemplateResource = errorTemplateResource;
 
 		this.context = new HashMap<>();
 
@@ -251,7 +249,6 @@ public abstract class BaseTemplate implements Template {
 
 	protected Map<String, Object> context;
 
-	private final TemplateResource _errorTemplateResource;
 	private final TemplateContextHelper _templateContextHelper;
 	private final TemplateResource _templateResource;
 

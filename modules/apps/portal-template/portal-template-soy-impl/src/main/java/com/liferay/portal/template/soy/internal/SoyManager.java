@@ -109,8 +109,7 @@ public class SoyManager extends BaseTemplateManager {
 
 	@Override
 	protected Template doGetTemplate(
-		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, boolean restricted,
+		TemplateResource templateResource, boolean restricted,
 		Map<String, Object> helperUtilities) {
 
 		SoyTemplateResource soyTemplateResource = null;
@@ -125,7 +124,7 @@ public class SoyManager extends BaseTemplateManager {
 		}
 
 		Template template = new SoyTemplate(
-			soyTemplateResource, errorTemplateResource, helperUtilities,
+			soyTemplateResource, helperUtilities,
 			(SoyTemplateContextHelper)templateContextHelper,
 			_soyTofuCacheHandler);
 

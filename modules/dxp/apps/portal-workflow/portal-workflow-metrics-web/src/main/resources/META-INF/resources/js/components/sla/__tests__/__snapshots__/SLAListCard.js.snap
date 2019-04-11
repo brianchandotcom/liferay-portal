@@ -289,8 +289,8 @@ exports[`Should remove a item 1`] = `
           <ListView
             emptyMessageText="SLA allows to define and measure process performance."
             emptyTitleText="No SLAs Yet"
-            isFetching={false}
-            isLoading={true}
+            fetching={false}
+            loading={true}
           >
             <div>
               <LoadingState>
@@ -689,8 +689,8 @@ exports[`Should render toast with SLA saved message 1`] = `
           <ListView
             emptyMessageText="SLA allows to define and measure process performance."
             emptyTitleText="No SLAs Yet"
-            isFetching={false}
-            isLoading={true}
+            fetching={false}
+            loading={true}
           >
             <div>
               <LoadingState>
@@ -997,8 +997,8 @@ exports[`Should render toast with SLA updated message 1`] = `
           <ListView
             emptyMessageText="SLA allows to define and measure process performance."
             emptyTitleText="No SLAs Yet"
-            isFetching={false}
-            isLoading={true}
+            fetching={false}
+            loading={true}
           >
             <div>
               <LoadingState>

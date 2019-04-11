@@ -436,8 +436,8 @@ exports[`Should cancel dialog through SLA List 1`] = `
           <ListView
             emptyMessageText="SLA allows to define and measure process performance."
             emptyTitleText="No SLAs Yet"
-            isFetching={false}
-            isLoading={true}
+            fetching={false}
+            loading={true}
           >
             <div>
               <LoadingState>
@@ -744,8 +744,8 @@ exports[`Should cancel dialog through SLA List 2`] = `
           <ListView
             emptyMessageText="SLA allows to define and measure process performance."
             emptyTitleText="No SLAs Yet"
-            isFetching={false}
-            isLoading={true}
+            fetching={false}
+            loading={true}
           >
             <div>
               <LoadingState>

@@ -1,0 +1,403 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should display hyphen when the task has no count 1`] = `
+<div
+  className="table-responsive"
+>
+  <table
+    className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list"
+  >
+    <thead>
+      <tr>
+        <th
+          className="table-cell-expand table-head-title"
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate title"
+              data-title="Step Name"
+              title="Step Name"
+            >
+              Step Name
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
+        </th>
+        <th
+          className="table-head-title text-right"
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="inline-item inline-item-before mr-2"
+            >
+              <span
+                className="sticker sticker-sm"
+              >
+                <span
+                  className="inline-item"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-exclamation-circle icon-red"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-circle"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </span>
+            <span
+              className="text-truncate title"
+              data-title="Overdue"
+              title="Overdue"
+            >
+              Overdue
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
+        </th>
+        <th
+          className="table-head-title text-right"
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="inline-item inline-item-before mr-2"
+            >
+              <span
+                className="sticker sticker-sm"
+              >
+                <span
+                  className="inline-item"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-check-circle icon-green"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </span>
+            <span
+              className="text-truncate title"
+              data-title="On Time"
+              title="On Time"
+            >
+              On Time
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
+        </th>
+        <th
+          className="table-head-title text-right"
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate title"
+              data-title="Total Pending"
+              title="Total Pending"
+            >
+              Total Pending
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          className="lfr-title-column table-cell-expand table-cell-minw-200 table-title"
+        >
+          Single Approver
+        </td>
+        <td
+          className="text-right"
+        >
+          -
+        </td>
+        <td
+          className="text-right"
+        >
+          -
+        </td>
+        <td
+          className="text-right"
+        >
+          -
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`Should render component 1`] = `
+<div
+  className="table-responsive"
+>
+  <table
+    className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list"
+  >
+    <thead>
+      <tr>
+        <th
+          className="table-cell-expand table-head-title"
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate title"
+              data-title="Step Name"
+              title="Step Name"
+            >
+              Step Name
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
+        </th>
+        <th
+          className="table-head-title text-right"
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="inline-item inline-item-before mr-2"
+            >
+              <span
+                className="sticker sticker-sm"
+              >
+                <span
+                  className="inline-item"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-exclamation-circle icon-red"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-circle"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </span>
+            <span
+              className="text-truncate title"
+              data-title="Overdue"
+              title="Overdue"
+            >
+              Overdue
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
+        </th>
+        <th
+          className="table-head-title text-right"
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="inline-item inline-item-before mr-2"
+            >
+              <span
+                className="sticker sticker-sm"
+              >
+                <span
+                  className="inline-item"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-check-circle icon-green"
+                    focusable="false"
+                    role="presentation"
+                  >
+                    <use
+                      href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </span>
+            <span
+              className="text-truncate title"
+              data-title="On Time"
+              title="On Time"
+            >
+              On Time
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
+        </th>
+        <th
+          className="table-head-title text-right"
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate title"
+              data-title="Total Pending"
+              title="Total Pending"
+            >
+              Total Pending
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
+                />
+              </svg>
+            </span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          className="lfr-title-column table-cell-expand table-cell-minw-200 table-title"
+        >
+          Single Approver
+        </td>
+        <td
+          className="text-right"
+        >
+          0
+        </td>
+        <td
+          className="text-right"
+        >
+          1
+        </td>
+        <td
+          className="text-right"
+        >
+          1
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

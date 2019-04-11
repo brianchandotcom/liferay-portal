@@ -1,8 +1,141 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProcessDashboard Should render component 1`] = `
-<span
-  aria-hidden="true"
-  className="loading-animation"
-/>
+exports[`Should render component 1`] = `
+<div
+  className="workflow-process-dashboard"
+>
+  <span
+    aria-hidden="true"
+    className="loading-animation"
+  />
+  <div
+    className="container-fluid-1280 mt-4"
+  >
+    <div
+      className="panel panel-secondary"
+    >
+      <div
+        className="panel-header dashboard-panel-header"
+      >
+        <div>
+          <div>
+            <span
+              className="mr-3"
+            >
+              Workload by Step
+            </span>
+            <span
+              className="workflow-tooltip"
+              onMouseLeave={[Function]}
+            >
+              <span
+                className="tooltip-trigger"
+                onMouseOver={[Function]}
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-question-circle-full"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                  />
+                </svg>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="panel-body"
+      >
+        <div>
+          <div
+            className="border-0 sheet taglib-empty-result-message"
+          >
+            <div
+              className="sheet-text text-center"
+            >
+              <p
+                className="small"
+              >
+                There are no pending items at the moment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Should render component with failure state 1`] = `
+<div
+  className="workflow-process-dashboard"
+>
+  <span
+    aria-hidden="true"
+    className="loading-animation"
+  />
+  <div
+    className="container-fluid-1280 mt-4"
+  >
+    <div
+      className="panel panel-secondary"
+    >
+      <div
+        className="panel-header dashboard-panel-header"
+      >
+        <div>
+          <div>
+            <span
+              className="mr-3"
+            >
+              Workload by Step
+            </span>
+            <span
+              className="workflow-tooltip"
+              onMouseLeave={[Function]}
+            >
+              <span
+                className="tooltip-trigger"
+                onMouseOver={[Function]}
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-question-circle-full"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                  />
+                </svg>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="panel-body"
+      >
+        <div>
+          <div
+            className="border-0 sheet taglib-empty-result-message"
+          >
+            <div
+              className="sheet-text text-center"
+            >
+              <p
+                className="small"
+              >
+                There are no pending items at the moment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;

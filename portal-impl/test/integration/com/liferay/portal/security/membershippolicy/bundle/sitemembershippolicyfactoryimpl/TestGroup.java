@@ -75,17 +75,6 @@ public class TestGroup implements Group {
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public List<Group> getChildrenWithLayouts(
-		boolean site, int start, int end) {
-
-		return null;
-	}
-
 	@Override
 	public List<Group> getChildrenWithLayouts(
 		boolean site, int start, int end, OrderByComparator<Group> obc) {
@@ -504,15 +493,6 @@ public class TestGroup implements Group {
 
 	@Override
 	public boolean isCachedModel() {
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public boolean isChild(long groupId) {
 		return false;
 	}
 

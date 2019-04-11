@@ -77,13 +77,6 @@ public interface PortletFileRepository {
 			long groupId, String portletId, ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #deletePortletFolder}
-	 */
-	@Deprecated
-	public void deleteFolder(long folderId) throws PortalException;
-
 	public void deletePortletFileEntries(long groupId, long folderId)
 		throws PortalException;
 

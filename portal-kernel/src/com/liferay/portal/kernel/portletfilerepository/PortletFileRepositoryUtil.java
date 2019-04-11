@@ -110,15 +110,6 @@ public class PortletFileRepositoryUtil {
 			groupId, portletId, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #deletePortletFolder}
-	 */
-	@Deprecated
-	public static void deleteFolder(long folderId) throws PortalException {
-		getPortletFileRepository().deleteFolder(folderId);
-	}
-
 	public static void deletePortletFileEntries(long groupId, long folderId)
 		throws PortalException {
 

@@ -271,16 +271,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				serviceContext));
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #deletePortletFolder}
-	 */
-	@Deprecated
-	@Override
-	public void deleteFolder(long folderId) throws PortalException {
-		deletePortletFolder(folderId);
-	}
-
 	@Override
 	public void deletePortletFileEntries(long groupId, long folderId)
 		throws PortalException {

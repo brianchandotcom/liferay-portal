@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -205,8 +206,13 @@ public class CTCollectionResource {
 		else if (_TYPE_RECENT.equals(type)) {
 			CTJaxRsUtil.checkCompany(companyId);
 
-			ctCollections = _ctEngineManager.searchByKeywords(
-				companyId, _getQueryDefinition(limit, sort));
+			QueryDefinition<CTCollection> queryDefinition = _getQueryDefinition(
+				limit, sort);
+
+			queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+			ctCollections = _ctEngineManager.getNonproductionCTCollections(
+				companyId, queryDefinition);
 		}
 		else {
 			throw new IllegalArgumentException(

@@ -14,10 +14,7 @@
 
 package com.liferay.portal.repository;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 
 /**
  * @author Iván Zaera
@@ -25,23 +22,4 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 public class InitializedLocalRepository
 	extends InitializedDocumentRepository<LocalRepository>
 	implements LocalRepository {
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public void updateAsset(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		documentRepository.updateAsset(
-			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds);
-	}
-
 }

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
-import com.liferay.portal.kernel.repository.util.RepositoryUserUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -70,42 +69,6 @@ public class RepositoryWrapper implements Repository {
 			changeLog, is, size, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), see {@link #addFileEntry(long,
-	 *             long, String, String, String, String, String, File,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _repository.addFileEntry(
-			RepositoryUserUtil.getUserId(), folderId, sourceFileName, mimeType,
-			title, description, changeLog, file, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), see {@link #addFileEntry(long,
-	 *             long, String, String, String, String, String, InputStream,
-	 *             long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, InputStream is, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _repository.addFileEntry(
-			RepositoryUserUtil.getUserId(), folderId, sourceFileName, mimeType,
-			title, description, changeLog, is, size, serviceContext);
-	}
-
 	@Override
 	public FileShortcut addFileShortcut(
 			long userId, long folderId, long toFileEntryId,
@@ -126,42 +89,9 @@ public class RepositoryWrapper implements Repository {
 			userId, parentFolderId, name, description, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #addFolder(long, long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Folder addFolder(
-			long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _repository.addFolder(
-			RepositoryUserUtil.getUserId(), parentFolderId, name, description,
-			serviceContext);
-	}
-
 	@Override
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException {
 		return _repository.cancelCheckOut(fileEntryId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #checkInFileEntry(long, long, boolean, String,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(
-			long fileEntryId, boolean majorVersion, String changeLog,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_repository.checkInFileEntry(
-			RepositoryUserUtil.getUserId(), fileEntryId, majorVersion,
-			changeLog, serviceContext);
 	}
 
 	/**
@@ -202,21 +132,6 @@ public class RepositoryWrapper implements Repository {
 			userId, fileEntryId, lockUuid, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #checkInFileEntry(long, long, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(
-			long fileEntryId, String lockUuid, ServiceContext serviceContext)
-		throws PortalException {
-
-		_repository.checkInFileEntry(
-			RepositoryUserUtil.getUserId(), fileEntryId, lockUuid,
-			serviceContext);
-	}
-
 	@Override
 	public FileEntry checkOutFileEntry(
 			long fileEntryId, ServiceContext serviceContext)
@@ -243,22 +158,6 @@ public class RepositoryWrapper implements Repository {
 
 		return _repository.copyFileEntry(
 			userId, groupId, fileEntryId, destFolderId, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #copyFileEntry(long, long, long, long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FileEntry copyFileEntry(
-			long groupId, long fileEntryId, long destFolderId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _repository.copyFileEntry(
-			RepositoryUserUtil.getUserId(), groupId, fileEntryId, destFolderId,
-			serviceContext);
 	}
 
 	@Override
@@ -674,21 +573,6 @@ public class RepositoryWrapper implements Repository {
 			userId, fileEntryId, newFolderId, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #moveFileEntry(long, long, long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
-		throws PortalException {
-
-		return _repository.moveFileEntry(
-			RepositoryUserUtil.getUserId(), fileEntryId, newFolderId,
-			serviceContext);
-	}
-
 	@Override
 	public Folder moveFolder(
 			long userId, long folderId, long parentFolderId,
@@ -697,21 +581,6 @@ public class RepositoryWrapper implements Repository {
 
 		return _repository.moveFolder(
 			userId, folderId, parentFolderId, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #moveFolder(long, long, long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Folder moveFolder(
-			long folderId, long newParentFolderId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _repository.moveFolder(
-			RepositoryUserUtil.getUserId(), newParentFolderId, serviceContext);
 	}
 
 	@Override
@@ -740,21 +609,6 @@ public class RepositoryWrapper implements Repository {
 
 		_repository.revertFileEntry(
 			userId, fileEntryId, version, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #revertFileEntry(long, long, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void revertFileEntry(
-			long fileEntryId, String version, ServiceContext serviceContext)
-		throws PortalException {
-
-		_repository.revertFileEntry(
-			RepositoryUserUtil.getUserId(), fileEntryId, version,
-			serviceContext);
 	}
 
 	@Override
@@ -863,45 +717,6 @@ public class RepositoryWrapper implements Repository {
 		return _repository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, dlVersionNumberIncrease, is, size, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateFileEntry(long, long, String, String, String, String,
-	 *             String, boolean, File, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FileEntry updateFileEntry(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
-		throws PortalException {
-
-		return _repository.updateFileEntry(
-			RepositoryUserUtil.getUserId(), fileEntryId, sourceFileName,
-			mimeType, title, description, changeLog, majorVersion, file,
-			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateFileEntry(long, long, String, String, String, String,
-	 *             String, boolean, InputStream, long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public FileEntry updateFileEntry(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _repository.updateFileEntry(
-			RepositoryUserUtil.getUserId(), fileEntryId, sourceFileName,
-			mimeType, title, description, changeLog, majorVersion, is, size,
-			serviceContext);
 	}
 
 	@Override

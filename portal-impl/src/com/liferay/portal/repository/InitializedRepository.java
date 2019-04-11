@@ -28,9 +28,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.io.File;
-import java.io.InputStream;
-
 import java.util.List;
 
 /**
@@ -39,94 +36,11 @@ import java.util.List;
 public class InitializedRepository
 	extends InitializedDocumentRepository<Repository> implements Repository {
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		return documentRepository.addFileEntry(
-			folderId, sourceFileName, mimeType, title, description, changeLog,
-			file, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, InputStream is, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		return documentRepository.addFileEntry(
-			folderId, sourceFileName, mimeType, title, description, changeLog,
-			is, size, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Folder addFolder(
-			long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		return documentRepository.addFolder(
-			parentFolderId, name, description, serviceContext);
-	}
-
 	@Override
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException {
 		checkDocumentRepository();
 
 		return documentRepository.cancelCheckOut(fileEntryId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(
-			long fileEntryId, boolean major, String changeLog,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		documentRepository.checkInFileEntry(
-			fileEntryId, major, changeLog, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(
-			long fileEntryId, String lockUuid, ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		documentRepository.checkInFileEntry(
-			fileEntryId, lockUuid, serviceContext);
 	}
 
 	@Override
@@ -150,22 +64,6 @@ public class InitializedRepository
 
 		return documentRepository.checkOutFileEntry(
 			fileEntryId, owner, expirationTime, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public FileEntry copyFileEntry(
-			long groupId, long fileEntryId, long destFolderId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		return documentRepository.copyFileEntry(
-			groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
 	@Override
@@ -504,37 +402,6 @@ public class InitializedRepository
 			folderId, owner, inheritable, expirationTime);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		return documentRepository.moveFileEntry(
-			fileEntryId, newFolderId, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Folder moveFolder(
-			long folderId, long newParentFolderId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		return documentRepository.moveFolder(
-			folderId, newParentFolderId, serviceContext);
-	}
-
 	@Override
 	public Lock refreshFileEntryLock(
 			String lockUuid, long companyId, long expirationTime)
@@ -555,21 +422,6 @@ public class InitializedRepository
 
 		return documentRepository.refreshFolderLock(
 			lockUuid, companyId, expirationTime);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public void revertFileEntry(
-			long fileEntryId, String version, ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		documentRepository.revertFileEntry(
-			fileEntryId, version, serviceContext);
 	}
 
 	@Override
@@ -625,43 +477,6 @@ public class InitializedRepository
 		checkDocumentRepository();
 
 		documentRepository.unlockFolder(parentFolderId, name, lockUuid);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public FileEntry updateFileEntry(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		return documentRepository.updateFileEntry(
-			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, file, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public FileEntry updateFileEntry(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		return documentRepository.updateFileEntry(
-			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
 	}
 
 	@Override

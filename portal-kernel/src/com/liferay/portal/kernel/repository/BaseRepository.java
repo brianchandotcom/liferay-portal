@@ -32,14 +32,6 @@ public interface BaseRepository extends Repository {
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             com.liferay.portal.kernel.repository.registry.RepositoryDefiner#getSupportedConfigurations(
-	 *             )}
-	 */
-	@Deprecated
-	public String[] getSupportedConfigurations();
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             com.liferay.portal.kernel.repository.registry.RepositoryDefiner#getSupportedParameters(
 	 *             )}
 	 */

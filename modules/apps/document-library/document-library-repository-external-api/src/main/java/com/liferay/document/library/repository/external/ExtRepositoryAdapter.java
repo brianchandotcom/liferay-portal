@@ -722,11 +722,6 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 	}
 
 	@Override
-	public String[] getSupportedConfigurations() {
-		return _extRepository.getSupportedConfigurations();
-	}
-
-	@Override
 	public String[][] getSupportedParameters() {
 		return _extRepository.getSupportedParameters();
 	}

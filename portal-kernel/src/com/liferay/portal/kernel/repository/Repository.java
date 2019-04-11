@@ -27,49 +27,12 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.io.File;
-import java.io.InputStream;
-
 import java.util.List;
 
 /**
  * @author Alexander Chow
  */
 public interface Repository extends DocumentRepository {
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), see {@link #addFileEntry(long,
-	 *             long, String, String, String, String, String, File,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), see {@link #addFileEntry(long,
-	 *             long, String, String, String, String, String, InputStream,
-	 *             long, ServiceContext)}
-	 */
-	@Deprecated
-	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, InputStream is, long size,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #addFolder(long, long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public Folder addFolder(
-			long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	 * Cancels the file entry check out. If the file entry is not checked out,
@@ -84,42 +47,12 @@ public interface Repository extends DocumentRepository {
 	 */
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #checkInFileEntry(long, long, boolean, String,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	public void checkInFileEntry(
-			long fileEntryId, boolean major, String changeLog,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #checkInFileEntry(long, long, String, ServiceContext)}
-	 */
-	@Deprecated
-	public void checkInFileEntry(
-			long fileEntryId, String lockUuid, ServiceContext serviceContext)
-		throws PortalException;
-
 	public FileEntry checkOutFileEntry(
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FileEntry checkOutFileEntry(
 			long fileEntryId, String owner, long expirationTime,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #copyFileEntry(long, long, long, long, ServiceContext)}
-	 */
-	@Deprecated
-	public FileEntry copyFileEntry(
-			long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -218,40 +151,12 @@ public interface Repository extends DocumentRepository {
 			long expirationTime)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #moveFileEntry(long, long, long, ServiceContext)}
-	 */
-	@Deprecated
-	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #moveFolder(long, long, long, ServiceContext)}
-	 */
-	@Deprecated
-	public Folder moveFolder(
-			long folderId, long newParentFolderId,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public Lock refreshFileEntryLock(
 			String lockUuid, long companyId, long expirationTime)
 		throws PortalException;
 
 	public Lock refreshFolderLock(
 			String lockUuid, long companyId, long expirationTime)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #revertFileEntry(long, long, String, ServiceContext)}
-	 */
-	@Deprecated
-	public void revertFileEntry(
-			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException;
 
 	public Hits search(long creatorUserId, int status, int start, int end)
@@ -271,31 +176,6 @@ public interface Repository extends DocumentRepository {
 		throws PortalException;
 
 	public void unlockFolder(long parentFolderId, String name, String lockUuid)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateFileEntry(long, long, String, String, String, String,
-	 *             String, boolean, File, ServiceContext)}
-	 */
-	@Deprecated
-	public FileEntry updateFileEntry(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateFileEntry(long, long, String, String, String, String,
-	 *             String, boolean, InputStream, long, ServiceContext)}
-	 */
-	@Deprecated
-	public FileEntry updateFileEntry(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 	public Folder updateFolder(

@@ -481,22 +481,6 @@ public class CapabilityLocalRepository
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void updateAsset(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds)
-		throws PortalException {
-
-		getRepository().updateAsset(
-			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds);
-	}
-
 	@Override
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,

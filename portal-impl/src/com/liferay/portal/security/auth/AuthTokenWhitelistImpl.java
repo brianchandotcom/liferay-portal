@@ -54,33 +54,6 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getOriginCSRFWhitelist() {
-		return _originCSRFWhitelist;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getPortletCSRFWhitelist() {
-		return _portletCSRFWhitelist;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getPortletInvocationWhitelist() {
-		return _portletInvocationWhitelist;
-	}
-
 	@Override
 	public boolean isOriginCSRFWhitelisted(long companyId, String origin) {
 		for (String whitelistedOrigin : _originCSRFWhitelist) {

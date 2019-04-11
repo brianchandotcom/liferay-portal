@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.security.auth;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -46,21 +45,6 @@ public class AuthTokenUtil {
 
 		if (authToken != null) {
 			authToken.addPortletInvocationToken(request, liferayPortletURL);
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #checkCSRFToken(HttpServletRequest, String)}
-	 */
-	@Deprecated
-	public static void check(HttpServletRequest request)
-		throws PortalException {
-
-		AuthToken authToken = _authToken;
-
-		if (authToken != null) {
-			authToken.check(request);
 		}
 	}
 
@@ -107,26 +91,6 @@ public class AuthTokenUtil {
 
 		return authToken.isValidPortletInvocationToken(
 			request, layout, portlet);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #isValidPortletInvocationToken(HttpServletRequest, Layout,
-	 *             Portlet)}
-	 */
-	@Deprecated
-	public static boolean isValidPortletInvocationToken(
-		HttpServletRequest request, long plid, String portletId,
-		String strutsAction, String tokenValue) {
-
-		AuthToken authToken = _authToken;
-
-		if (authToken == null) {
-			return false;
-		}
-
-		return authToken.isValidPortletInvocationToken(
-			request, plid, portletId, strutsAction, tokenValue);
 	}
 
 	private static volatile AuthToken _authToken =

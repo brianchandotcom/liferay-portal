@@ -47,14 +47,6 @@ public class TestAuthToken implements AuthToken {
 			"p_p_auth", "TEST_TOKEN_BY_PLID_AND_PORTLET_ID");
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public void check(HttpServletRequest request) {
-	}
-
 	@Override
 	public void checkCSRFToken(HttpServletRequest request, String origin) {
 	}
@@ -76,18 +68,6 @@ public class TestAuthToken implements AuthToken {
 		HttpServletRequest request, Layout layout, Portlet portlet) {
 
 		String tokenValue = request.getParameter("p_p_auth");
-
-		return "VALID_PORTLET_INVOCATION_TOKEN".equals(tokenValue);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public boolean isValidPortletInvocationToken(
-		HttpServletRequest request, long plid, String portletId,
-		String strutsAction, String tokenValue) {
 
 		return "VALID_PORTLET_INVOCATION_TOKEN".equals(tokenValue);
 	}

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -122,16 +120,6 @@ public class SessionAuthToken implements AuthToken {
 			"p_p_auth", getToken(request, plid, portletId));
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public void check(HttpServletRequest request) throws PrincipalException {
-		checkCSRFToken(
-			request, SecurityPortletContainerWrapper.class.getName());
-	}
-
 	@Override
 	public void checkCSRFToken(HttpServletRequest request, String origin)
 		throws PrincipalException {
@@ -225,28 +213,6 @@ public class SessionAuthToken implements AuthToken {
 
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public boolean isValidPortletInvocationToken(
-		HttpServletRequest request, long plid, String portletId,
-		String strutsAction, String tokenValue) {
-
-		try {
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
-
-			return isValidPortletInvocationToken(request, layout, portlet);
-		}
-		catch (PortalException pe) {
-			ReflectionUtil.throwException(pe);
 		}
 
 		return false;

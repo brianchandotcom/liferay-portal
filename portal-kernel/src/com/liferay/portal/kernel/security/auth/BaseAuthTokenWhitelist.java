@@ -30,7 +30,6 @@ import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,51 +41,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Tomas Polesovsky
  */
 public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getOriginCSRFWhitelist() {
-		return Collections.emptySet();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getPortletCSRFWhitelist() {
-		return Collections.emptySet();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getPortletCSRFWhitelistActions() {
-		return Collections.emptySet();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getPortletInvocationWhitelist() {
-		return Collections.emptySet();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getPortletInvocationWhitelistActions() {
-		return Collections.emptySet();
-	}
 
 	@Override
 	public boolean isOriginCSRFWhitelisted(long companyId, String origin) {
@@ -100,31 +54,9 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public boolean isPortletCSRFWhitelisted(
-		long companyId, String portletId, String strutsAction) {
-
-		return false;
-	}
-
 	@Override
 	public boolean isPortletInvocationWhitelisted(
 		HttpServletRequest request, Portlet portlet) {
-
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public boolean isPortletInvocationWhitelisted(
-		long companyId, String portletId, String strutsAction) {
 
 		return false;
 	}
@@ -146,42 +78,6 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	@Override
 	public boolean isValidSharedSecret(String sharedSecret) {
 		return false;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> resetOriginCSRFWhitelist() {
-		return Collections.emptySet();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> resetPortletCSRFWhitelist() {
-		return Collections.emptySet();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> resetPortletInvocationWhitelist() {
-		return Collections.emptySet();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Set<String> resetPortletInvocationWhitelistActions() {
-		return Collections.emptySet();
 	}
 
 	protected void destroy() {

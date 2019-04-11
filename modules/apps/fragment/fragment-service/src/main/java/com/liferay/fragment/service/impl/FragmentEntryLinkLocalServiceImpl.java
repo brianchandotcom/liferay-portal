@@ -127,6 +127,13 @@ public class FragmentEntryLinkLocalServiceImpl
 	public FragmentEntryLink deleteFragmentEntryLink(
 		FragmentEntryLink fragmentEntryLink) {
 
+		// Fragment entry processor registry
+
+		_fragmentEntryProcessorRegistry.deleteFragmentEntryLinkData(
+			fragmentEntryLink);
+
+		// Fragment entry link
+
 		fragmentEntryLinkPersistence.remove(fragmentEntryLink);
 
 		return fragmentEntryLink;

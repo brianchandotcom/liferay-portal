@@ -50,6 +50,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.message.body.JSONMessageBodyWrit
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.MultipartBodyMessageBodyReader;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyReader;
 import com.liferay.portal.vulcan.internal.jaxrs.message.body.XMLMessageBodyWriter;
+import com.liferay.portal.vulcan.internal.jaxrs.transaction.TransactionContainerFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterceptor;
 
 import javax.ws.rs.core.Feature;
@@ -98,6 +99,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(PortalExceptionMapper.class);
 		featureContext.register(PrincipalExceptionMapper.class);
 		featureContext.register(ServiceEventsContainerRequestFilter.class);
+		featureContext.register(TransactionContainerFilter.class);
 		featureContext.register(UnrecognizedPropertyExceptionMapper.class);
 		featureContext.register(ValidationExceptionMapper.class);
 		featureContext.register(WebApplicationExceptionMapper.class);

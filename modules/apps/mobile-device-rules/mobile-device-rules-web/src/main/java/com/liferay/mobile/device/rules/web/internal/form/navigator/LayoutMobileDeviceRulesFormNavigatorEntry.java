@@ -16,12 +16,9 @@ package com.liferay.mobile.device.rules.web.internal.form.navigator;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -66,18 +63,6 @@ public class LayoutMobileDeviceRulesFormNavigatorEntry
 	}
 
 	@Override
-	public boolean isVisible(User user, Layout layout) {
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
-
-		if (draftLayout != null) {
-			return false;
-		}
-
-		return super.isVisible(user, layout);
-	}
-
-	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.mobile.device.rules.web)",
 		unbind = "-"
@@ -90,11 +75,5 @@ public class LayoutMobileDeviceRulesFormNavigatorEntry
 	protected String getJspPath() {
 		return "/layout/mobile_device_rules.jsp";
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

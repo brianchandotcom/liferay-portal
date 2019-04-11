@@ -76,7 +76,6 @@ public class SoyTemplate extends BaseTemplate {
 			throw new IllegalArgumentException("Template resource is null");
 		}
 
-		_soyTemplateResource = soyTemplateResource;
 		_templateContextHelper = templateContextHelper;
 
 		_soyContextImpl = new SoyContextImpl(
@@ -166,12 +165,13 @@ public class SoyTemplate extends BaseTemplate {
 	}
 
 	protected SoyMsgBundleBridge createSoyMsgBundleBridge(
-		SoyFileSet soyFileSet, Locale locale) {
+		List<TemplateResource> templateResources, SoyFileSet soyFileSet,
+		Locale locale) {
 
 		SoyMsgBundle soyMsgBundle = soyFileSet.extractMsgs();
 
 		ResourceBundle languageResourceBundle = _getLanguageResourceBundle(
-			locale);
+			templateResources, locale);
 
 		SoyMsgBundleBridge soyMsgBundleBridge = new SoyMsgBundleBridge(
 			soyMsgBundle, locale, languageResourceBundle);
@@ -202,7 +202,8 @@ public class SoyTemplate extends BaseTemplate {
 	}
 
 	protected Optional<SoyMsgBundle> getSoyMsgBundle(
-		SoyFileSet soyFileSet, SoyTofuCacheBag soyTofuCacheBag) {
+		List<TemplateResource> templateResources, SoyFileSet soyFileSet,
+		SoyTofuCacheBag soyTofuCacheBag) {
 
 		Locale locale = (Locale)get("locale");
 
@@ -211,7 +212,8 @@ public class SoyTemplate extends BaseTemplate {
 				locale);
 
 			if (soyMsgBundle == null) {
-				soyMsgBundle = createSoyMsgBundleBridge(soyFileSet, locale);
+				soyMsgBundle = createSoyMsgBundleBridge(
+					templateResources, soyFileSet, locale);
 
 				soyTofuCacheBag.putMessageBundle(locale, soyMsgBundle);
 			}
@@ -323,7 +325,7 @@ public class SoyTemplate extends BaseTemplate {
 		SoyFileSet soyFileSet = soyTofuCacheBag.getSoyFileSet();
 
 		Optional<SoyMsgBundle> soyMsgBundle = getSoyMsgBundle(
-			soyFileSet, soyTofuCacheBag);
+			templateResources, soyFileSet, soyTofuCacheBag);
 
 		if (soyMsgBundle.isPresent()) {
 			renderer.setMsgBundle(soyMsgBundle.get());
@@ -342,12 +344,12 @@ public class SoyTemplate extends BaseTemplate {
 		}
 	}
 
-	private ResourceBundle _getLanguageResourceBundle(Locale locale) {
+	private ResourceBundle _getLanguageResourceBundle(
+		List<TemplateResource> templateResources, Locale locale) {
+
 		List<ResourceBundleLoader> resourceBundleLoaders = new ArrayList<>();
 
-		for (TemplateResource templateResource :
-				_soyTemplateResource.getTemplateResources()) {
-
+		for (TemplateResource templateResource : templateResources) {
 			try {
 				Bundle templateResourceBundle =
 					SoyProviderCapabilityBundleRegister.getTemplateBundle(
@@ -397,7 +399,6 @@ public class SoyTemplate extends BaseTemplate {
 	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
 
 	private final SoyContextImpl _soyContextImpl;
-	private final SoyTemplateResource _soyTemplateResource;
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 	private final SoyTemplateContextHelper _templateContextHelper;
 

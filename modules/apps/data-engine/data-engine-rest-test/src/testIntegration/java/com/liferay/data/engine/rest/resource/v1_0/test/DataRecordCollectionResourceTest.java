@@ -44,11 +44,6 @@ public class DataRecordCollectionResourceTest
 
 	@Ignore
 	@Override
-	public void testDeleteDataRecordCollection() throws Exception {
-	}
-
-	@Ignore
-	@Override
 	public void testGetDataDefinitionDataRecordCollectionsPage()
 		throws Exception {
 	}
@@ -99,14 +94,20 @@ public class DataRecordCollectionResourceTest
 
 	@Override
 	protected DataRecordCollection
+			testDeleteDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		return invokePostDataDefinitionDataRecordCollection(
+			_ddmStructure.getStructureId(), randomDataRecordCollection());
+	}
+
+	@Override
+	protected DataRecordCollection
 			testGetDataRecordCollection_addDataRecordCollection()
 		throws Exception {
 
-		DataRecordCollection dataRecordCollection =
-			randomDataRecordCollection();
-
 		return invokePostDataDefinitionDataRecordCollection(
-			dataRecordCollection.getDataDefinitionId(), dataRecordCollection);
+			_ddmStructure.getStructureId(), randomDataRecordCollection());
 	}
 
 	@Override
@@ -116,7 +117,7 @@ public class DataRecordCollectionResourceTest
 		throws Exception {
 
 		return invokePostDataDefinitionDataRecordCollection(
-			dataRecordCollection.getDataDefinitionId(), dataRecordCollection);
+			_ddmStructure.getStructureId(), dataRecordCollection);
 	}
 
 	private DDMStructure _ddmStructure;

@@ -82,19 +82,19 @@ public class DataDefinitionResourceTest
 
 	@Override
 	protected DataDefinition randomDataDefinition() {
-		DataDefinition dataDefinition = super.randomDataDefinition();
-		
-		dataDefinition.setName(
-			new LocalizedValue[] {
-				new LocalizedValue() {
-					{
-						key = "en_US";
-						value = RandomTestUtil.randomString();
+		return new DataDefinition() {
+			{
+				name = new LocalizedValue[] {
+					new LocalizedValue() {
+						{
+							key = "en_US";
+							value = RandomTestUtil.randomString();
+						}
 					}
-				}
-			});
-
-		return dataDefinition;
+				};
+				siteId = testGroup.getGroupId();
+			}
+		};
 	}
 
 	private static final String _OPERATION_SAVE_PERMISSION = "save";

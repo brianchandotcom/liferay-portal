@@ -97,7 +97,7 @@ public class ConfigurationModelToDDMFormConverter {
 		AttributeDefinition[] optionalAttributeDefinitions = ArrayUtil.filter(
 			_configurationModel.getAttributeDefinitions(
 				ObjectClassDefinition.OPTIONAL),
-			((Predicate<AttributeDefinition>)this::_isUiRequired).negate());
+			((Predicate<AttributeDefinition>)this::_isRequiredInput).negate());
 
 		addDDMFormFields(optionalAttributeDefinitions, ddmForm, false);
 	}
@@ -109,7 +109,7 @@ public class ConfigurationModelToDDMFormConverter {
 			ArrayUtil.filter(
 				_configurationModel.getAttributeDefinitions(
 					ObjectClassDefinition.OPTIONAL),
-				this::_isUiRequired));
+				this::_isRequiredInput));
 
 		addDDMFormFields(requiredAttributeDefinitions, ddmForm, true);
 	}
@@ -392,11 +392,11 @@ public class ConfigurationModelToDDMFormConverter {
 				ExtendedAttributeDefinition.XML_NAMESPACE);
 	}
 
-	private boolean _isUiRequired(AttributeDefinition attributeDefinition) {
+	private boolean _isRequiredInput(AttributeDefinition attributeDefinition) {
 		Map<String, String> extensionAttributes = _getExtensionAttributes(
 			attributeDefinition);
 
-		return Boolean.valueOf(extensionAttributes.get("uiRequired"));
+		return Boolean.valueOf(extensionAttributes.get("required-input"));
 	}
 
 	private final ConfigurationModel _configurationModel;

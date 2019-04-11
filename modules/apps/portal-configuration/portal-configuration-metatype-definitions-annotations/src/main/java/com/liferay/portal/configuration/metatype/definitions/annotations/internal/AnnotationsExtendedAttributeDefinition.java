@@ -129,8 +129,9 @@ public class AnnotationsExtendedAttributeDefinition
 					StringUtil.merge(
 						extendedAttributeDefinition.nameArguments()));
 				map.put(
-					"uiRequired",
-					String.valueOf(extendedAttributeDefinition.uiRequired()));
+					"required-input",
+					String.valueOf(
+						extendedAttributeDefinition.requiredInput()));
 
 				_extensionAttributes.put(
 					ExtendedAttributeDefinition.XML_NAMESPACE, map);

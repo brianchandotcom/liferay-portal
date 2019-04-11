@@ -3,8 +3,14 @@ $c: ".workflow-tooltip";
 #{$c} {
 	position: relative;
 
+	.tooltip-inner {
+		max-width: 300px;
+		text-align: left;
+	}
+
 	#{$c}-bottom {
 		left: 50%;
+		max-width: 300px;
 		padding-top: 9px;
 		top: 100%;
 		transform: translateX(-50%);
@@ -15,6 +21,7 @@ $c: ".workflow-tooltip";
 	}
 
 	#{$c}-left {
+		max-width: 300px;
 		padding-right: 9px;
 		right: 100%;
 		top: 50%;
@@ -27,6 +34,7 @@ $c: ".workflow-tooltip";
 
 	#{$c}-right {
 		left: 100%;
+		max-width: 300px;
 		padding-left: 9px;
 		top: 50%;
 		transform: translateY(-50%);
@@ -39,6 +47,7 @@ $c: ".workflow-tooltip";
 	#{$c}-top {
 		bottom: 100%;
 		left: 50%;
+		max-width: 300px;
 		padding-bottom: 9px;
 		transform: translateX(-50%);
 

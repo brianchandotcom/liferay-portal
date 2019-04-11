@@ -74,11 +74,21 @@ public class AssetEntryUsageLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAssetEntryUsages(long assetEntryId) {
+		assetEntryUsagePersistence.removeByAssetEntryId(assetEntryId);
+	}
+
+	@Override
 	public void deleteAssetEntryUsages(
 		long containerType, String containerKey, long plid) {
 
 		assetEntryUsagePersistence.removeByC_C_P(
 			containerType, containerKey, plid);
+	}
+
+	@Override
+	public void deleteAssetEntryUsagesByPlid(long plid) {
+		assetEntryUsagePersistence.removeByPlid(plid);
 	}
 
 	@Override
@@ -110,6 +120,11 @@ public class AssetEntryUsageLocalServiceImpl
 
 		return assetEntryUsagePersistence.findByAssetEntryId(
 			assetEntryId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<AssetEntryUsage> getAssetEntryUsagesByPlid(long plid) {
+		return assetEntryUsagePersistence.findByPlid(plid);
 	}
 
 	@Override

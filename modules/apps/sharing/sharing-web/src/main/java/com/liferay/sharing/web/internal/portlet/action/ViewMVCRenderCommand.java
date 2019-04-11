@@ -104,14 +104,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			"sharingUserAutocompleteURL",
 			sharingUserAutocompleteURL.toString());
 
-		ResourceURL sharingVerifyEmailURL =
-			renderResponse.createResourceURL();
+		ResourceURL sharingVerifyEmailURL = renderResponse.createResourceURL();
 
 		sharingVerifyEmailURL.setResourceID("/sharing/verify_email");
 
-		template.put(
-			"sharingVerifyEmailURL",
-			sharingVerifyEmailURL.toString());
+		template.put("sharingVerifyEmailURL", sharingVerifyEmailURL.toString());
 
 		template.put(
 			"spritemap",

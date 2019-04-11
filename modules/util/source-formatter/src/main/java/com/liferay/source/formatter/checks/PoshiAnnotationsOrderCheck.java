@@ -51,7 +51,7 @@ public class PoshiAnnotationsOrderCheck extends BaseFileCheck {
 
 			String orderedAnnotations = sb.toString();
 
-			if (!StringUtil.equals(s, orderedAnnotations)) {
+			if (!StringUtil.equals(matcher.group(), orderedAnnotations)) {
 				content = StringUtil.replaceFirst(
 					content, matcher.group(), orderedAnnotations,
 					matcher.start());

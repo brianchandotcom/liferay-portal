@@ -34,7 +34,6 @@ import java.io.Writer;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -96,17 +95,17 @@ public class XSLTemplate extends BaseTemplate {
 
 	@Override
 	public void clear() {
-		_context.clear();
+		context.clear();
 	}
 
 	@Override
 	public boolean containsKey(Object key) {
-		return _context.containsKey(key);
+		return context.containsKey(key);
 	}
 
 	@Override
 	public boolean containsValue(Object value) {
-		return _context.containsValue(value);
+		return context.containsValue(value);
 	}
 
 	@Override
@@ -170,34 +169,34 @@ public class XSLTemplate extends BaseTemplate {
 
 	@Override
 	public Set<Entry<String, Object>> entrySet() {
-		return _context.entrySet();
+		return context.entrySet();
 	}
 
 	@Override
 	public Object get(Object key) {
-		return _context.get(key);
+		return context.get(key);
 	}
 
 	@Override
 	public Object get(String key) {
-		return _context.get(key);
+		return context.get(key);
 	}
 
 	@Override
 	public String[] getKeys() {
-		Set<String> keys = _context.keySet();
+		Set<String> keys = context.keySet();
 
 		return keys.toArray(new String[keys.size()]);
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return _context.isEmpty();
+		return context.isEmpty();
 	}
 
 	@Override
 	public Set<String> keySet() {
-		return _context.keySet();
+		return context.keySet();
 	}
 
 	@Override
@@ -268,27 +267,27 @@ public class XSLTemplate extends BaseTemplate {
 			return null;
 		}
 
-		return _context.put(key, value);
+		return context.put(key, value);
 	}
 
 	@Override
 	public void putAll(Map<? extends String, ? extends Object> m) {
-		_context.putAll(m);
+		context.putAll(m);
 	}
 
 	@Override
 	public Object remove(Object key) {
-		return _context.remove(key);
+		return context.remove(key);
 	}
 
 	@Override
 	public int size() {
-		return _context.size();
+		return context.size();
 	}
 
 	@Override
 	public Collection<Object> values() {
-		return _context.values();
+		return context.values();
 	}
 
 	@Override
@@ -312,7 +311,7 @@ public class XSLTemplate extends BaseTemplate {
 			Transformer transformer = _transformerFactory.newTransformer(
 				scriptSource);
 
-			for (Map.Entry<String, Object> entry : _context.entrySet()) {
+			for (Map.Entry<String, Object> entry : context.entrySet()) {
 				transformer.setParameter(entry.getKey(), entry.getValue());
 			}
 
@@ -342,7 +341,6 @@ public class XSLTemplate extends BaseTemplate {
 			transformerFactoryClass.getClassLoader();
 	}
 
-	private final Map<String, Object> _context = new HashMap<>();
 	private TemplateResource _errorTemplateResource;
 	private final boolean _preventLocalConnections;
 	private final TemplateContextHelper _templateContextHelper;

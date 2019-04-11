@@ -363,8 +363,6 @@ public class UADSearchContainerBuilder {
 		PortletURL viewURL = PortletURLUtil.clone(
 			currentURL, liferayPortletResponse);
 
-		viewURL.setParameter("applicationKey", (String)null);
-
 		viewURL.setParameter(
 			"applicationKey", uadApplicationSummaryDisplay.getApplicationKey());
 

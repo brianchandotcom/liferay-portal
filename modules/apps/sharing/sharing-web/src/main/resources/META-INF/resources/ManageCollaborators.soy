@@ -156,7 +156,8 @@
 			<div class="autofit-col">
 				{if $collaborator.sharingEntryExpirationDate}
 					{let $untilMsg kind="text"}
-						{msg desc=""}until-{$collaborator.sharingEntryExpirationDateTooltip}{/msg}
+						{msg desc=""}until{/msg}
+						{sp}{$collaborator.sharingEntryExpirationDateTooltip}
 					{/let}
 
 					{call ClayIcon.render}

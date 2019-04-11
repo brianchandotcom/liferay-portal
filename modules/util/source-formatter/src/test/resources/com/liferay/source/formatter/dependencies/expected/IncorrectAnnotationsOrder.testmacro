@@ -1,5 +1,25 @@
 @component-name = "portal-acceptance"
 @ignore = "true"
+@ignore-command-names = "tmp"
 definition {
-	property portal.release = "true";
+
+	@description = "This is a use case for LPS-51127."
+	@priority = "5"
+	function TestA {
+		CalendarNavigator.gotoConfiguration();
+
+		CalendarEvent.viewRepeatWeekStartDay(weekStartDay = "Monday");
+	}
+
+	@description = "This is a use case for LPS-72398."
+	@ignore = "true"
+	@priority = "5"
+	test TestB {
+		Upgrade.resetTestUserPassword();
+	}
+
+	test TestC {
+		property setup.wizard.enabled = "true";
+	}
+
 }

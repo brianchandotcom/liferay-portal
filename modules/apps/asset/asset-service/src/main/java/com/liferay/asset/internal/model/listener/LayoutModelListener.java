@@ -14,32 +14,25 @@
 
 package com.liferay.asset.internal.model.listener;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Bryan Engler
+ * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = ModelListener.class)
-public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
+public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
-	public void onAfterCreate(AssetEntry assetEntry) {
-		assetEntry.setListable(true);
-	}
-
-	@Override
-	public void onBeforeRemove(AssetEntry assetEntry)
-		throws ModelListenerException {
-
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			assetEntry.getEntryId());
+	public void onBeforeRemove(Layout layout) throws ModelListenerException {
+		_assetEntryUsageLocalService.deleteAssetEntryUsagesByPlid(
+			layout.getPlid());
 	}
 
 	@Reference

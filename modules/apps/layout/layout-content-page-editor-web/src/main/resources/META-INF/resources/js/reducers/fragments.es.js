@@ -1,9 +1,10 @@
 import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE} from '../actions/actions.es';
-import {add, addRow, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
+import {add, addRow, remove, setIn, updateIn, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
+import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
 import {getColumn, getDropRowPosition, getFragmentColumn, getFragmentRowIndex} from '../utils/FragmentsEditorGetUtils.es';
-import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
+import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -125,15 +126,9 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 								payload.fragmentEntryLinkType
 							);
 
-							return updateLayoutData(
-								{
-									classNameId: nextState.classNameId,
-									classPK: nextState.classPK,
-									data: nextData,
-									portletNamespace: nextState.portletNamespace,
-									segmentsExperienceId: nextState.segmentsExperienceId,
-									updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
-								}
+							return updatePageEditorLayoutData(
+								nextData,
+								nextState.segmentsExperienceId
 							);
 						}
 					)
@@ -316,33 +311,25 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 					payload.fragmentEntryLinkType
 				);
 
-				_moveFragmentEntryLink(
-					nextState.updateLayoutPageTemplateDataURL,
-					nextState.portletNamespace,
-					nextState.classNameId,
-					nextState.classPK,
-					nextData
-				)
-					.then(
-						response => {
-							if (response.error) {
-								throw response.error;
-							}
-
-							nextState = setIn(
-								nextState,
-								['layoutData'],
-								nextData
-							);
-
-							resolve(nextState);
+				updatePageEditorLayoutData(nextData, nextState.segmentsExperienceId).then(
+					response => {
+						if (response.error) {
+							throw response.error;
 						}
-					)
-					.catch(
-						() => {
-							resolve(nextState);
-						}
-					);
+
+						nextState = setIn(
+							nextState,
+							['layoutData'],
+							nextData
+						);
+
+						resolve(nextState);
+					}
+				).catch(
+					() => {
+						resolve(nextState);
+					}
+				);
 			}
 			else {
 				resolve(nextState);
@@ -400,18 +387,12 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 				);
 
 				if (_shouldNotRemove) {
-					updateLayoutData(
-						{
-							classNameId: nextState.classNameId,
-							classPK: nextState.classPK,
-							data: nextData,
-							portletNamespace: nextState.portletNamespace,
-							segmentsExperienceId: nextState.segmentsExperienceId,
-							updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
+					updatePageEditorLayoutData(nextData, nextState.segmentsExperienceId).then(
+						() => {
+							nextState = setIn(nextState, ['layoutData'], nextData);
+							resolve(nextState);
 						}
 					);
-					nextState = setIn(nextState, ['layoutData'], nextData);
-					resolve(nextState);
 				}
 				else {
 					_removeFragmentEntryLink(
@@ -794,38 +775,6 @@ function _getDropFragmentPosition(
 	}
 
 	return position;
-}
-
-/**
- * @param {string} moveFragmentEntryLinkURL
- * @param {string} portletNamespace
- * @param {string} classNameId
- * @param {string} classPK
- * @param {object} layoutData
- * @return {Promise}
- * @review
- */
-function _moveFragmentEntryLink(
-	moveFragmentEntryLinkURL,
-	portletNamespace,
-	classNameId,
-	classPK,
-	layoutData
-) {
-	const formData = new FormData();
-
-	formData.append(`${portletNamespace}classNameId`, classNameId);
-	formData.append(`${portletNamespace}classPK`, classPK);
-	formData.append(`${portletNamespace}data`, JSON.stringify(layoutData));
-
-	return fetch(
-		moveFragmentEntryLinkURL,
-		{
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
-		}
-	);
 }
 
 /**

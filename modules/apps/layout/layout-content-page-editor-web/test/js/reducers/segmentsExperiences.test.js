@@ -2,10 +2,7 @@
 
 import {createSegmentsExperienceReducer, deleteSegmentsExperienceReducer, editSegmentsExperienceReducer, selectSegmentsExperienceReducer} from '../../../src/main/resources/META-INF/resources/js/reducers/segmentsExperiences.es';
 import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE} from '../../../src/main/resources/META-INF/resources/js/actions/actions.es';
-import * as FragmentsEditorUpdateUtils from '../../../src/main/resources/META-INF/resources/js/utils/FragmentsEditorUpdateUtils.es';
-
-
-
+import * as FragmentsEditorFetchUtils from '../../../src/main/resources/META-INF/resources/js/utils/FragmentsEditorFetchUtils.es';
 
 const SEGMENTS_EXPERIENCE_ID = 'SEGMENTS_EXPERIENCE_ID';
 
@@ -19,7 +16,7 @@ describe(
 	'segments experiences reducers',
 	() => {
 		beforeEach(() => {
-			jest.spyOn(FragmentsEditorUpdateUtils, 'updateLayoutData')
+			jest.spyOn(FragmentsEditorFetchUtils, 'updatePageEditorLayoutData')
 				.mockImplementation(() => new Promise(resolve => resolve()));
 		})
 		test(
@@ -27,7 +24,7 @@ describe(
 			done => {
 				let prevLiferayGlobal = {...global.Liferay};
 				let prevThemeDisplay = {...global.themeDisplay};
-				
+
 				global.themeDisplay = {
 					getScopeGroupId() {
 						return 'mockedScopeGroupId';
@@ -108,7 +105,7 @@ describe(
 				createSegmentsExperienceReducer(prevState, CREATE_SEGMENTS_EXPERIENCE, payload)
 				.then(response => {
 					expect(response).toMatchSnapshot();
-				
+
 					expect(spy).toHaveBeenCalledWith(
 						expect.stringContaining(''),
 						liferayServiceParams,
@@ -137,7 +134,7 @@ describe(
 							secondPayload
 						)
 					).resolves.toMatchSnapshot();
-					
+
 					expect(spy).toHaveBeenLastCalledWith(
 						expect.stringContaining(''),
 						secondLiferayServiceParams,
@@ -156,7 +153,7 @@ describe(
 			'deleteExperience communicates with API and updates the state',
 			(done) => {
 				let prevLiferayGlobal = {...global.Liferay};
-				
+
 				global.Liferay = {
 					Service(
 						URL,
@@ -173,7 +170,7 @@ describe(
 						);
 					}
 				};
-				
+
 				const spy = jest.spyOn(global.Liferay, 'Service');
 
 				const availableSegmentsExperiences = {
@@ -417,7 +414,7 @@ describe(
 					throw new Error(error);
 				})
 		})
-		
+
 		afterEach(() => {
 			jest.restoreAllMocks()
 		})

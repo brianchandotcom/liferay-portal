@@ -1,8 +1,9 @@
 import {ADD_ROW, MOVE_ROW, REMOVE_ROW, UPDATE_ROW_COLUMNS, UPDATE_ROW_COLUMNS_NUMBER, UPDATE_ROW_CONFIG} from '../actions/actions.es';
-import {MAX_COLUMNS} from '../utils/rowConstants';
-import {add, addRow, remove, setIn, updateIn, updateLayoutData, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
-import {getDropRowPosition, getRowFragmentEntryLinkIds, getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
+import {add, addRow, remove, setIn, updateIn, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
+import {getDropRowPosition, getRowFragmentEntryLinkIds, getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
+import {MAX_COLUMNS} from '../utils/rowConstants';
+import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * @param {!object} state
@@ -30,32 +31,21 @@ function addRowReducer(state, actionType, payload) {
 					position
 				);
 
-				updateLayoutData(
-					{
-						classNameId: nextState.classNameId,
-						classPK: nextState.classPK,
-						data: nextData,
-						portletNamespace: nextState.portletNamespace,
-						segmentsExperienceId: nextState.segmentsExperienceId,
-						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
-					}
-				)
-					.then(
-						() => {
-							nextState = setIn(
-								nextState,
-								['layoutData'],
-								nextData
-							);
+				updatePageEditorLayoutData(nextData, nextState.segmentsExperienceId).then(
+					() => {
+						nextState = setIn(
+							nextState,
+							['layoutData'],
+							nextData
+						);
 
-							resolve(nextState);
-						}
-					)
-					.catch(
-						() => {
-							resolve(nextState);
-						}
-					);
+						resolve(nextState);
+					}
+				).catch(
+					() => {
+						resolve(nextState);
+					}
+				);
 			}
 			else {
 				resolve(nextState);
@@ -87,32 +77,21 @@ function moveRowReducer(state, actionType, payload) {
 					payload.targetBorder
 				);
 
-				updateLayoutData(
-					{
-						classNameId: nextState.classNameId,
-						classPK: nextState.classPK,
-						data: nextData,
-						portletNamespace: nextState.portletNamespace,
-						segmentsExperienceId: nextState.segmentsExperienceId,
-						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
-					}
-				)
-					.then(
-						() => {
-							nextState = setIn(
-								nextState,
-								['layoutData'],
-								nextData
-							);
+				updatePageEditorLayoutData(nextData, nextState.segmentsExperienceId).then(
+					() => {
+						nextState = setIn(
+							nextState,
+							['layoutData'],
+							nextData
+						);
 
-							resolve(nextState);
-						}
-					)
-					.catch(
-						() => {
-							resolve(nextState);
-						}
-					);
+						resolve(nextState);
+					}
+				).catch(
+					() => {
+						resolve(nextState);
+					}
+				);
 			}
 			else {
 				resolve(nextState);
@@ -160,33 +139,29 @@ function removeRowReducer(state, actionType, payload) {
 					}
 				);
 
-				updateLayoutData(
-					{
-						classNameId: nextState.classNameId,
-						classPK: nextState.classPK,
-						data: nextData,
-						fragmentEntryLinkIds: fragmentsToRemove,
-						portletNamespace: nextState.portletNamespace,
-						segmentsExperienceId: nextState.segmentsExperienceId,
-						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
-					}
-				)
-					.then(
-						() => {
-							nextState = setIn(
-								nextState,
-								['layoutData'],
-								nextData
-							);
-
-							resolve(nextState);
-						}
+				updatePageEditorLayoutData(
+					nextData,
+					nextState.segmentsExperienceId
+				).then(
+					() => removeFragmentEntryLinks(
+						fragmentsToRemove,
+						nextState.segmentsExperienceId
 					)
-					.catch(
-						() => {
-							resolve(nextState);
-						}
-					);
+				).then(
+					() => {
+						nextState = setIn(
+							nextState,
+							['layoutData'],
+							nextData
+						);
+
+						resolve(nextState);
+					}
+				).catch(
+					() => {
+						resolve(nextState);
+					}
+				);
 			}
 			else {
 				resolve(nextState);
@@ -218,10 +193,9 @@ const updateRowColumnsReducer = (state, actionType, payload) => new Promise(
 				resolve(nextState);
 			}
 			else {
-				nextState = setIn(
-					nextState,
+				const nextData = setIn(
+					nextState.layoutData,
 					[
-						'layoutData',
 						'structure',
 						rowIndex,
 						'columns'
@@ -229,26 +203,24 @@ const updateRowColumnsReducer = (state, actionType, payload) => new Promise(
 					payload.columns
 				);
 
-				updateLayoutData(
-					{
-						classNameId: nextState.classNameId,
-						classPK: nextState.classPK,
-						data: nextState.layoutData,
-						portletNamespace: nextState.portletNamespace,
-						segmentsExperienceId: nextState.segmentsExperienceId,
-						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
+				updatePageEditorLayoutData(
+					nextData,
+					nextState.segmentsExperienceId
+				).then(
+					() => {
+						nextState = setIn(
+							nextState,
+							['layoutData'],
+							nextData
+						);
+
+						resolve(nextState);
 					}
-				)
-					.then(
-						() => {
-							resolve(nextState);
-						}
-					)
-					.catch(
-						() => {
-							resolve(nextState);
-						}
-					);
+				).catch(
+					() => {
+						resolve(nextState);
+					}
+				);
 			}
 		}
 		else {
@@ -301,33 +273,29 @@ function updateRowColumnsNumberReducer(state, actionType, payload) {
 					nextData = _removeColumns(nextState.layoutData, rowIndex, numberOfColumns, columnsSize);
 				}
 
-				updateLayoutData(
-					{
-						classNameId: nextState.classNameId,
-						classPK: nextState.classPK,
-						data: nextData,
-						fragmentEntryLinkIds: fragmentEntryLinkIdsToRemove,
-						portletNamespace: nextState.portletNamespace,
-						segmentsExperienceId: nextState.segmentsExperienceId,
-						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
-					}
-				)
-					.then(
-						() => {
-							nextState = setIn(
-								nextState,
-								['layoutData'],
-								nextData
-							);
-
-							resolve(nextState);
-						}
+				updatePageEditorLayoutData(
+					nextData,
+					nextState.segmentsExperienceId
+				).then(
+					() => removeFragmentEntryLinks(
+						fragmentEntryLinkIdsToRemove,
+						nextState.segmentsExperienceId
 					)
-					.catch(
-						() => {
-							resolve(nextState);
-						}
-					);
+				).then(
+					() => {
+						nextState = setIn(
+							nextState,
+							['layoutData'],
+							nextData
+						);
+
+						resolve(nextState);
+					}
+				).catch(
+					() => {
+						resolve(nextState);
+					}
+				);
 			}
 			else {
 				resolve(nextState);
@@ -378,26 +346,18 @@ const updateRowConfigReducer = (state, actionType, payload) => new Promise(
 					}
 				);
 
-				updateLayoutData(
-					{
-						classNameId: nextState.classNameId,
-						classPK: nextState.classPK,
-						data: nextState.layoutData,
-						portletNamespace: nextState.portletNamespace,
-						segmentsExperienceId: nextState.segmentsExperienceId,
-						updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
+				updatePageEditorLayoutData(
+					nextState.layoutData,
+					nextState.segmentsExperienceId
+				).then(
+					() => {
+						resolve(nextState);
 					}
-				)
-					.then(
-						() => {
-							resolve(nextState);
-						}
-					)
-					.catch(
-						() => {
-							resolve(nextState);
-						}
-					);
+				).catch(
+					() => {
+						resolve(state);
+					}
+				);
 			}
 		}
 		else {

@@ -1,6 +1,4 @@
-import {
-	containsFragmentEntryLinkId
-} from '../../../src/main/resources/META-INF/resources/js/utils/LayoutDataList.es';
+import {containsFragmentEntryLinkId} from '../../../src/main/resources/META-INF/resources/js/utils/LayoutDataList.es';
 
 const LAYOUT_DATA_PERSONALIZATION = [
 	{
@@ -67,7 +65,7 @@ describe('confirmFragmnetEntryLinkIdLayoutDataList ', () => {
 				'segmentsExperienceId1'
 			)
 		).toBe(true);
-		
+
 		expect(
 			containsFragmentEntryLinkId(
 				LAYOUT_DATA_PERSONALIZATION,
@@ -86,7 +84,7 @@ describe('confirmFragmnetEntryLinkIdLayoutDataList ', () => {
 		).toBe(true);
 	});
 
-	test('should confirm fragmentEntryLinkId ausence in a LayoutData different than the one selected', () => {	
+	test('should confirm fragmentEntryLinkId ausence in a LayoutData different than the one selected', () => {
 		expect(
 			containsFragmentEntryLinkId(
 				LAYOUT_DATA_PERSONALIZATION,

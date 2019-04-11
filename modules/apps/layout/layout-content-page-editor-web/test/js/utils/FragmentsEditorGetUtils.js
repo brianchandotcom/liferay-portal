@@ -47,7 +47,6 @@ describe(
 			expect(newObject).toBe(objectToClone);
 		});
 
-
 		test('deep clone for undefined has no effect', () => {
 			const objectToClone = undefined;
 

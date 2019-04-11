@@ -252,57 +252,6 @@ function updateIn(object, keyPath, updater, defaultValue) {
 }
 
 /**
- * Update layoutData on backend
- * @param {!object} config
- * @param {!string} config.updateLayoutPageTemplateDataURL
- * @param {!string} config.portletNamespace
- * @param {!string} config.classNameId
- * @param {!string} config.classPK
- * @param {!Object} config.data
- * @param {!Array} config.fragmentEntryLinkIds List of fragmentEntryLinkIds to remove on the backend
- * @return {Promise}
- * @review
- */
-function updateLayoutData(
-	{
-		classNameId,
-		classPK,
-		data,
-		fragmentEntryLinkIds,
-		portletNamespace,
-		segmentsExperienceId,
-		updateLayoutPageTemplateDataURL
-	}
-) {
-	const formData = new FormData();
-
-	formData.append(`${portletNamespace}classNameId`, classNameId);
-	formData.append(`${portletNamespace}classPK`, classPK);
-	formData.append(`${portletNamespace}segmentsExperienceId`, segmentsExperienceId);
-
-	formData.append(
-		`${portletNamespace}data`,
-		JSON.stringify(data)
-	);
-
-	if (fragmentEntryLinkIds) {
-		formData.append(
-			`${portletNamespace}fragmentEntryLinkIds`,
-			JSON.stringify(fragmentEntryLinkIds)
-		);
-	}
-
-	return fetch(
-		updateLayoutPageTemplateDataURL,
-		{
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
-		}
-	);
-}
-
-/**
  * Updates row
  * @param {!Object} store Store instance that dispatches the actions
  * @param {string} updateAction Update action name
@@ -379,7 +328,6 @@ export {
 	removeItem,
 	setIn,
 	updateIn,
-	updateLayoutData,
 	updateRow,
 	updateWidgets
 };

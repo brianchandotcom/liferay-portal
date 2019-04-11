@@ -1,6 +1,7 @@
 import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE, UPDATE_SEGMENTS_EXPERIENCE_PRIORITY} from '../actions/actions.es';
-import {setIn, updateLayoutData} from '../utils/FragmentsEditorUpdateUtils.es';
 import {deepClone} from '../utils/FragmentsEditorGetUtils.es';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
+import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 const CREATE_SEGMENTS_EXPERIENCE_URL = '/segments.segmentsexperience/add-segments-experience';
 
@@ -38,16 +39,7 @@ function _storeNewLayoutData(state, segmentsExperienceId) {
 			baseLayoutData = defaultExperienceLayoutListItem && deepClone(defaultExperienceLayoutListItem.layoutData);
 		}
 
-		updateLayoutData(
-			{
-				classNameId: nextState.classNameId,
-				classPK: nextState.classPK,
-				data: baseLayoutData,
-				portletNamespace: nextState.portletNamespace,
-				segmentsExperienceId: segmentsExperienceId,
-				updateLayoutPageTemplateDataURL: nextState.updateLayoutPageTemplateDataURL
-			}
-		).then(
+		updatePageEditorLayoutData(baseLayoutData, segmentsExperienceId).then(
 			() => {
 				nextState.layoutDataList.push(
 					{
@@ -76,64 +68,56 @@ function _storeNewLayoutData(state, segmentsExperienceId) {
  */
 function _switchLayoutDataList(state, segmentsExperienceId) {
 	let nextState = state;
+
 	return new Promise((resolve, reject) => {
 		try {
+			updatePageEditorLayoutData(
+				state.layoutData,
+				state.segmentsExperienceId || state.defaultSegmentsExperienceId
+			).then(
+				() => {
+					const prevLayout = nextState.layoutData;
+					const prevSegmentsExperienceId = state.segmentsExperienceId || nextState.defaultSegmentsExperienceId;
 
-			updateLayoutData(
-				{
-					classNameId: state.classNameId,
-					classPK: state.classPK,
-					data: state.layoutData,
-					portletNamespace: state.portletNamespace,
-					segmentsExperienceId: state.segmentsExperienceId || state.defaultSegmentsExperienceId,
-					updateLayoutPageTemplateDataURL: state.updateLayoutPageTemplateDataURL
+					const {layoutData} = nextState.layoutDataList.find(
+						segmentedLayout => {
+							return segmentedLayout.segmentsExperienceId === segmentsExperienceId;
+						}
+					);
+
+					nextState = setIn(
+						nextState,
+						['layoutData'],
+						layoutData
+					);
+
+					const newlayoutDataList = nextState.layoutDataList.map(
+						segmentedLayout => {
+							return segmentedLayout.segmentsExperienceId === prevSegmentsExperienceId ?
+								Object.assign(
+									{},
+									segmentedLayout,
+									{
+										layoutData: prevLayout
+									}
+								) :
+								segmentedLayout;
+						}
+					);
+
+					nextState = setIn(
+						nextState,
+						['layoutDataList'],
+						newlayoutDataList
+					);
+
+					resolve(nextState);
 				}
-			)
-				.then(
-					() => {
-						const prevLayout = nextState.layoutData;
-						const prevSegmentsExperienceId = state.segmentsExperienceId || nextState.defaultSegmentsExperienceId;
-
-						const {layoutData} = nextState.layoutDataList.find(
-							segmentedLayout => {
-								return segmentedLayout.segmentsExperienceId === segmentsExperienceId;
-							}
-						);
-
-						nextState = setIn(
-							nextState,
-							['layoutData'],
-							layoutData
-						);
-
-						const newlayoutDataList = nextState.layoutDataList.map(
-							segmentedLayout => {
-								return segmentedLayout.segmentsExperienceId === prevSegmentsExperienceId ?
-									Object.assign(
-										{},
-										segmentedLayout,
-										{
-											layoutData: prevLayout
-										}
-									) :
-									segmentedLayout;
-							}
-						);
-
-						nextState = setIn(
-							nextState,
-							['layoutDataList'],
-							newlayoutDataList
-						);
-
-						resolve(nextState);
-					}
-				)
-				.catch(
-					(error) => {
-						reject(error);
-					}
-				);
+			).catch(
+				(error) => {
+					reject(error);
+				}
+			);
 		}
 		catch (e) {
 			reject(e);

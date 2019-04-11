@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 
 import java.util.Locale;
@@ -81,6 +83,17 @@ public class MyDashboardPersonalMenuEntry implements PersonalMenuEntry {
 		User user = themeDisplay.getUser();
 
 		if (displayURL.startsWith(user.getDisplayURL(themeDisplay, true))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isShow(
+		PortletRequest portletRequest, PermissionChecker permissionChecker) {
+
+		if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
 			return true;
 		}
 

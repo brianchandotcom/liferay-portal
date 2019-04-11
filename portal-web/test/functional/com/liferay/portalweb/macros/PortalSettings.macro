@@ -537,8 +537,6 @@ definition {
 
 		PortletEntry.save();
 
-		PortalSettingsNavigator.gotoOpenIDConnect();
-
 		AssertChecked(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX"
 		);
@@ -550,8 +548,6 @@ definition {
 		);
 
 		PortletEntry.save();
-
-		PortalSettingsNavigator.gotoOpenID();
 
 		AssertChecked(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX"
@@ -765,6 +761,8 @@ definition {
 	}
 
 	macro testOpenSSOConnection {
+		Click.waitForMenuToggleJSClick(locator1 = "PortalSettingsAuthentication#VERTICAL_ELLIPSIS");
+
 		AssertClick(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON",
 			value1 = "Test OpenSSO Configuration"
@@ -863,7 +861,11 @@ definition {
 	}
 
 	macro viewAuthenticationGeneralCP {
-		PortalSettingsNavigator.expandAuthenticationPanel();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertSelectedLabel(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT",
@@ -1029,7 +1031,11 @@ definition {
 	}
 
 	macro viewAuthenticationOpenIDCP {
-		PortalSettingsNavigator.gotoOpenID();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenID",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertElementPresent(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX"
@@ -1037,7 +1043,11 @@ definition {
 	}
 
 	macro viewAuthenticationOpenSSOCP {
-		PortalSettingsNavigator.gotoOpenSSO();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenSSO",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertElementPresent(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX"

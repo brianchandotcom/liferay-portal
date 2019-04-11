@@ -461,7 +461,7 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON</td>
-	<td>//button[contains(.,'Test OpenSSO Configuration')]</td>
+	<td>//a[contains(.,'Test OpenSSO Configuration')]</td>
 	<td></td>
 </tr>
 </tbody>

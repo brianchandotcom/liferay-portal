@@ -21,9 +21,11 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		PortalSettings.gotoPortalSettings();
-
-		PortalSettingsNavigator.gotoFacebook();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "Facebook Connect",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.editConfigurationAuthenticationFacebook(
 			facebookApplicationID = "${facebookApplicationID}",
@@ -59,9 +61,11 @@ definition {
 
 		User.firstLoginPG();
 
-		PortalSettings.gotoPortalSettings();
-
-		PortalSettingsNavigator.gotoGoogle();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "Google Authorization",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.enableGoogleSSOCP(
 			googleClientID = "${googleClientID}",
@@ -128,9 +132,11 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		PortalSettings.gotoPortalSettings();
-
-		PortalSettingsNavigator.gotoOpenIDConnect();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenID Connect",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.enableOpenIDConnectCP();
 
@@ -164,9 +170,11 @@ definition {
 
 		User.firstLoginPG();
 
-		PortalSettings.gotoPortalSettings();
-
-		PortalSettingsNavigator.gotoOpenID();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenID",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.enableOpenIDCP();
 
@@ -237,11 +245,13 @@ definition {
 
 		User.firstLoginPG();
 
-		PortalSettings.gotoPortalSettings();
-
 		Pause(locator1 = "30000");
 
-		PortalSettingsNavigator.gotoOpenSSO();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenSSO",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.configureOpenSSO(
 			OpenSSOLoginURL = "http://test.able.com:8080/openam/UI/Login?goto=http://www.able.com:8080/c/portal/login",
@@ -249,7 +259,11 @@ definition {
 			OpenSSOServiceURL = "http://test.able.com:8080/openam"
 		);
 
-		PortalSettingsNavigator.gotoOpenSSO();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "OpenSSO",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.testOpenSSOConnection();
 
@@ -296,13 +310,9 @@ definition {
 	test ViewInstanceSettingsAuthentication {
 		User.firstLoginPG();
 
-		PortalSettings.gotoPortalSettings();
-
 		PortalSettings.viewAuthenticationGeneralCP();
 
 		PortalSettings.viewAuthenticationLDAPCP();
-
-		Navigator.gotoBack();
 
 		PortalSettings.viewAuthenticationOpenIDCP();
 

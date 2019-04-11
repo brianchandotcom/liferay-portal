@@ -13,7 +13,6 @@
 	{@param? _closeDialog: any}
 	{@param? _dataSource: string|[]|list<?>}
 	{@param? _handleDataChange: any}
-	{@param? _handleInputBlur: any}
 	{@param? _handleInputChange: any}
 	{@param? _handleItemRemoved: any}
 	{@param? _handleSubmit: any}
@@ -37,7 +36,6 @@
 						{param elementClasses: 'clay-multi-select' /}
 						{param events: [
 							'dataChange': $_handleDataChange,
-							'inputBlur': $_handleInputBlur,
 							'labelItemAdded': $_validateEmail,
 							'labelItemRemoved': $_handleItemRemoved
 						] /}

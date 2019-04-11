@@ -141,7 +141,8 @@ public class Transformer {
 			template.put("groupId", scopeGroupId);
 			template.put("journalTemplatesPath", templatesPath);
 
-			template.processTemplate(unsyncStringWriter);
+			template.processTemplate(
+				unsyncStringWriter, () -> getErrorTemplateResource(langType));
 		}
 		catch (Exception e) {
 			throw new TransformException("Unhandled exception", e);
@@ -185,11 +186,8 @@ public class Transformer {
 		TemplateResource templateResource = new StringTemplateResource(
 			templateId, script);
 
-		TemplateResource errorTemplateResource = getErrorTemplateResource(
-			langType);
-
 		return TemplateManagerUtil.getTemplate(
-			langType, templateResource, errorTemplateResource, _restricted);
+			langType, templateResource, _restricted);
 	}
 
 	protected String getTemplateId(

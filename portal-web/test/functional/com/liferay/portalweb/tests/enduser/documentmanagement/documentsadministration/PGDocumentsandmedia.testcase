@@ -882,7 +882,7 @@ definition {
 
 	@priority = "5"
 	test EditDocumentType {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
@@ -1001,7 +1001,7 @@ definition {
 
 	@priority = "5"
 	test EditSubFolder {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1227,7 +1227,7 @@ definition {
 
 	@priority = "5"
 	test RemovePortlet {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

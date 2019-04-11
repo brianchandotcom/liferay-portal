@@ -12,7 +12,7 @@ function ${namespace}open_${dialogId}(uri, title, refreshOnClose) {
 				on: {
 					visibleChange: function(event) {
 						if (refreshOnClose && !event.newVal) {
-							Liferay.Portlet.refresh(`#p_p_id${namespace}`);
+							Liferay.Portlet.refresh('#p_p_id${namespace}');
 						}
 					}
 				}

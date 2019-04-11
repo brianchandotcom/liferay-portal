@@ -15,7 +15,6 @@
 package com.liferay.gradle.plugins.jsdoc;
 
 import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.util.GradleUtil;
 
@@ -69,7 +68,7 @@ public abstract class BaseJSDocPlugin implements Plugin<Project> {
 				public File call() throws Exception {
 					File scriptFile = downloadJSDocTask.getScriptFile();
 
-					if (NodePluginUtil.isYarnScriptFile(scriptFile)) {
+					if (_isYarnScriptFile(scriptFile)) {
 						File nodeModulesDir = new File(
 							scriptFile.getParentFile(), "node_modules");
 
@@ -101,6 +100,22 @@ public abstract class BaseJSDocPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private boolean _isYarnScriptFile(File scriptFile) {
+		if (scriptFile == null) {
+			return false;
+		}
+
+		String scriptFileName = scriptFile.getName();
+
+		if (!scriptFileName.startsWith("yarn-") ||
+			!scriptFileName.endsWith(".js")) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _VERSION = "3.5.5";

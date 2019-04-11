@@ -65,7 +65,7 @@ public class ContentPageLayoutEditorDisplayContext
 
 		soyContext.put("sidebarPanels", getSidebarPanelSoyContexts(false));
 
-		if (_isPersonalizationEnabled()) {
+		if (_isShowSegmentsExperiences()) {
 			soyContext.put(
 				"availableSegmentsEntries",
 				_getAvailableSegmentsEntriesSoyContext()
@@ -102,7 +102,7 @@ public class ContentPageLayoutEditorDisplayContext
 
 		SoyContext soyContext = super.getFragmentsEditorToolbarSoyContext();
 
-		if (_isPersonalizationEnabled()) {
+		if (_isShowSegmentsExperiences()) {
 			soyContext.put(
 				"availableSegmentsEntries",
 				_getAvailableSegmentsEntriesSoyContext()
@@ -263,21 +263,20 @@ public class ContentPageLayoutEditorDisplayContext
 		return soyContexts;
 	}
 
-	private boolean _isPersonalizationEnabled() throws PortalException {
-		if (_personalizationEnabled != null) {
-			return _personalizationEnabled;
+	private boolean _isShowSegmentsExperiences() throws PortalException {
+		if (_showSegmentsExperiences != null) {
+			return _showSegmentsExperiences;
 		}
 
 		Group group = GroupLocalServiceUtil.getGroup(getGroupId());
 
-		_personalizationEnabled =
-			!group.isLayoutSetPrototype() && !group.isUser();
+		_showSegmentsExperiences = !group.isLayoutSetPrototype() && !group.isUser();
 
-		return _personalizationEnabled;
+		return _showSegmentsExperiences;
 	}
 
 	private SoyContext _editorSoyContext;
 	private SoyContext _fragmentsEditorToolbarSoyContext;
-	private Boolean _personalizationEnabled;
+	private Boolean _showSegmentsExperiences;
 
 }

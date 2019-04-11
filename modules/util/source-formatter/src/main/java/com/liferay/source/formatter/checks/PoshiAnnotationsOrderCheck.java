@@ -36,13 +36,13 @@ public class PoshiAnnotationsOrderCheck extends BaseFileCheck {
 		Matcher matcher = _annotationsPattern.matcher(content);
 
 		while (matcher.find()) {
-			String s = matcher.group();
+			String match = matcher.group();
 
-			String[] annotations = s.split("\n");
-
-			StringBundler sb = new StringBundler();
+			String[] annotations = match.split("\n");
 
 			Arrays.sort(annotations);
+
+			StringBundler sb = new StringBundler(annotations.length * 2);
 
 			for (String annotation : annotations) {
 				sb.append(annotation);
@@ -51,10 +51,9 @@ public class PoshiAnnotationsOrderCheck extends BaseFileCheck {
 
 			String sortedAnnotations = sb.toString();
 
-			if (!StringUtil.equals(matcher.group(), sortedAnnotations)) {
+			if (!StringUtil.equals(match, sortedAnnotations)) {
 				content = StringUtil.replaceFirst(
-					content, matcher.group(), sortedAnnotations,
-					matcher.start());
+					content, match, sortedAnnotations, matcher.start());
 			}
 		}
 

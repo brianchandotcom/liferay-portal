@@ -19,7 +19,7 @@
 	{@param? _handleSubmit: any}
 	{@param? _inputValue: string}
 	{@param? _userEmailAddresses: list<?>}
-	{@param? _validateEmails: any}
+	{@param? _validateEmail: any}
 	{@param? emailErrorMessage: string}
 	{@param? submitting: bool}
 
@@ -38,7 +38,7 @@
 						{param events: [
 							'dataChange': $_handleDataChange,
 							'inputBlur': $_handleInputBlur,
-							'labelItemAdded': $_validateEmails,
+							'labelItemAdded': $_validateEmail,
 							'labelItemRemoved': $_handleItemRemoved
 						] /}
 						{param helpText kind="text"}{msg desc=""}you-can-use-a-comma-to-enter-multiple-collaborators{/msg}{/param}

@@ -1668,7 +1668,7 @@ public abstract class BaseBuild implements Build {
 				Long stopWatchRecordEndTimestamp =
 					stopWatchRecordStartTimestamp + stopWatchRecordDuration;
 
-				if (endTimestamp > stopWatchRecordEndTimestamp) {
+				if (endTimestamp >= stopWatchRecordEndTimestamp) {
 					return true;
 				}
 			}

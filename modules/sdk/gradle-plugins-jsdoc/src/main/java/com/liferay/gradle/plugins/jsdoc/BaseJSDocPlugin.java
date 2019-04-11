@@ -66,16 +66,6 @@ public abstract class BaseJSDocPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File scriptFile = downloadJSDocTask.getScriptFile();
-
-					if (_isYarnScriptFile(scriptFile)) {
-						File nodeModulesDir = new File(
-							scriptFile.getParentFile(), "node_modules");
-
-						return new File(
-							new File(nodeModulesDir, "jsdoc"), "jsdoc.js");
-					}
-
 					return new File(
 						downloadJSDocTask.getModuleDir(), "jsdoc.js");
 				}
@@ -100,22 +90,6 @@ public abstract class BaseJSDocPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private boolean _isYarnScriptFile(File scriptFile) {
-		if (scriptFile == null) {
-			return false;
-		}
-
-		String scriptFileName = scriptFile.getName();
-
-		if (!scriptFileName.startsWith("yarn-") ||
-			!scriptFileName.endsWith(".js")) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final String _VERSION = "3.5.5";

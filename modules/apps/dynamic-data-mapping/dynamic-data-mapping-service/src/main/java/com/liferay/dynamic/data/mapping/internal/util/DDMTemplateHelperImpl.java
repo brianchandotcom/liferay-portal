@@ -215,7 +215,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		Template template = TemplateManagerUtil.getTemplate(
 			language, templateResource, false);
 
-		for (String key : template.getKeys()) {
+		for (String key : template.keySet()) {
 			Object value = template.get(key);
 
 			if (value == null) {

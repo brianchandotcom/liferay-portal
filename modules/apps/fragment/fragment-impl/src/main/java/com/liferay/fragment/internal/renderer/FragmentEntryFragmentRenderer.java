@@ -33,8 +33,10 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
@@ -69,6 +71,26 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					fragmentEntry.getFragmentCollectionId());
 
 			return fragmentCollection.getFragmentCollectionKey();
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	@Override
+	public String getImagePreviewURL(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			FragmentEntry fragmentEntry = _getFragmentEntry(
+				fragmentRendererContext);
+
+			return fragmentEntry.getImagePreviewURL(themeDisplay);
 		}
 		catch (PortalException pe) {
 			throw new RuntimeException(pe);

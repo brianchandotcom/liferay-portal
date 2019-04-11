@@ -29,6 +29,10 @@ public interface FragmentRenderer {
 	public String getCollectionKey(
 		FragmentRendererContext fragmentRendererContext);
 
+	public String getImagePreviewURL(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest);
+
 	public default String getKey() {
 		Class<?> clazz = getClass();
 

@@ -162,7 +162,7 @@ public class VelocityTemplateTest {
 	@Test
 	public void testGet() throws Exception {
 		Template template = new VelocityTemplate(
-			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
 			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -181,7 +181,7 @@ public class VelocityTemplateTest {
 	@Test
 	public void testPrepare() throws Exception {
 		Template template = new VelocityTemplate(
-			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
 			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -202,7 +202,7 @@ public class VelocityTemplateTest {
 	@Test
 	public void testProcessTemplate1() throws Exception {
 		Template template = new VelocityTemplate(
-			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
 			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -219,8 +219,8 @@ public class VelocityTemplateTest {
 	@Test
 	public void testProcessTemplate2() throws Exception {
 		Template template = new VelocityTemplate(
-			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, null,
-			_velocityEngine, _templateContextHelper, _templateResourceCache);
+			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _velocityEngine,
+			_templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -243,7 +243,7 @@ public class VelocityTemplateTest {
 		Template template = new VelocityTemplate(
 			new StringTemplateResource(
 				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
-			null, null, _velocityEngine, _templateContextHelper,
+			null, _velocityEngine, _templateContextHelper,
 			_templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
@@ -260,15 +260,16 @@ public class VelocityTemplateTest {
 	@Test
 	public void testProcessTemplate4() throws Exception {
 		Template template = new VelocityTemplate(
-			new MockTemplateResource(_TEMPLATE_FILE_NAME),
-			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
 			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		template.processTemplate(unsyncStringWriter);
+		template.processTemplate(
+			unsyncStringWriter,
+			() -> new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID));
 
 		String result = unsyncStringWriter.toString();
 
@@ -278,15 +279,16 @@ public class VelocityTemplateTest {
 	@Test
 	public void testProcessTemplate5() throws Exception {
 		Template template = new VelocityTemplate(
-			new MockTemplateResource(_WRONG_TEMPLATE_ID),
-			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
-			_velocityEngine, _templateContextHelper, _templateResourceCache);
+			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _velocityEngine,
+			_templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		template.processTemplate(unsyncStringWriter);
+		template.processTemplate(
+			unsyncStringWriter,
+			() -> new MockTemplateResource(_TEMPLATE_FILE_NAME));
 
 		String result = unsyncStringWriter.toString();
 
@@ -296,16 +298,17 @@ public class VelocityTemplateTest {
 	@Test
 	public void testProcessTemplate6() throws Exception {
 		Template template = new VelocityTemplate(
-			new MockTemplateResource(_WRONG_TEMPLATE_ID),
-			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
-			_velocityEngine, _templateContextHelper, _templateResourceCache);
+			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _velocityEngine,
+			_templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {
-			template.processTemplate(unsyncStringWriter);
+			template.processTemplate(
+				unsyncStringWriter,
+				() -> new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID));
 
 			Assert.fail();
 		}
@@ -320,17 +323,17 @@ public class VelocityTemplateTest {
 	@Test
 	public void testProcessTemplate7() throws Exception {
 		Template template = new VelocityTemplate(
-			new MockTemplateResource(_WRONG_TEMPLATE_ID),
-			new StringTemplateResource(
-				_WRONG_ERROR_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
-			null, _velocityEngine, _templateContextHelper,
-			_templateResourceCache);
+			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, _velocityEngine,
+			_templateContextHelper, _templateResourceCache);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		template.processTemplate(unsyncStringWriter);
+		template.processTemplate(
+			unsyncStringWriter,
+			() -> new StringTemplateResource(
+				_WRONG_ERROR_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT));
 
 		String result = unsyncStringWriter.toString();
 
@@ -344,7 +347,7 @@ public class VelocityTemplateTest {
 		context.put(_TEST_KEY, _TEST_VALUE);
 
 		Template template = new VelocityTemplate(
-			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, context,
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), context,
 			_velocityEngine, _templateContextHelper, _templateResourceCache);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();

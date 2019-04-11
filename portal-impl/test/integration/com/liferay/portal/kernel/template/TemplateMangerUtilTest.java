@@ -60,7 +60,7 @@ public class TemplateMangerUtilTest {
 
 		Template template = TemplateManagerUtil.getTemplate(
 			TestTemplateManager.TEST_TEMPLATE_MANAGER_NAME,
-			testTemplateResource, null, false);
+			testTemplateResource, false);
 
 		Class<?> clazz = template.getClass();
 

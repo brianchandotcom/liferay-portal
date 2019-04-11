@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -127,18 +128,26 @@ public abstract class BaseTemplate implements Template {
 
 	@Override
 	public void processTemplate(Writer writer) throws TemplateException {
-		if (_errorTemplateResource == null) {
-			try {
-				processTemplate(_templateResource, writer);
+		try {
+			processTemplate(_templateResource, writer);
+		}
+		catch (Exception e) {
+			throw new TemplateException(
+				"Unable to process template " +
+					_templateResource.getTemplateId(),
+				e);
+		}
+	}
 
-				return;
-			}
-			catch (Exception e) {
-				throw new TemplateException(
-					"Unable to process template " +
-						_templateResource.getTemplateId(),
-					e);
-			}
+	public void processTemplate(
+			Writer writer,
+			Supplier<TemplateResource> errorTemplateResourceSupplier)
+		throws TemplateException {
+
+		if (errorTemplateResourceSupplier == null) {
+			processTemplate(writer);
+
+			return;
 		}
 
 		Writer oldWriter = (Writer)get(TemplateConstants.WRITER);
@@ -155,10 +164,20 @@ public abstract class BaseTemplate implements Template {
 			sb.writeTo(writer);
 		}
 		catch (Exception e) {
+			TemplateResource errorTemplateResource =
+				errorTemplateResourceSupplier.get();
+
+			if (errorTemplateResource == null) {
+				throw new TemplateException(
+					"Unable to process template " +
+						_templateResource.getTemplateId(),
+					e);
+			}
+
 			put(TemplateConstants.WRITER, writer);
 
 			handleException(
-				_templateResource, _errorTemplateResource, e, writer);
+				_templateResource, errorTemplateResource, e, writer);
 		}
 		finally {
 			put(TemplateConstants.WRITER, oldWriter);

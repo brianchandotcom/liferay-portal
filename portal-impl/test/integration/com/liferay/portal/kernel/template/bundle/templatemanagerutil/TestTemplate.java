@@ -15,12 +15,14 @@
 package com.liferay.portal.kernel.template.bundle.templatemanagerutil;
 
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateResource;
 
 import java.io.Writer;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,6 +81,12 @@ public class TestTemplate implements Template {
 
 	@Override
 	public void processTemplate(Writer writer) {
+	}
+
+	@Override
+	public void processTemplate(
+		Writer writer,
+		Supplier<TemplateResource> errorTemplateResourceSupplier) {
 	}
 
 	@Override

@@ -73,6 +73,13 @@ public class DownloadNodeModuleTask extends ExecuteNpmTask {
 	public File getModuleDir() {
 		File nodeModulesDir = new File(getWorkingDir(), "node_modules");
 
+		if (NodePluginUtil.isYarnScriptFile(getScriptFile())) {
+			File scriptFile = getScriptFile();
+
+			nodeModulesDir = new File(
+				scriptFile.getParentFile(), "node_modules");
+		}
+
 		return new File(nodeModulesDir, getModuleName());
 	}
 

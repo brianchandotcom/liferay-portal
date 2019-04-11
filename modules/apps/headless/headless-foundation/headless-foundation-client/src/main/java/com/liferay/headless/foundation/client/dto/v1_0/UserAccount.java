@@ -381,27 +381,27 @@ public class UserAccount {
 
 	protected String name;
 
-	public OrganizationBrief[] getOrganizationBriefs() {
-		return organizationBriefs;
+	public OrganizationBrief[] getOrganizations() {
+		return organizations;
 	}
 
-	public void setOrganizationBriefs(OrganizationBrief[] organizationBriefs) {
-		this.organizationBriefs = organizationBriefs;
+	public void setOrganizations(OrganizationBrief[] organizations) {
+		this.organizations = organizations;
 	}
 
-	public void setOrganizationBriefs(
+	public void setOrganizations(
 		UnsafeSupplier<OrganizationBrief[], Exception>
-			organizationBriefsUnsafeSupplier) {
+			organizationsUnsafeSupplier) {
 
 		try {
-			organizationBriefs = organizationBriefsUnsafeSupplier.get();
+			organizations = organizationsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected OrganizationBrief[] organizationBriefs;
+	protected OrganizationBrief[] organizations;
 
 	public String getProfileURL() {
 		return profileURL;
@@ -424,46 +424,46 @@ public class UserAccount {
 
 	protected String profileURL;
 
-	public RoleBrief[] getRoleBriefs() {
-		return roleBriefs;
+	public RoleBrief[] getRoles() {
+		return roles;
 	}
 
-	public void setRoleBriefs(RoleBrief[] roleBriefs) {
-		this.roleBriefs = roleBriefs;
+	public void setRoles(RoleBrief[] roles) {
+		this.roles = roles;
 	}
 
-	public void setRoleBriefs(
-		UnsafeSupplier<RoleBrief[], Exception> roleBriefsUnsafeSupplier) {
+	public void setRoles(
+		UnsafeSupplier<RoleBrief[], Exception> rolesUnsafeSupplier) {
 
 		try {
-			roleBriefs = roleBriefsUnsafeSupplier.get();
+			roles = rolesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected RoleBrief[] roleBriefs;
+	protected RoleBrief[] roles;
 
-	public SiteBrief[] getSiteBriefs() {
-		return siteBriefs;
+	public SiteBrief[] getSites() {
+		return sites;
 	}
 
-	public void setSiteBriefs(SiteBrief[] siteBriefs) {
-		this.siteBriefs = siteBriefs;
+	public void setSites(SiteBrief[] sites) {
+		this.sites = sites;
 	}
 
-	public void setSiteBriefs(
-		UnsafeSupplier<SiteBrief[], Exception> siteBriefsUnsafeSupplier) {
+	public void setSites(
+		UnsafeSupplier<SiteBrief[], Exception> sitesUnsafeSupplier) {
 
 		try {
-			siteBriefs = siteBriefsUnsafeSupplier.get();
+			sites = sitesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected SiteBrief[] siteBriefs;
+	protected SiteBrief[] sites;
 
 }

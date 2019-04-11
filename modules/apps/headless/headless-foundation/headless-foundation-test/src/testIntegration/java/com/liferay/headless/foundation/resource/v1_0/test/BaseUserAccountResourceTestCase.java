@@ -1362,10 +1362,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"organizationBriefs", additionalAssertFieldName)) {
-
-				if (userAccount.getOrganizationBriefs() == null) {
+			if (Objects.equals("organizations", additionalAssertFieldName)) {
+				if (userAccount.getOrganizations() == null) {
 					valid = false;
 				}
 
@@ -1380,16 +1378,16 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("roleBriefs", additionalAssertFieldName)) {
-				if (userAccount.getRoleBriefs() == null) {
+			if (Objects.equals("roles", additionalAssertFieldName)) {
+				if (userAccount.getRoles() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("siteBriefs", additionalAssertFieldName)) {
-				if (userAccount.getSiteBriefs() == null) {
+			if (Objects.equals("sites", additionalAssertFieldName)) {
+				if (userAccount.getSites() == null) {
 					valid = false;
 				}
 
@@ -1620,12 +1618,10 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"organizationBriefs", additionalAssertFieldName)) {
-
+			if (Objects.equals("organizations", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						userAccount1.getOrganizationBriefs(),
-						userAccount2.getOrganizationBriefs())) {
+						userAccount1.getOrganizations(),
+						userAccount2.getOrganizations())) {
 
 					return false;
 				}
@@ -1644,10 +1640,9 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("roleBriefs", additionalAssertFieldName)) {
+			if (Objects.equals("roles", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						userAccount1.getRoleBriefs(),
-						userAccount2.getRoleBriefs())) {
+						userAccount1.getRoles(), userAccount2.getRoles())) {
 
 					return false;
 				}
@@ -1655,10 +1650,9 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("siteBriefs", additionalAssertFieldName)) {
+			if (Objects.equals("sites", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						userAccount1.getSiteBriefs(),
-						userAccount2.getSiteBriefs())) {
+						userAccount1.getSites(), userAccount2.getSites())) {
 
 					return false;
 				}
@@ -1840,7 +1834,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("organizationBriefs")) {
+		if (entityFieldName.equals("organizations")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1853,12 +1847,12 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("roleBriefs")) {
+		if (entityFieldName.equals("roles")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("siteBriefs")) {
+		if (entityFieldName.equals("sites")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

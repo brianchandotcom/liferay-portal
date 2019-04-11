@@ -500,21 +500,21 @@ public class UserAccount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	public OrganizationBrief[] getOrganizationBriefs() {
-		return organizationBriefs;
+	public OrganizationBrief[] getOrganizations() {
+		return organizations;
 	}
 
-	public void setOrganizationBriefs(OrganizationBrief[] organizationBriefs) {
-		this.organizationBriefs = organizationBriefs;
+	public void setOrganizations(OrganizationBrief[] organizations) {
+		this.organizations = organizations;
 	}
 
 	@JsonIgnore
-	public void setOrganizationBriefs(
+	public void setOrganizations(
 		UnsafeSupplier<OrganizationBrief[], Exception>
-			organizationBriefsUnsafeSupplier) {
+			organizationsUnsafeSupplier) {
 
 		try {
-			organizationBriefs = organizationBriefsUnsafeSupplier.get();
+			organizations = organizationsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -526,7 +526,7 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected OrganizationBrief[] organizationBriefs;
+	protected OrganizationBrief[] organizations;
 
 	public String getProfileURL() {
 		return profileURL;
@@ -555,20 +555,20 @@ public class UserAccount {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String profileURL;
 
-	public RoleBrief[] getRoleBriefs() {
-		return roleBriefs;
+	public RoleBrief[] getRoles() {
+		return roles;
 	}
 
-	public void setRoleBriefs(RoleBrief[] roleBriefs) {
-		this.roleBriefs = roleBriefs;
+	public void setRoles(RoleBrief[] roles) {
+		this.roles = roles;
 	}
 
 	@JsonIgnore
-	public void setRoleBriefs(
-		UnsafeSupplier<RoleBrief[], Exception> roleBriefsUnsafeSupplier) {
+	public void setRoles(
+		UnsafeSupplier<RoleBrief[], Exception> rolesUnsafeSupplier) {
 
 		try {
-			roleBriefs = roleBriefsUnsafeSupplier.get();
+			roles = rolesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -580,22 +580,22 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected RoleBrief[] roleBriefs;
+	protected RoleBrief[] roles;
 
-	public SiteBrief[] getSiteBriefs() {
-		return siteBriefs;
+	public SiteBrief[] getSites() {
+		return sites;
 	}
 
-	public void setSiteBriefs(SiteBrief[] siteBriefs) {
-		this.siteBriefs = siteBriefs;
+	public void setSites(SiteBrief[] sites) {
+		this.sites = sites;
 	}
 
 	@JsonIgnore
-	public void setSiteBriefs(
-		UnsafeSupplier<SiteBrief[], Exception> siteBriefsUnsafeSupplier) {
+	public void setSites(
+		UnsafeSupplier<SiteBrief[], Exception> sitesUnsafeSupplier) {
 
 		try {
-			siteBriefs = siteBriefsUnsafeSupplier.get();
+			sites = sitesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -607,7 +607,7 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected SiteBrief[] siteBriefs;
+	protected SiteBrief[] sites;
 
 	@Override
 	public boolean equals(Object object) {
@@ -835,18 +835,18 @@ public class UserAccount {
 
 		sb.append(", ");
 
-		sb.append("\"organizationBriefs\": ");
+		sb.append("\"organizations\": ");
 
-		if (organizationBriefs == null) {
+		if (organizations == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < organizationBriefs.length; i++) {
-				sb.append(organizationBriefs[i]);
+			for (int i = 0; i < organizations.length; i++) {
+				sb.append(organizations[i]);
 
-				if ((i + 1) < organizationBriefs.length) {
+				if ((i + 1) < organizations.length) {
 					sb.append(", ");
 				}
 			}
@@ -867,18 +867,18 @@ public class UserAccount {
 
 		sb.append(", ");
 
-		sb.append("\"roleBriefs\": ");
+		sb.append("\"roles\": ");
 
-		if (roleBriefs == null) {
+		if (roles == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < roleBriefs.length; i++) {
-				sb.append(roleBriefs[i]);
+			for (int i = 0; i < roles.length; i++) {
+				sb.append(roles[i]);
 
-				if ((i + 1) < roleBriefs.length) {
+				if ((i + 1) < roles.length) {
 					sb.append(", ");
 				}
 			}
@@ -888,18 +888,18 @@ public class UserAccount {
 
 		sb.append(", ");
 
-		sb.append("\"siteBriefs\": ");
+		sb.append("\"sites\": ");
 
-		if (siteBriefs == null) {
+		if (sites == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < siteBriefs.length; i++) {
-				sb.append(siteBriefs[i]);
+			for (int i = 0; i < sites.length; i++) {
+				sb.append(sites[i]);
 
-				if ((i + 1) < siteBriefs.length) {
+				if ((i + 1) < sites.length) {
 					sb.append(", ");
 				}
 			}

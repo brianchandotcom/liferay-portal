@@ -260,20 +260,18 @@ public class UserAccountSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"organizationBriefs\": ");
+		sb.append("\"organizations\": ");
 
-		if (userAccount.getOrganizationBriefs() == null) {
+		if (userAccount.getOrganizations() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < userAccount.getOrganizationBriefs().length;
-				 i++) {
+			for (int i = 0; i < userAccount.getOrganizations().length; i++) {
+				sb.append(userAccount.getOrganizations()[i]);
 
-				sb.append(userAccount.getOrganizationBriefs()[i]);
-
-				if ((i + 1) < userAccount.getOrganizationBriefs().length) {
+				if ((i + 1) < userAccount.getOrganizations().length) {
 					sb.append(", ");
 				}
 			}
@@ -294,18 +292,18 @@ public class UserAccountSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"roleBriefs\": ");
+		sb.append("\"roles\": ");
 
-		if (userAccount.getRoleBriefs() == null) {
+		if (userAccount.getRoles() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < userAccount.getRoleBriefs().length; i++) {
-				sb.append(userAccount.getRoleBriefs()[i]);
+			for (int i = 0; i < userAccount.getRoles().length; i++) {
+				sb.append(userAccount.getRoles()[i]);
 
-				if ((i + 1) < userAccount.getRoleBriefs().length) {
+				if ((i + 1) < userAccount.getRoles().length) {
 					sb.append(", ");
 				}
 			}
@@ -315,18 +313,18 @@ public class UserAccountSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"siteBriefs\": ");
+		sb.append("\"sites\": ");
 
-		if (userAccount.getSiteBriefs() == null) {
+		if (userAccount.getSites() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < userAccount.getSiteBriefs().length; i++) {
-				sb.append(userAccount.getSiteBriefs()[i]);
+			for (int i = 0; i < userAccount.getSites().length; i++) {
+				sb.append(userAccount.getSites()[i]);
 
-				if ((i + 1) < userAccount.getSiteBriefs().length) {
+				if ((i + 1) < userAccount.getSites().length) {
 					sb.append(", ");
 				}
 			}
@@ -472,11 +470,9 @@ public class UserAccountSerDes {
 					userAccount.setName((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "organizationBriefs")) {
-
+			else if (Objects.equals(jsonParserFieldName, "organizations")) {
 				if (jsonParserFieldValue != null) {
-					userAccount.setOrganizationBriefs(
+					userAccount.setOrganizations(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -492,9 +488,9 @@ public class UserAccountSerDes {
 					userAccount.setProfileURL((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
+			else if (Objects.equals(jsonParserFieldName, "roles")) {
 				if (jsonParserFieldValue != null) {
-					userAccount.setRoleBriefs(
+					userAccount.setRoles(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -504,9 +500,9 @@ public class UserAccountSerDes {
 						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "siteBriefs")) {
+			else if (Objects.equals(jsonParserFieldName, "sites")) {
 				if (jsonParserFieldValue != null) {
-					userAccount.setSiteBriefs(
+					userAccount.setSites(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(

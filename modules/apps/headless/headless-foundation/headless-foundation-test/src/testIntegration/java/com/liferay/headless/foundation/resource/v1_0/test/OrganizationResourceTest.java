@@ -25,14 +25,13 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.portal.kernel.util.PortalUtil;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
@@ -109,19 +108,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		return _addUserOrganization(_user.getUserId(), organization);
-	}
-
-	@Override
-	protected Organization testGetUserAccountOrganizationsPage_addOrganization(
-			Long userAccountId, Organization organization)
-		throws Exception {
-
-		return _addUserOrganization(userAccountId, organization);
-	}
-
-	@Override
-	protected Long testGetUserAccountOrganizationsPage_getUserAccountId() {
-		return _user.getUserId();
 	}
 
 	private com.liferay.portal.kernel.model.Organization _addOrganization(

@@ -76,7 +76,7 @@ public class TestTemplate implements Template {
 	}
 
 	@Override
-	public void prepare(HttpServletRequest request) {
+	public void prepare(HttpServletRequest httpServletRequest) {
 	}
 
 	@Override

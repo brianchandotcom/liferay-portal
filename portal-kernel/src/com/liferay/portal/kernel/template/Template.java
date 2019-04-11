@@ -30,7 +30,7 @@ public interface Template extends Map<String, Object> {
 
 	public String[] getKeys();
 
-	public void prepare(HttpServletRequest request);
+	public void prepare(HttpServletRequest httpServletRequest);
 
 	public void processTemplate(Writer writer) throws TemplateException;
 

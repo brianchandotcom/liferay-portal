@@ -85,8 +85,8 @@ public class RestrictedTemplate implements Template {
 	}
 
 	@Override
-	public void prepare(HttpServletRequest request) {
-		_template.prepare(request);
+	public void prepare(HttpServletRequest httpServletRequest) {
+		_template.prepare(httpServletRequest);
 	}
 
 	@Override

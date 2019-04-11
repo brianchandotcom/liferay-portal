@@ -128,10 +128,10 @@ public class SoyTemplate extends BaseTemplate {
 	}
 
 	@Override
-	public void prepare(HttpServletRequest request) {
+	public void prepare(HttpServletRequest httpServletRequest) {
 		Map<String, Object> injectedDataObjects = new HashMap<>();
 
-		_templateContextHelper.prepare(injectedDataObjects, request);
+		_templateContextHelper.prepare(injectedDataObjects, httpServletRequest);
 
 		for (Map.Entry<String, Object> entry : injectedDataObjects.entrySet()) {
 			_soyContextImpl.putInjectedData(entry.getKey(), entry.getValue());

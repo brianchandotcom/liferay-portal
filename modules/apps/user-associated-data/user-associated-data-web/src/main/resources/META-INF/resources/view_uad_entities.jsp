@@ -19,8 +19,6 @@
 <%
 ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
 
-ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarDisplayContext = new ViewUADEntitiesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, viewUADEntitiesDisplay);
-
 boolean topLevelView = true;
 
 long parentContainerId = ParamUtil.getLong(request, "parentContainerId");
@@ -35,7 +33,7 @@ if (parentContainerId > 0) {
 %>
 
 <clay:management-toolbar
-	displayContext="<%= viewUADEntitiesManagementToolbarDisplayContext %>"
+	displayContext="<%= new ViewUADEntitiesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, viewUADEntitiesDisplay) %>"
 />
 
 <aui:form method="post" name="viewUADEntitiesFm">
@@ -161,24 +159,9 @@ if (parentContainerId > 0) {
 </aui:form>
 
 <aui:script>
-
-	<%
-	PortletURL autoAnonymizeURL = renderResponse.createActionURL();
-	PortletURL deleteURL = renderResponse.createActionURL();
-
-	if (Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS)) {
-		autoAnonymizeURL.setParameter(ActionRequest.ACTION_NAME, "/anonymize_uad_applications");
-		deleteURL.setParameter(ActionRequest.ACTION_NAME, "/delete_uad_applications");
-	}
-	else {
-		autoAnonymizeURL.setParameter(ActionRequest.ACTION_NAME, "/anonymize_uad_entities");
-		deleteURL.setParameter(ActionRequest.ACTION_NAME, "/delete_uad_entities");
-	}
-	%>
-
 	function <portlet:namespace/>doAnonymizeMultiple() {
 		<portlet:namespace />doMultiple(
-			'<%= autoAnonymizeURL.toString() %>',
+			'<portlet:actionURL name='<%= Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) ? "/anonymize_uad_applications" : "/anonymize_uad_entities" %>' />',
 			'<liferay-ui:message key="are-you-sure-you-want-to-anonymize-the-selected-items" />',
 			'<liferay-ui:message key="only-items-belonging-to-the-user-will-be-anonymized" />'
 		);
@@ -186,7 +169,7 @@ if (parentContainerId > 0) {
 
 	function <portlet:namespace/>doDeleteMultiple() {
 		<portlet:namespace />doMultiple(
-			'<%= deleteURL.toString() %>',
+			'<portlet:actionURL name='<%= Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) ? "/delete_uad_applications" : "/delete_uad_entities" %>' />',
 			'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-items" />',
 			'<liferay-ui:message key="only-items-belonging-to-the-user-will-be-deleted" />'
 		);

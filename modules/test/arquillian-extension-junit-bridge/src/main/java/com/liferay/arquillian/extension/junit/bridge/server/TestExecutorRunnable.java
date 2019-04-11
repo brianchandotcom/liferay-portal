@@ -59,18 +59,22 @@ import org.osgi.framework.BundleException;
 public class TestExecutorRunnable implements Runnable {
 
 	public TestExecutorRunnable(
-		Bundle bundle, TestClass testClass, Socket socket, long passCode) {
+		Bundle bundle, TestClass testClass, String reportServerHostName,
+		int reportServerPort, long passCode) {
 
 		_bundle = bundle;
 		_testClass = testClass;
-		_socket = socket;
+		_reportServerHostName = reportServerHostName;
+		_reportServerPort = reportServerPort;
 		_passCode = passCode;
 	}
 
 	@Override
 	public void run() {
-		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				_socket.getOutputStream())) {
+		try (Socket socket = new Socket(
+				_reportServerHostName, _reportServerPort);
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				socket.getOutputStream())) {
 
 			objectOutputStream.writeLong(_passCode);
 
@@ -347,7 +351,8 @@ public class TestExecutorRunnable implements Runnable {
 
 	private final Bundle _bundle;
 	private final long _passCode;
-	private final Socket _socket;
+	private final String _reportServerHostName;
+	private final int _reportServerPort;
 	private final TestClass _testClass;
 
 }

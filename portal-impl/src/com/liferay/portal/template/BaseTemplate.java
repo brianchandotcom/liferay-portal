@@ -66,7 +66,12 @@ public abstract class BaseTemplate implements Template {
 		_templateContextHelper = templateContextHelper;
 
 		if (templateResourceCache.isEnabled()) {
-			cacheTemplateResource(templateResourceCache);
+			cacheTemplateResource(templateResourceCache, templateResource);
+
+			if (errorTemplateResource != null) {
+				cacheTemplateResource(
+					templateResourceCache, errorTemplateResource);
+			}
 		}
 	}
 
@@ -192,7 +197,8 @@ public abstract class BaseTemplate implements Template {
 	}
 
 	protected void cacheTemplateResource(
-		TemplateResourceCache templateResourceCache) {
+		TemplateResourceCache templateResourceCache,
+		TemplateResource templateResource) {
 
 		TemplateResource cachedTemplateResource =
 			templateResourceCache.getTemplateResource(
@@ -203,21 +209,6 @@ public abstract class BaseTemplate implements Template {
 
 			templateResourceCache.put(
 				templateResource.getTemplateId(), templateResource);
-		}
-
-		if (errorTemplateResource == null) {
-			return;
-		}
-
-		TemplateResource cachedErrorTemplateResource =
-			templateResourceCache.getTemplateResource(
-				errorTemplateResource.getTemplateId());
-
-		if ((cachedErrorTemplateResource == null) ||
-			!errorTemplateResource.equals(cachedErrorTemplateResource)) {
-
-			templateResourceCache.put(
-				errorTemplateResource.getTemplateId(), errorTemplateResource);
 		}
 	}
 

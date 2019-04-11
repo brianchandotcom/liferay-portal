@@ -21,11 +21,7 @@ import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUt
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
-import java.util.Arrays;
-
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
@@ -40,7 +36,8 @@ public class DataRecordCollectionResourceTest
 		super.setUp();
 
 		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
-		_irrelevantDDMStructure = DataDefinitionTestUtil.addDDMStructure(irrelevantGroup);
+		_irrelevantDDMStructure = DataDefinitionTestUtil.addDDMStructure(
+			irrelevantGroup);
 	}
 
 	@Override
@@ -75,17 +72,16 @@ public class DataRecordCollectionResourceTest
 	}
 
 	@Override
-	protected DataRecordCollection
-			testGetDataRecordCollection_addDataRecordCollection()
+	protected Long
+			testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId()
 		throws Exception {
 
-		return invokePostDataDefinitionDataRecordCollection(
-			_ddmStructure.getStructureId(), randomDataRecordCollection());
+		return _ddmStructure.getStructureId();
 	}
 
 	@Override
 	protected DataRecordCollection
-			testPutDataRecordCollection_addDataRecordCollection()
+			testGetDataRecordCollection_addDataRecordCollection()
 		throws Exception {
 
 		return invokePostDataDefinitionDataRecordCollection(
@@ -109,14 +105,6 @@ public class DataRecordCollectionResourceTest
 	}
 
 	@Override
-	protected Long
-			testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId()
-		throws Exception {
-
-		return _ddmStructure.getStructureId();
-	}
-
-	@Override
 	protected DataRecordCollection
 			testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
 				DataRecordCollection dataRecordCollection)
@@ -124,6 +112,15 @@ public class DataRecordCollectionResourceTest
 
 		return invokePostDataDefinitionDataRecordCollection(
 			_ddmStructure.getStructureId(), dataRecordCollection);
+	}
+
+	@Override
+	protected DataRecordCollection
+			testPutDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		return invokePostDataDefinitionDataRecordCollection(
+			_ddmStructure.getStructureId(), randomDataRecordCollection());
 	}
 
 	private DDMStructure _ddmStructure;

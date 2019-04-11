@@ -25,10 +25,6 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 
-import java.util.Arrays;
-import java.util.Objects;
-
-import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**

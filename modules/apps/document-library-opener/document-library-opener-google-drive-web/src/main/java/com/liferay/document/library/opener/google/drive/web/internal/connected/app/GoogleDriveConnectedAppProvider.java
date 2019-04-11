@@ -28,9 +28,12 @@ import com.liferay.document.library.opener.google.drive.web.internal.OAuth2Manag
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -85,10 +88,16 @@ public class GoogleDriveConnectedAppProvider implements ConnectedAppProvider {
 				StringBundler sb = new StringBundler(5);
 
 				sb.append(LanguageUtil.get(resourceBundle, "google-drive"));
-				sb.append(StringPool.SPACE);
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(_getGoogleDriveUserEmailAddress(credential));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				String emailAddress = _getGoogleDriveUserEmailAddress(
+					credential);
+
+				if (Validator.isNotNull(emailAddress)) {
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.OPEN_PARENTHESIS);
+					sb.append(emailAddress);
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+				}
 
 				return sb.toString();
 			}
@@ -127,9 +136,14 @@ public class GoogleDriveConnectedAppProvider implements ConnectedAppProvider {
 			return user.getEmailAddress();
 		}
 		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+			_log.error(ioe, ioe);
+
+			return null;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GoogleDriveConnectedAppProvider.class);
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;

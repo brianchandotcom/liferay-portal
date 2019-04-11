@@ -51,6 +51,7 @@ page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
+page import="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil" %><%@
@@ -71,12 +72,15 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys" %><%@
 page import="com.liferay.user.groups.admin.web.internal.display.context.EditUserGroupAssignmentsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.user.groups.admin.web.internal.display.context.SelectUserGroupManagementToolbarDisplayContext" %><%@
 page import="com.liferay.user.groups.admin.web.internal.display.context.ViewUserGroupsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>

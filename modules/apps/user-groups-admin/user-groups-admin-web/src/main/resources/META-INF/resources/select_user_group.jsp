@@ -17,28 +17,27 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUserGroup");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
-SelectUserGroupManagementToolbarDisplayContext SelectUserGroupManagementToolbarDisplayContext = new SelectUserGroupManagementToolbarDisplayContext(request, renderRequest, renderResponse);
+SelectUserGroupManagementToolbarDisplayContext selectUserGroupManagementToolbarDisplayContext = new SelectUserGroupManagementToolbarDisplayContext(request, renderRequest, renderResponse);
 
-PortletURL portletURL = SelectUserGroupManagementToolbarDisplayContext.getPortletURL();
+PortletURL portletURL = selectUserGroupManagementToolbarDisplayContext.getPortletURL();
 
-SearchContainer userGroupSearch = SelectUserGroupManagementToolbarDisplayContext.getSearchContainer(filterManageableUserGroups);
+SearchContainer userGroupSearch = selectUserGroupManagementToolbarDisplayContext.getSearchContainer(filterManageableUserGroups);
 
 renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= SelectUserGroupManagementToolbarDisplayContext.getClearResultsURL() %>"
+	clearResultsURL="<%= selectUserGroupManagementToolbarDisplayContext.getClearResultsURL() %>"
 	itemsTotal="<%= userGroupSearch.getTotal() %>"
-	searchActionURL="<%= SelectUserGroupManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchActionURL="<%= selectUserGroupManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	showSearch="<%= true %>"
-	viewTypeItems="<%= SelectUserGroupManagementToolbarDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= selectUserGroupManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectUserGroupFm">

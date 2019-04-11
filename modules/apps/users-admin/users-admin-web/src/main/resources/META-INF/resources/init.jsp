@@ -175,7 +175,6 @@ page import="com.liferay.users.admin.web.internal.display.context.OrgLaborFormDi
 page import="com.liferay.users.admin.web.internal.display.context.OrganizationScreenNavigationDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.SelectOrganizationManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.SelectOrganizationUsersManagementToolbarDisplayContext" %><%@
-page import="com.liferay.users.admin.web.internal.display.context.SelectUserGroupManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.UserActionDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.UserDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.ViewOrganizationsManagementToolbarDisplayContext" %><%@
@@ -215,7 +214,6 @@ String myAccountPortletId = PortletProviderUtil.getPortletId(PortalMyAccountAppl
 InitDisplayContext initDisplayContext = new InitDisplayContext(request, portletName);
 
 boolean filterManageableOrganizations = initDisplayContext.isFilterManageableOrganizations();
-boolean filterManageableUserGroups = initDisplayContext.isFilterManageableUserGroups();
 
 UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
 %>

@@ -156,10 +156,10 @@ name = HtmlUtil.escapeJS(name);
 		initEditor: function() {
 			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
 
-				var initEditorFunction = <%= HtmlUtil.escapeJS(namespace + initMethod) %>;
+				var initEditorFunction = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'];
 
 				if (typeof initEditorFunction === 'function') {
-					<%= name %>.setHTML(<%= HtmlUtil.escapeJS(namespace + initMethod) %>());
+					<%= name %>.setHTML(initEditorFunction());
 				}
 			</c:if>
 

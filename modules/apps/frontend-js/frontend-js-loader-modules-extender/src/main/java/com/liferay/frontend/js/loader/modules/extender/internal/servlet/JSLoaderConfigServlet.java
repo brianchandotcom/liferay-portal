@@ -19,6 +19,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.minifier.MinifierUtil;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
@@ -87,13 +88,11 @@ public class JSLoaderConfigServlet extends HttpServlet {
 
 		StringWriter stringWriter = new StringWriter();
 
-		PrintWriter printWriter = new PrintWriter(stringWriter);
-
-		printWriter.println("(function() {");
-		printWriter.println(
+		stringWriter.write("(function() {");
+		stringWriter.write(
 			"Liferay.EXPLAIN_RESOLUTIONS = " + _details.explainResolutions() +
 				";\n");
-		printWriter.println(
+		stringWriter.write(
 			"Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
@@ -104,20 +103,22 @@ public class JSLoaderConfigServlet extends HttpServlet {
 			"/js_resolve_modules"
 		).build();
 
-		printWriter.println("Liferay.RESOLVE_PATH = \"" + url + "\";\n");
+		stringWriter.write("Liferay.RESOLVE_PATH = \"" + url + "\";\n");
 
-		printWriter.println(
+		stringWriter.write(
 			"Liferay.WAIT_TIMEOUT = " + (_details.waitTimeout() * 1000) +
 				";\n");
-		printWriter.println("}());");
-
-		printWriter.close();
+		stringWriter.write("}());");
 
 		String content = stringWriter.toString();
 
-		_objectValuePair = new ObjectValuePair<>(getLastModified(), content);
+		String minifiedContent = MinifierUtil.minifyJavaScript(
+			"/o/js_loader_config", content);
 
-		_writeResponse(response, content);
+		_objectValuePair = new ObjectValuePair<>(
+			getLastModified(), minifiedContent);
+
+		_writeResponse(response, minifiedContent);
 	}
 
 	private boolean _isStale() {

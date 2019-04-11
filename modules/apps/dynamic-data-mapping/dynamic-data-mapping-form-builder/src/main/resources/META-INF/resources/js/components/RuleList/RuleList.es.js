@@ -146,6 +146,9 @@ class RuleList extends Component {
 		const {roles} = this;
 		const rules = this._setDataProviderNames(states);
 
+		let newLabel = '';
+		let newTarget = '';
+
 		return {
 			...states,
 			rules: this._formatRules(
@@ -155,10 +158,19 @@ class RuleList extends Component {
 							...rule,
 							actions: rule.actions.map(
 								action => {
+									if (action.action == 'jump-to-page') {
+										newLabel = (parseInt(action.target, 10) + 1).toString();
+										newTarget = (parseInt(action.target, 10) + 1).toString();
+									}
+									else {
+										newLabel = this._getFieldLabel(action.target);
+										newTarget = this._getFieldLabel(action.target);
+									}
+
 									return {
 										...action,
-										label: this._getFieldLabel(action.target),
-										target: this._getFieldLabel(action.target)
+										label: newLabel,
+										target: newTarget
 									};
 								}
 							),

@@ -125,6 +125,12 @@
 	}
 	{@param invalidRule: bool}
 	{@param logicalOperator: string}
+	{@param pageOptions: list<[
+			label: string,
+			name: string,
+			value: string
+		]>
+	}
 	{@param readOnly: bool}
 	{@param spritemap: string}
 	{@param? _handleActionSelection: any}
@@ -234,6 +240,7 @@
 					{param fieldOptions: $fieldOptions /}
 					{param hasRequiredInputs: $action.hasRequiredInputs /}
 					{param index: index($action) /}
+					{param pageOptions: $pageOptions /}
 					{param spritemap: $spritemap /}
 					{param targetSelected: $action.target /}
 				{/call}
@@ -387,6 +394,12 @@
 		]>
 	}
 	{@param index: int}
+	{@param pageOptions: list<[
+			label: string,
+			name: string,
+			value: string
+		]>
+	}
 	{@param spritemap: string}
 	{@param? _handleActionSelection: any}
 	{@param? _handleEditExpression: any}
@@ -468,6 +481,7 @@
 					{let $showTargetDefault: $actionSelected and (($actionSelected == 'show') or ($actionSelected == 'enable') or ($actionSelected == 'require')) /}
 					{let $showTargetAutofill: $actionSelected and ($actionSelected == 'auto-fill') /}
 					{let $showTargetCalculator: $actionSelected and ($actionSelected == 'calculate') /}
+					{let $showTargetJumpToPage: $actionSelected and ($actionSelected == 'jump-to-page') /}
 					{let $showLabel: $showTargetAutofill or $showTargetCalculator /}
 
 					<div class="form-group-item form-group-item-label form-group-item-shrink {if not $showLabel}hide{/if} target-message-{$index}">
@@ -481,9 +495,11 @@
 							</span>
 						</h4>
 					</div>
-					{if $showTargetDefault or $showTargetAutofill or $showTargetCalculator}
-						{let $options: ($showTargetAutofill) ? $dataProvider : ($showTargetDefault ? $fieldOptions : ($showTargetCalculator ? $calculatorResultOptions : [])) /}
+
+					{if $showTargetDefault or $showTargetAutofill or $showTargetCalculator or $showTargetJumpToPage}
+						{let $options: ($showTargetAutofill) ? $dataProvider : ($showTargetDefault ? $fieldOptions : ($showTargetJumpToPage ? $pageOptions : ($showTargetCalculator ? $calculatorResultOptions : []))) /}
 						{let $ref: $showTargetCalculator ? 'calculatorResult' : 'actionTarget' /}
+
 						{call .renderActionTarget}
 							{param _handleTargetSelection: $_handleTargetSelection /}
 							{param index: $index /}

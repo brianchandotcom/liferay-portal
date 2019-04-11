@@ -80,6 +80,10 @@ class RuleEditor extends Component {
 				{
 					label: Liferay.Language.get('calculate'),
 					value: 'calculate'
+				},
+				{
+					label: Liferay.Language.get('jump-to-page'),
+					value: 'jump-to-page'
 				}
 			]
 		),
@@ -235,6 +239,26 @@ class RuleEditor extends Component {
 
 		logicalOperator: Config.string().internal().value('or'),
 
+		pageOptions: Config.arrayOf(
+			Config.shapeOf(
+				{
+					dataType: Config.string(),
+					name: Config.string(),
+					options: Config.arrayOf(
+						Config.shapeOf(
+							{
+								label: Config.string(),
+								name: Config.string(),
+								value: Config.string()
+							}
+						)
+					),
+					type: Config.string(),
+					value: Config.string()
+				}
+			)
+		).internal().value([]),
+
 		pages: Config.array().required(),
 
 		readOnly: Config.bool().value(false),
@@ -348,13 +372,13 @@ class RuleEditor extends Component {
 	}
 
 	created() {
-		this._fetchFunctionsURL();
-		this._setDataProviderTarget();
-		this._setActionsInputsOutputs();
-
 		if (this.rule) {
 			this._prepareRuleEditor();
 		}
+
+		this._fetchFunctionsURL();
+		this._setDataProviderTarget();
+		this._setActionsInputsOutputs();
 	}
 
 	disposed() {
@@ -466,6 +490,10 @@ class RuleEditor extends Component {
 		actions[index].target = id;
 		actions[index].label = id;
 
+		if (actions[index].action == 'jump-to-page') {
+			actions[index].label = id;
+		}
+
 		if (id === undefined) {
 			actions[index].target = '';
 		}
@@ -510,6 +538,26 @@ class RuleEditor extends Component {
 				throw new Error(error);
 			}
 		);
+	}
+
+	populatePageOptions(pages, maxPageIndex = 0) {
+		let {pageOptions} = this;
+
+		pageOptions = [];
+
+		for (let pageIndex = maxPageIndex + 2; pageIndex <= pages.length; pageIndex++) {
+			pageIndex = pageIndex.toString();
+
+			pageOptions.push(
+				{
+					label: pageIndex,
+					name: pageIndex,
+					value: pageIndex
+				}
+			);
+		}
+
+		return pageOptions;
 	}
 
 	prepareStateForRender(state) {
@@ -557,9 +605,20 @@ class RuleEditor extends Component {
 			}
 		);
 
+		let {actionTypes} = this;
+
+		if (pages.length < 3) {
+			actionTypes = this.actionTypes.filter(
+				obj => {
+					return obj.value !== 'jump-to-page';
+				}
+			);
+		}
+
 		return {
 			...state,
 			actions,
+			actionTypes,
 			conditions
 		};
 	}
@@ -602,13 +661,16 @@ class RuleEditor extends Component {
 			}
 		);
 
+		const maxPageIndex = this._getMaxPageIndex(conditions);
+
 		this.setState(
 			{
 				actions: this._syncActions(actions),
 				calculatorResultOptions: this._calculatorResultOptionsValueFn(),
 				conditions,
 				deletedFields: this._getDeletedFields(visitor),
-				fieldOptions: this._fieldOptionsValueFn()
+				fieldOptions: this._fieldOptionsValueFn(),
+				pageOptions: this.populatePageOptions(pages, maxPageIndex)
 			}
 		);
 	}
@@ -864,6 +926,30 @@ class RuleEditor extends Component {
 		return firstOperand.getAttribute(`${fieldClass.substring(1)}-index`);
 	}
 
+	_getMaxPageIndex(conditions) {
+		const {pages} = this;
+		const pageIndexes = [];
+		const visitor = new PagesVisitor(pages);
+
+		if (conditions.length && conditions[0].operands[0].value) {
+			conditions.forEach(
+				condition => {
+					visitor.mapFields(
+						(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+							if (field.fieldName === condition.operands[0].value) {
+								pageIndexes.push(pageIndex);
+							}
+						}
+					);
+				}
+			);
+		}
+
+		const maxPageIndex = Math.max(...pageIndexes);
+
+		return isFinite(maxPageIndex) ? maxPageIndex : 0;
+	}
+
 	_getOperatorsByFieldType(fieldType) {
 		if (fieldType === 'integer' || fieldType === 'double') {
 			fieldType = 'number';
@@ -905,7 +991,7 @@ class RuleEditor extends Component {
 		const {fieldInstance, value} = event;
 		const index = parseInt(this._getIndex(fieldInstance, '.action-type'), 10);
 
-		const {actions} = this;
+		const {actions, conditions} = this;
 
 		let newActions = [...actions];
 
@@ -923,6 +1009,7 @@ class RuleEditor extends Component {
 								action: fieldName,
 								calculatorFields: [],
 								label: '',
+								source: conditions[0].operands[0].source,
 								target: ''
 							} : action;
 						}
@@ -1041,6 +1128,7 @@ class RuleEditor extends Component {
 	_handleFirstOperandFieldEdited(event) {
 		const {fieldInstance, value} = event;
 		const index = this._getIndex(fieldInstance, '.condition-if');
+		const {actions, pages} = this;
 		let {conditions} = this;
 
 		if (value && value.length > 0 && value[0]) {
@@ -1072,9 +1160,41 @@ class RuleEditor extends Component {
 			conditions = this._clearAllConditionFieldValues(index);
 		}
 
+		let maxPageIndex;
+
+		const visitor = new PagesVisitor(pages);
+
+		if (conditions[index].operands[0].value != '') {
+			visitor.mapFields(
+				(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+					if (field.fieldName === conditions[index].operands[0].value) {
+						maxPageIndex = pageIndex;
+
+						conditions[index].operands[0].source = pageIndex;
+					}
+				}
+			);
+		}
+
+		if (actions && actions[0].action != '') {
+			actions.map(
+				action => {
+					if (action.action == 'jump-to-page') {
+						action.source = conditions[index].operands[0].source;
+					}
+
+					return {
+						action
+					};
+				}
+			);
+		}
+
 		this.setState(
 			{
-				conditions
+				actions,
+				conditions,
+				pageOptions: this.populatePageOptions(pages, maxPageIndex)
 			}
 		);
 	}
@@ -1348,11 +1468,30 @@ class RuleEditor extends Component {
 	_prepareRuleEditor() {
 		const {rule} = this;
 
+		const newRule = rule;
+
+		let newActions = rule.actions.map(
+			action => {
+				const newAction = {...action};
+
+				if (action.action == 'jump-to-page') {
+					newAction.target = (parseInt(action.target, 10) + 1).toString();
+				}
+
+				return newAction;
+			}
+		);
+
+		newActions = this._syncActions(newActions);
+
+		newRule.actions = newActions;
+
 		this.setState(
 			{
-				actions: this._syncActions(rule.actions),
+				actions: newActions,
 				conditions: rule.conditions,
-				logicalOperator: rule['logical-operator']
+				logicalOperator: rule['logical-operator'],
+				rule: newRule
 			}
 		);
 	}
@@ -1369,6 +1508,7 @@ class RuleEditor extends Component {
 					inputs,
 					label,
 					outputs,
+					source,
 					target
 				} = action;
 				const newAction = {
@@ -1380,13 +1520,18 @@ class RuleEditor extends Component {
 					newAction.outputs = outputs;
 					newAction.ddmDataProviderInstanceUUID = ddmDataProviderInstanceUUID;
 				}
+				else if (actionType == 'calculate') {
+					newAction.expression = expression;
+				}
+				else if (actionType == 'jump-to-page') {
+					newAction.source = source.toString();
+					const targetPage = parseInt(target, 10) - 1;
+
+					newAction.target = targetPage.toString();
+				}
 				else {
 					newAction.label = label;
 					newAction.target = target;
-				}
-
-				if (actionType == 'calculate') {
-					newAction.expression = expression;
 				}
 
 				return newAction;
@@ -1548,7 +1693,11 @@ class RuleEditor extends Component {
 
 				action.calculatorFields = this._updateCalculatorFields(action, action.target);
 
-				if (!targetFieldExists && action.action != 'auto-fill') {
+				if (
+					action.action !== 'auto-fill' &&
+					action.action !== 'jump-to-page' &&
+					!targetFieldExists
+				) {
 					action.target = '';
 				}
 				else if (action.action == 'auto-fill') {

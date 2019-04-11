@@ -1,5 +1,7 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:asset:asset-auto-tagger-opennlp-api")
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationCompile project(":core:petra:petra-function")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

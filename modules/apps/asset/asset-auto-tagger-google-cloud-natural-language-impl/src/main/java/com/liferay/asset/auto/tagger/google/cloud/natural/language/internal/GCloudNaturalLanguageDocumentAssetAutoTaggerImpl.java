@@ -15,8 +15,8 @@
 package com.liferay.asset.auto.tagger.google.cloud.natural.language.internal;
 
 import com.liferay.asset.auto.tagger.google.cloud.natural.language.api.GCloudNaturalLanguageDocumentAssetAutoTagger;
-import com.liferay.asset.auto.tagger.google.cloud.natural.language.api.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.asset.auto.tagger.google.cloud.natural.language.api.constants.GCloudNaturalLanguageAssetAutoTagProviderConstants;
+import com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration;
+import com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.contants.GCloudNaturalLanguageDocumentAssetAutoTaggerConstants;
 import com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.util.GCloudNaturalLanguageUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -57,14 +58,19 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 
 	@Override
 	public Collection<String> getTagNames(
-			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
-			String content, Locale locale, String mimeType)
+			long companyId, String content, Locale locale, String mimeType)
 		throws Exception {
 
 		if (!_supportedContentTypes.contains(mimeType)) {
 			return Collections.emptySet();
 		}
+
+		GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
+						class,
+					companyId);
 
 		if (!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 				classificationEndpointEnabled() &&
@@ -93,14 +99,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 
 	@Override
 	public Collection<String> getTagNames(
-			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
-			String content, String mimeType)
+			long companyId, String content, String mimeType)
 		throws Exception {
 
-		return getTagNames(
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
-			content, null, mimeType);
+		return getTagNames(companyId, content, null, mimeType);
 	}
 
 	private static <T> Predicate<T> _negate(Predicate<T> predicate) {
@@ -108,12 +110,12 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 	}
 
 	private Collection<String> _getClassificationTagNames(
-			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration
+				gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			String documentPayload, Locale locale)
 		throws Exception {
 
-		if (!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+		if (!gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
 				classificationEndpointEnabled()) {
 
 			return Collections.emptySet();
@@ -128,12 +130,12 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 
 		JSONObject responseJSONObject = _post(
 			_getServiceURL(
-				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+				gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
 					apiKey(),
 				"classifyText"),
 			documentPayload);
 		float confidence =
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
 				confidence();
 
 		return _toTagNames(
@@ -145,7 +147,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 		String type = GCloudNaturalLanguageUtil.getType(mimeType);
 
 		int size =
-			GCloudNaturalLanguageAssetAutoTagProviderConstants.
+			GCloudNaturalLanguageDocumentAssetAutoTaggerConstants.
 				MAX_CHARACTERS_SERVICE - _MINIMUM_PAYLOAD_SIZE - type.length();
 
 		String truncatedContent = GCloudNaturalLanguageUtil.truncateToSize(
@@ -156,12 +158,12 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 	}
 
 	private Collection<String> _getEntitiesTagNames(
-			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration
+				gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			String documentPayload, Locale locale)
 		throws Exception {
 
-		if (!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+		if (!gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
 				entityEndpointEnabled()) {
 
 			return Collections.emptySet();
@@ -175,13 +177,12 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 
 		JSONObject responseJSONObject = _post(
 			_getServiceURL(
-				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+				gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
 					apiKey(),
 				"analyzeEntities"),
 			documentPayload);
 		float salience =
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-				salience();
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.salience();
 
 		return _toTagNames(
 			responseJSONObject.getJSONArray("entities"),
@@ -285,6 +286,9 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 
 		_MINIMUM_PAYLOAD_SIZE = payload.length();
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Http _http;

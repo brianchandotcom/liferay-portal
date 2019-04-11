@@ -22,13 +22,11 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.journal.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -103,18 +101,13 @@ public class OpenNLPDocumentAssetAutoTagProvider
 			journalArticle.getDefaultLanguageId());
 
 		return _openNLPDocumentAssetAutoTagger.getTagNames(
-			_configurationProvider.getCompanyConfiguration(
-				OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.class,
-				journalArticle.getCompanyId()),
+			journalArticle.getCompanyId(),
 			extractDDMContent(journalArticle, locale), locale,
 			ContentTypes.TEXT_PLAIN);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenNLPDocumentAssetAutoTagProvider.class);
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DDMIndexer _ddmIndexer;

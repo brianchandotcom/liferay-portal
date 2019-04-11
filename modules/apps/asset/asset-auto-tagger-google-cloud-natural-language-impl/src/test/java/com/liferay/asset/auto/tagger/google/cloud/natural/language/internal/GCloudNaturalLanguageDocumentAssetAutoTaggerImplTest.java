@@ -14,7 +14,7 @@
 
 package com.liferay.asset.auto.tagger.google.cloud.natural.language.internal;
 
-import com.liferay.asset.auto.tagger.google.cloud.natural.language.api.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
+import com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -64,9 +64,9 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 	public void testGetClassificationTagNamesWithDisabledClassifcationEndpoint()
 		throws Exception {
 
-		GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
-				new GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration() {
+		GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration =
+				new GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration() {
 
 					@Override
 					public String apiKey() {
@@ -99,11 +99,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 			_gCloudNaturalLanguageDocumentAssetAutoTagger,
 			"_getClassificationTagNames",
 			new Class<?>[] {
-				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-					class,
+				GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.class,
 				String.class, Locale.class
 			},
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			RandomTestUtil.randomString(), null);
 
 		Assert.assertEquals(
@@ -114,9 +113,9 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 	public void testGetClassificationTagNamesWithInvalidLanguage()
 		throws Exception {
 
-		GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
-				new GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration() {
+		GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration =
+				new GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration() {
 
 					@Override
 					public String apiKey() {
@@ -149,11 +148,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 			_gCloudNaturalLanguageDocumentAssetAutoTagger,
 			"_getClassificationTagNames",
 			new Class<?>[] {
-				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-					class,
+				GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.class,
 				String.class, Locale.class
 			},
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			RandomTestUtil.randomString(), LocaleUtil.GERMAN);
 
 		Assert.assertEquals(
@@ -164,9 +162,9 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 	public void testGetEntitiesTagNamesWithDisabledEntitiesEndpoint()
 		throws Exception {
 
-		GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
-				new GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration() {
+		GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration =
+				new GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration() {
 
 					@Override
 					public String apiKey() {
@@ -199,11 +197,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 			_gCloudNaturalLanguageDocumentAssetAutoTagger,
 			"_getEntitiesTagNames",
 			new Class<?>[] {
-				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-					class,
+				GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.class,
 				String.class, Locale.class
 			},
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			RandomTestUtil.randomString(), null);
 
 		Assert.assertEquals(
@@ -212,9 +209,9 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 
 	@Test
 	public void testGetEntitiesTagNamesWithInvalidLanguage() throws Exception {
-		GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
-				new GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration() {
+		GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration =
+				new GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration() {
 
 					@Override
 					public String apiKey() {
@@ -247,11 +244,10 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImplTest {
 			_gCloudNaturalLanguageDocumentAssetAutoTagger,
 			"_getEntitiesTagNames",
 			new Class<?>[] {
-				GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
-					class,
+				GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.class,
 				String.class, Locale.class
 			},
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			RandomTestUtil.randomString(), LocaleUtil.TAIWAN);
 
 		Assert.assertEquals(

@@ -15,7 +15,8 @@
 package com.liferay.asset.auto.tagger.opennlp.internal;
 
 import com.liferay.asset.auto.tagger.opennlp.api.OpenNLPDocumentAssetAutoTagger;
-import com.liferay.asset.auto.tagger.opennlp.api.configuration.OpenNLPDocumentAssetAutoTagCompanyConfiguration;
+import com.liferay.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTaggerCompanyConfiguration;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -44,6 +45,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
@@ -54,9 +56,8 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 
 	@Override
 	public Collection<String> getTagNames(
-		OpenNLPDocumentAssetAutoTagCompanyConfiguration
-			openNLPDocumentAssetAutoTagCompanyConfiguration,
-		String content, Locale locale, String mimeType) {
+			long companyId, String content, Locale locale, String mimeType)
+		throws Exception {
 
 		if (Objects.nonNull(locale) &&
 			!Objects.equals(
@@ -65,7 +66,13 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 			return Collections.emptyList();
 		}
 
-		if (!openNLPDocumentAssetAutoTagCompanyConfiguration.enabled()) {
+		OpenNLPDocumentAssetAutoTaggerCompanyConfiguration
+			openNLPDocumentAssetAutoTaggerCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					OpenNLPDocumentAssetAutoTaggerCompanyConfiguration.class,
+					companyId);
+
+		if (!openNLPDocumentAssetAutoTaggerCompanyConfiguration.enabled()) {
 			return Collections.emptyList();
 		}
 
@@ -85,7 +92,7 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 		).map(
 			tokens -> _getTagNames(
 				tokens,
-				openNLPDocumentAssetAutoTagCompanyConfiguration.
+				openNLPDocumentAssetAutoTaggerCompanyConfiguration.
 					confidenceThreshold())
 		).flatMap(
 			Arrays::stream
@@ -96,13 +103,10 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 
 	@Override
 	public Collection<String> getTagNames(
-		OpenNLPDocumentAssetAutoTagCompanyConfiguration
-			openNLPDocumentAssetAutoTagCompanyConfiguration,
-		String content, String mimeType) {
+			long companyId, String content, String mimeType)
+		throws Exception {
 
-		return getTagNames(
-			openNLPDocumentAssetAutoTagCompanyConfiguration, content, null,
-			mimeType);
+		return getTagNames(companyId, content, null, mimeType);
 	}
 
 	@Activate
@@ -161,6 +165,9 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 			ContentTypes.APPLICATION_TEXT, ContentTypes.TEXT,
 			ContentTypes.TEXT_PLAIN, ContentTypes.TEXT_HTML,
 			ContentTypes.TEXT_HTML_UTF8));
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private SentenceModel _sentenceModel;
 	private TokenizerModel _tokenizerModel;

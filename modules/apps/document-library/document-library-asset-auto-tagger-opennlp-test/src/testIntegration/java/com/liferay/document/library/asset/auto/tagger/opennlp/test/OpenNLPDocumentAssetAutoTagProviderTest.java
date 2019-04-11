@@ -314,9 +314,8 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 		"Alice's Adventures in Wonderland, by Lewis Carroll";
 
 	private static final String _OPENNLP_AUTO_TAG_CONFIGURATION_CLASS_NAME =
-		"com.liferay.document.library.asset.auto.tagger.opennlp.internal." +
-			"configuration." +
-				"OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration";
+		"com.liferay.asset.auto.tagger.opennlp.internal.configuration." +
+			"OpenNLPDocumentAssetAutoTaggerCompanyConfiguration";
 
 	@Inject(
 		filter = "component.name=com.liferay.document.library.asset.auto.tagger.opennlp.internal.OpenNLPDocumentAssetAutoTagProvider"

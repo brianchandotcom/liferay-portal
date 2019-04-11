@@ -409,7 +409,7 @@ if (portletTitleBasedNavigation) {
 											classPK="<%= ddmStructure.getPrimaryKey() %>"
 											ddmFormValues="<%= ddmFormValues %>"
 											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
-											groupId="<%= fileEntry.getGroupId() %>"
+											groupId="<%= (fileEntry != null) ? fileEntry.getGroupId() : 0 %>"
 											localizable="<%= localizable %>"
 											requestedLocale="<%= locale %>"
 										/>

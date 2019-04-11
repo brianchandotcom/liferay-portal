@@ -49,11 +49,11 @@ public class PoshiAnnotationsOrderCheck extends BaseFileCheck {
 				sb.append("\n");
 			}
 
-			String orderedAnnotations = sb.toString();
+			String sortedAnnotations = sb.toString();
 
-			if (!StringUtil.equals(matcher.group(), orderedAnnotations)) {
+			if (!StringUtil.equals(matcher.group(), sortedAnnotations)) {
 				content = StringUtil.replaceFirst(
-					content, matcher.group(), orderedAnnotations,
+					content, matcher.group(), sortedAnnotations,
 					matcher.start());
 			}
 		}

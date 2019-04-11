@@ -365,9 +365,11 @@ definition {
 	}
 
 	macro editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
@@ -381,9 +383,11 @@ definition {
 
 		PortletEntry.save();
 
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
@@ -392,9 +396,11 @@ definition {
 	}
 
 	macro editConfigurationUsersDefaultUserAssociationsRolesCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER",
@@ -408,9 +414,11 @@ definition {
 
 		PortletEntry.save();
 
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		Type.clickAtType(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
@@ -419,9 +427,11 @@ definition {
 	}
 
 	macro editConfigurationUsersDefaultUserAssociationsSitesCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER",
@@ -435,9 +445,11 @@ definition {
 
 		PortletEntry.save();
 
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
@@ -446,9 +458,11 @@ definition {
 	}
 
 	macro editConfigurationUsersDefaultUserAssociationsUserGroupsCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER",
@@ -462,9 +476,11 @@ definition {
 
 		PortletEntry.save();
 
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
@@ -473,9 +489,11 @@ definition {
 	}
 
 	macro editConfigurationUsersEmailNotificationsCP {
-		Panel.expandPanel(panel = "Email Notifications");
-
-		Navigator.gotoNavTab(navTab = "Account Created Notification");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Account Created Notification",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		Type.typeCKEditor(
 			locator1 = "CKEditor#BODY_FIELD",
@@ -486,9 +504,11 @@ definition {
 	}
 
 	macro editConfigurationUsersEmailVerificationNotificationsCP {
-		Panel.expandPanel(panel = "Email Notifications");
-
-		Navigator.gotoNavTab(navTab = "Email Verification Notification");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Email Verification Notification",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		if ("${emailVerificationURL}" == "true") {
 			Type.typeEditor(
@@ -584,9 +604,11 @@ definition {
 	}
 
 	macro enterReservedEmailAddressCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Reserved Credentials");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "Reserved Credentials",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER",
@@ -600,9 +622,11 @@ definition {
 
 		PortletEntry.save();
 
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Reserved Credentials");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "Reserved Credentials",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
@@ -611,9 +635,11 @@ definition {
 	}
 
 	macro enterReservedScreenNameCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Reserved Credentials");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "Reserved Credentials",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER",
@@ -627,9 +653,11 @@ definition {
 
 		PortletEntry.save();
 
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Reserved Credentials");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "Reserved Credentials",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD",
@@ -706,11 +734,11 @@ definition {
 	}
 
 	macro tearDownCP {
-		PortalSettings.gotoPortalSettings();
-
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		Type(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
@@ -732,7 +760,11 @@ definition {
 			value1 = ""
 		);
 
-		Navigator.gotoNavTab(navTab = "Reserved Credentials");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "Reserved Credentials",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		Type(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD",
@@ -1188,9 +1220,11 @@ definition {
 	}
 
 	macro viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD",
@@ -1199,9 +1233,11 @@ definition {
 	}
 
 	macro viewConfigurationUsersDefaultUserAssociationsRolesCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		Type.clickAtType(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
@@ -1210,9 +1246,11 @@ definition {
 	}
 
 	macro viewConfigurationUsersDefaultUserAssociationsSitesCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD",
@@ -1221,9 +1259,11 @@ definition {
 	}
 
 	macro viewConfigurationUsersDefaultUserAssociationsUserGroupsCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD",
@@ -1256,9 +1296,11 @@ definition {
 	}
 
 	macro viewDefaultUserAssociationsCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Default User Associations");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertElementPresent(
 			locator1 = "PortalSettingsUsers#APPLY_TO_EXISTING_USERS_CHECKBOX"
@@ -1306,9 +1348,11 @@ definition {
 	}
 
 	macro viewEmailNotificationsAccountCreatedNotificationCP {
-		Panel.expandPanel(panel = "Email Notifications");
-
-		Navigator.gotoNavTab(navTab = "Account Created Notification");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Account Created Notification",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertElementPresent(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX"
@@ -1344,9 +1388,11 @@ definition {
 	}
 
 	macro viewEmailNotificationsPasswordChangedNotificationCP {
-		Panel.expandPanel(panel = "Email Notifications");
-
-		Navigator.gotoNavTab(navTab = "Password Changed Notification");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Password Changed Notification",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertElementPresent(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER"
@@ -1368,9 +1414,11 @@ definition {
 	}
 
 	macro viewEmailNotificationsSenderCP {
-		Panel.expandPanel(panel = "Email Notifications");
-
-		Navigator.gotoNavTab(navTab = "Sender");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Email Sender",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_HEADER",
@@ -1425,9 +1473,11 @@ definition {
 	}
 
 	macro viewReservedCredentialsScreenNamesCP {
-		Panel.expandPanel(panel = "Users");
-
-		Navigator.gotoNavTab(navTab = "Reserved Credentials");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "Reserved Credentials",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER",

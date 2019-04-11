@@ -31,7 +31,7 @@ export default class AppComponent extends React.Component {
 			setStatus: this.setStatus.bind(this),
 			setTitle: this.setTitle.bind(this),
 			status: null,
-			title: null
+			title: Liferay.Language.get('metrics')
 		};
 	}
 

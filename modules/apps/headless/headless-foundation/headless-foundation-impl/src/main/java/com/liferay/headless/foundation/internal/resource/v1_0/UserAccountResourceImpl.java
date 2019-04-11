@@ -273,14 +273,14 @@ public class UserAccountResourceImpl
 						User.class.getName(), user.getUserId()),
 					AssetTag.NAME_ACCESSOR);
 				name = user.getFullName();
-				organizationBriefs = transformToArray(
+				organizations = transformToArray(
 					user.getOrganizations(),
 					organization -> _toOrganizationBrief(organization),
 					OrganizationBrief.class);
-				roleBriefs = transformToArray(
+				roles = transformToArray(
 					_roleService.getUserRoles(user.getUserId()),
 					role -> _toRoleBrief(role), RoleBrief.class);
-				siteBriefs = transformToArray(
+				sites = transformToArray(
 					_groupService.getGroups(
 						contextCompany.getCompanyId(),
 						GroupConstants.DEFAULT_PARENT_GROUP_ID, true),

@@ -11,7 +11,6 @@
 	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSelectedItemsChange: any}
-	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? selectAll: bool}
 
@@ -28,7 +27,6 @@
 							{param _handleRadioChange: $_handleRadioChange /}
 							{param _handleSelectedItemsChange: $_handleSelectedItemsChange /}
 							{param groupIds: $groupIds /}
-							{param description: $description /}
 							{param multiple: $multiple /}
 							{param namespace: $namespace /}
 							{param selectAll: $selectAll /}
@@ -78,7 +76,6 @@
 	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSelectedItemsChange: any}
-	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? selectAll: bool}
 
@@ -92,7 +89,14 @@
 		{/call}
 	{/if}
 
-	<p>{$description} {if $multiple} {msg desc=""}select-append-or-replace-current-tags{/msg} {/if}</p>
+	<p>
+		{if $multiple}
+			{msg desc=""}you-are-editing-the-common-tags-for-the-selected-items{/msg}
+			{msg desc=""}select-edit-or-replace-current-tags{/msg}
+		{else}
+			{msg desc=""}you-are-editing-the-tags-for-the-selected-item{/msg}
+		{/if}
+	</p>
 
 	{if $multiple}
 		{call ClayRadio.render}
@@ -100,9 +104,9 @@
 			{param events: [
 				'change': $_handleRadioChange,
 			] /}
-			{param label kind="text"} {msg desc=""}append{/msg} {/param}
+			{param label kind="text"} {msg desc=""}edit{/msg} {/param}
 			{param labelContent kind="html"}
-				<div class="form-text">{msg desc=""}add-new-tags-to-the-existing-tags{/msg}</div>
+				<div class="form-text">{msg desc=""}add-new-tags-or-remove-common-tags{/msg}</div>
 			{/param}
 			{param name: 'add-replace' /}
 			{param value: 'add' /}
@@ -114,7 +118,7 @@
 			] /}
 			{param label kind="text"} {msg desc=""}replace{/msg} {/param}
 			{param labelContent kind="html"}
-				<div class="form-text">{msg desc=""}new-tags-replace-all-existing-tags{/msg}</div>
+				<div class="form-text">{msg desc=""}these-tags-replace-all-existing-tags{/msg}</div>
 			{/param}
 			{param name: 'add-replace' /}
 			{param value: 'replace' /}

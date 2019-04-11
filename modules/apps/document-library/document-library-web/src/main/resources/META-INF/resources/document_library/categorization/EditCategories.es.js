@@ -129,13 +129,11 @@ class EditCategories extends Component {
 		Promise.all(
 			[
 				this._fetchCategoriesRequest(this.urlCategories, 'POST', selection),
-				this._fetchCategoriesRequest(this.urlSelectionDescription, 'POST', selection)
 			]
 		).then(
-			([responseCategories, responseDescription]) => {
-				if (responseCategories && responseDescription) {
+			([responseCategories]) => {
+				if (responseCategories) {
 					this.loading = false;
-					this.description = responseDescription.description;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 					this.vocabularies = this._parseVocabularies(responseCategories.items || []);
 				}
@@ -362,16 +360,6 @@ class EditCategories extends Component {
 EditCategories.STATE = {
 
 	/**
-	 * Description
-	 *
-	 * @instance
-	 * @memberof EditCategories
-	 * @review
-	 * @type {String}
-	 */
-	description: Config.string(),
-
-	/**
 	 * List of selected file entries.
 	 *
 	 * @instance
@@ -512,17 +500,6 @@ EditCategories.STATE = {
 	 * @type {String}
 	 */
 	urlCategories: Config.string(),
-
-	/**
-	 * Url to backend service that provides
-	 * the selection description.
-	 *
-	 * @instance
-	 * @memberof EditTags
-	 * @review
-	 * @type {String}
-	 */
-	urlSelectionDescription: Config.string().value('/bulk-rest/v1.0/bulk-selection'),
 
 	/**
 	 * Url to backend service that updates

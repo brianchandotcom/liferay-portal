@@ -97,14 +97,12 @@ class EditTags extends Component {
 		Promise.all(
 			[
 				this._fetchTagsRequest(this.urlTags, 'POST', selection),
-				this._fetchTagsRequest(this.urlSelectionDescription, 'POST', selection)
 			]
 		).then(
-			([responseTags, responseDescription]) => {
-				if (responseTags && responseDescription) {
+			([responseTags]) => {
+				if (responseTags) {
 					this._loading = false;
 					this._commonTags = this._setCommonTags((responseTags.items || []).map(item => item.name));
-					this.description = responseDescription.description;
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 				}
 			}
@@ -260,16 +258,6 @@ EditTags.STATE = {
 	_showModal: Config.bool().value(false).internal(),
 
 	/**
-	 * Description
-	 *
-	 * @instance
-	 * @memberof EditTags
-	 * @review
-	 * @type {String}
-	 */
-	description: Config.string(),
-
-	/**
 	 * List of selected file entries.
 	 *
 	 * @instance
@@ -367,17 +355,6 @@ EditTags.STATE = {
 	 * @type {String}
 	 */
 	urlTags: Config.string().value('/bulk-rest/v1.0/keywords/common'),
-
-	/**
-	 * Url to backend service that provides
-	 * the selection description.
-	 *
-	 * @instance
-	 * @memberof EditTags
-	 * @review
-	 * @type {String}
-	 */
-	urlSelectionDescription: Config.string().value('/bulk-rest/v1.0/bulk-selection'),
 
 	/**
 	 * Url to backend service that updates

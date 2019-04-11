@@ -72,6 +72,42 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
+	public void deleteFragmentEntryLinkData(
+		FragmentEntryLink fragmentEntryLink) {
+
+		Document document = _getDocument(fragmentEntryLink.getHtml());
+
+		for (Element element : document.select("*")) {
+			String tagName = element.tagName();
+
+			if (!StringUtil.startsWith(tagName, "lfr-widget-")) {
+				continue;
+			}
+
+			String alias = StringUtil.replace(
+				tagName, "lfr-widget-", StringPool.BLANK);
+
+			String portletName = _portletRegistry.getPortletName(alias);
+
+			if (Validator.isNull(portletName)) {
+				continue;
+			}
+
+			try {
+				_portletPreferencesLocalService.deletePortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					_getPlid(fragmentEntryLink),
+					_getPortletId(
+						portletName, fragmentEntryLink.getNamespace(),
+						element.attr("id")));
+			}
+			catch (Exception e) {
+			}
+		}
+	}
+
+	@Override
 	public JSONArray getAvailableTagsJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

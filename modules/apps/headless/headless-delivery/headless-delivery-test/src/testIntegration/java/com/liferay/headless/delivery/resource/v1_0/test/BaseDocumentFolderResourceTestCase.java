@@ -129,8 +129,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testDeleteDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		return invokePostDocumentFolderDocumentFolder(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			documentFolder);
 	}
 
 	protected void invokeDeleteDocumentFolder(Long documentFolderId)
@@ -189,8 +190,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testGetDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		return invokePostDocumentFolderDocumentFolder(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			documentFolder);
 	}
 
 	protected DocumentFolder invokeGetDocumentFolder(Long documentFolderId)
@@ -265,8 +267,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testPatchDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		return invokePostDocumentFolderDocumentFolder(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			documentFolder);
 	}
 
 	protected DocumentFolder invokePatchDocumentFolder(
@@ -351,8 +354,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder testPutDocumentFolder_addDocumentFolder()
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
+		return invokePostDocumentFolderDocumentFolder(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			documentFolder);
 	}
 
 	protected DocumentFolder invokePutDocumentFolder(
@@ -803,8 +807,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				DocumentFolder documentFolder)
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), documentFolder);
+		return invokePostDocumentFolderDocumentFolder(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			documentFolder);
 	}
 
 	protected DocumentFolder invokePostDocumentFolderDocumentFolder(
@@ -1134,7 +1139,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			Long siteId, DocumentFolder documentFolder)
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(siteId, documentFolder);
+		return invokePostDocumentFolderDocumentFolder(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			documentFolder);
 	}
 
 	protected Long testGetSiteDocumentFoldersPage_getSiteId() throws Exception {
@@ -1221,8 +1228,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			DocumentFolder documentFolder)
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), documentFolder);
+		return invokePostDocumentFolderDocumentFolder(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			documentFolder);
 	}
 
 	protected DocumentFolder invokePostSiteDocumentFolder(

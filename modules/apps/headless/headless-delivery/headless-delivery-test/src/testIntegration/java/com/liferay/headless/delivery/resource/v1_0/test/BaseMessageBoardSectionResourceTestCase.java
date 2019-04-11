@@ -133,8 +133,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testDeleteMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		return invokePostSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
+		return invokePostMessageBoardSectionMessageBoardSection(
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+			messageBoardSection);
 	}
 
 	protected void invokeDeleteMessageBoardSection(Long messageBoardSectionId)
@@ -196,8 +197,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		return invokePostSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
+		return invokePostMessageBoardSectionMessageBoardSection(
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+			messageBoardSection);
 	}
 
 	protected MessageBoardSection invokeGetMessageBoardSection(
@@ -280,8 +282,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testPatchMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		return invokePostSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
+		return invokePostMessageBoardSectionMessageBoardSection(
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+			messageBoardSection);
 	}
 
 	protected MessageBoardSection invokePatchMessageBoardSection(
@@ -372,8 +375,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testPutMessageBoardSection_addMessageBoardSection()
 		throws Exception {
 
-		return invokePostSiteMessageBoardSection(
-			testGroup.getGroupId(), randomMessageBoardSection());
+		return invokePostMessageBoardSectionMessageBoardSection(
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+			messageBoardSection);
 	}
 
 	protected MessageBoardSection invokePutMessageBoardSection(
@@ -843,8 +847,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return invokePostSiteMessageBoardSection(
-			testGroup.getGroupId(), messageBoardSection);
+		return invokePostMessageBoardSectionMessageBoardSection(
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+			messageBoardSection);
 	}
 
 	protected MessageBoardSection
@@ -1196,7 +1201,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				Long siteId, MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return invokePostSiteMessageBoardSection(siteId, messageBoardSection);
+		return invokePostMessageBoardSectionMessageBoardSection(
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+			messageBoardSection);
 	}
 
 	protected Long testGetSiteMessageBoardSectionsPage_getSiteId()
@@ -1290,8 +1297,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return invokePostSiteMessageBoardSection(
-			testGroup.getGroupId(), messageBoardSection);
+		return invokePostMessageBoardSectionMessageBoardSection(
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+			messageBoardSection);
 	}
 
 	protected MessageBoardSection invokePostSiteMessageBoardSection(

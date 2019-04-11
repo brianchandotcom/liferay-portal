@@ -1448,8 +1448,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
-		return invokePostMessageBoardThreadMessageBoardMessage(
-			messageBoardThreadId, messageBoardMessage);
+		return invokePostMessageBoardMessageMessageBoardMessage(
+			testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId(),
+			messageBoardMessage);
 	}
 
 	protected Long

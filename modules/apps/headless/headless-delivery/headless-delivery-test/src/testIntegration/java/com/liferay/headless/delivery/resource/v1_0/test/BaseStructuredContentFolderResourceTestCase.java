@@ -415,8 +415,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				Long siteId, StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
-		return invokePostSiteStructuredContentFolder(
-			siteId, structuredContentFolder);
+		return invokePostStructuredContentFolderStructuredContentFolder(
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
+			structuredContentFolder);
 	}
 
 	protected Long testGetSiteStructuredContentFoldersPage_getSiteId()
@@ -512,8 +513,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), structuredContentFolder);
+		return invokePostStructuredContentFolderStructuredContentFolder(
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
+			structuredContentFolder);
 	}
 
 	protected StructuredContentFolder invokePostSiteStructuredContentFolder(
@@ -1001,8 +1003,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), structuredContentFolder);
+		return invokePostStructuredContentFolderStructuredContentFolder(
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
+			structuredContentFolder);
 	}
 
 	protected StructuredContentFolder
@@ -1091,8 +1094,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testDeleteStructuredContentFolder_addStructuredContentFolder()
 		throws Exception {
 
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
+		return invokePostStructuredContentFolderStructuredContentFolder(
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
+			structuredContentFolder);
 	}
 
 	protected void invokeDeleteStructuredContentFolder(
@@ -1156,8 +1160,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGetStructuredContentFolder_addStructuredContentFolder()
 		throws Exception {
 
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
+		return invokePostStructuredContentFolderStructuredContentFolder(
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
+			structuredContentFolder);
 	}
 
 	protected StructuredContentFolder invokeGetStructuredContentFolder(
@@ -1244,8 +1249,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testPatchStructuredContentFolder_addStructuredContentFolder()
 		throws Exception {
 
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
+		return invokePostStructuredContentFolderStructuredContentFolder(
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
+			structuredContentFolder);
 	}
 
 	protected StructuredContentFolder invokePatchStructuredContentFolder(
@@ -1340,8 +1346,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testPutStructuredContentFolder_addStructuredContentFolder()
 		throws Exception {
 
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
+		return invokePostStructuredContentFolderStructuredContentFolder(
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
+			structuredContentFolder);
 	}
 
 	protected StructuredContentFolder invokePutStructuredContentFolder(

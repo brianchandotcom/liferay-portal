@@ -366,7 +366,8 @@ public abstract class BaseCommentResourceTestCase {
 			Long blogPostingId, Comment comment)
 		throws Exception {
 
-		return invokePostBlogPostingComment(blogPostingId, comment);
+		return invokePostCommentComment(
+			testGetCommentCommentsPage_getParentCommentId(), comment);
 	}
 
 	protected Long testGetBlogPostingCommentsPage_getBlogPostingId()
@@ -1340,7 +1341,8 @@ public abstract class BaseCommentResourceTestCase {
 			Long documentId, Comment comment)
 		throws Exception {
 
-		return invokePostDocumentComment(documentId, comment);
+		return invokePostCommentComment(
+			testGetCommentCommentsPage_getParentCommentId(), comment);
 	}
 
 	protected Long testGetDocumentCommentsPage_getDocumentId()
@@ -1750,7 +1752,8 @@ public abstract class BaseCommentResourceTestCase {
 			Long structuredContentId, Comment comment)
 		throws Exception {
 
-		return invokePostStructuredContentComment(structuredContentId, comment);
+		return invokePostCommentComment(
+			testGetCommentCommentsPage_getParentCommentId(), comment);
 	}
 
 	protected Long testGetStructuredContentCommentsPage_getStructuredContentId()

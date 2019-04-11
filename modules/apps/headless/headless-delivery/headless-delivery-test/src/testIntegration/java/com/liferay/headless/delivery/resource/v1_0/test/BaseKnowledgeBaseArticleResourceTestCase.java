@@ -135,8 +135,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected void invokeDeleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
@@ -198,8 +199,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle invokeGetKnowledgeBaseArticle(
@@ -283,8 +285,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testPatchKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle invokePatchKnowledgeBaseArticle(
@@ -377,8 +380,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testPutKnowledgeBaseArticle_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle invokePutKnowledgeBaseArticle(
@@ -465,8 +469,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected void invokeDeleteKnowledgeBaseArticleMyRating(
@@ -1096,8 +1101,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), knowledgeBaseArticle);
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle
@@ -1473,8 +1479,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return invokePostKnowledgeBaseFolderKnowledgeBaseArticle(
-			knowledgeBaseFolderId, knowledgeBaseArticle);
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected Long
@@ -1579,8 +1586,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), knowledgeBaseArticle);
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle
@@ -1943,7 +1951,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(siteId, knowledgeBaseArticle);
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected Long testGetSiteKnowledgeBaseArticlesPage_getSiteId()
@@ -2037,8 +2047,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), knowledgeBaseArticle);
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle invokePostSiteKnowledgeBaseArticle(

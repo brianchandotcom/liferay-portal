@@ -130,8 +130,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+		return invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+			knowledgeBaseFolder);
 	}
 
 	protected void invokeDeleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
@@ -193,8 +194,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+		return invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+			knowledgeBaseFolder);
 	}
 
 	protected KnowledgeBaseFolder invokeGetKnowledgeBaseFolder(
@@ -277,8 +279,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+		return invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+			knowledgeBaseFolder);
 	}
 
 	protected KnowledgeBaseFolder invokePatchKnowledgeBaseFolder(
@@ -369,8 +372,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testPutKnowledgeBaseFolder_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+		return invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+			knowledgeBaseFolder);
 	}
 
 	protected KnowledgeBaseFolder invokePutKnowledgeBaseFolder(
@@ -637,8 +641,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), knowledgeBaseFolder);
+		return invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+			knowledgeBaseFolder);
 	}
 
 	protected KnowledgeBaseFolder
@@ -804,7 +809,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(siteId, knowledgeBaseFolder);
+		return invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+			knowledgeBaseFolder);
 	}
 
 	protected Long testGetSiteKnowledgeBaseFoldersPage_getSiteId()
@@ -888,8 +895,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseFolder(
-			testGroup.getGroupId(), knowledgeBaseFolder);
+		return invokePostKnowledgeBaseFolderKnowledgeBaseFolder(
+			testGetKnowledgeBaseFolderKnowledgeBaseFoldersPage_getParentKnowledgeBaseFolderId(),
+			knowledgeBaseFolder);
 	}
 
 	protected KnowledgeBaseFolder invokePostSiteKnowledgeBaseFolder(

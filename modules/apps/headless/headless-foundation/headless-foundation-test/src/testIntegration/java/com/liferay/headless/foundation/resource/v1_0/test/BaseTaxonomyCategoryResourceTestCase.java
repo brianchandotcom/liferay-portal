@@ -1185,8 +1185,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				Long taxonomyVocabularyId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return invokePostTaxonomyVocabularyTaxonomyCategory(
-			taxonomyVocabularyId, taxonomyCategory);
+		return invokePostTaxonomyCategoryTaxonomyCategory(
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId(),
+			taxonomyCategory);
 	}
 
 	protected Long

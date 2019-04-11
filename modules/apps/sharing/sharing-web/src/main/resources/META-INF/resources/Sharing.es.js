@@ -152,6 +152,20 @@ class Sharing extends PortletBase {
 	}
 
 	/**
+	 * When input has been cleared removes the errors.
+	 *
+	 * @param  {!Event} event
+	 * @private
+	 * @review
+	 */
+	_handleEmailInputChange(event) {
+		if (!event.data.value) {
+			this._inputValue = '';
+			this.emailErrorMessage = '';
+		}
+	}
+
+	/**
 	 * Checks wether the input has emails or not.
 	 *
 	 * @param {!Event} event

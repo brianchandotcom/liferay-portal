@@ -2656,6 +2656,16 @@ public class UserLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.User> searchSocial(
+		long companyId, long[] groupIds, String keywords, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.portal.kernel.model.User> obc) {
+
+		return _userLocalService.searchSocial(
+			companyId, groupIds, keywords, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> searchSocial(
 			long[] groupIds, long userId, int[] socialRelationTypes,
 			String keywords, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

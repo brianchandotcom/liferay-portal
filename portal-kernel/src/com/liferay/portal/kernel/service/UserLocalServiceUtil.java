@@ -2494,6 +2494,17 @@ public class UserLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.User>
+		searchSocial(
+			long companyId, long[] groupIds, String keywords, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.User> obc) {
+
+		return getService().searchSocial(
+			companyId, groupIds, keywords, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.User>
 			searchSocial(
 				long[] groupIds, long userId, int[] socialRelationTypes,
 				String keywords, int start, int end)

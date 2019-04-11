@@ -28,16 +28,16 @@ import javax.servlet.http.HttpServletResponse;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.SHARING,
-		"mvc.command.name=/sharing/checkUser"
+		"mvc.command.name=/sharing/verify_email"
 	},
 	service = MVCResourceCommand.class
 )
-public class SharingUserCheckEmailMVCResourceCommand extends
+public class SharingVerifyEmailMVCResourceCommand extends
 	BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		HttpServletRequest request = _portal.getHttpServletRequest(

@@ -27,13 +27,15 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.constants.SharingPortletKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
@@ -46,8 +48,8 @@ import javax.servlet.http.HttpServletResponse;
 	},
 	service = MVCResourceCommand.class
 )
-public class SharingVerifyEmailMVCResourceCommand extends
-	BaseMVCResourceCommand {
+public class SharingVerifyEmailMVCResourceCommand
+	extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -62,7 +64,7 @@ public class SharingVerifyEmailMVCResourceCommand extends
 
 		String email = ParamUtil.getString(request, "email");
 
-		User user =  _userLocalService.fetchUserByEmailAddress(
+		User user = _userLocalService.fetchUserByEmailAddress(
 			themeDisplay.getCompanyId(), email);
 
 		HttpServletResponse response = _portal.getHttpServletResponse(

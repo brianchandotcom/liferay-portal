@@ -174,14 +174,22 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 							constrain: true,
 							modal: true
 						},
-						id: '<portlet:namespace />selectUserGroup',
+
+						<%
+						String eventName = liferayPortletResponse.getNamespace() + "selectUserGroup";
+						%>
+
+						id: '<%= eventName %>',
 						selectedData: searchContainerData,
 						title: '<liferay-ui:message arguments="user-group" key="select-x" />',
 
-						<liferay-portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="mvcPath" value="/select_user_group.jsp" />
-							<portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' />
-						</liferay-portlet:renderURL>
+						<%
+						PortletURL selectUserGroupURL = PortletProviderUtil.getPortletURL(request, UserGroup.class.getName(), PortletProvider.Action.BROWSE);
+
+						selectUserGroupURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+						selectUserGroupURL.setParameter("eventName", eventName);
+						selectUserGroupURL.setWindowState(LiferayWindowState.POP_UP);
+						%>
 
 						uri: '<%= selectUserGroupURL.toString() %>'
 					},

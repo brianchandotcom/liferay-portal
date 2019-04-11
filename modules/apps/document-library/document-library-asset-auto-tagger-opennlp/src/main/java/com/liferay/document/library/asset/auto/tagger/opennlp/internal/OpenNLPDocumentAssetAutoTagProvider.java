@@ -16,9 +16,11 @@ package com.liferay.document.library.asset.auto.tagger.opennlp.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.opennlp.api.OpenNLPDocumentAssetAutoTagger;
+import com.liferay.document.library.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -68,10 +70,23 @@ public class OpenNLPDocumentAssetAutoTagProvider
 	private Collection<String> _getTagNames(FileEntry fileEntry)
 		throws Exception {
 
+		OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration
+			openNLPDocumentAssetAutoTagProviderCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration.
+						class,
+					fileEntry.getCompanyId());
+
+		if (!openNLPDocumentAssetAutoTagProviderCompanyConfiguration.
+				enabled()) {
+
+			return Collections.emptySet();
+		}
+
 		if (fileEntry.isRepositoryCapabilityProvided(
 				TemporaryFileEntriesCapability.class)) {
 
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
 		return _openNLPDocumentAssetAutoTagger.getTagNames(
@@ -81,6 +96,9 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenNLPDocumentAssetAutoTagProvider.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private OpenNLPDocumentAssetAutoTagger _openNLPDocumentAssetAutoTagger;

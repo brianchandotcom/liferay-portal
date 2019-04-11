@@ -22,7 +22,7 @@
 	}
 </script>
 
-<aui:script require="metal-dom/src/all/dom as dom,metal-uri/src/Uri" sandbox="<%= true %>">
+<aui:script sandbox="<%= true %>">
 	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
 
 	function handleDownloadClick(event) {

@@ -139,12 +139,10 @@ definition {
 			templateName = "WC Template Name"
 		);
 
-		Click(
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS",
-			key_rowEntry = "WC Template Name"
+		LexiconCard.clickEllipsisItem(
+			card = "WC Template Name",
+			item = "Permissions"
 		);
-
-		MenuItem.click(menuItem = "Permissions");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 

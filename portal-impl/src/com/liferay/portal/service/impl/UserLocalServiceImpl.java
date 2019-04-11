@@ -3590,6 +3590,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public List<User> searchSocial(
 		long companyId, long[] groupIds, String keywords, int start, int end) {
 
+		return searchSocial(companyId, groupIds, keywords, start, end, null);
+	}
+
+	@Override
+	public List<User> searchSocial(
+		long companyId, long[] groupIds, String keywords, int start, int end,
+		OrderByComparator<User> obc) {
+
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("usersGroups", ArrayUtil.toLongArray(groupIds));
@@ -3597,7 +3605,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		return userFinder.findByKeywords(
 			companyId, keywords, WorkflowConstants.STATUS_APPROVED, params,
-			start, end, null);
+			start, end, obc);
 	}
 
 	@Override

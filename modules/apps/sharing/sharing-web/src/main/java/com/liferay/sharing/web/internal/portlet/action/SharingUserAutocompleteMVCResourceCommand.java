@@ -68,7 +68,7 @@ public class SharingUserAutocompleteMVCResourceCommand
 		HttpServletRequest request = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		JSONArray usersJSONArray = getUsersJSONArray(request);
+		JSONArray usersJSONArray = _getUsersJSONArray(request);
 
 		HttpServletResponse response = _portal.getHttpServletResponse(
 			resourceResponse);
@@ -79,7 +79,7 @@ public class SharingUserAutocompleteMVCResourceCommand
 			resourceRequest, resourceResponse, usersJSONArray);
 	}
 
-	protected JSONArray getUsersJSONArray(HttpServletRequest request)
+	private JSONArray _getUsersJSONArray(HttpServletRequest request)
 		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

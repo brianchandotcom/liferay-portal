@@ -28,6 +28,9 @@ import java.util.Locale;
  */
 public interface FragmentEntryProcessorRegistry {
 
+	public void deleteFragmentEntryLinkData(
+		FragmentEntryLink fragmentEntryLink);
+
 	public default JSONArray getAvailableTagsJSONArray() {
 		return null;
 	}

@@ -43,6 +43,18 @@ public class FragmentEntryProcessorRegistryImpl
 	implements FragmentEntryProcessorRegistry {
 
 	@Override
+	public void deleteFragmentEntryLinkData(
+		FragmentEntryLink fragmentEntryLink) {
+
+		for (FragmentEntryProcessor fragmentEntryProcessor :
+				_serviceTrackerList) {
+
+			fragmentEntryProcessor.deleteFragmentEntryLinkData(
+				fragmentEntryLink);
+		}
+	}
+
+	@Override
 	public JSONArray getAvailableTagsJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

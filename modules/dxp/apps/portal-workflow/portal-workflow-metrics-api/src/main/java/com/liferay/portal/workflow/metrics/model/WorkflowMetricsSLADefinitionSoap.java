@@ -51,9 +51,9 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDuration(model.getDuration());
 		soapModel.setProcessId(model.getProcessId());
-		soapModel.setPauseNodeNames(model.getPauseNodeNames());
-		soapModel.setStartNodeNames(model.getStartNodeNames());
-		soapModel.setStopNodeNames(model.getStopNodeNames());
+		soapModel.setPauseNodeKeys(model.getPauseNodeKeys());
+		soapModel.setStartNodeKeys(model.getStartNodeKeys());
+		soapModel.setStopNodeKeys(model.getStopNodeKeys());
 
 		return soapModel;
 	}
@@ -222,28 +222,28 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		_processId = processId;
 	}
 
-	public String getPauseNodeNames() {
-		return _pauseNodeNames;
+	public String getPauseNodeKeys() {
+		return _pauseNodeKeys;
 	}
 
-	public void setPauseNodeNames(String pauseNodeNames) {
-		_pauseNodeNames = pauseNodeNames;
+	public void setPauseNodeKeys(String pauseNodeKeys) {
+		_pauseNodeKeys = pauseNodeKeys;
 	}
 
-	public String getStartNodeNames() {
-		return _startNodeNames;
+	public String getStartNodeKeys() {
+		return _startNodeKeys;
 	}
 
-	public void setStartNodeNames(String startNodeNames) {
-		_startNodeNames = startNodeNames;
+	public void setStartNodeKeys(String startNodeKeys) {
+		_startNodeKeys = startNodeKeys;
 	}
 
-	public String getStopNodeNames() {
-		return _stopNodeNames;
+	public String getStopNodeKeys() {
+		return _stopNodeKeys;
 	}
 
-	public void setStopNodeNames(String stopNodeNames) {
-		_stopNodeNames = stopNodeNames;
+	public void setStopNodeKeys(String stopNodeKeys) {
+		_stopNodeKeys = stopNodeKeys;
 	}
 
 	private long _mvccVersion;
@@ -259,8 +259,8 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 	private String _description;
 	private long _duration;
 	private long _processId;
-	private String _pauseNodeNames;
-	private String _startNodeNames;
-	private String _stopNodeNames;
+	private String _pauseNodeKeys;
+	private String _startNodeKeys;
+	private String _stopNodeKeys;
 
 }

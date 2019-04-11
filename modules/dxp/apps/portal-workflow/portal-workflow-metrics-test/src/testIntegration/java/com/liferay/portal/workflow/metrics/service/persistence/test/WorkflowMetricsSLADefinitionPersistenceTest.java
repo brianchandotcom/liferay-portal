@@ -159,13 +159,13 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		newWorkflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 
-		newWorkflowMetricsSLADefinition.setPauseNodeNames(
+		newWorkflowMetricsSLADefinition.setPauseNodeKeys(
 			RandomTestUtil.randomString());
 
-		newWorkflowMetricsSLADefinition.setStartNodeNames(
+		newWorkflowMetricsSLADefinition.setStartNodeKeys(
 			RandomTestUtil.randomString());
 
-		newWorkflowMetricsSLADefinition.setStopNodeNames(
+		newWorkflowMetricsSLADefinition.setStopNodeKeys(
 			RandomTestUtil.randomString());
 
 		_workflowMetricsSLADefinitions.add(
@@ -221,14 +221,14 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			existingWorkflowMetricsSLADefinition.getProcessId(),
 			newWorkflowMetricsSLADefinition.getProcessId());
 		Assert.assertEquals(
-			existingWorkflowMetricsSLADefinition.getPauseNodeNames(),
-			newWorkflowMetricsSLADefinition.getPauseNodeNames());
+			existingWorkflowMetricsSLADefinition.getPauseNodeKeys(),
+			newWorkflowMetricsSLADefinition.getPauseNodeKeys());
 		Assert.assertEquals(
-			existingWorkflowMetricsSLADefinition.getStartNodeNames(),
-			newWorkflowMetricsSLADefinition.getStartNodeNames());
+			existingWorkflowMetricsSLADefinition.getStartNodeKeys(),
+			newWorkflowMetricsSLADefinition.getStartNodeKeys());
 		Assert.assertEquals(
-			existingWorkflowMetricsSLADefinition.getStopNodeNames(),
-			newWorkflowMetricsSLADefinition.getStopNodeNames());
+			existingWorkflowMetricsSLADefinition.getStopNodeKeys(),
+			newWorkflowMetricsSLADefinition.getStopNodeKeys());
 	}
 
 	@Test
@@ -311,8 +311,8 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			"workflowMetricsSLADefinitionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "duration", true,
-			"processId", true, "pauseNodeNames", true, "startNodeNames", true,
-			"stopNodeNames", true);
+			"processId", true, "pauseNodeKeys", true, "startNodeKeys", true,
+			"stopNodeKeys", true);
 	}
 
 	@Test
@@ -636,13 +636,13 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		workflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 
-		workflowMetricsSLADefinition.setPauseNodeNames(
+		workflowMetricsSLADefinition.setPauseNodeKeys(
 			RandomTestUtil.randomString());
 
-		workflowMetricsSLADefinition.setStartNodeNames(
+		workflowMetricsSLADefinition.setStartNodeKeys(
 			RandomTestUtil.randomString());
 
-		workflowMetricsSLADefinition.setStopNodeNames(
+		workflowMetricsSLADefinition.setStopNodeKeys(
 			RandomTestUtil.randomString());
 
 		_workflowMetricsSLADefinitions.add(

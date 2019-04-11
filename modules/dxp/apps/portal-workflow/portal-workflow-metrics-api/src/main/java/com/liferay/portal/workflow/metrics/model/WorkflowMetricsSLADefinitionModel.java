@@ -281,48 +281,48 @@ public interface WorkflowMetricsSLADefinitionModel
 	public void setProcessId(long processId);
 
 	/**
-	 * Returns the pause node names of this workflow metrics sla definition.
+	 * Returns the pause node keys of this workflow metrics sla definition.
 	 *
-	 * @return the pause node names of this workflow metrics sla definition
+	 * @return the pause node keys of this workflow metrics sla definition
 	 */
 	@AutoEscape
-	public String getPauseNodeNames();
+	public String getPauseNodeKeys();
 
 	/**
-	 * Sets the pause node names of this workflow metrics sla definition.
+	 * Sets the pause node keys of this workflow metrics sla definition.
 	 *
-	 * @param pauseNodeNames the pause node names of this workflow metrics sla definition
+	 * @param pauseNodeKeys the pause node keys of this workflow metrics sla definition
 	 */
-	public void setPauseNodeNames(String pauseNodeNames);
+	public void setPauseNodeKeys(String pauseNodeKeys);
 
 	/**
-	 * Returns the start node names of this workflow metrics sla definition.
+	 * Returns the start node keys of this workflow metrics sla definition.
 	 *
-	 * @return the start node names of this workflow metrics sla definition
-	 */
-	@AutoEscape
-	public String getStartNodeNames();
-
-	/**
-	 * Sets the start node names of this workflow metrics sla definition.
-	 *
-	 * @param startNodeNames the start node names of this workflow metrics sla definition
-	 */
-	public void setStartNodeNames(String startNodeNames);
-
-	/**
-	 * Returns the stop node names of this workflow metrics sla definition.
-	 *
-	 * @return the stop node names of this workflow metrics sla definition
+	 * @return the start node keys of this workflow metrics sla definition
 	 */
 	@AutoEscape
-	public String getStopNodeNames();
+	public String getStartNodeKeys();
 
 	/**
-	 * Sets the stop node names of this workflow metrics sla definition.
+	 * Sets the start node keys of this workflow metrics sla definition.
 	 *
-	 * @param stopNodeNames the stop node names of this workflow metrics sla definition
+	 * @param startNodeKeys the start node keys of this workflow metrics sla definition
 	 */
-	public void setStopNodeNames(String stopNodeNames);
+	public void setStartNodeKeys(String startNodeKeys);
+
+	/**
+	 * Returns the stop node keys of this workflow metrics sla definition.
+	 *
+	 * @return the stop node keys of this workflow metrics sla definition
+	 */
+	@AutoEscape
+	public String getStopNodeKeys();
+
+	/**
+	 * Sets the stop node keys of this workflow metrics sla definition.
+	 *
+	 * @param stopNodeKeys the stop node keys of this workflow metrics sla definition
+	 */
+	public void setStopNodeKeys(String stopNodeKeys);
 
 }

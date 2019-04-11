@@ -65,8 +65,8 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	 */
 	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
 			String name, String description, long duration, long processId,
-			String[] pauseNodeNames, String[] startNodeNames,
-			String[] stopNodeNames, ServiceContext serviceContext)
+			String[] pauseNodeKeys, String[] startNodeKeys,
+			String[] stopNodeKeys, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -314,8 +314,8 @@ public interface WorkflowMetricsSLADefinitionLocalService
 
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 			long workflowMetricsSLADefinitiontId, String name,
-			String description, long duration, String[] pauseNodeNames,
-			String[] startNodeNames, String[] stopNodeNames,
+			String description, long duration, String[] pauseNodeKeys,
+			String[] startNodeKeys, String[] stopNodeKeys,
 			ServiceContext serviceContext)
 		throws PortalException;
 

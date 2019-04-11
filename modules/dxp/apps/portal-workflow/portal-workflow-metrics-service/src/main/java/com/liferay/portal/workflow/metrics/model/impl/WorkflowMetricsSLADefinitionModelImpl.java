@@ -77,8 +77,8 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"description", Types.CLOB},
 		{"duration", Types.BIGINT}, {"processId", Types.BIGINT},
-		{"pauseNodeNames", Types.VARCHAR}, {"startNodeNames", Types.VARCHAR},
-		{"stopNodeNames", Types.VARCHAR}
+		{"pauseNodeKeys", Types.VARCHAR}, {"startNodeKeys", Types.VARCHAR},
+		{"stopNodeKeys", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,13 +98,13 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("processId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("pauseNodeNames", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("startNodeNames", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("stopNodeNames", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("pauseNodeKeys", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("startNodeKeys", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("stopNodeKeys", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,duration LONG,processId LONG,pauseNodeNames VARCHAR(75) null,startNodeNames VARCHAR(75) null,stopNodeNames VARCHAR(75) null)";
+		"create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,duration LONG,processId LONG,pauseNodeKeys VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table WorkflowMetricsSLADefinition";
@@ -341,23 +341,23 @@ public class WorkflowMetricsSLADefinitionModelImpl
 			(BiConsumer<WorkflowMetricsSLADefinition, Long>)
 				WorkflowMetricsSLADefinition::setProcessId);
 		attributeGetterFunctions.put(
-			"pauseNodeNames", WorkflowMetricsSLADefinition::getPauseNodeNames);
+			"pauseNodeKeys", WorkflowMetricsSLADefinition::getPauseNodeKeys);
 		attributeSetterBiConsumers.put(
-			"pauseNodeNames",
+			"pauseNodeKeys",
 			(BiConsumer<WorkflowMetricsSLADefinition, String>)
-				WorkflowMetricsSLADefinition::setPauseNodeNames);
+				WorkflowMetricsSLADefinition::setPauseNodeKeys);
 		attributeGetterFunctions.put(
-			"startNodeNames", WorkflowMetricsSLADefinition::getStartNodeNames);
+			"startNodeKeys", WorkflowMetricsSLADefinition::getStartNodeKeys);
 		attributeSetterBiConsumers.put(
-			"startNodeNames",
+			"startNodeKeys",
 			(BiConsumer<WorkflowMetricsSLADefinition, String>)
-				WorkflowMetricsSLADefinition::setStartNodeNames);
+				WorkflowMetricsSLADefinition::setStartNodeKeys);
 		attributeGetterFunctions.put(
-			"stopNodeNames", WorkflowMetricsSLADefinition::getStopNodeNames);
+			"stopNodeKeys", WorkflowMetricsSLADefinition::getStopNodeKeys);
 		attributeSetterBiConsumers.put(
-			"stopNodeNames",
+			"stopNodeKeys",
 			(BiConsumer<WorkflowMetricsSLADefinition, String>)
-				WorkflowMetricsSLADefinition::setStopNodeNames);
+				WorkflowMetricsSLADefinition::setStopNodeKeys);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -596,48 +596,48 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	}
 
 	@Override
-	public String getPauseNodeNames() {
-		if (_pauseNodeNames == null) {
+	public String getPauseNodeKeys() {
+		if (_pauseNodeKeys == null) {
 			return "";
 		}
 		else {
-			return _pauseNodeNames;
+			return _pauseNodeKeys;
 		}
 	}
 
 	@Override
-	public void setPauseNodeNames(String pauseNodeNames) {
-		_pauseNodeNames = pauseNodeNames;
+	public void setPauseNodeKeys(String pauseNodeKeys) {
+		_pauseNodeKeys = pauseNodeKeys;
 	}
 
 	@Override
-	public String getStartNodeNames() {
-		if (_startNodeNames == null) {
+	public String getStartNodeKeys() {
+		if (_startNodeKeys == null) {
 			return "";
 		}
 		else {
-			return _startNodeNames;
+			return _startNodeKeys;
 		}
 	}
 
 	@Override
-	public void setStartNodeNames(String startNodeNames) {
-		_startNodeNames = startNodeNames;
+	public void setStartNodeKeys(String startNodeKeys) {
+		_startNodeKeys = startNodeKeys;
 	}
 
 	@Override
-	public String getStopNodeNames() {
-		if (_stopNodeNames == null) {
+	public String getStopNodeKeys() {
+		if (_stopNodeKeys == null) {
 			return "";
 		}
 		else {
-			return _stopNodeNames;
+			return _stopNodeKeys;
 		}
 	}
 
 	@Override
-	public void setStopNodeNames(String stopNodeNames) {
-		_stopNodeNames = stopNodeNames;
+	public void setStopNodeKeys(String stopNodeKeys) {
+		_stopNodeKeys = stopNodeKeys;
 	}
 
 	@Override
@@ -696,9 +696,9 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		workflowMetricsSLADefinitionImpl.setDescription(getDescription());
 		workflowMetricsSLADefinitionImpl.setDuration(getDuration());
 		workflowMetricsSLADefinitionImpl.setProcessId(getProcessId());
-		workflowMetricsSLADefinitionImpl.setPauseNodeNames(getPauseNodeNames());
-		workflowMetricsSLADefinitionImpl.setStartNodeNames(getStartNodeNames());
-		workflowMetricsSLADefinitionImpl.setStopNodeNames(getStopNodeNames());
+		workflowMetricsSLADefinitionImpl.setPauseNodeKeys(getPauseNodeKeys());
+		workflowMetricsSLADefinitionImpl.setStartNodeKeys(getStartNodeKeys());
+		workflowMetricsSLADefinitionImpl.setStopNodeKeys(getStopNodeKeys());
 
 		workflowMetricsSLADefinitionImpl.resetOriginalValues();
 
@@ -865,34 +865,33 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 		workflowMetricsSLADefinitionCacheModel.processId = getProcessId();
 
-		workflowMetricsSLADefinitionCacheModel.pauseNodeNames =
-			getPauseNodeNames();
+		workflowMetricsSLADefinitionCacheModel.pauseNodeKeys =
+			getPauseNodeKeys();
 
-		String pauseNodeNames =
-			workflowMetricsSLADefinitionCacheModel.pauseNodeNames;
+		String pauseNodeKeys =
+			workflowMetricsSLADefinitionCacheModel.pauseNodeKeys;
 
-		if ((pauseNodeNames != null) && (pauseNodeNames.length() == 0)) {
-			workflowMetricsSLADefinitionCacheModel.pauseNodeNames = null;
+		if ((pauseNodeKeys != null) && (pauseNodeKeys.length() == 0)) {
+			workflowMetricsSLADefinitionCacheModel.pauseNodeKeys = null;
 		}
 
-		workflowMetricsSLADefinitionCacheModel.startNodeNames =
-			getStartNodeNames();
+		workflowMetricsSLADefinitionCacheModel.startNodeKeys =
+			getStartNodeKeys();
 
-		String startNodeNames =
-			workflowMetricsSLADefinitionCacheModel.startNodeNames;
+		String startNodeKeys =
+			workflowMetricsSLADefinitionCacheModel.startNodeKeys;
 
-		if ((startNodeNames != null) && (startNodeNames.length() == 0)) {
-			workflowMetricsSLADefinitionCacheModel.startNodeNames = null;
+		if ((startNodeKeys != null) && (startNodeKeys.length() == 0)) {
+			workflowMetricsSLADefinitionCacheModel.startNodeKeys = null;
 		}
 
-		workflowMetricsSLADefinitionCacheModel.stopNodeNames =
-			getStopNodeNames();
+		workflowMetricsSLADefinitionCacheModel.stopNodeKeys = getStopNodeKeys();
 
-		String stopNodeNames =
-			workflowMetricsSLADefinitionCacheModel.stopNodeNames;
+		String stopNodeKeys =
+			workflowMetricsSLADefinitionCacheModel.stopNodeKeys;
 
-		if ((stopNodeNames != null) && (stopNodeNames.length() == 0)) {
-			workflowMetricsSLADefinitionCacheModel.stopNodeNames = null;
+		if ((stopNodeKeys != null) && (stopNodeKeys.length() == 0)) {
+			workflowMetricsSLADefinitionCacheModel.stopNodeKeys = null;
 		}
 
 		return workflowMetricsSLADefinitionCacheModel;
@@ -993,9 +992,9 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	private long _processId;
 	private long _originalProcessId;
 	private boolean _setOriginalProcessId;
-	private String _pauseNodeNames;
-	private String _startNodeNames;
-	private String _stopNodeNames;
+	private String _pauseNodeKeys;
+	private String _startNodeKeys;
+	private String _stopNodeKeys;
 	private long _columnBitmask;
 	private WorkflowMetricsSLADefinition _escapedModel;
 

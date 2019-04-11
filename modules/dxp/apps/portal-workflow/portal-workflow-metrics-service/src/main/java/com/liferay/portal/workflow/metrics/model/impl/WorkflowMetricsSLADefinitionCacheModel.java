@@ -113,12 +113,12 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		sb.append(duration);
 		sb.append(", processId=");
 		sb.append(processId);
-		sb.append(", pauseNodeNames=");
-		sb.append(pauseNodeNames);
-		sb.append(", startNodeNames=");
-		sb.append(startNodeNames);
-		sb.append(", stopNodeNames=");
-		sb.append(stopNodeNames);
+		sb.append(", pauseNodeKeys=");
+		sb.append(pauseNodeKeys);
+		sb.append(", startNodeKeys=");
+		sb.append(startNodeKeys);
+		sb.append(", stopNodeKeys=");
+		sb.append(stopNodeKeys);
 		sb.append("}");
 
 		return sb.toString();
@@ -184,25 +184,25 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		workflowMetricsSLADefinitionImpl.setDuration(duration);
 		workflowMetricsSLADefinitionImpl.setProcessId(processId);
 
-		if (pauseNodeNames == null) {
-			workflowMetricsSLADefinitionImpl.setPauseNodeNames("");
+		if (pauseNodeKeys == null) {
+			workflowMetricsSLADefinitionImpl.setPauseNodeKeys("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setPauseNodeNames(pauseNodeNames);
+			workflowMetricsSLADefinitionImpl.setPauseNodeKeys(pauseNodeKeys);
 		}
 
-		if (startNodeNames == null) {
-			workflowMetricsSLADefinitionImpl.setStartNodeNames("");
+		if (startNodeKeys == null) {
+			workflowMetricsSLADefinitionImpl.setStartNodeKeys("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setStartNodeNames(startNodeNames);
+			workflowMetricsSLADefinitionImpl.setStartNodeKeys(startNodeKeys);
 		}
 
-		if (stopNodeNames == null) {
-			workflowMetricsSLADefinitionImpl.setStopNodeNames("");
+		if (stopNodeKeys == null) {
+			workflowMetricsSLADefinitionImpl.setStopNodeKeys("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setStopNodeNames(stopNodeNames);
+			workflowMetricsSLADefinitionImpl.setStopNodeKeys(stopNodeKeys);
 		}
 
 		workflowMetricsSLADefinitionImpl.resetOriginalValues();
@@ -231,9 +231,9 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		duration = objectInput.readLong();
 
 		processId = objectInput.readLong();
-		pauseNodeNames = objectInput.readUTF();
-		startNodeNames = objectInput.readUTF();
-		stopNodeNames = objectInput.readUTF();
+		pauseNodeKeys = objectInput.readUTF();
+		startNodeKeys = objectInput.readUTF();
+		stopNodeKeys = objectInput.readUTF();
 	}
 
 	@Override
@@ -283,25 +283,25 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 		objectOutput.writeLong(processId);
 
-		if (pauseNodeNames == null) {
+		if (pauseNodeKeys == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(pauseNodeNames);
+			objectOutput.writeUTF(pauseNodeKeys);
 		}
 
-		if (startNodeNames == null) {
+		if (startNodeKeys == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(startNodeNames);
+			objectOutput.writeUTF(startNodeKeys);
 		}
 
-		if (stopNodeNames == null) {
+		if (stopNodeKeys == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(stopNodeNames);
+			objectOutput.writeUTF(stopNodeKeys);
 		}
 	}
 
@@ -318,8 +318,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 	public String description;
 	public long duration;
 	public long processId;
-	public String pauseNodeNames;
-	public String startNodeNames;
-	public String stopNodeNames;
+	public String pauseNodeKeys;
+	public String startNodeKeys;
+	public String stopNodeKeys;
 
 }

@@ -43,16 +43,16 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 		com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition
 				addWorkflowMetricsSLADefinition(
 					String name, String description, long duration,
-					long processId, String[] pauseNodeNames,
-					String[] startNodeNames, String[] stopNodeNames,
+					long processId, String[] pauseNodeKeys,
+					String[] startNodeKeys, String[] stopNodeKeys,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _workflowMetricsSLADefinitionLocalService.
 			addWorkflowMetricsSLADefinition(
-				name, description, duration, processId, pauseNodeNames,
-				startNodeNames, stopNodeNames, serviceContext);
+				name, description, duration, processId, pauseNodeKeys,
+				startNodeKeys, stopNodeKeys, serviceContext);
 	}
 
 	/**
@@ -446,8 +446,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 		com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition
 				updateWorkflowMetricsSLADefinition(
 					long workflowMetricsSLADefinitiontId, String name,
-					String description, long duration, String[] pauseNodeNames,
-					String[] startNodeNames, String[] stopNodeNames,
+					String description, long duration, String[] pauseNodeKeys,
+					String[] startNodeKeys, String[] stopNodeKeys,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -455,7 +455,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 		return _workflowMetricsSLADefinitionLocalService.
 			updateWorkflowMetricsSLADefinition(
 				workflowMetricsSLADefinitiontId, name, description, duration,
-				pauseNodeNames, startNodeNames, stopNodeNames, serviceContext);
+				pauseNodeKeys, startNodeKeys, stopNodeKeys, serviceContext);
 	}
 
 	/**

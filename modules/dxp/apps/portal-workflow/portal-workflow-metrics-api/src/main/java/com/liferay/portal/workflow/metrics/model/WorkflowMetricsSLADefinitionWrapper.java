@@ -64,9 +64,9 @@ public class WorkflowMetricsSLADefinitionWrapper
 		attributes.put("description", getDescription());
 		attributes.put("duration", getDuration());
 		attributes.put("processId", getProcessId());
-		attributes.put("pauseNodeNames", getPauseNodeNames());
-		attributes.put("startNodeNames", getStartNodeNames());
-		attributes.put("stopNodeNames", getStopNodeNames());
+		attributes.put("pauseNodeKeys", getPauseNodeKeys());
+		attributes.put("startNodeKeys", getStartNodeKeys());
+		attributes.put("stopNodeKeys", getStopNodeKeys());
 
 		return attributes;
 	}
@@ -152,22 +152,22 @@ public class WorkflowMetricsSLADefinitionWrapper
 			setProcessId(processId);
 		}
 
-		String pauseNodeNames = (String)attributes.get("pauseNodeNames");
+		String pauseNodeKeys = (String)attributes.get("pauseNodeKeys");
 
-		if (pauseNodeNames != null) {
-			setPauseNodeNames(pauseNodeNames);
+		if (pauseNodeKeys != null) {
+			setPauseNodeKeys(pauseNodeKeys);
 		}
 
-		String startNodeNames = (String)attributes.get("startNodeNames");
+		String startNodeKeys = (String)attributes.get("startNodeKeys");
 
-		if (startNodeNames != null) {
-			setStartNodeNames(startNodeNames);
+		if (startNodeKeys != null) {
+			setStartNodeKeys(startNodeKeys);
 		}
 
-		String stopNodeNames = (String)attributes.get("stopNodeNames");
+		String stopNodeKeys = (String)attributes.get("stopNodeKeys");
 
-		if (stopNodeNames != null) {
-			setStopNodeNames(stopNodeNames);
+		if (stopNodeKeys != null) {
+			setStopNodeKeys(stopNodeKeys);
 		}
 	}
 
@@ -252,13 +252,13 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	/**
-	 * Returns the pause node names of this workflow metrics sla definition.
+	 * Returns the pause node keys of this workflow metrics sla definition.
 	 *
-	 * @return the pause node names of this workflow metrics sla definition
+	 * @return the pause node keys of this workflow metrics sla definition
 	 */
 	@Override
-	public String getPauseNodeNames() {
-		return model.getPauseNodeNames();
+	public String getPauseNodeKeys() {
+		return model.getPauseNodeKeys();
 	}
 
 	/**
@@ -282,23 +282,23 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	/**
-	 * Returns the start node names of this workflow metrics sla definition.
+	 * Returns the start node keys of this workflow metrics sla definition.
 	 *
-	 * @return the start node names of this workflow metrics sla definition
+	 * @return the start node keys of this workflow metrics sla definition
 	 */
 	@Override
-	public String getStartNodeNames() {
-		return model.getStartNodeNames();
+	public String getStartNodeKeys() {
+		return model.getStartNodeKeys();
 	}
 
 	/**
-	 * Returns the stop node names of this workflow metrics sla definition.
+	 * Returns the stop node keys of this workflow metrics sla definition.
 	 *
-	 * @return the stop node names of this workflow metrics sla definition
+	 * @return the stop node keys of this workflow metrics sla definition
 	 */
 	@Override
-	public String getStopNodeNames() {
-		return model.getStopNodeNames();
+	public String getStopNodeKeys() {
+		return model.getStopNodeKeys();
 	}
 
 	/**
@@ -437,13 +437,13 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	/**
-	 * Sets the pause node names of this workflow metrics sla definition.
+	 * Sets the pause node keys of this workflow metrics sla definition.
 	 *
-	 * @param pauseNodeNames the pause node names of this workflow metrics sla definition
+	 * @param pauseNodeKeys the pause node keys of this workflow metrics sla definition
 	 */
 	@Override
-	public void setPauseNodeNames(String pauseNodeNames) {
-		model.setPauseNodeNames(pauseNodeNames);
+	public void setPauseNodeKeys(String pauseNodeKeys) {
+		model.setPauseNodeKeys(pauseNodeKeys);
 	}
 
 	/**
@@ -467,23 +467,23 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	/**
-	 * Sets the start node names of this workflow metrics sla definition.
+	 * Sets the start node keys of this workflow metrics sla definition.
 	 *
-	 * @param startNodeNames the start node names of this workflow metrics sla definition
+	 * @param startNodeKeys the start node keys of this workflow metrics sla definition
 	 */
 	@Override
-	public void setStartNodeNames(String startNodeNames) {
-		model.setStartNodeNames(startNodeNames);
+	public void setStartNodeKeys(String startNodeKeys) {
+		model.setStartNodeKeys(startNodeKeys);
 	}
 
 	/**
-	 * Sets the stop node names of this workflow metrics sla definition.
+	 * Sets the stop node keys of this workflow metrics sla definition.
 	 *
-	 * @param stopNodeNames the stop node names of this workflow metrics sla definition
+	 * @param stopNodeKeys the stop node keys of this workflow metrics sla definition
 	 */
 	@Override
-	public void setStopNodeNames(String stopNodeNames) {
-		model.setStopNodeNames(stopNodeNames);
+	public void setStopNodeKeys(String stopNodeKeys) {
+		model.setStopNodeKeys(stopNodeKeys);
 	}
 
 	/**

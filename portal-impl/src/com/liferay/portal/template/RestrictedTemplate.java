@@ -53,11 +53,6 @@ public class RestrictedTemplate implements Template {
 	}
 
 	@Override
-	public void doProcessTemplate(Writer writer) throws Exception {
-		_template.doProcessTemplate(writer);
-	}
-
-	@Override
 	public Set<Entry<String, Object>> entrySet() {
 		return _template.entrySet();
 	}

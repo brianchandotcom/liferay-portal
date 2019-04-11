@@ -25,8 +25,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Template extends Map<String, Object> {
 
-	public void doProcessTemplate(Writer writer) throws Exception;
-
 	public Object get(String key);
 
 	public String[] getKeys();

@@ -44,10 +44,6 @@ public class TestTemplate implements Template {
 	}
 
 	@Override
-	public void doProcessTemplate(Writer writer) throws Exception {
-	}
-
-	@Override
 	public Set<Map.Entry<String, Object>> entrySet() {
 		return null;
 	}

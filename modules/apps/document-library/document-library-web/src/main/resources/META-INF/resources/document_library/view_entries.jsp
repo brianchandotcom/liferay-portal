@@ -41,7 +41,18 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
 entriesChecker.setCssClass("entry-selector");
-entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*(folderId=" + String.valueOf(folderId) + ")");
+
+if (DLPortletKeys.DOCUMENT_LIBRARY.equals(portletDisplay.getRootPortletId())) {
+	if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		entriesChecker.setRememberCheckBoxStateURLRegex("^[^?]+/" + portletDisplay.getInstanceId() + "\\?");
+	}
+	else {
+		entriesChecker.setRememberCheckBoxStateURLRegex("^[^?]+/" + portletDisplay.getInstanceId() + "/view/" + folderId + "\\?");
+	}
+}
+else {
+	entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*(folderId=" + String.valueOf(folderId) + ")");
+}
 
 EntriesMover entriesMover = new EntriesMover(dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId));
 

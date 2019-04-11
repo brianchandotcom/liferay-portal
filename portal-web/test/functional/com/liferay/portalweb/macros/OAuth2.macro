@@ -277,11 +277,7 @@ definition {
 	}
 
 	macro revokeGrantedAuthViaUser {
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "OAuth 2 Connected Applications"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "OAuth 2 Connected Applications");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "View",
@@ -425,11 +421,7 @@ definition {
 	}
 
 	macro viewGrantedAuthViaUser {
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "OAuth 2 Connected Applications"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "OAuth 2 Connected Applications");
 
 		if ("${noAuthorizations}" == "true") {
 			AssertTextEquals(

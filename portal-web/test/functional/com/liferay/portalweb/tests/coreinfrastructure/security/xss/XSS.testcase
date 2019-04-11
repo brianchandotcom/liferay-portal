@@ -106,11 +106,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Account Settings"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
 		User.editDetailsViaMyAccount(
 			userLastNameEdit = '''<script>alert(123);</script>'''
@@ -539,11 +535,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Account Settings"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
 		Navigator.openSpecificURL(url = "${maliciousURL3}");
 
@@ -657,11 +649,7 @@ definition {
 	test ViewWiki {
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Account Settings"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
 		User.editDetailsViaMyAccount(
 			userFirstNameEdit = '''<script>alert(123);</script>''',

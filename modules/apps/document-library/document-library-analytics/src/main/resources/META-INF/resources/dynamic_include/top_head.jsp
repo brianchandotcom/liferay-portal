@@ -23,18 +23,32 @@
 </script>
 
 <aui:script require="metal-dom/src/all/dom as dom,metal-uri/src/Uri" sandbox="<%= true %>">
-	var Uri = metalUriSrcUri.default;
 	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
 
 	function handleDownloadClick(event) {
 		if (event.target.nodeName.toLowerCase() === 'a') {
 			if (window.Analytics) {
-				var uri = new Uri(anchor.href);
-
-				var match = pathnameRegexp.exec(uri.getPathname());
 				var anchor = event.target;
+				var match = pathnameRegexp.exec(anchor.pathname);
 
 				if (match) {
+					var getParameterValue = function(parameterName) {
+						var result = null;
+						var tmp = [];
+
+						anchor
+							.search
+							.substr(1)
+							.split("&")
+							.forEach(
+								function(item) {
+									tmp = item.split("=");
+									if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+								}
+							);
+						return result;
+					}
+
 					var groupId = match[1];
 					var fileEntryUUID = match[4];
 
@@ -55,7 +69,7 @@
 								fileEntryId: response.fileEntryId,
 								preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
 								title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
-								version: uri.getParameterValue('version')
+								version: getParameterValue('version')
 							}
 						);
 					}).catch(function() {

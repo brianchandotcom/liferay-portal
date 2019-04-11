@@ -1096,8 +1096,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), knowledgeBaseArticle);
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle
@@ -1579,8 +1580,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), knowledgeBaseArticle);
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle
@@ -2037,8 +2039,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return invokePostSiteKnowledgeBaseArticle(
-			testGroup.getGroupId(), knowledgeBaseArticle);
+		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
+			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
+			knowledgeBaseArticle);
 	}
 
 	protected KnowledgeBaseArticle invokePostSiteKnowledgeBaseArticle(

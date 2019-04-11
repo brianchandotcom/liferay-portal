@@ -512,8 +512,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), structuredContentFolder);
+		return invokePostStructuredContentFolderStructuredContentFolder(
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
+			structuredContentFolder);
 	}
 
 	protected StructuredContentFolder invokePostSiteStructuredContentFolder(
@@ -1001,8 +1002,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), structuredContentFolder);
+		return invokePostStructuredContentFolderStructuredContentFolder(
+			testGetStructuredContentFolderStructuredContentFoldersPage_getParentStructuredContentFolderId(),
+			structuredContentFolder);
 	}
 
 	protected StructuredContentFolder

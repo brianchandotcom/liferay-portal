@@ -843,8 +843,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return invokePostSiteMessageBoardSection(
-			testGroup.getGroupId(), messageBoardSection);
+		return invokePostMessageBoardSectionMessageBoardSection(
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+			messageBoardSection);
 	}
 
 	protected MessageBoardSection
@@ -1290,8 +1291,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return invokePostSiteMessageBoardSection(
-			testGroup.getGroupId(), messageBoardSection);
+		return invokePostMessageBoardSectionMessageBoardSection(
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
+			messageBoardSection);
 	}
 
 	protected MessageBoardSection invokePostSiteMessageBoardSection(

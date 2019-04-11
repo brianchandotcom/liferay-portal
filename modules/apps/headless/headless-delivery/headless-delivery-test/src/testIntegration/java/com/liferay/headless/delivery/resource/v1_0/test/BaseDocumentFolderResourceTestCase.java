@@ -803,8 +803,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				DocumentFolder documentFolder)
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), documentFolder);
+		return invokePostDocumentFolderDocumentFolder(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			documentFolder);
 	}
 
 	protected DocumentFolder invokePostDocumentFolderDocumentFolder(
@@ -1221,8 +1222,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			DocumentFolder documentFolder)
 		throws Exception {
 
-		return invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), documentFolder);
+		return invokePostDocumentFolderDocumentFolder(
+			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
+			documentFolder);
 	}
 
 	protected DocumentFolder invokePostSiteDocumentFolder(

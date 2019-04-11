@@ -72,7 +72,10 @@ public class FreeMarkerTemplate extends BaseTemplate {
 	}
 
 	@Override
-	protected void handleException(Exception exception, Writer writer)
+	protected void handleException(
+			TemplateResource templateResource,
+			TemplateResource errorTemplateResource, Exception exception,
+			Writer writer)
 		throws TemplateException {
 
 		if (_templateResourceCache.isEnabled()) {

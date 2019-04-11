@@ -253,19 +253,25 @@ public class SoyTemplate extends BaseTemplate {
 	}
 
 	@Override
-	protected void handleException(Exception exception, Writer writer)
+	protected void handleException(
+			TemplateResource templateResource,
+			TemplateResource errorTemplateResource, Exception exception,
+			Writer writer)
 		throws TemplateException {
 
 		put("exception", exception.getMessage());
 
+		SoyTemplateResource soyTemplateResource =
+			(SoyTemplateResource)templateResource;
+
 		StringBundler sb = new StringBundler();
 
-		for (TemplateResource templateResource :
-				_soyTemplateResource.getTemplateResources()) {
+		for (TemplateResource innerTemplateResource :
+				soyTemplateResource.getTemplateResources()) {
 
-			if (templateResource instanceof StringTemplateResource) {
+			if (innerTemplateResource instanceof StringTemplateResource) {
 				StringTemplateResource stringTemplateResource =
-					(StringTemplateResource)templateResource;
+					(StringTemplateResource)innerTemplateResource;
 
 				sb.append(stringTemplateResource.getContent());
 			}

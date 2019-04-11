@@ -64,6 +64,7 @@ public class XSLTemplate extends BaseTemplate {
 		}
 
 		_xslTemplateResource = xslTemplateResource;
+		_errorTemplateResource = errorTemplateResource;
 
 		_preventLocalConnections =
 			xslEngineConfiguration.preventLocalConnections();
@@ -108,7 +109,7 @@ public class XSLTemplate extends BaseTemplate {
 
 		Transformer transformer = null;
 
-		if (errorTemplateResource == null) {
+		if (_errorTemplateResource == null) {
 			try {
 				transformer = _getTransformer(_xslTemplateResource);
 
@@ -153,7 +154,8 @@ public class XSLTemplate extends BaseTemplate {
 			doProcessTemplate(writer);
 		}
 		catch (Exception e) {
-			handleException(e, writer);
+			handleException(
+				_xslTemplateResource, _errorTemplateResource, e, writer);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -161,7 +163,10 @@ public class XSLTemplate extends BaseTemplate {
 	}
 
 	@Override
-	protected void handleException(Exception exception, Writer writer)
+	protected void handleException(
+			TemplateResource templateResource,
+			TemplateResource errorTemplateResource, Exception exception,
+			Writer writer)
 		throws TemplateException {
 
 		Transformer errorTransformer = _getTransformer(errorTemplateResource);
@@ -244,6 +249,7 @@ public class XSLTemplate extends BaseTemplate {
 			transformerFactoryClass.getClassLoader();
 	}
 
+	private final TemplateResource _errorTemplateResource;
 	private final boolean _preventLocalConnections;
 	private final TransformerFactory _transformerFactory;
 	private StreamSource _xmlStreamSource;

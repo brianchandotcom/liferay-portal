@@ -51,8 +51,8 @@ public abstract class BaseTemplate implements Template {
 				"Template context helper is null");
 		}
 
-		this.templateResource = templateResource;
-		this.errorTemplateResource = errorTemplateResource;
+		_templateResource = templateResource;
+		_errorTemplateResource = errorTemplateResource;
 
 		this.context = new HashMap<>();
 
@@ -86,7 +86,7 @@ public abstract class BaseTemplate implements Template {
 
 		put(TemplateConstants.WRITER, unsyncStringWriter);
 
-		processTemplate(templateResource, unsyncStringWriter);
+		processTemplate(_templateResource, unsyncStringWriter);
 
 		StringBundler sb = unsyncStringWriter.getStringBundler();
 
@@ -140,16 +140,16 @@ public abstract class BaseTemplate implements Template {
 
 	@Override
 	public void processTemplate(Writer writer) throws TemplateException {
-		if (errorTemplateResource == null) {
+		if (_errorTemplateResource == null) {
 			try {
-				processTemplate(templateResource, writer);
+				processTemplate(_templateResource, writer);
 
 				return;
 			}
 			catch (Exception e) {
 				throw new TemplateException(
 					"Unable to process template " +
-						templateResource.getTemplateId(),
+						_templateResource.getTemplateId(),
 					e);
 			}
 		}
@@ -162,7 +162,8 @@ public abstract class BaseTemplate implements Template {
 		catch (Exception e) {
 			put(TemplateConstants.WRITER, writer);
 
-			handleException(e, writer);
+			handleException(
+				_templateResource, _errorTemplateResource, e, writer);
 		}
 		finally {
 			put(TemplateConstants.WRITER, oldWriter);
@@ -224,7 +225,10 @@ public abstract class BaseTemplate implements Template {
 		);
 	}
 
-	protected abstract void handleException(Exception exception, Writer writer)
+	protected abstract void handleException(
+			TemplateResource templateResource,
+			TemplateResource errorTemplateResource, Exception exception,
+			Writer writer)
 		throws TemplateException;
 
 	protected abstract void processTemplate(
@@ -232,9 +236,9 @@ public abstract class BaseTemplate implements Template {
 		throws Exception;
 
 	protected Map<String, Object> context;
-	protected TemplateResource errorTemplateResource;
-	protected TemplateResource templateResource;
 
+	private final TemplateResource _errorTemplateResource;
 	private final TemplateContextHelper _templateContextHelper;
+	private final TemplateResource _templateResource;
 
 }

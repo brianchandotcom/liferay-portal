@@ -74,7 +74,7 @@ export default class AppComponent extends React.Component {
 							/>
 
 							<Route
-								path="/process-dashboard/:processId"
+								path="/dashboard/:processId/:pageSize/:page/:sort"
 								render={withParams(ProcessDashboard)}
 							/>
 

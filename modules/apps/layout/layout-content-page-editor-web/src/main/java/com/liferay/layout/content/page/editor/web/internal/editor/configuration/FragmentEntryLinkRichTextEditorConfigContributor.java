@@ -162,7 +162,13 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 
 		jsonArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "normal"), "p", null, 1));
+				LanguageUtil.get(resourceBundle, "normal"), "p", "text-default", 1));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "small"), "p", "small", 1));
+		jsonArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "lead"), "p", "lead", 1));
 		jsonArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
@@ -179,30 +185,6 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "4"), "h4",
 				null, 1));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "preformatted-text"), "pre",
-				null, 1));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "cited-work"), "cite", null,
-				2));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "computer-code"), "code", null,
-				2));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "info-message"), "div",
-				"portlet-msg-info", 1));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "alert-message"), "div",
-				"portlet-msg-alert", 1));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "error-message"), "div",
-				"portlet-msg-error", 1));
 
 		return jsonArray;
 	}

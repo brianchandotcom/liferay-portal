@@ -32,6 +32,9 @@
 		<finder name="AssetEntryId" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="assetEntryId" />
 		</finder>
+		<finder name="Plid" return-type="Collection" where="containerKey IS NOT NULL">
+			<finder-column name="plid" />
+		</finder>
 		<finder name="A_T" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="assetEntryId" />
 			<finder-column name="type" />

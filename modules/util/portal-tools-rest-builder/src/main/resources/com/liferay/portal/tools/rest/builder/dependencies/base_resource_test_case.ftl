@@ -141,8 +141,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#assign generateToMultipartBodyMethod = true />
 
 							return invokePostSite${schemaName}(testGroup.getGroupId(), toMultipartBody(random${schemaName}()));
-						<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, schemaName, schemaName)>
-							return invokePost${schemaName}${schemaName}(testGet${schemaName}${schemaNames}Page_getParent${schemaName}Id(), ${schemaVarName});
 						<#else>
 							return invokePostSite${schemaName}(testGroup.getGroupId(), random${schemaName}());
 						</#if>
@@ -640,8 +638,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 								<#assign generateToMultipartBodyMethod = true />
 
 								return invoke${postSchemaJavaMethodSignature.methodName?cap_first}(${firstPathJavaMethodParameter.parameterName}, toMultipartBody(${schemaVarName}));
-							<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, schemaName, schemaName)>
-								return invokePost${schemaName}${schemaName}(testGet${schemaName}${schemaNames}Page_getParent${schemaName}Id(), ${schemaVarName});
 							<#else>
 								return invoke${postSchemaJavaMethodSignature.methodName?cap_first}(${firstPathJavaMethodParameter.parameterName}, ${schemaVarName});
 							</#if>
@@ -713,8 +709,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#assign generateToMultipartBodyMethod = true />
 
 							return invokePostSite${schemaName}(testGroup.getGroupId(), toMultipartBody(random${schemaName}()));
-						<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, schemaName, schemaName)>
-							return invokePost${schemaName}${schemaName}(testGet${schemaName}${schemaNames}Page_getParent${schemaName}Id(), ${schemaVarName});
 						<#else>
 							return invokePostSite${schemaName}(testGroup.getGroupId(), random${schemaName}());
 						</#if>
@@ -755,8 +749,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#assign generateToMultipartBodyMethod = true />
 
 							return invokePostSite${schemaName}(testGroup.getGroupId(), toMultipartBody(random${schemaName}()));
-						<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, schemaName, schemaName)>
-							return invokePost${schemaName}${schemaName}(testGet${schemaName}${schemaNames}Page_getParent${schemaName}Id(), ${schemaVarName});
 						<#else>
 							return invokePostSite${schemaName}(testGroup.getGroupId(), random${schemaName}());
 						</#if>
@@ -828,8 +820,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#assign generateToMultipartBodyMethod = true />
 
 							return invokePostSite${schemaName}(testGroup.getGroupId(), toMultipartBody(random${schemaName}()));
-						<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, schemaName, schemaName)>
-							return invokePost${schemaName}${schemaName}(testGet${schemaName}${schemaNames}Page_getParent${schemaName}Id(), ${schemaVarName});
 						<#else>
 							return invokePostSite${schemaName}(testGroup.getGroupId(), random${schemaName}());
 						</#if>

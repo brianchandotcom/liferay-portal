@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -54,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -96,6 +98,7 @@ public abstract class BaseSLAResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
+		testLocale = LocaleUtil.getDefault();
 
 		_resourceURL = new URL(
 			"http://localhost:8080/o/portal-workflow-metrics/v1.0");
@@ -180,8 +183,7 @@ public abstract class BaseSLAResourceTestCase {
 	protected SLA testGetProcessSLAsPage_addSLA(Long processId, SLA sla)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostProcessSLA(processId, sla);
 	}
 
 	protected Long testGetProcessSLAsPage_getProcessId() throws Exception {
@@ -217,7 +219,7 @@ public abstract class BaseSLAResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<SLA>>() {
 			});
@@ -265,7 +267,7 @@ public abstract class BaseSLAResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(sla),
+			inputObjectMapper.writeValueAsString(sla),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -282,7 +284,7 @@ public abstract class BaseSLAResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, SLA.class);
+			return outputObjectMapper.readValue(string, SLA.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -298,7 +300,7 @@ public abstract class BaseSLAResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(sla),
+			inputObjectMapper.writeValueAsString(sla),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location =
@@ -388,7 +390,7 @@ public abstract class BaseSLAResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, SLA.class);
+			return outputObjectMapper.readValue(string, SLA.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -435,7 +437,7 @@ public abstract class BaseSLAResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(sla),
+			inputObjectMapper.writeValueAsString(sla),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location = _resourceURL + _toPath("/slas/{slaId}", slaId);
@@ -451,7 +453,7 @@ public abstract class BaseSLAResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, SLA.class);
+			return outputObjectMapper.readValue(string, SLA.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -466,7 +468,7 @@ public abstract class BaseSLAResourceTestCase {
 		Http.Options options = _createHttpOptions();
 
 		options.setBody(
-			_inputObjectMapper.writeValueAsString(sla),
+			inputObjectMapper.writeValueAsString(sla),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
 		String location = _resourceURL + _toPath("/slas/{slaId}", slaId);
@@ -521,8 +523,77 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected void assertValid(SLA sla) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		boolean valid = true;
+
+		if (sla.getId() == null) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (sla.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("duration", additionalAssertFieldName)) {
+				if (sla.getDuration() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (sla.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("pauseNodeKeys", additionalAssertFieldName)) {
+				if (sla.getPauseNodeKeys() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processId", additionalAssertFieldName)) {
+				if (sla.getProcessId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("startNodeKeys", additionalAssertFieldName)) {
+				if (sla.getStartNodeKeys() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("stopNodeKeys", additionalAssertFieldName)) {
+				if (sla.getStopNodeKeys() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
 	}
 
 	protected void assertValid(Page<SLA> page) {
@@ -542,12 +613,100 @@ public abstract class BaseSLAResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(SLA sla1, SLA sla2) {
 		if (sla1 == sla2) {
 			return true;
 		}
 
-		return false;
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sla1.getDescription(), sla2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("duration", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sla1.getDuration(), sla2.getDuration())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(sla1.getId(), sla2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(sla1.getName(), sla2.getName())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("pauseNodeKeys", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sla1.getPauseNodeKeys(), sla2.getPauseNodeKeys())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("processId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sla1.getProcessId(), sla2.getProcessId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("startNodeKeys", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sla1.getStartNodeKeys(), sla2.getStartNodeKeys())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("stopNodeKeys", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sla1.getStopNodeKeys(), sla2.getStopNodeKeys())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
@@ -621,7 +780,7 @@ public abstract class BaseSLAResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("pauseNodeNames")) {
+		if (entityFieldName.equals("pauseNodeKeys")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -631,12 +790,12 @@ public abstract class BaseSLAResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("startNodeNames")) {
+		if (entityFieldName.equals("startNodeKeys")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("stopNodeNames")) {
+		if (entityFieldName.equals("stopNodeKeys")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -658,15 +817,47 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected SLA randomIrrelevantSLA() {
-		return randomSLA();
+		SLA randomIrrelevantSLA = randomSLA();
+
+		return randomIrrelevantSLA;
 	}
 
 	protected SLA randomPatchSLA() {
 		return randomSLA();
 	}
 
+	protected static final ObjectMapper inputObjectMapper = new ObjectMapper() {
+		{
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
+			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		}
+	};
+	protected static final ObjectMapper outputObjectMapper =
+		new ObjectMapper() {
+			{
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+			}
+		};
+
 	protected Group irrelevantGroup;
+	protected String testContentType = "application/json";
 	protected Group testGroup;
+	protected Locale testLocale;
+	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	protected static class Page<T> {
 
@@ -711,16 +902,16 @@ public abstract class BaseSLAResourceTestCase {
 		Http.Options options = new Http.Options();
 
 		options.addHeader("Accept", "application/json");
+		options.addHeader(
+			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
 
-		String userNameAndPassword = "test@liferay.com:test";
-
-		String encodedUserNameAndPassword = Base64.encode(
-			userNameAndPassword.getBytes());
+		String encodedTestUserNameAndPassword = Base64.encode(
+			testUserNameAndPassword.getBytes());
 
 		options.addHeader(
-			"Authorization", "Basic " + encodedUserNameAndPassword);
+			"Authorization", "Basic " + encodedTestUserNameAndPassword);
 
-		options.addHeader("Content-Type", "application/json");
+		options.addHeader("Content-Type", testContentType);
 
 		return options;
 	}
@@ -754,31 +945,6 @@ public abstract class BaseSLAResourceTestCase {
 
 	};
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		}
-	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-		}
-	};
 
 	@Inject
 	private SLAResource _slaResource;

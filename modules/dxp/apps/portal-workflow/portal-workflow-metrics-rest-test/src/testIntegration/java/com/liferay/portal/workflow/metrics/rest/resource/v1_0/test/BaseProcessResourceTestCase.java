@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -53,6 +54,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -97,6 +99,7 @@ public abstract class BaseProcessResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
+		testLocale = LocaleUtil.getDefault();
 
 		_resourceURL = new URL(
 			"http://localhost:8080/o/portal-workflow-metrics/v1.0");
@@ -267,7 +270,7 @@ public abstract class BaseProcessResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Process>>() {
 			});
@@ -325,7 +328,7 @@ public abstract class BaseProcessResourceTestCase {
 		}
 
 		try {
-			return _outputObjectMapper.readValue(string, Process.class);
+			return outputObjectMapper.readValue(string, Process.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -397,8 +400,77 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	protected void assertValid(Process process) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		boolean valid = true;
+
+		if (process.getId() == null) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"dueAfterInstanceCount", additionalAssertFieldName)) {
+
+				if (process.getDueAfterInstanceCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"dueInInstanceCount", additionalAssertFieldName)) {
+
+				if (process.getDueInInstanceCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("instanceCount", additionalAssertFieldName)) {
+				if (process.getInstanceCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"onTimeInstanceCount", additionalAssertFieldName)) {
+
+				if (process.getOnTimeInstanceCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"overdueInstanceCount", additionalAssertFieldName)) {
+
+				if (process.getOverdueInstanceCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (process.getTitle() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
 	}
 
 	protected void assertValid(Page<Process> page) {
@@ -418,12 +490,105 @@ public abstract class BaseProcessResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(Process process1, Process process2) {
 		if (process1 == process2) {
 			return true;
 		}
 
-		return false;
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"dueAfterInstanceCount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						process1.getDueAfterInstanceCount(),
+						process2.getDueAfterInstanceCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"dueInInstanceCount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						process1.getDueInInstanceCount(),
+						process2.getDueInInstanceCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(process1.getId(), process2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("instanceCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						process1.getInstanceCount(),
+						process2.getInstanceCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"onTimeInstanceCount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						process1.getOnTimeInstanceCount(),
+						process2.getOnTimeInstanceCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"overdueInstanceCount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						process1.getOverdueInstanceCount(),
+						process2.getOverdueInstanceCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						process1.getTitle(), process2.getTitle())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
@@ -528,15 +693,47 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	protected Process randomIrrelevantProcess() {
-		return randomProcess();
+		Process randomIrrelevantProcess = randomProcess();
+
+		return randomIrrelevantProcess;
 	}
 
 	protected Process randomPatchProcess() {
 		return randomProcess();
 	}
 
+	protected static final ObjectMapper inputObjectMapper = new ObjectMapper() {
+		{
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
+			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		}
+	};
+	protected static final ObjectMapper outputObjectMapper =
+		new ObjectMapper() {
+			{
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+			}
+		};
+
 	protected Group irrelevantGroup;
+	protected String testContentType = "application/json";
 	protected Group testGroup;
+	protected Locale testLocale;
+	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	protected static class Page<T> {
 
@@ -581,16 +778,16 @@ public abstract class BaseProcessResourceTestCase {
 		Http.Options options = new Http.Options();
 
 		options.addHeader("Accept", "application/json");
+		options.addHeader(
+			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
 
-		String userNameAndPassword = "test@liferay.com:test";
-
-		String encodedUserNameAndPassword = Base64.encode(
-			userNameAndPassword.getBytes());
+		String encodedTestUserNameAndPassword = Base64.encode(
+			testUserNameAndPassword.getBytes());
 
 		options.addHeader(
-			"Authorization", "Basic " + encodedUserNameAndPassword);
+			"Authorization", "Basic " + encodedTestUserNameAndPassword);
 
-		options.addHeader("Content-Type", "application/json");
+		options.addHeader("Content-Type", testContentType);
 
 		return options;
 	}
@@ -624,31 +821,6 @@ public abstract class BaseProcessResourceTestCase {
 
 	};
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		}
-	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-		}
-	};
 
 	@Inject
 	private ProcessResource _processResource;

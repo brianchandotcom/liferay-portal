@@ -48,7 +48,7 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public SLA postProcessSLA(
 			@GraphQLName("processId") Long processId,
-			@GraphQLName("SLA") SLA sla)
+			@GraphQLName("sla") SLA sla)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -65,7 +65,7 @@ public class Mutation {
 
 	@GraphQLInvokeDetached
 	public SLA putSLA(
-			@GraphQLName("slaId") Long slaId, @GraphQLName("SLA") SLA sla)
+			@GraphQLName("slaId") Long slaId, @GraphQLName("sla") SLA sla)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

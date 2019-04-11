@@ -91,7 +91,7 @@ public class Query {
 	public Collection<Process> getProcessesPage(
 			@GraphQLName("title") String title,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page, @GraphQLName("Sort[]") Sort[] sorts)
+			@GraphQLName("page") int page, @GraphQLName("sorts") Sort[] sorts)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

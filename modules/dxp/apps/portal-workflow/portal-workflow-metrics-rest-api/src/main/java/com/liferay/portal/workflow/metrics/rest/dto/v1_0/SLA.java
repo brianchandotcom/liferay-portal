@@ -144,20 +144,20 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	public String[] getPauseNodeNames() {
-		return pauseNodeNames;
+	public String[] getPauseNodeKeys() {
+		return pauseNodeKeys;
 	}
 
-	public void setPauseNodeNames(String[] pauseNodeNames) {
-		this.pauseNodeNames = pauseNodeNames;
+	public void setPauseNodeKeys(String[] pauseNodeKeys) {
+		this.pauseNodeKeys = pauseNodeKeys;
 	}
 
 	@JsonIgnore
-	public void setPauseNodeNames(
-		UnsafeSupplier<String[], Exception> pauseNodeNamesUnsafeSupplier) {
+	public void setPauseNodeKeys(
+		UnsafeSupplier<String[], Exception> pauseNodeKeysUnsafeSupplier) {
 
 		try {
-			pauseNodeNames = pauseNodeNamesUnsafeSupplier.get();
+			pauseNodeKeys = pauseNodeKeysUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -169,7 +169,7 @@ public class SLA {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] pauseNodeNames;
+	protected String[] pauseNodeKeys;
 
 	public Long getProcessId() {
 		return processId;
@@ -198,20 +198,20 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long processId;
 
-	public String[] getStartNodeNames() {
-		return startNodeNames;
+	public String[] getStartNodeKeys() {
+		return startNodeKeys;
 	}
 
-	public void setStartNodeNames(String[] startNodeNames) {
-		this.startNodeNames = startNodeNames;
+	public void setStartNodeKeys(String[] startNodeKeys) {
+		this.startNodeKeys = startNodeKeys;
 	}
 
 	@JsonIgnore
-	public void setStartNodeNames(
-		UnsafeSupplier<String[], Exception> startNodeNamesUnsafeSupplier) {
+	public void setStartNodeKeys(
+		UnsafeSupplier<String[], Exception> startNodeKeysUnsafeSupplier) {
 
 		try {
-			startNodeNames = startNodeNamesUnsafeSupplier.get();
+			startNodeKeys = startNodeKeysUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -223,22 +223,22 @@ public class SLA {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] startNodeNames;
+	protected String[] startNodeKeys;
 
-	public String[] getStopNodeNames() {
-		return stopNodeNames;
+	public String[] getStopNodeKeys() {
+		return stopNodeKeys;
 	}
 
-	public void setStopNodeNames(String[] stopNodeNames) {
-		this.stopNodeNames = stopNodeNames;
+	public void setStopNodeKeys(String[] stopNodeKeys) {
+		this.stopNodeKeys = stopNodeKeys;
 	}
 
 	@JsonIgnore
-	public void setStopNodeNames(
-		UnsafeSupplier<String[], Exception> stopNodeNamesUnsafeSupplier) {
+	public void setStopNodeKeys(
+		UnsafeSupplier<String[], Exception> stopNodeKeysUnsafeSupplier) {
 
 		try {
-			stopNodeNames = stopNodeNamesUnsafeSupplier.get();
+			stopNodeKeys = stopNodeKeysUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -250,7 +250,7 @@ public class SLA {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] stopNodeNames;
+	protected String[] stopNodeKeys;
 
 	@Override
 	public boolean equals(Object object) {
@@ -281,42 +281,62 @@ public class SLA {
 
 		sb.append("\"description\": ");
 
-		sb.append("\"");
-		sb.append(description);
-		sb.append("\"");
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(description);
+		}
+
 		sb.append(", ");
 
 		sb.append("\"duration\": ");
 
-		sb.append(duration);
+		if (duration == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(duration);
+		}
+
 		sb.append(", ");
 
 		sb.append("\"id\": ");
 
-		sb.append(id);
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
 		sb.append(", ");
 
 		sb.append("\"name\": ");
 
-		sb.append("\"");
-		sb.append(name);
-		sb.append("\"");
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(name);
+		}
+
 		sb.append(", ");
 
-		sb.append("\"pauseNodeNames\": ");
+		sb.append("\"pauseNodeKeys\": ");
 
-		if (pauseNodeNames == null) {
+		if (pauseNodeKeys == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < pauseNodeNames.length; i++) {
+			for (int i = 0; i < pauseNodeKeys.length; i++) {
 				sb.append("\"");
-				sb.append(pauseNodeNames[i]);
+				sb.append(pauseNodeKeys[i]);
 				sb.append("\"");
 
-				if ((i + 1) < pauseNodeNames.length) {
+				if ((i + 1) < pauseNodeKeys.length) {
 					sb.append(", ");
 				}
 			}
@@ -328,23 +348,29 @@ public class SLA {
 
 		sb.append("\"processId\": ");
 
-		sb.append(processId);
+		if (processId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(processId);
+		}
+
 		sb.append(", ");
 
-		sb.append("\"startNodeNames\": ");
+		sb.append("\"startNodeKeys\": ");
 
-		if (startNodeNames == null) {
+		if (startNodeKeys == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < startNodeNames.length; i++) {
+			for (int i = 0; i < startNodeKeys.length; i++) {
 				sb.append("\"");
-				sb.append(startNodeNames[i]);
+				sb.append(startNodeKeys[i]);
 				sb.append("\"");
 
-				if ((i + 1) < startNodeNames.length) {
+				if ((i + 1) < startNodeKeys.length) {
 					sb.append(", ");
 				}
 			}
@@ -354,20 +380,20 @@ public class SLA {
 
 		sb.append(", ");
 
-		sb.append("\"stopNodeNames\": ");
+		sb.append("\"stopNodeKeys\": ");
 
-		if (stopNodeNames == null) {
+		if (stopNodeKeys == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < stopNodeNames.length; i++) {
+			for (int i = 0; i < stopNodeKeys.length; i++) {
 				sb.append("\"");
-				sb.append(stopNodeNames[i]);
+				sb.append(stopNodeKeys[i]);
 				sb.append("\"");
 
-				if ((i + 1) < stopNodeNames.length) {
+				if ((i + 1) < stopNodeKeys.length) {
 					sb.append(", ");
 				}
 			}

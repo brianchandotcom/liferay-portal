@@ -256,39 +256,78 @@ public class Process {
 
 		sb.append("\"dueAfterInstanceCount\": ");
 
-		sb.append(dueAfterInstanceCount);
+		if (dueAfterInstanceCount == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(dueAfterInstanceCount);
+		}
+
 		sb.append(", ");
 
 		sb.append("\"dueInInstanceCount\": ");
 
-		sb.append(dueInInstanceCount);
+		if (dueInInstanceCount == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(dueInInstanceCount);
+		}
+
 		sb.append(", ");
 
 		sb.append("\"id\": ");
 
-		sb.append(id);
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
 		sb.append(", ");
 
 		sb.append("\"instanceCount\": ");
 
-		sb.append(instanceCount);
+		if (instanceCount == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(instanceCount);
+		}
+
 		sb.append(", ");
 
 		sb.append("\"onTimeInstanceCount\": ");
 
-		sb.append(onTimeInstanceCount);
+		if (onTimeInstanceCount == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(onTimeInstanceCount);
+		}
+
 		sb.append(", ");
 
 		sb.append("\"overdueInstanceCount\": ");
 
-		sb.append(overdueInstanceCount);
+		if (overdueInstanceCount == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(overdueInstanceCount);
+		}
+
 		sb.append(", ");
 
 		sb.append("\"title\": ");
 
-		sb.append("\"");
-		sb.append(title);
-		sb.append("\"");
+		if (title == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(title);
+		}
 
 		sb.append("}");
 

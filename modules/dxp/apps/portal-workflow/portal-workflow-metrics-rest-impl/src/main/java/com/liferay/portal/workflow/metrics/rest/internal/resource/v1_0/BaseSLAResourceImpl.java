@@ -124,7 +124,7 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(SLA sla) {
+	protected void preparePatch(SLA sla, SLA existingSla) {
 	}
 
 	protected <T, R> List<R> transform(

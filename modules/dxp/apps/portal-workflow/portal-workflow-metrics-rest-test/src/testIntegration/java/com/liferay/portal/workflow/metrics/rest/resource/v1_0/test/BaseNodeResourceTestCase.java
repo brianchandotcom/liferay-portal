@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -51,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -93,6 +95,7 @@ public abstract class BaseNodeResourceTestCase {
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
 		testGroup = GroupTestUtil.addGroup();
+		testLocale = LocaleUtil.getDefault();
 
 		_resourceURL = new URL(
 			"http://localhost:8080/o/portal-workflow-metrics/v1.0");
@@ -170,7 +173,7 @@ public abstract class BaseNodeResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return _outputObjectMapper.readValue(
+		return outputObjectMapper.readValue(
 			string,
 			new TypeReference<Page<Node>>() {
 			});
@@ -235,8 +238,53 @@ public abstract class BaseNodeResourceTestCase {
 	}
 
 	protected void assertValid(Node node) {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		boolean valid = true;
+
+		if (node.getId() == null) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("initial", additionalAssertFieldName)) {
+				if (node.getInitial() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (node.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("terminal", additionalAssertFieldName)) {
+				if (node.getTerminal() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (node.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
 	}
 
 	protected void assertValid(Page<Node> page) {
@@ -256,12 +304,68 @@ public abstract class BaseNodeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
 	protected boolean equals(Node node1, Node node2) {
 		if (node1 == node2) {
 			return true;
 		}
 
-		return false;
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(node1.getId(), node2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("initial", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						node1.getInitial(), node2.getInitial())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(node1.getName(), node2.getName())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("terminal", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						node1.getTerminal(), node2.getTerminal())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(node1.getType(), node2.getType())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
@@ -357,15 +461,47 @@ public abstract class BaseNodeResourceTestCase {
 	}
 
 	protected Node randomIrrelevantNode() {
-		return randomNode();
+		Node randomIrrelevantNode = randomNode();
+
+		return randomIrrelevantNode;
 	}
 
 	protected Node randomPatchNode() {
 		return randomNode();
 	}
 
+	protected static final ObjectMapper inputObjectMapper = new ObjectMapper() {
+		{
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
+			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		}
+	};
+	protected static final ObjectMapper outputObjectMapper =
+		new ObjectMapper() {
+			{
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+			}
+		};
+
 	protected Group irrelevantGroup;
+	protected String testContentType = "application/json";
 	protected Group testGroup;
+	protected Locale testLocale;
+	protected String testUserNameAndPassword = "test@liferay.com:test";
 
 	protected static class Page<T> {
 
@@ -410,16 +546,16 @@ public abstract class BaseNodeResourceTestCase {
 		Http.Options options = new Http.Options();
 
 		options.addHeader("Accept", "application/json");
+		options.addHeader(
+			"Accept-Language", LocaleUtil.toW3cLanguageId(testLocale));
 
-		String userNameAndPassword = "test@liferay.com:test";
-
-		String encodedUserNameAndPassword = Base64.encode(
-			userNameAndPassword.getBytes());
+		String encodedTestUserNameAndPassword = Base64.encode(
+			testUserNameAndPassword.getBytes());
 
 		options.addHeader(
-			"Authorization", "Basic " + encodedUserNameAndPassword);
+			"Authorization", "Basic " + encodedTestUserNameAndPassword);
 
-		options.addHeader("Content-Type", "application/json");
+		options.addHeader("Content-Type", testContentType);
 
 		return options;
 	}
@@ -453,31 +589,6 @@ public abstract class BaseNodeResourceTestCase {
 
 	};
 	private static DateFormat _dateFormat;
-	private final static ObjectMapper _inputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		}
-	};
-	private final static ObjectMapper _outputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-		}
-	};
 
 	@Inject
 	private NodeResource _nodeResource;

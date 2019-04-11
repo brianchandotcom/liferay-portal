@@ -64,7 +64,7 @@ public abstract class BaseNodeResourceImpl implements NodeResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Node node) {
+	protected void preparePatch(Node node, Node existingNode) {
 	}
 
 	protected <T, R> List<R> transform(

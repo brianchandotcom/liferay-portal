@@ -123,16 +123,23 @@ public class GenericError {
 
 		sb.append("\"fieldName\": ");
 
-		sb.append("\"");
-		sb.append(fieldName);
-		sb.append("\"");
+		if (fieldName == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(fieldName);
+		}
+
 		sb.append(", ");
 
 		sb.append("\"message\": ");
 
-		sb.append("\"");
-		sb.append(message);
-		sb.append("\"");
+		if (message == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(message);
+		}
 
 		sb.append("}");
 

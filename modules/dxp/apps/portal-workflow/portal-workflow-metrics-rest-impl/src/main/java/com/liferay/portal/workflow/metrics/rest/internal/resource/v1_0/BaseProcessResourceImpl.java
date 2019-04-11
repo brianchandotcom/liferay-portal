@@ -89,7 +89,7 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Process process) {
+	protected void preparePatch(Process process, Process existingProcess) {
 	}
 
 	protected <T, R> List<R> transform(

@@ -40,34 +40,7 @@ public class DataRecordCollectionResourceTest
 		super.setUp();
 
 		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
-	}
-
-	@Ignore
-	@Override
-	public void testGetDataDefinitionDataRecordCollectionsPage()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	public void testGetDataDefinitionDataRecordCollectionsPageWithPagination()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	public void testGetSiteDataRecordCollectionsPage() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	public void testGetSiteDataRecordCollectionsPageWithPagination()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	public void testPutDataRecordCollection() throws Exception {
+		_irrelevantDDMStructure = DataDefinitionTestUtil.addDDMStructure(irrelevantGroup);
 	}
 
 	@Override
@@ -112,6 +85,39 @@ public class DataRecordCollectionResourceTest
 
 	@Override
 	protected DataRecordCollection
+			testPutDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		return invokePostDataDefinitionDataRecordCollection(
+			_ddmStructure.getStructureId(), randomDataRecordCollection());
+	}
+
+	@Override
+	protected DataRecordCollection
+			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
+				Long siteId, DataRecordCollection dataRecordCollection)
+		throws Exception {
+
+		long dataDefinitionId = _ddmStructure.getStructureId();
+
+		if (siteId == _irrelevantDDMStructure.getGroupId()) {
+			dataDefinitionId = _irrelevantDDMStructure.getStructureId();
+		}
+
+		return invokePostDataDefinitionDataRecordCollection(
+			dataDefinitionId, randomDataRecordCollection());
+	}
+
+	@Override
+	protected Long
+			testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId()
+		throws Exception {
+
+		return _ddmStructure.getStructureId();
+	}
+
+	@Override
+	protected DataRecordCollection
 			testPostDataDefinitionDataRecordCollection_addDataRecordCollection(
 				DataRecordCollection dataRecordCollection)
 		throws Exception {
@@ -121,5 +127,6 @@ public class DataRecordCollectionResourceTest
 	}
 
 	private DDMStructure _ddmStructure;
+	private DDMStructure _irrelevantDDMStructure;
 
 }

@@ -296,24 +296,6 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Organization> getUserAccountOrganizationsPage(
-			@GraphQLName("userAccountId") Long userAccountId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_organizationResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			organizationResource -> {
-				Page paginationPage =
-					organizationResource.getUserAccountOrganizationsPage(
-						userAccountId);
-
-				return paginationPage.getItems();
-			});
-	}
-
-	@GraphQLField
-	@GraphQLInvokeDetached
 	public Collection<Phone> getOrganizationPhonesPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {

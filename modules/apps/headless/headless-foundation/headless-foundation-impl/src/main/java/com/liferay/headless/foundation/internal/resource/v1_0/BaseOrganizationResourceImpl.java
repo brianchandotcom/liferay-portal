@@ -112,18 +112,6 @@ public abstract class BaseOrganizationResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	@Override
-	@GET
-	@Path("/user-accounts/{userAccountId}/organizations")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Organization")})
-	public Page<Organization> getUserAccountOrganizationsPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}

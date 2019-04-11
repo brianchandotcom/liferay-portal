@@ -14,7 +14,6 @@ liferayThemeTasks.registerTasks(
 			gulp.hook(
 				'before:build:war',
 				function(done) {
-					console.log(liferayFontAwesome);
 					fs.copy(
 						path.join(liferayFontAwesome, 'font'),
 						path.join('build', 'font')

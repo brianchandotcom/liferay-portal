@@ -52,7 +52,7 @@ if (portletTitleBasedNavigation) {
 
 		<liferay-frontend:info-bar-buttons>
 			<liferay-frontend:info-bar-sidenav-toggler-button
-				icon="info-circle"
+				icon="info-circle-open"
 				label="info"
 			/>
 		</liferay-frontend:info-bar-buttons>

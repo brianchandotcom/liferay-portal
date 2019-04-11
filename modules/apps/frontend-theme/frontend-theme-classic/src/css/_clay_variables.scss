@@ -5,12 +5,6 @@ $dark-color: #272833;
 $input-bg: #F1F2F5;
 $light-color: #E7E7ED;
 
-$theme-color-palette: () !default;
-$theme-color-palette: map-merge((
-	lighter: $gray-100,
-	gray-dark: $gray-800
-), $theme-color-palette);
-
 $lead-font-weight: 400;
 $small-font-size: 0.875rem;
 

@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -38,11 +39,16 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,6 +100,9 @@ public class FragmentEntryLinkExportImportContentProcessor
 				_replaceMappedFieldExportContentReferences(
 					portletDataContext, stagedModel, editableJSONObject,
 					exportReferencedContent);
+
+				_replaceSegmentsExperienceExportContentReferences(
+					portletDataContext, stagedModel, editableJSONObject);
 			}
 		}
 
@@ -131,6 +140,9 @@ public class FragmentEntryLinkExportImportContentProcessor
 					editableProcessorJSONObject.getJSONObject(editableKey);
 
 				_replaceMappedFieldImportContentReferences(
+					portletDataContext, editableJSONObject);
+
+				_replaceSegmentsExperienceImportContentReferences(
 					portletDataContext, editableJSONObject);
 			}
 		}
@@ -307,7 +319,88 @@ public class FragmentEntryLinkExportImportContentProcessor
 		editableJSONObject.put("classPK", classPK);
 	}
 
+	private void _replaceSegmentsExperienceExportContentReferences(
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			JSONObject editableJSONObject)
+		throws Exception {
+
+		Iterator<String> editableKeysIterator = editableJSONObject.keys();
+
+		while (editableKeysIterator.hasNext()) {
+			String editableKey = editableKeysIterator.next();
+
+			if (!editableKey.startsWith(_SEGMENTS_EXPERIENCE_ID)) {
+				continue;
+			}
+
+			long segmentsExperienceId = GetterUtil.getLong(
+				editableKey.substring(_SEGMENTS_EXPERIENCE_ID.length()));
+
+			if (segmentsExperienceId ==
+					SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+
+				continue;
+			}
+
+			FragmentEntryLink fragmentEntryLink =
+				(FragmentEntryLink)stagedModel;
+
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperienceId);
+
+			if (fragmentEntryLink.getClassPK() !=
+					segmentsExperience.getClassPK()) {
+
+				continue;
+			}
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedModel, segmentsExperience,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
+
+	private void _replaceSegmentsExperienceImportContentReferences(
+		PortletDataContext portletDataContext, JSONObject editableJSONObject) {
+
+		Iterator<String> editableKeysIterator = editableJSONObject.keys();
+
+		Set<String> editableKeys = new HashSet();
+
+		editableKeysIterator.forEachRemaining(editableKeys::add);
+
+		for (String editableKey : editableKeys) {
+			if (!editableKey.startsWith(_SEGMENTS_EXPERIENCE_ID)) {
+				continue;
+			}
+
+			long segmentsExperienceId = GetterUtil.getLong(
+				editableKey.substring(_SEGMENTS_EXPERIENCE_ID.length()));
+
+			Map<Long, Long> segmentsExperienceIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					SegmentsExperience.class);
+
+			long importedSegmentsExperienceId = MapUtil.getLong(
+				segmentsExperienceIds, segmentsExperienceId,
+				segmentsExperienceId);
+
+			JSONObject segmentsExperienceJSONObject =
+				editableJSONObject.getJSONObject(editableKey);
+
+			editableJSONObject.remove(editableKey);
+
+			editableJSONObject.put(
+				_SEGMENTS_EXPERIENCE_ID + importedSegmentsExperienceId,
+				segmentsExperienceJSONObject);
+		}
+	}
+
 	private static final String _DDM_TEMPLATE = "ddmTemplate_";
+
+	private static final String _SEGMENTS_EXPERIENCE_ID =
+		"segments-experience-id-";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryLinkExportImportContentProcessor.class);
@@ -320,5 +413,8 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

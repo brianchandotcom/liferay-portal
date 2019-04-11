@@ -23,6 +23,7 @@ dependencies {
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
+	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
 	compileOnly project(":core:petra:petra-function")

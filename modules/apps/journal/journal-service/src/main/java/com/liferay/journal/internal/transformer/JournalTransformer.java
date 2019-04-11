@@ -233,7 +233,8 @@ public class JournalTransformer {
 				templateId, companyId, companyGroupId, articleGroupId);
 
 			Template template = getTemplate(
-				templateId, tokens, languageId, document, script, langType);
+				templateId, tokens, languageId, document, script, langType,
+				propagateException);
 
 			if ((themeDisplay != null) && (themeDisplay.getRequest() != null)) {
 				HttpServletRequest request = themeDisplay.getRequest();
@@ -341,12 +342,7 @@ public class JournalTransformer {
 				template.put("groupId", articleGroupId);
 				template.put("journalTemplatesPath", templatesPath);
 
-				if (propagateException) {
-					template.doProcessTemplate(unsyncStringWriter);
-				}
-				else {
-					template.processTemplate(unsyncStringWriter);
-				}
+				template.processTemplate(unsyncStringWriter);
 			}
 			catch (Exception e) {
 				if (e instanceof DocumentException) {
@@ -448,7 +444,8 @@ public class JournalTransformer {
 
 	protected Template getTemplate(
 			String templateId, Map<String, String> tokens, String languageId,
-			Document document, String script, String langType)
+			Document document, String script, String langType,
+			boolean propagateException)
 		throws Exception {
 
 		TemplateResource templateResource = null;
@@ -464,8 +461,11 @@ public class JournalTransformer {
 			templateResource = new StringTemplateResource(templateId, script);
 		}
 
-		TemplateResource errorTemplateResource = getErrorTemplateResource(
-			langType);
+		TemplateResource errorTemplateResource = null;
+
+		if (!propagateException) {
+			errorTemplateResource = getErrorTemplateResource(langType);
+		}
 
 		return TemplateManagerUtil.getTemplate(
 			langType, templateResource, errorTemplateResource, _restricted);

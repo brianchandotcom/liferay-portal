@@ -155,14 +155,9 @@
 
 			<div class="autofit-col">
 				{if $collaborator.sharingEntryExpirationDate}
-					{let $untilMsg kind="text"}
-						{msg desc=""}until{/msg}
-						{sp}{$collaborator.sharingEntryExpirationDateTooltip}
-					{/let}
-
 					{call ClayIcon.render}
 						{param data: [
-							'title': $untilMsg
+							'title': $collaborator.sharingEntryExpirationDateTooltip
 						] /}
 						{param spritemap: $spritemap /}
 						{param symbol: 'time' /}

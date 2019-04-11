@@ -285,7 +285,10 @@ class ManageCollaborators extends PortletBase {
 	 * @return {String}                [description]
 	 */
 	_getTooltipDate(expirationDate) {
-		return new Date(expirationDate).toLocaleDateString(Liferay.ThemeDisplay.getBCP47LanguageId());
+		return Liferay.Util.sub(
+			Liferay.Language.get('until-x'),
+			new Date(expirationDate).toLocaleDateString(Liferay.ThemeDisplay.getBCP47LanguageId())
+		);
 	}
 
 	/**

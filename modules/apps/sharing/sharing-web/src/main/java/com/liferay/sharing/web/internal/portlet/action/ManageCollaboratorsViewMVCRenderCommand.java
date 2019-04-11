@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -42,6 +44,7 @@ import java.text.Format;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
@@ -149,8 +152,13 @@ public class ManageCollaboratorsViewMVCRenderCommand
 					Format expirationDateTooltipDateFormat =
 						DateFormatFactoryUtil.getDate(themeDisplay.getLocale());
 
-					expirationDateTooltip =
-						expirationDateTooltipDateFormat.format(expirationDate);
+					ResourceBundle resourceBundle =
+						ResourceBundleUtil.getBundle(
+							themeDisplay.getLocale(), getClass());
+
+					expirationDateTooltip = LanguageUtil.format(
+						resourceBundle, "until-x",
+						expirationDateTooltipDateFormat.format(expirationDate));
 				}
 
 				collaboratorJSONObject.put(

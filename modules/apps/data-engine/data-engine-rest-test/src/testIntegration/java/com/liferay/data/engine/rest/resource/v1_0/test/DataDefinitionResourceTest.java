@@ -76,43 +76,25 @@ public class DataDefinitionResourceTest
 	}
 
 	@Override
-	protected void assertValid(DataDefinition dataDefinition) {
-		boolean valid = false;
-
-		if (Objects.equals(
-				dataDefinition.getSiteId(), testGroup.getGroupId()) &&
-			(dataDefinition.getDateCreated() != null) &&
-			(dataDefinition.getDateModified() != null) &&
-			(dataDefinition.getId() != null)) {
-
-			valid = true;
-		}
-
-		Assert.assertTrue(valid);
-	}
-
-	@Override
-	protected boolean equals(
-		DataDefinition dataDefinition1, DataDefinition dataDefinition2) {
-
-		return Arrays.equals(
-			dataDefinition1.getName(), dataDefinition2.getName());
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"name"};
 	}
 
 	@Override
 	protected DataDefinition randomDataDefinition() {
-		return new DataDefinition() {
-			{
-				name = new LocalizedValue[] {
-					new LocalizedValue() {
-						{
-							key = "en_US";
-							value = RandomTestUtil.randomString();
-						}
+		DataDefinition dataDefinition = super.randomDataDefinition();
+		
+		dataDefinition.setName(
+			new LocalizedValue[] {
+				new LocalizedValue() {
+					{
+						key = "en_US";
+						value = RandomTestUtil.randomString();
 					}
-				};
-			}
-		};
+				}
+			});
+
+		return dataDefinition;
 	}
 
 	private static final String _OPERATION_SAVE_PERMISSION = "save";

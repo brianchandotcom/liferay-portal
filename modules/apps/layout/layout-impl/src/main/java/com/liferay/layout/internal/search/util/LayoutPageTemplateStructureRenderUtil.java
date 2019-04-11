@@ -97,8 +97,6 @@ public class LayoutPageTemplateStructureRenderUtil {
 						continue;
 					}
 
-					String renderFragmentEntryLink = StringPool.BLANK;
-
 					DefaultFragmentRendererContext fragmentRendererContext =
 						new DefaultFragmentRendererContext(fragmentEntryLink);
 
@@ -108,9 +106,10 @@ public class LayoutPageTemplateStructureRenderUtil {
 					fragmentRendererContext.setSegmentsExperienceIds(
 						segmentsExperienceIds);
 
-					renderFragmentEntryLink = fragmentRendererController.render(
-						fragmentRendererContext, httpServletRequest,
-						httpServletResponse);
+					String renderFragmentEntryLink =
+						fragmentRendererController.render(
+							fragmentRendererContext, httpServletRequest,
+							httpServletResponse);
 
 					sb.append(renderFragmentEntryLink);
 				}

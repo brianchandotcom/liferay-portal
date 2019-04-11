@@ -122,7 +122,7 @@ class Sharing extends PortletBase {
 		}
 		else {
 			this.fetch(
-				this.sharingUserCheckEmailURL,
+				this.sharingVerifyEmailURL,
 				{
 					email: itemAdded
 				}
@@ -299,7 +299,7 @@ Sharing.STATE = {
 	shareActionURL: Config.string().required(),
 	sharingEntryPermissionDisplayActionId: Config.string().required(),
 	sharingUserAutocompleteURL: Config.string().required(),
-	sharingUserCheckEmailURL: Config.string().required(),
+	sharingVerifyEmailURL: Config.string().required(),
 	spritemap: Config.string().required(),
 	submitting: Config.bool().value(false)
 };

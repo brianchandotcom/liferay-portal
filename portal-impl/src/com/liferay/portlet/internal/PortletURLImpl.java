@@ -1080,17 +1080,21 @@ public class PortletURLImpl
 			}
 		}
 
-		AssetEntry assetEntry = (AssetEntry)_request.getAttribute(
+		Object layoutAssetEntry = _request.getAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY);
 
-		if ((_layout != null) &&
-			Objects.equals(
-				_layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) &&
-			(assetEntry != null)) {
+		if (layoutAssetEntry instanceof AssetEntry) {
+			AssetEntry assetEntry = (AssetEntry)layoutAssetEntry;
 
-			sb.append("assetEntryId=");
-			sb.append(assetEntry.getEntryId());
-			sb.append(StringPool.AMPERSAND);
+			if ((_layout != null) &&
+				Objects.equals(
+					_layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) &&
+				(assetEntry != null)) {
+
+				sb.append("assetEntryId=");
+				sb.append(assetEntry.getEntryId());
+				sb.append(StringPool.AMPERSAND);
+			}
 		}
 
 		Map<String, String[]> portletURLParams = _portletURLParameterMap;

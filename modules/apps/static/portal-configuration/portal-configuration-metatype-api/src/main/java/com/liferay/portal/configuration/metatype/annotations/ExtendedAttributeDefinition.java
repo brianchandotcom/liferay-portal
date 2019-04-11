@@ -41,6 +41,6 @@ public @interface ExtendedAttributeDefinition {
 
 	public String[] nameArguments() default {};
 
-	public boolean uiRequired() default false;
+	public boolean requiredInput() default false;
 
 }

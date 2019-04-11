@@ -40,7 +40,7 @@ public interface GCloudVisionAssetAutoTagProviderCompanyConfiguration {
 	 */
 	@ExtendedAttributeDefinition(
 		descriptionArguments = GCloudVisionAssetAutoTagProviderConstants.API_KEY_DOCS_URL,
-		uiRequired = true
+		requiredInput = true
 	)
 	@Meta.AD(
 		description = "api-key-description", name = "api-key", required = false

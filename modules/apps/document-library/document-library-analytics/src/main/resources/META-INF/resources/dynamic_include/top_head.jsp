@@ -26,16 +26,13 @@
 	var Uri = metalUriSrcUri.default;
 	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
 
-	var downloadClickHandler = dom.delegate(
-		document.body,
-		'click',
-		'a',
-		function(event) {
+	function handleDownloadClick(event) {
+		if (event.target.nodeName.toLowerCase() === 'a') {
 			if (window.Analytics) {
-				var anchor = event.delegateTarget;
 				var uri = new Uri(anchor.href);
 
 				var match = pathnameRegexp.exec(uri.getPathname());
+				var anchor = event.target;
 
 				if (match) {
 					var groupId = match[1];
@@ -67,10 +64,12 @@
 				}
 			}
 		}
-	);
+	}
+
+	document.body.addEventListener('click', handleDownloadClick);
 
 	var onDestroyPortlet = function() {
-		downloadClickHandler.removeListener()
+		document.body.removeEventListener('click', handleDownloadClick);
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
 	}
 

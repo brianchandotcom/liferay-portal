@@ -98,13 +98,67 @@ class Sharing extends PortletBase {
 	}
 
 	/**
+	 * Validates if the email addresses introduced is valid
+	 * and exists as a user.
+	 *
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+	_handleEmailAdded(event) {
+		let {item, selectedItems} = event.data;
+
+		this._userEmailAddresses = selectedItems;
+
+		this.emailErrorMessage = '';
+		this._inputValue = '';
+
+		let itemAdded = item.value;
+
+		if (!this._isEmailValid(itemAdded)) {
+			this.emailErrorMessage = Liferay.Language.get('please-enter-a-valid-email-address');
+			this._inputValue = itemAdded;
+			this._userEmailAddresses.pop();
+		}
+		else {
+			this.fetch(
+				this.sharingUserCheckEmailURL,
+				{
+					email: itemAdded
+				}
+			).then(
+				response => response.json()
+			).then(
+				result => {
+					let {userEmail, userExists} = result;
+
+					if (!userExists) {
+						this.emailErrorMessage = Liferay.Util.sub(Liferay.Language.get('user-x-does-not-exists'), userEmail);
+
+						this._userEmailAddresses = this._userEmailAddresses.filter(
+							item => item.value != userEmail
+						);
+
+						setTimeout(
+							() => {
+								this._inputValue = userEmail;
+							},
+							0
+						);
+					}
+				}
+			);
+		}
+	}
+
+	/**
 	 * Checks wether the input has emails or not.
 	 *
 	 * @param {!Event} event
 	 * @private
 	 * @review
 	 */
-	_handleItemRemoved(event) {
+	_handleEmailRemoved(event) {
 		this._userEmailAddresses = event.data.selectedItems;
 		this._validateRequiredEmail();
 	}
@@ -215,58 +269,6 @@ class Sharing extends PortletBase {
 		this.emailErrorMessage = valid ? '' : Liferay.Language.get('this-field-is-required');
 
 		return valid;
-	}
-
-	/**
-	 * Validates if there are email addresses and all are valid
-	 * @param {!Event} event
-	 * @private
-	 * @review
-	 */
-	_validateEmail(event) {
-		let {item, selectedItems} = event.data;
-
-		this._userEmailAddresses = selectedItems;
-
-		this.emailErrorMessage = '';
-		this._inputValue = '';
-
-		let itemAdded = item.value;
-
-		if (!this._isEmailValid(itemAdded)) {
-			this.emailErrorMessage = Liferay.Language.get('please-enter-a-valid-email-address');
-			this._inputValue = itemAdded;
-			this._userEmailAddresses.pop();
-		}
-		else {
-			this.fetch(
-				this.sharingUserCheckEmailURL,
-				{
-					email: itemAdded
-				}
-			).then(
-				response => response.json()
-			).then(
-				result => {
-					let {userEmail, userExists} = result;
-
-					if (!userExists) {
-						this.emailErrorMessage = Liferay.Util.sub(Liferay.Language.get('user-x-does-not-exists'), userEmail);
-
-						this._userEmailAddresses = this._userEmailAddresses.filter(
-							item => item.value != userEmail
-						);
-
-						setTimeout(
-							() => {
-								this._inputValue = userEmail;
-							},
-							0
-						);
-					}
-				}
-			);
-		}
 	}
 }
 

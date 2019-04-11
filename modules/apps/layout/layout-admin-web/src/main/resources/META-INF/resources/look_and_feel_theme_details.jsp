@@ -203,19 +203,23 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 </c:if>
 
 <c:if test="<%= !colorSchemes.isEmpty() %>">
-	<aui:script use="aui-base">
+	<aui:script use="aui-base, aui-event-key">
 		var colorSchemesContainer = A.one('#<portlet:namespace />colorSchemesContainer');
 
 		colorSchemesContainer.delegate(
-			'click',
+			['click', 'keydown'],
 			function(event) {
-				var currentTarget = event.currentTarget;
+				if (!event.keyCode || event.keyCode === 13 || event.keyCode === 32) {
+					event.preventDefault();
 
-				colorSchemesContainer.all('.color-scheme-selector').removeClass('selected');
+					var currentTarget = event.currentTarget;
 
-				currentTarget.addClass('selected');
+					colorSchemesContainer.all('.color-scheme-selector').removeClass('selected');
 
-				A.one('#<portlet:namespace />regularColorSchemeId').val(currentTarget.attr('data-color-scheme-id'));
+					currentTarget.addClass('selected');
+
+					A.one('#<portlet:namespace />regularColorSchemeId').val(currentTarget.attr('data-color-scheme-id'));
+				}
 			},
 			'.color-scheme-selector'
 		);

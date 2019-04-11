@@ -169,6 +169,10 @@ public class SimulationProductNavigationControlMenuEntry
 			return false;
 		}
 
+		if (isEmbeddedPersonalApplicationLayout(layout)) {
+			return false;
+		}
+
 		String layoutMode = ParamUtil.getString(
 			request, "p_l_mode", Constants.VIEW);
 

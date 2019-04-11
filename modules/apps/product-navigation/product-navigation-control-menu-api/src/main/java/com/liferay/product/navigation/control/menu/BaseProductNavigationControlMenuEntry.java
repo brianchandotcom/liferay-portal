@@ -17,6 +17,9 @@ package com.liferay.product.navigation.control.menu;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.IOException;
 
@@ -115,6 +118,23 @@ public abstract class BaseProductNavigationControlMenuEntry
 
 	@Override
 	public boolean isUseDialog() {
+		return false;
+	}
+
+	protected boolean isEmbeddedPersonalApplicationLayout(Layout layout) {
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		String layoutFriendlyURL = layout.getFriendlyURL();
+
+		if (layout.isSystem() &&
+			layoutFriendlyURL.equals(
+				PropsUtil.get(PropsKeys.CONTROL_PANEL_LAYOUT_FRIENDLY_URL))) {
+
+			return true;
+		}
+
 		return false;
 	}
 

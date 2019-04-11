@@ -158,6 +158,10 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			return false;
 		}
 
+		if (isEmbeddedPersonalApplicationLayout(layout)) {
+			return false;
+		}
+
 		if (!(themeDisplay.isShowLayoutTemplatesIcon() ||
 			  themeDisplay.isShowPageSettingsIcon())) {
 

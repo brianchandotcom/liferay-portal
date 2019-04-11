@@ -34,16 +34,20 @@ else if (Validator.isNull(selLayout)) {
 PluginPackage selPluginPackage = selTheme.getPluginPackage();
 %>
 
-<h5 class="text-default"><liferay-ui:message key="current-theme" /></h5>
+<h4 class="text-default"><liferay-ui:message key="current-theme" /></h4>
 
 <div class="card-horizontal main-content-card">
 	<div class="card-row card-row-padded">
 		<aui:row>
-			<aui:col span="<%= 2 %>">
-				<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-thumbnail theme-screenshot" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
-			</aui:col>
+			<div class="col-6 col-sm-4">
+				<div class="card image-card img-thumbnail">
+					<div class="aspect-ratio aspect-ratio-16-to-9">
+						<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="aspect-ratio-item-flush aspect-ratio-item-top-center img-thumbnail theme-screenshot" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
+					</div>
+				</div>
+			</div>
 
-			<aui:col span="<%= 10 %>">
+			<div class="col-6 col-sm-8">
 				<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getName()) %>">
 					<h4><liferay-ui:message key="name" /></h4>
 
@@ -59,7 +63,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 						<aui:a href="<%= HtmlUtil.escapeHREF(selPluginPackage.getPageURL()) %>" target="_blank"><%= HtmlUtil.escape(selPluginPackage.getAuthor()) %></aui:a>
 					</p>
 				</c:if>
-			</aui:col>
+			</div>
 		</aui:row>
 
 		<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getShortDescription()) %>">
@@ -79,7 +83,23 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 		<c:if test="<%= !colorSchemes.isEmpty() && Validator.isNotNull(selColorScheme) %>">
 			<h4><liferay-ui:message key="color-scheme" /></h4>
 
-			<img alt="" class="img-thumbnail theme-screenshot" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selColorScheme.getName()) %>" />
+			<aui:row>
+				<div class="col-6 col-md-3 col-sm-4">
+					<div class="card image-card img-thumbnail">
+						<div class="aspect-ratio aspect-ratio-16-to-9">
+							<img alt="" class="aspect-ratio-item-flush aspect-ratio-item-top-center img-thumbnail theme-screenshot" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selColorScheme.getName()) %>" />
+						</div>
+
+						<div class="card-body p-2">
+							<div class="card-row">
+								<div class="card-title text-truncate">
+									<%= HtmlUtil.escapeAttribute(selColorScheme.getName()) %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</aui:row>
 		</c:if>
 
 		<%

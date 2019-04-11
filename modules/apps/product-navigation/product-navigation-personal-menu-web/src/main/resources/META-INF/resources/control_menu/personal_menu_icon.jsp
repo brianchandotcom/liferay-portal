@@ -23,14 +23,14 @@
 		<span class="sticker">
 			<span class="inline-item">
 				<liferay-ui:user-portrait
-					cssClass="sticker text-secondary"
+					cssClass="sticker"
 					user="<%= user %>"
 				/>
 			</span>
 
 			<c:if test="<%= themeDisplay.isImpersonated() %>">
 				<span class="sticker sticker-bottom-right sticker-circle sticker-outside sticker-sm sticker-user-icon">
-					<aui:icon cssClass="text-secondary" image="user" markupView="lexicon" />
+					<aui:icon image="user" markupView="lexicon" />
 				</span>
 			</c:if>
 		</span>

@@ -76,7 +76,7 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		_defaultPasswordPolicy.setDefaultPolicy(false);
 
 		_passwordPolicyLocalService.updatePasswordPolicy(

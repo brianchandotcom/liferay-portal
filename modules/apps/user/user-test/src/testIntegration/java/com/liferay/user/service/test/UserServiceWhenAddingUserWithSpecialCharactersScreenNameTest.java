@@ -51,7 +51,7 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_screenNameValidator = ScreenNameValidatorFactory.getInstance();
 
 		if (_screenNameValidator instanceof DefaultScreenNameValidator) {
@@ -64,7 +64,7 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		if (_screenNameValidator instanceof DefaultScreenNameValidator) {
 			ReflectionTestUtil.setFieldValue(
 				_screenNameValidator, _FIELD_KEY, _originalSpecialCharacters);

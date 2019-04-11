@@ -50,7 +50,7 @@ public class UserServiceWhenAddingUserWithNumericScreenNameTest {
 		new LiferayIntegrationTestRule();
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
 	}

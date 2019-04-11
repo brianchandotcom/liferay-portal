@@ -1003,6 +1003,16 @@ else {
 }
 %>
 
+<%
+boolean canEditTitle = showConfigurationIcon;
+
+String layoutFriendlyURL = layout.getFriendlyURL();
+
+if (layout.isSystem() && !layout.isTypeControlPanel() && layoutFriendlyURL.equals(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
+	canEditTitle = false;
+}
+%>
+
 <aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
 	<c:if test="<%= !layoutTypePortlet.hasStateMax() && !themeDisplay.isStatePopUp() %>">
 		Liferay.Portlet.register('<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>');
@@ -1010,7 +1020,7 @@ else {
 
 	Liferay.Portlet.onLoad(
 		{
-			canEditTitle: <%= showConfigurationIcon %>,
+			canEditTitle: <%= canEditTitle %>,
 			columnPos: <%= columnPos %>,
 			isStatic: '<%= staticVar %>',
 			namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(liferayRenderResponse.getNamespace()) %>',

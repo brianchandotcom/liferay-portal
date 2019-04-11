@@ -198,21 +198,21 @@ public class DLAdminDisplayContext {
 	public String getRememberCheckBoxStateURLRegex() {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		if (DLPortletKeys.DOCUMENT_LIBRARY.equals(
+		if (!DLPortletKeys.DOCUMENT_LIBRARY.equals(
 				portletDisplay.getRootPortletId())) {
 
-			if (_folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				return "^[^?]+/" + portletDisplay.getInstanceId() + "\\?";
-			}
-
 			return StringBundler.concat(
-				"^[^?]+/", portletDisplay.getInstanceId(), "/view/" + _folderId,
-				"\\?");
+				"^(?!.*", portletDisplay.getNamespace(),
+				"redirect).*(folderId=", _folderId, ")");
+		}
+
+		if (_folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return "^[^?]+/" + portletDisplay.getInstanceId() + "\\?";
 		}
 
 		return StringBundler.concat(
-			"^(?!.*", portletDisplay.getNamespace(), "redirect).*(folderId=",
-			_folderId, ")");
+			"^[^?]+/", portletDisplay.getInstanceId(), "/view/" + _folderId,
+			"\\?");
 	}
 
 	public long getRepositoryId() {

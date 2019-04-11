@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -34,22 +35,28 @@ public class PoshiAnnotationsOrderCheck extends BaseFileCheck {
 
 		Matcher matcher = _annotationsPattern.matcher(content);
 
-		if (matcher.find()) {
+		while (matcher.find()) {
 			String s = matcher.group();
 
 			String[] annotations = s.split("\n");
 
+			StringBundler sb = new StringBundler();
+
 			Arrays.sort(annotations);
 
+			for (String annotation : annotations) {
+				sb.append(annotation);
+				sb.append("\n");
+			}
+
 			content = StringUtil.replaceFirst(
-				content, matcher.group(),
-				StringUtil.merge(annotations, "\n") + "\n");
+				content, matcher.group(), sb.toString());
 		}
 
 		return content;
 	}
 
 	private static final Pattern _annotationsPattern = Pattern.compile(
-		"(@.+?=.+?\n){2,}(?=definition \\{)");
+		"(^\t*)(@.+?=.+?\n)(\\1(@.+?=.+?\n))+", Pattern.MULTILINE);
 
 }

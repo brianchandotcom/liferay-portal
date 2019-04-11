@@ -1,7 +1,5 @@
 package com.liferay.sharing.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -50,14 +48,8 @@ public class SharingUserCheckEmailMVCResourceCommand extends
 
 		String email = ParamUtil.getString(request, "email");
 
-		User user = null;
-
-		try {
-			user = _userLocalService.getUserByEmailAddress(
-				themeDisplay.getCompanyId(), email);
-		}
-		catch (PortalException e) {
-		}
+		User user =  _userLocalService.fetchUserByEmailAddress(
+			themeDisplay.getCompanyId(), email);
 
 		HttpServletResponse response = _portal.getHttpServletResponse(
 			resourceResponse);
@@ -65,6 +57,7 @@ public class SharingUserCheckEmailMVCResourceCommand extends
 		response.setContentType(ContentTypes.APPLICATION_JSON);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 		jsonObject.put("userEmail", email);
 		jsonObject.put("userExists", user != null);
 
@@ -77,4 +70,5 @@ public class SharingUserCheckEmailMVCResourceCommand extends
 
 	@Reference
 	private UserLocalService _userLocalService;
+
 }

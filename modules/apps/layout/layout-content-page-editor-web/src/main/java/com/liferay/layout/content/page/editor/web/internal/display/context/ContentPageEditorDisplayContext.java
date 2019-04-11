@@ -970,6 +970,8 @@ public class ContentPageEditorDisplayContext {
 						request, "fragmentEntryInvalidContent")) {
 
 					error = true;
+
+					SessionErrors.clear(request);
 				}
 
 				soyContext.putHTML(

@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.journal.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
@@ -53,12 +54,24 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 	@Override
 	public Collection<String> getTagNames(JournalArticle journalArticle) {
 		try {
+			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.class,
+						journalArticle.getCompanyId());
+
+			if (!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+					enabled()) {
+
+				return Collections.emptySet();
+			}
+
 			return _getTagNames(journalArticle);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 	}
 

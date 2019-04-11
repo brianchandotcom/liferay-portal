@@ -71,7 +71,8 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				new DefaultFragmentRendererContext(fragmentEntryLink);
 
 			defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
-			defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
+			defaultFragmentRendererContext.setMode(
+				FragmentEntryLinkConstants.EDIT);
 
 			jsonObject.put(
 				"content",

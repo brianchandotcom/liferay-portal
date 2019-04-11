@@ -459,8 +459,8 @@ public abstract class BaseCommentResourceTestCase {
 	protected Comment testPostBlogPostingComment_addComment(Comment comment)
 		throws Exception {
 
-		return invokePostCommentComment(
-			testGetCommentCommentsPage_getParentCommentId(), comment);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Comment invokePostBlogPostingComment(
@@ -1429,8 +1429,8 @@ public abstract class BaseCommentResourceTestCase {
 	protected Comment testPostDocumentComment_addComment(Comment comment)
 		throws Exception {
 
-		return invokePostCommentComment(
-			testGetCommentCommentsPage_getParentCommentId(), comment);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Comment invokePostDocumentComment(
@@ -1846,8 +1846,8 @@ public abstract class BaseCommentResourceTestCase {
 			Comment comment)
 		throws Exception {
 
-		return invokePostCommentComment(
-			testGetCommentCommentsPage_getParentCommentId(), comment);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Comment invokePostStructuredContentComment(

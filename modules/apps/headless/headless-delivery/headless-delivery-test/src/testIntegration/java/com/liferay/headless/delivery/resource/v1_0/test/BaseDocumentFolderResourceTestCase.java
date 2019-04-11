@@ -1222,9 +1222,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			DocumentFolder documentFolder)
 		throws Exception {
 
-		return invokePostDocumentFolderDocumentFolder(
-			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
-			documentFolder);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected DocumentFolder invokePostSiteDocumentFolder(

@@ -1580,9 +1580,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
-			knowledgeBaseArticle);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected KnowledgeBaseArticle
@@ -2039,9 +2038,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
-		return invokePostKnowledgeBaseArticleKnowledgeBaseArticle(
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId(),
-			knowledgeBaseArticle);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected KnowledgeBaseArticle invokePostSiteKnowledgeBaseArticle(

@@ -1291,9 +1291,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				MessageBoardSection messageBoardSection)
 		throws Exception {
 
-		return invokePostMessageBoardSectionMessageBoardSection(
-			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId(),
-			messageBoardSection);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected MessageBoardSection invokePostSiteMessageBoardSection(

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.template;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -62,13 +61,6 @@ public interface TemplateManager {
 	public String getName();
 
 	public String[] getRestrictedVariables();
-
-	public Template getTemplate(
-		List<TemplateResource> templateResources, boolean restricted);
-
-	public Template getTemplate(
-		List<TemplateResource> templateResources,
-		TemplateResource errorTemplateResource, boolean restricted);
 
 	public Template getTemplate(
 		TemplateResource templateResource, boolean restricted);

@@ -17,29 +17,12 @@ package com.liferay.portal.template;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateResource;
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author Leonardo Barros
  */
 public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
-
-	@Override
-	public Template getTemplate(
-		List<TemplateResource> templateResources, boolean restricted) {
-
-		return getTemplate(templateResources, null, restricted);
-	}
-
-	@Override
-	public Template getTemplate(
-		List<TemplateResource> templateResources,
-		TemplateResource errorTemplateResource, boolean restricted) {
-
-		throw new UnsupportedOperationException(
-			"Template type does not support multi templates");
-	}
 
 	@Override
 	public Template getTemplate(

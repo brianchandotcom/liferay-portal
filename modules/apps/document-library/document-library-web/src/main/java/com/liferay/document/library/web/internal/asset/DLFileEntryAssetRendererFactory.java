@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portlet.documentlibrary.asset.DLFileEntryClassTypeReader;
+import com.liferay.portlet.documentlibrary.asset.model.DLFileEntryClassTypeReader;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.trash.TrashHelper;
 

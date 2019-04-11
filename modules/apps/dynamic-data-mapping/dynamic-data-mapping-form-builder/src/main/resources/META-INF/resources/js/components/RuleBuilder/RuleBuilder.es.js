@@ -196,6 +196,94 @@ class RuleBuilder extends Component {
 		this._eventHandler.removeAllListeners();
 	}
 
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	render() {
+		const {
+			dataProviderInstanceParameterSettingsURL,
+			dataProviderInstancesURL,
+			functionsMetadata,
+			functionsURL,
+			pages,
+			spritemap
+		} = this.props;
+
+		const {
+			dataProvider,
+			index,
+			mode,
+			roles,
+			rules
+		} = this.state;
+
+		return (
+			<div class="container">
+				{mode === 'create' && (
+					<RuleEditor
+						actions={[]}
+						conditions={[]}
+						dataProvider={dataProvider}
+						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
+						dataProviderInstancesURL={dataProviderInstancesURL}
+						events={{
+							ruleAdded: this._handleRuleAdded.bind(this),
+							ruleCancel: this._handleRuleCanceled.bind(this),
+							ruleDeleted: this._handleRuleDeleted.bind(this),
+							ruleEdited: this._handleRuleEdited.bind(this)
+						}}
+						functionsMetadata={functionsMetadata}
+						functionsURL={functionsURL}
+						key={'create'}
+						pages={pages}
+						ref="RuleEditor"
+						roles={roles}
+						spritemap={spritemap}
+					/>
+				)}
+				{mode === 'edit' && (
+					<RuleEditor
+						dataProvider={dataProvider}
+						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
+						dataProviderInstancesURL={dataProviderInstancesURL}
+						events={{
+							ruleAdded: this._handleRuleSaved.bind(this),
+							ruleCancel: this._handleRuleCanceled.bind(this)
+						}}
+						functionsMetadata={functionsMetadata}
+						functionsURL={functionsURL}
+						key={'edit'}
+						pages={pages}
+						ref="RuleEditor"
+						roles={roles}
+						rule={rules[index]}
+						ruleEditedIndex={index}
+						spritemap={spritemap}
+					/>
+				)}
+				{mode === 'view' && (
+					<RuleList
+						dataProvider={dataProvider}
+						events={{
+							ruleAdded: this._handleRuleAdded.bind(this),
+							ruleCancel: this._handleRuleCanceled.bind(this),
+							ruleDeleted: this._handleRuleDeleted.bind(this),
+							ruleEdited: this._handleRuleEdited.bind(this)
+						}}
+						pages={pages}
+						ref="RuleList"
+						roles={roles}
+						rules={rules}
+						spritemap={spritemap}
+					/>
+				)}
+			</div>
+		);
+	}
+
 	rendered() {
 		const {mode} = this.state;
 		const {visible} = this.props;
@@ -212,16 +300,6 @@ class RuleBuilder extends Component {
 		}
 	}
 
-	willReceiveProps({rules}) {
-		if (rules && rules.newVal) {
-			this.setState(
-				{
-					rules: rules.newVal
-				}
-			);
-		}
-	}
-
 	syncVisible(visible) {
 		super.syncVisible(visible);
 
@@ -232,6 +310,16 @@ class RuleBuilder extends Component {
 		}
 		else {
 			this._eventHandler.removeAllListeners();
+		}
+	}
+
+	willReceiveProps({rules}) {
+		if (rules && rules.newVal) {
+			this.setState(
+				{
+					rules: rules.newVal
+				}
+			);
 		}
 	}
 
@@ -402,94 +490,6 @@ class RuleBuilder extends Component {
 			{
 				mode: 'view'
 			}
-		);
-	}
-
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	render() {
-		const {
-			dataProviderInstanceParameterSettingsURL,
-			dataProviderInstancesURL,
-			functionsMetadata,
-			functionsURL,
-			pages,
-			spritemap
-		} = this.props;
-
-		const {
-			dataProvider,
-			index,
-			mode,
-			roles,
-			rules
-		} = this.state;
-
-		return (
-			<div class="container">
-				{mode === 'create' && (
-					<RuleEditor
-						actions={[]}
-						conditions={[]}
-						dataProvider={dataProvider}
-						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
-						dataProviderInstancesURL={dataProviderInstancesURL}
-						events={{
-							ruleAdded: this._handleRuleAdded.bind(this),
-							ruleCancel: this._handleRuleCanceled.bind(this),
-							ruleDeleted: this._handleRuleDeleted.bind(this),
-							ruleEdited: this._handleRuleEdited.bind(this)
-						}}
-						functionsMetadata={functionsMetadata}
-						functionsURL={functionsURL}
-						key={'create'}
-						pages={pages}
-						ref="RuleEditor"
-						roles={roles}
-						spritemap={spritemap}
-					/>
-				)}
-				{mode === 'edit' && (
-					<RuleEditor
-						dataProvider={dataProvider}
-						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
-						dataProviderInstancesURL={dataProviderInstancesURL}
-						events={{
-							ruleAdded: this._handleRuleSaved.bind(this),
-							ruleCancel: this._handleRuleCanceled.bind(this)
-						}}
-						functionsMetadata={functionsMetadata}
-						functionsURL={functionsURL}
-						key={'edit'}
-						pages={pages}
-						ref="RuleEditor"
-						roles={roles}
-						rule={rules[index]}
-						ruleEditedIndex={index}
-						spritemap={spritemap}
-					/>
-				)}
-				{mode === 'view' && (
-					<RuleList
-						dataProvider={dataProvider}
-						events={{
-							ruleAdded: this._handleRuleAdded.bind(this),
-							ruleCancel: this._handleRuleCanceled.bind(this),
-							ruleDeleted: this._handleRuleDeleted.bind(this),
-							ruleEdited: this._handleRuleEdited.bind(this)
-						}}
-						pages={pages}
-						ref="RuleList"
-						roles={roles}
-						rules={rules}
-						spritemap={spritemap}
-					/>
-				)}
-			</div>
 		);
 	}
 }

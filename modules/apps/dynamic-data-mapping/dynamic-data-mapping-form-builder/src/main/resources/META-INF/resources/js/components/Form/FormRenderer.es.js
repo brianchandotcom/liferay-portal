@@ -52,10 +52,6 @@ class FormRenderer extends Component {
 		spritemap: Config.string().required()
 	};
 
-	_handleFieldClicked(index) {
-		this.emit('fieldClicked', index);
-	}
-
 	/**
 	 * @param {!Object} event
 	 * @private
@@ -63,6 +59,10 @@ class FormRenderer extends Component {
 
 	_handleFieldBlurred(event) {
 		this.emit('fieldBlurred', event);
+	}
+
+	_handleFieldClicked(index) {
+		this.emit('fieldClicked', index);
 	}
 
 	/**

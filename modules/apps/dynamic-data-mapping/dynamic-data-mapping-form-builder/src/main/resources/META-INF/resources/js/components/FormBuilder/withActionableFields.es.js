@@ -7,23 +7,6 @@ import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 
 class Actions extends Component {
-
-	_handleDeleteButtonClicked(event) {
-		const indexes = FormSupport.getIndexes(
-			dom.closest(event.target, '.col-ddm')
-		);
-
-		this.emit('fieldDeleted', {indexes});
-	}
-
-	_handleDuplicateButtonClicked(event) {
-		const indexes = FormSupport.getIndexes(
-			dom.closest(event.target, '.col-ddm')
-		);
-
-		this.emit('fieldDuplicated', indexes);
-	}
-
 	render() {
 		const {spritemap} = this.props;
 
@@ -55,6 +38,22 @@ class Actions extends Component {
 			</div>
 		);
 	}
+
+	_handleDeleteButtonClicked(event) {
+		const indexes = FormSupport.getIndexes(
+			dom.closest(event.target, '.col-ddm')
+		);
+
+		this.emit('fieldDeleted', {indexes});
+	}
+
+	_handleDuplicateButtonClicked(event) {
+		const indexes = FormSupport.getIndexes(
+			dom.closest(event.target, '.col-ddm')
+		);
+
+		this.emit('fieldDuplicated', indexes);
+	}
 }
 
 const withActionableFields = ChildComponent => {
@@ -85,47 +84,6 @@ const withActionableFields = ChildComponent => {
 			this._eventHandler.removeAllListeners();
 		}
 
-		_handleFieldDuplicated(indexes) {
-			const {store} = this.context;
-
-			store.emit('fieldDuplicated', indexes);
-		}
-
-		_handleDeleteConfirmationModalButtonClicked(event) {
-			const {store} = this.context;
-			const {target} = event;
-			const {deleteModal} = this.refs;
-			const {indexes} = this.state;
-
-			event.stopPropagation();
-
-			deleteModal.emit('hide');
-
-			if (!target.classList.contains('close-modal')) {
-				store.emit('fieldDeleted', {indexes});
-			}
-		}
-
-		_handleDeleteRequest({indexes}) {
-			this.setState(
-				{
-					indexes
-				}
-			);
-
-			this.showDeleteConfirmationModal();
-		}
-
-		_handleDuplicateRequest(indexes) {
-			this._handleFieldDuplicated(indexes);
-		}
-
-		_handleMouseEnterField({delegateTarget}) {
-			if (this.isActionsEnabled()) {
-				dom.append(delegateTarget, this.refs.actions.element);
-			}
-		}
-
 		getEvents() {
 			return {
 				fieldDeleted: this._handleDeleteRequest.bind(this),
@@ -137,12 +95,6 @@ const withActionableFields = ChildComponent => {
 			const {defaultLanguageId, editingLanguageId} = this.props;
 
 			return defaultLanguageId === editingLanguageId;
-		}
-
-		showDeleteConfirmationModal() {
-			const {deleteModal} = this.refs;
-
-			deleteModal.show();
 		}
 
 		render() {
@@ -187,6 +139,53 @@ const withActionableFields = ChildComponent => {
 					)}
 				</div>
 			);
+		}
+
+		showDeleteConfirmationModal() {
+			const {deleteModal} = this.refs;
+
+			deleteModal.show();
+		}
+
+		_handleDeleteConfirmationModalButtonClicked(event) {
+			const {store} = this.context;
+			const {target} = event;
+			const {deleteModal} = this.refs;
+			const {indexes} = this.state;
+
+			event.stopPropagation();
+
+			deleteModal.emit('hide');
+
+			if (!target.classList.contains('close-modal')) {
+				store.emit('fieldDeleted', {indexes});
+			}
+		}
+
+		_handleDeleteRequest({indexes}) {
+			this.setState(
+				{
+					indexes
+				}
+			);
+
+			this.showDeleteConfirmationModal();
+		}
+
+		_handleDuplicateRequest(indexes) {
+			this._handleFieldDuplicated(indexes);
+		}
+
+		_handleFieldDuplicated(indexes) {
+			const {store} = this.context;
+
+			store.emit('fieldDuplicated', indexes);
+		}
+
+		_handleMouseEnterField({delegateTarget}) {
+			if (this.isActionsEnabled()) {
+				dom.append(delegateTarget, this.refs.actions.element);
+			}
 		}
 	}
 

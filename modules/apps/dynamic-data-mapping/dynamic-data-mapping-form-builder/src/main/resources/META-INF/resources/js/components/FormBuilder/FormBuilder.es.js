@@ -86,11 +86,6 @@ class FormBuilder extends Component {
 		rules: Config.arrayOf(ruleStructure).required()
 	};
 
-	created() {
-		this._eventHandler = new EventHandler();
-		this._handleCancelChangesModalButtonClicked = this._handleCancelChangesModalButtonClicked.bind(this);
-	}
-
 	attached() {
 		const {activePage, pages} = this.props;
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
@@ -106,45 +101,147 @@ class FormBuilder extends Component {
 		}
 	}
 
+	created() {
+		this._eventHandler = new EventHandler();
+		this._handleCancelChangesModalButtonClicked = this._handleCancelChangesModalButtonClicked.bind(this);
+	}
+
 	disposeInternal() {
 		super.disposeInternal();
 
 		this._eventHandler.removeAllListeners();
 	}
 
+	getFormRendererEvents() {
+		return {
+			fieldClicked: this._handleFieldClicked.bind(this)
+		};
+	}
+
+	getSidebarEvents() {
+		return {
+			fieldAdded: this._handleFieldAdded.bind(this),
+			fieldBlurred: this._handleSidebarFieldBlurred.bind(this),
+			fieldChangesCanceled: this._handleCancelFieldChangesModal.bind(this),
+			fieldDeleted: this._handleFieldDeleted.bind(this),
+			fieldDuplicated: this._handleFieldDuplicated.bind(this),
+			focusedFieldUpdated: this._handleFocusedFieldUpdated.bind(this),
+			settingsFieldBlurred: this._handleSettingsFieldBlurred.bind(this),
+			settingsFieldEdited: this._handleSettingsFieldEdited.bind(this)
+		};
+	}
+
+	openSidebar() {
+		const {sidebar} = this.refs;
+
+		sidebar.open();
+	}
+
+	preparePagesForRender(pages) {
+		const visitor = new PagesVisitor(pages);
+
+		return visitor.mapFields(
+			field => {
+				if (field.type === 'select' && field.dataSourceType !== 'manual') {
+					field = {
+						...field,
+						options: [
+							{
+								label: Liferay.Language.get('dynamically-loaded-data'),
+								value: 'dynamic'
+							}
+						],
+						value: 'dynamic'
+					};
+				}
+
+				return field;
+			}
+		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+
+	render() {
+		const {props} = this;
+		const {
+			activePage,
+			defaultLanguageId,
+			editingLanguageId,
+			fieldTypes,
+			focusedField,
+			namespace,
+			pages,
+			paginationMode,
+			rules,
+			spritemap,
+			visible
+		} = props;
+
+		return (
+			<div>
+				<div class="container ddm-form-builder">
+					<div class="sheet">
+						<FormRenderer
+							activePage={activePage}
+							editable={true}
+							editingLanguageId={editingLanguageId}
+							events={this.getFormRendererEvents()}
+							pages={this.preparePagesForRender(pages)}
+							paginationMode={paginationMode}
+							ref="FormRenderer"
+							spritemap={spritemap}
+						/>
+
+						<ClayModal
+							body={Liferay.Language.get('are-you-sure-you-want-to-cancel')}
+							events={{
+								clickButton: this._handleCancelChangesModalButtonClicked
+							}}
+							footerButtons={[
+								{
+									alignment: 'right',
+									label: Liferay.Language.get('dismiss'),
+									style: 'primary',
+									type: 'close'
+								},
+								{
+									alignment: 'right',
+									label: Liferay.Language.get('yes-cancel'),
+									style: 'primary',
+									type: 'button'
+								}
+							]}
+							ref="cancelChangesModal"
+							size="sm"
+							spritemap={spritemap}
+							title={Liferay.Language.get('cancel-field-changes-question')}
+						/>
+					</div>
+				</div>
+
+				<Sidebar
+					defaultLanguageId={defaultLanguageId}
+					editingLanguageId={editingLanguageId}
+					events={this.getSidebarEvents()}
+					fieldTypes={fieldTypes}
+					focusedField={focusedField}
+					namespace={namespace}
+					ref="sidebar"
+					rules={rules}
+					spritemap={spritemap}
+					visible={visible}
+				/>
+			</div>
+		);
+	}
+
 	rendered() {
 		const {sidebar} = this.refs;
 
 		sidebar.refreshDragAndDrop();
-	}
-
-	willReceiveProps(changes) {
-		let {activePage, pages} = this.props;
-		let openSidebar = false;
-
-		if (changes.activePage && changes.activePage.newVal !== -1) {
-			activePage = changes.activePage.newVal;
-
-			if (!this._pageHasFields(pages, activePage)) {
-				openSidebar = true;
-			}
-		}
-
-		if (
-			changes.pages &&
-			changes.pages.prevVal &&
-			changes.pages.newVal.length !== changes.pages.prevVal.length
-		) {
-			pages = changes.pages.newVal;
-
-			if (!this._pageHasFields(pages, activePage)) {
-				openSidebar = true;
-			}
-		}
-
-		if (openSidebar) {
-			this.openSidebar();
-		}
 	}
 
 	syncEditingLanguageId(editingLanguageId) {
@@ -178,80 +275,33 @@ class FormBuilder extends Component {
 		}
 	}
 
-	openSidebar() {
-		const {sidebar} = this.refs;
+	willReceiveProps(changes) {
+		let {activePage, pages} = this.props;
+		let openSidebar = false;
 
-		sidebar.open();
-	}
+		if (changes.activePage && changes.activePage.newVal !== -1) {
+			activePage = changes.activePage.newVal;
 
-	preparePagesForRender(pages) {
-		const visitor = new PagesVisitor(pages);
-
-		return visitor.mapFields(
-			field => {
-				if (field.type === 'select' && field.dataSourceType !== 'manual') {
-					field = {
-						...field,
-						options: [
-							{
-								label: Liferay.Language.get('dynamically-loaded-data'),
-								value: 'dynamic'
-							}
-						],
-						value: 'dynamic'
-					};
-				}
-
-				return field;
+			if (!this._pageHasFields(pages, activePage)) {
+				openSidebar = true;
 			}
-		);
-	}
-
-	_handleSettingsFieldEdited({fieldInstance, value}) {
-		if (fieldInstance && !fieldInstance.isDisposed()) {
-			const {editingLanguageId} = this.props;
-			const {fieldName} = fieldInstance;
-			const {store} = this.context;
-
-			store.emit(
-				'fieldEdited',
-				{
-					editingLanguageId,
-					propertyName: fieldName,
-					propertyValue: value
-				}
-			);
 		}
-	}
 
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
-	_handleSettingsFieldBlurred({fieldInstance, value}) {
-		const {store} = this.context;
-		const {editingLanguageId} = this.props;
-		const {fieldName} = fieldInstance;
+		if (
+			changes.pages &&
+			changes.pages.prevVal &&
+			changes.pages.newVal.length !== changes.pages.prevVal.length
+		) {
+			pages = changes.pages.newVal;
 
-		store.emit(
-			'fieldBlurred',
-			{
-				editingLanguageId,
-				propertyName: fieldName,
-				propertyValue: value
+			if (!this._pageHasFields(pages, activePage)) {
+				openSidebar = true;
 			}
-		);
-	}
+		}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
-	_handleSidebarFieldBlurred() {
-		const {store} = this.context;
-
-		store.emit('sidebarFieldBlurred');
+		if (openSidebar) {
+			this.openSidebar();
+		}
 	}
 
 	/**
@@ -376,6 +426,53 @@ class FormBuilder extends Component {
 		);
 	}
 
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+	_handleSettingsFieldBlurred({fieldInstance, value}) {
+		const {store} = this.context;
+		const {editingLanguageId} = this.props;
+		const {fieldName} = fieldInstance;
+
+		store.emit(
+			'fieldBlurred',
+			{
+				editingLanguageId,
+				propertyName: fieldName,
+				propertyValue: value
+			}
+		);
+	}
+
+	_handleSettingsFieldEdited({fieldInstance, value}) {
+		if (fieldInstance && !fieldInstance.isDisposed()) {
+			const {editingLanguageId} = this.props;
+			const {fieldName} = fieldInstance;
+			const {store} = this.context;
+
+			store.emit(
+				'fieldEdited',
+				{
+					editingLanguageId,
+					propertyName: fieldName,
+					propertyValue: value
+				}
+			);
+		}
+	}
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Event} event
+	 * @private
+	 */
+	_handleSidebarFieldBlurred() {
+		const {store} = this.context;
+
+		store.emit('sidebarFieldBlurred');
+	}
+
 	_isOutsideModal(node) {
 		return !dom.closest(node, '.close-modal');
 	}
@@ -398,103 +495,6 @@ class FormBuilder extends Component {
 		);
 
 		return hasFields;
-	}
-
-	getFormRendererEvents() {
-		return {
-			fieldClicked: this._handleFieldClicked.bind(this)
-		};
-	}
-
-	getSidebarEvents() {
-		return {
-			fieldAdded: this._handleFieldAdded.bind(this),
-			fieldBlurred: this._handleSidebarFieldBlurred.bind(this),
-			fieldChangesCanceled: this._handleCancelFieldChangesModal.bind(this),
-			fieldDeleted: this._handleFieldDeleted.bind(this),
-			fieldDuplicated: this._handleFieldDuplicated.bind(this),
-			focusedFieldUpdated: this._handleFocusedFieldUpdated.bind(this),
-			settingsFieldBlurred: this._handleSettingsFieldBlurred.bind(this),
-			settingsFieldEdited: this._handleSettingsFieldEdited.bind(this)
-		};
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-
-	render() {
-		const {props} = this;
-		const {
-			activePage,
-			defaultLanguageId,
-			editingLanguageId,
-			fieldTypes,
-			focusedField,
-			namespace,
-			pages,
-			paginationMode,
-			rules,
-			spritemap,
-			visible
-		} = props;
-
-		return (
-			<div>
-				<div class="container ddm-form-builder">
-					<div class="sheet">
-						<FormRenderer
-							activePage={activePage}
-							editable={true}
-							editingLanguageId={editingLanguageId}
-							events={this.getFormRendererEvents()}
-							pages={this.preparePagesForRender(pages)}
-							paginationMode={paginationMode}
-							ref="FormRenderer"
-							spritemap={spritemap}
-						/>
-
-						<ClayModal
-							body={Liferay.Language.get('are-you-sure-you-want-to-cancel')}
-							events={{
-								clickButton: this._handleCancelChangesModalButtonClicked
-							}}
-							footerButtons={[
-								{
-									alignment: 'right',
-									label: Liferay.Language.get('dismiss'),
-									style: 'primary',
-									type: 'close'
-								},
-								{
-									alignment: 'right',
-									label: Liferay.Language.get('yes-cancel'),
-									style: 'primary',
-									type: 'button'
-								}
-							]}
-							ref="cancelChangesModal"
-							size="sm"
-							spritemap={spritemap}
-							title={Liferay.Language.get('cancel-field-changes-question')}
-						/>
-					</div>
-				</div>
-
-				<Sidebar
-					defaultLanguageId={defaultLanguageId}
-					editingLanguageId={editingLanguageId}
-					events={this.getSidebarEvents()}
-					fieldTypes={fieldTypes}
-					focusedField={focusedField}
-					namespace={namespace}
-					ref="sidebar"
-					rules={rules}
-					spritemap={spritemap}
-					visible={visible}
-				/>
-			</div>
-		);
 	}
 }
 

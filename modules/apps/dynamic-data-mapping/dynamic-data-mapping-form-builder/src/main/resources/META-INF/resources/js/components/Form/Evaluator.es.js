@@ -48,6 +48,67 @@ const WithEvaluator = ChildComponent => {
 			this.evaluate = debounce(this.evaluate.bind(this), 300);
 		}
 
+		evaluate(fieldInstance) {
+			if (!this.isDisposed()) {
+				const {
+					editingLanguageId,
+					formContext,
+					url
+				} = this.props;
+				const {pages} = this.state;
+
+				let fieldName;
+
+				if (fieldInstance && !fieldInstance.isDisposed()) {
+					fieldName = fieldInstance.fieldName;
+				}
+
+				makeFetch(
+					{
+						body: convertToSearchParams(
+							{
+								languageId: editingLanguageId,
+								p_auth: Liferay.authToken,
+								serializedFormContext: JSON.stringify(formContext),
+								trigger: fieldName
+							}
+						),
+						url
+					}
+				).then(
+					newPages => {
+						const mergedPages = this._mergePages(pages, newPages);
+
+						if (!this.isDisposed()) {
+							this.emit('evaluated', mergedPages);
+						}
+					}
+				);
+			}
+		}
+
+		/**
+		 * Render the call of it's children
+		 * @return {function}
+		 */
+
+		render() {
+			const {pages} = this.state;
+			const {editingLanguageId, events} = this.props;
+
+			return (
+				<ChildComponent
+					{...this.props}
+					editingLanguageId={editingLanguageId}
+					events={{
+						...events,
+						fieldEdited: this._handleFieldEdited.bind(this)
+					}}
+					pages={pages}
+				/>
+			);
+		}
+
 		willReceiveProps(props) {
 			const {formContext} = props;
 
@@ -162,67 +223,6 @@ const WithEvaluator = ChildComponent => {
 			const {formContext} = this.props;
 
 			return formContext.pages;
-		}
-
-		evaluate(fieldInstance) {
-			if (!this.isDisposed()) {
-				const {
-					editingLanguageId,
-					formContext,
-					url
-				} = this.props;
-				const {pages} = this.state;
-
-				let fieldName;
-
-				if (fieldInstance && !fieldInstance.isDisposed()) {
-					fieldName = fieldInstance.fieldName;
-				}
-
-				makeFetch(
-					{
-						body: convertToSearchParams(
-							{
-								languageId: editingLanguageId,
-								p_auth: Liferay.authToken,
-								serializedFormContext: JSON.stringify(formContext),
-								trigger: fieldName
-							}
-						),
-						url
-					}
-				).then(
-					newPages => {
-						const mergedPages = this._mergePages(pages, newPages);
-
-						if (!this.isDisposed()) {
-							this.emit('evaluated', mergedPages);
-						}
-					}
-				);
-			}
-		}
-
-		/**
-		 * Render the call of it's children
-		 * @return {function}
-		 */
-
-		render() {
-			const {pages} = this.state;
-			const {editingLanguageId, events} = this.props;
-
-			return (
-				<ChildComponent
-					{...this.props}
-					editingLanguageId={editingLanguageId}
-					events={{
-						...events,
-						fieldEdited: this._handleFieldEdited.bind(this)
-					}}
-					pages={pages}
-				/>
-			);
 		}
 	}
 

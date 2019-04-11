@@ -37,6 +37,103 @@ const withMultiplePages = ChildComponent => {
 			dropdownExpanded: Config.bool().value(false).internal()
 		}
 
+		getPages() {
+			let {pages} = this.props;
+			const {successPageSettings} = this.props;
+
+			if (successPageSettings.enabled) {
+				pages = [
+					...pages,
+					{
+						contentRenderer: 'success',
+						paginationItemRenderer: 'success',
+						rows: [],
+						successPageSettings
+					}
+				];
+			}
+
+			return pages;
+		}
+
+		getPaginationPosition() {
+			const {pages, paginationMode} = this.props;
+			const position = paginationMode === 'wizard' ? 'top' : 'bottom';
+
+			return pages.length > 1 ? position : 'top';
+		}
+
+		isDropdownDisabled() {
+			const {defaultLanguageId, editingLanguageId} = this.props;
+
+			return defaultLanguageId !== editingLanguageId;
+		}
+
+		render() {
+			const {dropdownExpanded} = this.state;
+			const {spritemap} = this.props;
+
+			return (
+				<div class={`container ddm-paginated-builder ${this.getPaginationPosition()}`}>
+					<ChildComponent
+						{...this.props}
+						pages={this.getPages()}
+					/>
+
+					<ClayActionsDropdown
+						disabled={this.isDropdownDisabled()}
+						elementClasses={'ddm-paginated-builder-dropdown'}
+						events={{
+							expandedChanged: this._handleExpandedChanged.bind(this),
+							itemClicked: this._handleDropdownItemClicked.bind(this)
+						}}
+						expanded={dropdownExpanded}
+						items={this._getPageSettingsItems()}
+						spritemap={spritemap}
+					/>
+				</div>
+			);
+		}
+
+		_addPage() {
+			const {dispatch} = this.context;
+
+			dispatch('pageAdded');
+		}
+
+		_addSuccessPage() {
+			const {dispatch} = this.context;
+			const {pages} = this.props;
+
+			this._updateSuccessPage(
+				{
+					body: Liferay.Language.get('your-information-was-successfully-received-thanks-for-fill-out'),
+					enabled: true,
+					title: Liferay.Language.get('done')
+				}
+			);
+
+			dispatch('activePageUpdated', pages.length);
+		}
+
+		_deletePage() {
+			const {dispatch} = this.context;
+
+			dispatch('pageDeleted', this.props.activePage);
+		}
+
+		_deleteSuccessPage() {
+			const {dispatch} = this.context;
+
+			this._updateSuccessPage(
+				{
+					enabled: false
+				}
+			);
+
+			dispatch('activePageUpdated', this.props.pages.length - 1);
+		}
+
 		_getPageSettingsItems() {
 			const {
 				pages,
@@ -94,68 +191,6 @@ const withMultiplePages = ChildComponent => {
 			return pageSettingsItems;
 		}
 
-		_handleExpandedChanged({newVal}) {
-			this.setState(
-				{
-					dropdownExpanded: newVal
-				}
-			);
-		}
-
-		_addPage() {
-			const {dispatch} = this.context;
-
-			dispatch('pageAdded');
-		}
-
-		_addSuccessPage() {
-			const {dispatch} = this.context;
-			const {pages} = this.props;
-
-			this._updateSuccessPage(
-				{
-					body: Liferay.Language.get('your-information-was-successfully-received-thanks-for-fill-out'),
-					enabled: true,
-					title: Liferay.Language.get('done')
-				}
-			);
-
-			dispatch('activePageUpdated', pages.length);
-		}
-
-		_updateSuccessPage({body = '', title = '', enabled}) {
-			const {dispatch} = this.context;
-			const {editingLanguageId} = this.props;
-			const successPageSettings = {
-				body: {},
-				enabled,
-				title: {}
-			};
-
-			setValue(successPageSettings, editingLanguageId, 'body', body);
-			setValue(successPageSettings, editingLanguageId, 'title', title);
-
-			dispatch('successPageChanged', successPageSettings);
-		}
-
-		_deletePage() {
-			const {dispatch} = this.context;
-
-			dispatch('pageDeleted', this.props.activePage);
-		}
-
-		_deleteSuccessPage() {
-			const {dispatch} = this.context;
-
-			this._updateSuccessPage(
-				{
-					enabled: false
-				}
-			);
-
-			dispatch('activePageUpdated', this.props.pages.length - 1);
-		}
-
 		_handleDropdownItemClicked({data}) {
 			const {activePage, successPageSettings} = this.props;
 			const {settingsItem} = data.item;
@@ -188,10 +223,12 @@ const withMultiplePages = ChildComponent => {
 			}
 		}
 
-		_switchPaginationMode() {
-			const {dispatch} = this.context;
-
-			dispatch('paginationModeUpdated');
+		_handleExpandedChanged({newVal}) {
+			this.setState(
+				{
+					dropdownExpanded: newVal
+				}
+			);
 		}
 
 		_resetPage() {
@@ -200,62 +237,25 @@ const withMultiplePages = ChildComponent => {
 			dispatch('pageReset');
 		}
 
-		isDropdownDisabled() {
-			const {defaultLanguageId, editingLanguageId} = this.props;
+		_switchPaginationMode() {
+			const {dispatch} = this.context;
 
-			return defaultLanguageId !== editingLanguageId;
+			dispatch('paginationModeUpdated');
 		}
 
-		getPages() {
-			let {pages} = this.props;
-			const {successPageSettings} = this.props;
+		_updateSuccessPage({body = '', title = '', enabled}) {
+			const {dispatch} = this.context;
+			const {editingLanguageId} = this.props;
+			const successPageSettings = {
+				body: {},
+				enabled,
+				title: {}
+			};
 
-			if (successPageSettings.enabled) {
-				pages = [
-					...pages,
-					{
-						contentRenderer: 'success',
-						paginationItemRenderer: 'success',
-						rows: [],
-						successPageSettings
-					}
-				];
-			}
+			setValue(successPageSettings, editingLanguageId, 'body', body);
+			setValue(successPageSettings, editingLanguageId, 'title', title);
 
-			return pages;
-		}
-
-		getPaginationPosition() {
-			const {pages, paginationMode} = this.props;
-			const position = paginationMode === 'wizard' ? 'top' : 'bottom';
-
-			return pages.length > 1 ? position : 'top';
-		}
-
-		render() {
-			const {dropdownExpanded} = this.state;
-			const {spritemap} = this.props;
-
-			return (
-				<div class={`container ddm-paginated-builder ${this.getPaginationPosition()}`}>
-					<ChildComponent
-						{...this.props}
-						pages={this.getPages()}
-					/>
-
-					<ClayActionsDropdown
-						disabled={this.isDropdownDisabled()}
-						elementClasses={'ddm-paginated-builder-dropdown'}
-						events={{
-							expandedChanged: this._handleExpandedChanged.bind(this),
-							itemClicked: this._handleDropdownItemClicked.bind(this)
-						}}
-						expanded={dropdownExpanded}
-						items={this._getPageSettingsItems()}
-						spritemap={spritemap}
-					/>
-				</div>
-			);
+			dispatch('successPageChanged', successPageSettings);
 		}
 	}
 

@@ -14,6 +14,8 @@ import {Config} from 'metal-state';
 class Calculator extends Component {
 
 	static STATE = {
+		expression: Config.string().value(''),
+
 		fields: Config.arrayOf(
 			Config.shapeOf(
 				{
@@ -27,23 +29,11 @@ class Calculator extends Component {
 
 		functions: Config.array().value([]),
 
-		expression: Config.string().value(''),
-
 		index: Config.number().value(0),
 
 		repeatableFields: Config.array().valueFn('_repeatableFieldsValueFn'),
 
 		spritemap: Config.string().required()
-	}
-
-	prepareStateForRender(state) {
-		const {expression} = state;
-
-		return {
-			...state,
-			...this.getStateBasedOnExpression(expression),
-			expression: expression.replace(/[\[\]]/g, '')
-		};
 	}
 
 	addTokenToExpression(tokenType, tokenValue) {
@@ -118,6 +108,16 @@ class Calculator extends Component {
 		};
 	}
 
+	prepareStateForRender(state) {
+		const {expression} = state;
+
+		return {
+			...state,
+			...this.getStateBasedOnExpression(expression),
+			expression: expression.replace(/[\[\]]/g, '')
+		};
+	}
+
 	removeTokenFromExpression() {
 		const {expression, index} = this;
 		const tokens = Tokenizer.tokenize(expression);
@@ -181,20 +181,6 @@ class Calculator extends Component {
 		);
 	}
 
-	_handleFunctionsDropdownItemClicked({data}) {
-		const {item} = data;
-
-		this.addTokenToExpression(Token.FUNCTION, item.value);
-		this.addTokenToExpression(Token.LEFT_PARENTHESIS, '(');
-	}
-
-	_handleFieldsDropdownItemClicked({data}) {
-		const {item} = data;
-		const {fieldName} = item;
-
-		this.addTokenToExpression(Token.VARIABLE, fieldName);
-	}
-
 	_handleButtonClicked({delegateTarget}) {
 		const {tokenType, tokenValue} = delegateTarget.dataset;
 
@@ -204,6 +190,20 @@ class Calculator extends Component {
 		else {
 			this.addTokenToExpression(tokenType, tokenValue);
 		}
+	}
+
+	_handleFieldsDropdownItemClicked({data}) {
+		const {item} = data;
+		const {fieldName} = item;
+
+		this.addTokenToExpression(Token.VARIABLE, fieldName);
+	}
+
+	_handleFunctionsDropdownItemClicked({data}) {
+		const {item} = data;
+
+		this.addTokenToExpression(Token.FUNCTION, item.value);
+		this.addTokenToExpression(Token.LEFT_PARENTHESIS, '(');
 	}
 
 	_repeatableFieldsValueFn() {

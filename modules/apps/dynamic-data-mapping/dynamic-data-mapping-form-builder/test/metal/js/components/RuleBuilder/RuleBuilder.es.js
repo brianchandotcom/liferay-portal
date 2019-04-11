@@ -94,6 +94,7 @@ const baseConfig = {
 			]
 		}
 	],
+	rolesURL: '/o/dynamic-data-mapping-form-builder-roles/',
 	rules: [
 		{
 			actions: [
@@ -146,9 +147,6 @@ const baseConfig = {
 		}
 	],
 	spritemap,
-
-	rolesURL: '/o/dynamic-data-mapping-form-builder-roles/',
-
 	url: '/o/dynamic-data-mapping-form-builder-roles/'
 };
 

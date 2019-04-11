@@ -100,23 +100,6 @@ class LayoutProvider extends Component {
 		 * @default undefined
 		 * @instance
 		 * @memberof LayoutProvider
-		 * @type {?array}
-		 */
-
-		pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
-
-		/**
-		 * @instance
-		 * @memberof LayoutProvider
-		 * @type {string}
-		 */
-
-		paginationMode: Config.string().valueFn('_paginationModeValueFn'),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof LayoutProvider
 		 * @type {?object}
 		 */
 
@@ -138,6 +121,23 @@ class LayoutProvider extends Component {
 		 * @default undefined
 		 * @instance
 		 * @memberof LayoutProvider
+		 * @type {?array}
+		 */
+
+		pages: Config.arrayOf(pageStructure).valueFn('_pagesValueFn'),
+
+		/**
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {string}
+		 */
+
+		paginationMode: Config.string().valueFn('_paginationModeValueFn'),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof LayoutProvider
 		 * @type {?(array|undefined)}
 		 */
 
@@ -146,10 +146,32 @@ class LayoutProvider extends Component {
 		successPageSettings: Config.object().valueFn('_successPageSettingsValueFn')
 	};
 
-	_setEvents(value) {
+	/**
+	 * Return a new page object
+	 * @private
+	 * @returns {object}
+	 */
+
+	createNewPage() {
+		const languageId = this.props.editingLanguageId;
+		const page = {
+			description: '',
+			enabled: true,
+			rows: [FormSupport.implAddRow(12, [])],
+			showRequiredFieldsWarning: true,
+			title: ''
+		};
+
+		setLocalizedValue(page, languageId, 'title', '');
+		setLocalizedValue(page, languageId, 'description', '');
+
+		return page;
+	}
+
+	getChildContext() {
 		return {
-			...this.getEvents(),
-			...value
+			dispatch: this.emit.bind(this),
+			store: this
 		};
 	}
 
@@ -177,413 +199,6 @@ class LayoutProvider extends Component {
 			sidebarFieldBlurred: this._handleSidebarFieldBlurred.bind(this),
 			successPageChanged: this._handleSuccessPageChanged.bind(this)
 		};
-	}
-
-	_handleActivePageUpdated(activePage) {
-		this.setState(
-			{
-				activePage
-			}
-		);
-	}
-
-	_handleColumnResized({column, direction, source}) {
-		const {state} = this;
-
-		this.setState(handleColumnResized(state, source, column, direction));
-	}
-
-	/**
-	 * @param {!Object} data
-	 * @private
-	 */
-
-	_handleFieldClicked(event) {
-		this.setState(handleFieldClicked(this.state, event));
-	}
-
-	_handleFieldChangesCanceled() {
-		const {focusedField: {originalContext}} = this.state;
-
-		Object.keys(originalContext).forEach(
-			propertyName => {
-				this._handleFieldEdited(
-					{
-						propertyName,
-						propertyValue: originalContext[propertyName]
-					}
-				);
-			}
-		);
-	}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
-
-	_handleFieldAdded(event) {
-		this.setState(handleFieldAdded(this.props, this.state, event));
-	}
-
-	_handleFieldBlurred(event) {
-		this.setState(handleFieldBlurred(this.state, event));
-	}
-
-	_handleSidebarFieldBlurred() {
-		this.setState(
-			{
-				focusedField: {}
-			}
-		);
-	}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
-
-	_handleFieldDeleted(event) {
-		this.setState(handleFieldDeleted(this.state, event));
-	}
-
-	/**
-	 * @param {!Object}
-	 * @private
-	 */
-
-	_handleFieldDuplicated(event) {
-		this.setState(handleFieldDuplicated(this.state, event));
-	}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
-
-	_handleFieldEdited(properties) {
-		const {editingLanguageId} = this.props;
-
-		this.setState(handleFieldEdited(this.state, editingLanguageId, properties));
-	}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
-
-	_handleFieldMoved({addedToPlaceholder, target, source}) {
-		let {pages} = this.state;
-		const {columnIndex, pageIndex, rowIndex} = source;
-
-		const column = FormSupport.getColumn(
-			pages,
-			pageIndex,
-			rowIndex,
-			columnIndex
-		);
-		const {fields} = column;
-		const newRow = FormSupport.implAddRow(12, fields);
-
-		pages = FormSupport.removeFields(
-			pages,
-			pageIndex,
-			rowIndex,
-			columnIndex
-		);
-
-		if (target.rowIndex > pages[pageIndex].rows.length - 1) {
-			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
-		}
-		else if (addedToPlaceholder) {
-			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
-		}
-		else {
-			pages = FormSupport.addFieldToColumn(pages, target.pageIndex, target.rowIndex, target.columnIndex, fields[0]);
-		}
-
-		pages[pageIndex].rows = FormSupport.removeEmptyRows(pages, pageIndex);
-
-		this.setState(
-			{
-				pages
-			}
-		);
-	}
-
-	_handleFocusedFieldUpdated(focusedField) {
-		const {columnIndex, pageIndex, rowIndex} = focusedField;
-		const {pages} = this.state;
-
-		this.setState(
-			{
-				focusedField,
-				pages: this._setColumnFields(
-					pages,
-					{
-						columnIndex,
-						pageIndex,
-						rowIndex
-					},
-					[focusedField]
-				)
-			}
-		);
-	}
-
-	/**
-	 * @param {!Number} pageIndex
-	 * @private
-	 */
-
-	_handlePageDeleted(pageIndex) {
-		const {pages} = this.state;
-
-		this.setState(
-			{
-				activePage: Math.max(0, pageIndex - 1),
-				pages: pages.filter(
-					(page, index) => index != pageIndex
-				)
-			}
-		);
-	}
-
-	/**
-	 * @param {!Array} pages
-	 * @private
-	 */
-
-	_handlePageAdded() {
-		const {pages} = this.state;
-
-		this.setState(
-			{
-				activePage: pages.length,
-				pages: [
-					...pages,
-					this.createNewPage()
-				]
-			}
-		);
-	}
-
-	/**
-	 * @private
-	 */
-
-	_handlePageReset() {
-		this.setState(
-			{
-				pages: [this.createNewPage()]
-			}
-		);
-	}
-
-	_handlePagesUpdated(pages) {
-		this.setState(
-			{
-				pages
-			}
-		);
-	}
-
-	_handlePaginationModeUpdated() {
-		const {paginationMode} = this.state;
-		let newMode = 'paginated';
-
-		if (paginationMode === newMode) {
-			newMode = 'wizard';
-		}
-
-		this.setState(
-			{
-				paginationMode: newMode
-			}
-		);
-	}
-
-	_handleRuleAdded(rule) {
-		this.setState(
-			{
-				rules: [
-					...this.state.rules,
-					rule
-				]
-			}
-		);
-	}
-
-	_handleRuleDeleted({ruleId}) {
-		const {rules} = this.state;
-
-		this.setState(
-			{
-				rules: rules.filter((rule, index) => index !== ruleId)
-			}
-		);
-	}
-
-	_handleRuleSaved(event) {
-		const {actions, conditions, ruleEditedIndex} = event;
-		const logicalOperator = event['logical-operator'];
-		const {rules} = this.state;
-
-		rules.splice(
-			ruleEditedIndex,
-			1,
-			{
-				actions,
-				conditions,
-				'logical-operator': logicalOperator
-			}
-		);
-
-		this.setState(
-			{
-				rules
-			}
-		);
-	}
-
-	/**
-	 * Update the success page settings
-	 * @param {!Object} successPageSettings
-	 * @private
-	 */
-
-	_handleSuccessPageChanged(successPageSettings) {
-		this.setState(
-			{
-				successPageSettings
-			}
-		);
-	}
-
-	_pagesValueFn() {
-		const {initialPages} = this.props;
-
-		return initialPages;
-	}
-
-	_paginationModeValueFn() {
-		return this.props.initialPaginationMode;
-	}
-
-	_rulesValueFn() {
-		const {rules} = this.props;
-
-		return rules;
-	}
-
-	_successPageSettingsValueFn() {
-		return this.props.initialSuccessPageSettings;
-	}
-
-	/**
-	 * @param {!Array} pages
-	 * @param {!Object} target
-	 * @param {!Object} field
-	 * @private
-	 * @return {Object}
-	 */
-
-	_setColumnFields(pages, target, fields) {
-		const {columnIndex, pageIndex, rowIndex} = target;
-
-		return FormSupport.setColumnFields(
-			pages,
-			pageIndex,
-			rowIndex,
-			columnIndex,
-			fields
-		);
-	}
-
-	_setInitialPages(initialPages) {
-		const visitor = new PagesVisitor(initialPages);
-
-		return visitor.mapFields(
-			field => {
-				const {settingsContext} = field;
-
-				return {
-					...field,
-					localizedValue: {},
-					readOnly: true,
-					settingsContext: {
-						...this._setInitialSettingsContext(settingsContext)
-					},
-					value: undefined,
-					visible: true
-				};
-			}
-		);
-	}
-
-	_setInitialSettingsContext(settingsContext) {
-		const visitor = new PagesVisitor(settingsContext.pages);
-
-		return {
-			...settingsContext,
-			pages: visitor.mapFields(
-				field => {
-					if (field.type === 'options') {
-						const getOptions = (languageId, field) => {
-							return field.value[languageId].map(
-								option => {
-									return {
-										...option,
-										edited: true
-									};
-								}
-							);
-						};
-
-						for (const languageId in field.value) {
-							field = {
-								...field,
-								value: {
-									...field.value,
-									[languageId]: getOptions(languageId, field)
-								}
-							};
-						}
-					}
-
-					return field;
-				}
-			)
-		};
-	}
-
-	getChildContext() {
-		return {
-			dispatch: this.emit.bind(this),
-			store: this
-		};
-	}
-
-	/**
-	 * Return a new page object
-	 * @private
-	 * @returns {object}
-	 */
-
-	createNewPage() {
-		const languageId = this.props.editingLanguageId;
-		const page = {
-			description: '',
-			enabled: true,
-			rows: [FormSupport.implAddRow(12, [])],
-			showRequiredFieldsWarning: true,
-			title: ''
-		};
-
-		setLocalizedValue(page, languageId, 'title', '');
-		setLocalizedValue(page, languageId, 'description', '');
-
-		return page;
 	}
 
 	getFocusedField() {
@@ -697,6 +312,391 @@ class LayoutProvider extends Component {
 		return (
 			<span>{children}</span>
 		);
+	}
+
+	_handleActivePageUpdated(activePage) {
+		this.setState(
+			{
+				activePage
+			}
+		);
+	}
+
+	_handleColumnResized({column, direction, source}) {
+		const {state} = this;
+
+		this.setState(handleColumnResized(state, source, column, direction));
+	}
+
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleFieldAdded(event) {
+		this.setState(handleFieldAdded(this.props, this.state, event));
+	}
+
+	_handleFieldBlurred(event) {
+		this.setState(handleFieldBlurred(this.state, event));
+	}
+
+	_handleFieldChangesCanceled() {
+		const {focusedField: {originalContext}} = this.state;
+
+		Object.keys(originalContext).forEach(
+			propertyName => {
+				this._handleFieldEdited(
+					{
+						propertyName,
+						propertyValue: originalContext[propertyName]
+					}
+				);
+			}
+		);
+	}
+
+	/**
+	 * @param {!Object} data
+	 * @private
+	 */
+
+	_handleFieldClicked(event) {
+		this.setState(handleFieldClicked(this.state, event));
+	}
+
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleFieldDeleted(event) {
+		this.setState(handleFieldDeleted(this.state, event));
+	}
+
+	/**
+	 * @param {!Object}
+	 * @private
+	 */
+
+	_handleFieldDuplicated(event) {
+		this.setState(handleFieldDuplicated(this.state, event));
+	}
+
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleFieldEdited(properties) {
+		const {editingLanguageId} = this.props;
+
+		this.setState(handleFieldEdited(this.state, editingLanguageId, properties));
+	}
+
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleFieldMoved({addedToPlaceholder, target, source}) {
+		let {pages} = this.state;
+		const {columnIndex, pageIndex, rowIndex} = source;
+
+		const column = FormSupport.getColumn(
+			pages,
+			pageIndex,
+			rowIndex,
+			columnIndex
+		);
+		const {fields} = column;
+		const newRow = FormSupport.implAddRow(12, fields);
+
+		pages = FormSupport.removeFields(
+			pages,
+			pageIndex,
+			rowIndex,
+			columnIndex
+		);
+
+		if (target.rowIndex > pages[pageIndex].rows.length - 1) {
+			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
+		}
+		else if (addedToPlaceholder) {
+			pages = FormSupport.addRow(pages, target.rowIndex, target.pageIndex, newRow);
+		}
+		else {
+			pages = FormSupport.addFieldToColumn(pages, target.pageIndex, target.rowIndex, target.columnIndex, fields[0]);
+		}
+
+		pages[pageIndex].rows = FormSupport.removeEmptyRows(pages, pageIndex);
+
+		this.setState(
+			{
+				pages
+			}
+		);
+	}
+
+	_handleFocusedFieldUpdated(focusedField) {
+		const {columnIndex, pageIndex, rowIndex} = focusedField;
+		const {pages} = this.state;
+
+		this.setState(
+			{
+				focusedField,
+				pages: this._setColumnFields(
+					pages,
+					{
+						columnIndex,
+						pageIndex,
+						rowIndex
+					},
+					[focusedField]
+				)
+			}
+		);
+	}
+
+	/**
+	 * @param {!Array} pages
+	 * @private
+	 */
+
+	_handlePageAdded() {
+		const {pages} = this.state;
+
+		this.setState(
+			{
+				activePage: pages.length,
+				pages: [
+					...pages,
+					this.createNewPage()
+				]
+			}
+		);
+	}
+
+	/**
+	 * @param {!Number} pageIndex
+	 * @private
+	 */
+
+	_handlePageDeleted(pageIndex) {
+		const {pages} = this.state;
+
+		this.setState(
+			{
+				activePage: Math.max(0, pageIndex - 1),
+				pages: pages.filter(
+					(page, index) => index != pageIndex
+				)
+			}
+		);
+	}
+
+	/**
+	 * @private
+	 */
+
+	_handlePageReset() {
+		this.setState(
+			{
+				pages: [this.createNewPage()]
+			}
+		);
+	}
+
+	_handlePagesUpdated(pages) {
+		this.setState(
+			{
+				pages
+			}
+		);
+	}
+
+	_handlePaginationModeUpdated() {
+		const {paginationMode} = this.state;
+		let newMode = 'paginated';
+
+		if (paginationMode === newMode) {
+			newMode = 'wizard';
+		}
+
+		this.setState(
+			{
+				paginationMode: newMode
+			}
+		);
+	}
+
+	_handleRuleAdded(rule) {
+		this.setState(
+			{
+				rules: [
+					...this.state.rules,
+					rule
+				]
+			}
+		);
+	}
+
+	_handleRuleDeleted({ruleId}) {
+		const {rules} = this.state;
+
+		this.setState(
+			{
+				rules: rules.filter((rule, index) => index !== ruleId)
+			}
+		);
+	}
+
+	_handleRuleSaved(event) {
+		const {actions, conditions, ruleEditedIndex} = event;
+		const logicalOperator = event['logical-operator'];
+		const {rules} = this.state;
+
+		rules.splice(
+			ruleEditedIndex,
+			1,
+			{
+				actions,
+				conditions,
+				'logical-operator': logicalOperator
+			}
+		);
+
+		this.setState(
+			{
+				rules
+			}
+		);
+	}
+
+	_handleSidebarFieldBlurred() {
+		this.setState(
+			{
+				focusedField: {}
+			}
+		);
+	}
+
+	/**
+	 * Update the success page settings
+	 * @param {!Object} successPageSettings
+	 * @private
+	 */
+
+	_handleSuccessPageChanged(successPageSettings) {
+		this.setState(
+			{
+				successPageSettings
+			}
+		);
+	}
+
+	_pagesValueFn() {
+		const {initialPages} = this.props;
+
+		return initialPages;
+	}
+
+	_paginationModeValueFn() {
+		return this.props.initialPaginationMode;
+	}
+
+	_rulesValueFn() {
+		const {rules} = this.props;
+
+		return rules;
+	}
+
+	/**
+	 * @param {!Array} pages
+	 * @param {!Object} target
+	 * @param {!Object} field
+	 * @private
+	 * @return {Object}
+	 */
+
+	_setColumnFields(pages, target, fields) {
+		const {columnIndex, pageIndex, rowIndex} = target;
+
+		return FormSupport.setColumnFields(
+			pages,
+			pageIndex,
+			rowIndex,
+			columnIndex,
+			fields
+		);
+	}
+
+	_setEvents(value) {
+		return {
+			...this.getEvents(),
+			...value
+		};
+	}
+
+	_setInitialPages(initialPages) {
+		const visitor = new PagesVisitor(initialPages);
+
+		return visitor.mapFields(
+			field => {
+				const {settingsContext} = field;
+
+				return {
+					...field,
+					localizedValue: {},
+					readOnly: true,
+					settingsContext: {
+						...this._setInitialSettingsContext(settingsContext)
+					},
+					value: undefined,
+					visible: true
+				};
+			}
+		);
+	}
+
+	_setInitialSettingsContext(settingsContext) {
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		return {
+			...settingsContext,
+			pages: visitor.mapFields(
+				field => {
+					if (field.type === 'options') {
+						const getOptions = (languageId, field) => {
+							return field.value[languageId].map(
+								option => {
+									return {
+										...option,
+										edited: true
+									};
+								}
+							);
+						};
+
+						for (const languageId in field.value) {
+							field = {
+								...field,
+								value: {
+									...field.value,
+									[languageId]: getOptions(languageId, field)
+								}
+							};
+						}
+					}
+
+					return field;
+				}
+			)
+		};
+	}
+
+	_successPageSettingsValueFn() {
+		return this.props.initialSuccessPageSettings;
 	}
 }
 

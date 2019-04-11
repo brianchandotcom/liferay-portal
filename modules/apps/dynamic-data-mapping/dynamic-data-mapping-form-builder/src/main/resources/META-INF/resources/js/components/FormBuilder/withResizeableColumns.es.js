@@ -16,6 +16,37 @@ const withResizeableColumns = ChildComponent => {
 			}
 		}
 
+		isResizeEnabled() {
+			const {defaultLanguageId, editingLanguageId} = this.props;
+
+			return defaultLanguageId === editingLanguageId;
+		}
+
+		render() {
+			return (
+				<div class={this.isResizeEnabled() ? 'resizeable' : ''}>
+					{this.renderResizeReferences()}
+
+					<ChildComponent {...this.props} />
+				</div>
+			);
+		}
+
+		renderResizeReferences() {
+			return [...Array(12)].map(
+				(element, index) => {
+					return (
+						<div
+							class="ddm-resize-column"
+							data-resize-column={index}
+							key={index}
+							ref={`resizeColumn${index}`}
+						/>
+					);
+				}
+			);
+		}
+
 		_createResizeDrag() {
 			this._resizeDrag = new Drag(
 				{
@@ -73,37 +104,6 @@ const withResizeableColumns = ChildComponent => {
 
 		_handleResizeDragStartEvent() {
 			this._lastResizeColumn = -1;
-		}
-
-		isResizeEnabled() {
-			const {defaultLanguageId, editingLanguageId} = this.props;
-
-			return defaultLanguageId === editingLanguageId;
-		}
-
-		renderResizeReferences() {
-			return [...Array(12)].map(
-				(element, index) => {
-					return (
-						<div
-							class="ddm-resize-column"
-							data-resize-column={index}
-							key={index}
-							ref={`resizeColumn${index}`}
-						/>
-					);
-				}
-			);
-		}
-
-		render() {
-			return (
-				<div class={this.isResizeEnabled() ? 'resizeable' : ''}>
-					{this.renderResizeReferences()}
-
-					<ChildComponent {...this.props} />
-				</div>
-			);
 		}
 	}
 

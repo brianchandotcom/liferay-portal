@@ -5,6 +5,76 @@ class PagesVisitor {
 		this.setPages(pages);
 	}
 
+	dispose() {
+		this._pages = null;
+	}
+
+	/**
+	 * Find a field based on the fieldName property
+	 * @param {string} fieldName
+	 * @returns {object} a form field
+	 */
+	findField(condition) {
+		let conditionField;
+
+		this._map(
+			identity,
+			identity,
+			identity,
+			(fields, ...args) => {
+				const field = fields.find(
+					(field, fieldIndex) => {
+						condition(field, fieldIndex, ...args);
+
+						return condition(field, fieldIndex, ...args);
+					}
+				);
+
+				if (field) {
+					conditionField = field;
+				}
+			}
+		);
+
+		return conditionField;
+	}
+
+	mapColumns(mapper) {
+		return this._map(identity, identity, mapper, identity);
+	}
+
+	mapFields(mapper) {
+		return this._map(
+			identity,
+			identity,
+			identity,
+			(fields, ...args) => {
+				return fields.map(
+					(field, fieldIndex) => {
+						const newField = {
+							...field,
+							...mapper(field, fieldIndex, ...args)
+						};
+
+						return newField;
+					}
+				);
+			}
+		);
+	}
+
+	mapPages(mapper) {
+		return this._map(mapper, identity, identity, identity);
+	}
+
+	mapRows(mapper) {
+		return this._map(identity, mapper, identity, identity);
+	}
+
+	setPages(pages) {
+		this._pages = [...pages];
+	}
+
 	_map(pageMapper, rowMapper, columnMapper, fieldFn) {
 		return this._pages.map(
 			(page, pageIndex) => {
@@ -43,76 +113,6 @@ class PagesVisitor {
 				};
 			}
 		);
-	}
-
-	dispose() {
-		this._pages = null;
-	}
-
-	/**
-	 * Find a field based on the fieldName property
-	 * @param {string} fieldName
-	 * @returns {object} a form field
-	 */
-	findField(condition) {
-		let conditionField;
-
-		this._map(
-			identity,
-			identity,
-			identity,
-			(fields, ...args) => {
-				const field = fields.find(
-					(field, fieldIndex) => {
-						condition(field, fieldIndex, ...args);
-
-						return condition(field, fieldIndex, ...args);
-					}
-				);
-
-				if (field) {
-					conditionField = field;
-				}
-			}
-		);
-
-		return conditionField;
-	}
-
-	mapFields(mapper) {
-		return this._map(
-			identity,
-			identity,
-			identity,
-			(fields, ...args) => {
-				return fields.map(
-					(field, fieldIndex) => {
-						const newField = {
-							...field,
-							...mapper(field, fieldIndex, ...args)
-						};
-
-						return newField;
-					}
-				);
-			}
-		);
-	}
-
-	mapPages(mapper) {
-		return this._map(mapper, identity, identity, identity);
-	}
-
-	mapRows(mapper) {
-		return this._map(identity, mapper, identity, identity);
-	}
-
-	mapColumns(mapper) {
-		return this._map(identity, identity, mapper, identity);
-	}
-
-	setPages(pages) {
-		this._pages = [...pages];
 	}
 }
 
@@ -157,6 +157,10 @@ class RulesVisitor {
 		);
 	}
 
+	dispose() {
+		this._rules = null;
+	}
+
 	mapActions(actionMapper) {
 		return this._rules.map(
 			rule => {
@@ -181,10 +185,6 @@ class RulesVisitor {
 
 	setRules(rules) {
 		this._rules = [...rules];
-	}
-
-	dispose() {
-		this._rules = null;
 	}
 
 }

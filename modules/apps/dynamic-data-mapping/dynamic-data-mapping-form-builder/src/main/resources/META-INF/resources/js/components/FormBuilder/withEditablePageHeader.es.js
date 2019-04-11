@@ -19,6 +19,32 @@ const withEditablePageHeader = ChildComponent => {
 			this._eventHandler.removeAllListeners();
 		}
 
+		getPages() {
+			const {pages} = this.props;
+			const total = pages.length;
+			const visitor = new PagesVisitor(pages);
+
+			return visitor.mapPages(
+				(page, pageIndex) => {
+					return {
+						...page,
+						headerRenderer: 'editable',
+						pageIndex,
+						placeholder: sub(Liferay.Language.get('untitled-page-x-of-x'), [pageIndex + 1, total]),
+						total
+					};
+				}
+			);
+		}
+
+		render() {
+			return (
+				<Fragment>
+					<ChildComponent {...this.props} pages={this.getPages()} />
+				</Fragment>
+			);
+		}
+
 		/**
 		 * @param {!Object} event
 		 * @private
@@ -82,32 +108,6 @@ const withEditablePageHeader = ChildComponent => {
 						return page;
 					}
 				)
-			);
-		}
-
-		getPages() {
-			const {pages} = this.props;
-			const total = pages.length;
-			const visitor = new PagesVisitor(pages);
-
-			return visitor.mapPages(
-				(page, pageIndex) => {
-					return {
-						...page,
-						headerRenderer: 'editable',
-						pageIndex,
-						placeholder: sub(Liferay.Language.get('untitled-page-x-of-x'), [pageIndex + 1, total]),
-						total
-					};
-				}
-			);
-		}
-
-		render() {
-			return (
-				<Fragment>
-					<ChildComponent {...this.props} pages={this.getPages()} />
-				</Fragment>
 			);
 		}
 	}

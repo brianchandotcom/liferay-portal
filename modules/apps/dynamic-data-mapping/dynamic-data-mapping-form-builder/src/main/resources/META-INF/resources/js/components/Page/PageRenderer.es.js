@@ -59,49 +59,6 @@ class PageRenderer extends Component {
 		spritemap: Config.string().required()
 	}
 
-	prepareStateForRender(states) {
-		return {
-			...states,
-			empty: this.isEmptyPage(states.page),
-			page: this.getPage(states.page)
-		};
-	}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
-
-	_handleFieldBlurred(event) {
-		this.emit('fieldBlurred', event);
-	}
-
-	/**
-	 * @param {!Object} event
-	 * @private
-	 */
-
-	_handleFieldEdited(event) {
-		this.emit('fieldEdited', event);
-	}
-
-	/**
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_handleFieldClicked({delegateTarget}) {
-		const fieldNode = delegateTarget.parentElement.parentElement;
-		const indexes = FormSupport.getIndexes(fieldNode);
-
-		this.emit(
-			'fieldClicked',
-			{
-				...indexes
-			}
-		);
-	}
-
 	getPage(page) {
 		const {editingLanguageId} = this;
 
@@ -143,6 +100,49 @@ class PageRenderer extends Component {
 			);
 		}
 		return empty;
+	}
+
+	prepareStateForRender(states) {
+		return {
+			...states,
+			empty: this.isEmptyPage(states.page),
+			page: this.getPage(states.page)
+		};
+	}
+
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleFieldBlurred(event) {
+		this.emit('fieldBlurred', event);
+	}
+
+	/**
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_handleFieldClicked({delegateTarget}) {
+		const fieldNode = delegateTarget.parentElement.parentElement;
+		const indexes = FormSupport.getIndexes(fieldNode);
+
+		this.emit(
+			'fieldClicked',
+			{
+				...indexes
+			}
+		);
+	}
+
+	/**
+	 * @param {!Object} event
+	 * @private
+	 */
+
+	_handleFieldEdited(event) {
+		this.emit('fieldEdited', event);
 	}
 }
 

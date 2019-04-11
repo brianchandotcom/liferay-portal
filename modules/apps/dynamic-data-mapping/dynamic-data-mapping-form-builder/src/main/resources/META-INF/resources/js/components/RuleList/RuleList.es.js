@@ -32,6 +32,15 @@ class RuleList extends Component {
 
 		pages: Config.array().required(),
 
+		roles: Config.arrayOf(
+			Config.shapeOf(
+				{
+					id: Config.string(),
+					name: Config.string()
+				}
+			)
+		).value([]),
+
 		/**
 		 * @default 0
 		 * @instance
@@ -77,15 +86,6 @@ class RuleList extends Component {
 			)
 		).value([]),
 
-		roles: Config.arrayOf(
-			Config.shapeOf(
-				{
-					id: Config.string(),
-					name: Config.string()
-				}
-			)
-		).value([]),
-
 		/**
 		 * @default undefined
 		 * @instance
@@ -120,6 +120,12 @@ class RuleList extends Component {
 		)
 	}
 
+	attached() {
+		this._eventHandler.add(
+			dom.on(document, 'mouseup', this._handleDocumentMouseDown.bind(this), true)
+		);
+	}
+
 	created() {
 		this._eventHandler = new EventHandler();
 
@@ -127,12 +133,6 @@ class RuleList extends Component {
 			{
 				rules: this._formatRules(this.rules)
 			}
-		);
-	}
-
-	attached() {
-		this._eventHandler.add(
-			dom.on(document, 'mouseup', this._handleDocumentMouseDown.bind(this), true)
 		);
 	}
 
@@ -275,6 +275,33 @@ class RuleList extends Component {
 		return getFieldProperty(pages, fieldName, 'type');
 	}
 
+	_getOperandLabel(operands, index) {
+		let label = '';
+		const operand = operands[index];
+
+		if (operand.type === 'field') {
+			label = this._getFieldLabel(operand.value);
+		}
+		else if (operand.type === 'user') {
+			label = Liferay.Language.get('user');
+		}
+		else if (operand.type !== 'field') {
+			const fieldType = this._getFieldType(operands[0].value);
+
+			if (fieldType == 'select' || fieldType === 'radio') {
+				label = this._getOptionLabel(operands[0].value, operand.value);
+			}
+			else {
+				label = operand.value;
+			}
+		}
+		else {
+			label = operand.value;
+		}
+
+		return label;
+	}
+
 	_getOptionLabel(fieldName, optionValue) {
 		const pages = this.pages;
 
@@ -399,33 +426,6 @@ class RuleList extends Component {
 		}
 
 		return rules;
-	}
-
-	_getOperandLabel(operands, index) {
-		let label = '';
-		const operand = operands[index];
-
-		if (operand.type === 'field') {
-			label = this._getFieldLabel(operand.value);
-		}
-		else if (operand.type === 'user') {
-			label = Liferay.Language.get('user');
-		}
-		else if (operand.type !== 'field') {
-			const fieldType = this._getFieldType(operands[0].value);
-
-			if (fieldType == 'select' || fieldType === 'radio') {
-				label = this._getOptionLabel(operands[0].value, operand.value);
-			}
-			else {
-				label = operand.value;
-			}
-		}
-		else {
-			label = operand.value;
-		}
-
-		return label;
 	}
 }
 

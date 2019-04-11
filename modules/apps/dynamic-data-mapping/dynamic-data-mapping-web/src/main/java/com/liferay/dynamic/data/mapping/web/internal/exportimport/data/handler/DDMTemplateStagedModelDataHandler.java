@@ -138,9 +138,9 @@ public class DDMTemplateStagedModelDataHandler
 			return referenceAttributes;
 		}
 
-		boolean preloaded = isPreloadedTemplate(defaultUserId, template);
-
-		referenceAttributes.put("preloaded", String.valueOf(preloaded));
+		referenceAttributes.put(
+			"preloaded",
+			String.valueOf(isPreloadedTemplate(defaultUserId, template)));
 
 		return referenceAttributes;
 	}

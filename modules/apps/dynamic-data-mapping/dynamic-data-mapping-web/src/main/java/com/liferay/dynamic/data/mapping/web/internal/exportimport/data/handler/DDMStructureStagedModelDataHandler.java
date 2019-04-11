@@ -156,9 +156,9 @@ public class DDMStructureStagedModelDataHandler
 			return referenceAttributes;
 		}
 
-		boolean preloaded = isPreloadedStructure(defaultUserId, structure);
-
-		referenceAttributes.put("preloaded", String.valueOf(preloaded));
+		referenceAttributes.put(
+			"preloaded",
+			String.valueOf(isPreloadedStructure(defaultUserId, structure)));
 
 		return referenceAttributes;
 	}

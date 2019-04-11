@@ -76,6 +76,34 @@ const WithEvaluator = ChildComponent => {
 			this.emit('fieldEdited', event);
 		}
 
+		_mergeFieldOptions(field, newField) {
+			let newValue = {...newField.value};
+
+			for (const languageId in newValue) {
+				newValue = {
+					...newValue,
+					[languageId]: newValue[languageId].map(
+						option => {
+							const existingOption = field.value[languageId]
+								.find(
+									({value}) => value === option.value
+								);
+
+							return {
+								...option,
+								edited: (
+									existingOption &&
+									existingOption.edited
+								)
+							};
+						}
+					)
+				};
+			}
+
+			return newValue;
+		}
+
 		/**
 		 * Merges fields from two array of pages. This is used to get new
 		 * information from the evaluator and update fields with it while
@@ -85,19 +113,29 @@ const WithEvaluator = ChildComponent => {
 		 */
 
 		_mergePages(sourcePages, newPages) {
+			const {defaultLanguageId, editingLanguageId} = this.props;
 			const visitor = new PagesVisitor(sourcePages);
 
 			return visitor.mapFields(
 				(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
 					let newField = {
 						...field,
-						...newPages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex]
+						...newPages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex],
+						defaultLanguageId,
+						editingLanguageId
 					};
 
 					if (newField.fieldName === 'name') {
 						newField = {
 							...newField,
 							visible: true
+						};
+					}
+
+					if (newField.type === 'options') {
+						newField = {
+							...newField,
+							value: this._mergeFieldOptions(field, newField)
 						};
 					}
 
@@ -157,13 +195,9 @@ const WithEvaluator = ChildComponent => {
 					newPages => {
 						const mergedPages = this._mergePages(pages, newPages);
 
-						this.emit('evaluated', mergedPages);
-
-						this.setState(
-							{
-								pages: mergedPages
-							}
-						);
+						if (!this.isDisposed()) {
+							this.emit('evaluated', mergedPages);
+						}
 					}
 				);
 			}

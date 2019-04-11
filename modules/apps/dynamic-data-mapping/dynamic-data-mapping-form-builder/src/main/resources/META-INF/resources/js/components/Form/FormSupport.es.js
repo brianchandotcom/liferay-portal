@@ -260,7 +260,7 @@ export const updateField = (
 ) => {
 	const visitor = new PagesVisitor(pages);
 
-	const newPages = visitor.mapFields(
+	return visitor.mapFields(
 		field => {
 			if (fieldName === field.fieldName) {
 				field = {
@@ -268,11 +268,10 @@ export const updateField = (
 					...properties
 				};
 			}
+
 			return field;
 		}
 	);
-
-	return newPages;
 };
 
 export const updateColumn = (pages, pageIndex, rowIndex, columnIndex, properties) => {

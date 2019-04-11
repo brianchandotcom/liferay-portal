@@ -262,9 +262,9 @@ class LayoutProvider extends Component {
 	 */
 
 	_handleFieldEdited(properties) {
-		const {defaultLanguageId, editingLanguageId} = this.props;
+		const {editingLanguageId} = this.props;
 
-		this.setState(handleFieldEdited(this.state, defaultLanguageId, editingLanguageId, properties));
+		this.setState(handleFieldEdited(this.state, editingLanguageId, properties));
 	}
 
 	/**
@@ -505,15 +505,56 @@ class LayoutProvider extends Component {
 
 		return visitor.mapFields(
 			field => {
+				const {settingsContext} = field;
+
 				return {
 					...field,
 					localizedValue: {},
 					readOnly: true,
+					settingsContext: {
+						...this._setInitialSettingsContext(settingsContext)
+					},
 					value: undefined,
 					visible: true
 				};
 			}
 		);
+	}
+
+	_setInitialSettingsContext(settingsContext) {
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		return {
+			...settingsContext,
+			pages: visitor.mapFields(
+				field => {
+					if (field.type === 'options') {
+						const getOptions = (languageId, field) => {
+							return field.value[languageId].map(
+								option => {
+									return {
+										...option,
+										edited: true
+									};
+								}
+							);
+						};
+
+						for (const languageId in field.value) {
+							field = {
+								...field,
+								value: {
+									...field.value,
+									[languageId]: getOptions(languageId, field)
+								}
+							};
+						}
+					}
+
+					return field;
+				}
+			)
+		};
 	}
 
 	getChildContext() {
@@ -572,34 +613,7 @@ class LayoutProvider extends Component {
 			field => {
 				let value = field.value;
 
-				if (field.type === 'options') {
-					const getCurrentOptionLabel = ({label, value}) => {
-						const currentValue = field.value[editingLanguageId];
-
-						if (currentValue) {
-							const currentOption = currentValue.find(
-								option => option.value === value
-							);
-
-							if (currentOption) {
-								label = currentOption.label;
-							}
-						}
-
-						return label;
-					};
-
-					value = {
-						...value,
-						[editingLanguageId]: value[defaultLanguageId].map(
-							option => ({
-								...option,
-								label: getCurrentOptionLabel(option)
-							})
-						)
-					};
-				}
-				else if (field.localizable) {
+				if (field.localizable) {
 					let localizedValue = field.localizedValue[editingLanguageId];
 
 					if (localizedValue === undefined) {
@@ -615,6 +629,8 @@ class LayoutProvider extends Component {
 
 				return {
 					...field,
+					defaultLanguageId,
+					editingLanguageId,
 					value
 				};
 			}

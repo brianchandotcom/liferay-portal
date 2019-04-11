@@ -180,14 +180,14 @@ class Options extends Component {
 		 * @type {?string}
 		 */
 
-		value: Config.object().value({})
+		value: Config.object().setter('_setValue').value({})
 	};
 
 	attached() {
 		let defaultOption = false;
 		const defaultOptionLabel = Liferay.Language.get('option').toLowerCase();
 
-		const options = this.getValue();
+		const options = this.getCurrentLocaleValue();
 
 		if ((options.length == 1) && (options[0].label.toLowerCase() == defaultOptionLabel)) {
 			defaultOption = true;
@@ -202,13 +202,25 @@ class Options extends Component {
 		this._createDragDrop();
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	deleteOption(deletedIndex) {
+		const {editingLanguageId} = this;
+		let {value} = this;
 
-	disposeInternal() {
-		super.disposeInternal();
-		this.disposeDragAndDrop();
+		for (const languageId in value) {
+			value = {
+				...value,
+				[languageId]: value[languageId].filter(
+					(option, currentIndex) => currentIndex !== deletedIndex
+				)
+			};
+		}
+
+		this.setState(
+			{
+				items: this.getItems(value[editingLanguageId])
+			},
+			() => this._handleFieldEdited({}, value)
+		);
 	}
 
 	disposeDragAndDrop() {
@@ -217,28 +229,10 @@ class Options extends Component {
 		}
 	}
 
-	willReceiveState(changes) {
-		const {editingLanguageId} = this;
+	disposeInternal() {
+		super.disposeInternal();
 
-		if (changes.value && changes.value.newVal[editingLanguageId]) {
-			this.setState(
-				{
-					items: this.getItems(changes.value.newVal[editingLanguageId])
-				}
-			);
-		}
-	}
-
-	deleteOption(deletedIndex) {
-		const options = [...this.getValue()].filter((option, currentIndex) => currentIndex !== deletedIndex);
-
-		this._handleFieldEdited({}, options);
-
-		this.setState(
-			{
-				items: this.getItems(options)
-			}
-		);
+		this.disposeDragAndDrop();
 	}
 
 	findOptionByValue(options, name, limit = options.length) {
@@ -249,19 +243,35 @@ class Options extends Component {
 		);
 	}
 
+	getCurrentLocaleValue() {
+		const {defaultLanguageId, editingLanguageId} = this;
+		let value = [];
+
+		if (this.value && this.value[editingLanguageId]) {
+			value = this.value[editingLanguageId];
+		}
+		else if (this.value && this.value[defaultLanguageId]) {
+			value = this.value[defaultLanguageId];
+		}
+
+		return value;
+	}
+
 	getFieldIndex(element) {
 		return parseInt(dom.closest(element, '.ddm-field-options').dataset.index, 10);
 	}
 
 	getItems(options = []) {
 		const {defaultLanguageId, editingLanguageId} = this;
-		const items = [...options];
+		const items = options.filter(({value}) => !!value);
 
 		if (defaultLanguageId === editingLanguageId) {
-			items.push({
-				label: '',
-				value: ''
-			});
+			items.push(
+				{
+					label: '',
+					value: ''
+				}
+			);
 		}
 
 		return items.map(
@@ -274,48 +284,40 @@ class Options extends Component {
 		);
 	}
 
-	getValue() {
-		const {defaultLanguageId, editingLanguageId} = this;
-		let value = [];
-
-		if (this.value && this.value[editingLanguageId]) {
-			value = this.value[editingLanguageId];
-		}
-		else if (this.value && this.value[defaultLanguageId]) {
-			value = this.value[defaultLanguageId];
-		}
-		else {
-			value = [];
-		}
-
-		return value;
-	}
-
 	moveOption(sourceIndex, targetIndex) {
-		let options = [...this.getValue()];
+		const {editingLanguageId} = this;
+		let {value} = this;
 
-		if (sourceIndex < options.length) {
-			options.splice(
-				targetIndex,
-				0,
-				{
-					...options[sourceIndex]
-				}
-			);
+		for (const languageId in value) {
+			const options = [...value[languageId]];
 
-			options = options.filter(
-				(option, index) => {
-					return sourceIndex > targetIndex ? index != (sourceIndex + 1) : index != sourceIndex;
-				}
-			);
+			if (sourceIndex < options.length) {
+				options.splice(
+					targetIndex,
+					0,
+					{
+						...options[sourceIndex]
+					}
+				);
 
-			this._handleFieldEdited({}, options);
+				value = {
+					...value,
+					[languageId]: options.filter(
+						(option, index) => {
+							return sourceIndex > targetIndex ?
+								index != (sourceIndex + 1) :
+								index != sourceIndex;
+						}
+					)
+				};
+			}
 		}
 
 		this.setState(
 			{
-				items: this.getItems(options)
-			}
+				items: this.getItems(value[editingLanguageId])
+			},
+			() => this._handleFieldEdited({}, value)
 		);
 	}
 
@@ -373,6 +375,34 @@ class Options extends Component {
 		);
 	}
 
+	syncEditingLanguageId(editingLanguageId) {
+		const {defaultLanguageId} = this;
+
+		if (
+			defaultLanguageId !== editingLanguageId &&
+			!this.value[editingLanguageId]
+		) {
+			this.setState(
+				{
+					value: {
+						...this.value,
+						[editingLanguageId]: this.value[defaultLanguageId]
+							.filter(({value}) => !!value)
+					}
+				},
+				() => this._handleFieldEdited({}, this.value)
+			);
+		}
+	}
+
+	syncValue() {
+		this.setState(
+			{
+				items: this.getItems(this.getCurrentLocaleValue())
+			}
+		);
+	}
+
 	_createDragDrop() {
 		this._dragAndDrop = new DragDrop(
 			{
@@ -387,6 +417,10 @@ class Options extends Component {
 
 		this._dragAndDrop.on(DragDrop.Events.END, this._handleDragDropEvent.bind(this));
 		this._dragAndDrop.on(DragDrop.Events.DRAG, this._handleDragEvent.bind(this));
+	}
+
+	_getOptionIndex({name}) {
+		return parseInt(name.replace('option', ''), 10);
 	}
 
 	_handleDragEvent({source}) {
@@ -408,11 +442,22 @@ class Options extends Component {
 		}
 	}
 
+	_handleFieldEdited({originalEvent}, value) {
+		this.emit(
+			'fieldEdited',
+			{
+				fieldInstance: this,
+				originalEvent,
+				value
+			}
+		);
+	}
+
 	_handleOptionBlurred(event) {
-		const {editingLanguageId, value} = this;
+		const {value} = this;
 		const normalizedValue = this.normalizeValue(value, true);
 
-		this._handleFieldEdited(event, normalizedValue[editingLanguageId]);
+		this._handleFieldEdited(event, normalizedValue);
 	}
 
 	_handleOptionDeleted(event) {
@@ -422,14 +467,10 @@ class Options extends Component {
 		this.deleteOption(deletedIndex);
 	}
 
-	_getOptionIndex({name}) {
-		return parseInt(name.replace('option', ''), 10);
-	}
-
 	_handleOptionEdited(event, property) {
-		const {editingLanguageId} = this;
+		const {defaultLanguageId, editingLanguageId} = this;
 		const {fieldInstance, value} = event;
-		let options = this.getValue();
+		let options = this.getCurrentLocaleValue();
 
 		const optionExists = options.some(
 			(option, index) => {
@@ -443,6 +484,7 @@ class Options extends Component {
 					return index === this._getOptionIndex(fieldInstance) ? (
 						{
 							...option,
+							edited: property === 'label',
 							[property]: value
 						}
 					) : option;
@@ -463,25 +505,48 @@ class Options extends Component {
 			options = this.normalizeOptions(options);
 		}
 
+		let newValue = {
+			...this.value,
+			[editingLanguageId]: options
+		};
+
+		if (defaultLanguageId === editingLanguageId) {
+			const generateLabels = (languageId, options) => {
+				return options.map(
+					({label, value}, index) => {
+						const option = newValue[languageId][index];
+
+						if (option && option.edited) {
+							label = option.label;
+						}
+
+						return {
+							edited: option && option.edited,
+							label,
+							value
+						};
+					}
+				);
+			};
+
+			for (const languageId in this.value) {
+				if (defaultLanguageId === languageId) {
+					continue;
+				}
+
+				newValue = {
+					...newValue,
+					[languageId]: generateLabels(languageId, options)
+				};
+			}
+		}
+
 		this.setState(
 			{
-				value: {
-					...this.value,
-					[editingLanguageId]: options
-				}
+				value: newValue
 			},
-			() => {
-				this._handleFieldEdited(event, options);
-			}
+			() => this._handleFieldEdited(event, newValue)
 		);
-	}
-
-	_handleOptionValueEdited(event) {
-		this._handleOptionEdited(event, 'value');
-	}
-
-	_handleOptionLabelEdited(event) {
-		this._handleOptionEdited(event, 'label');
 	}
 
 	_handleOptionFocused({originalEvent: {target}}) {
@@ -496,21 +561,32 @@ class Options extends Component {
 		}
 	}
 
-	_handleFieldEdited({originalEvent}, options) {
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent,
-				value: options
-			}
-		);
+	_handleOptionLabelEdited(event) {
+		this._handleOptionEdited(event, 'label');
+	}
+
+	_handleOptionValueEdited(event) {
+		this._handleOptionEdited(event, 'value');
 	}
 
 	_internalItemsValueFn() {
-		const options = this.getValue();
+		const options = this.getCurrentLocaleValue();
 
 		return this.getItems(options || []);
+	}
+
+	_setValue(value = {}) {
+		const {defaultLanguageId} = this;
+		const formattedValue = {...value};
+
+		for (const languageId in value) {
+			if (defaultLanguageId !== languageId) {
+				formattedValue[languageId] = formattedValue[languageId]
+					.filter(({value}) => !!value);
+			}
+		}
+
+		return formattedValue;
 	}
 }
 

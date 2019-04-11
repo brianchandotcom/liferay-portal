@@ -228,20 +228,6 @@ public class MVCPortlet extends LiferayPortlet {
 	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
 	 */
 	@Deprecated
-	public void invokeTaglibDiscussion(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		PortletConfig portletConfig = getPortletConfig();
-
-		PortalUtil.invokeTaglibDiscussion(
-			portletConfig, actionRequest, actionResponse);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
 	public void invokeTaglibDiscussionPagination(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortletCategoryKeys;
 
 import java.util.List;
@@ -50,46 +49,6 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 
 		return hasPermissionImplicitlyGranted(
 			permissionChecker, group, portlet);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement.<p>This
-	 *             method was originally defined to determine if a portlet
-	 *             should be displayed in the Control Panel. In this version,
-	 *             this method should always return <code>false</code> and
-	 *             remains only to preserve binary compatibility. This method
-	 *             will be permanently removed in a future version.</p><p>In
-	 *             lieu of this method, the Control Panel now uses {@link
-	 *             #hasAccessPermission} to determine if a portlet should be
-	 *             displayed in the Control Panel.</p>
-	 */
-	@Deprecated
-	@Override
-	public boolean isVisible(
-			PermissionChecker permissionChecker, Portlet portlet)
-		throws Exception {
-
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement.<p>This
-	 *             method was originally defined to determine if a portlet
-	 *             should be displayed in the Control Panel. In this version,
-	 *             this method should always return <code>false</code> and
-	 *             remains only to preserve binary compatibility. This method
-	 *             will be permanently removed in a future version.</p><p>In
-	 *             lieu of this method, the Control Panel now uses {@link
-	 *             #hasAccessPermission} to determine if a portlet should be
-	 *             displayed in the Control Panel.</p>
-	 */
-	@Deprecated
-	@Override
-	public boolean isVisible(
-			Portlet portlet, String category, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return false;
 	}
 
 	protected long getDefaultPlid(Group group, String category) {

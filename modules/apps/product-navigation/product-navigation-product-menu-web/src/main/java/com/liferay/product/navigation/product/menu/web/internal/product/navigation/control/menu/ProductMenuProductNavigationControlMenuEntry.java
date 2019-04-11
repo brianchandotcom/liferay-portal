@@ -187,7 +187,9 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 		User user = themeDisplay.getUser();
 
-		if (themeDisplay.isSignedIn() && user.isSetupComplete()) {
+		if (themeDisplay.isSignedIn() &&
+			(user.isSetupComplete() || themeDisplay.isImpersonated())) {
+
 			return true;
 		}
 

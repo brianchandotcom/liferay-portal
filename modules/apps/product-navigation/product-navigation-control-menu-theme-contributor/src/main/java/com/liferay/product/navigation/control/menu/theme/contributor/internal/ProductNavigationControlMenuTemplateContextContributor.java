@@ -68,7 +68,7 @@ public class ProductNavigationControlMenuTemplateContextContributor
 
 		User user = themeDisplay.getUser();
 
-		if (!user.isSetupComplete()) {
+		if (!user.isSetupComplete() && !themeDisplay.isImpersonated()) {
 			return false;
 		}
 

@@ -307,13 +307,13 @@ public class ToolsUtil {
 
 		String afterImportsContent = null;
 
-		int pos = content.indexOf(imports);
+		int pos = content.lastIndexOf("\nimport ");
 
 		if (pos == -1) {
 			afterImportsContent = content;
 		}
 		else {
-			pos += imports.length();
+			pos = content.indexOf("\n", pos + 1);
 
 			afterImportsContent = content.substring(pos);
 		}
@@ -348,6 +348,14 @@ public class ToolsUtil {
 
 					if (x == -1) {
 						break;
+					}
+
+					char previousChar = afterImportsContent.charAt(x - 1);
+
+					if (Character.isLetterOrDigit(previousChar) ||
+						(previousChar == CharPool.PERIOD)) {
+
+						continue;
 					}
 
 					char nextChar = afterImportsContent.charAt(

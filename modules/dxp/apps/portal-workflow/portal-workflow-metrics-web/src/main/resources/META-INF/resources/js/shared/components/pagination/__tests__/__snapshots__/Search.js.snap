@@ -138,10 +138,10 @@ exports[`Should change search value 1`] = `
                 >
                   <input
                     className="form-control input-group-inset input-group-inset-after"
-                    defaultValue="test"
-                    onKeyPress={[Function]}
+                    onChange={[Function]}
                     placeholder="Search for..."
                     type="text"
+                    value=""
                   />
                   <span
                     className="input-group-inset-item input-group-inset-item-after"
@@ -190,11 +190,11 @@ exports[`Should render component 1`] = `
     >
       <input
         className="form-control input-group-inset input-group-inset-after"
-        defaultValue=""
         disabled={true}
-        onKeyPress={[Function]}
+        onChange={[Function]}
         placeholder="Search for..."
         type="text"
+        value=""
       />
       <span
         className="input-group-inset-item input-group-inset-item-after"

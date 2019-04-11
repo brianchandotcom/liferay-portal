@@ -29,11 +29,11 @@ Array [
                 >
                   <input
                     className="form-control input-group-inset input-group-inset-after"
-                    defaultValue=""
                     disabled={false}
-                    onKeyPress={[Function]}
+                    onChange={[Function]}
                     placeholder="search-for"
                     type="text"
+                    value=""
                   />
                   <span
                     className="input-group-inset-item input-group-inset-item-after"
@@ -102,11 +102,11 @@ exports[`Should render default component without custom header 1`] = `
               >
                 <input
                   className="form-control input-group-inset input-group-inset-after"
-                  defaultValue=""
                   disabled={false}
-                  onKeyPress={[Function]}
+                  onChange={[Function]}
                   placeholder="search-for"
                   type="text"
+                  value=""
                 />
                 <span
                   className="input-group-inset-item input-group-inset-item-after"

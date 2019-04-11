@@ -203,10 +203,10 @@ class EditCategories extends Component {
 
 	_handleInputFocus(event) {
 		const dataProvider = event.target.refs.autocomplete.refs.dataProvider;
-		const modalDialog = this.element.querySelector('.modal-dialog');
+		const modal = this.element.querySelector('.modal');
 
-		if (modalDialog && dataProvider && !modalDialog.contains(dataProvider.element)) {
-			this.element.appendChild(dataProvider.element)
+		if (modal && dataProvider && !modal.contains(dataProvider.element)) {
+			modal.appendChild(dataProvider.element)
 		}
 	}
 

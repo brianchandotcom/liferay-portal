@@ -14,6 +14,8 @@
 
 package com.liferay.layout.internal.util;
 
+import com.liferay.asset.model.AssetEntryUsage;
+import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -155,6 +157,21 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				layoutPageTemplateStructure, segmentsExperienceId, classNameId,
 				targetLayout, fragmentEntryLinkMap, serviceContext);
 		}
+
+		_assetEntryUsageLocalService.deleteAssetEntryUsagesByPlid(
+			targetLayout.getPlid());
+
+		List<AssetEntryUsage> assetEntryUsages =
+			_assetEntryUsageLocalService.getAssetEntryUsagesByPlid(
+				sourceLayout.getPlid());
+
+		for (AssetEntryUsage assetEntryUsage : assetEntryUsages) {
+			_assetEntryUsageLocalService.addAssetEntryUsage(
+				assetEntryUsage.getGroupId(), assetEntryUsage.getAssetEntryId(),
+				assetEntryUsage.getContainerType(),
+				assetEntryUsage.getContainerKey(), targetLayout.getPlid(),
+				serviceContext);
+		}
 	}
 
 	private void _copyLayoutPageTemplateStructureExperience(
@@ -284,6 +301,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

@@ -774,7 +774,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
 				<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, schemaName, schemaName)>
-					return invokePost${schemaName}${schemaName}(testGet${schemaName}${schemaNames}Page_getParent${schemaName}Id(), ${schemaVarName});
+					<#if stringUtil.equals(javaMethodSignature.methodName, "post" + schemaName + schemaName)>
+						return invokePost${schemaName}${schemaName}(testGet${schemaName}${schemaNames}Page_getParent${schemaName}Id(), ${schemaVarName});
+					<#else>
+						throw new UnsupportedOperationException("This method needs to be implemented");
+					</#if>
 				<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
 					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
 

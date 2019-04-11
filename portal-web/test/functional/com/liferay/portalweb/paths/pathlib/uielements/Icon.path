@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>EXPIRE</td>
-	<td>//a[@data-title='Expire'] | //a[@title='Expire']</td>
+	<td>//button[@data-title='Expire' or @title='Expire']</td>
 	<td></td>
 </tr>
 <tr>

@@ -263,12 +263,7 @@ class Analytics {
 			);
 
 			result = Promise.race([
-				this._getUserId().then(userId =>
-					Promise.all([
-						this._sendIdentity(this.config.identity, userId),
-						instance._sendData(userId),
-					])
-				),
+				this._getUserId().then(userId => instance._sendData(userId)),
 				this._timeout(REQUEST_TIMEOUT),
 			])
 				.then(() => {

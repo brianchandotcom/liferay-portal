@@ -261,7 +261,7 @@ class Sharing extends PortletBase {
 						this._userEmailAddresses = selectedItems;
 					}
 					else {
-						this.emailErrorMessage = userEmail + ' does not exists.';
+						this.emailErrorMessage = Liferay.Util.sub(Liferay.Language.get('user-x-does-not-exists'), userEmail);
 						this._inputValue = itemAdded;
 					}
 				}

@@ -1432,26 +1432,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["Email"]
-    "/user-accounts/{userAccountId}/organizations":
-        get:
-            operationId: getUserAccountOrganizationsPage
-            parameters:
-                - in: path
-                  name: userAccountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Organization"
-                                type: array
-                    description: ""
-            tags: ["Organization"]
     "/user-accounts/{userAccountId}/phones":
         get:
             operationId: getUserAccountPhonesPage

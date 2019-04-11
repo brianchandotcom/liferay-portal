@@ -150,8 +150,9 @@ public class AopServiceManagerConcurrencyTest {
 
 					String name = clazz.getName();
 
-					int executorServiceRanking = GetterUtil.getInteger(
-						name.substring(name.length() - 1)) + 1;
+					int executorServiceRanking =
+						GetterUtil.getInteger(
+							name.substring(name.length() - 1)) + 1;
 
 					Assert.assertTrue(
 						StringBundler.concat(

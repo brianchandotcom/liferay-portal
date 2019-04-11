@@ -140,6 +140,17 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public FragmentEntryLink deleteFragmentEntryLink(long fragmentEntryLinkId)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
+
+		return fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+			fragmentEntryLink);
+	}
+
+	@Override
 	public void deleteFragmentEntryLinks(long groupId) {
 		List<FragmentEntryLink> fragmentEntryLinks =
 			fragmentEntryLinkPersistence.findByGroupId(groupId);

@@ -269,7 +269,7 @@ public class XSLTemplate extends BaseTemplate {
 			Transformer transformer = _transformerFactory.newTransformer(
 				scriptSource);
 
-			for (Map.Entry<String, Object> entry : context.entrySet()) {
+			for (Map.Entry<String, Object> entry : entrySet()) {
 				transformer.setParameter(entry.getKey(), entry.getValue());
 			}
 

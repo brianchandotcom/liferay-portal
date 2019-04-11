@@ -36,13 +36,13 @@ class StateSyncronizer extends Component {
 
 	getAvailableLanguageIds() {
 		const {translationManager} = this.props;
-		let availableLanguageIds = [this.getDefaultLanguageId()];
+		let availableLanguageIds = [{id: this.getDefaultLanguageId()}];
 
 		if (translationManager) {
 			availableLanguageIds = translationManager.get('availableLocales');
 		}
 
-		return availableLanguageIds;
+		return availableLanguageIds.map(({id}) => id);
 	}
 
 	getDefaultLanguageId() {

@@ -75,26 +75,9 @@ public class DataRecordCollectionResourceTest
 	public void testPutDataRecordCollection() throws Exception {
 	}
 
-	protected void assertValid(DataRecordCollection dataRecordCollection) {
-		boolean valid = false;
-
-		if ((dataRecordCollection.getDataDefinitionId() != null) &&
-			(dataRecordCollection.getId() != null) &&
-			(dataRecordCollection.getName() != null)) {
-
-			valid = true;
-		}
-
-		Assert.assertTrue(valid);
-	}
-
 	@Override
-	protected boolean equals(
-		DataRecordCollection dataRecordCollection1,
-		DataRecordCollection dataRecordCollection2) {
-
-		return Arrays.equals(
-			dataRecordCollection1.getName(), dataRecordCollection2.getName());
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"dataDefinitionId", "name"};
 	}
 
 	@Override

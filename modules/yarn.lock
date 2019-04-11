@@ -7403,6 +7403,15 @@ fs-extra@3.0.1:
     jsonfile "^3.0.0"
     universalify "^0.1.0"
 
+fs-extra@7.0.1, fs-extra@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.1.tgz#4f189c44aa123b895f722804f55ea23eadc348e9"
+  integrity sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
+
 fs-extra@^0.24.0:
   version "0.24.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-0.24.0.tgz#d4e4342a96675cb7846633a6099249332b539952"
@@ -7437,15 +7446,6 @@ fs-extra@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-5.0.0.tgz#414d0110cdd06705734d055652c5411260c31abd"
   integrity sha512-66Pm4RYbjzdyeuqudYqhFiNBbCIuI9kgRqLPSHIlXHidW8NIQtVdkM1yeZ4lXwuhbTETv3EUGMNHAAw6hiundQ==
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^4.0.0"
-    universalify "^0.1.0"
-
-fs-extra@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.1.tgz#4f189c44aa123b895f722804f55ea23eadc348e9"
-  integrity sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^4.0.0"
@@ -11230,10 +11230,10 @@ liferay-npm-bundler@2.7.1:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@1.4.13:
-  version "1.4.13"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.4.13.tgz#a682884ae8f97597b75f455f7956205abce2e3da"
-  integrity sha512-rsbtbYDXyrrqTo1a/ZFYLBGS4X8WfM3y1taAAHzkCvCbeHejh4b+iczjyxIJ3F27JQoPhH4pYz5jH0klxkrtvw==
+liferay-npm-scripts@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.5.0.tgz#2f06969a2b70709cb9e7af5d52105a8ff32fafab"
+  integrity sha512-vnrlCybhLAhTDaggeEG/fwi1uPe0qTzl2blFARcNBfHelvLPirciOyeZt62JN3otJFARd/I4FFoM1cRm3gkECg==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/preset-env" "^7.4.2"
@@ -11248,6 +11248,7 @@ liferay-npm-scripts@1.4.13:
     liferay-npm-bridge-generator "2.7.1"
     liferay-npm-bundler "2.7.1"
     liferay-npm-bundler-preset-liferay-dev "1.1.7"
+    liferay-theme-tasks "9.1.0"
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"
     rimraf "^2.6.2"
@@ -11274,10 +11275,10 @@ liferay-theme-es2015-hook@8.0.0-rc.2:
     metal-tools-soy "^4.1.2"
     run-sequence "^1.2.2"
 
-liferay-theme-tasks@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-9.0.0.tgz#e89ad958c69ecbb2973643e53ffec2cfcbd03ac7"
-  integrity sha512-LuEIUmVif+PcT+2tepOgceFumok+squly55H8JENoFHNtGxOoUfq/KQA4JIDXnXFAOkwkyS0eaI/A/2nwESN9Q==
+liferay-theme-tasks@9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-9.1.0.tgz#cd1bc7b533e1822d4338e0575157331096fe28b5"
+  integrity sha512-6JCmtzLKWoaPyWkUgYVJgb6vi7T96JxliUU619rcWXLw9KX1ds7ChGun83zuOnWBgkGmo6adD+6NzWIHCDZlNw==
   dependencies:
     async "^2.6.1"
     autoprefixer "^9.1.5"

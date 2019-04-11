@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
@@ -33,6 +34,13 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DataRecordCollectionResourceTest
 	extends BaseDataRecordCollectionResourceTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
+	}
 
 	@Ignore
 	@Override
@@ -91,28 +99,19 @@ public class DataRecordCollectionResourceTest
 
 	@Override
 	protected DataRecordCollection randomDataRecordCollection() {
-		try {
-			DDMStructure ddmStructure = DataDefinitionTestUtil.addDDMStructure(
-				testGroup);
-
-			return new DataRecordCollection() {
-				{
-					dataDefinitionId = ddmStructure.getStructureId();
-					id = RandomTestUtil.randomLong();
-					name = new LocalizedValue[] {
-						new LocalizedValue() {
-							{
-								key = "en_US";
-								value = RandomTestUtil.randomString();
-							}
+		return new DataRecordCollection() {
+			{
+				dataDefinitionId = _ddmStructure.getStructureId();
+				name = new LocalizedValue[] {
+					new LocalizedValue() {
+						{
+							key = "en_US";
+							value = RandomTestUtil.randomString();
 						}
-					};
-				}
-			};
-		}
-		catch (Exception e) {
-			return null;
-		}
+					}
+				};
+			}
+		};
 	}
 
 	@Override
@@ -136,5 +135,7 @@ public class DataRecordCollectionResourceTest
 		return invokePostDataDefinitionDataRecordCollection(
 			dataRecordCollection.getDataDefinitionId(), dataRecordCollection);
 	}
+
+	private DDMStructure _ddmStructure;
 
 }

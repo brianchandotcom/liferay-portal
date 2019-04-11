@@ -1,4 +1,4 @@
-import 'frontend-js-web/liferay/compat/dropdown/Dropdown.es';
+import 'clay-dropdown';
 import CompatibilityEventProxy from 'frontend-js-web/liferay/CompatibilityEventProxy.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
@@ -33,7 +33,7 @@ class TranslationManager extends Component {
 	 * @review
 	 */
 	addLocale(event) {
-		let localeId = event.delegateTarget.getAttribute('data-locale-id');
+		let localeId = event.data.item;
 
 		if (this.availableLocales.indexOf(localeId) === -1) {
 			this.availableLocales.push(localeId);
@@ -93,9 +93,20 @@ class TranslationManager extends Component {
 	 * @review
 	 */
 	removeAvailableLocale(event) {
+		event.stopPropagation();
+
 		let localeId = event.delegateTarget.getAttribute('data-locale-id');
 
-		let localePosition = this.availableLocales.indexOf(localeId);
+		let localePosition = null;
+
+		for (let index = 0; index < this.availableLocales.length; index++) {
+			const element = this.availableLocales[index];
+
+			if (element.id === localeId) {
+				localePosition = index;
+				break;
+			}
+		}
 
 		this.availableLocales.splice(localePosition, 1);
 

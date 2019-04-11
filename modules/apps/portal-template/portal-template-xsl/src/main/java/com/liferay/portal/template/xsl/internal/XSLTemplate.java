@@ -14,14 +14,12 @@
 
 package com.liferay.portal.template.xsl.internal;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.template.BaseTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.xsl.configuration.XSLEngineConfiguration;
@@ -33,7 +31,6 @@ import java.io.Writer;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Transformer;
@@ -58,12 +55,6 @@ public class XSLTemplate extends BaseTemplate {
 		super(
 			xslTemplateResource, Collections.emptyMap(), templateContextHelper);
 
-		if (xslTemplateResource == null) {
-			throw new IllegalArgumentException("XSL template resource is null");
-		}
-
-		_xslTemplateResource = xslTemplateResource;
-
 		_preventLocalConnections =
 			xslEngineConfiguration.preventLocalConnections();
 
@@ -80,176 +71,61 @@ public class XSLTemplate extends BaseTemplate {
 	}
 
 	@Override
-	public void processTemplate(Writer writer) throws TemplateException {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(
-			AggregateClassLoader.getAggregateClassLoader(
-				contextClassLoader, _TRANSFORMER_FACTORY_CLASS_LOADER));
-
-		try {
-			String languageId = null;
-
-			XSLURIResolver xslURIResolver =
-				_xslTemplateResource.getXSLURIResolver();
-
-			if (xslURIResolver != null) {
-				languageId = xslURIResolver.getLanguageId();
-			}
-
-			Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-			XSLErrorListener xslErrorListener = new XSLErrorListener(locale);
-
-			_transformerFactory.setErrorListener(xslErrorListener);
-
-			if (_preventLocalConnections) {
-				xslURIResolver = new XSLSecureURIResolver(xslURIResolver);
-			}
-
-			_transformerFactory.setURIResolver(xslURIResolver);
-
-			_xmlStreamSource = new StreamSource(
-				_xslTemplateResource.getXMLReader());
-
-			try {
-				Transformer transformer = _getTransformer(_xslTemplateResource);
-
-				transformer.transform(
-					_xmlStreamSource, new StreamResult(writer));
-			}
-			catch (Exception e) {
-				throw new TemplateException(
-					"Unable to process XSL template " +
-						_xslTemplateResource.getTemplateId(),
-					e);
-			}
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
-	}
-
-	public void processTemplate(
-			Writer writer,
-			Supplier<TemplateResource> errorTemplateResourceSupplier)
-		throws TemplateException {
-
-		if (errorTemplateResourceSupplier == null) {
-			processTemplate(writer);
-
-			return;
-		}
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(
-			AggregateClassLoader.getAggregateClassLoader(
-				contextClassLoader, _TRANSFORMER_FACTORY_CLASS_LOADER));
-
-		try {
-			String languageId = null;
-
-			XSLURIResolver xslURIResolver =
-				_xslTemplateResource.getXSLURIResolver();
-
-			if (xslURIResolver != null) {
-				languageId = xslURIResolver.getLanguageId();
-			}
-
-			Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-			XSLErrorListener xslErrorListener = new XSLErrorListener(locale);
-
-			_transformerFactory.setErrorListener(xslErrorListener);
-
-			if (_preventLocalConnections) {
-				xslURIResolver = new XSLSecureURIResolver(xslURIResolver);
-			}
-
-			_transformerFactory.setURIResolver(xslURIResolver);
-
-			_xmlStreamSource = new StreamSource(
-				_xslTemplateResource.getXMLReader());
-
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-			Transformer transformer = _getTransformer(_xslTemplateResource);
-
-			transformer.setParameter(
-				TemplateConstants.WRITER, unsyncStringWriter);
-
-			transformer.transform(
-				_xmlStreamSource, new StreamResult(unsyncStringWriter));
-
-			StringBundler sb = unsyncStringWriter.getStringBundler();
-
-			sb.writeTo(writer);
-		}
-		catch (Exception e) {
-			TemplateResource errorTemplateResource =
-				errorTemplateResourceSupplier.get();
-
-			if (errorTemplateResource == null) {
-				throw new TemplateException(
-					"Unable to process XSL template " +
-						_xslTemplateResource.getTemplateId(),
-					e);
-			}
-
-			handleException(
-				_xslTemplateResource, errorTemplateResource, e, writer);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
-	}
-
-	@Override
 	protected void handleException(
 			TemplateResource templateResource,
 			TemplateResource errorTemplateResource, Exception exception,
 			Writer writer)
 		throws TemplateException {
 
-		Transformer errorTransformer = _getTransformer(errorTemplateResource);
+		Thread currentThread = Thread.currentThread();
 
-		errorTransformer.setParameter(TemplateConstants.WRITER, writer);
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		XSLErrorListener xslErrorListener =
-			(XSLErrorListener)_transformerFactory.getErrorListener();
-
-		errorTransformer.setParameter(
-			"exception", xslErrorListener.getMessageAndLocation());
-
-		if (errorTemplateResource instanceof StringTemplateResource) {
-			StringTemplateResource stringTemplateResource =
-				(StringTemplateResource)errorTemplateResource;
-
-			errorTransformer.setParameter(
-				"script", stringTemplateResource.getContent());
-		}
-
-		if (xslErrorListener.getLocation() != null) {
-			errorTransformer.setParameter(
-				"column", Integer.valueOf(xslErrorListener.getColumnNumber()));
-			errorTransformer.setParameter(
-				"line", Integer.valueOf(xslErrorListener.getLineNumber()));
-		}
+		currentThread.setContextClassLoader(
+			AggregateClassLoader.getAggregateClassLoader(
+				contextClassLoader, _TRANSFORMER_FACTORY_CLASS_LOADER));
 
 		try {
-			errorTransformer.transform(
-				_xmlStreamSource, new StreamResult(writer));
+			Transformer errorTransformer = _getTransformer(
+				errorTemplateResource);
+
+			errorTransformer.setParameter(TemplateConstants.WRITER, writer);
+
+			XSLErrorListener xslErrorListener =
+				(XSLErrorListener)_transformerFactory.getErrorListener();
+
+			errorTransformer.setParameter(
+				"exception", xslErrorListener.getMessageAndLocation());
+
+			if (errorTemplateResource instanceof StringTemplateResource) {
+				StringTemplateResource stringTemplateResource =
+					(StringTemplateResource)errorTemplateResource;
+
+				errorTransformer.setParameter(
+					"script", stringTemplateResource.getContent());
+			}
+
+			if (xslErrorListener.getLocation() != null) {
+				errorTransformer.setParameter(
+					"column",
+					Integer.valueOf(xslErrorListener.getColumnNumber()));
+				errorTransformer.setParameter(
+					"line", Integer.valueOf(xslErrorListener.getLineNumber()));
+			}
+
+			try {
+				errorTransformer.transform(
+					_xmlStreamSource, new StreamResult(writer));
+			}
+			catch (Exception e) {
+				throw new TemplateException(
+					"Unable to process XSL template " +
+						errorTemplateResource.getTemplateId(),
+					e);
+			}
 		}
-		catch (Exception e) {
-			throw new TemplateException(
-				"Unable to process XSL template " +
-					errorTemplateResource.getTemplateId(),
-				e);
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -257,6 +133,50 @@ public class XSLTemplate extends BaseTemplate {
 	protected void processTemplate(
 			TemplateResource templateResource, Writer writer)
 		throws Exception {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			AggregateClassLoader.getAggregateClassLoader(
+				contextClassLoader, _TRANSFORMER_FACTORY_CLASS_LOADER));
+
+		XSLTemplateResource xslTemplateResource =
+			(XSLTemplateResource)templateResource;
+
+		try {
+			String languageId = null;
+
+			XSLURIResolver xslURIResolver =
+				xslTemplateResource.getXSLURIResolver();
+
+			if (xslURIResolver != null) {
+				languageId = xslURIResolver.getLanguageId();
+			}
+
+			Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+			XSLErrorListener xslErrorListener = new XSLErrorListener(locale);
+
+			_transformerFactory.setErrorListener(xslErrorListener);
+
+			if (_preventLocalConnections) {
+				xslURIResolver = new XSLSecureURIResolver(xslURIResolver);
+			}
+
+			_transformerFactory.setURIResolver(xslURIResolver);
+
+			_xmlStreamSource = new StreamSource(
+				xslTemplateResource.getXMLReader());
+
+			Transformer transformer = _getTransformer(xslTemplateResource);
+
+			transformer.transform(_xmlStreamSource, new StreamResult(writer));
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	private Transformer _getTransformer(TemplateResource templateResource)
@@ -299,6 +219,5 @@ public class XSLTemplate extends BaseTemplate {
 	private final boolean _preventLocalConnections;
 	private final TransformerFactory _transformerFactory;
 	private StreamSource _xmlStreamSource;
-	private final XSLTemplateResource _xslTemplateResource;
 
 }

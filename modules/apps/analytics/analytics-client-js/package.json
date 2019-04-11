@@ -56,10 +56,10 @@
 		"url": "git+https://github.com/liferay/com-liferay-analytics.git"
 	},
 	"scripts": {
-		"build_DISABLED": "rimraf build/ && webpack",
+		"build": "rimraf build/ && webpack",
 		"format": "prettier-eslint --write 'src/**/*.js' 'src/**/*.js'",
 		"lint": "eslint src/",
-		"test_DISABLED": "karma start karma.conf.js"
+		"test": "karma start karma.conf.js"
 	},
 	"version": "1.0.0"
 }

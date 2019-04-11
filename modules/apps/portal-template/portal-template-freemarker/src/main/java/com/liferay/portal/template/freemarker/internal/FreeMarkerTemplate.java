@@ -64,11 +64,17 @@ public class FreeMarkerTemplate extends BaseTemplate {
 			templateContextHelper, templateResourceCache);
 
 		_configuration = configuration;
+		_templateResourceCache = templateResourceCache;
 	}
 
 	@Override
 	protected void handleException(Exception exception, Writer writer)
 		throws TemplateException {
+
+		if (_templateResourceCache.isEnabled()) {
+			cacheTemplateResource(
+				_templateResourceCache, errorTemplateResource);
+		}
 
 		if ((exception instanceof ParseException) ||
 			(exception instanceof freemarker.template.TemplateException)) {
@@ -136,6 +142,7 @@ public class FreeMarkerTemplate extends BaseTemplate {
 		};
 
 	private final Configuration _configuration;
+	private final TemplateResourceCache _templateResourceCache;
 
 	private class CachableDefaultMapAdapter
 		extends WrappingTemplateModel

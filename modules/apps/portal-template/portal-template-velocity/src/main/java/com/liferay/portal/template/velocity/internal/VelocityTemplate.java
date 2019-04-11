@@ -50,11 +50,17 @@ public class VelocityTemplate extends BaseTemplate {
 
 		_velocityContext = new VelocityContext(super.context);
 		_velocityEngine = velocityEngine;
+		_templateResourceCache = templateResourceCache;
 	}
 
 	@Override
 	protected void handleException(Exception exception, Writer writer)
 		throws TemplateException {
+
+		if (_templateResourceCache.isEnabled()) {
+			cacheTemplateResource(
+				_templateResourceCache, errorTemplateResource);
+		}
 
 		put("exception", exception.getMessage());
 
@@ -104,6 +110,7 @@ public class VelocityTemplate extends BaseTemplate {
 		}
 	}
 
+	private final TemplateResourceCache _templateResourceCache;
 	private final VelocityContext _velocityContext;
 	private final VelocityEngine _velocityEngine;
 

@@ -19,9 +19,6 @@ package com.liferay.arquillian.extension.junit.bridge.constants;
  */
 public class Headers {
 
-	public static final String TEST_BRIDGE_CLASS_NAME =
-		"Test-Bridge-Class-Name";
-
 	public static final String TEST_BRIDGE_FILTERED_METHOD_NAMES =
 		"Test-Bridge-Filtered-Method-Names";
 

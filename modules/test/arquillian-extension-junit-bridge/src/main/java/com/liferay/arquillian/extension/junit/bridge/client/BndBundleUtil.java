@@ -46,8 +46,8 @@ import java.util.Set;
 public class BndBundleUtil {
 
 	public static Path createBundle(
-			String className, List<String> filteredMethods, String hostAddress,
-			int port, long passCode)
+			List<String> filteredMethods, String hostAddress, int port,
+			long passCode)
 		throws Exception {
 
 		File buildDir = new File(System.getProperty("user.dir"));
@@ -55,8 +55,7 @@ public class BndBundleUtil {
 		try (Workspace workspace = new Workspace(buildDir);
 			Project project = new Project(workspace, buildDir);
 			ProjectBuilder projectBuilder = _createProjectBuilder(
-				project, className, filteredMethods, hostAddress, port,
-				passCode);
+				project, filteredMethods, hostAddress, port, passCode);
 			Jar jar = projectBuilder.build();
 			Analyzer analyzer = new Analyzer()) {
 
@@ -74,11 +73,10 @@ public class BndBundleUtil {
 	}
 
 	private static ProjectBuilder _createProjectBuilder(
-			Project project, String className, List<String> filteredMethods,
-			String hostAddress, int port, long passCode)
+			Project project, List<String> filteredMethods, String hostAddress,
+			int port, long passCode)
 		throws Exception {
 
-		project.setProperty(Headers.TEST_BRIDGE_CLASS_NAME, className);
 		project.setProperty(
 			Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES,
 			StringUtil.merge(filteredMethods, StringPool.COMMA));

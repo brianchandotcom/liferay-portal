@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge.server;
 
-import org.junit.runners.model.TestClass;
+import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -28,12 +28,12 @@ public class TestBundleListener implements BundleListener {
 
 	public TestBundleListener(
 		BundleContext systemBundleContext, Bundle testBundle,
-		TestClass testClass, String reportServerHostName, int reportServerPort,
-		long passCode) {
+		List<String> filterMethodNames, String reportServerHostName,
+		int reportServerPort, long passCode) {
 
 		_systemBundleContext = systemBundleContext;
 		_testBundle = testBundle;
-		_testClass = testClass;
+		_filterMethodNames = filterMethodNames;
 		_reportServerHostName = reportServerHostName;
 		_reportServerPort = reportServerPort;
 		_passCode = passCode;
@@ -54,9 +54,9 @@ public class TestBundleListener implements BundleListener {
 		if (bundle.getState() == Bundle.ACTIVE) {
 			_testExecutorThread = new Thread(
 				new TestExecutorRunnable(
-					_testBundle, _testClass, _reportServerHostName,
+					_testBundle, _filterMethodNames, _reportServerHostName,
 					_reportServerPort, _passCode),
-				_testClass.getName() + "-executor-thread");
+				_testBundle.getSymbolicName() + "-executor-thread");
 
 			_testExecutorThread.setDaemon(true);
 
@@ -74,12 +74,12 @@ public class TestBundleListener implements BundleListener {
 		}
 	}
 
+	private final List<String> _filterMethodNames;
 	private final long _passCode;
 	private final String _reportServerHostName;
 	private final int _reportServerPort;
 	private final BundleContext _systemBundleContext;
 	private final Bundle _testBundle;
-	private final TestClass _testClass;
 	private Thread _testExecutorThread;
 
 }

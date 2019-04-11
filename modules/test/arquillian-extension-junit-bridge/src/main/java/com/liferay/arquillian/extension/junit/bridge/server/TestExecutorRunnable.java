@@ -17,6 +17,7 @@ package com.liferay.arquillian.extension.junit.bridge.server;
 import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import java.lang.annotation.Annotation;
@@ -25,7 +26,9 @@ import java.lang.reflect.Method;
 
 import java.net.Socket;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +39,7 @@ import org.junit.AssumptionViolatedException;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.internal.runners.statements.FailOnTimeout;
@@ -45,6 +49,7 @@ import org.junit.internal.runners.statements.RunBefores;
 import org.junit.rules.RunRules;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
+import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.MultipleFailureException;
 import org.junit.runners.model.Statement;
@@ -59,11 +64,11 @@ import org.osgi.framework.BundleException;
 public class TestExecutorRunnable implements Runnable {
 
 	public TestExecutorRunnable(
-		Bundle bundle, TestClass testClass, String reportServerHostName,
-		int reportServerPort, long passCode) {
+		Bundle bundle, List<String> filterMethodNames,
+		String reportServerHostName, int reportServerPort, long passCode) {
 
 		_bundle = bundle;
-		_testClass = testClass;
+		_filterMethodNames = filterMethodNames;
 		_reportServerHostName = reportServerHostName;
 		_reportServerPort = reportServerPort;
 		_passCode = passCode;
@@ -74,25 +79,31 @@ public class TestExecutorRunnable implements Runnable {
 		try (Socket socket = new Socket(
 				_reportServerHostName, _reportServerPort);
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				socket.getOutputStream())) {
+				socket.getOutputStream());
+			ObjectInputStream objectInputStream = new ObjectInputStream(
+				socket.getInputStream())) {
 
 			objectOutputStream.writeLong(_passCode);
 
-			_execute(_testClass, objectOutputStream);
+			objectOutputStream.flush();
+
+			String testClass = objectInputStream.readUTF();
+
+			_execute(_createTestClass(testClass), objectOutputStream);
 		}
-		catch (IOException ioe) {
+		catch (Exception e) {
 			try {
 				_bundle.uninstall();
 			}
 			catch (BundleException be) {
-				ioe.addSuppressed(be);
+				e.addSuppressed(be);
 			}
 
 			_logger.log(
 				Level.SEVERE,
 				"Unable to report back to client. Uninstalled test bundle " +
 					"and abort test.",
-				ioe);
+				e);
 		}
 	}
 
@@ -346,13 +357,49 @@ public class TestExecutorRunnable implements Runnable {
 		return builder.build(statement);
 	}
 
+	private TestClass _createTestClass(String testClassName)
+		throws ClassNotFoundException {
+
+		return new TestClass(_bundle.loadClass(testClassName)) {
+
+			@Override
+			protected void scanAnnotatedMembers(
+				Map<Class<? extends Annotation>, List<FrameworkMethod>>
+					frameworkMethodsMap,
+				Map<Class<? extends Annotation>, List<FrameworkField>>
+					frameworkFieldsMap) {
+
+				super.scanAnnotatedMembers(
+					frameworkMethodsMap, frameworkFieldsMap);
+
+				List<FrameworkMethod> testFrameworkMethods =
+					frameworkMethodsMap.get(Test.class);
+
+				List<FrameworkMethod> ignoreFrameworkMethods =
+					frameworkMethodsMap.get(Ignore.class);
+
+				if (ignoreFrameworkMethods != null) {
+					testFrameworkMethods.removeAll(ignoreFrameworkMethods);
+				}
+
+				testFrameworkMethods.removeIf(
+					frameworkMethod -> _filterMethodNames.contains(
+						frameworkMethod.getName()));
+
+				testFrameworkMethods.sort(
+					Comparator.comparing(FrameworkMethod::getName));
+			}
+
+		};
+	}
+
 	private static final Logger _logger = Logger.getLogger(
 		TestExecutorRunnable.class.getName());
 
 	private final Bundle _bundle;
+	private final List<String> _filterMethodNames;
 	private final long _passCode;
 	private final String _reportServerHostName;
 	private final int _reportServerPort;
-	private final TestClass _testClass;
 
 }

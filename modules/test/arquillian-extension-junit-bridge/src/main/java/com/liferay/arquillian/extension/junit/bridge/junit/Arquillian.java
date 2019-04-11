@@ -23,6 +23,8 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 
 import java.lang.annotation.Annotation;
 
@@ -161,8 +163,11 @@ public class Arquillian extends Runner implements Filterable {
 				while (true) {
 					try (Socket socket = serverSocket.accept();
 						InputStream inputStream = socket.getInputStream();
+						OutputStream outputStream = socket.getOutputStream();
 						ObjectInputStream objectInputStream =
-							new ObjectInputStream(inputStream)) {
+							new ObjectInputStream(inputStream);
+						ObjectOutputStream objectOutputStream =
+							new ObjectOutputStream(outputStream)) {
 
 						if (_passCode != objectInputStream.readLong()) {
 							_logger.log(
@@ -172,6 +177,10 @@ public class Arquillian extends Runner implements Filterable {
 
 							continue;
 						}
+
+						objectOutputStream.writeUTF(_clazz.getName());
+
+						objectOutputStream.flush();
 
 						while (true) {
 							RunNotifierCommand runNotifierCommand =
@@ -237,7 +246,7 @@ public class Arquillian extends Runner implements Filterable {
 		throws Exception {
 
 		Path path = BndBundleUtil.createBundle(
-			_clazz.getName(), _filteredSortedTestClass._filteredMethodNames,
+			_filteredSortedTestClass._filteredMethodNames,
 			_inetAddress.getHostAddress(), port, _passCode);
 
 		URI uri = path.toUri();

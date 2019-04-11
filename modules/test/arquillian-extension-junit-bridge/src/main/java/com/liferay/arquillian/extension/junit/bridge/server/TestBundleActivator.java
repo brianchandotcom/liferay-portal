@@ -21,21 +21,11 @@ import com.liferay.petra.string.StringUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.lang.annotation.Annotation;
-
 import java.net.URL;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
-
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runners.model.FrameworkField;
-import org.junit.runners.model.FrameworkMethod;
-import org.junit.runners.model.TestClass;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -73,40 +63,6 @@ public class TestBundleActivator implements BundleActivator {
 			attributes.getValue(Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES),
 			CharPool.COMMA);
 
-		TestClass testClass = new TestClass(
-			testBundle.loadClass(
-				attributes.getValue(Headers.TEST_BRIDGE_CLASS_NAME))) {
-
-			@Override
-			protected void scanAnnotatedMembers(
-				Map<Class<? extends Annotation>, List<FrameworkMethod>>
-					frameworkMethodsMap,
-				Map<Class<? extends Annotation>, List<FrameworkField>>
-					frameworkFieldsMap) {
-
-				super.scanAnnotatedMembers(
-					frameworkMethodsMap, frameworkFieldsMap);
-
-				List<FrameworkMethod> testFrameworkMethods =
-					frameworkMethodsMap.get(Test.class);
-
-				List<FrameworkMethod> ignoreFrameworkMethods =
-					frameworkMethodsMap.get(Ignore.class);
-
-				if (ignoreFrameworkMethods != null) {
-					testFrameworkMethods.removeAll(ignoreFrameworkMethods);
-				}
-
-				testFrameworkMethods.removeIf(
-					frameworkMethod -> filterMethodNames.contains(
-						frameworkMethod.getName()));
-
-				testFrameworkMethods.sort(
-					Comparator.comparing(FrameworkMethod::getName));
-			}
-
-		};
-
 		long passCode = Long.parseLong(
 			attributes.getValue(Headers.TEST_BRIDGE_PASS_CODE));
 
@@ -116,7 +72,7 @@ public class TestBundleActivator implements BundleActivator {
 
 		systemBundleContext.addBundleListener(
 			new TestBundleListener(
-				systemBundleContext, testBundle, testClass,
+				systemBundleContext, testBundle, filterMethodNames,
 				reportServerHostName, reportServerPort, passCode));
 	}
 

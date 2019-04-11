@@ -5,42 +5,66 @@
 				"lint": {
 					"env": {
 						"browser": true,
-						"jest": true,
-						"mocha": true
+						"jest": true
 					},
 					"extends": "liferay",
 					"globals": {
-						"$": true,
-						"AlloyEditor": true,
-						"CKEDITOR": true,
-						"MODULE_PATH": true,
-						"main": true
+						"AlloyEditor": true
 					},
 					"parser": "babel-eslint",
 					"parserOptions": {
-						"ecmaFeatures": {
-							"allowImportExportEverywhere": true,
-							"experimentalObjectRestSpread": true,
-							"jsx": true
-						},
-						"ecmaVersion": 2017,
-						"sourceType": "module"
+						"ecmaVersion": 7
 					},
+					"plugins": [
+						"sort-class-members"
+					],
 					"rules": {
-						"keyword-spacing": [
+						"no-unknown-property": [
 							2,
 							{
-								"overrides": {
-									"catch": {
-										"after": true
-									}
-								}
+								"ignore": [
+									"class",
+									"xlink:href"
+								]
 							}
 						],
-						"newline-after-var": 2,
-						"no-console": 0,
-						"no-unknown-property": 0,
-						"require-jsdoc": 0
+						"sort-class-members/sort-class-members": [
+							2,
+							{
+								"groups": {
+									"conventional-private-methods": [
+										{
+											"name": "/^_.+$/",
+											"sort": "alphabetical",
+											"type": "method"
+										}
+									],
+									"methods": [
+										{
+											"sort": "alphabetical",
+											"type": "method"
+										}
+									]
+								},
+								"order": [
+									"[static-properties]",
+									"[static-methods]",
+									"[properties]",
+									"[conventional-private-properties]",
+									"constructor",
+									"[methods]",
+									"[conventional-private-methods]"
+								]
+							}
+						],
+						"sort-keys": [
+							"error",
+							"asc",
+							{
+								"caseSensitive": false,
+								"natural": false
+							}
+						]
 					}
 				}
 			}

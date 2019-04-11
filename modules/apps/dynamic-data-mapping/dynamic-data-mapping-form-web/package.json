@@ -5,46 +5,65 @@
 				"lint": {
 					"env": {
 						"browser": true,
-						"jest": true,
-						"mocha": true
+						"jest": true
 					},
 					"extends": "liferay",
 					"globals": {
-						"$": true,
-						"AlloyEditor": true,
-						"CKEDITOR": true,
-						"MODULE_PATH": true
+						"AlloyEditor": true
 					},
 					"parser": "babel-eslint",
 					"parserOptions": {
-						"ecmaFeatures": {
-							"allowImportExportEverywhere": true,
-							"experimentalObjectRestSpread": true,
-							"jsx": true
-						},
-						"ecmaVersion": 2017,
-						"sourceType": "module"
+						"ecmaVersion": 7
 					},
 					"plugins": [
-						"eslint-plugin-react"
+						"sort-class-members"
 					],
 					"rules": {
-						"keyword-spacing": [
+						"no-unknown-property": [
 							2,
 							{
-								"overrides": {
-									"catch": {
-										"after": true
-									}
-								}
+								"ignore": [
+									"class"
+								]
 							}
 						],
-						"newline-after-var": 2,
-						"no-console": 0,
-						"no-unknown-property": 0,
-						"react/jsx-uses-react": 0,
-						"react/jsx-uses-vars": 2,
-						"require-jsdoc": 0
+						"sort-class-members/sort-class-members": [
+							2,
+							{
+								"groups": {
+									"conventional-private-methods": [
+										{
+											"name": "/^_.+$/",
+											"sort": "alphabetical",
+											"type": "method"
+										}
+									],
+									"methods": [
+										{
+											"sort": "alphabetical",
+											"type": "method"
+										}
+									]
+								},
+								"order": [
+									"[static-properties]",
+									"[static-methods]",
+									"[properties]",
+									"[conventional-private-properties]",
+									"constructor",
+									"[methods]",
+									"[conventional-private-methods]"
+								]
+							}
+						],
+						"sort-keys": [
+							"error",
+							"asc",
+							{
+								"caseSensitive": true,
+								"natural": false
+							}
+						]
 					}
 				}
 			}
@@ -104,8 +123,7 @@
 		"cross-env": "^5.2.0",
 		"cross-spawn": "^6.0.5",
 		"eslint": "^4.10.0",
-		"eslint-config-liferay": "^2.0.8",
-		"eslint-plugin-react": "^7.4.0",
+		"eslint-config-liferay": "^3.0.0",
 		"jest": "^24.5.0",
 		"jest-fetch-mock": "^1.6.6",
 		"metal-jest-serializer": "^2.0.0",

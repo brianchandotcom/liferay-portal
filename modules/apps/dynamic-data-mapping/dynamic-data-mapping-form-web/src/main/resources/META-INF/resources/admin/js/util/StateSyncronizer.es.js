@@ -99,10 +99,6 @@ class StateSyncronizer extends Component {
 		} = state;
 
 		if (settingsDDMForm) {
-			const publishedField = settingsDDMForm.getField('published');
-
-			publishedField.set('value', this.props.published);
-
 			const settings = settingsDDMForm.get('context');
 
 			document.querySelector(`#${namespace}serializedSettingsContext`).value = JSON.stringify(settings);

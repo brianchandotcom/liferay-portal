@@ -102,7 +102,7 @@ class Form extends Component {
 		 * @type {!array}
 		 */
 
-		formInstanceId: Config.string().value(0),
+		formInstanceId: Config.number().value(0),
 
 		/**
 		 * A map with all translated values available as the form description.
@@ -414,21 +414,7 @@ class Form extends Component {
 		);
 	}
 
-	_handlePublishedChanged({newVal}) {
-		const {saved} = this.props;
-		const shareFormIcon = document.querySelector('.share-form-icon');
-
-		this.props.published = newVal;
-
-		if (newVal && !saved) {
-			this.props.saved = true;
-
-			shareFormIcon.classList.remove('hide');
-		}
-		else if (!newVal && !saved) {
-			shareFormIcon.classList.add('hide');
-		}
-
+	_handlePublishedChanged() {
 		this.togglePublishedAlertsShown();
 	}
 
@@ -692,13 +678,6 @@ class Form extends Component {
 						translationManager
 					},
 					this.element
-				);
-
-				this.on(
-					'publishedChanged',
-					({newVal}) => {
-						this._stateSyncronizer.props.published = newVal;
-					}
 				);
 
 				this._autoSave = new AutoSave(

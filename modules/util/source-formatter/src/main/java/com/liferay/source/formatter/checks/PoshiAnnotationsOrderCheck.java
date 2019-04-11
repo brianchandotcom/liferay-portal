@@ -42,7 +42,7 @@ public class PoshiAnnotationsOrderCheck extends BaseFileCheck {
 			Arrays.sort(annotations);
 
 			content = StringUtil.replaceFirst(
-				content, matcher.group(0),
+				content, matcher.group(),
 				StringUtil.merge(annotations, "\n") + "\n");
 		}
 

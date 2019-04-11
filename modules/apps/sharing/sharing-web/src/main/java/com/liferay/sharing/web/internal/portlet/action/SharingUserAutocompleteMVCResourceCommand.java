@@ -133,7 +133,8 @@ public class SharingUserAutocompleteMVCResourceCommand
 		User user = themeDisplay.getUser();
 
 		return _userLocalService.searchSocial(
-			themeDisplay.getCompanyId(), user.getGroupIds(), query, 0, 20);
+			themeDisplay.getCompanyId(), user.getGroupIds(), query, 0, 20,
+			new UserScreenNameComparator());
 	}
 
 	@Reference

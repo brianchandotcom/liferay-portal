@@ -32,13 +32,9 @@ import com.liferay.portal.xsl.XSLURIResolver;
 
 import java.io.Writer;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Transformer;
@@ -69,14 +65,8 @@ public class XSLTemplate extends BaseTemplate {
 			throw new IllegalArgumentException("XSL template resource is null");
 		}
 
-		if (templateContextHelper == null) {
-			throw new IllegalArgumentException(
-				"Template context helper is null");
-		}
-
 		_xslTemplateResource = xslTemplateResource;
 		_errorTemplateResource = errorTemplateResource;
-		_templateContextHelper = templateContextHelper;
 
 		_preventLocalConnections =
 			xslEngineConfiguration.preventLocalConnections();
@@ -91,21 +81,6 @@ public class XSLTemplate extends BaseTemplate {
 		}
 		catch (TransformerConfigurationException tce) {
 		}
-	}
-
-	@Override
-	public void clear() {
-		context.clear();
-	}
-
-	@Override
-	public boolean containsKey(Object key) {
-		return context.containsKey(key);
-	}
-
-	@Override
-	public boolean containsValue(Object value) {
-		return context.containsValue(value);
 	}
 
 	@Override
@@ -168,11 +143,6 @@ public class XSLTemplate extends BaseTemplate {
 	}
 
 	@Override
-	public Set<Entry<String, Object>> entrySet() {
-		return context.entrySet();
-	}
-
-	@Override
 	public Object get(Object key) {
 		return context.get(key);
 	}
@@ -180,28 +150,6 @@ public class XSLTemplate extends BaseTemplate {
 	@Override
 	public Object get(String key) {
 		return context.get(key);
-	}
-
-	@Override
-	public String[] getKeys() {
-		Set<String> keys = context.keySet();
-
-		return keys.toArray(new String[keys.size()]);
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return context.isEmpty();
-	}
-
-	@Override
-	public Set<String> keySet() {
-		return context.keySet();
-	}
-
-	@Override
-	public void prepare(HttpServletRequest request) {
-		_templateContextHelper.prepare(this, request);
 	}
 
 	@Override
@@ -271,26 +219,6 @@ public class XSLTemplate extends BaseTemplate {
 	}
 
 	@Override
-	public void putAll(Map<? extends String, ? extends Object> m) {
-		context.putAll(m);
-	}
-
-	@Override
-	public Object remove(Object key) {
-		return context.remove(key);
-	}
-
-	@Override
-	public int size() {
-		return context.size();
-	}
-
-	@Override
-	public Collection<Object> values() {
-		return context.values();
-	}
-
-	@Override
 	protected void handleException(Exception exception, Writer writer)
 		throws TemplateException {
 	}
@@ -343,7 +271,6 @@ public class XSLTemplate extends BaseTemplate {
 
 	private TemplateResource _errorTemplateResource;
 	private final boolean _preventLocalConnections;
-	private final TemplateContextHelper _templateContextHelper;
 	private final TransformerFactory _transformerFactory;
 	private StreamSource _xmlStreamSource;
 	private final XSLTemplateResource _xslTemplateResource;

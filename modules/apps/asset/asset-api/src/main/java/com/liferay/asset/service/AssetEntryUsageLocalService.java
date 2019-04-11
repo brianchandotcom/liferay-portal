@@ -108,8 +108,12 @@ public interface AssetEntryUsageLocalService
 	public AssetEntryUsage deleteAssetEntryUsage(long assetEntryUsageId)
 		throws PortalException;
 
+	public void deleteAssetEntryUsages(long assetEntryId);
+
 	public void deleteAssetEntryUsages(
 		long containerType, String containerKey, long plid);
+
+	public void deleteAssetEntryUsagesByPlid(long plid);
 
 	/**
 	 * @throws PortalException
@@ -255,6 +259,9 @@ public interface AssetEntryUsageLocalService
 	public List<AssetEntryUsage> getAssetEntryUsages(
 		long assetEntryId, int start, int end,
 		OrderByComparator<AssetEntryUsage> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetEntryUsage> getAssetEntryUsagesByPlid(long plid);
 
 	/**
 	 * Returns the number of asset entry usages.

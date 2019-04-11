@@ -1404,6 +1404,509 @@ public class AssetEntryUsagePersistenceImpl
 	private static final String _FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2 =
 		"assetEntryUsage.assetEntryId = ? AND assetEntryUsage.containerKey IS NOT NULL";
 
+	private FinderPath _finderPathWithPaginationFindByPlid;
+	private FinderPath _finderPathWithoutPaginationFindByPlid;
+	private FinderPath _finderPathCountByPlid;
+
+	/**
+	 * Returns all the asset entry usages where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the matching asset entry usages
+	 */
+	@Override
+	public List<AssetEntryUsage> findByPlid(long plid) {
+		return findByPlid(plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset entry usages where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of asset entry usages
+	 * @param end the upper bound of the range of asset entry usages (not inclusive)
+	 * @return the range of matching asset entry usages
+	 */
+	@Override
+	public List<AssetEntryUsage> findByPlid(long plid, int start, int end) {
+		return findByPlid(plid, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset entry usages where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of asset entry usages
+	 * @param end the upper bound of the range of asset entry usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset entry usages
+	 */
+	@Override
+	public List<AssetEntryUsage> findByPlid(
+		long plid, int start, int end,
+		OrderByComparator<AssetEntryUsage> orderByComparator) {
+
+		return findByPlid(plid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset entry usages where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of asset entry usages
+	 * @param end the upper bound of the range of asset entry usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset entry usages
+	 */
+	@Override
+	public List<AssetEntryUsage> findByPlid(
+		long plid, int start, int end,
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean retrieveFromCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByPlid;
+			finderArgs = new Object[] {plid};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByPlid;
+			finderArgs = new Object[] {plid, start, end, orderByComparator};
+		}
+
+		List<AssetEntryUsage> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AssetEntryUsage>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetEntryUsage assetEntryUsage : list) {
+					if ((plid != assetEntryUsage.getPlid())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_ASSETENTRYUSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_PLID_PLID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(AssetEntryUsageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(plid);
+
+				if (!pagination) {
+					list = (List<AssetEntryUsage>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetEntryUsage>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset entry usage in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry usage
+	 * @throws NoSuchEntryUsageException if a matching asset entry usage could not be found
+	 */
+	@Override
+	public AssetEntryUsage findByPlid_First(
+			long plid, OrderByComparator<AssetEntryUsage> orderByComparator)
+		throws NoSuchEntryUsageException {
+
+		AssetEntryUsage assetEntryUsage = fetchByPlid_First(
+			plid, orderByComparator);
+
+		if (assetEntryUsage != null) {
+			return assetEntryUsage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("plid=");
+		msg.append(plid);
+
+		msg.append("}");
+
+		throw new NoSuchEntryUsageException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset entry usage in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
+	 */
+	@Override
+	public AssetEntryUsage fetchByPlid_First(
+		long plid, OrderByComparator<AssetEntryUsage> orderByComparator) {
+
+		List<AssetEntryUsage> list = findByPlid(plid, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset entry usage in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset entry usage
+	 * @throws NoSuchEntryUsageException if a matching asset entry usage could not be found
+	 */
+	@Override
+	public AssetEntryUsage findByPlid_Last(
+			long plid, OrderByComparator<AssetEntryUsage> orderByComparator)
+		throws NoSuchEntryUsageException {
+
+		AssetEntryUsage assetEntryUsage = fetchByPlid_Last(
+			plid, orderByComparator);
+
+		if (assetEntryUsage != null) {
+			return assetEntryUsage;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("plid=");
+		msg.append(plid);
+
+		msg.append("}");
+
+		throw new NoSuchEntryUsageException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset entry usage in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
+	 */
+	@Override
+	public AssetEntryUsage fetchByPlid_Last(
+		long plid, OrderByComparator<AssetEntryUsage> orderByComparator) {
+
+		int count = countByPlid(plid);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AssetEntryUsage> list = findByPlid(
+			plid, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset entry usages before and after the current asset entry usage in the ordered set where plid = &#63;.
+	 *
+	 * @param assetEntryUsageId the primary key of the current asset entry usage
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset entry usage
+	 * @throws NoSuchEntryUsageException if a asset entry usage with the primary key could not be found
+	 */
+	@Override
+	public AssetEntryUsage[] findByPlid_PrevAndNext(
+			long assetEntryUsageId, long plid,
+			OrderByComparator<AssetEntryUsage> orderByComparator)
+		throws NoSuchEntryUsageException {
+
+		AssetEntryUsage assetEntryUsage = findByPrimaryKey(assetEntryUsageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetEntryUsage[] array = new AssetEntryUsageImpl[3];
+
+			array[0] = getByPlid_PrevAndNext(
+				session, assetEntryUsage, plid, orderByComparator, true);
+
+			array[1] = assetEntryUsage;
+
+			array[2] = getByPlid_PrevAndNext(
+				session, assetEntryUsage, plid, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetEntryUsage getByPlid_PrevAndNext(
+		Session session, AssetEntryUsage assetEntryUsage, long plid,
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ASSETENTRYUSAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_PLID_PLID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AssetEntryUsageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(plid);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						assetEntryUsage)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<AssetEntryUsage> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the asset entry usages where plid = &#63; from the database.
+	 *
+	 * @param plid the plid
+	 */
+	@Override
+	public void removeByPlid(long plid) {
+		for (AssetEntryUsage assetEntryUsage :
+				findByPlid(plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(assetEntryUsage);
+		}
+	}
+
+	/**
+	 * Returns the number of asset entry usages where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the number of matching asset entry usages
+	 */
+	@Override
+	public int countByPlid(long plid) {
+		FinderPath finderPath = _finderPathCountByPlid;
+
+		Object[] finderArgs = new Object[] {plid};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ASSETENTRYUSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_PLID_PLID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(plid);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PLID_PLID_2 =
+		"assetEntryUsage.plid = ? AND assetEntryUsage.containerKey IS NOT NULL";
+
 	private FinderPath _finderPathWithPaginationFindByA_T;
 	private FinderPath _finderPathWithoutPaginationFindByA_T;
 	private FinderPath _finderPathCountByA_T;
@@ -3293,6 +3796,12 @@ public class AssetEntryUsagePersistenceImpl
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByAssetEntryId, args);
 
+			args = new Object[] {assetEntryUsageModelImpl.getPlid()};
+
+			finderCache.removeResult(_finderPathCountByPlid, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByPlid, args);
+
 			args = new Object[] {
 				assetEntryUsageModelImpl.getAssetEntryId(),
 				assetEntryUsageModelImpl.getType()
@@ -3355,6 +3864,25 @@ public class AssetEntryUsagePersistenceImpl
 				finderCache.removeResult(_finderPathCountByAssetEntryId, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByAssetEntryId, args);
+			}
+
+			if ((assetEntryUsageModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByPlid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					assetEntryUsageModelImpl.getOriginalPlid()
+				};
+
+				finderCache.removeResult(_finderPathCountByPlid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByPlid, args);
+
+				args = new Object[] {assetEntryUsageModelImpl.getPlid()};
+
+				finderCache.removeResult(_finderPathCountByPlid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByPlid, args);
 			}
 
 			if ((assetEntryUsageModelImpl.getColumnBitmask() &
@@ -3759,6 +4287,25 @@ public class AssetEntryUsagePersistenceImpl
 		_finderPathCountByAssetEntryId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetEntryId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByPlid = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPlid",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByPlid = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
+			new String[] {Long.class.getName()},
+			AssetEntryUsageModelImpl.PLID_COLUMN_BITMASK);
+
+		_finderPathCountByPlid = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByA_T = new FinderPath(

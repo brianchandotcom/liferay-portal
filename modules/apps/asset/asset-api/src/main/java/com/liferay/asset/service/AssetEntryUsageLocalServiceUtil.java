@@ -110,10 +110,18 @@ public class AssetEntryUsageLocalServiceUtil {
 		return getService().deleteAssetEntryUsage(assetEntryUsageId);
 	}
 
+	public static void deleteAssetEntryUsages(long assetEntryId) {
+		getService().deleteAssetEntryUsages(assetEntryId);
+	}
+
 	public static void deleteAssetEntryUsages(
 		long containerType, String containerKey, long plid) {
 
 		getService().deleteAssetEntryUsages(containerType, containerKey, plid);
+	}
+
+	public static void deleteAssetEntryUsagesByPlid(long plid) {
+		getService().deleteAssetEntryUsagesByPlid(plid);
 	}
 
 	/**
@@ -314,6 +322,12 @@ public class AssetEntryUsageLocalServiceUtil {
 
 		return getService().getAssetEntryUsages(
 			assetEntryId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.asset.model.AssetEntryUsage>
+		getAssetEntryUsagesByPlid(long plid) {
+
+		return getService().getAssetEntryUsagesByPlid(plid);
 	}
 
 	/**

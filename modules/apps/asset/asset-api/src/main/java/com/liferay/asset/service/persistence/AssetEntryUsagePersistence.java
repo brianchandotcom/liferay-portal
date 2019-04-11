@@ -379,6 +379,149 @@ public interface AssetEntryUsagePersistence
 	public int countByAssetEntryId(long assetEntryId);
 
 	/**
+	 * Returns all the asset entry usages where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the matching asset entry usages
+	 */
+	public java.util.List<AssetEntryUsage> findByPlid(long plid);
+
+	/**
+	 * Returns a range of all the asset entry usages where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of asset entry usages
+	 * @param end the upper bound of the range of asset entry usages (not inclusive)
+	 * @return the range of matching asset entry usages
+	 */
+	public java.util.List<AssetEntryUsage> findByPlid(
+		long plid, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the asset entry usages where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of asset entry usages
+	 * @param end the upper bound of the range of asset entry usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset entry usages
+	 */
+	public java.util.List<AssetEntryUsage> findByPlid(
+		long plid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the asset entry usages where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of asset entry usages
+	 * @param end the upper bound of the range of asset entry usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset entry usages
+	 */
+	public java.util.List<AssetEntryUsage> findByPlid(
+		long plid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
+			orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	 * Returns the first asset entry usage in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry usage
+	 * @throws NoSuchEntryUsageException if a matching asset entry usage could not be found
+	 */
+	public AssetEntryUsage findByPlid_First(
+			long plid,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
+				orderByComparator)
+		throws NoSuchEntryUsageException;
+
+	/**
+	 * Returns the first asset entry usage in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
+	 */
+	public AssetEntryUsage fetchByPlid_First(
+		long plid,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
+			orderByComparator);
+
+	/**
+	 * Returns the last asset entry usage in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset entry usage
+	 * @throws NoSuchEntryUsageException if a matching asset entry usage could not be found
+	 */
+	public AssetEntryUsage findByPlid_Last(
+			long plid,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
+				orderByComparator)
+		throws NoSuchEntryUsageException;
+
+	/**
+	 * Returns the last asset entry usage in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
+	 */
+	public AssetEntryUsage fetchByPlid_Last(
+		long plid,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
+			orderByComparator);
+
+	/**
+	 * Returns the asset entry usages before and after the current asset entry usage in the ordered set where plid = &#63;.
+	 *
+	 * @param assetEntryUsageId the primary key of the current asset entry usage
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset entry usage
+	 * @throws NoSuchEntryUsageException if a asset entry usage with the primary key could not be found
+	 */
+	public AssetEntryUsage[] findByPlid_PrevAndNext(
+			long assetEntryUsageId, long plid,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
+				orderByComparator)
+		throws NoSuchEntryUsageException;
+
+	/**
+	 * Removes all the asset entry usages where plid = &#63; from the database.
+	 *
+	 * @param plid the plid
+	 */
+	public void removeByPlid(long plid);
+
+	/**
+	 * Returns the number of asset entry usages where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the number of matching asset entry usages
+	 */
+	public int countByPlid(long plid);
+
+	/**
 	 * Returns all the asset entry usages where assetEntryId = &#63; and type = &#63;.
 	 *
 	 * @param assetEntryId the asset entry ID

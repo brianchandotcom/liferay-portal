@@ -114,11 +114,21 @@ public class AssetEntryUsageLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteAssetEntryUsages(long assetEntryId) {
+		_assetEntryUsageLocalService.deleteAssetEntryUsages(assetEntryId);
+	}
+
+	@Override
 	public void deleteAssetEntryUsages(
 		long containerType, String containerKey, long plid) {
 
 		_assetEntryUsageLocalService.deleteAssetEntryUsages(
 			containerType, containerKey, plid);
+	}
+
+	@Override
+	public void deleteAssetEntryUsagesByPlid(long plid) {
+		_assetEntryUsageLocalService.deleteAssetEntryUsagesByPlid(plid);
 	}
 
 	/**
@@ -340,6 +350,13 @@ public class AssetEntryUsageLocalServiceWrapper
 
 		return _assetEntryUsageLocalService.getAssetEntryUsages(
 			assetEntryId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.model.AssetEntryUsage>
+		getAssetEntryUsagesByPlid(long plid) {
+
+		return _assetEntryUsageLocalService.getAssetEntryUsagesByPlid(plid);
 	}
 
 	/**

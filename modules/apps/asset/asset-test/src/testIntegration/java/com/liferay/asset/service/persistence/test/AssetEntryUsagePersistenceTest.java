@@ -208,6 +208,13 @@ public class AssetEntryUsagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByPlid() throws Exception {
+		_persistence.countByPlid(RandomTestUtil.nextLong());
+
+		_persistence.countByPlid(0L);
+	}
+
+	@Test
 	public void testCountByA_T() throws Exception {
 		_persistence.countByA_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());

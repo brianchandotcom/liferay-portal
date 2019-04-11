@@ -155,44 +155,8 @@ public class XSLTemplate extends BaseTemplate {
 		try {
 			doProcessTemplate(writer);
 		}
-		catch (Exception e1) {
-			Transformer errorTransformer = _getTransformer(
-				_errorTemplateResource);
-
-			errorTransformer.setParameter(TemplateConstants.WRITER, writer);
-
-			XSLErrorListener xslErrorListener =
-				(XSLErrorListener)_transformerFactory.getErrorListener();
-
-			errorTransformer.setParameter(
-				"exception", xslErrorListener.getMessageAndLocation());
-
-			if (_errorTemplateResource instanceof StringTemplateResource) {
-				StringTemplateResource stringTemplateResource =
-					(StringTemplateResource)_errorTemplateResource;
-
-				errorTransformer.setParameter(
-					"script", stringTemplateResource.getContent());
-			}
-
-			if (xslErrorListener.getLocation() != null) {
-				errorTransformer.setParameter(
-					"column",
-					Integer.valueOf(xslErrorListener.getColumnNumber()));
-				errorTransformer.setParameter(
-					"line", Integer.valueOf(xslErrorListener.getLineNumber()));
-			}
-
-			try {
-				errorTransformer.transform(
-					_xmlStreamSource, new StreamResult(writer));
-			}
-			catch (Exception e2) {
-				throw new TemplateException(
-					"Unable to process XSL template " +
-						_errorTemplateResource.getTemplateId(),
-					e2);
-			}
+		catch (Exception e) {
+			handleException(e, writer);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -202,6 +166,42 @@ public class XSLTemplate extends BaseTemplate {
 	@Override
 	protected void handleException(Exception exception, Writer writer)
 		throws TemplateException {
+
+		Transformer errorTransformer = _getTransformer(_errorTemplateResource);
+
+		errorTransformer.setParameter(TemplateConstants.WRITER, writer);
+
+		XSLErrorListener xslErrorListener =
+			(XSLErrorListener)_transformerFactory.getErrorListener();
+
+		errorTransformer.setParameter(
+			"exception", xslErrorListener.getMessageAndLocation());
+
+		if (_errorTemplateResource instanceof StringTemplateResource) {
+			StringTemplateResource stringTemplateResource =
+				(StringTemplateResource)_errorTemplateResource;
+
+			errorTransformer.setParameter(
+				"script", stringTemplateResource.getContent());
+		}
+
+		if (xslErrorListener.getLocation() != null) {
+			errorTransformer.setParameter(
+				"column", Integer.valueOf(xslErrorListener.getColumnNumber()));
+			errorTransformer.setParameter(
+				"line", Integer.valueOf(xslErrorListener.getLineNumber()));
+		}
+
+		try {
+			errorTransformer.transform(
+				_xmlStreamSource, new StreamResult(writer));
+		}
+		catch (Exception e) {
+			throw new TemplateException(
+				"Unable to process XSL template " +
+					_errorTemplateResource.getTemplateId(),
+				e);
+		}
 	}
 
 	@Override

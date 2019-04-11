@@ -12,12 +12,21 @@
 	{@param? _handleInputFocus: any}
 	{@param? _handleItemAdded: any}
 	{@param? _handleItemRemoved: any}
+	{@param? label: string}
 	{@param? selectedItems: list<?>}
 	{@param? showSelectButton: bool}
 	{@param? tagNames: string}
 
 	<div class="lfr-tags-selector-content" id="{$id}">
 		<input id="{$inputName}" type="hidden" value="{$tagNames}" />
+
+		{let $multiSelectLabel kind="text"}
+			{if isNonnull($label)}
+				{$label}
+			{else}
+				{msg desc=""}tags{/msg}
+			{/if}
+		{/let}
 
 		{call ClayMultiSelect.render}
 			{param autocompleteFilterCondition: 'name' /}
@@ -30,7 +39,7 @@
 			] /}
 			{param helpText: '' /}
 			{param inputName: $inputName /}
-			{param label kind="text"} {msg desc=""}tags{/msg} {/param}
+			{param label: $multiSelectLabel /}
 			{param ref: 'multiSelect' /}
 			{param selectedItems: $selectedItems /}
 			{param showSelectButton: $showSelectButton /}

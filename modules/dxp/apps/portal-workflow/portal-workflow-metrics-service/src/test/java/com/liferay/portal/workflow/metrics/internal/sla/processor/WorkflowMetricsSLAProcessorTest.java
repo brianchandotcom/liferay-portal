@@ -121,19 +121,19 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		);
 
 		when(
-			workflowMetricsSLADefinition.getPauseNodeNames()
+			workflowMetricsSLADefinition.getPauseNodeKeys()
 		).thenReturn(
 			"2"
 		);
 
 		when(
-			workflowMetricsSLADefinition.getStartNodeNames()
+			workflowMetricsSLADefinition.getStartNodeKeys()
 		).thenReturn(
 			"1:enter"
 		);
 
 		when(
-			workflowMetricsSLADefinition.getStopNodeNames()
+			workflowMetricsSLADefinition.getStopNodeKeys()
 		).thenReturn(
 			"2:leave"
 		);
@@ -176,7 +176,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			WorkflowMetricsSLADefinition.class);
 
 		when(
-			workflowMetricsSLADefinition.getStartNodeNames()
+			workflowMetricsSLADefinition.getStartNodeKeys()
 		).thenReturn(
 			"1:leave"
 		);
@@ -210,13 +210,13 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		);
 
 		when(
-			workflowMetricsSLADefinition.getStartNodeNames()
+			workflowMetricsSLADefinition.getStartNodeKeys()
 		).thenReturn(
 			"1:enter"
 		);
 
 		when(
-			workflowMetricsSLADefinition.getPauseNodeNames()
+			workflowMetricsSLADefinition.getPauseNodeKeys()
 		).thenReturn(
 			"2:enter"
 		);
@@ -332,7 +332,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		);
 
 		when(
-			workflowMetricsSLADefinition.getStartNodeNames()
+			workflowMetricsSLADefinition.getStartNodeKeys()
 		).thenReturn(
 			"0"
 		);

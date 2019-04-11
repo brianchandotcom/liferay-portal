@@ -75,8 +75,8 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(
 					sla.getName(), sla.getDescription(), sla.getDuration(),
-					processId, sla.getPauseNodeNames(), sla.getStartNodeNames(),
-					sla.getStopNodeNames(), _createServiceContext()));
+					processId, sla.getPauseNodeKeys(), sla.getStartNodeKeys(),
+					sla.getStopNodeKeys(), _createServiceContext()));
 	}
 
 	@Override
@@ -85,8 +85,8 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 			_workflowMetricsSLADefinitionLocalService.
 				updateWorkflowMetricsSLADefinition(
 					slaId, sla.getName(), sla.getDescription(),
-					sla.getDuration(), sla.getPauseNodeNames(),
-					sla.getStartNodeNames(), sla.getStopNodeNames(),
+					sla.getDuration(), sla.getPauseNodeKeys(),
+					sla.getStartNodeKeys(), sla.getStopNodeKeys(),
 					_createServiceContext()));
 	}
 
@@ -115,13 +115,13 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 				duration = workflowMetricsSLADefinition.getDuration();
 				id = workflowMetricsSLADefinition.getPrimaryKey();
 				name = workflowMetricsSLADefinition.getName();
-				pauseNodeNames = StringUtil.split(
-					workflowMetricsSLADefinition.getPauseNodeNames());
+				pauseNodeKeys = StringUtil.split(
+					workflowMetricsSLADefinition.getPauseNodeKeys());
 				processId = workflowMetricsSLADefinition.getProcessId();
-				startNodeNames = StringUtil.split(
-					workflowMetricsSLADefinition.getStartNodeNames());
-				stopNodeNames = StringUtil.split(
-					workflowMetricsSLADefinition.getStopNodeNames());
+				startNodeKeys = StringUtil.split(
+					workflowMetricsSLADefinition.getStartNodeKeys());
+				stopNodeKeys = StringUtil.split(
+					workflowMetricsSLADefinition.getStopNodeKeys());
 			}
 		};
 	}

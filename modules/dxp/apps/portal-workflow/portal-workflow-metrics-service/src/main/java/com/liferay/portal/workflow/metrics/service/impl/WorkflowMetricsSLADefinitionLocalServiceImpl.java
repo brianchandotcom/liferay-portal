@@ -41,8 +41,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	@Override
 	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
 			String name, String description, long duration, long processId,
-			String[] pauseNodeNames, String[] startNodeNames,
-			String[] stopNodeNames, ServiceContext serviceContext)
+			String[] pauseNodeKeys, String[] startNodeKeys,
+			String[] stopNodeKeys, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
@@ -50,7 +50,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		validate(
 			0, serviceContext.getCompanyId(), processId, name, duration,
-			pauseNodeNames, startNodeNames, stopNodeNames);
+			pauseNodeKeys, startNodeKeys, stopNodeKeys);
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
 			workflowMetricsSLADefinitionPersistence.create(
@@ -68,12 +68,12 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
 		workflowMetricsSLADefinition.setProcessId(processId);
-		workflowMetricsSLADefinition.setPauseNodeNames(
-			StringUtil.merge(pauseNodeNames));
-		workflowMetricsSLADefinition.setStartNodeNames(
-			StringUtil.merge(startNodeNames));
-		workflowMetricsSLADefinition.setStopNodeNames(
-			StringUtil.merge(stopNodeNames));
+		workflowMetricsSLADefinition.setPauseNodeKeys(
+			StringUtil.merge(pauseNodeKeys));
+		workflowMetricsSLADefinition.setStartNodeKeys(
+			StringUtil.merge(startNodeKeys));
+		workflowMetricsSLADefinition.setStopNodeKeys(
+			StringUtil.merge(stopNodeKeys));
 
 		workflowMetricsSLADefinitionPersistence.update(
 			workflowMetricsSLADefinition);
@@ -124,8 +124,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	@Override
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 			long workflowMetricsSLADefinitiontId, String name,
-			String description, long duration, String[] pauseNodeNames,
-			String[] startNodeNames, String[] stopNodeNames,
+			String description, long duration, String[] pauseNodeKeys,
+			String[] startNodeKeys, String[] stopNodeKeys,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -137,18 +137,18 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId(),
 			workflowMetricsSLADefinition.getCompanyId(),
 			workflowMetricsSLADefinition.getProcessId(), name, duration,
-			pauseNodeNames, startNodeNames, stopNodeNames);
+			pauseNodeKeys, startNodeKeys, stopNodeKeys);
 
 		workflowMetricsSLADefinition.setModifiedDate(new Date());
 		workflowMetricsSLADefinition.setName(name);
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
-		workflowMetricsSLADefinition.setPauseNodeNames(
-			StringUtil.merge(pauseNodeNames));
-		workflowMetricsSLADefinition.setStartNodeNames(
-			StringUtil.merge(startNodeNames));
-		workflowMetricsSLADefinition.setStopNodeNames(
-			StringUtil.merge(stopNodeNames));
+		workflowMetricsSLADefinition.setPauseNodeKeys(
+			StringUtil.merge(pauseNodeKeys));
+		workflowMetricsSLADefinition.setStartNodeKeys(
+			StringUtil.merge(startNodeKeys));
+		workflowMetricsSLADefinition.setStopNodeKeys(
+			StringUtil.merge(stopNodeKeys));
 
 		workflowMetricsSLADefinitionPersistence.update(
 			workflowMetricsSLADefinition);
@@ -165,8 +165,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	protected void validate(
 			long workflowMetricsSLADefinitionId, long companyId, long processId,
-			String name, long duration, String[] pauseNodeNames,
-			String[] startNodeNames, String[] stopNodeNames)
+			String name, long duration, String[] pauseNodeKeys,
+			String[] startNodeKeys, String[] stopNodeKeys)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {

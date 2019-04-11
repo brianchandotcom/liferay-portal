@@ -364,7 +364,7 @@ public class WorkflowMetricsSLAProcessor {
 			new WorkflowMetricsSLAStopwatch(workfowMetricsSLAStatus);
 
 		Map<Long, String> startTimeMarkers = _getTimeMarkers(
-			StringUtil.split(workflowMetricsSLADefinition.getStartNodeNames()));
+			StringUtil.split(workflowMetricsSLADefinition.getStartNodeKeys()));
 
 		if (Objects.equals(
 				workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.RUNNING)) {
@@ -380,9 +380,9 @@ public class WorkflowMetricsSLAProcessor {
 		}
 
 		Map<Long, String> pauseTimeMarkers = _getTimeMarkers(
-			StringUtil.split(workflowMetricsSLADefinition.getPauseNodeNames()));
+			StringUtil.split(workflowMetricsSLADefinition.getPauseNodeKeys()));
 		Map<Long, String> stopTimeMarkers = _getTimeMarkers(
-			StringUtil.split(workflowMetricsSLADefinition.getStopNodeNames()));
+			StringUtil.split(workflowMetricsSLADefinition.getStopNodeKeys()));
 
 		Iterator<Document> iterator = documents.iterator();
 
@@ -459,11 +459,11 @@ public class WorkflowMetricsSLAProcessor {
 		return taskInterval._endLocalDateTime;
 	}
 
-	private Map<Long, String> _getTimeMarkers(List<String> timeMarkers) {
-		Map<Long, String> map = new HashMap<>(timeMarkers.size());
+	private Map<Long, String> _getTimeMarkers(List<String> nodeKeys) {
+		Map<Long, String> map = new HashMap<>(nodeKeys.size());
 
-		for (String timeMarker : timeMarkers) {
-			List<String> parts = StringUtil.split(timeMarker, CharPool.COLON);
+		for (String nodeKey : nodeKeys) {
+			List<String> parts = StringUtil.split(nodeKey, CharPool.COLON);
 
 			long nodeId = GetterUtil.getLong(parts.get(0));
 

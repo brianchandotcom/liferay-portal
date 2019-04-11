@@ -60,18 +60,18 @@ components:
                     type: integer
                 name:
                     type: string
-                pauseNodeNames:
+                pauseNodeKeys:
                     items:
                         type: string
                     type: array
                 processId:
                     format: int64
                     type: integer
-                startNodeNames:
+                startNodeKeys:
                     items:
                         type: string
                     type: array
-                stopNodeNames:
+                stopNodeKeys:
                     items:
                         type: string
                     type: array

@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -192,6 +193,26 @@ public class DLAdminDisplayContext {
 		}
 
 		return orderByType;
+	}
+
+	public String getRememberCheckBoxStateURLRegex() {
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		if (DLPortletKeys.DOCUMENT_LIBRARY.equals(
+				portletDisplay.getRootPortletId())) {
+
+			if (_folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				return "^[^?]+/" + portletDisplay.getInstanceId() + "\\?";
+			}
+
+			return StringBundler.concat(
+				"^[^?]+/", portletDisplay.getInstanceId(), "/view/" + _folderId,
+				"\\?");
+		}
+
+		return StringBundler.concat(
+			"^(?!.*", portletDisplay.getNamespace(), "redirect).*(folderId=",
+			_folderId, ")");
 	}
 
 	public long getRepositoryId() {

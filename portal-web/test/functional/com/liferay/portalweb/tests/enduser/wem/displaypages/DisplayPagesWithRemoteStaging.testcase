@@ -26,8 +26,6 @@ definition {
 			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 	}
 

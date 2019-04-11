@@ -216,10 +216,6 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Navigate back to the content page") {
-			PageEditor.clickBack();
-		}
-
 		task ("Assert the Title fragment is present") {
 			AssertVisible(
 				locator1 = "Fragment#FRAGMENT",

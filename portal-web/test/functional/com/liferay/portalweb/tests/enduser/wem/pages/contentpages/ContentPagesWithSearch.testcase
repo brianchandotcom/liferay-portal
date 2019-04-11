@@ -77,12 +77,6 @@ definition {
 			);
 		}
 
-		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name"
-			);
-		}
-
 		task ("Search by text that appears in both the content page and web content article") {
 			Search.searchCP(searchTerm = "static");
 		}
@@ -126,12 +120,6 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name"
-			);
-		}
-
 		task ("Search by text that appears in the editable text field in the Rich Text fragment") {
 			Search.searchCP(searchTerm = "duis");
 		}
@@ -156,12 +144,6 @@ definition {
 
 		task ("Publish the content page") {
 			PageEditor.clickPublish();
-		}
-
-		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name"
-			);
 		}
 
 		task ("Search by the new text that appears in the editable text field in the Rich Text fragment") {
@@ -195,12 +177,6 @@ definition {
 
 		task ("Publish the content page") {
 			PageEditor.clickPublish();
-		}
-
-		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name"
-			);
 		}
 
 		task ("Search by the static text in the Static Text fragment") {

@@ -43,66 +43,6 @@ definition {
 	}
 
 	@priority = "5"
-	test DefaultPortalLandingPage {
-		property test.name.skip.portal.instance = "PortalconfigurationUsecase#DefaultPortalLandingPage";
-
-		PortalSettings.gotoPortalSettings();
-
-		PortalSettings.editDefaultLandingPageCP(
-			defaultLandingPage = "/web/guest/landing"
-		);
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites"
-		);
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ProductMenu.gotoSite(site = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages"
-		);
-
-		SitePages.addPublicPage(pageName = "landing");
-
-		User.logoutPG();
-
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		AssertLocation(value1 = "${portalURL}/web/guest/landing");
-	}
-
-	@description = "This is a use case for LPS-39744."
-	@priority = "5"
-	test DefaultPortalLandingPageSetByProperty {
-		property custom.properties = "default.landing.page.path=/web/guest/landing";
-		property test.name.skip.portal.instance = "PortalconfigurationUsecase#DefaultPortalLandingPageSetByProperty";
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages"
-		);
-
-		SitePages.addPublicPage(pageName = "landing");
-
-		User.logoutPG();
-
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		AssertLocation(value1 = "${portalURL}/web/guest/landing");
-	}
-
-	@priority = "5"
 	test DeletePortalInstance {
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#DeletePortalInstance";
 

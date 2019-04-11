@@ -219,7 +219,7 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_handleExpandCollaborator(event) {
-		if (!event.target.matches('select,button')) {
+		if (!event.target.matches('select,option,button')) {
 			this.expandedCollaboratorId = event.delegateTarget.dataset.collaboratorid;
 		}
 	}

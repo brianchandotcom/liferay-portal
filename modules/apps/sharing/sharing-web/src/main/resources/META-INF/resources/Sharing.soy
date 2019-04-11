@@ -13,12 +13,12 @@
 	{@param? _closeDialog: any}
 	{@param? _dataSource: string|[]|list<?>}
 	{@param? _handleDataChange: any}
+	{@param? _handleEmailAdded: any}
+	{@param? _handleEmailRemoved: any}
 	{@param? _handleInputChange: any}
-	{@param? _handleItemRemoved: any}
 	{@param? _handleSubmit: any}
 	{@param? _inputValue: string}
 	{@param? _userEmailAddresses: list<?>}
-	{@param? _validateEmail: any}
 	{@param? emailErrorMessage: string}
 	{@param? submitting: bool}
 
@@ -36,8 +36,8 @@
 						{param elementClasses: 'clay-multi-select' /}
 						{param events: [
 							'dataChange': $_handleDataChange,
-							'labelItemAdded': $_validateEmail,
-							'labelItemRemoved': $_handleItemRemoved
+							'labelItemAdded': $_handleEmailAdded,
+							'labelItemRemoved': $_handleEmailRemoved
 						] /}
 						{param helpText kind="text"}{msg desc=""}you-can-use-a-comma-to-enter-multiple-collaborators{/msg}{/param}
 						{param inputValue: $_inputValue /}

@@ -270,7 +270,12 @@ public class ContentPageLayoutEditorDisplayContext
 
 		Group group = GroupLocalServiceUtil.getGroup(getGroupId());
 
-		_showSegmentsExperiences = !group.isLayoutSetPrototype() && !group.isUser();
+		if (!group.isLayoutSetPrototype() && !group.isUser()) {
+			_showSegmentsExperiences = true;
+		}
+		else {
+			_showSegmentsExperiences = false;
+		}
 
 		return _showSegmentsExperiences;
 	}

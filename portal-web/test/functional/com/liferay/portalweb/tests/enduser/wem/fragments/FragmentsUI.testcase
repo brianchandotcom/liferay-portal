@@ -95,6 +95,12 @@ definition {
 			PageEditor.clickPublish();
 		}
 
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/test-content-page-name"
+			);
+		}
+
 		task ("Assert the section fragment is present by asserting the elements from the Button fragment") {
 			AssertVisible(
 				locator1 = "Fragment#FRAGMENT",

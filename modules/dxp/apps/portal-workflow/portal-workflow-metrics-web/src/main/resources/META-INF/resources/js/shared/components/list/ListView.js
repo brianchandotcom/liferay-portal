@@ -1,4 +1,4 @@
-import EmptyContent from '../EmptyContent';
+import EmptyState from './EmptyState';
 import LoadingState from '../loading/LoadingState';
 import React from 'react';
 

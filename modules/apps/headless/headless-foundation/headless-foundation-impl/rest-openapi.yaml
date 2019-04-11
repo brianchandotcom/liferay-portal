@@ -163,6 +163,15 @@ components:
                         type: object
                     type: array
             type: object
+        OrganizationBrief:
+            description: https://www.schema.org/OrganizationBrief
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+            type: object
         Phone:
             description: https://www.schema.org/Phone
             properties:
@@ -228,6 +237,15 @@ components:
                 roleType:
                     type: string
             type: object
+        RoleBrief:
+            description: https://www.schema.org/RoleBrief
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+            type: object
         Segment:
             description: https://schema.org/Audience
             properties:
@@ -257,6 +275,15 @@ components:
             properties:
                 email:
                     type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+            type: object
+        SiteBrief:
+            description: https://www.schema.org/SiteBrief
+            properties:
                 id:
                     format: int64
                     type: integer
@@ -434,39 +461,21 @@ components:
                     type: array
                 name:
                     type: string
-                organizationBriefs:
+                organizations:
                     items:
-                        properties:
-                            id:
-                                format: int64
-                                type: integer
-                            name:
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/OrganizationBrief"
                     readOnly: true
                     type: array
                 profileURL:
                     type: string
-                roleBriefs:
+                roles:
                     items:
-                        properties:
-                            id:
-                                format: int64
-                                type: integer
-                            name:
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/RoleBrief"
                     readOnly: true
                     type: array
-                siteBriefs:
+                sites:
                     items:
-                        properties:
-                            id:
-                                format: int64
-                                type: integer
-                            name:
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/SiteBrief"
                     readOnly: true
                     type: array
             type: object

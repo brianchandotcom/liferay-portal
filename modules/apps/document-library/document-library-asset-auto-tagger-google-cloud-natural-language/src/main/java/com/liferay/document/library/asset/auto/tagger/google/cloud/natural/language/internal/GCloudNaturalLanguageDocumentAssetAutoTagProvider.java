@@ -16,9 +16,11 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.natural.lang
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.google.cloud.natural.language.api.GCloudNaturalLanguageDocumentAssetAutoTagger;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -51,6 +53,18 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		try {
 			if (fileEntry.isRepositoryCapabilityProvided(
 					TemporaryFileEntriesCapability.class)) {
+
+				return Collections.emptySet();
+			}
+
+			GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration
+				gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						GCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.class,
+						fileEntry.getCompanyId());
+
+			if (!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+					enabled()) {
 
 				return Collections.emptySet();
 			}
@@ -91,6 +105,9 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GCloudNaturalLanguageDocumentAssetAutoTagProvider.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private GCloudNaturalLanguageDocumentAssetAutoTagger

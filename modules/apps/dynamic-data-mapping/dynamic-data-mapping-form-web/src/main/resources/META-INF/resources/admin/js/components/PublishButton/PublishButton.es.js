@@ -17,6 +17,24 @@ class PublishButton extends Component {
 		return this._savePublished(event, true);
 	}
 
+	render() {
+		const {published, spritemap} = this.props;
+
+		return (
+			<ClayButton
+				elementClasses={'btn-default'}
+				events={
+					{
+						click: this._handleButtonClicked.bind(this)
+					}
+				}
+				label={published ? Liferay.Language.get('unpublish-form') : Liferay.Language.get('publish-form')}
+				ref={'button'}
+				spritemap={spritemap}
+			/>
+		);
+	}
+
 	toggle(event) {
 		const {published} = this.props;
 		let promise;
@@ -35,24 +53,6 @@ class PublishButton extends Component {
 		this.props.published = false;
 
 		return this._savePublished(event, false);
-	}
-
-	render() {
-		const {published, spritemap} = this.props;
-
-		return (
-			<ClayButton
-				elementClasses={'btn-default'}
-				events={
-					{
-						click: this._handleButtonClicked.bind(this)
-					}
-				}
-				label={published ? Liferay.Language.get('unpublish-form') : Liferay.Language.get('publish-form')}
-				ref={'button'}
-				spritemap={spritemap}
-			/>
-		);
 	}
 
 	_handleButtonClicked(event) {

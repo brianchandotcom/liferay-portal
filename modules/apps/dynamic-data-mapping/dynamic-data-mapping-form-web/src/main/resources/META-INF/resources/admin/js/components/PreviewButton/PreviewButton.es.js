@@ -9,6 +9,23 @@ class PreviewButton extends Component {
 		spritemap: Config.string().required()
 	};
 
+	preview() {
+		const {resolvePreviewURL} = this.props;
+
+		return resolvePreviewURL()
+			.then(
+				previewURL => {
+					window.open(previewURL, '_blank');
+
+					return previewURL;
+				}
+			).catch(
+				() => {
+					Notifications.showError(Liferay.Language.get('your-request-failed-to-complete'));
+				}
+			);
+	}
+
 	render() {
 		const {spritemap} = this.props;
 
@@ -30,23 +47,6 @@ class PreviewButton extends Component {
 
 	_handleButtonClicked() {
 		this.preview();
-	}
-
-	preview() {
-		const {resolvePreviewURL} = this.props;
-
-		return resolvePreviewURL()
-			.then(
-				previewURL => {
-					window.open(previewURL, '_blank');
-
-					return previewURL;
-				}
-			).catch(
-				() => {
-					Notifications.showError(Liferay.Language.get('your-request-failed-to-complete'));
-				}
-			);
 	}
 }
 

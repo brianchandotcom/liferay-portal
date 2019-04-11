@@ -29,35 +29,6 @@ class AutoSave extends Component {
 		this.stop();
 	}
 
-	start() {
-		const {interval} = this.props;
-
-		this.stop();
-
-		if (interval > 0) {
-			this._intervalId = setInterval(() => this.saveIfNeeded(), interval);
-		}
-	}
-
-	stop() {
-		if (this._intervalId) {
-			clearInterval(this._intervalId);
-		}
-	}
-
-	saveIfNeeded() {
-		if (!this.isDisposed()) {
-			const {stateSyncronizer} = this.props;
-
-			if (this._pendingRequest) {
-				this._pendingRequest.then(() => this.saveIfNeeded()).catch (() => {});
-			}
-			else if (this.hasUnsavedChanges() && !stateSyncronizer.isEmpty()) {
-				this.save();
-			}
-		}
-	}
-
 	getCurrentState() {
 		const {stateSyncronizer} = this.props;
 
@@ -79,10 +50,6 @@ class AutoSave extends Component {
 		const currentStateHash = this.getStateHash(currentState);
 
 		return this._lastKownHash !== currentStateHash;
-	}
-
-	saveStateHash(state) {
-		this._lastKownHash = this.getStateHash(state);
 	}
 
 	save(saveAsDraft = this.props.saveAsDraft) {
@@ -124,6 +91,39 @@ class AutoSave extends Component {
 			);
 
 		return this._pendingRequest;
+	}
+
+	saveIfNeeded() {
+		if (!this.isDisposed()) {
+			const {stateSyncronizer} = this.props;
+
+			if (this._pendingRequest) {
+				this._pendingRequest.then(() => this.saveIfNeeded()).catch (() => {});
+			}
+			else if (this.hasUnsavedChanges() && !stateSyncronizer.isEmpty()) {
+				this.save();
+			}
+		}
+	}
+
+	saveStateHash(state) {
+		this._lastKownHash = this.getStateHash(state);
+	}
+
+	start() {
+		const {interval} = this.props;
+
+		this.stop();
+
+		if (interval > 0) {
+			this._intervalId = setInterval(() => this.saveIfNeeded(), interval);
+		}
+	}
+
+	stop() {
+		if (this._intervalId) {
+			clearInterval(this._intervalId);
+		}
 	}
 
 	_defineIds(response) {

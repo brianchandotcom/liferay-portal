@@ -57,44 +57,11 @@ class ShareFormPopover extends Component {
 		);
 	}
 
-	rendered() {
-		const {success} = this.state;
-
-		if (success) {
-			setTimeout(
-				() => {
-					const shareFieldURL = this.element.querySelector('input');
-
-					selectText(shareFieldURL);
-				},
-				30
-			);
-		}
-	}
-
 	disposeInternal() {
 		super.disposeInternal();
 
 		this._clipboard.dispose();
 		this._eventHandler.removeAllListeners();
-	}
-
-	_handleClipboardSuccess() {
-		this.setState(
-			{
-				success: true
-			}
-		);
-	}
-
-	_handlePopoverClosed() {
-		this.setState(
-			{
-				success: false
-			}
-		);
-
-		this.emit('popoverClosed');
 	}
 
 	render() {
@@ -131,7 +98,7 @@ class ShareFormPopover extends Component {
 				<div class={formClasses}>
 					<div class="input-group">
 						<div class="input-group-item input-group-prepend">
-							<input class="form-control" readonly={true} ref="shareFieldURL" type="text" value={url} />
+							<input class="form-control" readOnly={true} ref="shareFieldURL" type="text" value={url} />
 							{success && (
 								<div class="form-feedback-group">
 									<div class="form-feedback-item">{Liferay.Language.get('copied-to-clipboard')}</div>
@@ -147,7 +114,7 @@ class ShareFormPopover extends Component {
 											class={'lexicon-icon lexicon-icon-check'}
 										>
 											<use
-												xlink:href={`${spritemap}#check`}
+												xlinkHref={`${spritemap}#check`}
 											/>
 										</svg>
 									</span>
@@ -160,6 +127,39 @@ class ShareFormPopover extends Component {
 				</div>
 			</Popover>
 		);
+	}
+
+	rendered() {
+		const {success} = this.state;
+
+		if (success) {
+			setTimeout(
+				() => {
+					const shareFieldURL = this.element.querySelector('input');
+
+					selectText(shareFieldURL);
+				},
+				30
+			);
+		}
+	}
+
+	_handleClipboardSuccess() {
+		this.setState(
+			{
+				success: true
+			}
+		);
+	}
+
+	_handlePopoverClosed() {
+		this.setState(
+			{
+				success: false
+			}
+		);
+
+		this.emit('popoverClosed');
 	}
 }
 

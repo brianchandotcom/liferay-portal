@@ -53,76 +53,10 @@ class Popover extends Component {
 		return this.setPopoverWidth();
 	}
 
-	willReceiveProps({visible}) {
-		if (visible) {
-			this.setState(
-				{
-					displayed: !!visible.newVal
-				}
-			);
-		}
-	}
-
-	_visibleValueFn() {
-		return this.props.visible;
-	}
-
 	disposeInternal() {
 		super.disposeInternal();
 
 		this._eventHandler.removeAllListeners();
-	}
-
-	_handleAlignElementClicked() {
-		const {displayed} = this.state;
-
-		if (displayed) {
-			this.emit('popoverClosed');
-		}
-
-		this.setState(
-			{
-				displayed: !displayed
-			}
-		);
-	}
-
-	/**
-	 * Handle a click on the document in order to close the popover
-	 * @param {Event} event
-	 * @protected
-	 */
-	_handleDocumentMouseDown({target}) {
-		const {alignElement} = this.props;
-		const {displayed} = this.state;
-
-		if ((!this.element.contains(target) && !alignElement.contains(target)) && displayed) {
-			this.setState(
-				{
-					displayed: false
-				}
-			);
-
-			this.emit('popoverClosed');
-		}
-	}
-
-	setPopoverWidth() {
-		const {element} = this;
-
-		element.style.visibility = 'hidden';
-		element.style.display = 'block';
-
-		const width = element.offsetHeight;
-
-		element.style.visibility = 'visible';
-		element.style.display = 'none';
-
-		this.setState(
-			{
-				width
-			}
-		);
 	}
 
 	render() {
@@ -182,6 +116,72 @@ class Popover extends Component {
 				</PopoverBase.Body>
 			</PopoverBase>
 		);
+	}
+
+	setPopoverWidth() {
+		const {element} = this;
+
+		element.style.visibility = 'hidden';
+		element.style.display = 'block';
+
+		const width = element.offsetHeight;
+
+		element.style.visibility = 'visible';
+		element.style.display = 'none';
+
+		this.setState(
+			{
+				width
+			}
+		);
+	}
+
+	willReceiveProps({visible}) {
+		if (visible) {
+			this.setState(
+				{
+					displayed: !!visible.newVal
+				}
+			);
+		}
+	}
+
+	_handleAlignElementClicked() {
+		const {displayed} = this.state;
+
+		if (displayed) {
+			this.emit('popoverClosed');
+		}
+
+		this.setState(
+			{
+				displayed: !displayed
+			}
+		);
+	}
+
+	/**
+	 * Handle a click on the document in order to close the popover
+	 * @param {Event} event
+	 * @protected
+	 */
+	_handleDocumentMouseDown({target}) {
+		const {alignElement} = this.props;
+		const {displayed} = this.state;
+
+		if ((!this.element.contains(target) && !alignElement.contains(target)) && displayed) {
+			this.setState(
+				{
+					displayed: false
+				}
+			);
+
+			this.emit('popoverClosed');
+		}
+	}
+
+	_visibleValueFn() {
+		return this.props.visible;
 	}
 }
 

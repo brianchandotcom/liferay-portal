@@ -1,25 +1,4 @@
 {
-	"config": {
-		"imports": {
-			"frontend-js-metal-web": {
-				"metal": ">=2.16.5",
-				"metal-anim": ">=2.0.0",
-				"metal-component": ">=2.16.5",
-				"metal-debounce": ">=2.0.0",
-				"metal-dom": ">=2.16.5",
-				"metal-drag-drop": ">=3.0.1",
-				"metal-events": ">=2.16.5",
-				"metal-keyboard-focus": ">=2.0.1",
-				"metal-position": ">=2.1.1",
-				"metal-promise": ">=2.0.1",
-				"metal-soy": ">=2.16.5",
-				"metal-state": ">=2.16.5"
-			},
-			"frontend-taglib-clay": {
-				"clay-alert": ">=2.1.12"
-			}
-		}
-	},
 	"exclude": {
 		"*": true
 	},
@@ -27,6 +6,5 @@
 		"**/*.js",
 		"!**/*.es.js",
 		"!**/*.soy.js"
-	],
-	"output": "classes/META-INF/resources/"
+	]
 }

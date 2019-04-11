@@ -21,6 +21,15 @@ class Select extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
+		dataSourceType: Config.string(),
+
+		/**
+		 * @default 'string'
+		 * @instance
+		 * @memberof Select
+		 * @type {?(string|undefined)}
+		 */
+
 		dataType: Config.string().value('string'),
 
 		/**
@@ -42,44 +51,6 @@ class Select extends Component {
 		expanded: Config.bool().internal().value(false),
 
 		/**
-		 * @default 'string'
-		 * @instance
-		 * @memberof Select
-		 * @type {?(string|undefined)}
-		 */
-
-		dataSourceType: Config.string(),
-
-		/**
-		 * @default false
-		 * @instance
-		 * @memberof Select
-		 * @type {?bool}
-		 */
-
-		readOnly: Config.bool().value(false),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof FieldBase
-		 * @type {?(string|undefined)}
-		 */
-
-		tip: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Select
-		 * @type {?(string|undefined)}
-		 */
-
-		id: Config.string(),
-
-		key: Config.string(),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof Text
@@ -89,28 +60,6 @@ class Select extends Component {
 		fieldName: Config.string(),
 
 		fixedOptions: Config.arrayOf(
-			Config.shapeOf(
-				{
-					active: Config.bool().value(false),
-					disabled: Config.bool().value(false),
-					id: Config.string(),
-					inline: Config.bool().value(false),
-					label: Config.string(),
-					name: Config.string(),
-					showLabel: Config.bool().value(true),
-					value: Config.string()
-				}
-			)
-		).value([]),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Select
-		 * @type {?array<object>}
-		 */
-
-		options: Config.arrayOf(
 			Config.shapeOf(
 				{
 					active: Config.bool().value(false),
@@ -144,6 +93,28 @@ class Select extends Component {
 		multiple: Config.bool(),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Select
+		 * @type {?array<object>}
+		 */
+
+		options: Config.arrayOf(
+			Config.shapeOf(
+				{
+					active: Config.bool().value(false),
+					disabled: Config.bool().value(false),
+					id: Config.string(),
+					inline: Config.bool().value(false),
+					label: Config.string(),
+					name: Config.string(),
+					showLabel: Config.bool().value(true),
+					value: Config.string()
+				}
+			)
+		).value([]),
+
+		/**
 		 * @default Choose an Option
 		 * @instance
 		 * @memberof Select
@@ -168,7 +139,7 @@ class Select extends Component {
 		 * @type {?bool}
 		 */
 
-		required: Config.bool().value(false),
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -178,6 +149,15 @@ class Select extends Component {
 		 */
 
 		repeatable: Config.bool(),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Select
+		 * @type {?bool}
+		 */
+
+		required: Config.bool().value(false),
 
 		/**
 		 * @default false
@@ -200,6 +180,15 @@ class Select extends Component {
 		/**
 		 * @default undefined
 		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(string|undefined)}
+		 */
+
+		tip: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
 		 * @memberof Text
 		 * @type {?(string|undefined)}
 		 */
@@ -216,12 +205,29 @@ class Select extends Component {
 		value: Config.oneOfType([Config.array(), Config.string()])
 	};
 
+	addValue(value) {
+		const currentValue = this._getArrayValue(this.value);
+		const newValue = [...currentValue];
+
+		if (value) {
+			newValue.push(value);
+		}
+
+		return newValue;
+	}
+
 	attached() {
 		this._eventHandler = new EventHandler();
 
 		this._eventHandler.add(
 			dom.on(document, 'click', this._handleDocumentClicked.bind(this))
 		);
+	}
+
+	deleteValue(value) {
+		const currentValue = this._getArrayValue(this.value);
+
+		return currentValue.filter(v => v !== value);
 	}
 
 	disposeInternal() {
@@ -281,16 +287,14 @@ class Select extends Component {
 		};
 	}
 
-	_prepareOption(option, valueArray) {
-		const {multiple} = this;
-		const included = valueArray.includes(option.value);
+	setValue(value) {
+		const newValue = [];
 
-		return {
-			...option,
-			active: !multiple && included,
-			checked: multiple && included,
-			type: multiple ? 'checkbox' : 'item'
-		};
+		if (value) {
+			newValue.push(value);
+		}
+
+		return newValue;
 	}
 
 	_getArrayValue(value) {
@@ -312,37 +316,6 @@ class Select extends Component {
 		if (expanded && !this.element.contains(target) && !dropdown.element.contains(target) && !menu.contains(target)) {
 			this.setState({expanded: false});
 		}
-	}
-
-	_isEmptyArray(array) {
-		return array.some(value => value !== '') === false;
-	}
-
-	addValue(value) {
-		const currentValue = this._getArrayValue(this.value);
-		const newValue = [...currentValue];
-
-		if (value) {
-			newValue.push(value);
-		}
-
-		return newValue;
-	}
-
-	deleteValue(value) {
-		const currentValue = this._getArrayValue(this.value);
-
-		return currentValue.filter(v => v !== value);
-	}
-
-	setValue(value) {
-		const newValue = [];
-
-		if (value) {
-			newValue.push(value);
-		}
-
-		return newValue;
 	}
 
 	_handleItemClicked({data, preventDefault}) {
@@ -405,6 +378,22 @@ class Select extends Component {
 				}
 			)
 		);
+	}
+
+	_isEmptyArray(array) {
+		return array.some(value => value !== '') === false;
+	}
+
+	_prepareOption(option, valueArray) {
+		const {multiple} = this;
+		const included = valueArray.includes(option.value);
+
+		return {
+			...option,
+			active: !multiple && included,
+			checked: multiple && included,
+			type: multiple ? 'checkbox' : 'item'
+		};
 	}
 }
 

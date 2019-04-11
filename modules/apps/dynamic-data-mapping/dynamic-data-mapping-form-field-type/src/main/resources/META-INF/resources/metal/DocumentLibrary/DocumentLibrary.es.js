@@ -72,15 +72,6 @@ class DocumentLibrary extends Component {
 		readOnly: Config.bool().value(false),
 
 		/**
-		 * @default false
-		 * @instance
-		 * @memberof DocumentLibrary
-		 * @type {?(bool|undefined)}
-		 */
-
-		required: Config.bool().value(false),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase
@@ -88,6 +79,15 @@ class DocumentLibrary extends Component {
 		 */
 
 		repeatable: Config.bool(),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof DocumentLibrary
+		 * @type {?(bool|undefined)}
+		 */
+
+		required: Config.bool().value(false),
 
 		/**
 		 * @default true

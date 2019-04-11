@@ -145,35 +145,6 @@ class Validation extends Component {
 		).value({})
 	};
 
-	_getStateFromValue(value) {
-		const {errorMessage, expression} = value;
-		let parameterMessage = '';
-		let selectedValidation;
-		const enableValidation = !!expression;
-
-		if (enableValidation) {
-			selectedValidation = this._parseValidationFromExpression(expression);
-
-			if (selectedValidation) {
-				parameterMessage = this._parseParameterMessageFromExpression(expression, selectedValidation);
-			}
-			else {
-				selectedValidation = {
-					parameterMessage: this.validations[0].parameterMessage,
-					value: this.validations[0].name
-				};
-			}
-		}
-
-		return {
-			enableValidation,
-			errorMessage,
-			expression,
-			parameterMessage,
-			selectedValidation
-		};
-	}
-
 	prepareStateForRender(state) {
 		const parsedState = this._getStateFromValue(state.value);
 
@@ -209,12 +180,6 @@ class Validation extends Component {
 		return this.validation.dataType ? this.validation.dataType : this.dataType;
 	}
 
-	_enableValidationValueFn() {
-		const {value} = this;
-
-		return !!value.expression;
-	}
-
 	_emitFieldEdited(value) {
 		this.emit(
 			'fieldEdited',
@@ -224,6 +189,12 @@ class Validation extends Component {
 				value
 			}
 		);
+	}
+
+	_enableValidationValueFn() {
+		const {value} = this;
+
+		return !!value.expression;
 	}
 
 	_getSelectedValidation() {
@@ -242,6 +213,35 @@ class Validation extends Component {
 		}
 
 		return selectedValidation;
+	}
+
+	_getStateFromValue(value) {
+		const {errorMessage, expression} = value;
+		let parameterMessage = '';
+		let selectedValidation;
+		const enableValidation = !!expression;
+
+		if (enableValidation) {
+			selectedValidation = this._parseValidationFromExpression(expression);
+
+			if (selectedValidation) {
+				parameterMessage = this._parseParameterMessageFromExpression(expression, selectedValidation);
+			}
+			else {
+				selectedValidation = {
+					parameterMessage: this.validations[0].parameterMessage,
+					value: this.validations[0].name
+				};
+			}
+		}
+
+		return {
+			enableValidation,
+			errorMessage,
+			expression,
+			parameterMessage,
+			selectedValidation
+		};
 	}
 
 	_getValue() {

@@ -43,13 +43,13 @@ class Radio extends Component {
 		fieldName: Config.string(),
 
 		/**
-		 * @default false
+		 * @default undefined
 		 * @instance
 		 * @memberof Radio
-		 * @type {?bool}
+		 * @type {?(string|undefined)}
 		 */
 
-		readOnly: Config.bool().value(false),
+		inline: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -58,7 +58,7 @@ class Radio extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		tip: Config.string(),
+		label: Config.string(),
 
 		/**
 		 * @default undefined
@@ -87,33 +87,6 @@ class Radio extends Component {
 		),
 
 		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Radio
-		 * @type {?(string|undefined)}
-		 */
-
-		id: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Radio
-		 * @type {?(string|undefined)}
-		 */
-
-		inline: Config.bool().value(false),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Radio
-		 * @type {?(string|undefined)}
-		 */
-
-		label: Config.string(),
-
-		/**
 		 * @default Choose an Option
 		 * @instance
 		 * @memberof Radio
@@ -121,6 +94,15 @@ class Radio extends Component {
 		 */
 
 		predefinedValue: Config.oneOfType([Config.array(), Config.string()]),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Radio
+		 * @type {?bool}
+		 */
+
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -161,6 +143,15 @@ class Radio extends Component {
 		/**
 		 * @default undefined
 		 * @instance
+		 * @memberof Radio
+		 * @type {?(string|undefined)}
+		 */
+
+		tip: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
 		 * @memberof Text
 		 * @type {?(string|undefined)}
 		 */
@@ -186,16 +177,6 @@ class Radio extends Component {
 		);
 	}
 
-	_getArrayValue(value) {
-		let newValue = value || '';
-
-		if (!Array.isArray(newValue)) {
-			newValue = [newValue];
-		}
-
-		return newValue;
-	}
-
 	prepareStateForRender(state) {
 		const {predefinedValue} = state;
 		const predefinedValueArray = this._getArrayValue(predefinedValue);
@@ -204,6 +185,16 @@ class Radio extends Component {
 			...state,
 			predefinedValue: predefinedValueArray[0] || ''
 		};
+	}
+
+	_getArrayValue(value) {
+		let newValue = value || '';
+
+		if (!Array.isArray(newValue)) {
+			newValue = [newValue];
+		}
+
+		return newValue;
 	}
 
 	_handleValueChanged(event) {
@@ -216,6 +207,7 @@ class Radio extends Component {
 			}
 		);
 	}
+
 }
 
 Soy.register(Radio, templates);

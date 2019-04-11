@@ -11,6 +11,15 @@ class Numeric extends Component {
 	static STATE = {
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		_value: Config.string().internal().valueFn('_internalValueFn'),
+
+		/**
 		 * @default 'integer'
 		 * @instance
 		 * @memberof Numeric
@@ -82,15 +91,6 @@ class Numeric extends Component {
 		readOnly: Config.bool().value(false),
 
 		/**
-		 * @default false
-		 * @instance
-		 * @memberof Numeric
-		 * @type {?(bool|undefined)}
-		 */
-
-		required: Config.bool().value(false),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase
@@ -98,6 +98,15 @@ class Numeric extends Component {
 		 */
 
 		repeatable: Config.bool(),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Numeric
+		 * @type {?(bool|undefined)}
+		 */
+
+		required: Config.bool().value(false),
 
 		/**
 		 * @default true
@@ -170,41 +179,8 @@ class Numeric extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Text
-		 * @type {?(string|undefined)}
-		 */
-
-		_value: Config.string().internal().valueFn('_internalValueFn')
+		value: Config.string()
 	};
-
-	attached() {
-		this.applyMask();
-	}
-
-	disposed() {
-		if (this.maskInstance) {
-			this.maskInstance.destroy();
-		}
-	}
-
-	willReceiveState(changes) {
-		if (changes.dataType && changes.dataType.newVal) {
-			this.applyMask();
-		}
-
-		if (changes.value) {
-			this.setState(
-				{
-					_value: changes.value.newVal
-				}
-			);
-		}
-	}
 
 	applyMask() {
 		const {dataType, element} = this;
@@ -226,6 +202,16 @@ class Numeric extends Component {
 		);
 	}
 
+	attached() {
+		this.applyMask();
+	}
+
+	disposed() {
+		if (this.maskInstance) {
+			this.maskInstance.destroy();
+		}
+	}
+
 	getMaskConfig(dataType) {
 		const {symbols} = this;
 
@@ -245,6 +231,20 @@ class Numeric extends Component {
 		}
 
 		return config;
+	}
+
+	willReceiveState(changes) {
+		if (changes.dataType && changes.dataType.newVal) {
+			this.applyMask();
+		}
+
+		if (changes.value) {
+			this.setState(
+				{
+					_value: changes.value.newVal
+				}
+			);
+		}
 	}
 
 	_handleFieldChanged(event) {

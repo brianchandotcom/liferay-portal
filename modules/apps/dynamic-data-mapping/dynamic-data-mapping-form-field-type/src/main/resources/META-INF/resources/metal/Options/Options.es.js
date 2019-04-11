@@ -66,24 +66,6 @@ class Options extends Component {
 		fieldName: Config.string(),
 
 		/**
-		 * @default false
-		 * @instance
-		 * @memberof Options
-		 * @type {?bool}
-		 */
-
-		readOnly: Config.bool().value(false),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Options
-		 * @type {?(string|undefined)}
-		 */
-
-		tip: Config.string(),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof Options
@@ -105,19 +87,28 @@ class Options extends Component {
 		 * @default undefined
 		 * @instance
 		 * @memberof Options
-		 * @type {?string}
-		 */
-
-		id: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Options
 		 * @type {?(string|undefined)}
 		 */
 
 		label: Config.string(),
+
+		/**
+		 * @default enter-an-option
+		 * @instance
+		 * @memberof Options
+		 * @type {?(string)}
+		 */
+
+		placeholder: Config.string().value(Liferay.Language.get('enter-an-option')),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Options
+		 * @type {?bool}
+		 */
+
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -156,13 +147,13 @@ class Options extends Component {
 		spritemap: Config.string(),
 
 		/**
-		 * @default enter-an-option
+		 * @default undefined
 		 * @instance
 		 * @memberof Options
-		 * @type {?(string)}
+		 * @type {?(string|undefined)}
 		 */
 
-		placeholder: Config.string().value(Liferay.Language.get('enter-an-option')),
+		tip: Config.string(),
 
 		/**
 		 * @default options
@@ -423,10 +414,6 @@ class Options extends Component {
 		return parseInt(name.replace('option', ''), 10);
 	}
 
-	_handleDragEvent({source}) {
-		source.classList.add('ddm-source-dragging');
-	}
-
 	_handleDragDropEvent({target, source}) {
 		const lastSource = document.querySelector('.ddm-source-dragging');
 		const sourceIndex = parseInt(source.dataset.index, 10);
@@ -440,6 +427,10 @@ class Options extends Component {
 
 			this.moveOption(sourceIndex, targetIndex);
 		}
+	}
+
+	_handleDragEvent({source}) {
+		source.classList.add('ddm-source-dragging');
 	}
 
 	_handleFieldEdited({originalEvent}, value) {

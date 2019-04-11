@@ -72,15 +72,6 @@ class Editor extends Component {
 		readOnly: Config.bool().value(false),
 
 		/**
-		 * @default false
-		 * @instance
-		 * @memberof Editor
-		 * @type {?(bool|undefined)}
-		 */
-
-		required: Config.bool().value(false),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase
@@ -88,6 +79,15 @@ class Editor extends Component {
 		 */
 
 		repeatable: Config.bool(),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Editor
+		 * @type {?(bool|undefined)}
+		 */
+
+		required: Config.bool().value(false),
 
 		/**
 		 * @default true
@@ -144,6 +144,10 @@ class Editor extends Component {
 		value: Config.string().value('')
 	};
 
+	attached() {
+		this._createEditor();
+	}
+
 	created() {
 		AUI().use(
 			'liferay-alloy-editor',
@@ -151,10 +155,6 @@ class Editor extends Component {
 				this.A = A;
 			}
 		);
-	}
-
-	attached() {
-		this._createEditor();
 	}
 
 	willReceiveState({children, value}) {

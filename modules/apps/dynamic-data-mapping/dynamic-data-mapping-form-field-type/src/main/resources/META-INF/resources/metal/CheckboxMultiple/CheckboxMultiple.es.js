@@ -28,46 +28,19 @@ class CheckboxMultiple extends Component {
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase
-		 * @type {?(string|undefined)}
-		 */
-
-		fieldName: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof FieldBase
 		 * @type {?bool}
 		 */
 
 		evaluable: Config.bool().value(false),
 
 		/**
-		 * @default false
-		 * @instance
-		 * @memberof Checkbox
-		 * @type {?bool}
-		 */
-
-		readOnly: Config.bool().value(false),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase
 		 * @type {?(string|undefined)}
 		 */
 
-		tip: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Checkbox
-		 * @type {?(string|undefined)}
-		 */
-
-		id: Config.string(),
+		fieldName: Config.string(),
 
 		/**
 		 * @default false
@@ -123,6 +96,15 @@ class CheckboxMultiple extends Component {
 		predefinedValue: Config.array().value([]),
 
 		/**
+		 * @default false
+		 * @instance
+		 * @memberof Checkbox
+		 * @type {?bool}
+		 */
+
+		readOnly: Config.bool().value(false),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase
@@ -170,6 +152,15 @@ class CheckboxMultiple extends Component {
 		/**
 		 * @default undefined
 		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(string|undefined)}
+		 */
+
+		tip: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
 		 * @memberof Text
 		 * @type {?(string|undefined)}
 		 */
@@ -183,16 +174,7 @@ class CheckboxMultiple extends Component {
 		 * @type {?(bool)}
 		 */
 
-		value: Config.bool().value(true),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Checkbox
-		 * @type {?(string|undefined)}
-		 */
-
-		key: Config.string()
+		value: Config.bool().value(true)
 	};
 
 	handleInputChangeEvent(event) {

@@ -1,12 +1,10 @@
+import '../FormPortal/FormPortal.es';
 import 'clay-icon';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
-
 import templates from './Tooltip.soy.js';
 import {Align} from 'metal-position';
-
-import '../FormPortal/FormPortal.es';
+import {Config} from 'metal-state';
 
 const POSITIONS = ['top', 'left', 'right', 'bottom'];
 
@@ -38,6 +36,15 @@ class Tooltip extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
+		showContent: Config.bool(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Tooltip
+		 * @type {?(string|undefined)}
+		 */
+
 		spritemap: Config.string().required(),
 
 		/**
@@ -47,16 +54,7 @@ class Tooltip extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		text: Config.string().required(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Tooltip
-		 * @type {?(string|undefined)}
-		 */
-
-		showContent: Config.bool()
+		text: Config.string().required()
 	};
 
 	created() {

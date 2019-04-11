@@ -32,6 +32,15 @@ class Grid extends Component {
 		),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Grid
+		 * @type {?(string|undefined)}
+		 */
+
+		label: Config.string(),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Grid
@@ -43,34 +52,7 @@ class Grid extends Component {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof FieldBase
-		 * @type {?(string|undefined)}
-		 */
-
-		tip: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
 		 * @memberof Grid
-		 * @type {?(string|undefined)}
-		 */
-
-		id: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Grid
-		 * @type {?(string|undefined)}
-		 */
-
-		label: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof FieldBase
 		 * @type {?(bool|undefined)}
 		 */
 
@@ -129,7 +111,16 @@ class Grid extends Component {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof Text
+		 * @memberof Grid
+		 * @type {?(string|undefined)}
+		 */
+
+		tip: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Grid
 		 * @type {?(string|undefined)}
 		 */
 

@@ -18,6 +18,10 @@ import {
 class KeyValue extends Component {
 	static STATE = {
 
+		_keyword: Config.string().internal().valueFn('_internalKeywordFn'),
+
+		_value: Config.string().internal().valueFn('_internalValueFn'),
+
 		/**
 		 * @default undefined
 		 * @instance
@@ -151,11 +155,7 @@ class KeyValue extends Component {
 		 * @type {?(bool)}
 		 */
 
-		value: Config.string(),
-
-		_keyword: Config.string().internal().valueFn('_internalKeywordFn'),
-
-		_value: Config.string().internal().valueFn('_internalValueFn')
+		value: Config.string()
 	}
 
 	willReceiveState(changes) {

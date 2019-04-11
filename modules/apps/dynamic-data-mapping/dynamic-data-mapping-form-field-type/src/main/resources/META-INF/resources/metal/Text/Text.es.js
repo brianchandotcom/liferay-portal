@@ -9,6 +9,15 @@ class Text extends Component {
 	static STATE = {
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		_value: Config.string().internal().valueFn('_internalValueFn'),
+
+		/**
 		 * @default 'string'
 		 * @instance
 		 * @memberof Text
@@ -43,15 +52,6 @@ class Text extends Component {
 		 */
 
 		fieldName: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Text
-		 * @type {?(string|undefined)}
-		 */
-
-		id: Config.string(),
 
 		/**
 		 * @default undefined
@@ -99,15 +99,6 @@ class Text extends Component {
 		readOnly: Config.bool().value(false),
 
 		/**
-		 * @default false
-		 * @instance
-		 * @memberof Text
-		 * @type {?(bool|undefined)}
-		 */
-
-		required: Config.bool().value(false),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase
@@ -115,6 +106,15 @@ class Text extends Component {
 		 */
 
 		repeatable: Config.bool(),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Text
+		 * @type {?(bool|undefined)}
+		 */
+
+		required: Config.bool().value(false),
 
 		/**
 		 * @default true
@@ -146,15 +146,6 @@ class Text extends Component {
 		/**
 		 * @default undefined
 		 * @instance
-		 * @memberof Text
-		 * @type {?(string|undefined)}
-		 */
-
-		type: Config.string().value('text'),
-
-		/**
-		 * @default undefined
-		 * @instance
 		 * @memberof FieldBase
 		 * @type {?(string|undefined)}
 		 */
@@ -168,7 +159,7 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string().value(''),
+		type: Config.string().value('text'),
 
 		/**
 		 * @default undefined
@@ -177,7 +168,7 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		_value: Config.string().internal().valueFn('_internalValueFn')
+		value: Config.string().value('')
 	};
 
 	willReceiveState(changes) {

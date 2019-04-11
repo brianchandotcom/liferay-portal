@@ -42,7 +42,7 @@ class FieldBase extends Component {
 		 * @type {?(bool|undefined)}
 		 */
 
-		required: Config.bool(),
+		repeatable: Config.bool(),
 
 		/**
 		 * @default undefined
@@ -51,7 +51,7 @@ class FieldBase extends Component {
 		 * @type {?(bool|undefined)}
 		 */
 
-		repeatable: Config.bool(),
+		required: Config.bool(),
 
 		/**
 		 * @default true

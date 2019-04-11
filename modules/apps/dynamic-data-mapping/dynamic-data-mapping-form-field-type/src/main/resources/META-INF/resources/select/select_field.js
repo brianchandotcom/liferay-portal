@@ -310,6 +310,8 @@ AUI.add(
 					toggleList: function(event) {
 						var instance = this;
 
+						event.stopPropagation();
+
 						var container = instance.get('container');
 
 						var selectTrigger = container.one('.select-field-trigger');

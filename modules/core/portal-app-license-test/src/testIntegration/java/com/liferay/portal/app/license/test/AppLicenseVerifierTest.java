@@ -17,16 +17,16 @@ package com.liferay.portal.app.license.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.app.license.AppLicenseVerifier;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+import java.util.Iterator;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,11 +34,9 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Amos Fong
@@ -51,97 +49,92 @@ public class AppLicenseVerifierTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() {
-		_bundle = FrameworkUtil.getBundle(AppLicenseVerifierTest.class);
+	@BeforeClass
+	public static void setUpClass() {
+		Bundle bundle = FrameworkUtil.getBundle(AppLicenseVerifierTest.class);
 
-		BundleContext bundleContext = _bundle.getBundleContext();
+		_bundleContext = bundle.getBundleContext();
 
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, AppLicenseVerifier.class, null);
-
-		_serviceTracker.open();
-
-		Dictionary<String, Object> properties = new Hashtable<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("version", "1.0.0");
 
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				AppLicenseVerifier.class, new FailAppLicenseVerifier(),
-				properties));
+		_failServiceRegistration = _bundleContext.registerService(
+			AppLicenseVerifier.class, new FailAppLicenseVerifier(), properties);
 
-		properties = new Hashtable<>();
+		properties = new HashMapDictionary<>();
 
 		properties.put("version", "1.0.1");
 
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				AppLicenseVerifier.class, new PassAppLicenseVerifier(),
-				properties));
+		_passServiceRegistration = _bundleContext.registerService(
+			AppLicenseVerifier.class, new PassAppLicenseVerifier(), properties);
 	}
 
-	@After
-	public void tearDown() {
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
-
-		_serviceTracker.close();
+	@AfterClass
+	public static void tearDownClass() {
+		_failServiceRegistration.unregister();
+		_passServiceRegistration.unregister();
 	}
 
-	@Test(expected = Exception.class)
+	@Test
 	public void testVerifyFailure() throws Exception {
-		Filter filter = FrameworkUtil.createFilter("(version=1.0.0)");
+		Collection<ServiceReference<AppLicenseVerifier>> serviceReferences =
+			_bundleContext.getServiceReferences(
+				AppLicenseVerifier.class, "(version=1.0.0)");
 
-		Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
-			serviceReferences = _serviceTracker.getTracked();
+		Assert.assertEquals(
+			serviceReferences.toString(), 1, serviceReferences.size());
 
-		for (Map.Entry<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
-				entry : serviceReferences.entrySet()) {
+		Iterator<ServiceReference<AppLicenseVerifier>> iterator =
+			serviceReferences.iterator();
 
-			if (!filter.match(entry.getKey())) {
-				continue;
-			}
+		ServiceReference<AppLicenseVerifier> serviceReference = iterator.next();
 
-			AppLicenseVerifier appLicenseVerifier = entry.getValue();
+		AppLicenseVerifier appLicenseVerifier = _bundleContext.getService(
+			serviceReference);
 
-			appLicenseVerifier.verify(_bundle, "", "", "");
+		try {
+			appLicenseVerifier.verify(_bundleContext.getBundle(), "", "", "");
 
-			break;
+			Assert.fail();
+		}
+		catch (Exception e) {
+			Assert.assertSame(FailAppLicenseVerifier.EXCEPTION, e);
+		}
+		finally {
+			_bundleContext.ungetService(serviceReference);
 		}
 	}
 
 	@Test
 	public void testVerifyPass() throws Exception {
-		Filter filter = FrameworkUtil.createFilter("(version=1.0.1)");
+		Collection<ServiceReference<AppLicenseVerifier>> serviceReferences =
+			_bundleContext.getServiceReferences(
+				AppLicenseVerifier.class, "(version=1.0.1)");
 
-		Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
-			serviceReferences = _serviceTracker.getTracked();
+		Assert.assertEquals(
+			serviceReferences.toString(), 1, serviceReferences.size());
 
-		for (Map.Entry<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
-				entry : serviceReferences.entrySet()) {
+		Iterator<ServiceReference<AppLicenseVerifier>> iterator =
+			serviceReferences.iterator();
 
-			ServiceReference serviceReference = entry.getKey();
+		ServiceReference<AppLicenseVerifier> serviceReference = iterator.next();
 
-			if (!filter.match(serviceReference)) {
-				continue;
-			}
+		AppLicenseVerifier appLicenseVerifier = _bundleContext.getService(
+			serviceReference);
 
-			AppLicenseVerifier appLicenseVerifier = entry.getValue();
-
-			appLicenseVerifier.verify(_bundle, "", "", "");
-
-			break;
+		try {
+			appLicenseVerifier.verify(_bundleContext.getBundle(), "", "", "");
+		}
+		finally {
+			_bundleContext.ungetService(serviceReference);
 		}
 	}
 
-	private Bundle _bundle;
-	private final List<ServiceRegistration<?>> _serviceRegistrations =
-		new ArrayList<>();
-	private ServiceTracker<AppLicenseVerifier, AppLicenseVerifier>
-		_serviceTracker;
+	private static BundleContext _bundleContext;
+	private static ServiceRegistration<AppLicenseVerifier>
+		_failServiceRegistration;
+	private static ServiceRegistration<AppLicenseVerifier>
+		_passServiceRegistration;
 
 }

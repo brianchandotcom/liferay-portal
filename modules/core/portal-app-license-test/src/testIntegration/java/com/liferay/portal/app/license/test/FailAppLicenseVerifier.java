@@ -23,13 +23,15 @@ import org.osgi.framework.Bundle;
  */
 public class FailAppLicenseVerifier implements AppLicenseVerifier {
 
+	public static final Exception EXCEPTION = new Exception();
+
 	@Override
 	public void verify(
 			Bundle bundle, String productId, String productType,
 			String productVersion)
 		throws Exception {
 
-		throw new Exception();
+		throw EXCEPTION;
 	}
 
 }

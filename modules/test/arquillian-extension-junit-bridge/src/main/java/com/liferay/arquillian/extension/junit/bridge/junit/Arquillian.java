@@ -147,7 +147,11 @@ public class Arquillian extends Runner implements Filterable {
 
 		FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
 
-		try (ServerSocket serverSocket = _getServerSocket()) {
+		ServerSocket serverSocket = null;
+
+		try {
+			serverSocket = _getServerSocket();
+
 			long bundleId = _installBundle(
 				frameworkMBean, serverSocket.getLocalPort());
 
@@ -191,9 +195,24 @@ public class Arquillian extends Runner implements Filterable {
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(getDescription(), t));
 		}
+		finally {
+			if (_classes.isEmpty()) {
+				try {
+					serverSocket.close();
+				}
+				catch (IOException ioe) {
+					runNotifier.fireTestFailure(
+						new Failure(getDescription(), ioe));
+				}
+			}
+		}
 	}
 
 	private static ServerSocket _getServerSocket() throws IOException {
+		if (_serverSocket != null) {
+			return _serverSocket;
+		}
+
 		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 
 		int port = _START_PORT;
@@ -203,6 +222,8 @@ public class Arquillian extends Runner implements Filterable {
 				ServerSocket serverSocket = serverSocketChannel.socket();
 
 				serverSocket.bind(new InetSocketAddress(_inetAddress, port));
+
+				_serverSocket = serverSocket;
 
 				return serverSocket;
 			}
@@ -287,6 +308,7 @@ public class Arquillian extends Runner implements Filterable {
 
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();
+	private static ServerSocket _serverSocket;
 
 	private final Class<?> _clazz;
 	private FilteredSortedTestClass _filteredSortedTestClass;

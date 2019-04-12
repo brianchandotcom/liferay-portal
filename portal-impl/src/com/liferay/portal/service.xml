@@ -2063,7 +2063,6 @@
 
 		<!-- References -->
 
-		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="RepositoryEntry" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />

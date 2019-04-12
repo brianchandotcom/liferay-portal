@@ -311,6 +311,13 @@ class Form extends Component {
 							this.props.editingLanguageId = event.newVal;
 						}
 					);
+
+					translationManager.on(
+						'deleteAvailableLocale',
+						event => {
+							layoutProvider.emit('languageIdDeleted', event);
+						}
+					);
 				}
 
 				this._stateSyncronizer = new StateSyncronizer(

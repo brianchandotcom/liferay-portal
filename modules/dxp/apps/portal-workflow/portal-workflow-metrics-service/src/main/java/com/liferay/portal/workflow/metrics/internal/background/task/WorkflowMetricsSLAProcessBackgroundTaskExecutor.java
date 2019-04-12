@@ -19,9 +19,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -30,6 +27,8 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
@@ -116,6 +115,19 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		return null;
 	}
 
+	private BooleanQuery _createInstancesBooleanQuery(
+		long companyId, long processId) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", "0"));
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", companyId),
+			_queries.term("completed", false), _queries.term("deleted", false),
+			_queries.term("processId", processId));
+	}
+
 	private Map<Long, LocalDateTime> _getCreateLocalDateTimes(
 		long companyId, long processId) {
 
@@ -123,22 +135,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
 		searchSearchRequest.setQuery(
-			new BooleanQueryImpl() {
-				{
-					setPreBooleanFilter(
-						new BooleanFilter() {
-							{
-								addRequiredTerm("companyId", companyId);
-								addRequiredTerm("completed", false);
-								addRequiredTerm("deleted", false);
-								addTerm(
-									"instanceId", "0",
-									BooleanClauseOccur.MUST_NOT);
-								addRequiredTerm("processId", processId);
-							}
-						});
-				}
-			});
+			_createInstancesBooleanQuery(companyId, processId));
 		searchSearchRequest.setSize(10000);
 
 		SearchSearchResponse searchSearchResponse =
@@ -165,20 +162,15 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
 		searchSearchRequest.setQuery(
-			new BooleanQueryImpl() {
-				{
-					setPreBooleanFilter(
-						new BooleanFilter() {
-							{
-								addRequiredTerm("companyId", companyId);
-								addRequiredTerm("deleted", false);
-								addRequiredTerm("initial", true);
-								addRequiredTerm("processId", processId);
-							}
-						});
-				}
-			});
+			booleanQuery.addMustQueryClauses(
+				_queries.term("companyId", companyId),
+				_queries.term("completed", false),
+				_queries.term("deleted", false),
+				_queries.term("processId", processId)));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

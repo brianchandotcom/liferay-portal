@@ -15,12 +15,8 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -42,7 +38,9 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
@@ -142,22 +140,13 @@ public class ProcessResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	private BooleanFilter _createInstanceBooleanFilter(Set<Long> processIds) {
-		return new BooleanFilter() {
-			{
-				TermsFilter termsFilter = new TermsFilter("processId");
+	private BooleanQuery _createInstanceBooleanQuery(Set<Long> processIds) {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-				for (long processId : processIds) {
-					termsFilter.addValue(String.valueOf(processId));
-				}
-
-				add(termsFilter, BooleanClauseOccur.MUST);
-
-				addRequiredTerm("companyId", contextCompany.getCompanyId());
-				addRequiredTerm("completed", false);
-				addRequiredTerm("deleted", false);
-			}
-		};
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", contextCompany.getCompanyId()),
+			_queries.term("completed", false), _queries.term("deleted", false),
+			_createProcessIdTermsQuery(processIds));
 	}
 
 	private Process _createProcess(Document document) {
@@ -170,32 +159,48 @@ public class ProcessResourceImpl
 		};
 	}
 
-	private BooleanFilter _createProcessBooleanFilter() {
-		return new BooleanFilter() {
-			{
-				addRequiredTerm("companyId", contextCompany.getCompanyId());
-				addRequiredTerm("deleted", false);
-			}
-		};
+	private BooleanQuery _createProcessBooleanQuery(
+		Long processId, String title) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		if (Validator.isNotNull(processId)) {
+			booleanQuery.addMustQueryClauses(
+				_queries.term("processId", processId));
+		}
+
+		if (Validator.isNotNull(title)) {
+			booleanQuery.addMustQueryClauses(
+				_queries.term(_getTitleFieldName(), title));
+		}
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", contextCompany.getCompanyId()),
+			_queries.term("deleted", false));
 	}
 
-	private BooleanFilter _createSLABooleanFilter(Set<Long> processIds) {
-		return new BooleanFilter() {
-			{
-				add(
-					new TermsFilter("processId") {
-						{
-							for (long processId : processIds) {
-								addValue(String.valueOf(processId));
-							}
-						}
-					},
-					BooleanClauseOccur.MUST);
+	private TermsQuery _createProcessIdTermsQuery(Set<Long> processIds) {
+		TermsQuery termsQuery = _queries.terms("processId");
 
-				addRequiredTerm("companyId", contextCompany.getCompanyId());
-				addRequiredTerm("deleted", false);
-			}
-		};
+		Stream<Long> stream = processIds.stream();
+
+		termsQuery.addValues(
+			stream.map(
+				String::valueOf
+			).toArray(
+				String[]::new
+			));
+
+		return termsQuery;
+	}
+
+	private BooleanQuery _createSLABooleanQuery(Set<Long> processIds) {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", contextCompany.getCompanyId()),
+			_queries.term("deleted", false),
+			_createProcessIdTermsQuery(processIds));
 	}
 
 	private TermsAggregationResult _getInstanceTermsAggregationResult(
@@ -229,13 +234,7 @@ public class ProcessResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
-		searchSearchRequest.setQuery(
-			new BooleanQueryImpl() {
-				{
-					setPreBooleanFilter(
-						_createInstanceBooleanFilter(processIds));
-				}
-			});
+		searchSearchRequest.setQuery(_createInstanceBooleanQuery(processIds));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -328,19 +327,7 @@ public class ProcessResourceImpl
 
 		searchSearchRequest.setIndexNames("workflow-metrics-processes");
 		searchSearchRequest.setQuery(
-			new BooleanQueryImpl() {
-				{
-					if (Validator.isNotNull(processId)) {
-						addTerm("processId", processId);
-					}
-
-					if (Validator.isNotNull(title)) {
-						addTerm(_getTitleFieldName(), title);
-					}
-
-					setPreBooleanFilter(_createProcessBooleanFilter());
-				}
-			});
+			_createProcessBooleanQuery(processId, title));
 		searchSearchRequest.setSelectedFieldNames(
 			"processId", _getTitleFieldName());
 
@@ -412,12 +399,7 @@ public class ProcessResourceImpl
 
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-sla-process-result");
-		searchSearchRequest.setQuery(
-			new BooleanQueryImpl() {
-				{
-					setPreBooleanFilter(_createSLABooleanFilter(processIds));
-				}
-			});
+		searchSearchRequest.setQuery(_createSLABooleanQuery(processIds));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

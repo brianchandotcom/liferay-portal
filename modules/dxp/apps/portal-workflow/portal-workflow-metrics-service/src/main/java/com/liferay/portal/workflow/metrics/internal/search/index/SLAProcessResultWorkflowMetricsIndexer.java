@@ -18,15 +18,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 
 import java.sql.Timestamp;
@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -91,37 +92,24 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	}
 
 	public void deleteDocuments(long companyId, long instanceId) {
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
 		_deleteDocuments(
-			new BooleanQueryImpl() {
-				{
-					setPreBooleanFilter(
-						new BooleanFilter() {
-							{
-								addRequiredTerm("companyId", companyId);
-								addRequiredTerm("instanceId", instanceId);
-							}
-						});
-				}
-			});
+			booleanQuery.addMustQueryClauses(
+				queries.term("companyId", companyId),
+				queries.term("instanceId", instanceId)));
 	}
 
 	public void deleteDocuments(
 		long companyId, long processId, long slaDefinitionId) {
 
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
 		_deleteDocuments(
-			new BooleanQueryImpl() {
-				{
-					setPreBooleanFilter(
-						new BooleanFilter() {
-							{
-								addRequiredTerm("companyId", companyId);
-								addRequiredTerm("processId", processId);
-								addRequiredTerm(
-									"slaDefinitionId", slaDefinitionId);
-							}
-						});
-				}
-			});
+			booleanQuery.addMustQueryClauses(
+				queries.term("companyId", companyId),
+				queries.term("processId", processId),
+				queries.term("slaDefinitionId", slaDefinitionId)));
 	}
 
 	@Override
@@ -137,6 +125,9 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	@Override
 	protected void populateIndex() throws PortalException {
 	}
+
+	@Reference
+	protected Queries queries;
 
 	private void _deleteDocuments(Query query) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();

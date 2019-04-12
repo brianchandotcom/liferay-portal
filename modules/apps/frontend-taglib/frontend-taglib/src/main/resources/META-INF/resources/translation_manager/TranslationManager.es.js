@@ -33,15 +33,15 @@ class TranslationManager extends Component {
 	 * @review
 	 */
 	addLocale(event) {
-		let localeId = event.data.item;
+		let localeObj = event.data.item;
 
-		if (this.availableLocales.indexOf(localeId) === -1) {
-			this.availableLocales.push(localeId);
+		if (this.availableLocales.indexOf(localeObj) === -1) {
+			this.availableLocales.push(localeObj);
 		}
 
 		this.availableLocales = this.availableLocales;
 
-		this.editingLocale = localeId;
+		this.editingLocale = localeObj.id;
 	}
 
 	/**
@@ -173,7 +173,7 @@ TranslationManager.STATE = {
 	/**
 	 * List of available languages keys.
 	 * @review
-	 * @type {Array.<String>}
+	 * @type {Array.<Object>}
 	 */
 	availableLocales: {
 		validator: core.isArray

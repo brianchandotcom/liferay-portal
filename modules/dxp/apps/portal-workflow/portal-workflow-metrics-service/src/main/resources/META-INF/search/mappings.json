@@ -693,6 +693,81 @@
 			}
 		}
 	},
+	"WorkflowMetricsSLATaskResultType": {
+		"date_detection": false,
+		"dynamic_templates": [
+			{
+				"template_long_sortable": {
+					"mapping": {
+						"store": true,
+						"type": "long"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "long"
+				}
+			}
+		],
+		"properties": {
+			"companyId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"deleted": {
+				"store": true,
+				"type": "boolean"
+			},
+			"elapsedTime": {
+				"store": true,
+				"type": "long"
+			},
+			"instanceId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"lastCheckDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
+			"onTime": {
+				"store": true,
+				"type": "boolean"
+			},
+			"overdueDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
+			"processId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"remainingTime": {
+				"store": true,
+				"type": "long"
+			},
+			"slaDefinitionId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"status": {
+				"store": true,
+				"type": "keyword"
+			},
+			"taskId": {
+				"store": true,
+				"type": "keyword"
+			},
+			"taskName": {
+				"store": true,
+				"type": "keyword"
+			},
+			"uid": {
+				"store": true,
+				"type": "keyword"
+			}
+		}
+	},
 	"WorkflowMetricsTokenType": {
 		"date_detection": false,
 		"dynamic_templates": [

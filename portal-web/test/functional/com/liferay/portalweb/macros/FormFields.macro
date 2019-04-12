@@ -352,7 +352,7 @@ definition {
 
 		Click(locator1 = "FormFields#SELECT_FIELD", value1 = "${selectOption}");
 
-		if (("${fieldName}" == "Data Provider") || ("${fieldName}" == "Output Parameter")) {
+		if (("${fieldName}" == "Choose a Data Provider") || ("${fieldName}" == "Output Parameter")) {
 			AssertClick(
 				locator1 = "FormFields#SELECT_FIELD_DATA_PROVIDER_LIST",
 				value1 = "${selectOption}"

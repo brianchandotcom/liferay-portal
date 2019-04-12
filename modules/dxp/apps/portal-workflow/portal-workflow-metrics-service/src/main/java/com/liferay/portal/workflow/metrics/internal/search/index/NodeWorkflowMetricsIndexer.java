@@ -70,6 +70,17 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		}
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
+			new IndexDocumentRequest(
+				_tokenWorkflowMetricsIndexer.getIndexName(),
+				_createWorkflowMetricsTokenDocument(
+					GetterUtil.getLong(document.get("companyId")),
+					GetterUtil.getLong(document.get("processId")))) {
+
+				{
+					setType(_tokenWorkflowMetricsIndexer.getIndexType());
+				}
+			});
+		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(getIndexName(), document) {
 				{
 					setType(getIndexType());
@@ -84,8 +95,8 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			kaleoNode.getCompanyId(), kaleoNode.getCreateDate(),
 			kaleoNode.isInitial(), kaleoNode.getKaleoDefinitionVersionId(),
 			kaleoNode.getModifiedDate(), kaleoNode.getName(),
-			kaleoNode.getKaleoNodeId(), kaleoNode.getPrimaryKey(),
-			kaleoNode.isTerminal(), kaleoNode.getType());
+			kaleoNode.getKaleoNodeId(), kaleoNode.isTerminal(),
+			kaleoNode.getType());
 	}
 
 	public Document createDocument(KaleoTask kaleoTask) {
@@ -93,8 +104,7 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			kaleoTask.getCompanyId(), kaleoTask.getCreateDate(), false,
 			kaleoTask.getKaleoDefinitionVersionId(),
 			kaleoTask.getModifiedDate(), kaleoTask.getName(),
-			kaleoTask.getKaleoTaskId(), kaleoTask.getPrimaryKey(), false,
-			NodeType.TASK.name());
+			kaleoTask.getKaleoTaskId(), false, NodeType.TASK.name());
 	}
 
 	@Override
@@ -116,13 +126,13 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	private Document _createDocument(
 		long companyId, Date createDate, boolean initial,
 		long kaleoDefinitionVersionId, Date modifiedDate, String name,
-		long nodeId, long primaryKey, boolean terminal, String type) {
+		long nodeId, boolean terminal, String type) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
 			"WorkflowMetricsNode",
-			digest(companyId, kaleoDefinitionVersionId, primaryKey));
+			digest(companyId, kaleoDefinitionVersionId, nodeId));
 		document.addKeyword("companyId", companyId);
 		document.addDateSortable("createDate", createDate);
 		document.addKeyword("deleted", false);
@@ -148,6 +158,25 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				StringBundler.concat(
 					kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
 		}
+
+		return document;
+	}
+
+	private Document _createWorkflowMetricsTokenDocument(
+		long companyId, long processId) {
+
+		Document document = new DocumentImpl();
+
+		document.addUID(
+			"WorkflowMetricsToken", digest(companyId, processId, 0, 0, 0));
+
+		document.addKeyword("companyId", companyId);
+		document.addKeyword("completed", false);
+		document.addKeyword("deleted", false);
+		document.addKeyword("instanceId", 0);
+		document.addKeyword("processId", processId);
+		document.addKeyword("taskId", 0);
+		document.addKeyword("tokenId", 0);
 
 		return document;
 	}
@@ -207,5 +236,8 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
+
+	@Reference
+	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
 
 }

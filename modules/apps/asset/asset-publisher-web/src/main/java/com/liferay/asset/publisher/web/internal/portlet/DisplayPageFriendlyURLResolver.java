@@ -89,42 +89,8 @@ public class DisplayPageFriendlyURLResolver
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(
-				_getURLTitle(friendlyURL));
-
-		JournalArticle journalArticle =
-			_journalArticleLocalService.fetchLatestArticleByUrlTitle(
-				groupId, normalizedUrlTitle, WorkflowConstants.STATUS_APPROVED);
-
-		if (journalArticle == null) {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			journalArticle =
-				_journalArticleLocalService.getLatestArticleByUrlTitle(
-					groupId, normalizedUrlTitle,
-					WorkflowConstants.STATUS_PENDING);
-
-			if (!WorkflowPermissionUtil.hasPermission(
-					permissionChecker, groupId,
-					"com.liferay.journal.model.JournalArticle",
-					journalArticle.getId(), ActionKeys.VIEW)) {
-
-				throw new PrincipalException();
-			}
-		}
-
-		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
-
-		if (!friendlyURLMap.containsValue(normalizedUrlTitle)) {
-			throw new NoSuchArticleException(
-				StringBundler.concat(
-					"No latest version of a JournalArticle exists with the key",
-					"{groupId=", groupId, ", urlTitle=",
-					_getURLTitle(friendlyURL), ", status=",
-					WorkflowConstants.STATUS_ANY, "}"));
-		}
+		JournalArticle journalArticle = _getJournalArticle(
+			groupId, friendlyURL);
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(),
@@ -170,30 +136,8 @@ public class DisplayPageFriendlyURLResolver
 			long groupId, boolean privateLayout, String friendlyURL)
 		throws PortalException {
 
-		String urlTitle = _getURLTitle(friendlyURL);
-
-		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
-
-		JournalArticle journalArticle =
-			_journalArticleLocalService.fetchLatestArticleByUrlTitle(
-				groupId, normalizedUrlTitle, WorkflowConstants.STATUS_APPROVED);
-
-		if (journalArticle == null) {
-			journalArticle =
-				_journalArticleLocalService.getLatestArticleByUrlTitle(
-					groupId, normalizedUrlTitle, WorkflowConstants.STATUS_ANY);
-		}
-
-		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
-
-		if (!friendlyURLMap.containsValue(normalizedUrlTitle)) {
-			throw new NoSuchArticleException(
-				StringBundler.concat(
-					"No latest version of a JournalArticle exists with the key",
-					"{groupId=", groupId, ", urlTitle=", urlTitle, ", status=",
-					WorkflowConstants.STATUS_ANY, "}"));
-		}
+		JournalArticle journalArticle = _getJournalArticle(
+			groupId, friendlyURL);
 
 		if (Validator.isNotNull(journalArticle.getLayoutUuid())) {
 			return _layoutLocalService.getLayoutByUuidAndGroupId(
@@ -383,6 +327,49 @@ public class DisplayPageFriendlyURLResolver
 		}
 
 		return paths.get(2);
+	}
+
+	private JournalArticle _getJournalArticle(long groupId, String friendlyURL)
+		throws PortalException {
+
+		String normalizedUrlTitle =
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				_getURLTitle(friendlyURL));
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.fetchLatestArticleByUrlTitle(
+				groupId, normalizedUrlTitle, WorkflowConstants.STATUS_APPROVED);
+
+		if (journalArticle == null) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			journalArticle =
+				_journalArticleLocalService.getLatestArticleByUrlTitle(
+					groupId, normalizedUrlTitle,
+					WorkflowConstants.STATUS_PENDING);
+
+			if (!WorkflowPermissionUtil.hasPermission(
+					permissionChecker, groupId,
+					"com.liferay.journal.model.JournalArticle",
+					journalArticle.getId(), ActionKeys.VIEW)) {
+
+				throw new PrincipalException();
+			}
+		}
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		if (!friendlyURLMap.containsValue(normalizedUrlTitle)) {
+			throw new NoSuchArticleException(
+				StringBundler.concat(
+					"No latest version of a JournalArticle exists with the key",
+					"{groupId=", groupId, ", urlTitle=",
+					_getURLTitle(friendlyURL), ", status=",
+					WorkflowConstants.STATUS_ANY, "}"));
+		}
+
+		return journalArticle;
 	}
 
 	private String _getURLTitle(String friendlyURL) {

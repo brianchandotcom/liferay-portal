@@ -53,7 +53,7 @@ public class PostalAddressResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"postalCode", "streetAddressLine1"};
+		return new String[] {"postalCode", "primary", "streetAddressLine1"};
 	}
 
 	@Override
@@ -140,6 +140,7 @@ public class PostalAddressResourceTest
 				addressLocality = address.getCity();
 				id = address.getAddressId();
 				postalCode = address.getZip();
+				primary = address.getPrimary();
 				streetAddressLine1 = address.getStreet1();
 			}
 		};

@@ -74,6 +74,18 @@ sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 				value="<%= sharedAssetsViewDisplayContext.getAssetTypeTitle(sharingEntry) %>"
 			/>
 
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-smallest"
+				name="status"
+				orderable="<%= false %>"
+			>
+				<span class="label label-info">
+					<span class="label-item label-item-expand">
+						<%= sharedAssetsViewDisplayContext.isVisible(sharingEntry) ? LanguageUtil.get(request, "visible") : LanguageUtil.get(request, "not-visible") %>
+					</span>
+				</span>
+			</liferay-ui:search-container-column-text>
+
 			<liferay-ui:search-container-column-date
 				name="shared-date"
 				orderable="<%= false %>"

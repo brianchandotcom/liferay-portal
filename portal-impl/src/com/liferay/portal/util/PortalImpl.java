@@ -178,7 +178,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalInetSocketAddressEventListener;
-import com.liferay.portal.kernel.util.PortalPortEventListener;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletCategoryKeys;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -8037,20 +8036,6 @@ public class PortalImpl implements Portal {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #notifyPortalInetSocketAddressEventListeners(
-	 *             InetSocketAddress, boolean, boolean)}
-	 */
-	@Deprecated
-	protected void notifyPortalPortEventListeners(int portalPort) {
-		for (PortalPortEventListener portalPortEventListener :
-				_portalPortEventListeners) {
-
-			portalPortEventListener.portalPortConfigured(portalPort);
-		}
-	}
-
 	protected String removeRedirectParameter(String url) {
 		String queryString = HttpUtil.getQueryString(url);
 
@@ -8788,14 +8773,6 @@ public class PortalImpl implements Portal {
 	 */
 	@Deprecated
 	private final AtomicInteger _portalPort = new AtomicInteger(-1);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #_portalInetSocketAddressEventListeners}
-	 */
-	@Deprecated
-	private final List<PortalPortEventListener> _portalPortEventListeners =
-		new ArrayList<>();
 
 	private final AtomicReference<InetSocketAddress>
 		_portalServerInetSocketAddress = new AtomicReference<>();

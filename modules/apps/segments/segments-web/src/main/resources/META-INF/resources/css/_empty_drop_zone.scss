@@ -2,12 +2,8 @@
 	background: $secondaryHover;
 	border-width: 2px;
 
-	.drop-zone-target {
-		height: 86px;
-	}
-
 	.empty-drop-zone-target {
-		height: 462px;
+		height: 50vh;
 
 		.empty-drop-zone-indicator {
 			visibility: hidden;

@@ -104,7 +104,8 @@ public class FragmentRendererControllerImpl
 			fragmentRenderer = _fragmentRendererTracker.getFragmentRenderer(
 				fragmentEntryLink.getRendererKey());
 		}
-		else {
+
+		if (fragmentRenderer == null) {
 			fragmentRenderer = _fragmentRendererTracker.getFragmentRenderer(
 				FragmentRendererConstants.FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY);
 		}

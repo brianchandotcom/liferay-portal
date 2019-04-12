@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
-import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -36,8 +35,7 @@ public class TaskEntityModel implements EntityModel {
 				"onTimeTaskCount", locale -> "onTimeTaskCount"),
 			new IntegerEntityField(
 				"overdueTaskCount", locale -> "overdueTaskCount"),
-			new IntegerEntityField("taskCount", locale -> "taskCount"),
-			new StringEntityField("name", locale -> "name")
+			new IntegerEntityField("taskCount", locale -> "taskCount")
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

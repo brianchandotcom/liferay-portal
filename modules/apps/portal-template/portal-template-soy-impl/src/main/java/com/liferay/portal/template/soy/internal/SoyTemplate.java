@@ -28,19 +28,23 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceCache;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.template.BaseMultiResourceTemplate;
+import com.liferay.portal.template.BaseSingleResourceTemplate;
+import com.liferay.portal.template.soy.SoyTemplateResource;
 
 import java.io.Reader;
 import java.io.Writer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -61,18 +65,23 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Bruno Basto
  */
-public class SoyTemplate extends BaseMultiResourceTemplate {
+public class SoyTemplate extends BaseSingleResourceTemplate {
 
 	public SoyTemplate(
-		List<TemplateResource> templateResources,
+		SoyTemplateResource soyTemplateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		SoyTemplateContextHelper templateContextHelper,
 		SoyTofuCacheHandler soyTofuCacheHandler) {
 
 		super(
-			templateResources, errorTemplateResource, null,
-			templateContextHelper);
+			soyTemplateResource, errorTemplateResource, null,
+			templateContextHelper, _DUMMY_TEMPLATE_RESOURCE_CACHE);
 
+		if (ListUtil.isEmpty(soyTemplateResource.getTemplateResources())) {
+			throw new IllegalArgumentException("Template resource is null");
+		}
+
+		_soyTemplateResource = soyTemplateResource;
 		_templateContextHelper = templateContextHelper;
 
 		_soyContextImpl = new SoyContextImpl(
@@ -253,7 +262,9 @@ public class SoyTemplate extends BaseMultiResourceTemplate {
 
 		StringBundler sb = new StringBundler();
 
-		for (TemplateResource templateResource : templateResources) {
+		for (TemplateResource templateResource :
+				_soyTemplateResource.getTemplateResources()) {
+
 			if (templateResource instanceof StringTemplateResource) {
 				StringTemplateResource stringTemplateResource =
 					(StringTemplateResource)templateResource;
@@ -265,7 +276,7 @@ public class SoyTemplate extends BaseMultiResourceTemplate {
 		put("script", sb.toString());
 
 		try {
-			processTemplates(Arrays.asList(errorTemplateResource), writer);
+			processTemplate(errorTemplateResource, writer);
 		}
 		catch (Exception e) {
 			throw new TemplateException(
@@ -276,8 +287,8 @@ public class SoyTemplate extends BaseMultiResourceTemplate {
 	}
 
 	@Override
-	protected void processTemplates(
-			List<TemplateResource> templateResources, Writer writer)
+	protected void processTemplate(
+			TemplateResource templateResource, Writer writer)
 		throws Exception {
 
 		String namespace = GetterUtil.getString(
@@ -285,6 +296,18 @@ public class SoyTemplate extends BaseMultiResourceTemplate {
 
 		if (Validator.isNull(namespace)) {
 			throw new TemplateException("Namespace is not specified");
+		}
+
+		List<TemplateResource> templateResources;
+
+		if (templateResource instanceof SoyTemplateResource) {
+			SoyTemplateResource soyTemplateResource =
+				(SoyTemplateResource)templateResource;
+
+			templateResources = soyTemplateResource.getTemplateResources();
+		}
+		else {
+			templateResources = Collections.singletonList(templateResource);
 		}
 
 		SoyTofuCacheBag soyTofuCacheBag = getSoyTofuCacheBag(templateResources);
@@ -321,7 +344,9 @@ public class SoyTemplate extends BaseMultiResourceTemplate {
 	private ResourceBundle _getLanguageResourceBundle(Locale locale) {
 		List<ResourceBundleLoader> resourceBundleLoaders = new ArrayList<>();
 
-		for (TemplateResource templateResource : templateResources) {
+		for (TemplateResource templateResource :
+				_soyTemplateResource.getTemplateResources()) {
+
 			try {
 				Bundle templateResourceBundle =
 					SoyProviderCapabilityBundleRegister.getTemplateBundle(
@@ -368,9 +393,13 @@ public class SoyTemplate extends BaseMultiResourceTemplate {
 		context = _soyContextImpl;
 	}
 
+	private static final TemplateResourceCache _DUMMY_TEMPLATE_RESOURCE_CACHE =
+		ProxyFactory.newDummyInstance(TemplateResourceCache.class);
+
 	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
 
 	private final SoyContextImpl _soyContextImpl;
+	private final SoyTemplateResource _soyTemplateResource;
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 	private final SoyTemplateContextHelper _templateContextHelper;
 

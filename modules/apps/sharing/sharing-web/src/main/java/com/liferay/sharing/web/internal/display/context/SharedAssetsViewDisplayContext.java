@@ -272,6 +272,21 @@ public class SharedAssetsViewDisplayContext {
 		return false;
 	}
 
+	public boolean isVisible(SharingEntry sharingEntry) throws PortalException {
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_sharingEntryInterpreterFunction.apply(sharingEntry);
+
+		if (sharingEntryInterpreter == null) {
+			return false;
+		}
+
+		if (sharingEntryInterpreter.isVisible(sharingEntry)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public void populateResults(SearchContainer<SharingEntry> searchContainer) {
 		long classNameId = 0;
 

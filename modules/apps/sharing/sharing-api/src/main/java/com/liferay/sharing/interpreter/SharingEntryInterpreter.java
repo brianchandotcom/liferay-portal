@@ -35,4 +35,6 @@ public interface SharingEntryInterpreter {
 
 	public String getTitle(SharingEntry sharingEntry);
 
+	public boolean isVisible(SharingEntry sharingEntry) throws PortalException;
+
 }

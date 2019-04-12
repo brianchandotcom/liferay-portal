@@ -42,10 +42,12 @@ public class TableTag<T> extends BaseClayTag {
 
 		int returnValue = super.doStartTag();
 
+		_populateContextDefaultValues();
+
 		ClayTagDataSource<T> clayTagDataSource = getClayTagDataSource();
 
 		if (clayTagDataSource != null) {
-			_populateContext(clayTagDataSource);
+			_populateContextItems(clayTagDataSource);
 		}
 
 		List<ClayTableTagSchemaContributor> clayTableTagSchemaContributors =
@@ -166,7 +168,19 @@ public class TableTag<T> extends BaseClayTag {
 			getClayTableTagSchemaContributors(tableSchemaContributorKey);
 	}
 
-	private void _populateContext(ClayTagDataSource<T> clayTagDataSource) {
+	private void _populateContextDefaultValues() {
+		Map<String, Object> context = getContext();
+
+		putValue("page", context.getOrDefault("page", 1));
+		putValue(
+			"pageParamName", context.getOrDefault("pageParamName", "page"));
+		putValue("pageSize", context.getOrDefault("pageSize", 5));
+		putValue(
+			"pageSizeParamName",
+			context.getOrDefault("pageSizeParamName", "pageSize"));
+	}
+
+	private void _populateContextItems(ClayTagDataSource<T> clayTagDataSource) {
 		Map<String, Object> context = getContext();
 
 		if (context.get("items") == null) {

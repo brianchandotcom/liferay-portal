@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>GOOGLE_PLUS</td>
-	<td>//i[contains(@class,'icon-google-plus')]</td>
+	<td>//a[contains(@href,'google_login')]</td>
 	<td></td>
 </tr>
 <tr>

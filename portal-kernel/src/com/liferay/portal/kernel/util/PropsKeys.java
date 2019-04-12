@@ -130,12 +130,6 @@ public interface PropsKeys {
 	public static final String ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES =
 		"asset.categories.selector.max.entries";
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String ASSET_ENTRY_VALIDATOR = "asset.entry.validator";
-
 	public static final String ASSET_FILTER_SEARCH_LIMIT =
 		"asset.filter.search.limit";
 

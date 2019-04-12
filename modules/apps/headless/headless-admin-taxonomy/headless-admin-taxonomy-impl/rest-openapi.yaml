@@ -14,21 +14,28 @@ components:
             description: https://www.schema.org/Creator
             properties:
                 additionalName:
+                    readOnly: true
                     type: string
                 familyName:
+                    readOnly: true
                     type: string
                 givenName:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 image:
                     format: uri
+                    readOnly: true
                     type: string
                 name:
+                    readOnly: true
                     type: string
                 profileURL:
                     format: uri
+                    readOnly: true
                     type: string
             type: object
         Keyword:
@@ -38,19 +45,24 @@ components:
                     $ref: "#/components/schemas/Creator"
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
                     format: date-time
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 keywordUsageCount:
+                    readOnly: true
                     type: number
                 name:
                     type: string
                 siteId:
                     format: int64
+                    readOnly: true
                     type: integer
             required:
                 - name
@@ -61,6 +73,7 @@ components:
                 availableLanguages:
                     items:
                         type: string
+                    readOnly: true
                     type: array
                 creator:
                     allOf:
@@ -68,18 +81,22 @@ components:
                     readOnly: true
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
                     format: date-time
+                    readOnly: true
                     type: string
                 description:
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
                     type: string
                 numberOfTaxonomyCategories:
+                    readOnly: true
                     type: number
                 parentTaxonomyCategory:
                     properties:
@@ -88,6 +105,7 @@ components:
                             type: integer
                         name:
                             type: string
+                    readOnly: true
                     type: object
                 parentTaxonomyVocabulary:
                     properties:
@@ -98,10 +116,6 @@ components:
                             type: string
                     readOnly: true
                     type: object
-                parentVocabularyId:
-                    format: int64
-                    type: integer
-                    writeOnly: true
                 viewableBy:
                     enum: [Anyone, Members, Owner]
                     type: string
@@ -119,26 +133,32 @@ components:
                 availableLanguages:
                     items:
                         type: string
+                    readOnly: true
                     type: array
                 creator:
                     $ref: "#/components/schemas/Creator"
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
                     format: date-time
+                    readOnly: true
                     type: string
                 description:
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
                     type: string
                 numberOfTaxonomyCategories:
+                    readOnly: true
                     type: number
                 siteId:
                     format: int64
+                    readOnly: true
                     type: integer
                 viewableBy:
                     enum: [Anyone, Members, Owner]

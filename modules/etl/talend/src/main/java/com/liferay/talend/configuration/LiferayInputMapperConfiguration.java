@@ -20,15 +20,22 @@ import java.io.Serializable;
 
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
+import org.talend.sdk.component.api.configuration.ui.layout.GridLayouts;
 import org.talend.sdk.component.api.meta.Documentation;
 
 /**
  * @author Zoltán Takács
  */
-@GridLayout(
+@GridLayouts(
 	{
-		@GridLayout.Row("_restDataSet"), @GridLayout.Row("_timeout"),
-		@GridLayout.Row("_batchSize")
+		@GridLayout(
+			names = GridLayout.FormType.MAIN,
+			value = @GridLayout.Row("_restDataSet")
+		),
+		@GridLayout(
+			names = GridLayout.FormType.ADVANCED,
+			value = {@GridLayout.Row("_timeout"), @GridLayout.Row("_batchSize")}
+		)
 	}
 )
 public class LiferayInputMapperConfiguration implements Serializable {

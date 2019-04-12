@@ -108,10 +108,8 @@ public class FileEntrySharingEntryMenuItemContributor
 	}
 
 	private boolean _isVisible(SharingEntry sharingEntry) {
-
-		AssetEntry assetEntry =
-			_assetEntryLocalService.fetchEntry(sharingEntry.getClassNameId(),
-				sharingEntry.getClassPK());
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			sharingEntry.getClassNameId(), sharingEntry.getClassPK());
 
 		if ((assetEntry != null) && assetEntry.isVisible()) {
 			return true;

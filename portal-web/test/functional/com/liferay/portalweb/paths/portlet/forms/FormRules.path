@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ADD_CONDITION</td>
-	<td>//a[contains(@class,'form-builder-rule-add-condition')]</td>
+	<td>//a[contains(@class,'form-builder-rule-add-condition')] | //div[contains(@class,'addbutton-timeline-item')][1]//button[contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_VALUE_TYPE_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-second-oper') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//div[contains(@class,'select-field-trigger')] | //div[contains(@class,'condition-type')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-type')]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//div[not(contains(@class,'hide')) and contains(@class,'liferay-ddm-form-field')]//input[@type='text'] | //div[contains(@class,'condition-type-value')]//input[contains(@type,'text')]</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//input</td>
 	<td></td>
 </tr>
 <tr>

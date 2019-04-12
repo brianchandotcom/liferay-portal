@@ -15,14 +15,19 @@
 package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.search.FieldNames;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
-import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.search.Document;
@@ -31,6 +36,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -97,7 +103,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 					configurationScopeDisplayContext.getScope(),
 					configurationScopeDisplayContext.getScopePK());
 
-			List<ConfigurationModel> searchResults = new ArrayList<>(
+			List<ConfigurationEntry> searchResults = new ArrayList<>(
 				documents.length);
 
 			for (Document document : documents) {
@@ -118,19 +124,51 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 				if ((configurationModel != null) &&
 					configurationModel.isGenerateUI()) {
 
-					searchResults.add(configurationModel);
+					searchResults.add(
+						new ConfigurationModelConfigurationEntry(
+							configurationModel, renderRequest.getLocale(),
+							_resourceBundleLoaderProvider));
 				}
 			}
 
-			ConfigurationModelIterator configurationModelIterator =
-				new ConfigurationModelIterator(searchResults);
+			ExtendedObjectClassDefinition.Scope scope =
+				configurationScopeDisplayContext.getScope();
+
+			for (ConfigurationScreen configurationScreen :
+					_configurationEntryRetriever.getAllConfigurationScreens()) {
+
+				if (!scope.equals(configurationScreen.getScope())) {
+					continue;
+				}
+
+				String configurationScreenKey = StringUtil.toLowerCase(
+					configurationScreen.getKey(), renderRequest.getLocale());
+				String configurationScreenName = StringUtil.toLowerCase(
+					configurationScreen.getName(renderRequest.getLocale()),
+					renderRequest.getLocale());
+
+				String searchReadyKeywords = StringUtil.toLowerCase(
+					keywords, renderRequest.getLocale());
+
+				if (Validator.isNull(keywords) ||
+					configurationScreenKey.contains(searchReadyKeywords) ||
+					configurationScreenName.contains(searchReadyKeywords)) {
+
+					searchResults.add(
+						new ConfigurationScreenConfigurationEntry(
+							configurationScreen, renderRequest.getLocale()));
+				}
+			}
+
+			ConfigurationEntryIterator configurationEntryIterator =
+				new ConfigurationEntryIterator(searchResults);
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER,
 				_configurationEntryRetriever);
 			renderRequest.setAttribute(
-				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
-				configurationModelIterator);
+				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_ITERATOR,
+				configurationEntryIterator);
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
 				_resourceBundleLoaderProvider);

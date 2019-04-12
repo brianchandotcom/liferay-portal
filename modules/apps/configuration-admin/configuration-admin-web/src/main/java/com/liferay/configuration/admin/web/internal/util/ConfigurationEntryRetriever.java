@@ -23,6 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,8 @@ import java.util.Set;
  * @author Michael C. Han
  */
 public interface ConfigurationEntryRetriever {
+
+	public Collection<ConfigurationScreen> getAllConfigurationScreens();
 
 	public ConfigurationCategory getConfigurationCategory(
 		String configurationCategoryKey);

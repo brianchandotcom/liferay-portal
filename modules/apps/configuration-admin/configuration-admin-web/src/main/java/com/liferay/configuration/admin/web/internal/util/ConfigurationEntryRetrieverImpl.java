@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -58,6 +59,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ConfigurationEntryRetriever.class)
 public class ConfigurationEntryRetrieverImpl
 	implements ConfigurationEntryRetriever {
+
+	@Override
+	public Collection<ConfigurationScreen> getAllConfigurationScreens() {
+		return _configurationScreenServiceTrackerMap.values();
+	}
 
 	@Override
 	public ConfigurationCategory getConfigurationCategory(

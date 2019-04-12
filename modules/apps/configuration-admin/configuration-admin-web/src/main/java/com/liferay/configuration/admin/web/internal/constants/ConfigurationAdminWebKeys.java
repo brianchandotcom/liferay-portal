@@ -27,6 +27,9 @@ public class ConfigurationAdminWebKeys {
 
 	public static final String CONFIGURATION_ENTRY = "CONFIGURATION_ENTRY";
 
+	public static final String CONFIGURATION_ENTRY_ITERATOR =
+		"CONFIGURATION_ENTRY_ITERATOR";
+
 	public static final String CONFIGURATION_ENTRY_RETRIEVER =
 		"CONFIGURATION_ENTRY_RETRIEVER";
 

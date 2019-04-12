@@ -54,6 +54,10 @@ public class ConfigurationModelConfigurationEntry
 		return _configurationModel.getCategory();
 	}
 
+	public ConfigurationModel getConfigurationModel() {
+		return _configurationModel;
+	}
+
 	@Override
 	public String getEditURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {

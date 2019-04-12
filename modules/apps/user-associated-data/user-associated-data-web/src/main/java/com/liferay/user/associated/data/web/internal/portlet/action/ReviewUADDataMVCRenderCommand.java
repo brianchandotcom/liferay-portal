@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -42,6 +43,7 @@ import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 import com.liferay.user.associated.data.web.internal.util.UADSearchContainerBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -218,21 +220,23 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 			}
 
 			if (scope.equals(UADConstants.SCOPE_REGULAR_SITES)) {
-				List<Group> groups = _groupLocalService.getGroups(
+				List<Group> allGroups = new ArrayList<>();
+
+				List<Group> liveGroups = _groupLocalService.getGroups(
 					user.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
 					true);
 
-				int size = groups.size();
+				allGroups.addAll(liveGroups);
 
-				long[] groupIds = new long[size];
+				for (Group group : liveGroups) {
+					Group stagingGroup = group.getStagingGroup();
 
-				for (int i = 0; i < size; i++) {
-					Group group = groups.get(i);
-
-					groupIds[i] = group.getGroupId();
+					if (stagingGroup != null) {
+						allGroups.add(stagingGroup);
+					}
 				}
 
-				return groupIds;
+				return ListUtil.toLongArray(allGroups, Group.GROUP_ID_ACCESSOR);
 			}
 		}
 		catch (PortalException pe) {

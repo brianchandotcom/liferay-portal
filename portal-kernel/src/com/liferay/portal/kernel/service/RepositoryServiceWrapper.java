@@ -77,39 +77,6 @@ public class RepositoryServiceWrapper
 		return _repositoryService.getRepository(repositoryId);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String[] getSupportedConfigurations(long classNameId) {
-		return _repositoryService.getSupportedConfigurations(classNameId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String[] getSupportedParameters(
-		long classNameId, String configuration) {
-
-		return _repositoryService.getSupportedParameters(
-			classNameId, configuration);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String[] getSupportedParameters(
-		String className, String configuration) {
-
-		return _repositoryService.getSupportedParameters(
-			className, configuration);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
 			getTypeSettingsProperties(long repositoryId)

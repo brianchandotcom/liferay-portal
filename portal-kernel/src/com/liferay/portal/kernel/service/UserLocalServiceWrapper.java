@@ -1665,79 +1665,6 @@ public class UserLocalServiceWrapper
 		return _userLocalService.getRoleUsersCount(roleId, status);
 	}
 
-	/**
-	 * Returns an ordered range of all the users with a social relation of the
-	 * type with the user.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param userId the primary key of the user
-	 * @param socialRelationType the type of social relation. The possible
-	 types can be found in {@link SocialRelationConstants}.
-	 * @param start the lower bound of the range of users
-	 * @param end the upper bound of the range of users (not inclusive)
-	 * @param obc the comparator to order the users by (optionally
-	 <code>null</code>)
-	 * @return the ordered range of users with a social relation of the type
-	 with the user
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getSocialUsers(long, int, String, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.User> getSocialUsers(
-			long userId, int socialRelationType, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.User> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.getSocialUsers(
-			userId, socialRelationType, start, end, obc);
-	}
-
-	/**
-	 * Returns an ordered range of all the users with a social relation with the
-	 * user.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param userId the primary key of the user
-	 * @param start the lower bound of the range of users
-	 * @param end the upper bound of the range of users (not inclusive)
-	 * @param obc the comparator to order the users by (optionally
-	 <code>null</code>)
-	 * @return the ordered range of users with a social relation with the
-	 user
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getSocialUsers(long, int, String, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.User> getSocialUsers(
-			long userId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.User> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.getSocialUsers(userId, start, end, obc);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.User> getSocialUsers(
 			long userId, int socialRelationType,
@@ -1818,43 +1745,6 @@ public class UserLocalServiceWrapper
 
 		return _userLocalService.getSocialUsers(
 			userId1, userId2, start, end, obc);
-	}
-
-	/**
-	 * Returns the number of users with a social relation with the user.
-	 *
-	 * @param userId the primary key of the user
-	 * @return the number of users with a social relation with the user
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getSocialUsersCount(long, int, String)}
-	 */
-	@Deprecated
-	@Override
-	public int getSocialUsersCount(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.getSocialUsersCount(userId);
-	}
-
-	/**
-	 * Returns the number of users with a social relation of the type with the
-	 * user.
-	 *
-	 * @param userId the primary key of the user
-	 * @param socialRelationType the type of social relation. The possible
-	 types can be found in {@link SocialRelationConstants}.
-	 * @return the number of users with a social relation of the type with
-	 the user
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getSocialUsersCount(long, int, String)}
-	 */
-	@Deprecated
-	@Override
-	public int getSocialUsersCount(long userId, int socialRelationType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.getSocialUsersCount(
-			userId, socialRelationType);
 	}
 
 	/**
@@ -3488,24 +3378,6 @@ public class UserLocalServiceWrapper
 	 *
 	 * @param userId the primary key of the user
 	 * @param status the user's new workflow status
-	 * @return the user
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateStatus(long, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.model.User updateStatus(
-			long userId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.updateStatus(userId, status);
-	}
-
-	/**
-	 * Updates the user's workflow status.
-	 *
-	 * @param userId the primary key of the user
-	 * @param status the user's new workflow status
 	 * @param serviceContext the service context to be applied. You can specify
 	 an unencrypted custom password (used by an LDAP listener) for the
 	 user via attribute <code>passwordUnencrypted</code>.
@@ -3597,90 +3469,6 @@ public class UserLocalServiceWrapper
 			birthdayYear, smsSn, facebookSn, jabberSn, skypeSn, twitterSn,
 			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
 			userGroupIds, serviceContext);
-	}
-
-	/**
-	 * Updates the user.
-	 *
-	 * @param userId the primary key of the user
-	 * @param oldPassword the user's old password
-	 * @param newPassword1 the user's new password (optionally
-	 <code>null</code>)
-	 * @param newPassword2 the user's new password confirmation (optionally
-	 <code>null</code>)
-	 * @param passwordReset whether the user should be asked to reset their
-	 password the next time they login
-	 * @param reminderQueryQuestion the user's new password reset question
-	 * @param reminderQueryAnswer the user's new password reset answer
-	 * @param screenName the user's new screen name
-	 * @param emailAddress the user's new email address
-	 * @param facebookId the user's new Facebook ID
-	 * @param openId the user's new OpenID
-	 * @param languageId the user's new language ID
-	 * @param timeZoneId the user's new time zone ID
-	 * @param greeting the user's new greeting
-	 * @param comments the user's new comments
-	 * @param firstName the user's new first name
-	 * @param middleName the user's new middle name
-	 * @param lastName the user's new last name
-	 * @param prefixId the user's new name prefix ID
-	 * @param suffixId the user's new name suffix ID
-	 * @param male whether user is male
-	 * @param birthdayMonth the user's new birthday month (0-based, meaning
-	 0 for January)
-	 * @param birthdayDay the user's new birthday day
-	 * @param birthdayYear the user's birthday year
-	 * @param smsSn the user's new SMS screen name
-	 * @param facebookSn the user's new Facebook screen name
-	 * @param jabberSn the user's new Jabber screen name
-	 * @param skypeSn the user's new Skype screen name
-	 * @param twitterSn the user's new Twitter screen name
-	 * @param jobTitle the user's new job title
-	 * @param groupIds the primary keys of the user's groups
-	 * @param organizationIds the primary keys of the user's organizations
-	 * @param roleIds the primary keys of the user's roles
-	 * @param userGroupRoles the user user's group roles
-	 * @param userGroupIds the primary keys of the user's user groups
-	 * @param serviceContext the service context to be applied (optionally
-	 <code>null</code>). Can set the UUID (with the
-	 <code>uuid</code> attribute), asset category IDs, asset tag
-	 names, and expando bridge attributes for the user.
-	 * @return the user
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateUser(long, String, String, String, boolean, String,
-	 String, String, String, long, String, boolean, byte[],
-	 String, String, String, String, String, String, String, long,
-	 long, boolean, int, int, int, String, String, String, String,
-	 String, String, long[], long[], long[], List, long[],
-	 ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.model.User updateUser(
-			long userId, String oldPassword, String newPassword1,
-			String newPassword2, boolean passwordReset,
-			String reminderQueryQuestion, String reminderQueryAnswer,
-			String screenName, String emailAddress, long facebookId,
-			String openId, String languageId, String timeZoneId,
-			String greeting, String comments, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
-			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
-			String smsSn, String facebookSn, String jabberSn, String skypeSn,
-			String twitterSn, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
-			java.util.List<com.liferay.portal.kernel.model.UserGroupRole>
-				userGroupRoles,
-			long[] userGroupIds, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.updateUser(
-			userId, oldPassword, newPassword1, newPassword2, passwordReset,
-			reminderQueryQuestion, reminderQueryAnswer, screenName,
-			emailAddress, facebookId, openId, languageId, timeZoneId, greeting,
-			comments, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
-			jabberSn, skypeSn, twitterSn, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, serviceContext);
 	}
 
 	/**

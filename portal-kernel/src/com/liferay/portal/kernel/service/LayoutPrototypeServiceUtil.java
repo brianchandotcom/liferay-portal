@@ -49,22 +49,6 @@ public class LayoutPrototypeServiceUtil {
 			nameMap, descriptionMap, active, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addLayoutPrototype(Map, Map, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.LayoutPrototype
-			addLayoutPrototype(
-				java.util.Map<java.util.Locale, String> nameMap,
-				String description, boolean active,
-				ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addLayoutPrototype(
-			nameMap, description, active, serviceContext);
-	}
-
 	public static void deleteLayoutPrototype(long layoutPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -114,24 +98,6 @@ public class LayoutPrototypeServiceUtil {
 
 		return getService().updateLayoutPrototype(
 			layoutPrototypeId, nameMap, descriptionMap, active, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateLayoutPrototype(long, Map, Map, boolean,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.LayoutPrototype
-			updateLayoutPrototype(
-				long layoutPrototypeId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String description, boolean active,
-				ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateLayoutPrototype(
-			layoutPrototypeId, nameMap, description, active, serviceContext);
 	}
 
 	public static LayoutPrototypeService getService() {

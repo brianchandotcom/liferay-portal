@@ -377,62 +377,6 @@ public class CompanyServiceSoap {
 	}
 
 	/**
-	 * Updates the company with additional account information.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param virtualHost the company's virtual host name
-	 * @param mx the company's mail domain
-	 * @param homeURL the company's home URL (optionally <code>null</code>)
-	 * @param name the company's account name (optionally
-	 <code>null</code>)
-	 * @param legalName the company's account legal name (optionally
-	 <code>null</code>)
-	 * @param legalId the company's account legal ID (optionally
-	 <code>null</code>)
-	 * @param legalType the company's account legal type (optionally
-	 <code>null</code>)
-	 * @param sicCode the company's account SIC code (optionally
-	 <code>null</code>)
-	 * @param tickerSymbol the company's account ticker symbol (optionally
-	 <code>null</code>)
-	 * @param industry the the company's account industry (optionally
-	 <code>null</code>)
-	 * @param type the company's account type (optionally
-	 <code>null</code>)
-	 * @param size the company's account size (optionally
-	 <code>null</code>)
-	 * @return the the company with the primary key
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateCompany(long, String, String, String, boolean, byte[],
-	 String, String, String, String, String, String, String,
-	 String, String)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.CompanySoap updateCompany(
-			long companyId, String virtualHost, String mx, String homeURL,
-			String name, String legalName, String legalId, String legalType,
-			String sicCode, String tickerSymbol, String industry, String type,
-			String size)
-		throws RemoteException {
-
-		try {
-			com.liferay.portal.kernel.model.Company returnValue =
-				CompanyServiceUtil.updateCompany(
-					companyId, virtualHost, mx, homeURL, name, legalName,
-					legalId, legalType, sicCode, tickerSymbol, industry, type,
-					size);
-
-			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	 * Update the company's display.
 	 *
 	 * @param companyId the primary key of the company

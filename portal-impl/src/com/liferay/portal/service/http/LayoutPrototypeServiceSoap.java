@@ -97,36 +97,6 @@ public class LayoutPrototypeServiceSoap {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addLayoutPrototype(Map, Map, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.LayoutPrototypeSoap
-			addLayoutPrototype(
-				String[] nameMapLanguageIds, String[] nameMapValues,
-				String description, boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				nameMapLanguageIds, nameMapValues);
-
-			com.liferay.portal.kernel.model.LayoutPrototype returnValue =
-				LayoutPrototypeServiceUtil.addLayoutPrototype(
-					nameMap, description, active, serviceContext);
-
-			return com.liferay.portal.kernel.model.LayoutPrototypeSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void deleteLayoutPrototype(long layoutPrototypeId)
 		throws RemoteException {
 
@@ -217,38 +187,6 @@ public class LayoutPrototypeServiceSoap {
 			com.liferay.portal.kernel.model.LayoutPrototype returnValue =
 				LayoutPrototypeServiceUtil.updateLayoutPrototype(
 					layoutPrototypeId, nameMap, descriptionMap, active,
-					serviceContext);
-
-			return com.liferay.portal.kernel.model.LayoutPrototypeSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateLayoutPrototype(long, Map, Map, boolean,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.LayoutPrototypeSoap
-			updateLayoutPrototype(
-				long layoutPrototypeId, String[] nameMapLanguageIds,
-				String[] nameMapValues, String description, boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				nameMapLanguageIds, nameMapValues);
-
-			com.liferay.portal.kernel.model.LayoutPrototype returnValue =
-				LayoutPrototypeServiceUtil.updateLayoutPrototype(
-					layoutPrototypeId, nameMap, description, active,
 					serviceContext);
 
 			return com.liferay.portal.kernel.model.LayoutPrototypeSoap.

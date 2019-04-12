@@ -56,51 +56,13 @@ public class TeamServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Team addTeam(
 			HttpPrincipal httpPrincipal, long groupId, String name,
-			String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				TeamServiceUtil.class, "addTeam", _addTeamParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, name, description);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (com.liferay.portal.kernel.model.Team)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.portal.kernel.model.Team addTeam(
-			HttpPrincipal httpPrincipal, long groupId, String name,
 			String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				TeamServiceUtil.class, "addTeam", _addTeamParameterTypes1);
+				TeamServiceUtil.class, "addTeam", _addTeamParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name, description, serviceContext);
@@ -137,7 +99,7 @@ public class TeamServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamServiceUtil.class, "deleteTeam",
-				_deleteTeamParameterTypes2);
+				_deleteTeamParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, teamId);
 
@@ -170,7 +132,7 @@ public class TeamServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamServiceUtil.class, "getGroupTeams",
-				_getGroupTeamsParameterTypes3);
+				_getGroupTeamsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -207,7 +169,7 @@ public class TeamServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				TeamServiceUtil.class, "getTeam", _getTeamParameterTypes4);
+				TeamServiceUtil.class, "getTeam", _getTeamParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, teamId);
 
@@ -243,7 +205,7 @@ public class TeamServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				TeamServiceUtil.class, "getTeam", _getTeamParameterTypes5);
+				TeamServiceUtil.class, "getTeam", _getTeamParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name);
@@ -281,7 +243,7 @@ public class TeamServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamServiceUtil.class, "getUserTeams",
-				_getUserTeamsParameterTypes6);
+				_getUserTeamsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId);
 
@@ -319,7 +281,7 @@ public class TeamServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamServiceUtil.class, "getUserTeams",
-				_getUserTeamsParameterTypes7);
+				_getUserTeamsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId);
@@ -358,7 +320,7 @@ public class TeamServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamServiceUtil.class, "hasUserTeam",
-				_hasUserTeamParameterTypes8);
+				_hasUserTeamParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, teamId);
@@ -398,7 +360,7 @@ public class TeamServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				TeamServiceUtil.class, "search", _searchParameterTypes9);
+				TeamServiceUtil.class, "search", _searchParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name, description, params, start, end, obc);
@@ -430,7 +392,7 @@ public class TeamServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamServiceUtil.class, "searchCount",
-				_searchCountParameterTypes10);
+				_searchCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, name, description, params);
@@ -462,7 +424,7 @@ public class TeamServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				TeamServiceUtil.class, "updateTeam",
-				_updateTeamParameterTypes11);
+				_updateTeamParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, teamId, name, description);
@@ -496,41 +458,38 @@ public class TeamServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(TeamServiceHttp.class);
 
 	private static final Class<?>[] _addTeamParameterTypes0 = new Class[] {
-		long.class, String.class, String.class
-	};
-	private static final Class<?>[] _addTeamParameterTypes1 = new Class[] {
 		long.class, String.class, String.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _deleteTeamParameterTypes2 = new Class[] {
+	private static final Class<?>[] _deleteTeamParameterTypes1 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getGroupTeamsParameterTypes3 =
+	private static final Class<?>[] _getGroupTeamsParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getTeamParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getTeamParameterTypes3 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getTeamParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getTeamParameterTypes4 = new Class[] {
 		long.class, String.class
 	};
-	private static final Class<?>[] _getUserTeamsParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getUserTeamsParameterTypes5 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getUserTeamsParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getUserTeamsParameterTypes6 = new Class[] {
 		long.class, long.class
 	};
-	private static final Class<?>[] _hasUserTeamParameterTypes8 = new Class[] {
+	private static final Class<?>[] _hasUserTeamParameterTypes7 = new Class[] {
 		long.class, long.class
 	};
-	private static final Class<?>[] _searchParameterTypes9 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes8 = new Class[] {
 		long.class, String.class, String.class, java.util.LinkedHashMap.class,
 		int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _searchCountParameterTypes10 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes9 = new Class[] {
 		long.class, String.class, String.class, java.util.LinkedHashMap.class
 	};
-	private static final Class<?>[] _updateTeamParameterTypes11 = new Class[] {
+	private static final Class<?>[] _updateTeamParameterTypes10 = new Class[] {
 		long.class, String.class, String.class
 	};
 

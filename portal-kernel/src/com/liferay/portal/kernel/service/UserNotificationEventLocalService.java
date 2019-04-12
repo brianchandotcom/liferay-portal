@@ -83,17 +83,6 @@ public interface UserNotificationEventLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), {@link
-	 #addUserNotificationEvent(long, String, long, int, long,
-	 String, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public UserNotificationEvent addUserNotificationEvent(
-			long userId, String type, long timestamp, long deliverBy,
-			String payload, boolean archived, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
 	 * Adds the user notification event to the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userNotificationEvent the user notification event

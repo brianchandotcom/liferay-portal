@@ -75,42 +75,6 @@ public interface GroupService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * Adds a group.
-	 *
-	 * @param parentGroupId the primary key of the parent group
-	 * @param liveGroupId the primary key of the live group
-	 * @param name the entity's name
-	 * @param description the group's description (optionally
-	 <code>null</code>)
-	 * @param type the group's type. For more information see {@link
-	 GroupConstants}.
-	 * @param manualMembership whether manual membership is allowed for the
-	 group
-	 * @param membershipRestriction the group's membership restriction. For
-	 more information see {@link GroupConstants}.
-	 * @param friendlyURL the group's friendlyURL (optionally
-	 <code>null</code>)
-	 * @param site whether the group is to be associated with a main site
-	 * @param active whether the group is active
-	 * @param serviceContext the service context to be applied (optionally
-	 <code>null</code>). Can set the asset category IDs and asset
-	 tag names for the group, and can set whether the group is for
-	 staging
-	 * @return the group
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addGroup(long,
-	 long, Map, Map, int, boolean, int, String, boolean, boolean,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public Group addGroup(
-			long parentGroupId, long liveGroupId, String name,
-			String description, int type, boolean manualMembership,
-			int membershipRestriction, String friendlyURL, boolean site,
-			boolean active, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
 	 * Adds the groups to the role.
 	 *
 	 * @param roleId the primary key of the role
@@ -571,42 +535,6 @@ public interface GroupService extends BaseService {
 			long groupId, long parentGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, int type,
 			boolean manualMembership, int membershipRestriction,
-			String friendlyURL, boolean inheritContent, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * Updates the group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param parentGroupId the primary key of the parent group
-	 * @param name the group's name
-	 * @param description the group's new description (optionally
-	 <code>null</code>)
-	 * @param type the group's new type. For more information see {@link
-	 GroupConstants}.
-	 * @param manualMembership whether manual membership is allowed for the
-	 group
-	 * @param membershipRestriction the group's membership restriction. For
-	 more information see {@link GroupConstants}.
-	 * @param friendlyURL the group's new friendlyURL (optionally
-	 <code>null</code>)
-	 * @param inheritContent whether to inherit content from the parent
-	 group
-	 * @param active whether the group is active
-	 * @param serviceContext the service context to be applied (optionally
-	 <code>null</code>). Can set the asset category IDs and asset
-	 tag names for the group.
-	 * @return the group
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateGroup(long, long, Map, Map, int, boolean, int, String,
-	 boolean, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public Group updateGroup(
-			long groupId, long parentGroupId, String name, String description,
-			int type, boolean manualMembership, int membershipRestriction,
 			String friendlyURL, boolean inheritContent, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException;

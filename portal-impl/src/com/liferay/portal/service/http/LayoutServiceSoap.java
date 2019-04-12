@@ -368,57 +368,6 @@ public class LayoutServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
-	 ExportImportConfiguration)}
-	 */
-	@Deprecated
-	public static long exportLayoutsAsFileInBackground(
-			com.liferay.exportimport.kernel.model.ExportImportConfigurationSoap
-				exportImportConfiguration)
-		throws RemoteException {
-
-		try {
-			long returnValue =
-				LayoutServiceUtil.exportLayoutsAsFileInBackground(
-					com.liferay.portlet.exportimport.model.impl.
-						ExportImportConfigurationModelImpl.toModel(
-							exportImportConfiguration));
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
-	 long)}
-	 */
-	@Deprecated
-	public static long exportLayoutsAsFileInBackground(
-			long exportImportConfigurationId)
-		throws RemoteException {
-
-		try {
-			long returnValue =
-				LayoutServiceUtil.exportLayoutsAsFileInBackground(
-					exportImportConfigurationId);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	 * Returns all the ancestor layouts of the layout.
 	 *
 	 * @param plid the primary key of the layout

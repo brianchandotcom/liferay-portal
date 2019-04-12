@@ -31,19 +31,6 @@ public class TeamLocalServiceWrapper
 		_teamLocalService = teamLocalService;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addTeam(long,
-	 long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.model.Team addTeam(
-			long userId, long groupId, String name, String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _teamLocalService.addTeam(userId, groupId, name, description);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.Team addTeam(
 			long userId, long groupId, String name, String description,

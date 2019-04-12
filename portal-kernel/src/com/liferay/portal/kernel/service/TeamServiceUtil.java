@@ -38,19 +38,6 @@ public class TeamServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.TeamServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addTeam(long,
-	 String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.Team addTeam(
-			long groupId, String name, String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addTeam(groupId, name, description);
-	}
-
 	public static com.liferay.portal.kernel.model.Team addTeam(
 			long groupId, String name, String description,
 			ServiceContext serviceContext)

@@ -79,24 +79,6 @@ public interface UserGroupService extends BaseService {
 	 *
 	 * @param name the user group's name
 	 * @param description the user group's description
-	 * @return the user group
-	 * @deprecated As of Newton (6.2.x), replaced by {@link
-	 #addUserGroup(String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public UserGroup addUserGroup(String name, String description)
-		throws PortalException;
-
-	/**
-	 * Adds a user group.
-	 *
-	 * <p>
-	 * This method handles the creation and bookkeeping of the user group,
-	 * including its resources, metadata, and internal data structures.
-	 * </p>
-	 *
-	 * @param name the user group's name
-	 * @param description the user group's description
 	 * @param serviceContext the service context to be applied (optionally
 	 <code>null</code>). Can set expando bridge attributes for the
 	 user group.
@@ -187,21 +169,6 @@ public interface UserGroupService extends BaseService {
 	 * @param userGroupIds the primary keys of the user groups
 	 */
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
-		throws PortalException;
-
-	/**
-	 * Updates the user group.
-	 *
-	 * @param userGroupId the primary key of the user group
-	 * @param name the user group's name
-	 * @param description the the user group's description
-	 * @return the user group
-	 * @deprecated As of Newton (6.2.x), replaced by {@link
-	 #updateUserGroup(long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public UserGroup updateUserGroup(
-			long userGroupId, String name, String description)
 		throws PortalException;
 
 	/**

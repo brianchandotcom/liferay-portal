@@ -192,17 +192,6 @@ public interface ResourceBlockPermissionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getAvailableResourceBlockPermissionActionIds(String, long,
-	 List)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, Set<String>> getAvailableResourceBlockPermissionActionIds(
-			long[] roleIds, String name, long primKey, List<String> actionIds)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Long, Set<String>> getAvailableResourceBlockPermissionActionIds(
 			String name, long primKey, List<String> actionIds)

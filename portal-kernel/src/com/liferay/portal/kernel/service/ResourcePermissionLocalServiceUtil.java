@@ -449,21 +449,6 @@ public class ResourcePermissionLocalServiceUtil {
 			companyId, name, scope, primKey, roleId, actionIds);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getAvailableResourcePermissionActionIds(long, String, int,
-	 String, Collection)}
-	 */
-	@Deprecated
-	public static java.util.Map<Long, java.util.Set<String>>
-		getAvailableResourcePermissionActionIds(
-			long companyId, String name, int scope, String primKey,
-			long[] roleIds, java.util.Collection<String> actionIds) {
-
-		return getService().getAvailableResourcePermissionActionIds(
-			companyId, name, scope, primKey, roleIds, actionIds);
-	}
-
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
@@ -777,20 +762,6 @@ public class ResourcePermissionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().hasResourcePermission(
-			companyId, name, scope, primKey, roleIds, actionId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getRoles(long,
-	 String, int, String, String}
-	 */
-	@Deprecated
-	public static boolean[] hasResourcePermissions(
-			long companyId, String name, int scope, String primKey,
-			long[] roleIds, String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().hasResourcePermissions(
 			companyId, name, scope, primKey, roleIds, actionId);
 	}
 

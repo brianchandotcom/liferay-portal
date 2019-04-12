@@ -108,68 +108,6 @@ public class RepositoryServiceSoap {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getSupportedConfigurations(long classNameId)
-		throws RemoteException {
-
-		try {
-			String[] returnValue =
-				RepositoryServiceUtil.getSupportedConfigurations(classNameId);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getSupportedParameters(
-			long classNameId, String configuration)
-		throws RemoteException {
-
-		try {
-			String[] returnValue = RepositoryServiceUtil.getSupportedParameters(
-				classNameId, configuration);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] getSupportedParameters(
-			String className, String configuration)
-		throws RemoteException {
-
-		try {
-			String[] returnValue = RepositoryServiceUtil.getSupportedParameters(
-				className, configuration);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portal.kernel.util.UnicodeProperties
 			getTypeSettingsProperties(long repositoryId)
 		throws RemoteException {

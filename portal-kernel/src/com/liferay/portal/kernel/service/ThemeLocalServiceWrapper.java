@@ -109,18 +109,6 @@ public class ThemeLocalServiceWrapper
 		return _themeLocalService.getThemes(companyId);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPageThemes}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Theme> getThemes(
-		long companyId, long groupId, long userId, boolean wapTheme) {
-
-		return _themeLocalService.getThemes(
-			companyId, groupId, userId, wapTheme);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Theme>
 		getWARThemes() {

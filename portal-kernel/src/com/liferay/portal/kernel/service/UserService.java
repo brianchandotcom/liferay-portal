@@ -959,18 +959,6 @@ public interface UserService extends BaseService {
 	 *
 	 * @param userId the primary key of the user
 	 * @param status the user's new workflow status
-	 * @return the user
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateStatus(long, int, ServiceContext)}
-	 */
-	@Deprecated
-	public User updateStatus(long userId, int status) throws PortalException;
-
-	/**
-	 * Updates the user's workflow status.
-	 *
-	 * @param userId the primary key of the user
-	 * @param status the user's new workflow status
 	 * @param serviceContext the service context to be applied. You can specify
 	 an unencrypted custom password (used by an LDAP listener) for the
 	 user via attribute <code>passwordUnencrypted</code>.
@@ -1046,86 +1034,6 @@ public interface UserService extends BaseService {
 			String lastName, long prefixId, long suffixId, boolean male,
 			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
 			String facebookSn, String jabberSn, String skypeSn,
-			String twitterSn, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
-			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
-			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * Updates the user with additional parameters.
-	 *
-	 * @param userId the primary key of the user
-	 * @param oldPassword the user's old password
-	 * @param newPassword1 the user's new password (optionally
-	 <code>null</code>)
-	 * @param newPassword2 the user's new password confirmation (optionally
-	 <code>null</code>)
-	 * @param passwordReset whether the user should be asked to reset their
-	 password the next time they login
-	 * @param reminderQueryQuestion the user's new password reset question
-	 * @param reminderQueryAnswer the user's new password reset answer
-	 * @param screenName the user's new screen name
-	 * @param emailAddress the user's new email address
-	 * @param facebookId the user's new Facebook ID
-	 * @param openId the user's new OpenID
-	 * @param languageId the user's new language ID
-	 * @param timeZoneId the user's new time zone ID
-	 * @param greeting the user's new greeting
-	 * @param comments the user's new comments
-	 * @param firstName the user's new first name
-	 * @param middleName the user's new middle name
-	 * @param lastName the user's new last name
-	 * @param prefixId the user's new name prefix ID
-	 * @param suffixId the user's new name suffix ID
-	 * @param male whether user is male
-	 * @param birthdayMonth the user's new birthday month (0-based, meaning
-	 0 for January)
-	 * @param birthdayDay the user's new birthday day
-	 * @param birthdayYear the user's birthday year
-	 * @param smsSn the user's new SMS screen name
-	 * @param facebookSn the user's new Facebook screen name
-	 * @param jabberSn the user's new Jabber screen name
-	 * @param skypeSn the user's new Skype screen name
-	 * @param twitterSn the user's new Twitter screen name
-	 * @param jobTitle the user's new job title
-	 * @param groupIds the primary keys of the user's groups
-	 * @param organizationIds the primary keys of the user's organizations
-	 * @param roleIds the primary keys of the user's roles
-	 * @param userGroupRoles the user user's group roles
-	 * @param userGroupIds the primary keys of the user's user groups
-	 * @param addresses the user's addresses
-	 * @param emailAddresses the user's email addresses
-	 * @param phones the user's phone numbers
-	 * @param websites the user's websites
-	 * @param announcementsDelivers the announcements deliveries
-	 * @param serviceContext the service context to be applied (optionally
-	 <code>null</code>). Can set the UUID (with the
-	 <code>uuid</code> attribute), asset category IDs, asset tag
-	 names, and expando bridge attributes for the user.
-	 * @return the user
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateUser(long, String, String, String, boolean, String,
-	 String, String, String, long, String, boolean, byte[],
-	 String, String, String, String, String, String, String, long,
-	 long, boolean, int, int, int, String, String, String, String,
-	 String, String, long[], long[], long[], List, long[], List,
-	 List, List, List, List, ServiceContext)}
-	 */
-	@Deprecated
-	public User updateUser(
-			long userId, String oldPassword, String newPassword1,
-			String newPassword2, boolean passwordReset,
-			String reminderQueryQuestion, String reminderQueryAnswer,
-			String screenName, String emailAddress, long facebookId,
-			String openId, String languageId, String timeZoneId,
-			String greeting, String comments, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
-			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
-			String smsSn, String facebookSn, String jabberSn, String skypeSn,
 			String twitterSn, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,

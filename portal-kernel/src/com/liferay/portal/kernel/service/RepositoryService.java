@@ -70,29 +70,6 @@ public interface RepositoryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Repository getRepository(long repositoryId) throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String[] getSupportedConfigurations(long classNameId);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String[] getSupportedParameters(
-		long classNameId, String configuration);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String[] getSupportedParameters(
-		String className, String configuration);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
 		throws PortalException;

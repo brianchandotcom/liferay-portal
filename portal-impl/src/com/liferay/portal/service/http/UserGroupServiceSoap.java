@@ -112,39 +112,6 @@ public class UserGroupServiceSoap {
 	 *
 	 * @param name the user group's name
 	 * @param description the user group's description
-	 * @return the user group
-	 * @deprecated As of Newton (6.2.x), replaced by {@link
-	 #addUserGroup(String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.UserGroupSoap addUserGroup(
-			String name, String description)
-		throws RemoteException {
-
-		try {
-			com.liferay.portal.kernel.model.UserGroup returnValue =
-				UserGroupServiceUtil.addUserGroup(name, description);
-
-			return com.liferay.portal.kernel.model.UserGroupSoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * Adds a user group.
-	 *
-	 * <p>
-	 * This method handles the creation and bookkeeping of the user group,
-	 * including its resources, metadata, and internal data structures.
-	 * </p>
-	 *
-	 * @param name the user group's name
-	 * @param description the user group's description
 	 * @param serviceContext the service context to be applied (optionally
 	 <code>null</code>). Can set expando bridge attributes for the
 	 user group.
@@ -388,36 +355,6 @@ public class UserGroupServiceSoap {
 
 		try {
 			UserGroupServiceUtil.unsetTeamUserGroups(teamId, userGroupIds);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	 * Updates the user group.
-	 *
-	 * @param userGroupId the primary key of the user group
-	 * @param name the user group's name
-	 * @param description the the user group's description
-	 * @return the user group
-	 * @deprecated As of Newton (6.2.x), replaced by {@link
-	 #updateUserGroup(long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.UserGroupSoap updateUserGroup(
-			long userGroupId, String name, String description)
-		throws RemoteException {
-
-		try {
-			com.liferay.portal.kernel.model.UserGroup returnValue =
-				UserGroupServiceUtil.updateUserGroup(
-					userGroupId, name, description);
-
-			return com.liferay.portal.kernel.model.UserGroupSoap.toSoapModel(
-				returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

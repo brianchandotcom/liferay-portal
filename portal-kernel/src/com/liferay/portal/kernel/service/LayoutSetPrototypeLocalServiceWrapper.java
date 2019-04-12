@@ -66,26 +66,6 @@ public class LayoutSetPrototypeLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addLayoutSetPrototype(long, long, Map, Map, boolean,
-	 boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSetPrototype
-			addLayoutSetPrototype(
-				long userId, long companyId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String description, boolean active, boolean layoutsUpdateable,
-				ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutSetPrototypeLocalService.addLayoutSetPrototype(
-			userId, companyId, nameMap, description, active, layoutsUpdateable,
-			serviceContext);
-	}
-
-	/**
 	 * Creates a new layout set prototype with the primary key. Does not add the layout set prototype to the database.
 	 *
 	 * @param layoutSetPrototypeId the primary key for the new layout set prototype
@@ -431,26 +411,6 @@ public class LayoutSetPrototypeLocalServiceWrapper
 
 		return _layoutSetPrototypeLocalService.updateLayoutSetPrototype(
 			layoutSetPrototypeId, nameMap, descriptionMap, active,
-			layoutsUpdateable, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateLayoutSetPrototype(long, Map, Map, boolean, boolean,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSetPrototype
-			updateLayoutSetPrototype(
-				long layoutSetPrototypeId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String description, boolean active, boolean layoutsUpdateable,
-				ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutSetPrototypeLocalService.updateLayoutSetPrototype(
-			layoutSetPrototypeId, nameMap, description, active,
 			layoutsUpdateable, serviceContext);
 	}
 

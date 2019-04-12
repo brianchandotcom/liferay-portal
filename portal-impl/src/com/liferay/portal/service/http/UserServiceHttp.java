@@ -2493,44 +2493,6 @@ public class UserServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.User updateStatus(
-			HttpPrincipal httpPrincipal, long userId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				UserServiceUtil.class, "updateStatus",
-				_updateStatusParameterTypes63);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, status);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (com.liferay.portal.kernel.model.User)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.portal.kernel.model.User updateStatus(
 			HttpPrincipal httpPrincipal, long userId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -2538,7 +2500,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateStatus",
-				_updateStatusParameterTypes64);
+				_updateStatusParameterTypes63);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, status, serviceContext);
@@ -2599,7 +2561,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateUser",
-				_updateUserParameterTypes65);
+				_updateUserParameterTypes64);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, oldPassword, newPassword1, newPassword2,
@@ -2654,81 +2616,13 @@ public class UserServiceHttp {
 			java.util.List<com.liferay.portal.kernel.model.UserGroupRole>
 				userGroupRoles,
 			long[] userGroupIds,
-			java.util.List<com.liferay.portal.kernel.model.Address> addresses,
-			java.util.List<com.liferay.portal.kernel.model.EmailAddress>
-				emailAddresses,
-			java.util.List<com.liferay.portal.kernel.model.Phone> phones,
-			java.util.List<com.liferay.portal.kernel.model.Website> websites,
-			java.util.List
-				<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-					announcementsDelivers,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateUser",
-				_updateUserParameterTypes66);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, oldPassword, newPassword1, newPassword2,
-				passwordReset, reminderQueryQuestion, reminderQueryAnswer,
-				screenName, emailAddress, facebookId, openId, languageId,
-				timeZoneId, greeting, comments, firstName, middleName, lastName,
-				prefixId, suffixId, male, birthdayMonth, birthdayDay,
-				birthdayYear, smsSn, facebookSn, jabberSn, skypeSn, twitterSn,
-				jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
-				userGroupIds, addresses, emailAddresses, phones, websites,
-				announcementsDelivers, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (com.liferay.portal.kernel.model.User)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.portal.kernel.model.User updateUser(
-			HttpPrincipal httpPrincipal, long userId, String oldPassword,
-			String newPassword1, String newPassword2, boolean passwordReset,
-			String reminderQueryQuestion, String reminderQueryAnswer,
-			String screenName, String emailAddress, long facebookId,
-			String openId, String languageId, String timeZoneId,
-			String greeting, String comments, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
-			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
-			String smsSn, String facebookSn, String jabberSn, String skypeSn,
-			String twitterSn, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
-			java.util.List<com.liferay.portal.kernel.model.UserGroupRole>
-				userGroupRoles,
-			long[] userGroupIds,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				UserServiceUtil.class, "updateUser",
-				_updateUserParameterTypes67);
+				_updateUserParameterTypes65);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, oldPassword, newPassword1, newPassword2,
@@ -2968,13 +2862,11 @@ public class UserServiceHttp {
 	private static final Class<?>[] _updateScreenNameParameterTypes62 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[] _updateStatusParameterTypes63 =
-		new Class[] {long.class, int.class};
-	private static final Class<?>[] _updateStatusParameterTypes64 =
 		new Class[] {
 			long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateUserParameterTypes65 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes64 = new Class[] {
 		long.class, String.class, String.class, String.class, boolean.class,
 		String.class, String.class, String.class, String.class, long.class,
 		String.class, boolean.class, byte[].class, String.class, String.class,
@@ -2987,19 +2879,7 @@ public class UserServiceHttp {
 		java.util.List.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _updateUserParameterTypes66 = new Class[] {
-		long.class, String.class, String.class, String.class, boolean.class,
-		String.class, String.class, String.class, String.class, long.class,
-		String.class, String.class, String.class, String.class, String.class,
-		String.class, String.class, String.class, long.class, long.class,
-		boolean.class, int.class, int.class, int.class, String.class,
-		String.class, String.class, String.class, String.class, String.class,
-		long[].class, long[].class, long[].class, java.util.List.class,
-		long[].class, java.util.List.class, java.util.List.class,
-		java.util.List.class, java.util.List.class, java.util.List.class,
-		com.liferay.portal.kernel.service.ServiceContext.class
-	};
-	private static final Class<?>[] _updateUserParameterTypes67 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes65 = new Class[] {
 		long.class, String.class, String.class, String.class, boolean.class,
 		String.class, String.class, String.class, String.class, long.class,
 		String.class, String.class, String.class, String.class, String.class,

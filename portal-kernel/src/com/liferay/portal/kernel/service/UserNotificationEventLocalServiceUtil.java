@@ -84,23 +84,6 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), {@link
-	 #addUserNotificationEvent(long, String, long, int, long,
-	 String, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.model.UserNotificationEvent
-			addUserNotificationEvent(
-				long userId, String type, long timestamp, long deliverBy,
-				String payload, boolean archived, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addUserNotificationEvent(
-			userId, type, timestamp, deliverBy, payload, archived,
-			serviceContext);
-	}
-
-	/**
 	 * Adds the user notification event to the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userNotificationEvent the user notification event

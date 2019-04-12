@@ -81,17 +81,6 @@ public interface LayoutPrototypeLocalService
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addLayoutPrototype(long, long, Map, Map, boolean,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public LayoutPrototype addLayoutPrototype(
-			long userId, long companyId, Map<Locale, String> nameMap,
-			String description, boolean active, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
 	 * Creates a new layout prototype with the primary key. Does not add the layout prototype to the database.
 	 *
 	 * @param layoutPrototypeId the primary key for the new layout prototype
@@ -323,17 +312,6 @@ public interface LayoutPrototypeLocalService
 			long layoutPrototypeId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean active,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateLayoutPrototype(long, Map, Map, boolean,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public LayoutPrototype updateLayoutPrototype(
-			long layoutPrototypeId, Map<Locale, String> nameMap,
-			String description, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 }

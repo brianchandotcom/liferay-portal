@@ -52,15 +52,6 @@ public interface TeamService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TeamServiceUtil} to access the team remote service. Add custom service methods to <code>com.liferay.portal.service.impl.TeamServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addTeam(long,
-	 String, String, ServiceContext)}
-	 */
-	@Deprecated
-	public Team addTeam(long groupId, String name, String description)
-		throws PortalException;
-
 	public Team addTeam(
 			long groupId, String name, String description,
 			ServiceContext serviceContext)

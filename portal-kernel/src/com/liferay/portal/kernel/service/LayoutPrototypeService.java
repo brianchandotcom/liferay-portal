@@ -58,16 +58,6 @@ public interface LayoutPrototypeService extends BaseService {
 			boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addLayoutPrototype(Map, Map, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public LayoutPrototype addLayoutPrototype(
-			Map<Locale, String> nameMap, String description, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public void deleteLayoutPrototype(long layoutPrototypeId)
 		throws PortalException;
 
@@ -96,17 +86,6 @@ public interface LayoutPrototypeService extends BaseService {
 			long layoutPrototypeId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean active,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateLayoutPrototype(long, Map, Map, boolean,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public LayoutPrototype updateLayoutPrototype(
-			long layoutPrototypeId, Map<Locale, String> nameMap,
-			String description, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 }

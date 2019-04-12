@@ -220,22 +220,6 @@ public class ResourceBlockPermissionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getAvailableResourceBlockPermissionActionIds(String, long,
-	 List)}
-	 */
-	@Deprecated
-	public static java.util.Map<Long, java.util.Set<String>>
-			getAvailableResourceBlockPermissionActionIds(
-				long[] roleIds, String name, long primKey,
-				java.util.List<String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getAvailableResourceBlockPermissionActionIds(
-			roleIds, name, primKey, actionIds);
-	}
-
 	public static java.util.Map<Long, java.util.Set<String>>
 			getAvailableResourceBlockPermissionActionIds(
 				String name, long primKey, java.util.List<String> actionIds)

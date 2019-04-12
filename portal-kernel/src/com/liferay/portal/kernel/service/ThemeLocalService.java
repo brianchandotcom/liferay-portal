@@ -90,14 +90,6 @@ public interface ThemeLocalService extends BaseLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Theme> getThemes(long companyId);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPageThemes}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Theme> getThemes(
-		long companyId, long groupId, long userId, boolean wapTheme);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Theme> getWARThemes();
 

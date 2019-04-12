@@ -398,17 +398,6 @@ public interface ResourcePermissionLocalService
 			Collection<String> actionIds)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getAvailableResourcePermissionActionIds(long, String, int,
-	 String, Collection)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, Set<String>> getAvailableResourcePermissionActionIds(
-		long companyId, String name, int scope, String primKey, long[] roleIds,
-		Collection<String> actionIds);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
@@ -660,17 +649,6 @@ public interface ResourcePermissionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasResourcePermission(
-			long companyId, String name, int scope, String primKey,
-			long[] roleIds, String actionId)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getRoles(long,
-	 String, int, String, String}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean[] hasResourcePermissions(
 			long companyId, String name, int scope, String primKey,
 			long[] roleIds, String actionId)
 		throws PortalException;

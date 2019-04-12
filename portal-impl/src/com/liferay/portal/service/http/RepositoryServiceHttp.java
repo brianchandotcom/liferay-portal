@@ -204,96 +204,6 @@ public class RepositoryServiceHttp {
 		}
 	}
 
-	public static String[] getSupportedConfigurations(
-		HttpPrincipal httpPrincipal, long classNameId) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				RepositoryServiceUtil.class, "getSupportedConfigurations",
-				_getSupportedConfigurationsParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classNameId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (String[])returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static String[] getSupportedParameters(
-		HttpPrincipal httpPrincipal, long classNameId, String configuration) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				RepositoryServiceUtil.class, "getSupportedParameters",
-				_getSupportedParametersParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, classNameId, configuration);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (String[])returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static String[] getSupportedParameters(
-		HttpPrincipal httpPrincipal, String className, String configuration) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				RepositoryServiceUtil.class, "getSupportedParameters",
-				_getSupportedParametersParameterTypes6);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, className, configuration);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (String[])returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static com.liferay.portal.kernel.util.UnicodeProperties
 			getTypeSettingsProperties(
 				HttpPrincipal httpPrincipal, long repositoryId)
@@ -302,7 +212,7 @@ public class RepositoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				RepositoryServiceUtil.class, "getTypeSettingsProperties",
-				_getTypeSettingsPropertiesParameterTypes7);
+				_getTypeSettingsPropertiesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId);
@@ -341,7 +251,7 @@ public class RepositoryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				RepositoryServiceUtil.class, "updateRepository",
-				_updateRepositoryParameterTypes8);
+				_updateRepositoryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, name, description);
@@ -384,15 +294,9 @@ public class RepositoryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getRepositoryParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getSupportedConfigurationsParameterTypes4 =
+	private static final Class<?>[] _getTypeSettingsPropertiesParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getSupportedParametersParameterTypes5 =
-		new Class[] {long.class, String.class};
-	private static final Class<?>[] _getSupportedParametersParameterTypes6 =
-		new Class[] {String.class, String.class};
-	private static final Class<?>[] _getTypeSettingsPropertiesParameterTypes7 =
-		new Class[] {long.class};
-	private static final Class<?>[] _updateRepositoryParameterTypes8 =
+	private static final Class<?>[] _updateRepositoryParameterTypes5 =
 		new Class[] {long.class, String.class, String.class};
 
 }

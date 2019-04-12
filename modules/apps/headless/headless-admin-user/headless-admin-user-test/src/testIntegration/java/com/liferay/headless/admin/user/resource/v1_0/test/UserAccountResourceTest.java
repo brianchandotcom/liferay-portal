@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -78,20 +78,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	@Test
 	public void testGetMyUserAccount() throws Exception {
-		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
-
-		UserAccount userAccount = new UserAccount() {
-			{
-				additionalName = user.getMiddleName();
-				alternateName = user.getScreenName();
-				birthDate = user.getBirthday();
-				email = user.getEmailAddress();
-				familyName = user.getFirstName();
-				givenName = user.getLastName();
-				id = user.getUserId();
-				jobTitle = user.getJobTitle();
-			}
-		};
+		UserAccount userAccount = invokeGetUserAccount(_testUser.getUserId());
 
 		UserAccount getUserAccount = invokeGetMyUserAccount();
 
@@ -108,15 +95,18 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			randomUserAccount());
 		UserAccount userAccount3 = invokeGetUserAccount(_testUser.getUserId());
 
+		int count = UserLocalServiceUtil.getUsersCount(
+			PortalUtil.getDefaultCompanyId(), false,
+			WorkflowConstants.STATUS_APPROVED);
+
 		Page<UserAccount> page = invokeGetUserAccountsPage(
-			null, null, Pagination.of(1, 3), null);
+			null, null, Pagination.of(1, count), null);
 
-		Assert.assertEquals(3, page.getTotalCount());
+		Assert.assertEquals(count, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(userAccount1, userAccount2, userAccount3),
-			(List<UserAccount>)page.getItems());
-		assertValid(page);
+		_assertContainsAll(
+			(List<UserAccount>)page.getItems(),
+			Arrays.asList(userAccount1, userAccount2, userAccount3));
 	}
 
 	@Ignore
@@ -245,6 +235,26 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_users.add(UserLocalServiceUtil.getUser(user.getUserId()));
 
 		return userAccount;
+	}
+
+	private void _assertContainsAll(
+		List<UserAccount> userAccounts1, List<UserAccount> userAccounts2) {
+
+		int count = 0;
+
+		for (UserAccount userAccount1 : userAccounts1) {
+			for (UserAccount userAccount2 : userAccounts2) {
+				if (equals(userAccount1, userAccount2)) {
+					count++;
+
+					break;
+				}
+			}
+		}
+
+		Assert.assertEquals(
+			userAccounts2 + " does not contain " + userAccounts1,
+			userAccounts2.size(), count);
 	}
 
 	@DeleteAfterTestRun

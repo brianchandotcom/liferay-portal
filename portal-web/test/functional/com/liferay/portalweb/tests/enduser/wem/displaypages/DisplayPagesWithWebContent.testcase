@@ -97,7 +97,7 @@ definition {
 
 		task ("View the web content through the display page") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -154,7 +154,7 @@ definition {
 
 		task ("View the web content through the display page") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -208,7 +208,7 @@ definition {
 
 		task ("View the web content through the display page") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -251,7 +251,7 @@ definition {
 
 		task ("View the web content through the display page") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -288,7 +288,7 @@ definition {
 
 		task ("View the web content article through its friendly URL") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -309,7 +309,7 @@ definition {
 
 		task ("View the web content article through its friendly URL") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -359,7 +359,7 @@ definition {
 
 		task ("View the web content article through its friendly URL") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -608,7 +608,7 @@ definition {
 
 		task ("View the web content article through its friendly URL") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -676,7 +676,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(
-				url = "view-source:${baseURL}/web/test-site-name/-/webcontent-title"
+				url = "view-source:${baseURL}/web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -778,7 +778,7 @@ definition {
 
 		task ("Navigate to the web content article's friendly URL") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -861,7 +861,7 @@ definition {
 
 		task ("Navigate to the web content article's friendly URL") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -911,7 +911,7 @@ definition {
 
 		task ("Navigate to what the web content article's friendly URL would have been if it had a display page selected") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 

@@ -108,7 +108,7 @@ definition {
 		);
 
 		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/remote-site/-/webcontent-title"
+			urlAppend = "web/remote-site/w/webcontent-title"
 		);
 
 		AssetPublisherPortlet.viewAssetPG(

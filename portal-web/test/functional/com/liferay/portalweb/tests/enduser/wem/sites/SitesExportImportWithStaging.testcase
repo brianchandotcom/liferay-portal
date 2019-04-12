@@ -339,7 +339,7 @@ definition {
 
 		task ("Assert the web content article and its reference to its display page survived the import") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name-2-staging/-/webcontent-title"
+				urlAppend = "web/test-site-name-2-staging/w/webcontent-title"
 			);
 
 			AssertVisible(

@@ -157,7 +157,7 @@ definition {
 
 		task ("View the web content article through its friendly URL") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -178,7 +178,7 @@ definition {
 
 		task ("View the web content article through its friendly URL") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -207,7 +207,7 @@ definition {
 
 		task ("View the web content article through its friendly URL") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -259,7 +259,7 @@ definition {
 
 		task ("View the web content article through its friendly URL") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 		}
 
@@ -336,7 +336,7 @@ definition {
 
 		task ("Assert the super admin's name and profile image appear in the display page") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 
 			AssertVisible(
@@ -453,7 +453,7 @@ definition {
 
 		task ("Assert the super admin name and profile image appear in the display page") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 
 			AssertVisible(
@@ -491,7 +491,7 @@ definition {
 
 		task ("Assert the second user's name and profile image appear in the display page") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 
 			AssertVisible(

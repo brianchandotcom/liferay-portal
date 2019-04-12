@@ -112,7 +112,7 @@ definition {
 		}
 
 		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/-/webcontent-title"
+			urlAppend = "web/test-site-name/w/webcontent-title"
 		);
 
 		task ("Assert the web content is still displayed properly through the display page") {
@@ -164,7 +164,7 @@ definition {
 
 		task ("Assert the web content article displays using the display page in the staging site") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name-staging/-/webcontent-title"
+				urlAppend = "web/test-site-name-staging/w/webcontent-title"
 			);
 
 			AssertVisible(
@@ -184,7 +184,7 @@ definition {
 
 		task ("Assert the web content article does not exist in the live site") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 
 			AssertTextPresent(value1 = "The requested resource could not be found.");
@@ -198,7 +198,7 @@ definition {
 
 		task ("Assert the web content article displays using the display page in the live site") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 
 			AssertVisible(
@@ -257,7 +257,7 @@ definition {
 
 		task ("Assert the web content article displays through the display page in the staging site") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name-staging/-/webcontent-title"
+				urlAppend = "web/test-site-name-staging/w/webcontent-title"
 			);
 
 			AssertVisible(
@@ -277,7 +277,7 @@ definition {
 
 		task ("Assert the web content article does not exist in the live site") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 
 			AssertTextPresent(value1 = "The requested resource could not be found.");
@@ -291,7 +291,7 @@ definition {
 
 		task ("Assert the web content article displays through the display page in the live site") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 
 			AssertVisible(
@@ -363,7 +363,7 @@ definition {
 
 		task ("Assert the web content article displays with the additional Content fragment in the staging site") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name-staging/-/webcontent-title"
+				urlAppend = "web/test-site-name-staging/w/webcontent-title"
 			);
 
 			AssertVisible(
@@ -390,7 +390,7 @@ definition {
 
 		task ("Assert the web content article displays with the original display page in the live site") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 
 			AssertVisible(
@@ -423,7 +423,7 @@ definition {
 
 		task ("Assert the web content article displays with the additional Content fragment in the live site") {
 			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/-/webcontent-title"
+				urlAppend = "web/test-site-name/w/webcontent-title"
 			);
 
 			AssertVisible(

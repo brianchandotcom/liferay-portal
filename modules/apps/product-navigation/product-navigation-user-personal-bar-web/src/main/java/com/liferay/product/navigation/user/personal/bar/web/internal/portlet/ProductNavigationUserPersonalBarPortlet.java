@@ -16,10 +16,10 @@ package com.liferay.product.navigation.user.personal.bar.web.internal.portlet;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
-import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.user.personal.bar.web.internal.contants.ProductNavigationUserPersonalBarPortletKeys;
@@ -80,12 +80,14 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 	}
 
 	protected int getNotificationsCount(ThemeDisplay themeDisplay) {
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+		if (_userNotificationEventLocalService == null) {
+			return 0;
+		}
 
-		return panelCategoryHelper.getNotificationsCount(
-			PanelCategoryKeys.USER, themeDisplay.getPermissionChecker(),
-			themeDisplay.getScopeGroup(), themeDisplay.getUser());
+		return _userNotificationEventLocalService.
+			getArchivedUserNotificationEventsCount(
+				themeDisplay.getUserId(),
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 	}
 
 	@Reference(unbind = "-")
@@ -102,5 +104,9 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

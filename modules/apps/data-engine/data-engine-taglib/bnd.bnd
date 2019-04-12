@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Data Engine Taglib
+Bundle-SymbolicName: com.liferay.data.engine.taglib
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.data.engine.lang)";\
+		resource.bundle.base.name="content.Language",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/data-engine";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /data-engine-taglib

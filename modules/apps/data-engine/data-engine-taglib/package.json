@@ -1,0 +1,10 @@
+{
+	"dependencies": {},
+	"name": "data-engine-taglib",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
+	},
+	"version": "1.0.0"
+}

@@ -20,6 +20,8 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.change.tracking.model.CTProcess;
+import com.liferay.change.tracking.service.CTEntryAggregateLocalService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -109,7 +111,7 @@ public class CTCollectionLocalServiceImpl
 				continue;
 			}
 
-			ctEntryPersistence.remove(ctEntry);
+			_ctEntryLocalService.deleteCTEntry(ctEntry);
 		}
 
 		List<CTEntryAggregate> ctEntryAggregates =
@@ -125,7 +127,8 @@ public class CTCollectionLocalServiceImpl
 				continue;
 			}
 
-			ctEntryAggregatePersistence.remove(ctEntryAggregate);
+			_ctEntryAggregateLocalService.deleteCTEntryAggregate(
+				ctEntryAggregate);
 		}
 
 		List<CTProcess> ctProcesses = ctProcessPersistence.findByCollectionId(
@@ -224,6 +227,12 @@ public class CTCollectionLocalServiceImpl
 			throw new CTCollectionNameException("Name is too long");
 		}
 	}
+
+	@Reference
+	private CTEntryAggregateLocalService _ctEntryAggregateLocalService;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;

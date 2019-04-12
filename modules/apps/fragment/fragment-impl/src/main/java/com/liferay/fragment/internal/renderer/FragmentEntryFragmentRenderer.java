@@ -166,8 +166,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _renderFragmentEntry(
-		long fragmentEntryId, long fragmentEntryInstanceId, String css,
-		String html, String js) {
+		long fragmentEntryId, String namespace, String css, String html,
+		String js) {
 
 		StringBundler sb = new StringBundler(14);
 
@@ -178,7 +178,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		fragmentIdSB.append("fragment-");
 		fragmentIdSB.append(fragmentEntryId);
 		fragmentIdSB.append("-");
-		fragmentIdSB.append(fragmentEntryInstanceId);
+		fragmentIdSB.append(namespace);
 
 		sb.append(fragmentIdSB.toString());
 
@@ -249,7 +249,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		return _renderFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId(),
-			fragmentEntryLink.getPosition(), css, html,
+			fragmentEntryLink.getNamespace(), css, html,
 			fragmentEntryLink.getJs());
 	}
 

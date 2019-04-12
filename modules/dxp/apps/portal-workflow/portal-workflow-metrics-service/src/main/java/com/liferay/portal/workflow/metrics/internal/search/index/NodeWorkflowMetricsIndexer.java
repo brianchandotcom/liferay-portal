@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -172,6 +174,13 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	private void _populateIndexWithKaleoNode() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_kaleoNodeLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property typeProperty = PropertyFactoryUtil.forName("type");
+
+				dynamicQuery.add(typeProperty.eq(NodeType.STATE.name()));
+			});
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoNode kaleoNode) -> addDocument(createDocument(kaleoNode)));

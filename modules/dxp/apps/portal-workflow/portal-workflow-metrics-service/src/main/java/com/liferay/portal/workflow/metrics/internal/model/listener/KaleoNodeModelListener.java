@@ -34,9 +34,7 @@ public class KaleoNodeModelListener extends BaseModelListener<KaleoNode> {
 
 	@Override
 	public void onAfterCreate(KaleoNode kaleoNode) {
-		if (Objects.equals(kaleoNode.getType(), NodeType.CONDITION.name()) ||
-			Objects.equals(kaleoNode.getType(), NodeType.TASK.name())) {
-
+		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name())) {
 			return;
 		}
 
@@ -47,9 +45,7 @@ public class KaleoNodeModelListener extends BaseModelListener<KaleoNode> {
 
 	@Override
 	public void onAfterRemove(KaleoNode kaleoNode) {
-		if (Objects.equals(kaleoNode.getType(), NodeType.CONDITION.name()) ||
-			Objects.equals(kaleoNode.getType(), NodeType.TASK.name())) {
-
+		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name())) {
 			return;
 		}
 

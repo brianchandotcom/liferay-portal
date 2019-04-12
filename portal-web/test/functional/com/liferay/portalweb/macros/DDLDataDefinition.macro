@@ -228,6 +228,10 @@ definition {
 
 		SelectFrameTop();
 
+		while(IsElementNotPresent(locator1 = "IFrame#DIALOG")){
+			Pause(locator1 = "1000");
+		}
+
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertTextEquals.assertValue(

@@ -19,15 +19,21 @@ import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.Card
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.DropdownsDisplayContext;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ManagementToolbarsDisplayContext;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSourceAjaxInvoker;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,6 +97,38 @@ public class ClaySamplePortlet extends MVCPortlet {
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
+
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		String resourceID = GetterUtil.getString(
+			resourceRequest.getResourceID());
+
+		if (resourceID.equals("tableItems")) {
+			resourceResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+			PrintWriter writer = resourceResponse.getWriter();
+
+			String dataSourceKey = resourceRequest.getParameter(
+				"dataSourceKey");
+			int page = Integer.valueOf(resourceRequest.getParameter("page"));
+			int pageSize = Integer.valueOf(
+				resourceRequest.getParameter("pageSize"));
+
+			writer.write(
+				_clayTagDataSourceAjaxInvoker.getItems(
+					_portal.getHttpServletRequest(resourceRequest),
+					dataSourceKey, page, pageSize));
+		}
+		else {
+			super.serveResource(resourceRequest, resourceResponse);
+		}
+	}
+
+	@Reference
+	private ClayTagDataSourceAjaxInvoker _clayTagDataSourceAjaxInvoker;
 
 	@Reference
 	private Portal _portal;

@@ -18,8 +18,15 @@
 
 <blockquote><p>Tables are lists of properties of items arranged as rows and columns. Each table cell can use a custom renderer so that its data can be displayed in the best way.</p></blockquote>
 
+<portlet:resourceURL id="tableItems" var="dataSourceURL">
+	<portlet:param name="dataSourceKey" value="SampleTable" />
+</portlet:resourceURL>
+
 <clay:table
 	contributorKey="SampleTable"
 	dataSourceKey="SampleTable"
+	dataSourceURL="<%= dataSourceURL %>"
+	pageParamName='<%= portletDisplay.getNamespace() + "page" %>'
+	pageSizeParamName='<%= portletDisplay.getNamespace() + "pageSize" %>'
 	tableSchemaContributorKey="SampleTable"
 />

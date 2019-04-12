@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.TrashedModel;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -228,13 +227,6 @@ public interface TrashHandler {
 		long classPK, long destinationContainerModelId);
 
 	public Filter getExcludeFilter(SearchContext searchContext);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getExcludeFilter(SearchContext)}
-	 */
-	@Deprecated
-	public Query getExcludeQuery(SearchContext searchContext);
 
 	/**
 	 * Returns the parent container model of the model entity with the primary

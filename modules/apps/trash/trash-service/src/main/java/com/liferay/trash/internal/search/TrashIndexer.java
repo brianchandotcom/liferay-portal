@@ -20,13 +20,11 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -86,9 +84,6 @@ public class TrashIndexer extends BaseIndexer<TrashEntry> {
 					fullQueryBooleanFilter.add(
 						filter, BooleanClauseOccur.MUST_NOT);
 				}
-
-				processTrashHandlerExcludeQuery(
-					searchContext, fullQueryBooleanFilter, trashHandler);
 			}
 
 			long[] groupIds = searchContext.getGroupIds();
@@ -178,18 +173,6 @@ public class TrashIndexer extends BaseIndexer<TrashEntry> {
 
 	@Override
 	protected void doReindex(TrashEntry trashEntry) {
-	}
-
-	protected void processTrashHandlerExcludeQuery(
-		SearchContext searchContext, BooleanFilter fullQueryBooleanFilter,
-		TrashHandler trashHandler) {
-
-		Query query = trashHandler.getExcludeQuery(searchContext);
-
-		if (query != null) {
-			fullQueryBooleanFilter.add(
-				new QueryFilter(query), BooleanClauseOccur.MUST_NOT);
-		}
 	}
 
 }

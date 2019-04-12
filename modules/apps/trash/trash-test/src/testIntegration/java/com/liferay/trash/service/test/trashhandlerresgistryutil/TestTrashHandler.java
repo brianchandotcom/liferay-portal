@@ -17,7 +17,6 @@ package com.liferay.trash.service.test.trashhandlerresgistryutil;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.TrashedModel;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -110,15 +109,6 @@ public class TestTrashHandler implements TrashHandler {
 
 	@Override
 	public Filter getExcludeFilter(SearchContext searchContext) {
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public Query getExcludeQuery(SearchContext searchContext) {
 		return null;
 	}
 

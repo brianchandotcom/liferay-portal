@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.TrashedModel;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -129,16 +128,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 	@Override
 	public Filter getExcludeFilter(SearchContext searchContext) {
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getExcludeFilter(SearchContext)}
-	 */
-	@Deprecated
-	@Override
-	public Query getExcludeQuery(SearchContext searchContext) {
 		return null;
 	}
 

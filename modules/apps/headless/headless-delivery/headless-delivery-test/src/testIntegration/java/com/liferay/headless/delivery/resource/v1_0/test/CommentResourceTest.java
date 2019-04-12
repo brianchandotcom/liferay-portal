@@ -108,47 +108,6 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	}
 
 	@Override
-	protected Comment testPostBlogPostingComment_addComment(Comment comment)
-		throws Exception {
-
-		BlogsEntry blogsEntry = _addBlogsEntry();
-
-		return invokePostBlogPostingComment(blogsEntry.getEntryId(), comment);
-	}
-
-	@Override
-	protected Comment testPostCommentComment_addComment(Comment comment)
-		throws Exception {
-
-		BlogsEntry blogsEntry = _addBlogsEntry();
-
-		Comment parentComment = invokePostBlogPostingComment(
-			blogsEntry.getEntryId(), randomComment());
-
-		return invokePostCommentComment(parentComment.getId(), comment);
-	}
-
-	@Override
-	protected Comment testPostDocumentComment_addComment(Comment comment)
-		throws Exception {
-
-		FileEntry fileEntry = _addFileEntry();
-
-		return invokePostDocumentComment(fileEntry.getFileEntryId(), comment);
-	}
-
-	@Override
-	protected Comment testPostStructuredContentComment_addComment(
-			Comment comment)
-		throws Exception {
-
-		JournalArticle journalArticle = _addJournalArticle();
-
-		return invokePostStructuredContentComment(
-			journalArticle.getResourcePrimKey(), comment);
-	}
-
-	@Override
 	protected Comment testPutComment_addComment() throws Exception {
 		BlogsEntry blogsEntry = _addBlogsEntry();
 

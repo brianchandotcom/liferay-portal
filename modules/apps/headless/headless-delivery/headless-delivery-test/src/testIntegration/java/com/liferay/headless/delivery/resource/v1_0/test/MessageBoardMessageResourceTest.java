@@ -108,17 +108,6 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	protected MessageBoardMessage
-			testPostMessageBoardThreadMessageBoardMessage_addMessageBoardMessage(
-				MessageBoardMessage messageBoardMessage)
-		throws Exception {
-
-		return invokePostMessageBoardThreadMessageBoardMessage(
-			testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
-			messageBoardMessage);
-	}
-
-	@Override
-	protected MessageBoardMessage
 			testPutMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 

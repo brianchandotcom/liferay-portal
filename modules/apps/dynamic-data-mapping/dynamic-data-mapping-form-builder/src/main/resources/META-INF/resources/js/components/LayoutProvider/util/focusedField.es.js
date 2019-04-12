@@ -6,10 +6,13 @@ import {
 import {getField} from '../util/fields.es';
 import {updateSettingsContextProperty} from './settings.es';
 
-const shouldAutoGenerateName = focusedField => {
+const shouldAutoGenerateName = (defaultLanguageId, editingLanguageId, focusedField) => {
 	const {fieldName, label} = focusedField;
 
-	return fieldName.indexOf(normalizeFieldName(label)) === 0;
+	return (
+		defaultLanguageId === editingLanguageId &&
+		fieldName.indexOf(normalizeFieldName(label)) === 0
+	);
 };
 
 export const updateFocusedFieldName = (state, editingLanguageId, focusedField, value) => {
@@ -59,10 +62,10 @@ export const updateFocusedFieldDataType = (editingLanguageId, focusedField, valu
 	};
 };
 
-export const updateFocusedFieldLabel = (state, editingLanguageId, focusedField, value) => {
+export const updateFocusedFieldLabel = (state, defaultLanguageId, editingLanguageId, focusedField, value) => {
 	let {fieldName, settingsContext} = focusedField;
 
-	if (shouldAutoGenerateName(focusedField)) {
+	if (shouldAutoGenerateName(defaultLanguageId, editingLanguageId, focusedField)) {
 		const updates = updateFocusedFieldName(state, editingLanguageId, focusedField, value);
 
 		fieldName = updates.fieldName;
@@ -117,7 +120,7 @@ export const updateFocusedFieldOptions = (editingLanguageId, focusedField, value
 	};
 };
 
-export const updateFocusedField = (state, editingLanguageId, fieldName, value) => {
+export const updateFocusedField = (state, defaultLanguageId, editingLanguageId, fieldName, value) => {
 	let {focusedField} = state;
 
 	if (fieldName === 'dataType') {
@@ -129,7 +132,7 @@ export const updateFocusedField = (state, editingLanguageId, fieldName, value) =
 	else if (fieldName === 'label') {
 		focusedField = {
 			...focusedField,
-			...updateFocusedFieldLabel(state, editingLanguageId, focusedField, value)
+			...updateFocusedFieldLabel(state, defaultLanguageId, editingLanguageId, focusedField, value)
 		};
 	}
 	else if (fieldName === 'name') {

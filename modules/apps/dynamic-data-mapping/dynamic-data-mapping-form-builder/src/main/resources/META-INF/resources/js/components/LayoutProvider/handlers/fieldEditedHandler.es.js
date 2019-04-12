@@ -19,9 +19,9 @@ export const updateRules = (rules, oldFieldProperties, newFieldProperties) => {
 	return updateRulesFieldName(rules, fieldName, newFieldName);
 };
 
-export const updateField = (state, editingLanguageId, fieldName, fieldValue) => {
+export const updateField = (state, defaultLanguageId, editingLanguageId, fieldName, fieldValue) => {
 	const {focusedField, pages, rules} = state;
-	const updatedFocusedField = updateFocusedField(state, editingLanguageId, fieldName, fieldValue);
+	const updatedFocusedField = updateFocusedField(state, defaultLanguageId, editingLanguageId, fieldName, fieldValue);
 
 	return {
 		focusedField: updatedFocusedField,
@@ -30,12 +30,12 @@ export const updateField = (state, editingLanguageId, fieldName, fieldValue) => 
 	};
 };
 
-export const handleFieldEdited = (state, editingLanguageId, event) => {
+export const handleFieldEdited = (state, defaultLanguageId, editingLanguageId, event) => {
 	const {propertyName, propertyValue} = event;
 	let newState = {};
 
 	if (propertyName !== 'name' || propertyValue !== '') {
-		newState = updateField(state, editingLanguageId, propertyName, propertyValue);
+		newState = updateField(state, defaultLanguageId, editingLanguageId, propertyName, propertyValue);
 	}
 
 	return newState;

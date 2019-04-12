@@ -443,9 +443,9 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFieldEdited(properties) {
-		const {editingLanguageId} = this.props;
+		const {defaultLanguageId, editingLanguageId} = this.props;
 
-		this.setState(handleFieldEdited(this.state, editingLanguageId, properties));
+		this.setState(handleFieldEdited(this.state, defaultLanguageId, editingLanguageId, properties));
 	}
 
 	_handleFieldMoved({addedToPlaceholder, target, source}) {

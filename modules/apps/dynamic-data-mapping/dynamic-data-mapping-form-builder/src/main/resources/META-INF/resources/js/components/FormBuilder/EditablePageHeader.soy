@@ -1,19 +1,18 @@
 {namespace EditablePageHeader}
 
 {deltemplate PageRenderer.PageHeader variant="'editable'"}
+	{@param description: string}
 	{@param pageIndex: number}
+	{@param title: string}
 	{@param total: number}
-	{@param? description: string}
-	{@param? title: string}
 	{@param? placeholder: string}
 
 	<textarea
 		class="form-builder-page-header-title form-control p-0"
 		maxlength="120"
 		placeholder="{$placeholder ?: ''}"
-	>
-		{$title}
-	</textarea>
+		value="{$title}"
+	></textarea>
 
 	{let $descriptionPlaceholder kind="text"}
 		{msg desc=""}add-a-short-description-for-this-page{/msg}
@@ -23,7 +22,8 @@
 		class="form-builder-page-header-description form-control p-0"
 		maxlength="120"
 		placeholder="{$descriptionPlaceholder}"
+		value="{$description}"
 	{/let}
 
-	<textarea {$pageDescriptionAttributes}>{$description}</textarea>
+	<textarea {$pageDescriptionAttributes}></textarea>
 {/deltemplate}

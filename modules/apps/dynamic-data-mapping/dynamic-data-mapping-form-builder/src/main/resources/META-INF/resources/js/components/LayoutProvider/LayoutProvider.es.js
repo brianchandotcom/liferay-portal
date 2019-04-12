@@ -271,10 +271,10 @@ class LayoutProvider extends Component {
 
 	getPages() {
 		const {defaultLanguageId, editingLanguageId} = this.props;
-		const {pages} = this.state;
+		let {pages} = this.state;
 		const visitor = new PagesVisitor(pages);
 
-		return visitor.mapFields(
+		pages = visitor.mapFields(
 			field => {
 				const {settingsContext} = field;
 
@@ -284,6 +284,34 @@ class LayoutProvider extends Component {
 						...settingsContext,
 						pages: this.getLocalizedPages(settingsContext.pages)
 					}
+				};
+			}
+		);
+
+		visitor.setPages(pages);
+
+		return visitor.mapPages(
+			page => {
+				let {description, title} = page;
+
+				if (page.localizedDescription[editingLanguageId]) {
+					description = page.localizedDescription[editingLanguageId];
+				}
+				else if (page.localizedDescription[defaultLanguageId]) {
+					description = page.localizedDescription[defaultLanguageId];
+				}
+
+				if (page.localizedTitle[editingLanguageId]) {
+					title = page.localizedTitle[editingLanguageId];
+				}
+				else if (page.localizedTitle[defaultLanguageId]) {
+					title = page.localizedTitle[defaultLanguageId];
+				}
+
+				return {
+					...page,
+					description,
+					title
 				};
 			}
 		);
@@ -517,7 +545,7 @@ class LayoutProvider extends Component {
 	_handlePagesUpdated(pages) {
 		this.setState(
 			{
-				pages
+				pages: [...pages]
 			}
 		);
 	}

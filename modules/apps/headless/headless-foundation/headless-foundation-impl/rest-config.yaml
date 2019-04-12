@@ -1,9 +1,0 @@
-apiDir: "../headless-foundation-api/src/main/java"
-apiPackagePath: "com.liferay.headless.foundation"
-application:
-    baseURI: "/headless-foundation"
-    className: "HeadlessFoundationApplication"
-    name: "Liferay.Headless.Foundation"
-author: "Javier Gamarra"
-clientDir: "../headless-foundation-client/src/main/java"
-testDir: "../headless-foundation-test/src/testIntegration/java"

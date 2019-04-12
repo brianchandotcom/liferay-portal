@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Headless Foundation Client
-Bundle-SymbolicName: com.liferay.headless.foundation.client
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.headless.foundation.client.dto.v1_0

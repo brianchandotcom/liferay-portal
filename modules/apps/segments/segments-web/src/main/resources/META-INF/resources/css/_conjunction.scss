@@ -1,4 +1,28 @@
 .conjunction-button {
-	margin: 24px 0;
-	text-transform: uppercase;
+	text-transform: capitalize;
+	margin: {
+		bottom: $gap * 2;
+		top: $gap * 2;
+	}
+}
+
+.criteria-group-root {
+	.conjunction-button {
+		margin-left: $gap * 3;
+	}
+
+	.conjunction-label {
+		margin-left: $gap;
+	}
+}
+
+.conjunction-label {
+	color: $mainLighten28;
+	font-size: 14px;
+	font-weight: 600;
+	text-transform: capitalize;
+	margin: {
+		bottom: $gap * 2;
+		top: $gap * 2;
+	}
 }

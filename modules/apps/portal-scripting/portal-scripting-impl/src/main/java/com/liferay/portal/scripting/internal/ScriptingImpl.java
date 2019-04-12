@@ -107,20 +107,6 @@ public class ScriptingImpl implements Scripting {
 		eval(allowedClasses, inputObjects, null, language, script);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #exec(Set, Map,
-	 *             String, String)}
-	 */
-	@Deprecated
-	@Override
-	public void exec(
-			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			String language, String script, String... servletContextNames)
-		throws ScriptingException {
-
-		eval(allowedClasses, inputObjects, null, language, script);
-	}
-
 	@Override
 	public Set<String> getSupportedLanguages() {
 		return _scriptingExecutors.keySet();

@@ -47,21 +47,6 @@ public class ScriptingUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #exec(Set, Map,
-	 *             String, String)}
-	 */
-	@Deprecated
-	public static void exec(
-			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			String language, String script, String... servletContextNames)
-		throws ScriptingException {
-
-		_getScripting().exec(
-			allowedClasses, inputObjects, language, script,
-			servletContextNames);
-	}
-
-	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link #_getScripting()}
 	 */
 	@Deprecated

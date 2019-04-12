@@ -69,24 +69,6 @@ public class TestWorkflowHandler implements WorkflowHandler<Object> {
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public String getIconPath(LiferayPortletRequest liferayPortletRequest) {
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public String getSummary(long classPK, Locale locale) {
-		return null;
-	}
-
 	@Override
 	public String getSummary(
 		long classPK, PortletRequest portletRequest,

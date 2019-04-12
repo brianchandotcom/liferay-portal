@@ -51,19 +51,6 @@ public interface WorkflowHandler<T> {
 
 	public String getIconCssClass();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getIconPath(LiferayPortletRequest liferayPortletRequest);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSummary(long, PortletRequest, PortletResponse)}
-	 */
-	@Deprecated
-	public String getSummary(long classPK, Locale locale);
-
 	public String getSummary(
 		long classPK, PortletRequest portletRequest,
 		PortletResponse portletResponse);

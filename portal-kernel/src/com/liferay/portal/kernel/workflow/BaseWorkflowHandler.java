@@ -87,25 +87,6 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		return StringPool.BLANK;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getIconPath(LiferayPortletRequest liferayPortletRequest) {
-		return StringPool.BLANK;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSummary(long, PortletRequest, PortletResponse)}
-	 */
-	@Deprecated
-	@Override
-	public String getSummary(long classPK, Locale locale) {
-		return getSummary(classPK, null, null);
-	}
-
 	@Override
 	public String getSummary(
 		long classPK, PortletRequest portletRequest,

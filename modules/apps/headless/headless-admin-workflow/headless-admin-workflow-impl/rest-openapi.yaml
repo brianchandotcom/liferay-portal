@@ -5,26 +5,34 @@ components:
             properties:
                 transition:
                     type: string
+                    writeOnly: true
             type: object
         Creator:
             description: https://www.schema.org/Creator
             properties:
                 additionalName:
+                    readOnly: true
                     type: string
                 familyName:
+                    readOnly: true
                     type: string
                 givenName:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 image:
                     format: uri
+                    readOnly: true
                     type: string
                 name:
+                    readOnly: true
                     type: string
                 profileURL:
                     format: uri
+                    readOnly: true
                     type: string
             type: object
         ObjectReviewed:
@@ -32,8 +40,10 @@ components:
             properties:
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 resourceType:
+                    readOnly: true
                     type: string
             type: object
         WorkflowLog:
@@ -42,55 +52,71 @@ components:
                 auditPerson:
                     $ref: "#/components/schemas/Creator"
                 commentLog:
+                    readOnly: true
                     type: string
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 person:
                     $ref: "#/components/schemas/Creator"
                 previousPerson:
                     $ref: "#/components/schemas/Creator"
                 previousState:
+                    readOnly: true
                     type: string
                 state:
+                    readOnly: true
                     type: string
                 taskId:
                     format: int64
+                    readOnly: true
                     type: integer
                 type:
+                    readOnly: true
                     type: string
             type: object
         WorkflowTask:
             description: https://www.schema.org/WorkflowTask
             properties:
                 completed:
+                    readOnly: true
                     type: boolean
                 dateCompleted:
                     format: date-time
+                    readOnly: true
                     type: string
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 definitionName:
+                    readOnly: true
                     type: string
                 description:
+                    readOnly: true
                     type: string
                 dueDate:
                     format: date-time
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
+                    readOnly: true
                     type: string
                 objectReviewed:
                     $ref: "#/components/schemas/ObjectReviewed"
                 transitions:
                     items:
                         type: string
+                    readOnly: true
                     type: array
             type: object
         WorkflowTaskAssignToMe:
@@ -98,9 +124,11 @@ components:
             properties:
                 comment:
                     type: string
+                    writeOnly: true
                 dueDate:
                     format: date-time
                     type: string
+                    writeOnly: true
             type: object
         WorkflowTaskAssignToUser:
             description: https://www.schema.org/WorkflowTaskAssignToUser
@@ -108,11 +136,14 @@ components:
                 assigneeId:
                     format: int64
                     type: integer
+                    writeOnly: true
                 comment:
                     type: string
+                    writeOnly: true
                 dueDate:
                     format: date-time
                     type: string
+                    writeOnly: true
             type: object
 info:
     description: ""

@@ -50,24 +50,6 @@ public class TestTrashHandler implements TrashHandler {
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void checkDuplicateEntry(
-		long classPK, long containerModelId, String newName) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void checkDuplicateTrashEntry(
-		TrashEntry trashEntry, long containerModelId, String newName) {
-	}
-
 	@Override
 	public void checkRestorableEntry(
 		long classPK, long containerModelId, String newName) {
@@ -89,15 +71,6 @@ public class TestTrashHandler implements TrashHandler {
 
 	@Override
 	public ContainerModel getContainerModel(long containerModelId) {
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public String getContainerModelClassName() {
 		return null;
 	}
 

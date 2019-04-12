@@ -17,9 +17,6 @@ package com.liferay.portal.kernel.trash;
 import com.liferay.petra.string.StringPool;
 import com.liferay.trash.kernel.util.TrashUtil;
 
-import java.util.Locale;
-
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -33,28 +30,9 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 		return StringPool.BLANK;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getIconPath(PortletRequest portletRequest) {
-		return StringPool.BLANK;
-	}
-
 	@Override
 	public String getNewName(String oldName, String token) {
 		return TrashUtil.getNewName(oldName, token);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSummary(PortletRequest, javax.portlet.PortletResponse)}
-	 */
-	@Deprecated
-	@Override
-	public String getSummary(Locale locale) {
-		return getSummary(null, null);
 	}
 
 	@Override

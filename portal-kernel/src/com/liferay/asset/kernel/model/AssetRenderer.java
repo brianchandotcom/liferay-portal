@@ -110,13 +110,6 @@ public interface AssetRenderer<T> extends Renderer {
 
 	public String getSummary();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSummary(PortletRequest, PortletResponse)}
-	 */
-	@Deprecated
-	public String getSummary(Locale locale);
-
 	public String[] getSupportedConversions();
 
 	public String getThumbnailPath(PortletRequest portletRequest)

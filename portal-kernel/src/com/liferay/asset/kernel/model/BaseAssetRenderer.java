@@ -120,15 +120,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		return getAssetRendererFactory().getIconCssClass();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getIconPath(PortletRequest portletRequest) {
-		return StringPool.BLANK;
-	}
-
 	@Override
 	public String getNewName(String oldName, String token) {
 		return TrashUtil.getNewName(oldName, token);
@@ -158,16 +149,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	@Override
 	public String getSummary() {
-		return getSummary(null, null);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSummary(PortletRequest, PortletResponse)}
-	 */
-	@Deprecated
-	@Override
-	public String getSummary(Locale locale) {
 		return getSummary(null, null);
 	}
 

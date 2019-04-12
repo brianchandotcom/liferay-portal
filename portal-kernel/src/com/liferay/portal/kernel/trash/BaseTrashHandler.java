@@ -71,32 +71,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 			extraDataJSONObject.toString());
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #checkRestorableEntry(long, long, String)}
-	 */
-	@Deprecated
-	@Override
-	public void checkDuplicateEntry(
-			long classPK, long containerModelId, String newName)
-		throws PortalException {
-
-		checkRestorableEntry(classPK, containerModelId, newName);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #checkRestorableEntry(TrashEntry, long, String)}
-	 */
-	@Deprecated
-	@Override
-	public void checkDuplicateTrashEntry(
-			TrashEntry trashEntry, long containerModelId, String newName)
-		throws PortalException {
-
-		checkRestorableEntry(trashEntry, containerModelId, newName);
-	}
-
 	@Override
 	public void checkRestorableEntry(
 			long classPK, long containerModelId, String newName)
@@ -114,16 +88,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		throws PortalException {
 
 		return null;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getContainerModel(long)}
-	 */
-	@Deprecated
-	@Override
-	public String getContainerModelClassName() {
-		return getContainerModelClassName(0);
 	}
 
 	@Override

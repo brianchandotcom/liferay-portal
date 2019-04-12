@@ -102,38 +102,6 @@ public interface TrashHandler {
 			String referrerClassName)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #checkRestorableEntry(long, long, String)}
-	 */
-	@Deprecated
-	public void checkDuplicateEntry(
-			long classPK, long containerModelId, String newName)
-		throws PortalException;
-
-	/**
-	 * Checks if a duplicate trash entry already exists in the destination
-	 * container.
-	 *
-	 * <p>
-	 * This method is used to check for duplicates when a trash entry is being
-	 * restored or moved out of the Recycle Bin.
-	 * </p>
-	 *
-	 * @param      trashEntry the trash entry to check
-	 * @param      containerModelId the primary key of the destination (e.g.
-	 *             folder)
-	 * @param      newName the new name to be assigned to the trash entry
-	 *             (optionally <code>null</code> to forego renaming the trash
-	 *             entry)
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #checkRestorableEntry(TrashEntry, long, String)}
-	 */
-	@Deprecated
-	public void checkDuplicateTrashEntry(
-			TrashEntry trashEntry, long containerModelId, String newName)
-		throws PortalException;
-
 	public void checkRestorableEntry(
 			long classPK, long containerModelId, String newName)
 		throws PortalException;
@@ -178,15 +146,6 @@ public interface TrashHandler {
 	 */
 	public ContainerModel getContainerModel(long containerModelId)
 		throws PortalException;
-
-	/**
-	 * Returns the parent container model's class name.
-	 *
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getContainerModelClassName(long)}
-	 */
-	@Deprecated
-	public String getContainerModelClassName();
 
 	public String getContainerModelClassName(long classPK);
 

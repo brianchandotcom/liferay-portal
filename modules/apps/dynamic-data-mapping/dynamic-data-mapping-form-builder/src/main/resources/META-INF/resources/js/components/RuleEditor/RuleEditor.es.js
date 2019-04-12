@@ -1510,27 +1510,32 @@ class RuleEditor extends Component {
 					source,
 					target
 				} = action;
-				const newAction = {
-					action: actionType
+				let newAction = {
+					action: actionType,
+					label,
+					target
 				};
 
 				if (actionType == 'auto-fill') {
-					newAction.inputs = inputs;
-					newAction.outputs = outputs;
-					newAction.ddmDataProviderInstanceUUID = ddmDataProviderInstanceUUID;
+					newAction = {
+						...newAction,
+						ddmDataProviderInstanceUUID,
+						inputs,
+						outputs
+					};
 				}
 				else if (actionType == 'calculate') {
-					newAction.expression = expression;
+					newAction = {
+						...newAction,
+						expression
+					};
 				}
 				else if (actionType == 'jump-to-page') {
-					newAction.source = source.toString();
-					const targetPage = parseInt(target, 10) - 1;
-
-					newAction.target = targetPage.toString();
-				}
-				else {
-					newAction.label = label;
-					newAction.target = target;
+					newAction = {
+						...newAction,
+						source: `${source}`,
+						target: `${parseInt(target, 10) - 1}`
+					};
 				}
 
 				return newAction;

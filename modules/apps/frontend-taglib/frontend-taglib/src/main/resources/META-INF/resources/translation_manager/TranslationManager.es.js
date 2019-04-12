@@ -33,15 +33,15 @@ class TranslationManager extends Component {
 	 * @review
 	 */
 	addLocale(event) {
-		let localeObj = event.data.item;
+		let locale = event.data.item;
 
-		if (this.availableLocales.indexOf(localeObj) === -1) {
-			this.availableLocales.push(localeObj);
+		if (this.availableLocales.indexOf(locale) === -1) {
+			this.availableLocales.push(locale);
 		}
 
 		this.availableLocales = this.availableLocales;
 
-		this.editingLocale = localeObj.id;
+		this.editingLocale = locale.id;
 	}
 
 	/**

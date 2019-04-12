@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.asset;
+package com.liferay.document.library.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.document.library.web.internal.asset.DLFileEntryAssetRendererFactory;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;

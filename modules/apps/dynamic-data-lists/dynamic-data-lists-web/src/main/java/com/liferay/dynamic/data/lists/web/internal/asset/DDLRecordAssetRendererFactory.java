@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
+import com.liferay.dynamic.data.lists.web.internal.asset.model.DDLRecordAssetRenderer;
 import com.liferay.dynamic.data.lists.web.internal.asset.model.DDLRecordSetClassTypeReader;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;

@@ -12,14 +12,10 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.asset;
+package com.liferay.directory.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.BaseAssetRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.model.Organization;
 
 import java.util.Locale;
 
@@ -32,83 +28,57 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ricardo Couso
  */
-public class SiteAssetRenderer extends BaseAssetRenderer<Group> {
+public class OrganizationAssetRenderer extends BaseAssetRenderer<Organization> {
 
-	public SiteAssetRenderer(Group group) {
-		if (group.isSite() || group.isStagingGroup()) {
-			_siteGroup = group;
-		}
-		else {
-			throw new IllegalArgumentException(
-				"Only site groups are supported");
-		}
+	public OrganizationAssetRenderer(Organization organization) {
+		_organization = organization;
 	}
 
 	@Override
-	public Group getAssetObject() {
-		return _siteGroup;
+	public Organization getAssetObject() {
+		return _organization;
 	}
 
 	@Override
 	public String getClassName() {
-		return Group.class.getName();
+		return Organization.class.getName();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _siteGroup.getPrimaryKey();
+		return _organization.getPrimaryKey();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _siteGroup.getGroupId();
+		return _organization.getGroupId();
 	}
 
 	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		try {
-			return _siteGroup.getDescriptiveName(
-				PortalUtil.getLocale(portletRequest));
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to get summary for group " + _siteGroup.getGroupId(),
-				pe);
-		}
-
-		return null;
+		return _organization.getComments();
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		try {
-			return _siteGroup.getDescriptiveName(locale);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to get descriptive name for group " +
-					_siteGroup.getGroupId(),
-				pe);
-		}
-
-		return null;
+		return _organization.getName();
 	}
 
 	@Override
 	public long getUserId() {
-		return _siteGroup.getCreatorUserId();
+		return _organization.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return null;
+		return _organization.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return _siteGroup.getUuid();
+		return _organization.getUuid();
 	}
 
 	@Override
@@ -120,9 +90,6 @@ public class SiteAssetRenderer extends BaseAssetRenderer<Group> {
 		return false;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteAssetRenderer.class);
-
-	private final Group _siteGroup;
+	private final Organization _organization;
 
 }

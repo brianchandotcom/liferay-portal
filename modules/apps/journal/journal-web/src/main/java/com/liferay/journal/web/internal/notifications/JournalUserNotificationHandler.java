@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
+import com.liferay.journal.web.asset.model.JournalArticleAssetRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;

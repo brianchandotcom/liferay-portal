@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.internal.asset;
+package com.liferay.dynamic.data.mapping.form.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
+import com.liferay.dynamic.data.mapping.form.web.internal.asset.DDMFormAssetRendererFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormViewFormInstanceRecordDisplayContext;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;

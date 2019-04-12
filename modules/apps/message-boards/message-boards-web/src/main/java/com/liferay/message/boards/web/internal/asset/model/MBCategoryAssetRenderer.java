@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.asset;
+package com.liferay.message.boards.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.constants.BookmarksWebKeys;
-import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -27,11 +27,9 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -46,84 +44,64 @@ import javax.servlet.http.HttpServletResponse;
  * @author Julio Camarero
  * @author Juan Fernández
  * @author Sergio González
+ * @author Jonathan Lee
  */
-public class BookmarksEntryAssetRenderer
-	extends BaseJSPAssetRenderer<BookmarksEntry> implements TrashRenderer {
+public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 
-	public BookmarksEntryAssetRenderer(
-		BookmarksEntry entry,
-		ModelResourcePermission<BookmarksEntry> modelResourcePermission) {
+	public MBCategoryAssetRenderer(
+		MBCategory category,
+		ModelResourcePermission<MBCategory> categoryModelResourcePermission) {
 
-		_entry = entry;
-		_bookmarksEntryModelResourcePermission = modelResourcePermission;
+		_category = category;
+		_categoryModelResourcePermission = categoryModelResourcePermission;
 	}
 
 	@Override
-	public BookmarksEntry getAssetObject() {
-		return _entry;
+	public MBCategory getAssetObject() {
+		return _category;
 	}
 
 	@Override
 	public String getClassName() {
-		return BookmarksEntry.class.getName();
+		return MBCategory.class.getName();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _entry.getEntryId();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Date getDisplayDate() {
-		return _entry.getModifiedDate();
+		return _category.getCategoryId();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _entry.getGroupId();
+		return _category.getGroupId();
 	}
 
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
-		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			return "/bookmarks/asset/" + template + ".jsp";
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
+
+			return "/message_boards/asset/" + template + ".jsp";
 		}
 
 		return null;
 	}
 
 	@Override
-	public String getPortletId() {
-		AssetRendererFactory<BookmarksEntry> assetRendererFactory =
-			getAssetRendererFactory();
-
-		return assetRendererFactory.getPortletId();
-	}
-
-	@Override
 	public int getStatus() {
-		return _entry.getStatus();
+		return _category.getStatus();
 	}
 
 	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return _entry.getDescription();
+		return _category.getDescription();
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _entry.getName();
-	}
-
-	@Override
-	public String getType() {
-		return BookmarksEntryAssetRendererFactory.TYPE;
+		return _category.getName();
 	}
 
 	@Override
@@ -132,7 +110,7 @@ public class BookmarksEntryAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.fetchGroup(_entry.getGroupId());
+		Group group = GroupLocalServiceUtil.fetchGroup(_category.getGroupId());
 
 		if (group.isCompany()) {
 			ThemeDisplay themeDisplay =
@@ -143,15 +121,13 @@ public class BookmarksEntryAssetRenderer
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, BookmarksPortletKeys.BOOKMARKS_ADMIN,
-			0, 0, PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/bookmarks/edit_entry");
+			"mvcRenderCommandName", "/message_boards/edit_category");
 		portletURL.setParameter(
-			"folderId", String.valueOf(_entry.getFolderId()));
-		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
-		portletURL.setParameter("showFolderSelector", Boolean.TRUE.toString());
+			"mbCategoryId", String.valueOf(_category.getCategoryId()));
 
 		return portletURL;
 	}
@@ -162,8 +138,19 @@ public class BookmarksEntryAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		return PortalUtil.getPathMain() + "/bookmarks/open_entry?entryId=" +
-			_entry.getEntryId();
+		AssetRendererFactory<MBCategory> assetRendererFactory =
+			getAssetRendererFactory();
+
+		PortletURL portletURL = assetRendererFactory.getURLView(
+			liferayPortletResponse, windowState);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/message_boards/view_category");
+		portletURL.setParameter(
+			"mbCategoryId", String.valueOf(_category.getCategoryId()));
+		portletURL.setWindowState(windowState);
+
+		return portletURL.toString();
 	}
 
 	@Override
@@ -173,47 +160,40 @@ public class BookmarksEntryAssetRenderer
 		String noSuchEntryRedirect) {
 
 		return getURLViewInContext(
-			liferayPortletRequest, noSuchEntryRedirect, "/bookmarks/find_entry",
-			"entryId", _entry.getEntryId());
+			liferayPortletRequest, noSuchEntryRedirect,
+			"/message_boards/find_category", "mbCategoryId",
+			_category.getCategoryId());
 	}
 
 	@Override
 	public long getUserId() {
-		return _entry.getUserId();
+		return _category.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _entry.getUserName();
+		return _category.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return _entry.getUuid();
+		return _category.getUuid();
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker) {
-		try {
-			return _bookmarksEntryModelResourcePermission.contains(
-				permissionChecker, _entry, ActionKeys.UPDATE);
-		}
-		catch (Exception e) {
-		}
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException {
 
-		return false;
+		return _categoryModelResourcePermission.contains(
+			permissionChecker, _category, ActionKeys.UPDATE);
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker) {
-		try {
-			return _bookmarksEntryModelResourcePermission.contains(
-				permissionChecker, _entry, ActionKeys.VIEW);
-		}
-		catch (Exception e) {
-		}
+	public boolean hasViewPermission(PermissionChecker permissionChecker)
+		throws PortalException {
 
-		return true;
+		return _categoryModelResourcePermission.contains(
+			permissionChecker, _category, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -222,18 +202,13 @@ public class BookmarksEntryAssetRenderer
 			String template)
 		throws Exception {
 
-		request.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, _entry);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY, _category);
 
 		return super.include(request, response, template);
 	}
 
-	@Override
-	public boolean isPrintable() {
-		return true;
-	}
-
-	private final ModelResourcePermission<BookmarksEntry>
-		_bookmarksEntryModelResourcePermission;
-	private final BookmarksEntry _entry;
+	private final MBCategory _category;
+	private final ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 }

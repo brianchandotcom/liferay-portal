@@ -12,22 +12,27 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.asset;
+package com.liferay.knowledge.base.web.internal.asset.model;
 
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.model.MBCategory;
+import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBArticleConstants;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
+import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
+import com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -35,53 +40,43 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Julio Camarero
- * @author Juan Fernández
- * @author Sergio González
- * @author Jonathan Lee
+ * @author Peter Shin
  */
-public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
+public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 
-	public MBCategoryAssetRenderer(
-		MBCategory category,
-		ModelResourcePermission<MBCategory> categoryModelResourcePermission) {
-
-		_category = category;
-		_categoryModelResourcePermission = categoryModelResourcePermission;
+	public KBArticleAssetRenderer(KBArticle kbArticle) {
+		_kbArticle = kbArticle;
 	}
 
 	@Override
-	public MBCategory getAssetObject() {
-		return _category;
+	public KBArticle getAssetObject() {
+		return _kbArticle;
 	}
 
 	@Override
 	public String getClassName() {
-		return MBCategory.class.getName();
+		return KBArticle.class.getName();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _category.getCategoryId();
+		return getClassPK(_kbArticle);
 	}
 
 	@Override
 	public long getGroupId() {
-		return _category.getGroupId();
+		return _kbArticle.getGroupId();
 	}
 
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
-		if (template.equals(TEMPLATE_ABSTRACT) ||
-			template.equals(TEMPLATE_FULL_CONTENT)) {
-
-			return "/message_boards/asset/" + template + ".jsp";
+		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+			return "/admin/asset/" + template + ".jsp";
 		}
 
 		return null;
@@ -89,19 +84,26 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 
 	@Override
 	public int getStatus() {
-		return _category.getStatus();
+		return _kbArticle.getStatus();
 	}
 
 	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return _category.getDescription();
+		String summary = _kbArticle.getDescription();
+
+		if (Validator.isNull(summary)) {
+			summary = StringUtil.shorten(
+				HtmlUtil.extractText(_kbArticle.getContent()), 200);
+		}
+
+		return summary;
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _category.getName();
+		return _kbArticle.getTitle();
 	}
 
 	@Override
@@ -110,7 +112,7 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.fetchGroup(_category.getGroupId());
+		Group group = GroupLocalServiceUtil.fetchGroup(_kbArticle.getGroupId());
 
 		if (group.isCompany()) {
 			ThemeDisplay themeDisplay =
@@ -121,36 +123,14 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0, 0,
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, group, KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0,
+			0, PortletRequest.RENDER_PHASE);
 
+		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/edit_category");
-		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(_category.getCategoryId()));
+			"resourcePrimKey", String.valueOf(_kbArticle.getResourcePrimKey()));
 
 		return portletURL;
-	}
-
-	@Override
-	public String getURLView(
-			LiferayPortletResponse liferayPortletResponse,
-			WindowState windowState)
-		throws Exception {
-
-		AssetRendererFactory<MBCategory> assetRendererFactory =
-			getAssetRendererFactory();
-
-		PortletURL portletURL = assetRendererFactory.getURLView(
-			liferayPortletResponse, windowState);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/view_category");
-		portletURL.setParameter(
-			"mbCategoryId", String.valueOf(_category.getCategoryId()));
-		portletURL.setWindowState(windowState);
-
-		return portletURL.toString();
 	}
 
 	@Override
@@ -159,41 +139,44 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		return getURLViewInContext(
-			liferayPortletRequest, noSuchEntryRedirect,
-			"/message_boards/find_category", "mbCategoryId",
-			_category.getCategoryId());
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				KBWebKeys.THEME_DISPLAY);
+
+		return KnowledgeBaseUtil.getKBArticleURL(
+			themeDisplay.getPlid(), _kbArticle.getResourcePrimKey(),
+			_kbArticle.getStatus(), themeDisplay.getPortalURL(), false);
 	}
 
 	@Override
 	public long getUserId() {
-		return _category.getUserId();
+		return _kbArticle.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _category.getUserName();
+		return _kbArticle.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return _category.getUuid();
+		return _kbArticle.getUuid();
 	}
 
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return _categoryModelResourcePermission.contains(
-			permissionChecker, _category, ActionKeys.UPDATE);
+		return KBArticlePermission.contains(
+			permissionChecker, _kbArticle, KBActionKeys.UPDATE);
 	}
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return _categoryModelResourcePermission.contains(
-			permissionChecker, _category, ActionKeys.VIEW);
+		return KBArticlePermission.contains(
+			permissionChecker, _kbArticle, KBActionKeys.VIEW);
 	}
 
 	@Override
@@ -202,13 +185,26 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 			String template)
 		throws Exception {
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY, _category);
+		request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, _kbArticle);
 
 		return super.include(request, response, template);
 	}
 
-	private final MBCategory _category;
-	private final ModelResourcePermission<MBCategory>
-		_categoryModelResourcePermission;
+	@Override
+	public boolean isPrintable() {
+		return true;
+	}
+
+	protected long getClassPK(KBArticle kbArticle) {
+		if ((kbArticle.isDraft() || kbArticle.isPending()) &&
+			(kbArticle.getVersion() != KBArticleConstants.DEFAULT_VERSION)) {
+
+			return kbArticle.getPrimaryKey();
+		}
+
+		return kbArticle.getResourcePrimKey();
+	}
+
+	private final KBArticle _kbArticle;
 
 }

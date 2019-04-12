@@ -12,28 +12,27 @@
  * details.
  */
 
-package com.liferay.comment.web.internal.asset;
+package com.liferay.message.boards.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.comment.web.internal.constants.CommentPortletKeys;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.kernel.comment.DiscussionPermission;
-import com.liferay.portal.kernel.comment.WorkflowableComment;
+import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.permission.MBDiscussionPermission;
+import com.liferay.message.boards.web.internal.asset.MBMessageAssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Date;
@@ -48,38 +47,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Jorge Ferrer
+ * @author Julio Camarero
+ * @author Juan Fernández
  * @author Sergio González
  */
-public class CommentAssetRenderer
-	extends BaseJSPAssetRenderer<WorkflowableComment> implements TrashRenderer {
+public class MBMessageAssetRenderer
+	extends BaseJSPAssetRenderer<MBMessage> implements TrashRenderer {
 
-	public CommentAssetRenderer(
-		WorkflowableComment workflowableComment,
-		AssetRendererFactory<WorkflowableComment> assetRendererFactory) {
+	public MBMessageAssetRenderer(
+		MBMessage message,
+		ModelResourcePermission<MBMessage> messageModelResourcePermission) {
 
-		_workflowableComment = workflowableComment;
-		_assetRendererFactory = assetRendererFactory;
+		_message = message;
+		_messageModelResourcePermission = messageModelResourcePermission;
 	}
 
 	@Override
-	public WorkflowableComment getAssetObject() {
-		return _workflowableComment;
-	}
-
-	@Override
-	public AssetRendererFactory<WorkflowableComment> getAssetRendererFactory() {
-		return _assetRendererFactory;
+	public MBMessage getAssetObject() {
+		return _message;
 	}
 
 	@Override
 	public String getClassName() {
-		return _workflowableComment.getModelClassName();
+		return MBMessage.class.getName();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _workflowableComment.getCommentId();
+		return _message.getMessageId();
 	}
 
 	/**
@@ -88,12 +83,12 @@ public class CommentAssetRenderer
 	@Deprecated
 	@Override
 	public Date getDisplayDate() {
-		return _workflowableComment.getModifiedDate();
+		return _message.getModifiedDate();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _workflowableComment.getGroupId();
+		return _message.getGroupId();
 	}
 
 	@Override
@@ -101,7 +96,7 @@ public class CommentAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			return "/asset/discussion_" + template + ".jsp";
+			return "/message_boards/asset/" + template + ".jsp";
 		}
 
 		return null;
@@ -109,7 +104,7 @@ public class CommentAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory<WorkflowableComment> assetRendererFactory =
+		AssetRendererFactory<MBMessage> assetRendererFactory =
 			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
@@ -117,30 +112,34 @@ public class CommentAssetRenderer
 
 	@Override
 	public String getSearchSummary(Locale locale) {
-		return HtmlUtil.extractText(
-			_workflowableComment.getTranslatedBody(StringPool.BLANK));
+		if (_message.isFormatBBCode()) {
+			return HtmlUtil.extractText(
+				BBCodeTranslatorUtil.getHTML(_message.getBody()));
+		}
+
+		return getSummary(null, null);
 	}
 
 	@Override
 	public int getStatus() {
-		return _workflowableComment.getStatus();
+		return _message.getStatus();
 	}
 
 	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return _workflowableComment.getBody();
+		return _message.getBody();
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return StringUtil.shorten(getSearchSummary(locale));
+		return _message.getSubject();
 	}
 
 	@Override
 	public String getType() {
-		return CommentAssetRendererFactory.TYPE;
+		return MBMessageAssetRendererFactory.TYPE;
 	}
 
 	@Override
@@ -149,8 +148,7 @@ public class CommentAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			_workflowableComment.getGroupId());
+		Group group = GroupLocalServiceUtil.fetchGroup(_message.getGroupId());
 
 		if (group.isCompany()) {
 			ThemeDisplay themeDisplay =
@@ -161,13 +159,13 @@ public class CommentAssetRenderer
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, CommentPortletKeys.COMMENT, 0, 0,
+			liferayPortletRequest, group, MBPortletKeys.MESSAGE_BOARDS, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/discussion/edit_discussion");
+			"mvcRenderCommandName", "/message_boards/edit_message");
 		portletURL.setParameter(
-			"commentId", String.valueOf(_workflowableComment.getCommentId()));
+			"messageId", String.valueOf(_message.getMessageId()));
 
 		return portletURL;
 	}
@@ -178,15 +176,16 @@ public class CommentAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory<WorkflowableComment> assetRendererFactory =
+		AssetRendererFactory<MBMessage> assetRendererFactory =
 			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("mvcPath", "/view_comment.jsp");
 		portletURL.setParameter(
-			"commentId", String.valueOf(_workflowableComment.getCommentId()));
+			"mvcRenderCommandName", "/message_boards/view_message");
+		portletURL.setParameter(
+			"messageId", String.valueOf(_message.getMessageId()));
 		portletURL.setWindowState(windowState);
 
 		return portletURL.toString();
@@ -198,44 +197,51 @@ public class CommentAssetRenderer
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		return null;
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect,
+			"/message_boards/find_message", "messageId",
+			_message.getMessageId());
 	}
 
 	@Override
 	public long getUserId() {
-		return _workflowableComment.getUserId();
+		return _message.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _workflowableComment.getUserName();
+		return _message.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return _workflowableComment.getUuid();
+		return _message.getUuid();
 	}
 
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		DiscussionPermission discussionPermission =
-			CommentManagerUtil.getDiscussionPermission(permissionChecker);
+		if (_message.isDiscussion()) {
+			return MBDiscussionPermission.contains(
+				permissionChecker, _message, ActionKeys.UPDATE);
+		}
 
-		return discussionPermission.hasUpdatePermission(
-			_workflowableComment.getCommentId());
+		return _messageModelResourcePermission.contains(
+			permissionChecker, _message, ActionKeys.UPDATE);
 	}
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		DiscussionPermission discussionPermission =
-			CommentManagerUtil.getDiscussionPermission(permissionChecker);
+		if (_message.isDiscussion()) {
+			return MBDiscussionPermission.contains(
+				permissionChecker, _message, ActionKeys.VIEW);
+		}
 
-		return discussionPermission.hasPermission(
-			_workflowableComment, ActionKeys.VIEW);
+		return _messageModelResourcePermission.contains(
+			permissionChecker, _message, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -244,10 +250,7 @@ public class CommentAssetRenderer
 			String template)
 		throws Exception {
 
-		Comment comment = CommentManagerUtil.fetchComment(
-			_workflowableComment.getCommentId());
-
-		request.setAttribute(WebKeys.COMMENT, comment);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, _message);
 
 		return super.include(request, response, template);
 	}
@@ -257,8 +260,8 @@ public class CommentAssetRenderer
 		return true;
 	}
 
-	private final AssetRendererFactory<WorkflowableComment>
-		_assetRendererFactory;
-	private final WorkflowableComment _workflowableComment;
+	private final MBMessage _message;
+	private final ModelResourcePermission<MBMessage>
+		_messageModelResourcePermission;
 
 }

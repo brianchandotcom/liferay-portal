@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.microblogs.web.internal.asset;
+package com.liferay.microblogs.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;

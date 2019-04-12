@@ -3,7 +3,7 @@
 <javadocs>
 	<javadoc>
 		<name>TasksEntryAssetRenderer</name>
-		<type>com.liferay.tasks.asset.TasksEntryAssetRenderer</type>
+		<type>com.liferay.tasks.asset.model.TasksEntryAssetRenderer</type>
 		<author><![CDATA[Matthew Kong]]></author>
 		<method>
 			<name>TasksEntryAssetRenderer</name>

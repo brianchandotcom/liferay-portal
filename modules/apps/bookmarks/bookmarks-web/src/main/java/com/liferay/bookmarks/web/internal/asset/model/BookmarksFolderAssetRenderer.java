@@ -12,19 +12,20 @@
  * details.
  */
 
-package com.liferay.journal.web.asset;
+package com.liferay.bookmarks.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.constants.BookmarksWebKeys;
+import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -41,39 +42,34 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
+ * @author Eudaldo Alonso
  * @author Alexander Chow
  */
-public class JournalFolderAssetRenderer
-	extends BaseJSPAssetRenderer<JournalFolder> implements TrashRenderer {
+public class BookmarksFolderAssetRenderer
+	extends BaseJSPAssetRenderer<BookmarksFolder> implements TrashRenderer {
 
-	public static final String TYPE = "folder";
+	public static final String TYPE = "bookmarks_folder";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #JournalFolderAssetRenderer(JournalFolder, TrashHelper)}}
-	 */
-	@Deprecated
-	public JournalFolderAssetRenderer(JournalFolder folder) {
-		this(folder, null);
-	}
-
-	public JournalFolderAssetRenderer(
-		JournalFolder folder, TrashHelper trashHelper) {
+	public BookmarksFolderAssetRenderer(
+		BookmarksFolder folder, TrashHelper trashHelper,
+		ModelResourcePermission<BookmarksFolder> modelResourcePermission) {
 
 		_folder = folder;
 		_trashHelper = trashHelper;
+		_bookmarksFolderModelResourcePermission = modelResourcePermission;
 	}
 
 	@Override
-	public JournalFolder getAssetObject() {
+	public BookmarksFolder getAssetObject() {
 		return _folder;
 	}
 
 	@Override
 	public String getClassName() {
-		return JournalFolder.class.getName();
+		return BookmarksFolder.class.getName();
 	}
 
 	@Override
@@ -98,9 +94,7 @@ public class JournalFolderAssetRenderer
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			request.setAttribute(WebKeys.JOURNAL_FOLDER, _folder);
-
-			return "/asset/folder_" + template + ".jsp";
+			return "/bookmarks/asset/folder_" + template + ".jsp";
 		}
 
 		return null;
@@ -108,7 +102,7 @@ public class JournalFolderAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory<JournalFolder> assetRendererFactory =
+		AssetRendererFactory<BookmarksFolder> assetRendererFactory =
 			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
@@ -157,10 +151,11 @@ public class JournalFolderAssetRenderer
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, group, JournalPortletKeys.JOURNAL, 0, 0,
-			PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, group, BookmarksPortletKeys.BOOKMARKS_ADMIN,
+			0, 0, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcPath", "/edit_folder.jsp");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/bookmarks/edit_folder");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 
@@ -173,13 +168,14 @@ public class JournalFolderAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory<JournalFolder> assetRendererFactory =
+		AssetRendererFactory<BookmarksFolder> assetRendererFactory =
 			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("mvcPath", "/asset/folder_full_content.jsp");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/bookmarks/view_folder");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);
@@ -193,12 +189,9 @@ public class JournalFolderAssetRenderer
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		try {
-			return getURLView(liferayPortletResponse, WindowState.MAXIMIZED);
-		}
-		catch (Exception e) {
-			return noSuchEntryRedirect;
-		}
+		return getURLViewInContext(
+			liferayPortletRequest, noSuchEntryRedirect,
+			"/bookmarks/find_folder", "folderId", _folder.getFolderId());
 	}
 
 	@Override
@@ -220,7 +213,7 @@ public class JournalFolderAssetRenderer
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return JournalFolderPermission.contains(
+		return _bookmarksFolderModelResourcePermission.contains(
 			permissionChecker, _folder, ActionKeys.UPDATE);
 	}
 
@@ -228,11 +221,24 @@ public class JournalFolderAssetRenderer
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return JournalFolderPermission.contains(
+		return _bookmarksFolderModelResourcePermission.contains(
 			permissionChecker, _folder, ActionKeys.VIEW);
 	}
 
-	private final JournalFolder _folder;
+	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
+			String template)
+		throws Exception {
+
+		request.setAttribute(BookmarksWebKeys.BOOKMARKS_FOLDER, _folder);
+
+		return super.include(request, response, template);
+	}
+
+	private final ModelResourcePermission<BookmarksFolder>
+		_bookmarksFolderModelResourcePermission;
+	private final BookmarksFolder _folder;
 	private final TrashHelper _trashHelper;
 
 }

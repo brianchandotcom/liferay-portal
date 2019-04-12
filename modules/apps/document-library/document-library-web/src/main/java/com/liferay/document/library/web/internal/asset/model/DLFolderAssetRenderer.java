@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.asset;
+package com.liferay.document.library.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.asset;
+package com.liferay.bookmarks.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.constants.BookmarksWebKeys;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.web.internal.asset.BookmarksEntryAssetRendererFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.TrashHelper;
 
 import java.util.Date;
 import java.util.Locale;
@@ -45,36 +44,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Eudaldo Alonso
- * @author Alexander Chow
+ * @author Julio Camarero
+ * @author Juan Fernández
+ * @author Sergio González
  */
-public class BookmarksFolderAssetRenderer
-	extends BaseJSPAssetRenderer<BookmarksFolder> implements TrashRenderer {
+public class BookmarksEntryAssetRenderer
+	extends BaseJSPAssetRenderer<BookmarksEntry> implements TrashRenderer {
 
-	public static final String TYPE = "bookmarks_folder";
+	public BookmarksEntryAssetRenderer(
+		BookmarksEntry entry,
+		ModelResourcePermission<BookmarksEntry> modelResourcePermission) {
 
-	public BookmarksFolderAssetRenderer(
-		BookmarksFolder folder, TrashHelper trashHelper,
-		ModelResourcePermission<BookmarksFolder> modelResourcePermission) {
-
-		_folder = folder;
-		_trashHelper = trashHelper;
-		_bookmarksFolderModelResourcePermission = modelResourcePermission;
+		_entry = entry;
+		_bookmarksEntryModelResourcePermission = modelResourcePermission;
 	}
 
 	@Override
-	public BookmarksFolder getAssetObject() {
-		return _folder;
+	public BookmarksEntry getAssetObject() {
+		return _entry;
 	}
 
 	@Override
 	public String getClassName() {
-		return BookmarksFolder.class.getName();
+		return BookmarksEntry.class.getName();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _folder.getFolderId();
+		return _entry.getEntryId();
 	}
 
 	/**
@@ -83,18 +80,18 @@ public class BookmarksFolderAssetRenderer
 	@Deprecated
 	@Override
 	public Date getDisplayDate() {
-		return _folder.getModifiedDate();
+		return _entry.getModifiedDate();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _folder.getGroupId();
+		return _entry.getGroupId();
 	}
 
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			return "/bookmarks/asset/folder_" + template + ".jsp";
+			return "/bookmarks/asset/" + template + ".jsp";
 		}
 
 		return null;
@@ -102,7 +99,7 @@ public class BookmarksFolderAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory<BookmarksFolder> assetRendererFactory =
+		AssetRendererFactory<BookmarksEntry> assetRendererFactory =
 			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
@@ -110,28 +107,24 @@ public class BookmarksFolderAssetRenderer
 
 	@Override
 	public int getStatus() {
-		return _folder.getStatus();
+		return _entry.getStatus();
 	}
 
 	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return _folder.getDescription();
+		return _entry.getDescription();
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		if (_trashHelper == null) {
-			return _folder.getName();
-		}
-
-		return _trashHelper.getOriginalTitle(_folder.getName());
+		return _entry.getName();
 	}
 
 	@Override
 	public String getType() {
-		return TYPE;
+		return BookmarksEntryAssetRendererFactory.TYPE;
 	}
 
 	@Override
@@ -140,7 +133,7 @@ public class BookmarksFolderAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.fetchGroup(_folder.getGroupId());
+		Group group = GroupLocalServiceUtil.fetchGroup(_entry.getGroupId());
 
 		if (group.isCompany()) {
 			ThemeDisplay themeDisplay =
@@ -155,9 +148,11 @@ public class BookmarksFolderAssetRenderer
 			0, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/bookmarks/edit_folder");
+			"mvcRenderCommandName", "/bookmarks/edit_entry");
 		portletURL.setParameter(
-			"folderId", String.valueOf(_folder.getFolderId()));
+			"folderId", String.valueOf(_entry.getFolderId()));
+		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
+		portletURL.setParameter("showFolderSelector", Boolean.TRUE.toString());
 
 		return portletURL;
 	}
@@ -168,19 +163,8 @@ public class BookmarksFolderAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory<BookmarksFolder> assetRendererFactory =
-			getAssetRendererFactory();
-
-		PortletURL portletURL = assetRendererFactory.getURLView(
-			liferayPortletResponse, windowState);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/bookmarks/view_folder");
-		portletURL.setParameter(
-			"folderId", String.valueOf(_folder.getFolderId()));
-		portletURL.setWindowState(windowState);
-
-		return portletURL.toString();
+		return PortalUtil.getPathMain() + "/bookmarks/open_entry?entryId=" +
+			_entry.getEntryId();
 	}
 
 	@Override
@@ -190,39 +174,47 @@ public class BookmarksFolderAssetRenderer
 		String noSuchEntryRedirect) {
 
 		return getURLViewInContext(
-			liferayPortletRequest, noSuchEntryRedirect,
-			"/bookmarks/find_folder", "folderId", _folder.getFolderId());
+			liferayPortletRequest, noSuchEntryRedirect, "/bookmarks/find_entry",
+			"entryId", _entry.getEntryId());
 	}
 
 	@Override
 	public long getUserId() {
-		return _folder.getUserId();
+		return _entry.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _folder.getUserName();
+		return _entry.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return _folder.getUuid();
+		return _entry.getUuid();
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker)
-		throws PortalException {
+	public boolean hasEditPermission(PermissionChecker permissionChecker) {
+		try {
+			return _bookmarksEntryModelResourcePermission.contains(
+				permissionChecker, _entry, ActionKeys.UPDATE);
+		}
+		catch (Exception e) {
+		}
 
-		return _bookmarksFolderModelResourcePermission.contains(
-			permissionChecker, _folder, ActionKeys.UPDATE);
+		return false;
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws PortalException {
+	public boolean hasViewPermission(PermissionChecker permissionChecker) {
+		try {
+			return _bookmarksEntryModelResourcePermission.contains(
+				permissionChecker, _entry, ActionKeys.VIEW);
+		}
+		catch (Exception e) {
+		}
 
-		return _bookmarksFolderModelResourcePermission.contains(
-			permissionChecker, _folder, ActionKeys.VIEW);
+		return true;
 	}
 
 	@Override
@@ -231,14 +223,18 @@ public class BookmarksFolderAssetRenderer
 			String template)
 		throws Exception {
 
-		request.setAttribute(BookmarksWebKeys.BOOKMARKS_FOLDER, _folder);
+		request.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, _entry);
 
 		return super.include(request, response, template);
 	}
 
-	private final ModelResourcePermission<BookmarksFolder>
-		_bookmarksFolderModelResourcePermission;
-	private final BookmarksFolder _folder;
-	private final TrashHelper _trashHelper;
+	@Override
+	public boolean isPrintable() {
+		return true;
+	}
+
+	private final ModelResourcePermission<BookmarksEntry>
+		_bookmarksEntryModelResourcePermission;
+	private final BookmarksEntry _entry;
 
 }

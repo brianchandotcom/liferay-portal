@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.directory.web.internal.asset;
+package com.liferay.message.boards.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.BaseAssetRenderer;
-import com.liferay.portal.kernel.model.Organization;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
 
@@ -26,70 +27,74 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Ricardo Couso
+ * @author Adolfo Pérez
  */
-public class OrganizationAssetRenderer extends BaseAssetRenderer<Organization> {
+public class MBThreadAssetRenderer extends BaseAssetRenderer<MBThread> {
 
-	public OrganizationAssetRenderer(Organization organization) {
-		_organization = organization;
+	public MBThreadAssetRenderer(MBThread mbThread) {
+		_mbThread = mbThread;
 	}
 
 	@Override
-	public Organization getAssetObject() {
-		return _organization;
+	public MBThread getAssetObject() {
+		return _mbThread;
 	}
 
 	@Override
 	public String getClassName() {
-		return Organization.class.getName();
+		return MBThread.class.getName();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _organization.getPrimaryKey();
+		return _mbThread.getThreadId();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _organization.getGroupId();
+		return _mbThread.getGroupId();
 	}
 
 	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return _organization.getComments();
+		return StringPool.BLANK;
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _organization.getName();
+		return _mbThread.getTitle();
 	}
 
 	@Override
 	public long getUserId() {
-		return _organization.getUserId();
+		return _mbThread.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _organization.getUserName();
+		return _mbThread.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return _organization.getUuid();
+		return _mbThread.getUuid();
 	}
 
 	@Override
 	public boolean include(
-			HttpServletRequest request, HttpServletResponse response,
-			String template)
-		throws Exception {
+		HttpServletRequest request, HttpServletResponse response,
+		String template) {
 
 		return false;
 	}
 
-	private final Organization _organization;
+	@Override
+	public boolean isDisplayable() {
+		return false;
+	}
+
+	private final MBThread _mbThread;
 
 }

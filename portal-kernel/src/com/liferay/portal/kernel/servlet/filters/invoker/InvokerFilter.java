@@ -238,15 +238,6 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getURI(HttpServletRequest, String)}
-	 */
-	@Deprecated
-	protected String getURI(HttpServletRequest request) {
-		return null;
-	}
-
-	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #getURI(String)}
 	 */
@@ -264,27 +255,6 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		}
 
 		return HttpUtil.normalizePath(originalURI);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String getURL(HttpServletRequest request) {
-		StringBuffer requestURL = request.getRequestURL();
-
-		if (requestURL == null) {
-			return StringPool.BLANK;
-		}
-
-		String queryString = request.getQueryString();
-
-		if (!Validator.isBlank(queryString)) {
-			requestURL.append(StringPool.QUESTION);
-			requestURL.append(request.getQueryString());
-		}
-
-		return requestURL.toString();
 	}
 
 	protected boolean handleLongRequestURL(

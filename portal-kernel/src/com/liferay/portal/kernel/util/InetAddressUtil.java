@@ -14,81 +14,40 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
-import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.UnknownHostException;
-
-import java.util.Enumeration;
 
 /**
  * @author Michael C. Han
  * @author Shuyang Zhou
+ * @author Marta Medio
  */
 public class InetAddressUtil {
 
-	public static String getLocalHostName() throws Exception {
-		return LocalHostNameHolder._LOCAL_HOST_NAME;
+	public static InetAddressProvider getInetAddressProvider() {
+		return _inetAddressProvider;
 	}
 
-	public static InetAddress getLocalInetAddress() throws Exception {
-		Enumeration<NetworkInterface> enu1 =
-			NetworkInterface.getNetworkInterfaces();
-
-		while (enu1.hasMoreElements()) {
-			NetworkInterface networkInterface = enu1.nextElement();
-
-			Enumeration<InetAddress> enu2 = networkInterface.getInetAddresses();
-
-			while (enu2.hasMoreElements()) {
-				InetAddress inetAddress = enu2.nextElement();
-
-				if (!inetAddress.isLoopbackAddress() &&
-					(inetAddress instanceof Inet4Address)) {
-
-					return inetAddress;
-				}
-			}
-		}
-
-		throw new SystemException("No local internet address");
+	public static String getLocalHostName() throws Exception {
+		return getInetAddressProvider().getLocalHostName();
 	}
 
 	public static InetAddress getLoopbackInetAddress()
 		throws UnknownHostException {
 
-		return InetAddress.getByName("127.0.0.1");
+		return getInetAddressProvider().getLoopbackInetAddress();
 	}
 
 	public static boolean isLocalInetAddress(InetAddress inetAddress) {
-		if (inetAddress.isAnyLocalAddress() ||
-			inetAddress.isLinkLocalAddress() ||
-			inetAddress.isLoopbackAddress() ||
-			inetAddress.isSiteLocalAddress()) {
-
-			return true;
-		}
-
-		return false;
+		return getInetAddressProvider().isLocalInetAddress(inetAddress);
 	}
 
-	private static class LocalHostNameHolder {
+	public static void setInetAddressProvider(
+		InetAddressProvider inetAddressProvider) {
 
-		private static final String _LOCAL_HOST_NAME;
-
-		static {
-			try {
-				InetAddress inetAddress = getLocalInetAddress();
-
-				_LOCAL_HOST_NAME = inetAddress.getHostName();
-			}
-			catch (Exception e) {
-				throw new ExceptionInInitializerError(e);
-			}
-		}
-
+		_inetAddressProvider = inetAddressProvider;
 	}
+
+	private static InetAddressProvider _inetAddressProvider;
 
 }

@@ -18,7 +18,7 @@ class StateSyncronizer extends Component {
 	};
 
 	created() {
-		const {descriptionEditor, nameEditor} = this.props;
+		const {descriptionEditor, nameEditor, translationManager} = this.props;
 
 		this._eventHandler = new EventHandler();
 
@@ -26,6 +26,15 @@ class StateSyncronizer extends Component {
 			descriptionEditor.on('change', this._handleDescriptionEditorChanged.bind(this)),
 			nameEditor.on('change', this._handleNameEditorChanged.bind(this))
 		);
+
+		if (translationManager) {
+			translationManager.on(
+				'editingLocaleChange',
+				event => {
+					this.syncEditors(event.newVal);
+				}
+			);
+		}
 	}
 
 	disposeInternal() {
@@ -88,6 +97,31 @@ class StateSyncronizer extends Component {
 		const {layoutProvider} = this.props;
 
 		return FormSupport.emptyPages(layoutProvider.state.pages);
+	}
+
+	syncEditors(editingLanguageId) {
+		const {
+			descriptionEditor,
+			localizedDescription,
+			localizedName,
+			nameEditor
+		} = this.props;
+
+		let description = localizedDescription[editingLanguageId];
+
+		if (!description) {
+			description = localizedDescription[this.getDefaultLanguageId()];
+		}
+
+		window[descriptionEditor.name].setHTML(description);
+
+		let name = localizedName[editingLanguageId];
+
+		if (!name) {
+			name = localizedName[this.getDefaultLanguageId()];
+		}
+
+		window[nameEditor.name].setHTML(name);
 	}
 
 	syncInputs() {

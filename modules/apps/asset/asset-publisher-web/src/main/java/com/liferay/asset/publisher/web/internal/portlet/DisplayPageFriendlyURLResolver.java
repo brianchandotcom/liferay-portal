@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -175,37 +174,6 @@ public class DisplayPageFriendlyURLResolver
 			groupId, privateLayout, friendlyURL);
 
 		return new LayoutFriendlyURLComposite(layout, friendlyURL);
-	}
-
-	@Override
-	public LayoutFriendlyURLSeparatorComposite
-			getLayoutFriendlyURLSeparatorComposite(
-				long companyId, long groupId, boolean privateLayout,
-				String friendlyURL, Map<String, String[]> params,
-				Map<String, Object> requestContext)
-		throws PortalException {
-
-		String urlTitle = friendlyURL.substring(
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
-
-		int i = urlTitle.lastIndexOf(StringPool.FORWARD_SLASH);
-
-		if (i > 0) {
-			friendlyURL = friendlyURL.substring(
-				0,
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR.length() + i);
-		}
-
-		LayoutFriendlyURLComposite layoutFriendlyURLComposite =
-			getLayoutFriendlyURLComposite(
-				companyId, groupId, privateLayout, friendlyURL, params,
-				requestContext);
-
-		LayoutFriendlyURLSeparatorComposite newLayoutFriendlyURLComposite =
-			new LayoutFriendlyURLSeparatorComposite(
-				layoutFriendlyURLComposite, Portal.FRIENDLY_URL_SEPARATOR);
-
-		return newLayoutFriendlyURLComposite;
 	}
 
 	@Override

@@ -14,13 +14,8 @@ import StateSyncronizer from './util/StateSyncronizer.es';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {isKeyInSet, isModifyingKey} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
-import {LocalStorageMechanism, Storage} from 'metal-storage';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
-
-const STORAGE_KEY_SHOW_PUBLISHED_ALERTS = 'dynamic-data-mapping-form-web-shown-alerts';
-
-const storage = new Storage(new LocalStorageMechanism());
 
 /**
  * Form.
@@ -207,6 +202,17 @@ class Form extends Component {
 		saved: Config.bool(),
 
 		/**
+		 * Wether to show an alert telling the user about the result of the
+		 * "Publish" operation.
+		 * @default false
+		 * @instance
+		 * @memberof Form
+		 * @type {!boolean}
+		 */
+
+		showPublishAlert: Config.bool().value(false),
+
+		/**
 		 * The path to the SVG spritemap file containing the icons.
 		 * @default undefined
 		 * @instance
@@ -267,7 +273,8 @@ class Form extends Component {
 			localizedDescription,
 			localizedName,
 			namespace,
-			published
+			published,
+			showPublishAlert
 		} = this.props;
 		const {paginationMode} = this.state;
 
@@ -342,15 +349,13 @@ class Form extends Component {
 			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked)
 		);
 
-		if (this.isShowPublishedStatusAlerts()) {
+		if (showPublishAlert) {
 			if (published) {
 				this._showPublishedAlert(this._createFormURL());
 			}
 			else {
 				this._showUnpublishedAlert();
 			}
-
-			this.togglePublishedAlertsShown();
 		}
 	}
 
@@ -369,7 +374,6 @@ class Form extends Component {
 		this._handleNameEditorCopyAndPaste = this._handleNameEditorCopyAndPaste.bind(this);
 		this._handleNameEditorKeydown = this._handleNameEditorKeydown.bind(this);
 		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(this);
-		this._handlePublishedChanged = this._handlePublishedChanged.bind(this);
 		this._resolvePreviewURL = this._resolvePreviewURL.bind(this);
 		this._updateAutoSaveMessage = this._updateAutoSaveMessage.bind(this);
 		this.submitForm = this.submitForm.bind(this);
@@ -405,12 +409,6 @@ class Form extends Component {
 		const {view} = this.props;
 
 		return view !== 'fieldSets';
-	}
-
-	isShowPublishedStatusAlerts() {
-		const {formInstanceId} = this.props;
-
-		return formInstanceId > 0 && !!storage.get(STORAGE_KEY_SHOW_PUBLISHED_ALERTS + formInstanceId);
 	}
 
 	isShowRuleBuilder() {
@@ -503,11 +501,6 @@ class Form extends Component {
 					{this.isFormBuilderView() && (
 						<div class="button-holder ddm-form-builder-buttons">
 							<PublishButton
-								events={
-									{
-										publishedChanged: this._handlePublishedChanged
-									}
-								}
 								namespace={namespace}
 								published={published}
 								spritemap={spritemap}
@@ -625,17 +618,6 @@ class Form extends Component {
 			if (saved || published) {
 				shareURLButton.classList.remove('hide');
 			}
-		}
-	}
-
-	togglePublishedAlertsShown() {
-		const {formInstanceId} = this.props;
-
-		if (this.isShowPublishedStatusAlerts()) {
-			storage.remove(STORAGE_KEY_SHOW_PUBLISHED_ALERTS + formInstanceId);
-		}
-		else {
-			storage.set(STORAGE_KEY_SHOW_PUBLISHED_ALERTS + formInstanceId, true);
 		}
 	}
 
@@ -795,10 +777,6 @@ class Form extends Component {
 				paginationMode: newVal
 			}
 		);
-	}
-
-	_handlePublishedChanged() {
-		this.togglePublishedAlertsShown();
 	}
 
 	_handleSaveButtonClicked(event) {

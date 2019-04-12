@@ -12,23 +12,30 @@
  * details.
  */
 
-package com.liferay.message.boards.configuration.definition;
+package com.liferay.comment.web.internal.configuration.definition;
 
-import com.liferay.message.boards.configuration.MBDiscussionGroupServiceConfiguration;
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
+import com.liferay.message.boards.constants.MBConstants;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * @author Roberto Díaz
  * @author István András Dézsi
  */
-@Component(service = ConfigurationBeanDeclaration.class)
-public class MBDiscussionGroupServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+@Component(service = ConfigurationPidMapping.class)
+public class CommentGroupServiceConfigurationPidMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return MBDiscussionGroupServiceConfiguration.class;
+		return CommentGroupServiceConfiguration.class;
+	}
+
+	@Override
+	public String getConfigurationPid() {
+		return MBConstants.SERVICE_NAME;
 	}
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.internal.util;
 
-import com.liferay.message.boards.configuration.MBDiscussionGroupServiceConfiguration;
+import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 
@@ -24,17 +24,15 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 public class MBDiscussionSubcriptionSender extends SubscriptionSender {
 
 	public MBDiscussionSubcriptionSender(
-		MBDiscussionGroupServiceConfiguration
-			mbDiscussionGroupServiceConfiguration) {
+		CommentGroupServiceConfiguration commentGroupServiceConfiguration) {
 
-		_mbDiscussionGroupServiceConfiguration =
-			mbDiscussionGroupServiceConfiguration;
+		_commentGroupServiceConfiguration = commentGroupServiceConfiguration;
 	}
 
 	@Override
 	protected void sendEmailNotification(User user) throws Exception {
-		if ((_mbDiscussionGroupServiceConfiguration == null) ||
-			!_mbDiscussionGroupServiceConfiguration.
+		if ((_commentGroupServiceConfiguration == null) ||
+			!_commentGroupServiceConfiguration.
 				discussionEmailCommentsAddedEnabled()) {
 
 			return;
@@ -43,7 +41,7 @@ public class MBDiscussionSubcriptionSender extends SubscriptionSender {
 		super.sendEmailNotification(user);
 	}
 
-	private final MBDiscussionGroupServiceConfiguration
-		_mbDiscussionGroupServiceConfiguration;
+	private final CommentGroupServiceConfiguration
+		_commentGroupServiceConfiguration;
 
 }

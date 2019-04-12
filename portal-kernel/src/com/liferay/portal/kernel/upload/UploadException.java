@@ -44,15 +44,6 @@ public class UploadException extends PortalException {
 		return _exceededLiferayFileItemSizeLimit;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #
-	 *             isExceededUploadRequestSizeLimit()}
-	 */
-	@Deprecated
-	public boolean isExceededSizeLimit() {
-		return isExceededUploadRequestSizeLimit();
-	}
-
 	public boolean isExceededUploadRequestSizeLimit() {
 		return _exceededUploadRequestSizeLimit;
 	}
@@ -65,15 +56,6 @@ public class UploadException extends PortalException {
 		boolean exceededLiferayFileItemSizeLimit) {
 
 		_exceededLiferayFileItemSizeLimit = exceededLiferayFileItemSizeLimit;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #
-	 *             setExceededUploadRequestSizeLimit(boolean)}
-	 */
-	@Deprecated
-	public void setExceededSizeLimit(boolean exceededSizeLimit) {
-		setExceededUploadRequestSizeLimit(exceededSizeLimit);
 	}
 
 	public void setExceededUploadRequestSizeLimit(

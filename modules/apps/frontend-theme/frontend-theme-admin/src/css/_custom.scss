@@ -7,6 +7,17 @@
 
 body {
 	background-color: $bg-color;
+
+	.user-avatar-link {
+		position: relative;
+
+		.panel-notifications-count {
+			margin: 0;
+			position: absolute;
+			right: calc(100% - 0.7rem);
+			top: -0.4rem;
+		}
+	}
 }
 
 #wrapper {

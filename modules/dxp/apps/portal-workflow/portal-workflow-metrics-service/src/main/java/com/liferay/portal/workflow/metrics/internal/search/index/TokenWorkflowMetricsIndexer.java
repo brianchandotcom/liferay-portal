@@ -89,6 +89,8 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		document.addKeyword("taskId", kaleoTaskInstanceToken.getKaleoTaskId());
 		document.addKeyword(
+			"taskName", kaleoTaskInstanceToken.getKaleoTaskName());
+		document.addKeyword(
 			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 		document.addKeyword("userId", kaleoTaskInstanceToken.getUserId());
 

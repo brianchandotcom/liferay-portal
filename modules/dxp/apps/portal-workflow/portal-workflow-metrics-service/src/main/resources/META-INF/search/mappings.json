@@ -763,6 +763,10 @@
 				"store": true,
 				"type": "keyword"
 			},
+			"taskName": {
+				"store": true,
+				"type": "keyword"
+			},
 			"tokenId": {
 				"store": true,
 				"type": "keyword"

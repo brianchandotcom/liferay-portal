@@ -267,9 +267,12 @@ definition {
 
 		NavItem.gotoTemplates();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Basic Web Content"
+		Click(
+			locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON"
+		);
+
+		MenuItem.click(
+			menuItem = "Edit"
 		);
 
 		PortletEntry.inputName(name = "Basic Web Content Edit");

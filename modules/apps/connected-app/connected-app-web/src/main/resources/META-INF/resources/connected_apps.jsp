@@ -22,7 +22,7 @@
 			<liferay-ui:message key="apps" />
 		</h2>
 
-		<liferay-ui:message key="list-third-party-apps-connected-to-your-account" />
+		<liferay-ui:message key="your-account-is-connected-to-the-following-third-party-apps" />
 	</div>
 
 	<div class="sheet-section">

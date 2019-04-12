@@ -60,18 +60,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ServletResponseUtil {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<Range> getRanges(
-			HttpServletRequest request, HttpServletResponse response,
-			long length)
-		throws IOException {
-
-		return _getRanges(request, length);
-	}
-
 	public static boolean isClientAbortException(IOException ioe) {
 		Class<?> clazz = ioe.getClass();
 
@@ -197,21 +185,6 @@ public class ServletResponseUtil {
 				request, response, fileName, ranges, inputStream, contentLength,
 				contentType);
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void write(
-			HttpServletRequest request, HttpServletResponse response,
-			String fileName, List<Range> ranges, InputStream inputStream,
-			long fullLength, String contentType)
-		throws IOException {
-
-		_write(
-			request, response, fileName, ranges, inputStream, fullLength,
-			contentType);
 	}
 
 	public static void write(
@@ -443,20 +416,6 @@ public class ServletResponseUtil {
 
 			write(response, byteBuffer);
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected static InputStream copyRange(
-			InputStream inputStream, OutputStream outputStream, long start,
-			long length)
-		throws IOException {
-
-		return _copyRange(
-			_toRandomAccessInputStream(inputStream), outputStream, start,
-			length);
 	}
 
 	protected static void setContentLength(

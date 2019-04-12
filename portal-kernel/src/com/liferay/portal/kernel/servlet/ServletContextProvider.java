@@ -27,13 +27,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface ServletContextProvider {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String STRUTS_BRIDGES_CONTEXT_PROVIDER =
-		"STRUTS_BRIDGES_CONTEXT_PROVIDER";
-
 	public HttpServletRequest getHttpServletRequest(
 		GenericPortlet portlet, PortletRequest portletRequest);
 

@@ -388,14 +388,6 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getFacebookCanvasPageURL() {
-		return _facebookCanvasPageURL;
-	}
-
-	/**
 	 * Returns the current internationalization language's code.
 	 *
 	 * <p>
@@ -1103,14 +1095,6 @@ public class ThemeDisplay
 		return _async;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean isFacebook() {
-		return false;
-	}
-
 	public boolean isFreeformLayout() {
 		return _freeformLayout;
 	}
@@ -1358,14 +1342,6 @@ public class ThemeDisplay
 
 	public void setDoAsUserLanguageId(String doAsUserLanguageId) {
 		_doAsUserLanguageId = doAsUserLanguageId;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setFacebookCanvasPageURL(String facebookCanvasPageURL) {
-		_facebookCanvasPageURL = facebookCanvasPageURL;
 	}
 
 	public void setFreeformLayout(boolean freeformLayout) {
@@ -1945,13 +1921,6 @@ public class ThemeDisplay
 	private long _doAsGroupId;
 	private String _doAsUserId = StringPool.BLANK;
 	private String _doAsUserLanguageId = StringPool.BLANK;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	private String _facebookCanvasPageURL;
-
 	private boolean _freeformLayout;
 	private boolean _hubAction;
 	private boolean _hubPartialAction;

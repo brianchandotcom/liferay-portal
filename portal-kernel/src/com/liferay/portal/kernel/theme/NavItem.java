@@ -51,45 +51,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NavItem implements Serializable {
 
-	/**
-	 * Creates a single level of navigation items from the layouts. Navigation
-	 * items for nested layouts are only created when they are accessed.
-	 *
-	 * <p>
-	 * No permission checks are performed in this method. Permissions of child
-	 * layouts are honored when accessing them via {@link #getChildren()}.
-	 * </p>
-	 *
-	 * @param      request the currently served {@link HttpServletRequest}
-	 * @param      layouts the layouts from which to create the navigation items
-	 * @return     a single level of navigation items from the layouts, or
-	 *             <code>null</code> if the collection of layouts was
-	 *             <code>null</code>.
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #fromLayouts(HttpServletRequest, ThemeDisplay, Map)}
-	 */
-	@Deprecated
-	public static List<NavItem> fromLayouts(
-		HttpServletRequest request, List<Layout> layouts,
-		Map<String, Object> contextObjects) {
-
-		if ((layouts == null) || layouts.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<NavItem> navItems = new ArrayList<>(layouts.size());
-
-		for (Layout layout : layouts) {
-			navItems.add(
-				new NavItem(request, themeDisplay, layout, contextObjects));
-		}
-
-		return navItems;
-	}
-
 	public static List<NavItem> fromLayouts(
 			HttpServletRequest request, ThemeDisplay themeDisplay,
 			Map<String, Object> contextObjects)

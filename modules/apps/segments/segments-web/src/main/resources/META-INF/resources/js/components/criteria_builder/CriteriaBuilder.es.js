@@ -45,7 +45,7 @@ class CriteriaBuilder extends Component {
 		),
 		editing: PropTypes.bool.isRequired,
 		editingCriteria: PropTypes.bool.isRequired,
-		empty: PropTypes.bool.isRequired,
+		emptyContributors: PropTypes.bool.isRequired,
 
 		/**
 		 * Name of the entity that a set of properties belongs to, for example,
@@ -257,7 +257,7 @@ class CriteriaBuilder extends Component {
 			editing,
 			editingCriteria,
 			editingId,
-			empty,
+			emptyContributors,
 			entityName,
 			modelLabel,
 			propertyKey,
@@ -276,11 +276,11 @@ class CriteriaBuilder extends Component {
 
 		return (
 			<div className={criteriaBuilderClassNames}>
-				{(!empty || editing) &&
+				{(!emptyContributors || editing) &&
 					<CriteriaGroup
 						criteria={criteria}
 						editing={editingCriteria}
-						empty={empty}
+						emptyContributors={emptyContributors}
 						entityName={entityName}
 						groupId={criteria && criteria.groupId}
 						modelLabel={modelLabel}

@@ -806,12 +806,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected boolean entityCacheEnabled;
 	protected boolean finderCacheEnabled;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	protected ModelListener<T>[] listeners = new ModelListener[0];
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePersistenceImpl.class);
 

@@ -28,13 +28,30 @@ class StateSyncronizer extends Component {
 		);
 
 		if (translationManager) {
-			translationManager.on(
-				'editingLocaleChange',
-				event => {
-					this.syncEditors(event.newVal);
-				}
+			this._eventHandler.add(
+				translationManager.on(
+					'deleteAvailableLocale',
+					({locale}) => {
+						this.deleteLanguageId(locale);
+					}
+				),
+				translationManager.on(
+					'editingLocaleChange',
+					event => {
+						this.syncEditors(event.newVal);
+					}
+				),
 			);
 		}
+	}
+
+	deleteLanguageId(languageId) {
+		const {localizedDescription, localizedName} = this.props;
+
+		delete localizedDescription[languageId];
+		delete localizedName[languageId];
+
+		this.syncEditors();
 	}
 
 	disposeInternal() {
@@ -99,7 +116,7 @@ class StateSyncronizer extends Component {
 		return FormSupport.emptyPages(layoutProvider.state.pages);
 	}
 
-	syncEditors(editingLanguageId) {
+	syncEditors(editingLanguageId = this.getDefaultLanguageId()) {
 		const {
 			descriptionEditor,
 			localizedDescription,

@@ -23,7 +23,7 @@
 		<span class="sticker">
 			<span class="inline-item">
 				<liferay-ui:user-portrait
-					cssClass="sticker"
+					cssClass="sticker-lg"
 					user="<%= user %>"
 				/>
 			</span>
@@ -40,4 +40,19 @@
 		expanded="<%= true %>"
 		label="<%= userAvatar %>"
 	/>
+
+	<%
+	int notificationsCount = GetterUtil.getInteger(request.getAttribute(PersonalMenuWebKeys.NOTIFICATIONS_COUNT));
+	%>
+
+	<c:if test="<%= notificationsCount > 0 %>">
+		<%PortletURL notificationsURL = PortletProviderUtil.getPortletURL(request, UserNotificationEvent.class.getName(), PortletProvider.Action.VIEW);
+		%>
+
+		<aui:a href="<%= (notificationsURL != null) ? notificationsURL.toString() : null %>">
+			<span class="badge badge-danger panel-notifications-count">
+				<span class="badge-item badge-item-expand"><%= notificationsCount %></span>
+			</span>
+		</aui:a>
+	</c:if>
 </span>

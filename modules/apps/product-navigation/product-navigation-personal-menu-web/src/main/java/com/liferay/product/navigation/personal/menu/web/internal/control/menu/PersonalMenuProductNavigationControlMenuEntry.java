@@ -15,6 +15,9 @@
 package com.liferay.product.navigation.personal.menu.web.internal.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -23,9 +26,13 @@ import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuE
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration;
 import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfigurationTracker;
+import com.liferay.product.navigation.personal.menu.web.internal.constants.PersonalMenuWebKeys;
+
+import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,6 +55,30 @@ public class PersonalMenuProductNavigationControlMenuEntry
 	@Override
 	public String getIconJspPath() {
 		return "/control_menu/personal_menu_icon.jsp";
+	}
+
+	@Override
+	public boolean includeIcon(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
+
+		if (!user.isDefaultUser() &&
+			(_userNotificationEventLocalService != null)) {
+
+			request.setAttribute(
+				PersonalMenuWebKeys.NOTIFICATIONS_COUNT,
+				_userNotificationEventLocalService.
+					getArchivedUserNotificationEventsCount(
+						themeDisplay.getUserId(),
+						UserNotificationDeliveryConstants.TYPE_WEBSITE, false));
+		}
+
+		return super.includeIcon(request, response);
 	}
 
 	@Override
@@ -86,5 +117,9 @@ public class PersonalMenuProductNavigationControlMenuEntry
 
 	@Reference
 	private PersonalMenuConfigurationTracker _personalMenuConfigurationTracker;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

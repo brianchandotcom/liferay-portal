@@ -21,7 +21,7 @@ export const generateFieldName = (pages, desiredName, currentName = null) => {
 };
 
 export const checkInvalidFieldNameCharacter = character => {
-	return /[\\~`!@#$%^&*(){}[\];:"'<,.>?/\-+=]/g.test(character);
+	return /[\\~`!@#$%^&*(){}[\];:"'<,.>?/\-+=|]/g.test(character);
 };
 
 export function normalizeFieldName(fieldName) {

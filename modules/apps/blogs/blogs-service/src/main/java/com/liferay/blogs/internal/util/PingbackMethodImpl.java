@@ -48,7 +48,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
-import java.net.InetAddress;
 import java.net.URL;
 
 import java.util.HashMap;
@@ -377,7 +376,7 @@ public class PingbackMethodImpl implements Method {
 			URL url = new URL(_sourceURI);
 
 			return InetAddressUtil.isLocalInetAddress(
-				InetAddress.getByName(url.getHost()));
+				InetAddressUtil.getInetAddressByName(url.getHost()));
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

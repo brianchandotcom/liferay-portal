@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.xsl.XSLURIResolver;
 
-import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -52,7 +51,7 @@ public class XSLSecureURIResolver implements XSLURIResolver {
 			URL url = new URL(href);
 
 			if (InetAddressUtil.isLocalInetAddress(
-					InetAddress.getByName(url.getHost()))) {
+					InetAddressUtil.getInetAddressByName(url.getHost()))) {
 
 				throw new TransformerException(
 					StringBundler.concat(

@@ -94,7 +94,6 @@ import com.liferay.portal.struts.TilesUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.InetAddress;
 import java.net.URL;
 
 import java.util.Collections;
@@ -1385,7 +1384,7 @@ public class TemplateContextHelper {
 				URL url = new URL(location);
 
 				if (InetAddressUtil.isLocalInetAddress(
-						InetAddress.getByName(url.getHost()))) {
+						InetAddressUtil.getInetAddressByName(url.getHost()))) {
 
 					return true;
 				}

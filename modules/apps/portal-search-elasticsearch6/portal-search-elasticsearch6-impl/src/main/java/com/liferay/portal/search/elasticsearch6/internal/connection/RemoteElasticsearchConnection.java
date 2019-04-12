@@ -19,6 +19,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -103,7 +104,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 		int port = GetterUtil.getInteger(transportAddressParts[1]);
 
-		InetAddress inetAddress = InetAddress.getByName(host);
+		InetAddress inetAddress = InetAddressUtil.getInetAddressByName(host);
 
 		transportClient.addTransportAddress(
 			new TransportAddress(inetAddress, port));

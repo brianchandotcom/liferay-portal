@@ -170,6 +170,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListMergeable;
@@ -999,7 +1000,8 @@ public class PortalImpl implements Portal {
 			}
 
 			try {
-				InetAddress inetAddress = InetAddress.getByName(domain);
+				InetAddress inetAddress = InetAddressUtil.getInetAddressByName(
+					domain);
 
 				String hostAddress = inetAddress.getHostAddress();
 

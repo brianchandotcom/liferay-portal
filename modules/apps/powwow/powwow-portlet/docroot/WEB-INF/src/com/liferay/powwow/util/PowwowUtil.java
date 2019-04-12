@@ -334,7 +334,7 @@ public class PowwowUtil {
 		powwowSubscriptionSender.setReplyToAddress(fromAddress);
 		powwowSubscriptionSender.setScopeGroupId(powwowMeeting.getGroupId());
 		powwowSubscriptionSender.setServiceContext(serviceContext);
-		powwowSubscriptionSender.setUserId(powwowMeeting.getUserId());
+		powwowSubscriptionSender.setCurrentUserId(powwowMeeting.getUserId());
 
 		return powwowSubscriptionSender;
 	}

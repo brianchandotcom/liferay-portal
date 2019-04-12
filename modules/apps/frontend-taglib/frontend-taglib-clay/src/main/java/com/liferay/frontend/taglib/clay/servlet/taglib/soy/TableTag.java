@@ -78,8 +78,28 @@ public class TableTag<T> extends BaseClayTag {
 		putValue("dataSourceKey", dataSourceKey);
 	}
 
+	public void setDataSourceURL(String dataSourceURL) {
+		putValue("dataSourceURL", dataSourceURL);
+	}
+
 	public void setItems(Collection<?> items) {
 		putValue("items", items);
+	}
+
+	public void setPage(int page) {
+		putValue("page", page);
+	}
+
+	public void setPageParamName(String pageParamName) {
+		putValue("pageParamName", pageParamName);
+	}
+
+	public void setPageSize(int pageSize) {
+		putValue("pageSize", pageSize);
+	}
+
+	public void setPageSizeParamName(String pageSizeParamName) {
+		putValue("pageSizeParamName", pageSizeParamName);
 	}
 
 	public void setSchema(Schema schema) {

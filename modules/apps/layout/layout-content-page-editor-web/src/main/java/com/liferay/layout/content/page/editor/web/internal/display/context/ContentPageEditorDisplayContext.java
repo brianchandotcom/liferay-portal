@@ -551,7 +551,8 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private SoyContext _getFragmentEntrySoyContext(
-		FragmentEntry fragmentEntry, String content) {
+		FragmentEntryLink fragmentEntryLink, FragmentEntry fragmentEntry,
+		String content) {
 
 		if (fragmentEntry != null) {
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
@@ -563,6 +564,23 @@ public class ContentPageEditorDisplayContext {
 			);
 
 			return soyContext;
+		}
+
+		String rendererKey = fragmentEntryLink.getRendererKey();
+
+		if (Validator.isNotNull(rendererKey)) {
+			SoyContext soyContext = _getSoyContextContributedFragment(
+				rendererKey);
+
+			if (!soyContext.isEmpty()) {
+				return soyContext;
+			}
+
+			soyContext = _getSoyContextDynamicFragment(fragmentEntryLink);
+
+			if (!soyContext.isEmpty()) {
+				return soyContext;
+			}
 		}
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
@@ -851,6 +869,27 @@ public class ContentPageEditorDisplayContext {
 		return _redirect;
 	}
 
+	private SoyContext _getSoyContextContributedFragment(String rendererKey) {
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		Map<String, FragmentEntry> fragmentCollectionContributorEntries =
+			_fragmentCollectionContributorTracker.
+				getFragmentCollectionContributorEntries();
+
+		FragmentEntry contributedFragmentEntry =
+			fragmentCollectionContributorEntries.get(rendererKey);
+
+		if (contributedFragmentEntry != null) {
+			soyContext.put(
+				"fragmentEntryId", 0
+			).put(
+				"name", contributedFragmentEntry.getName()
+			);
+		}
+
+		return soyContext;
+	}
+
 	private List<SoyContext> _getSoyContextContributedFragmentCollections(
 		int type) {
 
@@ -886,6 +925,31 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return soyContexts;
+	}
+
+	private SoyContext _getSoyContextDynamicFragment(
+		FragmentEntryLink fragmentEntryLink) {
+
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		FragmentRenderer fragmentRenderer =
+			_fragmentRendererTracker.getFragmentRenderer(
+				fragmentEntryLink.getRendererKey());
+
+		if (fragmentRenderer != null) {
+			DefaultFragmentRendererContext fragmentRendererContext =
+				new DefaultFragmentRendererContext(fragmentEntryLink);
+
+			fragmentRendererContext.setLocale(themeDisplay.getLocale());
+
+			soyContext.put(
+				"fragmentEntryId", 0
+			).put(
+				"name", fragmentRenderer.getLabel(fragmentRendererContext)
+			);
+		}
+
+		return soyContext;
 	}
 
 	private SoyContext _getSoyContextDynamicFragments(int type) {
@@ -966,10 +1030,10 @@ public class ContentPageEditorDisplayContext {
 			soyContexts.add(soyContext);
 		}
 
-		SoyContext soyContextDynamicFragments =
-			_getSoyContextDynamicFragments(type);
+		SoyContext soyContextDynamicFragments = _getSoyContextDynamicFragments(
+			type);
 
-		if(!soyContextDynamicFragments.isEmpty()) {
+		if (!soyContextDynamicFragments.isEmpty()) {
 			soyContexts.add(_getSoyContextDynamicFragments(type));
 		}
 
@@ -1043,7 +1107,8 @@ public class ContentPageEditorDisplayContext {
 					"fragmentEntryLinkId",
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
 				).putAll(
-					_getFragmentEntrySoyContext(fragmentEntry, content)
+					_getFragmentEntrySoyContext(
+						fragmentEntryLink, fragmentEntry, content)
 				);
 
 				soyContexts.put(

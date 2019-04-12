@@ -143,7 +143,6 @@ class RuleList extends Component {
 	}
 
 	prepareStateForRender(states) {
-		const {roles} = this;
 		const rules = this._setDataProviderNames(states);
 
 		let newLabel = '';
@@ -180,18 +179,12 @@ class RuleList extends Component {
 										...condition,
 										operands: condition.operands.map(
 											(operand, index) => {
-												let {label} = operand;
-
-												label = this._getOperandLabel(condition.operands, index);
-
-												if (index == 1 && condition.operands[0].type === 'user' && roles.length) {
-													label = roles.find(role => role.id === operand.value).label;
-												}
+												const label = this._getOperandLabel(condition.operands, index);
 
 												return {
 													...operand,
 													label,
-													value: this._getOperandLabel(condition.operands, index)
+													value: label
 												};
 											}
 										)

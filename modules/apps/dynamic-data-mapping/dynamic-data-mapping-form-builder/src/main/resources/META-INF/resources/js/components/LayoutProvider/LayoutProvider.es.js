@@ -3,7 +3,7 @@ import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 import {getFieldProperties} from '../../util/fieldSupport.es';
 import {pageStructure, ruleStructure} from '../../util/config.es';
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor, RulesVisitor} from '../../util/visitors.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 
 import handleColumnResized from './handlers/columnResizedHandler.es';
@@ -287,6 +287,40 @@ class LayoutProvider extends Component {
 				};
 			}
 		);
+	}
+
+	getRules() {
+		let {rules} = this.state;
+
+		if (rules) {
+			const visitor = new RulesVisitor(rules);
+
+			rules = visitor.mapConditions(
+				condition => {
+					if (condition.operands[0].type == 'list') {
+						condition = {
+							...condition,
+							operands: [
+								{
+									label: 'user',
+									repeatable: false,
+									type: 'user',
+									value: 'user'
+								},
+								{
+									...condition.operands[0],
+									label: condition.operands[0].value
+								}
+							]
+						};
+					}
+
+					return condition;
+				}
+			);
+		}
+
+		return rules;
 	}
 
 	render() {

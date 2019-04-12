@@ -77,7 +77,7 @@ class StateSyncronizer extends Component {
 			name: localizedName,
 			pages: layoutProvider.state.pages,
 			paginationMode: layoutProvider.state.paginationMode,
-			rules: layoutProvider.state.rules,
+			rules: layoutProvider.getRules(),
 			successPageSettings: layoutProvider.state.successPageSettings
 		};
 

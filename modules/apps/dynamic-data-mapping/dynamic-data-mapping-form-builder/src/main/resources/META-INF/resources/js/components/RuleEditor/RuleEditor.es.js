@@ -270,7 +270,7 @@ class RuleEditor extends Component {
 					name: Config.string()
 				}
 			)
-		).value([]),
+		).valueFn('_rolesValueFn'),
 
 		/**
 		 * @default 0
@@ -670,7 +670,8 @@ class RuleEditor extends Component {
 				conditions,
 				deletedFields: this._getDeletedFields(visitor),
 				fieldOptions: this._fieldOptionsValueFn(),
-				pageOptions: this.populatePageOptions(pages, maxPageIndex)
+				pageOptions: this.populatePageOptions(pages, maxPageIndex),
+				roles: this._rolesValueFn()
 			}
 		);
 	}
@@ -1293,7 +1294,7 @@ class RuleEditor extends Component {
 	}
 
 	_handleSecondOperandFieldEdited(event) {
-		const {conditions, roles} = this;
+		const {conditions} = this;
 		const {fieldInstance, value} = event;
 		let fieldValue = '';
 
@@ -1319,18 +1320,16 @@ class RuleEditor extends Component {
 			};
 		}
 
-		let roleLabel = '';
 		let userType = '';
 
 		if (conditions[index].operands[0].type === 'user') {
-			roleLabel = roles.find(role => role.id === fieldValue);
 			userType = conditions[index].operands[0].type;
 		}
 
 		conditions[index].operands[1] = {
 			...secondOperand,
 			dataType: fieldInstance.dataType,
-			label: roleLabel ? roleLabel.label : '',
+			label: fieldValue,
 			type: userType ? userType : fieldInstance.type,
 			value: fieldValue
 		};
@@ -1556,6 +1555,19 @@ class RuleEditor extends Component {
 		);
 
 		return conditions;
+	}
+
+	_rolesValueFn() {
+		const {roles} = this;
+
+		return roles.map(
+			role => {
+				return {
+					...role,
+					value: role.label
+				};
+			}
+		);
 	}
 
 	_setActions(actions) {

@@ -59,21 +59,6 @@ public class MethodKeyTest {
 		_assertMethodKey(
 			TestClass.class, _METHOD_NAME, new Class<?>[0],
 			new MethodKey(TestClass.class.getMethod(_METHOD_NAME)));
-		_assertMethodKey(
-			TestClass.class, _METHOD_NAME, new Class<?>[0],
-			new MethodKey(TestClass.class.getName(), _METHOD_NAME));
-
-		try {
-			new MethodKey("ClassNotFound", _METHOD_NAME);
-
-			Assert.fail("RuntimeException was not thrown");
-		}
-		catch (RuntimeException re) {
-			Throwable throwable = re.getCause();
-
-			Assert.assertSame(
-				ClassNotFoundException.class, throwable.getClass());
-		}
 	}
 
 	@Test

@@ -217,8 +217,6 @@ public class UnicodePropertiesTest {
 		String expectedToString, UnicodeProperties unicodeProperties) {
 
 		Assert.assertEquals(expectedToString, unicodeProperties.toString());
-		Assert.assertEquals(
-			expectedToString, unicodeProperties.toSortedString());
 	}
 
 	private void _assertUnicodeProperties(

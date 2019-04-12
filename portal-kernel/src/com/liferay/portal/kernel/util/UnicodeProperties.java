@@ -164,14 +164,6 @@ public class UnicodeProperties extends HashMap<String, String> {
 		return put(key, value);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #toString}
-	 */
-	@Deprecated
-	public String toSortedString() {
-		return toString();
-	}
-
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(4 * size());

@@ -74,30 +74,6 @@ public class MethodKey implements Externalizable {
 			method.getParameterTypes());
 	}
 
-	/**
-	 * @deprecated As of Newton (6.2.x), replaced by {@link #MethodKey(Class,
-	 *             String, Class...)}
-	 */
-	@Deprecated
-	public MethodKey(
-		String declaringClassName, String methodName,
-		Class<?>... parameterTypes) {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		try {
-			_declaringClass = classLoader.loadClass(declaringClassName);
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
-		}
-
-		_methodName = methodName;
-		_parameterTypes = parameterTypes;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

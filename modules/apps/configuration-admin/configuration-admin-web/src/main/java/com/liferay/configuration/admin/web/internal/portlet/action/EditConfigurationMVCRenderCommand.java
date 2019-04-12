@@ -16,6 +16,7 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
+import com.liferay.configuration.admin.menu.ConfigurationMenuItem;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
@@ -28,6 +29,8 @@ import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetri
 import com.liferay.configuration.admin.web.internal.util.DDMFormRendererHelper;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -36,13 +39,16 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -133,6 +139,21 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 				ConfigurationAdminWebKeys.CONFIGURATION_FORM_RENDERER,
 				configurationFormRenderer);
 
+			List<ConfigurationMenuItem> configurationMenuItems =
+				_configurationMenuItemsServiceTrackerMap.getService(pid);
+
+			if (configurationMenuItems == null) {
+				configurationMenuItems =
+					_configurationMenuItemsServiceTrackerMap.getService(
+						factoryPid);
+			}
+
+			if (configurationMenuItems != null) {
+				renderRequest.setAttribute(
+					ConfigurationAdminWebKeys.CONFIGURATION_MENU_ITEMS,
+					configurationMenuItems);
+			}
+
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL,
 				configurationModel);
@@ -158,12 +179,27 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 		return "/error.jsp";
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_configurationMenuItemsServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, ConfigurationMenuItem.class,
+				"configuration.pid");
+	}
+
+	protected void deactivate() {
+		_configurationMenuItemsServiceTrackerMap.close();
+	}
+
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
 	@Reference
 	private ConfigurationFormRendererRetriever
 		_configurationFormRendererRetriever;
+
+	private ServiceTrackerMap<String, List<ConfigurationMenuItem>>
+		_configurationMenuItemsServiceTrackerMap;
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;

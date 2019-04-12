@@ -36,6 +36,9 @@ public class ConfigurationAdminWebKeys {
 	public static final String CONFIGURATION_FORM_RENDERER =
 		"CONFIGURATION_FORM_RENDERER";
 
+	public static final String CONFIGURATION_MENU_ITEMS =
+		"CONFIGURATION_MENU_ITEMS";
+
 	public static final String CONFIGURATION_MODEL = "CONFIGURATION_MODEL";
 
 	public static final String CONFIGURATION_MODEL_FORM_HTML =

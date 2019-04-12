@@ -127,7 +127,6 @@ public class StructuredContentDTOConverter implements DTOConverter {
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()),
 					AssetTag.NAME_ACCESSOR);
-				lastReviewed = journalArticle.getReviewDate();
 				numberOfComments = _commentManager.getCommentsCount(
 					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey());

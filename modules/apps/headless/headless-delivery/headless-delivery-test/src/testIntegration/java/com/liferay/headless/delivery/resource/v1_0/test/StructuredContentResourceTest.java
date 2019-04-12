@@ -140,7 +140,6 @@ public class StructuredContentResourceTest
 				contentStructureId = _ddmStructure.getStructureId();
 				datePublished = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
-				lastReviewed = RandomTestUtil.nextDate();
 				siteId = testGroup.getGroupId();
 				title = RandomTestUtil.randomString();
 			}

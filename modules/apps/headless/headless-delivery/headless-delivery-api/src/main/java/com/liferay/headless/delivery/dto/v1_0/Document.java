@@ -103,7 +103,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AdaptedImage[] adaptedImages;
 
 	public AggregateRating getAggregateRating() {
@@ -131,7 +131,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
 	public String getContentUrl() {
@@ -158,7 +158,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
 	public Creator getCreator() {
@@ -185,7 +185,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -212,7 +212,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -239,7 +239,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -293,7 +293,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long documentFolderId;
 
 	public String getEncodingFormat() {
@@ -320,7 +320,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
 	public String getFileExtension() {
@@ -372,7 +372,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public String[] getKeywords() {
@@ -426,7 +426,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfComments;
 
 	public Number getSizeInBytes() {
@@ -453,7 +453,7 @@ public class Document {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number sizeInBytes;
 
 	public TaxonomyCategory[] getTaxonomyCategories() {

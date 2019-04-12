@@ -64,7 +64,7 @@ public class MessageBoardAttachment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
 	public String getEncodingFormat() {
@@ -91,7 +91,7 @@ public class MessageBoardAttachment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
 	public String getFileExtension() {
@@ -143,7 +143,7 @@ public class MessageBoardAttachment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public Number getSizeInBytes() {
@@ -170,7 +170,7 @@ public class MessageBoardAttachment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number sizeInBytes;
 
 	public String getTitle() {

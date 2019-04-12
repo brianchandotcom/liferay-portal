@@ -106,7 +106,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
 	public String getArticleBody() {
@@ -161,7 +161,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -188,7 +188,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -215,7 +215,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -269,7 +269,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
 	public String getFriendlyUrlPath() {
@@ -321,7 +321,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public String[] getKeywords() {
@@ -375,7 +375,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfAttachments;
 
 	public Number getNumberOfKnowledgeBaseArticles() {
@@ -406,7 +406,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfKnowledgeBaseArticles;
 
 	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
@@ -437,7 +437,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
 
 	public Long getParentKnowledgeBaseFolderId() {
@@ -495,7 +495,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
 	public TaxonomyCategory[] getTaxonomyCategories() {

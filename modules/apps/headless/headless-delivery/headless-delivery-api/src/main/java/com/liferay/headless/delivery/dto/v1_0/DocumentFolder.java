@@ -105,7 +105,7 @@ public class DocumentFolder {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -132,7 +132,7 @@ public class DocumentFolder {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -159,7 +159,7 @@ public class DocumentFolder {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -211,7 +211,7 @@ public class DocumentFolder {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public String getName() {
@@ -266,7 +266,7 @@ public class DocumentFolder {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfDocumentFolders;
 
 	public Number getNumberOfDocuments() {
@@ -293,7 +293,7 @@ public class DocumentFolder {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfDocuments;
 
 	public Long getSiteId() {
@@ -320,7 +320,7 @@ public class DocumentFolder {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
 	public ViewableBy getViewableBy() {

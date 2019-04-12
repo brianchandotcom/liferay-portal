@@ -271,11 +271,6 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getKeywords());
 		}
 
-		if (structuredContent.getLastReviewed() != null) {
-			existingStructuredContent.setLastReviewed(
-				structuredContent.getLastReviewed());
-		}
-
 		if (structuredContent.getNumberOfComments() != null) {
 			existingStructuredContent.setNumberOfComments(
 				structuredContent.getNumberOfComments());

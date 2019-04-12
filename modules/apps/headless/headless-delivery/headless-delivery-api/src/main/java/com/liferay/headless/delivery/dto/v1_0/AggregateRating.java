@@ -64,7 +64,7 @@ public class AggregateRating {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number bestRating;
 
 	public Number getRatingCount() {
@@ -91,7 +91,7 @@ public class AggregateRating {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number ratingCount;
 
 	public Number getRatingValue() {
@@ -118,7 +118,7 @@ public class AggregateRating {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number ratingValue;
 
 	public Number getWorstRating() {
@@ -145,7 +145,7 @@ public class AggregateRating {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number worstRating;
 
 	@Override

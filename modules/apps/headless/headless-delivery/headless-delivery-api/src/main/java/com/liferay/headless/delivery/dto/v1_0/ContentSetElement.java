@@ -64,7 +64,7 @@ public class ContentSetElement {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Object content;
 
 	public String getContentType() {
@@ -91,7 +91,7 @@ public class ContentSetElement {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
 	public Long getId() {
@@ -116,7 +116,7 @@ public class ContentSetElement {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public String getTitle() {
@@ -143,7 +143,7 @@ public class ContentSetElement {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String title;
 
 	@Override

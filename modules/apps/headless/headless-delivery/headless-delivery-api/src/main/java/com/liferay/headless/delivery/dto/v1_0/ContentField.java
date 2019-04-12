@@ -64,7 +64,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
 	public String getInputControl() {
@@ -91,7 +91,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String inputControl;
 
 	public String getLabel() {
@@ -118,7 +118,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
 	public String getName() {
@@ -197,7 +197,7 @@ public class ContentField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean repeatable;
 
 	public Value getValue() {

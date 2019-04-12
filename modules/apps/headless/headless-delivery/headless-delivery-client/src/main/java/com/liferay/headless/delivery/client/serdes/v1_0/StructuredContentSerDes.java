@@ -244,17 +244,6 @@ public class StructuredContentSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"lastReviewed\": ");
-
-		if (structuredContent.getLastReviewed() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(structuredContent.getLastReviewed());
-		}
-
-		sb.append(", ");
-
 		sb.append("\"numberOfComments\": ");
 
 		if (structuredContent.getNumberOfComments() == null) {
@@ -513,12 +502,6 @@ public class StructuredContentSerDes {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setKeywords(
 						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "lastReviewed")) {
-				if (jsonParserFieldValue != null) {
-					structuredContent.setLastReviewed(
-						_toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfComments")) {

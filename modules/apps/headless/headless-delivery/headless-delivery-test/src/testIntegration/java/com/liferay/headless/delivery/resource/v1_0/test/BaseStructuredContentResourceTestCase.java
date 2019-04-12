@@ -2318,14 +2318,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("lastReviewed", additionalAssertFieldName)) {
-				if (structuredContent.getLastReviewed() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("numberOfComments", additionalAssertFieldName)) {
 				if (structuredContent.getNumberOfComments() == null) {
 					valid = false;
@@ -2580,17 +2572,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("lastReviewed", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						structuredContent1.getLastReviewed(),
-						structuredContent2.getLastReviewed())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("numberOfComments", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						structuredContent1.getNumberOfComments(),
@@ -2803,12 +2784,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("lastReviewed")) {
-			sb.append(_dateFormat.format(structuredContent.getLastReviewed()));
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("numberOfComments")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2870,7 +2845,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 				friendlyUrlPath = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				key = RandomTestUtil.randomString();
-				lastReviewed = RandomTestUtil.nextDate();
 				siteId = testGroup.getGroupId();
 				title = RandomTestUtil.randomString();
 				uuid = RandomTestUtil.randomString();
@@ -2957,8 +2931,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		String key;
 		@JsonProperty
 		String[] keywords;
-		@JsonProperty
-		Date lastReviewed;
 		@JsonProperty
 		Number numberOfComments;
 		@JsonProperty

@@ -64,7 +64,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
 	public String getInputControl() {
@@ -91,7 +91,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String inputControl;
 
 	public String getLabel() {
@@ -118,7 +118,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
 	public Boolean getLocalizable() {
@@ -145,7 +145,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean localizable;
 
 	public Boolean getMultiple() {
@@ -172,7 +172,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean multiple;
 
 	public String getName() {
@@ -197,7 +197,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	public ContentStructureField[] getNestedContentStructureFields() {
@@ -228,7 +228,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentStructureField[] nestedContentStructureFields;
 
 	public Option[] getOptions() {
@@ -255,7 +255,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Option[] options;
 
 	public String getPredefinedValue() {
@@ -282,7 +282,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String predefinedValue;
 
 	public Boolean getRepeatable() {
@@ -309,7 +309,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean repeatable;
 
 	public Boolean getRequired() {
@@ -336,7 +336,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean required;
 
 	public Boolean getShowLabel() {
@@ -363,7 +363,7 @@ public class ContentStructureField {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean showLabel;
 
 	@Override

@@ -50,17 +50,6 @@ public class GeoSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
-
-		if (geo.getId() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(geo.getId());
-		}
-
-		sb.append(", ");
-
 		sb.append("\"latitude\": ");
 
 		if (geo.getLatitude() == null) {
@@ -121,12 +110,7 @@ public class GeoSerDes {
 		protected void setField(
 			Geo geo, String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					geo.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "latitude")) {
+			if (Objects.equals(jsonParserFieldName, "latitude")) {
 				if (jsonParserFieldValue != null) {
 					geo.setLatitude((Number)jsonParserFieldValue);
 				}

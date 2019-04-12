@@ -106,7 +106,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
 	public String[] getAvailableLanguages() {
@@ -133,7 +133,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
 	public ContentField[] getContentFields() {
@@ -215,7 +215,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
 	public Date getDateCreated() {
@@ -242,7 +242,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -269,7 +269,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
 	public Date getDatePublished() {
@@ -375,7 +375,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public String getKey() {
@@ -400,7 +400,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
 	public String[] getKeywords() {
@@ -430,33 +430,6 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
-	public Date getLastReviewed() {
-		return lastReviewed;
-	}
-
-	public void setLastReviewed(Date lastReviewed) {
-		this.lastReviewed = lastReviewed;
-	}
-
-	@JsonIgnore
-	public void setLastReviewed(
-		UnsafeSupplier<Date, Exception> lastReviewedUnsafeSupplier) {
-
-		try {
-			lastReviewed = lastReviewedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date lastReviewed;
-
 	public Number getNumberOfComments() {
 		return numberOfComments;
 	}
@@ -481,7 +454,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfComments;
 
 	@Schema(description = "https://www.schema.org/templates")
@@ -510,7 +483,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RenderedContent[] renderedContents;
 
 	public Long getSiteId() {
@@ -537,7 +510,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
 	public TaxonomyCategory[] getTaxonomyCategories() {
@@ -565,7 +538,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategory[] taxonomyCategories;
 
 	public Long[] getTaxonomyCategoryIds() {
@@ -644,7 +617,7 @@ public class StructuredContent {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String uuid;
 
 	public ViewableBy getViewableBy() {
@@ -883,17 +856,6 @@ public class StructuredContent {
 			}
 
 			sb.append("]");
-		}
-
-		sb.append(", ");
-
-		sb.append("\"lastReviewed\": ");
-
-		if (lastReviewed == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(lastReviewed);
 		}
 
 		sb.append(", ");

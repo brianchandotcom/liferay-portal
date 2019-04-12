@@ -40,31 +40,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Geo")
 public class Geo {
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
-
 	public Number getLatitude() {
 		return latitude;
 	}
@@ -145,17 +120,6 @@ public class Geo {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		sb.append("\"id\": ");
-
-		if (id == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(id);
-		}
-
-		sb.append(", ");
 
 		sb.append("\"latitude\": ");
 

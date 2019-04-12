@@ -329,27 +329,6 @@ public class StructuredContent {
 
 	protected String[] keywords;
 
-	public Date getLastReviewed() {
-		return lastReviewed;
-	}
-
-	public void setLastReviewed(Date lastReviewed) {
-		this.lastReviewed = lastReviewed;
-	}
-
-	public void setLastReviewed(
-		UnsafeSupplier<Date, Exception> lastReviewedUnsafeSupplier) {
-
-		try {
-			lastReviewed = lastReviewedUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date lastReviewed;
-
 	public Number getNumberOfComments() {
 		return numberOfComments;
 	}

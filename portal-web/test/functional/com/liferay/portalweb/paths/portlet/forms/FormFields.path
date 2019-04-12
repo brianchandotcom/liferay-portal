@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')] | //label[text()='${key_fieldLabel}']</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(text(),'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

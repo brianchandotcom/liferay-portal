@@ -14,15 +14,8 @@
 
 package com.liferay.portal.kernel.sanitizer;
 
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.util.Map;
 
@@ -31,45 +24,6 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public class SanitizerUtil {
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Sanitizer getSanitizer() {
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #sanitize(long,
-	 *             long, long, String, long, String, String)}
-	 */
-	@Deprecated
-	public static byte[] sanitize(
-			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, byte[] bytes)
-		throws SanitizerException {
-
-		return sanitize(
-			companyId, groupId, userId, className, classPK, contentType,
-			Sanitizer.MODE_ALL, bytes, null);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #sanitize(long,
-	 *             long, long, String, long, String, String)}
-	 */
-	@Deprecated
-	public static void sanitize(
-			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, InputStream inputStream,
-			OutputStream outputStream)
-		throws SanitizerException {
-
-		sanitize(
-			companyId, groupId, userId, className, classPK, contentType,
-			Sanitizer.MODE_ALL, inputStream, outputStream, null);
-	}
 
 	public static String sanitize(
 			long companyId, long groupId, long userId, String className,
@@ -81,39 +35,6 @@ public class SanitizerUtil {
 			Sanitizer.MODE_ALL, content, null);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #sanitize(long,
-	 *             long, long, String, long, String, String, String, Map)}
-	 */
-	@Deprecated
-	public static byte[] sanitize(
-			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, String mode, byte[] bytes,
-			Map<String, Object> options)
-		throws SanitizerException {
-
-		return sanitize(
-			companyId, groupId, userId, className, classPK, contentType,
-			new String[] {mode}, bytes, options);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #sanitize(long,
-	 *             long, long, String, long, String, String, String, Map)}
-	 */
-	@Deprecated
-	public static void sanitize(
-			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, String mode,
-			InputStream inputStream, OutputStream outputStream,
-			Map<String, Object> options)
-		throws SanitizerException {
-
-		sanitize(
-			companyId, groupId, userId, className, classPK, contentType,
-			new String[] {mode}, inputStream, outputStream, options);
-	}
-
 	public static String sanitize(
 			long companyId, long groupId, long userId, String className,
 			long classPK, String contentType, String mode, String s,
@@ -123,60 +44,6 @@ public class SanitizerUtil {
 		return sanitize(
 			companyId, groupId, userId, className, classPK, contentType,
 			new String[] {mode}, s, options);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #sanitize(long,
-	 *             long, long, String, long, String, String[], String, Map)}
-	 */
-	@Deprecated
-	public static byte[] sanitize(
-			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, String[] modes, byte[] bytes,
-			Map<String, Object> options)
-		throws SanitizerException {
-
-		for (Sanitizer sanitizer : _sanitizers) {
-			bytes = sanitizer.sanitize(
-				companyId, groupId, userId, className, classPK, contentType,
-				modes, bytes, options);
-		}
-
-		return bytes;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #sanitize(long,
-	 *             long, long, String, long, String, String[], String, Map)}
-	 */
-	@Deprecated
-	public static void sanitize(
-			long companyId, long groupId, long userId, String className,
-			long classPK, String contentType, String[] modes,
-			InputStream inputStream, OutputStream outputStream,
-			Map<String, Object> options)
-		throws SanitizerException {
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		for (Sanitizer sanitizer : _sanitizers) {
-			sanitizer.sanitize(
-				companyId, groupId, userId, className, classPK, contentType,
-				modes, inputStream, byteArrayOutputStream, options);
-
-			inputStream = new ByteArrayInputStream(
-				byteArrayOutputStream.toByteArray());
-
-			byteArrayOutputStream.reset();
-		}
-
-		try {
-			StreamUtil.transfer(inputStream, outputStream);
-		}
-		catch (IOException ioe) {
-			throw new SanitizerException(ioe);
-		}
 	}
 
 	public static String sanitize(
@@ -192,13 +59,6 @@ public class SanitizerUtil {
 		}
 
 		return content;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSanitizer(Sanitizer sanitizer) {
 	}
 
 	private static final ServiceTrackerList<Sanitizer> _sanitizers =

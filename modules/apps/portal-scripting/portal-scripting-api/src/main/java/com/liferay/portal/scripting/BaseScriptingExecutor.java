@@ -52,35 +52,6 @@ public abstract class BaseScriptingExecutor implements ScriptingExecutor {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #eval(Set, Map,
-	 *             Set, File)}
-	 */
-	@Deprecated
-	@Override
-	public Map<String, Object> eval(
-			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, File scriptFile,
-			ClassLoader... classloaders)
-		throws ScriptingException {
-
-		return eval(allowedClasses, inputObjects, outputNames, scriptFile);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #eval(Set, Map,
-	 *             Set, String)}
-	 */
-	@Deprecated
-	@Override
-	public Map<String, Object> eval(
-			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String script, ClassLoader... classloaders)
-		throws ScriptingException {
-
-		return eval(allowedClasses, inputObjects, outputNames, script);
-	}
-
 	@Override
 	public ScriptingContainer<?> getScriptingContainer() {
 		return null;

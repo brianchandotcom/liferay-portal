@@ -98,21 +98,6 @@ public class ScriptingImpl implements Scripting {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #eval(Set, Map,
-	 *             Set, String, String)}
-	 */
-	@Deprecated
-	public Map<String, Object> eval(
-			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String language, String script,
-			String... servletContextNames)
-		throws ScriptingException {
-
-		return eval(
-			allowedClasses, inputObjects, outputNames, language, script);
-	}
-
 	@Override
 	public void exec(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,

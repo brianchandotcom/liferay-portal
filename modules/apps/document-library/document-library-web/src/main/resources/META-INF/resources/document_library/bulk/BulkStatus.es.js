@@ -54,7 +54,10 @@ class BulkStatus extends Component {
 	 * @protected
 	 */
 	_getBulkStatus() {
-		fetch(this.pathModule + this.bulkStatusUrl)
+		fetch(
+			this.pathModule + this.bulkStatusUrl,
+			{ credentials: 'include' }
+		)
 			.then(response => response.json())
 			.then(
 				response => {

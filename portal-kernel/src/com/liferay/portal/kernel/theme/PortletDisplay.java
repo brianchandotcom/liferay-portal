@@ -364,14 +364,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		return _urlStaging;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean isAccess() {
-		return true;
-	}
-
 	public boolean isActive() {
 		return _active;
 	}
@@ -569,13 +561,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_urlPrint = StringPool.BLANK;
 		_urlRefresh = StringPool.BLANK;
 		_webDAVEnabled = false;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setAccess(boolean access) {
 	}
 
 	public void setActive(boolean active) {

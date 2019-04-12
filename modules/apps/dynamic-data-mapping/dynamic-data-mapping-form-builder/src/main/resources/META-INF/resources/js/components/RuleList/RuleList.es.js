@@ -11,7 +11,7 @@ import {getFieldProperty} from '../LayoutProvider/util/fields.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
 /**
- * LayoutRenderer.
+ * RuleList.
  * @extends Component
  */
 

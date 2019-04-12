@@ -48,10 +48,10 @@ import org.junit.runner.Description;
 /**
  * @author Shuyang Zhou
  */
-public class DeleteAfterTestRunTestRule extends MethodTestRule<Void> {
+public class DeleteAfterTestRunMethodTestRule extends MethodTestRule<Void> {
 
-	public static final DeleteAfterTestRunTestRule INSTANCE =
-		new DeleteAfterTestRunTestRule();
+	public static final DeleteAfterTestRunMethodTestRule INSTANCE =
+		new DeleteAfterTestRunMethodTestRule();
 
 	@Override
 	public void afterMethod(Description description, Void v, Object target)
@@ -294,7 +294,7 @@ public class DeleteAfterTestRunTestRule extends MethodTestRule<Void> {
 
 	}
 
-	private DeleteAfterTestRunTestRule() {
+	private DeleteAfterTestRunMethodTestRule() {
 	}
 
 	private static final Set<Class<?>> _orderedClasses = new LinkedHashSet<>(

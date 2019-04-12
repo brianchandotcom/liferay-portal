@@ -35,9 +35,9 @@ import org.junit.runner.Description;
 /**
  * @author Raymond Augé
  */
-public class SyntheticBundleRule extends ClassTestRule<Long> {
+public class SyntheticBundleClassTestRule extends ClassTestRule<Long> {
 
-	public SyntheticBundleRule(String bundlePackageName) {
+	public SyntheticBundleClassTestRule(String bundlePackageName) {
 		_bundlePackageName = bundlePackageName;
 	}
 

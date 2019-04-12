@@ -27,10 +27,11 @@ import org.junit.runner.Description;
  * @author Miguel Pastor
  * @author Shuyang Zhou
  */
-public class WebDAVEnvironmentConfigTestRule extends ClassTestRule<Object> {
+public class WebDAVEnvironmentConfigClassTestRule
+	extends ClassTestRule<Object> {
 
-	public static final WebDAVEnvironmentConfigTestRule INSTANCE =
-		new WebDAVEnvironmentConfigTestRule();
+	public static final WebDAVEnvironmentConfigClassTestRule INSTANCE =
+		new WebDAVEnvironmentConfigClassTestRule();
 
 	@Override
 	public void afterClass(Description description, Object object) {
@@ -56,7 +57,7 @@ public class WebDAVEnvironmentConfigTestRule extends ClassTestRule<Object> {
 		return null;
 	}
 
-	private WebDAVEnvironmentConfigTestRule() {
+	private WebDAVEnvironmentConfigClassTestRule() {
 	}
 
 	private static final BaseWebDAVTestCase _baseWebDAVTestCase =

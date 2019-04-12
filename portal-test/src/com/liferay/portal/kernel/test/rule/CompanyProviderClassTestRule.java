@@ -23,10 +23,10 @@ import org.junit.runner.Description;
 /**
  * @author Cristina González
  */
-public class CompanyProviderTestRule extends ClassTestRule<Long> {
+public class CompanyProviderClassTestRule extends ClassTestRule<Long> {
 
-	public static final CompanyProviderTestRule INSTANCE =
-		new CompanyProviderTestRule();
+	public static final CompanyProviderClassTestRule INSTANCE =
+		new CompanyProviderClassTestRule();
 
 	@Override
 	protected void afterClass(Description description, Long previousCompanyId) {
@@ -42,7 +42,7 @@ public class CompanyProviderTestRule extends ClassTestRule<Long> {
 		return companyId;
 	}
 
-	private CompanyProviderTestRule() {
+	private CompanyProviderClassTestRule() {
 	}
 
 }

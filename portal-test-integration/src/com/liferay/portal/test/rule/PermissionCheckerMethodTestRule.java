@@ -26,10 +26,10 @@ import org.junit.runner.Description;
 /**
  * @author Tom Wang
  */
-public class PermissionCheckerTestRule extends MethodTestRule<Void> {
+public class PermissionCheckerMethodTestRule extends MethodTestRule<Void> {
 
-	public static final PermissionCheckerTestRule INSTANCE =
-		new PermissionCheckerTestRule();
+	public static final PermissionCheckerMethodTestRule INSTANCE =
+		new PermissionCheckerMethodTestRule();
 
 	@Override
 	public void afterMethod(Description description, Void c, Object target)
@@ -77,7 +77,7 @@ public class PermissionCheckerTestRule extends MethodTestRule<Void> {
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
-	private PermissionCheckerTestRule() {
+	private PermissionCheckerMethodTestRule() {
 	}
 
 	private String _originalName;

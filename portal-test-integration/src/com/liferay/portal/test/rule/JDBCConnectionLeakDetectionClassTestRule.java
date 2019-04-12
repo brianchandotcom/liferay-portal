@@ -31,11 +31,11 @@ import org.junit.runner.Description;
 /**
  * @author Tom Wang
  */
-public class JDBCConnectionLeakDetectionTestRule
+public class JDBCConnectionLeakDetectionClassTestRule
 	extends ClassTestRule<Collection<ServiceReference<ConnectionPoolMetrics>>> {
 
-	public static final JDBCConnectionLeakDetectionTestRule INSTANCE =
-		new JDBCConnectionLeakDetectionTestRule();
+	public static final JDBCConnectionLeakDetectionClassTestRule INSTANCE =
+		new JDBCConnectionLeakDetectionClassTestRule();
 
 	@Override
 	public void afterClass(

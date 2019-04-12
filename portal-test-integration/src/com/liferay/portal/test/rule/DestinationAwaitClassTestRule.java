@@ -31,15 +31,15 @@ import org.junit.runner.Description;
 /**
  * @author Shuyang Zhou
  */
-public class DestinationAwaitTestRule
+public class DestinationAwaitClassTestRule
 	extends ClassTestRule<Set<CountDownLatch>> {
 
-	public static final DestinationAwaitTestRule INSTANCE =
-		new DestinationAwaitTestRule(
+	public static final DestinationAwaitClassTestRule INSTANCE =
+		new DestinationAwaitClassTestRule(
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
 			DestinationNames.HOT_DEPLOY);
 
-	public DestinationAwaitTestRule(String... destinationNames) {
+	public DestinationAwaitClassTestRule(String... destinationNames) {
 		_destinationNames = destinationNames;
 	}
 

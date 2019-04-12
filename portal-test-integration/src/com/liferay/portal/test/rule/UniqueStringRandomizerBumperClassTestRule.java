@@ -14,7 +14,7 @@
 
 package com.liferay.portal.test.rule;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.ClassTestRule;
 
 import org.junit.runner.Description;
@@ -22,22 +22,24 @@ import org.junit.runner.Description;
 /**
  * @author Shuyang Zhou
  */
-public class ClearThreadLocalTestRule extends ClassTestRule<Void> {
+public class UniqueStringRandomizerBumperClassTestRule
+	extends ClassTestRule<Void> {
 
-	public static final ClearThreadLocalTestRule INSTANCE =
-		new ClearThreadLocalTestRule();
-
-	@Override
-	protected void afterClass(Description description, Void v) {
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
-	}
+	public static final UniqueStringRandomizerBumperClassTestRule INSTANCE =
+		new UniqueStringRandomizerBumperClassTestRule();
 
 	@Override
-	protected Void beforeClass(Description description) {
+	public Void beforeClass(Description description) {
+		UniqueStringRandomizerBumper.reset();
+
 		return null;
 	}
 
-	private ClearThreadLocalTestRule() {
+	@Override
+	protected void afterClass(Description description, Void v) {
+	}
+
+	private UniqueStringRandomizerBumperClassTestRule() {
 	}
 
 }

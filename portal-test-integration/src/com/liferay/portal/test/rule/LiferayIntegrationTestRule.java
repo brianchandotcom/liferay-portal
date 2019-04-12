@@ -18,8 +18,8 @@ import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.ClassTestRule;
-import com.liferay.portal.kernel.test.rule.CompanyProviderTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderClassTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunMethodTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TimeoutTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -59,21 +59,21 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		}
 
 		testRules.add(LogAssertionTestRule.INSTANCE);
-		testRules.add(_springInitializationTestRule);
+		testRules.add(_springInitializationClassTestRule);
 		testRules.add(SybaseDumpTransactionLogTestRule.INSTANCE);
-		testRules.add(ClearThreadLocalTestRule.INSTANCE);
-		testRules.add(UniqueStringRandomizerBumperTestRule.INSTANCE);
-		testRules.add(MainServletTestRule.INSTANCE);
-		testRules.add(DestinationAwaitTestRule.INSTANCE);
-		testRules.add(CompanyProviderTestRule.INSTANCE);
-		testRules.add(DeleteAfterTestRunTestRule.INSTANCE);
+		testRules.add(ClearThreadLocalClassTestRule.INSTANCE);
+		testRules.add(UniqueStringRandomizerBumperClassTestRule.INSTANCE);
+		testRules.add(MainServletClassTestRule.INSTANCE);
+		testRules.add(DestinationAwaitClassTestRule.INSTANCE);
+		testRules.add(CompanyProviderClassTestRule.INSTANCE);
+		testRules.add(DeleteAfterTestRunMethodTestRule.INSTANCE);
 		testRules.add(SynchronousDestinationTestRule.INSTANCE);
 		testRules.add(InjectTestRule.INSTANCE);
 
 		return testRules.toArray(new TestRule[testRules.size()]);
 	}
 
-	private static final TestRule _springInitializationTestRule =
+	private static final TestRule _springInitializationClassTestRule =
 		new ClassTestRule<Void>() {
 
 			@Override

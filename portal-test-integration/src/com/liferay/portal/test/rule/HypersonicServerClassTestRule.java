@@ -53,12 +53,12 @@ import org.junit.runner.Description;
  * @author William Newbury
  * @author Shuyang Zhou
  */
-public class HypersonicServerTestRule extends ClassTestRule<Server> {
+public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 
 	public static final String DATABASE_URL_BASE =
 		"jdbc:hsqldb:hsql://localhost/";
 
-	public static final HypersonicServerTestRule INSTANCE;
+	public static final HypersonicServerClassTestRule INSTANCE;
 
 	@Override
 	public void afterClass(Description description, Server server)
@@ -220,7 +220,7 @@ public class HypersonicServerTestRule extends ClassTestRule<Server> {
 			});
 	}
 
-	private HypersonicServerTestRule() {
+	private HypersonicServerClassTestRule() {
 	}
 
 	private static final String _DATABASE_NAME;
@@ -266,7 +266,7 @@ public class HypersonicServerTestRule extends ClassTestRule<Server> {
 			_DATABASE_URL = null;
 		}
 
-		INSTANCE = new HypersonicServerTestRule();
+		INSTANCE = new HypersonicServerClassTestRule();
 	}
 
 }

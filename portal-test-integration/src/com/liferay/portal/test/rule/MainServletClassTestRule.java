@@ -40,10 +40,10 @@ import org.springframework.mock.web.MockServletContext;
 /**
  * @author Shuyang Zhou
  */
-public class MainServletTestRule extends ClassTestRule<Void> {
+public class MainServletClassTestRule extends ClassTestRule<Void> {
 
-	public static final MainServletTestRule INSTANCE =
-		new MainServletTestRule();
+	public static final MainServletClassTestRule INSTANCE =
+		new MainServletClassTestRule();
 
 	public static MainServlet getMainServlet() {
 		return _mainServlet;
@@ -121,7 +121,7 @@ public class MainServletTestRule extends ClassTestRule<Void> {
 		return null;
 	}
 
-	protected MainServletTestRule() {
+	protected MainServletClassTestRule() {
 	}
 
 	private static MainServlet _mainServlet;

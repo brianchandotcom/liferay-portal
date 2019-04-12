@@ -91,7 +91,7 @@ public class ContactInformation {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String facebook;
 
 	public Long getId() {
@@ -116,7 +116,7 @@ public class ContactInformation {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public String getJabber() {
@@ -143,7 +143,7 @@ public class ContactInformation {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String jabber;
 
 	public PostalAddress[] getPostalAddresses() {
@@ -198,7 +198,7 @@ public class ContactInformation {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String skype;
 
 	public String getSms() {
@@ -223,7 +223,7 @@ public class ContactInformation {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String sms;
 
 	public Phone[] getTelephones() {
@@ -277,7 +277,7 @@ public class ContactInformation {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String twitter;
 
 	public WebUrl[] getWebUrls() {

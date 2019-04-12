@@ -192,17 +192,6 @@ public class OrganizationSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"parentOrganizationId\": ");
-
-		if (organization.getParentOrganizationId() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(organization.getParentOrganizationId());
-		}
-
-		sb.append(", ");
-
 		sb.append("\"services\": ");
 
 		if (organization.getServices() == null) {
@@ -332,14 +321,6 @@ public class OrganizationSerDes {
 				if (jsonParserFieldValue != null) {
 					organization.setParentOrganization(
 						OrganizationSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "parentOrganizationId")) {
-
-				if (jsonParserFieldValue != null) {
-					organization.setParentOrganizationId(
-						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "services")) {

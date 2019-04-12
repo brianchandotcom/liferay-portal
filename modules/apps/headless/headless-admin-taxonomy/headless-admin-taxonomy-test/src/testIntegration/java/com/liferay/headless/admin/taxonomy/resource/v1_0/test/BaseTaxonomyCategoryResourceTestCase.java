@@ -1493,16 +1493,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"parentVocabularyId", additionalAssertFieldName)) {
-
-				if (taxonomyCategory.getParentVocabularyId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (taxonomyCategory.getViewableBy() == null) {
 					valid = false;
@@ -1668,19 +1658,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"parentVocabularyId", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						taxonomyCategory1.getParentVocabularyId(),
-						taxonomyCategory2.getParentVocabularyId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						taxonomyCategory1.getViewableBy(),
@@ -1804,11 +1781,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("parentVocabularyId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("viewableBy")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1826,7 +1798,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
-				parentVocabularyId = RandomTestUtil.randomLong();
 			}
 		};
 	}

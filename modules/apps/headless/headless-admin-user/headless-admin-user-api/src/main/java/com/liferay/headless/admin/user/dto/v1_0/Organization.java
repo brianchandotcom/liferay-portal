@@ -67,7 +67,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String comment;
 
 	@Schema(description = "https://www.schema.org/ContactInformation")
@@ -96,7 +96,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContactInformation contactInformation;
 
 	public Date getDateCreated() {
@@ -123,7 +123,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -150,7 +150,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
 	public Long getId() {
@@ -175,7 +175,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public String getImage() {
@@ -202,7 +202,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
 	public String[] getKeywords() {
@@ -229,7 +229,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] keywords;
 
 	@Schema(description = "https://www.schema.org/PostalAddress")
@@ -257,7 +257,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Location location;
 
 	public String getName() {
@@ -282,7 +282,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	public Number getNumberOfOrganizations() {
@@ -309,7 +309,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfOrganizations;
 
 	public Organization getParentOrganization() {
@@ -340,33 +340,6 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Organization parentOrganization;
 
-	public Long getParentOrganizationId() {
-		return parentOrganizationId;
-	}
-
-	public void setParentOrganizationId(Long parentOrganizationId) {
-		this.parentOrganizationId = parentOrganizationId;
-	}
-
-	@JsonIgnore
-	public void setParentOrganizationId(
-		UnsafeSupplier<Long, Exception> parentOrganizationIdUnsafeSupplier) {
-
-		try {
-			parentOrganizationId = parentOrganizationIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long parentOrganizationId;
-
 	@Schema(description = "https://www.schema.org/Service")
 	public Service[] getServices() {
 		return services;
@@ -392,7 +365,7 @@ public class Organization {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Service[] services;
 
 	@Override
@@ -551,17 +524,6 @@ public class Organization {
 		}
 		else {
 			sb.append(parentOrganization);
-		}
-
-		sb.append(", ");
-
-		sb.append("\"parentOrganizationId\": ");
-
-		if (parentOrganizationId == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(parentOrganizationId);
 		}
 
 		sb.append(", ");

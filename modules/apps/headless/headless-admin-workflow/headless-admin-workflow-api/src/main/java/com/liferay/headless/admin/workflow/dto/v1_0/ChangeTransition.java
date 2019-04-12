@@ -64,7 +64,7 @@ public class ChangeTransition {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String transition;
 
 	@Override

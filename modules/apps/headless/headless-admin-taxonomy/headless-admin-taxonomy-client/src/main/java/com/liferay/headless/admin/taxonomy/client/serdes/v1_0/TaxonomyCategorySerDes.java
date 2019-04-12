@@ -181,17 +181,6 @@ public class TaxonomyCategorySerDes {
 
 		sb.append(", ");
 
-		sb.append("\"parentVocabularyId\": ");
-
-		if (taxonomyCategory.getParentVocabularyId() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(taxonomyCategory.getParentVocabularyId());
-		}
-
-		sb.append(", ");
-
 		sb.append("\"viewableBy\": ");
 
 		if (taxonomyCategory.getViewableBy() == null) {
@@ -312,14 +301,6 @@ public class TaxonomyCategorySerDes {
 					taxonomyCategory.setParentTaxonomyVocabulary(
 						ParentTaxonomyVocabularySerDes.toDTO(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "parentVocabularyId")) {
-
-				if (jsonParserFieldValue != null) {
-					taxonomyCategory.setParentVocabularyId(
-						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {

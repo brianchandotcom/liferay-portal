@@ -65,7 +65,7 @@ public class WorkflowTaskAssignToMe {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String comment;
 
 	public Date getDueDate() {
@@ -92,7 +92,7 @@ public class WorkflowTaskAssignToMe {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Date dueDate;
 
 	@Override

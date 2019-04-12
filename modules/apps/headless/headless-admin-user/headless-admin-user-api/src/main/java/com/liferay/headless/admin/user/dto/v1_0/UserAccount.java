@@ -67,7 +67,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String additionalName;
 
 	public String getAlternateName() {
@@ -94,7 +94,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String alternateName;
 
 	public Date getBirthDate() {
@@ -121,7 +121,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date birthDate;
 
 	@Schema(description = "https://www.schema.org/ContactInformation")
@@ -177,7 +177,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dashboardURL;
 
 	public Date getDateCreated() {
@@ -204,7 +204,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -231,7 +231,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
 	public String getEmail() {
@@ -258,7 +258,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String email;
 
 	public String getFamilyName() {
@@ -285,7 +285,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String familyName;
 
 	public String getGivenName() {
@@ -312,7 +312,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String givenName;
 
 	public String getHonorificPrefix() {
@@ -339,7 +339,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String honorificPrefix;
 
 	public String getHonorificSuffix() {
@@ -366,7 +366,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String honorificSuffix;
 
 	public Long getId() {
@@ -391,7 +391,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public String getImage() {
@@ -418,7 +418,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
 	public String getJobTitle() {
@@ -445,7 +445,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String jobTitle;
 
 	public String[] getKeywords() {
@@ -472,7 +472,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] keywords;
 
 	public String getName() {
@@ -497,7 +497,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	public OrganizationBrief[] getOrganizationBriefs() {
@@ -552,7 +552,7 @@ public class UserAccount {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
 
 	public RoleBrief[] getRoleBriefs() {

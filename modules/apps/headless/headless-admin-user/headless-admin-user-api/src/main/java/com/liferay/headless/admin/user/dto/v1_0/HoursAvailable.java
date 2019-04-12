@@ -64,7 +64,7 @@ public class HoursAvailable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String closes;
 
 	public String getDayOfWeek() {
@@ -91,7 +91,7 @@ public class HoursAvailable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dayOfWeek;
 
 	public Long getId() {
@@ -116,7 +116,7 @@ public class HoursAvailable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public String getOpens() {
@@ -143,7 +143,7 @@ public class HoursAvailable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String opens;
 
 	@Override

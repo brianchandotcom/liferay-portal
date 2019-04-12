@@ -276,27 +276,6 @@ public class TaxonomyCategory {
 
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
-	public Long getParentVocabularyId() {
-		return parentVocabularyId;
-	}
-
-	public void setParentVocabularyId(Long parentVocabularyId) {
-		this.parentVocabularyId = parentVocabularyId;
-	}
-
-	public void setParentVocabularyId(
-		UnsafeSupplier<Long, Exception> parentVocabularyIdUnsafeSupplier) {
-
-		try {
-			parentVocabularyId = parentVocabularyIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long parentVocabularyId;
-
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

@@ -256,27 +256,6 @@ public class Organization {
 
 	protected Organization parentOrganization;
 
-	public Long getParentOrganizationId() {
-		return parentOrganizationId;
-	}
-
-	public void setParentOrganizationId(Long parentOrganizationId) {
-		this.parentOrganizationId = parentOrganizationId;
-	}
-
-	public void setParentOrganizationId(
-		UnsafeSupplier<Long, Exception> parentOrganizationIdUnsafeSupplier) {
-
-		try {
-			parentOrganizationId = parentOrganizationIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long parentOrganizationId;
-
 	public Service[] getServices() {
 		return services;
 	}

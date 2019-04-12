@@ -105,7 +105,7 @@ public class TaxonomyCategory {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
 	public Creator getCreator() {
@@ -159,7 +159,7 @@ public class TaxonomyCategory {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
 	public Date getDateModified() {
@@ -186,7 +186,7 @@ public class TaxonomyCategory {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
 	public String getDescription() {
@@ -238,7 +238,7 @@ public class TaxonomyCategory {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	public String getName() {
@@ -295,7 +295,7 @@ public class TaxonomyCategory {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfTaxonomyCategories;
 
 	public ParentTaxonomyCategory getParentTaxonomyCategory() {
@@ -325,7 +325,7 @@ public class TaxonomyCategory {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyCategory parentTaxonomyCategory;
 
 	public ParentTaxonomyVocabulary getParentTaxonomyVocabulary() {
@@ -358,33 +358,6 @@ public class TaxonomyCategory {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
-
-	public Long getParentVocabularyId() {
-		return parentVocabularyId;
-	}
-
-	public void setParentVocabularyId(Long parentVocabularyId) {
-		this.parentVocabularyId = parentVocabularyId;
-	}
-
-	@JsonIgnore
-	public void setParentVocabularyId(
-		UnsafeSupplier<Long, Exception> parentVocabularyIdUnsafeSupplier) {
-
-		try {
-			parentVocabularyId = parentVocabularyIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long parentVocabularyId;
 
 	public ViewableBy getViewableBy() {
 		return viewableBy;
@@ -567,17 +540,6 @@ public class TaxonomyCategory {
 		}
 		else {
 			sb.append(parentTaxonomyVocabulary);
-		}
-
-		sb.append(", ");
-
-		sb.append("\"parentVocabularyId\": ");
-
-		if (parentVocabularyId == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(parentVocabularyId);
 		}
 
 		sb.append(", ");

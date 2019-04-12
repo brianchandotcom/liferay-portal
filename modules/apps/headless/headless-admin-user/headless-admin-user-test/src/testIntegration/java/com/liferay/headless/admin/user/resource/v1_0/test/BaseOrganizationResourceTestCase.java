@@ -943,16 +943,6 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"parentOrganizationId", additionalAssertFieldName)) {
-
-				if (organization.getParentOrganizationId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("services", additionalAssertFieldName)) {
 				if (organization.getServices() == null) {
 					valid = false;
@@ -1124,19 +1114,6 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"parentOrganizationId", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						organization1.getParentOrganizationId(),
-						organization2.getParentOrganizationId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("services", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						organization1.getServices(),
@@ -1267,11 +1244,6 @@ public abstract class BaseOrganizationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("parentOrganizationId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("services")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1290,7 +1262,6 @@ public abstract class BaseOrganizationResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				image = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
-				parentOrganizationId = RandomTestUtil.randomLong();
 			}
 		};
 	}

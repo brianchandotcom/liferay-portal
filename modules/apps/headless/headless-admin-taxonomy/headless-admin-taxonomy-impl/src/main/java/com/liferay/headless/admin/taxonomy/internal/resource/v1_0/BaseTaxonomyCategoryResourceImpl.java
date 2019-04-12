@@ -164,11 +164,6 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 				taxonomyCategory.getNumberOfTaxonomyCategories());
 		}
 
-		if (taxonomyCategory.getParentVocabularyId() != null) {
-			existingTaxonomyCategory.setParentVocabularyId(
-				taxonomyCategory.getParentVocabularyId());
-		}
-
 		if (taxonomyCategory.getViewableBy() != null) {
 			existingTaxonomyCategory.setViewableBy(
 				taxonomyCategory.getViewableBy());

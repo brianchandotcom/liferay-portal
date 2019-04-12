@@ -13,6 +13,7 @@ import handleFieldClicked from './handlers/fieldClickedHandler.es';
 import handleFieldDeleted from './handlers/fieldDeletedHandler.es';
 import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
+import handleLanguageIdDeleted from './handlers/languageIdDeletedHandler.es';
 
 /**
  * LayoutProvider listens to your children's events to
@@ -205,6 +206,7 @@ class LayoutProvider extends Component {
 			fieldEdited: this._handleFieldEdited.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
 			focusedFieldUpdated: this._handleFocusedFieldUpdated.bind(this),
+			languageIdDeleted: this._handleLanguageIdDeleted.bind(this),
 			pageAdded: this._handlePageAdded.bind(this),
 			pageDeleted: this._handlePageDeleted.bind(this),
 			pageReset: this._handlePageReset.bind(this),
@@ -505,6 +507,12 @@ class LayoutProvider extends Component {
 				)
 			}
 		);
+	}
+
+	_handleLanguageIdDeleted({locale}) {
+		const {focusedField, pages} = this.state;
+
+		this.setState(handleLanguageIdDeleted(focusedField, pages, locale));
 	}
 
 	_handlePageAdded() {

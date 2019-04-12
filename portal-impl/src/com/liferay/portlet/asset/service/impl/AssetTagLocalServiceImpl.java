@@ -104,12 +104,12 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		name = StringUtil.toLowerCase(StringUtil.trim(name));
 
+		validate(name);
+
 		if (hasTag(groupId, name)) {
 			throw new DuplicateTagException(
 				"A tag with the name " + name + " already exists");
 		}
-
-		validate(name);
 
 		tag.setName(name);
 

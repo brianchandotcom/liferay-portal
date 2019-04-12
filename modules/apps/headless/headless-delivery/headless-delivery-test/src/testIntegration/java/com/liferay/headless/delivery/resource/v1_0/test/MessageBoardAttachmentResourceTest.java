@@ -97,17 +97,6 @@ public class MessageBoardAttachmentResourceTest
 	}
 
 	@Override
-	protected MessageBoardAttachment
-			testPostMessageBoardThreadMessageBoardAttachment_addMessageBoardAttachment(
-				MessageBoardAttachment messageBoardAttachment)
-		throws Exception {
-
-		return invokePostMessageBoardThreadMessageBoardAttachment(
-			testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId(),
-			toMultipartBody(messageBoardAttachment));
-	}
-
-	@Override
 	protected MultipartBody toMultipartBody(
 		MessageBoardAttachment messageBoardAttachment) {
 

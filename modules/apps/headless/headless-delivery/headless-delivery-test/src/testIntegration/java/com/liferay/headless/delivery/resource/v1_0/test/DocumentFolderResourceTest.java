@@ -91,30 +91,4 @@ public class DocumentFolderResourceTest
 		return documentFolder.getId();
 	}
 
-	@Override
-	protected DocumentFolder
-			testPostDocumentFolderDocumentFolder_addDocumentFolder(
-				DocumentFolder documentFolder)
-		throws Exception {
-
-		DocumentFolder parentDocumentFolder = invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), randomDocumentFolder());
-
-		return invokePostDocumentFolderDocumentFolder(
-			parentDocumentFolder.getId(), documentFolder);
-	}
-
-	@Override
-	protected DocumentFolder testPostSiteDocumentFolder_addDocumentFolder(
-			DocumentFolder documentFolder)
-		throws Exception {
-
-		DocumentFolder postDocumentFolder = invokePostSiteDocumentFolder(
-			testGroup.getGroupId(), documentFolder);
-
-		Assert.assertEquals(0, postDocumentFolder.getNumberOfDocuments());
-
-		return postDocumentFolder;
-	}
-
 }

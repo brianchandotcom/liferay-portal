@@ -23,19 +23,13 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestAuthTokenIgnoreActions;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestAuthTokenIgnoreOrigins;
-import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestAuthTokenIgnorePortlets;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestMVCActionCommand;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestMVCRenderCommand;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestMVCResourceCommand;
-import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestPortalAddDefaultResourceCheckWhitelist;
-import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestPortalAddDefaultResourceCheckWhitelistActions;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -59,147 +53,6 @@ public class AuthTokenWhitelistUtilTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			new SyntheticBundleClassTestRule("bundle.authtokenwhitelistutil"));
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Test
-	public void testGetPortletCSRFWhitelistActionsFromBundle() {
-		Set<String> portletCSRFWhitelistActions =
-			AuthTokenWhitelistUtil.getPortletCSRFWhitelistActions();
-
-		Assert.assertTrue(
-			portletCSRFWhitelistActions.toString(),
-			portletCSRFWhitelistActions.contains(
-				TestAuthTokenIgnoreActions.TEST_AUTH_TOKEN_IGNORE_ACTION_URL));
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Test
-	public void testGetPortletCSRFWhitelistActionsFromPortalProperties() {
-		Set<String> portletCSRFWhitelistActions =
-			AuthTokenWhitelistUtil.getPortletCSRFWhitelistActions();
-
-		for (String authTokenIgnoreAction :
-				PropsValues.AUTH_TOKEN_IGNORE_ACTIONS) {
-
-			Assert.assertTrue(
-				portletCSRFWhitelistActions.toString(),
-				portletCSRFWhitelistActions.contains(authTokenIgnoreAction));
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Test
-	public void testGetPortletCSRFWhitelistFromBundle() {
-		Set<String> portletCSRFWhitelist =
-			AuthTokenWhitelistUtil.getPortletCSRFWhitelist();
-
-		Assert.assertTrue(
-			portletCSRFWhitelist.toString(),
-			portletCSRFWhitelist.contains(
-				TestAuthTokenIgnorePortlets.
-					TEST_AUTH_TOKEN_IGNORE_PORTLETS_URL));
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Test
-	public void testGetPortletCSRFWhitelistFromProperties() {
-		Set<String> portletCSRFWhitelist =
-			AuthTokenWhitelistUtil.getPortletCSRFWhitelist();
-
-		for (String authTokenIgnoreAction :
-				PropsValues.AUTH_TOKEN_IGNORE_PORTLETS) {
-
-			Assert.assertTrue(
-				portletCSRFWhitelist.toString(),
-				portletCSRFWhitelist.contains(authTokenIgnoreAction));
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Test
-	public void testGetPortletInvocationWhitelistActionsFromBundle() {
-		Set<String> portletInvocationWhitelistActions =
-			AuthTokenWhitelistUtil.getPortletInvocationWhitelistActions();
-
-		String action =
-			TestPortalAddDefaultResourceCheckWhitelistActions.
-				TEST_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS_URL;
-
-		Assert.assertTrue(
-			portletInvocationWhitelistActions.toString(),
-			portletInvocationWhitelistActions.contains(action));
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Test
-	public void testGetPortletInvocationWhitelistActionsFromPortalProperties() {
-		Set<String> portletInvocationWhitelistActions =
-			AuthTokenWhitelistUtil.getPortletInvocationWhitelistActions();
-
-		String[] actions =
-			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS;
-
-		for (String action : actions) {
-			Assert.assertTrue(
-				portletInvocationWhitelistActions.toString(),
-				portletInvocationWhitelistActions.contains(action));
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Test
-	public void testGetPortletInvocationWhitelistFromBundle() {
-		Set<String> portletInvocationWhitelist =
-			AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
-
-		String action =
-			TestPortalAddDefaultResourceCheckWhitelist.
-				TEST_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_URL;
-
-		Assert.assertTrue(
-			portletInvocationWhitelist.toString(),
-			portletInvocationWhitelist.contains(action));
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Test
-	public void testGetPortletInvocationWhitelistFromPortalProperties() {
-		Set<String> portletInvocationWhitelist =
-			AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
-
-		String[] actions =
-			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST;
-
-		for (String action : actions) {
-			Assert.assertTrue(
-				portletInvocationWhitelist.toString(),
-				portletInvocationWhitelist.contains(action));
-		}
-	}
 
 	@Test
 	public void testIsOriginCSRFWhitelistedFromBundle() {

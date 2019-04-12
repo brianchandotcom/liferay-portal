@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -141,22 +140,6 @@ public class PortalUtil {
 
 		return getPortal().addPortalInetSocketAddressEventListener(
 			portalInetSocketAddressEventListener);
-	}
-
-	/**
-	 * Adds the portal port event listener to the portal. The listener is
-	 * notified whenever the portal port is set.
-	 *
-	 * @param      portalPortEventListener the portal port event listener to add
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #addPortalInetSocketAddressEventListener(
-	 *             PortalInetSocketAddressEventListener)}
-	 */
-	@Deprecated
-	public static void addPortalPortEventListener(
-		PortalPortEventListener portalPortEventListener) {
-
-		getPortal().addPortalPortEventListener(portalPortEventListener);
 	}
 
 	/**
@@ -422,31 +405,6 @@ public class PortalUtil {
 		throws PortalException {
 
 		return getPortal().getBaseModel(modelName, primKey);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getBasicUserId(
-	 *             HttpServletRequest)}
-	 */
-	@Deprecated
-	public static long getBasicAuthUserId(HttpServletRequest request)
-		throws PortalException {
-
-		return getPortal().getBasicAuthUserId(request);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getBasicUserId(
-	 *             HttpServletRequest)}
-	 */
-	@Deprecated
-	public static long getBasicAuthUserId(
-			HttpServletRequest request, long companyId)
-		throws PortalException {
-
-		return getPortal().getBasicAuthUserId(request, companyId);
 	}
 
 	public static List<Group> getBrowsableScopeGroups(
@@ -899,18 +857,6 @@ public class PortalUtil {
 		return getPortal().getDefaultCompanyId();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getDigestUserId(
-	 *             HttpServletRequest)}
-	 */
-	@Deprecated
-	public static long getDigestAuthUserId(HttpServletRequest request)
-		throws PortalException {
-
-		return getPortal().getDigestAuthUserId(request);
-	}
-
 	public static String getEmailFromAddress(
 		PortletPreferences preferences, long companyId, String defaultValue) {
 
@@ -1138,33 +1084,6 @@ public class PortalUtil {
 
 		return getPortal().getI18nPathLanguageId(
 			locale, defaultI18nPathLanguageId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getJournalArticleActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
-			Map<String, Object> requestContext)
-		throws PortalException {
-
-		return getPortal().getJournalArticleActualURL(
-			groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Layout getJournalArticleLayout(
-			long groupId, boolean privateLayout, String friendlyURL)
-		throws PortalException {
-
-		return getPortal().getJournalArticleLayout(
-			groupId, privateLayout, friendlyURL);
 	}
 
 	public static String getJsSafePortletId(String portletId) {
@@ -1483,15 +1402,6 @@ public class PortalUtil {
 		return getPortal().getPortalLocalPort(secure);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalServerPort(boolean)}
-	 */
-	@Deprecated
-	public static int getPortalPort(boolean secure) {
-		return getPortal().getPortalPort(secure);
-	}
-
 	public static Properties getPortalProperties() {
 		return getPortal().getPortalProperties();
 	}
@@ -1550,18 +1460,6 @@ public class PortalUtil {
 
 	public static String getPortalWebDir() {
 		return getPortal().getPortalWebDir();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil#getPortletBreadcrumbEntries(
-	 *             HttpServletRequest)}
-	 */
-	@Deprecated
-	public static List<BreadcrumbEntry> getPortletBreadcrumbs(
-		HttpServletRequest request) {
-
-		return getPortal().getPortletBreadcrumbs(request);
 	}
 
 	public static PortletConfig getPortletConfig(
@@ -1799,34 +1697,6 @@ public class PortalUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             long, String)}
-	 */
-	@Deprecated
-	public static PortletURL getSiteAdministrationURL(
-		HttpServletRequest request, ThemeDisplay themeDisplay,
-		String portletId) {
-
-		return getPortal().getSiteAdministrationURL(
-			request, themeDisplay, portletId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             long, String)}
-	 */
-	@Deprecated
-	public static PortletURL getSiteAdministrationURL(
-		PortletResponse portletResponse, ThemeDisplay themeDisplay,
-		String portletName) {
-
-		return getPortal().getSiteAdministrationURL(
-			portletResponse, themeDisplay, portletName);
-	}
-
-	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getSiteAdminURL(ThemeDisplay, String, Map)}
 	 */
@@ -1857,28 +1727,6 @@ public class PortalUtil {
 		throws PortalException {
 
 		return getPortal().getSiteAdminURL(themeDisplay, ppid, params);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getCurrentAndAncestorSiteGroupIds(long)}
-	 */
-	@Deprecated
-	public static long[] getSiteAndCompanyGroupIds(long groupId)
-		throws PortalException {
-
-		return getPortal().getSiteAndCompanyGroupIds(groupId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getCurrentAndAncestorSiteGroupIds(long)}
-	 */
-	@Deprecated
-	public static long[] getSiteAndCompanyGroupIds(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return getPortal().getSiteAndCompanyGroupIds(themeDisplay);
 	}
 
 	public static Locale getSiteDefaultLocale(Group group)
@@ -2053,16 +1901,6 @@ public class PortalUtil {
 		return getPortal().getUserPassword(portletRequest);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getUserValue(
-		long userId, String param, String defaultValue) {
-
-		return getPortal().getUserValue(userId, param, defaultValue);
-	}
-
 	public static String getValidPortalDomain(long companyId, String domain) {
 		return getPortal().getValidPortalDomain(companyId, domain);
 	}
@@ -2075,36 +1913,6 @@ public class PortalUtil {
 
 	public static String getVirtualHostname(LayoutSet layoutSet) {
 		return getPortal().getVirtualHostname(layoutSet);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getVirtualLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
-			Map<String, Object> requestContext)
-		throws PortalException {
-
-		return getPortal().getVirtualLayoutActualURL(
-			groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static LayoutFriendlyURLComposite
-			getVirtualLayoutFriendlyURLComposite(
-				boolean privateLayout, String friendlyURL,
-				Map<String, String[]> params,
-				Map<String, Object> requestContext)
-		throws PortalException {
-
-		return getPortal().getVirtualLayoutFriendlyURLComposite(
-			privateLayout, friendlyURL, params, requestContext);
 	}
 
 	public static String getWidgetURL(
@@ -2120,19 +1928,6 @@ public class PortalUtil {
 
 	public static User initUser(HttpServletRequest request) throws Exception {
 		return getPortal().initUser(request);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void invokeTaglibDiscussion(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		getPortal().invokeTaglibDiscussion(
-			portletConfig, actionRequest, actionResponse);
 	}
 
 	/**
@@ -2414,17 +2209,6 @@ public class PortalUtil {
 		getPortal().setPortalInetSocketAddresses(request);
 	}
 
-	/**
-	 * Sets the port obtained on the first request to the portal.
-	 *
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setPortalInetSocketAddresses(HttpServletRequest)}
-	 */
-	@Deprecated
-	public static void setPortalPort(HttpServletRequest request) {
-		getPortal().setPortalPort(request);
-	}
-
 	public static void storePreferences(PortletPreferences portletPreferences)
 		throws IOException, ValidatorException {
 
@@ -2474,18 +2258,6 @@ public class PortalUtil {
 
 		return getPortal().updateWindowState(
 			portletId, user, layout, windowState, request);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #removePortalEventListener(
-	 *             PortalInetSocketAddressEventListener)}
-	 */
-	@Deprecated
-	public void removePortalPortEventListener(
-		PortalPortEventListener portalPortEventListener) {
-
-		getPortal().removePortalPortEventListener(portalPortEventListener);
 	}
 
 	public void setPortal(Portal portal) {

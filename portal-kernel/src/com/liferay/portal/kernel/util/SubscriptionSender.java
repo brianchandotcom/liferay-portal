@@ -255,15 +255,6 @@ public class SubscriptionSender implements Serializable {
 		return serviceContext;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getCurrentUserId()}
-	 */
-	@Deprecated
-	public long getUserId() {
-		return getCurrentUserId();
-	}
-
 	public void initialize() throws Exception {
 		if (_initialized) {
 			return;
@@ -496,15 +487,6 @@ public class SubscriptionSender implements Serializable {
 		this.uniqueMailId = uniqueMailId;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setCurrentUserId(long)}
-	 */
-	@Deprecated
-	public void setUserId(long userId) {
-		setCurrentUserId(userId);
-	}
-
 	public interface Hook<T> {
 
 		public void process(T payload);
@@ -689,20 +671,6 @@ public class SubscriptionSender implements Serializable {
 		else {
 			sendNotification(user);
 		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #notifyPersistedSubscriber(Subscription)}
-	 */
-	@Deprecated
-	protected void notifySubscriber(
-			Subscription subscription, String inferredClassName,
-			long inferredClassPK)
-		throws Exception {
-
-		notifyPersistedSubscriber(
-			subscription, inferredClassName, inferredClassPK);
 	}
 
 	protected void populateNotificationEventJSONObject(

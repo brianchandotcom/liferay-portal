@@ -258,15 +258,6 @@ public class LocalizationUtil {
 		return modifiedLocales;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getLocalizedName(String, String)}
-	 */
-	@Deprecated
-	public static String getPreferencesKey(String key, String languageId) {
-		return getLocalization().getPreferencesKey(key, languageId);
-	}
-
 	public static String getPreferencesValue(
 		PortletPreferences preferences, String key, String languageId) {
 

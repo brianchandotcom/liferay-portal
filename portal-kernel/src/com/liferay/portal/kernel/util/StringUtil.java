@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.io.IOException;
@@ -802,26 +801,6 @@ public class StringUtil {
 		}
 
 		return sb.toString();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), moved to {@link
-	 *             HighlightUtil#highlight(String, String[])}}
-	 */
-	@Deprecated
-	public static String highlight(String s, String[] queryTerms) {
-		return HighlightUtil.highlight(s, queryTerms);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), moved to {@link
-	 *             HighlightUtil#highlight(String, String[], String, String)}}
-	 */
-	@Deprecated
-	public static String highlight(
-		String s, String[] queryTerms, String highlight1, String highlight2) {
-
-		return HighlightUtil.highlight(s, queryTerms, highlight1, highlight2);
 	}
 
 	/**
@@ -2312,24 +2291,6 @@ public class StringUtil {
 		throws IOException {
 
 		_splitLines(_read(is), lines);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #removeFromList(String, String)}
-	 */
-	@Deprecated
-	public static String remove(String s, String element) {
-		return removeFromList(s, element, StringPool.COMMA);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #removeFromList(String, String, String)}
-	 */
-	@Deprecated
-	public static String remove(String s, String element, String delimiter) {
-		return removeFromList(s, element, delimiter);
 	}
 
 	public static String removeChar(String s, char oldSub) {

@@ -944,16 +944,6 @@ public class TemplateContextHelper {
 			return _http.decodeURL(url);
 		}
 
-		/**
-		 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-		 *             #decodeURL(String)}
-		 */
-		@Deprecated
-		@Override
-		public String decodeURL(String url, boolean unescapeSpaces) {
-			return _http.decodeURL(url, unescapeSpaces);
-		}
-
 		@Override
 		public String encodeParameters(String url) {
 			return _http.encodeParameters(url);

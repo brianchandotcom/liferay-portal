@@ -342,19 +342,6 @@ public interface Localization {
 	public Map<Locale, String> getMap(LocalizedValuesMap localizedValuesMap);
 
 	/**
-	 * Returns the localized preferences key in the language. Generally this is
-	 * just the preferences key, followed by an underscore, and the language ID.
-	 *
-	 * @param      key the preferences key
-	 * @param      languageId the ID of the language
-	 * @return     the localized preferences key
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getLocalizedName(String, String)}
-	 */
-	@Deprecated
-	public String getPreferencesKey(String key, String languageId);
-
-	/**
 	 * Returns the localized preferences value for the key in the language. The
 	 * default language is used if no localization exists for the requested
 	 * language.

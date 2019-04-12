@@ -95,7 +95,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.portlet.LiferayStateAwareResponse;
@@ -116,7 +115,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -154,7 +152,6 @@ import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -641,25 +638,6 @@ public class PortalImpl implements Portal {
 
 		return _portalInetSocketAddressEventListeners.add(
 			portalInetSocketAddressEventListener);
-	}
-
-	/**
-	 * Adds the portal port event listener to the portal. The listener will be
-	 * notified whenever the portal port is set.
-	 *
-	 * @param      portalPortEventListener the portal port event listener to add
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addPortalInetSocketAddressEventListener(
-	 *             PortalInetSocketAddressEventListener)}
-	 */
-	@Deprecated
-	@Override
-	public void addPortalPortEventListener(
-		PortalPortEventListener portalPortEventListener) {
-
-		if (!_portalPortEventListeners.contains(portalPortEventListener)) {
-			_portalPortEventListeners.add(portalPortEventListener);
-		}
 	}
 
 	@Override
@@ -1270,32 +1248,6 @@ public class PortalImpl implements Portal {
 				throw new SystemException(cause);
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
-	 */
-	@Deprecated
-	@Override
-	public long getBasicAuthUserId(HttpServletRequest request)
-		throws PortalException {
-
-		long companyId = PortalInstances.getCompanyId(request);
-
-		return getBasicAuthUserId(request, companyId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
-	 */
-	@Deprecated
-	@Override
-	public long getBasicAuthUserId(HttpServletRequest request, long companyId)
-		throws PortalException {
-
-		return HttpAuthManagerUtil.getBasicUserId(request);
 	}
 
 	@Override
@@ -2135,18 +2087,6 @@ public class PortalImpl implements Portal {
 		return PortalInstances.getDefaultCompanyId();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             HttpAuthManagerUtil#getDigestUserId(HttpServletRequest)}
-	 */
-	@Deprecated
-	@Override
-	public long getDigestAuthUserId(HttpServletRequest request)
-		throws PortalException {
-
-		return HttpAuthManagerUtil.getDigestUserId(request);
-	}
-
 	@Override
 	public String getEmailFromAddress(
 		PortletPreferences preferences, long companyId, String defaultValue) {
@@ -2751,60 +2691,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return i18nPathLanguageId;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getJournalArticleActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
-			Map<String, Object> requestContext)
-		throws PortalException {
-
-		FriendlyURLResolver friendlyURLResolver =
-			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				_JOURNAL_ARTICLE_CANONICAL_URL_SEPARATOR);
-
-		if (friendlyURLResolver == null) {
-			return null;
-		}
-
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
-
-		long companyId = PortalInstances.getCompanyId(request);
-
-		return friendlyURLResolver.getActualURL(
-			companyId, groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Layout getJournalArticleLayout(
-			long groupId, boolean privateLayout, String friendlyURL)
-		throws PortalException {
-
-		FriendlyURLResolver friendlyURLResolver =
-			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				_JOURNAL_ARTICLE_CANONICAL_URL_SEPARATOR);
-
-		if (friendlyURLResolver == null) {
-			return null;
-		}
-
-		LayoutFriendlyURLComposite layoutFriendlyURLComposite =
-			friendlyURLResolver.getLayoutFriendlyURLComposite(
-				0, groupId, privateLayout, friendlyURL,
-				new HashMap<String, String[]>(), new HashMap<String, Object>());
-
-		return layoutFriendlyURLComposite.getLayout();
 	}
 
 	@Override
@@ -4169,16 +4055,6 @@ public class PortalImpl implements Portal {
 		return inetSocketAddress.getPort();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getPortalServerPort(boolean)}
-	 */
-	@Deprecated
-	@Override
-	public int getPortalPort(boolean secure) {
-		return getPortalServerPort(secure);
-	}
-
 	@Override
 	public Properties getPortalProperties() {
 		return PropsUtil.getProperties();
@@ -4322,19 +4198,6 @@ public class PortalImpl implements Portal {
 	@Override
 	public String getPortalWebDir() {
 		return PropsValues.LIFERAY_WEB_PORTAL_DIR;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             BreadcrumbUtil#getPortletBreadcrumbEntries(
-	 *             HttpServletRequest)}
-	 */
-	@Deprecated
-	@Override
-	public List<BreadcrumbEntry> getPortletBreadcrumbs(
-		HttpServletRequest request) {
-
-		return BreadcrumbUtil.getPortletBreadcrumbEntries(request);
 	}
 
 	@Override
@@ -5154,49 +5017,6 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public PortletURL getSiteAdministrationURL(
-		HttpServletRequest request, ThemeDisplay themeDisplay,
-		String portletId) {
-
-		PortletURL portletURL = getControlPanelPortletURL(
-			request, portletId, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		return portletURL;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public PortletURL getSiteAdministrationURL(
-		PortletResponse portletResponse, ThemeDisplay themeDisplay,
-		String portletName) {
-
-		LiferayPortletResponse liferayPortletResponse =
-			getLiferayPortletResponse(portletResponse);
-
-		LiferayPortletURL siteAdministrationURL =
-			liferayPortletResponse.createRenderURL(portletName);
-
-		siteAdministrationURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
-		siteAdministrationURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-
-		return siteAdministrationURL;
-	}
-
-	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #getSiteAdminURL(ThemeDisplay, String, Map)}
 	 */
@@ -5243,49 +5063,6 @@ public class PortalImpl implements Portal {
 		return _getSiteAdminURL(
 			themeDisplay.getPortalURL(), themeDisplay.getScopeGroup(), ppid,
 			params);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getCurrentAndAncestorSiteGroupIds(long)}
-	 */
-	@Deprecated
-	@Override
-	public long[] getSiteAndCompanyGroupIds(long groupId)
-		throws PortalException {
-
-		Group scopeGroup = GroupLocalServiceUtil.getGroup(groupId);
-
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			scopeGroup.getCompanyId());
-
-		if (scopeGroup.isLayout()) {
-			return new long[] {
-				groupId, scopeGroup.getParentGroupId(),
-				companyGroup.getGroupId()
-			};
-		}
-		else if (scopeGroup.isLayoutSetPrototype() ||
-				 scopeGroup.isOrganization() || scopeGroup.isRegularSite() ||
-				 scopeGroup.isUser()) {
-
-			return new long[] {groupId, companyGroup.getGroupId()};
-		}
-		else {
-			return new long[] {companyGroup.getGroupId()};
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getCurrentAndAncestorSiteGroupIds(long)}
-	 */
-	@Deprecated
-	@Override
-	public long[] getSiteAndCompanyGroupIds(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return getSiteAndCompanyGroupIds(themeDisplay.getScopeGroupId());
 	}
 
 	@Override
@@ -6113,33 +5890,6 @@ public class PortalImpl implements Portal {
 		return getUserPassword(getHttpServletRequest(portletRequest));
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getUserValue(long userId, String param, String defaultValue) {
-		if (Validator.isNotNull(defaultValue)) {
-			return defaultValue;
-		}
-
-		try {
-			User user = UserLocalServiceUtil.getUserById(userId);
-
-			return BeanPropertiesUtil.getString(user, param, defaultValue);
-		}
-		catch (PortalException pe) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return StringPool.BLANK;
-		}
-	}
-
 	@Override
 	public String getValidPortalDomain(long companyId, String domain) {
 		if (_validPortalDomainCheckDisabled) {
@@ -6203,62 +5953,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return virtualHostname;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getVirtualLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
-			Map<String, Object> requestContext)
-		throws PortalException {
-
-		FriendlyURLResolver friendlyURLResolver =
-			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
-
-		if (friendlyURLResolver == null) {
-			return null;
-		}
-
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
-
-		long companyId = PortalInstances.getCompanyId(request);
-
-		return friendlyURLResolver.getActualURL(
-			companyId, groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public LayoutFriendlyURLComposite getVirtualLayoutFriendlyURLComposite(
-			boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
-		throws PortalException {
-
-		FriendlyURLResolver friendlyURLResolver =
-			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
-
-		if (friendlyURLResolver == null) {
-			return null;
-		}
-
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
-
-		long companyId = PortalInstances.getCompanyId(request);
-
-		return friendlyURLResolver.getLayoutFriendlyURLComposite(
-			companyId, 0, privateLayout, friendlyURL, params, requestContext);
 	}
 
 	@Override
@@ -6357,29 +6051,6 @@ public class PortalImpl implements Portal {
 		Company company = getCompany(request);
 
 		return company.getDefaultUser();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void invokeTaglibDiscussion(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		if (_editDiscussionStrutsAction == null) {
-			_log.error(
-				"Unable to find a Struts action component with property " +
-					"\"path=/portal/comment/discussion/edit\"");
-
-			return;
-		}
-
-		_editDiscussionStrutsAction.execute(
-			getHttpServletRequest(actionRequest),
-			getHttpServletResponse(actionResponse));
 	}
 
 	/**
@@ -6853,19 +6524,6 @@ public class PortalImpl implements Portal {
 			portalInetSocketAddressEventListener);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #removePortalInetSocketAddressEventListener(
-	 *             PortalInetSocketAddressEventListener)}
-	 */
-	@Deprecated
-	@Override
-	public void removePortalPortEventListener(
-		PortalPortEventListener portalPortEventListener) {
-
-		_portalPortEventListeners.remove(portalPortEventListener);
-	}
-
 	@Override
 	public void resetCDNHosts() {
 		_cdnHostHttpMap.clear();
@@ -7203,38 +6861,6 @@ public class PortalImpl implements Portal {
 
 				notifyPortalInetSocketAddressEventListeners(
 					serverInetSocketAddress, false, false);
-			}
-		}
-	}
-
-	/**
-	 * Sets the port obtained on the first request to the portal.
-	 *
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setPortalInetSocketAddresses(HttpServletRequest)}
-	 */
-	@Deprecated
-	@Override
-	public void setPortalPort(HttpServletRequest request) {
-		if (request.isSecure()) {
-			if (_securePortalPort.get() == -1) {
-				int securePortalPort = request.getServerPort();
-
-				if (_securePortalPort.compareAndSet(-1, securePortalPort) &&
-					StringUtil.equalsIgnoreCase(
-						Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
-
-					notifyPortalPortEventListeners(securePortalPort);
-				}
-			}
-		}
-		else {
-			if (_portalPort.get() == -1) {
-				int portalPort = request.getServerPort();
-
-				if (_portalPort.compareAndSet(-1, portalPort)) {
-					notifyPortalPortEventListeners(portalPort);
-				}
 			}
 		}
 	}
@@ -9096,9 +8722,6 @@ public class PortalImpl implements Portal {
 		WebServerServlet.class);
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";
-
-	private static final String _JOURNAL_ARTICLE_CANONICAL_URL_SEPARATOR =
-		"/-/";
 
 	private static final String _LOCALHOST = "localhost";
 

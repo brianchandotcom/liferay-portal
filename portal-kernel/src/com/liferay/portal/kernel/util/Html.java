@@ -54,12 +54,6 @@ public interface Html {
 
 	public String render(String html);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public String replaceMsWordCharacters(String text);
-
 	public String replaceNewLine(String html);
 
 	public String stripBetween(String text, String tag);

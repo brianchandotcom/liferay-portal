@@ -71,13 +71,6 @@ public interface Http {
 
 	public String decodeURL(String url);
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #decodeURL(String)}
-	 */
-	@Deprecated
-	public String decodeURL(String url, boolean unescapeSpaces);
-
 	public String encodeParameters(String url);
 
 	public String encodePath(String path);

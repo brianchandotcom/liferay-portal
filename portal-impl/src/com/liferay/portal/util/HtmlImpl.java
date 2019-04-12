@@ -627,21 +627,6 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Replaces all Microsoft&reg; Word Unicode characters with plain HTML
-	 * entities or characters.
-	 *
-	 * @param      text the text
-	 * @return     the converted text, or <code>null</code> if the text is
-	 *             <code>null</code>
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String replaceMsWordCharacters(String text) {
-		return StringUtil.replace(text, _MS_WORD_UNICODE, _MS_WORD_HTML);
-	}
-
-	/**
 	 * Replaces all new lines or carriage returns with the <code><br /></code>
 	 * HTML tag.
 	 *
@@ -956,14 +941,6 @@ public class HtmlImpl implements Html {
 	private static final char[] _HEX_DIGITS = {
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
 		'e', 'f'
-	};
-
-	private static final String[] _MS_WORD_HTML = {
-		"&reg;", StringPool.APOSTROPHE, StringPool.QUOTE, StringPool.QUOTE
-	};
-
-	private static final String[] _MS_WORD_UNICODE = {
-		"\u00ae", "\u2019", "\u201c", "\u201d"
 	};
 
 	private static final char[] _TAG_SCRIPT = {'s', 'c', 'r', 'i', 'p', 't'};

@@ -177,20 +177,6 @@ public class HtmlUtil {
 	}
 
 	/**
-	 * Replaces all Microsoft&reg; Word Unicode characters with plain HTML
-	 * entities or characters.
-	 *
-	 * @param      text the text
-	 * @return     the converted text, or <code>null</code> if the text is
-	 *             <code>null</code>
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String replaceMsWordCharacters(String text) {
-		return getHtml().replaceMsWordCharacters(text);
-	}
-
-	/**
 	 * Replaces all new lines or carriage returns with the <code><br /></code>
 	 * HTML tag.
 	 *

@@ -113,24 +113,6 @@ public class ResourceBundleUtil {
 		return map;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public static Map<Locale, String> getLocalizationMap(
-		String baseName, Class<?> clazz, String key) {
-
-		Map<Locale, String> map = new HashMap<>();
-
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			ResourceBundle resourceBundle = getBundle(baseName, locale, clazz);
-
-			map.put(locale, getString(resourceBundle, key));
-		}
-
-		return map;
-	}
-
 	public static ResourceBundleLoader getResourceBundleLoader(
 		final String baseName, final ClassLoader classLoader) {
 

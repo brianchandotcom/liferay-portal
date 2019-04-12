@@ -666,22 +666,6 @@ public class LocalizationImpl implements Localization {
 		return map;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public String getPreferencesKey(String key, String languageId) {
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
-		if (!languageId.equals(defaultLanguageId)) {
-			key = getLocalizedName(key, languageId);
-		}
-
-		return key;
-	}
-
 	@Override
 	public String getPreferencesValue(
 		PortletPreferences preferences, String key, String languageId) {

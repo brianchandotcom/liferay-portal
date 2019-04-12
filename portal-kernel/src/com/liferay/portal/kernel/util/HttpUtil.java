@@ -64,15 +64,6 @@ public class HttpUtil {
 		return getHttp().decodeURL(url);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #decodeURL(String)}
-	 */
-	@Deprecated
-	public static String decodeURL(String url, boolean unescapeSpaces) {
-		return getHttp().decodeURL(url, unescapeSpaces);
-	}
-
 	public static String encodeParameters(String url) {
 		return getHttp().encodeParameters(url);
 	}

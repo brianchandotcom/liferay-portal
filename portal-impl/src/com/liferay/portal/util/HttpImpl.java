@@ -306,16 +306,6 @@ public class HttpImpl implements Http {
 		return StringPool.BLANK;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #decodeURL(String)}
-	 */
-	@Deprecated
-	@Override
-	public String decodeURL(String url, boolean unescapeSpaces) {
-		return decodeURL(url);
-	}
-
 	public void destroy() {
 		int retry = 0;
 

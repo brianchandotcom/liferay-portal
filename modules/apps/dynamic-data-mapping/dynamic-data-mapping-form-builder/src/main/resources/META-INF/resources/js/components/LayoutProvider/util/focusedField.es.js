@@ -85,10 +85,12 @@ export const updateFocusedFieldProperty = (editingLanguageId, focusedField, prop
 	};
 };
 
-export const updateFocusedFieldOptions = (editingLanguageId, focusedField, options) => {
-	const withNewOptions = updateSettingsContextProperty(editingLanguageId, focusedField.settingsContext, 'options', options);
+export const updateFocusedFieldOptions = (editingLanguageId, focusedField, value) => {
+	const options = value[editingLanguageId];
 
-	const predefinedValue = getField(withNewOptions.pages, 'predefinedValue');
+	const settingsContext = updateSettingsContextProperty(editingLanguageId, focusedField.settingsContext, 'options', value);
+
+	const predefinedValue = getField(settingsContext.pages, 'predefinedValue');
 
 	if (predefinedValue) {
 		const {value} = predefinedValue;
@@ -108,7 +110,7 @@ export const updateFocusedFieldOptions = (editingLanguageId, focusedField, optio
 		predefinedValue: predefinedValue.value,
 		settingsContext: updateSettingsContextProperty(
 			editingLanguageId,
-			withNewOptions,
+			settingsContext,
 			'predefinedValue',
 			predefinedValue.value
 		)

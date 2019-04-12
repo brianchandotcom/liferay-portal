@@ -199,20 +199,6 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		_committed = true;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #finishResponse()}}
-	 */
-	@Deprecated
-	public void finishResponse(boolean reapplyMetaData) throws IOException {
-		if (reapplyMetaData) {
-			HttpServletResponse response = (HttpServletResponse)getResponse();
-
-			finishResponse(_metaData, response);
-		}
-
-		_committed = true;
-	}
-
 	@Override
 	public void flushBuffer() throws IOException {
 		_committed = true;

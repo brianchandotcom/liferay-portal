@@ -534,7 +534,7 @@ public class MetaInfoCacheServletResponseTest {
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
 			new MetaInfoCacheServletResponse(stubHttpServletResponse);
 
-		metaInfoCacheServletResponse.finishResponse(true);
+		metaInfoCacheServletResponse.finishResponse();
 
 		// Transfer headers
 
@@ -572,7 +572,7 @@ public class MetaInfoCacheServletResponseTest {
 		Assert.assertTrue(
 			headers2.toString(), headers2.contains(new Header("value1")));
 
-		outerMetaInfoCacheServletResponse.finishResponse(false);
+		outerMetaInfoCacheServletResponse.finishResponse();
 
 		headers = innerMetaInfoCacheServletResponse.getHeaders();
 
@@ -607,7 +607,7 @@ public class MetaInfoCacheServletResponseTest {
 
 		locationReference.set(null);
 
-		fromMetaInfoCacheServletResponse.finishResponse(true);
+		fromMetaInfoCacheServletResponse.finishResponse();
 
 		Assert.assertEquals("testURL", locationReference.get());
 
@@ -627,7 +627,7 @@ public class MetaInfoCacheServletResponseTest {
 		messageReference.set(null);
 		statusReference.set(0);
 
-		fromMetaInfoCacheServletResponse.finishResponse(true);
+		fromMetaInfoCacheServletResponse.finishResponse();
 
 		Assert.assertEquals("Bad Page", messageReference.get());
 		Assert.assertEquals(400, statusReference.get());
@@ -653,7 +653,7 @@ public class MetaInfoCacheServletResponseTest {
 		messageReference.set(null);
 		statusReference.set(0);
 
-		fromMetaInfoCacheServletResponse.finishResponse(true);
+		fromMetaInfoCacheServletResponse.finishResponse();
 
 		Assert.assertEquals(
 			StringPool.UTF8,
@@ -684,7 +684,7 @@ public class MetaInfoCacheServletResponseTest {
 
 		toMetaInfoCacheServletResponse.flushBuffer();
 
-		fromMetaInfoCacheServletResponse.finishResponse(true);
+		fromMetaInfoCacheServletResponse.finishResponse();
 
 		Assert.assertNull(locationReference.get());
 	}

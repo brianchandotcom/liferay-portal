@@ -8,27 +8,6 @@
 		position: relative;
 	}
 
-	.conjunction-label {
-		color: $mainLighten28;
-		font-size: 14px;
-		font-weight: 600;
-		margin: 8px;
-		text-transform: uppercase;
-
-		&:after, &:before {
-			color: $mainLighten52;
-			content: '-';
-		}
-
-		&:after {
-			margin-left: 4px;
-		}
-
-		&:before {
-			margin-right: 4px;
-		}
-	}
-
 	.conjunction-label + .drop-zone-root + .criterion-group,
 	.criterion-group + .drop-zone-root + .conjunction-label,
 	.criterion-group + .drop-zone-root + .conjunction-button {

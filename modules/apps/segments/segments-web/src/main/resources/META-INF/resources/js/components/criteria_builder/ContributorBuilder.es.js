@@ -258,7 +258,7 @@ class ContributorBuilder extends React.Component {
 														<Conjunction
 															className="ml-0"
 															conjunctionName={criteria.conjunctionId}
-															editing
+															editing={editing}
 															onClick={this._handleRootConjunctionClick}
 															supportedConjunctions={supportedConjunctions}
 														/>

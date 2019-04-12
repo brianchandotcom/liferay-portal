@@ -662,6 +662,8 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 			<antcall inheritAll="false" target="setup-sdk" />
 
+			<antcall inheritAll="false" target="setup-yarn" />
+
 			<if>
 				<and>
 					<equals arg1="@{app.server.type}" arg2="jboss" />

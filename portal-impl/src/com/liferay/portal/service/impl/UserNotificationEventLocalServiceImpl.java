@@ -112,24 +112,6 @@ public class UserNotificationEventLocalServiceImpl
 			archived, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), {@link
-	 *             #addUserNotificationEvent(long, String, long, int, long,
-	 *             String, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public UserNotificationEvent addUserNotificationEvent(
-			long userId, String type, long timestamp, long deliverBy,
-			String payload, boolean archived, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addUserNotificationEvent(
-			userId, type, timestamp,
-			UserNotificationDeliveryConstants.TYPE_WEBSITE, deliverBy, payload,
-			archived, serviceContext);
-	}
-
 	@Override
 	public List<UserNotificationEvent> addUserNotificationEvents(
 			long userId, Collection<NotificationEvent> notificationEvents)

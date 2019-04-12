@@ -52,27 +52,6 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 			active, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #addLayoutPrototype(Map, Map, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPrototype addLayoutPrototype(
-			Map<Locale, String> nameMap, String description, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.ADD_LAYOUT_PROTOTYPE);
-
-		User user = getUser();
-
-		return layoutPrototypeLocalService.addLayoutPrototype(
-			user.getUserId(), user.getCompanyId(), nameMap, description, active,
-			serviceContext);
-	}
-
 	@Override
 	public void deleteLayoutPrototype(long layoutPrototypeId)
 		throws PortalException {
@@ -147,25 +126,6 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 
 		return layoutPrototypeLocalService.updateLayoutPrototype(
 			layoutPrototypeId, nameMap, descriptionMap, active, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateLayoutPrototype(long, Map, Map, boolean,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutPrototype updateLayoutPrototype(
-			long layoutPrototypeId, Map<Locale, String> nameMap,
-			String description, boolean active, ServiceContext serviceContext)
-		throws PortalException {
-
-		LayoutPrototypePermissionUtil.check(
-			getPermissionChecker(), layoutPrototypeId, ActionKeys.UPDATE);
-
-		return layoutPrototypeLocalService.updateLayoutPrototype(
-			layoutPrototypeId, nameMap, description, active, serviceContext);
 	}
 
 }

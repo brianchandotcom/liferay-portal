@@ -42,20 +42,6 @@ import java.util.List;
  */
 public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addTeam(long,
-	 *             long, String, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Team addTeam(
-			long userId, long groupId, String name, String description)
-		throws PortalException {
-
-		return addTeam(
-			userId, groupId, name, description, new ServiceContext());
-	}
-
 	@Override
 	public Team addTeam(
 			long userId, long groupId, String name, String description,

@@ -477,53 +477,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a group.
-	 *
-	 * @param      userId the primary key of the group's creator/owner
-	 * @param      parentGroupId the primary key of the parent group
-	 * @param      className the entity's class name
-	 * @param      classPK the primary key of the entity's instance
-	 * @param      liveGroupId the primary key of the live group
-	 * @param      name the entity's name
-	 * @param      description the group's description (optionally
-	 *             <code>null</code>)
-	 * @param      type the group's type. For more information see {@link
-	 *             GroupConstants}.
-	 * @param      manualMembership whether manual membership is allowed for the
-	 *             group
-	 * @param      membershipRestriction the group's membership restriction. For
-	 *             more information see {@link GroupConstants}.
-	 * @param      friendlyURL the group's friendlyURL (optionally
-	 *             <code>null</code>)
-	 * @param      site whether the group is to be associated with a main site
-	 * @param      active whether the group is active
-	 * @param      serviceContext the service context to be applied (optionally
-	 *             <code>null</code>). Can set asset category IDs and asset tag
-	 *             names for the group, and whether the group is for staging.
-	 * @return     the group
-	 * @throws     PortalException if a portal exception occured
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #addGroup(long,
-	 *             long, String, long, long, Map, Map, int, boolean, int,
-	 *             String, boolean, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Group addGroup(
-			long userId, long parentGroupId, String className, long classPK,
-			long liveGroupId, String name, String description, int type,
-			boolean manualMembership, int membershipRestriction,
-			String friendlyURL, boolean site, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addGroup(
-			userId, parentGroupId, className, classPK, liveGroupId,
-			getLocalizationMap(name), getLocalizationMap(description), type,
-			manualMembership, membershipRestriction, friendlyURL, site, false,
-			active, serviceContext);
-	}
-
-	/**
 	 * Adds the group to the organization.
 	 *
 	 * @param organizationId the primary key of the organization
@@ -1663,32 +1616,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groupLocalService.loadGetGroup(companyId, groupKey);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             Group#getDescriptiveName(Locale)}
-	 */
-	@Deprecated
-	@Override
-	public String getGroupDescriptiveName(Group group, Locale locale)
-		throws PortalException {
-
-		return group.getDescriptiveName(locale);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             Group#getDescriptiveName(Locale)}
-	 */
-	@Deprecated
-	@Override
-	public String getGroupDescriptiveName(long groupId, Locale locale)
-		throws PortalException {
-
-		Group group = groupPersistence.findByPrimaryKey(groupId);
-
-		return group.getDescriptiveName(locale);
 	}
 
 	/**
@@ -3858,50 +3785,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			serviceContext.getAssetTagNames());
 
 		return group;
-	}
-
-	/**
-	 * Updates the group.
-	 *
-	 * @param      groupId the primary key of the group
-	 * @param      parentGroupId the primary key of the parent group
-	 * @param      name the name's key
-	 * @param      description the group's new description (optionally
-	 *             <code>null</code>)
-	 * @param      type the group's new type. For more information see {@link
-	 *             GroupConstants}.
-	 * @param      manualMembership whether manual membership is allowed for the
-	 *             group
-	 * @param      membershipRestriction the group's membership restriction. For
-	 *             more information see {@link GroupConstants}.
-	 * @param      friendlyURL the group's new friendlyURL (optionally
-	 *             <code>null</code>)
-	 * @param      inheritContent whether to inherit content from the parent
-	 *             group
-	 * @param      active whether the group is active
-	 * @param      serviceContext the service context to be applied (optionally
-	 *             <code>null</code>). Can set asset category IDs and asset tag
-	 *             names for the group.
-	 * @return     the group
-	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateGroup(long, long, Map, Map, int, boolean, int, String,
-	 *             boolean, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Group updateGroup(
-			long groupId, long parentGroupId, String name, String description,
-			int type, boolean manualMembership, int membershipRestriction,
-			String friendlyURL, boolean inheritContent, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return updateGroup(
-			groupId, parentGroupId, getLocalizationMap(name),
-			getLocalizationMap(description), type, manualMembership,
-			membershipRestriction, friendlyURL, inheritContent, active,
-			serviceContext);
 	}
 
 	/**

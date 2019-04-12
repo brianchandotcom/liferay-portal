@@ -213,18 +213,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletLocalService.clearPortletsMap();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #clearPortletsMap)}
-	 */
-	@Clusterable
-	@Deprecated
-	@Override
-	@Transactional(enabled = false)
-	public void clearCompanyPortletsPool() {
-		_portletsMaps.clear();
-	}
-
 	@Clusterable
 	@Override
 	@Transactional(enabled = false)
@@ -992,16 +980,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 
 		return portletsMap;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #loadGetPortletsMap(long))}
-	 */
-	@Deprecated
-	@Override
-	public Map<String, Portlet> loadGetPortletsPool(long companyId) {
-		return loadGetPortletsMap(companyId);
 	}
 
 	@Clusterable

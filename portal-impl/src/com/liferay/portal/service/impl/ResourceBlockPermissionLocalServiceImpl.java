@@ -72,21 +72,6 @@ public class ResourceBlockPermissionLocalServiceImpl
 			resourceBlockId);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getAvailableResourceBlockPermissionActionIds(String, long,
-	 *             List)}
-	 */
-	@Deprecated
-	@Override
-	public Map<Long, Set<String>> getAvailableResourceBlockPermissionActionIds(
-			long[] roleIds, String name, long primKey, List<String> actionIds)
-		throws PortalException {
-
-		return getAvailableResourceBlockPermissionActionIds(
-			name, primKey, actionIds);
-	}
-
 	@Override
 	public Map<Long, Set<String>> getAvailableResourceBlockPermissionActionIds(
 			String name, long primKey, List<String> actionIds)

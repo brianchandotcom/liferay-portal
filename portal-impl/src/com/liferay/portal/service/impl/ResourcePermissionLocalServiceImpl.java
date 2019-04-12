@@ -767,21 +767,6 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getAvailableResourcePermissionActionIds(long, String, int,
-	 *             String, Collection)}
-	 */
-	@Deprecated
-	@Override
-	public Map<Long, Set<String>> getAvailableResourcePermissionActionIds(
-		long companyId, String name, int scope, String primKey, long[] roleIds,
-		Collection<String> actionIds) {
-
-		return getAvailableResourcePermissionActionIds(
-			companyId, name, scope, primKey, new ArrayList<String>(actionIds));
-	}
-
-	/**
 	 * Returns the resource permission for the role at the scope to perform the
 	 * actions on resources of the type.
 	 *
@@ -1166,51 +1151,6 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		return false;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getRoles(long,
-	 *             String, int, String, String}
-	 */
-	@Deprecated
-	@Override
-	public boolean[] hasResourcePermissions(
-			long companyId, String name, int scope, String primKey,
-			long[] roleIds, String actionId)
-		throws PortalException {
-
-		boolean[] hasResourcePermissions = new boolean[roleIds.length];
-
-		if (roleIds.length == 0) {
-			return hasResourcePermissions;
-		}
-
-		ResourceAction resourceAction =
-			resourceActionLocalService.getResourceAction(name, actionId);
-
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P_R(
-				companyId, name, scope, primKey, roleIds);
-
-		if (resourcePermissions.isEmpty()) {
-			return hasResourcePermissions;
-		}
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (resourcePermission.hasAction(resourceAction)) {
-				long roleId = resourcePermission.getRoleId();
-
-				for (int i = 0; i < roleIds.length; i++) {
-					if (roleIds[i] == roleId) {
-						hasResourcePermissions[i] = true;
-
-						break;
-					}
-				}
-			}
-		}
-
-		return hasResourcePermissions;
 	}
 
 	/**

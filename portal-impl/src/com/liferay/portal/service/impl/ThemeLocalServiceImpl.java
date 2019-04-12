@@ -276,17 +276,6 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return ListUtil.sort(themesList);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getPageThemes}
-	 */
-	@Deprecated
-	@Override
-	public List<Theme> getThemes(
-		long companyId, long groupId, long userId, boolean wapTheme) {
-
-		return getPageThemes(companyId, groupId, userId);
-	}
-
 	@Override
 	public List<Theme> getWARThemes() {
 		List<Theme> themes = ListUtil.fromMapValues(_themes);

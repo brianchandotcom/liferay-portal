@@ -35,44 +35,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class FieldType {
 
-	public DataDefinitionField deserialize(JSONObject jsonObject)
-		throws Exception {
-
-		if (!jsonObject.has("name")) {
-			throw new Exception("Name is required");
-		}
-
-		if (!jsonObject.has("type")) {
-			throw new Exception("Type is required");
-		}
-
-		return new DataDefinitionField() {
-			{
-				customProperties = CustomPropertyUtil.add(
-					customProperties, "showLabel",
-					jsonObject.getBoolean("showLabel"));
-				fieldType = jsonObject.getString("type");
-				indexable = jsonObject.getBoolean("indexable", true);
-				label = LocalizedValueUtil.toLocalizedValues(
-					Optional.ofNullable(
-						jsonObject.getJSONObject("label")
-					).orElse(
-						JSONFactoryUtil.createJSONObject()
-					));
-				localizable = jsonObject.getBoolean("localizable", false);
-				name = jsonObject.getString("name");
-				repeatable = jsonObject.getBoolean("repeatable", false);
-				tip = LocalizedValueUtil.toLocalizedValues(
-					Optional.ofNullable(
-						jsonObject.getJSONObject("tip")
-					).orElse(
-						JSONFactoryUtil.createJSONObject()
-					));
-			}
-		};
-	}
-
-	public void includeContext(
+	public static void includeContext(
 		Map<String, Object> context, DataDefinitionField dataDefinitionField,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, boolean readOnly) {
@@ -110,6 +73,43 @@ public abstract class FieldType {
 			"visible",
 			CustomPropertyUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "visible", true));
+	}
+
+	public DataDefinitionField deserialize(JSONObject jsonObject)
+		throws Exception {
+
+		if (!jsonObject.has("name")) {
+			throw new Exception("Name is required");
+		}
+
+		if (!jsonObject.has("type")) {
+			throw new Exception("Type is required");
+		}
+
+		return new DataDefinitionField() {
+			{
+				customProperties = CustomPropertyUtil.add(
+					customProperties, "showLabel",
+					jsonObject.getBoolean("showLabel"));
+				fieldType = jsonObject.getString("type");
+				indexable = jsonObject.getBoolean("indexable", true);
+				label = LocalizedValueUtil.toLocalizedValues(
+					Optional.ofNullable(
+						jsonObject.getJSONObject("label")
+					).orElse(
+						JSONFactoryUtil.createJSONObject()
+					));
+				localizable = jsonObject.getBoolean("localizable", false);
+				name = jsonObject.getString("name");
+				repeatable = jsonObject.getBoolean("repeatable", false);
+				tip = LocalizedValueUtil.toLocalizedValues(
+					Optional.ofNullable(
+						jsonObject.getJSONObject("tip")
+					).orElse(
+						JSONFactoryUtil.createJSONObject()
+					));
+			}
+		};
 	}
 
 	public JSONObject toJSONObject(DataDefinitionField dataDefinitionField)

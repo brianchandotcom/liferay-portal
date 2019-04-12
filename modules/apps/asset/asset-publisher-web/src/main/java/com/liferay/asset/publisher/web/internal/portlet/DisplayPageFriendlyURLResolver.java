@@ -15,7 +15,6 @@
 package com.liferay.asset.publisher.web.internal.portlet;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
@@ -27,12 +26,8 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.util.AssetHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -65,7 +60,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 
@@ -153,8 +147,9 @@ public class DisplayPageFriendlyURLResolver
 		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
 			AssetDisplayPageHelper.hasAssetDisplayPage(groupId, assetEntry)) {
 
-			return _getDisplayPageURL(
-				groupId, assetEntry, mainPath, requestContext, urlTitle);
+			return super.getActualURL(
+				companyId, groupId, privateLayout, mainPath, friendlyURL,
+				params, requestContext);
 		}
 
 		HttpServletRequest request = (HttpServletRequest)requestContext.get(
@@ -426,59 +421,6 @@ public class DisplayPageFriendlyURLResolver
 		return layoutActualURL;
 	}
 
-	private String _getDisplayPageURL(
-			long groupId, AssetEntry assetEntry, String mainPath,
-			Map<String, Object> requestContext, String urlTitle)
-		throws PortalException {
-
-		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				assetEntry.getClassName());
-
-		if (infoDisplayContributor == null) {
-			throw new PortalException();
-		}
-
-		HttpServletRequest request = (HttpServletRequest)requestContext.get(
-			"request");
-
-		request.setAttribute(
-			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
-			infoDisplayContributor);
-		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
-
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
-				groupId,
-				_classNameLocalService.getClassNameId(JournalArticle.class),
-				urlTitle);
-		Locale locale = _portal.getLocale(request);
-
-		if (friendlyURLEntryLocalization != null) {
-			request.setAttribute(
-				AssetDisplayPageWebKeys.CURRENT_I18N_LANGUAGE_ID,
-				LocaleUtil.toLanguageId(locale));
-			request.setAttribute(
-				WebKeys.I18N_LANGUAGE_ID,
-				friendlyURLEntryLocalization.getLanguageId());
-
-			locale = LocaleUtil.fromLanguageId(
-				friendlyURLEntryLocalization.getLanguageId());
-		}
-
-		_portal.setPageTitle(assetEntry.getTitle(locale), request);
-		_portal.setPageDescription(assetEntry.getDescription(locale), request);
-
-		_portal.setPageKeywords(
-			_assetHelper.getAssetKeywords(
-				assetEntry.getClassName(), assetEntry.getClassPK()),
-			request);
-
-		Layout layout = _getAssetDisplayPageEntryLayout(groupId, assetEntry);
-
-		return _portal.getLayoutActualURL(layout, mainPath);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DisplayPageFriendlyURLResolver.class);
 
@@ -488,9 +430,6 @@ public class DisplayPageFriendlyURLResolver
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetHelper _assetHelper;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
@@ -503,9 +442,6 @@ public class DisplayPageFriendlyURLResolver
 
 	@Reference
 	private Http _http;
-
-	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

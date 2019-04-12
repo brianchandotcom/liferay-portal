@@ -5,6 +5,7 @@ import Component from 'metal-jsx';
 import dom from 'metal-dom';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
+import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
 
 class Actions extends Component {
 	render() {
@@ -68,6 +69,88 @@ const withActionableFields = ChildComponent => {
 			 */
 
 			indexes: Config.object()
+		}
+
+		static PROPS = {
+
+			/**
+			 * @default
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?number}
+			 */
+
+			activePage: Config.number().value(0),
+
+			/**
+			 * @default undefined
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?string}
+			 */
+
+			defaultLanguageId: Config.string(),
+
+			/**
+			 * @default undefined
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?string}
+			 */
+
+			editingLanguageId: Config.string(),
+
+			/**
+			 * @default []
+			 * @instance
+			 * @memberof Sidebar
+			 * @type {?(array|undefined)}
+			 */
+
+			fieldTypes: Config.array().value([]),
+
+			/**
+			 * @default {}
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?object}
+			 */
+
+			focusedField: focusedFieldStructure.value({}),
+
+			/**
+			 * @default []
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?array<object>}
+			 */
+
+			pages: Config.arrayOf(pageStructure).value([]),
+
+			/**
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {string}
+			 */
+
+			paginationMode: Config.string().required(),
+
+			/**
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {string}
+			 */
+
+			rules: Config.arrayOf(ruleStructure).required(),
+
+			/**
+			 * @default undefined
+			 * @instance
+			 * @memberof FormRenderer
+			 * @type {!string}
+			 */
+
+			spritemap: Config.string().required()
 		}
 
 		attached() {

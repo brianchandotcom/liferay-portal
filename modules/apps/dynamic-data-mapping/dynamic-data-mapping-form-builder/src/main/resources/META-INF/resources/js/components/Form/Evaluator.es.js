@@ -15,6 +15,15 @@ const WithEvaluator = ChildComponent => {
 		static PROPS = {
 
 			/**
+			 * @default
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?number}
+			 */
+
+			activePage: Config.number().value(0),
+
+			/**
 			 * @default undefined
 			 * @memberof Evaluator
 			 * @type {string}
@@ -22,6 +31,8 @@ const WithEvaluator = ChildComponent => {
 			 */
 
 			defaultLanguageId: Config.string(),
+
+			editable: Config.bool().value(false),
 
 			/**
 			 * @default undefined
@@ -49,6 +60,23 @@ const WithEvaluator = ChildComponent => {
 			 */
 
 			formContext: Config.object().required(),
+
+			/**
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {string}
+			 */
+
+			paginationMode: Config.string().required(),
+
+			/**
+			 * @default undefined
+			 * @instance
+			 * @memberof FormRenderer
+			 * @type {!string}
+			 */
+
+			spritemap: Config.string().required(),
 
 			/**
 			 * @default undefined

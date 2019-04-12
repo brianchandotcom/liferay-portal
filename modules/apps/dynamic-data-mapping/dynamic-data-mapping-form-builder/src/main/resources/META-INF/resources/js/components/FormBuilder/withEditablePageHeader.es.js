@@ -1,11 +1,95 @@
 import './EditablePageHeader.soy.js';
 import Component, {Fragment} from 'metal-jsx';
+import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
+import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import {sub} from '../../util/strings.es.js';
 
 const withEditablePageHeader = ChildComponent => {
 	class EditablePageHeader extends Component {
+		static PROPS = {
+
+			/**
+			 * @default
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?number}
+			 */
+
+			activePage: Config.number().value(0),
+
+			/**
+			 * @default undefined
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?string}
+			 */
+
+			defaultLanguageId: Config.string(),
+
+			/**
+			 * @default undefined
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?string}
+			 */
+
+			editingLanguageId: Config.string(),
+
+			/**
+			 * @default []
+			 * @instance
+			 * @memberof Sidebar
+			 * @type {?(array|undefined)}
+			 */
+
+			fieldTypes: Config.array().value([]),
+
+			/**
+			 * @default {}
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?object}
+			 */
+
+			focusedField: focusedFieldStructure.value({}),
+
+			/**
+			 * @default []
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {?array<object>}
+			 */
+
+			pages: Config.arrayOf(pageStructure).value([]),
+
+			/**
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {string}
+			 */
+
+			paginationMode: Config.string().required(),
+
+			/**
+			 * @instance
+			 * @memberof FormBuilder
+			 * @type {string}
+			 */
+
+			rules: Config.arrayOf(ruleStructure).required(),
+
+			/**
+			 * @default undefined
+			 * @instance
+			 * @memberof FormRenderer
+			 * @type {!string}
+			 */
+
+			spritemap: Config.string().required()
+		}
+
 		attached() {
 			this._eventHandler = new EventHandler();
 

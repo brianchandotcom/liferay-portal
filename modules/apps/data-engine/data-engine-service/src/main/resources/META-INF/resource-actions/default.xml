@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.data.engine</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_data_engine_web_portlet_DEDataDefinitionPortlet</portlet-name>
+			<portlet-name>com_liferay_data_engine_web_portlet_DataDefinitionPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -21,95 +21,6 @@
 				<action-key>ADD_DATA_LAYOUT</action-key>
 				<action-key>ADD_DATA_RECORD_COLLECTION</action-key>
 				<action-key>DEFINE_PERMISSIONS</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.data.engine.model.DEDataDefinition</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_data_engine_web_portlet_DEDataDefinitionPortlet</portlet-name>
-		</portlet-ref>
-		<weight>2</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.data.engine.model.DEDataLayout</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_data_engine_web_portlet_DEDataLayout</portlet-name>
-		</portlet-ref>
-		<weight>2</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.data.engine.model.DEDataRecordCollection</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_data_engine_web_portlet_DEDataRecordCollectionPortlet</portlet-name>
-		</portlet-ref>
-		<weight>3</weight>
-		<permissions>
-			<supports>
-				<action-key>ADD_DATA_RECORD</action-key>
-				<action-key>DELETE</action-key>
-				<action-key>DELETE_DATA_RECORD</action-key>
-				<action-key>EXPORT_DATA_RECORDS</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>UPDATE_DATA_RECORD</action-key>
-				<action-key>VIEW</action-key>
-				<action-key>VIEW_DATA_RECORD</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-				<action-key>VIEW_DATA_RECORD</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-				<action-key>VIEW_DATA_RECORD</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>ADD_DATA_RECORD</action-key>
-				<action-key>DELETE</action-key>
-				<action-key>DELETE_DATA_RECORD</action-key>
-				<action-key>EXPORT_DATA_RECORDS</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>UPDATE_DATA_RECORD</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

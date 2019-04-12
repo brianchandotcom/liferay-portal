@@ -16,8 +16,8 @@ package com.liferay.message.boards.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.message.boards.configuration.MBDiscussionGroupServiceConfiguration;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
@@ -2128,9 +2128,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBDiscussion mbDiscussion =
 			mbDiscussionLocalService.getThreadDiscussion(message.getThreadId());
 
-		MBDiscussionGroupServiceConfiguration
-			mbDiscussionGroupServiceConfiguration =
-				_getMBDiscussionGroupServiceConfiguration(message.getGroupId());
+		CommentGroupServiceConfiguration commentGroupServiceConfiguration =
+			_getCommentGroupServiceConfiguration(message.getGroupId());
 
 		String contentURL = (String)serviceContext.getAttribute("contentURL");
 
@@ -2148,14 +2147,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.getUserId(), StringPool.BLANK);
 		}
 
-		String emailFromName =
-			mbDiscussionGroupServiceConfiguration.emailFromName();
+		String emailFromName = commentGroupServiceConfiguration.emailFromName();
 		String emailFromAddress =
-			mbDiscussionGroupServiceConfiguration.emailFromAddress();
+			commentGroupServiceConfiguration.emailFromAddress();
 
 		SubscriptionSender subscriptionSender =
-			new MBDiscussionSubcriptionSender(
-				mbDiscussionGroupServiceConfiguration);
+			new MBDiscussionSubcriptionSender(commentGroupServiceConfiguration);
 
 		subscriptionSender.setCompanyId(message.getCompanyId());
 		subscriptionSender.setClassName(MBDiscussion.class.getName());
@@ -2173,10 +2170,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setHtmlFormat(true);
 
 		Map<Locale, String> localizedBodyMap = LocalizationUtil.getMap(
-			mbDiscussionGroupServiceConfiguration.discussionEmailBody());
+			commentGroupServiceConfiguration.discussionEmailBody());
 
 		Map<Locale, String> localizedSubjectMap = LocalizationUtil.getMap(
-			mbDiscussionGroupServiceConfiguration.discussionEmailSubject());
+			commentGroupServiceConfiguration.discussionEmailSubject());
 
 		if (localizedBodyMap != null) {
 			subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
@@ -2641,6 +2638,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	private CommentGroupServiceConfiguration
+			_getCommentGroupServiceConfiguration(long groupId)
+		throws ConfigurationException {
+
+		return configurationProvider.getConfiguration(
+			CommentGroupServiceConfiguration.class,
+			new GroupServiceSettingsLocator(groupId, MBConstants.SERVICE_NAME));
+	}
+
 	private long _getFileEntryMessageId(long fileEntryId)
 		throws PortalException {
 
@@ -2651,15 +2657,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			fileEntry.getFolderId());
 
 		return GetterUtil.getLong(folder.getName());
-	}
-
-	private MBDiscussionGroupServiceConfiguration
-			_getMBDiscussionGroupServiceConfiguration(long groupId)
-		throws ConfigurationException {
-
-		return configurationProvider.getConfiguration(
-			MBDiscussionGroupServiceConfiguration.class,
-			new GroupServiceSettingsLocator(groupId, MBConstants.SERVICE_NAME));
 	}
 
 	private long _getRootDiscussionMessageId(String className, long classPK)

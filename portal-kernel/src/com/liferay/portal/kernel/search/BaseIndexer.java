@@ -139,16 +139,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		return Objects.equals(getClassName(), indexer.getClassName());
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSearchClassNames}
-	 */
-	@Deprecated
-	@Override
-	public String[] getClassNames() {
-		return getSearchClassNames();
-	}
-
 	@Override
 	public Document getDocument(T object) throws SearchException {
 		try {
@@ -250,15 +240,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		return _indexerPostProcessors;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getClassName}
-	 */
-	@Deprecated
-	@Override
-	public String getPortletId() {
-		return StringPool.BLANK;
-	}
-
 	@Override
 	public String[] getSearchClassNames() {
 		return new String[] {getClassName()};
@@ -333,19 +314,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 
 		return getSortField(orderByCol);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSummary(Document, String, PortletRequest,
-	 *             PortletResponse)}
-	 */
-	@Deprecated
-	@Override
-	public Summary getSummary(Document document, Locale locale, String snippet)
-		throws SearchException {
-
-		return getSummary(document, snippet, null, null);
 	}
 
 	@Override
@@ -1532,14 +1500,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 
 		return countryNames;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getClassName}
-	 */
-	@Deprecated
-	protected String getPortletId(SearchContext searchContext) {
-		return StringPool.BLANK;
 	}
 
 	protected Group getSiteGroup(long groupId) {

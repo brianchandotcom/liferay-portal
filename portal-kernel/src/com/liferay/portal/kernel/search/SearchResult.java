@@ -100,27 +100,11 @@ public class SearchResult {
 		return HashUtil.hash(hash, _className);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setClassName(String className) {
-		_className = className;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setClassPK(long classPK) {
-		_classPK = classPK;
-	}
-
 	public void setSummary(Summary summary) {
 		_summary = summary;
 	}
 
-	private String _className;
+	private final String _className;
 	private long _classPK;
 	private final List<RelatedSearchResult<Comment>>
 		_commentRelatedSearchResults = new ArrayList<>();

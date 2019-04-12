@@ -37,12 +37,6 @@ public interface Query extends Serializable {
 
 	public QueryConfig getQueryConfig();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public Object getWrappedQuery();
-
 	public boolean hasChildren();
 
 	public boolean isDefaultBoost();

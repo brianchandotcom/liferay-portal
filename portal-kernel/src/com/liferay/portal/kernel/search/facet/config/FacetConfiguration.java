@@ -75,13 +75,6 @@ public class FacetConfiguration {
 		_dataJSONObject = dataJSONObject;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setDisplayStyle(String displayStyle) {
-	}
-
 	public void setFieldName(String fieldName) {
 		_fieldName = fieldName;
 	}

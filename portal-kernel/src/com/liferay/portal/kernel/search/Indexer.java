@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Collection;
-import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -39,13 +38,6 @@ public interface Indexer<T> {
 
 	public String getClassName();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSearchClassNames}
-	 */
-	@Deprecated
-	public String[] getClassNames();
-
 	public Document getDocument(T object) throws SearchException;
 
 	public BooleanFilter getFacetBooleanFilter(
@@ -56,12 +48,6 @@ public interface Indexer<T> {
 		throws SearchException;
 
 	public IndexerPostProcessor[] getIndexerPostProcessors();
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getClassName}
-	 */
-	@Deprecated
-	public String getPortletId();
 
 	public String[] getSearchClassNames();
 
@@ -80,15 +66,6 @@ public interface Indexer<T> {
 	 */
 	@Deprecated
 	public String getSortField(String orderByCol, int sortType);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSummary(Document, String, PortletRequest,
-	 *             PortletResponse)}
-	 */
-	@Deprecated
-	public Summary getSummary(Document document, Locale locale, String snippet)
-		throws SearchException;
 
 	public Summary getSummary(
 			Document document, String snippet, PortletRequest portletRequest,

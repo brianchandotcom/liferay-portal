@@ -38,15 +38,6 @@ public class BooleanClauseImpl<T> implements BooleanClause<T> {
 		return _t;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getClause}
-	 */
-	@Deprecated
-	@Override
-	public T getQuery() {
-		return getClause();
-	}
-
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(5);

@@ -55,15 +55,6 @@ public class IndexerRegistryUtil {
 		_indexerRegistry.register(indexer);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #register(Indexer)}
-	 */
-	@Deprecated
-	public static void register(String className, Indexer<?> indexer) {
-		_indexerRegistry.register(indexer);
-	}
-
 	public static void unregister(Indexer<?> indexer) {
 		_indexerRegistry.unregister(indexer);
 	}

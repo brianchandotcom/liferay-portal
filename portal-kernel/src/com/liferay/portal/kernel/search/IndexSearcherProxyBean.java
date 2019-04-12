@@ -59,19 +59,6 @@ public class IndexSearcherProxyBean
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #search(SearchContext, Query)}
-	 */
-	@Deprecated
-	@Override
-	public Hits search(
-		String searchEngineId, long companyId, Query query, Sort[] sort,
-		int start, int end) {
-
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public long searchCount(SearchContext searchContext, Query query) {
 		throw new UnsupportedOperationException();

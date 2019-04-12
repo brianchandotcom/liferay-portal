@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.search.dummy.DummyIndexSearcher;
 import com.liferay.portal.kernel.search.dummy.DummyIndexWriter;
-import com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl;
 import com.liferay.portal.kernel.search.generic.BooleanQueryFactoryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryFactoryImpl;
@@ -36,19 +35,6 @@ public class BaseSearchEngine implements SearchEngine {
 		throws SearchException {
 
 		return null;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public BooleanClauseFactory getBooleanClauseFactory() {
-		if (_booleanClauseFactory == null) {
-			_booleanClauseFactory = new BooleanClauseFactoryImpl();
-		}
-
-		return _booleanClauseFactory;
 	}
 
 	/**
@@ -129,26 +115,6 @@ public class BaseSearchEngine implements SearchEngine {
 		throws SearchException {
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public void setBooleanClauseFactory(
-		BooleanClauseFactory booleanClauseFactory) {
-
-		_booleanClauseFactory = booleanClauseFactory;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public void setBooleanQueryFactory(
-		BooleanQueryFactory booleanQueryFactory) {
-
-		_booleanQueryFactory = booleanQueryFactory;
-	}
-
 	public void setIndexSearcher(IndexSearcher indexSearcher) {
 		_indexSearcher = indexSearcher;
 	}
@@ -157,29 +123,9 @@ public class BaseSearchEngine implements SearchEngine {
 		_indexWriter = indexWriter;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public void setTermQueryFactory(TermQueryFactory termQueryFactory) {
-		_termQueryFactory = termQueryFactory;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public void setTermRangeQueryFactory(
-		TermRangeQueryFactory termRangeQueryFactory) {
-
-		_termRangeQueryFactory = termRangeQueryFactory;
-	}
-
 	public void setVendor(String vendor) {
 		_vendor = vendor;
 	}
-
-	private BooleanClauseFactory _booleanClauseFactory;
 
 	@SuppressWarnings("deprecation")
 	private BooleanQueryFactory _booleanQueryFactory;

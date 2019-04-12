@@ -52,15 +52,6 @@ public abstract class BaseQueryImpl implements Query {
 		return _queryConfig;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public Object getWrappedQuery() {
-		return this;
-	}
-
 	@Override
 	public boolean hasChildren() {
 		return false;

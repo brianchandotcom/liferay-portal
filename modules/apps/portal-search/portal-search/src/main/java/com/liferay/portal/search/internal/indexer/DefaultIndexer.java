@@ -101,11 +101,6 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return getSearchClassNames();
-	}
-
-	@Override
 	public Document getDocument(T baseModel) throws SearchException {
 		return _indexerDocumentBuilder.getDocument(baseModel);
 	}
@@ -134,11 +129,6 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	}
 
 	@Override
-	public String getPortletId() {
-		return StringPool.BLANK;
-	}
-
-	@Override
 	public String[] getSearchClassNames() {
 		return _modelSearchSettings.getSearchClassNames();
 	}
@@ -156,13 +146,6 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	@Override
 	public String getSortField(String orderByCol, int sortType) {
 		return StringPool.BLANK;
-	}
-
-	@Override
-	public Summary getSummary(Document document, Locale locale, String snippet)
-		throws SearchException {
-
-		return getSummary(document, snippet, null, null);
 	}
 
 	@Override

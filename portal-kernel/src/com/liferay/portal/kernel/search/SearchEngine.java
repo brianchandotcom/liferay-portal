@@ -24,13 +24,6 @@ public interface SearchEngine {
 		throws SearchException;
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             BooleanClauseFactoryUtil}
-	 */
-	@Deprecated
-	public BooleanClauseFactory getBooleanClauseFactory();
-
-	/**
 	 * @deprecated As of Wilberforce (7.0.x)
 	 */
 	@Deprecated

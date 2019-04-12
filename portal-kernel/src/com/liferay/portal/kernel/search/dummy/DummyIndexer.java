@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Collection;
-import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -47,16 +46,6 @@ public class DummyIndexer implements Indexer<Object> {
 	@Override
 	public String getClassName() {
 		return StringPool.BLANK;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSearchClassNames}
-	 */
-	@Deprecated
-	@Override
-	public String[] getClassNames() {
-		return new String[0];
 	}
 
 	@Override
@@ -81,15 +70,6 @@ public class DummyIndexer implements Indexer<Object> {
 		return new IndexerPostProcessor[0];
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getClassName}
-	 */
-	@Deprecated
-	@Override
-	public String getPortletId() {
-		return StringPool.BLANK;
-	}
-
 	@Override
 	public String[] getSearchClassNames() {
 		return new String[0];
@@ -108,19 +88,6 @@ public class DummyIndexer implements Indexer<Object> {
 	@Override
 	public String getSortField(String orderByCol, int sortType) {
 		return StringPool.BLANK;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSummary(Document, String, PortletRequest,
-	 *             PortletResponse)}
-	 */
-	@Deprecated
-	@Override
-	public Summary getSummary(
-		Document document, Locale locale, String snippet) {
-
-		return null;
 	}
 
 	@Override

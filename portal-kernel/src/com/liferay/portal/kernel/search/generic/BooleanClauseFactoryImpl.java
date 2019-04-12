@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.BooleanClauseFactory;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanClauseOccurImpl;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 
@@ -34,30 +33,6 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 			occur);
 
 		return new BooleanClauseImpl<>(query, booleanClauseOccur);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #create(Query,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public BooleanClause<Query> create(
-		SearchContext searchContext, Query query, String occur) {
-
-		return create(query, occur);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #create(String,
-	 *             String, String)}}
-	 */
-	@Deprecated
-	@Override
-	public BooleanClause<Query> create(
-		SearchContext searchContext, String field, String value, String occur) {
-
-		return create(field, value, occur);
 	}
 
 	@Override

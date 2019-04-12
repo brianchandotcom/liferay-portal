@@ -40,20 +40,6 @@ public class BooleanClauseFactoryUtil {
 		return booleanClauseFactory.create(query, occur);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link create(String,
-	 *             String, String)}
-	 */
-	@Deprecated
-	public static BooleanClause<Query> create(
-		SearchContext searchContext, String field, String value, String occur) {
-
-		BooleanClauseFactory booleanClauseFactory = getBooleanClauseFactory(
-			searchContext);
-
-		return booleanClauseFactory.create(field, value, occur);
-	}
-
 	public static BooleanClause<Query> create(
 		String field, String value, String occur) {
 

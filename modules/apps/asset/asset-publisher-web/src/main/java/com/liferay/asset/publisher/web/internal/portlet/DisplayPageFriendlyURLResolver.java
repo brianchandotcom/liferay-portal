@@ -14,10 +14,7 @@
 
 package com.liferay.asset.publisher.web.internal.portlet;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -32,15 +29,11 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
@@ -121,8 +114,23 @@ public class DisplayPageFriendlyURLResolver
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		Layout layout = getJournalArticleLayout(
-			groupId, privateLayout, friendlyURL);
+		JournalArticle journalArticle = _getJournalArticle(
+			groupId, friendlyURL);
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
+			AssetDisplayPageHelper.hasAssetDisplayPage(groupId, assetEntry)) {
+
+			return super.getLayoutFriendlyURLComposite(
+				companyId, groupId, privateLayout, friendlyURL, params,
+				requestContext);
+		}
+
+		Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			journalArticle.getLayoutUuid(), groupId, privateLayout);
 
 		return new LayoutFriendlyURLComposite(layout, friendlyURL);
 	}
@@ -130,72 +138,6 @@ public class DisplayPageFriendlyURLResolver
 	@Override
 	public String getURLSeparator() {
 		return JournalArticleConstants.CANONICAL_URL_SEPARATOR;
-	}
-
-	protected Layout getJournalArticleLayout(
-			long groupId, boolean privateLayout, String friendlyURL)
-		throws PortalException {
-
-		JournalArticle journalArticle = _getJournalArticle(
-			groupId, friendlyURL);
-
-		if (Validator.isNotNull(journalArticle.getLayoutUuid())) {
-			return _layoutLocalService.getLayoutByUuidAndGroupId(
-				journalArticle.getLayoutUuid(), groupId, privateLayout);
-		}
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		try {
-			Layout layout = _getAssetDisplayPageEntryLayout(
-				groupId, assetEntry);
-
-			if (layout != null) {
-				return layout;
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
-
-		return _layoutLocalService.getLayoutByUuidAndGroupId(
-			journalArticle.getLayoutUuid(), groupId, privateLayout);
-	}
-
-	private Layout _getAssetDisplayPageEntryLayout(
-			long groupId, AssetEntry assetEntry)
-		throws PortalException {
-
-		if (!AssetDisplayPageHelper.hasAssetDisplayPage(groupId, assetEntry)) {
-			return null;
-		}
-
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				groupId, assetEntry.getClassNameId(), assetEntry.getClassPK());
-
-		if (assetDisplayPageEntry.getType() !=
-				AssetDisplayPageConstants.TYPE_DEFAULT) {
-
-			return _layoutLocalService.fetchLayout(
-				assetDisplayPageEntry.getPlid());
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				groupId, assetEntry.getClassNameId(),
-				assetEntry.getClassTypeId());
-
-		if (layoutPageTemplateEntry != null) {
-			return _layoutLocalService.fetchLayout(
-				layoutPageTemplateEntry.getPlid());
-		}
-
-		return null;
 	}
 
 	private String _getBasicLayoutURL(
@@ -378,13 +320,6 @@ public class DisplayPageFriendlyURLResolver
 		return paths.get(1);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DisplayPageFriendlyURLResolver.class);
-
-	@Reference
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
-
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -405,9 +340,6 @@ public class DisplayPageFriendlyURLResolver
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

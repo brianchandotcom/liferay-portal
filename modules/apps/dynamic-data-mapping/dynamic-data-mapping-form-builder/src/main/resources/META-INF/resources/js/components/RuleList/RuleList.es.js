@@ -121,18 +121,10 @@ class RuleList extends Component {
 	}
 
 	attached() {
-		this._eventHandler.add(
-			dom.on(document, 'mouseup', this._handleDocumentMouseDown.bind(this), true)
-		);
-	}
-
-	created() {
 		this._eventHandler = new EventHandler();
 
-		this.setState(
-			{
-				rules: this._formatRules(this.rules)
-			}
+		this._eventHandler.add(
+			dom.on(document, 'mouseup', this._handleDocumentMouseUp.bind(this), true)
 		);
 	}
 
@@ -145,117 +137,88 @@ class RuleList extends Component {
 	prepareStateForRender(states) {
 		const rules = this._setDataProviderNames(states);
 
-		let newLabel = '';
-		let newTarget = '';
-
 		return {
 			...states,
-			rules: this._formatRules(
-				rules.map(
-					rule => {
-						return {
-							...rule,
-							actions: rule.actions.map(
-								action => {
-									if (action.action == 'jump-to-page') {
-										newLabel = (parseInt(action.target, 10) + 1).toString();
-										newTarget = (parseInt(action.target, 10) + 1).toString();
-									}
-									else {
-										newLabel = this._getFieldLabel(action.target);
-										newTarget = this._getFieldLabel(action.target);
-									}
+			rules: rules.map(
+				rule => {
+					let logicalOperator;
 
-									return {
-										...action,
-										label: newLabel,
-										target: newTarget
-									};
-								}
-							),
-							conditions: rule.conditions.map(
-								condition => {
-									return {
-										...condition,
-										operands: condition.operands.map(
-											(operand, index) => {
-												const label = this._getOperandLabel(condition.operands, index);
-
-												return {
-													...operand,
-													label,
-													value: label
-												};
-											}
-										)
-									};
-								}
-							)
-						};
+					if (rule['logical-operator']) {
+						logicalOperator = rule['logical-operator'].toLowerCase();
 					}
-				)
+					else if (rule.logicalOperator) {
+						logicalOperator = rule.logicalOperator.toLowerCase();
+					}
+
+					return {
+						...rule,
+						actions: rule.actions.map(
+							action => {
+								if (action.action === 'auto-fill') {
+									const {inputs, outputs} = action;
+
+									const inputLabel = Object.values(inputs).map(input => this._getFieldLabel(input));
+									const outputLabel = Object.values(outputs).map(output => this._getFieldLabel(output));
+
+									action = {
+										...action,
+										inputLabel,
+										outputLabel
+									};
+								}
+
+								let fieldLabel = this._getFieldLabel(action.target);
+
+								if (action.action == 'jump-to-page') {
+									fieldLabel = (parseInt(action.target, 10) + 1).toString();
+								}
+
+								return {
+									...action,
+									label: fieldLabel,
+									target: fieldLabel
+								};
+							}
+						),
+						conditions: rule.conditions.map(
+							condition => {
+								if (condition.operands.length < 2 && condition.operands[0].type === 'list') {
+									condition.operands = [
+										{
+											label: 'user',
+											repeatable: false,
+											type: 'user',
+											value: 'user'
+										},
+										{
+											...condition.operands[0],
+											label: condition.operands[0].value
+										}
+									];
+								}
+
+								return {
+									...condition,
+									operands: condition.operands.map(
+										(operand, index) => {
+											const label = this._getOperandLabel(condition.operands, index);
+
+											return {
+												...operand,
+												label,
+												value: label
+											};
+										}
+									)
+								};
+							}
+						),
+						logicalOperator
+					};
+				}
 			),
 			rulesCardOptions: this._getRulesCardOptions()
 		};
-	}
-
-	_formatRules(rules) {
-		return rules.map(
-			rule => {
-				const {actions, conditions} = rule;
-
-				let logicalOperator;
-
-				if (rule['logical-operator']) {
-					logicalOperator = rule['logical-operator'].toLowerCase();
-				}
-				else if (rule.logicalOperator) {
-					logicalOperator = rule.logicalOperator.toLowerCase();
-				}
-
-				return {
-					actions: actions.map(
-						action => {
-							if (action.action === 'auto-fill') {
-								const {inputs, outputs} = action;
-
-								const inputLabel = Object.values(inputs).map(input => this._getFieldLabel(input));
-								const outputLabel = Object.values(outputs).map(output => this._getFieldLabel(output));
-
-								action = {
-									...action,
-									inputLabel,
-									outputLabel
-								};
-							}
-
-							return action;
-						}
-					),
-					conditions: conditions.map(
-						condition => {
-							if (condition.operands.length < 2 && condition.operands[0].type === 'list') {
-								condition.operands = [
-									{
-										label: 'user',
-										repeatable: false,
-										type: 'user',
-										value: 'user'
-									},
-									{
-										...condition.operands[0],
-										label: condition.operands[0].value
-									}
-								];
-							}
-
-							return condition;
-						}
-					),
-					logicalOperator
-				};
-			}
-		);
 	}
 
 	_getDataProviderName(id) {
@@ -352,7 +315,7 @@ class RuleList extends Component {
 		return rulesCardOptions;
 	}
 
-	_handleDocumentMouseDown({target}) {
+	_handleDocumentMouseUp({target}) {
 		const dropdownSettings = dom.closest(target, '.ddm-rule-list-settings');
 
 		if (dropdownSettings) {

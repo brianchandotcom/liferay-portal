@@ -78,7 +78,7 @@ public class JournalArticleInfoDisplayContributor
 		List<InfoDisplayField> infoDisplayFields =
 			super.getClassTypeInfoDisplayFields(classTypeId, locale);
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchDDMStructure(
 			classTypeId);
 
 		List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
@@ -114,9 +114,8 @@ public class JournalArticleInfoDisplayContributor
 			new JournalArticleDDMFormValuesReader(article);
 
 		journalArticleDDMFormValuesReader.setFieldsToDDMFormValuesConverter(
-			_fieldsToDDMFormValuesConverter);
-		journalArticleDDMFormValuesReader.setJournalConverter(
-			_journalConverter);
+			fieldsToDDMFormValuesConverter);
+		journalArticleDDMFormValuesReader.setJournalConverter(journalConverter);
 
 		try {
 			DDMFormValues ddmFormValues =
@@ -154,6 +153,24 @@ public class JournalArticleInfoDisplayContributor
 
 		return classTypeValues;
 	}
+
+	@Reference
+	protected DDMStructureLocalService ddmStructureLocalService;
+
+	@Reference
+	protected DLAppService dlAppService;
+
+	@Reference
+	protected DLURLHelper dlURLHelper;
+
+	@Reference
+	protected FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter;
+
+	@Reference
+	protected JournalContent journalContent;
+
+	@Reference
+	protected JournalConverter journalConverter;
 
 	private void _addDDMFormFieldValues(
 			JournalArticle article, String key,
@@ -259,10 +276,10 @@ public class JournalArticleInfoDisplayContributor
 				return StringPool.BLANK;
 			}
 
-			FileEntry fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
+			FileEntry fileEntry = dlAppService.getFileEntryByUuidAndGroupId(
 				uuid, groupId);
 
-			return _dlURLHelper.getDownloadURL(
+			return dlURLHelper.getDownloadURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
 		}
 		catch (Exception e) {
@@ -279,24 +296,6 @@ public class JournalArticleInfoDisplayContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleInfoDisplayContributor.class);
 
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private DLAppService _dlAppService;
-
-	@Reference
-	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
-	private JournalContent _journalContent;
-
-	@Reference
-	private JournalConverter _journalConverter;
-
 	private class DDMTemplateContentAccessor implements ContentAccessor {
 
 		public DDMTemplateContentAccessor(
@@ -309,7 +308,7 @@ public class JournalArticleInfoDisplayContributor
 		}
 
 		public String getContent() {
-			return _journalContent.getContent(
+			return journalContent.getContent(
 				_article.getGroupId(), _article.getArticleId(),
 				_ddmTemplate.getTemplateKey(), Constants.VIEW, _languageId,
 				(ThemeDisplay)null);

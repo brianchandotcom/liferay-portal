@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.admin.workflow.dto.v1_0.Creator;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.petra.string.StringBundler;
@@ -52,6 +53,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -762,6 +764,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(WorkflowLog.class, WorkflowLogMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -778,6 +781,40 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class WorkflowLogMixin {
+
+		@JsonProperty
+		Creator auditPerson;
+
+		@JsonProperty
+		String commentLog;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		Creator person;
+
+		@JsonProperty
+		Creator previousPerson;
+
+		@JsonProperty
+		String previousState;
+
+		@JsonProperty
+		String state;
+
+		@JsonProperty
+		Long taskId;
+
+		@JsonProperty
+		String type;
+
+	}
 
 	protected static class Page<T> {
 

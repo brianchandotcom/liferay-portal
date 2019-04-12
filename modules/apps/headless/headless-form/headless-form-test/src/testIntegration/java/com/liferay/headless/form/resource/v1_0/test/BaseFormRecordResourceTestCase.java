@@ -21,6 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.form.dto.v1_0.Creator;
+import com.liferay.headless.form.dto.v1_0.FieldValue;
+import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.petra.string.StringBundler;
@@ -54,6 +57,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -839,6 +843,7 @@ public abstract class BaseFormRecordResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(FormRecord.class, FormRecordMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -855,6 +860,37 @@ public abstract class BaseFormRecordResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class FormRecordMixin {
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		Date datePublished;
+
+		@JsonProperty
+		Boolean draft;
+
+		@JsonProperty
+		FieldValue[] fieldValues;
+
+		@JsonProperty
+		Form form;
+
+		@JsonProperty
+		Long formId;
+
+		@JsonProperty
+		Long id;
+
+	}
 
 	protected static class Page<T> {
 

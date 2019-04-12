@@ -52,6 +52,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -787,6 +788,7 @@ public abstract class BaseSegmentResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(Segment.class, SegmentMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -803,6 +805,34 @@ public abstract class BaseSegmentResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class SegmentMixin {
+
+		@JsonProperty
+		Boolean active;
+
+		@JsonProperty
+		String criteria;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		Long siteId;
+
+		@JsonProperty
+		String source;
+
+	}
 
 	protected static class Page<T> {
 

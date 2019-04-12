@@ -21,7 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
+import com.liferay.headless.delivery.dto.v1_0.ParentKnowledgeBaseFolder;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -54,6 +56,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1470,6 +1473,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(
+					KnowledgeBaseFolder.class, KnowledgeBaseFolderMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1486,6 +1491,49 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class KnowledgeBaseFolderMixin {
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		Number numberOfKnowledgeBaseArticles;
+
+		@JsonProperty
+		Number numberOfKnowledgeBaseFolders;
+
+		@JsonProperty
+		ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
+
+		@JsonProperty
+		Long parentKnowledgeBaseFolderId;
+
+		@JsonProperty
+		Long siteId;
+
+		@JsonProperty
+		ViewableBy viewableBy;
+
+		public static enum ViewableBy {
+		}
+
+	}
 
 	protected static class Page<T> {
 

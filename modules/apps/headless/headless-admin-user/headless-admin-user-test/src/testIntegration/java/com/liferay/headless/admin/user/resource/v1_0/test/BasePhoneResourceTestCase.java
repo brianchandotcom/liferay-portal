@@ -653,6 +653,7 @@ public abstract class BasePhoneResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(Phone.class, PhoneMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -669,6 +670,25 @@ public abstract class BasePhoneResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class PhoneMixin {
+
+		@JsonProperty
+		String extension;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String phoneNumber;
+
+		@JsonProperty
+		String phoneType;
+
+		@JsonProperty
+		Boolean primary;
+
+	}
 
 	protected static class Page<T> {
 

@@ -410,6 +410,7 @@ public abstract class BaseFormRecordFormResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(FormRecordForm.class, FormRecordFormMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -426,6 +427,16 @@ public abstract class BaseFormRecordFormResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class FormRecordFormMixin {
+
+		@JsonProperty
+		Boolean draft;
+
+		@JsonProperty
+		String fieldValues;
+
+	}
 
 	protected static class Page<T> {
 

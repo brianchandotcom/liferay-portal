@@ -21,8 +21,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.Image;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1673,6 +1677,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(BlogPosting.class, BlogPostingMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1689,6 +1694,70 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class BlogPostingMixin {
+
+		@JsonProperty
+		AggregateRating aggregateRating;
+
+		@JsonProperty
+		String alternativeHeadline;
+
+		@JsonProperty
+		String articleBody;
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		Date datePublished;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		String encodingFormat;
+
+		@JsonProperty
+		String friendlyUrlPath;
+
+		@JsonProperty
+		String headline;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		Image image;
+
+		@JsonProperty
+		String[] keywords;
+
+		@JsonProperty
+		Number numberOfComments;
+
+		@JsonProperty
+		Long siteId;
+
+		@JsonProperty
+		TaxonomyCategory[] taxonomyCategories;
+
+		@JsonProperty
+		Long[] taxonomyCategoryIds;
+
+		@JsonProperty
+		ViewableBy viewableBy;
+
+		public static enum ViewableBy {
+		}
+
+	}
 
 	protected static class Page<T> {
 

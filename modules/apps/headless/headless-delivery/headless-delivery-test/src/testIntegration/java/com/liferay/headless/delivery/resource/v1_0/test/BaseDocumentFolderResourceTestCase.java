@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.petra.string.StringBundler;
@@ -1712,6 +1713,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(DocumentFolder.class, DocumentFolderMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1728,6 +1730,43 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class DocumentFolderMixin {
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		Number numberOfDocumentFolders;
+
+		@JsonProperty
+		Number numberOfDocuments;
+
+		@JsonProperty
+		Long siteId;
+
+		@JsonProperty
+		ViewableBy viewableBy;
+
+		public static enum ViewableBy {
+		}
+
+	}
 
 	protected static class Page<T> {
 

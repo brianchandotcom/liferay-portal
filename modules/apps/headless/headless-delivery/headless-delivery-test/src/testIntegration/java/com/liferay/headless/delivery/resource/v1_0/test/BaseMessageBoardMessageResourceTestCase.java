@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
@@ -2209,6 +2211,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(
+					MessageBoardMessage.class, MessageBoardMessageMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -2225,6 +2229,58 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class MessageBoardMessageMixin {
+
+		@JsonProperty
+		AggregateRating aggregateRating;
+
+		@JsonProperty
+		Boolean anonymous;
+
+		@JsonProperty
+		String articleBody;
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		String encodingFormat;
+
+		@JsonProperty
+		String headline;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String[] keywords;
+
+		@JsonProperty
+		Integer numberOfMessageBoardAttachments;
+
+		@JsonProperty
+		Integer numberOfMessageBoardMessages;
+
+		@JsonProperty
+		Boolean showAsAnswer;
+
+		@JsonProperty
+		Long siteId;
+
+		@JsonProperty
+		ViewableBy viewableBy;
+
+		public static enum ViewableBy {
+		}
+
+	}
 
 	protected static class Page<T> {
 

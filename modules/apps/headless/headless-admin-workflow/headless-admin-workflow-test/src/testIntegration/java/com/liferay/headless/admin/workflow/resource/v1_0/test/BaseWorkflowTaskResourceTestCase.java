@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition;
+import com.liferay.headless.admin.workflow.dto.v1_0.ObjectReviewed;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToMe;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser;
@@ -55,6 +56,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1163,6 +1165,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(WorkflowTask.class, WorkflowTaskMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1179,6 +1182,40 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class WorkflowTaskMixin {
+
+		@JsonProperty
+		Boolean completed;
+
+		@JsonProperty
+		Date dateCompleted;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		String definitionName;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		Date dueDate;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		ObjectReviewed objectReviewed;
+
+		@JsonProperty
+		String[] transitions;
+
+	}
 
 	protected static class Page<T> {
 

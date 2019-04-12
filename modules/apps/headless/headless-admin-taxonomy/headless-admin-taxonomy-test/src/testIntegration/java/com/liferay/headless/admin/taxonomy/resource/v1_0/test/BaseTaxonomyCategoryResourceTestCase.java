@@ -21,6 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.admin.taxonomy.dto.v1_0.Creator;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.ParentTaxonomyCategory;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.string.StringBundler;
@@ -1829,6 +1832,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(TaxonomyCategory.class, TaxonomyCategoryMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1845,6 +1849,46 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class TaxonomyCategoryMixin {
+
+		@JsonProperty
+		String[] availableLanguages;
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		Number numberOfTaxonomyCategories;
+
+		@JsonProperty
+		ParentTaxonomyCategory parentTaxonomyCategory;
+
+		@JsonProperty
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary;
+
+		@JsonProperty
+		ViewableBy viewableBy;
+
+		public static enum ViewableBy {
+		}
+
+	}
 
 	protected static class Page<T> {
 

@@ -971,6 +971,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(ContentSetElement.class, ContentSetElementMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -987,6 +988,22 @@ public abstract class BaseContentSetElementResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class ContentSetElementMixin {
+
+		@JsonProperty
+		Object content;
+
+		@JsonProperty
+		String contentType;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String title;
+
+	}
 
 	protected static class Page<T> {
 

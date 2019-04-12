@@ -21,8 +21,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.delivery.dto.v1_0.ParentKnowledgeBaseFolder;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -2809,6 +2813,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(
+					KnowledgeBaseArticle.class,
+					KnowledgeBaseArticleMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -2825,6 +2832,70 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class KnowledgeBaseArticleMixin {
+
+		@JsonProperty
+		AggregateRating aggregateRating;
+
+		@JsonProperty
+		String articleBody;
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		String encodingFormat;
+
+		@JsonProperty
+		String friendlyUrlPath;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String[] keywords;
+
+		@JsonProperty
+		Number numberOfAttachments;
+
+		@JsonProperty
+		Number numberOfKnowledgeBaseArticles;
+
+		@JsonProperty
+		ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
+
+		@JsonProperty
+		Long parentKnowledgeBaseFolderId;
+
+		@JsonProperty
+		Long siteId;
+
+		@JsonProperty
+		TaxonomyCategory[] taxonomyCategories;
+
+		@JsonProperty
+		Long[] taxonomyCategoryIds;
+
+		@JsonProperty
+		String title;
+
+		@JsonProperty
+		ViewableBy viewableBy;
+
+		public static enum ViewableBy {
+		}
+
+	}
 
 	protected static class Page<T> {
 

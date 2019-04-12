@@ -605,6 +605,7 @@ public abstract class BaseWebUrlResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(WebUrl.class, WebUrlMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -621,6 +622,19 @@ public abstract class BaseWebUrlResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class WebUrlMixin {
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String url;
+
+		@JsonProperty
+		String urlType;
+
+	}
 
 	protected static class Page<T> {
 

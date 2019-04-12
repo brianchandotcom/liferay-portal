@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.petra.string.StringBundler;
@@ -1808,6 +1809,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(
+					MessageBoardSection.class, MessageBoardSectionMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1824,6 +1827,43 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class MessageBoardSectionMixin {
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		Integer numberOfMessageBoardSections;
+
+		@JsonProperty
+		Integer numberOfMessageBoardThreads;
+
+		@JsonProperty
+		Long siteId;
+
+		@JsonProperty
+		String title;
+
+		@JsonProperty
+		ViewableBy viewableBy;
+
+		public static enum ViewableBy {
+		}
+
+	}
 
 	protected static class Page<T> {
 

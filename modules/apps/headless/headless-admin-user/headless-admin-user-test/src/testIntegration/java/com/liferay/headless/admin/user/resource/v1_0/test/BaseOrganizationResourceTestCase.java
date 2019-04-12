@@ -21,7 +21,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.admin.user.dto.v1_0.ContactInformation;
+import com.liferay.headless.admin.user.dto.v1_0.Location;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.dto.v1_0.Service;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -1292,6 +1295,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(Organization.class, OrganizationMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1308,6 +1312,46 @@ public abstract class BaseOrganizationResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class OrganizationMixin {
+
+		@JsonProperty
+		String comment;
+
+		@JsonProperty
+		ContactInformation contactInformation;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String image;
+
+		@JsonProperty
+		String[] keywords;
+
+		@JsonProperty
+		Location location;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		Number numberOfOrganizations;
+
+		@JsonProperty
+		Organization parentOrganization;
+
+		@JsonProperty
+		Service[] services;
+
+	}
 
 	protected static class Page<T> {
 

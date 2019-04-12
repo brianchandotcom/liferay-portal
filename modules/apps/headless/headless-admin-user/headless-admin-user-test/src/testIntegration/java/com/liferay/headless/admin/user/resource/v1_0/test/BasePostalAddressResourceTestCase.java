@@ -857,6 +857,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(PostalAddress.class, PostalAddressMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -873,6 +874,40 @@ public abstract class BasePostalAddressResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class PostalAddressMixin {
+
+		@JsonProperty
+		String addressCountry;
+
+		@JsonProperty
+		String addressLocality;
+
+		@JsonProperty
+		String addressRegion;
+
+		@JsonProperty
+		String addressType;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String postalCode;
+
+		@JsonProperty
+		Boolean primary;
+
+		@JsonProperty
+		String streetAddressLine1;
+
+		@JsonProperty
+		String streetAddressLine2;
+
+		@JsonProperty
+		String streetAddressLine3;
+
+	}
 
 	protected static class Page<T> {
 

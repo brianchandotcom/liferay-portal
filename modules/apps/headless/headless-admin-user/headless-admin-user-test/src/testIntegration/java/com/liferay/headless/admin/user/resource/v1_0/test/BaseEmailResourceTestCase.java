@@ -622,6 +622,7 @@ public abstract class BaseEmailResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(Email.class, EmailMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -638,6 +639,22 @@ public abstract class BaseEmailResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class EmailMixin {
+
+		@JsonProperty
+		String email;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		Boolean primary;
+
+		@JsonProperty
+		String type;
+
+	}
 
 	protected static class Page<T> {
 

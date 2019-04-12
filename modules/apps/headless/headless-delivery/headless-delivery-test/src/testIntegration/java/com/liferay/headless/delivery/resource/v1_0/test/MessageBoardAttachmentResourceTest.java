@@ -103,7 +103,8 @@ public class MessageBoardAttachmentResourceTest
 		throws Exception {
 
 		return invokePostMessageBoardThreadMessageBoardAttachment(
-			testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId(), toMultipartBody(messageBoardAttachment));
+			testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId(),
+			toMultipartBody(messageBoardAttachment));
 	}
 
 	@Override

@@ -34,8 +34,10 @@ import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -87,25 +89,9 @@ public class DisplayPageFriendlyURLResolver
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		String initialURL = friendlyURL.substring(
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
-
-		int i = initialURL.lastIndexOf(StringPool.FORWARD_SLASH);
-
-		String urlTitle = initialURL;
-
-		String ddmTemplateKey = null;
-
-		if (i > 0) {
-			urlTitle = initialURL.substring(0, i);
-			ddmTemplateKey = initialURL.substring(i + 1);
-
-			friendlyURL =
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR + urlTitle;
-		}
-
 		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				_getURLTitle(friendlyURL));
 
 		JournalArticle journalArticle =
 			_journalArticleLocalService.fetchLatestArticleByUrlTitle(
@@ -135,7 +121,8 @@ public class DisplayPageFriendlyURLResolver
 			throw new NoSuchArticleException(
 				StringBundler.concat(
 					"No latest version of a JournalArticle exists with the key",
-					"{groupId=", groupId, ", urlTitle=", urlTitle, ", status=",
+					"{groupId=", groupId, ", urlTitle=",
+					_getURLTitle(friendlyURL), ", status=",
 					WorkflowConstants.STATUS_ANY, "}"));
 		}
 
@@ -156,11 +143,9 @@ public class DisplayPageFriendlyURLResolver
 
 		Locale locale = _portal.getLocale(request);
 
-		urlTitle = journalArticle.getUrlTitle(locale);
-
 		return _getBasicLayoutURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext, urlTitle, ddmTemplateKey, journalArticle);
+			requestContext, journalArticle.getUrlTitle(locale), journalArticle);
 	}
 
 	@Override
@@ -185,8 +170,7 @@ public class DisplayPageFriendlyURLResolver
 			long groupId, boolean privateLayout, String friendlyURL)
 		throws PortalException {
 
-		String urlTitle = friendlyURL.substring(
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
+		String urlTitle = _getURLTitle(friendlyURL);
 
 		String normalizedUrlTitle =
 			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
@@ -274,7 +258,7 @@ public class DisplayPageFriendlyURLResolver
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext, String urlTitle,
-			String ddmTemplateKey, JournalArticle journalArticle)
+			JournalArticle journalArticle)
 		throws PortalException {
 
 		Layout layout = getJournalArticleLayout(
@@ -343,6 +327,8 @@ public class DisplayPageFriendlyURLResolver
 
 		actualParams.put(namespace + "urlTitle", new String[] {urlTitle});
 
+		String ddmTemplateKey = _getDDMTemplateKey(friendlyURL);
+
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			actualParams.put(
 				namespace + "ddmTemplateKey", new String[] {ddmTemplateKey});
@@ -387,6 +373,22 @@ public class DisplayPageFriendlyURLResolver
 		}
 
 		return layoutActualURL;
+	}
+
+	private String _getDDMTemplateKey(String friendlyURL) {
+		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+
+		if (paths.size() <= 2) {
+			return StringPool.BLANK;
+		}
+
+		return paths.get(2);
+	}
+
+	private String _getURLTitle(String friendlyURL) {
+		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+
+		return paths.get(1);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

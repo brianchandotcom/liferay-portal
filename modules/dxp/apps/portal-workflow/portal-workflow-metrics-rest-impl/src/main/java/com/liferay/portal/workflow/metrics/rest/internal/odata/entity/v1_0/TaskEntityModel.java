@@ -32,10 +32,10 @@ public class TaskEntityModel implements EntityModel {
 	public TaskEntityModel() {
 		_entityFieldsMap = Stream.of(
 			new IntegerEntityField(
-				"onTimeTaskCount", locale -> "onTimeTaskCount"),
+				"onTimeInstanceCount", locale -> "onTimeInstanceCount"),
 			new IntegerEntityField(
-				"overdueTaskCount", locale -> "overdueTaskCount"),
-			new IntegerEntityField("taskCount", locale -> "taskCount")
+				"overdueInstanceCount", locale -> "overdueInstanceCount"),
+			new IntegerEntityField("instanceCount", locale -> "instanceCount")
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

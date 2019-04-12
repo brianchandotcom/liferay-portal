@@ -79,15 +79,15 @@ components:
         Task:
             description: https://www.schema.org/Task
             properties:
+                instanceCount:
+                    format: int64
+                    type: integer
                 name:
                     type: string
-                onTimeTaskCount:
+                onTimeInstanceCount:
                     format: int64
                     type: integer
-                overdueTaskCount:
-                    format: int64
-                    type: integer
-                taskCount:
+                overdueInstanceCount:
                     format: int64
                     type: integer
             type: object

@@ -11609,10 +11609,10 @@ liferay-npm-bundler@2.7.1:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.5.0.tgz#2f06969a2b70709cb9e7af5d52105a8ff32fafab"
-  integrity sha512-vnrlCybhLAhTDaggeEG/fwi1uPe0qTzl2blFARcNBfHelvLPirciOyeZt62JN3otJFARd/I4FFoM1cRm3gkECg==
+liferay-npm-scripts@1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-1.5.1.tgz#95628e0223cd2f29051b27f2ea32c2fc3bcfe9bc"
+  integrity sha512-z/NjCwosut1ZXyn3YlWCPv5gQ6/Pxce8ZZ4pLnPoQa6rL6g+dVKwq+S4/O/oIEG5QSS8iGQDgJFnP0UTj8/ayA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/preset-env" "^7.4.2"
@@ -11627,7 +11627,7 @@ liferay-npm-scripts@1.5.0:
     liferay-npm-bridge-generator "2.7.1"
     liferay-npm-bundler "2.7.1"
     liferay-npm-bundler-preset-liferay-dev "1.1.7"
-    liferay-theme-tasks "9.1.0"
+    liferay-theme-tasks "9.1.1"
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"
     rimraf "^2.6.2"
@@ -11654,10 +11654,10 @@ liferay-theme-es2015-hook@8.0.0-rc.2:
     metal-tools-soy "^4.1.2"
     run-sequence "^1.2.2"
 
-liferay-theme-tasks@9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-9.1.0.tgz#cd1bc7b533e1822d4338e0575157331096fe28b5"
-  integrity sha512-6JCmtzLKWoaPyWkUgYVJgb6vi7T96JxliUU619rcWXLw9KX1ds7ChGun83zuOnWBgkGmo6adD+6NzWIHCDZlNw==
+liferay-theme-tasks@9.1.1:
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-9.1.1.tgz#7fd834356b8cff9e2a3e2eb9358e2580f7c889bf"
+  integrity sha512-36ZgJX1bXj5tojSp7QEeSLR9b/pEdPPxuECax037tbiZRo4sakRSxHFSPVf7vI7NOdysDRiwTNTwlza2XbB7Mg==
   dependencies:
     async "^2.6.1"
     autoprefixer "^9.1.5"
@@ -11971,11 +11971,6 @@ lodash.escape@~2.4.1:
     lodash._escapehtmlchar "~2.4.1"
     lodash._reunescapedhtml "~2.4.1"
     lodash.keys "~2.4.1"
-
-lodash.flowright@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.flowright/-/lodash.flowright-3.5.0.tgz#2b5fff399716d7e7dc5724fe9349f67065184d67"
-  integrity sha1-K1//OZcW1+fcVyT+k0n2cGUYTWc=
 
 lodash.get@^4.4.2:
   version "4.4.2"

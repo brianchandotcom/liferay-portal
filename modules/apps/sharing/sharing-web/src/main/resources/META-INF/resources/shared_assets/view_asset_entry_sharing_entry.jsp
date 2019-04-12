@@ -71,22 +71,13 @@ portletDisplay.setURLBack(redirect);
 
 <c:if test="<%= assetRenderer.isCommentable() %>">
 	<div class="container-fluid-1280">
-		<liferay-ui:panel
-			collapsible="<%= true %>"
-			cssClass="panel-group"
-			extended="<%= true %>"
-			markupView="lexicon"
-			persistState="<%= true %>"
-			title='<%= LanguageUtil.get(request, "comments") %>'
-		>
-			<liferay-comment:discussion
-				className="<%= assetEntry.getClassName() %>"
-				classPK="<%= assetEntry.getClassPK() %>"
-				formName='<%= "fm" + assetEntry.getClassPK() %>'
-				ratingsEnabled="<%= false %>"
-				redirect="<%= currentURL %>"
-				userId="<%= assetRenderer.getUserId() %>"
-			/>
-		</liferay-ui:panel>
+		<liferay-comment:discussion
+			className="<%= assetEntry.getClassName() %>"
+			classPK="<%= assetEntry.getClassPK() %>"
+			formName='<%= "fm" + assetEntry.getClassPK() %>'
+			ratingsEnabled="<%= false %>"
+			redirect="<%= currentURL %>"
+			userId="<%= assetRenderer.getUserId() %>"
+		/>
 	</div>
 </c:if>

@@ -236,23 +236,14 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= showComments && fileEntry.isRepositoryCapabilityProvided(CommentCapability.class) %>">
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					cssClass="lfr-document-library-comments panel-group"
-					extended="<%= true %>"
-					markupView="lexicon"
-					persistState="<%= true %>"
-					title="<%= dlViewFileVersionDisplayContext.getDiscussionLabel(locale) %>"
-				>
-					<liferay-comment:discussion
-						className="<%= dlViewFileVersionDisplayContext.getDiscussionClassName() %>"
-						classPK="<%= dlViewFileVersionDisplayContext.getDiscussionClassPK() %>"
-						formName="fm2"
-						ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
-						redirect="<%= currentURL %>"
-						userId="<%= PortalUtil.getValidUserId(fileEntry.getCompanyId(), fileEntry.getUserId()) %>"
-					/>
-				</liferay-ui:panel>
+				<liferay-comment:discussion
+					className="<%= dlViewFileVersionDisplayContext.getDiscussionClassName() %>"
+					classPK="<%= dlViewFileVersionDisplayContext.getDiscussionClassPK() %>"
+					formName="fm2"
+					ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
+					redirect="<%= currentURL %>"
+					userId="<%= PortalUtil.getValidUserId(fileEntry.getCompanyId(), fileEntry.getUserId()) %>"
+				/>
 			</c:if>
 		</div>
 	</div>

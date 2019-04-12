@@ -15,8 +15,10 @@
 package com.liferay.sharing.document.library.internal.servlet.taglib.ui;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -63,6 +65,10 @@ public class FileEntrySharingEntryMenuItemContributor
 				return Collections.emptyList();
 			}
 
+			if (!_isVisible(sharingEntry)) {
+				return Collections.emptyList();
+			}
+
 			return Collections.singleton(
 				_createDownloadMenuItem(sharingEntry, themeDisplay));
 		}
@@ -101,8 +107,24 @@ public class FileEntrySharingEntryMenuItemContributor
 		return assetRendererFactory.getAssetRenderer(sharingEntry.getClassPK());
 	}
 
+	private boolean _isVisible(SharingEntry sharingEntry) {
+
+		AssetEntry assetEntry =
+			_assetEntryLocalService.fetchEntry(sharingEntry.getClassNameId(),
+				sharingEntry.getClassPK());
+
+		if ((assetEntry != null) && assetEntry.isVisible()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntrySharingEntryMenuItemContributor.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private SharingPermission _sharingPermission;

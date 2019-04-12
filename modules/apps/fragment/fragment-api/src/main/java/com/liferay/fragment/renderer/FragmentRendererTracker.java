@@ -28,4 +28,6 @@ public interface FragmentRendererTracker {
 
 	public List<FragmentRenderer> getFragmentRenderers();
 
+	public List<FragmentRenderer> getFragmentRenderers(int type);
+
 }

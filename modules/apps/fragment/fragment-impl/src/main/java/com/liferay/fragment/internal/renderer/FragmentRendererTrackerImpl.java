@@ -19,9 +19,11 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,6 +48,19 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 	@Override
 	public List<FragmentRenderer> getFragmentRenderers() {
 		return new ArrayList(_fragmentRenderers.values());
+	}
+
+	@Override
+	public List<FragmentRenderer> getFragmentRenderers(int type) {
+		Collection<FragmentRenderer> fragmentRenderers =
+			_fragmentRenderers.values();
+
+		return fragmentRenderers.stream(
+		).filter(
+			fragmentRenderer -> fragmentRenderer.getType() == type
+		).collect(
+			Collectors.toCollection(ArrayList::new)
+		);
 	}
 
 	@Reference(

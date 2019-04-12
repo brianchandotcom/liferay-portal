@@ -116,6 +116,11 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
+	public boolean isSelectable() {
+		return false;
+	}
+
+	@Override
 	public void render(
 			FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest,

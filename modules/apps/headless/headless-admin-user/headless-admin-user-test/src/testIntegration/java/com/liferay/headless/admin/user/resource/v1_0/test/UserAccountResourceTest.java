@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
@@ -26,10 +27,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -78,20 +79,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	@Test
 	public void testGetMyUserAccount() throws Exception {
-		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
-
-		UserAccount userAccount = new UserAccount() {
-			{
-				additionalName = user.getMiddleName();
-				alternateName = user.getScreenName();
-				birthDate = user.getBirthday();
-				email = user.getEmailAddress();
-				familyName = user.getFirstName();
-				givenName = user.getLastName();
-				id = user.getUserId();
-				jobTitle = user.getJobTitle();
-			}
-		};
+		UserAccount userAccount = invokeGetUserAccount(_testUser.getUserId());
 
 		UserAccount getUserAccount = invokeGetMyUserAccount();
 
@@ -102,6 +90,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	@Test
 	public void testGetUserAccountsPage() throws Exception {
+		_removeAllUsersExceptAdmin();
+
 		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
 			randomUserAccount());
 		UserAccount userAccount2 = testGetUserAccountsPage_addUserAccount(
@@ -113,10 +103,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		Assert.assertEquals(3, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(userAccount1, userAccount2, userAccount3),
-			(List<UserAccount>)page.getItems());
-		assertValid(page);
+		_assertContainsAll(
+			(List<UserAccount>)page.getItems(),
+			Arrays.asList(userAccount1, userAccount2, userAccount3));
 	}
 
 	@Ignore
@@ -245,6 +234,41 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_users.add(UserLocalServiceUtil.getUser(user.getUserId()));
 
 		return userAccount;
+	}
+
+	private void _assertContainsAll(
+		List<UserAccount> userAccounts1, List<UserAccount> userAccounts2) {
+
+		int count = 0;
+
+		for (UserAccount userAccount1 : userAccounts1) {
+			for (UserAccount userAccount2 : userAccounts2) {
+				if (equals(userAccount1, userAccount2)) {
+					count++;
+
+					break;
+				}
+			}
+		}
+
+		Assert.assertEquals(
+			userAccounts2 + " does not contain " + userAccounts1,
+			userAccounts2.size(), count);
+	}
+
+	private void _removeAllUsersExceptAdmin()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		List<User> users = UserLocalServiceUtil.getUsers(
+			PortalUtil.getDefaultCompanyId(), false,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		for (User user : users) {
+			if (user.getUserId() != _testUser.getUserId()) {
+				UserLocalServiceUtil.deleteUser(user);
+			}
+		}
 	}
 
 	@DeleteAfterTestRun

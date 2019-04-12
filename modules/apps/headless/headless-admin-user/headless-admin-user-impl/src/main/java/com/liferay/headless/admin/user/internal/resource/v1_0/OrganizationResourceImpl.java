@@ -263,14 +263,6 @@ public class OrganizationResourceImpl
 							WebServerServletTokenUtil.getToken(
 								organization.getLogoId()));
 					});
-				setParentOrganizationId(
-					() -> {
-						if (organization.getParentOrganizationId() <= 0) {
-							return null;
-						}
-
-						return organization.getParentOrganizationId();
-					});
 			}
 		};
 	}

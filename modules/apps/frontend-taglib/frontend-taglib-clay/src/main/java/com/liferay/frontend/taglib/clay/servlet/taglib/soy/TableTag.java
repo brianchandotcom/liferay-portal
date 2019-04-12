@@ -14,20 +14,35 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.internal.ClayTableTagSchemaContributorsProvider;
 import com.liferay.frontend.taglib.clay.internal.ClayTagDataSourceProvider;
+import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.TableDefaults;
 import com.liferay.frontend.taglib.clay.servlet.taglib.contributor.ClayTableTagSchemaContributor;
 import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource;
+import com.liferay.frontend.taglib.clay.servlet.taglib.data.Pagination;
+import com.liferay.frontend.taglib.clay.servlet.taglib.model.pagination.PaginationEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Schema;
 import com.liferay.frontend.taglib.clay.servlet.taglib.model.table.Size;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * @author Iván Zaera Avellón
@@ -36,7 +51,7 @@ public class TableTag<T> extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		setComponentBaseName("ClayTable");
+		setComponentBaseName("com.liferay.frontend.taglib.clay.Table");
 		setHydrate(true);
 		setModuleBaseName("table");
 
@@ -48,6 +63,7 @@ public class TableTag<T> extends BaseClayTag {
 
 		if (clayTagDataSource != null) {
 			_populateContextItems(clayTagDataSource);
+			_populateContextPagination();
 		}
 
 		List<ClayTableTagSchemaContributor> clayTableTagSchemaContributors =
@@ -67,6 +83,18 @@ public class TableTag<T> extends BaseClayTag {
 		setShowCheckbox(showCheckbox);
 
 		return returnValue;
+	}
+
+	@Override
+	public String getModule() {
+		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
+
+		if (npmResolver == null) {
+			return StringPool.BLANK;
+		}
+
+		return npmResolver.resolveModuleName(
+			"frontend-taglib-clay/table/Table.es");
 	}
 
 	public void setActionsMenuVariant(String actionsMenuVariant) {
@@ -168,6 +196,36 @@ public class TableTag<T> extends BaseClayTag {
 			getClayTableTagSchemaContributors(tableSchemaContributorKey);
 	}
 
+	private List<PaginationEntry> _getPaginationEntries() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletId = String.valueOf(themeDisplay.getPlid());
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			request, portletId, PortletRequest.RENDER_PHASE);
+
+		String deltaParam = SearchContainer.DEFAULT_DELTA_PARAM;
+
+		String portletURLString = HttpUtil.removeParameter(
+			portletURL.toString(), getNamespace() + deltaParam);
+
+		List<PaginationEntry> clayPaginationEntries = new ArrayList<>();
+
+		for (int delta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+			if (delta > SearchContainer.MAX_DELTA) {
+				continue;
+			}
+
+			String url = HttpUtil.addParameter(
+				portletURLString, getNamespace() + deltaParam, delta);
+
+			clayPaginationEntries.add(new PaginationEntry(url, delta));
+		}
+
+		return clayPaginationEntries;
+	}
+
 	private void _populateContextDefaultValues() {
 		Map<String, Object> context = getContext();
 
@@ -181,10 +239,31 @@ public class TableTag<T> extends BaseClayTag {
 	}
 
 	private void _populateContextItems(ClayTagDataSource<T> clayTagDataSource) {
-		Map<String, Object> context = getContext();
+		setItems(
+			clayTagDataSource.getItems(
+				request,
+				new Pagination(getValue("pageSize"), getValue("page"))));
 
-		if (context.get("items") == null) {
-			setItems(clayTagDataSource.getItems(request));
+		putValue("totalItems", clayTagDataSource.getTotalItemsCount());
+	}
+
+	private void _populateContextPagination() {
+		List<PaginationEntry> paginationEntries = _getPaginationEntries();
+
+		putValue("paginationEntries", paginationEntries);
+
+		putValue("paginationSelectedEntry", 0);
+
+		int page = getValue("page");
+
+		for (int i = 0; i < paginationEntries.size(); i++) {
+			PaginationEntry paginationEntry = paginationEntries.get(i);
+
+			if (paginationEntry.getLabel() == page) {
+				putValue("paginationSelectedEntry", i);
+
+				break;
+			}
 		}
 	}
 

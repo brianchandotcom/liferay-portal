@@ -29,28 +29,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CheckboxFieldType extends FieldType {
 
-	public DataDefinitionField deserialize(JSONObject jsonObject)
-		throws Exception {
-
-		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
-
-		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
-				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
-				jsonObject.getBoolean("showAsSwitcher")));
-		dataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizedValues(
-				jsonObject.getJSONObject("predefinedValue")));
-
-		return dataDefinitionField;
-	}
-
-	public void includeContext(
+	public static void includeContext(
 		Map<String, Object> context, DataDefinitionField dataDefinitionField,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, boolean readOnly) {
 
-		super.includeContext(
+		FieldType.includeContext(
 			context, dataDefinitionField, httpServletRequest,
 			httpServletResponse, readOnly);
 
@@ -68,6 +52,22 @@ public class CheckboxFieldType extends FieldType {
 			"value",
 			CustomPropertyUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "value", false));
+	}
+
+	public DataDefinitionField deserialize(JSONObject jsonObject)
+		throws Exception {
+
+		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
+
+		dataDefinitionField.setCustomProperties(
+			CustomPropertyUtil.add(
+				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
+				jsonObject.getBoolean("showAsSwitcher")));
+		dataDefinitionField.setDefaultValue(
+			LocalizedValueUtil.toLocalizedValues(
+				jsonObject.getJSONObject("predefinedValue")));
+
+		return dataDefinitionField;
 	}
 
 	public JSONObject toJSONObject(DataDefinitionField dataDefinitionField)

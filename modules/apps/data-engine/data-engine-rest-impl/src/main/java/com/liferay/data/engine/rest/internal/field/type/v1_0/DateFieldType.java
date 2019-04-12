@@ -28,6 +28,22 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DateFieldType extends FieldType {
 
+	public static void includeContext(
+		Map<String, Object> context, DataDefinitionField dataDefinitionField,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, boolean readOnly) {
+
+		FieldType.includeContext(
+			context, dataDefinitionField, httpServletRequest,
+			httpServletResponse, readOnly);
+
+		context.put(
+			"predefinedValue",
+			LocalizedValueUtil.getLocalizedValue(
+				httpServletRequest.getLocale(),
+				dataDefinitionField.getDefaultValue()));
+	}
+
 	public DataDefinitionField deserialize(JSONObject jsonObject)
 		throws Exception {
 
@@ -38,22 +54,6 @@ public class DateFieldType extends FieldType {
 				jsonObject.getJSONObject("predefinedValue")));
 
 		return dataDefinitionField;
-	}
-
-	public void includeContext(
-		Map<String, Object> context, DataDefinitionField dataDefinitionField,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, boolean readOnly) {
-
-		super.includeContext(
-			context, dataDefinitionField, httpServletRequest,
-			httpServletResponse, readOnly);
-
-		context.put(
-			"predefinedValue",
-			LocalizedValueUtil.getLocalizedValue(
-				httpServletRequest.getLocale(),
-				dataDefinitionField.getDefaultValue()));
 	}
 
 	public JSONObject toJSONObject(DataDefinitionField dataDefinitionField)

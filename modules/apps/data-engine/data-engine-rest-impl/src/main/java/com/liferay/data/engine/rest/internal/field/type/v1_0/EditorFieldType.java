@@ -29,6 +29,23 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EditorFieldType extends FieldType {
 
+	public static void includeContext(
+		Map<String, Object> context, DataDefinitionField dataDefinitionField,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, boolean readOnly) {
+
+		FieldType.includeContext(
+			context, dataDefinitionField, httpServletRequest,
+			httpServletResponse, readOnly);
+
+		context.put(
+			"placeholder",
+			LocalizedValueUtil.getLocalizedValue(
+				httpServletRequest.getLocale(),
+				CustomPropertyUtil.getLocalizedValue(
+					dataDefinitionField.getCustomProperties(), "placeholder")));
+	}
+
 	public DataDefinitionField deserialize(JSONObject jsonObject)
 		throws Exception {
 
@@ -41,23 +58,6 @@ public class EditorFieldType extends FieldType {
 					jsonObject.getJSONObject("placeholder"))));
 
 		return dataDefinitionField;
-	}
-
-	public void includeContext(
-		Map<String, Object> context, DataDefinitionField dataDefinitionField,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, boolean readOnly) {
-
-		super.includeContext(
-			context, dataDefinitionField, httpServletRequest,
-			httpServletResponse, readOnly);
-
-		context.put(
-			"placeholder",
-			LocalizedValueUtil.getLocalizedValue(
-				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
-					dataDefinitionField.getCustomProperties(), "placeholder")));
 	}
 
 	public JSONObject toJSONObject(DataDefinitionField dataDefinitionField)

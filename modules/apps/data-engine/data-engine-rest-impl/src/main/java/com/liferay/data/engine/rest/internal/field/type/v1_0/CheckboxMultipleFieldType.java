@@ -31,37 +31,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CheckboxMultipleFieldType extends FieldType {
 
-	public DataDefinitionField deserialize(JSONObject jsonObject)
-		throws Exception {
-
-		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
-
-		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
-				dataDefinitionField.getCustomProperties(), "inline",
-				jsonObject.getBoolean("inline")));
-		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
-				dataDefinitionField.getCustomProperties(), "options",
-				DataFieldOptionUtil.toDataFieldOptions(
-					jsonObject.getJSONObject("options"))));
-		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
-				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
-				jsonObject.getBoolean("showAsSwitcher")));
-		dataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizedValues(
-				jsonObject.getJSONObject("predefinedValue")));
-
-		return dataDefinitionField;
-	}
-
-	public void includeContext(
+	public static void includeContext(
 		Map<String, Object> context, DataDefinitionField dataDefinitionField,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, boolean readOnly) {
 
-		super.includeContext(
+		FieldType.includeContext(
 			context, dataDefinitionField, httpServletRequest,
 			httpServletResponse, readOnly);
 
@@ -89,6 +64,31 @@ public class CheckboxMultipleFieldType extends FieldType {
 			"value",
 			CustomPropertyUtil.getString(
 				dataDefinitionField.getCustomProperties(), "value", "[]"));
+	}
+
+	public DataDefinitionField deserialize(JSONObject jsonObject)
+		throws Exception {
+
+		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
+
+		dataDefinitionField.setCustomProperties(
+			CustomPropertyUtil.add(
+				dataDefinitionField.getCustomProperties(), "inline",
+				jsonObject.getBoolean("inline")));
+		dataDefinitionField.setCustomProperties(
+			CustomPropertyUtil.add(
+				dataDefinitionField.getCustomProperties(), "options",
+				DataFieldOptionUtil.toDataFieldOptions(
+					jsonObject.getJSONObject("options"))));
+		dataDefinitionField.setCustomProperties(
+			CustomPropertyUtil.add(
+				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
+				jsonObject.getBoolean("showAsSwitcher")));
+		dataDefinitionField.setDefaultValue(
+			LocalizedValueUtil.toLocalizedValues(
+				jsonObject.getJSONObject("predefinedValue")));
+
+		return dataDefinitionField;
 	}
 
 	public JSONObject toJSONObject(DataDefinitionField dataDefinitionField)

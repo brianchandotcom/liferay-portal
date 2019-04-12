@@ -51,40 +51,14 @@ import org.apache.commons.lang.StringUtils;
  */
 public class DocumentLibraryFieldType extends FieldType {
 
-	public DataDefinitionField deserialize(JSONObject jsonObject)
-		throws Exception {
-
-		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
-
-		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
-				dataDefinitionField.getCustomProperties(), "groupId",
-				jsonObject.getLong("groupId")));
-		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
-				dataDefinitionField.getCustomProperties(),
-				"itemSelectorAuthToken",
-				jsonObject.getString("itemSelectorAuthToken")));
-		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
-				dataDefinitionField.getCustomProperties(), "lexiconIconsPath",
-				jsonObject.getString("lexiconIconsPath")));
-		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
-				dataDefinitionField.getCustomProperties(), "strings",
-				CustomPropertyUtil.toMap(jsonObject.getJSONObject("strings"))));
-
-		return dataDefinitionField;
-	}
-
-	public void includeContext(
+	public static void includeContext(
 		Map<String, Object> context, DataDefinitionField dataDefinitionField,
 		DLAppService dlAppService, Html html,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Portal portal,
 		boolean readOnly) {
 
-		super.includeContext(
+		FieldType.includeContext(
 			context, dataDefinitionField, httpServletRequest,
 			httpServletResponse, readOnly);
 
@@ -125,6 +99,32 @@ public class DocumentLibraryFieldType extends FieldType {
 					dataDefinitionField.getCustomProperties(), "value", "{}")));
 	}
 
+	public DataDefinitionField deserialize(JSONObject jsonObject)
+		throws Exception {
+
+		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
+
+		dataDefinitionField.setCustomProperties(
+			CustomPropertyUtil.add(
+				dataDefinitionField.getCustomProperties(), "groupId",
+				jsonObject.getLong("groupId")));
+		dataDefinitionField.setCustomProperties(
+			CustomPropertyUtil.add(
+				dataDefinitionField.getCustomProperties(),
+				"itemSelectorAuthToken",
+				jsonObject.getString("itemSelectorAuthToken")));
+		dataDefinitionField.setCustomProperties(
+			CustomPropertyUtil.add(
+				dataDefinitionField.getCustomProperties(), "lexiconIconsPath",
+				jsonObject.getString("lexiconIconsPath")));
+		dataDefinitionField.setCustomProperties(
+			CustomPropertyUtil.add(
+				dataDefinitionField.getCustomProperties(), "strings",
+				CustomPropertyUtil.toMap(jsonObject.getJSONObject("strings"))));
+
+		return dataDefinitionField;
+	}
+
 	public JSONObject toJSONObject(DataDefinitionField dataDefinitionField)
 		throws Exception {
 
@@ -151,7 +151,7 @@ public class DocumentLibraryFieldType extends FieldType {
 		);
 	}
 
-	private FileEntry _getFileEntry(
+	private static FileEntry _getFileEntry(
 		DLAppService dlAppService, JSONObject valueJSONObject) {
 
 		try {
@@ -166,7 +166,7 @@ public class DocumentLibraryFieldType extends FieldType {
 		}
 	}
 
-	private String _getFileEntryTitle(FileEntry fileEntry, Html html) {
+	private static String _getFileEntryTitle(FileEntry fileEntry, Html html) {
 		if (fileEntry == null) {
 			return StringPool.BLANK;
 		}
@@ -174,7 +174,7 @@ public class DocumentLibraryFieldType extends FieldType {
 		return html.escape(fileEntry.getTitle());
 	}
 
-	private String _getFileEntryURL(
+	private static String _getFileEntryURL(
 		FileEntry fileEntry, Html html, HttpServletRequest httpServletRequest) {
 
 		if (fileEntry == null) {
@@ -202,7 +202,7 @@ public class DocumentLibraryFieldType extends FieldType {
 		return html.escape(sb.toString());
 	}
 
-	private String _getItemSelectorAuthToken(
+	private static String _getItemSelectorAuthToken(
 		HttpServletRequest httpServletRequest, Portal portal) {
 
 		ThemeDisplay themeDisplay =
@@ -226,7 +226,9 @@ public class DocumentLibraryFieldType extends FieldType {
 		return StringPool.BLANK;
 	}
 
-	private String _getLexiconIconsPath(HttpServletRequest httpServletRequest) {
+	private static String _getLexiconIconsPath(
+		HttpServletRequest httpServletRequest) {
+
 		StringBundler sb = new StringBundler(3);
 
 		ThemeDisplay themeDisplay =
@@ -241,7 +243,7 @@ public class DocumentLibraryFieldType extends FieldType {
 		return sb.toString();
 	}
 
-	private Map<String, String> _getStrings(
+	private static Map<String, String> _getStrings(
 		HttpServletRequest httpServletRequest, Portal portal) {
 
 		Map<String, String> values = new HashMap<>();
@@ -252,7 +254,8 @@ public class DocumentLibraryFieldType extends FieldType {
 
 		ResourceBundle resourceBundle = new AggregateResourceBundle(
 			ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass()),
+				"content.Language", themeDisplay.getLocale(),
+				DocumentLibraryFieldType.class),
 			portal.getResourceBundle(themeDisplay.getLocale()));
 
 		values.put("select", LanguageUtil.get(resourceBundle, "select"));
@@ -260,7 +263,7 @@ public class DocumentLibraryFieldType extends FieldType {
 		return values;
 	}
 
-	private JSONObject _toJSONObject(String string) {
+	private static JSONObject _toJSONObject(String string) {
 		try {
 			return JSONFactoryUtil.createJSONObject(string);
 		}

@@ -35,13 +35,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CaptchaFieldType extends FieldType {
 
-	public void includeContext(
+	public static void includeContext(
 		Map<String, Object> context, DataDefinitionField dataDefinitionField,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, boolean readOnly,
 		SoyDataFactory soyDataFactory) {
 
-		super.includeContext(
+		FieldType.includeContext(
 			context, dataDefinitionField, httpServletRequest,
 			httpServletResponse, readOnly);
 
@@ -58,7 +58,7 @@ public class CaptchaFieldType extends FieldType {
 		context.put("html", soyDataFactory.createSoyHTMLData(html));
 	}
 
-	private String _renderCaptchaTag(
+	private static String _renderCaptchaTag(
 			DataDefinitionField dataDefinitionField,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

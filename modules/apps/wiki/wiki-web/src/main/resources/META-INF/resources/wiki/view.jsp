@@ -374,16 +374,29 @@ if (portletTitleBasedNavigation) {
 							</div>
 
 							<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableComments() %>">
-								<div id="<portlet:namespace />wikiCommentsPanel">
-									<liferay-comment:discussion
-										className="<%= WikiPage.class.getName() %>"
-										classPK="<%= wikiPage.getResourcePrimKey() %>"
-										formName="fm2"
-										ratingsEnabled="<%= wikiPortletInstanceSettingsHelper.isEnableCommentRatings() %>"
-										redirect="<%= currentURL %>"
-										userId="<%= wikiPage.getUserId() %>"
-									/>
-								</div>
+								<liferay-ui:panel-container
+									extended="<%= false %>"
+									markupView="lexicon"
+									persistState="<%= true %>"
+								>
+									<liferay-ui:panel
+										collapsible="<%= true %>"
+										extended="<%= true %>"
+										id='<%= liferayPortletResponse.getNamespace() + "wikiCommentsPanel" %>'
+										markupView="lexicon"
+										persistState="<%= true %>"
+										title="comments"
+									>
+										<liferay-comment:discussion
+											className="<%= WikiPage.class.getName() %>"
+											classPK="<%= wikiPage.getResourcePrimKey() %>"
+											formName="fm2"
+											ratingsEnabled="<%= wikiPortletInstanceSettingsHelper.isEnableCommentRatings() %>"
+											redirect="<%= currentURL %>"
+											userId="<%= wikiPage.getUserId() %>"
+										/>
+									</liferay-ui:panel>
+								</liferay-ui:panel-container>
 							</c:if>
 						</c:if>
 					</div>

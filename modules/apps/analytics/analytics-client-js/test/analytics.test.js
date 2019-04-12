@@ -79,7 +79,7 @@ describe('Analytics Client', () => {
 		});
 
 		it('should prevent overlapping requests', (done) => {
-			fetchMock.mock(/identity$/, () => Promise.resolve(200));
+			fetchMock.restore();
 
 			let fetchCalled = 0;
 
@@ -201,6 +201,7 @@ describe('Analytics Client', () => {
 		});
 
 		it('should only clear the persisted events when done', () => {
+			fetchMock.restore();
 			Analytics.reset();
 			Analytics.dispose();
 
@@ -210,8 +211,6 @@ describe('Analytics Client', () => {
 					...INITIAL_CONFIG,
 				}
 			);
-
-			fetchMock.mock(/identity$/, () => Promise.resolve({}));
 
 			fetchMock.mock(
 				/ac-server/ig,

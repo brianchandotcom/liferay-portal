@@ -30,18 +30,6 @@ public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 		throws Exception {
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #postProcessContextBooleanFilter(BooleanFilter,
-	 *             SearchContext)}
-	 */
-	@Deprecated
-	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
-		throws Exception {
-	}
-
 	@Override
 	public void postProcessDocument(Document document, Object obj)
 		throws Exception {
@@ -57,18 +45,6 @@ public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, BooleanFilter booleanFilter,
 			SearchContext searchContext)
-		throws Exception {
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
-	 *             SearchContext)}
-	 */
-	@Deprecated
-	@Override
-	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 	}
 

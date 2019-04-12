@@ -111,13 +111,6 @@ public class BaseRelatedEntryIndexer implements RelatedEntryIndexer {
 
 		indexer.postProcessContextQuery(entityQuery, searchContext);
 
-		for (IndexerPostProcessor indexerPostProcessor :
-				indexer.getIndexerPostProcessors()) {
-
-			indexerPostProcessor.postProcessContextQuery(
-				entityQuery, searchContext);
-		}
-
 		if (entityQuery.hasClauses()) {
 			QueryFilter queryFilter = new QueryFilter(entityQuery);
 

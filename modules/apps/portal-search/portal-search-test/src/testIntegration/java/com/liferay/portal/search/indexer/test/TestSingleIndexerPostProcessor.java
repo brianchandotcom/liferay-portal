@@ -41,16 +41,6 @@ public class TestSingleIndexerPostProcessor implements IndexerPostProcessor {
 		throws Exception {
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
-		throws Exception {
-	}
-
 	@Override
 	public void postProcessDocument(Document document, Object obj)
 		throws Exception {
@@ -66,16 +56,6 @@ public class TestSingleIndexerPostProcessor implements IndexerPostProcessor {
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, BooleanFilter booleanFilter,
 			SearchContext searchContext)
-		throws Exception {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 	}
 

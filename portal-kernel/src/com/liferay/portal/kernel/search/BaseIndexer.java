@@ -1355,13 +1355,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		throws Exception {
 
 		indexer.postProcessSearchQuery(searchQuery, searchContext);
-
-		for (IndexerPostProcessor indexerPostProcessor :
-				indexer.getIndexerPostProcessors()) {
-
-			indexerPostProcessor.postProcessSearchQuery(
-				searchQuery, searchContext);
-		}
 	}
 
 	protected abstract void doReindex(String className, long classPK)

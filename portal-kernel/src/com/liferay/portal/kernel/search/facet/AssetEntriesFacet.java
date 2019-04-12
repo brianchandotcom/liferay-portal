@@ -210,13 +210,6 @@ public class AssetEntriesFacet extends MultiValueFacet {
 
 		indexer.postProcessContextQuery(entityBooleanQuery, searchContext);
 
-		for (IndexerPostProcessor indexerPostProcessor :
-				indexer.getIndexerPostProcessors()) {
-
-			indexerPostProcessor.postProcessContextQuery(
-				entityBooleanQuery, searchContext);
-		}
-
 		if (entityBooleanQuery.hasClauses()) {
 			QueryFilter queryFilter = new QueryFilter(entityBooleanQuery);
 

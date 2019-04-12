@@ -17,6 +17,7 @@ package com.liferay.talend.datastore;
 import java.io.Serializable;
 
 import org.talend.sdk.component.api.configuration.Option;
+import org.talend.sdk.component.api.configuration.condition.ActiveIf;
 import org.talend.sdk.component.api.configuration.type.DataStore;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.configuration.ui.widget.Credential;
@@ -66,10 +67,12 @@ public class BasicDataStore implements Serializable {
 	@Option
 	private boolean _anonymous;
 
+	@ActiveIf(target = "_anonymous", value = "false")
 	@Credential
 	@Option
 	private String _password;
 
+	@ActiveIf(target = "_anonymous", value = "false")
 	@Option
 	private String _user;
 

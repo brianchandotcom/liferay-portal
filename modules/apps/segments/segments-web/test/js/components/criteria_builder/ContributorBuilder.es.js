@@ -171,7 +171,7 @@ describe(
 				const {asFragment} = render(
 					<ContributorBuilder
 						editing={editing}
-						empty={false}
+						emptyContributors={false}
 						initialContributors={initialContributors}
 						propertyGroups={propertyGroups}
 						supportedConjunctions={SUPPORTED_CONJUNCTIONS}
@@ -194,7 +194,7 @@ describe(
 				const {asFragment} = render(
 					<ContributorBuilder
 						editing={editing}
-						empty={false}
+						emptyContributors={false}
 						initialContributors={initialContributors}
 						propertyGroups={propertyGroups}
 						supportedConjunctions={SUPPORTED_CONJUNCTIONS}

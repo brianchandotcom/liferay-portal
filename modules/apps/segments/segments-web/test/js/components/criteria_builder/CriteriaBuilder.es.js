@@ -15,7 +15,7 @@ describe(
 						editing={false}
 						editingCriteria={false}
 						entityName="User"
-						empty={false}
+						emptyContributors={false}
 						id="0"
 						propertyKey="user"
 						supportedProperties={[]}

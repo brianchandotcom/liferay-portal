@@ -65,7 +65,7 @@ const propertyTypeShape = PropTypes.shape(
 class ContributorBuilder extends React.Component {
 	static propTypes = {
 		editing: PropTypes.bool.isRequired,
-		empty: PropTypes.bool.isRequired,
+		emptyContributors: PropTypes.bool.isRequired,
 		initialContributors: PropTypes.arrayOf(initialContributorShape),
 		onQueryChange: PropTypes.func,
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
@@ -203,7 +203,7 @@ class ContributorBuilder extends React.Component {
 	render() {
 		const {
 			editing,
-			empty,
+			emptyContributors,
 			propertyGroups,
 			supportedConjunctions,
 			supportedOperators,
@@ -236,7 +236,7 @@ class ContributorBuilder extends React.Component {
 								<div className="sheet">
 									<h2 className="sheet-title">{Liferay.Language.get('conditions')}</h2>
 
-									{((empty && editingId == undefined) || (!editing && empty)) &&
+									{((emptyContributors && editingId == undefined) || (!editing && emptyContributors)) &&
 										<EmptyPlaceholder />
 									}
 
@@ -289,7 +289,7 @@ class ContributorBuilder extends React.Component {
 														editing={editing}
 														editingCriteria={editingCriteria}
 														editingId={editingId}
-														empty={empty}
+														emptyContributors={emptyContributors}
 														entityName={criteria.entityName}
 														id={criteria.propertyKey}
 														modelLabel={criteria.modelLabel}

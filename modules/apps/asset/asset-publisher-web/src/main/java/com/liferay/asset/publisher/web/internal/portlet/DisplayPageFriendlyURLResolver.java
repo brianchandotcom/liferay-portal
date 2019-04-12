@@ -205,8 +205,8 @@ public class DisplayPageFriendlyURLResolver
 			JournalArticle journalArticle)
 		throws PortalException {
 
-		Layout layout = getJournalArticleLayout(
-			groupId, privateLayout, friendlyURL);
+		Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			journalArticle.getLayoutUuid(), groupId, privateLayout);
 
 		String layoutActualURL = _portal.getLayoutActualURL(layout, mainPath);
 

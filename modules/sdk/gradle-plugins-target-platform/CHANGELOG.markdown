@@ -30,6 +30,11 @@ dependencies and the various artifacts used in resolving OSGi dependencies.
 - [LPS-83922]: Don't add requirements for files without a BSN.
 - [LPS-83922]: Set `applyMavenExclusions` to `false` to improve performance.
 
+## 1.1.12 - 2019-04-11
+
+### Updated
+- [LPS-93873]: Update version of spring dependency-management-plugin
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Test Integration]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-test-integration
 [LPS-77343]: https://issues.liferay.com/browse/LPS-77343

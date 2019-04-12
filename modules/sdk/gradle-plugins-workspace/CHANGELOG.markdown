@@ -292,6 +292,11 @@ version 1.1.2.
 	- `startDockerContainer`
 	- `stopDockerContainer`
 
+## 2.0.0 - 2019-04-12
+
+### Changed
+- [LPS-93873]: Update the [Liferay Gradle Plugins Target Platform] dependency to version 1.1.12
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
@@ -356,3 +361,4 @@ version 1.1.2.
 [LPS-83922]: https://issues.liferay.com/browse/LPS-83922
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-86549]: https://issues.liferay.com/browse/LPS-86549
+[LPS-93873]: https://issues.liferay.com/browse/LPS-93873

@@ -76,7 +76,7 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 	</aui:a>
 </h2>
 
-<span class="text-default">
+<span>
 	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(latestFileVersion.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 </span>
 
@@ -88,12 +88,12 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 	DLFileEntryType dlFileEntryType = latestDLFileVersion.getDLFileEntryType();
 	%>
 
-	<span class="h5 text-default">
+	<span>
 		<%= HtmlUtil.escape(dlFileEntryType.getName(locale)) %>
 	</span>
 </c:if>
 
-<span class="h5 text-default">
+<span>
 	<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
 
 	<c:choose>

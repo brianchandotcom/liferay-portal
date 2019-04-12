@@ -78,7 +78,12 @@
 			{call .locale data="all"}
 				{param locale: $availableLocale /}
 				{param optionIcon kind="html"}
-					<a data-locale-id="{$availableLocale.id}" data-onclick="{$removeAvailableLocale}" href="javascript:;">
+					<a
+						class="pl-2"
+						data-locale-id="{$availableLocale.id}"
+						data-onclick="{$removeAvailableLocale}"
+						href="javascript:;"
+					>
 						<span>
 							<span class="icon-monospaced">
 								<svg class="lexicon-icon">
@@ -110,7 +115,7 @@
 	<li class="{$editingLocale == $locale.id ? 'active' : ''}">
 		<a data-locale-id="{$locale.id}" data-onclick="{$changeLocale}" href="javascript:;">
 			<span>
-				<span class="icon-monospaced">
+				<span class="icon-monospaced pr-2">
 					<svg class="lexicon-icon">
 						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
 

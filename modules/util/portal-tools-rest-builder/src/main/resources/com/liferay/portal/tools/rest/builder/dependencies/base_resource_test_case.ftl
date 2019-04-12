@@ -134,8 +134,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			<#if properties?keys?seq_contains("id")>
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
-					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
-						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
+					<#if freeMarkerTool.hasSchemaJavaMethodSignature(javaMethodSignatures, "post", "siteId", schemaName)>
+						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getSchemaJavaMethodSignature(javaMethodSignatures, "post", "siteId", schemaName) />
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							<#assign generateToMultipartBodyMethod = true />
@@ -631,8 +631,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#if (javaMethodSignature.pathJavaMethodParameters?size == 1)>
 						<#assign firstPathJavaMethodParameter = javaMethodSignature.pathJavaMethodParameters[0] />
 
-						<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, firstPathJavaMethodParameter.parameterName, schemaName)>
-							<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, firstPathJavaMethodParameter.parameterName, schemaName) />
+						<#if freeMarkerTool.hasSchemaJavaMethodSignature(javaMethodSignatures, "post", firstPathJavaMethodParameter.parameterName, schemaName)>
+							<#assign postSchemaJavaMethodSignature = freeMarkerTool.getSchemaJavaMethodSignature(javaMethodSignatures, "post", firstPathJavaMethodParameter.parameterName, schemaName) />
 
 							<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 								<#assign generateToMultipartBodyMethod = true />
@@ -702,8 +702,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			<#if properties?keys?seq_contains("id")>
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
-					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
-						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
+					<#if freeMarkerTool.hasSchemaJavaMethodSignature(javaMethodSignatures, "post", "siteId", schemaName)>
+						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getSchemaJavaMethodSignature(javaMethodSignatures, "post", "siteId", schemaName) />
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							<#assign generateToMultipartBodyMethod = true />
@@ -742,8 +742,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			<#if properties?keys?seq_contains("id")>
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
-					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
-						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
+					<#if freeMarkerTool.hasSchemaJavaMethodSignature(javaMethodSignatures, "post", "siteId", schemaName)>
+						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getSchemaJavaMethodSignature(javaMethodSignatures, "post", "siteId", schemaName) />
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							<#assign generateToMultipartBodyMethod = true />
@@ -775,10 +775,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 			protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
 				<#assign firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0] />
 
-				<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, firstJavaMethodParameter.parameterName, schemaName) && stringUtil.equals(firstJavaMethodParameter.parameterName, "parent" + schemaName + "Id")>
+				<#if freeMarkerTool.hasSchemaJavaMethodSignature(javaMethodSignatures, "post", firstJavaMethodParameter.parameterName, schemaName) && stringUtil.equals(firstJavaMethodParameter.parameterName, "parent" + schemaName + "Id")>
 					return invokePost${schemaName}${schemaName}(testGet${schemaName}${schemaNames}Page_getParent${schemaName}Id(), ${schemaVarName});
-				<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
-					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
+				<#elseif freeMarkerTool.hasSchemaJavaMethodSignature(javaMethodSignatures, "post", "siteId", schemaName)>
+					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getSchemaJavaMethodSignature(javaMethodSignatures, "post", "siteId", schemaName) />
 
 					<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 						<#assign generateToMultipartBodyMethod = true />
@@ -815,8 +815,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			<#if properties?keys?seq_contains("id")>
 				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
-					<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
-						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
+					<#if freeMarkerTool.hasSchemaJavaMethodSignature(javaMethodSignatures, "post", "siteId", schemaName)>
+						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getSchemaJavaMethodSignature(javaMethodSignatures, "post", "siteId", schemaName) />
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							<#assign generateToMultipartBodyMethod = true />

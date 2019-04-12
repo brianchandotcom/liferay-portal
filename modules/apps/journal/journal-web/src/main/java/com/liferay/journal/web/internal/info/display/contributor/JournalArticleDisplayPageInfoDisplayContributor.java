@@ -15,6 +15,7 @@
 package com.liferay.journal.web.internal.info.display.contributor;
 
 import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.journal.model.JournalArticleConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,7 +28,7 @@ public class JournalArticleDisplayPageInfoDisplayContributor
 
 	@Override
 	public String getInfoURLSeparator() {
-		return "/-/";
+		return JournalArticleConstants.CANONICAL_URL_SEPARATOR;
 	}
 
 }

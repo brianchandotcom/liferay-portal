@@ -17,6 +17,7 @@ package com.liferay.asset.publisher.web.internal.portlet;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -83,7 +84,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(service = FriendlyURLResolver.class)
-public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
+public class DisplayPageFriendlyURLResolver
+	extends BaseAssetDisplayPageFriendlyURLResolver {
 
 	@Override
 	public String getActualURL(

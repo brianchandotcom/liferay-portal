@@ -32,7 +32,6 @@ page import="com.liferay.portal.security.ldap.constants.LDAPConstants" %><%@
 page import="com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration" %><%@
 page import="com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration" %><%@
 page import="com.liferay.portal.settings.authentication.ldap.web.internal.portlet.constants.LDAPSettingsConstants" %><%@
-page import="com.liferay.portal.settings.authentication.ldap.web.internal.portlet.constants.LDAPSettingsWebKeys" %><%@
 page import="com.liferay.portal.settings.authentication.ldap.web.internal.portlet.util.ConfigurationProviderUtil" %>
 
 <%@ page import="java.util.List" %>

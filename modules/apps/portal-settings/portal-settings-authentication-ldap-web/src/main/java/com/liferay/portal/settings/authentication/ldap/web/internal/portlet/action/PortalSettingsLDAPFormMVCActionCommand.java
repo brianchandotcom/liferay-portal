@@ -33,7 +33,7 @@ import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.constants.LDAPConstants;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
-import com.liferay.portal.settings.authentication.ldap.web.internal.portlet.constants.LDAPSettingsWebKeys;
+import com.liferay.portal.settings.authentication.ldap.web.internal.portlet.constants.LDAPSettingsConstants;
 
 import java.util.Dictionary;
 import java.util.List;
@@ -80,22 +80,22 @@ public class PortalSettingsLDAPFormMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(LDAPSettingsWebKeys.CMD_UPDATE_AUTH)) {
+		if (cmd.equals(LDAPSettingsConstants.CMD_UPDATE_AUTH)) {
 			updateLDAPAuthConfigurationProvider(
 				actionRequest, _ldapAuthConfigurationProvider,
 				themeDisplay.getCompanyId());
 		}
-		else if (cmd.equals(LDAPSettingsWebKeys.CMD_UPDATE_EXPORT)) {
+		else if (cmd.equals(LDAPSettingsConstants.CMD_UPDATE_EXPORT)) {
 			updateLDAPExportConfigurationProvider(
 				actionRequest, _ldapExportConfigurationProvider,
 				themeDisplay.getCompanyId());
 		}
-		else if (cmd.equals(LDAPSettingsWebKeys.CMD_UPDATE_IMPORT)) {
+		else if (cmd.equals(LDAPSettingsConstants.CMD_UPDATE_IMPORT)) {
 			updateLDAPImportConfigurationProvider(
 				actionRequest, _ldapImportConfigurationProvider,
 				themeDisplay.getCompanyId());
 		}
-		else if (cmd.equals(LDAPSettingsWebKeys.CMD_UPDATE_SERVER)) {
+		else if (cmd.equals(LDAPSettingsConstants.CMD_UPDATE_SERVER)) {
 			sortLdapServerConfigurations(
 				themeDisplay.getCompanyId(),
 				ParamUtil.getString(

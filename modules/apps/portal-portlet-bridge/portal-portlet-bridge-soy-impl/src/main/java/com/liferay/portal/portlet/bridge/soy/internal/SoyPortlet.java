@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portlet.bridge.soy.SoyPortletRegister;
+import com.liferay.portal.portlet.bridge.soy.internal.util.SoyTemplateResourceFactoryUtil;
 import com.liferay.portal.portlet.bridge.soy.internal.util.SoyTemplateResourcesProviderUtil;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
 import com.liferay.portal.template.soy.util.SoyContext;
@@ -444,7 +445,10 @@ public class SoyPortlet extends MVCPortlet {
 		List<TemplateResource> templateResources = _getTemplateResources();
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY, templateResources, false);
+			TemplateConstants.LANG_TYPE_SOY,
+			SoyTemplateResourceFactoryUtil.createSoyTemplateResource(
+				templateResources),
+			false);
 
 		portletRequest.setAttribute(WebKeys.TEMPLATE, template);
 

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.template.soy.SoyTemplateResourceFactory;
 import com.liferay.portal.template.soy.util.SoyRawData;
 
 import java.io.Writer;
@@ -133,7 +134,10 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		throws PortalException {
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY, _templateResources, false);
+			TemplateConstants.LANG_TYPE_SOY,
+			_soyTemplateResourceFactory.createSoyTemplateResource(
+				_templateResources),
+			false);
 
 		populateCommonContext(
 			template, ddmForm, ddmFormLayout, ddmFormRenderingContext);
@@ -275,6 +279,9 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SoyTemplateResourceFactory _soyTemplateResourceFactory;
 
 	private final List<TemplateResource> _templateResources =
 		new CopyOnWriteArrayList<>();

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.template.soy.SoyTemplateResourceFactory;
 import com.liferay.portal.template.soy.renderer.SoyRenderer;
 import com.liferay.portal.template.soy.util.SoyTemplateResourcesProvider;
 
@@ -94,8 +95,13 @@ public class SoyRendererImpl implements SoyRenderer {
 		}
 
 		return _templateManager.getTemplate(
-			_soyTemplateResourcesProvider.getAllTemplateResources(), false);
+			_soyTemplateResourceFactory.createSoyTemplateResource(
+				_soyTemplateResourcesProvider.getAllTemplateResources()),
+			false);
 	}
+
+	@Reference
+	private SoyTemplateResourceFactory _soyTemplateResourceFactory;
 
 	@Reference
 	private SoyTemplateResourcesProvider _soyTemplateResourcesProvider;

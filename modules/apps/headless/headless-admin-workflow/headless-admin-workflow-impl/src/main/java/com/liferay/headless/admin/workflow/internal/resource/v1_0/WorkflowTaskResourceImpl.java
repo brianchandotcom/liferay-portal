@@ -133,7 +133,9 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		return _toWorkflowTask(
 			_workflowTaskManager.assignWorkflowTaskToUser(
 				contextCompany.getCompanyId(), _user.getUserId(),
-				workflowTaskId, assigneeId, "", null, null));
+				workflowTaskId, assigneeId,
+				workflowTaskAssignToUser.getComment(),
+				workflowTaskAssignToUser.getDueDate(), null));
 	}
 
 	@Override

@@ -15,6 +15,7 @@ const MOVE_ITEM_DIRECTIONS = {
  */
 function deepClone(objectToClone) {
 	let cloned = objectToClone;
+
 	if (typeof cloned == 'object' && cloned !== null) {
 		if (Array.isArray(cloned)) {
 			cloned = objectToClone.map(
@@ -23,6 +24,7 @@ function deepClone(objectToClone) {
 		}
 		else {
 			cloned = Object.assign({}, cloned);
+
 			for (let clonedKey in cloned) {
 				cloned[clonedKey] = deepClone(cloned[clonedKey]);
 			}

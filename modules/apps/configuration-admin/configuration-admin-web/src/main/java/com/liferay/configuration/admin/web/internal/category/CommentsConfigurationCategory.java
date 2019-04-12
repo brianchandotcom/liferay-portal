@@ -43,6 +43,6 @@ public class CommentsConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_KEY = "comments";
 
-	private static final String _CATEGORY_SECTION = "content";
+	private static final String _CATEGORY_SECTION = "social";
 
 }

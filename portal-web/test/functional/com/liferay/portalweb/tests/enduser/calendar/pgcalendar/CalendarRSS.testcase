@@ -71,6 +71,8 @@ definition {
 	@description = "This is a use case for LPS-67928."
 	@priority = "3"
 	test DeleteEventAndViewFeed {
+		property test.name.skip.portal.instance = "CalendarRSS#DeleteEventAndViewFeed";
+		
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Calendar.chooseSiteCalendarMenulistOption(

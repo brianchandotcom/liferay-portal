@@ -46,14 +46,6 @@ public class ScriptingUtil {
 			allowedClasses, inputObjects, outputNames, language, script);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #_getScripting()}
-	 */
-	@Deprecated
-	public static Scripting getScripting() {
-		return _getScripting();
-	}
-
 	public static Set<String> getSupportedLanguages() {
 		return _getScripting().getSupportedLanguages();
 	}

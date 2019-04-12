@@ -1,0 +1,61 @@
+{namespace com.liferay.frontend.taglib.clay.Table}
+
+/**
+ *
+ */
+{template .render}
+	{@param spritemap: string}
+	{@param? actionsMenuVariant: string}
+	{@param? id: string}
+	{@param? items : ?}
+	{@param? page : int}
+	{@param? pageParamName: string}
+	{@param? pageSizeParamName: string}
+	{@param? paginationBaseHref : string}
+	{@param? paginationEntries : ?}
+	{@param? paginationSelectedEntry : int}
+	{@param? schema : ?}
+	{@param? selectable : bool}
+	{@param? showActionsMenu : bool}
+	{@param? size : string}
+	{@param? tableClasses : string}
+	{@param? totalItems : int}
+	{@param? useDefaultClasses : bool}
+	{@param? wrapTable : bool}
+	{@param? _handlePageClicked: any}
+	{@param? _handlePageSizeClicked: any}
+
+	<div id="{$id}">
+		{call ClayTable.render}
+			{param actionsMenuVariant: $actionsMenuVariant /}
+			{param id: $id + 'Table'/}
+			{param items: $items /}
+			{param pageParamName: $pageParamName /}
+			{param pageSizeParamName: $pageSizeParamName /}
+			{param schema: $schema /}
+			{param selectable: $selectable /}
+			{param showActionsMenu : $showActionsMenu /}
+			{param size: $size /}
+			{param spritemap: $spritemap /}
+			{param tableClasses: $tableClasses /}
+			{param useDefaultClasses: $useDefaultClasses /}
+			{param wrapTable: $wrapTable /}
+		{/call}
+
+		{if $paginationEntries}
+			{call ClayPaginationBar.render}
+				{param baseHref: $paginationBaseHref /}
+				{param currentPage: $page ?: 1 /}
+				{param entries: $paginationEntries /}
+				{param events: [
+					'itemsPerPageClicked': $_handlePageSizeClicked,
+					'pageClicked': $_handlePageClicked
+				] /}
+				{param id: $id + 'PaginationBar' /}
+				{param selectedEntry: $paginationSelectedEntry ?: 0 /}
+				{param spritemap: $spritemap /}
+				{param totalEntries: $totalItems ?: 0 /}
+			{/call}
+		{/if}
+	</div>
+{/template}

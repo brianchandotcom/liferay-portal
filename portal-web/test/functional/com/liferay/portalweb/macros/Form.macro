@@ -132,7 +132,7 @@ definition {
 		Pause(locator1 = "2000");
 
 		FormFields.selectSelectOption(
-			fieldName = "Data Provider",
+			fieldName = "Choose a Data Provider",
 			selectOption = "${dataProvider}"
 		);
 

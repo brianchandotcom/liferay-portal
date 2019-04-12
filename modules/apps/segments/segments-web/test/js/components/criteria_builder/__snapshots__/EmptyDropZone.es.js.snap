@@ -3,40 +3,14 @@
 exports[`EmptyDropZone should render 1`] = `
 <DocumentFragment>
   <div
-    class="empty-drop-zone-root"
+    class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
   >
     <div
-      class="empty-drop-zone-target"
+      class="drop-zone-target"
     >
       <div
         class="empty-drop-zone-indicator"
       />
-      <div
-        class="empty-drop-zone-help-message"
-      >
-        <div
-          class="message-item"
-        >
-          <img
-            class="message-icon"
-            src="/drag-and-drop.svg"
-          />
-          <span>
-            drag-and-drop-criterion-from-the-right-to-add-rules
-          </span>
-        </div>
-        <div
-          class="message-item"
-        >
-          <img
-            class="message-icon"
-            src="/drag-over.svg"
-          />
-          <span>
-            drag-and-drop-over-an-existing-criteria-to-form-groups
-          </span>
-        </div>
-      </div>
     </div>
   </div>
 </DocumentFragment>

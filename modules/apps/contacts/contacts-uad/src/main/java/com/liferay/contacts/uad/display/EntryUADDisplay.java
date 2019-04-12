@@ -23,4 +23,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = UADDisplay.class)
 public class EntryUADDisplay extends BaseEntryUADDisplay {
+
+	@Override
+	public boolean isSiteScoped() {
+		return false;
+	}
+
 }

@@ -7,6 +7,10 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="getListType" qname="operNS:getListType" returnQName="getListTypeReturn" returnType="rtns:ListTypeSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="listTypeId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="getListType" qname="operNS:getListType" returnQName="getListTypeReturn" returnType="rtns:ListTypeSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getListTypes" qname="operNS:getListTypes" returnQName="getListTypesReturn" returnType="rtns:ArrayOf_tns2_ListTypeSoap" returnItemType="tns2:ListTypeSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 		</operation>

@@ -26,10 +26,6 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="addUserGroup" qname="operNS:addUserGroup" returnQName="addUserGroupReturn" returnType="rtns:UserGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
-		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="addUserGroup" qname="operNS:addUserGroup" returnQName="addUserGroupReturn" returnType="rtns:UserGroupSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.kernel.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="deleteUserGroup" qname="operNS:deleteUserGroup" soapAction="">
@@ -38,14 +34,30 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="fetchUserGroup" qname="operNS:fetchUserGroup" returnQName="fetchUserGroupReturn" returnType="rtns:UserGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userGroupId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getGtUserGroups" qname="operNS:getGtUserGroups" returnQName="getGtUserGroupsReturn" returnType="rtns:ArrayOf_tns2_UserGroupSoap" returnItemType="tns2:UserGroupSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="gtUserGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentUserGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="size" type="tns:int"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="getUserGroup" qname="operNS:getUserGroup" returnQName="getUserGroupReturn" returnType="rtns:UserGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userGroupId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="getUserGroup" qname="operNS:getUserGroup" returnQName="getUserGroupReturn" returnType="rtns:UserGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getUserGroupsCount" qname="operNS:getUserGroupsCount" returnQName="getUserGroupsCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserGroups" qname="operNS:getUserGroups" returnQName="getUserGroupsReturn" returnType="rtns:ArrayOf_tns2_UserGroupSoap" returnItemType="tns2:UserGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserGroups" qname="operNS:getUserGroups" returnQName="getUserGroupsReturn" returnType="rtns:ArrayOf_tns2_UserGroupSoap" returnItemType="tns2:UserGroupSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserUserGroups" qname="operNS:getUserUserGroups" returnQName="getUserUserGroupsReturn" returnType="rtns:ArrayOf_tns2_UserGroupSoap" returnItemType="tns2:UserGroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
@@ -62,14 +74,9 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userGroupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
-		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="updateUserGroup" qname="operNS:updateUserGroup" returnQName="updateUserGroupReturn" returnType="rtns:UserGroupSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userGroupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.kernel.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addGroupUserGroups addTeamUserGroups addUserGroup deleteUserGroup fetchUserGroup getUserGroup getUserGroups getUserUserGroups unsetGroupUserGroups unsetTeamUserGroups updateUserGroup" />
+		<parameter name="allowedMethods" value="addGroupUserGroups addTeamUserGroups addUserGroup deleteUserGroup fetchUserGroup getGtUserGroups getUserGroup getUserGroups getUserGroupsCount getUserUserGroups unsetGroupUserGroups unsetTeamUserGroups updateUserGroup" />
 		<parameter name="className" value="com.liferay.portal.service.http.UserGroupServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://icon.configuration.portlet.kernel.portal.liferay.com,http://model.kernel.portal.liferay.com,http://permission.service.kernel.portal.liferay.com,http://service.kernel.portal.liferay.com,http://theme.kernel.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

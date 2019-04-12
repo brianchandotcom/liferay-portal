@@ -50,19 +50,6 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="active" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://service.kernel.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="addGroup" qname="operNS:addGroup" returnQName="addGroupReturn" returnType="rtns:GroupSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentGroupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="liveGroupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:int"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="manualMembership" type="tns:boolean"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="membershipRestriction" type="tns:int"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="friendlyURL" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="site" type="tns:boolean"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="active" type="tns:boolean"></parameter>
-			<parameter xmlns:tns="http://service.kernel.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
-		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="addRoleGroups" qname="operNS:addRoleGroups" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="roleId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
@@ -94,10 +81,48 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupKey" type="tns:string"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getGroupsCount" qname="operNS:getGroupsCount" returnQName="getGroupsCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="site" type="tns:boolean"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getGroupsCount" qname="operNS:getGroupsCount" returnQName="getGroupsCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="site" type="tns:boolean"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getGroupsCount" qname="operNS:getGroupsCount" returnQName="getGroupsCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentGroupId" type="tns:long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getGroups" qname="operNS:getGroups" returnQName="getGroupsReturn" returnType="rtns:ArrayOf_tns2_GroupSoap" returnItemType="tns2:GroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentGroupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="site" type="tns:boolean"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getGroups" qname="operNS:getGroups" returnQName="getGroupsReturn" returnType="rtns:ArrayOf_tns2_GroupSoap" returnItemType="tns2:GroupSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="site" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getGroups" qname="operNS:getGroups" returnQName="getGroupsReturn" returnType="rtns:ArrayOf_tns2_GroupSoap" returnItemType="tns2:GroupSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="site" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getGtGroups" qname="operNS:getGtGroups" returnQName="getGtGroupsReturn" returnType="rtns:ArrayOf_tns2_GroupSoap" returnItemType="tns2:GroupSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="gtGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="site" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="size" type="tns:int"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getManageableSiteGroups" qname="operNS:getManageableSiteGroups" returnQName="getManageableSiteGroupsReturn" returnType="rtns:ArrayOf_tns2_GroupSoap" returnItemType="tns2:GroupSoap" soapAction="">
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="portlets" type="tns:ArrayOf_xsd_anyType"></parameter>
@@ -176,22 +201,9 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="updateGroup" qname="operNS:updateGroup" returnQName="updateGroupReturn" returnType="rtns:GroupSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentGroupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:int"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="manualMembership" type="tns:boolean"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="membershipRestriction" type="tns:int"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="friendlyURL" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="inheritContent" type="tns:boolean"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="active" type="tns:boolean"></parameter>
-			<parameter xmlns:tns="http://service.kernel.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
-		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="updateGroup" qname="operNS:updateGroup" returnQName="updateGroupReturn" returnType="rtns:GroupSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="typeSettings" type="tns:string"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addGroup addRoleGroups checkRemoteStagingGroup deleteGroup disableStaging enableStaging getCompanyGroup getGroup getGroupDisplayURL getGroups getManageableSiteGroups getOrganizationsGroups getUserGroup getUserGroupsGroups getUserOrganizationsGroups getUserSitesGroups getUserSitesGroupsCount hasUserGroup search searchCount setRoleGroups unsetRoleGroups updateFriendlyURL updateGroup" />
+		<parameter name="allowedMethods" value="addGroup addRoleGroups checkRemoteStagingGroup deleteGroup disableStaging enableStaging getCompanyGroup getGroup getGroupDisplayURL getGroups getGroupsCount getGtGroups getManageableSiteGroups getOrganizationsGroups getUserGroup getUserGroupsGroups getUserOrganizationsGroups getUserSitesGroups getUserSitesGroupsCount hasUserGroup search searchCount setRoleGroups unsetRoleGroups updateFriendlyURL updateGroup" />
 		<parameter name="className" value="com.liferay.portal.service.http.GroupServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://icon.configuration.portlet.kernel.portal.liferay.com,http://model.kernel.portal.liferay.com,http://permission.service.kernel.portal.liferay.com,http://service.kernel.portal.liferay.com,http://theme.kernel.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

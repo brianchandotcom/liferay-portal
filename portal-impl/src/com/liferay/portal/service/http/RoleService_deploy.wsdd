@@ -2,8 +2,8 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portal_RoleService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.kernel.portal.liferay.com" qname="ns:ArrayOf_tns2_GroupSoap" type="java:com.liferay.portal.kernel.model.GroupSoap[]" innerType="cmp-ns:GroupSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.kernel.portal.liferay.com" qname="ns:ArrayOf_tns2_RoleSoap" type="java:com.liferay.portal.kernel.model.RoleSoap[]" innerType="cmp-ns:RoleSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.kernel.portal.liferay.com" qname="ns:ArrayOf_tns6_GroupSoap" type="java:com.liferay.portal.kernel.model.GroupSoap[]" innerType="cmp-ns:GroupSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.kernel.portal.liferay.com" qname="ns:ArrayOf_tns6_RoleSoap" type="java:com.liferay.portal.kernel.model.RoleSoap[]" innerType="cmp-ns:RoleSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_int" type="java:int[]" innerType="cmp-ns:int" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -40,7 +40,25 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="fetchRole" qname="operNS:fetchRole" returnQName="fetchRoleReturn" returnType="rtns:RoleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="roleId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getGroupRoles" qname="operNS:getGroupRoles" returnQName="getGroupRolesReturn" returnType="rtns:ArrayOf_tns2_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getGroupRolesAndTeamRolesCount" qname="operNS:getGroupRolesAndTeamRolesCount" returnQName="getGroupRolesAndTeamRolesCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="excludedNames" type="tns:ArrayOf_xsd_anyType"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="types" type="tns:ArrayOf_xsd_int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="excludedTeamRoleId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="teamGroupId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getGroupRolesAndTeamRoles" qname="operNS:getGroupRolesAndTeamRoles" returnQName="getGroupRolesAndTeamRolesReturn" returnType="rtns:ArrayOf_tns6_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="excludedNames" type="tns:ArrayOf_xsd_anyType"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="types" type="tns:ArrayOf_xsd_int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="excludedTeamRoleId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="teamGroupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getGroupRoles" qname="operNS:getGroupRoles" returnQName="getGroupRolesReturn" returnType="rtns:ArrayOf_tns6_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="getRole" qname="operNS:getRole" returnQName="getRoleReturn" returnType="rtns:RoleSoap" soapAction="">
@@ -50,27 +68,27 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getRoles" qname="operNS:getRoles" returnQName="getRolesReturn" returnType="rtns:ArrayOf_tns2_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getRoles" qname="operNS:getRoles" returnQName="getRolesReturn" returnType="rtns:ArrayOf_tns6_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="subtype" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getRoles" qname="operNS:getRoles" returnQName="getRolesReturn" returnType="rtns:ArrayOf_tns2_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getRoles" qname="operNS:getRoles" returnQName="getRolesReturn" returnType="rtns:ArrayOf_tns6_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="types" type="tns:ArrayOf_xsd_int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserGroupGroupRoles" qname="operNS:getUserGroupGroupRoles" returnQName="getUserGroupGroupRolesReturn" returnType="rtns:ArrayOf_tns2_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserGroupGroupRoles" qname="operNS:getUserGroupGroupRoles" returnQName="getUserGroupGroupRolesReturn" returnType="rtns:ArrayOf_tns6_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserGroupRoles" qname="operNS:getUserGroupRoles" returnQName="getUserGroupRolesReturn" returnType="rtns:ArrayOf_tns2_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserGroupRoles" qname="operNS:getUserGroupRoles" returnQName="getUserGroupRolesReturn" returnType="rtns:ArrayOf_tns6_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserRelatedRoles" qname="operNS:getUserRelatedRoles" returnQName="getUserRelatedRolesReturn" returnType="rtns:ArrayOf_tns2_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserRelatedRoles" qname="operNS:getUserRelatedRoles" returnQName="getUserRelatedRolesReturn" returnType="rtns:ArrayOf_tns6_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="groups" type="tns:ArrayOf_tns2_GroupSoap"></parameter>
+			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="groups" type="tns:ArrayOf_tns6_GroupSoap"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserRoles" qname="operNS:getUserRoles" returnQName="getUserRolesReturn" returnType="rtns:ArrayOf_tns2_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getUserRoles" qname="operNS:getUserRoles" returnQName="getUserRolesReturn" returnType="rtns:ArrayOf_tns6_RoleSoap" returnItemType="tns2:RoleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="hasUserRole" qname="operNS:hasUserRole" returnQName="hasUserRoleReturn" returnType="rtns:boolean" soapAction="">
@@ -99,7 +117,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="subtype" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.kernel.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addRole addUserRoles deleteRole fetchRole getGroupRoles getRole getRoles getUserGroupGroupRoles getUserGroupRoles getUserRelatedRoles getUserRoles hasUserRole hasUserRoles unsetUserRoles updateRole" />
+		<parameter name="allowedMethods" value="addRole addUserRoles deleteRole fetchRole getGroupRoles getGroupRolesAndTeamRoles getGroupRolesAndTeamRolesCount getRole getRoles getUserGroupGroupRoles getUserGroupRoles getUserRelatedRoles getUserRoles hasUserRole hasUserRoles unsetUserRoles updateRole" />
 		<parameter name="className" value="com.liferay.portal.service.http.RoleServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://icon.configuration.portlet.kernel.portal.liferay.com,http://model.kernel.portal.liferay.com,http://permission.service.kernel.portal.liferay.com,http://service.kernel.portal.liferay.com,http://theme.kernel.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

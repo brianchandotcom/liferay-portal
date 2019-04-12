@@ -2,6 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portal_CompanyService" provider="java:RPC" style="rpc" use="encoded">
+		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://model.kernel.portal.liferay.com" qname="ns:ArrayOf_tns2_CompanySoap" type="java:com.liferay.portal.kernel.model.CompanySoap[]" innerType="cmp-ns:CompanySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.portal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.kernel.portal.liferay.com" qname="ns:CompanySoap" type="java:com.liferay.portal.kernel.model.CompanySoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="addCompany" qname="operNS:addCompany" returnQName="addCompanyReturn" returnType="rtns:CompanySoap" soapAction="">
@@ -18,6 +19,7 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="deleteLogo" qname="operNS:deleteLogo" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getCompanies" qname="operNS:getCompanies" returnQName="getCompaniesReturn" returnType="rtns:ArrayOf_tns2_CompanySoap" returnItemType="tns2:CompanySoap" soapAction=""> </operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="getCompanyById" qname="operNS:getCompanyById" returnQName="getCompanyByIdReturn" returnType="rtns:CompanySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 		</operation>
@@ -61,21 +63,6 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="size" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="updateCompany" qname="operNS:updateCompany" returnQName="updateCompanyReturn" returnType="rtns:CompanySoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="virtualHost" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="mx" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="homeURL" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="legalName" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="legalId" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="legalType" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="sicCode" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="tickerSymbol" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="industry" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="size" type="tns:string"></parameter>
-		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="updateDisplay" qname="operNS:updateDisplay" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="languageId" type="tns:string"></parameter>
@@ -95,7 +82,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="strangersVerify" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="siteLogo" type="tns:boolean"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addCompany deleteCompany deleteLogo getCompanyById getCompanyByLogoId getCompanyByMx getCompanyByVirtualHost getCompanyByWebId removePreferences updateCompany updateDisplay updateLogo updateSecurity" />
+		<parameter name="allowedMethods" value="addCompany deleteCompany deleteLogo getCompanies getCompanyById getCompanyByLogoId getCompanyByMx getCompanyByVirtualHost getCompanyByWebId removePreferences updateCompany updateDisplay updateLogo updateSecurity" />
 		<parameter name="className" value="com.liferay.portal.service.http.CompanyServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.kernel.portal.liferay.com,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

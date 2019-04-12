@@ -19,11 +19,6 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
-		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="addTeam" qname="operNS:addTeam" returnQName="addTeamReturn" returnType="rtns:TeamSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.kernel.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="deleteTeam" qname="operNS:deleteTeam" soapAction="">

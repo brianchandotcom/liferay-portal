@@ -15,7 +15,6 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,45 +31,6 @@ public class StructuredContentFolderResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "name"};
-	}
-
-	@Override
-	protected StructuredContentFolder
-			testDeleteStructuredContentFolder_addStructuredContentFolder()
-		throws Exception {
-
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
-	}
-
-	@Override
-	protected StructuredContentFolder
-			testGetSiteStructuredContentFoldersPage_addStructuredContentFolder(
-				Long siteId, StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return invokePostSiteStructuredContentFolder(
-			siteId, structuredContentFolder);
-	}
-
-	@Override
-	protected StructuredContentFolder
-			testGetStructuredContentFolder_addStructuredContentFolder()
-		throws Exception {
-
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
-	}
-
-	@Override
-	protected StructuredContentFolder
-			testGetStructuredContentFolderStructuredContentFoldersPage_addStructuredContentFolder(
-				Long structuredContentFolderId,
-				StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return invokePostStructuredContentFolderStructuredContentFolder(
-			structuredContentFolderId, structuredContentFolder);
 	}
 
 	@Override
@@ -93,44 +53,6 @@ public class StructuredContentFolderResourceTest
 			testGroup.getGroupId(), RandomTestUtil.randomString());
 
 		return journalFolder.getFolderId();
-	}
-
-	@Override
-	protected StructuredContentFolder
-			testPatchStructuredContentFolder_addStructuredContentFolder()
-		throws Exception {
-
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
-	}
-
-	@Override
-	protected StructuredContentFolder
-			testPostSiteStructuredContentFolder_addStructuredContentFolder(
-				StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), structuredContentFolder);
-	}
-
-	@Override
-	protected StructuredContentFolder
-			testPostStructuredContentFolderStructuredContentFolder_addStructuredContentFolder(
-				StructuredContentFolder structuredContentFolder)
-		throws Exception {
-
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), structuredContentFolder);
-	}
-
-	@Override
-	protected StructuredContentFolder
-			testPutStructuredContentFolder_addStructuredContentFolder()
-		throws Exception {
-
-		return invokePostSiteStructuredContentFolder(
-			testGroup.getGroupId(), randomStructuredContentFolder());
 	}
 
 }

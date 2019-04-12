@@ -39,12 +39,6 @@ public interface SearchEngine {
 	@Deprecated
 	public TermQueryFactory getTermQueryFactory();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public TermRangeQueryFactory getTermRangeQueryFactory();
-
 	public String getVendor();
 
 	public void initialize(long companyId);

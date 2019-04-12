@@ -34,10 +34,6 @@
 
 	<!-- Util -->
 
-	<bean class="com.liferay.portal.kernel.search.generic.StringQueryFactoryImpl" id="com.liferay.portal.kernel.search.StringQueryFactory" />
-	<bean class="com.liferay.portal.kernel.search.StringQueryFactoryUtil" id="com.liferay.portal.kernel.search.StringQueryFactoryUtil">
-		<property name="stringQueryFactory" ref="com.liferay.portal.kernel.search.StringQueryFactory" />
-	</bean>
 	<bean class="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" id="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" />
 	<bean class="com.liferay.portal.kernel.search.facet.RangeFacetFactory" id="com.liferay.portal.kernel.search.facet.RangeFacetFactory" />
 	<bean class="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" id="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" />

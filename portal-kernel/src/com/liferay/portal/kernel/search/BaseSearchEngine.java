@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.dummy.DummyIndexSearcher;
 import com.liferay.portal.kernel.search.dummy.DummyIndexWriter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryFactoryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl;
-import com.liferay.portal.kernel.search.generic.TermRangeQueryFactoryImpl;
 
 /**
  * @author Bruno Farache
@@ -73,19 +72,6 @@ public class BaseSearchEngine implements SearchEngine {
 		return _termQueryFactory;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public TermRangeQueryFactory getTermRangeQueryFactory() {
-		if (_termRangeQueryFactory == null) {
-			_termRangeQueryFactory = new TermRangeQueryFactoryImpl();
-		}
-
-		return _termRangeQueryFactory;
-	}
-
 	@Override
 	public String getVendor() {
 		return _vendor;
@@ -135,9 +121,6 @@ public class BaseSearchEngine implements SearchEngine {
 
 	@SuppressWarnings("deprecation")
 	private TermQueryFactory _termQueryFactory;
-
-	@SuppressWarnings("deprecation")
-	private TermRangeQueryFactory _termRangeQueryFactory;
 
 	private String _vendor;
 

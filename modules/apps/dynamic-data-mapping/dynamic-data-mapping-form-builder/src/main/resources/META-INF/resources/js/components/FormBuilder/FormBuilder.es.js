@@ -13,6 +13,7 @@ import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure, ruleStructure} from '../../util/config.es';
 import {generateFieldName} from '../LayoutProvider/util/fields.es';
+import {makeFetch} from '../../util/fetch.es';
 import {normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
@@ -125,6 +126,7 @@ class FormBuilder extends Component {
 			fieldChangesCanceled: this._handleCancelFieldChangesModal.bind(this),
 			fieldDeleted: this._handleFieldDeleted.bind(this),
 			fieldDuplicated: this._handleFieldDuplicated.bind(this),
+			fieldSetAdded: this._handleFieldSetAdded.bind(this),
 			focusedFieldUpdated: this._handleFocusedFieldUpdated.bind(this),
 			settingsFieldBlurred: this._handleSettingsFieldBlurred.bind(this),
 			settingsFieldEdited: this._handleSettingsFieldEdited.bind(this)
@@ -166,6 +168,7 @@ class FormBuilder extends Component {
 			activePage,
 			defaultLanguageId,
 			editingLanguageId,
+			fieldSets,
 			fieldTypes,
 			focusedField,
 			namespace,
@@ -222,6 +225,7 @@ class FormBuilder extends Component {
 					defaultLanguageId={defaultLanguageId}
 					editingLanguageId={editingLanguageId}
 					events={this.getSidebarEvents()}
+					fieldSets={fieldSets}
 					fieldTypes={fieldTypes}
 					focusedField={focusedField}
 					namespace={namespace}
@@ -298,6 +302,28 @@ class FormBuilder extends Component {
 		if (openSidebar) {
 			this.openSidebar();
 		}
+	}
+
+	_fetchFieldSet(fieldSetId) {
+		const {
+			editingLanguageId,
+			fieldSetDefinitionURL,
+			groupId,
+			namespace
+		} = this.props;
+
+		return makeFetch(
+			{
+				method: 'GET',
+				url: `${fieldSetDefinitionURL}?ddmStructureId=${fieldSetId}&languageId=${editingLanguageId}&portletNamespace=${namespace}&scopeGroupId=${groupId}`
+			}
+		).then(
+			({pages}) => pages
+		).catch(
+			error => {
+				throw new Error(error);
+			}
+		);
 	}
 
 	_handleAddFieldButtonClicked() {
@@ -377,11 +403,29 @@ class FormBuilder extends Component {
 		this.emit('fieldDuplicated', event);
 	}
 
+	_handleFieldSetAdded(event) {
+		const {data} = event;
+		const {dispatch} = this.context;
+		const {fieldSetId} = data.source.dataset;
+
+		this._fetchFieldSet(fieldSetId).then(
+			pages => {
+				dispatch(
+					'fieldSetAdded',
+					{
+						...event,
+						fieldSetPages: pages
+					}
+				);
+			}
+		);
+	}
+
 	_handleFocusedFieldUpdated(focusedField) {
-		const {store} = this.context;
+		const {dispatch} = this.context;
 		const settingsContext = focusedField.settingsContext;
 
-		store.emit(
+		dispatch(
 			'focusedFieldUpdated',
 			{
 				...focusedField,

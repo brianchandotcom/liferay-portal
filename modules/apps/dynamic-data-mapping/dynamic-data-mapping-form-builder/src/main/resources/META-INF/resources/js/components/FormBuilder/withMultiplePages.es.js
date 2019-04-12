@@ -71,7 +71,7 @@ const withMultiplePages = ChildComponent => {
 
 		render() {
 			const {dropdownExpanded} = this.state;
-			const {spritemap} = this.props;
+			const {spritemap, view} = this.props;
 
 			return (
 				<div class={`container ddm-paginated-builder ${this.getPaginationPosition()}`}>
@@ -80,17 +80,19 @@ const withMultiplePages = ChildComponent => {
 						pages={this.getPages()}
 					/>
 
-					<ClayActionsDropdown
-						disabled={this.isDropdownDisabled()}
-						elementClasses={'ddm-paginated-builder-dropdown'}
-						events={{
-							expandedChanged: this._handleExpandedChanged.bind(this),
-							itemClicked: this._handleDropdownItemClicked.bind(this)
-						}}
-						expanded={dropdownExpanded}
-						items={this._getPageSettingsItems()}
-						spritemap={spritemap}
-					/>
+					{view !== 'fieldSets' && (
+						<ClayActionsDropdown
+							disabled={this.isDropdownDisabled()}
+							elementClasses={'ddm-paginated-builder-dropdown'}
+							events={{
+								expandedChanged: this._handleExpandedChanged.bind(this),
+								itemClicked: this._handleDropdownItemClicked.bind(this)
+							}}
+							expanded={dropdownExpanded}
+							items={this._getPageSettingsItems()}
+							spritemap={spritemap}
+						/>
+					)}
 				</div>
 			);
 		}

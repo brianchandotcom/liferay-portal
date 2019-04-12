@@ -2,11 +2,11 @@ import {generateFieldName} from '../util/fields.es';
 import {PagesVisitor} from '../../../util/visitors.es';
 
 const handleFieldSetAdded = (props, state, event) => {
-	const {fieldSetPage, target} = event;
+	const {fieldSetPages, target} = event;
 	const {pages} = state;
 	const {pageIndex, rowIndex} = target;
 
-	const visitor = new PagesVisitor(fieldSetPage);
+	const visitor = new PagesVisitor(fieldSetPages);
 
 	const newFieldsetPages = visitor.mapFields(
 		field => {

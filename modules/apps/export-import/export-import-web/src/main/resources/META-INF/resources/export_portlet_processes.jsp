@@ -148,7 +148,6 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					<liferay-ui:icon-menu
 						icon="<%= StringPool.BLANK %>"
 						markupView="lexicon"
-						message="<%= StringPool.BLANK %>"
 						showWhenSingleIcon="<%= true %>"
 					>
 						<liferay-ui:icon-delete

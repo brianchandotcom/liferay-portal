@@ -95,7 +95,6 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 						direction="left-side"
 						icon="<%= StringPool.BLANK %>"
 						markupView="lexicon"
-						message="<%= StringPool.BLANK %>"
 						showWhenSingleIcon="<%= true %>"
 					>
 

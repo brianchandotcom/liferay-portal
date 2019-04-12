@@ -30,7 +30,6 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
 	<portlet:renderURL var="newExportProcessURL">

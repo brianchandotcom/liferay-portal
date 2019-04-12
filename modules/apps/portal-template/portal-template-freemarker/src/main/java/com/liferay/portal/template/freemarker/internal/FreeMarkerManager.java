@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.template.BaseSingleTemplateManager;
+import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
@@ -106,7 +106,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 	property = "language.type=" + TemplateConstants.LANG_TYPE_FTL,
 	service = TemplateManager.class
 )
-public class FreeMarkerManager extends BaseSingleTemplateManager {
+public class FreeMarkerManager extends BaseTemplateManager {
 
 	public static BeansWrapper getBeansWrapper() {
 		Thread currentThread = Thread.currentThread();

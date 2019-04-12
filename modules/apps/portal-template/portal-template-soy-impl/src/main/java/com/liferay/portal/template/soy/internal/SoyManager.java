@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.template.BaseSingleTemplateManager;
+import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.soy.SoyTemplateResource;
@@ -48,7 +48,7 @@ import org.osgi.util.tracker.BundleTracker;
 	property = "language.type=" + TemplateConstants.LANG_TYPE_SOY,
 	service = {SoyManager.class, TemplateManager.class}
 )
-public class SoyManager extends BaseSingleTemplateManager {
+public class SoyManager extends BaseTemplateManager {
 
 	@Override
 	public void destroy() {

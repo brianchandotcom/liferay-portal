@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.template.BaseSingleTemplateManager;
+import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.xsl.configuration.XSLEngineConfiguration;
 import com.liferay.portal.xsl.XSLTemplateResource;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Modified;
 	property = "language.type=" + TemplateConstants.LANG_TYPE_XSL,
 	service = TemplateManager.class
 )
-public class XSLManager extends BaseSingleTemplateManager {
+public class XSLManager extends BaseTemplateManager {
 
 	@Override
 	public void destroy() {

@@ -24,12 +24,9 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,15 +48,6 @@ public class AssetListEntrySegmentsEntryRelStagedModelRepository
 			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel)
 		throws PortalException {
 
-		Map<Long, Long> segmentsEntryIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				SegmentsEntry.class);
-
-		long segmentsEntryId = MapUtil.getLong(
-			segmentsEntryIds,
-			assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
-			assetListEntrySegmentsEntryRel.getSegmentsEntryId());
-
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			assetListEntrySegmentsEntryRel);
 
@@ -71,7 +59,7 @@ public class AssetListEntrySegmentsEntryRelStagedModelRepository
 			addAssetListEntrySegmentsEntryRel(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				assetListEntrySegmentsEntryRel.getAssetListEntryId(),
-				segmentsEntryId,
+				assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
 				assetListEntrySegmentsEntryRel.getTypeSettings(),
 				serviceContext);
 	}

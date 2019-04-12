@@ -133,6 +133,15 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 			assetListEntrySegmentsEntryRel.getAssetListEntryId(),
 			assetListEntrySegmentsEntryRel.getAssetListEntryId());
 
+		Map<Long, Long> segmentsEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				SegmentsEntry.class);
+
+		long segmentsEntryId = MapUtil.getLong(
+			segmentsEntryIds,
+			assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
+			assetListEntrySegmentsEntryRel.getSegmentsEntryId());
+
 		AssetListEntrySegmentsEntryRel importedAssetListEntrySegmentsEntryRel =
 			(AssetListEntrySegmentsEntryRel)
 				assetListEntrySegmentsEntryRel.clone();
@@ -141,6 +150,8 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 			portletDataContext.getScopeGroupId());
 		importedAssetListEntrySegmentsEntryRel.setAssetListEntryId(
 			assetListEntryId);
+		importedAssetListEntrySegmentsEntryRel.setSegmentsEntryId(
+			segmentsEntryId);
 
 		AssetListEntrySegmentsEntryRel existingAssetListEntrySegmentsEntryRel =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(

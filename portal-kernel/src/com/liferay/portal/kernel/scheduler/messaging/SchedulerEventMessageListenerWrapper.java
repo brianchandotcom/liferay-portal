@@ -102,22 +102,6 @@ public class SchedulerEventMessageListenerWrapper
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public void setGroupName(String groupName) {
-		_groupName = groupName;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public void setJobName(String jobName) {
-		_jobName = jobName;
-	}
-
 	public void setMessageListener(MessageListener messageListener) {
 		_messageListener = messageListener;
 	}
@@ -204,20 +188,6 @@ public class SchedulerEventMessageListenerWrapper
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEventMessageListenerWrapper.class);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@SuppressWarnings("unused")
-	private String _groupName;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@SuppressWarnings("unused")
-	private String _jobName;
 
 	private final Lock _lock = new ReentrantLock();
 	private MessageListener _messageListener;

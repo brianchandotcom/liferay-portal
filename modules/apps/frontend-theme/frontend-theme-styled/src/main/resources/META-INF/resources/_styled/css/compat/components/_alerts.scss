@@ -8,6 +8,10 @@
 		padding-left: $alert-dismissible-padding-left;
 		padding-right: $alert-dismissible-padding-right;
 		padding-top: $alert-dismissible-padding-top;
+
+		.close {
+			position: absolute;
+		}
 	}
 
 	.alert-fluid.alert-dismissable {

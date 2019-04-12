@@ -74,6 +74,10 @@ public class FormNavigatorConstants {
 	public static final String CATEGORY_KEY_USER_USER_INFORMATION =
 		"user-information";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String FORM_NAVIGATOR_ID_COMPANY_SETTINGS =
 		"company.settings.form";
 

@@ -562,6 +562,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(FormDocument.class, FormDocumentMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -578,6 +579,28 @@ public abstract class BaseFormDocumentResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class FormDocumentMixin {
+
+		@JsonProperty
+		String contentUrl;
+
+		@JsonProperty
+		String encodingFormat;
+
+		@JsonProperty
+		String fileExtension;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		Number sizeInBytes;
+
+		@JsonProperty
+		String title;
+
+	}
 
 	protected static class Page<T> {
 

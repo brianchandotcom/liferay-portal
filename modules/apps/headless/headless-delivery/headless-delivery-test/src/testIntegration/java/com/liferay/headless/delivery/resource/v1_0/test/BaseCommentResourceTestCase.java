@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.delivery.dto.v1_0.Comment;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -2227,6 +2228,7 @@ public abstract class BaseCommentResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(Comment.class, CommentMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -2243,6 +2245,28 @@ public abstract class BaseCommentResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class CommentMixin {
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		Number numberOfComments;
+
+		@JsonProperty
+		String text;
+
+	}
 
 	protected static class Page<T> {
 

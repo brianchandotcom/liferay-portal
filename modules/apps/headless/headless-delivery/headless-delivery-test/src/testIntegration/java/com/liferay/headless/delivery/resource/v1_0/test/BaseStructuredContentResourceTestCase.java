@@ -21,8 +21,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
+import com.liferay.headless.delivery.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.RenderedContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -2903,6 +2908,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(StructuredContent.class, StructuredContentMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -2919,6 +2925,79 @@ public abstract class BaseStructuredContentResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class StructuredContentMixin {
+
+		@JsonProperty
+		AggregateRating aggregateRating;
+
+		@JsonProperty
+		String[] availableLanguages;
+
+		@JsonProperty
+		ContentField[] contentFields;
+
+		@JsonProperty
+		Long contentStructureId;
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		Date datePublished;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		String friendlyUrlPath;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String key;
+
+		@JsonProperty
+		String[] keywords;
+
+		@JsonProperty
+		Date lastReviewed;
+
+		@JsonProperty
+		Number numberOfComments;
+
+		@JsonProperty
+		RenderedContent[] renderedContents;
+
+		@JsonProperty
+		Long siteId;
+
+		@JsonProperty
+		TaxonomyCategory[] taxonomyCategories;
+
+		@JsonProperty
+		Long[] taxonomyCategoryIds;
+
+		@JsonProperty
+		String title;
+
+		@JsonProperty
+		String uuid;
+
+		@JsonProperty
+		ViewableBy viewableBy;
+
+		public static enum ViewableBy {
+		}
+
+	}
 
 	protected static class Page<T> {
 

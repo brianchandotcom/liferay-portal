@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.petra.string.StringBundler;
@@ -1879,6 +1880,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(
+					StructuredContentFolder.class,
+					StructuredContentFolderMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1895,6 +1899,43 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class StructuredContentFolderMixin {
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		Number numberOfStructuredContentFolders;
+
+		@JsonProperty
+		Number numberOfStructuredContents;
+
+		@JsonProperty
+		Long siteId;
+
+		@JsonProperty
+		ViewableBy viewableBy;
+
+		public static enum ViewableBy {
+		}
+
+	}
 
 	protected static class Page<T> {
 

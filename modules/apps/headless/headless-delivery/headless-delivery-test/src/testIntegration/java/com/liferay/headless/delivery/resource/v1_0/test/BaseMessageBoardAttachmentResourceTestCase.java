@@ -1022,6 +1022,9 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(
+					MessageBoardAttachment.class,
+					MessageBoardAttachmentMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1038,6 +1041,28 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class MessageBoardAttachmentMixin {
+
+		@JsonProperty
+		String contentUrl;
+
+		@JsonProperty
+		String encodingFormat;
+
+		@JsonProperty
+		String fileExtension;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		Number sizeInBytes;
+
+		@JsonProperty
+		String title;
+
+	}
 
 	protected static class Page<T> {
 

@@ -21,6 +21,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.admin.user.dto.v1_0.ContactInformation;
+import com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief;
+import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
+import com.liferay.headless.admin.user.dto.v1_0.SiteBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.petra.string.StringBundler;
@@ -1916,6 +1920,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(UserAccount.class, UserAccountMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1932,6 +1937,73 @@ public abstract class BaseUserAccountResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class UserAccountMixin {
+
+		@JsonProperty
+		String additionalName;
+
+		@JsonProperty
+		String alternateName;
+
+		@JsonProperty
+		Date birthDate;
+
+		@JsonProperty
+		ContactInformation contactInformation;
+
+		@JsonProperty
+		String dashboardURL;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		String email;
+
+		@JsonProperty
+		String familyName;
+
+		@JsonProperty
+		String givenName;
+
+		@JsonProperty
+		String honorificPrefix;
+
+		@JsonProperty
+		String honorificSuffix;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String image;
+
+		@JsonProperty
+		String jobTitle;
+
+		@JsonProperty
+		String[] keywords;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		OrganizationBrief[] organizationBriefs;
+
+		@JsonProperty
+		String profileURL;
+
+		@JsonProperty
+		RoleBrief[] roleBriefs;
+
+		@JsonProperty
+		SiteBrief[] siteBriefs;
+
+	}
 
 	protected static class Page<T> {
 

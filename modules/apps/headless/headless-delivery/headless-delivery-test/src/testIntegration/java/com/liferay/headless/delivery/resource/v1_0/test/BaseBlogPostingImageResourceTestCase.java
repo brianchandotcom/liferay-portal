@@ -1051,6 +1051,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(BlogPostingImage.class, BlogPostingImageMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -1067,6 +1068,34 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class BlogPostingImageMixin {
+
+		@JsonProperty
+		String contentUrl;
+
+		@JsonProperty
+		String encodingFormat;
+
+		@JsonProperty
+		String fileExtension;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		Number sizeInBytes;
+
+		@JsonProperty
+		String title;
+
+		@JsonProperty
+		ViewableBy viewableBy;
+
+		public static enum ViewableBy {
+		}
+
+	}
 
 	protected static class Page<T> {
 

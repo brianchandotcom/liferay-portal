@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.petra.string.StringBundler;
@@ -51,6 +52,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -575,6 +577,7 @@ public abstract class BaseRoleResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(Role.class, RoleMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -591,6 +594,34 @@ public abstract class BaseRoleResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class RoleMixin {
+
+		@JsonProperty
+		String[] availableLanguages;
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		String roleType;
+
+	}
 
 	protected static class Page<T> {
 

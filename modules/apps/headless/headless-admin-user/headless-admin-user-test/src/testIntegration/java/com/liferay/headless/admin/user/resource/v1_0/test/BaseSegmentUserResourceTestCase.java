@@ -523,6 +523,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(SegmentUser.class, SegmentUserMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -539,6 +540,19 @@ public abstract class BaseSegmentUserResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class SegmentUserMixin {
+
+		@JsonProperty
+		String email;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String name;
+
+	}
 
 	protected static class Page<T> {
 

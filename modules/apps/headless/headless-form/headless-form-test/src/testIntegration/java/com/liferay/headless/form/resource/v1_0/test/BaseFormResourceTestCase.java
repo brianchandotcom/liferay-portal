@@ -21,8 +21,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import com.liferay.headless.form.dto.v1_0.Creator;
 import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
+import com.liferay.headless.form.dto.v1_0.FormRecord;
+import com.liferay.headless.form.dto.v1_0.FormStructure;
 import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -58,6 +61,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -930,6 +934,7 @@ public abstract class BaseFormResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(Form.class, FormMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -946,6 +951,52 @@ public abstract class BaseFormResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class FormMixin {
+
+		@JsonProperty
+		String[] availableLanguages;
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		Date datePublished;
+
+		@JsonProperty
+		String defaultLanguage;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		FormRecord[] formRecords;
+
+		@JsonProperty
+		Long[] formRecordsIds;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		Long siteId;
+
+		@JsonProperty
+		FormStructure structure;
+
+		@JsonProperty
+		Long structureId;
+
+	}
 
 	protected static class Page<T> {
 

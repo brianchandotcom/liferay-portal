@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
+import com.liferay.headless.delivery.dto.v1_0.ContentStructureField;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -947,6 +949,7 @@ public abstract class BaseContentStructureResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(ContentStructure.class, ContentStructureMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -963,6 +966,37 @@ public abstract class BaseContentStructureResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class ContentStructureMixin {
+
+		@JsonProperty
+		String[] availableLanguages;
+
+		@JsonProperty
+		ContentStructureField[] contentStructureFields;
+
+		@JsonProperty
+		Creator creator;
+
+		@JsonProperty
+		Date dateCreated;
+
+		@JsonProperty
+		Date dateModified;
+
+		@JsonProperty
+		String description;
+
+		@JsonProperty
+		Long id;
+
+		@JsonProperty
+		String name;
+
+		@JsonProperty
+		Long siteId;
+
+	}
 
 	protected static class Page<T> {
 

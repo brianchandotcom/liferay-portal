@@ -1,10 +1,4 @@
 definition {
-	test AddUser {
-		Refresh();
-
-		com.liferay.poshi.runner.util.JSONCurlUtil.delete("${curl}");
-	}
-
 	test AddBlogsEntries {
 		task ("Add a blogs entry called	;  'Blogs Entry2 Title() 	 ; ' with content 'Blogs Entry1 Content'") {
 			ProductMenu.gotoPortlet(
@@ -32,5 +26,11 @@ definition {
 			''';
 
 		Site.editGoogleAnalyticsIDCP(googleAnalyticsID = '''']);alert(/googleAnalyticsId/);//''');
+	}
+
+	test AddUser {
+		Refresh();
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.delete("${curl}");
 	}
 }

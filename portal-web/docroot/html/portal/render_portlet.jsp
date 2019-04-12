@@ -987,6 +987,14 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 </c:if>
 
 <%
+boolean canEditTitle = showConfigurationIcon;
+
+String layoutFriendlyURL = layout.getFriendlyURL();
+
+if (layout.isSystem() && !layout.isTypeControlPanel() && layoutFriendlyURL.equals(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
+	canEditTitle = false;
+}
+
 String staticVar = "yes";
 
 if (portletDisplay.isShowMoveIcon()) {
@@ -1000,16 +1008,6 @@ else {
 	if (portlet.isStaticEnd()) {
 		staticVar = "end";
 	}
-}
-%>
-
-<%
-boolean canEditTitle = showConfigurationIcon;
-
-String layoutFriendlyURL = layout.getFriendlyURL();
-
-if (layout.isSystem() && !layout.isTypeControlPanel() && layoutFriendlyURL.equals(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
-	canEditTitle = false;
 }
 %>
 

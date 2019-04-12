@@ -30,6 +30,7 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
@@ -98,11 +99,26 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 						startNodeId, workflowMetricsSLADefinition);
 
 				optional.ifPresent(
-					workflowMetricsSLAProcessResult ->
+					workflowMetricsSLAProcessResult -> {
 						_slaProcessResultWorkflowMetricsIndexer.addDocument(
 							_slaProcessResultWorkflowMetricsIndexer.
 								createDocument(
-									workflowMetricsSLAProcessResult)));
+									workflowMetricsSLAProcessResult));
+
+						Map<Long, String> taskNames = _getTaskNames(
+							workflowMetricsSLADefinition.getCompanyId(),
+							instanceId,
+							workflowMetricsSLADefinition.getProcessId());
+
+						taskNames.forEach(
+							(taskId, taskName) ->
+								_slaTaskResultWorkflowMetricsIndexer.
+									addDocument(
+										_slaTaskResultWorkflowMetricsIndexer.
+											createDocument(
+												taskId, taskName,
+												workflowMetricsSLAProcessResult)));
+					});
 			});
 
 		return BackgroundTaskResult.SUCCESS;
@@ -191,8 +207,50 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		);
 	}
 
+	private Map<Long, String> _getTaskNames(
+		long companyId, long instanceId, long processId) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames("workflow-metrics-token");
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", "0"));
+
+		booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", companyId),
+			_queries.term("completed", false), _queries.term("deleted", false),
+			_queries.term("instanceId", instanceId),
+			_queries.term("processId", processId));
+
+		searchSearchRequest.setQuery(booleanQuery);
+
+		searchSearchRequest.setSize(10000);
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		return Stream.of(
+			searchHits.getSearchHits()
+		).flatMap(
+			List::parallelStream
+		).map(
+			SearchHit::getDocument
+		).collect(
+			Collectors.toMap(
+				document -> document.getLong("taskId"),
+				document -> document.getString("taskName"))
+		);
+	}
+
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
 		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+
+	@Reference
+	private Queries _queries;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
@@ -200,6 +258,10 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Reference
 	private SLAProcessResultWorkflowMetricsIndexer
 		_slaProcessResultWorkflowMetricsIndexer;
+
+	@Reference
+	private SLATaskResultWorkflowMetricsIndexer
+		_slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

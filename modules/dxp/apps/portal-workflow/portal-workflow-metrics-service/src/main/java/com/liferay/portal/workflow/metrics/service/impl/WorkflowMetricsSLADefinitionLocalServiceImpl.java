@@ -26,6 +26,7 @@ import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitio
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionNameException;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefinitionLocalServiceBaseImpl;
 
@@ -87,6 +88,13 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		_workflowMetricsPortalExecutor.execute(
 			() -> _slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
+				workflowMetricsSLADefinition.getCompanyId(),
+				workflowMetricsSLADefinition.getProcessId(),
+				workflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId()));
+
+		_workflowMetricsPortalExecutor.execute(
+			() -> _slaTaskResultWorkflowMetricsIndexer.deleteDocuments(
 				workflowMetricsSLADefinition.getCompanyId(),
 				workflowMetricsSLADefinition.getProcessId(),
 				workflowMetricsSLADefinition.
@@ -160,6 +168,13 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 				workflowMetricsSLADefinition.
 					getWorkflowMetricsSLADefinitionId()));
 
+		_workflowMetricsPortalExecutor.execute(
+			() -> _slaTaskResultWorkflowMetricsIndexer.deleteDocuments(
+				workflowMetricsSLADefinition.getCompanyId(),
+				workflowMetricsSLADefinition.getProcessId(),
+				workflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId()));
+
 		return workflowMetricsSLADefinition;
 	}
 
@@ -193,6 +208,10 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	@ServiceReference(type = SLAProcessResultWorkflowMetricsIndexer.class)
 	private SLAProcessResultWorkflowMetricsIndexer
 		_slaProcessResultWorkflowMetricsIndexer;
+
+	@ServiceReference(type = SLATaskResultWorkflowMetricsIndexer.class)
+	private SLATaskResultWorkflowMetricsIndexer
+		_slaTaskResultWorkflowMetricsIndexer;
 
 	@ServiceReference(type = WorkflowMetricsPortalExecutor.class)
 	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;

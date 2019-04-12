@@ -102,6 +102,10 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		_slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
 			GetterUtil.getLong(document.get("companyId")),
 			GetterUtil.getLong(document.get("instanceId")));
+
+		_slaTaskResultWorkflowMetricsIndexer.deleteDocuments(
+			GetterUtil.getLong(document.get("companyId")),
+			GetterUtil.getLong(document.get("instanceId")));
 	}
 
 	@Override
@@ -132,5 +136,9 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	@Reference
 	private SLAProcessResultWorkflowMetricsIndexer
 		_slaProcessResultWorkflowMetricsIndexer;
+
+	@Reference
+	private SLATaskResultWorkflowMetricsIndexer
+		_slaTaskResultWorkflowMetricsIndexer;
 
 }

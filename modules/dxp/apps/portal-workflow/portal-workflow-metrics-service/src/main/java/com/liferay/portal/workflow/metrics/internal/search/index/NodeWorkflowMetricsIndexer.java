@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
@@ -28,6 +31,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 
 import java.util.Date;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,6 +41,41 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = NodeWorkflowMetricsIndexer.class)
 public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
+
+	@Override
+	public void addDocument(Document document) {
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		if (Objects.equals(
+				GetterUtil.getString(document.get("type")),
+				NodeType.TASK.name())) {
+
+			bulkDocumentRequest.addBulkableDocumentRequest(
+				new IndexDocumentRequest(
+					_slaTaskResultWorkflowMetricsIndexer.getIndexName(),
+					_creatWorkflowMetricsSLATaskResultDocument(
+						GetterUtil.getLong(document.get("companyId")),
+						GetterUtil.getString(document.get("name")),
+						GetterUtil.getLong(document.get("nodeId")),
+						GetterUtil.getLong(document.get("processId")))) {
+
+					{
+						setType(
+							_slaTaskResultWorkflowMetricsIndexer.
+								getIndexType());
+					}
+				});
+		}
+
+		bulkDocumentRequest.addBulkableDocumentRequest(
+			new IndexDocumentRequest(getIndexName(), document) {
+				{
+					setType(getIndexType());
+				}
+			});
+
+		searchEngineAdapter.execute(bulkDocumentRequest);
+	}
 
 	public Document createDocument(KaleoNode kaleoNode) {
 		return _createDocument(
@@ -111,6 +150,25 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		return document;
 	}
 
+	private Document _creatWorkflowMetricsSLATaskResultDocument(
+		long companyId, String name, long nodeId, long processId) {
+
+		Document document = new DocumentImpl();
+
+		document.addUID(
+			"WorkflowMetricsSLATaskResult",
+			digest(companyId, 0, processId, 0, nodeId));
+		document.addKeyword("companyId", companyId);
+		document.addKeyword("deleted", false);
+		document.addKeyword("instanceId", 0);
+		document.addKeyword("processId", processId);
+		document.addKeyword("slaDefinitionId", 0);
+		document.addKeyword("taskId", nodeId);
+		document.addKeyword("taskName", name);
+
+		return document;
+	}
+
 	private void _populateIndexWithKaleoNode() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_kaleoNodeLocalService.getActionableDynamicQuery();
@@ -136,5 +194,9 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Reference
 	private KaleoTaskLocalService _kaleoTaskLocalService;
+
+	@Reference
+	private SLATaskResultWorkflowMetricsIndexer
+		_slaTaskResultWorkflowMetricsIndexer;
 
 }

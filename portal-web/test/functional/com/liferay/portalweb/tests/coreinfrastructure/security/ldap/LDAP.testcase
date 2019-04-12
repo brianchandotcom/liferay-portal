@@ -163,11 +163,7 @@ definition {
 			userLoginFullName = "ldapusergivenname ldapusersn"
 		);
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Account Settings"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECTED",

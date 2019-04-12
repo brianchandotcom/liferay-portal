@@ -38,7 +38,7 @@ class EmptyDropZone extends Component {
 	static propTypes = {
 		canDrop: PropTypes.bool,
 		connectDropTarget: PropTypes.func,
-		empty: PropTypes.bool,
+		emptyContributors: PropTypes.bool,
 		hover: PropTypes.bool,
 		onCriterionAdd: PropTypes.func.isRequired,
 		propertyKey: PropTypes.string.isRequired
@@ -48,7 +48,7 @@ class EmptyDropZone extends Component {
 		const {
 			canDrop,
 			connectDropTarget,
-			empty,
+			emptyContributors,
 			hover
 		} = this.props;
 
@@ -60,7 +60,7 @@ class EmptyDropZone extends Component {
 		);
 
 		const targetClasses = getCN(
-			empty ? 'empty-drop-zone-target' : 'drop-zone-target',
+			emptyContributors ? 'empty-drop-zone-target' : 'drop-zone-target',
 			{
 				'empty-drop-zone-target-solid dnd-hover border-primary rounded': canDrop && hover
 			}

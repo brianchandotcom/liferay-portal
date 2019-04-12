@@ -1289,8 +1289,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostTaxonomyVocabularyTaxonomyCategory(
+			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
+			taxonomyCategory);
 	}
 
 	protected TaxonomyCategory invokePostTaxonomyVocabularyTaxonomyCategory(

@@ -490,7 +490,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		throws Exception {
 
 		return invokePostSiteTaxonomyVocabulary(
-			testGroup.getGroupId(), taxonomyVocabulary);
+			testGetSiteTaxonomyVocabulariesPage_getSiteId(),
+			taxonomyVocabulary);
 	}
 
 	protected TaxonomyVocabulary invokePostSiteTaxonomyVocabulary(

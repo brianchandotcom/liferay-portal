@@ -112,7 +112,7 @@ public class ZoomAPICallbackServlet extends HttpServlet {
 		booleanQuery.addExactTerm("zoomMeetingId", zoomMeetingId);
 
 		BooleanClause booleanClause = BooleanClauseFactoryUtil.create(
-			searchContext, booleanQuery, BooleanClauseOccur.MUST.getName());
+			booleanQuery, BooleanClauseOccur.MUST.getName());
 
 		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
 

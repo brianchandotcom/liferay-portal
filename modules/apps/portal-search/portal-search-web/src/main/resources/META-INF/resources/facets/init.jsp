@@ -51,7 +51,7 @@ JSONObject dataJSONObject = facetConfiguration.getData();
 
 FacetCollector facetCollector = facet.getFacetCollector();
 
-String cssClass = "search-facet search-".concat(HtmlUtil.escapeAttribute(facetConfiguration.getDisplayStyle()));
+String cssClass = "search-facet search-".concat(HtmlUtil.escapeAttribute(StringPool.BLANK));
 %>
 
 <%!

@@ -15,8 +15,11 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.data;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.data.ClayTagDataSource;
+import com.liferay.frontend.taglib.clay.servlet.taglib.data.Pagination;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +38,37 @@ import org.osgi.service.component.annotations.Component;
 public class SampleTableClayTagDataSource
 	implements ClayTagDataSource<Map<String, Object>> {
 
+	public SampleTableClayTagDataSource() {
+		for (int i = 0; i < (90 + Math.random() * 20); i++) {
+			String name = StringBundler.concat(
+				_getQualifier(), StringPool.SPACE, _getColor(), "berry");
+
+			int calories = 1 + (int)(Math.random() * 450);
+
+			int portion = 90 + (int)(Math.random() * 20);
+
+			_items.add(_getItem(name, calories, portion));
+		}
+	}
+
 	@Override
-	public List<Map<String, Object>> getItems(HttpServletRequest request) {
-		return Arrays.asList(
-			_getItem("Blueberry", 57, 100), _getItem("Strawberry", 33, 100),
-			_getItem("Raspberry", 53, 100));
+	public List<Map<String, Object>> getItems(
+		HttpServletRequest request, Pagination pagination) {
+
+		return _items.subList(
+			pagination.getStart(),
+			Math.min(pagination.getEnd(), _items.size()));
+	}
+
+	@Override
+	public int getTotalItemsCount() {
+		return _items.size();
+	}
+
+	private String _getColor() {
+		int i = (int)(Math.random() * _COLOR.length) % _COLOR.length;
+
+		return _COLOR[i];
 	}
 
 	private Map<String, Object> _getItem(
@@ -53,5 +82,24 @@ public class SampleTableClayTagDataSource
 
 		return item;
 	}
+
+	private String _getQualifier() {
+		int i = (int)(Math.random() * _QUALIFIER.length) % _QUALIFIER.length;
+
+		return _QUALIFIER[i];
+	}
+
+	private static final String[] _COLOR = {
+		"Blue", "Red", "Yellow", "Green", "Purple", "Orange", "Black", "White",
+		"Ochre", "Salmon", "Pink", "Lime", "Grey", "Silver", "Golden", "Rasp",
+		"Straw"
+	};
+
+	private static final String[] _QUALIFIER = {
+		"Soft", "Dried", "Moist", "Wild", "Domesticated", "Round", "Square",
+		"Big", "Small", "Huge", "Tiny", "Bright", "Dusty"
+	};
+
+	private final List<Map<String, Object>> _items = new ArrayList<>();
 
 }

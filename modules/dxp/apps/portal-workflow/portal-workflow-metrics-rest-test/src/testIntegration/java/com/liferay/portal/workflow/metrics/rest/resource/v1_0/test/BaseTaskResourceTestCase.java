@@ -382,6 +382,14 @@ public abstract class BaseTaskResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("instanceCount", additionalAssertFieldName)) {
+				if (task.getInstanceCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (task.getName() == null) {
 					valid = false;
@@ -390,24 +398,20 @@ public abstract class BaseTaskResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("onTimeTaskCount", additionalAssertFieldName)) {
-				if (task.getOnTimeTaskCount() == null) {
+			if (Objects.equals(
+					"onTimeInstanceCount", additionalAssertFieldName)) {
+
+				if (task.getOnTimeInstanceCount() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("overdueTaskCount", additionalAssertFieldName)) {
-				if (task.getOverdueTaskCount() == null) {
-					valid = false;
-				}
+			if (Objects.equals(
+					"overdueInstanceCount", additionalAssertFieldName)) {
 
-				continue;
-			}
-
-			if (Objects.equals("taskCount", additionalAssertFieldName)) {
-				if (task.getTaskCount() == null) {
+				if (task.getOverdueInstanceCount() == null) {
 					valid = false;
 				}
 
@@ -451,6 +455,16 @@ public abstract class BaseTaskResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("instanceCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						task1.getInstanceCount(), task2.getInstanceCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(task1.getName(), task2.getName())) {
 					return false;
@@ -459,10 +473,12 @@ public abstract class BaseTaskResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("onTimeTaskCount", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"onTimeInstanceCount", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						task1.getOnTimeTaskCount(),
-						task2.getOnTimeTaskCount())) {
+						task1.getOnTimeInstanceCount(),
+						task2.getOnTimeInstanceCount())) {
 
 					return false;
 				}
@@ -470,20 +486,12 @@ public abstract class BaseTaskResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("overdueTaskCount", additionalAssertFieldName)) {
+			if (Objects.equals(
+					"overdueInstanceCount", additionalAssertFieldName)) {
+
 				if (!Objects.deepEquals(
-						task1.getOverdueTaskCount(),
-						task2.getOverdueTaskCount())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("taskCount", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						task1.getTaskCount(), task2.getTaskCount())) {
+						task1.getOverdueInstanceCount(),
+						task2.getOverdueInstanceCount())) {
 
 					return false;
 				}
@@ -544,6 +552,11 @@ public abstract class BaseTaskResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("instanceCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
 			sb.append(String.valueOf(task.getName()));
@@ -552,17 +565,12 @@ public abstract class BaseTaskResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("onTimeTaskCount")) {
+		if (entityFieldName.equals("onTimeInstanceCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("overdueTaskCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("taskCount")) {
+		if (entityFieldName.equals("overdueInstanceCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -574,10 +582,10 @@ public abstract class BaseTaskResourceTestCase {
 	protected Task randomTask() {
 		return new Task() {
 			{
+				instanceCount = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
-				onTimeTaskCount = RandomTestUtil.randomLong();
-				overdueTaskCount = RandomTestUtil.randomLong();
-				taskCount = RandomTestUtil.randomLong();
+				onTimeInstanceCount = RandomTestUtil.randomLong();
+				overdueInstanceCount = RandomTestUtil.randomLong();
 			}
 		};
 	}
@@ -608,6 +616,7 @@ public abstract class BaseTaskResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(Task.class, TaskMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -624,6 +633,19 @@ public abstract class BaseTaskResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class TaskMixin {
+
+		@JsonProperty
+		Long instanceCount;
+		@JsonProperty
+		String name;
+		@JsonProperty
+		Long onTimeInstanceCount;
+		@JsonProperty
+		Long overdueInstanceCount;
+
+	}
 
 	protected static class Page<T> {
 

@@ -486,6 +486,7 @@ public abstract class BaseNodeResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(Node.class, NodeMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -502,6 +503,21 @@ public abstract class BaseNodeResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class NodeMixin {
+
+		@JsonProperty
+		Long id;
+		@JsonProperty
+		Boolean initial;
+		@JsonProperty
+		String name;
+		@JsonProperty
+		Boolean terminal;
+		@JsonProperty
+		String type;
+
+	}
 
 	protected static class Page<T> {
 

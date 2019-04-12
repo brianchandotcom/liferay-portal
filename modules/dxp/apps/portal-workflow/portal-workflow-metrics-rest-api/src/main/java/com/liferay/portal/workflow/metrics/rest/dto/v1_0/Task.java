@@ -40,6 +40,33 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Task")
 public class Task {
 
+	public Long getInstanceCount() {
+		return instanceCount;
+	}
+
+	public void setInstanceCount(Long instanceCount) {
+		this.instanceCount = instanceCount;
+	}
+
+	@JsonIgnore
+	public void setInstanceCount(
+		UnsafeSupplier<Long, Exception> instanceCountUnsafeSupplier) {
+
+		try {
+			instanceCount = instanceCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long instanceCount;
+
 	public String getName() {
 		return name;
 	}
@@ -65,20 +92,20 @@ public class Task {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	public Long getOnTimeTaskCount() {
-		return onTimeTaskCount;
+	public Long getOnTimeInstanceCount() {
+		return onTimeInstanceCount;
 	}
 
-	public void setOnTimeTaskCount(Long onTimeTaskCount) {
-		this.onTimeTaskCount = onTimeTaskCount;
+	public void setOnTimeInstanceCount(Long onTimeInstanceCount) {
+		this.onTimeInstanceCount = onTimeInstanceCount;
 	}
 
 	@JsonIgnore
-	public void setOnTimeTaskCount(
-		UnsafeSupplier<Long, Exception> onTimeTaskCountUnsafeSupplier) {
+	public void setOnTimeInstanceCount(
+		UnsafeSupplier<Long, Exception> onTimeInstanceCountUnsafeSupplier) {
 
 		try {
-			onTimeTaskCount = onTimeTaskCountUnsafeSupplier.get();
+			onTimeInstanceCount = onTimeInstanceCountUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -90,22 +117,22 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long onTimeTaskCount;
+	protected Long onTimeInstanceCount;
 
-	public Long getOverdueTaskCount() {
-		return overdueTaskCount;
+	public Long getOverdueInstanceCount() {
+		return overdueInstanceCount;
 	}
 
-	public void setOverdueTaskCount(Long overdueTaskCount) {
-		this.overdueTaskCount = overdueTaskCount;
+	public void setOverdueInstanceCount(Long overdueInstanceCount) {
+		this.overdueInstanceCount = overdueInstanceCount;
 	}
 
 	@JsonIgnore
-	public void setOverdueTaskCount(
-		UnsafeSupplier<Long, Exception> overdueTaskCountUnsafeSupplier) {
+	public void setOverdueInstanceCount(
+		UnsafeSupplier<Long, Exception> overdueInstanceCountUnsafeSupplier) {
 
 		try {
-			overdueTaskCount = overdueTaskCountUnsafeSupplier.get();
+			overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -117,34 +144,7 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long overdueTaskCount;
-
-	public Long getTaskCount() {
-		return taskCount;
-	}
-
-	public void setTaskCount(Long taskCount) {
-		this.taskCount = taskCount;
-	}
-
-	@JsonIgnore
-	public void setTaskCount(
-		UnsafeSupplier<Long, Exception> taskCountUnsafeSupplier) {
-
-		try {
-			taskCount = taskCountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long taskCount;
+	protected Long overdueInstanceCount;
 
 	@Override
 	public boolean equals(Object object) {
@@ -173,6 +173,17 @@ public class Task {
 
 		sb.append("{");
 
+		sb.append("\"instanceCount\": ");
+
+		if (instanceCount == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(instanceCount);
+		}
+
+		sb.append(", ");
+
 		sb.append("\"name\": ");
 
 		if (name == null) {
@@ -184,35 +195,24 @@ public class Task {
 
 		sb.append(", ");
 
-		sb.append("\"onTimeTaskCount\": ");
+		sb.append("\"onTimeInstanceCount\": ");
 
-		if (onTimeTaskCount == null) {
+		if (onTimeInstanceCount == null) {
 			sb.append("null");
 		}
 		else {
-			sb.append(onTimeTaskCount);
+			sb.append(onTimeInstanceCount);
 		}
 
 		sb.append(", ");
 
-		sb.append("\"overdueTaskCount\": ");
+		sb.append("\"overdueInstanceCount\": ");
 
-		if (overdueTaskCount == null) {
+		if (overdueInstanceCount == null) {
 			sb.append("null");
 		}
 		else {
-			sb.append(overdueTaskCount);
-		}
-
-		sb.append(", ");
-
-		sb.append("\"taskCount\": ");
-
-		if (taskCount == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(taskCount);
+			sb.append(overdueInstanceCount);
 		}
 
 		sb.append("}");

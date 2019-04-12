@@ -718,6 +718,7 @@ public abstract class BaseProcessResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(Process.class, ProcessMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -734,6 +735,25 @@ public abstract class BaseProcessResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class ProcessMixin {
+
+		@JsonProperty
+		Long dueAfterInstanceCount;
+		@JsonProperty
+		Long dueInInstanceCount;
+		@JsonProperty
+		Long id;
+		@JsonProperty
+		Long instanceCount;
+		@JsonProperty
+		Long onTimeInstanceCount;
+		@JsonProperty
+		Long overdueInstanceCount;
+		@JsonProperty
+		String title;
+
+	}
 
 	protected static class Page<T> {
 

@@ -257,8 +257,7 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected SLA testPostProcessSLA_addSLA(SLA sla) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostProcessSLA(testGetProcessSLAsPage_getProcessId(), sla);
 	}
 
 	protected SLA invokePostProcessSLA(Long processId, SLA sla)
@@ -842,6 +841,7 @@ public abstract class BaseSLAResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
+				addMixIn(SLA.class, SLAMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -858,6 +858,27 @@ public abstract class BaseSLAResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class SLAMixin {
+
+		@JsonProperty
+		String description;
+		@JsonProperty
+		Long duration;
+		@JsonProperty
+		Long id;
+		@JsonProperty
+		String name;
+		@JsonProperty
+		String[] pauseNodeKeys;
+		@JsonProperty
+		Long processId;
+		@JsonProperty
+		String[] startNodeKeys;
+		@JsonProperty
+		String[] stopNodeKeys;
+
+	}
 
 	protected static class Page<T> {
 

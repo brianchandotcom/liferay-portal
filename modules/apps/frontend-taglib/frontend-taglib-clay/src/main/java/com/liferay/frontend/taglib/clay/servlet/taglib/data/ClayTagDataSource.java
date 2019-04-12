@@ -23,6 +23,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ClayTagDataSource<T> {
 
-	public List<T> getItems(HttpServletRequest request);
+	/**
+	 * Get items from data source (optionally paginated).
+	 * @param request
+	 * @param pagination a {@link Pagination} object or {@link Pagination#OFF}
+	 *                   to ignore pagination. Never pass null, use
+	 *                   {@link Pagination#OFF} instead.
+	 * @return
+	 * @review
+	 */
+	public List<T> getItems(HttpServletRequest request, Pagination pagination);
+
+	public int getTotalItemsCount();
 
 }

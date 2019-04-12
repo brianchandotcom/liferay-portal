@@ -1232,6 +1232,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	};
 	protected static final ObjectMapper outputObjectMapper = new ObjectMapper() {
 		{
+			addMixIn(${schemaName}.class, ${schemaName}Mixin.class);
 			setFilterProvider(
 				new SimpleFilterProvider() {
 					{
@@ -1246,6 +1247,18 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
+
+	protected static class ${schemaName}Mixin {
+	<#list properties?keys as propertyName>
+		@JsonProperty
+		${properties[propertyName]}  ${propertyName};
+		
+	</#list>
+	<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(schema) />
+	<#list enumSchemas?keys as enumName>
+		public static enum ${enumName} {}
+	</#list>
+	}
 
 	protected static class Page<T> {
 

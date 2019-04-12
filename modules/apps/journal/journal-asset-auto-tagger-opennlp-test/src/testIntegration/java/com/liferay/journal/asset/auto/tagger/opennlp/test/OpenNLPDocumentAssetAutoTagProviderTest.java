@@ -37,6 +37,7 @@ import java.util.Collection;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,6 +58,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Ignore
 	@Test
 	public void testGetTagNamesWithTextFile() throws Exception {
 		String fileName = _FILE_NAME + ".txt";
@@ -89,6 +91,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			});
 	}
 
+	@Ignore
 	@Test
 	public void testGetTagNamesWithTextFileAndDisabledConfiguration()
 		throws Exception {
@@ -109,6 +112,7 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			});
 	}
 
+	@Ignore
 	@Test
 	public void testGetTagNamesWithTextInNoEnglishLanguage() throws Exception {
 		String fileName = _FILE_NAME + ".txt";

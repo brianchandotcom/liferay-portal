@@ -50,7 +50,9 @@ components:
             description: https://www.schema.org/WorkflowLog
             properties:
                 auditPerson:
-                    $ref: "#/components/schemas/Creator"
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
                 commentLog:
                     readOnly: true
                     type: string
@@ -63,9 +65,13 @@ components:
                     readOnly: true
                     type: integer
                 person:
-                    $ref: "#/components/schemas/Creator"
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
                 previousPerson:
-                    $ref: "#/components/schemas/Creator"
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
                 previousState:
                     readOnly: true
                     type: string
@@ -112,7 +118,9 @@ components:
                     readOnly: true
                     type: string
                 objectReviewed:
-                    $ref: "#/components/schemas/ObjectReviewed"
+                    allOf:
+                        - $ref: "#/components/schemas/ObjectReviewed"
+                    readOnly: true
                 transitions:
                     items:
                         type: string

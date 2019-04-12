@@ -110,6 +110,7 @@ components:
                             format: int64
                             readOnly: true
                             type: integer
+                    readOnly: true
                     type: object
                 name:
                     readOnly: true
@@ -231,7 +232,9 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    $ref: "#/components/schemas/Creator"
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
                 dateCreated:
                     format: date-time
                     readOnly: true

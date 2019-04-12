@@ -42,7 +42,9 @@ components:
             description: https://www.schema.org/Keyword
             properties:
                 creator:
-                    $ref: "#/components/schemas/Creator"
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
                 dateCreated:
                     format: date-time
                     readOnly: true
@@ -136,7 +138,9 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    $ref: "#/components/schemas/Creator"
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
                 dateCreated:
                     format: date-time
                     readOnly: true

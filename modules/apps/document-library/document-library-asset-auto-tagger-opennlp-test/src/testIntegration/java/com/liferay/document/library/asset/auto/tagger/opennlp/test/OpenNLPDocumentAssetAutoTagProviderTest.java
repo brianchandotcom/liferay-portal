@@ -279,16 +279,28 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_OPENNLP_AUTO_TAG_CONFIGURATION_CLASS_NAME,
-					new HashMapDictionary<String, Object>() {
-						{
-							put("enabled", false);
-						}
-					})) {
+		try (ConfigurationTemporarySwapper
+				autoTaggerConfigurationTemporarySwapper =
+					new ConfigurationTemporarySwapper(
+						_OPENNLP_AUTO_TAGGER_CONFIGURATION_CLASS_NAME,
+						new HashMapDictionary<String, Object>() {
+							{
+								put("enabled", false);
+							}
+						})) {
 
-			unsafeRunnable.run();
+			try (ConfigurationTemporarySwapper
+					journalAutoTagProviderConfigurationTemporarySwapper =
+						new ConfigurationTemporarySwapper(
+							_OPENNLP_AUTO_TAG_PROVIDER_CONFIGURATION_CLASS_NAME,
+							new HashMapDictionary<String, Object>() {
+								{
+									put("enabled", true);
+								}
+							})) {
+
+				unsafeRunnable.run();
+			}
 		}
 	}
 
@@ -296,24 +308,42 @@ public class OpenNLPDocumentAssetAutoTagProviderTest {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_OPENNLP_AUTO_TAG_CONFIGURATION_CLASS_NAME,
-					new HashMapDictionary<String, Object>() {
-						{
-							put("confidenceThreshold", 0.9);
-							put("enabled", true);
-						}
-					})) {
+		try (ConfigurationTemporarySwapper
+				autoTaggerConfigurationTemporarySwapper =
+					new ConfigurationTemporarySwapper(
+						_OPENNLP_AUTO_TAGGER_CONFIGURATION_CLASS_NAME,
+						new HashMapDictionary<String, Object>() {
+							{
+								put("enabled", true);
+								put("confidenceThreshold", 0.9);
+							}
+						})) {
 
-			unsafeRunnable.run();
+			try (ConfigurationTemporarySwapper
+					journalAutoTagProviderConfigurationTemporarySwapper =
+						new ConfigurationTemporarySwapper(
+							_OPENNLP_AUTO_TAG_PROVIDER_CONFIGURATION_CLASS_NAME,
+							new HashMapDictionary<String, Object>() {
+								{
+									put("enabled", true);
+								}
+							})) {
+
+				unsafeRunnable.run();
+			}
 		}
 	}
 
 	private static final String _FILE_NAME =
 		"Alice's Adventures in Wonderland, by Lewis Carroll";
 
-	private static final String _OPENNLP_AUTO_TAG_CONFIGURATION_CLASS_NAME =
+	private static final String
+		_OPENNLP_AUTO_TAG_PROVIDER_CONFIGURATION_CLASS_NAME =
+			"com.liferay.document.library.asset.auto.tagger.opennlp.internal." +
+				"configuration." +
+					"OpenNLPDocumentAssetAutoTagProviderCompanyConfiguration";
+
+	private static final String _OPENNLP_AUTO_TAGGER_CONFIGURATION_CLASS_NAME =
 		"com.liferay.asset.auto.tagger.opennlp.internal.configuration." +
 			"OpenNLPDocumentAssetAutoTaggerCompanyConfiguration";
 

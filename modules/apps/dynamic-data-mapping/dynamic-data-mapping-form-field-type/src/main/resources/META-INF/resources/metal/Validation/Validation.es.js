@@ -99,9 +99,16 @@ class Validation extends Component {
 		 * @type {String}
 		 */
 
-		parameterMessage: Config.string()
-			.internal()
-			.value(''),
+		parameterMessage: Config.string().internal().value(''),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Validation
+		 * @type {?bool}
+		 */
+
+		readOnly: Config.bool().value(false),
 
 		/**
 		 * @default undefined
@@ -111,6 +118,15 @@ class Validation extends Component {
 		 */
 
 		spritemap: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Validation
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('validation'),
 
 		/**
 		 * @default undefined

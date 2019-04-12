@@ -10,6 +10,7 @@
 	{@param? errorMessage: string}
 	{@param? label: string}
 	{@param? parameterMessage: string}
+	{@param? readOnly: bool}
 	{@param? selectedValidation: [parameterMessage: string, value: string]}
 	{@param? validations: list<[
 		checked: bool,
@@ -31,6 +32,7 @@
 		{param label: $label /}
 		{param name: $name /}
 		{param parameterMessage: $parameterMessage /}
+		{param readOnly: $readOnly /}
 		{param selectedValidation: $selectedValidation /}
 		{param spritemap: $spritemap /}
 		{param validations: $validations /}
@@ -46,6 +48,7 @@
 	{@param? errorMessage: string}
 	{@param? label: string}
 	{@param? parameterMessage: string}
+	{@param? readOnly: bool}
 	{@param? selectedValidation: [parameterMessage: string, value: string]}
 	{@param spritemap: string}
 	{@param? validations: list<[
@@ -65,6 +68,7 @@
 				'fieldEdited': $_updateValue
 			] /}
 			{param label: $label /}
+			{param readOnly: $readOnly /}
 			{param ref: 'enableValidation' /}
 			{param showAsSwitcher: true /}
 			{param spritemap: $spritemap /}
@@ -83,6 +87,7 @@
 			{param placeholder kind="text"}
 				{msg desc=""}choose-an-option{/msg}
 			{/param}
+			{param readOnly: $readOnly /}
 			{param ref: 'selectedValidation' /}
 			{param spritemap: $spritemap /}
 			{param value: [$selectedValidation?.value] /}
@@ -100,6 +105,7 @@
 				{/param}
 				{param name: $name + '_parameterMessage' /}
 				{param placeholder: $selectedValidation?.parameterMessage /}
+				{param readOnly: $readOnly /}
 				{param ref: 'parameterMessage' /}
 				{param required: false /}
 				{param spritemap: $spritemap /}
@@ -117,6 +123,7 @@
 				{/param}
 				{param name: $name + '_parameterMessage' /}
 				{param placeholder: $selectedValidation?.parameterMessage /}
+				{param readOnly: $readOnly /}
 				{param ref: 'parameterMessage' /}
 				{param required: false /}
 				{param spritemap: $spritemap /}
@@ -137,6 +144,7 @@
 			{param placeholder kind="text"}
 				{msg desc=""}show-error-message{/msg}
 			{/param}
+			{param readOnly: $readOnly /}
 			{param ref: 'errorMessage' /}
 			{param required: false /}
 			{param spritemap: $spritemap /}

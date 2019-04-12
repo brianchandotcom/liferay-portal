@@ -3,7 +3,7 @@ definition {
 	property osgi.app.includes = "portal-mobile-device-detection-fiftyonedegrees-enterprise";
 	property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config";
 	property osgi.module.configurations = "blacklistBundleSymbolicNames=";
-	property portal.release = "true";
+	property portal.release = "false";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Mobile Device Rules";

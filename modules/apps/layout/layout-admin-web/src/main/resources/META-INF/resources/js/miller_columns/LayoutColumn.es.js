@@ -30,8 +30,8 @@ class LayoutColumn extends Component {
 					handleClick: dropdownItem.handleClick || null,
 					href: actionURLs[dropdownItem.name],
 					label: dropdownItem.label,
-					layoutColumnItem: layoutColumnItem,
-					namespace: namespace
+					layoutColumnItem,
+					namespace
 				})
 			);
 
@@ -48,7 +48,10 @@ class LayoutColumn extends Component {
 				{},
 				layoutColumnItem,
 				{
-					dropdownItems: LayoutColumn._getLayoutColumnItemDropDownItems(layoutColumnItem, this.portletNamespace)
+					dropdownItems: LayoutColumn._getLayoutColumnItemDropDownItems(
+						layoutColumnItem,
+						this.portletNamespace
+					)
 				}
 			)
 		);

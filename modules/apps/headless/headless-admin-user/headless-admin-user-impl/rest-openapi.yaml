@@ -4,40 +4,52 @@ components:
             description: https://www.schema.org/Creator
             properties:
                 additionalName:
+                    readOnly: true
                     type: string
                 familyName:
+                    readOnly: true
                     type: string
                 givenName:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 image:
                     format: uri
+                    readOnly: true
                     type: string
                 name:
+                    readOnly: true
                     type: string
                 profileURL:
                     format: uri
+                    readOnly: true
                     type: string
             type: object
         Email:
             description: https://www.schema.org/Email
             properties:
                 email:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 primary:
+                    readOnly: true
                     type: boolean
                 type:
+                    readOnly: true
                     type: string
             type: object
         Organization:
             description: https://www.schema.org/Organization
             properties:
                 comment:
+                    readOnly: true
                     type: string
                 contactInformation:
                     description: https://www.schema.org/ContactInformation
@@ -62,46 +74,53 @@ components:
                                 $ref: "#/components/schemas/WebUrl"
                             readOnly: true
                             type: array
+                    readOnly: true
                     type: object
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
                     format: date-time
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 image:
                     format: uri
+                    readOnly: true
                     type: string
                 keywords:
                     items:
                         type: string
+                    readOnly: true
                     type: array
                 location:
                     description: https://www.schema.org/PostalAddress
                     properties:
                         addressCountry:
+                            readOnly: true
                             type: string
                         addressRegion:
+                            readOnly: true
                             type: string
                         id:
                             format: int64
+                            readOnly: true
                             type: integer
                     type: object
                 name:
+                    readOnly: true
                     type: string
                 numberOfOrganizations:
+                    readOnly: true
                     type: number
                 parentOrganization:
                     allOf:
                         - $ref: "#/components/schemas/Organization"
                     readOnly: true
-                parentOrganizationId:
-                    format: int64
-                    type: integer
-                    writeOnly: true
                 services:
                     description: https://www.schema.org/Service
                     items:
@@ -111,22 +130,30 @@ components:
                                 items:
                                     properties:
                                         closes:
+                                            readOnly: true
                                             type: string
                                         dayOfWeek:
+                                            readOnly: true
                                             type: string
                                         id:
                                             format: int64
+                                            readOnly: true
                                             type: integer
                                         opens:
+                                            readOnly: true
                                             type: string
                                     type: object
+                                readOnly: true
                                 type: array
                             id:
                                 format: int64
+                                readOnly: true
                                 type: integer
                             serviceType:
+                                readOnly: true
                                 type: string
                         type: object
+                    readOnly: true
                     type: array
             type: object
         OrganizationBrief:
@@ -134,48 +161,65 @@ components:
             properties:
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
+                    readOnly: true
                     type: string
             type: object
         Phone:
             description: https://www.schema.org/Phone
             properties:
                 extension:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 phoneNumber:
+                    readOnly: true
                     type: string
                 phoneType:
+                    readOnly: true
                     type: string
                 primary:
+                    readOnly: true
                     type: boolean
             type: object
         PostalAddress:
             description: https://www.schema.org/PostalAddress
             properties:
                 addressCountry:
+                    readOnly: true
                     type: string
                 addressLocality:
+                    readOnly: true
                     type: string
                 addressRegion:
+                    readOnly: true
                     type: string
                 addressType:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 postalCode:
+                    readOnly: true
                     type: string
                 primary:
+                    readOnly: true
                     type: boolean
                 streetAddressLine1:
+                    readOnly: true
                     type: string
                 streetAddressLine2:
+                    readOnly: true
                     type: string
                 streetAddressLine3:
+                    readOnly: true
                     type: string
             type: object
         Role:
@@ -184,23 +228,30 @@ components:
                 availableLanguages:
                     items:
                         type: string
+                    readOnly: true
                     type: array
                 creator:
                     $ref: "#/components/schemas/Creator"
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
                     format: date-time
+                    readOnly: true
                     type: string
                 description:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
+                    readOnly: true
                     type: string
                 roleType:
+                    readOnly: true
                     type: string
             type: object
         RoleBrief:
@@ -208,43 +259,56 @@ components:
             properties:
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
+                    readOnly: true
                     type: string
             type: object
         Segment:
             description: https://schema.org/Audience
             properties:
                 active:
+                    readOnly: true
                     type: boolean
                 criteria:
+                    readOnly: true
                     type: string
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
                     format: date-time
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
+                    readOnly: true
                     type: string
                 siteId:
                     format: int64
+                    readOnly: true
                     type: integer
                 source:
+                    readOnly: true
                     type: string
             type: object
         SegmentUser:
             description: https://www.schema.org/UserAccount
             properties:
                 email:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
+                    readOnly: true
                     type: string
             type: object
         SiteBrief:
@@ -252,19 +316,24 @@ components:
             properties:
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 name:
+                    readOnly: true
                     type: string
             type: object
         UserAccount:
             description: https://www.schema.org/UserAccount
             properties:
                 additionalName:
+                    readOnly: true
                     type: string
                 alternateName:
+                    readOnly: true
                     type: string
                 birthDate:
                     format: date-time
+                    readOnly: true
                     type: string
                 contactInformation:
                     description: https://www.schema.org/ContactInformation
@@ -275,11 +344,14 @@ components:
                             readOnly: true
                             type: array
                         facebook:
+                            readOnly: true
                             type: string
                         id:
                             format: int64
+                            readOnly: true
                             type: integer
                         jabber:
+                            readOnly: true
                             type: string
                         postalAddresses:
                             items:
@@ -287,8 +359,10 @@ components:
                             readOnly: true
                             type: array
                         skype:
+                            readOnly: true
                             type: string
                         sms:
+                            readOnly: true
                             type: string
                         telephones:
                             items:
@@ -296,6 +370,7 @@ components:
                             readOnly: true
                             type: array
                         twitter:
+                            readOnly: true
                             type: string
                         webUrls:
                             items:
@@ -304,36 +379,49 @@ components:
                             type: array
                     type: object
                 dashboardURL:
+                    readOnly: true
                     type: string
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
                     format: date-time
+                    readOnly: true
                     type: string
                 email:
+                    readOnly: true
                     type: string
                 familyName:
+                    readOnly: true
                     type: string
                 givenName:
+                    readOnly: true
                     type: string
                 honorificPrefix:
+                    readOnly: true
                     type: string
                 honorificSuffix:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 image:
                     format: uri
+                    readOnly: true
                     type: string
                 jobTitle:
+                    readOnly: true
                     type: string
                 keywords:
                     items:
                         type: string
+                    readOnly: true
                     type: array
                 name:
+                    readOnly: true
                     type: string
                 organizationBriefs:
                     items:
@@ -341,6 +429,7 @@ components:
                     readOnly: true
                     type: array
                 profileURL:
+                    readOnly: true
                     type: string
                 roleBriefs:
                     items:
@@ -358,10 +447,13 @@ components:
             properties:
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 url:
+                    readOnly: true
                     type: string
                 urlType:
+                    readOnly: true
                     type: string
             type: object
 info:

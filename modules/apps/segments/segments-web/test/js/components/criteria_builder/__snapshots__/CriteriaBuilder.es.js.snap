@@ -3,17 +3,7 @@
 exports[`CriteriaBuilder should render 1`] = `
 <DocumentFragment>
   <div
-    class="criteria-builder-root sheet"
-  >
-    <div
-      class="criteria-builder-toolbar"
-    >
-      <div
-        class="criteria-model-label"
-      >
-        x-properties
-      </div>
-    </div>
-  </div>
+    class="criteria-builder-root"
+  />
 </DocumentFragment>
 `;

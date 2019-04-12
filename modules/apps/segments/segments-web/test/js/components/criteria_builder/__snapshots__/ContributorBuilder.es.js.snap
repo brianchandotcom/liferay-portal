@@ -784,68 +784,49 @@ exports[`ContributorBuilder should render builder with sidebar: initialRenderEdi
             class="content-wrapper"
           >
             <div
-              class="criteria-builder-root sheet"
+              class="sheet"
             >
+              <h2
+                class="sheet-title"
+              >
+                conditions
+              </h2>
+              <input
+                class="field form-control"
+                data-testid="input_test_id"
+                id="input_test_id"
+                name="input_test_id"
+                readonly=""
+                type="hidden"
+                value=""
+              />
+              <input
+                id="conjunction_input_test_id"
+                name="conjunction_input_test_id"
+                readonly=""
+                type="hidden"
+                value="and"
+              />
               <div
-                class="criteria-builder-toolbar"
+                class="criteria-builder-root"
               >
                 <div
-                  class="criteria-model-label"
-                >
-                  x-properties
-                </div>
-              </div>
-              <div
-                class="criteria-group-root criteria-group-item-root color--user"
-              >
-                <div
-                  class="empty-drop-zone-root"
+                  class="criteria-group-item-root color--user"
                 >
                   <div
-                    class="empty-drop-zone-target"
+                    class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
                   >
                     <div
-                      class="empty-drop-zone-indicator"
-                    />
-                    <div
-                      class="empty-drop-zone-help-message"
+                      class="drop-zone-target"
                     >
                       <div
-                        class="message-item"
-                      >
-                        <img
-                          class="message-icon"
-                          src="/drag-and-drop.svg"
-                        />
-                        <span>
-                          drag-and-drop-criterion-from-the-right-to-add-rules
-                        </span>
-                      </div>
-                      <div
-                        class="message-item"
-                      >
-                        <img
-                          class="message-icon"
-                          src="/drag-over.svg"
-                        />
-                        <span>
-                          drag-and-drop-over-an-existing-criteria-to-form-groups
-                        </span>
-                      </div>
+                        class="empty-drop-zone-indicator"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <input
-              class="field form-control"
-              data-testid="input_test_id"
-              id="input_test_id"
-              name="input_test_id"
-              readonly=""
-              type="hidden"
-              value=""
-            />
           </div>
         </div>
       </div>
@@ -1638,68 +1619,49 @@ exports[`ContributorBuilder should render builder without sidebar: initialRender
             class="content-wrapper"
           >
             <div
-              class="criteria-builder-root sheet"
+              class="sheet"
             >
+              <h2
+                class="sheet-title"
+              >
+                conditions
+              </h2>
+              <input
+                class="field form-control"
+                data-testid="input_test_id"
+                id="input_test_id"
+                name="input_test_id"
+                readonly=""
+                type="hidden"
+                value=""
+              />
+              <input
+                id="conjunction_input_test_id"
+                name="conjunction_input_test_id"
+                readonly=""
+                type="hidden"
+                value="and"
+              />
               <div
-                class="criteria-builder-toolbar"
+                class="criteria-builder-root"
               >
                 <div
-                  class="criteria-model-label"
-                >
-                  x-properties
-                </div>
-              </div>
-              <div
-                class="criteria-group-root criteria-group-item-root color--user"
-              >
-                <div
-                  class="empty-drop-zone-root"
+                  class="criteria-group-item-root color--user"
                 >
                   <div
-                    class="empty-drop-zone-target"
+                    class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
                   >
                     <div
-                      class="empty-drop-zone-indicator"
-                    />
-                    <div
-                      class="empty-drop-zone-help-message"
+                      class="drop-zone-target"
                     >
                       <div
-                        class="message-item"
-                      >
-                        <img
-                          class="message-icon"
-                          src="/drag-and-drop.svg"
-                        />
-                        <span>
-                          drag-and-drop-criterion-from-the-right-to-add-rules
-                        </span>
-                      </div>
-                      <div
-                        class="message-item"
-                      >
-                        <img
-                          class="message-icon"
-                          src="/drag-over.svg"
-                        />
-                        <span>
-                          drag-and-drop-over-an-existing-criteria-to-form-groups
-                        </span>
-                      </div>
+                        class="empty-drop-zone-indicator"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <input
-              class="field form-control"
-              data-testid="input_test_id"
-              id="input_test_id"
-              name="input_test_id"
-              readonly=""
-              type="hidden"
-              value=""
-            />
           </div>
         </div>
       </div>

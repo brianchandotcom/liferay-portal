@@ -14,17 +14,12 @@
 
 package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
-import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-
-import java.io.IOException;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,13 +27,18 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(service = ConfigurationScreen.class)
+@Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class LegacyPortalSettingsConfigurationScreen
-	implements ConfigurationScreen {
+	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
 		return "instance-configuration";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/general.jsp";
 	}
 
 	@Override
@@ -50,22 +50,6 @@ public class LegacyPortalSettingsConfigurationScreen
 	public String getName(Locale locale) {
 		return LanguageUtil.get(locale, "general");
 	}
-
-	@Override
-	public String getScope() {
-		return "company";
-	}
-
-	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/edit_company.jsp");
-	}
-
-	@Reference
-	private JSPRenderer _jspRenderer;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)"

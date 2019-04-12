@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portlet.bundle.friendlyurlmappertrackerimpl.TestFriendlyURLMapper;
 import com.liferay.portlet.internal.FriendlyURLMapperTrackerImpl;
 
@@ -40,7 +40,8 @@ public class FriendlyURLMapperTrackerImplTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.friendlyurlmappertrackerimpl"));
+			new SyntheticBundleClassTestRule(
+				"bundle.friendlyurlmappertrackerimpl"));
 
 	@Test
 	public void testGetFriendlyURLMapper() throws Exception {

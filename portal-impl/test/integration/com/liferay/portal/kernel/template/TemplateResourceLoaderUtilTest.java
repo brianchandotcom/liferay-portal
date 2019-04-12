@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.template.bundle.templateresourceloaderutil.Test
 import com.liferay.portal.kernel.template.bundle.templateresourceloaderutil.TestTemplateResourceLoader;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import java.util.Set;
 
@@ -37,7 +37,8 @@ public class TemplateResourceLoaderUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.templateresourceloaderutil"));
+			new SyntheticBundleClassTestRule(
+				"bundle.templateresourceloaderutil"));
 
 	@Test
 	public void testGetTemplateResource() throws TemplateException {

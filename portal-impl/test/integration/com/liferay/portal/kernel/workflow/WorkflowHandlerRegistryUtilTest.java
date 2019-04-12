@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.workflow.bundle.workflowhandlerregistryutil.TestWorkflowHandler;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.test.AtomicState;
 
 import java.io.Serializable;
@@ -44,7 +44,8 @@ public class WorkflowHandlerRegistryUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.workflowhandlerregistryutil"));
+			new SyntheticBundleClassTestRule(
+				"bundle.workflowhandlerregistryutil"));
 
 	@BeforeClass
 	public static void setUpClass() {

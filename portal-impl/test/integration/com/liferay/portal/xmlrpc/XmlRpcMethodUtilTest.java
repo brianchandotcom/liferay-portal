@@ -17,7 +17,7 @@ package com.liferay.portal.xmlrpc;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.xmlrpc.bundle.xmlrpcmethodutil.TestMethod;
 
 import org.junit.Assert;
@@ -35,7 +35,7 @@ public class XmlRpcMethodUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.xmlrpcmethodutil"));
+			new SyntheticBundleClassTestRule("bundle.xmlrpcmethodutil"));
 
 	@Test
 	public void testNoReturn() {

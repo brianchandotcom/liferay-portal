@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.test.rule.MainServletClassTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Field;
@@ -132,7 +132,7 @@ public class JAASTest {
 
 			});
 
-		MainServlet mainServlet = MainServletTestRule.getMainServlet();
+		MainServlet mainServlet = MainServletClassTestRule.getMainServlet();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
@@ -337,7 +337,7 @@ public class JAASTest {
 
 	@Test
 	public void testProcessLoginEvents() throws Exception {
-		MainServlet mainServlet = MainServletTestRule.getMainServlet();
+		MainServlet mainServlet = MainServletClassTestRule.getMainServlet();
 
 		Date lastLoginDate = _user.getLastLoginDate();
 

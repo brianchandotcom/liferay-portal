@@ -17,7 +17,7 @@ package com.liferay.portal.security.sso;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class SSOUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.ssoutil"));
+			new SyntheticBundleClassTestRule("bundle.ssoutil"));
 
 	@Before
 	public void setUp() throws Exception {

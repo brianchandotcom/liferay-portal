@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.format;
 import com.liferay.portal.kernel.format.bundle.phonenumberformatutil.TestPhoneNumberFormat;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -34,7 +34,7 @@ public class PhoneNumberFormatUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.phonenumberformatutil"));
+			new SyntheticBundleClassTestRule("bundle.phonenumberformatutil"));
 
 	@Test
 	public void testFormat() {

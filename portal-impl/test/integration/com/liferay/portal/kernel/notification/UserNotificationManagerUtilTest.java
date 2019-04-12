@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.model.impl.UserNotificationEventImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import java.util.Map;
 
@@ -42,7 +42,8 @@ public class UserNotificationManagerUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.usernotificationmanagerutil"));
+			new SyntheticBundleClassTestRule(
+				"bundle.usernotificationmanagerutil"));
 
 	@Test
 	public void testGetUserNotificationHandlers() {

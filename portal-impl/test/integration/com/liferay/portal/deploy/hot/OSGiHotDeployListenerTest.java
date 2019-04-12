@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.test.AtomicState;
 
 import javax.servlet.ServletContext;
@@ -45,7 +45,7 @@ public class OSGiHotDeployListenerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.osgihotdeploylistener"));
+			new SyntheticBundleClassTestRule("bundle.osgihotdeploylistener"));
 
 	@BeforeClass
 	public static void setUpClass() {

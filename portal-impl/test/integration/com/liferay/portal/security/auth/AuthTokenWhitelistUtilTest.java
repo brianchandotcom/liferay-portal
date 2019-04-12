@@ -32,7 +32,7 @@ import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestMVCRes
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestPortalAddDefaultResourceCheckWhitelist;
 import com.liferay.portal.security.auth.bundle.authtokenwhitelistutil.TestPortalAddDefaultResourceCheckWhitelistActions;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Set;
@@ -58,7 +58,7 @@ public class AuthTokenWhitelistUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.authtokenwhitelistutil"));
+			new SyntheticBundleClassTestRule("bundle.authtokenwhitelistutil"));
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x)

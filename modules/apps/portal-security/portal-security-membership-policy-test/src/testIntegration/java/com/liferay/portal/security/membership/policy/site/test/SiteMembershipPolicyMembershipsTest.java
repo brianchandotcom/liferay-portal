@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.security.membership.policy.site.BaseSiteMembershipPolicyTestCase;
 import com.liferay.portal.security.membership.policy.test.util.MembershipPolicyTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.Collections;
@@ -61,7 +61,7 @@ public class SiteMembershipPolicyMembershipsTest
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerTestRule.INSTANCE,
+			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousMailTestRule.INSTANCE);
 
 	@After

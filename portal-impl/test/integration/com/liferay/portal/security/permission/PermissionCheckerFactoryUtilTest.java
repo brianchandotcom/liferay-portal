@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.security.permission.bundle.permissioncheckerfactoryutil.TestPermissionCheckerFactory;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -36,7 +36,8 @@ public class PermissionCheckerFactoryUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.permissioncheckerfactoryutil"));
+			new SyntheticBundleClassTestRule(
+				"bundle.permissioncheckerfactoryutil"));
 
 	@Test
 	public void testGetPermissionCheckerFactory() {

@@ -16,7 +16,7 @@ package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -33,7 +33,7 @@ public class AuthPublicPathRegistryTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.authpublicpathregistry"));
+			new SyntheticBundleClassTestRule("bundle.authpublicpathregistry"));
 
 	@Test
 	public void testContains() {

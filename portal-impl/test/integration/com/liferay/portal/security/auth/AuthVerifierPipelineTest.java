@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -41,7 +41,7 @@ public class AuthVerifierPipelineTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.authverifierpipeline"));
+			new SyntheticBundleClassTestRule("bundle.authverifierpipeline"));
 
 	@Test
 	public void testVerifyRequest() throws PortalException {

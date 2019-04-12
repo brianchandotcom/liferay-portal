@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portlet.bundle.friendlyurlresolverregistryutil.TestFriendlyURLResolver;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -45,7 +45,8 @@ public class FriendlyURLResolverRegistryUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.friendlyurlresolverregistryutil"));
+			new SyntheticBundleClassTestRule(
+				"bundle.friendlyurlresolverregistryutil"));
 
 	@Test
 	public void testGetFriendlyURLResolver() throws Exception {

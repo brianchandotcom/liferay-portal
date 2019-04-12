@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyU
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.security.membership.policy.site.BaseSiteMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -39,7 +39,7 @@ public class SiteMembershipPolicyBasicTest
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerTestRule.INSTANCE);
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
 	public void testIsMembershipAllowed() throws Exception {

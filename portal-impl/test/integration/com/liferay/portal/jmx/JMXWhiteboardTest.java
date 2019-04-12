@@ -19,7 +19,7 @@ import com.liferay.portal.jmx.bundle.jmxwhiteboard.JMXWhiteboardByInterfaceMBean
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import javax.management.MBeanInfo;
 import javax.management.MBeanOperationInfo;
@@ -42,7 +42,7 @@ public class JMXWhiteboardTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.jmxwhiteboard"));
+			new SyntheticBundleClassTestRule("bundle.jmxwhiteboard"));
 
 	@Test
 	public void testMBeanByDynamicMBean() throws Exception {

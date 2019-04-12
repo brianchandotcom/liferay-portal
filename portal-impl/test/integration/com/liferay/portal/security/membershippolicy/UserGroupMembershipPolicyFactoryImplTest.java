@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPo
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.security.membershippolicy.bundle.usergroupmembershippolicyfactoryimpl.TestUserGroupMembershipPolicy;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.test.AtomicState;
 
 import org.junit.AfterClass;
@@ -41,7 +41,7 @@ public class UserGroupMembershipPolicyFactoryImplTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule(
+			new SyntheticBundleClassTestRule(
 				"bundle.usergroupmembershippolicyfactoryimpl"));
 
 	@BeforeClass

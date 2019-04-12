@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.junit.After;
@@ -50,8 +50,8 @@ public abstract class BaseDLAppTestCase {
 
 	@ClassRule
 	@Rule
-	public static final PermissionCheckerTestRule permissionCheckerTestRule =
-		PermissionCheckerTestRule.INSTANCE;
+	public static final PermissionCheckerMethodTestRule
+		permissionCheckerTestRule = PermissionCheckerMethodTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

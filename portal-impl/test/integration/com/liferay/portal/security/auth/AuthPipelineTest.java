@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.test.AtomicState;
 
 import org.junit.AfterClass;
@@ -38,7 +38,7 @@ public class AuthPipelineTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.authpipeline"));
+			new SyntheticBundleClassTestRule("bundle.authpipeline"));
 
 	@BeforeClass
 	public static void setUpClass() {

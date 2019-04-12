@@ -49,7 +49,7 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			WebDAVEnvironmentConfigTestRule.INSTANCE);
+			WebDAVEnvironmentConfigClassTestRule.INSTANCE);
 
 	@Test
 	public void test02Options() {

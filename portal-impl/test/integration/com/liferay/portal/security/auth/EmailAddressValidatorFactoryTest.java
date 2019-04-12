@@ -17,7 +17,7 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -34,7 +34,8 @@ public class EmailAddressValidatorFactoryTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.emailaddressvalidatorfactory"));
+			new SyntheticBundleClassTestRule(
+				"bundle.emailaddressvalidatorfactory"));
 
 	@Test
 	public void testValidate() {

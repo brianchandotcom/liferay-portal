@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
@@ -55,7 +55,8 @@ public class AssetListEntryAssetEntryRelServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerTestRule.INSTANCE, PersistenceTestRule.INSTANCE,
+			PermissionCheckerMethodTestRule.INSTANCE,
+			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(
 				Propagation.REQUIRED, "com.liferay.asset.list.service"));
 

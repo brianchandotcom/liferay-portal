@@ -27,7 +27,7 @@ import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.security.membershippolicy.bundle.sitemembershippolicyfactoryimpl.TestGroup;
 import com.liferay.portal.security.membershippolicy.bundle.sitemembershippolicyfactoryimpl.TestSiteMembershipPolicy;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.test.AtomicState;
 
 import java.io.Serializable;
@@ -52,7 +52,8 @@ public class SiteMembershipPolicyFactoryImplTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.sitemembershippolicyfactoryimpl"));
+			new SyntheticBundleClassTestRule(
+				"bundle.sitemembershippolicyfactoryimpl"));
 
 	@BeforeClass
 	public static void setUpClass() {

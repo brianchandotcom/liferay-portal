@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.MainServletClassTestRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.test.AtomicState;
 import com.liferay.portlet.bundle.invokerfiltercontainerimpl.TestActionFilter;
 import com.liferay.portlet.bundle.invokerfiltercontainerimpl.TestEventFilter;
@@ -62,7 +62,8 @@ public class InvokerFilterContainerImplTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.invokerfiltercontainerimpl"));
+			new SyntheticBundleClassTestRule(
+				"bundle.invokerfiltercontainerimpl"));
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -77,7 +78,7 @@ public class InvokerFilterContainerImplTest {
 		portletContextFactoryUtil.setPortletContextFactory(
 			portletContextFactory);
 
-		MainServlet mainServlet = MainServletTestRule.getMainServlet();
+		MainServlet mainServlet = MainServletClassTestRule.getMainServlet();
 
 		ServletContext servletContext = mainServlet.getServletContext();
 

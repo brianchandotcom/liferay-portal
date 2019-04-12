@@ -43,7 +43,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.normalizer.Normalizer;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 import com.liferay.registry.Filter;
@@ -87,7 +87,7 @@ public class UserSegmentsCriteriaContributorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerTestRule.INSTANCE);
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() {

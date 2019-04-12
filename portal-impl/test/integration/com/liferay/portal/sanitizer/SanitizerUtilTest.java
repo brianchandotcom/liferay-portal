@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.sanitizer.bundle.sanitizerimpl.TestSanitizer;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.portal.util.test.AtomicState;
 
 import java.io.ByteArrayInputStream;
@@ -45,7 +45,7 @@ public class SanitizerUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.sanitizerimpl"));
+			new SyntheticBundleClassTestRule("bundle.sanitizerimpl"));
 
 	@BeforeClass
 	public static void setUpClass() {

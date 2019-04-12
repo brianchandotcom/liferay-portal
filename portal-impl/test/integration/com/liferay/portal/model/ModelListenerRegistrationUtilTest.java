@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.model.bundle.modellistenerregistrationutil.TestModelListener;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +41,8 @@ public class ModelListenerRegistrationUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.modellistenerregistrationutil"));
+			new SyntheticBundleClassTestRule(
+				"bundle.modellistenerregistrationutil"));
 
 	@Test
 	public void testGetModelListeners() {

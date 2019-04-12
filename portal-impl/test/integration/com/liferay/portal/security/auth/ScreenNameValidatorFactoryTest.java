@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.security.auth.ScreenNameValidator;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import java.util.Locale;
 
@@ -38,7 +38,8 @@ public class ScreenNameValidatorFactoryTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.screennamevalidatorfactory"));
+			new SyntheticBundleClassTestRule(
+				"bundle.screennamevalidatorfactory"));
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 
 import java.util.List;
 
@@ -38,7 +38,8 @@ public class TemplateHandlerRegistryUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule("bundle.templatehandlerregistryutil"));
+			new SyntheticBundleClassTestRule(
+				"bundle.templatehandlerregistryutil"));
 
 	@Test
 	public void testGetClassNameIds() {

@@ -1,0 +1,612 @@
+components:
+    schemas:
+        AssetType:
+            description: https://www.schema.org/AssetType
+            properties:
+                required:
+                    type: boolean
+                subtype:
+                    type: string
+                type:
+                    type: string
+            type: object
+        Creator:
+            description: https://www.schema.org/Creator
+            properties:
+                additionalName:
+                    type: string
+                familyName:
+                    type: string
+                givenName:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                image:
+                    format: uri
+                    type: string
+                name:
+                    type: string
+                profileURL:
+                    format: uri
+                    type: string
+            type: object
+        Keyword:
+            description: https://www.schema.org/Keyword
+            properties:
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                keywordUsageCount:
+                    type: number
+                name:
+                    type: string
+                siteId:
+                    format: int64
+                    type: integer
+            required:
+                - name
+            type: object
+        TaxonomyCategory:
+            description: https://www.schema.org/Category
+            properties:
+                availableLanguages:
+                    items:
+                        type: string
+                    type: array
+                creator:
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                numberOfTaxonomyCategories:
+                    type: number
+                parentTaxonomyCategory:
+                    properties:
+                        id:
+                            format: int64
+                            type: integer
+                        name:
+                            type: string
+                    type: object
+                parentTaxonomyVocabulary:
+                    properties:
+                        id:
+                            format: int64
+                            type: integer
+                        name:
+                            type: string
+                    readOnly: true
+                    type: object
+                parentVocabularyId:
+                    format: int64
+                    type: integer
+                    writeOnly: true
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            required:
+                - name
+            type: object
+        TaxonomyVocabulary:
+            description: https://www.schema.org/Vocabulary
+            properties:
+                assetTypes:
+                    items:
+                        $ref: "#/components/schemas/AssetType"
+                    type: array
+                availableLanguages:
+                    items:
+                        type: string
+                    type: array
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                numberOfTaxonomyCategories:
+                    type: number
+                siteId:
+                    format: int64
+                    type: integer
+                viewableBy:
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            required:
+                - name
+            type: object
+info:
+    description: ""
+    title: "Headless Admin Taxonomy"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/keywords/{keywordId}":
+        delete:
+            operationId: deleteKeyword
+            parameters:
+                - in: path
+                  name: keywordId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Keyword"]
+        get:
+            operationId: getKeyword
+            parameters:
+                - in: path
+                  name: keywordId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+                    description: ""
+            tags: ["Keyword"]
+        put:
+            operationId: putKeyword
+            parameters:
+                - in: path
+                  name: keywordId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+                    description: ""
+            tags: ["Keyword"]
+    "/sites/{siteId}/keywords":
+        get:
+            operationId: getSiteKeywordsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Keyword"
+                                type: array
+                    description: ""
+            tags: ["Keyword"]
+        post:
+            operationId: postSiteKeyword
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+                    description: ""
+            tags: ["Keyword"]
+    "/sites/{siteId}/taxonomy-vocabularies":
+        get:
+            operationId: getSiteTaxonomyVocabulariesPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaxonomyVocabulary"
+                                type: array
+                    description: ""
+            tags: ["TaxonomyVocabulary"]
+        post:
+            operationId: postSiteTaxonomyVocabulary
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyVocabulary"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+                    description: ""
+            tags: ["TaxonomyVocabulary"]
+    "/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories":
+        get:
+            operationId: getTaxonomyCategoryTaxonomyCategoriesPage
+            parameters:
+                - in: path
+                  name: parentTaxonomyCategoryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaxonomyCategory"
+                                type: array
+                    description: ""
+            tags: ["TaxonomyCategory"]
+        post:
+            operationId: postTaxonomyCategoryTaxonomyCategory
+            parameters:
+                - in: path
+                  name: parentTaxonomyCategoryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategory"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+                    description: ""
+            tags: ["TaxonomyCategory"]
+    "/taxonomy-categories/{taxonomyCategoryId}":
+        delete:
+            operationId: deleteTaxonomyCategory
+            parameters:
+                - in: path
+                  name: taxonomyCategoryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["TaxonomyCategory"]
+        get:
+            operationId: getTaxonomyCategory
+            parameters:
+                - in: path
+                  name: taxonomyCategoryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+                    description: ""
+            tags: ["TaxonomyCategory"]
+        patch:
+            operationId: patchTaxonomyCategory
+            parameters:
+                - in: path
+                  name: taxonomyCategoryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategory"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+                    description: ""
+            tags: ["TaxonomyCategory"]
+        put:
+            operationId: putTaxonomyCategory
+            parameters:
+                - in: path
+                  name: taxonomyCategoryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategory"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+                    description: ""
+            tags: ["TaxonomyCategory"]
+    "/taxonomy-vocabularies/{taxonomyVocabularyId}":
+        delete:
+            operationId: deleteTaxonomyVocabulary
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["TaxonomyVocabulary"]
+        get:
+            operationId: getTaxonomyVocabulary
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+                    description: ""
+            tags: ["TaxonomyVocabulary"]
+        patch:
+            operationId: patchTaxonomyVocabulary
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyVocabulary"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+                    description: ""
+            tags: ["TaxonomyVocabulary"]
+        put:
+            operationId: putTaxonomyVocabulary
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyVocabulary"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+                    description: ""
+            tags: ["TaxonomyVocabulary"]
+    "/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories":
+        get:
+            operationId: getTaxonomyVocabularyTaxonomyCategoriesPage
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaxonomyCategory"
+                                type: array
+                    description: ""
+            tags: ["TaxonomyCategory"]
+        post:
+            operationId: postTaxonomyVocabularyTaxonomyCategory
+            parameters:
+                - in: path
+                  name: taxonomyVocabularyId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategory"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyCategory"
+                    description: ""
+            tags: ["TaxonomyCategory"]

@@ -1,0 +1,15 @@
+@default = "mouseOver"
+@summary = "Mouse over '${locator1}'"
+definition {
+	function A {
+		selenium.mouseOver();
+	}
+
+	function B {
+		WaitForSPARefresh();
+	}
+
+	function C {
+		selenium.assertLiferayErrors();
+	}
+}

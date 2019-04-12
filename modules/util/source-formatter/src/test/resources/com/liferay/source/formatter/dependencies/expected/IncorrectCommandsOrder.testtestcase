@@ -1,0 +1,38 @@
+@component-name = "portal-acceptance"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "App Manager";
+
+	setUp {
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		Page.tearDownCP();
+	}
+
+	@description = "This is the description for TestA."
+	@priority = "5"
+	test TestA
+	{
+		CalendarNavigator.gotoConfiguration();
+	}
+
+	test TestB {
+		property setup.wizard.enabled = "true";
+	}
+
+	@description = "This is the description for TestC."
+	@ignore = "true"
+	@priority = "5"
+	test TestC{
+		Upgrade.resetTestUserPassword();
+	}
+
+	@description = "This is the description for TestD."
+	@priority = "5"
+	test TestD {
+		CalendarEvent.viewRepeatWeekStartDay(weekStartDay = "Monday");
+	}
+}

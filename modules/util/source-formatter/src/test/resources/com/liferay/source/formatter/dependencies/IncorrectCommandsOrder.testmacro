@@ -1,0 +1,58 @@
+@component-name = "portal-acceptance"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "App Manager";
+
+	setUp {
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		Page.tearDownCP();
+	}
+
+	@description = "This is the description for MacroD."
+	@priority = "5"
+	macro MacroD {
+		CalendarEvent.viewRepeatWeekStartDay(weekStartDay = "Monday");
+	}
+
+	@description = "This is the description for MacroC."
+	@ignore = "true"
+	@priority = "5"
+	macro MacroC{
+		Upgrade.resetTestUserPassword();
+	}
+
+	@description = "This is the description for MacroE."
+	macro MacroE {
+		var javaScript = '''
+if (true) {
+	if (true) {
+		if (false) {
+			return 'ready';
+		}
+		else {
+			return 'pending';
+		}
+	}
+	else {
+		return 'pending';
+	}
+}
+		''';
+		var metalComponentReady = ""
+	}
+
+	macro MacroB {
+		property setup.wizard.enabled = "true";
+	}
+
+	@description = "This is the description for MacroA."
+	@priority = "5"
+	macro MacroA
+	{
+		CalendarNavigator.gotoConfiguration();
+	}
+}

@@ -127,10 +127,18 @@ definition {
 			key_configurationScope = "${configurationScope}"
 		);
 
-		AssertElementPresent(
-			locator1 = "Header#H2_TITLE",
-			key_title = "${configurationName}"
-		);
+		if (("${configurationCategory}" == "Instance Configuration") && ("${configurationName}" == "General") && ("${configurationScope}" == "Virtual Instance Scope")) {
+			AssertElementPresent(
+				locator1 = "Header#H3_TITLE",
+				key_title = "${configurationName}"
+			);
+		}
+		else {
+			AssertElementPresent(
+				locator1 = "Header#H2_TITLE",
+				key_title = "${configurationName}"
+			);
+		}
 	}
 
 	macro gotoConfigurationEntry {

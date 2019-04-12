@@ -57,13 +57,10 @@ public class TableTag<T> extends BaseClayTag {
 
 		putValue("schema", _schema.toMap());
 
-		Map<String, Object> context = getContext();
-
-		boolean selectable = GetterUtil.getBoolean(context.get("selectable"));
+		boolean selectable = GetterUtil.getBoolean(getValue("selectable"));
 
 		boolean showCheckbox = GetterUtil.getBoolean(
-			context.get("showCheckbox"),
-			TableDefaults.isShowCheckbox(selectable));
+			getValue("showCheckbox"), TableDefaults.isShowCheckbox(selectable));
 
 		setShowCheckbox(showCheckbox);
 
@@ -145,9 +142,7 @@ public class TableTag<T> extends BaseClayTag {
 	}
 
 	protected ClayTagDataSource<T> getClayTagDataSource() {
-		Map<String, Object> context = getContext();
-
-		String dataSourceKey = (String)context.get("dataSourceKey");
+		String dataSourceKey = getValue("dataSourceKey");
 
 		if (Validator.isNull(dataSourceKey)) {
 			return null;
@@ -160,10 +155,8 @@ public class TableTag<T> extends BaseClayTag {
 	protected List<ClayTableTagSchemaContributor>
 		getTableTagSchemaContributors() {
 
-		Map<String, Object> context = getContext();
-
 		String tableSchemaContributorKey = GetterUtil.getString(
-			context.get("tableSchemaContributorKey"));
+			getValue("tableSchemaContributorKey"));
 
 		if (Validator.isNull(tableSchemaContributorKey)) {
 			return null;

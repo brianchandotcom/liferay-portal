@@ -25,6 +25,9 @@ import java.net.UnknownHostException;
 @ProviderType
 public interface InetAddressProvider {
 
+	public InetAddress getInetAddressByName(String domain)
+		throws UnknownHostException;
+
 	public String getLocalHostName() throws Exception;
 
 	public InetAddress getLoopbackInetAddress() throws UnknownHostException;

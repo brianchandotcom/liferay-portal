@@ -25,8 +25,12 @@ import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 
 import java.util.Enumeration;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -35,6 +39,42 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Marta Medio
  */
 public class InetAddressProviderImpl implements InetAddressProvider {
+
+	public InetAddress getInetAddressByName(String domain)
+		throws UnknownHostException {
+
+		InetAddress inetAddress = null;
+
+		int i = _atomicInteger.decrementAndGet();
+
+		try {
+			if (i > 0) {
+				Future<InetAddress> result = _executorService.submit(
+					() -> InetAddress.getByName(domain));
+
+				inetAddress = result.get(
+					PropsValues.DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS,
+					TimeUnit.SECONDS);
+			}
+			else {
+				_log.error(
+					"Thread limit exceeded to determine address for host: " +
+						domain);
+			}
+		}
+		catch (ExecutionException | InterruptedException | TimeoutException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
+			throw new UnknownHostException("Unable to resolve URL: " + domain);
+		}
+		finally {
+			_atomicInteger.incrementAndGet();
+		}
+
+		return inetAddress;
+	}
 
 	public String getLocalHostName() throws Exception {
 		String localHostName;

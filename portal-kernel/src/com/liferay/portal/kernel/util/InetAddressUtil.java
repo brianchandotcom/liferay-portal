@@ -24,6 +24,12 @@ import java.net.UnknownHostException;
  */
 public class InetAddressUtil {
 
+	public static InetAddress getInetAddressByName(String domain)
+		throws UnknownHostException {
+
+		return getInetAddressProvider().getInetAddressByName(domain);
+	}
+
 	public static InetAddressProvider getInetAddressProvider() {
 		return _inetAddressProvider;
 	}

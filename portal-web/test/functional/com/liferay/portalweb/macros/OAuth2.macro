@@ -277,7 +277,7 @@ definition {
 	}
 
 	macro revokeGrantedAuthViaUser {
-		UserBar.gotoDropdownItem(dropdownItem = "OAuth 2 Connected Applications");
+		UserBar.gotoDropdownItem(dropdownItem = "My Connected Applications");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "View",
@@ -421,7 +421,7 @@ definition {
 	}
 
 	macro viewGrantedAuthViaUser {
-		UserBar.gotoDropdownItem(dropdownItem = "OAuth 2 Connected Applications");
+		UserBar.gotoDropdownItem(dropdownItem = "My Connected Applications");
 
 		if ("${noAuthorizations}" == "true") {
 			AssertTextEquals(

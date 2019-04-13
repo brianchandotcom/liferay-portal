@@ -76,13 +76,13 @@ public class JavaParser {
 
 		_maxLineLength = maxLineLength;
 
+		String newContent = _parse(file, content);
+
 		ImportsFormatter importsFormatter = new JavaImportsFormatter();
 
-		String newContent = importsFormatter.format(
-			_trimContent(content), ToolsUtil.getPackagePath(file),
+		newContent = importsFormatter.format(
+			_trimContent(newContent), ToolsUtil.getPackagePath(file),
 			StringUtil.replaceLast(file.getName(), ".java", StringPool.BLANK));
-
-		newContent = _parse(file, newContent);
 
 		if (writeFile && !newContent.equals(content)) {
 			FileUtil.write(file, newContent);

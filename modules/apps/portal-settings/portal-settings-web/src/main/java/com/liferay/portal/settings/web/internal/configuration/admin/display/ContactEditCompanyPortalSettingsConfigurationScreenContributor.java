@@ -14,16 +14,7 @@
 
 package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
-import com.liferay.map.constants.MapProviderWebKeys;
-import com.liferay.map.util.MapProviderHelperUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,40 +22,22 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class MapsPortalSettingsConfigurationScreenContributor
+public class ContactEditCompanyPortalSettingsConfigurationScreenContributor
 	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "third-party";
+		return "instance-configuration";
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/maps.jsp";
+		return "/contact.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "third-party-maps";
-	}
-
-	@Override
-	public String getName(Locale locale) {
-		return "maps";
-	}
-
-	@Override
-	public void setAttributes(
-		HttpServletRequest request, HttpServletResponse response) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		request.setAttribute(
-			MapProviderWebKeys.MAP_PROVIDER_KEY,
-			MapProviderHelperUtil.getMapProviderKey(
-				themeDisplay.getCompanyId()));
+		return "contact-information";
 	}
 
 }

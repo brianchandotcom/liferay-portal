@@ -14,12 +14,12 @@
 
 package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.terms.of.use.TermsOfUseContentProvider;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
+import com.liferay.portal.settings.web.internal.constants.PortalSettingsWebKeys;
 
-import java.util.Locale;
-
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class LegacyPortalSettingsConfigurationScreen
+public class TermsOfUseEditCompanyPortalSettingsConfigurationScreenContributor
 	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
@@ -38,22 +38,24 @@ public class LegacyPortalSettingsConfigurationScreen
 
 	@Override
 	public String getJspPath() {
-		return "/general.jsp";
+		return "/terms_of_use.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "general";
+		return "terms-of-use";
 	}
 
 	@Override
-	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "general");
+	public void setAttributes(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		request.setAttribute(
+			PortalSettingsWebKeys.TERMS_OF_USE_CONTENT_PROVIDER,
+			_termsOfUseContentProvider);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)"
-	)
-	private ServletContext _servletContext;
+	@Reference
+	private TermsOfUseContentProvider _termsOfUseContentProvider;
 
 }

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class
-	PasswordChangedNotificationPortalSettingsConfigurationScreenContributor
+	PasswordResetNotificationEditCompanyPortalSettingsConfigurationScreenContributor
 		extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
@@ -33,12 +33,12 @@ public class
 
 	@Override
 	public String getJspPath() {
-		return "/email.notifications/password_changed_notification.jsp";
+		return "/email.notifications/password_reset_notification.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "password-changed-notification";
+		return "password-reset-notification";
 	}
 
 }

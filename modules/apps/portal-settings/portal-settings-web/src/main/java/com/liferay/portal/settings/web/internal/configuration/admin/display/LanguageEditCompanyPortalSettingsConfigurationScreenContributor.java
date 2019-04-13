@@ -15,11 +15,6 @@
 package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
-import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
-import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionValues;
-
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,41 +22,22 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class RatingsPortalSettingsConfigurationScreenContributor
+public class LanguageEditCompanyPortalSettingsConfigurationScreenContributor
 	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "community-tools";
+		return "localization";
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/ratings.jsp";
+		return "/language.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "social-ratings";
-	}
-
-	@Override
-	public String getName(Locale locale) {
-		return "ratings";
-	}
-
-	@Override
-	public boolean isVisible() {
-		Map<String, PortletRatingsDefinitionValues>
-			portletRatingsDefinitionValuesMap =
-				PortletRatingsDefinitionUtil.
-					getPortletRatingsDefinitionValuesMap();
-
-		if (portletRatingsDefinitionValuesMap.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return "language";
 	}
 
 }

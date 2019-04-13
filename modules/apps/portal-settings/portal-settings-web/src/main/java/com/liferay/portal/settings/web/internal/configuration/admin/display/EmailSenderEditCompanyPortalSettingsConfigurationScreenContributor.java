@@ -22,22 +22,22 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class ReservedCredentialsPortalSettingsConfigurationScreenContributor
+public class EmailSenderEditCompanyPortalSettingsConfigurationScreenContributor
 	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "user-authentication";
+		return "email";
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/authentication/reserved_credentials.jsp";
+		return "/email.notifications/email_sender.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "reserved-credentials";
+		return "email-sender";
 	}
 
 }

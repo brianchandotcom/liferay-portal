@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class
-	AccountCreatedNotificationPortalSettingsConfigurationScreenContributor
+	EmailVerificationNotificationEditCompanyPortalSettingsConfigurationScreenContributor
 		extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
@@ -33,12 +33,12 @@ public class
 
 	@Override
 	public String getJspPath() {
-		return "/email.notifications/account_created_notification.jsp";
+		return "/email.notifications/email_verification_notification.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "account-created-notification";
+		return "email-verification-notification";
 	}
 
 }

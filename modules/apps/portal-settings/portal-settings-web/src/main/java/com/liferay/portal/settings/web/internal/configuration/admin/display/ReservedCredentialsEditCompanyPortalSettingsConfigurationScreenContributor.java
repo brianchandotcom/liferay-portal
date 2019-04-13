@@ -16,16 +16,15 @@ package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
-import java.util.Locale;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class GeneralAuthenticationPortalSettingsConfigurationScreenContributor
-	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
+public class
+	ReservedCredentialsEditCompanyPortalSettingsConfigurationScreenContributor
+		extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
@@ -34,17 +33,12 @@ public class GeneralAuthenticationPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getJspPath() {
-		return "/authentication/general.jsp";
+		return "/authentication/reserved_credentials.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "general-authentication";
-	}
-
-	@Override
-	public String getName(Locale locale) {
-		return "general";
+		return "reserved-credentials";
 	}
 
 }

@@ -14,30 +14,46 @@
 
 package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
+import java.util.Locale;
+
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class TimeZonePortalSettingsConfigurationScreenContributor
+public class LegacyEditCompanyPortalSettingsConfigurationScreen
 	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "localization";
+		return "instance-configuration";
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/time_zone.jsp";
+		return "/general.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "time-zone";
+		return "general";
 	}
+
+	@Override
+	public String getName(Locale locale) {
+		return LanguageUtil.get(locale, "general");
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)"
+	)
+	private ServletContext _servletContext;
 
 }

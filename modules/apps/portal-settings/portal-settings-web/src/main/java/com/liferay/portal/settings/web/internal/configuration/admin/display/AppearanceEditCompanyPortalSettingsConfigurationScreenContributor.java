@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class AppearancePortalSettingsConfigurationScreenContributor
+public class AppearanceEditCompanyPortalSettingsConfigurationScreenContributor
 	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override

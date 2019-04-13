@@ -22,8 +22,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class MailHostNamesPortalSettingsConfigurationScreenContributor
-	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
+public class
+	AccountCreatedNotificationEditCompanyPortalSettingsConfigurationScreenContributor
+		extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
@@ -32,12 +33,12 @@ public class MailHostNamesPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getJspPath() {
-		return "/email.notifications/mail_host_names.jsp";
+		return "/email.notifications/account_created_notification.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "mail-host-names";
+		return "account-created-notification";
 	}
 
 }

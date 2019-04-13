@@ -22,22 +22,23 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class LanguagePortalSettingsConfigurationScreenContributor
-	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
+public class
+	DefaultUserAssociationsEditCompanyPortalSettingsConfigurationScreenContributor
+		extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "localization";
+		return "users";
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/language.jsp";
+		return "/users/default_user_associations.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "language";
+		return "default-user-associations";
 	}
 
 }

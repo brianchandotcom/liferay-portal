@@ -16,28 +16,36 @@ package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class ContactPortalSettingsConfigurationScreenContributor
-	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
+public class
+	GeneralAuthenticationEditCompanyPortalSettingsConfigurationScreenContributor
+		extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "instance-configuration";
+		return "user-authentication";
 	}
 
-	@Override
+	@Override/**/
 	public String getJspPath() {
-		return "/contact.jsp";
+		return "/authentication/general.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "contact-information";
+		return "general-authentication";
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		return "general";
 	}
 
 }

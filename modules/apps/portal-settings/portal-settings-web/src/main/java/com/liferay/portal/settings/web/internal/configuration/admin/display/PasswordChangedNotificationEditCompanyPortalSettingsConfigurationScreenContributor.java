@@ -22,8 +22,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class EmailSenderPortalSettingsConfigurationScreenContributor
-	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
+public class
+	PasswordChangedNotificationEditCompanyPortalSettingsConfigurationScreenContributor
+		extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
@@ -32,12 +33,12 @@ public class EmailSenderPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getJspPath() {
-		return "/email.notifications/email_sender.jsp";
+		return "/email.notifications/password_changed_notification.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "email-sender";
+		return "password-changed-notification";
 	}
 
 }

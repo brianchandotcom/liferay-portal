@@ -14,48 +14,57 @@
 
 package com.liferay.portal.settings.web.internal.configuration.admin.display;
 
-import com.liferay.portal.kernel.terms.of.use.TermsOfUseContentProvider;
+import com.liferay.map.constants.MapProviderWebKeys;
+import com.liferay.map.util.MapProviderHelperUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
-import com.liferay.portal.settings.web.internal.constants.PortalSettingsWebKeys;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class TermsOfUsePortalSettingsConfigurationScreenContributor
+public class MapsEditCompanyPortalSettingsConfigurationScreenContributor
 	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "instance-configuration";
+		return "third-party";
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/terms_of_use.jsp";
+		return "/maps.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "terms-of-use";
+		return "third-party-maps";
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		return "maps";
 	}
 
 	@Override
 	public void setAttributes(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		request.setAttribute(
-			PortalSettingsWebKeys.TERMS_OF_USE_CONTENT_PROVIDER,
-			_termsOfUseContentProvider);
-	}
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-	@Reference
-	private TermsOfUseContentProvider _termsOfUseContentProvider;
+		request.setAttribute(
+			MapProviderWebKeys.MAP_PROVIDER_KEY,
+			MapProviderHelperUtil.getMapProviderKey(
+				themeDisplay.getCompanyId()));
+	}
 
 }

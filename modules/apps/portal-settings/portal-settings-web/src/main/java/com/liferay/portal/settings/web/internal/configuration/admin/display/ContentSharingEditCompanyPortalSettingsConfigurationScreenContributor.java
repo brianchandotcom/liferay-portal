@@ -23,22 +23,22 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
 public class
-	PasswordResetNotificationPortalSettingsConfigurationScreenContributor
+	ContentSharingEditCompanyPortalSettingsConfigurationScreenContributor
 		extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "email";
+		return "sharing";
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/email.notifications/password_reset_notification.jsp";
+		return "/content_sharing.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "password-reset-notification";
+		return "content-sharing";
 	}
 
 }

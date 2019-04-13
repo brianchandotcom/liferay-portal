@@ -22,22 +22,22 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)
-public class DefaultUserAssociationsPortalSettingsConfigurationScreenContributor
+public class AnalyticsEditCompanyPortalSettingsConfigurationScreenContributor
 	extends BaseEditCompanyPortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "users";
+		return "analytics";
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/users/default_user_associations.jsp";
+		return "/analytics.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "default-user-associations";
+		return "analytics";
 	}
 
 }

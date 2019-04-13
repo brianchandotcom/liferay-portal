@@ -126,17 +126,17 @@
 <!--ASSET_ORDER-->
 <tr>
 	<td>ASSET_ORDER_FIRST</td>
-	<td>//div[@class='portlet-body']/div[2]/h4/a</td>
+	<td>//div[@class='portlet-body']/div/div/h4/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ORDER_SECOND</td>
-	<td>//div[@class='portlet-body']/div[3]/h4/a</td>
+	<td>//div[@class='portlet-body']/div[2]/div/h4/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ORDER_THIRD</td>
-	<td>//div[@class='portlet-body']/div[4]/h4/a</td>
+	<td>//div[@class='portlet-body']/div[3]/div/h4/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "SegmentUser")
 public class SegmentUser {
 
+	@Schema(description = "The email of the segment user")
 	public String getEmail() {
 		return email;
 	}
@@ -67,6 +70,7 @@ public class SegmentUser {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String email;
 
+	@Schema(description = "The internal ID of the segment user")
 	public Long getId() {
 		return id;
 	}
@@ -92,6 +96,7 @@ public class SegmentUser {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The full name of the segment user")
 	public String getName() {
 		return name;
 	}

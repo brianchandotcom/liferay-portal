@@ -24,10 +24,14 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
+
+import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -38,9 +42,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("Segment")
 @JsonFilter("Liferay.Vulcan")
+@Schema(requiredProperties = {"criteria", "name"})
 @XmlRootElement(name = "Segment")
 public class Segment {
 
+	@Schema(description = "The active of the segment")
 	public Boolean getActive() {
 		return active;
 	}
@@ -68,6 +74,7 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean active;
 
+	@Schema(description = "The criteria of the segment")
 	public String getCriteria() {
 		return criteria;
 	}
@@ -93,8 +100,10 @@ public class Segment {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@NotEmpty
 	protected String criteria;
 
+	@Schema(description = "The create date of the segment")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -122,6 +131,7 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(description = "The modified date of the segment")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -149,6 +159,7 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The internal ID of the segment")
 	public Long getId() {
 		return id;
 	}
@@ -174,6 +185,7 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The name of the segment")
 	public String getName() {
 		return name;
 	}
@@ -197,8 +209,10 @@ public class Segment {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@NotEmpty
 	protected String name;
 
+	@Schema(description = "The site of the segment")
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -226,6 +240,7 @@ public class Segment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@Schema(description = "The source of the segment")
 	public String getSource() {
 		return source;
 	}

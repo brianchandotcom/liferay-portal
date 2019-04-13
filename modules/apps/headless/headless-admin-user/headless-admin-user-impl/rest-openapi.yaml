@@ -269,48 +269,64 @@ components:
                     type: string
             type: object
         Segment:
-            description: https://schema.org/Audience
+            #@review
+            description: Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for their members.
             properties:
                 active:
+                    description: The active of the segment
                     readOnly: true
                     type: boolean
                 criteria:
+                    description: The criteria of the segment
                     readOnly: true
                     type: string
                 dateCreated:
+                    description: The create date of the segment
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    description: The modified date of the segment
                     format: date-time
                     readOnly: true
                     type: string
                 id:
+                    description: The internal ID of the segment
                     format: int64
                     readOnly: true
                     type: integer
                 name:
+                    description: The name of the segment
                     readOnly: true
                     type: string
                 siteId:
+                    description: The site of the segment
                     format: int64
                     readOnly: true
                     type: integer
                 source:
+                    description: The source of the segment
                     readOnly: true
                     type: string
+            required:
+                - criteria
+                - name
             type: object
         SegmentUser:
-            description: https://www.schema.org/UserAccount
+            #@review
+            description: Represents a user who belongs to a segment.
             properties:
                 email:
+                    description: The email of the segment user
                     readOnly: true
                     type: string
                 id:
+                    description: The internal ID of the segment user
                     format: int64
                     readOnly: true
                     type: integer
                 name:
+                    description: The full name of the segment user
                     readOnly: true
                     type: string
             type: object

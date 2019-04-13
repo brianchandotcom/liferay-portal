@@ -290,8 +290,6 @@ public class EmbeddedElasticsearchConnection
 
 		Settings settings = settingsBuilder.build();
 
-		installPlugins(settings);
-
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Starting embedded Elasticsearch cluster " +
@@ -345,6 +343,8 @@ public class EmbeddedElasticsearchConnection
 		System.setProperty("jna.tmpdir", _jnaTmpDirName);
 
 		try {
+			installPlugins(settings);
+
 			return EmbeddedElasticsearchNode.newInstance(settings);
 		}
 		finally {

@@ -62,6 +62,7 @@ page import="com.liferay.user.associated.data.web.internal.display.ViewUADEntiti
 page import="com.liferay.user.associated.data.web.internal.display.context.UADExportProcessDisplayContext" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.context.UADExportProcessManagementToolbarDisplayContext" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.context.ViewUADEntitiesManagementToolbarDisplayContext" %><%@
+page import="com.liferay.user.associated.data.web.internal.portlet.action.ScopeDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.search.UADApplicationExportDisplayChecker" %><%@
 page import="com.liferay.user.associated.data.web.internal.search.UADExportProcessResultRowSplitter" %><%@
 page import="com.liferay.user.associated.data.web.internal.util.SafeDisplayValueUtil" %><%@

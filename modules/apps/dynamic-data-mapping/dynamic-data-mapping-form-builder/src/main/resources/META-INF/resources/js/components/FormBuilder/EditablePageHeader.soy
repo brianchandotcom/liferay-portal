@@ -12,7 +12,7 @@
 		maxlength="120"
 		placeholder="{$placeholder ?: ''}"
 		value="{$title}"
-	></textarea>
+	>{$title}</textarea>
 
 	{let $descriptionPlaceholder kind="text"}
 		{msg desc=""}add-a-short-description-for-this-page{/msg}
@@ -25,5 +25,5 @@
 		value="{$description}"
 	{/let}
 
-	<textarea {$pageDescriptionAttributes}></textarea>
+	<textarea {$pageDescriptionAttributes}>{$description}</textarea>
 {/deltemplate}

@@ -17,9 +17,9 @@
 		{if $activePage == $pageIndex}
 			<div class="ddm-form-page pl-4 pr-4">
 				{delcall PageRenderer.PageHeader data="$page" variant="$page.headerRenderer"}
-					{param description: $page.description /}
+					{param description: $page.description ?: '' /}
 					{param pageIndex: $pageIndex /}
-					{param title: $page.title /}
+					{param title: $page.title ?: '' /}
 					{param total: $total /}
 				{/delcall}
 

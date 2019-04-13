@@ -4,24 +4,25 @@ import React from 'react';
 function ContributorInputs({contributors}) {
 	return contributors.map(
 		(criteria, i) => {
-			return (<React.Fragment key={i}>
-				<input
-					className="field form-control"
-					data-testid={criteria.inputId}
-					id={criteria.inputId}
-					name={criteria.inputId}
-					readOnly
-					type="hidden"
-					value={criteria.query}
-				/>
-				<input
-					id={criteria.conjunctionInputId}
-					name={criteria.conjunctionInputId}
-					readOnly
-					type="hidden"
-					value={criteria.conjunctionId}
-				/>
-			</React.Fragment>);
+			return (
+				<React.Fragment key={i}>
+					<input
+						className="field form-control"
+						data-testid={criteria.inputId}
+						id={criteria.inputId}
+						name={criteria.inputId}
+						readOnly
+						type="hidden"
+						value={criteria.query}
+					/>
+					<input
+						id={criteria.conjunctionInputId}
+						name={criteria.conjunctionInputId}
+						readOnly
+						type="hidden"
+						value={criteria.conjunctionId}
+					/>
+				</React.Fragment>);
 		}
 	);
 }

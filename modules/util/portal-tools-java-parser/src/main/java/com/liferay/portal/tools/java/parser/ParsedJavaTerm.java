@@ -492,7 +492,7 @@ public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 	private static final Pattern _accessModifierPattern = Pattern.compile(
 		"\t(private|protected|public)\\s");
 	private static final Pattern _variableNamePattern = Pattern.compile(
-		"\\s(\\w+)( =|;)");
+		"\\s([\\w$]+)( =|;)");
 
 	private final String _className;
 	private boolean _containsCommentToken;

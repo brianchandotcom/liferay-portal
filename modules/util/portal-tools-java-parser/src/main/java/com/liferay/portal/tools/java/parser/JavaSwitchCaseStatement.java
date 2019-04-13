@@ -25,8 +25,8 @@ import java.util.List;
  */
 public class JavaSwitchCaseStatement extends BaseJavaTerm {
 
-	public JavaSwitchCaseStatement(boolean isDefault) {
-		_isDefault = isDefault;
+	public void addDefault() {
+		_hasDefault = true;
 	}
 
 	public void addSwitchCaseJavaExpression(
@@ -38,10 +38,6 @@ public class JavaSwitchCaseStatement extends BaseJavaTerm {
 	@Override
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
-
-		if (_isDefault) {
-			return StringBundler.concat(indent, prefix, "default", suffix);
-		}
 
 		StringBundler sb = new StringBundler();
 
@@ -55,10 +51,22 @@ public class JavaSwitchCaseStatement extends BaseJavaTerm {
 			prefix = StringPool.BLANK;
 		}
 
+		if (_hasDefault) {
+			if (sb.index() > 0) {
+				sb.append("\n");
+			}
+
+			sb.append(prefix);
+			sb.append(indent);
+			sb.append("default");
+			sb.append(suffix);
+		}
+
 		return sb.toString();
 	}
 
-	private final boolean _isDefault;
-	private List<JavaExpression> _switchCaseJavaExpressions = new ArrayList<>();
+	private boolean _hasDefault;
+	private final List<JavaExpression> _switchCaseJavaExpressions =
+		new ArrayList<>();
 
 }

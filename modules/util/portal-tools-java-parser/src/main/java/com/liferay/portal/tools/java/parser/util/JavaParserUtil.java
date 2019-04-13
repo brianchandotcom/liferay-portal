@@ -1611,14 +1611,15 @@ public class JavaParserUtil {
 	private static JavaSwitchCaseStatement _parseJavaSwitchCaseStatement(
 		DetailAST caseGroupDetailAST) {
 
-		DetailAST firstChildDetailAST = caseGroupDetailAST.getFirstChild();
-
-		if (firstChildDetailAST.getType() == TokenTypes.LITERAL_DEFAULT) {
-			return new JavaSwitchCaseStatement(true);
-		}
-
 		JavaSwitchCaseStatement javaSwitchCaseStatement =
-			new JavaSwitchCaseStatement(false);
+			new JavaSwitchCaseStatement();
+
+		DetailAST literalDefaultDetailAST = caseGroupDetailAST.findFirstToken(
+			TokenTypes.LITERAL_DEFAULT);
+
+		if (literalDefaultDetailAST != null) {
+			javaSwitchCaseStatement.addDefault();
+		}
 
 		List<DetailAST> literalCaseDetailASTList =
 			DetailASTUtil.getAllChildTokens(

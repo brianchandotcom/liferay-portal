@@ -43,6 +43,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Organization")
 public class Organization {
 
+	@Schema(
+		description = "The text of a comment associated with the Organization."
+	)
 	public String getComment() {
 		return comment;
 	}
@@ -70,7 +73,9 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String comment;
 
-	@Schema(description = "https://www.schema.org/ContactInformation")
+	@Schema(
+		description = "The contact information for an Organization, with the list of emails, postal addresses, telephones and web urls linked to that Organization."
+	)
 	public ContactInformation getContactInformation() {
 		return contactInformation;
 	}
@@ -99,6 +104,7 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContactInformation contactInformation;
 
+	@Schema(description = "The creation date of the Organization.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -126,6 +132,7 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(description = "The last time a field of the Organization changed.")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -153,6 +160,7 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -178,6 +186,9 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(
+		description = "A relative URL to the image associated with the Organization."
+	)
 	public String getImage() {
 		return image;
 	}
@@ -205,6 +216,7 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
+	@Schema(description = "A list of keywords describing the Organization.")
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -232,7 +244,9 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] keywords;
 
-	@Schema(description = "https://www.schema.org/PostalAddress")
+	@Schema(
+		description = "Postal information (country and region) where the Organization is located."
+	)
 	public Location getLocation() {
 		return location;
 	}
@@ -260,6 +274,7 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Location location;
 
+	@Schema(description = "The name of the Organization.")
 	public String getName() {
 		return name;
 	}
@@ -285,6 +300,9 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@Schema(
+		description = "The number of child Organizations that belong to this Organization."
+	)
 	public Number getNumberOfOrganizations() {
 		return numberOfOrganizations;
 	}
@@ -312,6 +330,7 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfOrganizations;
 
+	@Schema(description = "The parent Organization of this resource, if any.")
 	public Organization getParentOrganization() {
 		return parentOrganization;
 	}
@@ -340,7 +359,9 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Organization parentOrganization;
 
-	@Schema(description = "https://www.schema.org/Service")
+	@Schema(
+		description = "A list of services provided by an Organization. Follows https://www.schema.org/Service specification."
+	)
 	public Service[] getServices() {
 		return services;
 	}

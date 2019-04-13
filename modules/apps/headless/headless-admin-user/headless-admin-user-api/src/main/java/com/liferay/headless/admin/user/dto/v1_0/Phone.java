@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Phone")
 public class Phone {
 
+	@Schema(description = "the phone extension.")
 	public String getExtension() {
 		return extension;
 	}
@@ -67,6 +70,7 @@ public class Phone {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String extension;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -92,6 +96,7 @@ public class Phone {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "the phone number, without extension.")
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -119,6 +124,7 @@ public class Phone {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String phoneNumber;
 
+	@Schema(description = "the type of phone number.")
 	public String getPhoneType() {
 		return phoneType;
 	}
@@ -146,6 +152,9 @@ public class Phone {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String phoneType;
 
+	@Schema(
+		description = "A flag that identifies if the phone is the main one of the UserAccount/Organization."
+	)
 	public Boolean getPrimary() {
 		return primary;
 	}

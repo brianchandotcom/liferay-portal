@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "PostalAddress")
 public class PostalAddress {
 
+	@Schema(description = "The country. For example, USA.")
 	public String getAddressCountry() {
 		return addressCountry;
 	}
@@ -67,6 +70,7 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String addressCountry;
 
+	@Schema(description = "The locality. For example, Diamond Bar.")
 	public String getAddressLocality() {
 		return addressLocality;
 	}
@@ -94,6 +98,7 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String addressLocality;
 
+	@Schema(description = "The region. For example, CA.")
 	public String getAddressRegion() {
 		return addressRegion;
 	}
@@ -121,6 +126,7 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String addressRegion;
 
+	@Schema(description = "The type of address.")
 	public String getAddressType() {
 		return addressType;
 	}
@@ -148,6 +154,7 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String addressType;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -173,6 +180,7 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The postal code. For example, 94043.")
 	public String getPostalCode() {
 		return postalCode;
 	}
@@ -200,6 +208,9 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String postalCode;
 
+	@Schema(
+		description = "A flag that identifies if the postal address is the main one of the UserAccount/Organization."
+	)
 	public Boolean getPrimary() {
 		return primary;
 	}
@@ -227,6 +238,9 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean primary;
 
+	@Schema(
+		description = "The first componente of a street address. For example, 1600 Amphitheatre Pkwy."
+	)
 	public String getStreetAddressLine1() {
 		return streetAddressLine1;
 	}
@@ -254,6 +268,9 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String streetAddressLine1;
 
+	@Schema(
+		description = "The second componente of a street address. For example, 4º B."
+	)
 	public String getStreetAddressLine2() {
 		return streetAddressLine2;
 	}
@@ -281,6 +298,7 @@ public class PostalAddress {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String streetAddressLine2;
 
+	@Schema(description = "The third componente of a street address.")
 	public String getStreetAddressLine3() {
 		return streetAddressLine3;
 	}

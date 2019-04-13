@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "HoursAvailable")
 public class HoursAvailable {
 
+	@Schema(
+		description = "An hour in HH:MM format that marks when the Organization closes."
+	)
 	public String getCloses() {
 		return closes;
 	}
@@ -67,6 +72,7 @@ public class HoursAvailable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String closes;
 
+	@Schema(description = "The day of the week.")
 	public String getDayOfWeek() {
 		return dayOfWeek;
 	}
@@ -94,6 +100,7 @@ public class HoursAvailable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dayOfWeek;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -119,6 +126,9 @@ public class HoursAvailable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(
+		description = "An hour in HH:MM format that marks when the Organization opens."
+	)
 	public String getOpens() {
 		return opens;
 	}

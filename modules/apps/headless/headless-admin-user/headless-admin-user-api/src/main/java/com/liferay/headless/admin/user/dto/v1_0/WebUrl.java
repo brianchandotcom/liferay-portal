@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "WebUrl")
 public class WebUrl {
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -65,6 +68,7 @@ public class WebUrl {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "An absolute URL.")
 	public String getUrl() {
 		return url;
 	}
@@ -90,6 +94,7 @@ public class WebUrl {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String url;
 
+	@Schema(description = "The type of the URL.")
 	public String getUrlType() {
 		return urlType;
 	}

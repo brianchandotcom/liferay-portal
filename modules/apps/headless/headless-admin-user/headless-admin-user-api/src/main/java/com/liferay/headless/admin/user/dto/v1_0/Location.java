@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Location")
 public class Location {
 
+	@Schema(
+		description = "The country where the Organization is located. Follows https://schema.org/addressCountry specification."
+	)
 	public String getAddressCountry() {
 		return addressCountry;
 	}
@@ -67,6 +72,9 @@ public class Location {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String addressCountry;
 
+	@Schema(
+		description = "The region where the Organization is located. Follows https://schema.org/addressRegion specification."
+	)
 	public String getAddressRegion() {
 		return addressRegion;
 	}
@@ -94,6 +102,7 @@ public class Location {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String addressRegion;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}

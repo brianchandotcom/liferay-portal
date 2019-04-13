@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "OrganizationBrief")
 public class OrganizationBrief {
 
+	@Schema(
+		description = "The identifier of the resource. Can be used to query the Organization APIs."
+	)
 	public Long getId() {
 		return id;
 	}
@@ -65,6 +70,7 @@ public class OrganizationBrief {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The name of the Organization.")
 	public String getName() {
 		return name;
 	}

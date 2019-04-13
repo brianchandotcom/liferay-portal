@@ -152,6 +152,13 @@ public class DetailASTUtil {
 	public static Position getEndPosition(
 		DetailAST detailAST, FileContents fileContents) {
 
+		if (detailAST.getType() == TokenTypes.LABELED_STAT) {
+			DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+			return getEndPosition(
+				firstChildDetailAST.getNextSibling(), fileContents);
+		}
+
 		DetailAST closingDetailAST = getClosingDetailAST(detailAST);
 
 		if (closingDetailAST != null) {

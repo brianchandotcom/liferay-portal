@@ -108,6 +108,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 							<clay:radio
 								checked="<%= Objects.equals(uadApplicationSummaryDisplay.getApplicationKey(), viewUADEntitiesDisplay.getApplicationKey()) %>"
+								disabled="<%= !uadApplicationSummaryDisplay.hasItems() %>"
 								label="<%= StringUtil.appendParentheticalSuffix(applicationName, uadApplicationSummaryDisplay.getCount()) %>"
 								name="applicationKey"
 								value="<%= uadApplicationSummaryDisplay.getApplicationKey() %>"
@@ -159,11 +160,13 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 										<%
 										for (UADDisplay uadDisplay : uadDisplays) {
+											long count = uadDisplay.searchCount(selectedUser.getUserId(), groupIds, null);
 										%>
 
 											<clay:radio
 												checked="<%= Objects.equals(uadDisplay.getTypeName(locale), viewUADEntitiesDisplay.getTypeName()) %>"
-												label="<%= StringUtil.appendParentheticalSuffix(uadDisplay.getTypeName(locale), (int)uadDisplay.searchCount(selectedUser.getUserId(), groupIds, null)) %>"
+												disabled="<%= count == 0 %>"
+												label="<%= StringUtil.appendParentheticalSuffix(uadDisplay.getTypeName(locale), (int)count) %>"
 												name="uadRegistryKey"
 												value="<%= uadDisplay.getTypeClass().getName() %>"
 											/>

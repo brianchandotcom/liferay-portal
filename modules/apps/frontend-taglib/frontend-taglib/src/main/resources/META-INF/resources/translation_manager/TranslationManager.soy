@@ -15,6 +15,9 @@
 	{@param? elementClasses: string}
 	{@param? id: string}
 	{@param? removeAvailableLocale: any}
+	{@param? visibleChangedHandler_: any}
+	{@param? evaluateRemovalModal: any}
+	{@param? visibleModal: bool}
 
 	<div class="lfr-translationmanager{$elementClasses ? ' ' + $elementClasses : ''}" id="{$id}">
 		<ul class="nav nav-tabs nav-tabs-default">
@@ -29,6 +32,9 @@
 				{/call}
 			</li>
 		</ul>
+		{call .removeAvailableLocaleModal data="all"}
+			{param removeAvailableLocale: $removeAvailableLocale /}
+		{/call}
 	</div>
 {/template}
 
@@ -71,7 +77,7 @@
 	{@param availableLocales: list<?>}
 	{@param defaultLocale: string}
 	{@param pathThemeImages: string}
-	{@param? removeAvailableLocale: any}
+	{@param removeAvailableLocale: any}
 
 	{foreach $availableLocale in $availableLocales}
 		{if $availableLocale.id != $defaultLocale}
@@ -100,6 +106,55 @@
 			{/call}
 		{/if}
 	{/foreach}
+{/template}
+
+/**
+ * Renders a modal to be opened when removing a available language.
+ */
+{template .removeAvailableLocaleModal}
+	{@param pathThemeImages: string}
+	{@param evaluateRemovalModal: any}
+	{@param visibleChangedHandler_: any}
+	{@param? visibleModal: bool}
+
+	{let $deleteLabel kind="text"}
+		{msg desc=""}delete{/msg}
+	{/let}
+
+	{let $dismissLabel kind="text"}
+		{msg desc=""}dismiss{/msg}
+	{/let}
+
+	{call ClayModal.render data="all"}
+		{param body kind="html"}
+			<h4>
+				{msg desc=""}are-you-sure-you-want-to-deactivate-this-language{/msg}
+			</h4>
+		{/param}
+		{param events: [
+			'clickButton': $evaluateRemovalModal,
+			'visibleChanged': $visibleChangedHandler_
+		] /}
+		{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+		{param size: 'sm' /}
+		{param footerButtons: [
+			[
+				'alignment': 'right',
+				'label': $dismissLabel,
+				'type': 'close',
+				'style': 'primary'
+			],
+			[
+				'alignment': 'right',
+				'label': $deleteLabel,
+				'type': 'button',
+				'style': 'primary'
+			]
+		] /}
+		{param elementClasses: 'hide' /}
+		{param ref: 'deleteModal' /}
+		{param visible: $visibleModal /}
+	{/call}
 {/template}
 
 /**

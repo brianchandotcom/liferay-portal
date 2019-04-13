@@ -365,7 +365,7 @@ class FormBuilder extends Component {
 			}
 		};
 
-		const addedToPlaceholder = ![...event.data.target.parentElement.parentElement.classList].includes('position-relative');
+		const addedToPlaceholder = !event.data.target.parentElement.parentElement.classList.contains('position-relative');
 
 		dispatch(
 			'fieldAdded',

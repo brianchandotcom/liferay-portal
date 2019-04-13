@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.template.soy.data.SoyDataFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -34,6 +36,60 @@ import javax.servlet.http.HttpServletResponse;
  * @author Marcela Cunha
  */
 public abstract class FieldType {
+
+	public FieldType(
+		DataDefinitionField dataDefinitionField,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
+		SoyDataFactory soyDataFactory) {
+
+		this.dataDefinitionField = dataDefinitionField;
+		this.httpServletRequest = httpServletRequest;
+		this.httpServletResponse = httpServletResponse;
+		this.soyDataFactory = soyDataFactory;
+	}
+
+	public Map<String, Object> createContext() {
+		Map<String, Object> context = new HashMap<>();
+
+		context.put(
+			"dir",
+			LanguageUtil.get(httpServletRequest, LanguageConstants.KEY_DIR));
+		context.put("indexable", dataDefinitionField.getIndexable());
+		context.put(
+			"label",
+			LocalizedValueUtil.getLocalizedValue(
+				httpServletRequest.getLocale(),
+				dataDefinitionField.getLabel()));
+		context.put("localizable", dataDefinitionField.getLocalizable());
+		context.put("name", dataDefinitionField.getName());
+		context.put(
+			"readOnly",
+			CustomPropertyUtil.getBoolean(
+				dataDefinitionField.getCustomProperties(), "readOnly", false));
+		context.put("repeatable", dataDefinitionField.getRepeatable());
+		context.put(
+			"required",
+			CustomPropertyUtil.getBoolean(
+				dataDefinitionField.getCustomProperties(), "required", false));
+		context.put(
+			"showLabel",
+			CustomPropertyUtil.getBoolean(
+				dataDefinitionField.getCustomProperties(), "showLabel", true));
+		context.put(
+			"tip",
+			LocalizedValueUtil.getLocalizedValue(
+				httpServletRequest.getLocale(), dataDefinitionField.getTip()));
+		context.put("type", dataDefinitionField.getFieldType());
+		context.put(
+			"visible",
+			CustomPropertyUtil.getBoolean(
+				dataDefinitionField.getCustomProperties(), "visible", true));
+
+		addContext(context);
+
+		return context;
+	}
 
 	public DataDefinitionField deserialize(JSONObject jsonObject)
 		throws Exception {
@@ -72,46 +128,6 @@ public abstract class FieldType {
 		};
 	}
 
-	public void includeContext(
-		Map<String, Object> context, DataDefinitionField dataDefinitionField,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, boolean readOnly) {
-
-		context.put(
-			"dir",
-			LanguageUtil.get(httpServletRequest, LanguageConstants.KEY_DIR));
-		context.put("indexable", dataDefinitionField.getIndexable());
-		context.put(
-			"label",
-			LocalizedValueUtil.getLocalizedValue(
-				httpServletRequest.getLocale(),
-				dataDefinitionField.getLabel()));
-		context.put("localizable", dataDefinitionField.getLocalizable());
-		context.put("name", dataDefinitionField.getName());
-		context.put(
-			"readOnly",
-			CustomPropertyUtil.getBoolean(
-				dataDefinitionField.getCustomProperties(), "readOnly", false));
-		context.put("repeatable", dataDefinitionField.getRepeatable());
-		context.put(
-			"required",
-			CustomPropertyUtil.getBoolean(
-				dataDefinitionField.getCustomProperties(), "required", false));
-		context.put(
-			"showLabel",
-			CustomPropertyUtil.getBoolean(
-				dataDefinitionField.getCustomProperties(), "showLabel", true));
-		context.put(
-			"tip",
-			LocalizedValueUtil.getLocalizedValue(
-				httpServletRequest.getLocale(), dataDefinitionField.getTip()));
-		context.put("type", dataDefinitionField.getFieldType());
-		context.put(
-			"visible",
-			CustomPropertyUtil.getBoolean(
-				dataDefinitionField.getCustomProperties(), "visible", true));
-	}
-
 	public JSONObject toJSONObject(DataDefinitionField dataDefinitionField)
 		throws Exception {
 
@@ -148,5 +164,12 @@ public abstract class FieldType {
 			"type", type
 		);
 	}
+
+	protected abstract void addContext(Map<String, Object> context);
+
+	protected DataDefinitionField dataDefinitionField;
+	protected HttpServletRequest httpServletRequest;
+	protected HttpServletResponse httpServletResponse;
+	protected SoyDataFactory soyDataFactory;
 
 }

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.soy.data.SoyDataFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +51,21 @@ import org.apache.commons.lang.StringUtils;
  * @author Marcela Cunha
  */
 public class DocumentLibraryFieldType extends FieldType {
+
+	public DocumentLibraryFieldType(
+		DataDefinitionField dataDefinitionField, DLAppService dlAppService,
+		Html html, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Portal portal,
+		SoyDataFactory soyDataFactory) {
+
+		super(
+			dataDefinitionField, httpServletRequest, httpServletResponse,
+			soyDataFactory);
+
+		this.dlAppService = dlAppService;
+		this.html = html;
+		this.portal = portal;
+	}
 
 	public DataDefinitionField deserialize(JSONObject jsonObject)
 		throws Exception {
@@ -75,54 +91,6 @@ public class DocumentLibraryFieldType extends FieldType {
 				CustomPropertyUtil.toMap(jsonObject.getJSONObject("strings"))));
 
 		return dataDefinitionField;
-	}
-
-	public void includeContext(
-		Map<String, Object> context, DataDefinitionField dataDefinitionField,
-		DLAppService dlAppService, Html html,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Portal portal,
-		boolean readOnly) {
-
-		super.includeContext(
-			context, dataDefinitionField, httpServletRequest,
-			httpServletResponse, readOnly);
-
-		if (!StringUtils.isEmpty(
-				CustomPropertyUtil.getString(
-					dataDefinitionField.getCustomProperties(), "value"))) {
-
-			JSONObject valueJSONObject = _toJSONObject(
-				CustomPropertyUtil.getString(
-					dataDefinitionField.getCustomProperties(), "value"));
-
-			if ((valueJSONObject != null) && (valueJSONObject.length() > 0)) {
-				FileEntry fileEntry = _getFileEntry(
-					dlAppService, valueJSONObject);
-
-				context.put(
-					"fileEntryTitle", _getFileEntryTitle(fileEntry, html));
-				context.put(
-					"fileEntryURL",
-					_getFileEntryURL(fileEntry, html, httpServletRequest));
-			}
-		}
-
-		context.put(
-			"groupId",
-			CustomPropertyUtil.getLong(
-				dataDefinitionField.getCustomProperties(), "groupId"));
-		context.put(
-			"itemSelectorAuthToken",
-			_getItemSelectorAuthToken(httpServletRequest, portal));
-		context.put(
-			"lexiconIconsPath", _getLexiconIconsPath(httpServletRequest));
-		context.put("strings", _getStrings(httpServletRequest, portal));
-		context.put(
-			"value",
-			JSONFactoryUtil.looseDeserialize(
-				CustomPropertyUtil.getString(
-					dataDefinitionField.getCustomProperties(), "value", "{}")));
 	}
 
 	public JSONObject toJSONObject(DataDefinitionField dataDefinitionField)
@@ -151,9 +119,49 @@ public class DocumentLibraryFieldType extends FieldType {
 		);
 	}
 
-	private FileEntry _getFileEntry(
-		DLAppService dlAppService, JSONObject valueJSONObject) {
+	@Override
+	protected void addContext(Map<String, Object> context) {
+		if (!StringUtils.isEmpty(
+				CustomPropertyUtil.getString(
+					dataDefinitionField.getCustomProperties(), "value"))) {
 
+			JSONObject valueJSONObject = _toJSONObject(
+				CustomPropertyUtil.getString(
+					dataDefinitionField.getCustomProperties(), "value"));
+
+			if ((valueJSONObject != null) && (valueJSONObject.length() > 0)) {
+				FileEntry fileEntry = _getFileEntry(valueJSONObject);
+
+				context.put(
+					"fileEntryTitle", _getFileEntryTitle(fileEntry, html));
+				context.put(
+					"fileEntryURL",
+					_getFileEntryURL(fileEntry, html, httpServletRequest));
+			}
+		}
+
+		context.put(
+			"groupId",
+			CustomPropertyUtil.getLong(
+				dataDefinitionField.getCustomProperties(), "groupId"));
+		context.put(
+			"itemSelectorAuthToken",
+			_getItemSelectorAuthToken(httpServletRequest, portal));
+		context.put(
+			"lexiconIconsPath", _getLexiconIconsPath(httpServletRequest));
+		context.put("strings", _getStrings(httpServletRequest, portal));
+		context.put(
+			"value",
+			JSONFactoryUtil.looseDeserialize(
+				CustomPropertyUtil.getString(
+					dataDefinitionField.getCustomProperties(), "value", "{}")));
+	}
+
+	protected DLAppService dlAppService;
+	protected Html html;
+	protected Portal portal;
+
+	private FileEntry _getFileEntry(JSONObject valueJSONObject) {
 		try {
 			return dlAppService.getFileEntryByUuidAndGroupId(
 				valueJSONObject.getString("uuid"),
@@ -252,7 +260,8 @@ public class DocumentLibraryFieldType extends FieldType {
 
 		ResourceBundle resourceBundle = new AggregateResourceBundle(
 			ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass()),
+				"content.Language", themeDisplay.getLocale(),
+				DocumentLibraryFieldType.class),
 			portal.getResourceBundle(themeDisplay.getLocale()));
 
 		values.put("select", LanguageUtil.get(resourceBundle, "select"));

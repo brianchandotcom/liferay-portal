@@ -35,16 +35,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CaptchaFieldType extends FieldType {
 
-	public void includeContext(
-		Map<String, Object> context, DataDefinitionField dataDefinitionField,
+	public CaptchaFieldType(
+		DataDefinitionField dataDefinitionField,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, boolean readOnly,
+		HttpServletResponse httpServletResponse,
 		SoyDataFactory soyDataFactory) {
 
-		super.includeContext(
-			context, dataDefinitionField, httpServletRequest,
-			httpServletResponse, readOnly);
+		super(
+			dataDefinitionField, httpServletRequest, httpServletResponse,
+			soyDataFactory);
+	}
 
+	@Override
+	protected void addContext(Map<String, Object> context) {
 		String html = StringPool.BLANK;
 
 		try {

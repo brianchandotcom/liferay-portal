@@ -1,9 +1,7 @@
 .conjunction-button {
+	margin-bottom: $gap * 2;
+	margin-top: $gap * 2;
 	text-transform: capitalize;
-	margin: {
-		bottom: $gap * 2;
-		top: $gap * 2;
-	}
 }
 
 .criteria-group-root {
@@ -20,9 +18,7 @@
 	color: $mainLighten28;
 	font-size: 14px;
 	font-weight: 600;
+	margin-bottom: $gap * 2;
+	margin-top: $gap * 2;
 	text-transform: capitalize;
-	margin: {
-		bottom: $gap * 2;
-		top: $gap * 2;
-	}
 }

@@ -1,6 +1,9 @@
 @media (min-width: 576px) {
-	.ddm-form-builder .modal-sm {
-		max-width: 300px;
+	.ddm-form-builder,
+	.ddm-translation-manager {
+		.modal-sm {
+			max-width: 300px;
+		}
 	}
 }
 

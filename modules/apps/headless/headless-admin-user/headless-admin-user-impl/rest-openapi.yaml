@@ -801,6 +801,8 @@ paths:
     "/segments/{segmentId}/user-accounts":
         get:
             operationId: getSegmentUserAccountsPage
+            #@review
+            description: Get users of a segment
             parameters:
                 - in: path
                   name: segmentId
@@ -829,6 +831,8 @@ paths:
     "/sites/{siteId}/segments":
         get:
             operationId: getSiteSegmentsPage
+            #@review
+            description: Get segments of a site
             parameters:
                 - in: path
                   name: siteId
@@ -857,6 +861,8 @@ paths:
     "/sites/{siteId}/user-accounts/{userAccountId}/segments":
         get:
             operationId: getSiteUserAccountSegmentsPage
+            #@review
+            description: Get segments of an user
             parameters:
                 - in: path
                   name: siteId

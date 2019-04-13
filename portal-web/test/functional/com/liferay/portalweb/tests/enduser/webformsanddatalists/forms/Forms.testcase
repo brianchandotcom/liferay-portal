@@ -2187,7 +2187,7 @@ definition {
 			fieldName = "TestingTitle"
 		);
 
-		FormFields.viewRadioValue(fieldName = "dataType", fieldValue = "integer");
+		FormFields.viewRadioValue(fieldName = "dataType", fieldValue = "Integer");
 
 		FormFields.changeFieldType(selectOption = "Multiple Selection");
 
@@ -2224,7 +2224,7 @@ definition {
 
 		Form.save();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "TestingTitle");
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
@@ -2278,13 +2278,13 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "TextField");
+		FormsAdminNavigator.gotoEditField(fieldName = "Text Field");
 
 		FormFields.changeFieldType(selectOption = "Single Selection");
 
 		Form.closeSidebar();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "TestingTitle");
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
 
 		FormFields.changeFieldType(selectOption = "Date");
 

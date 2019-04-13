@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.template.soy.SoyTemplateResourceFactory;
 
 import java.io.Reader;
 
@@ -49,7 +51,10 @@ public class SoyTestHelper {
 	public SoyTemplate getSoyTemplate(
 		List<TemplateResource> templateResources) {
 
-		return (SoyTemplate)_soyManager.getTemplate(templateResources, false);
+		return (SoyTemplate)_soyManager.getTemplate(
+			_soyTemplateResourceFactory.createSoyTemplateResource(
+				templateResources),
+			false);
 	}
 
 	public SoyTemplate getSoyTemplate(String fileName) {
@@ -151,6 +156,8 @@ public class SoyTestHelper {
 	}
 
 	protected void setUpSoyManager() {
+		_soyTemplateResourceFactory = new SoyTemplateResourceFactoryImpl();
+
 		_soyManager = new SoyManager();
 
 		_soyManager.setTemplateContextHelper(new SoyTemplateContextHelper());
@@ -166,11 +173,16 @@ public class SoyTestHelper {
 
 					throw new UnsupportedOperationException(method.toString());
 				}));
+
+		ReflectionTestUtil.setFieldValue(
+			_soyManager, "_soyTemplateResourceFactory",
+			_soyTemplateResourceFactory);
 	}
 
 	private static final String _TPL_PATH =
 		"com/liferay/portal/template/soy/dependencies/";
 
 	private SoyManager _soyManager;
+	private SoyTemplateResourceFactory _soyTemplateResourceFactory;
 
 }

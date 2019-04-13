@@ -79,37 +79,6 @@ class TranslationManager extends Component {
 	}
 
 	/**
-	 * Treats the opened modal and finishes the available
-	 * language removal.
-	 * @param {MouseEvent} event
-	 * @review
-	 */
-	evaluateRemovalModal(event) {
-		this.refs.deleteModal.emit('hide');
-
-		if (!event.target.classList.contains('btn-primary')) {
-			return;
-		}
-
-		let { localeId, localePosition } = this.localeObject;
-
-		this.availableLocales.splice(localePosition, 1);
-
-		this.availableLocales = this.availableLocales;
-
-		if (localeId === this.editingLocale) {
-			this.resetEditingLocale_();
-		}
-
-		this.emit(
-			'deleteAvailableLocale',
-			{
-				locale: localeId
-			}
-		);
-	}
-
-	/**
 	 * Returns a property.
 	 * @param  {String} attr Name of the attribute wanted to get
 	 * @review
@@ -124,27 +93,34 @@ class TranslationManager extends Component {
 	 * @param  {MouseEvent} event
 	 * @review
 	 */
-	removeAvailableLocale(event) {
+	removeAvailableLocale({delegateTarget}) {
+		const {availableLocales} = this;
+		const {localeId} = delegateTarget.dataset;
+
 		event.stopPropagation();
 
-		this.refs.deleteModal.show();
+		this.refs.deleteModal.events = {
+			clickButton: ({target}) => {
+				if (target.classList.contains('btn-primary')) {
+					this.availableLocales = availableLocales.filter(
+						({id}) => id !== localeId
+					);
 
-		let localeId = event.delegateTarget.getAttribute('data-locale-id');
+					if (localeId === this.editingLocale) {
+						this.resetEditingLocale_();
+					}
 
-		let localePosition = null;
-
-		for (let index = 0; index < this.availableLocales.length; index++) {
-			const element = this.availableLocales[index];
-
-			if (element.id === localeId) {
-				localePosition = index;
-				break;
+					this.emit(
+						'deleteAvailableLocale',
+						{
+							locale: localeId
+						}
+					);
+				}
 			}
-		}
+		};
 
-		this.localeObject = {
-			localeId, localePosition
-		}
+		this.refs.deleteModal.show();
 	}
 
 	/**
@@ -171,19 +147,6 @@ class TranslationManager extends Component {
 				namespace: 'translationmanager'
 			}
 		);
-	}
-
-	/**
-	 * Sets the state of visible modal with
-	 * the visible Metal state
-	 * @param {Object} obj
-	 * @private
-	 * @review
-	 */
-	visibleChangedHandler_(obj) {
-		this.setState({
-			visibleModal: obj.newVal
-		});
 	}
 
 }
@@ -240,18 +203,6 @@ TranslationManager.STATE = {
 	 */
 	locales: {
 		validator: core.isObject
-	},
-
-	/**
-	 * Holds the state of modal, to be synced with Metal's
-	 * visible state.
-	 * @review
-	 * @type {Boolean}
-	 */
-	visibleModal: {
-		validator: core.isBoolean,
-		internal: true,
-		value: false
 	}
 };
 

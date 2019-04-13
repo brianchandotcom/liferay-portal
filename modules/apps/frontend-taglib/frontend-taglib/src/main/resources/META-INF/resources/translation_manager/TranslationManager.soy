@@ -15,9 +15,6 @@
 	{@param? elementClasses: string}
 	{@param? id: string}
 	{@param? removeAvailableLocale: any}
-	{@param? visibleChangedHandler_: any}
-	{@param? evaluateRemovalModal: any}
-	{@param? visibleModal: bool}
 
 	<div class="lfr-translationmanager{$elementClasses ? ' ' + $elementClasses : ''}" id="{$id}">
 		<ul class="nav nav-tabs nav-tabs-default">
@@ -32,6 +29,7 @@
 				{/call}
 			</li>
 		</ul>
+
 		{call .removeAvailableLocaleModal data="all"}
 			{param removeAvailableLocale: $removeAvailableLocale /}
 		{/call}
@@ -113,9 +111,6 @@
  */
 {template .removeAvailableLocaleModal}
 	{@param pathThemeImages: string}
-	{@param evaluateRemovalModal: any}
-	{@param visibleChangedHandler_: any}
-	{@param? visibleModal: bool}
 
 	{let $deleteLabel kind="text"}
 		{msg desc=""}delete{/msg}
@@ -131,10 +126,6 @@
 				{msg desc=""}are-you-sure-you-want-to-deactivate-this-language{/msg}
 			</h4>
 		{/param}
-		{param events: [
-			'clickButton': $evaluateRemovalModal,
-			'visibleChanged': $visibleChangedHandler_
-		] /}
 		{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
 		{param size: 'sm' /}
 		{param footerButtons: [
@@ -153,7 +144,7 @@
 		] /}
 		{param elementClasses: 'hide' /}
 		{param ref: 'deleteModal' /}
-		{param visible: $visibleModal /}
+		{param visible: false /}
 	{/call}
 {/template}
 

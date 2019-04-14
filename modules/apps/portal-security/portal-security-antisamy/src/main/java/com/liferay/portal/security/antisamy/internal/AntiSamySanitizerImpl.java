@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,7 +40,7 @@ import org.owasp.validator.html.Policy;
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
  */
-public class AntiSamySanitizerImpl extends BaseSanitizer {
+public class AntiSamySanitizerImpl implements Sanitizer {
 
 	public AntiSamySanitizerImpl(
 		String[] blacklist, URL url, String[] whitelist) {

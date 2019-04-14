@@ -14,7 +14,6 @@
 
 package com.liferay.comment.sanitizer.internal;
 
-import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,7 +31,7 @@ import org.owasp.html.PolicyFactory;
  * @author Sergio González
  */
 @Component(immediate = true, service = Sanitizer.class)
-public class CommentSanitizerImpl extends BaseSanitizer {
+public class CommentSanitizerImpl implements Sanitizer {
 
 	public CommentSanitizerImpl() {
 		_commentAllowedContent = new CommentAllowedContent(

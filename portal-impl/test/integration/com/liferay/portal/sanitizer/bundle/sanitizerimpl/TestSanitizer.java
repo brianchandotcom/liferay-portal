@@ -14,7 +14,6 @@
 
 package com.liferay.portal.sanitizer.bundle.sanitizerimpl;
 
-import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 
 import java.util.Map;
@@ -30,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
 	service = Sanitizer.class
 )
-public class TestSanitizer extends BaseSanitizer {
+public class TestSanitizer implements Sanitizer {
 
 	@Override
 	public String sanitize(

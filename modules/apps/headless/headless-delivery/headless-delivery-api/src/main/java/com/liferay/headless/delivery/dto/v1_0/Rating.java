@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -41,6 +43,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Rating")
 public class Rating {
 
+	@Schema(
+		description = "The best possible rating a content can receive, by default normalized to 1.0."
+	)
 	public Number getBestRating() {
 		return bestRating;
 	}
@@ -68,6 +73,7 @@ public class Rating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number bestRating;
 
+	@Schema(description = "The creator of the Rating")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -95,6 +101,7 @@ public class Rating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date of the Rating.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -122,6 +129,7 @@ public class Rating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(description = "The last time a field of the Rating changed.")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -149,6 +157,7 @@ public class Rating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -174,6 +183,7 @@ public class Rating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The value of the Rating.")
 	public Number getRatingValue() {
 		return ratingValue;
 	}
@@ -201,6 +211,9 @@ public class Rating {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number ratingValue;
 
+	@Schema(
+		description = "The worst possible rating a content can receive, by default normalized to 0.0."
+	)
 	public Number getWorstRating() {
 		return worstRating;
 	}

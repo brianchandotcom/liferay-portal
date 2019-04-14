@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentStructureField")
 public class ContentStructureField {
 
+	@Schema(description = "The type of the form field (date, geo, text...).")
 	public String getDataType() {
 		return dataType;
 	}
@@ -67,6 +70,9 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
+	@Schema(
+		description = "The type of the input used to render the content (text, textarea, select...)."
+	)
 	public String getInputControl() {
 		return inputControl;
 	}
@@ -94,6 +100,7 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String inputControl;
 
+	@Schema(description = "The label of the form field.")
 	public String getLabel() {
 		return label;
 	}
@@ -121,6 +128,9 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@Schema(
+		description = "A flag indicating if the content can be accesible in different languages."
+	)
 	public Boolean getLocalizable() {
 		return localizable;
 	}
@@ -148,6 +158,9 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean localizable;
 
+	@Schema(
+		description = "A flag indicating that this form field can have several answers."
+	)
 	public Boolean getMultiple() {
 		return multiple;
 	}
@@ -175,6 +188,7 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean multiple;
 
+	@Schema(description = "The name.")
 	public String getName() {
 		return name;
 	}
@@ -200,6 +214,9 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@Schema(
+		description = "The child ContentStructureFields that depends in this resource."
+	)
 	public ContentStructureField[] getNestedContentStructureFields() {
 		return nestedContentStructureFields;
 	}
@@ -231,6 +248,7 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentStructureField[] nestedContentStructureFields;
 
+	@Schema(description = "A list of several predefined answers.")
 	public Option[] getOptions() {
 		return options;
 	}
@@ -258,6 +276,7 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Option[] options;
 
+	@Schema(description = "The default value of the form field.")
 	public String getPredefinedValue() {
 		return predefinedValue;
 	}
@@ -285,6 +304,9 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String predefinedValue;
 
+	@Schema(
+		description = "A flag indicating in this content can be rendered (and answered) several times."
+	)
 	public Boolean getRepeatable() {
 		return repeatable;
 	}
@@ -312,6 +334,9 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean repeatable;
 
+	@Schema(
+		description = "A flag to indicate that this form field is required, form can't be filled without it."
+	)
 	public Boolean getRequired() {
 		return required;
 	}
@@ -339,6 +364,9 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean required;
 
+	@Schema(
+		description = "A flag indicating if the end target of this structure should render the label of the field."
+	)
 	public Boolean getShowLabel() {
 		return showLabel;
 	}

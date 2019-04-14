@@ -81,6 +81,7 @@ public class DocumentFolder {
 
 	}
 
+	@Schema(description = "The creator of the DocumentFolder")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -108,6 +109,7 @@ public class DocumentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date of the DocumentFolder.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -135,6 +137,9 @@ public class DocumentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(
+		description = "The last time a field of the DocumentFolder changed."
+	)
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -162,6 +167,7 @@ public class DocumentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The description of the DocumentFolder")
 	public String getDescription() {
 		return description;
 	}
@@ -189,6 +195,7 @@ public class DocumentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -214,6 +221,7 @@ public class DocumentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The main title/name of the DocumentFolder")
 	public String getName() {
 		return name;
 	}
@@ -240,6 +248,9 @@ public class DocumentFolder {
 	@NotEmpty
 	protected String name;
 
+	@Schema(
+		description = "The number of child DocumentFolders that depend on this resources."
+	)
 	public Number getNumberOfDocumentFolders() {
 		return numberOfDocumentFolders;
 	}
@@ -269,6 +280,9 @@ public class DocumentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfDocumentFolders;
 
+	@Schema(
+		description = "The number of child Documents that depend on this resources."
+	)
 	public Number getNumberOfDocuments() {
 		return numberOfDocuments;
 	}
@@ -296,6 +310,9 @@ public class DocumentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfDocuments;
 
+	@Schema(
+		description = "The site identificator where this DocumentFolder is scoped."
+	)
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -323,6 +340,9 @@ public class DocumentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@Schema(
+		description = "Write only property to specify the default permissions."
+	)
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

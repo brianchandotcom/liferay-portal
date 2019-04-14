@@ -81,6 +81,9 @@ public class StructuredContent {
 
 	}
 
+	@Schema(
+		description = "The information of the ratings (average, number) associated to this resource."
+	)
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
@@ -109,6 +112,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@Schema(
+		description = "A list of languages the content has a translation for."
+	)
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}
@@ -136,6 +142,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@Schema(
+		description = "A list of fields that store the information of the StructuredContent."
+	)
 	public ContentField[] getContentFields() {
 		return contentFields;
 	}
@@ -163,6 +172,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] contentFields;
 
+	@Schema(description = "The identifier of the ContentStructure.")
 	public Long getContentStructureId() {
 		return contentStructureId;
 	}
@@ -191,6 +201,7 @@ public class StructuredContent {
 	@NotNull
 	protected Long contentStructureId;
 
+	@Schema(description = "The creator of the StructuredContent")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -218,6 +229,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date of the StructuredContent.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -245,6 +257,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(
+		description = "The last time a field of the StructuredContent changed."
+	)
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -272,6 +287,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(
+		description = "The last date when the StructuredContent was published."
+	)
 	public Date getDatePublished() {
 		return datePublished;
 	}
@@ -299,6 +317,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
+	@Schema(description = "The description of the StructuredContent")
 	public String getDescription() {
 		return description;
 	}
@@ -326,6 +345,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema(
+		description = "A relative URL to the rendered content of the StructuredContent."
+	)
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}
@@ -353,6 +375,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -378,6 +401,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(
+		description = "An identifier, indepedent of the database, that can be used to reference the resource."
+	)
 	public String getKey() {
 		return key;
 	}
@@ -403,6 +429,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
+	@Schema(
+		description = "A list of keywords describing the StructuredContent."
+	)
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -430,6 +459,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@Schema(
+		description = "The number of child comments this StructuredContent has received."
+	)
 	public Number getNumberOfComments() {
 		return numberOfComments;
 	}
@@ -457,7 +489,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfComments;
 
-	@Schema(description = "https://www.schema.org/templates")
+	@Schema(
+		description = "A list of rendered StructuredContents, the result of using a template to process the content, returning html."
+	)
 	public RenderedContent[] getRenderedContents() {
 		return renderedContents;
 	}
@@ -486,6 +520,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RenderedContent[] renderedContents;
 
+	@Schema(
+		description = "The site identificator where this StructuredContent is scoped."
+	)
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -513,6 +550,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@Schema(
+		description = "The categories asociated with this StructuredContent."
+	)
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
@@ -541,6 +581,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategory[] taxonomyCategories;
 
+	@Schema(
+		description = "A write only field to add TaxonomyCategory to this resource."
+	)
 	public Long[] getTaxonomyCategoryIds() {
 		return taxonomyCategoryIds;
 	}
@@ -568,6 +611,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	@Schema(description = "The main title of the StructuredContent.")
 	public String getTitle() {
 		return title;
 	}
@@ -595,6 +639,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@Schema(
+		description = "A valid external identifier to reference this content."
+	)
 	public String getUuid() {
 		return uuid;
 	}
@@ -620,6 +667,9 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String uuid;
 
+	@Schema(
+		description = "Write only property to specify the default permissions."
+	)
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

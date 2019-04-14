@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "AggregateRating")
 public class AggregateRating {
 
+	@Schema(
+		description = "The best rating possible (by default normalized to 1.0)."
+	)
 	public Number getBestRating() {
 		return bestRating;
 	}
@@ -67,6 +72,7 @@ public class AggregateRating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number bestRating;
 
+	@Schema(description = "The number of ratings.")
 	public Number getRatingCount() {
 		return ratingCount;
 	}
@@ -94,6 +100,7 @@ public class AggregateRating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number ratingCount;
 
+	@Schema(description = "The average rating.")
 	public Number getRatingValue() {
 		return ratingValue;
 	}
@@ -121,6 +128,9 @@ public class AggregateRating {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number ratingValue;
 
+	@Schema(
+		description = "The worst rating possible (by default normalized to 0.0)."
+	)
 	public Number getWorstRating() {
 		return worstRating;
 	}

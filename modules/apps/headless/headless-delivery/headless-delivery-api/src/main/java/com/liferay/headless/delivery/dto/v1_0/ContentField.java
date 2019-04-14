@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentField")
 public class ContentField {
 
+	@Schema(description = "The type of field (image, text).")
 	public String getDataType() {
 		return dataType;
 	}
@@ -67,6 +70,9 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
+	@Schema(
+		description = "The type of control that has be used to render the content (text, textarea...)."
+	)
 	public String getInputControl() {
 		return inputControl;
 	}
@@ -94,6 +100,7 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String inputControl;
 
+	@Schema(description = "The label of the field.")
 	public String getLabel() {
 		return label;
 	}
@@ -121,6 +128,9 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@Schema(
+		description = "The internal name of the field, valid for comparisons and unique in the StructuredContent."
+	)
 	public String getName() {
 		return name;
 	}
@@ -146,6 +156,9 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema(
+		description = "A list of child ContentFields that depend on this resource."
+	)
 	public ContentField[] getNestedFields() {
 		return nestedFields;
 	}
@@ -173,6 +186,9 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] nestedFields;
 
+	@Schema(
+		description = "A flag indicating if this field can be rendered multiple times."
+	)
 	public Boolean getRepeatable() {
 		return repeatable;
 	}

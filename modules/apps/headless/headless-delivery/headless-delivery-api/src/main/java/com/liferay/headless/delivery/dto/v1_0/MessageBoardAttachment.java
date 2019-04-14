@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "MessageBoardAttachment")
 public class MessageBoardAttachment {
 
+	@Schema(description = "An absolute URL to the binary image.")
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -67,6 +70,9 @@ public class MessageBoardAttachment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
+	@Schema(
+		description = "The media format of the binary file (application/pdf...)."
+	)
 	public String getEncodingFormat() {
 		return encodingFormat;
 	}
@@ -94,6 +100,7 @@ public class MessageBoardAttachment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	@Schema(description = "The extension of the binary file.")
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -121,6 +128,7 @@ public class MessageBoardAttachment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileExtension;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -146,6 +154,7 @@ public class MessageBoardAttachment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The size in bytes of the binary file.")
 	public Number getSizeInBytes() {
 		return sizeInBytes;
 	}
@@ -173,6 +182,7 @@ public class MessageBoardAttachment {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number sizeInBytes;
 
+	@Schema(description = "The title of the binary file.")
 	public String getTitle() {
 		return title;
 	}

@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Geo")
 public class Geo {
 
+	@Schema(description = "The latitude of a point in space.")
 	public Number getLatitude() {
 		return latitude;
 	}
@@ -67,6 +70,7 @@ public class Geo {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number latitude;
 
+	@Schema(description = "The longitude of a point in space.")
 	public Number getLongitude() {
 		return longitude;
 	}

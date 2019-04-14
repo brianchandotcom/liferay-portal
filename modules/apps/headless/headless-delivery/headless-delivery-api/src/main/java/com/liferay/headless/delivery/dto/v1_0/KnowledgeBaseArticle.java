@@ -81,6 +81,9 @@ public class KnowledgeBaseArticle {
 
 	}
 
+	@Schema(
+		description = "The information of the ratings (average, number) associated to this resource."
+	)
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
@@ -109,6 +112,7 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@Schema(description = "The main content of this resouce.")
 	public String getArticleBody() {
 		return articleBody;
 	}
@@ -137,6 +141,7 @@ public class KnowledgeBaseArticle {
 	@NotEmpty
 	protected String articleBody;
 
+	@Schema(description = "The creator of the KnowledgeBaseArticle")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -164,6 +169,7 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date of the KnowledgeBaseArticle.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -191,6 +197,9 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(
+		description = "The last time a field of the KnowledgeBaseArticle changed."
+	)
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -218,6 +227,7 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The description of the KnowledgeBaseArticle.")
 	public String getDescription() {
 		return description;
 	}
@@ -245,6 +255,7 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema(description = "The media type (html, bbcode) of the content.")
 	public String getEncodingFormat() {
 		return encodingFormat;
 	}
@@ -272,6 +283,7 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	@Schema(description = "A relative URL to access this resource.")
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}
@@ -299,6 +311,7 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -324,6 +337,9 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(
+		description = "A list of keywords describing the KnowledgeBaseArticle."
+	)
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -351,6 +367,9 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@Schema(
+		description = "The number of KnowledgeBaseAttachments that are stored in this article."
+	)
 	public Number getNumberOfAttachments() {
 		return numberOfAttachments;
 	}
@@ -378,6 +397,9 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfAttachments;
 
+	@Schema(
+		description = "The number of child KBArticle that are asociated with this resouce."
+	)
 	public Number getNumberOfKnowledgeBaseArticles() {
 		return numberOfKnowledgeBaseArticles;
 	}
@@ -409,6 +431,9 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number numberOfKnowledgeBaseArticles;
 
+	@Schema(
+		description = "The parent KnowledgeBaseFolder of this article, if any."
+	)
 	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
 		return parentKnowledgeBaseFolder;
 	}
@@ -440,6 +465,9 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
 
+	@Schema(
+		description = "The parent KnowledgeBaseFolder identifier of this article, if any."
+	)
 	public Long getParentKnowledgeBaseFolderId() {
 		return parentKnowledgeBaseFolderId;
 	}
@@ -471,6 +499,9 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentKnowledgeBaseFolderId;
 
+	@Schema(
+		description = "The site identificator where this TaxonomyVocabulary is scoped."
+	)
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -498,6 +529,9 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@Schema(
+		description = "The categories asociated with this KnowledgeBaseArticle."
+	)
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
@@ -523,9 +557,12 @@ public class KnowledgeBaseArticle {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategory[] taxonomyCategories;
 
+	@Schema(
+		description = "A write only field to add TaxonomyCategory to this resource."
+	)
 	public Long[] getTaxonomyCategoryIds() {
 		return taxonomyCategoryIds;
 	}
@@ -553,6 +590,7 @@ public class KnowledgeBaseArticle {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	@Schema(description = "The main title of the KnowledgeBaseArticle.")
 	public String getTitle() {
 		return title;
 	}
@@ -581,6 +619,9 @@ public class KnowledgeBaseArticle {
 	@NotEmpty
 	protected String title;
 
+	@Schema(
+		description = "Write only property to specify the default permissions."
+	)
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

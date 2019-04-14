@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "StructuredContentLink")
 public class StructuredContentLink {
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -65,6 +68,7 @@ public class StructuredContentLink {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema(description = "The title of the resouce.")
 	public String getTitle() {
 		return title;
 	}

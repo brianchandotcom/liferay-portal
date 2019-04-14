@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -41,6 +43,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentStructure")
 public class ContentStructure {
 
+	@Schema(
+		description = "A list of languages the content has a translation for."
+	)
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}
@@ -68,6 +73,9 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@Schema(
+		description = "A list of fields that belong to this ContentStructure."
+	)
 	public ContentStructureField[] getContentStructureFields() {
 		return contentStructureFields;
 	}
@@ -98,6 +106,7 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentStructureField[] contentStructureFields;
 
+	@Schema(description = "The creator of the ContentStructure")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -125,6 +134,7 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date of the ContentStructure.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -152,6 +162,9 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(
+		description = "The last time a field of the ContentStructure changed."
+	)
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -179,6 +192,7 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The description of the ContentStructure")
 	public String getDescription() {
 		return description;
 	}
@@ -206,6 +220,7 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -231,6 +246,7 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The name.")
 	public String getName() {
 		return name;
 	}
@@ -256,6 +272,9 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@Schema(
+		description = "The site identificator where this ContentStructure is scoped."
+	)
 	public Long getSiteId() {
 		return siteId;
 	}

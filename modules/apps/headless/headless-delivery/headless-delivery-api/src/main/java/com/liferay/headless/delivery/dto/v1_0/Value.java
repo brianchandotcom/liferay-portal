@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Value")
 public class Value {
 
+	@Schema(description = "The content of this field for simple types.")
 	public String getData() {
 		return data;
 	}
@@ -67,6 +68,7 @@ public class Value {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String data;
 
+	@Schema(description = "A ContentDocument element.")
 	public ContentDocument getDocument() {
 		return document;
 	}
@@ -94,7 +96,7 @@ public class Value {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument document;
 
-	@Schema(description = "https://www.schema.org/GeoCoordinates")
+	@Schema(description = "A point determined by latitude and longitude.")
 	public Geo getGeo() {
 		return geo;
 	}
@@ -120,6 +122,7 @@ public class Value {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Geo geo;
 
+	@Schema(description = "A ContentDocument element storing an image file.")
 	public ContentDocument getImage() {
 		return image;
 	}
@@ -147,6 +150,7 @@ public class Value {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument image;
 
+	@Schema(description = "A link to a page inside the server.")
 	public String getLink() {
 		return link;
 	}
@@ -172,6 +176,7 @@ public class Value {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String link;
 
+	@Schema(description = "A link to a JournalArticle stored in the server.")
 	public StructuredContentLink getStructuredContentLink() {
 		return structuredContentLink;
 	}

@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ParentKnowledgeBaseFolder")
 public class ParentKnowledgeBaseFolder {
 
+	@Schema(description = "The identifier of the folder.")
 	public Long getFolderId() {
 		return folderId;
 	}
@@ -67,6 +70,7 @@ public class ParentKnowledgeBaseFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long folderId;
 
+	@Schema(description = "The name of the folder.")
 	public String getFolderName() {
 		return folderName;
 	}

@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "RenderedContent")
 public class RenderedContent {
 
+	@Schema(description = "An absolute URL to the binary image.")
 	public String getRenderedContentURL() {
 		return renderedContentURL;
 	}
@@ -67,6 +70,9 @@ public class RenderedContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedContentURL;
 
+	@Schema(
+		description = "The name of the template used to render the content."
+	)
 	public String getTemplateName() {
 		return templateName;
 	}

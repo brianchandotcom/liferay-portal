@@ -81,6 +81,9 @@ public class MessageBoardThread {
 
 	}
 
+	@Schema(
+		description = "The information of the ratings (average, number) associated to this resource."
+	)
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
@@ -109,6 +112,9 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@Schema(
+		description = "The main content of the thread, the message written as description of the thread."
+	)
 	public String getArticleBody() {
 		return articleBody;
 	}
@@ -136,6 +142,7 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String articleBody;
 
+	@Schema(description = "The creator of the MessageBoardThread")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -163,6 +170,7 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date of the MessageBoardThread.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -190,6 +198,9 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(
+		description = "The last time a field of the MessageBoardThread changed."
+	)
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -217,6 +228,7 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The media format of the content (html, bbcode...).")
 	public String getEncodingFormat() {
 		return encodingFormat;
 	}
@@ -244,6 +256,7 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	@Schema(description = "The main title of the thread.")
 	public String getHeadline() {
 		return headline;
 	}
@@ -272,6 +285,7 @@ public class MessageBoardThread {
 	@NotEmpty
 	protected String headline;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -297,6 +311,9 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(
+		description = "A list of keywords describing the MessageBoardThread."
+	)
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -324,6 +341,9 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@Schema(
+		description = "The number of child attachments asociated with the MessageBoardThread."
+	)
 	public Integer getNumberOfMessageBoardAttachments() {
 		return numberOfMessageBoardAttachments;
 	}
@@ -355,6 +375,9 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardAttachments;
 
+	@Schema(
+		description = "The number of child attachments asociated with the MessageBoardMessages."
+	)
 	public Integer getNumberOfMessageBoardMessages() {
 		return numberOfMessageBoardMessages;
 	}
@@ -386,6 +409,9 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardMessages;
 
+	@Schema(
+		description = "A flag indicating that this thread is posting a question that can receives aproved answers."
+	)
 	public Boolean getShowAsQuestion() {
 		return showAsQuestion;
 	}
@@ -413,6 +439,9 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showAsQuestion;
 
+	@Schema(
+		description = "The site identificator where this MessageBoardThread is scoped."
+	)
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -440,6 +469,7 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@Schema(description = "The type of the thread.")
 	public String getThreadType() {
 		return threadType;
 	}
@@ -467,6 +497,9 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String threadType;
 
+	@Schema(
+		description = "Write only property to specify the default permissions."
+	)
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

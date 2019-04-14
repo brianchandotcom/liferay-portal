@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "AdaptedImage")
 public class AdaptedImage {
 
+	@Schema(description = "An absolute URL to the image.")
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -67,6 +70,7 @@ public class AdaptedImage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
+	@Schema(description = "The height of the image.")
 	public Number getHeight() {
 		return height;
 	}
@@ -94,6 +98,7 @@ public class AdaptedImage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number height;
 
+	@Schema(description = "A descriptive name of this version.")
 	public String getResolutionName() {
 		return resolutionName;
 	}
@@ -121,6 +126,7 @@ public class AdaptedImage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String resolutionName;
 
+	@Schema(description = "The size in bytes of the image.")
 	public Number getSizeInBytes() {
 		return sizeInBytes;
 	}
@@ -148,6 +154,7 @@ public class AdaptedImage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Number sizeInBytes;
 
+	@Schema(description = "The width of the image.")
 	public Number getWidth() {
 		return width;
 	}

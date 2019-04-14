@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentSetElement")
 public class ContentSetElement {
 
+	@Schema(description = "The main content.")
 	public Object getContent() {
 		return content;
 	}
@@ -67,6 +70,7 @@ public class ContentSetElement {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Object content;
 
+	@Schema(description = "The type of the content.")
 	public String getContentType() {
 		return contentType;
 	}
@@ -94,6 +98,7 @@ public class ContentSetElement {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -119,6 +124,7 @@ public class ContentSetElement {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The title of the ContentSetElement.")
 	public String getTitle() {
 		return title;
 	}

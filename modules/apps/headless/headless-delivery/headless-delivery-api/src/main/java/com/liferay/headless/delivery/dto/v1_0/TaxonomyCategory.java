@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "TaxonomyCategory")
 public class TaxonomyCategory {
 
+	@Schema(
+		description = "The id of the category, can be used to retrieve more information in the TaxonomyCategory API."
+	)
 	public Long getTaxonomyCategoryId() {
 		return taxonomyCategoryId;
 	}
@@ -67,6 +72,7 @@ public class TaxonomyCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long taxonomyCategoryId;
 
+	@Schema(description = "The name of the TaxonomyCategory.")
 	public String getTaxonomyCategoryName() {
 		return taxonomyCategoryName;
 	}

@@ -81,6 +81,7 @@ public class MessageBoardSection {
 
 	}
 
+	@Schema(description = "The creator of the MessageBoardSection")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -108,6 +109,7 @@ public class MessageBoardSection {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date of the MessageBoardSection.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -135,6 +137,9 @@ public class MessageBoardSection {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(
+		description = "The last time a field of the MessageBoardSection changed."
+	)
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -162,6 +167,7 @@ public class MessageBoardSection {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The description of the MessageBoardSection")
 	public String getDescription() {
 		return description;
 	}
@@ -189,6 +195,7 @@ public class MessageBoardSection {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -214,6 +221,9 @@ public class MessageBoardSection {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(
+		description = "The number of child MessageBoardSections that belong to this MessageBoardSection."
+	)
 	public Integer getNumberOfMessageBoardSections() {
 		return numberOfMessageBoardSections;
 	}
@@ -245,6 +255,9 @@ public class MessageBoardSection {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardSections;
 
+	@Schema(
+		description = "The number of child MessageBoardThreads that belong to this MessageBoardSection."
+	)
 	public Integer getNumberOfMessageBoardThreads() {
 		return numberOfMessageBoardThreads;
 	}
@@ -276,6 +289,9 @@ public class MessageBoardSection {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardThreads;
 
+	@Schema(
+		description = "The site identificator where this MessageBoardSection is scoped."
+	)
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -303,6 +319,7 @@ public class MessageBoardSection {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@Schema(description = "The main title of the resource.")
 	public String getTitle() {
 		return title;
 	}
@@ -331,6 +348,9 @@ public class MessageBoardSection {
 	@NotEmpty
 	protected String title;
 
+	@Schema(
+		description = "Write only property to specify the default permissions."
+	)
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

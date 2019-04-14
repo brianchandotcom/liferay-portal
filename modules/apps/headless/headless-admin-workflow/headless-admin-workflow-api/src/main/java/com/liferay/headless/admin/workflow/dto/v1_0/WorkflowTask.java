@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -41,6 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "WorkflowTask")
 public class WorkflowTask {
 
+	@Schema(description = "Represents a task to be executed in a Workflow.")
 	public Boolean getCompleted() {
 		return completed;
 	}
@@ -68,6 +71,7 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean completed;
 
+	@Schema(description = "The creation date of the Organization.")
 	public Date getDateCompleted() {
 		return dateCompleted;
 	}
@@ -95,6 +99,7 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCompleted;
 
+	@Schema(description = "The creation date of the Organization.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -122,6 +127,7 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(description = "The name of the definition of the Workflow.")
 	public String getDefinitionName() {
 		return definitionName;
 	}
@@ -149,6 +155,7 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String definitionName;
 
+	@Schema(description = "A description of the WorkflowTask.")
 	public String getDescription() {
 		return description;
 	}
@@ -176,6 +183,7 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
+	@Schema(description = "A date where the WorkflowTask should be executed.")
 	public Date getDueDate() {
 		return dueDate;
 	}
@@ -203,6 +211,7 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dueDate;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -228,6 +237,7 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(description = "The name of the WorkflowTask.")
 	public String getName() {
 		return name;
 	}
@@ -253,6 +263,9 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@Schema(
+		description = "The object/asset that is being managed by a Workflow."
+	)
 	public ObjectReviewed getObjectReviewed() {
 		return objectReviewed;
 	}
@@ -281,6 +294,9 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ObjectReviewed objectReviewed;
 
+	@Schema(
+		description = "A list of transitions to be launched by the Workflow."
+	)
 	public String[] getTransitions() {
 		return transitions;
 	}

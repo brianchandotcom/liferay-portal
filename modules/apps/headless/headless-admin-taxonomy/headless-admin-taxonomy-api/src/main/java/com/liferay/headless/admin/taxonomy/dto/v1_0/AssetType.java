@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "AssetType")
 public class AssetType {
 
+	@Schema(description = "Flag that marks if this type is required.")
 	public Boolean getRequired() {
 		return required;
 	}
@@ -67,6 +70,7 @@ public class AssetType {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@Schema(description = "Subtype of the asset.")
 	public String getSubtype() {
 		return subtype;
 	}
@@ -94,6 +98,9 @@ public class AssetType {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtype;
 
+	@Schema(
+		description = "Represents the type of the asset (BlogPosting, Document...)."
+	)
 	public String getType() {
 		return type;
 	}

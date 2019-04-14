@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Keyword")
 public class Keyword {
 
+	@Schema(description = "The creator of this Keyword.")
 	public Creator getCreator() {
 		return creator;
 	}
@@ -73,6 +74,7 @@ public class Keyword {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@Schema(description = "The creation date of the Keyword.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -100,6 +102,7 @@ public class Keyword {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@Schema(description = "The creation date of the Keyword.")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -127,6 +130,7 @@ public class Keyword {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
 		return id;
 	}
@@ -152,6 +156,9 @@ public class Keyword {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema(
+		description = "The number of times this Keyword has been used in other Assets."
+	)
 	public Number getKeywordUsageCount() {
 		return keywordUsageCount;
 	}
@@ -179,6 +186,7 @@ public class Keyword {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Number keywordUsageCount;
 
+	@Schema(description = "The name of the Keyword.")
 	public String getName() {
 		return name;
 	}
@@ -205,6 +213,9 @@ public class Keyword {
 	@NotEmpty
 	protected String name;
 
+	@Schema(
+		description = "The site identificator where this Keyword is scoped."
+	)
 	public Long getSiteId() {
 		return siteId;
 	}

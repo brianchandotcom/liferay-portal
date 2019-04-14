@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -41,6 +43,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "WorkflowTaskAssignToMe")
 public class WorkflowTaskAssignToMe {
 
+	@Schema(
+		description = "An optional comment to be added while accepting the WorkflowTask."
+	)
 	public String getComment() {
 		return comment;
 	}
@@ -68,6 +73,7 @@ public class WorkflowTaskAssignToMe {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String comment;
 
+	@Schema(description = "A date where the WorkflowTask should be executed.")
 	public Date getDueDate() {
 		return dueDate;
 	}

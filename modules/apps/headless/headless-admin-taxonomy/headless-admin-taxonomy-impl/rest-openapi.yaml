@@ -1,68 +1,88 @@
 components:
     schemas:
         AssetType:
-            description: https://www.schema.org/AssetType
+            #@review
+            description: Represents the type of the asset asociated with a TaxonomyCategory
             properties:
                 required:
+                    description: Flag that marks if this type is required.
                     type: boolean
                 subtype:
+                    description: Subtype of the asset.
                     type: string
                 type:
+                    description: Represents the type of the asset (BlogPosting, Document...).
                     type: string
             type: object
         Creator:
-            description: https://www.schema.org/Creator
+            #@review
+            description: Represents the UserAccount who created/authored the content. Properties follow https://schema.org/creator specification.
             properties:
                 additionalName:
+                    description: An additional name, can be used for a middle name.
                     readOnly: true
                     type: string
                 familyName:
+                    description: In the US, the surname of the UserAccount.
                     readOnly: true
                     type: string
                 givenName:
+                    description: In the US, the first name of the UserAccount.
                     readOnly: true
                     type: string
                 id:
+                    description: The identifier of the resource.
                     format: int64
                     readOnly: true
                     type: integer
                 image:
+                    description: A relative URL to the image profile of the UserAccount.
                     format: uri
                     readOnly: true
                     type: string
                 name:
+                    description: The full name of the UserAccount.
                     readOnly: true
                     type: string
                 profileURL:
+                    description: A relative URL to the profile of the UserAccount.
                     format: uri
                     readOnly: true
                     type: string
             type: object
         Keyword:
-            description: https://www.schema.org/Keyword
+            #@review
+            description: Keywords to describe this content. Follows https://schema.org/keywords specification.
             properties:
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
+                    description: The creator of this Keyword.
                     readOnly: true
                 dateCreated:
+                    description: The creation date of the Keyword.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    description: The creation date of the Keyword.
                     format: date-time
                     readOnly: true
                     type: string
                 id:
+                    description: The identifier of the resource.
                     format: int64
                     readOnly: true
                     type: integer
                 keywordUsageCount:
+                    description: The number of times this Keyword has been used in other Assets.
                     readOnly: true
                     type: number
                 name:
+                    description: The name of the Keyword.
                     type: string
                 siteId:
+                    description: The site identificator where this Keyword is scoped.
                     format: int64
                     readOnly: true
                     type: integer
@@ -70,9 +90,11 @@ components:
                 - name
             type: object
         TaxonomyCategory:
-            description: https://www.schema.org/Category
+            #@review
+            description: Represents a category, a hierarchical clasification that can be asociated to particular types of assets. Properties follow https://schema.org/category.
             properties:
                 availableLanguages:
+                    description: A list of languages the content has a translation for.
                     items:
                         type: string
                     readOnly: true
@@ -80,27 +102,35 @@ components:
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
+                    description: The creator of this TaxonomyCategory.
                     readOnly: true
                 dateCreated:
+                    description: The creation date of the Organization.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    description: The creation date of the Organization.
                     format: date-time
                     readOnly: true
                     type: string
                 description:
+                    description: A text description describing the TaxonomyCategory.
                     type: string
                 id:
+                    description: The identifier of the resource.
                     format: int64
                     readOnly: true
                     type: integer
                 name:
+                    description: The name of the TaxonomyCategory.
                     type: string
                 numberOfTaxonomyCategories:
+                    description: The number of times this TaxonomyCategory has been used in other Assets.
                     readOnly: true
                     type: number
                 parentTaxonomyCategory:
+                    description: In the hierarchical structure of categories, the parent TaxonomyCategory, if exists.
                     properties:
                         id:
                             format: int64
@@ -110,6 +140,7 @@ components:
                     readOnly: true
                     type: object
                 parentTaxonomyVocabulary:
+                    description: In the hierarchical structure of categories, the parent TaxonomyVocabulary.
                     properties:
                         id:
                             format: int64
@@ -119,6 +150,7 @@ components:
                     readOnly: true
                     type: object
                 viewableBy:
+                    description: Write only property to specify the default permissions.
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
@@ -126,13 +158,16 @@ components:
                 - name
             type: object
         TaxonomyVocabulary:
-            description: https://www.schema.org/Vocabulary
+            #@review
+            description: Represents an agroupation of TaxonomyCategories for a specific purpose, clasification, sorting...
             properties:
                 assetTypes:
+                    description: A list of assets that can be asociated with this TaxonomyVocabulary.
                     items:
                         $ref: "#/components/schemas/AssetType"
                     type: array
                 availableLanguages:
+                    description: A list of languages the content has a translation for.
                     items:
                         type: string
                     readOnly: true
@@ -140,31 +175,40 @@ components:
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
+                    description: The creator of this TaxonomyVocabulary.
                     readOnly: true
                 dateCreated:
+                    description: The creation date of the Organization.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    description: The creation date of the Organization.
                     format: date-time
                     readOnly: true
                     type: string
                 description:
+                    description: A text description describing the TaxonomyVocabulary.
                     type: string
                 id:
+                    description: The identifier of the resource.
                     format: int64
                     readOnly: true
                     type: integer
                 name:
+                    description: The name of the TaxonomyVocabulary.
                     type: string
                 numberOfTaxonomyCategories:
+                    description: The number of TaxonomyCategories that directly depend on this resource.
                     readOnly: true
                     type: number
                 siteId:
+                    description: The site identificator where this TaxonomyVocabulary is scoped.
                     format: int64
                     readOnly: true
                     type: integer
                 viewableBy:
+                    description: Write only property to specify the default permissions.
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true

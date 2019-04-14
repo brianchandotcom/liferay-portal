@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
 
-import java.io.InputStream;
-
 import java.util.List;
 import java.util.Locale;
 

@@ -75,11 +75,11 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	<liferay-ui:search-container-results>
 
 		<%
-		total = DDMStructureServiceUtil.searchCount(company.getCompanyId(), PortalUtil.getSiteAndCompanyGroupIds(scopeGroupId), scopeClassNameId, displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY);
+		total = DDMStructureServiceUtil.searchCount(company.getCompanyId(), PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), scopeClassNameId, displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY);
 
 		searchContainer.setTotal(total);
 
-		results = DDMStructureServiceUtil.search(company.getCompanyId(), PortalUtil.getSiteAndCompanyGroupIds(scopeGroupId), scopeClassNameId, displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), null);
+		results = DDMStructureServiceUtil.search(company.getCompanyId(), PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), scopeClassNameId, displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), null);
 
 		searchContainer.setResults(results);
 		%>

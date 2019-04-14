@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.transaction;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
@@ -92,11 +94,10 @@ public class TransactionContainerFilter
 							transactionStatusAdapter);
 					}
 					catch (Throwable throwable) {
-
-						// We are crashing either way and we don't want
-						// to swallow the real exception and create another
-						// request
-
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Could not rollback the transation", throwable);
+						}
 					}
 				}
 			}
@@ -136,6 +137,9 @@ public class TransactionContainerFilter
 				transactionConfig.getNoRollbackForClasses(),
 				transactionConfig.getNoRollbackForClassNames()));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TransactionContainerFilter.class);
 
 	private static final List<String> _transactionVerbs = Arrays.asList(
 		"DELETE", "PATCH", "POST", "PUT");

@@ -63,11 +63,11 @@ public class TransactionContainerFilter
 
 	@Override
 	public void filter(
-			ContainerRequestContext requestContext,
-			ContainerResponseContext responseContext)
+			ContainerRequestContext containerRequestContext,
+			ContainerResponseContext containerResponseContext)
 		throws IOException {
 
-		if (_transactionVerbs.contains(requestContext.getMethod())) {
+		if (_transactionVerbs.contains(containerRequestContext.getMethod())) {
 			DefaultTransactionExecutor defaultTransactionExecutor =
 				_getDefaultTransactionExecutor();
 
@@ -79,7 +79,7 @@ public class TransactionContainerFilter
 					_getTransactionAttributeAdapter();
 
 				if (Response.Status.Family.familyOf(
-						responseContext.getStatus()).equals(
+						containerResponseContext.getStatus()).equals(
 							Response.Status.Family.SUCCESSFUL)) {
 
 					defaultTransactionExecutor.commit(

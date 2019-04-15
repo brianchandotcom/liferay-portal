@@ -21,7 +21,6 @@ import java.io.Serializable;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayouts;
-import org.talend.sdk.component.api.meta.Documentation;
 
 /**
  * @author Zoltán Takács
@@ -73,15 +72,12 @@ public class LiferayInputMapperConfiguration implements Serializable {
 		return this;
 	}
 
-	@Documentation("TODO Fill the documentation for this parameter")
 	@Option
 	private int _batchSize;
 
-	@Documentation("TODO Fill the documentation for this parameter")
 	@Option
 	private RestDataSet _restDataSet;
 
-	@Documentation("TODO Fill the documentation for this parameter")
 	@Option
 	private int _timeout;
 

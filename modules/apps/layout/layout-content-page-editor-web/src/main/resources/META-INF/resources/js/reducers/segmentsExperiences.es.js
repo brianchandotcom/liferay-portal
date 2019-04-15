@@ -326,8 +326,8 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 								nextState.defaultSegmentsExperienceId :
 								nextState.segmentsExperienceId;
 
-							Object.entries(availableSegmentsExperiences).forEach(
-								([key, experience]) => {
+							Object.values(availableSegmentsExperiences).forEach(
+								experience => {
 									const segmentExperiencePriority = experience.priority;
 
 									if (segmentExperiencePriority > priority) {

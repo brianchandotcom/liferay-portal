@@ -13,6 +13,8 @@ Require-Capability:\
 	liferay.resource.bundle;\
 		filter:="(bundle.symbolic.name=com.liferay.sharing.lang)",\
 	soy;\
+		filter:="(type=clay-taglib)",\
+	soy;\
 		filter:="(type=frontend-js-web)"
 Web-ContextPath: /sharing-web
 -dsannotations-options: inherit

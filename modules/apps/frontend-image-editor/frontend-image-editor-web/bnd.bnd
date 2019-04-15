@@ -5,4 +5,7 @@ Provide-Capability:\
 	soy;\
 		type="image-editor-web";\
 		version:Version="${Bundle-Version}"
+Require-Capability:\
+	soy;\
+		filter:="(type=clay-taglib)"
 Web-ContextPath: /frontend-image-editor-web

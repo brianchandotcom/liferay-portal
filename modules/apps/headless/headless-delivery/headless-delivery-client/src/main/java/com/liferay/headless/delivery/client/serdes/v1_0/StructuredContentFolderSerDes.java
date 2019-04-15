@@ -61,13 +61,7 @@ public class StructuredContentFolderSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (structuredContentFolder.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(structuredContentFolder.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(structuredContentFolder.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");

@@ -68,13 +68,7 @@ public class RatingSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (rating.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(rating.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(rating.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");

@@ -59,13 +59,9 @@ public class MessageBoardMessageSerDes {
 
 		sb.append("\"aggregateRating\": ");
 
-		if (messageBoardMessage.getAggregateRating() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(messageBoardMessage.getAggregateRating());
-		}
-
+		sb.append(
+			AggregateRatingSerDes.toJSON(
+				messageBoardMessage.getAggregateRating()));
 		sb.append(", ");
 
 		sb.append("\"anonymous\": ");
@@ -96,13 +92,7 @@ public class MessageBoardMessageSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (messageBoardMessage.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(messageBoardMessage.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(messageBoardMessage.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");

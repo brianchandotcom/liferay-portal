@@ -214,7 +214,7 @@ public class SelectLayoutTag extends ComponentRendererTag {
 
 		for (Layout layout : layouts) {
 			if ((layout.isHidden() && !_isShowHiddenLayouts()) ||
-				(!Objects.equals(
+				(Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_CONTENT) &&
 				 Objects.equals(
 					 layout.getCreateDate(), layout.getPublishDate())) ||

@@ -11,7 +11,7 @@ $card-horizontal-on-border-width: 2px !default;
 
 /* ---------- Dialogs ---------- */
 
-$dialog-footer-bg: #FFF !default;
+$dialog-footer-bg: $white !default;
 $dialog-footer-border-color: $modal-footer-border-color !default;
 $dialog-footer-box-shadow: if(variable-exists(modal-footer-box-shadow), $modal-footer-box-shadow, null) !default;
 $dialog-footer-height: 60px;
@@ -46,26 +46,26 @@ $toggle-card-icon-width: 32px !default;
 
 $toggle-card-border: #DCE0E3 !default;
 $toggle-card-border-width: 1px !default;
-$toggle-card-icon-bg: #FFF !default;
+$toggle-card-icon-bg: $white !default;
 $toggle-card-icon-border: #869CAD !default;
 $toggle-card-icon-border-width: 0 !default;
 
 $toggle-card-on-border: #65B6F0 !default;
 $toggle-card-on-border-width: 2px !default;
-$toggle-card-on-icon-bg: #FFF !default;
+$toggle-card-on-icon-bg: $white !default;
 $toggle-card-on-icon-border: #65B6F0 !default;
 $toggle-card-on-icon-border-width: 0 !default;
 
 /* ---------- File icons colors ---------- */
 
-$file-icon-color-0: #FFF !default;
-$file-icon-color-1: #FFF !default;
-$file-icon-color-2: #FFF !default;
-$file-icon-color-3: #FFF !default;
-$file-icon-color-4: #FFF !default;
-$file-icon-color-5: #FFF !default;
-$file-icon-color-6: #FFF !default;
-$file-icon-color-7: #FFF !default;
+$file-icon-color-0: $white !default;
+$file-icon-color-1: $white !default;
+$file-icon-color-2: $white !default;
+$file-icon-color-3: $white !default;
+$file-icon-color-4: $white !default;
+$file-icon-color-5: $white !default;
+$file-icon-color-6: $white !default;
+$file-icon-color-7: $white !default;
 
 /* ---------- File icons text colors ---------- */
 
@@ -80,29 +80,29 @@ $file-icon-text-color-7: #272833 !default;
 
 /* ---------- User icons background colors ---------- */
 
-$user-icon-bg-color-0: #FFF !default;
-$user-icon-bg-color-1: #FFF !default;
-$user-icon-bg-color-2: #FFF !default;
-$user-icon-bg-color-3: #FFF !default;
-$user-icon-bg-color-4: #FFF !default;
-$user-icon-bg-color-5: #FFF !default;
-$user-icon-bg-color-6: #FFF !default;
-$user-icon-bg-color-7: #FFF !default;
-$user-icon-bg-color-8: #FFF !default;
-$user-icon-bg-color-9: #FFF !default;
+$user-icon-bg-color-0: $white !default;
+$user-icon-bg-color-1: $white !default;
+$user-icon-bg-color-2: $white !default;
+$user-icon-bg-color-3: $white !default;
+$user-icon-bg-color-4: $white !default;
+$user-icon-bg-color-5: $white !default;
+$user-icon-bg-color-6: $white !default;
+$user-icon-bg-color-7: $white !default;
+$user-icon-bg-color-8: $white !default;
+$user-icon-bg-color-9: $white !default;
 
 /* ---------- User icons border color ---------- */
 
-$user-icon-border-color-0: #E7E7ED !default;
-$user-icon-border-color-1: #E7E7ED !default;
-$user-icon-border-color-2: #E7E7ED !default;
-$user-icon-border-color-3: #E7E7ED !default;
-$user-icon-border-color-4: #E7E7ED !default;
-$user-icon-border-color-5: #E7E7ED !default;
-$user-icon-border-color-6: #E7E7ED !default;
-$user-icon-border-color-7: #E7E7ED !default;
-$user-icon-border-color-8: #E7E7ED !default;
-$user-icon-border-color-9: #E7E7ED !default;
+$user-icon-border-color-0: $gray-300 !default;
+$user-icon-border-color-1: $gray-300 !default;
+$user-icon-border-color-2: $gray-300 !default;
+$user-icon-border-color-3: $gray-300 !default;
+$user-icon-border-color-4: $gray-300 !default;
+$user-icon-border-color-5: $gray-300 !default;
+$user-icon-border-color-6: $gray-300 !default;
+$user-icon-border-color-7: $gray-300 !default;
+$user-icon-border-color-8: $gray-300 !default;
+$user-icon-border-color-9: $gray-300 !default;
 
 /* ---------- User icons colors ---------- */
 

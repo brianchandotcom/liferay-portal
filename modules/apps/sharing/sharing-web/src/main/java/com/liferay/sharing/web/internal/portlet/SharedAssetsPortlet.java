@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.css-class-wrapper=shared-assets-portlet",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Shared Assets",
+		"javax.portlet.display-name=Shared Content",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/shared_assets/view.jsp",

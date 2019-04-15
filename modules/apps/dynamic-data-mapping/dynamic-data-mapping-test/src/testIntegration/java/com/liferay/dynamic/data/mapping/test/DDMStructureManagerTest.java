@@ -58,7 +58,7 @@ import org.junit.runner.RunWith;
  * @author Leonardo Barros
  */
 @RunWith(Arquillian.class)
-public class DDMStructureManagerUtilTest {
+public class DDMStructureManagerTest {
 
 	@ClassRule
 	@Rule

@@ -28,9 +28,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.product.navigation.personal.menu.util.PersonalApplicationURLUtil" %><%@
 page import="com.liferay.product.navigation.personal.menu.web.internal.constants.PersonalMenuWebKeys" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
 

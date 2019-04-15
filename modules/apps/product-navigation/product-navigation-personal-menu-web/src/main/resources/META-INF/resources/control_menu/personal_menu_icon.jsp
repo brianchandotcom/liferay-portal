@@ -46,7 +46,9 @@
 	%>
 
 	<c:if test="<%= notificationsCount > 0 %>">
-		<%PortletURL notificationsURL = PortletProviderUtil.getPortletURL(request, UserNotificationEvent.class.getName(), PortletProvider.Action.VIEW);
+
+		<%
+		String notificationsURL = PersonalApplicationURLUtil.getPersonalApplicationURL(request, PortletProviderUtil.getPortletId(UserNotificationEvent.class.getName(), PortletProvider.Action.VIEW));
 		%>
 
 		<aui:a href="<%= (notificationsURL != null) ? notificationsURL.toString() : null %>">

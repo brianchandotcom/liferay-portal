@@ -15,8 +15,6 @@
 package com.liferay.portal.remote.cors.test.internal.activator;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.io.IOException;
@@ -47,7 +45,7 @@ public abstract class BaseTestPreparatorBundleActivator
 	implements BundleActivator {
 
 	@Override
-	public void start(BundleContext bundleContext) {
+	public void start(BundleContext bundleContext) throws Exception {
 		this.bundleContext = bundleContext;
 
 		autoCloseables = new ArrayList<>();
@@ -63,19 +61,14 @@ public abstract class BaseTestPreparatorBundleActivator
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) {
+	public void stop(BundleContext bundleContext) throws Exception {
 		ListIterator<AutoCloseable> listIterator = autoCloseables.listIterator(
 			autoCloseables.size());
 
 		while (listIterator.hasPrevious()) {
 			AutoCloseable previousAutoCloseable = listIterator.previous();
 
-			try {
-				previousAutoCloseable.close();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			previousAutoCloseable.close();
 		}
 	}
 
@@ -219,8 +212,5 @@ public abstract class BaseTestPreparatorBundleActivator
 
 	protected ArrayList<AutoCloseable> autoCloseables;
 	protected BundleContext bundleContext;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseTestPreparatorBundleActivator.class);
 
 }

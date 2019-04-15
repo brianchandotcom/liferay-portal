@@ -15,6 +15,8 @@
 package com.liferay.document.library.internal.security.permission.resource;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -49,9 +51,22 @@ public class FolderModelResourcePermissionRegistrar {
 				Folder.class, Folder::getFolderId,
 				_dlAppLocalService::getFolder, _portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
-					(permissionChecker, name, folder, actionId) ->
-						folder.containsPermission(
-							permissionChecker, actionId))),
+					(permissionChecker, name, folder, actionId) -> {
+						if (folder.isMountPoint()) {
+							Repository repository =
+								_repositoryFactory.createRepository(
+									folder.getRepositoryId());
+
+							Folder repositoryFolder = repository.getFolder(
+								folder.getFolderId());
+
+							return repositoryFolder.containsPermission(
+								permissionChecker, actionId);
+						}
+
+						return folder.containsPermission(
+							permissionChecker, actionId);
+					})),
 			properties);
 	}
 
@@ -65,6 +80,9 @@ public class FolderModelResourcePermissionRegistrar {
 
 	@Reference(target = "(resource.name=" + DLConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private RepositoryFactory _repositoryFactory;
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
 

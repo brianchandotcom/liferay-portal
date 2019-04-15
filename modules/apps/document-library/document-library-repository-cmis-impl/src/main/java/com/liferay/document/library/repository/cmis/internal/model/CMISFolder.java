@@ -93,7 +93,7 @@ public class CMISFolder extends CMISModel implements Folder {
 		ObjectType objectType = _cmisFolder.getType();
 
 		if (cmisRepositoryDetector.isNuxeo() &&
-			Objects.equals("Domain", objectType.getId()) &&
+			!Objects.equals("Workspace", objectType.getId()) &&
 			Objects.equals(ActionKeys.ADD_DOCUMENT, actionId)) {
 
 			return false;

@@ -225,7 +225,7 @@ definition {
 		);
 
 		OAuth2.addApplication(
-			applicationName = "OAuth Application",
+			applicationName = "Third-party Application",
 			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
 			clientProfile = "Web Application"
 		);
@@ -238,13 +238,13 @@ definition {
 		Navigator.gotoBack();
 
 		OAuth2.editScopes(
-			applicationName = "OAuth Application",
+			applicationName = "Third-party Application",
 			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
 			resourcePanels = "Portal Services"
 		);
 
 		OAuth2.viewApplication(
-			applicationName = "OAuth Application",
+			applicationName = "Third-party Application",
 			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
 			checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
 			clientId = "${clientId}",

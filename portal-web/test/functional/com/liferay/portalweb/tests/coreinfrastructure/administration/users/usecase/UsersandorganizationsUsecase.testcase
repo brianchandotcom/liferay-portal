@@ -226,7 +226,7 @@ definition {
 
 	@priority = "4"
 	test CannotViewSiteSettingsInUserPersonalSite {
-		ProductMenu.gotoPersonalSite();
+		Navigator.gotoPersonalSite();
 
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 

@@ -155,7 +155,7 @@ definition {
 
 		CalendarScheduler.viewWeek(eventTitle = "Test Test Calendar Event Title");
 
-		ProductMenu.gotoPersonalSite();
+		Navigator.gotoPersonalSite();
 
 		Portlet.addPG(portletName = "Calendar");
 

@@ -130,6 +130,14 @@ definition {
 		Navigator._gotoPage(pageName = "${pageName}");
 	}
 
+	macro gotoPersonalSite {
+		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		var key_dropdownItem = "My Sites";
+
+		Click(locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
+	}
+
 	macro gotoPrivateSitePage {
 		Navigator.openPrivateSiteURL(baseURL = "${baseURL}", siteName = "${siteName}");
 

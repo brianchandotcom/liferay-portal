@@ -87,7 +87,7 @@ definition {
 
 		ProductMenuHelper.openProductMenu();
 
-		ProductMenu.gotoPersonalSite();
+		Navigator.gotoPersonalSite();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -111,7 +111,7 @@ definition {
 
 		ProductMenuHelper.openProductMenu();
 
-		ProductMenu.gotoPersonalSite();
+		Navigator.gotoPersonalSite();
 
 		var key_pageName = "Friends Request Page";
 

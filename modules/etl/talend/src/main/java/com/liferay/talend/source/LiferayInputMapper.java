@@ -17,7 +17,7 @@ package com.liferay.talend.source;
 import static java.util.Collections.singletonList;
 
 import com.liferay.talend.configuration.LiferayInputMapperConfiguration;
-import com.liferay.talend.service.TalendService;
+import com.liferay.talend.service.ConnectionService;
 
 import java.io.Serializable;
 
@@ -35,6 +35,7 @@ import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 @Icon(custom = "LiferayInput", value = Icon.IconType.CUSTOM)
 @PartitionMapper(family = "Liferay", name = "Input")
@@ -42,20 +43,20 @@ import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 public class LiferayInputMapper implements Serializable {
 
 	public LiferayInputMapper(
+		final ConnectionService connectionService,
 		@Option("liferayInputMapperConfiguration") final
 			LiferayInputMapperConfiguration liferayInputMapperConfiguration,
-		final TalendService talendService,
 		final RecordBuilderFactory recordBuilderFactory) {
 
+		_connectionService = connectionService;
 		_liferayInputMapperConfiguration = liferayInputMapperConfiguration;
-		_talendService = talendService;
 		_recordBuilderFactory = recordBuilderFactory;
 	}
 
 	@Emitter
 	public LiferayInputEmitter createWorker() {
 		return new LiferayInputEmitter(
-			_liferayInputMapperConfiguration, _talendService,
+			_connectionService, _liferayInputMapperConfiguration,
 			_recordBuilderFactory);
 	}
 
@@ -69,9 +70,9 @@ public class LiferayInputMapper implements Serializable {
 		return singletonList(this);
 	}
 
+	private final ConnectionService _connectionService;
 	private final LiferayInputMapperConfiguration
 		_liferayInputMapperConfiguration;
 	private final RecordBuilderFactory _recordBuilderFactory;
-	private final TalendService _talendService;
 
 }

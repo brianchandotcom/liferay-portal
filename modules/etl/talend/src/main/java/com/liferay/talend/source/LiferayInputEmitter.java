@@ -15,7 +15,8 @@
 package com.liferay.talend.source;
 
 import com.liferay.talend.configuration.LiferayInputMapperConfiguration;
-import com.liferay.talend.service.TalendService;
+import com.liferay.talend.dataset.RestDataSet;
+import com.liferay.talend.service.ConnectionService;
 
 import java.io.Serializable;
 
@@ -29,17 +30,18 @@ import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public class LiferayInputEmitter implements Serializable {
 
 	public LiferayInputEmitter(
+		final ConnectionService connectionService,
 		@Option("liferayInputMapperConfiguration") final
 			LiferayInputMapperConfiguration liferayInputMapperConfiguration,
-		final TalendService talendService,
 		final RecordBuilderFactory recordBuilderFactory) {
 
+		_connectionService = connectionService;
 		_liferayInputMapperConfiguration = liferayInputMapperConfiguration;
-		_talendService = talendService;
 		_recordBuilderFactory = recordBuilderFactory;
 	}
 
@@ -49,6 +51,11 @@ public class LiferayInputEmitter implements Serializable {
 
 	@Producer
 	public Record next() {
+		RestDataSet restDataSet =
+			_liferayInputMapperConfiguration.getRestDataSet();
+
+		_connectionService.getData(restDataSet);
+
 		return null;
 	}
 
@@ -56,9 +63,9 @@ public class LiferayInputEmitter implements Serializable {
 	public void release() {
 	}
 
+	private final ConnectionService _connectionService;
 	private final LiferayInputMapperConfiguration
 		_liferayInputMapperConfiguration;
 	private final RecordBuilderFactory _recordBuilderFactory;
-	private final TalendService _talendService;
 
 }

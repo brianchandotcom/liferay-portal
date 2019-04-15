@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 
 import org.osgi.framework.Constants;
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ConfigurationEvent;
 import org.osgi.service.cm.SynchronousConfigurationListener;
 import org.osgi.service.component.annotations.Component;
@@ -44,12 +43,6 @@ public class ConfigurationSynchronousConfigurationListener
 
 		message.setDestinationName(
 			ConfigurationClusterDestinationNames.CONFIGURATION);
-
-		String factoryPid = configurationEvent.getFactoryPid();
-
-		if (factoryPid != null) {
-			message.put(ConfigurationAdmin.SERVICE_FACTORYPID, factoryPid);
-		}
 
 		message.put(Constants.SERVICE_PID, configurationEvent.getPid());
 

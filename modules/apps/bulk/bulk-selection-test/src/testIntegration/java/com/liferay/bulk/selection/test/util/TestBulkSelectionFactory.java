@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,11 +41,6 @@ public class TestBulkSelectionFactory implements BulkSelectionFactory<Integer> {
 		String[] integers = parameterMap.get("integers");
 
 		return new BulkSelection<Integer>() {
-
-			@Override
-			public String describe(Locale locale) {
-				return "Test Integer Bulk Selection";
-			}
 
 			@Override
 			public <E extends PortalException> void forEach(
@@ -71,8 +65,8 @@ public class TestBulkSelectionFactory implements BulkSelectionFactory<Integer> {
 			}
 
 			@Override
-			public boolean isMultiple() {
-				return true;
+			public long getSize() {
+				return integers.length;
 			}
 
 			@Override

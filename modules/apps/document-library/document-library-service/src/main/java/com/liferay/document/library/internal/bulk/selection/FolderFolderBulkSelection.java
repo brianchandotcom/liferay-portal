@@ -57,13 +57,13 @@ public class FolderFolderBulkSelection
 	}
 
 	@Override
-	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
-		throw new UnsupportedOperationException("Folder is not an asset");
+	public long getSize() throws PortalException {
+		return _dlAppService.getFoldersCount(_repositoryId, _folderId);
 	}
 
 	@Override
-	protected int getEntriesCount() throws PortalException {
-		return _dlAppService.getFoldersCount(_repositoryId, _folderId);
+	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
+		throw new UnsupportedOperationException("Folder is not an asset");
 	}
 
 	@Override

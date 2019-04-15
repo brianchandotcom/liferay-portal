@@ -23,18 +23,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
 
-import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Adolfo Pérez
  */
 public class EmptyBulkSelection<T> implements BulkSelection<T> {
-
-	@Override
-	public String describe(Locale locale) {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public <E extends PortalException> void forEach(
@@ -54,8 +48,8 @@ public class EmptyBulkSelection<T> implements BulkSelection<T> {
 	}
 
 	@Override
-	public boolean isMultiple() {
-		return false;
+	public long getSize() {
+		return 0;
 	}
 
 	@Override

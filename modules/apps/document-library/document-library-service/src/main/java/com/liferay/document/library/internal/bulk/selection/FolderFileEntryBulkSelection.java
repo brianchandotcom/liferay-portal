@@ -60,14 +60,14 @@ public class FolderFileEntryBulkSelection
 	}
 
 	@Override
-	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
-		return new FileEntryAssetEntryBulkSelection(
-			this, _assetEntryLocalService);
+	public long getSize() throws PortalException {
+		return _dlAppService.getFileEntriesCount(_repositoryId, _folderId);
 	}
 
 	@Override
-	protected int getEntriesCount() throws PortalException {
-		return _dlAppService.getFileEntriesCount(_repositoryId, _folderId);
+	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
+		return new FileEntryAssetEntryBulkSelection(
+			this, _assetEntryLocalService);
 	}
 
 	@Override

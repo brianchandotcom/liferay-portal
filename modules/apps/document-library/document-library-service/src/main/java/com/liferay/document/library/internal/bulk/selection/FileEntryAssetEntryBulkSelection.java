@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.io.Serializable;
 
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -41,11 +40,6 @@ public class FileEntryAssetEntryBulkSelection
 
 		_fileEntryBulkSelection = fileEntryBulkSelection;
 		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Override
-	public String describe(Locale locale) throws PortalException {
-		return _fileEntryBulkSelection.describe(locale);
 	}
 
 	@Override
@@ -70,8 +64,8 @@ public class FileEntryAssetEntryBulkSelection
 	}
 
 	@Override
-	public boolean isMultiple() {
-		return _fileEntryBulkSelection.isMultiple();
+	public long getSize() throws PortalException {
+		return _fileEntryBulkSelection.getSize();
 	}
 
 	@Override

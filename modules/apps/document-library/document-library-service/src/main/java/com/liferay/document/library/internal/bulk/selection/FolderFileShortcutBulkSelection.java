@@ -58,13 +58,7 @@ public class FolderFileShortcutBulkSelection
 	}
 
 	@Override
-	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
-		throw new UnsupportedOperationException(
-			"File shortcut is not an asset");
-	}
-
-	@Override
-	protected int getEntriesCount() throws PortalException {
+	public long getSize() throws PortalException {
 		int fileEntriesAndFileShortcutsCount =
 			_dlAppService.getFileEntriesAndFileShortcutsCount(
 				_repositoryId, _folderId, WorkflowConstants.STATUS_APPROVED);
@@ -72,6 +66,12 @@ public class FolderFileShortcutBulkSelection
 			_repositoryId, _folderId);
 
 		return fileEntriesAndFileShortcutsCount - fileEntriesCount;
+	}
+
+	@Override
+	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
+		throw new UnsupportedOperationException(
+			"File shortcut is not an asset");
 	}
 
 	@Override

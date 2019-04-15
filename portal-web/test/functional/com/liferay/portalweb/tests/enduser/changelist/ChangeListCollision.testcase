@@ -88,8 +88,8 @@ definition {
 		WebContentTemplates.modifyTemplate(
 			structureName = "Basic Web Content",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "Image",
-			templateName = "WC Template Name Modified in The First Change List"
+			templateName = "WC Template Name Modified in The First Change List",
+			templatePreviousName = "WC Template Name"
 		);
 
 		ProductMenu.gotoPortlet(
@@ -116,7 +116,8 @@ definition {
 
 		WebContentTemplates.modifyTemplate(
 			templateDescription = "WC Template Description",
-			templateName = "WC Template Name Modified in The Second Change List"
+			templateName = "WC Template Name Modified in The Second Change List",
+			templatePreviousName = "WC Template Name"
 		);
 
 		ProductMenu.gotoPortlet(

@@ -257,7 +257,10 @@ definition {
 
 	@summary = "Modify template"
 	macro modifyTemplate {
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		LexiconCard.clickEllipsisItem(
+			card = "${templatePreviousName}",
+			item = "Edit"
+		);
 
 		WebContentTemplates.inputTemplateAddScreenFields(
 			templateDescription = "${templateDescription}",

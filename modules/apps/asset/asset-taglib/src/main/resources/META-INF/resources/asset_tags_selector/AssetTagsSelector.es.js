@@ -92,6 +92,12 @@ class AssetTagsSelector extends Component {
 		const inputValue = event.target.inputValue;
 
 		if (inputValue) {
+			const existingTag = this.selectedItems.find(tag => tag.value === inputValue);
+
+			if (existingTag) {
+				return;
+			}
+
 			const item = {
 				label: inputValue,
 				value: inputValue

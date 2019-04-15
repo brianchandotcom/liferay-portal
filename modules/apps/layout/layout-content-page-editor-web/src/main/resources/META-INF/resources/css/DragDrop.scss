@@ -23,12 +23,11 @@
 		background: transparent;
 		border: none;
 		box-shadow: none;
-		height: auto;
-		margin: 0;
+		height: 64px;
 		opacity: 1;
 		outline: none;
 		padding: 0;
-		width: auto;
+		width: 116px;
 		z-index: $dragSourceZIndex;
 
 		& > * {
@@ -53,7 +52,6 @@
 			padding: 8px;
 			text-align: center;
 			text-overflow: ellipsis;
-			transform: scale(0.6);
 			white-space: nowrap;
 			width: 116px;
 		}

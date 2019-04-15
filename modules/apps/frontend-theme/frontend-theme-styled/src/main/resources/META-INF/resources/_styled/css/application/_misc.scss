@@ -49,7 +49,12 @@
 .lfr-page-layouts {
 	padding: 0;
 
-	input[type="radio"]:checked + .card-horizontal {
-		box-shadow: inset 0 0 0 $card-horizontal-on-border-width $card-horizontal-on-border;
+	input[type="radio"] {
+		opacity: 0;
+		position: absolute;
+
+		&:checked + .card-horizontal {
+			box-shadow: inset 0 0 0 $card-horizontal-on-border-width $card-horizontal-on-border;
+		}
 	}
 }

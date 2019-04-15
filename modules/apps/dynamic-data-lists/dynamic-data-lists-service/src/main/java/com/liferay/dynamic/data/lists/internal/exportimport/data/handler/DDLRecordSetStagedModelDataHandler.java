@@ -33,7 +33,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -51,51 +50,6 @@ public class DDLRecordSetStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDLRecordSet> {
 
 	public static final String[] CLASS_NAMES = {DDLRecordSet.class.getName()};
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void deleteStagedModel(DDLRecordSet recordSet)
-		throws PortalException {
-
-		super.deleteStagedModel(recordSet);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void deleteStagedModel(
-			String uuid, long groupId, String className, String extraData)
-		throws PortalException {
-
-		super.deleteStagedModel(uuid, groupId, className, extraData);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public DDLRecordSet fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return super.fetchStagedModelByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public List<DDLRecordSet> fetchStagedModelsByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return super.fetchStagedModelsByUuidAndCompanyId(uuid, companyId);
-	}
 
 	@Override
 	public String[] getClassNames() {

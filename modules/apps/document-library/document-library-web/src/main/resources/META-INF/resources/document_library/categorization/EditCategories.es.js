@@ -217,7 +217,7 @@ class EditCategories extends Component {
 		const modal = this.element.querySelector('.modal');
 
 		if (modal && dataProvider && !modal.contains(dataProvider.element)) {
-			modal.appendChild(dataProvider.element)
+			modal.appendChild(dataProvider.element);
 		}
 	}
 

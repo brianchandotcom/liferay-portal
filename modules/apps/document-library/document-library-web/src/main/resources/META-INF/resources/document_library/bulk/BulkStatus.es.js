@@ -56,7 +56,7 @@ class BulkStatus extends Component {
 	_getBulkStatus() {
 		fetch(
 			this.pathModule + this.bulkStatusUrl,
-			{ credentials: 'include' }
+			{credentials: 'include'}
 		)
 			.then(response => response.json())
 			.then(

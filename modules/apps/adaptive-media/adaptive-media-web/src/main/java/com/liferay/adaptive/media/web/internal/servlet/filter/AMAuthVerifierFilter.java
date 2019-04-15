@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"filter.init.auth.verifier.PortalSessionAuthVerifier.checkCSRFToken=false",
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + AMWebConstants.SERVLET_PATH + "/*",
 		"osgi.http.whiteboard.filter.name=com.liferay.adaptive.media.web.internal.servlet.filter.AMAuthVerifierFilter",
 		"osgi.http.whiteboard.filter.pattern=/" + AMWebConstants.SERVLET_PATH + "/*"

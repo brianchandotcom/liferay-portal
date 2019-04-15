@@ -16,4 +16,13 @@
 
 <%@ include file="/entries/init.jsp" %>
 
-<aui:icon cssClass="btn btn-monospaced" image="pencil" markupView="lexicon" url="<%= toggleEditLayoutModeDisplayContext.getEditModeURL() %>" />
+<li class="control-menu-nav-item">
+	<liferay-ui:icon
+		icon="pencil"
+		iconCssClass="icon-monospaced lexicon-icon"
+		label="<%= false %>"
+		linkCssClass="btn btn-monospaced btn-sm control-menu-icon"
+		markupView="lexicon"
+		url="<%= toggleEditLayoutModeDisplayContext.getEditModeURL() %>"
+	/>
+</li>

@@ -52,7 +52,7 @@ public class DataStoreChecker {
 		restDataSet.setInputDataStore(inputDataStore);
 
 		try {
-			_connectionService.getData(restDataSet);
+			_connectionService.getResponseRawString(restDataSet);
 		}
 		catch (ConnectionException ce) {
 			return new HealthCheckStatus(

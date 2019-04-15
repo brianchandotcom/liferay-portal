@@ -60,7 +60,7 @@ public class ConnectionService {
 		return serverURL;
 	}
 
-	public JsonObject getData(RESTDataSet restDataSet)
+	public JsonObject getResponseJsonObject(RESTDataSet restDataSet)
 		throws ConnectionException {
 
 		InputDataStore inputDataStore = restDataSet.getInputDataStore();
@@ -71,21 +71,33 @@ public class ConnectionService {
 
 		_liferayHttpClient.base(serverURL.toString());
 
-		Response<JsonObject> jsonObjectResponse = _liferayHttpClient.getData(
-			authorizationHeader, "application/json", restDataSet.getEndpoint());
+		Response<JsonObject> jsonObjectResponse =
+			_liferayHttpClient.getJsonObjectResponse(
+				authorizationHeader, "application/json",
+				restDataSet.getEndpoint());
 
-		if (jsonObjectResponse == null) {
-			throw new ConnectionException(
-				"Data request failed. End point did not respond.");
-		}
-
-		if (jsonObjectResponse.status() != 200) {
-			throw new ConnectionException(
-				"Request failed. Received response status is " +
-					jsonObjectResponse.status());
-		}
+		_validateResponse(jsonObjectResponse);
 
 		return jsonObjectResponse.body();
+	}
+
+	public String getResponseRawString(RESTDataSet restDataSet)
+		throws ConnectionException {
+
+		InputDataStore inputDataStore = restDataSet.getInputDataStore();
+
+		String authorizationHeader = _getAuthorizationHeader(inputDataStore);
+
+		URL serverURL = getServerURL(inputDataStore);
+
+		_liferayHttpClient.base(serverURL.toString());
+
+		Response<String> response = _liferayHttpClient.getRawStringResponse(
+			authorizationHeader, "*/*", restDataSet.getEndpoint());
+
+		_validateResponse(response);
+
+		return response.body();
 	}
 
 	public JsonObject requestAuthorizationJsonObject(
@@ -189,13 +201,26 @@ public class ConnectionService {
 		return false;
 	}
 
+	private void _validateResponse(Response<?> response) {
+		if (response == null) {
+			throw new ConnectionException(
+				"Data request failed. End point did not respond.");
+		}
+
+		if (response.status() != 200) {
+			throw new ConnectionException(
+				"Request failed. Received response status is " +
+					response.status());
+		}
+	}
+
 	private static final String
 		_OAUTH_FAILED_UNSUPPORTED_RESPONSE_CONTENT_TYPE =
-			"OAuth check failed. Unsupported content type. Response status " +
+			"OAuth2 check failed. Unsupported content type. Response status " +
 				"{%s}  Content type {%s}";
 
 	private static final String _OAUTH_FAILED_UNSUPPORTED_STATUS =
-		"OAuth check failed. Response status {%s}.";
+		"OAuth2 check failed. Response status {%s}.";
 
 	@Service
 	private LiferayHttpClient _liferayHttpClient;

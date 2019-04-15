@@ -28,6 +28,7 @@ import org.talend.sdk.component.api.service.http.Response;
 
 /**
  * @author Igor Beslic
+ * @author Zoltán Takács
  */
 public interface LiferayHttpClient extends HttpClient {
 
@@ -38,7 +39,13 @@ public interface LiferayHttpClient extends HttpClient {
 		OAuthDataStore oAuthDataStore);
 
 	@Request(method = "GET", path = "/{endpointPath}")
-	public Response<JsonObject> getData(
+	public Response<JsonObject> getJsonObjectResponse(
+		@Header("Authorization") String authorizationHeader,
+		@Header("Accept") String acceptHeader,
+		@Path("endpointPath") String endpointPath);
+
+	@Request(method = "GET", path = "/{endpointPath}")
+	public Response<String> getRawStringResponse(
 		@Header("Authorization") String authorizationHeader,
 		@Header("Accept") String acceptHeader,
 		@Path("endpointPath") String endpointPath);

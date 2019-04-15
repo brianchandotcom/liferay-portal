@@ -217,6 +217,17 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * URL for removing a segmentsExperience and it's associated
+	 * fragmentEntryLinks.
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	deleteSegmentsExperienceURL: Config
+		.string()
+		.value(''),
+
+	/**
 	 * URL to redirect after discard draft action.
 	 * @default ''
 	 * @review

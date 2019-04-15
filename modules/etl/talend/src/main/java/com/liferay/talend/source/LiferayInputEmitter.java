@@ -15,13 +15,17 @@
 package com.liferay.talend.source;
 
 import com.liferay.talend.configuration.LiferayInputMapperConfiguration;
-import com.liferay.talend.dataset.RestDataSet;
 import com.liferay.talend.service.ConnectionService;
 
 import java.io.Serializable;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+
+import javax.json.JsonObject;
 
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.input.Producer;
@@ -51,10 +55,14 @@ public class LiferayInputEmitter implements Serializable {
 
 	@Producer
 	public Record next() {
-		RestDataSet restDataSet =
-			_liferayInputMapperConfiguration.getRestDataSet();
+		JsonObject data = _connectionService.getData(
+			_liferayInputMapperConfiguration.getRestDataSet());
 
-		_connectionService.getData(restDataSet);
+		if (data != null) {
+			if (_logger.isLoggable(Level.FINE)) {
+				_logger.fine("Process data:" + data.toString());
+			}
+		}
 
 		return null;
 	}
@@ -66,6 +74,7 @@ public class LiferayInputEmitter implements Serializable {
 	private final ConnectionService _connectionService;
 	private final LiferayInputMapperConfiguration
 		_liferayInputMapperConfiguration;
+	private final Logger _logger = Logger.getLogger("LiferayInputEmitter");
 	private final RecordBuilderFactory _recordBuilderFactory;
 
 }

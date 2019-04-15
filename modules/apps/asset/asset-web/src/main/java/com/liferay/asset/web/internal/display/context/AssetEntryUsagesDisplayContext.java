@@ -22,12 +22,18 @@ import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.asset.util.AssetEntryUsageActionMenuContributor;
 import com.liferay.asset.util.AssetEntryUsageActionMenuContributorRegistryUtil;
 import com.liferay.asset.util.comparator.AssetEntryUsageModifiedDateComparator;
+import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -48,6 +54,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -67,6 +74,13 @@ public class AssetEntryUsagesDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
+		_fragmentCollectionContributorTracker =
+			(FragmentCollectionContributorTracker)renderRequest.getAttribute(
+				ContentPageEditorWebKeys.
+					FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
+		_fragmentRendererTracker =
+			(FragmentRendererTracker)renderRequest.getAttribute(
+				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -224,21 +238,17 @@ public class AssetEntryUsagesDisplayContext {
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLink(
 				GetterUtil.getLong(assetEntryUsage.getContainerKey()));
 
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
-				fragmentEntryLink.getFragmentEntryId());
+		String name = _getFragmentEntryName(fragmentEntryLink);
 
-		if (fragmentEntry == null) {
+		if (Validator.isNull(name)) {
 			return StringPool.BLANK;
 		}
 
-		if (fragmentEntry.getType() == FragmentConstants.TYPE_COMPONENT) {
-			return LanguageUtil.format(
-				request, "x-element", fragmentEntry.getName());
+		if (_getType(fragmentEntryLink) == FragmentConstants.TYPE_COMPONENT) {
+			return LanguageUtil.format(request, "x-element", name);
 		}
 
-		return LanguageUtil.format(
-			request, "x-section", fragmentEntry.getName());
+		return LanguageUtil.format(request, "x-section", name);
 	}
 
 	public int getDisplayPagesUsageCount() {
@@ -368,6 +378,48 @@ public class AssetEntryUsagesDisplayContext {
 		return _searchContainer;
 	}
 
+	private String _getFragmentEntryName(FragmentEntryLink fragmentEntryLink) {
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+
+		if (fragmentEntry != null) {
+			return fragmentEntry.getName();
+		}
+
+		String rendererKey = fragmentEntryLink.getRendererKey();
+
+		if (Validator.isNull(rendererKey)) {
+			return StringPool.BLANK;
+		}
+
+		Map<String, FragmentEntry> fragmentCollectionContributorEntries =
+			_fragmentCollectionContributorTracker.
+				getFragmentCollectionContributorEntries();
+
+		FragmentEntry contributedFragmentEntry =
+			fragmentCollectionContributorEntries.get(rendererKey);
+
+		if (contributedFragmentEntry != null) {
+			return contributedFragmentEntry.getName();
+		}
+
+		FragmentRenderer fragmentRenderer =
+			_fragmentRendererTracker.getFragmentRenderer(
+				fragmentEntryLink.getRendererKey());
+
+		if (fragmentRenderer != null) {
+			DefaultFragmentRendererContext fragmentRendererContext =
+				new DefaultFragmentRendererContext(fragmentEntryLink);
+
+			fragmentRendererContext.setLocale(_themeDisplay.getLocale());
+
+			return fragmentRenderer.getLabel(fragmentRendererContext);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -390,6 +442,43 @@ public class AssetEntryUsagesDisplayContext {
 		return _orderByType;
 	}
 
+	private int _getType(FragmentEntryLink fragmentEntryLink) {
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+
+		if (fragmentEntry != null) {
+			return fragmentEntry.getType();
+		}
+
+		String rendererKey = fragmentEntryLink.getRendererKey();
+
+		if (Validator.isNull(rendererKey)) {
+			return 0;
+		}
+
+		Map<String, FragmentEntry> fragmentCollectionContributorEntries =
+			_fragmentCollectionContributorTracker.
+				getFragmentCollectionContributorEntries();
+
+		FragmentEntry contributedFragmentEntry =
+			fragmentCollectionContributorEntries.get(rendererKey);
+
+		if (contributedFragmentEntry != null) {
+			return contributedFragmentEntry.getType();
+		}
+
+		FragmentRenderer fragmentRenderer =
+			_fragmentRendererTracker.getFragmentRenderer(
+				fragmentEntryLink.getRendererKey());
+
+		if (fragmentRenderer != null) {
+			return fragmentRenderer.getType();
+		}
+
+		return 0;
+	}
+
 	private boolean _isDraft(Layout layout) {
 		if (layout.getClassNameId() != PortalUtil.getClassNameId(
 				Layout.class.getName())) {
@@ -402,6 +491,9 @@ public class AssetEntryUsagesDisplayContext {
 
 	private Long _assetEntryId;
 	private String _assetEntryTitle;
+	private final FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+	private final FragmentRendererTracker _fragmentRendererTracker;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

@@ -18,6 +18,10 @@ import com.liferay.asset.constants.AssetPortletKeys;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetEntryUsageRecorder;
+import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -92,6 +96,13 @@ public class AssetPortlet extends MVCPortlet {
 			}
 		}
 
+		renderRequest.setAttribute(
+			ContentPageEditorWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
+			_fragmentCollectionContributorTracker);
+		renderRequest.setAttribute(
+			FragmentActionKeys.FRAGMENT_RENDERER_TRACKER,
+			_fragmentRendererTracker);
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -135,5 +146,12 @@ public class AssetPortlet extends MVCPortlet {
 
 	private final Map<String, AssetEntryUsageRecorder>
 		_assetEntryUsageRecorders = new ConcurrentHashMap<>();
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
 
 }

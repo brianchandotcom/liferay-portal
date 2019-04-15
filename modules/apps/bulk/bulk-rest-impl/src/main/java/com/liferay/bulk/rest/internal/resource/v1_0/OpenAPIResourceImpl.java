@@ -76,7 +76,7 @@ public class OpenAPIResourceImpl {
 		{
 			add(KeywordResourceImpl.class);
 
-			add(MessageSelectionResourceImpl.class);
+			add(SelectionResourceImpl.class);
 
 			add(StatusResourceImpl.class);
 

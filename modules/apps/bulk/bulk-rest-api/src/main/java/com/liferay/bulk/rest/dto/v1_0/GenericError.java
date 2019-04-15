@@ -100,7 +100,9 @@ public class GenericError {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(message);
+			sb.append("\"");
 		}
 
 		sb.append("}");

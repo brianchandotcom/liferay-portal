@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
-import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
-import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
+import com.liferay.bulk.rest.dto.v1_0.Selection;
+import com.liferay.bulk.rest.resource.v1_0.SelectionResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -77,7 +77,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseMessageSelectionResourceTestCase {
+public abstract class BaseSelectionResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -107,24 +107,23 @@ public abstract class BaseMessageSelectionResourceTestCase {
 
 	@Test
 	public void testPostBulkSelection() throws Exception {
-		MessageSelection randomMessageSelection = randomMessageSelection();
+		Selection randomSelection = randomSelection();
 
-		MessageSelection postMessageSelection =
-			testPostBulkSelection_addMessageSelection(randomMessageSelection);
+		Selection postSelection = testPostBulkSelection_addSelection(
+			randomSelection);
 
-		assertEquals(randomMessageSelection, postMessageSelection);
-		assertValid(postMessageSelection);
+		assertEquals(randomSelection, postSelection);
+		assertValid(postSelection);
 	}
 
-	protected MessageSelection testPostBulkSelection_addMessageSelection(
-			MessageSelection messageSelection)
+	protected Selection testPostBulkSelection_addSelection(Selection selection)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected MessageSelection invokePostBulkSelection(
+	protected Selection invokePostBulkSelection(
 			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
@@ -143,7 +142,7 @@ public abstract class BaseMessageSelectionResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(string, MessageSelection.class);
+			return outputObjectMapper.readValue(string, Selection.class);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process HTTP response: " + string, e);
@@ -176,42 +175,35 @@ public abstract class BaseMessageSelectionResourceTestCase {
 			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected void assertEquals(
-		MessageSelection messageSelection1,
-		MessageSelection messageSelection2) {
-
+	protected void assertEquals(Selection selection1, Selection selection2) {
 		Assert.assertTrue(
-			messageSelection1 + " does not equal " + messageSelection2,
-			equals(messageSelection1, messageSelection2));
+			selection1 + " does not equal " + selection2,
+			equals(selection1, selection2));
 	}
 
 	protected void assertEquals(
-		List<MessageSelection> messageSelections1,
-		List<MessageSelection> messageSelections2) {
+		List<Selection> selections1, List<Selection> selections2) {
 
-		Assert.assertEquals(
-			messageSelections1.size(), messageSelections2.size());
+		Assert.assertEquals(selections1.size(), selections2.size());
 
-		for (int i = 0; i < messageSelections1.size(); i++) {
-			MessageSelection messageSelection1 = messageSelections1.get(i);
-			MessageSelection messageSelection2 = messageSelections2.get(i);
+		for (int i = 0; i < selections1.size(); i++) {
+			Selection selection1 = selections1.get(i);
+			Selection selection2 = selections2.get(i);
 
-			assertEquals(messageSelection1, messageSelection2);
+			assertEquals(selection1, selection2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<MessageSelection> messageSelections1,
-		List<MessageSelection> messageSelections2) {
+		List<Selection> selections1, List<Selection> selections2) {
 
-		Assert.assertEquals(
-			messageSelections1.size(), messageSelections2.size());
+		Assert.assertEquals(selections1.size(), selections2.size());
 
-		for (MessageSelection messageSelection1 : messageSelections1) {
+		for (Selection selection1 : selections1) {
 			boolean contains = false;
 
-			for (MessageSelection messageSelection2 : messageSelections2) {
-				if (equals(messageSelection1, messageSelection2)) {
+			for (Selection selection2 : selections2) {
+				if (equals(selection1, selection2)) {
 					contains = true;
 
 					break;
@@ -219,19 +211,18 @@ public abstract class BaseMessageSelectionResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				messageSelections2 + " does not contain " + messageSelection1,
-				contains);
+				selections2 + " does not contain " + selection1, contains);
 		}
 	}
 
-	protected void assertValid(MessageSelection messageSelection) {
+	protected void assertValid(Selection selection) {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("description", additionalAssertFieldName)) {
-				if (messageSelection.getDescription() == null) {
+			if (Objects.equals("size", additionalAssertFieldName)) {
+				if (selection.getSize() == null) {
 					valid = false;
 				}
 
@@ -246,12 +237,12 @@ public abstract class BaseMessageSelectionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<MessageSelection> page) {
+	protected void assertValid(Page<Selection> page) {
 		boolean valid = false;
 
-		Collection<MessageSelection> messageSelections = page.getItems();
+		Collection<Selection> selections = page.getItems();
 
-		int size = messageSelections.size();
+		int size = selections.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -267,21 +258,17 @@ public abstract class BaseMessageSelectionResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(
-		MessageSelection messageSelection1,
-		MessageSelection messageSelection2) {
-
-		if (messageSelection1 == messageSelection2) {
+	protected boolean equals(Selection selection1, Selection selection2) {
+		if (selection1 == selection2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("description", additionalAssertFieldName)) {
+			if (Objects.equals("size", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						messageSelection1.getDescription(),
-						messageSelection2.getDescription())) {
+						selection1.getSize(), selection2.getSize())) {
 
 					return false;
 				}
@@ -298,13 +285,13 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_messageSelectionResource instanceof EntityModelResource)) {
+		if (!(_selectionResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_messageSelectionResource;
+			(EntityModelResource)_selectionResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -330,8 +317,7 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator,
-		MessageSelection messageSelection) {
+		EntityField entityField, String operator, Selection selection) {
 
 		StringBundler sb = new StringBundler();
 
@@ -343,35 +329,31 @@ public abstract class BaseMessageSelectionResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("description")) {
-			sb.append("'");
-			sb.append(String.valueOf(messageSelection.getDescription()));
-			sb.append("'");
-
-			return sb.toString();
+		if (entityFieldName.equals("size")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected MessageSelection randomMessageSelection() {
-		return new MessageSelection() {
+	protected Selection randomSelection() {
+		return new Selection() {
 			{
-				description = RandomTestUtil.randomString();
+				size = RandomTestUtil.randomLong();
 			}
 		};
 	}
 
-	protected MessageSelection randomIrrelevantMessageSelection() {
-		MessageSelection randomIrrelevantMessageSelection =
-			randomMessageSelection();
+	protected Selection randomIrrelevantSelection() {
+		Selection randomIrrelevantSelection = randomSelection();
 
-		return randomIrrelevantMessageSelection;
+		return randomIrrelevantSelection;
 	}
 
-	protected MessageSelection randomPatchMessageSelection() {
-		return randomMessageSelection();
+	protected Selection randomPatchSelection() {
+		return randomSelection();
 	}
 
 	protected static final ObjectMapper inputObjectMapper = new ObjectMapper() {
@@ -390,7 +372,7 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	protected static final ObjectMapper outputObjectMapper =
 		new ObjectMapper() {
 			{
-				addMixIn(MessageSelection.class, MessageSelectionMixin.class);
+				addMixIn(Selection.class, SelectionMixin.class);
 				setFilterProvider(
 					new SimpleFilterProvider() {
 						{
@@ -408,10 +390,10 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
 
-	protected static class MessageSelectionMixin {
+	protected static class SelectionMixin {
 
 		@JsonProperty
-		String description;
+		Long size;
 
 	}
 
@@ -486,7 +468,7 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseMessageSelectionResourceTestCase.class);
+		BaseSelectionResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -503,7 +485,7 @@ public abstract class BaseMessageSelectionResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private MessageSelectionResource _messageSelectionResource;
+	private SelectionResource _selectionResource;
 
 	private URL _resourceURL;
 

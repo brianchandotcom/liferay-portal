@@ -138,7 +138,9 @@ public class TaxonomyCategory {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(taxonomyCategoryName);
+			sb.append("\"");
 		}
 
 		sb.append("}");

@@ -15,8 +15,8 @@
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
 import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
-import com.liferay.bulk.rest.dto.v1_0.MessageSelection;
-import com.liferay.bulk.rest.resource.v1_0.MessageSelectionResource;
+import com.liferay.bulk.rest.dto.v1_0.Selection;
+import com.liferay.bulk.rest.resource.v1_0.SelectionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -43,20 +43,19 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseMessageSelectionResourceImpl
-	implements MessageSelectionResource {
+public abstract class BaseSelectionResourceImpl implements SelectionResource {
 
 	@Override
 	@Consumes("application/json")
 	@POST
 	@Path("/bulk-selection")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "MessageSelection")})
-	public MessageSelection postBulkSelection(
+	@Tags(value = {@Tag(name = "Selection")})
+	public Selection postBulkSelection(
 			DocumentBulkSelection documentBulkSelection)
 		throws Exception {
 
-		return new MessageSelection();
+		return new Selection();
 	}
 
 	public void setContextCompany(Company contextCompany) {
@@ -64,8 +63,7 @@ public abstract class BaseMessageSelectionResourceImpl
 	}
 
 	protected void preparePatch(
-		MessageSelection messageSelection,
-		MessageSelection existingMessageSelection) {
+		Selection selection, Selection existingSelection) {
 	}
 
 	protected <T, R> List<R> transform(

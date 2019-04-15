@@ -35,25 +35,23 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("MessageSelection")
+@GraphQLName("Selection")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "MessageSelection")
-public class MessageSelection {
+@XmlRootElement(name = "Selection")
+public class Selection {
 
-	public String getDescription() {
-		return description;
+	public Long getSize() {
+		return size;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setSize(Long size) {
+		this.size = size;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
-
+	public void setSize(UnsafeSupplier<Long, Exception> sizeUnsafeSupplier) {
 		try {
-			description = descriptionUnsafeSupplier.get();
+			size = sizeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -65,7 +63,7 @@ public class MessageSelection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
+	protected Long size;
 
 	@Override
 	public boolean equals(Object object) {
@@ -73,13 +71,13 @@ public class MessageSelection {
 			return true;
 		}
 
-		if (!(object instanceof MessageSelection)) {
+		if (!(object instanceof Selection)) {
 			return false;
 		}
 
-		MessageSelection messageSelection = (MessageSelection)object;
+		Selection selection = (Selection)object;
 
-		return Objects.equals(toString(), messageSelection.toString());
+		return Objects.equals(toString(), selection.toString());
 	}
 
 	@Override
@@ -94,13 +92,13 @@ public class MessageSelection {
 
 		sb.append("{");
 
-		sb.append("\"description\": ");
+		sb.append("\"size\": ");
 
-		if (description == null) {
+		if (size == null) {
 			sb.append("null");
 		}
 		else {
-			sb.append(description);
+			sb.append(size);
 		}
 
 		sb.append("}");

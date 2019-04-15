@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_TITLE_LINK</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'table-title')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_TEXT</td>
 	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[normalize-space(text())='${key_tableEntryText}']</td>
 	<td></td>

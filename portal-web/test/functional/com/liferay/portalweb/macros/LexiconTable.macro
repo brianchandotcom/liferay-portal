@@ -12,7 +12,7 @@ definition {
 
 	macro clickTableEntryTitle {
 		Click(
-			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
 			key_tableEntry = "${tableEntry}"
 		);
 	}

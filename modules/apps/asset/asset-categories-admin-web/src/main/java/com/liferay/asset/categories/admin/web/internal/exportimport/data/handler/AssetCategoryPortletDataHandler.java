@@ -191,42 +191,6 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 		vocabularyActionableDynamicQuery.performCount();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected ActionableDynamicQuery getCategoryActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			_assetCategoryLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		// Override date range criteria
-
-		actionableDynamicQuery.setAddCriteriaMethod(null);
-
-		return actionableDynamicQuery;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected ActionableDynamicQuery getVocabularyActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			_assetVocabularyLocalService.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		// Override date range criteria
-
-		actionableDynamicQuery.setAddCriteriaMethod(null);
-
-		return actionableDynamicQuery;
-	}
-
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 

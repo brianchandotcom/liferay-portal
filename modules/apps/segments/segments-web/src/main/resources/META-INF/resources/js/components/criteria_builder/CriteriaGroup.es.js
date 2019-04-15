@@ -336,6 +336,7 @@ class CriteriaGroup extends Component {
 				'dnd-drag': dragging
 			}
 		);
+		const singleRow = criteria && criteria.items && criteria.items.length === 1;
 
 		return connectDragPreview(
 			<div
@@ -357,7 +358,7 @@ class CriteriaGroup extends Component {
 							propertyKey={propertyKey}
 						/>
 
-						{editing && !root && connectDragSource(
+						{editing && singleRow && !root && connectDragSource(
 							<div className="criteria-group-drag-icon drag-icon">
 								<ClayIcon iconName="drag" />
 							</div>

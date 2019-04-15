@@ -156,7 +156,7 @@
 		"checkFormat": "npm run csf",
 		"clean": "npm run clean-soy",
 		"clean-soy": "rimraf \"src/**/*.soy.js\" \"test/**/*.soy.js\"",
-		"csf": "csf src/**/*.es.js src/**/*.soy test/**/*.es.js",
+		"checkFormat": "csf src/**/*.es.js src/**/*.soy test/**/*.es.js",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",

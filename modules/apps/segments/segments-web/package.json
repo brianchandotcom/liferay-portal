@@ -89,7 +89,7 @@
 		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
 		"build:libs": "webpack",
 		"checkFormat": "npm run csf",
-		"csf": "csf {src,test}/**/*.es.js src/**/*.scss",
+		"checkFormat": "csf {src,test}/**/*.es.js src/**/*.scss",
 		"format": "npm run csf -- -i",
 		"start": "webpack-dev-server --config ./webpack.dev.config.js",
 		"test": "env TZ=utc jest",

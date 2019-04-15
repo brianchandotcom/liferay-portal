@@ -10,7 +10,7 @@
 	"name": "frontend-image-editor-capability-crop",
 	"scripts": {
 		"build": "liferay-npm-scripts",
-		"csf": "liferay-npm-scripts lint",
+		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},
 	"version": "3.0.0"

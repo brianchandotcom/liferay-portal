@@ -12,7 +12,7 @@
 	"name": "document-library-preview-document",
 	"scripts": {
 		"build": "liferay-npm-scripts",
-		"csf": "liferay-npm-scripts lint",
+		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},
 	"version": "1.0.0"

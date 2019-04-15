@@ -175,7 +175,7 @@
 	"scripts": {
 		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
 		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.es.js src/**/*.jsp test/**/*.es.js",
+		"checkFormat": "csf src/**/*.es.js src/**/*.jsp test/**/*.es.js",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",

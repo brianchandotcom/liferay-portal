@@ -147,7 +147,7 @@
 		"build-soy-tests": "npm run build-soy && metalsoy -s \"test/**/*.soy\" -d \"test\"",
 		"checkFormat": "npm run csf",
 		"clean": "rimraf \"src/**/*.soy.js\" \"test/**/*.soy.js\"",
-		"csf": "csf src/**/*.es.js src/**/*.soy test/**/*.es.js",
+		"checkFormat": "csf src/**/*.es.js src/**/*.soy test/**/*.es.js",
 		"format": "npm run csf -- -i",
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"start": "node watch.js",

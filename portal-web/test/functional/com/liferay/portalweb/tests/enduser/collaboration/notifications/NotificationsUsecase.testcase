@@ -187,11 +187,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		NotificationsPortlet.gotoNotificationDelivery();
 
@@ -203,12 +199,6 @@ definition {
 	@priority = "5"
 	test ViewNoNotification {
 		Notifications.viewNoNotifications(activePanel = "Profile");
-
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
 
 		Notifications.viewNoRequest();
 

@@ -58,11 +58,7 @@ definition {
 	}
 
 	macro tearDownUnreadNotifications {
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		var key_contentBody = "${contentBody}";
 

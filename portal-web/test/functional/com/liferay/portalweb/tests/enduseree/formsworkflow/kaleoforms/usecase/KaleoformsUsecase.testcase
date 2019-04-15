@@ -2165,11 +2165,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		WorkflowAsset.viewNotification(
 			contentBody = "Test Test sent you a Process for review in the workflow."
@@ -2185,11 +2181,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		WorkflowAsset.viewNotification(
 			contentBody = "Test Test sent you a Process for review in the workflow."
@@ -4605,11 +4597,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		WorkflowAsset.viewNotification(
 			contentBody = "Test Test sent you a Process for review in the workflow."
@@ -4625,11 +4613,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		WorkflowAsset.viewNotification(
 			contentBody = "Test Test sent you a Process for review in the workflow."
@@ -4645,11 +4629,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		WorkflowAsset.viewNotification(
 			contentBody = "Your submission was rejected by Test Test, please modify and resubmit."
@@ -4674,11 +4654,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		WorkflowAsset.viewNotification(
 			contentBody = "Test Test sent you a Process for review in the workflow."
@@ -5292,11 +5268,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		WorkflowAsset.viewNotification(
 			contentBody = "Test Test sent you a Process for review in the workflow."
@@ -5323,11 +5295,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		WorkflowAsset.viewNotification(
 			contentBody = "Test Test sent you a Process for review in the workflow."

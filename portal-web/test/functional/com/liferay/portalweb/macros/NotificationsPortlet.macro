@@ -31,11 +31,7 @@ definition {
 	}
 
 	macro gotoNotificationDelivery {
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
 	}

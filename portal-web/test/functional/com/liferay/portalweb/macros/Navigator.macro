@@ -113,6 +113,14 @@ definition {
 		AssertElementPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK");
 	}
 
+	macro gotoNotifications {
+		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		var key_dropdownItem = "Notifications";
+
+		Click(locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
+	}
+
 	@summary = "Navigate to the page named '${pageName}'"
 	macro gotoPage {
 		Navigator.openURL(baseURL = "${baseURL}");

@@ -146,11 +146,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Notifications"
-		);
+		Navigator.gotoNotifications();
 
 		PortletEntry.selectAll();
 

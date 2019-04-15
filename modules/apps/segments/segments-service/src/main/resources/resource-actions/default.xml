@@ -5,6 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.segments</model-name>
 		<portlet-ref>
+			<portlet-name>com_liferay_segments_simulation_web_internal_portlet_SegmentsSimulationPortlet</portlet-name>
 			<portlet-name>com_liferay_segments_web_internal_portlet_SegmentsPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
@@ -12,6 +13,7 @@
 		<permissions>
 			<supports>
 				<action-key>MANAGE_SEGMENTS_ENTRIES</action-key>
+				<action-key>SIMULATE_SEGMENTS_ENTRIES</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>

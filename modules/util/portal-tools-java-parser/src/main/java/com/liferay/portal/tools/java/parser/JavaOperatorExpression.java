@@ -31,6 +31,10 @@ public class JavaOperatorExpression extends JavaExpression {
 		return _javaOperator;
 	}
 
+	public JavaExpression getLeftHandJavaExpression() {
+		return _leftHandJavaExpression;
+	}
+
 	public JavaExpression getRightHandJavaExpression() {
 		return _rightHandJavaExpression;
 	}
@@ -45,6 +49,14 @@ public class JavaOperatorExpression extends JavaExpression {
 		JavaExpression rightHandJavaExpression) {
 
 		_rightHandJavaExpression = rightHandJavaExpression;
+	}
+
+	@Override
+	public void setSurroundingParentheses() {
+		_setSurroundingParentheses(_leftHandJavaExpression);
+		_setSurroundingParentheses(_rightHandJavaExpression);
+
+		_setSurroundingParenthesesForInstanceofStatement();
 	}
 
 	@Override
@@ -161,6 +173,229 @@ public class JavaOperatorExpression extends JavaExpression {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	protected boolean hasSurroundingParentheses() {
+		if (getChainedJavaExpression() != null) {
+			return true;
+		}
+
+		return super.hasSurroundingParentheses();
+	}
+
+	private boolean _equalsValueJavaExpression(
+		JavaInstanceofStatement javaInstanceofStatement1,
+		JavaInstanceofStatement javaInstanceofStatement2) {
+
+		JavaExpression valueJavaExpression1 =
+			javaInstanceofStatement1.getValueJavaExpression();
+		JavaExpression valueJavaExpression2 =
+			javaInstanceofStatement2.getValueJavaExpression();
+
+		return Objects.equals(
+			valueJavaExpression1.toString(), valueJavaExpression2.toString());
+	}
+
+	private void _setSurroundingParentheses(JavaExpression javaExpression) {
+		if (javaExpression == null) {
+			return;
+		}
+
+		JavaOperator.Category category = _javaOperator.getCategory();
+
+		if (!category.equals(JavaOperator.Category.ASSIGNMENT) &&
+			(javaExpression instanceof JavaTernaryOperator)) {
+
+			javaExpression.setHasSurroundingParentheses(true);
+
+			return;
+		}
+
+		if (!(javaExpression instanceof JavaOperatorExpression)) {
+			return;
+		}
+
+		JavaOperatorExpression javaOperatorExpression =
+			(JavaOperatorExpression)javaExpression;
+
+		JavaOperator javaOperator = javaOperatorExpression.getJavaOperator();
+
+		JavaOperator.Category javaExpressionCategory =
+			javaOperator.getCategory();
+
+		if (javaExpressionCategory.equals(JavaOperator.Category.UNARY) ||
+			javaOperator.equals(JavaOperator.UNARY_BITWISE_OPERATOR)) {
+
+			if (!category.equals(JavaOperator.Category.UNARY) &&
+				!_javaOperator.equals(JavaOperator.UNARY_BITWISE_OPERATOR)) {
+
+				javaExpression.setHasSurroundingParentheses(false);
+			}
+
+			return;
+		}
+
+		if (category.equals(JavaOperator.Category.ASSIGNMENT)) {
+			javaExpression.setHasSurroundingParentheses(false);
+
+			return;
+		}
+
+		if (category.equals(JavaOperator.Category.BITWISE) ||
+			category.equals(JavaOperator.Category.RELATIONAL)) {
+
+			javaExpression.setHasSurroundingParentheses(true);
+
+			return;
+		}
+
+		if (category.equals(JavaOperator.Category.CONDITIONAL)) {
+			if (javaOperator.equals(_javaOperator)) {
+				javaExpression.setHasSurroundingParentheses(false);
+			}
+			else {
+				javaExpression.setHasSurroundingParentheses(true);
+			}
+		}
+	}
+
+	private void _setSurroundingParenthesesForInstanceofStatement() {
+		if ((_leftHandJavaExpression != null) &&
+			(_leftHandJavaExpression instanceof JavaInstanceofStatement)) {
+
+			if (_rightHandJavaExpression == null) {
+				_leftHandJavaExpression.setHasSurroundingParentheses(true);
+
+				return;
+			}
+
+			if (_rightHandJavaExpression instanceof JavaInstanceofStatement) {
+				if (!_equalsValueJavaExpression(
+						(JavaInstanceofStatement)_leftHandJavaExpression,
+						(JavaInstanceofStatement)_rightHandJavaExpression)) {
+
+					_leftHandJavaExpression.setHasSurroundingParentheses(true);
+					_rightHandJavaExpression.setHasSurroundingParentheses(true);
+				}
+
+				return;
+			}
+
+			if (!(_rightHandJavaExpression instanceof JavaOperatorExpression)) {
+				_leftHandJavaExpression.setHasSurroundingParentheses(true);
+
+				return;
+			}
+
+			JavaExpression rightHandNeighborJavaExpression =
+				_rightHandJavaExpression;
+
+			while (true) {
+				if (rightHandNeighborJavaExpression.
+						hasSurroundingParentheses()) {
+
+					_leftHandJavaExpression.setHasSurroundingParentheses(true);
+
+					return;
+				}
+
+				if (rightHandNeighborJavaExpression instanceof
+						JavaInstanceofStatement) {
+
+					if (!_equalsValueJavaExpression(
+							(JavaInstanceofStatement)_leftHandJavaExpression,
+							(JavaInstanceofStatement)
+								rightHandNeighborJavaExpression)) {
+
+						_leftHandJavaExpression.setHasSurroundingParentheses(
+							true);
+					}
+
+					return;
+				}
+
+				if (!(rightHandNeighborJavaExpression instanceof
+						JavaOperatorExpression)) {
+
+					_leftHandJavaExpression.setHasSurroundingParentheses(true);
+
+					return;
+				}
+
+				JavaOperatorExpression javaOperatorExpression =
+					(JavaOperatorExpression)rightHandNeighborJavaExpression;
+
+				rightHandNeighborJavaExpression =
+					javaOperatorExpression.getLeftHandJavaExpression();
+
+				if (rightHandNeighborJavaExpression == null) {
+					_leftHandJavaExpression.setHasSurroundingParentheses(true);
+
+					return;
+				}
+			}
+		}
+
+		if ((_rightHandJavaExpression != null) &&
+			(_rightHandJavaExpression instanceof JavaInstanceofStatement)) {
+
+			if ((_leftHandJavaExpression == null) ||
+				!(_leftHandJavaExpression instanceof JavaOperatorExpression)) {
+
+				_rightHandJavaExpression.setHasSurroundingParentheses(true);
+
+				return;
+			}
+
+			JavaExpression leftHandNeighborJavaExpression =
+				_leftHandJavaExpression;
+
+			while (true) {
+				if (leftHandNeighborJavaExpression.
+						hasSurroundingParentheses()) {
+
+					_rightHandJavaExpression.setHasSurroundingParentheses(true);
+
+					return;
+				}
+
+				if (leftHandNeighborJavaExpression instanceof
+						JavaInstanceofStatement) {
+
+					if (!_equalsValueJavaExpression(
+							(JavaInstanceofStatement)_rightHandJavaExpression,
+							(JavaInstanceofStatement)
+								leftHandNeighborJavaExpression)) {
+
+						_rightHandJavaExpression.setHasSurroundingParentheses(
+							true);
+					}
+
+					return;
+				}
+
+				if (!(leftHandNeighborJavaExpression instanceof
+						JavaOperatorExpression)) {
+
+					_rightHandJavaExpression.setHasSurroundingParentheses(true);
+
+					return;
+				}
+
+				JavaOperatorExpression javaOperatorExpression =
+					(JavaOperatorExpression)leftHandNeighborJavaExpression;
+
+				leftHandNeighborJavaExpression =
+					javaOperatorExpression.getRightHandJavaExpression();
+
+				if (leftHandNeighborJavaExpression == null) {
+					_rightHandJavaExpression.setHasSurroundingParentheses(true);
+
+					return;
+				}
+			}
+		}
 	}
 
 	private final JavaOperator _javaOperator;

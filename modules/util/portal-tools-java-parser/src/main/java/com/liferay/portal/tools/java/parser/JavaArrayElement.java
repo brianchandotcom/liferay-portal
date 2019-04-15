@@ -32,6 +32,13 @@ public class JavaArrayElement extends JavaExpression {
 	}
 
 	@Override
+	public void setSurroundingParentheses() {
+		if (_arrayJavaExpression instanceof JavaTypeCast) {
+			_arrayJavaExpression.setHasSurroundingParentheses(true);
+		}
+	}
+
+	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak) {

@@ -35,6 +35,13 @@ public class JavaTypeCast extends JavaExpression {
 	}
 
 	@Override
+	public void setSurroundingParentheses() {
+		if (_valueJavaExpression instanceof JavaTernaryOperator) {
+			_valueJavaExpression.setHasSurroundingParentheses(true);
+		}
+	}
+
+	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak) {
@@ -59,6 +66,15 @@ public class JavaTypeCast extends JavaExpression {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	protected boolean hasSurroundingParentheses() {
+		if (getChainedJavaExpression() != null) {
+			return true;
+		}
+
+		return super.hasSurroundingParentheses();
 	}
 
 	private final List<JavaType> _javaTypes;

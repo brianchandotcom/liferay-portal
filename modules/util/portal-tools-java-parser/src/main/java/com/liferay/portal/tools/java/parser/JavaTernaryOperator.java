@@ -49,6 +49,15 @@ public class JavaTernaryOperator extends JavaExpression {
 		return sb.toString();
 	}
 
+	@Override
+	protected boolean hasSurroundingParentheses() {
+		if (getChainedJavaExpression() != null) {
+			return true;
+		}
+
+		return super.hasSurroundingParentheses();
+	}
+
 	private final JavaExpression _conditionJavaExpression;
 	private final JavaExpression _falseValueJavaExpression;
 	private final JavaExpression _trueValueJavaExpression;

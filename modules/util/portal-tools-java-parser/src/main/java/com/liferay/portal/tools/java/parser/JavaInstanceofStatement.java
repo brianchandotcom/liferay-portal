@@ -28,6 +28,17 @@ public class JavaInstanceofStatement extends JavaExpression {
 		_valueJavaExpression = valueJavaExpression;
 	}
 
+	public JavaExpression getValueJavaExpression() {
+		return _valueJavaExpression;
+	}
+
+	@Override
+	public void setSurroundingParentheses() {
+		if (_valueJavaExpression instanceof JavaOperatorExpression) {
+			_valueJavaExpression.setHasSurroundingParentheses(true);
+		}
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,

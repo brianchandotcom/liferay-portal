@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.spi.model.result.contributor;
 
-import aQute.bnd.annotation.ConsumerType;
-
 /**
  * @author Michael C. Han
  */
-@ConsumerType
 public interface ModelVisibilityContributor {
 
 	public boolean isVisible(long classPK, int status);

@@ -14,15 +14,12 @@
 
 package com.liferay.portal.search.spi.model.index.contributor;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.BaseModel;
 
 /**
  * @author Michael C. Han
  */
-@ConsumerType
 public interface ExpandoBridgeRetriever {
 
 	public ExpandoBridge getExpandoBridge(BaseModel baseModel);

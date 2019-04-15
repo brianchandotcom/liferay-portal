@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.spi.model.index.contributor;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
@@ -24,7 +22,6 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 /**
  * @author Michael C. Han
  */
-@ConsumerType
 public interface ModelIndexerWriterContributor<T extends BaseModel<?>> {
 
 	public void customize(

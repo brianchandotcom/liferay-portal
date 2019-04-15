@@ -14,14 +14,11 @@
 
 package com.liferay.portal.search.spi.model.registrar.contributor;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.search.spi.model.registrar.ModelSearchDefinition;
 
 /**
  * @author André de Oliveira
  */
-@ConsumerType
 @FunctionalInterface
 public interface ModelSearchDefinitionContributor {
 

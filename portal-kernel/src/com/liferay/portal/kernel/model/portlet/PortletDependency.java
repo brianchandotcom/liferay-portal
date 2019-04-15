@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.model.portlet;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.petra.string.StringBundler;
 
 import java.io.Serializable;
@@ -23,7 +21,6 @@ import java.io.Serializable;
 /**
  * @author Neil Griffin
  */
-@ConsumerType
 public interface PortletDependency extends Serializable {
 
 	public String getName();

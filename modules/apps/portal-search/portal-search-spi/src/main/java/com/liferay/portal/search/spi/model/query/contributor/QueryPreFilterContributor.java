@@ -14,15 +14,12 @@
 
 package com.liferay.portal.search.spi.model.query.contributor;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 
 /**
  * @author Michael C. Han
  */
-@ConsumerType
 public interface QueryPreFilterContributor {
 
 	public void contribute(

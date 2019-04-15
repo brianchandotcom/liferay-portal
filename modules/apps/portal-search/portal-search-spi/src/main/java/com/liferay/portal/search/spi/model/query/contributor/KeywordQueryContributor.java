@@ -14,15 +14,12 @@
 
 package com.liferay.portal.search.spi.model.query.contributor;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 
 /**
  * @author Michael C. Han
  */
-@ConsumerType
 public interface KeywordQueryContributor {
 
 	public void contribute(

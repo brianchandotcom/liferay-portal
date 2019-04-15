@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.web.search.result;
 
-import aQute.bnd.annotation.ConsumerType;
-
 /**
  * @author André de Oliveira
  */
-@ConsumerType
 public interface SearchResultImageContributor {
 
 	public void contribute(SearchResultImage searchResultImage);

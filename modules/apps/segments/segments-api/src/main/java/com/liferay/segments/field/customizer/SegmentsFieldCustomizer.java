@@ -14,8 +14,6 @@
 
 package com.liferay.segments.field.customizer;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -34,7 +32,6 @@ import javax.portlet.PortletRequest;
  * @author Eduardo García
  * @review
  */
-@ConsumerType
 public interface SegmentsFieldCustomizer {
 
 	public List<String> getFieldNames();

@@ -14,14 +14,11 @@
 
 package com.liferay.portal.search.permission;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import java.util.Optional;
 
 /**
  * @author Bryan Engler
  */
-@ConsumerType
 public interface SearchPermissionFilterContributor {
 
 	public Optional<String> getParentEntryClassNameOptional(

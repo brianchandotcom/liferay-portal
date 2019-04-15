@@ -14,15 +14,12 @@
 
 package com.liferay.digital.signature.adapter.spi;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.digital.signature.request.PackageDSSignatureRequest;
 import com.liferay.digital.signature.response.DSSignatureResponse;
 
 /**
  * @author Michael C. Han
  */
-@ConsumerType
 public interface DSSignatureAdapter {
 
 	public DSSignatureResponse execute(

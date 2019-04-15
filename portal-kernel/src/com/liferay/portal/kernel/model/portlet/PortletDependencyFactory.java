@@ -14,14 +14,11 @@
 
 package com.liferay.portal.kernel.model.portlet;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import javax.portlet.PortletRequest;
 
 /**
  * @author Neil Griffin
  */
-@ConsumerType
 public interface PortletDependencyFactory {
 
 	public PortletDependency createPortletDependency(

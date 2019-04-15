@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.web.portlet.shared.search;
 
-import aQute.bnd.annotation.ConsumerType;
-
 /**
  * @author Rodrigo Paulino
  */
-@ConsumerType
 public interface PortletSharedSearchContributor {
 
 	public void contribute(

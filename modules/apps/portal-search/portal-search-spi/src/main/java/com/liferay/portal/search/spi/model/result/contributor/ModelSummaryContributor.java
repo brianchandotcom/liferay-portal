@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.spi.model.result.contributor;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Summary;
 
@@ -24,7 +22,6 @@ import java.util.Locale;
 /**
  * @author Michael C. Han
  */
-@ConsumerType
 public interface ModelSummaryContributor {
 
 	public Summary getSummary(Document document, Locale locale, String snippet);

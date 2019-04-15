@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.web.search.request;
 
-import aQute.bnd.annotation.ConsumerType;
-
 /**
  * @author André de Oliveira
  */
-@ConsumerType
 public interface SearchSettingsContributor {
 
 	public void contribute(SearchSettings searchSettings);

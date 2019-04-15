@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.spi.model.permission;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -31,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
  *
  * @author Sergio González
  */
-@ConsumerType
 @FunctionalInterface
 public interface SearchPermissionFilterContributor {
 

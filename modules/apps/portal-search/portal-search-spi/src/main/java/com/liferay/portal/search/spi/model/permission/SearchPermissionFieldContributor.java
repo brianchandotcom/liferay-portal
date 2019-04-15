@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.spi.model.permission;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.search.Document;
 
 /**
@@ -30,7 +28,6 @@ import com.liferay.portal.kernel.search.Document;
  *
  * @author Bryan Engler
  */
-@ConsumerType
 public interface SearchPermissionFieldContributor {
 
 	/**

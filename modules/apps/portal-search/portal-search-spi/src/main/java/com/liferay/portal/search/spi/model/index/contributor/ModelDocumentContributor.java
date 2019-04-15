@@ -14,15 +14,12 @@
 
 package com.liferay.portal.search.spi.model.index.contributor;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
 
 /**
  * @author Michael C. Han
  */
-@ConsumerType
 public interface ModelDocumentContributor<T extends BaseModel<?>> {
 
 	public void contribute(Document document, T baseModel);

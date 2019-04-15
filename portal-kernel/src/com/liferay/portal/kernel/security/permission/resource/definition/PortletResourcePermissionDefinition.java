@@ -14,14 +14,11 @@
 
 package com.liferay.portal.kernel.security.permission.resource.definition;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionLogic;
 
 /**
  * @author Preston Crary
  */
-@ConsumerType
 public interface PortletResourcePermissionDefinition {
 
 	public PortletResourcePermissionLogic[]

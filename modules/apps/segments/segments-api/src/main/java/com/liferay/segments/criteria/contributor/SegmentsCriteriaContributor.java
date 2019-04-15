@@ -14,8 +14,6 @@
 
 package com.liferay.segments.criteria.contributor;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.segments.criteria.Criteria;
@@ -34,7 +32,6 @@ import javax.portlet.PortletRequest;
  * @author Eduardo García
  * @review
  */
-@ConsumerType
 public interface SegmentsCriteriaContributor {
 
 	/**

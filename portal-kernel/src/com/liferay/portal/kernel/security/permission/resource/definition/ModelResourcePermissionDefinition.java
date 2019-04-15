@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.security.permission.resource.definition;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -27,7 +25,6 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-@ConsumerType
 public interface ModelResourcePermissionDefinition<T extends GroupedModel> {
 
 	public T getModel(long primaryKey) throws PortalException;

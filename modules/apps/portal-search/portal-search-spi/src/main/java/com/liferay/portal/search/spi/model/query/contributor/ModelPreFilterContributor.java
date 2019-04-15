@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.spi.model.query.contributor;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
@@ -23,7 +21,6 @@ import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 /**
  * @author André de Oliveira
  */
-@ConsumerType
 public interface ModelPreFilterContributor {
 
 	public void contribute(

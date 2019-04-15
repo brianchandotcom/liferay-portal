@@ -14,8 +14,6 @@
 
 package com.liferay.info.provider;
 
-import aQute.bnd.annotation.ConsumerType;
-
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 
@@ -25,7 +23,6 @@ import java.util.Locale;
 /**
  * @author Jorge Ferrer
  */
-@ConsumerType
 public interface InfoListProvider<T> {
 
 	public List<T> getInfoList(InfoListProviderContext infoListProviderContext);

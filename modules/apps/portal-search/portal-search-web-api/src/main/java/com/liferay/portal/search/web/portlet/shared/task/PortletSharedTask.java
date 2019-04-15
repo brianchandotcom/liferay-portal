@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.web.portlet.shared.task;
 
-import aQute.bnd.annotation.ConsumerType;
-
 /**
  * @author André de Oliveira
  */
-@ConsumerType
 public interface PortletSharedTask<T> {
 
 	public T execute();

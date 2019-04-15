@@ -14,9 +14,14 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
+import com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection;
+import com.liferay.bulk.rest.dto.v1_0.Selection;
+import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.SelectionResource;
+import com.liferay.bulk.selection.BulkSelection;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +32,23 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = SelectionResource.class
 )
 public class SelectionResourceImpl extends BaseSelectionResourceImpl {
+
+	@Override
+	public Selection postBulkSelection(
+			DocumentBulkSelection documentBulkSelection)
+		throws Exception {
+
+		BulkSelection bulkSelection = _documentBulkSelectionFactory.create(
+			documentBulkSelection);
+
+		return new Selection() {
+			{
+				size = bulkSelection.getSize();
+			}
+		};
+	}
+
+	@Reference
+	private DocumentBulkSelectionFactory _documentBulkSelectionFactory;
+
 }

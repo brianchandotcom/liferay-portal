@@ -1,7 +1,3 @@
-baseline {
-	enabled = false
-}
-
 dependencies {
 	compileOnly group: "net.sf.ehcache", name: "ehcache", version: "2.8.3"
 }

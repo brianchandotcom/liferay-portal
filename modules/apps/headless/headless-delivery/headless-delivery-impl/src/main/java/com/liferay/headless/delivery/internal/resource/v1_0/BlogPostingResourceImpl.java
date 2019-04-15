@@ -178,6 +178,7 @@ public class BlogPostingResourceImpl
 			blogPosting.getDatePublished());
 		Optional<Image> imageOptional = Optional.ofNullable(
 			blogPosting.getImage());
+		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogPostingId);
 
 		return _toBlogPosting(
 			_blogsEntryService.updateEntry(
@@ -203,7 +204,7 @@ public class BlogPostingResourceImpl
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getKeywords(),
 					blogPosting.getTaxonomyCategoryIds(),
-					blogPosting.getSiteId(),
+					blogsEntry.getGroupId(),
 					blogPosting.getViewableByAsString())));
 	}
 

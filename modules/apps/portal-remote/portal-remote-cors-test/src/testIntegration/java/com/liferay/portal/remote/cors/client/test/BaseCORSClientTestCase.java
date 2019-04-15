@@ -22,17 +22,12 @@ import com.liferay.portal.util.HttpImpl;
 
 import java.io.File;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
 import org.apache.cxf.jaxrs.provider.json.JSONProvider;
 
-import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.BeforeClass;
@@ -65,36 +60,16 @@ public abstract class BaseCORSClientTestCase {
 		digesterUtil.setDigester(new DigesterImpl());
 	}
 
-	protected static Client getClient() {
+	protected WebTarget getWebTarget(String path) {
 		Client client = ClientBuilder.newClient();
 
-		return client.register(JSONProvider.class);
-	}
+		client = client.register(JSONProvider.class);
 
-	protected WebTarget getWebTarget(String... paths) {
-		Client client = getClient();
-
-		WebTarget target = client.target(_getPortalURL());
+		WebTarget target = client.target("http://localhost:8080");
 
 		target = target.path("o");
 
-		for (String path : paths) {
-			target = target.path(path);
-		}
-
-		return target;
+		return target.path(path);
 	}
-
-	private URI _getPortalURL() {
-		try {
-			return _url.toURI();
-		}
-		catch (URISyntaxException urise) {
-			throw new RuntimeException(urise);
-		}
-	}
-
-	@ArquillianResource
-	private URL _url;
 
 }

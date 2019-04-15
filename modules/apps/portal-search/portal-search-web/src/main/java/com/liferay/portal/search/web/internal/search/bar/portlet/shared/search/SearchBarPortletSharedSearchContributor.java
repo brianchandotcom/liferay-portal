@@ -17,9 +17,9 @@ package com.liferay.portal.search.web.internal.search.bar.portlet.shared.search;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.search.constants.SearchContextAttributes;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.display.context.Keywords;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
@@ -59,19 +59,27 @@ public class SearchBarPortletSharedSearchContributor
 			new SearchBarPortletPreferencesImpl(
 				portletSharedSearchSettings.getPortletPreferencesOptional());
 
+		SearchRequestBuilder searchRequestBuilder =
+			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
+				searchBarPortletPreferences.getFederatedSearchKeyOptional());
+
 		if (!shouldContributeToCurrentPageSearch(
 				searchBarPortletPreferences, portletSharedSearchSettings)) {
 
 			return;
 		}
 
-		setKeywords(searchBarPortletPreferences, portletSharedSearchSettings);
+		setKeywords(
+			searchRequestBuilder, searchBarPortletPreferences,
+			portletSharedSearchSettings);
 
 		filterByThisSite(
-			searchBarPortletPreferences, portletSharedSearchSettings);
+			searchRequestBuilder, searchBarPortletPreferences,
+			portletSharedSearchSettings);
 	}
 
 	protected void filterByThisSite(
+		SearchRequestBuilder searchRequestBuilder,
 		SearchBarPortletPreferences searchBarPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
@@ -82,17 +90,15 @@ public class SearchBarPortletSharedSearchContributor
 			return;
 		}
 
-		SearchContext searchContext =
-			portletSharedSearchSettings.getSearchContext();
-
-		searchContext.setGroupIds(
-			new long[] {getScopeGroupId(portletSharedSearchSettings)});
+		searchRequestBuilder.withSearchContext(
+			searchContext -> searchContext.setGroupIds(
+				new long[] {getScopeGroupId(portletSharedSearchSettings)}));
 	}
 
 	protected Optional<Portlet> findTopSearchBarPortletOptional(
 		ThemeDisplay themeDisplay) {
 
-		Stream<Portlet> stream = getPortlets(themeDisplay);
+		Stream<Portlet> stream = getPortletsStream(themeDisplay);
 
 		return stream.filter(
 			this::isTopSearchBar
@@ -109,7 +115,7 @@ public class SearchBarPortletSharedSearchContributor
 		return searchScopePreference.getSearchScope();
 	}
 
-	protected Stream<Portlet> getPortlets(ThemeDisplay themeDisplay) {
+	protected Stream<Portlet> getPortletsStream(ThemeDisplay themeDisplay) {
 		Layout layout = themeDisplay.getLayout();
 
 		LayoutTypePortlet layoutTypePortlet =
@@ -232,6 +238,7 @@ public class SearchBarPortletSharedSearchContributor
 	}
 
 	protected void setKeywords(
+		SearchRequestBuilder searchRequestBuilder,
 		SearchBarPortletPreferences searchBarPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
@@ -246,22 +253,19 @@ public class SearchBarPortletSharedSearchContributor
 			value -> {
 				Keywords keywords = new Keywords(value);
 
-				portletSharedSearchSettings.setKeywords(keywords.getKeywords());
+				searchRequestBuilder.queryString(keywords.getKeywords());
 
 				if (isLuceneSyntax(searchBarPortletPreferences, keywords)) {
-					setLuceneSyntax(portletSharedSearchSettings);
+					setLuceneSyntax(searchRequestBuilder);
 				}
 			});
 	}
 
-	protected void setLuceneSyntax(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		SearchContext searchContext =
-			portletSharedSearchSettings.getSearchContext();
-
-		searchContext.setAttribute(
-			SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX, Boolean.TRUE);
+	protected void setLuceneSyntax(SearchRequestBuilder searchRequestBuilder) {
+		searchRequestBuilder.withSearchContext(
+			searchContext -> searchContext.setAttribute(
+				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX,
+				Boolean.TRUE));
 	}
 
 	protected boolean shouldContributeToCurrentPageSearch(

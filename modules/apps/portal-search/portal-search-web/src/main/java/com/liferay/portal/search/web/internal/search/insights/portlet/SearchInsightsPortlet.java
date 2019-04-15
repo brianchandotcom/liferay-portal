@@ -80,9 +80,16 @@ public class SearchInsightsPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(renderRequest);
 
+		SearchInsightsPortletPreferences searchInsightsPortletPreferences =
+			new SearchInsightsPortletPreferencesImpl(
+				portletSharedSearchResponse.getPortletPreferences(
+					renderRequest));
+
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			buildDisplayContext(portletSharedSearchResponse, renderRequest));
+			buildDisplayContext(
+				portletSharedSearchResponse, searchInsightsPortletPreferences,
+				renderRequest));
 
 		if (!SearchPortletPermissionUtil.containsConfiguration(
 				portletPermission, renderRequest, portal)) {
@@ -96,20 +103,23 @@ public class SearchInsightsPortlet extends MVCPortlet {
 
 	protected SearchInsightsDisplayContext buildDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
+		SearchInsightsPortletPreferences searchInsightsPortletPreferences,
 		RenderRequest renderRequest) {
 
 		SearchInsightsDisplayContext searchInsightsDisplayContext =
 			new SearchInsightsDisplayContext();
 
 		SearchResponse searchResponse =
-			portletSharedSearchResponse.getSearchResponse();
+			portletSharedSearchResponse.getFederatedSearchResponse(
+				searchInsightsPortletPreferences.
+					getFederatedSearchKeyOptional());
 
 		if (isRequestStringPresent(searchResponse)) {
 			searchInsightsDisplayContext.setRequestString(
-				buildRequestString(searchResponse, renderRequest));
+				buildRequestString(searchResponse));
 
 			searchInsightsDisplayContext.setResponseString(
-				buildResponseString(searchResponse, renderRequest));
+				buildResponseString(searchResponse));
 		}
 		else {
 			searchInsightsDisplayContext.setHelpMessage(
@@ -119,18 +129,14 @@ public class SearchInsightsPortlet extends MVCPortlet {
 		return searchInsightsDisplayContext;
 	}
 
-	protected String buildRequestString(
-		SearchResponse searchResponse, RenderRequest renderRequest) {
-
-		Optional<String> requestString = SearchStringUtil.maybe(
+	protected String buildRequestString(SearchResponse searchResponse) {
+		Optional<String> optional = SearchStringUtil.maybe(
 			searchResponse.getRequestString());
 
-		return requestString.orElse(StringPool.BLANK);
+		return optional.orElse(StringPool.BLANK);
 	}
 
-	protected String buildResponseString(
-		SearchResponse searchResponse, RenderRequest renderRequest) {
-
+	protected String buildResponseString(SearchResponse searchResponse) {
 		Optional<String> responseString = SearchStringUtil.maybe(
 			searchResponse.getResponseString());
 

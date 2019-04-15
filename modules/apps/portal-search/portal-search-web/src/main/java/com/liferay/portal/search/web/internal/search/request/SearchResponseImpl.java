@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.search.request;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
@@ -33,6 +34,13 @@ public class SearchResponseImpl {
 
 	public List<Document> getDocuments() {
 		return _documents;
+	}
+
+	public SearchResponse getFederatedSearchResponse(
+		Optional<String> federatedSearchKeyOptional) {
+
+		return _searchResponse.getFederatedSearchResponse(
+			federatedSearchKeyOptional.orElse(StringPool.BLANK));
 	}
 
 	public Optional<String> getKeywordsOptional() {

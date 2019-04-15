@@ -49,6 +49,17 @@ public class SearchBarPortletPreferencesImpl
 	}
 
 	@Override
+	public Optional<String> getFederatedSearchKeyOptional() {
+		return _portletPreferencesHelper.getString(
+			SearchBarPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY);
+	}
+
+	@Override
+	public String getFederatedSearchKeyString() {
+		return getFederatedSearchKeyOptional().orElse(StringPool.BLANK);
+	}
+
+	@Override
 	public String getKeywordsParameterName() {
 		return _portletPreferencesHelper.getString(
 			SearchBarPortletPreferences.PREFERENCE_KEY_KEYWORDS_PARAMETER_NAME,
@@ -80,6 +91,12 @@ public class SearchBarPortletPreferencesImpl
 			getSearchScopePreference();
 
 		return searchScopePreference.getPreferenceString();
+	}
+
+	@Override
+	public boolean isInvisible() {
+		return _portletPreferencesHelper.getBoolean(
+			SearchBarPortletPreferences.PREFERENCE_KEY_INVISIBLE, false);
 	}
 
 	@Override

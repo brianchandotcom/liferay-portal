@@ -63,6 +63,14 @@ public class PortletSharedSearchSettingsImpl
 	}
 
 	@Override
+	public SearchRequestBuilder getFederatedSearchRequestBuilder(
+		Optional<String> federatedSearchKeyOptional) {
+
+		return _searchSettings.getFederatedSearchRequestBuilder(
+			federatedSearchKeyOptional);
+	}
+
+	@Override
 	public Optional<String> getKeywordsParameterName() {
 		return _searchSettings.getKeywordsParameterName();
 	}

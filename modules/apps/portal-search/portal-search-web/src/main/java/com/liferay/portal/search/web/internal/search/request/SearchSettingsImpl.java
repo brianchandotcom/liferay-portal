@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.search.request;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -59,6 +60,14 @@ public class SearchSettingsImpl implements SearchSettings {
 		Map<String, Facet> facets = _searchContext.getFacets();
 
 		facets.put(getAggregationName(facet), facet);
+	}
+
+	@Override
+	public SearchRequestBuilder getFederatedSearchRequestBuilder(
+		Optional<String> federatedSearchKeyOptional) {
+
+		return _searchRequestBuilder.getFederatedSearchRequestBuilder(
+			federatedSearchKeyOptional.orElse(StringPool.BLANK));
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.search.insights.portlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.web.internal.util.PortletPreferencesHelper;
 
 import java.util.Optional;
@@ -31,6 +32,18 @@ public class SearchInsightsPortletPreferencesImpl
 
 		_portletPreferencesHelper = new PortletPreferencesHelper(
 			portletPreferencesOptional);
+	}
+
+	@Override
+	public Optional<String> getFederatedSearchKeyOptional() {
+		return _portletPreferencesHelper.getString(
+			SearchInsightsPortletPreferences.
+				PREFERENCE_KEY_FEDERATED_SEARCH_KEY);
+	}
+
+	@Override
+	public String getFederatedSearchKeyString() {
+		return getFederatedSearchKeyOptional().orElse(StringPool.BLANK);
 	}
 
 	@Override

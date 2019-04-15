@@ -58,7 +58,7 @@ public class SearchRequestImpl {
 		SearchContext searchContext = buildSearchContext();
 
 		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.getSearchRequestBuilder(searchContext);
+			_searchRequestBuilderFactory.builder(searchContext);
 
 		SearchSettingsImpl searchSettingsImpl = buildSettings(
 			searchRequestBuilder, searchContext);

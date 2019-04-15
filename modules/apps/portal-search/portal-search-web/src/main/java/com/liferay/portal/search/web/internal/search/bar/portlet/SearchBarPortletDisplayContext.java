@@ -63,6 +63,10 @@ public class SearchBarPortletDisplayContext {
 		return _letTheUserChooseTheSearchScope;
 	}
 
+	public boolean isRenderNothing() {
+		return _renderNothing;
+	}
+
 	public boolean isSelectedCurrentSiteSearchScope() {
 		return _selectedCurrentSiteSearchScope;
 	}
@@ -113,6 +117,10 @@ public class SearchBarPortletDisplayContext {
 		_letTheUserChooseTheSearchScope = letTheUserChooseTheSearchScope;
 	}
 
+	public void setRenderNothing(boolean renderNothing) {
+		_renderNothing = renderNothing;
+	}
+
 	public void setScopeParameterName(String scopeParameterName) {
 		_scopeParameterName = scopeParameterName;
 	}
@@ -145,6 +153,7 @@ public class SearchBarPortletDisplayContext {
 	private String _keywords;
 	private String _keywordsParameterName;
 	private boolean _letTheUserChooseTheSearchScope;
+	private boolean _renderNothing;
 	private String _scopeParameterName;
 	private String _scopeParameterValue;
 	private String _searchURL;

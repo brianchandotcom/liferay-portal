@@ -25,6 +25,11 @@ public interface SearchBarPortletPreferences {
 
 	public static final String PREFERENCE_KEY_DESTINATION = "destination";
 
+	public static final String PREFERENCE_KEY_FEDERATED_SEARCH_KEY =
+		"federatedSearchKey";
+
+	public static final String PREFERENCE_KEY_INVISIBLE = "invisible";
+
 	public static final String PREFERENCE_KEY_KEYWORDS_PARAMETER_NAME =
 		"keywordsParameterName";
 
@@ -40,6 +45,10 @@ public interface SearchBarPortletPreferences {
 
 	public String getDestinationString();
 
+	public Optional<String> getFederatedSearchKeyOptional();
+
+	public String getFederatedSearchKeyString();
+
 	public String getKeywordsParameterName();
 
 	public String getScopeParameterName();
@@ -47,6 +56,8 @@ public interface SearchBarPortletPreferences {
 	public SearchScopePreference getSearchScopePreference();
 
 	public String getSearchScopePreferenceString();
+
+	public boolean isInvisible();
 
 	public boolean isUseAdvancedSearchSyntax();
 

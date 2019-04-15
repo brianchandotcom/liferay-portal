@@ -26,6 +26,9 @@ public interface CustomFacetPortletPreferences {
 
 	public static final String PREFERENCE_KEY_CUSTOM_HEADING = "customHeading";
 
+	public static final String PREFERENCE_KEY_FEDERATED_SEARCH_KEY =
+		"federatedSearchKey";
+
 	public static final String PREFERENCE_KEY_FREQUENCIES_VISIBLE =
 		"frequenciesVisible";
 
@@ -43,6 +46,10 @@ public interface CustomFacetPortletPreferences {
 	public Optional<String> getCustomHeadingOptional();
 
 	public String getCustomHeadingString();
+
+	public Optional<String> getFederatedSearchKeyOptional();
+
+	public String getFederatedSearchKeyString();
 
 	public int getFrequencyThreshold();
 

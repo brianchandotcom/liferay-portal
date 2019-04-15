@@ -26,7 +26,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
@@ -48,19 +47,25 @@ public class PortletSharedSearchResponseImpl
 
 	@Override
 	public List<Document> getDocuments() {
-		return _searchResponseImpl.getDocuments();
+		SearchResponse searchResponse = _searchResponseImpl.getSearchResponse();
+
+		return searchResponse.getDocuments71();
 	}
 
 	@Override
 	public Facet getFacet(String name) {
 		SearchResponse searchResponse = getSearchResponse();
 
-		return searchResponse.withSearchContextGet(
-			searchContext -> {
-				Map<String, Facet> facets = searchContext.getFacets();
+		return searchResponse.withFacetContextGet(
+			facetContext -> facetContext.getFacet(name));
+	}
 
-				return facets.get(name);
-			});
+	@Override
+	public SearchResponse getFederatedSearchResponse(
+		Optional<String> federatedSearchKeyOptional) {
+
+		return _searchResponseImpl.getFederatedSearchResponse(
+			federatedSearchKeyOptional);
 	}
 
 	@Override

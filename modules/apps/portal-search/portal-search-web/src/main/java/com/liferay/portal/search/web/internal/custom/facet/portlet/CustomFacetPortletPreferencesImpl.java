@@ -61,6 +61,17 @@ public class CustomFacetPortletPreferencesImpl
 	}
 
 	@Override
+	public Optional<String> getFederatedSearchKeyOptional() {
+		return _portletPreferencesHelper.getString(
+			CustomFacetPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY);
+	}
+
+	@Override
+	public String getFederatedSearchKeyString() {
+		return getFederatedSearchKeyOptional().orElse(StringPool.BLANK);
+	}
+
+	@Override
 	public int getFrequencyThreshold() {
 		return _portletPreferencesHelper.getInteger(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD,

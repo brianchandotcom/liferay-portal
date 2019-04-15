@@ -25,6 +25,7 @@ import com.liferay.portal.search.web.internal.result.display.context.SearchResul
 
 import java.util.Locale;
 
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -39,59 +40,81 @@ public class SearchResultContentDisplayBuilder {
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
 			new SearchResultContentDisplayContext();
 
-		AssetRendererFactory<?> assetRendererFactory =
-			getAssetRendererFactoryByType(_type);
+		AssetRendererFactory<?> assetRendererFactory;
 
-		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-			_assetEntryId);
+		assetRendererFactory = getAssetRendererFactoryByType(_type);
 
-		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+		searchResultContentDisplayContext.setAssetRendererFactory(
+			assetRendererFactory);
 
-		boolean visible = false;
+		AssetEntry assetEntry;
 
-		if (assetEntry.isVisible() &&
+		if (assetRendererFactory != null) {
+			assetEntry = assetRendererFactory.getAssetEntry(_assetEntryId);
+		}
+		else {
+			assetEntry = null;
+		}
+
+		searchResultContentDisplayContext.setAssetEntry(assetEntry);
+
+		AssetRenderer<?> assetRenderer;
+
+		if (assetEntry != null) {
+			assetRenderer = assetEntry.getAssetRenderer();
+		}
+		else {
+			assetRenderer = null;
+		}
+
+		searchResultContentDisplayContext.setAssetRenderer(assetRenderer);
+
+		final boolean visible;
+
+		if ((assetEntry != null) && (assetRenderer != null) &&
+			assetEntry.isVisible() &&
 			assetRenderer.hasViewPermission(_permissionChecker)) {
 
 			visible = true;
 		}
+		else {
+			visible = false;
+		}
 
 		searchResultContentDisplayContext.setVisible(visible);
 
-		if (!visible) {
-			return searchResultContentDisplayContext;
+		if (visible) {
+			String title = assetRenderer.getTitle(_locale);
+
+			searchResultContentDisplayContext.setHeaderTitle(title);
+
+			boolean hasEditPermission = assetRenderer.hasEditPermission(
+				_permissionChecker);
+
+			searchResultContentDisplayContext.setHasEditPermission(
+				hasEditPermission);
+
+			if (hasEditPermission) {
+				searchResultContentDisplayContext.setIconEditTarget(title);
+
+				PortletURL redirectPortletURL =
+					_renderResponse.createRenderURL();
+
+				MutableRenderParameters mutableRenderParameters =
+					redirectPortletURL.getRenderParameters();
+
+				mutableRenderParameters.setValue(
+					"mvcPath", "/edit_content_redirect.jsp");
+
+				PortletURL editPortletURL = assetRenderer.getURLEdit(
+					_portal.getLiferayPortletRequest(_renderRequest),
+					_portal.getLiferayPortletResponse(_renderResponse),
+					LiferayWindowState.POP_UP, redirectPortletURL);
+
+				searchResultContentDisplayContext.setIconURLString(
+					editPortletURL.toString());
+			}
 		}
-
-		String title = assetRenderer.getTitle(_locale);
-
-		searchResultContentDisplayContext.setHeaderTitle(title);
-
-		boolean hasEditPermission = assetRenderer.hasEditPermission(
-			_permissionChecker);
-
-		searchResultContentDisplayContext.setHasEditPermission(
-			hasEditPermission);
-
-		if (hasEditPermission) {
-			searchResultContentDisplayContext.setIconEditTarget(title);
-
-			PortletURL redirectPortletURL = _renderResponse.createRenderURL();
-
-			redirectPortletURL.setParameter(
-				"mvcPath", "/edit_content_redirect.jsp");
-
-			PortletURL editPortletURL = assetRenderer.getURLEdit(
-				_portal.getLiferayPortletRequest(_renderRequest),
-				_portal.getLiferayPortletResponse(_renderResponse),
-				LiferayWindowState.POP_UP, redirectPortletURL);
-
-			searchResultContentDisplayContext.setIconURLString(
-				editPortletURL.toString());
-		}
-
-		searchResultContentDisplayContext.setAssetEntry(assetEntry);
-		searchResultContentDisplayContext.setAssetRenderer(assetRenderer);
-		searchResultContentDisplayContext.setAssetRendererFactory(
-			assetRendererFactory);
 
 		return searchResultContentDisplayContext;
 	}

@@ -123,7 +123,7 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 					</h4>
 
 					<h6 class="text-default">
-						<strong><%= searchResultSummaryDisplayContext.getModelResource() %></strong> &#183;
+						<strong><%= searchResultSummaryDisplayContext.getModelResource() %></strong>
 
 						<c:if test="<%= searchResultSummaryDisplayContext.isLocaleReminderVisible() %>">
 							<liferay-ui:icon
@@ -133,6 +133,7 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 						</c:if>
 
 						<c:if test="<%= searchResultSummaryDisplayContext.isCreatorVisible() %>">
+							&#183;
 							<liferay-ui:message key="written-by" /> <strong><%= searchResultSummaryDisplayContext.getCreatorUserName() %></strong>
 						</c:if>
 

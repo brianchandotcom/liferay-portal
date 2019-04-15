@@ -110,6 +110,8 @@ OccurEntriesHolder occurEntriesHolder = configurationDisplayContext.getOccurEntr
 			<aui:input helpMessage="immutable-help" label="immutable" name="<%= PortletPreferencesJspUtil.getInputName(CustomFilterPortletPreferences.PREFERENCE_KEY_IMMUTABLE) %>" type="checkbox" value="<%= customFilterPortletPreferences.isImmutable() %>" />
 
 			<aui:input helpMessage="disabled-help" label="disabled" name="<%= PortletPreferencesJspUtil.getInputName(CustomFilterPortletPreferences.PREFERENCE_KEY_DISABLED) %>" type="checkbox" value="<%= customFilterPortletPreferences.isDisabled() %>" />
+
+			<aui:input helpMessage="federated-search-key-help" label="federated-search-key" name="<%= PortletPreferencesJspUtil.getInputName(CustomFilterPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>" type="text" value="<%= customFilterPortletPreferences.getFederatedSearchKeyString() %>" />
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

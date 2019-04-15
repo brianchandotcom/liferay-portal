@@ -28,6 +28,9 @@ public interface CustomFilterPortletPreferences {
 
 	public static final String PREFERENCE_KEY_DISABLED = "disabled";
 
+	public static final String PREFERENCE_KEY_FEDERATED_SEARCH_KEY =
+		"federatedSearchKey";
+
 	public static final String PREFERENCE_KEY_FILTER_FIELD = "filterField";
 
 	public static final String PREFERENCE_KEY_FILTER_QUERY_TYPE =
@@ -55,6 +58,10 @@ public interface CustomFilterPortletPreferences {
 	public Optional<String> getCustomHeadingOptional();
 
 	public String getCustomHeadingString();
+
+	public Optional<String> getFederatedSearchKeyOptional();
+
+	public String getFederatedSearchKeyString();
 
 	public Optional<String> getFilterFieldOptional();
 

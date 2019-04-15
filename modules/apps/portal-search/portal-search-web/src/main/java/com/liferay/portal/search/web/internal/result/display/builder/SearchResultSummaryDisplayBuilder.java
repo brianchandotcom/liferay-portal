@@ -59,7 +59,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -92,104 +91,165 @@ public class SearchResultSummaryDisplayBuilder {
 		}
 	}
 
-	public void setAbridged(boolean abridged) {
+	public SearchResultSummaryDisplayBuilder setAbridged(boolean abridged) {
 		_abridged = abridged;
+
+		return this;
 	}
 
-	public void setAssetEntryLocalService(
+	public SearchResultSummaryDisplayBuilder setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+
+		return this;
 	}
 
-	public void setAssetRendererFactoryLookup(
+	public SearchResultSummaryDisplayBuilder setAssetRendererFactoryLookup(
 		AssetRendererFactoryLookup assetRendererFactoryLookup) {
 
 		_assetRendererFactoryLookup = assetRendererFactoryLookup;
+
+		return this;
 	}
 
-	public void setCurrentURL(String currentURL) {
+	public SearchResultSummaryDisplayBuilder setCurrentURL(String currentURL) {
 		_currentURL = currentURL;
+
+		return this;
 	}
 
-	public void setDocument(Document document) {
+	public SearchResultSummaryDisplayBuilder setDocument(Document document) {
 		_document = document;
+
+		return this;
 	}
 
-	public void setFastDateFormatFactory(
+	public SearchResultSummaryDisplayBuilder setFastDateFormatFactory(
 		FastDateFormatFactory fastDateFormatFactory) {
 
 		_fastDateFormatFactory = fastDateFormatFactory;
+
+		return this;
 	}
 
-	public void setHighlightEnabled(boolean highlightEnabled) {
+	public SearchResultSummaryDisplayBuilder setHighlightEnabled(
+		boolean highlightEnabled) {
+
 		_highlightEnabled = highlightEnabled;
+
+		return this;
 	}
 
-	public void setImageRequested(boolean imageRequested) {
+	public SearchResultSummaryDisplayBuilder setImageRequested(
+		boolean imageRequested) {
+
 		_imageRequested = imageRequested;
+
+		return this;
 	}
 
-	public void setIndexerRegistry(IndexerRegistry indexerRegistry) {
+	public SearchResultSummaryDisplayBuilder setIndexerRegistry(
+		IndexerRegistry indexerRegistry) {
+
 		_indexerRegistry = indexerRegistry;
+
+		return this;
 	}
 
-	public void setLanguage(Language language) {
+	public SearchResultSummaryDisplayBuilder setLanguage(Language language) {
 		_language = language;
+
+		return this;
 	}
 
-	public void setLocale(Locale locale) {
+	public SearchResultSummaryDisplayBuilder setLocale(Locale locale) {
 		_locale = locale;
+
+		return this;
 	}
 
-	public void setPortletURLFactory(PortletURLFactory portletURLFactory) {
+	public SearchResultSummaryDisplayBuilder setPortletURLFactory(
+		PortletURLFactory portletURLFactory) {
+
 		_portletURLFactory = portletURLFactory;
+
+		return this;
 	}
 
-	public void setRenderRequest(RenderRequest renderRequest) {
+	public SearchResultSummaryDisplayBuilder setRenderRequest(
+		RenderRequest renderRequest) {
+
 		_renderRequest = renderRequest;
+
+		return this;
 	}
 
-	public void setRenderResponse(RenderResponse renderResponse) {
+	public SearchResultSummaryDisplayBuilder setRenderResponse(
+		RenderResponse renderResponse) {
+
 		_renderResponse = renderResponse;
+
+		return this;
 	}
 
-	public void setRequest(HttpServletRequest request) {
+	public SearchResultSummaryDisplayBuilder setRequest(
+		HttpServletRequest request) {
+
 		_request = request;
+
+		return this;
 	}
 
-	public void setResourceActions(ResourceActions resourceActions) {
+	public SearchResultSummaryDisplayBuilder setResourceActions(
+		ResourceActions resourceActions) {
+
 		_resourceActions = resourceActions;
+
+		return this;
 	}
 
-	public void setSearchResultImageContributorsStream(
-		Stream<SearchResultImageContributor>
-			searchResultImageContributorsStream) {
+	public SearchResultSummaryDisplayBuilder
+		setSearchResultImageContributorsStream(
+			Stream<SearchResultImageContributor>
+				searchResultImageContributorsStream) {
 
 		_searchResultImageContributorsStream =
 			searchResultImageContributorsStream;
+
+		return this;
 	}
 
-	public void setSearchResultPreferences(
+	public SearchResultSummaryDisplayBuilder setSearchResultPreferences(
 		SearchResultPreferences searchResultPreferences) {
 
 		_searchResultPreferences = searchResultPreferences;
+
+		return this;
 	}
 
-	public void setSearchResultViewURLSupplier(
+	public SearchResultSummaryDisplayBuilder setSearchResultViewURLSupplier(
 		SearchResultViewURLSupplier searchResultViewURLSupplier) {
 
 		_searchResultViewURLSupplier = searchResultViewURLSupplier;
+
+		return this;
 	}
 
-	public void setSummaryBuilderFactory(
+	public SearchResultSummaryDisplayBuilder setSummaryBuilderFactory(
 		SummaryBuilderFactory summaryBuilderFactory) {
 
 		_summaryBuilderFactory = summaryBuilderFactory;
+
+		return this;
 	}
 
-	public void setThemeDisplay(ThemeDisplay themeDisplay) {
+	public SearchResultSummaryDisplayBuilder setThemeDisplay(
+		ThemeDisplay themeDisplay) {
+
 		_themeDisplay = themeDisplay;
+
+		return this;
 	}
 
 	protected SearchResultSummaryDisplayContext build(
@@ -251,7 +311,7 @@ public class SearchResultSummaryDisplayBuilder {
 			className, classPK);
 
 		buildAssetCategoriesOrTags(
-			searchResultSummaryDisplayContext, assetEntry, className, classPK);
+			searchResultSummaryDisplayContext, assetEntry);
 
 		buildAssetRendererURLDownload(
 			searchResultSummaryDisplayContext, assetRenderer, summary);
@@ -269,9 +329,8 @@ public class SearchResultSummaryDisplayBuilder {
 	}
 
 	protected void buildAssetCategoriesOrTags(
-			SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
-			AssetEntry assetEntry, String className, long classPK)
-		throws PortletException {
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
+		AssetEntry assetEntry) {
 
 		if (hasAssetCategoriesOrTags(assetEntry)) {
 			searchResultSummaryDisplayContext.setAssetCategoriesOrTagsVisible(
@@ -319,7 +378,7 @@ public class SearchResultSummaryDisplayBuilder {
 
 		String creatorUserName = _document.get(Field.USER_NAME);
 
-		if (creatorUserName != null) {
+		if (!Validator.isBlank(creatorUserName)) {
 			searchResultSummaryDisplayContext.setCreatorUserName(
 				creatorUserName);
 			searchResultSummaryDisplayContext.setCreatorVisible(true);
@@ -358,18 +417,10 @@ public class SearchResultSummaryDisplayBuilder {
 
 		Collections.sort(
 			entries,
-			new Comparator<Map.Entry<String, Field>>() {
+			(entry1, entry2) -> {
+				String key = entry1.getKey();
 
-				@Override
-				public int compare(
-					Map.Entry<String, Field> entry1,
-					Map.Entry<String, Field> entry2) {
-
-					String key = entry1.getKey();
-
-					return key.compareTo(entry2.getKey());
-				}
-
+				return key.compareTo(entry2.getKey());
 			});
 
 		List<SearchResultFieldDisplayContext> searchResultFieldDisplayContexts =

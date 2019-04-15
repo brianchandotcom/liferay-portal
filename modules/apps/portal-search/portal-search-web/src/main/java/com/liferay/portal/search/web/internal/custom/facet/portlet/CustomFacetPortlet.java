@@ -15,12 +15,13 @@
 package com.liferay.portal.search.web.internal.custom.facet.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.custom.facet.constants.CustomFacetPortletKeys;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
@@ -95,39 +96,56 @@ public class CustomFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
+		CustomFacetDisplayBuilder customFacetDisplayBuilder =
+			new CustomFacetDisplayBuilder();
+
 		CustomFacetPortletPreferences customFacetPortletPreferences =
 			new CustomFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
 
-		CustomFacetDisplayBuilder customFacetDisplayBuilder =
-			new CustomFacetDisplayBuilder();
-
-		SearchOptionalUtil.copy(
-			customFacetPortletPreferences::getCustomHeadingOptional,
-			customFacetDisplayBuilder::setCustomDisplayCaption);
-
-		customFacetDisplayBuilder.setFacet(
-			portletSharedSearchResponse.getFacet(getPortletId(renderRequest)));
-		customFacetDisplayBuilder.setFieldToAggregate(
-			customFacetPortletPreferences.getAggregationFieldString());
-		customFacetDisplayBuilder.setFrequenciesVisible(
-			customFacetPortletPreferences.isFrequenciesVisible());
-		customFacetDisplayBuilder.setFrequencyThreshold(
-			customFacetPortletPreferences.getFrequencyThreshold());
-		customFacetDisplayBuilder.setMaxTerms(
-			customFacetPortletPreferences.getMaxTerms());
+		Facet facet = getFacet(
+			portletSharedSearchResponse, customFacetPortletPreferences,
+			renderRequest);
 
 		String parameterName = getParameterName(customFacetPortletPreferences);
 
-		customFacetDisplayBuilder.setParameterName(parameterName);
+		Optional<List<String>> parameterValuesOptional =
+			getParameterValuesOptional(
+				parameterName, portletSharedSearchResponse, renderRequest);
 
-		SearchOptionalUtil.copy(
-			() -> getParameterValuesOptional(
-				parameterName, portletSharedSearchResponse, renderRequest),
-			customFacetDisplayBuilder::setParameterValues);
+		return customFacetDisplayBuilder.setCustomDisplayCaption(
+			customFacetPortletPreferences.getCustomHeadingOptional()
+		).setFacet(
+			facet
+		).setFieldToAggregate(
+			customFacetPortletPreferences.getAggregationFieldString()
+		).setFrequenciesVisible(
+			customFacetPortletPreferences.isFrequenciesVisible()
+		).setFrequencyThreshold(
+			customFacetPortletPreferences.getFrequencyThreshold()
+		).setMaxTerms(
+			customFacetPortletPreferences.getMaxTerms()
+		).setParameterName(
+			parameterName
+		).setParameterValues(
+			parameterValuesOptional
+		).build();
+	}
 
-		return customFacetDisplayBuilder.build();
+	protected Facet getFacet(
+		PortletSharedSearchResponse portletSharedSearchResponse,
+		CustomFacetPortletPreferences customFacetPortletPreferences,
+		RenderRequest renderRequest) {
+
+		SearchResponse searchResponse =
+			portletSharedSearchResponse.getFederatedSearchResponse(
+				customFacetPortletPreferences.getFederatedSearchKeyOptional());
+
+		Facet facet = searchResponse.withFacetContextGet(
+			facetContext -> facetContext.getFacet(getPortletId(renderRequest)));
+
+		return facet;
 	}
 
 	protected String getParameterName(

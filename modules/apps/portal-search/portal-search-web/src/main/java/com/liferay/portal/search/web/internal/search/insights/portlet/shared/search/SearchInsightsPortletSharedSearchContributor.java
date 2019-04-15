@@ -38,12 +38,14 @@ public class SearchInsightsPortletSharedSearchContributor
 	public void contribute(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		SearchRequestBuilder searchRequestBuilder =
-			portletSharedSearchSettings.getSearchRequestBuilder();
-
 		SearchInsightsPortletPreferences searchInsightsPortletPreferences =
 			new SearchInsightsPortletPreferencesImpl(
 				portletSharedSearchSettings.getPortletPreferencesOptional());
+
+		SearchRequestBuilder searchRequestBuilder =
+			portletSharedSearchSettings.getFederatedSearchRequestBuilder(
+				searchInsightsPortletPreferences.
+					getFederatedSearchKeyOptional());
 
 		searchRequestBuilder.explain(
 			searchInsightsPortletPreferences.isExplain()

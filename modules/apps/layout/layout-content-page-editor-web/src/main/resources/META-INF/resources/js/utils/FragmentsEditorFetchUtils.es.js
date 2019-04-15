@@ -70,15 +70,19 @@ function removeFragmentEntryLinks(
 ) {
 	const state = _store.getState();
 
-	return _fetch(
-		state.updateLayoutPageTemplateDataURL,
-		{
-			classNameId: state.classNameId,
-			classPK: state.classPK,
-			data: JSON.stringify(layoutData),
-			fragmentEntryLinkIds: JSON.stringify(fragmentEntryLinkIds),
-			segmentsExperienceId
-		}
+	return Promise.all(
+		fragmentEntryLinkIds.map(
+			fragmentEntryLinkId => _fetch(
+				state.deleteFragmentEntryLinkURL,
+				{
+					classNameId: state.classNameId,
+					classPK: state.classPK,
+					data: JSON.stringify(layoutData),
+					fragmentEntryLinkId,
+					segmentsExperienceId
+				}
+			)
+		)
 	);
 }
 

@@ -70,51 +70,40 @@ public abstract class BaseVerticalCard
 
 	@Override
 	public String getStickerCssClass() {
-		String userColorCssClass = "user-icon-default";
-
-		try {
-			if (!(baseModel instanceof AuditedModel)) {
-				return StringPool.BLANK;
-			}
-
-			AuditedModel auditedModel = (AuditedModel)baseModel;
-
-			User user = UserLocalServiceUtil.fetchUser(
-				auditedModel.getUserId());
-
-			userColorCssClass = LexiconUtil.getUserColorCssClass(user);
-		}
-		catch (Exception e) {
+		if (!(baseModel instanceof AuditedModel)) {
+			return StringPool.BLANK;
 		}
 
-		return "sticker-user-icon " + userColorCssClass;
+		AuditedModel auditedModel = (AuditedModel)baseModel;
+
+		User user = UserLocalServiceUtil.fetchUser(auditedModel.getUserId());
+
+		if (user == null) {
+			return StringPool.BLANK;
+		}
+
+		return "sticker-user-icon " + LexiconUtil.getUserColorCssClass(user);
 	}
 
 	@Override
 	public String getStickerIcon() {
-		try {
-			if (!(baseModel instanceof AuditedModel)) {
-				return StringPool.BLANK;
-			}
-
-			AuditedModel auditedModel = (AuditedModel)baseModel;
-
-			User user = UserLocalServiceUtil.fetchUser(
-				auditedModel.getUserId());
-
-			if (user == null) {
-				return StringPool.BLANK;
-			}
-
-			if (user.getPortraitId() == 0) {
-				return "user";
-			}
-
+		if (!(baseModel instanceof AuditedModel)) {
 			return StringPool.BLANK;
 		}
-		catch (Exception e) {
+
+		AuditedModel auditedModel = (AuditedModel)baseModel;
+
+		User user = UserLocalServiceUtil.fetchUser(auditedModel.getUserId());
+
+		if (user == null) {
 			return StringPool.BLANK;
 		}
+
+		if (user.getPortraitId() == 0) {
+			return "user";
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

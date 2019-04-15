@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>SELECTED_TEMPLATE</td>
-	<td>//input[@title='Template Name']</td>
+	<td>//input[contains(@id,'TemplateName')]</td>
 	<td></td>
 </tr>
 <tr>

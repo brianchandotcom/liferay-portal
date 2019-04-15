@@ -176,6 +176,16 @@ public class ProductMenuProductNavigationControlMenuEntry
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (!themeDisplay.isSignedIn()) {
+			return false;
+		}
+
+		User user = themeDisplay.getUser();
+
+		if (!themeDisplay.isImpersonated() && !user.isSetupComplete()) {
+			return false;
+		}
+
 		List<PanelCategory> childPanelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
 				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
@@ -185,15 +195,7 @@ public class ProductMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		User user = themeDisplay.getUser();
-
-		if (themeDisplay.isSignedIn() &&
-			(user.isSetupComplete() || themeDisplay.isImpersonated())) {
-
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	private void _processBodyBottomContent(PageContext pageContext) {

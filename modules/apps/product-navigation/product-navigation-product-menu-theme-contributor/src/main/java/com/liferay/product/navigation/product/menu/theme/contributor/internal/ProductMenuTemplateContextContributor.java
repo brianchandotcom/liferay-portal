@@ -71,15 +71,6 @@ public class ProductMenuTemplateContextContributor
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<PanelCategory> childPanelCategories =
-			_panelCategoryRegistry.getChildPanelCategories(
-				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroup());
-
-		if (childPanelCategories.isEmpty()) {
-			return false;
-		}
-
 		if (!themeDisplay.isSignedIn()) {
 			return false;
 		}
@@ -87,6 +78,15 @@ public class ProductMenuTemplateContextContributor
 		User user = themeDisplay.getUser();
 
 		if (!themeDisplay.isImpersonated() && !user.isSetupComplete()) {
+			return false;
+		}
+
+		List<PanelCategory> childPanelCategories =
+			_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup());
+
+		if (childPanelCategories.isEmpty()) {
 			return false;
 		}
 

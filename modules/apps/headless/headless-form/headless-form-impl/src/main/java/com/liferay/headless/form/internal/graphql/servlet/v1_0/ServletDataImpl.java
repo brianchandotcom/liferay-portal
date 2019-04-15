@@ -46,8 +46,6 @@ public class ServletDataImpl implements ServletData {
 			_formResourceComponentServiceObjects);
 		Mutation.setFormDocumentResourceComponentServiceObjects(
 			_formDocumentResourceComponentServiceObjects);
-		Mutation.setFormRecordResourceComponentServiceObjects(
-			_formRecordResourceComponentServiceObjects);
 		Mutation.setFormRecordFormResourceComponentServiceObjects(
 			_formRecordFormResourceComponentServiceObjects);
 
@@ -85,12 +83,12 @@ public class ServletDataImpl implements ServletData {
 		_formDocumentResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<FormRecordResource>
-		_formRecordResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FormRecordFormResource>
 		_formRecordFormResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<FormRecordResource>
+		_formRecordResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FormStructureResource>

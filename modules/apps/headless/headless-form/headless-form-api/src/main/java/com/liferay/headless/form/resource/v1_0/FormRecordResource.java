@@ -38,9 +38,6 @@ public interface FormRecordResource {
 			Long formId, Pagination pagination)
 		throws Exception;
 
-	public FormRecord postFormFormRecord(Long formId, FormRecord formRecord)
-		throws Exception;
-
 	public FormRecord getFormFormRecordByLatestDraft(Long formId)
 		throws Exception;
 

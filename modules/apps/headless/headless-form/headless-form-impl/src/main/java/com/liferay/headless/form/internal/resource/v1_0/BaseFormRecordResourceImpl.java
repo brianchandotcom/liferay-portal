@@ -37,9 +37,7 @@ import javax.annotation.Generated;
 
 import javax.validation.constraints.NotNull;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -83,19 +81,6 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
-	}
-
-	@Override
-	@Consumes("application/json")
-	@POST
-	@Path("/forms/{formId}/form-records")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "FormRecord")})
-	public FormRecord postFormFormRecord(
-			@NotNull @PathParam("formId") Long formId, FormRecord formRecord)
-		throws Exception {
-
-		return new FormRecord();
 	}
 
 	@Override

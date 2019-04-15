@@ -233,6 +233,69 @@ public abstract class BaseFormRecordFormResourceTestCase {
 		return options.getResponse();
 	}
 
+	@Test
+	public void testPostFormFormRecord() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected FormRecord invokePostFormFormRecord(
+			Long formId, FormRecordForm formRecordForm)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			FormRecordFormSerDes.toJSON(formRecordForm),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/forms/{formId}/form-records", formId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return com.liferay.headless.form.client.serdes.v1_0.
+				FormRecordSerDes.toDTO(string);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostFormFormRecordResponse(
+			Long formId, FormRecordForm formRecordForm)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			FormRecordFormSerDes.toJSON(formRecordForm),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/forms/{formId}/form-records", formId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 

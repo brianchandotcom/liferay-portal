@@ -20,7 +20,6 @@ import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.dto.v1_0.FormRecordForm;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
 import com.liferay.headless.form.resource.v1_0.FormRecordFormResource;
-import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -57,14 +56,6 @@ public class Mutation {
 
 		_formDocumentResourceComponentServiceObjects =
 			formDocumentResourceComponentServiceObjects;
-	}
-
-	public static void setFormRecordResourceComponentServiceObjects(
-		ComponentServiceObjects<FormRecordResource>
-			formRecordResourceComponentServiceObjects) {
-
-		_formRecordResourceComponentServiceObjects =
-			formRecordResourceComponentServiceObjects;
 	}
 
 	public static void setFormRecordFormResourceComponentServiceObjects(
@@ -114,20 +105,6 @@ public class Mutation {
 				formDocumentId));
 	}
 
-	@GraphQLField
-	@GraphQLInvokeDetached
-	public FormRecord postFormFormRecord(
-			@GraphQLName("formId") Long formId,
-			@GraphQLName("formRecord") FormRecord formRecord)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_formRecordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			formRecordResource -> formRecordResource.postFormFormRecord(
-				formId, formRecord));
-	}
-
 	@GraphQLInvokeDetached
 	public FormRecord putFormRecord(
 			@GraphQLName("formRecordId") Long formRecordId,
@@ -139,6 +116,20 @@ public class Mutation {
 			this::_populateResourceContext,
 			formRecordFormResource -> formRecordFormResource.putFormRecord(
 				formRecordId, formRecordForm));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public FormRecord postFormFormRecord(
+			@GraphQLName("formId") Long formId,
+			@GraphQLName("formRecordForm") FormRecordForm formRecordForm)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_formRecordFormResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			formRecordFormResource -> formRecordFormResource.postFormFormRecord(
+				formId, formRecordForm));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -196,14 +187,6 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(FormRecordResource formRecordResource)
-		throws Exception {
-
-		formRecordResource.setContextCompany(
-			CompanyLocalServiceUtil.getCompany(
-				CompanyThreadLocal.getCompanyId()));
-	}
-
 	private void _populateResourceContext(
 			FormRecordFormResource formRecordFormResource)
 		throws Exception {
@@ -217,8 +200,6 @@ public class Mutation {
 		_formResourceComponentServiceObjects;
 	private static ComponentServiceObjects<FormDocumentResource>
 		_formDocumentResourceComponentServiceObjects;
-	private static ComponentServiceObjects<FormRecordResource>
-		_formRecordResourceComponentServiceObjects;
 	private static ComponentServiceObjects<FormRecordFormResource>
 		_formRecordFormResourceComponentServiceObjects;
 

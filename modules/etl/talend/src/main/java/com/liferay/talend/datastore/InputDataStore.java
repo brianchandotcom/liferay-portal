@@ -32,8 +32,9 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 @DataStore("InputDataStore")
 @GridLayout(
 	{
-		@GridLayout.Row("_authenticationMethod"), @GridLayout.Row("_serverURL"),
-		@GridLayout.Row("_basicDataStore"), @GridLayout.Row("_oAuthDataStore")
+		@GridLayout.Row("_authenticationMethod"),
+		@GridLayout.Row("_openAPISpecURL"), @GridLayout.Row("_basicDataStore"),
+		@GridLayout.Row("_oAuthDataStore")
 	}
 )
 public class InputDataStore {
@@ -50,8 +51,8 @@ public class InputDataStore {
 		return _oAuthDataStore;
 	}
 
-	public URL getServerURL() {
-		return _serverURL;
+	public URL getOpenAPISpecURL() {
+		return _openAPISpecURL;
 	}
 
 	public InputDataStore setAuthenticationMethod(
@@ -74,8 +75,8 @@ public class InputDataStore {
 		return this;
 	}
 
-	public InputDataStore setServerURL(URL serverURL) {
-		_serverURL = serverURL;
+	public InputDataStore setOpenAPISpecURL(URL openAPISpecURL) {
+		_openAPISpecURL = openAPISpecURL;
 
 		return this;
 	}
@@ -97,6 +98,7 @@ public class InputDataStore {
 		"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.yaml"
 	)
 	@Option
-	private URL _serverURL;
+	@Required
+	private URL _openAPISpecURL;
 
 }

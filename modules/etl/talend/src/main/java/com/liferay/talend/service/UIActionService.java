@@ -63,15 +63,16 @@ public class UIActionService {
 
 		BasicDataStore basicDataStore = inputDataStore.getBasicDataStore();
 
-		if (_isNull(basicDataStore.getUser()) ||
-			_isNull(basicDataStore.getPassword())) {
+		if (!basicDataStore.isAnonymous() &&
+			(_isNull(basicDataStore.getUser()) ||
+			 _isNull(basicDataStore.getPassword()))) {
 
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO,
 				"Username and password are required");
 		}
 
-		URL serverURL = inputDataStore.getServerURL();
+		URL serverURL = inputDataStore.getOpenAPISpecURL();
 
 		if ((serverURL == null) || _isNull(serverURL.toString())) {
 			return new HealthCheckStatus(
@@ -139,7 +140,7 @@ public class UIActionService {
 				"Consumer key and secret are required");
 		}
 
-		if (inputDataStore.getServerURL() == null) {
+		if (inputDataStore.getOpenAPISpecURL() == null) {
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO, "Server URL is required");
 		}

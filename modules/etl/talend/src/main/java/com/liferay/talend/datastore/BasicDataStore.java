@@ -19,6 +19,7 @@ import java.io.Serializable;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.condition.ActiveIf;
 import org.talend.sdk.component.api.configuration.type.DataStore;
+import org.talend.sdk.component.api.configuration.ui.DefaultValue;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.configuration.ui.widget.Credential;
 
@@ -29,14 +30,10 @@ import org.talend.sdk.component.api.configuration.ui.widget.Credential;
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
 	value = {
-		@GridLayout.Row("_anonymous"), @GridLayout.Row({"_user", "_password"})
+		@GridLayout.Row({"_user", "_password"}), @GridLayout.Row("_anonymous")
 	}
 )
 public class BasicDataStore implements Serializable {
-
-	public boolean getAnonymous() {
-		return _anonymous;
-	}
 
 	public String getPassword() {
 		return _password;
@@ -44,6 +41,10 @@ public class BasicDataStore implements Serializable {
 
 	public String getUser() {
 		return _user;
+	}
+
+	public boolean isAnonymous() {
+		return _anonymous;
 	}
 
 	public BasicDataStore setAnonymous(boolean anonymous) {

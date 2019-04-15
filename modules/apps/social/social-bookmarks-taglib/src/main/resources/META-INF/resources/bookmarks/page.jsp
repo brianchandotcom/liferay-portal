@@ -105,6 +105,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 					'width=' + SHARE_WINDOW_WIDTH
 				];
 
+				event.preventDefault();
 				event.stopPropagation();
 
 				window.open(postURL, null, shareWindowFeatures.join()).focus();

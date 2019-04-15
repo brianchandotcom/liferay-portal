@@ -520,7 +520,7 @@ public class JavaParserUtil {
 				curTypeGenericBoundsDetailAST.getParent();
 
 			while (true) {
-				if (parentDetailAST.equals(detailAST)) {
+				if (DetailASTUtil.equals(detailAST, parentDetailAST)) {
 					typeGenericBoundsDetailAST = curTypeGenericBoundsDetailAST;
 
 					break outerLoop;

@@ -23,6 +23,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -30,6 +31,10 @@ import java.util.List;
 public class DetailASTUtil {
 
 	public static final int ALL_TYPES = -1;
+
+	public static boolean equals(DetailAST detailAST1, DetailAST detailAST2) {
+		return Objects.equals(detailAST1.toString(), detailAST2.toString());
+	}
 
 	public static List<DetailAST> getAllChildTokens(
 		DetailAST detailAST, boolean recursive, int... tokenTypes) {

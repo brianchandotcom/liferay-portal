@@ -294,8 +294,6 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 				if (actionType === DELETE_SEGMENTS_EXPERIENCE) {
 					const {segmentsExperienceId} = payload;
 
-					const priority = nextState.availableSegmentsExperiences[segmentsExperienceId].priority;
-
 					const fragmentEntryLinkIds = nextState.layoutData.structure.reduce(
 						(allFragmentEntryLinkIds, row) => [
 							...allFragmentEntryLinkIds,
@@ -315,6 +313,8 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 						fragmentEntryLinkIds
 					).then(
 						() => {
+							const priority = nextState.availableSegmentsExperiences[segmentsExperienceId].priority;
+
 							let availableSegmentsExperiences = Object.assign(
 								{},
 								nextState.availableSegmentsExperiences

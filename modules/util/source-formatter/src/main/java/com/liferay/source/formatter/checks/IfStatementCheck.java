@@ -101,8 +101,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				if (getLevel(s) == 0) {
 					char nextChar = ifClause.charAt(y + 1);
 
-					if (!(this instanceof JavaIfStatementCheck) &&
-						(previousChar == CharPool.OPEN_PARENTHESIS) &&
+					if ((previousChar == CharPool.OPEN_PARENTHESIS) &&
 						(nextChar == CharPool.CLOSE_PARENTHESIS)) {
 
 						addMessage(

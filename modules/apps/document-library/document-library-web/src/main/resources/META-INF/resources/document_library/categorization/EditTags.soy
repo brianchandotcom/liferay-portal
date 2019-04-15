@@ -7,6 +7,7 @@
 	{@param groupIds: list<?>}
 	{@param namespace: string}
 	{@param spritemap: string}
+	{@param? close: any}
 	{@param? _handleFormSubmit: any}
 	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
@@ -50,7 +51,7 @@
 				{/param}
 
 				{param footer kind="html"}
-					<button class="btn btn-secondary" data-onclick="hide" type="button">{msg desc=""}cancel{/msg}</button>
+					<button class="btn btn-secondary" data-onclick="{$close}" type="button">{msg desc=""}cancel{/msg}</button>
 					<button class="btn btn-primary" type="submit">{msg desc=""}save{/msg}</button>
 				{/param}
 

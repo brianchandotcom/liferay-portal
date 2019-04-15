@@ -13,6 +13,8 @@
 	{@param? _handleInputOnBlur: any}
 	{@param? _handleItemAdded: any}
 	{@param? _handleItemRemoved: any}
+	{@param? _handleSyncInputValue: any}
+	{@param? _inputValue: string}
 	{@param? _typedCategory: string}
 	{@param? _unexistingCategoryError: bool}
 	{@param? categoryIds: string}
@@ -28,14 +30,16 @@
 			{param autocompleteFilterCondition: 'label' /}
 			{param dataSource: $_dataSource ?: [] /}
 			{param events: [
-				'selectButtonClick': $_handleButtonClicked,
 				'inputBlur': $_handleInputOnBlur,
 				'inputFocus': $_handleInputFocus,
+				'inputValueChanged': $_handleSyncInputValue,
 				'labelItemAdded': $_handleItemAdded,
-				'labelItemRemoved': $_handleItemRemoved
+				'labelItemRemoved': $_handleItemRemoved,
+				'selectButtonClick': $_handleButtonClicked
 			] /}
 			{param helpText: '' /}
 			{param inputName: $inputName /}
+			{param inputValue: $_inputValue /}
 			{param ref: 'multiSelect' /}
 			{param selectedItems: $selectedItems /}
 			{param spritemap: $spritemap /}

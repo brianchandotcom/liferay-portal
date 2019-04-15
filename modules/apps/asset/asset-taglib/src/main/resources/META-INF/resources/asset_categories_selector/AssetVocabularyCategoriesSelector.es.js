@@ -130,6 +130,10 @@ class AssetVocabularyCategoriesSelector extends Component {
 		this.selectedItems = event.data.selectedItems;
 	}
 
+	_handleSyncInputValue(val) {
+		this._inputValue = val.newVal;
+	}
+
 	syncSelectedItems() {
 		this.categoryIds = this._getCategoryIds();
 	}
@@ -175,6 +179,27 @@ class AssetVocabularyCategoriesSelector extends Component {
 }
 
 AssetVocabularyCategoriesSelector.STATE = {
+
+	/**
+	 * Synchronizes the input value of MultiSelect.
+	 * @default undefined
+	 * @instance
+	 * @memberof AssetVocabularyCategoriesSelector
+	 * @private
+	 * @type {?(string|undefined)}
+	 */
+
+	_inputValue: Config.string().internal(),
+
+	/**
+	 * @default false
+	 * @instance
+	 * @memberof AssetVocabularyCategoriesSelector
+	 * @private
+	 * @type {?bool}
+	 */
+
+	_unexistingCategoryError: Config.bool().value(false),
 
 	/**
 	 * Flag to indicate whether input can create item.

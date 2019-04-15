@@ -49,8 +49,7 @@ public class ConnectionService {
 
 		URL serverURL = inputDataStore.getServerURL();
 
-		_liferayHttpClient.base(
-			serverURL.toString() + restDataSet.getEndpoint());
+		_liferayHttpClient.base(serverURL.toString());
 
 		Response<JsonObject> jsonObjectResponse = _liferayHttpClient.getData(
 			authorizationHeader, "application/json", restDataSet.getEndpoint());
@@ -86,6 +85,13 @@ public class ConnectionService {
 			throw new OAuth2Exception(
 				"Authorization request failed. OAuth2 end point did not " +
 					"respond.");
+		}
+
+		if (jsonObjectResponse.status() != 200) {
+			throw new OAuth2Exception(
+				String.format(
+					_OAUTH_FAILED_UNSUPPORTED_STATUS,
+					jsonObjectResponse.status()));
 		}
 
 		if (!_isApplicationJsonContentType(jsonObjectResponse.headers())) {
@@ -124,8 +130,7 @@ public class ConnectionService {
 
 		String base64Seed = sb.toString();
 
-		return base64Encoder.encodeToString(
-			base64Encoder.encode(base64Seed.getBytes()));
+		return new String(base64Encoder.encode(base64Seed.getBytes()));
 	}
 
 	private String _getBearerToken(InputDataStore inputDataStore) {
@@ -168,6 +173,9 @@ public class ConnectionService {
 		_OAUTH_FAILED_UNSUPPORTED_RESPONSE_CONTENT_TYPE =
 			"OAuth check failed. Unsupported content type. Response status " +
 				"{%s}  Content type {%s}";
+
+	private static final String _OAUTH_FAILED_UNSUPPORTED_STATUS =
+		"OAuth check failed. Response status {%s}.";
 
 	@Service
 	private LiferayHttpClient _liferayHttpClient;

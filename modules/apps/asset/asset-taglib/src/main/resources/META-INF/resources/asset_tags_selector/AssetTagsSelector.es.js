@@ -99,10 +99,13 @@ class AssetTagsSelector extends Component {
 			window[this.addCallback](event.data.item);
 		}
 
-		this.emit('itemAdded', {
-			item: event.data.item,
-			selectedItems: this.selectedItems
-		});
+		this.emit(
+			'itemAdded',
+			{
+				item: event.data.item,
+				selectedItems: this.selectedItems
+			}
+		);
 	}
 
 	/**
@@ -120,10 +123,13 @@ class AssetTagsSelector extends Component {
 			window[this.removeCallback](event.data.item);
 		}
 
-		this.emit('itemRemoved', {
-			item: event.data.item,
-			selectedItems: this.selectedItems
-		});
+		this.emit(
+			'itemRemoved',
+			{
+				item: event.data.item,
+				selectedItems: this.selectedItems
+			}
+		);
 	}
 
 	/**

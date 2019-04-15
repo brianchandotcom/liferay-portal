@@ -160,12 +160,12 @@ function removeRowReducer(state, actionType, payload) {
 					}
 				).catch(
 					() => {
-						resolve(nextState);
+						resolve(state);
 					}
 				);
 			}
 			else {
-				resolve(nextState);
+				resolve(state);
 			}
 		}
 	);
@@ -292,15 +292,17 @@ function updateRowColumnsNumberReducer(state, actionType, payload) {
 						);
 
 						resolve(nextState);
+
+						return nextState;
 					}
 				).catch(
 					() => {
-						resolve(nextState);
+						resolve(state);
 					}
 				);
 			}
 			else {
-				resolve(nextState);
+				resolve(state);
 			}
 		}
 	);

@@ -272,7 +272,7 @@ public abstract class BaseIndexingTestCase {
 			_searchContext = createSearchContext();
 
 			_searchRequestBuilder = new SearchRequestBuilderImpl(
-				_searchContext);
+				null, _searchContext);
 		}
 
 		public void assertResultCount(int expected) {

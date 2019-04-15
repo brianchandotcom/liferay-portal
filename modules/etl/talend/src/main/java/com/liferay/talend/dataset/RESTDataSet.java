@@ -37,10 +37,18 @@ public class RESTDataSet implements Serializable {
 		return _inputDataStore;
 	}
 
+	public String getResource() {
+		return _resource;
+	}
+
 	public RESTDataSet setInputDataStore(InputDataStore inputDataStore) {
 		_inputDataStore = inputDataStore;
 
 		return this;
+	}
+
+	public void setResource(String resource) {
+		_resource = resource;
 	}
 
 	@Option

@@ -88,7 +88,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		Map<String, String> orphanFragmentEntries = new HashMap<>();
 
 		Map<String, FragmentCollectionFolder> fragmentCollectionFolderMap =
-			_getFragmentCollectionFolderMap(zipFile, orphanFragmentEntries);
+			_getFragmentCollectionFolderMap(
+				zipFile, groupId, orphanFragmentEntries);
 
 		for (Map.Entry<String, FragmentCollectionFolder> entry :
 				fragmentCollectionFolderMap.entrySet()) {
@@ -260,12 +261,14 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			return path.substring(pos + 1);
 		}
 
-		return StringPool.BLANK;
+		return path;
 	}
 
 	private Map<String, FragmentCollectionFolder>
-		_getFragmentCollectionFolderMap(
-			ZipFile zipFile, Map<String, String> orphanFragmentEntries) {
+			_getFragmentCollectionFolderMap(
+				ZipFile zipFile, long groupId,
+				Map<String, String> orphanFragmentEntries)
+		throws Exception {
 
 		Map<String, FragmentCollectionFolder> fragmentCollectionFolderMap =
 			new HashMap<>();
@@ -286,7 +289,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			}
 
 			fragmentCollectionFolderMap.put(
-				_getKey(fileName), new FragmentCollectionFolder(fileName));
+				_getKey(zipFile, groupId, fileName),
+				new FragmentCollectionFolder(fileName));
 		}
 
 		enumeration = zipFile.entries();
@@ -304,20 +308,37 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				continue;
 			}
 
+			String fragmentCollectionPath = fileName;
+
 			String fragmentCollectionKey = StringPool.BLANK;
 
-			String[] paths = fileName.split(StringPool.SLASH);
+			while (fragmentCollectionPath.length() > 0) {
+				fragmentCollectionPath = fragmentCollectionPath.substring(
+					0,
+					fragmentCollectionPath.lastIndexOf(StringPool.SLASH) + 1);
 
-			for (String path : paths) {
-				if (fragmentCollectionFolderMap.containsKey(path)) {
-					fragmentCollectionKey = path;
+				String fragmentCollectionFileName =
+					fragmentCollectionPath +
+						FragmentExportImportConstants.
+							FILE_NAME_COLLECTION_CONFIG;
+
+				ZipEntry fragmentCollectionZipEntry = zipFile.getEntry(
+					fragmentCollectionFileName);
+
+				if (fragmentCollectionZipEntry != null) {
+					fragmentCollectionKey = _getKey(
+						zipFile, groupId, fragmentCollectionFileName);
 
 					break;
 				}
+
+				fragmentCollectionPath = fragmentCollectionPath.substring(
+					0, fragmentCollectionPath.lastIndexOf(StringPool.SLASH));
 			}
 
 			if (Validator.isNull(fragmentCollectionKey)) {
-				orphanFragmentEntries.put(_getKey(fileName), fileName);
+				orphanFragmentEntries.put(
+					_getKey(zipFile, groupId, fileName), fileName);
 
 				continue;
 			}
@@ -326,13 +347,14 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				fragmentCollectionFolderMap.get(fragmentCollectionKey);
 
 			if (fragmentCollectionFolder == null) {
-				orphanFragmentEntries.put(_getKey(fileName), fileName);
+				orphanFragmentEntries.put(
+					_getKey(zipFile, groupId, fileName), fileName);
 
 				continue;
 			}
 
 			fragmentCollectionFolder.addFragmentEntry(
-				_getKey(fileName), fileName);
+				_getKey(zipFile, groupId, fileName), fileName);
 		}
 
 		return fragmentCollectionFolderMap;
@@ -382,11 +404,44 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		return zipFile.getInputStream(zipEntry);
 	}
 
-	private String _getKey(String fileName) {
-		String path = fileName.substring(
-			0, fileName.lastIndexOf(CharPool.SLASH));
+	private String _getKey(ZipFile zipFile, long groupId, String fileName)
+		throws Exception {
 
-		return path.substring(path.lastIndexOf(CharPool.SLASH) + 1);
+		String key = StringPool.BLANK;
+
+		if (fileName.lastIndexOf(CharPool.SLASH) != -1) {
+			String path = fileName.substring(
+				0, fileName.lastIndexOf(CharPool.SLASH));
+
+			key = path.substring(path.lastIndexOf(CharPool.SLASH) + 1);
+		}
+		else if (fileName.equals(
+					FragmentExportImportConstants.
+						FILE_NAME_COLLECTION_CONFIG)) {
+
+			JSONObject collectionJSONObject = JSONFactoryUtil.createJSONObject(
+				StringUtil.read(
+					zipFile.getInputStream(zipFile.getEntry(fileName))));
+
+			key = _fragmentCollectionLocalService.generateFragmentCollectionKey(
+				groupId, collectionJSONObject.getString("name"));
+		}
+		else if (fileName.equals(
+					FragmentExportImportConstants.FILE_NAME_FRAGMENT_CONFIG)) {
+
+			JSONObject fragmentJSONObject = JSONFactoryUtil.createJSONObject(
+				StringUtil.read(
+					zipFile.getInputStream(zipFile.getEntry(fileName))));
+
+			key = _fragmentEntryLocalService.generateFragmentEntryKey(
+				groupId, fragmentJSONObject.getString("name"));
+		}
+
+		if (Validator.isNotNull(key)) {
+			return key;
+		}
+
+		throw new IllegalArgumentException("Incorrect file name " + fileName);
 	}
 
 	private long _getPreviewFileEntryId(

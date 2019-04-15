@@ -1264,6 +1264,8 @@ war.path=${app.server.portal.dir}/</echo>
 						</not>
 						<then>
 							<antcall inheritAll="false" target="setup-sdk" />
+
+							<antcall inheritAll="false" target="setup-yarn" />
 						</then>
 					</if>
 
@@ -10708,6 +10710,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</not>
 			<then>
 				<antcall inheritAll="false" target="setup-sdk" />
+
+				<antcall inheritAll="false" target="setup-yarn" />
 			</then>
 		</if>
 

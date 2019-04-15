@@ -887,6 +887,8 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<antcall inheritAll="false" target="setup-sdk" />
 
+			<antcall inheritAll="false" target="setup-yarn" />
+
 			<untar
 				compression="gzip"
 				dest="."
@@ -4878,6 +4880,8 @@ ${output.content}</echo>
 
 		<antcall inheritAll="false" target="setup-sdk" />
 
+		<antcall inheritAll="false" target="setup-yarn" />
+
 		<record action="start" name="${project.dir}/sass-compiler-log" />
 
 		<gradle-execute dir="modules" task="buildCSS">
@@ -5139,6 +5143,8 @@ information. Make sure to commit in all build services results.
 					</then>
 					<else>
 						<antcall target="setup-sdk" />
+
+						<antcall target="setup-yarn" />
 					</else>
 				</if>
 

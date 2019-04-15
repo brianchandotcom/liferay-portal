@@ -305,6 +305,8 @@
 
 						<antcall inheritAll="false" target="setup-sdk" />
 
+						<antcall inheritAll="false" target="setup-yarn" />
+
 						<setup-test-batch-testable-tomcat test.portal.bundle.version="${test.portal.bundle.version}" />
 					</then>
 					<elseif>

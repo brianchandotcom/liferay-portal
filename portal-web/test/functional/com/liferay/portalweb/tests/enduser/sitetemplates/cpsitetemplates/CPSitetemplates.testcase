@@ -525,7 +525,7 @@ definition {
 
 		User.loginUserPG(userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoSite(site = "Site Template Site Name");
+		Navigator.gotoSitePage(pageName = "Home", siteName = "Site Template Site Name");
 
 		AssertElementNotPresent(locator1 = "ControlMenu#ADD");
 

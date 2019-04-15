@@ -22,4 +22,8 @@ public class SegmentsPortletKeys {
 	public static final String SEGMENTS =
 		"com_liferay_segments_web_internal_portlet_SegmentsPortlet";
 
+	public static final String SEGMENTS_SIMULATION =
+		"com_liferay_segments_simulation_web_internal_portlet_" +
+			"SegmentsSimulationPortlet";
+
 }

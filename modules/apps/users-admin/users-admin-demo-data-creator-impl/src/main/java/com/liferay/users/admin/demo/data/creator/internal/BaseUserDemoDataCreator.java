@@ -75,7 +75,7 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		Date birthDate = new Date();
 		byte[] portraitBytes = null;
 
-		try (InputStream is = (new URL(_RANDOM_USER_API)).openStream()) {
+		try (InputStream is = new URL(_RANDOM_USER_API).openStream()) {
 			String json = StringUtil.read(is);
 
 			JSONObject rootJSONObject = JSONFactoryUtil.createJSONObject(json);

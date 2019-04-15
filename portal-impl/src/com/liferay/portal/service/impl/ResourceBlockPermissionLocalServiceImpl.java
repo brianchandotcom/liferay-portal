@@ -171,7 +171,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 		}
 		else if (operator == ResourceBlockConstants.OPERATOR_REMOVE) {
 			actionIdsLong =
-				resourceBlockPermission.getActionIds() & (~actionIdsLong);
+				resourceBlockPermission.getActionIds() & ~actionIdsLong;
 		}
 
 		if (actionIdsLong == 0) {

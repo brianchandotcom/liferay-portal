@@ -667,7 +667,7 @@ public class CMISStore extends BaseStore {
 		ItemIterable<CmisObject> cmisObjects = parentFolder.getChildren();
 
 		for (CmisObject cmisObject : cmisObjects) {
-			if (cmisObject instanceof Document &&
+			if ((cmisObject instanceof Document) &&
 				name.equals(cmisObject.getName())) {
 
 				return (Document)cmisObject;
@@ -681,7 +681,7 @@ public class CMISStore extends BaseStore {
 		ItemIterable<CmisObject> cmisObjects = parentFolder.getChildren();
 
 		for (CmisObject cmisObject : cmisObjects) {
-			if (cmisObject instanceof Folder &&
+			if ((cmisObject instanceof Folder) &&
 				name.equals(cmisObject.getName())) {
 
 				return (Folder)cmisObject;

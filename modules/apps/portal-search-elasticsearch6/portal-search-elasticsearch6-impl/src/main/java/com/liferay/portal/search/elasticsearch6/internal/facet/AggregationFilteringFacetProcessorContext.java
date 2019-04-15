@@ -87,7 +87,7 @@ public class AggregationFilteringFacetProcessorContext
 		Map<String, List<QueryBuilder>> map = new HashMap<>();
 
 		for (Facet facet : facets) {
-			if (facet instanceof com.liferay.portal.search.facet.Facet &&
+			if ((facet instanceof com.liferay.portal.search.facet.Facet) &&
 				!facet.isStatic()) {
 
 				com.liferay.portal.search.facet.Facet facet2 =

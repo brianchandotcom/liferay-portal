@@ -167,7 +167,7 @@ public class Base64 {
 			block += _getValue(base64.charAt(i + 3), url);
 
 			for (int j = 0; (j < 3) && ((rawindex + j) < raw.length); j++) {
-				raw[rawindex + j] = (byte)(block >> 8 * (2 - j) & 0xff);
+				raw[rawindex + j] = (byte)((block >> (8 * (2 - j))) & 0xff);
 			}
 
 			rawindex += 3;
@@ -203,15 +203,15 @@ public class Base64 {
 		for (int i = 0; i <= end; i++) {
 			byte b = raw[offset + i];
 
-			int neuter = (b >= 0) ? ((int)b) : b + 256;
+			int neuter = (b >= 0) ? (int)b : b + 256;
 
-			block += neuter << 8 * (2 - i);
+			block += neuter << (8 * (2 - i));
 		}
 
 		char[] base64 = new char[4];
 
 		for (int i = 0; i < 4; i++) {
-			int sixbit = block >>> 6 * (3 - i) & 0x3f;
+			int sixbit = (block >>> (6 * (3 - i))) & 0x3f;
 
 			base64[i] = _getChar(sixbit, url);
 		}

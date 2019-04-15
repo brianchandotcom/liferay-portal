@@ -278,8 +278,8 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			return indexerWriterMode;
 		}
 
-		if ((baseModel instanceof WorkflowedModel) &&
-			(baseModel instanceof TrashedModel)) {
+		if (baseModel instanceof WorkflowedModel &&
+			baseModel instanceof TrashedModel) {
 
 			TrashedModel trashedModel = (TrashedModel)baseModel;
 			WorkflowedModel workflowedModel = (WorkflowedModel)baseModel;

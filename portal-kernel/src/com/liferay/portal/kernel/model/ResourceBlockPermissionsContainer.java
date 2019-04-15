@@ -89,7 +89,7 @@ public class ResourceBlockPermissionsContainer {
 	}
 
 	public void removePermission(long roleId, long actionIdsLong) {
-		actionIdsLong = getActionIds(roleId) & (~actionIdsLong);
+		actionIdsLong = getActionIds(roleId) & ~actionIdsLong;
 
 		setPermissions(roleId, actionIdsLong);
 	}

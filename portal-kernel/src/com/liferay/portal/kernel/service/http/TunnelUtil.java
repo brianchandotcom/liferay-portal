@@ -90,7 +90,7 @@ public class TunnelUtil {
 			}
 		}
 
-		if ((returnObject != null) && returnObject instanceof Exception) {
+		if ((returnObject != null) && (returnObject instanceof Exception)) {
 			throw (Exception)returnObject;
 		}
 

@@ -662,7 +662,7 @@ public class ServiceTrackerCollections {
 						}
 					}
 					else if (index < 0) {
-						_services.add((-index) - 1, entryWrapper);
+						_services.add(-index - 1, entryWrapper);
 					}
 				}
 			}

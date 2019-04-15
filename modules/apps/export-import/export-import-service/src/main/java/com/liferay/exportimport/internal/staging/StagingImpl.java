@@ -962,9 +962,9 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof ExportImportIOException ||
-				 (cause instanceof SystemException &&
-				  cause.getCause() instanceof ExportImportIOException)) {
+		else if ((e instanceof ExportImportIOException) ||
+				 ((cause instanceof SystemException) &&
+				  (cause.getCause() instanceof ExportImportIOException))) {
 
 			ExportImportIOException eiioe = null;
 
@@ -1237,8 +1237,8 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof LayoutImportException ||
-				 cause instanceof LayoutImportException) {
+		else if ((e instanceof LayoutImportException) ||
+				 (cause instanceof LayoutImportException)) {
 
 			LayoutImportException lie = null;
 

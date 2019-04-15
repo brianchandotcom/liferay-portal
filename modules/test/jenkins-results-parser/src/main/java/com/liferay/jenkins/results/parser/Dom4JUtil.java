@@ -224,7 +224,7 @@ public class Dom4JUtil {
 					textNode.setText(text);
 				}
 			}
-			else if (node instanceof Element && cascade) {
+			else if ((node instanceof Element) && cascade) {
 				replace((Element)node, cascade, replacementText, targetText);
 			}
 		}

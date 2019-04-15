@@ -288,7 +288,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	private Predicate<Context> _getGEPredicate(
 		EntityField entityField, Object fieldValue) {
 
-		if (fieldValue instanceof Comparable &&
+		if ((fieldValue instanceof Comparable) &&
 			(Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
 			 Objects.equals(
 				 entityField.getType(), EntityField.Type.DATE_TIME) ||
@@ -311,7 +311,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	private Predicate<Context> _getGTPredicate(
 		EntityField entityField, Object fieldValue) {
 
-		if (fieldValue instanceof Comparable &&
+		if ((fieldValue instanceof Comparable) &&
 			(Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
 			 Objects.equals(
 				 entityField.getType(), EntityField.Type.DATE_TIME) ||
@@ -401,7 +401,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	private Predicate<Context> _getLEPredicate(
 		EntityField entityField, Object fieldValue) {
 
-		if (fieldValue instanceof Comparable &&
+		if ((fieldValue instanceof Comparable) &&
 			(Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
 			 Objects.equals(
 				 entityField.getType(), EntityField.Type.DATE_TIME) ||
@@ -424,7 +424,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	private Predicate<Context> _getLTPredicate(
 		EntityField entityField, Object fieldValue) {
 
-		if (fieldValue instanceof Comparable &&
+		if ((fieldValue instanceof Comparable) &&
 			(Objects.equals(entityField.getType(), EntityField.Type.DATE) ||
 			 Objects.equals(
 				 entityField.getType(), EntityField.Type.DATE_TIME) ||

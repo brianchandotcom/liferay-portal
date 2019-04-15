@@ -103,7 +103,7 @@ public abstract class BaseUpgradeAdminPortlets extends UpgradeProcess {
 						long actionIds = rs.getLong("actionIds");
 
 						if ((actionIds & bitwiseValue) != 0) {
-							actionIds = actionIds & (~bitwiseValue);
+							actionIds = actionIds & ~bitwiseValue;
 
 							long resourcePermissionId = rs.getLong(
 								"resourcePermissionId");

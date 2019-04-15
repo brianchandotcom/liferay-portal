@@ -213,8 +213,8 @@ public class JournalArticleExportImportContentProcessor
 
 					String type = "page";
 
-					if (e instanceof NoSuchFileEntryException ||
-						e.getCause() instanceof NoSuchFileEntryException) {
+					if ((e instanceof NoSuchFileEntryException) ||
+						(e.getCause() instanceof NoSuchFileEntryException)) {
 
 						type = "file entry";
 					}

@@ -127,7 +127,7 @@ public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 			ResourceActionLocalServiceUtil.getResourceAction(
 				getName(), actionId);
 
-		long actionIds = getActionIds() & (~resourceAction.getBitwiseValue());
+		long actionIds = getActionIds() & ~resourceAction.getBitwiseValue();
 
 		setActionIds(actionIds);
 		setViewActionId((actionIds % 2) == 1);

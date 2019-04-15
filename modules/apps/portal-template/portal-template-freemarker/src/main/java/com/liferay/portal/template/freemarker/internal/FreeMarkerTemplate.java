@@ -80,8 +80,8 @@ public class FreeMarkerTemplate extends BaseTemplate {
 				_templateResourceCache, errorTemplateResource);
 		}
 
-		if ((exception instanceof ParseException) ||
-			(exception instanceof freemarker.template.TemplateException)) {
+		if (exception instanceof ParseException ||
+			exception instanceof freemarker.template.TemplateException) {
 
 			put("exception", exception.getMessage());
 

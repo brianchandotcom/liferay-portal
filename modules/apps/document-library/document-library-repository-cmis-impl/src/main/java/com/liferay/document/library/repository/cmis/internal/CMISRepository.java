@@ -2171,7 +2171,7 @@ public class CMISRepository extends BaseCmisRepository {
 	protected void processException(Exception e) throws PortalException {
 		String message = e.getMessage();
 
-		if ((e instanceof CmisRuntimeException &&
+		if (((e instanceof CmisRuntimeException) &&
 			 message.contains("authorized")) ||
 			(e instanceof CmisPermissionDeniedException)) {
 
@@ -2191,10 +2191,10 @@ public class CMISRepository extends BaseCmisRepository {
 		List<E> list, int start, int end, OrderByComparator<E> obc) {
 
 		if ((obc != null) &&
-			((obc instanceof RepositoryModelCreateDateComparator) ||
-			 (obc instanceof RepositoryModelModifiedDateComparator) ||
-			 (obc instanceof RepositoryModelSizeComparator) ||
-			 (obc instanceof RepositoryModelTitleComparator))) {
+			(obc instanceof RepositoryModelCreateDateComparator ||
+			 obc instanceof RepositoryModelModifiedDateComparator ||
+			 obc instanceof RepositoryModelSizeComparator ||
+			 obc instanceof RepositoryModelTitleComparator)) {
 
 			list = ListUtil.sort(list, obc);
 		}

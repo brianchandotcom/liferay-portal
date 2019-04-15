@@ -73,7 +73,9 @@ public abstract class BaseFileCheck
 				continue;
 			}
 
-			if (curNode instanceof Element && previousNode instanceof Element) {
+			if ((curNode instanceof Element) &&
+				(previousNode instanceof Element)) {
+
 				Element curElement = (Element)curNode;
 				Element previousElement = (Element)previousNode;
 

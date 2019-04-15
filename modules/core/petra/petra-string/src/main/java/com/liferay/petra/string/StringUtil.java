@@ -111,7 +111,7 @@ public class StringUtil {
 		Collection<T> col, Function<T, String> toStringFunction,
 		String delimiter) {
 
-		if ((col instanceof List) && (col instanceof RandomAccess)) {
+		if (col instanceof List && col instanceof RandomAccess) {
 			return merge(
 				(List<T> & RandomAccess)col, toStringFunction, delimiter);
 		}

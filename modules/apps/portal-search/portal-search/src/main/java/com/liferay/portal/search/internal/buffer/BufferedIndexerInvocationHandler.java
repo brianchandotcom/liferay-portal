@@ -103,7 +103,7 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			return method.invoke(_indexer, args);
 		}
 
-		if (args[0] instanceof ClassedModel &&
+		if ((args[0] instanceof ClassedModel) &&
 			Objects.equals(method.getName(), "reindex")) {
 
 			MethodKey methodKey = new MethodKey(

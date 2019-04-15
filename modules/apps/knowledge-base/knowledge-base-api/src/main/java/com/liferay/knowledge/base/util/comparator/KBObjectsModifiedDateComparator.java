@@ -64,7 +64,7 @@ public class KBObjectsModifiedDateComparator<T> extends OrderByComparator<T> {
 		String title2 = getTitle(t2);
 
 		if (_orderByModel) {
-			if (t1 instanceof KBFolder && t2 instanceof KBFolder) {
+			if ((t1 instanceof KBFolder) && (t2 instanceof KBFolder)) {
 				value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
 
 				if (value == 0) {

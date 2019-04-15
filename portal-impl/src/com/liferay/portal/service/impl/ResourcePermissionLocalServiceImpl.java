@@ -2083,7 +2083,7 @@ public class ResourcePermissionLocalServiceImpl
 			}
 			else {
 				actionIdsLong =
-					actionIdsLong & (~resourceAction.getBitwiseValue());
+					actionIdsLong & ~resourceAction.getBitwiseValue();
 			}
 		}
 

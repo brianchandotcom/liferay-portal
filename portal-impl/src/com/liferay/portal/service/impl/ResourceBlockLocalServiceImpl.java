@@ -847,7 +847,7 @@ public class ResourceBlockLocalServiceImpl
 			actionIdsLong |= oldActionIdsLong;
 		}
 		else if (operator == ResourceBlockConstants.OPERATOR_REMOVE) {
-			actionIdsLong = oldActionIdsLong & (~actionIdsLong);
+			actionIdsLong = oldActionIdsLong & ~actionIdsLong;
 		}
 
 		if (resourceBlock != null) {

@@ -61,7 +61,7 @@ public class AsyncAttributeAdapterServlet implements Servlet {
 
 		if (servletRequest.isAsyncSupported() &&
 			(servletRequest.getDispatcherType() == DispatcherType.ASYNC) &&
-			servletRequest instanceof HttpServletRequest) {
+			(servletRequest instanceof HttpServletRequest)) {
 
 			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)servletRequest;

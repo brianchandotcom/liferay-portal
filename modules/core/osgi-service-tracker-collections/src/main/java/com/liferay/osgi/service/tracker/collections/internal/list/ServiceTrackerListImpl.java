@@ -170,7 +170,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 					}
 				}
 				else if (index < 0) {
-					_services.add((-index) - 1, serviceReferenceServiceTuple);
+					_services.add(-index - 1, serviceReferenceServiceTuple);
 				}
 			}
 

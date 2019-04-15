@@ -2330,7 +2330,7 @@ public class JenkinsResultsParserUtil {
 					}
 
 					if (url.startsWith("https://api.github.com") &&
-						httpURLConnection instanceof HttpsURLConnection) {
+						(httpURLConnection instanceof HttpsURLConnection)) {
 
 						SSLContext sslContext = null;
 

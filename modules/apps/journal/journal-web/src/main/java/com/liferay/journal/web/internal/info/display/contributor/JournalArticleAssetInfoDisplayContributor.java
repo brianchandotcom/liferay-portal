@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = InfoDisplayContributor.class)
-public class JournalArticleInfoDisplayContributor
+public class JournalArticleAssetInfoDisplayContributor
 	extends BaseAssetInfoDisplayContributor<JournalArticle> {
 
 	@Override
@@ -294,7 +294,7 @@ public class JournalArticleInfoDisplayContributor
 	private static final String _DDM_TEMPLATE = "ddmTemplate_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleInfoDisplayContributor.class);
+		JournalArticleAssetInfoDisplayContributor.class);
 
 	private class DDMTemplateContentAccessor implements ContentAccessor {
 

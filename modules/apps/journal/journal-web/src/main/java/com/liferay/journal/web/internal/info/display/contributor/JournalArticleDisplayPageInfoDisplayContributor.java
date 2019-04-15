@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = InfoDisplayContributor.class)
 public class JournalArticleDisplayPageInfoDisplayContributor
-	extends JournalArticleInfoDisplayContributor {
+	extends JournalArticleAssetInfoDisplayContributor {
 
 	@Override
 	public String getInfoURLSeparator() {

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = InfoDisplayContributor.class)
-public class BlogsEntryInfoDisplayContributor
+public class BlogsEntryAssetInfoDisplayContributor
 	extends BaseAssetInfoDisplayContributor<BlogsEntry> {
 
 	@Override

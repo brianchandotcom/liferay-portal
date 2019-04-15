@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = InfoDisplayContributor.class)
-public class DLFileEntryInfoDisplayContributor
+public class DLFileEntryAssetInfoDisplayContributor
 	extends BaseAssetInfoDisplayContributor<FileEntry> {
 
 	@Override

@@ -37,9 +37,10 @@ public interface LiferayHttpClient extends HttpClient {
 		@Header("Content-Type") String contentType,
 		OAuthDataStore oAuthDataStore);
 
-	@Request
+	@Request(method = "GET", path = "/{endpointPath}")
 	public Response<JsonObject> getData(
 		@Header("Authorization") String authorizationHeader,
-		@Header("Accept") String acceptHeader, @Path("") String path);
+		@Header("Accept") String acceptHeader,
+		@Path("endpointPath") String endpointPath);
 
 }

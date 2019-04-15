@@ -463,6 +463,10 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
+	public CMISRepositoryDetector getCmisRepositoryDetector() {
+		return _cmisRepositoryDetector;
+	}
+
 	@Override
 	public List<FileEntry> getFileEntries(
 		long folderId, int status, int start, int end,

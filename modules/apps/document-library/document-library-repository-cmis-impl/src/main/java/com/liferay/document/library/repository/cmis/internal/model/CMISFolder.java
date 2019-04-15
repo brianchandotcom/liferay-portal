@@ -17,6 +17,7 @@ package com.liferay.document.library.repository.cmis.internal.model;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.repository.cmis.internal.CMISRepository;
+import com.liferay.document.library.repository.cmis.internal.CMISRepositoryDetector;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -41,8 +42,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
+import org.apache.chemistry.opencmis.client.api.ObjectType;
 import org.apache.chemistry.opencmis.client.api.Session;
 
 /**
@@ -83,6 +86,18 @@ public class CMISFolder extends CMISModel implements Folder {
 	@Override
 	public boolean containsPermission(
 		PermissionChecker permissionChecker, String actionId) {
+
+		CMISRepositoryDetector cmisRepositoryDetector =
+			_cmisRepository.getCmisRepositoryDetector();
+
+		ObjectType objectType = _cmisFolder.getType();
+
+		if (cmisRepositoryDetector.isNuxeo() &&
+			Objects.equals("Domain", objectType.getId()) &&
+			Objects.equals(ActionKeys.ADD_DOCUMENT, actionId)) {
+
+			return false;
+		}
 
 		if (_cmisFolder.isRootFolder() &&
 			(actionId.equals(ActionKeys.DELETE) ||

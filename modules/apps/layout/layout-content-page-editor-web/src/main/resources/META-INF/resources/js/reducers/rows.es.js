@@ -150,6 +150,7 @@ function removeRowReducer(state, actionType, payload) {
 					nextState.segmentsExperienceId
 				).then(
 					() => removeFragmentEntryLinks(
+						nextState.layoutData,
 						fragmentEntryLinkIds,
 						nextState.segmentsExperienceId
 					)
@@ -278,6 +279,7 @@ function updateRowColumnsNumberReducer(state, actionType, payload) {
 					nextState.segmentsExperienceId
 				).then(
 					() => removeFragmentEntryLinks(
+						nextData,
 						fragmentEntryLinkIdsToRemove,
 						nextState.segmentsExperienceId
 					)

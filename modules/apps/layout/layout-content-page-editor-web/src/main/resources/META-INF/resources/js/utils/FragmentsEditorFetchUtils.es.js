@@ -58,11 +58,16 @@ function removeExperience(segmentsExperienceId, fragmentEntryLinkIds = []) {
 }
 
 /**
+ * @param {{}} layoutData
  * @param {string[]} fragmentEntryLinkIds
  * @param {string} segmentsExperienceId
  * @return {Promise<Response>}
  */
-function removeFragmentEntryLinks(fragmentEntryLinkIds, segmentsExperienceId) {
+function removeFragmentEntryLinks(
+	layoutData,
+	fragmentEntryLinkIds,
+	segmentsExperienceId
+) {
 	const state = _store.getState();
 
 	return _fetch(
@@ -70,7 +75,7 @@ function removeFragmentEntryLinks(fragmentEntryLinkIds, segmentsExperienceId) {
 		{
 			classNameId: state.classNameId,
 			classPK: state.classPK,
-			data: JSON.stringify(state.layoutData),
+			data: JSON.stringify(layoutData),
 			fragmentEntryLinkIds: JSON.stringify(fragmentEntryLinkIds),
 			segmentsExperienceId
 		}

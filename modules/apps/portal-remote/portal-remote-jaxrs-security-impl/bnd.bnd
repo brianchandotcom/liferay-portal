@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Remote JAXRS Security Implementation
+Bundle-SymbolicName: com.liferay.portal.remote.jaxrs.security.impl
+Bundle-Version: 1.0.0

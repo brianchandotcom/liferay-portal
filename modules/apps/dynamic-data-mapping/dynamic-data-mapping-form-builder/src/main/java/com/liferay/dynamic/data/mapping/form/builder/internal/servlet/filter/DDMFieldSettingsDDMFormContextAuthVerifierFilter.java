@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"filter.init.auth.verifier.PortalSessionAuthVerifier.checkCSRFToken=false",
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/dynamic-data-mapping-form-builder-field-settings-form-context/*",
 		"osgi.http.whiteboard.filter.name=com.liferay.dynamic.data.mapping.form.builder.internal.servlet.filter.DDMFieldSettingsDDMFormContextAuthVerifierFilter",
 		"osgi.http.whiteboard.filter.pattern=/dynamic-data-mapping-form-builder-field-settings-form-context/*"

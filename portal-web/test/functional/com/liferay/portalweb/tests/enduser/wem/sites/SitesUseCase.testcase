@@ -616,7 +616,11 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		PortalSettings.gotoPortalSettings();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.editVirtualHostCP(virtualHostName = "www.able.com");
 
@@ -714,7 +718,11 @@ definition {
 
 		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
 
-		PortalSettings.gotoPortalSettings();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Email Verification Notification",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.editConfigurationUsersEmailVerificationNotificationsCP(
 			emailVerificationURL = "true"

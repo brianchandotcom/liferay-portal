@@ -162,7 +162,11 @@ definition {
 
 		User.firstLoginPG();
 
-		PortalSettings.gotoPortalSettings();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Languiage",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.configureCurrentLanguagesCP(
 			currentPortalLanguages = "Spanish (Spain)"

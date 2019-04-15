@@ -275,7 +275,11 @@ definition {
 	test ViewContentSharingDisabledAcrossSitesViaAP {
 		property test.name.skip.portal.instance = "CPPortalSettings#ViewContentSharingDisabledAcrossSitesViaAP";
 
-		PortalSettings.gotoPortalSettings();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Sharing",
+			configurationName = "Content Sharing",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.configureContentSharingAcrossSitesCP(enableAcrossSite = "false");
 
@@ -399,7 +403,11 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		PortalSettings.gotoPortalSettings();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Sharing",
+			configurationName = "Content Sharing",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.configureContentSharingAcrossSitesCP(enableAcrossSite = "true");
 

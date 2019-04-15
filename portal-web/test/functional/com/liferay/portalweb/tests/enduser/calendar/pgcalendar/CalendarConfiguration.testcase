@@ -271,7 +271,11 @@ definition {
 			displaySettingsGreeting = "Welcome Test Test!"
 		);
 
-		PortalSettings.gotoPortalSettings();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Time Zone",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.configureTimeZone(timeZone = "(UTC +08:00) China Standard Time");
 

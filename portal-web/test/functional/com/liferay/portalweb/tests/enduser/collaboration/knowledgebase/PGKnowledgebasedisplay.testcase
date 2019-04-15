@@ -864,9 +864,11 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title"
 		);
 
-		PortalSettings.gotoPortalSettings();
-
-		Navigator.gotoNavTab(navTab = "Social");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Community Tools",
+			configurationName = "Ratings",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		Select(locator1 = "Select#KNOWLEDGE_BASE_RATING", value1 = "Stars");
 
@@ -1027,9 +1029,11 @@ definition {
 			rateUp = "true"
 		);
 
-		PortalSettings.gotoPortalSettings();
-
-		Navigator.gotoNavTab(navTab = "Social");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Community Tools",
+			configurationName = "Ratings",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		Select(locator1 = "Select#KNOWLEDGE_BASE_RATING", value1 = "Stars");
 
@@ -1043,9 +1047,11 @@ definition {
 
 		KBArticle.viewArticle5StarRatingPG();
 
-		PortalSettings.gotoPortalSettings();
-
-		Navigator.gotoNavTab(navTab = "Social");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Community Tools",
+			configurationName = "Ratings",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		Select(locator1 = "Select#KNOWLEDGE_BASE_RATING", value1 = "Thumbs");
 

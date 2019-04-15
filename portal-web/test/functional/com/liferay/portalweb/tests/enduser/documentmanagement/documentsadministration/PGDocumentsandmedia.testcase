@@ -828,9 +828,11 @@ definition {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "PGDocumentsandmedia#EditAndDeleteGoogleDoc";
 
-		PortalSettings.gotoPortalSettings();
-
-		Navigator.gotoNavTab(navTab = "Miscellaneous");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Google Drive",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		var googlePropertiesSet = MathUtil.randomNumber("3");
 		var googleAppsAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");
@@ -1179,9 +1181,11 @@ definition {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "PGDocumentsandmedia#MoveGoogleDocToFolder";
 
-		PortalSettings.gotoPortalSettings();
-
-		Navigator.gotoNavTab(navTab = "Miscellaneous");
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Google Drive",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		var googlePropertiesSet = MathUtil.randomNumber("3");
 		var googleAppsAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");

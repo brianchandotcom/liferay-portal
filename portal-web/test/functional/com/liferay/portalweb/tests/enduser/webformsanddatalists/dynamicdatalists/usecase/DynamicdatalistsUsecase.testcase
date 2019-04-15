@@ -2007,7 +2007,11 @@ definition {
 
 		Navigator.openURL();
 
-		PortalSettings.gotoPortalSettings();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.configureCurrentLanguagesCP(
 			defaultPortalLanguage = "Spanish (Spain)"

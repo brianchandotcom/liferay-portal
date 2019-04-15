@@ -30,9 +30,11 @@ definition {
 		}
 
 		else if ("${disableAutoTaggingFor}" == "Instance Settings") {
-			PortalSettings.gotoPortalSettings();
-
-			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Asset Auto Tagging",
+				configurationScope = "Virtual Instance Scope"
+			);
 
 			Uncheck(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
 		}
@@ -76,10 +78,11 @@ definition {
 		}
 
 		else if ("${enableAutoTaggingFor}" == "Instance Settings") {
-			PortalSettings.gotoPortalSettings();
-
-			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
-
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Asset Auto Tagging",
+				configurationScope = "Virtual Instance Scope"
+			);
 			Check(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
 		}
 

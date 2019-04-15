@@ -121,7 +121,11 @@ definition {
 
 		Portlet.addPG(portletName = "Language Selector");
 
-		PortalSettings.gotoPortalSettings();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		PortalSettings.configureCurrentLanguagesCP(
 			currentPortalLanguages = "Chinese (China),English (United States),French (France)"

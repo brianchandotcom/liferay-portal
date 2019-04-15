@@ -674,9 +674,11 @@ definition {
 	}
 
 	macro tearDownAuthenticationCP {
-		PortalSettings.gotoPortalSettings();
-
-		PortalSettingsNavigator.expandAuthenticationPanel();
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope"
+		);
 
 		Select(
 			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT",

@@ -14,46 +14,69 @@
 
 package com.liferay.portal.remote.json.web.service.extender.client.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.IOException;
-import java.io.InputStream;
 
-import java.net.URISyntaxException;
 import java.net.URL;
 
+import java.util.Dictionary;
 import java.util.Random;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-
-import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@RunAsClient
 @RunWith(Arquillian.class)
 public class JSONWebServiceTrackerTest {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			JSONWebServiceTrackerTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("json.web.service.context.name", "test");
+		properties.put("json.web.service.context.path", "webservice");
+
+		_serviceRegistration = bundleContext.registerService(
+			Object.class, new TestWebService(), properties);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceRegistration.unregister();
+	}
+
 	@Test
 	public void testWebServiceContextAppearsInTheSummary() throws IOException {
-		URL url = new URL(_url, "/api/jsonws");
+		URL url = new URL("http://localhost:8080/api/jsonws");
 
 		String body = StringUtil.read(url.openStream());
 
@@ -61,45 +84,29 @@ public class JSONWebServiceTrackerTest {
 	}
 
 	@Test
-	public void testWebServiceInvocation()
-		throws IOException, URISyntaxException {
-
-		HttpClientBuilder httpClientBuilder = HttpClients.custom();
-
-		CredentialsProvider credentialsProvider =
-			new BasicCredentialsProvider();
-
+	public void testWebServiceInvocation() throws IOException {
 		Random random = new Random();
 
 		int a = random.nextInt(50);
 		int b = random.nextInt(50);
 
-		final URL url = new URL(
-			_url, "/api/jsonws/test.testweb/sum/a/" + a + "/b/" + b);
+		URL url = new URL(
+			"http://localhost:8080/api/jsonws/test.testweb/sum/a/" + a + "/b/" +
+				b);
 
-		credentialsProvider.setCredentials(
-			new AuthScope(url.getHost(), url.getPort()),
-			new UsernamePasswordCredentials("test@liferay.com", "test"));
-
-		httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-
-		CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
-
-		HttpGet httpGet = new HttpGet(url.toURI());
-
-		CloseableHttpResponse closeableHttpResponse =
-			closeableHttpClient.execute(httpGet);
-
-		HttpEntity httpEntity = closeableHttpResponse.getEntity();
-
-		InputStream inputStream = httpEntity.getContent();
-
-		String string = StringUtil.read(inputStream);
-
-		Assert.assertEquals(a + b, GetterUtil.getInteger(string));
+		Assert.assertEquals(
+			a + b, GetterUtil.getInteger(StringUtil.read(url.openStream())));
 	}
 
-	@ArquillianResource
-	private URL _url;
+	@JSONWebService
+	public static class TestWebService {
+
+		public int sum(int a, int b) {
+			return a + b;
+		}
+
+	}
+
+	private static ServiceRegistration<?> _serviceRegistration;
 
 }

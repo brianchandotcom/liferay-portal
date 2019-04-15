@@ -214,7 +214,6 @@ definition {
 
 	test OAuth2TesterSmokeTest {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
-		property prepare.oauth2.global.scopes = "true";
 		var clientId = "abc123";
 		var clientSecret = "abc123";
 		var portalURL = PropsUtil.get("portal.url");

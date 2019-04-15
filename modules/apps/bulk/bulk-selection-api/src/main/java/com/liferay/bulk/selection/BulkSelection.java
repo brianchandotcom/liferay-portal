@@ -20,15 +20,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
 
-import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Adolfo Pérez
  */
 public interface BulkSelection<T> {
-
-	public String describe(Locale locale) throws PortalException;
 
 	public <E extends PortalException> void forEach(
 			UnsafeConsumer<T, E> unsafeConsumer)
@@ -38,7 +35,7 @@ public interface BulkSelection<T> {
 
 	public Map<String, String[]> getParameterMap();
 
-	public boolean isMultiple();
+	public long getSize() throws PortalException;
 
 	public Serializable serialize();
 

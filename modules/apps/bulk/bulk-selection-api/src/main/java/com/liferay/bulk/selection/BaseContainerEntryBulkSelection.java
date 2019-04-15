@@ -14,15 +14,12 @@
 
 package com.liferay.bulk.selection;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
 
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * @author Adolfo Pérez
@@ -41,31 +38,14 @@ public abstract class BaseContainerEntryBulkSelection<T>
 	}
 
 	@Override
-	public String describe(Locale locale) throws PortalException {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		return _language.format(
-			resourceBundle, "these-changes-will-be-applied-to-x-items",
-			getEntriesCount());
-	}
-
-	@Override
 	public Map<String, String[]> getParameterMap() {
 		return _parameterMap;
-	}
-
-	@Override
-	public boolean isMultiple() {
-		return true;
 	}
 
 	@Override
 	public Serializable serialize() {
 		return "all:" + _containerId;
 	}
-
-	protected abstract int getEntriesCount() throws PortalException;
 
 	private final long _containerId;
 	private final Language _language;

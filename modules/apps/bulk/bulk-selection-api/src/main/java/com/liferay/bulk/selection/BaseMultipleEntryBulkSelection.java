@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
 
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * @author Adolfo Pérez
@@ -44,16 +42,6 @@ public abstract class BaseMultipleEntryBulkSelection<T>
 	}
 
 	@Override
-	public String describe(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		return _language.format(
-			resourceBundle, "these-changes-will-be-applied-to-x-items",
-			_entryIds.length);
-	}
-
-	@Override
 	public <E extends PortalException> void forEach(
 			UnsafeConsumer<T, E> unsafeConsumer)
 		throws PortalException {
@@ -69,8 +57,8 @@ public abstract class BaseMultipleEntryBulkSelection<T>
 	}
 
 	@Override
-	public boolean isMultiple() {
-		return true;
+	public long getSize() {
+		return _entryIds.length;
 	}
 
 	@Override

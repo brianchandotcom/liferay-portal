@@ -62,7 +62,7 @@ public class LanguageSegmentsFieldCustomizer
 
 		return stream.map(
 			availableLocale -> new Field.Option(
-				availableLocale.getDisplayLanguage(locale),
+				availableLocale.getDisplayName(locale),
 				LanguageUtil.getLanguageId(availableLocale))
 		).collect(
 			Collectors.toList()

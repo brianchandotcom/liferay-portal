@@ -26,8 +26,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-import org.apache.cxf.jaxrs.provider.json.JSONProvider;
-
 import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.BeforeClass;
@@ -62,8 +60,6 @@ public abstract class BaseCORSClientTestCase {
 
 	protected WebTarget getWebTarget(String path) {
 		Client client = ClientBuilder.newClient();
-
-		client = client.register(JSONProvider.class);
 
 		WebTarget target = client.target("http://localhost:8080");
 

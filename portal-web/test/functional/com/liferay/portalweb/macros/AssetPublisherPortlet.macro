@@ -2,7 +2,24 @@ definition {
 	macro addAsset {
 		Portlet.clickPortletPlusIconPG(portletName = "Asset Publisher");
 
-		MenuItem.click(menuItem = "${assetType}");
+		if (isSet(siteScope)) {
+			MenuItem.click(menuItem = "Add Content (Select Scope and Type)");
+
+			SelectField.select(
+				selectFieldLabel = "Scope",
+				selectFieldValue = "${siteScope}"
+			);
+
+			SelectField.select(
+				selectFieldLabel = "Asset Type",
+				selectFieldValue = "${assetType}"
+			);
+
+			Button.clickAdd();
+		}
+		else {
+			MenuItem.click(menuItem = "${assetType}");
+		}
 	}
 
 	macro assertSiteScopeSearch {

@@ -207,19 +207,7 @@ definition {
 	}
 
 	macro addViaAPSelectScope {
-		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
-
-		MouseOver.mouseOverNotVisible(locator1 = "AP#ADD_ASSET_PLUS_ICON");
-
-		Click(locator1 = "AP#ADD_ASSET_PLUS_ICON");
-
-		Click(locator1 = "AP#ADD_ASSET_SCOPED");
-
-		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
-
-		Select(locator1 = "Select#TYPE", value1 = "Blogs Entry");
-
-		AssertClick(locator1 = "Button#ADD", value1 = "Add");
+		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry", siteScope = "${siteScope}");
 
 		AlloyEditor.addTitleAndContent(
 			content = "${entryContent}",

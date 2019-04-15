@@ -220,6 +220,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		);
 	}
 
+
 	@priority = "5"
 	test ValidateForwardURLPG {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}";
@@ -232,7 +233,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		Pause(locator1 = "3000");
 
-		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Welcome");
+		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Home");
 
 		AssertTextEquals(
 			locator1 = "HelloWorld#PORTLET_TITLE",

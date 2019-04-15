@@ -1,4 +1,4 @@
-@Components(categories = "Misc", family = "LiferayFamily")
+@Components(categories = {"Business", "Cloud"}, family = "Liferay")
 @Icon(custom = "LiferayFamily", value = Icon.IconType.CUSTOM)
 package com.liferay.talend;
 

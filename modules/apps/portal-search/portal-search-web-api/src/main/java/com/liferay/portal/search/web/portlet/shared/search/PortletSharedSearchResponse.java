@@ -38,6 +38,9 @@ public interface PortletSharedSearchResponse {
 
 	public Facet getFacet(String name);
 
+	public SearchResponse getFederatedSearchResponse(
+		Optional<String> federatedSearchKeyOptional);
+
 	/**
 	 * @deprecated As of Judson (7.1.x)
 	 */

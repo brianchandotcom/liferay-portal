@@ -81,6 +81,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 				propertyGroups: <%= editSegmentsEntryDisplayContext.getPropertyGroupsJSONArray(locale) %>,
 				redirect: '<%= HtmlUtil.escape(redirect) %>',
 				requestMembersCountURL: '<%= getSegmentsEntryClassPKsCountURL %>',
+				showInEditMode: <%= editSegmentsEntryDisplayContext.isShowInEditMode() %>,
 				source: '<%= editSegmentsEntryDisplayContext.getSource() %>'
 			},
 			{

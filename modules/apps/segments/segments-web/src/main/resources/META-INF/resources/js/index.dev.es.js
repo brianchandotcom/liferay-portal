@@ -22,6 +22,7 @@ const altProps = {
 			propertyKey: 'user-organization'
 		}
 	],
+	editing: false,
 	initialMembersCount: 0,
 	initialSegmentActive: false,
 	initialSegmentName: '',

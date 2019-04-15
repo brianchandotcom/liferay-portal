@@ -47,6 +47,7 @@ class SegmentEdit extends Component {
 		redirect: PropTypes.string.isRequired,
 		requestMembersCountURL: PropTypes.string,
 		setValues: PropTypes.func,
+		showInEditMode: PropTypes.bools,
 		source: PropTypes.string,
 		validateForm: PropTypes.func,
 		values: PropTypes.object
@@ -61,7 +62,7 @@ class SegmentEdit extends Component {
 
 	state = {
 		changesUnsaved: false,
-		editing: false,
+		editing: this.props.showInEditMode,
 		membersCount: this.props.initialMembersCount,
 		membersCountLoading: false
 	};

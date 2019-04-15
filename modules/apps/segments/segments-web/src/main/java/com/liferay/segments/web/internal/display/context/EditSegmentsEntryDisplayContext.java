@@ -251,6 +251,17 @@ public class EditSegmentsEntryDisplayContext {
 		return ParamUtil.getString(_request, "type", User.class.getName());
 	}
 
+	public boolean isShowInEditMode() {
+		if (_showInEditMode != null) {
+			return _showInEditMode;
+		}
+
+		_showInEditMode = ParamUtil.getBoolean(
+			_request, "showInEditMode", true);
+
+		return _showInEditMode;
+	}
+
 	private String _getCriterionConjunction(Criteria.Criterion criterion) {
 		if (criterion == null) {
 			return StringPool.BLANK;
@@ -278,6 +289,7 @@ public class EditSegmentsEntryDisplayContext {
 	private Long _segmentsEntryId;
 	private final SegmentsEntryProvider _segmentsEntryProvider;
 	private final SegmentsEntryService _segmentsEntryService;
+	private Boolean _showInEditMode;
 	private String _title;
 
 }

@@ -111,6 +111,16 @@
 </tr>
 <!--OAUTH2_TESTER-->
 <tr>
+	<td>OAUTH2_TESTER_CLIENT_ID</td>
+	<td>//input[contains(@id,'clientId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OAUTH2_TESTER_CLIENT_SECRET</td>
+	<td>//input[contains(@id,'clientSecret')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OAUTH2_TESTER_REQUEST_RESULTS</td>
 	<td>//div[contains(@id,'result')]</td>
 	<td></td>

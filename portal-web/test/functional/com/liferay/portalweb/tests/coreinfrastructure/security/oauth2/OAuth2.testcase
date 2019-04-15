@@ -248,7 +248,7 @@ definition {
 		);
 
 		Type(
-			locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID",
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
 			value1 = "${clientId}"
 		);
 
@@ -261,7 +261,7 @@ definition {
 		);
 
 		Type(
-			locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET",
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
 			value1 = "${clientSecret}"
 		);
 

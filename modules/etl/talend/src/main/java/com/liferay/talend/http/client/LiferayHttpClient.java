@@ -14,7 +14,7 @@
 
 package com.liferay.talend.http.client;
 
-import com.liferay.talend.datastore.OAuthDataStore;
+import com.liferay.talend.data.store.OAuthDataStore;
 import com.liferay.talend.http.client.codec.XWWWFormURLEncoder;
 
 import javax.json.JsonObject;

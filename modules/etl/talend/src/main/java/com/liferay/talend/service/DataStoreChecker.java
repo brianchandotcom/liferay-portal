@@ -68,9 +68,10 @@ public class DataStoreChecker {
 	public HealthCheckStatus checkInputDataStore(
 		InputDataStore inputDataStore) {
 
-		if (inputDataStore.getServerURL() == null) {
+		if (inputDataStore.getOpenAPISpecURL() == null) {
 			return new HealthCheckStatus(
-				HealthCheckStatus.Status.KO, "Server URL is required");
+				HealthCheckStatus.Status.KO,
+				"OpenAPI Specification URL is required");
 		}
 
 		if (inputDataStore.getAuthenticationMethod() ==

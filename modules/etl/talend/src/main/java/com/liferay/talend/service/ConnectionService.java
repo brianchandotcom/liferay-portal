@@ -14,12 +14,13 @@
 
 package com.liferay.talend.service;
 
-import com.liferay.talend.dataset.RestDataSet;
-import com.liferay.talend.datastore.AuthenticationMethod;
-import com.liferay.talend.datastore.BasicDataStore;
-import com.liferay.talend.datastore.InputDataStore;
+import com.liferay.talend.data.store.AuthenticationMethod;
+import com.liferay.talend.data.store.BasicDataStore;
+import com.liferay.talend.data.store.InputDataStore;
+import com.liferay.talend.dataset.RESTDataSet;
 import com.liferay.talend.http.client.LiferayHttpClient;
 import com.liferay.talend.http.client.exception.ConnectionException;
+import com.liferay.talend.http.client.exception.MalformedURLException;
 import com.liferay.talend.http.client.exception.OAuth2Exception;
 
 import java.net.URL;
@@ -40,14 +41,33 @@ import org.talend.sdk.component.api.service.http.Response;
 @Service
 public class ConnectionService {
 
-	public JsonObject getData(RestDataSet restDataSet)
+	public static URL getServerURL(InputDataStore inputDataStore) {
+		URL openAPISpecURL = inputDataStore.getOpenAPISpecURL();
+
+		String protocol = openAPISpecURL.getProtocol();
+		String host = openAPISpecURL.getHost();
+		int port = openAPISpecURL.getPort();
+
+		URL serverURL = null;
+
+		try {
+			serverURL = new URL(protocol, host, port, "");
+		}
+		catch (java.net.MalformedURLException murle) {
+			throw new MalformedURLException(murle);
+		}
+
+		return serverURL;
+	}
+
+	public JsonObject getData(RESTDataSet restDataSet)
 		throws ConnectionException {
 
 		InputDataStore inputDataStore = restDataSet.getInputDataStore();
 
 		String authorizationHeader = _getAuthorizationHeader(inputDataStore);
 
-		URL serverURL = inputDataStore.getServerURL();
+		URL serverURL = getServerURL(inputDataStore);
 
 		_liferayHttpClient.base(serverURL.toString());
 
@@ -72,7 +92,7 @@ public class ConnectionService {
 			InputDataStore inputDataStore)
 		throws ConnectionException {
 
-		URL serverURL = inputDataStore.getServerURL();
+		URL serverURL = getServerURL(inputDataStore);
 
 		_liferayHttpClient.base(serverURL.toString());
 

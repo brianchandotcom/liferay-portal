@@ -14,7 +14,7 @@
 
 package com.liferay.talend.http.client.codec;
 
-import com.liferay.talend.datastore.OAuthDataStore;
+import com.liferay.talend.data.store.OAuthDataStore;
 import com.liferay.talend.http.client.exception.EncoderException;
 
 import org.talend.sdk.component.api.service.http.Encoder;

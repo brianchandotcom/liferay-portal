@@ -30,7 +30,7 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
  * @review
  */
 @DataSet("RESTDataSet")
-@GridLayout({@GridLayout.Row("_inputDataStore"), @GridLayout.Row("_resource")})
+@GridLayout({@GridLayout.Row("_inputDataStore"), @GridLayout.Row("_endpoint")})
 public class RESTDataSet implements Serializable {
 
 	public String getEndpoint() {
@@ -41,12 +41,10 @@ public class RESTDataSet implements Serializable {
 		return _inputDataStore;
 	}
 
-	public String getResource() {
-		return _resource;
-	}
-
-	public void setEndpoint(String endpoint) {
+	public RESTDataSet setEndpoint(String endpoint) {
 		_endpoint = endpoint;
+
+		return this;
 	}
 
 	public RESTDataSet setInputDataStore(InputDataStore inputDataStore) {
@@ -55,15 +53,6 @@ public class RESTDataSet implements Serializable {
 		return this;
 	}
 
-	public void setResource(String resource) {
-		_resource = resource;
-	}
-
-	private String _endpoint;
-
-	@Option
-	private InputDataStore _inputDataStore;
-
 	/**
 	 * DataStore parameter now is not needed, just an example how we can use it
 	 * in UIActionService if needed.
@@ -71,6 +60,9 @@ public class RESTDataSet implements Serializable {
 	@Option
 	@Required
 	@Suggestable(parameters = "_inputDataStore", value = "fetchEndpoints")
-	private String _resource;
+	private String _endpoint;
+
+	@Option
+	private InputDataStore _inputDataStore;
 
 }

@@ -332,14 +332,14 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		List<Layout> ancestorLayouts = _getAncestorLayouts(request);
 
-		int layoutsCount = _layoutService.getLayoutsCount(
+		int count = _layoutService.getLayoutsCount(
 			groupId, privateLayout, parentLayoutId);
 
-		for (Layout layout :
-				_getPaginatedLayouts(
-					request, groupId, privateLayout, parentLayoutId,
-					layoutsCount, incomplete, treeId, childLayout)) {
+		List<Layout> layouts = _getPaginatedLayouts(
+			request, groupId, privateLayout, parentLayoutId, incomplete, treeId,
+			childLayout, count);
 
+		for (Layout layout : layouts) {
 			LayoutTreeNode layoutTreeNode = new LayoutTreeNode(layout);
 
 			LayoutTreeNodes childLayoutTreeNodes = null;
@@ -376,7 +376,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			layoutTreeNodes.add(layoutTreeNode);
 		}
 
-		return new LayoutTreeNodes(layoutTreeNodes, layoutsCount);
+		return new LayoutTreeNodes(layoutTreeNodes, count);
 	}
 
 	private int _getLoadedLayoutsCount(
@@ -423,8 +423,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private List<Layout> _getPaginatedLayouts(
 			HttpServletRequest request, long groupId, boolean privateLayout,
-			long parentLayoutId, int layoutsCount, boolean incomplete,
-			String treeId, boolean childLayout)
+			long parentLayoutId, boolean incomplete, String treeId,
+			boolean childLayout, int count)
 		throws Exception {
 
 		if (!_isPaginationEnabled(request)) {
@@ -440,7 +440,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		int start = ParamUtil.getInteger(request, "start");
 
-		start = Math.max(0, Math.min(start, layoutsCount));
+		start = Math.max(0, Math.min(start, count));
 
 		int end = ParamUtil.getInteger(
 			request, "end",
@@ -450,7 +450,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			end = loadedLayoutsCount;
 		}
 
-		end = Math.max(start, Math.min(end, layoutsCount));
+		end = Math.max(start, Math.min(end, count));
 
 		if (_log.isDebugEnabled()) {
 			StringBundler sb = new StringBundler(7);
@@ -467,7 +467,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		}
 
 		if (childLayout &&
-			(layoutsCount > PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) &&
+			(count > PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) &&
 			(start == PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)) {
 
 			start = end;

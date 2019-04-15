@@ -333,22 +333,6 @@ definition {
 			searchAssetTitle = "Blogs Entry Title",
 			searchAssetType = "Blogs Entry"
 		);
-
-		SearchPortlets.searchEmbedded(searchTerm = "Blogs1");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Blogs1");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Entry1");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Entry1");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Content1");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Content1");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Title1");
-
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Title1");
 	}
 
 	@priority = "4"

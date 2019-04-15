@@ -1685,7 +1685,7 @@ public class VerifyProperties extends VerifyProcess {
 		"dl.file.entry.read.count.enabled",
 		"dl.file.entry.type.ig.image.auto.create.on.upgrade",
 		"dl.file.extensions", "dl.file.max.size", "dl.file.rank.enabled",
-		"dl.folder.menu.visible", "dockbar.add.portlets",
+		"dl.folder.menu.visible", "dl.tabs.visible", "dockbar.add.portlets",
 		"dockbar.administrative.links.show.in.pop.up",
 		"dynamic.data.lists.record.set.force.autogenerate.key",
 		"dynamic.data.lists.template.language.parser[ftl]",

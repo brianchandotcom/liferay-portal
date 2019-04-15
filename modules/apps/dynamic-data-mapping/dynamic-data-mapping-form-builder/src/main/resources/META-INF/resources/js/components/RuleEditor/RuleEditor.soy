@@ -717,18 +717,30 @@
 											{param value: [$secondOperandValue] /}
 										{/delcall}
 									{else}
-										{let $fieldType: $secondOperandType /}
-
-										{delcall PageRenderer.RegisterFieldType variant="$fieldType"}
-											{param events: [
-												'fieldEdited': $_handleSecondOperandValueEdited
-											] /}
-											{param name: $secondOperandFieldName /}
-											{param readOnly: $readOnly /}
-											{param ref: 'secondOperand' + $index /}
-											{param spritemap: $spritemap /}
-											{param value: $secondOperandValue /}
-										{/delcall}
+										{if $secondOperandType == 'integer' or $secondOperandType == 'double'}
+											{delcall PageRenderer.RegisterFieldType variant="'numeric'"}
+												{param events: [
+													'fieldEdited': $_handleSecondOperandValueEdited
+												] /}
+												{param dataType: $secondOperandType /}
+												{param name: $secondOperandFieldName /}
+												{param readOnly: $readOnly /}
+												{param ref: 'secondOperand' + $index /}
+												{param spritemap: $spritemap /}
+												{param value: $secondOperandValue /}
+											{/delcall}
+										{else}
+											{delcall PageRenderer.RegisterFieldType variant="$secondOperandType"}
+												{param events: [
+													'fieldEdited': $_handleSecondOperandValueEdited
+												] /}
+												{param name: $secondOperandFieldName /}
+												{param readOnly: $readOnly /}
+												{param ref: 'secondOperand' + $index /}
+												{param spritemap: $spritemap /}
+												{param value: $secondOperandValue /}
+											{/delcall}
+										{/if}
 									{/if}
 								</div>
 							{/if}

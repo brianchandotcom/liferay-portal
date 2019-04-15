@@ -111,13 +111,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 							workflowMetricsSLADefinition.getProcessId());
 
 						taskNames.forEach(
-							(taskId, taskName) ->
-								_slaTaskResultWorkflowMetricsIndexer.
-									addDocument(
-										_slaTaskResultWorkflowMetricsIndexer.
-											createDocument(
-												taskId, taskName,
-												workflowMetricsSLAProcessResult)));
+							(taskId, taskName) -> _addDocument(
+								taskId, taskName,
+								workflowMetricsSLAProcessResult));
 					});
 			});
 
@@ -129,6 +125,15 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		BackgroundTask backgroundTask) {
 
 		return null;
+	}
+
+	private void _addDocument(
+		Long taskId, String taskName,
+		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+
+		_slaTaskResultWorkflowMetricsIndexer.addDocument(
+			_slaTaskResultWorkflowMetricsIndexer.createDocument(
+				taskId, taskName, workflowMetricsSLAProcessResult));
 	}
 
 	private BooleanQuery _createInstancesBooleanQuery(

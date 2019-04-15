@@ -59,6 +59,11 @@ import org.osgi.service.component.annotations.Reference;
 public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 
 	@Override
+	public String getIcon(PortletRequest portletRequest) {
+		return "sites";
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "my-sites");
 	}

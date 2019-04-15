@@ -30,6 +30,7 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -133,6 +134,9 @@ public class AssetEntryUsagesDisplayContext {
 	}
 
 	public String getAssetEntryUsageName(AssetEntryUsage assetEntryUsage) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (assetEntryUsage.getType() == AssetEntryUsageConstants.TYPE_LAYOUT) {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
 				assetEntryUsage.getPlid());
@@ -141,11 +145,18 @@ public class AssetEntryUsagesDisplayContext {
 				return StringPool.BLANK;
 			}
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_renderRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			if (!_isDraft(layout)) {
+				return layout.getName(themeDisplay.getLocale());
+			}
 
-			return layout.getName(themeDisplay.getLocale());
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(layout.getName(themeDisplay.getLocale()));
+			sb.append(" (");
+			sb.append(LanguageUtil.get(themeDisplay.getLocale(), "draft"));
+			sb.append(")");
+
+			return sb.toString();
 		}
 
 		long plid = assetEntryUsage.getPlid();
@@ -157,6 +168,8 @@ public class AssetEntryUsagesDisplayContext {
 			plid = layout.getClassPK();
 		}
 
+		layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
 				fetchLayoutPageTemplateEntryByPlid(plid);
@@ -165,7 +178,18 @@ public class AssetEntryUsagesDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return layoutPageTemplateEntry.getName();
+		if (!_isDraft(layout)) {
+			return layoutPageTemplateEntry.getName();
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(layoutPageTemplateEntry.getName());
+		sb.append(" (");
+		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "draft"));
+		sb.append(")");
+
+		return sb.toString();
 	}
 
 	public String getAssetEntryUsageTypeLabel(AssetEntryUsage assetEntryUsage) {
@@ -370,6 +394,16 @@ public class AssetEntryUsagesDisplayContext {
 			_renderRequest, "orderByType", "asc");
 
 		return _orderByType;
+	}
+
+	private boolean _isDraft(Layout layout) {
+		if (layout.getClassNameId() != PortalUtil.getClassNameId(
+				Layout.class.getName())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private Long _assetEntryId;

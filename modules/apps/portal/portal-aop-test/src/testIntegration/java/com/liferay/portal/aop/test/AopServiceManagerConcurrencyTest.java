@@ -137,9 +137,12 @@ public class AopServiceManagerConcurrencyTest {
 						Arrays.toString(serviceReferences), 1,
 						serviceReferences.length);
 
-					TestService testService =
-						(TestService)_bundleContext.getService(
+					TestService testService = null;
+
+					while (testService == null) {
+						testService = (TestService)_bundleContext.getService(
 							serviceReferences[0]);
+					}
 
 					TestTransactionExecutor actualTestTransactionExecutor =
 						testService.getTransactionExecutor();

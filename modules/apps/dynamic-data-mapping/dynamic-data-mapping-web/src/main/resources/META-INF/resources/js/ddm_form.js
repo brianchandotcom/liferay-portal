@@ -3212,40 +3212,42 @@ AUI.add(
 
 						var defaultLocale = instance.getDefaultLocale();
 
-						for (x in instance.newRepeatableInstances) {
-							var field = instance.newRepeatableInstances[x];
+						Object.keys(instance.newRepeatableInstances).forEach(
+							function (x) {
+								var field = instance.newRepeatableInstances[x];
 
-							if (!field.get('localizable')) {
-								continue;
-							}
-
-							var currentLocale = field.get('displayLocale');
-							var originalField = field.originalField;
-
-							var newFieldLocalizations = field.get('localizationMap');
-							var totalLocalizations = originalField.get('localizationMap');
-
-							for (var localization in totalLocalizations) {
-								if (localization === currentLocale) {
-									continue;
+								if (!field.get('localizable')) {
+									return;
 								}
 
-								if (!newFieldLocalizations[localization]) {
-									var localizationValue = '';
+								var currentLocale = field.get('displayLocale');
+								var originalField = field.originalField;
 
-									if (newFieldLocalizations[defaultLocale]) {
-										localizationValue = newFieldLocalizations[defaultLocale];
-									}
-									else if (defaultLocale === field.get('displayLocale') && field.getValue()) {
-										localizationValue = field.getValue();
+								var newFieldLocalizations = field.get('localizationMap');
+								var totalLocalizations = originalField.get('localizationMap');
+
+								for (var localization in totalLocalizations) {
+									if (localization === currentLocale) {
+										return;
 									}
 
-									newFieldLocalizations[localization] = localizationValue;
+									if (!newFieldLocalizations[localization]) {
+										var localizationValue = '';
+
+										if (newFieldLocalizations[defaultLocale]) {
+											localizationValue = newFieldLocalizations[defaultLocale];
+										}
+										else if (defaultLocale === field.get('displayLocale') && field.getValue()) {
+											localizationValue = field.getValue();
+										}
+
+										newFieldLocalizations[localization] = localizationValue;
+									}
 								}
-							}
 
-							field.set('localizationMap', newFieldLocalizations);
-						}
+								field.set('localizationMap', newFieldLocalizations);
+							}
+						);
 					},
 
 					moveField: function(parentField, oldIndex, newIndex) {

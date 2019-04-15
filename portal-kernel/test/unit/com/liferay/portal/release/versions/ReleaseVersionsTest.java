@@ -189,9 +189,9 @@ public class ReleaseVersionsTest {
 		Properties otherBndProperties = _loadProperties(otherBndBndPath);
 
 		String bundleSymbolicName = bndProperties.getProperty(
-			Constants.BUNDLE_SYMBOLICNAME);
+			"Bundle-SymbolicName");
 		String otherBundleSymbolicName = otherBndProperties.getProperty(
-			Constants.BUNDLE_SYMBOLICNAME);
+			"Bundle-SymbolicName");
 
 		Assert.assertEquals(bundleSymbolicName, otherBundleSymbolicName);
 

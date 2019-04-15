@@ -14,8 +14,6 @@
 
 package com.liferay.portal.modules.util;
 
-import aQute.bnd.osgi.Constants;
-
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -182,9 +180,8 @@ public class ModulesStructureTestUtil {
 
 			String moduleGroup = "com.liferay";
 			String moduleName = bndProperties.getProperty(
-				Constants.BUNDLE_SYMBOLICNAME);
-			String moduleVersion = bndProperties.getProperty(
-				Constants.BUNDLE_VERSION);
+				"Bundle-SymbolicName");
+			String moduleVersion = bndProperties.getProperty("Bundle-Version");
 
 			String configuration = matcher.group(1);
 

@@ -41,7 +41,6 @@ public class SLATaskResultWorkflowMetricsIndexer
 				workflowMetricsSLAProcessResult.getInstanceId(),
 				workflowMetricsSLAProcessResult.getProcessId(),
 				workflowMetricsSLAProcessResult.getSLADefinitionId(), taskId));
-
 		document.addKeyword("taskId", taskId);
 		document.addKeyword("taskName", taskName);
 

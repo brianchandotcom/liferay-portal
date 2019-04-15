@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_TITLE</td>
-	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'table-title')]//a</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'table-title')]</td>
 	<td></td>
 </tr>
 <tr>

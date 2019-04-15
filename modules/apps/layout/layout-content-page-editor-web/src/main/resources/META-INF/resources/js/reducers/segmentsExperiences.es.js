@@ -296,21 +296,16 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 
 					const priority = nextState.availableSegmentsExperiences[segmentsExperienceId].priority;
 
-					let fragmentEntryLinkIdsInCurrentLayout = [];
-
-					let structure = nextState.layoutData.structure;
-
-					for (let i = 0; i < structure.length; i++) {
-						Array.prototype.push.apply(
-							fragmentEntryLinkIdsInCurrentLayout,
-							getRowFragmentEntryLinkIds(structure[i])
-						);
-					}
-
-					const fragmentEntryLinkIds = fragmentEntryLinkIdsInCurrentLayout.filter(
-						fragmentId => !containsFragmentEntryLinkId(
+					const fragmentEntryLinkIds = nextState.layoutData.structure.reduce(
+						(allFragmentEntryLinkIds, row) => [
+							...allFragmentEntryLinkIds,
+							...getRowFragmentEntryLinkIds(row)
+						],
+						[]
+					).filter(
+						fragmentEntryLinkId => !containsFragmentEntryLinkId(
 							nextState.layoutDataList,
-							fragmentId,
+							fragmentEntryLinkId,
 							segmentsExperienceId
 						)
 					);

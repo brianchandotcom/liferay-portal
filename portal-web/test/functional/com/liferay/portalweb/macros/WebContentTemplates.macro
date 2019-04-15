@@ -238,6 +238,8 @@ definition {
 
 	@summary = "Add localization for the template name"
 	macro localizeTemplateName {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		var key_ddlTemplateName = "${templateName}";
 
 		WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");

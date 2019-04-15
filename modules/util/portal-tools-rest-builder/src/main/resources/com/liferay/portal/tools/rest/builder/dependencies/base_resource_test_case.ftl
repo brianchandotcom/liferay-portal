@@ -259,11 +259,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 						</#list>
 
 						${schemaName} ${schemaVarName}1 = random${schemaName}();
-						${schemaName} ${schemaVarName}2 = random${schemaName}();
-
-						for (EntityField entityField : entityFields) {
-							BeanUtils.setProperty(${schemaVarName}1, entityField.getName(), DateUtils.addMinutes(new Date(), -2));
-						}
 
 						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
@@ -272,16 +267,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 						</#list>
 
 						${schemaVarName}1);
-
-						Thread.sleep(1000);
-
-						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
-
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterName},
-						</#list>
-
-						${schemaVarName}2);
 
 						for (EntityField entityField : entityFields) {
 							Page<${schemaName}> page = invoke${javaMethodSignature.methodName?cap_first}(
@@ -292,7 +277,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								</#if>
 
 								<#if stringUtil.equals(javaMethodParameter.parameterName, "filter")>
-									getFilterString(entityField, "eq", ${schemaVarName}1)
+									getFilterString(entityField, "between", ${schemaVarName}1)
 								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 									Pagination.of(1, 2)
 								<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
@@ -1167,10 +1152,34 @@ public abstract class Base${schemaName}ResourceTestCase {
 		<#list properties?keys as propertyName>
 			if (entityFieldName.equals("${propertyName}")) {
 				<#if stringUtil.equals(properties[propertyName], "Date")>
-					sb.append(_dateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
+					if (operator.equals("between")) {
+						sb = new StringBundler();
 
+						sb.append("(");
+						sb.append(entityFieldName);
+
+						sb.append(" gt ");
+
+						sb.append(_dateFormat.format(DateUtils.addSeconds(${schemaVarName}.get${propertyName?cap_first}(), -2)));
+
+						sb.append(" and ");
+						sb.append(entityFieldName);
+						sb.append(" lt ");
+						sb.append(_dateFormat.format(DateUtils.addSeconds(${schemaVarName}.get${propertyName?cap_first}(), 2)));
+						sb.append(")");
+					}
+					else {
+						sb.append(entityFieldName);
+
+						sb.append(" ");
+						sb.append(operator);
+						sb.append(" ");
+
+						sb.append(_dateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
+					}
 					return sb.toString();
 				<#elseif stringUtil.equals(properties[propertyName], "String")>
+
 					sb.append("'");
 					sb.append(String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
 					sb.append("'");

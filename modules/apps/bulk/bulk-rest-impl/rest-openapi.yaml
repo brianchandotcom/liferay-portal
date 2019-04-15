@@ -39,10 +39,11 @@ components:
                           items:
                               type: string
                           type: array
-        MessageSelection:
+        Selection:
             properties:
-                description:
-                    type: string
+                size:
+                    format: int64
+                    type: integer
         Status:
             properties:
                 actionInProgress:
@@ -103,9 +104,9 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/MessageSelection"
+                                $ref: "#/components/schemas/Selection"
                     description: ""
-            tags: ["MessageSelection"]
+            tags: ["Selection"]
     "/keywords/batch":
         patch:
             operationId: patchKeywordBatch

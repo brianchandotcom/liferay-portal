@@ -302,7 +302,7 @@ definition {
 		);
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#REQUEST_RESULTS", 
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
 			value1 = "test@liferay.com"
 		);
 	}

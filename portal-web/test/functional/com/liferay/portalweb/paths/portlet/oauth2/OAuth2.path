@@ -109,9 +109,9 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--OAUTH2 TESTER-->
+<!--OAUTH2_TESTER-->
 <tr>
-	<td>REQUEST_RESULTS</td>
+	<td>OAUTH2_TESTER_REQUEST_RESULTS</td>
 	<td>//div[contains(@id,'result')]</td>
 	<td></td>
 </tr>

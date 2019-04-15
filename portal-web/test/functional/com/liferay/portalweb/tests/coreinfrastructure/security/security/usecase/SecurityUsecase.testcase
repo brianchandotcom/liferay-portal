@@ -220,6 +220,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		);
 	}
 
+
 	@priority = "5"
 	test ValidateForwardURLPG {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}";

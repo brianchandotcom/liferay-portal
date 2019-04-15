@@ -52,17 +52,15 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		reloadConfiguration(
-			message.getString(Constants.SERVICE_PID), Constants.SERVICE_PID,
+			message.getString(Constants.SERVICE_PID),
 			message.getInteger("configuration.event.type"));
 	}
 
-	protected void reloadConfiguration(String pid, String filter, int type)
-		throws Exception {
-
+	protected void reloadConfiguration(String pid, int type) throws Exception {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("(");
-		sb.append(filter);
+		sb.append(Constants.SERVICE_PID);
 		sb.append("=");
 		sb.append(pid);
 		sb.append(")");

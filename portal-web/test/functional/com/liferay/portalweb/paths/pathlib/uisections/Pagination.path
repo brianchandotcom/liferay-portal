@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>FIRST_LINK</td>
-	<td>//ul[contains(@class,'pagination')]/li/a/span[contains(@class,'icon-caret-left')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'1')]</td>
 	<td></td>
 </tr>
 <tr>

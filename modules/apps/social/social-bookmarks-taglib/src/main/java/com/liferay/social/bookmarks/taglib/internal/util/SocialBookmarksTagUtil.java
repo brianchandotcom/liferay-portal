@@ -32,7 +32,8 @@ public class SocialBookmarksTagUtil {
 		String url) {
 
 		return String.format(
-			"socialBookmarks_handleItemClick('%s', %d, '%s', '%s', '%s');",
+			"socialBookmarks_handleItemClick(event, '%s', %d, '%s', '%s', " +
+				"'%s');",
 			HtmlUtil.escapeJS(className), classPK, HtmlUtil.escapeJS(type),
 			HtmlUtil.escapeJS(postURL), HtmlUtil.escapeJS(url));
 	}

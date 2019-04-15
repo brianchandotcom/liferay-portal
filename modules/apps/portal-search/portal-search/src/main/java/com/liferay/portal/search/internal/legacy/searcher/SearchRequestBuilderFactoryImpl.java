@@ -19,6 +19,7 @@ import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author André de Oliveira
@@ -28,10 +29,13 @@ public class SearchRequestBuilderFactoryImpl
 	implements SearchRequestBuilderFactory {
 
 	@Override
-	public SearchRequestBuilder getSearchRequestBuilder(
-		SearchContext searchContext) {
-
-		return new SearchRequestBuilderImpl(searchContext);
+	public SearchRequestBuilder builder(SearchContext searchContext) {
+		return new SearchRequestBuilderImpl(
+			searchRequestBuilderFactory, searchContext);
 	}
+
+	@Reference
+	protected com.liferay.portal.search.searcher.SearchRequestBuilderFactory
+		searchRequestBuilderFactory;
 
 }

@@ -28,9 +28,7 @@ public class SearchResponseBuilderFactoryImpl
 	implements SearchResponseBuilderFactory {
 
 	@Override
-	public SearchResponseBuilder getSearchResponseBuilder(
-		SearchContext searchContext) {
-
+	public SearchResponseBuilder builder(SearchContext searchContext) {
 		return new SearchResponseBuilderImpl(searchContext);
 	}
 

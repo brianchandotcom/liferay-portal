@@ -14,22 +14,29 @@
 
 package com.liferay.portal.search.internal.searcher;
 
-import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
 
-import org.osgi.service.component.annotations.Component;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SearchRequestBuilderFactory.class)
-public class SearchRequestBuilderFactoryImpl
-	implements SearchRequestBuilderFactory {
+public interface IndexSearcherHelper {
 
-	@Override
-	public SearchRequestBuilder builder() {
-		return new SearchRequestBuilderImpl(this);
-	}
+	public String getQueryString(SearchContext searchContext, Query query);
+
+	public Hits search(SearchContext searchContext, Query query);
+
+	public long searchCount(SearchContext searchContext, Query query);
+
+	public String spellCheckKeywords(SearchContext searchContext);
+
+	public Map<String, List<String>> spellCheckKeywords(
+		SearchContext searchContext, int max);
+
+	public String[] suggestKeywordQueries(SearchContext searchContext, int max);
 
 }

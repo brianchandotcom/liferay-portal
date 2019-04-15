@@ -14,45 +14,54 @@
 
 package com.liferay.portal.search.internal.legacy.searcher;
 
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.internal.searcher.SearchRequestImpl;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.FacetContext;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.stats.StatsRequest;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * @author André de Oliveira
  */
 public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
-	public SearchRequestBuilderImpl(SearchContext searchContext) {
+	public SearchRequestBuilderImpl(
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
+
+		this(searchRequestBuilderFactory, new SearchContext());
+	}
+
+	public SearchRequestBuilderImpl(
+		SearchRequestBuilderFactory searchRequestBuilderFactory,
+		SearchContext searchContext) {
+
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 		_facetContext = new FacetContextImpl(searchContext);
 		_searchContext = searchContext;
 	}
 
 	@Override
 	public SearchRequestBuilder addAggregation(Aggregation aggregation) {
-		Map<String, Aggregation> map = getSearchContextKeyAggregationsMap();
-
-		map.put(aggregation.getName(), aggregation);
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.addAggregation(aggregation));
 
 		return this;
 	}
@@ -61,9 +70,26 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	public SearchRequestBuilder addComplexQueryPart(
 		ComplexQueryPart complexQueryPart) {
 
-		List<ComplexQueryPart> list = getSearchContextKeyComplexQueryParts();
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.addComplexQueryPart(
+				complexQueryPart));
 
-		list.add(complexQueryPart);
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder addFederatedSearchRequest(
+		SearchRequest searchRequest) {
+
+		addFederatedSearchRequests(Stream.of(searchRequest));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder addIndex(String index) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.addIndex(index));
 
 		return this;
 	}
@@ -72,10 +98,9 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	public SearchRequestBuilder addPipelineAggregation(
 		PipelineAggregation pipelineAggregation) {
 
-		Map<String, PipelineAggregation> map =
-			getSearchContextKeyPipelineAggregationsMap();
-
-		map.put(pipelineAggregation.getName(), pipelineAggregation);
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.addPipelineAggregation(
+				pipelineAggregation));
 
 		return this;
 	}
@@ -84,29 +109,86 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	public SearchRequestBuilder addSelectedFieldNames(
 		String... selectedFieldNames) {
 
-		QueryConfig queryConfig = _searchContext.getQueryConfig();
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.addSelectedFieldNames(
+				selectedFieldNames));
 
-		queryConfig.addSelectedFieldNames(selectedFieldNames);
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder basicFacetSelection(
+		boolean basicFacetSelection) {
+
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setBasicFacetSelection(
+				basicFacetSelection));
 
 		return this;
 	}
 
 	@Override
 	public SearchRequest build() {
-		return new SearchRequestImpl();
+		basicFacetSelection(
+			SearchRequestImpl.isBasicFacetSelection(_searchContext));
+
+		addFederatedSearchRequests(buildFederatedSearchRequests());
+
+		return withSearchRequestGet(Function.identity());
+	}
+
+	@Override
+	public SearchRequestBuilder emptySearchEnabled(boolean allowEmptySearches) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setEmptySearchEnabled(
+				allowEmptySearches));
+
+		return this;
 	}
 
 	@Override
 	public SearchRequestBuilder entryClassNames(String... entryClassNames) {
-		_searchContext.setEntryClassNames(entryClassNames);
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.addEntryClassNames(
+				entryClassNames));
 
 		return this;
 	}
 
 	@Override
 	public SearchRequestBuilder explain(boolean explain) {
-		_searchContext.setAttribute(
-			_SEARCH_CONTEXT_KEY_EXPLAIN, Boolean.valueOf(explain));
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setExplain(explain));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder federatedSearchKey(String federatedSearchKey) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setFederatedSearchKey(
+				federatedSearchKey));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder getFederatedSearchRequestBuilder(
+		String federatedSearchKey) {
+
+		if (Validator.isBlank(federatedSearchKey)) {
+			return this;
+		}
+
+		return _federatedSearchRequestBuildersMap.computeIfAbsent(
+			federatedSearchKey, this::newFederatedSearchRequestBuilder);
+	}
+
+	@Override
+	public SearchRequestBuilder highlightEnabled(boolean highlightEnabled) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setHighlightEnabled(
+				highlightEnabled));
 
 		return this;
 	}
@@ -115,60 +197,75 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	public SearchRequestBuilder includeResponseString(
 		boolean includeResponseString) {
 
-		_searchContext.setAttribute(
-			_SEARCH_CONTEXT_KEY_INCLUDE_RESPONSE_STRING,
-			Boolean.valueOf(includeResponseString));
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setIncludeResponseString(
+				includeResponseString));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder indexes(String... indexes) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setIndexes(indexes));
 
 		return this;
 	}
 
 	@Override
 	public SearchRequestBuilder modelIndexerClasses(Class<?>... classes) {
-		if (classes != null) {
-			_modelIndexerClasses = Arrays.asList(classes);
-		}
-		else {
-			_modelIndexerClasses = Collections.emptyList();
-		}
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setModelIndexerClasses(
+				classes));
 
 		return this;
 	}
 
 	@Override
 	public SearchRequestBuilder postFilterQuery(Query query) {
-		_postFilterQuery = query;
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setPostFilterQuery(query));
 
 		return this;
 	}
 
 	@Override
 	public SearchRequestBuilder query(Query query) {
-		_searchContext.setAttribute(_SEARCH_CONTEXT_KEY_QUERY, query);
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setQuery(query));
 
 		return this;
 	}
 
 	@Override
-	public SearchRequestBuilder rescoreQuery(Query rescoreQuery) {
-		_searchContext.setAttribute(
-			_SEARCH_CONTEXT_KEY_RESCORE_QUERY, rescoreQuery);
+	public SearchRequestBuilder queryString(String queryString) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setQueryString(queryString));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder rescoreQuery(Query query) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setRescoreQuery(query));
 
 		return this;
 	}
 
 	@Override
 	public SearchRequestBuilder sorts(Sort... sorts) {
-		_searchContext.setAttribute(
-			_SEARCH_CONTEXT_KEY_SORTS, new ArrayList<>(Arrays.asList(sorts)));
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setSorts(sorts));
 
 		return this;
 	}
 
 	@Override
 	public SearchRequestBuilder statsRequests(StatsRequest... statsRequests) {
-		_searchContext.setAttribute(
-			_SEARCH_CONTEXT_KEY_STATS_REQUESTS,
-			new ArrayList<>(Arrays.asList(statsRequests)));
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setStatsRequests(
+				statsRequests));
 
 		return this;
 	}
@@ -205,207 +302,79 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		return searchContextFunction.apply(_searchContext);
 	}
 
-	public class SearchRequestImpl implements SearchRequest {
+	protected static SearchRequestImpl getSearchRequestImpl(
+		SearchContext searchContext) {
 
-		@Override
-		public Map<String, Aggregation> getAggregationsMap() {
-			Map<String, Aggregation> map =
-				(Map<String, Aggregation>)_searchContext.getAttribute(
-					_SEARCH_CONTEXT_KEY_AGGREGATIONS_MAP);
-
-			if (map == null) {
-				return Collections.emptyMap();
-			}
-
-			return map;
-		}
-
-		@Override
-		public List<ComplexQueryPart> getComplexQueryParts() {
-			List<ComplexQueryPart> list =
-				(List<ComplexQueryPart>)_searchContext.getAttribute(
-					_SEARCH_CONTEXT_KEY_COMPLEX_QUERY_PARTS);
-
-			if (list != null) {
-				return list;
-			}
-
-			return Collections.emptyList();
-		}
-
-		@Override
-		public List<String> getEntryClassNames() {
-			return Arrays.asList(_searchContext.getEntryClassNames());
-		}
-
-		@Override
-		public List<Class<?>> getModelIndexerClasses() {
-			return Collections.unmodifiableList(_modelIndexerClasses);
-		}
-
-		@Override
-		public Map<String, PipelineAggregation> getPipelineAggregationsMap() {
-			Map<String, PipelineAggregation> map =
-				(Map<String, PipelineAggregation>)_searchContext.getAttribute(
-					_SEARCH_CONTEXT_KEY_PIPELINE_AGGREGATIONS_MAP);
-
-			if (map == null) {
-				return Collections.emptyMap();
-			}
-
-			return map;
-		}
-
-		@Override
-		public Query getPostFilterQuery() {
-			return _postFilterQuery;
-		}
-
-		@Override
-		public Query getQuery() {
-			return (Query)_searchContext.getAttribute(
-				_SEARCH_CONTEXT_KEY_QUERY);
-		}
-
-		@Override
-		public Query getRescoreQuery() {
-			return (Query)_searchContext.getAttribute(
-				_SEARCH_CONTEXT_KEY_RESCORE_QUERY);
-		}
-
-		public SearchContext getSearchContext() {
-			return _searchContext;
-		}
-
-		@Override
-		public List<Sort> getSorts() {
-			Serializable serializable = _searchContext.getAttribute(
-				_SEARCH_CONTEXT_KEY_SORTS);
-
-			if (serializable != null) {
-				return (List<Sort>)serializable;
-			}
-
-			return Collections.emptyList();
-		}
-
-		@Override
-		public List<StatsRequest> getStatsRequests() {
-			Serializable serializable = _searchContext.getAttribute(
-				_SEARCH_CONTEXT_KEY_STATS_REQUESTS);
-
-			if (serializable != null) {
-				return (List<StatsRequest>)serializable;
-			}
-
-			return Collections.emptyList();
-		}
-
-		@Override
-		public boolean isExplain() {
-			return GetterUtil.getBoolean(
-				_searchContext.getAttribute(_SEARCH_CONTEXT_KEY_EXPLAIN));
-		}
-
-		@Override
-		public boolean isIncludeResponseString() {
-			return GetterUtil.getBoolean(
-				_searchContext.getAttribute(
-					_SEARCH_CONTEXT_KEY_INCLUDE_RESPONSE_STRING));
-		}
-
+		return Optional.ofNullable(
+			(SearchRequestImpl)searchContext.getAttribute(
+				_SEARCH_CONTEXT_KEY_SEARCH_REQUEST)
+		).orElseGet(
+			() -> setAttribute(
+				searchContext, _SEARCH_CONTEXT_KEY_SEARCH_REQUEST,
+				new SearchRequestImpl(searchContext))
+		);
 	}
 
-	protected Map<String, Aggregation> getSearchContextKeyAggregationsMap() {
-		synchronized (_searchContext) {
-			LinkedHashMap<String, Aggregation> linkedHashMap =
-				(LinkedHashMap<String, Aggregation>)_searchContext.getAttribute(
-					_SEARCH_CONTEXT_KEY_AGGREGATIONS_MAP);
+	protected static <T extends Serializable> T setAttribute(
+		SearchContext searchContext, String key, T value) {
 
-			if (linkedHashMap != null) {
-				return linkedHashMap;
-			}
+		searchContext.setAttribute(key, value);
 
-			linkedHashMap = new LinkedHashMap<>();
-
-			_searchContext.setAttribute(
-				_SEARCH_CONTEXT_KEY_AGGREGATIONS_MAP, linkedHashMap);
-
-			return linkedHashMap;
-		}
+		return value;
 	}
 
-	protected List<ComplexQueryPart> getSearchContextKeyComplexQueryParts() {
-		synchronized (_searchContext) {
-			ArrayList<ComplexQueryPart> list =
-				(ArrayList<ComplexQueryPart>)_searchContext.getAttribute(
-					_SEARCH_CONTEXT_KEY_COMPLEX_QUERY_PARTS);
-
-			if (list != null) {
-				return list;
-			}
-
-			list = new ArrayList<>();
-
-			_searchContext.setAttribute(
-				_SEARCH_CONTEXT_KEY_COMPLEX_QUERY_PARTS, list);
-
-			return list;
-		}
+	protected void addFederatedSearchRequests(Stream<SearchRequest> stream) {
+		withSearchRequestImpl(
+			searchRequestImpl -> stream.forEach(
+				searchRequestImpl::addFederatedSearchRequest));
 	}
 
-	protected Map<String, PipelineAggregation>
-		getSearchContextKeyPipelineAggregationsMap() {
+	protected Stream<SearchRequest> buildFederatedSearchRequests() {
+		Collection<SearchRequestBuilder> searchRequestBuilders =
+			_federatedSearchRequestBuildersMap.values();
+
+		Stream<SearchRequest> map = searchRequestBuilders.stream(
+		).map(
+			SearchRequestBuilder::build
+		);
+
+		return map;
+	}
+
+	protected SearchRequestBuilder newFederatedSearchRequestBuilder(
+		String federatedSearchKey) {
+
+		return _searchRequestBuilderFactory.builder(
+		).federatedSearchKey(
+			federatedSearchKey
+		);
+	}
+
+	protected <T> T withSearchRequestGet(
+		Function<SearchRequest, T> searchRequestFunction) {
 
 		synchronized (_searchContext) {
-			LinkedHashMap<String, PipelineAggregation> linkedHashMap =
-				(LinkedHashMap<String, PipelineAggregation>)
-					_searchContext.getAttribute(
-						_SEARCH_CONTEXT_KEY_PIPELINE_AGGREGATIONS_MAP);
-
-			if (linkedHashMap != null) {
-				return linkedHashMap;
-			}
-
-			linkedHashMap = new LinkedHashMap<>();
-
-			_searchContext.setAttribute(
-				_SEARCH_CONTEXT_KEY_PIPELINE_AGGREGATIONS_MAP, linkedHashMap);
-
-			return linkedHashMap;
+			return searchRequestFunction.apply(
+				getSearchRequestImpl(_searchContext));
 		}
 	}
 
-	private static final String _SEARCH_CONTEXT_KEY_AGGREGATIONS_MAP =
-		"search.request.aggregations.map";
+	protected void withSearchRequestImpl(
+		Consumer<SearchRequestImpl> searchRequestImplConsumer) {
 
-	private static final String _SEARCH_CONTEXT_KEY_COMPLEX_QUERY_PARTS =
-		"search.request.complex.query.parts";
+		synchronized (_searchContext) {
+			searchRequestImplConsumer.accept(
+				getSearchRequestImpl(_searchContext));
+		}
+	}
 
-	private static final String _SEARCH_CONTEXT_KEY_EXPLAIN =
-		"search.request.explain";
-
-	private static final String _SEARCH_CONTEXT_KEY_INCLUDE_RESPONSE_STRING =
-		"search.request.include.response.string";
-
-	private static final String _SEARCH_CONTEXT_KEY_PIPELINE_AGGREGATIONS_MAP =
-		"search.request.pipeline.aggregations.map";
-
-	private static final String _SEARCH_CONTEXT_KEY_QUERY =
-		"search.request.query";
-
-	private static final String _SEARCH_CONTEXT_KEY_RESCORE_QUERY =
-		"search.request.rescore.query";
-
-	private static final String _SEARCH_CONTEXT_KEY_SORTS =
-		"search.request.sorts";
-
-	private static final String _SEARCH_CONTEXT_KEY_STATS_REQUESTS =
-		"search.request.stats.requests";
+	private static final String _SEARCH_CONTEXT_KEY_SEARCH_REQUEST =
+		"search.request";
 
 	private final FacetContext _facetContext;
-	private List<Class<?>> _modelIndexerClasses = Collections.emptyList();
-	private Query _postFilterQuery;
+	private final Map<String, SearchRequestBuilder>
+		_federatedSearchRequestBuildersMap = new LinkedHashMap<>();
 	private final SearchContext _searchContext;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

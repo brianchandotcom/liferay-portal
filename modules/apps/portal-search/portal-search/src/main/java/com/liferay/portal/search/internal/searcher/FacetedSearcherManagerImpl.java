@@ -15,7 +15,6 @@
 package com.liferay.portal.search.internal.searcher;
 
 import com.liferay.portal.kernel.search.ExpandoQueryContributor;
-import com.liferay.portal.kernel.search.IndexSearcherHelper;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;

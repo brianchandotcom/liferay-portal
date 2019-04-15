@@ -66,7 +66,7 @@ public class FragmentCollectionLocalServiceImpl
 		validate(name);
 
 		if (Validator.isNull(fragmentCollectionKey)) {
-			fragmentCollectionKey = _generateFragmentCollectionKey(
+			fragmentCollectionKey = generateFragmentCollectionKey(
 				groupId, name);
 		}
 
@@ -168,6 +168,31 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
+	public String generateFragmentCollectionKey(long groupId, String name) {
+		String fragmentCollectionKey = _getFragmentCollectionKey(name);
+
+		fragmentCollectionKey = StringUtil.replace(
+			fragmentCollectionKey, CharPool.SPACE, CharPool.DASH);
+
+		String curFragmentCollectionKey = fragmentCollectionKey;
+
+		int count = 0;
+
+		while (true) {
+			FragmentCollection fragmentCollection =
+				fragmentCollectionPersistence.fetchByG_FCK(
+					groupId, curFragmentCollectionKey);
+
+			if (fragmentCollection == null) {
+				return curFragmentCollectionKey;
+			}
+
+			curFragmentCollectionKey =
+				fragmentCollectionKey + CharPool.DASH + count++;
+		}
+	}
+
+	@Override
 	public List<FragmentCollection> getFragmentCollections(
 		long groupId, int start, int end) {
 
@@ -244,30 +269,6 @@ public class FragmentCollectionLocalServiceImpl
 
 		if (fragmentCollection != null) {
 			throw new DuplicateFragmentCollectionKeyException();
-		}
-	}
-
-	private String _generateFragmentCollectionKey(long groupId, String name) {
-		String fragmentCollectionKey = _getFragmentCollectionKey(name);
-
-		fragmentCollectionKey = StringUtil.replace(
-			fragmentCollectionKey, CharPool.SPACE, CharPool.DASH);
-
-		String curFragmentCollectionKey = fragmentCollectionKey;
-
-		int count = 0;
-
-		while (true) {
-			FragmentCollection fragmentCollection =
-				fragmentCollectionPersistence.fetchByG_FCK(
-					groupId, curFragmentCollectionKey);
-
-			if (fragmentCollection == null) {
-				return curFragmentCollectionKey;
-			}
-
-			curFragmentCollectionKey =
-				fragmentCollectionKey + CharPool.DASH + count++;
 		}
 	}
 

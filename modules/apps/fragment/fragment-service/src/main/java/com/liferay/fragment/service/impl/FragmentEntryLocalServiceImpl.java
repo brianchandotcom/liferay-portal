@@ -140,7 +140,7 @@ public class FragmentEntryLocalServiceImpl
 		validate(name);
 
 		if (Validator.isNull(fragmentEntryKey)) {
-			fragmentEntryKey = _generateFragmentEntryKey(groupId, name);
+			fragmentEntryKey = generateFragmentEntryKey(groupId, name);
 		}
 
 		fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
@@ -279,7 +279,7 @@ public class FragmentEntryLocalServiceImpl
 		User user = userLocalService.getUser(userId);
 
 		if (Validator.isNull(fragmentEntryKey)) {
-			fragmentEntryKey = _generateFragmentEntryKey(groupId, name);
+			fragmentEntryKey = generateFragmentEntryKey(groupId, name);
 		}
 
 		validate(name);
@@ -416,6 +416,29 @@ public class FragmentEntryLocalServiceImpl
 
 		return fragmentEntryPersistence.fetchByG_FEK(
 			groupId, _getFragmentEntryKey(fragmentEntryKey));
+	}
+
+	@Override
+	public String generateFragmentEntryKey(long groupId, String name) {
+		String fragmentEntryKey = _getFragmentEntryKey(name);
+
+		fragmentEntryKey = StringUtil.replace(
+			fragmentEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		String curFragmentEntryKey = fragmentEntryKey;
+
+		int count = 0;
+
+		while (true) {
+			FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FEK(
+				groupId, curFragmentEntryKey);
+
+			if (fragmentEntry == null) {
+				return curFragmentEntryKey;
+			}
+
+			curFragmentEntryKey = fragmentEntryKey + CharPool.DASH + count++;
+		}
 	}
 
 	@Override
@@ -602,28 +625,6 @@ public class FragmentEntryLocalServiceImpl
 
 		if (fragmentEntry != null) {
 			throw new DuplicateFragmentEntryKeyException();
-		}
-	}
-
-	private String _generateFragmentEntryKey(long groupId, String name) {
-		String fragmentEntryKey = _getFragmentEntryKey(name);
-
-		fragmentEntryKey = StringUtil.replace(
-			fragmentEntryKey, CharPool.SPACE, CharPool.DASH);
-
-		String curFragmentEntryKey = fragmentEntryKey;
-
-		int count = 0;
-
-		while (true) {
-			FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FEK(
-				groupId, curFragmentEntryKey);
-
-			if (fragmentEntry == null) {
-				return curFragmentEntryKey;
-			}
-
-			curFragmentEntryKey = fragmentEntryKey + CharPool.DASH + count++;
 		}
 	}
 

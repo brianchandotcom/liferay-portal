@@ -61,13 +61,8 @@ public class BlogPostingSerDes {
 
 		sb.append("\"aggregateRating\": ");
 
-		if (blogPosting.getAggregateRating() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(blogPosting.getAggregateRating());
-		}
-
+		sb.append(
+			AggregateRatingSerDes.toJSON(blogPosting.getAggregateRating()));
 		sb.append(", ");
 
 		sb.append("\"alternativeHeadline\": ");
@@ -102,13 +97,7 @@ public class BlogPostingSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (blogPosting.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(blogPosting.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(blogPosting.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");
@@ -232,13 +221,7 @@ public class BlogPostingSerDes {
 
 		sb.append("\"image\": ");
 
-		if (blogPosting.getImage() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(blogPosting.getImage());
-		}
-
+		sb.append(ImageSerDes.toJSON(blogPosting.getImage()));
 		sb.append(", ");
 
 		sb.append("\"keywords\": ");
@@ -299,7 +282,9 @@ public class BlogPostingSerDes {
 			for (int i = 0; i < blogPosting.getTaxonomyCategories().length;
 				 i++) {
 
-				sb.append(blogPosting.getTaxonomyCategories()[i]);
+				sb.append(
+					TaxonomyCategorySerDes.toJSON(
+						blogPosting.getTaxonomyCategories()[i]));
 
 				if ((i + 1) < blogPosting.getTaxonomyCategories().length) {
 					sb.append(", ");

@@ -59,13 +59,7 @@ public class MessageBoardSectionSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (messageBoardSection.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(messageBoardSection.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(messageBoardSection.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");

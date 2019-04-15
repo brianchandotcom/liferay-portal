@@ -59,13 +59,9 @@ public class MessageBoardThreadSerDes {
 
 		sb.append("\"aggregateRating\": ");
 
-		if (messageBoardThread.getAggregateRating() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(messageBoardThread.getAggregateRating());
-		}
-
+		sb.append(
+			AggregateRatingSerDes.toJSON(
+				messageBoardThread.getAggregateRating()));
 		sb.append(", ");
 
 		sb.append("\"articleBody\": ");
@@ -85,13 +81,7 @@ public class MessageBoardThreadSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (messageBoardThread.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(messageBoardThread.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(messageBoardThread.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");

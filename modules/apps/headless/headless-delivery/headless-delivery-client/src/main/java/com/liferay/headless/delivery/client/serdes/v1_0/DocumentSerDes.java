@@ -67,7 +67,8 @@ public class DocumentSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < document.getAdaptedImages().length; i++) {
-				sb.append(document.getAdaptedImages()[i]);
+				sb.append(
+					AdaptedImageSerDes.toJSON(document.getAdaptedImages()[i]));
 
 				if ((i + 1) < document.getAdaptedImages().length) {
 					sb.append(", ");
@@ -81,13 +82,7 @@ public class DocumentSerDes {
 
 		sb.append("\"aggregateRating\": ");
 
-		if (document.getAggregateRating() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(document.getAggregateRating());
-		}
-
+		sb.append(AggregateRatingSerDes.toJSON(document.getAggregateRating()));
 		sb.append(", ");
 
 		sb.append("\"contentUrl\": ");
@@ -107,13 +102,7 @@ public class DocumentSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (document.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(document.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(document.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");
@@ -271,7 +260,9 @@ public class DocumentSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < document.getTaxonomyCategories().length; i++) {
-				sb.append(document.getTaxonomyCategories()[i]);
+				sb.append(
+					TaxonomyCategorySerDes.toJSON(
+						document.getTaxonomyCategories()[i]));
 
 				if ((i + 1) < document.getTaxonomyCategories().length) {
 					sb.append(", ");

@@ -59,13 +59,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (knowledgeBaseFolder.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(knowledgeBaseFolder.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(knowledgeBaseFolder.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");
@@ -167,13 +161,9 @@ public class KnowledgeBaseFolderSerDes {
 
 		sb.append("\"parentKnowledgeBaseFolder\": ");
 
-		if (knowledgeBaseFolder.getParentKnowledgeBaseFolder() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(knowledgeBaseFolder.getParentKnowledgeBaseFolder());
-		}
-
+		sb.append(
+			ParentKnowledgeBaseFolderSerDes.toJSON(
+				knowledgeBaseFolder.getParentKnowledgeBaseFolder()));
 		sb.append(", ");
 
 		sb.append("\"parentKnowledgeBaseFolderId\": ");

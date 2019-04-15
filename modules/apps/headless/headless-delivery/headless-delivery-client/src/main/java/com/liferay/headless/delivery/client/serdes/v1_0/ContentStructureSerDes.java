@@ -97,7 +97,9 @@ public class ContentStructureSerDes {
 			for (int i = 0;
 				 i < contentStructure.getContentStructureFields().length; i++) {
 
-				sb.append(contentStructure.getContentStructureFields()[i]);
+				sb.append(
+					ContentStructureFieldSerDes.toJSON(
+						contentStructure.getContentStructureFields()[i]));
 
 				if ((i + 1) <
 						contentStructure.getContentStructureFields().length) {
@@ -113,13 +115,7 @@ public class ContentStructureSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (contentStructure.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(contentStructure.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(contentStructure.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");

@@ -61,13 +61,9 @@ public class KnowledgeBaseArticleSerDes {
 
 		sb.append("\"aggregateRating\": ");
 
-		if (knowledgeBaseArticle.getAggregateRating() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(knowledgeBaseArticle.getAggregateRating());
-		}
-
+		sb.append(
+			AggregateRatingSerDes.toJSON(
+				knowledgeBaseArticle.getAggregateRating()));
 		sb.append(", ");
 
 		sb.append("\"articleBody\": ");
@@ -87,13 +83,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (knowledgeBaseArticle.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(knowledgeBaseArticle.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(knowledgeBaseArticle.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");
@@ -237,13 +227,9 @@ public class KnowledgeBaseArticleSerDes {
 
 		sb.append("\"parentKnowledgeBaseFolder\": ");
 
-		if (knowledgeBaseArticle.getParentKnowledgeBaseFolder() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(knowledgeBaseArticle.getParentKnowledgeBaseFolder());
-		}
-
+		sb.append(
+			ParentKnowledgeBaseFolderSerDes.toJSON(
+				knowledgeBaseArticle.getParentKnowledgeBaseFolder()));
 		sb.append(", ");
 
 		sb.append("\"parentKnowledgeBaseFolderId\": ");
@@ -279,7 +265,9 @@ public class KnowledgeBaseArticleSerDes {
 			for (int i = 0;
 				 i < knowledgeBaseArticle.getTaxonomyCategories().length; i++) {
 
-				sb.append(knowledgeBaseArticle.getTaxonomyCategories()[i]);
+				sb.append(
+					TaxonomyCategorySerDes.toJSON(
+						knowledgeBaseArticle.getTaxonomyCategories()[i]));
 
 				if ((i + 1) <
 						knowledgeBaseArticle.getTaxonomyCategories().length) {

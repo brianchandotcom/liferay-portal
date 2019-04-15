@@ -66,35 +66,17 @@ public class ValueSerDes {
 
 		sb.append("\"document\": ");
 
-		if (value.getDocument() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(value.getDocument());
-		}
-
+		sb.append(ContentDocumentSerDes.toJSON(value.getDocument()));
 		sb.append(", ");
 
 		sb.append("\"geo\": ");
 
-		if (value.getGeo() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(value.getGeo());
-		}
-
+		sb.append(GeoSerDes.toJSON(value.getGeo()));
 		sb.append(", ");
 
 		sb.append("\"image\": ");
 
-		if (value.getImage() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(value.getImage());
-		}
-
+		sb.append(ContentDocumentSerDes.toJSON(value.getImage()));
 		sb.append(", ");
 
 		sb.append("\"link\": ");
@@ -114,12 +96,9 @@ public class ValueSerDes {
 
 		sb.append("\"structuredContentLink\": ");
 
-		if (value.getStructuredContentLink() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(value.getStructuredContentLink());
-		}
+		sb.append(
+			StructuredContentLinkSerDes.toJSON(
+				value.getStructuredContentLink()));
 
 		sb.append("}");
 

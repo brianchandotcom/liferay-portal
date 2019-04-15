@@ -63,13 +63,9 @@ public class StructuredContentSerDes {
 
 		sb.append("\"aggregateRating\": ");
 
-		if (structuredContent.getAggregateRating() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(structuredContent.getAggregateRating());
-		}
-
+		sb.append(
+			AggregateRatingSerDes.toJSON(
+				structuredContent.getAggregateRating()));
 		sb.append(", ");
 
 		sb.append("\"availableLanguages\": ");
@@ -112,7 +108,9 @@ public class StructuredContentSerDes {
 			for (int i = 0; i < structuredContent.getContentFields().length;
 				 i++) {
 
-				sb.append(structuredContent.getContentFields()[i]);
+				sb.append(
+					ContentFieldSerDes.toJSON(
+						structuredContent.getContentFields()[i]));
 
 				if ((i + 1) < structuredContent.getContentFields().length) {
 					sb.append(", ");
@@ -137,13 +135,7 @@ public class StructuredContentSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (structuredContent.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(structuredContent.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(structuredContent.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");
@@ -300,7 +292,9 @@ public class StructuredContentSerDes {
 			for (int i = 0; i < structuredContent.getRenderedContents().length;
 				 i++) {
 
-				sb.append(structuredContent.getRenderedContents()[i]);
+				sb.append(
+					RenderedContentSerDes.toJSON(
+						structuredContent.getRenderedContents()[i]));
 
 				if ((i + 1) < structuredContent.getRenderedContents().length) {
 					sb.append(", ");
@@ -334,7 +328,9 @@ public class StructuredContentSerDes {
 			for (int i = 0;
 				 i < structuredContent.getTaxonomyCategories().length; i++) {
 
-				sb.append(structuredContent.getTaxonomyCategories()[i]);
+				sb.append(
+					TaxonomyCategorySerDes.toJSON(
+						structuredContent.getTaxonomyCategories()[i]));
 
 				if ((i + 1) <
 						structuredContent.getTaxonomyCategories().length) {

@@ -34,4 +34,8 @@ import com.liferay.portal.security.auth.verifier.internal.module.configuration.B
 )
 public interface PortalSessionAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {
+
+	@Meta.AD(deflt = "true", name = "check-csrf-token", required = false)
+	public boolean checkCSRFToken();
+
 }

@@ -101,7 +101,7 @@ definition {
 	macro viewDocumentViaSharedAssets {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "Shared Assets"
+			value1 = "Shared Content"
 		);
 
 		if ("${assetSharingPermission}" == "View") {

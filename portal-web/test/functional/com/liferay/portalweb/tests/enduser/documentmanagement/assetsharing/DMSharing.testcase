@@ -130,7 +130,7 @@ definition {
 		);
 	}
 
-	@description = "This test asserts only one entry displays in a user's Shared Assets app when multiple users share the same document to him."
+	@description = "This test asserts only one entry displays in a user's Shared Content app when multiple users share the same document to him."
 	@priority = "4"
 	test AssertSingleEntry {
 		ProductMenu.gotoPortlet(
@@ -220,7 +220,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared Assets"
+			portlet = "Shared Content"
 		);
 
 		var key_dmDocumentTitle = "DM Document Title";
@@ -315,7 +315,7 @@ definition {
 		AssertElementNotPresent(locator1="Button#ANY", key_text="Share");
 	}
 
-	@description = "This test ensures that users can Order By Shared Date in the Shared Assets app."
+	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
 	@priority = "3"
 	test FilterByAssetType {
 
@@ -340,7 +340,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared Assets"
+			portlet = "Shared Content"
 		);
 
 		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
@@ -364,7 +364,7 @@ definition {
 		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
 	}
 
-	@description = "This test ensures that users receives an email when a document is shared with them. This email contains a link that navigates user to Shared Assets app."
+	@description = "This test ensures that users receives an email when a document is shared with them. This email contains a link that navigates user to Shared Content app."
 	@priority = "4"
 	test GoToSharedAssetsViaEmail {
 		property custom.properties = "message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
@@ -465,7 +465,7 @@ definition {
 		);
 	}
 
-	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared Assets app."
+	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared Content app."
 	@priority = "4"
 	test GoToSharedAssetsViaNotifications {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
@@ -592,7 +592,7 @@ definition {
 		);
 	}
 
-	@description = "This test ensures that users can Order By Shared Date in the Shared Assets app."
+	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
 	@priority = "3"
 	test OrderBySharedDate {
 		DMDocument.addMultiplePG(
@@ -625,7 +625,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared Assets"
+			portlet = "Shared Content"
 		);
 
 		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
@@ -633,7 +633,7 @@ definition {
 		ManagementBar.toggleViewOrder(order = "Descending");
 	}
 
-	@description = "This test asserts that users can share via Shared Assets app."
+	@description = "This test asserts that users can share via Shared Content app."
 	@priority = "5"
 	test ShareViaSharedAssets {
 		JSONUser.addUser(
@@ -679,7 +679,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared Assets"
+			portlet = "Shared Content"
 		);
 
 		DMNavigator.gotoShareViaSharedAssets(dmDocumentTitle = "DM Document Title");
@@ -746,7 +746,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "Shared Assets"
+			portlet = "Shared Content"
 		);
 
 		var key_dmDocumentTitle = "DM Document Title";

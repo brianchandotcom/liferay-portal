@@ -28,8 +28,6 @@ definition {
 	}
 
 	macro configureAudienceTargetingAnalytics {
-		Panel.expandPanel(panel = "Audience Targeting Analytics");
-
 		if (isSet(enableAnalyticsList)) {
 			for (var enableAnalytics : list "${enableAnalyticsList}") {
 				Check.checkToggleSwitch(
@@ -64,8 +62,6 @@ definition {
 	}
 
 	macro configureContentSharingAcrossSitesCP {
-		Panel.expandPanel(panel = "Content Sharing");
-
 		if ("${enableAcrossSite}" == "true") {
 			Check(locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX");
 
@@ -82,8 +78,6 @@ definition {
 
 			PortletEntry.save();
 
-			Panel.expandPanel(panel = "Content Sharing");
-
 			AssertNotChecked(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX"
 			);
@@ -91,8 +85,6 @@ definition {
 	}
 
 	macro configureContentSharingSubSitesCP {
-		Panel.expandPanel(panel = "Content Sharing");
-
 		if ("${subSites}" == "enabledByDefault") {
 			Select(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
@@ -100,8 +92,6 @@ definition {
 			);
 
 			PortletEntry.save();
-
-			Panel.expandPanel(panel = "Content Sharing");
 
 			AssertSelectedLabel(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
@@ -116,8 +106,6 @@ definition {
 
 			PortletEntry.save();
 
-			Panel.expandPanel(panel = "Content Sharing");
-
 			AssertSelectedLabel(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
 				value1 = "Disabled by Default"
@@ -131,8 +119,6 @@ definition {
 
 			PortletEntry.save();
 
-			Panel.expandPanel(panel = "Content Sharing");
-
 			AssertSelectedLabel(
 				locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
 				value1 = "Disabled"
@@ -141,8 +127,6 @@ definition {
 	}
 
 	macro configureCurrentLanguagesCP {
-		Navigator.gotoNavTab(navTab = "Miscellaneous");
-
 		if (isSet(defaultPortalLanguage)) {
 			var defaultPortalLanguage = "${defaultPortalLanguage}";
 
@@ -256,8 +240,6 @@ definition {
 	}
 
 	macro configureTimeZone {
-		Navigator.gotoNavTab(navTab = "Miscellaneous");
-
 		Select(locator1 = "Select#TIME_ZONE", value1 = "${timeZone}");
 
 		PortalSettings._saveDisplaySettings();
@@ -347,8 +329,6 @@ definition {
 	}
 
 	macro editConfigurationAuthenticationGeneral {
-		PortalSettingsNavigator.expandAuthenticationPanel();
-
 		if ("${enableRequireStrangers}" == "true") {
 			Check(
 				locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX"

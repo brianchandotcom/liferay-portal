@@ -155,10 +155,7 @@ public class CORSConfigurationClientTest extends BaseCORSClientTestCase {
 				"servlet.context.helper.select.filter",
 				"(osgi.jaxrs.name=test-cors)");
 
-			createFactoryConfiguration(
-				"com.liferay.portal.remote.cors.configuration." +
-					"WebContextCORSConfiguration",
-				properties);
+			createFactoryConfiguration(properties);
 
 			properties = new HashMapDictionary<>();
 
@@ -174,10 +171,7 @@ public class CORSConfigurationClientTest extends BaseCORSClientTestCase {
 				"servlet.context.helper.select.filter",
 				"(osgi.jaxrs.name=test-cors-url)");
 
-			createFactoryConfiguration(
-				"com.liferay.portal.remote.cors.configuration." +
-					"WebContextCORSConfiguration",
-				properties);
+			createFactoryConfiguration(properties);
 
 			registerJaxRsApplication(
 				new CORSTestApplication(), "no-cors",
@@ -197,10 +191,7 @@ public class CORSConfigurationClientTest extends BaseCORSClientTestCase {
 				"servlet.context.helper.select.filter",
 				"(osgi.jaxrs.name=test-cors-wrong-url)");
 
-			createFactoryConfiguration(
-				"com.liferay.portal.remote.cors.configuration." +
-					"WebContextCORSConfiguration",
-				properties);
+			createFactoryConfiguration(properties);
 		}
 
 	}

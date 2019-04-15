@@ -16,6 +16,7 @@ package com.liferay.portal.remote.cors.test.internal.activator;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.remote.cors.configuration.WebContextCORSConfiguration;
 
 import java.io.IOException;
 
@@ -155,15 +156,14 @@ public abstract class BaseTestPreparatorBundleActivator
 		}
 	}
 
-	protected Configuration createFactoryConfiguration(
-		String factoryPid, Dictionary<String, Object> properties) {
+	protected void createFactoryConfiguration(
+		Dictionary<String, Object> properties) {
 
 		Configuration configuration = createFactoryConfiguration(
-			bundleContext, factoryPid, properties);
+			bundleContext, WebContextCORSConfiguration.class.getName(),
+			properties);
 
 		autoCloseables.add(configuration::delete);
-
-		return configuration;
 	}
 
 	protected boolean isIncluded(
@@ -190,7 +190,7 @@ public abstract class BaseTestPreparatorBundleActivator
 
 	protected abstract void prepareTest();
 
-	protected ServiceRegistration<Application> registerJaxRsApplication(
+	protected void registerJaxRsApplication(
 		Application application, String path,
 		Dictionary<String, Object> properties) {
 
@@ -206,8 +206,6 @@ public abstract class BaseTestPreparatorBundleActivator
 				Application.class, application, properties);
 
 		autoCloseables.add(serviceRegistration::unregister);
-
-		return serviceRegistration;
 	}
 
 	protected ArrayList<AutoCloseable> autoCloseables;

@@ -129,15 +129,28 @@ class EditCategories extends Component {
 		Promise.all(
 			[
 				this._fetchCategoriesRequest(this.urlCategories, 'POST', selection),
+				this._fetchCategoriesRequest(this.urlSelection, 'POST', selection)
 			]
 		).then(
-			([responseCategories]) => {
-				if (responseCategories) {
+			([responseCategories, responseSelection]) => {
+				if (responseCategories && responseSelection) {
 					this.loading = false;
+					this.description = this._getDescription(responseSelection.size);
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 					this.vocabularies = this._parseVocabularies(responseCategories.items || []);
 				}
 			}
+		);
+	}
+
+	_getDescription(size) {
+		if (size === 1) {
+			return Liferay.Language.get('you-are-editing-the-categories-for-the-selected-item');
+		}
+
+		return Liferay.Util.sub(
+			Liferay.Language.get('you-are-editing-the-common-categories-for-x-items.-select-edit-or-replace-current-categories'),
+			size
 		);
 	}
 
@@ -360,6 +373,16 @@ class EditCategories extends Component {
 EditCategories.STATE = {
 
 	/**
+	 * Description
+	 *
+	 * @instance
+	 * @memberof EditCategories
+	 * @review
+	 * @type {String}
+	 */
+	description: Config.string(),
+
+	/**
 	 * List of selected file entries.
 	 *
 	 * @instance
@@ -500,6 +523,17 @@ EditCategories.STATE = {
 	 * @type {String}
 	 */
 	urlCategories: Config.string(),
+
+	/**
+	 * Url to backend service that provides
+	 * the selection description.
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	urlSelection: Config.string().value('/bulk-rest/v1.0/bulk-selection'),
 
 	/**
 	 * Url to backend service that updates

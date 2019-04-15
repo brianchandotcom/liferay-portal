@@ -78,6 +78,17 @@ class EditTags extends Component {
 			);
 	}
 
+	_getDescription(size) {
+		if (size === 1) {
+			return Liferay.Language.get('you-are-editing-the-tags-for-the-selected-item');
+		}
+
+		return Liferay.Util.sub(
+			Liferay.Language.get('you-are-editing-the-common-tags-for-x-items.-select-edit-or-replace-current-tags'),
+			size
+		);
+	}
+
 	_handleSelectedItemsChange(event) {
 		this._commonTags = event.selectedItems;
 	}
@@ -97,12 +108,14 @@ class EditTags extends Component {
 		Promise.all(
 			[
 				this._fetchTagsRequest(this.urlTags, 'POST', selection),
+				this._fetchTagsRequest(this.urlSelection, 'POST', selection)
 			]
 		).then(
-			([responseTags]) => {
-				if (responseTags) {
+			([responseTags, responseSelection]) => {
+				if (responseTags && responseSelection) {
 					this._loading = false;
 					this._commonTags = this._setCommonTags((responseTags.items || []).map(item => item.name));
+					this.description = this._getDescription(responseSelection.size);
 					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 				}
 			}
@@ -258,6 +271,16 @@ EditTags.STATE = {
 	_showModal: Config.bool().value(false).internal(),
 
 	/**
+	 * Description
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	description: Config.string(),
+
+	/**
 	 * List of selected file entries.
 	 *
 	 * @instance
@@ -355,6 +378,17 @@ EditTags.STATE = {
 	 * @type {String}
 	 */
 	urlTags: Config.string().value('/bulk-rest/v1.0/keywords/common'),
+
+	/**
+	 * Url to backend service that provides
+	 * the selection information.
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	urlSelection: Config.string().value('/bulk-rest/v1.0/bulk-selection'),
 
 	/**
 	 * Url to backend service that updates

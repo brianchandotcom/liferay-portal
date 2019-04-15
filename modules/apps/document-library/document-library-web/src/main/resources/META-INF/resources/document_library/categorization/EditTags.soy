@@ -11,6 +11,7 @@
 	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSelectedItemsChange: any}
+	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? selectAll: bool}
 
@@ -27,6 +28,7 @@
 							{param _handleRadioChange: $_handleRadioChange /}
 							{param _handleSelectedItemsChange: $_handleSelectedItemsChange /}
 							{param groupIds: $groupIds /}
+							{param description: $description /}
 							{param multiple: $multiple /}
 							{param namespace: $namespace /}
 							{param selectAll: $selectAll /}
@@ -76,6 +78,7 @@
 	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
 	{@param? _handleSelectedItemsChange: any}
+	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? selectAll: bool}
 
@@ -89,14 +92,7 @@
 		{/call}
 	{/if}
 
-	<p>
-		{if $multiple}
-			{msg desc=""}you-are-editing-the-common-tags-for-the-selected-items{/msg}
-			{msg desc=""}select-edit-or-replace-current-tags{/msg}
-		{else}
-			{msg desc=""}you-are-editing-the-tags-for-the-selected-item{/msg}
-		{/if}
-	</p>
+	<p>{$description}</p>
 
 	{if $multiple}
 		{call ClayRadio.render}

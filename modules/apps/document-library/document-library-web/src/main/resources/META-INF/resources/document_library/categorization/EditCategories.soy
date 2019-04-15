@@ -11,6 +11,7 @@
 	{@param? _handleFormSubmit: any}
 	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
+	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? namespace: string}
 	{@param? selectAll: bool}
@@ -24,6 +25,7 @@
 						{call .loading /}
 					{else}
 						{call .categories}
+							{param description: $description /}
 							{param groupIds: $groupIds /}
 							{param hiddenInput: $hiddenInput /}
 							{param multiple: $multiple /}
@@ -80,6 +82,7 @@
 	{@param? _handleCategoriesChange: any}
 	{@param? _handleInputFocus: any}
 	{@param? _handleRadioChange: any}
+	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? namespace: string}
 	{@param? selectAll: bool}
@@ -95,14 +98,7 @@
 		{/call}
 	{/if}
 
-	<p>
-		{if $multiple}
-			{msg desc=""}you-are-editing-the-common-categories-for-the-selected-items{/msg}
-			{msg desc=""}select-edit-or-replace-current-categories{/msg}
-		{else}
-			{msg desc=""}you-are-editing-the-categories-for-the-selected-item{/msg}
-		{/if}
-	</p>
+	<p>{$description}</p>
 
 	{if $multiple}
 		{call ClayRadio.render}

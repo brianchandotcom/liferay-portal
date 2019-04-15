@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>USER_AVATAR_DROPDOWN_PORTAL_CLOSED</td>
-	<td>//div[@id='clay_dropdown_portal']//div[@class,'dropdown-menu')]</td>
+	<td>//div[@id='clay_dropdown_portal']//div[contains(@class,'dropdown-menu')]</td>
 	<td></td>
 </tr>
 <tr>

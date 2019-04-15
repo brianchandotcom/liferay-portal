@@ -14,9 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_2_x;
 
-import aQute.bnd.version.Version;
-
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
 import java.util.TreeMap;
@@ -32,13 +31,13 @@ public class PortalUpgradeProcessRegistryImpl
 		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
 
 		upgradeProcesses.put(
-			new Version("3.0.0"), new UpgradeSQLServerDatetime());
+			new Version(3, 0, 0), new UpgradeSQLServerDatetime());
 
-		upgradeProcesses.put(new Version("4.0.0"), new UpgradeSchema());
+		upgradeProcesses.put(new Version(4, 0, 0), new UpgradeSchema());
 
-		upgradeProcesses.put(new Version("5.0.0"), new UpgradeBadColumnNames());
+		upgradeProcesses.put(new Version(5, 0, 0), new UpgradeBadColumnNames());
 
-		upgradeProcesses.put(new Version("5.0.1"), new UpgradePersonalMenu());
+		upgradeProcesses.put(new Version(5, 0, 1), new UpgradePersonalMenu());
 	}
 
 }

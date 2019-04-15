@@ -14,8 +14,6 @@
 
 package com.liferay.portal.modules;
 
-import aQute.bnd.version.Version;
-
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -25,6 +23,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.modules.util.GradleDependency;
 import com.liferay.portal.modules.util.ModulesStructureTestUtil;
 

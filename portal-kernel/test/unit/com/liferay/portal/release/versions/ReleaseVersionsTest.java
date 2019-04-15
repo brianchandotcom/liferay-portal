@@ -15,7 +15,6 @@
 package com.liferay.portal.release.versions;
 
 import aQute.bnd.osgi.Constants;
-import aQute.bnd.version.Version;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.version.Version;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -213,7 +213,7 @@ public class ReleaseVersionsTest {
 		Version masterVersion = masterVersionPair.getKey();
 		Version releaseVersion = releaseVersionPair.getKey();
 
-		if (!releaseVersion.equals(Version.ONE) &&
+		if (!releaseVersion.equals(new Version(1, 0, 0)) &&
 			(masterVersion.getMajor() != (releaseVersion.getMajor() + 1))) {
 
 			StringBundler sb = new StringBundler(22);
@@ -279,7 +279,7 @@ public class ReleaseVersionsTest {
 			sb.append(" \"");
 			sb.append(Constants.BUNDLE_VERSION);
 			sb.append(updateVersionSeparator);
-			sb.append(new Version(releaseVersion.getMajor() + 1));
+			sb.append(new Version(releaseVersion.getMajor() + 1, 0, 0));
 			sb.append("\" in ");
 			sb.append(_portalPath.relativize(updateVersionPath));
 			sb.append(" for the 'master' branch.");

@@ -14,9 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_1_x;
 
-import aQute.bnd.version.Version;
-
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
 import java.util.TreeMap;
@@ -31,27 +30,27 @@ public class PortalUpgradeProcessRegistryImpl
 	public void registerUpgradeProcesses(
 		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
 
-		upgradeProcesses.put(new Version("1.0.0"), new UpgradeSchema());
+		upgradeProcesses.put(new Version(1, 0, 0), new UpgradeSchema());
 
-		upgradeProcesses.put(new Version("1.1.0"), new UpgradeModules());
+		upgradeProcesses.put(new Version(1, 1, 0), new UpgradeModules());
 
-		upgradeProcesses.put(new Version("1.1.1"), new UpgradeCounter());
+		upgradeProcesses.put(new Version(1, 1, 1), new UpgradeCounter());
 
-		upgradeProcesses.put(new Version("1.1.2"), new UpgradeDB2());
-
-		upgradeProcesses.put(
-			new Version("2.0.0"), new UpgradeAssetTagsPermission());
+		upgradeProcesses.put(new Version(1, 1, 2), new UpgradeDB2());
 
 		upgradeProcesses.put(
-			new Version("2.0.1"), new UpgradeDocumentLibrary());
+			new Version(2, 0, 0), new UpgradeAssetTagsPermission());
 
 		upgradeProcesses.put(
-			new Version("2.0.2"), new UpgradePasswordPolicyRegex());
+			new Version(2, 0, 1), new UpgradeDocumentLibrary());
 
 		upgradeProcesses.put(
-			new Version("2.0.3"), new UpgradePortalPreferences());
+			new Version(2, 0, 2), new UpgradePasswordPolicyRegex());
 
-		upgradeProcesses.put(new Version("2.0.4"), new UpgradeUserGroup());
+		upgradeProcesses.put(
+			new Version(2, 0, 3), new UpgradePortalPreferences());
+
+		upgradeProcesses.put(new Version(2, 0, 4), new UpgradeUserGroup());
 	}
 
 }

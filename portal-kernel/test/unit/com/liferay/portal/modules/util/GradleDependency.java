@@ -14,7 +14,7 @@
 
 package com.liferay.portal.modules.util;
 
-import aQute.bnd.version.Version;
+import com.liferay.portal.kernel.version.Version;
 
 /**
  * @author Andrea Di Giorgi
@@ -31,7 +31,8 @@ public class GradleDependency {
 		_moduleName = moduleName;
 
 		if (moduleVersion.equals(_VERSION_DEFAULT)) {
-			_moduleVersion = Version.HIGHEST;
+			_moduleVersion = new Version(
+				Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
 
 			projectDependency = true;
 		}

@@ -135,9 +135,9 @@
 
 														<%
 														firstLine = firstLine && applicationScopeDescription.length() == 0;
-														out.write(applicationScopeDescription);
 														%>
 
+														<%= applicationScopeDescription %>
 													</div>
 												</c:if>
 

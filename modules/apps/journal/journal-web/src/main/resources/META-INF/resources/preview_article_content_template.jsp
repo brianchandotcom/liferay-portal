@@ -50,5 +50,3 @@ JournalArticleDisplay articleDisplay = journalDisplayContext.getArticleDisplay()
 
 	<br />
 </c:if>
-
-<liferay-util:include page="/html/common/themes/bottom.jsp" />

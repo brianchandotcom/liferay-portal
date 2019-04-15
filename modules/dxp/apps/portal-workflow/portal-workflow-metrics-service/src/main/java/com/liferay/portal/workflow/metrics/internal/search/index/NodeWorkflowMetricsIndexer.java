@@ -169,7 +169,6 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		document.addUID(
 			"WorkflowMetricsToken", digest(companyId, processId, 0, 0, 0));
-
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("completed", false);
 		document.addKeyword("deleted", false);
@@ -210,7 +209,6 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 				dynamicQuery.add(typeProperty.eq(NodeType.STATE.name()));
 			});
-
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoNode kaleoNode) -> addDocument(createDocument(kaleoNode)));
 

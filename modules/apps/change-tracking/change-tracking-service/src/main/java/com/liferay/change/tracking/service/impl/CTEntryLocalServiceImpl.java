@@ -40,13 +40,13 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sort;
@@ -446,8 +446,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		long companyId, Query query, QueryDefinition<CTEntry> queryDefinition) {
 
 		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.getSearchRequestBuilder(
-				new SearchContext());
+			_searchRequestBuilderFactory.builder();
 
 		SearchRequest searchRequest = searchRequestBuilder.entryClassNames(
 			CTEntry.class.getName()

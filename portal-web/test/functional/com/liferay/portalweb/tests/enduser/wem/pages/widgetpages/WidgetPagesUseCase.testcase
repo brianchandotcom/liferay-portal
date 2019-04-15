@@ -96,7 +96,7 @@ definition {
 
 		SitePages.deletePage(pageName = "Search");
 
-		Page.assertCannotDeleteOnlyPage(pageName = "Welcome");
+		Page.assertCannotDeleteOnlyPage(pageName = "Home");
 	}
 
 	@priority = "3"

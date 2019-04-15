@@ -232,7 +232,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		Pause(locator1 = "3000");
 
-		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Welcome");
+		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Home");
 
 		AssertTextEquals(
 			locator1 = "HelloWorld#PORTLET_TITLE",

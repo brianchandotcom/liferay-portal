@@ -178,7 +178,7 @@ definition {
 		);
 
 		Navigator.gotoSpecificURLPage(
-			pageName = "Welcome",
+			pageName = "Home",
 			url = "localhost:8080/web/test"
 		);
 

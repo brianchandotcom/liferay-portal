@@ -683,7 +683,7 @@ definition {
 
 		var kbAricleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
 
-		Navigator.gotoPage(pageName = "Welcome");
+		Navigator.gotoPage(pageName = "Home");
 
 		Navigator.openSpecificURL(url = "${kbAricleFriendlyURL}");
 
@@ -781,7 +781,7 @@ definition {
 
 		var kbAricleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
 
-		Navigator.gotoPage(pageName = "Welcome");
+		Navigator.gotoPage(pageName = "Home");
 
 		Navigator.openSpecificURL(url = "${kbAricleFriendlyURL}");
 

@@ -298,7 +298,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.charlie.com:8080");
 
-		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Welcome");
+		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Home");
 
 		User.loginPG(
 			password = "test",

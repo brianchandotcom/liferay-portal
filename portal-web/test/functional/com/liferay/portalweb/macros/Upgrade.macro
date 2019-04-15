@@ -1149,7 +1149,7 @@ definition {
 	}
 
 	macro viewNotifications {
-		Navigator.gotoPage(pageName = "Welcome");
+		Navigator.gotoPage(pageName = "Home");
 
 		Notifications.gotoNotifications();
 

@@ -1439,7 +1439,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title"
 		);
 
-		Navigator.gotoPage(pageName = "Welcome");
+		Navigator.gotoPage(pageName = "Home");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -2936,7 +2936,7 @@ definition {
 
 		SitePages.addPublicChildPage(
 			childPageName = "Knowledge Base Display Page",
-			parentPageName = "Welcome"
+			parentPageName = "Home"
 		);
 
 		ProductMenu.gotoPortlet(
@@ -2948,7 +2948,7 @@ definition {
 		SitePages.configureChildPage(
 			columnName = "1 Column",
 			pageName = "Knowledge Base Display Page",
-			parentPagesHierarchy = "Welcome",
+			parentPagesHierarchy = "Home",
 			privacy = "Public Pages",
 			sitePageType = "Widget Page"
 		);
@@ -2970,7 +2970,7 @@ definition {
 
 		Page.gotoChildPagePG(
 			childPageName = "Knowledge Base Display Page",
-			pageName = "Welcome"
+			pageName = "Home"
 		);
 
 		Portlet.addPG(portletName = "Knowledge Base Display");

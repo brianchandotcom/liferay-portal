@@ -352,19 +352,19 @@ definition {
 
 		SitePages.addPublicChildPage(
 			childPageName = "Child Page Name",
-			parentPageName = "Welcome"
+			parentPageName = "Home"
 		);
 
 		ProductMenu.gotoSiteViaLink();
 
-		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Welcome");
+		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Home");
 
 		Portlet.addPG(portletName = "Breadcrumb");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		Breadcrumb.viewConfigurationPreview(
-			breadcrumbListVisible = "Welcome,Child Page Name"
+			breadcrumbListVisible = "Home,Child Page Name"
 		);
 
 		Breadcrumb.configureBreadcrumb(checkSetupName = "Show Guest Site");
@@ -372,7 +372,7 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Breadcrumb.viewConfigurationPreview(
-			breadcrumbListVisible = "${siteName},Welcome,Child Page Name"
+			breadcrumbListVisible = "${siteName},Home,Child Page Name"
 		);
 
 		Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Page");
@@ -383,10 +383,10 @@ definition {
 
 		Navigator.openURL();
 
-		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Welcome");
+		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Home");
 
 		Breadcrumb.viewPG(
-			breadcrumbListNotVisible = "Welcome,Child Page Name",
+			breadcrumbListNotVisible = "Home,Child Page Name",
 			breadcrumbListVisible = "${siteName}",
 			pathLocator = "PAGE"
 		);
@@ -484,12 +484,12 @@ definition {
 
 		SitePages.addPublicChildPage(
 			childPageName = "Child Page Name",
-			parentPageName = "Welcome"
+			parentPageName = "Home"
 		);
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
-		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Welcome");
+		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Home");
 
 		Portlet.addPG(portletName = "Breadcrumb");
 
@@ -498,17 +498,17 @@ definition {
 		Breadcrumb.displayTemplatePreview(displayStyle = "Horizontal");
 
 		Breadcrumb.viewConfigurationPreview(
-			breadcrumbListVisible = "Welcome,Child Page Name"
+			breadcrumbListVisible = "Home,Child Page Name"
 		);
 
 		Breadcrumb.saveDisplayPreview();
 
 		Navigator.openURL();
 
-		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Welcome");
+		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Home");
 
 		Breadcrumb.viewPG(
-			breadcrumbListVisible = "Welcome,Child Page Name",
+			breadcrumbListVisible = "Home,Child Page Name",
 			pathLocator = "PAGE"
 		);
 	}
@@ -527,12 +527,12 @@ definition {
 
 		SitePages.addPublicChildPage(
 			childPageName = "Child Page Name",
-			parentPageName = "Welcome"
+			parentPageName = "Home"
 		);
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
-		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Welcome");
+		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Home");
 
 		Portlet.addPG(portletName = "Breadcrumb");
 
@@ -541,17 +541,17 @@ definition {
 		Breadcrumb.displayTemplatePreview(displayStyle = "Vertical");
 
 		Breadcrumb.viewConfigurationPreview(
-			breadcrumbListVisible = "Welcome,Child Page Name"
+			breadcrumbListVisible = "Home,Child Page Name"
 		);
 
 		Breadcrumb.saveDisplayPreview();
 
 		Navigator.openURL();
 
-		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Welcome");
+		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Home");
 
 		Breadcrumb.viewPG(
-			breadcrumbListVisible = "Welcome,Child Page Name",
+			breadcrumbListVisible = "Home,Child Page Name",
 			pathLocator = "PAGE"
 		);
 	}
@@ -571,19 +571,19 @@ definition {
 
 		SitePages.addPublicChildPage(
 			childPageName = "Child Page Name",
-			parentPageName = "Welcome"
+			parentPageName = "Home"
 		);
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
-		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Welcome");
+		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Home");
 
 		Portlet.addPG(portletName = "Breadcrumb");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		Breadcrumb.viewConfigurationPreview(
-			breadcrumbListVisible = "Welcome,Child Page Name"
+			breadcrumbListVisible = "Home,Child Page Name"
 		);
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -593,21 +593,21 @@ definition {
 		Breadcrumb.configureBreadcrumb(checkSetupName = "Show Guest Site");
 
 		Breadcrumb.viewConfigurationPreview(
-			breadcrumbListVisible = "${siteName},Welcome,Child Page Name"
+			breadcrumbListVisible = "${siteName},Home,Child Page Name"
 		);
 
 		Breadcrumb.saveDisplayPreview();
 
 		Breadcrumb.viewConfigurationPreview(
-			breadcrumbListVisible = "${siteName},Welcome,Child Page Name"
+			breadcrumbListVisible = "${siteName},Home,Child Page Name"
 		);
 
 		Navigator.openURL();
 
-		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Welcome");
+		Page.gotoChildPagePG(childPageName = "Child Page Name", pageName = "Home");
 
 		Breadcrumb.viewPG(
-			breadcrumbListVisible = "${siteName},Welcome,Child Page Name",
+			breadcrumbListVisible = "${siteName},Home,Child Page Name",
 			pathLocator = "PAGE"
 		);
 	}

@@ -29,7 +29,7 @@ definition {
 			portlet = "Pages"
 		);
 
-		SitePages.gotoPageMenuItem(menuItem = "Permissions", pageName = "Welcome");
+		SitePages.gotoPageMenuItem(menuItem = "Permissions", pageName = "Home");
 
 		IFrame.selectPermissionsFrame();
 

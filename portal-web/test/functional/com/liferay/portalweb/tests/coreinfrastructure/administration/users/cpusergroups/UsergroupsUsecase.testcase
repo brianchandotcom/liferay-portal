@@ -525,9 +525,9 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
-		var key_pageName = "Welcome";
+		var key_pageName = "Home";
 
-		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Welcome");
+		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Home");
 
 		AssertTextPresent(locator1 = "Home#PAGE_2", value1 = "Home");
 
@@ -535,7 +535,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Welcome");
+		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Home");
 
 		if (IsElementPresent(locator1 = "Home#PAGE_2")) {
 			AssertTextNotEquals(locator1 = "Home#PAGE_2", value1 = "Home");
@@ -551,9 +551,9 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
-		var key_pageName = "Welcome";
+		var key_pageName = "Home";
 
-		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Welcome");
+		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Home");
 
 		if (IsElementPresent(locator1 = "Home#PAGE_2")) {
 			AssertTextNotEquals(locator1 = "Home#PAGE_2", value1 = "Home");
@@ -565,7 +565,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Welcome");
+		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Home");
 
 		if (IsElementPresent(locator1 = "Home#PAGE_2")) {
 			AssertTextNotEquals(locator1 = "Home#PAGE_2", value1 = "Home");
@@ -596,9 +596,9 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
-		var key_pageName = "Welcome";
+		var key_pageName = "Home";
 
-		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Welcome");
+		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Home");
 
 		AssertTextPresent(locator1 = "Home#PAGE_2", value1 = "Home");
 
@@ -606,7 +606,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Welcome");
+		AssertTextPresent(locator1 = "Home#PAGE_1", value1 = "Home");
 
 		if (IsElementPresent(locator1 = "Home#PAGE_2")) {
 			AssertTextNotEquals(locator1 = "Home#PAGE_2", value1 = "Home");

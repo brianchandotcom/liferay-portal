@@ -142,7 +142,7 @@ definition {
 
 			Portlet.deletePG(portletName = "Hello World");
 
-			Navigator.gotoPage(pageName = "Welcome");
+			Navigator.gotoPage(pageName = "Home");
 
 			Portlet.deletePG(portletName = "Hello World");
 

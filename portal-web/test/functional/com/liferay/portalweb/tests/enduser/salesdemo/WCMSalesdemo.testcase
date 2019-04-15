@@ -93,12 +93,12 @@ definition {
 
 		SitePages.configurePage(
 			columnName = "2 Columns (50/50)",
-			pageName = "Welcome",
+			pageName = "Home",
 			privacy = "Public Pages",
 			sitePageType = "Widget Page"
 		);
 
-		Navigator.gotoPage(pageName = "Welcome");
+		Navigator.gotoPage(pageName = "Home");
 
 		Content.addPG(assetTitle = "DHS Title", webContentContent = "DHS Content");
 

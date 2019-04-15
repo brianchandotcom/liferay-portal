@@ -343,7 +343,7 @@ definition {
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
-			pageName = "Welcome"
+			pageName = "Home"
 		);
 
 		Navigator.gotoNavTab(navTab = "Advanced");

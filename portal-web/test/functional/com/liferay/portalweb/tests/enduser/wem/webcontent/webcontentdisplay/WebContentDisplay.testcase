@@ -1446,6 +1446,6 @@ definition {
 
 		WebContent.viewPageBreak();
 
-		WebContentDisplayPortlet.viewContentPageBreak(webContentContent = "Welcome");
+		WebContentDisplayPortlet.viewContentPageBreak(webContentContent = "Home");
 	}
 }

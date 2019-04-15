@@ -162,7 +162,7 @@ definition {
 			DragAndDrop.dragAndDropToObject(
 				locator1 = "Home#PAGE_1",
 				locator2 = "Home#PAGE_2",
-				value1 = "Welcome"
+				value1 = "Home"
 			);
 		}
 	}

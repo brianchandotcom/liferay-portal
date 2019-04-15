@@ -1912,7 +1912,7 @@ definition {
 		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Test");
 
 		SearchPortlets.viewUserResultDetails(
-			pageName = "Welcome",
+			pageName = "Home",
 			userName = "Test Test"
 		);
 	}

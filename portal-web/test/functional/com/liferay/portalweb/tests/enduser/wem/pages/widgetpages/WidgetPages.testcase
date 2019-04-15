@@ -272,7 +272,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Welcome");
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Home");
 
 		Page.viewSelectedLayoutColumn(columnName = "1 Column");
 

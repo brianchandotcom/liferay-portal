@@ -413,7 +413,7 @@ definition {
 		Page.assertNodePortPG(nodePort = "9080");
 
 		Navigator.gotoSpecificURLPage(
-			pageName = "Welcome",
+			pageName = "Home",
 			url = "http://localhost:9080"
 		);
 
@@ -425,7 +425,7 @@ definition {
 		Pause(locator1 = "180000");
 
 		Navigator.gotoSpecificURLPage(
-			pageName = "Welcome",
+			pageName = "Home",
 			url = "http://localhost:9080"
 		);
 

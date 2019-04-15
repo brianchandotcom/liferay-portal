@@ -155,7 +155,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "RSS";
 
-		Navigator.gotoPage(pageName = "Welcome");
+		Navigator.gotoPage(pageName = "Home");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -318,7 +318,7 @@ definition {
 	test DeleteFeedFromRSS {
 		property testray.component.names = "RSS";
 
-		Navigator.gotoPage(pageName = "Welcome");
+		Navigator.gotoPage(pageName = "Home");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -482,7 +482,7 @@ definition {
 	test RemoveRSSPortlet {
 		property testray.component.names = "RSS";
 
-		Navigator.gotoPage(pageName = "Welcome");
+		Navigator.gotoPage(pageName = "Home");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

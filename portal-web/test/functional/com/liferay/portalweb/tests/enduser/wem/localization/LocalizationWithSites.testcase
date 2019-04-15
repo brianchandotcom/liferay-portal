@@ -867,8 +867,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#PAGE",
-			value1 = "Welcome",
-			key_pageName = "Welcome"
+			value1 = "Home",
+			key_pageName = "Home"
 		);
 
 		User.loginPG(specificURL = "${portalURL}/fr");

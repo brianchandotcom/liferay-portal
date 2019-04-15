@@ -2211,7 +2211,7 @@ definition {
 			portletOption = "Preferences"
 		);
 
-		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Welcome");
+		AssertElementPresent(locator1 = "Home#PAGE", key_pageName = "Home");
 
 		AssertTextEquals(
 			locator1 = "HelloWorld#PORTLET_TITLE",

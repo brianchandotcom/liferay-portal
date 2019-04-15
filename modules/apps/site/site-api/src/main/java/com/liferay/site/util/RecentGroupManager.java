@@ -150,7 +150,7 @@ public class RecentGroupManager {
 
 			String friendlyURL = group.getFriendlyURL();
 
-			if(!friendlyURL.equals("/global")) {
+			if (!friendlyURL.equals("/global")) {
 				Layout layout = _layoutLocalService.fetchFirstLayout(
 					group.getGroupId(), false,
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);

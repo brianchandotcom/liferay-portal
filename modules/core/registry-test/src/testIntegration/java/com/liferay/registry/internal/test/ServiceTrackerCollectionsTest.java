@@ -58,104 +58,110 @@ public class ServiceTrackerCollectionsTest {
 
 	@Test
 	public void testClass() {
-		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.openList(InterfaceOne.class);
+		try (ServiceTrackerList<InterfaceOne> serviceTrackerList =
+				ServiceTrackerCollections.openList(InterfaceOne.class)) {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
-		InterfaceOne interfaceOneA = getInstance();
+			InterfaceOne interfaceOneA = getInstance();
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			_registry.registerService(InterfaceOne.class, interfaceOneA);
+			ServiceRegistration<InterfaceOne> serviceRegistrationA =
+				_registry.registerService(InterfaceOne.class, interfaceOneA);
 
-		Assert.assertNotNull(serviceRegistrationA);
+			Assert.assertNotNull(serviceRegistrationA);
 
-		InterfaceOne interfaceOneB = getInstance();
+			InterfaceOne interfaceOneB = getInstance();
 
-		serviceTrackerList.add(interfaceOneB);
+			serviceTrackerList.add(interfaceOneB);
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 2, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 2, serviceTrackerList.size());
 
-		for (InterfaceOne interfaceOne : serviceTrackerList) {
-			Assert.assertNotNull(interfaceOne);
+			for (InterfaceOne interfaceOne : serviceTrackerList) {
+				Assert.assertNotNull(interfaceOne);
+			}
+
+			serviceRegistrationA.unregister();
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
+
+			serviceTrackerList.remove(interfaceOneB);
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 		}
-
-		serviceRegistrationA.unregister();
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
-
-		serviceTrackerList.remove(interfaceOneB);
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
 	}
 
 	@Test
 	public void testClassFilter() throws Exception {
 		Filter filter = _registry.getFilter("(a.property=G)");
 
-		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.openList(InterfaceOne.class, filter);
+		try (ServiceTrackerList<InterfaceOne> serviceTrackerList =
+				ServiceTrackerCollections.openList(
+					InterfaceOne.class, filter)) {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
-		InterfaceOne interfaceOneA = getInstance();
+			InterfaceOne interfaceOneA = getInstance();
 
-		Map<String, Object> properties = new HashMap<>();
+			Map<String, Object> properties = new HashMap<>();
 
-		properties.put("a.property", "G");
+			properties.put("a.property", "G");
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			_registry.registerService(
-				InterfaceOne.class, interfaceOneA, properties);
+			ServiceRegistration<InterfaceOne> serviceRegistrationA =
+				_registry.registerService(
+					InterfaceOne.class, interfaceOneA, properties);
 
-		Assert.assertNotNull(serviceRegistrationA);
+			Assert.assertNotNull(serviceRegistrationA);
 
-		InterfaceOne interfaceOneB = getInstance();
+			InterfaceOne interfaceOneB = getInstance();
 
-		try {
-			serviceTrackerList.add(interfaceOneB);
+			try {
+				serviceTrackerList.add(interfaceOneB);
 
-			Assert.fail();
+				Assert.fail();
+			}
+			catch (IllegalStateException ise) {
+			}
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
+
+			for (InterfaceOne interfaceOne : serviceTrackerList) {
+				Assert.assertNotNull(interfaceOne);
+			}
+
+			Collection<InterfaceOne> interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 1, interfaceOnes.size());
+
+			serviceRegistrationA.unregister();
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 0, interfaceOnes.size());
+
+			serviceTrackerList.remove(interfaceOneB);
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 0, interfaceOnes.size());
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 		}
-		catch (IllegalStateException ise) {
-		}
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
-
-		for (InterfaceOne interfaceOne : serviceTrackerList) {
-			Assert.assertNotNull(interfaceOne);
-		}
-
-		Collection<InterfaceOne> interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
-
-		serviceRegistrationA.unregister();
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 0, interfaceOnes.size());
-
-		serviceTrackerList.remove(interfaceOneB);
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 0, interfaceOnes.size());
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
 	}
 
 	@Test
@@ -166,55 +172,59 @@ public class ServiceTrackerCollectionsTest {
 
 		properties.put("a.property", "G");
 
-		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.openList(
-				InterfaceOne.class, filter, properties);
+		try (ServiceTrackerList<InterfaceOne> serviceTrackerList =
+				ServiceTrackerCollections.openList(
+					InterfaceOne.class, filter, properties)) {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
-		InterfaceOne interfaceOneA = getInstance();
+			InterfaceOne interfaceOneA = getInstance();
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			_registry.registerService(InterfaceOne.class, interfaceOneA);
+			ServiceRegistration<InterfaceOne> serviceRegistrationA =
+				_registry.registerService(InterfaceOne.class, interfaceOneA);
 
-		Assert.assertNotNull(serviceRegistrationA);
+			Assert.assertNotNull(serviceRegistrationA);
 
-		InterfaceOne interfaceOneB = getInstance();
+			InterfaceOne interfaceOneB = getInstance();
 
-		serviceTrackerList.add(interfaceOneB);
+			serviceTrackerList.add(interfaceOneB);
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
 
-		for (InterfaceOne interfaceOne : serviceTrackerList) {
-			Assert.assertNotNull(interfaceOne);
+			for (InterfaceOne interfaceOne : serviceTrackerList) {
+				Assert.assertNotNull(interfaceOne);
+			}
+
+			Collection<InterfaceOne> interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 1, interfaceOnes.size());
+
+			serviceRegistrationA.unregister();
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 1, interfaceOnes.size());
+
+			serviceTrackerList.remove(interfaceOneB);
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 0, interfaceOnes.size());
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 		}
-
-		Collection<InterfaceOne> interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
-
-		serviceRegistrationA.unregister();
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
-
-		serviceTrackerList.remove(interfaceOneB);
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 0, interfaceOnes.size());
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
 	}
 
 	@Test
@@ -227,70 +237,74 @@ public class ServiceTrackerCollectionsTest {
 			serviceTrackerCustomizer = new MockServiceTrackerCustomizer(
 				counter);
 
-		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.openList(
-				InterfaceOne.class, filter, serviceTrackerCustomizer);
+		try (ServiceTrackerList<InterfaceOne> serviceTrackerList =
+				ServiceTrackerCollections.openList(
+					InterfaceOne.class, filter, serviceTrackerCustomizer)) {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
-		InterfaceOne interfaceOneA = getInstance();
+			InterfaceOne interfaceOneA = getInstance();
 
-		Map<String, Object> properties = new HashMap<>();
+			Map<String, Object> properties = new HashMap<>();
 
-		properties.put("a.property", "G");
+			properties.put("a.property", "G");
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			_registry.registerService(
-				InterfaceOne.class, interfaceOneA, properties);
+			ServiceRegistration<InterfaceOne> serviceRegistrationA =
+				_registry.registerService(
+					InterfaceOne.class, interfaceOneA, properties);
 
-		Assert.assertNotNull(serviceRegistrationA);
+			Assert.assertNotNull(serviceRegistrationA);
 
-		InterfaceOne interfaceOneB = getInstance();
+			InterfaceOne interfaceOneB = getInstance();
 
-		try {
-			serviceTrackerList.add(interfaceOneB);
+			try {
+				serviceTrackerList.add(interfaceOneB);
 
-			Assert.fail();
+				Assert.fail();
+			}
+			catch (IllegalStateException ise) {
+			}
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
+
+			for (InterfaceOne interfaceOne : serviceTrackerList) {
+				Assert.assertNotNull(interfaceOne);
+			}
+
+			Collection<InterfaceOne> interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 1, interfaceOnes.size());
+
+			Assert.assertEquals(1, counter.intValue());
+
+			serviceRegistrationA.unregister();
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(2, counter.intValue());
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 0, interfaceOnes.size());
+
+			serviceTrackerList.remove(interfaceOneB);
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 0, interfaceOnes.size());
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(2, counter.intValue());
 		}
-		catch (IllegalStateException ise) {
-		}
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
-
-		for (InterfaceOne interfaceOne : serviceTrackerList) {
-			Assert.assertNotNull(interfaceOne);
-		}
-
-		Collection<InterfaceOne> interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
-
-		Assert.assertEquals(1, counter.intValue());
-
-		serviceRegistrationA.unregister();
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
-		Assert.assertEquals(2, counter.intValue());
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 0, interfaceOnes.size());
-
-		serviceTrackerList.remove(interfaceOneB);
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 0, interfaceOnes.size());
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
-		Assert.assertEquals(2, counter.intValue());
 	}
 
 	@Test
@@ -309,60 +323,64 @@ public class ServiceTrackerCollectionsTest {
 
 		properties.put("a.property", "G");
 
-		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.openList(
-				InterfaceOne.class, filter, serviceTrackerCustomizer,
-				properties);
+		try (ServiceTrackerList<InterfaceOne> serviceTrackerList =
+				ServiceTrackerCollections.openList(
+					InterfaceOne.class, filter, serviceTrackerCustomizer,
+					properties)) {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
-		InterfaceOne interfaceOneA = getInstance();
+			InterfaceOne interfaceOneA = getInstance();
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			_registry.registerService(InterfaceOne.class, interfaceOneA);
+			ServiceRegistration<InterfaceOne> serviceRegistrationA =
+				_registry.registerService(InterfaceOne.class, interfaceOneA);
 
-		Assert.assertNotNull(serviceRegistrationA);
+			Assert.assertNotNull(serviceRegistrationA);
 
-		InterfaceOne interfaceOneB = getInstance();
+			InterfaceOne interfaceOneB = getInstance();
 
-		serviceTrackerList.add(interfaceOneB);
+			serviceTrackerList.add(interfaceOneB);
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
 
-		for (InterfaceOne interfaceOne : serviceTrackerList) {
-			Assert.assertNotNull(interfaceOne);
+			for (InterfaceOne interfaceOne : serviceTrackerList) {
+				Assert.assertNotNull(interfaceOne);
+			}
+
+			Collection<InterfaceOne> interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 1, interfaceOnes.size());
+
+			Assert.assertEquals(1, counter.intValue());
+
+			serviceRegistrationA.unregister();
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
+			Assert.assertEquals(1, counter.intValue());
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 1, interfaceOnes.size());
+
+			serviceTrackerList.remove(interfaceOneB);
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 0, interfaceOnes.size());
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(2, counter.intValue());
 		}
-
-		Collection<InterfaceOne> interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
-
-		Assert.assertEquals(1, counter.intValue());
-
-		serviceRegistrationA.unregister();
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
-		Assert.assertEquals(1, counter.intValue());
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
-
-		serviceTrackerList.remove(interfaceOneB);
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 0, interfaceOnes.size());
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
-		Assert.assertEquals(2, counter.intValue());
 	}
 
 	@Test
@@ -371,55 +389,60 @@ public class ServiceTrackerCollectionsTest {
 
 		properties.put("a.property", "G");
 
-		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.openList(InterfaceOne.class, properties);
+		try (ServiceTrackerList<InterfaceOne> serviceTrackerList =
+				ServiceTrackerCollections.openList(
+					InterfaceOne.class, properties)) {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
-		InterfaceOne interfaceOneA = getInstance();
+			InterfaceOne interfaceOneA = getInstance();
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			_registry.registerService(
-				InterfaceOne.class, interfaceOneA, properties);
+			ServiceRegistration<InterfaceOne> serviceRegistrationA =
+				_registry.registerService(
+					InterfaceOne.class, interfaceOneA, properties);
 
-		Assert.assertNotNull(serviceRegistrationA);
+			Assert.assertNotNull(serviceRegistrationA);
 
-		InterfaceOne interfaceOneB = getInstance();
+			InterfaceOne interfaceOneB = getInstance();
 
-		serviceTrackerList.add(interfaceOneB);
+			serviceTrackerList.add(interfaceOneB);
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 2, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 2, serviceTrackerList.size());
 
-		for (InterfaceOne interfaceOne : serviceTrackerList) {
-			Assert.assertNotNull(interfaceOne);
+			for (InterfaceOne interfaceOne : serviceTrackerList) {
+				Assert.assertNotNull(interfaceOne);
+			}
+
+			Collection<InterfaceOne> interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 2, interfaceOnes.size());
+
+			serviceRegistrationA.unregister();
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 1, interfaceOnes.size());
+
+			serviceTrackerList.remove(interfaceOneB);
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 0, interfaceOnes.size());
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 		}
-
-		Collection<InterfaceOne> interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 2, interfaceOnes.size());
-
-		serviceRegistrationA.unregister();
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
-
-		serviceTrackerList.remove(interfaceOneB);
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 0, interfaceOnes.size());
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
 	}
 
 	@Test
@@ -430,44 +453,45 @@ public class ServiceTrackerCollectionsTest {
 			serviceTrackerCustomizer = new MockServiceTrackerCustomizer(
 				counter);
 
-		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.openList(
-				InterfaceOne.class, serviceTrackerCustomizer);
+		try (ServiceTrackerList<InterfaceOne> serviceTrackerList =
+				ServiceTrackerCollections.openList(
+					InterfaceOne.class, serviceTrackerCustomizer)) {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
-		InterfaceOne interfaceOneA = getInstance();
+			InterfaceOne interfaceOneA = getInstance();
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			_registry.registerService(InterfaceOne.class, interfaceOneA);
+			ServiceRegistration<InterfaceOne> serviceRegistrationA =
+				_registry.registerService(InterfaceOne.class, interfaceOneA);
 
-		Assert.assertNotNull(serviceRegistrationA);
+			Assert.assertNotNull(serviceRegistrationA);
 
-		InterfaceOne interfaceOneB = getInstance();
+			InterfaceOne interfaceOneB = getInstance();
 
-		serviceTrackerList.add(interfaceOneB);
+			serviceTrackerList.add(interfaceOneB);
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 2, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 2, serviceTrackerList.size());
 
-		for (InterfaceOne interfaceOne : serviceTrackerList) {
-			Assert.assertNotNull(interfaceOne);
+			for (InterfaceOne interfaceOne : serviceTrackerList) {
+				Assert.assertNotNull(interfaceOne);
+			}
+
+			Assert.assertEquals(2, counter.intValue());
+
+			serviceRegistrationA.unregister();
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
+			Assert.assertEquals(3, counter.intValue());
+
+			serviceTrackerList.remove(interfaceOneB);
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(4, counter.intValue());
 		}
-
-		Assert.assertEquals(2, counter.intValue());
-
-		serviceRegistrationA.unregister();
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
-		Assert.assertEquals(3, counter.intValue());
-
-		serviceTrackerList.remove(interfaceOneB);
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
-		Assert.assertEquals(4, counter.intValue());
 	}
 
 	@Test
@@ -484,60 +508,64 @@ public class ServiceTrackerCollectionsTest {
 
 		properties.put("a.property", "G");
 
-		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.openList(
-				InterfaceOne.class, serviceTrackerCustomizer, properties);
+		try (ServiceTrackerList<InterfaceOne> serviceTrackerList =
+				ServiceTrackerCollections.openList(
+					InterfaceOne.class, serviceTrackerCustomizer, properties)) {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
-		InterfaceOne interfaceOneA = getInstance();
+			InterfaceOne interfaceOneA = getInstance();
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			_registry.registerService(
-				InterfaceOne.class, interfaceOneA, properties);
+			ServiceRegistration<InterfaceOne> serviceRegistrationA =
+				_registry.registerService(
+					InterfaceOne.class, interfaceOneA, properties);
 
-		Assert.assertNotNull(serviceRegistrationA);
+			Assert.assertNotNull(serviceRegistrationA);
 
-		InterfaceOne interfaceOneB = getInstance();
+			InterfaceOne interfaceOneB = getInstance();
 
-		serviceTrackerList.add(interfaceOneB);
+			serviceTrackerList.add(interfaceOneB);
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 2, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 2, serviceTrackerList.size());
 
-		for (InterfaceOne interfaceOne : serviceTrackerList) {
-			Assert.assertNotNull(interfaceOne);
+			for (InterfaceOne interfaceOne : serviceTrackerList) {
+				Assert.assertNotNull(interfaceOne);
+			}
+
+			Collection<InterfaceOne> interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 2, interfaceOnes.size());
+
+			Assert.assertEquals(2, counter.intValue());
+
+			serviceRegistrationA.unregister();
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
+			Assert.assertEquals(3, counter.intValue());
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 1, interfaceOnes.size());
+
+			serviceTrackerList.remove(interfaceOneB);
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 0, interfaceOnes.size());
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(4, counter.intValue());
 		}
-
-		Collection<InterfaceOne> interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 2, interfaceOnes.size());
-
-		Assert.assertEquals(2, counter.intValue());
-
-		serviceRegistrationA.unregister();
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
-		Assert.assertEquals(3, counter.intValue());
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
-
-		serviceTrackerList.remove(interfaceOneB);
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 0, interfaceOnes.size());
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
-		Assert.assertEquals(4, counter.intValue());
 	}
 
 	@Test
@@ -554,59 +582,63 @@ public class ServiceTrackerCollectionsTest {
 
 		properties.put("a.property", "G");
 
-		ServiceTrackerList<InterfaceOne> serviceTrackerList =
-			ServiceTrackerCollections.openList(
-				InterfaceOne.class, serviceTrackerCustomizer, properties);
+		try (ServiceTrackerList<InterfaceOne> serviceTrackerList =
+				ServiceTrackerCollections.openList(
+					InterfaceOne.class, serviceTrackerCustomizer, properties)) {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
-		InterfaceOne interfaceOneA = getInstance();
+			InterfaceOne interfaceOneA = getInstance();
 
-		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			_registry.registerService(InterfaceOne.class, interfaceOneA);
+			ServiceRegistration<InterfaceOne> serviceRegistrationA =
+				_registry.registerService(InterfaceOne.class, interfaceOneA);
 
-		Assert.assertNotNull(serviceRegistrationA);
+			Assert.assertNotNull(serviceRegistrationA);
 
-		InterfaceOne interfaceOneB = getInstance();
+			InterfaceOne interfaceOneB = getInstance();
 
-		serviceTrackerList.add(interfaceOneB);
+			serviceTrackerList.add(interfaceOneB);
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 2, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 2, serviceTrackerList.size());
 
-		for (InterfaceOne interfaceOne : serviceTrackerList) {
-			Assert.assertNotNull(interfaceOne);
+			for (InterfaceOne interfaceOne : serviceTrackerList) {
+				Assert.assertNotNull(interfaceOne);
+			}
+
+			Collection<InterfaceOne> interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 1, interfaceOnes.size());
+
+			Assert.assertEquals(2, counter.intValue());
+
+			serviceRegistrationA.unregister();
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
+			Assert.assertEquals(3, counter.intValue());
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 1, interfaceOnes.size());
+
+			serviceTrackerList.remove(interfaceOneB);
+
+			interfaceOnes = _registry.getServices(
+				InterfaceOne.class, "(a.property=G)");
+
+			Assert.assertEquals(
+				interfaceOnes.toString(), 0, interfaceOnes.size());
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
+			Assert.assertEquals(4, counter.intValue());
 		}
-
-		Collection<InterfaceOne> interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
-
-		Assert.assertEquals(2, counter.intValue());
-
-		serviceRegistrationA.unregister();
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
-		Assert.assertEquals(3, counter.intValue());
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 1, interfaceOnes.size());
-
-		serviceTrackerList.remove(interfaceOneB);
-
-		interfaceOnes = _registry.getServices(
-			InterfaceOne.class, "(a.property=G)");
-
-		Assert.assertEquals(interfaceOnes.toString(), 0, interfaceOnes.size());
-
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
-		Assert.assertEquals(4, counter.intValue());
 	}
 
 	protected InterfaceOne getInstance() {

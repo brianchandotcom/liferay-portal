@@ -255,12 +255,12 @@
 	{let $columnClasses kind="text"}
 		col
 		{sp}fragments-editor__drop-target
-		{sp}fragments-editor__drop-target--sidebar-widget
 		{sp}fragment-entry-link-list__col
 
 		{if $rowType == $fragmentsEditorRowTypes.componentRow}
 			{sp}fragments-editor__drop-target--fragment
 			{sp}fragments-editor__drop-target--sidebar-fragment
+			{sp}fragments-editor__drop-target--sidebar-widget
 		{/if}
 
 		{if $dropTargetItemId == $columnId and $dropTargetItemType == $dropTargetItemTypes.column}

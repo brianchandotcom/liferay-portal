@@ -35,15 +35,15 @@
 
 	{let $wrapperClasses kind="text"}
 		fragments-editor__drag-source
+		{sp}fragment-entry-link-wrapper
 		{sp}fragments-editor__drag-source--fragment
 		{sp}fragments-editor__drop-target
-		{sp}fragments-editor__drop-target--sidebar-widget
-		{sp}fragment-entry-link-wrapper
 		{sp}fragments-editor__topper-wrapper
 
 		{if $rowType == $_fragmentsEditorRowTypes.componentRow}
 			{sp}fragments-editor__drop-target--fragment
 			{sp}fragments-editor__drop-target--sidebar-fragment
+			{sp}fragments-editor__drop-target--sidebar-widget
 		{/if}
 
 		{if $dropTargetItemId == $fragmentEntryLinkId and $_fragmentsEditorItemTypes and $dropTargetItemType == $_fragmentsEditorItemTypes.fragment}

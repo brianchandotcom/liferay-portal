@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.datastore;
+package com.liferay.talend.data.store;
 
 /**
  * @author Igor Beslic

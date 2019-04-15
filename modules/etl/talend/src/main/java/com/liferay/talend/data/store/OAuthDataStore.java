@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.talend.datastore;
+package com.liferay.talend.data.store;
 
 import java.io.Serializable;
 
 import org.talend.sdk.component.api.configuration.Option;
-import org.talend.sdk.component.api.configuration.condition.ActiveIf;
 import org.talend.sdk.component.api.configuration.type.DataStore;
 import org.talend.sdk.component.api.configuration.ui.DefaultValue;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
@@ -26,58 +25,40 @@ import org.talend.sdk.component.api.configuration.ui.widget.Credential;
 /**
  * @author Igor Beslic
  */
-@DataStore("BasicDataStore")
+@DataStore("OAuthDataStore")
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
-	value = {
-		@GridLayout.Row({"_user", "_password"}), @GridLayout.Row("_anonymous")
-	}
+	value = {@GridLayout.Row({"_consumerKey", "_consumerSecret"})}
 )
-public class BasicDataStore implements Serializable {
+public class OAuthDataStore implements Serializable {
 
-	public String getPassword() {
-		return _password;
+	public String getConsumerKey() {
+		return _consumerKey;
 	}
 
-	public String getUser() {
-		return _user;
+	public String getConsumerSecret() {
+		return _consumerSecret;
 	}
 
-	public boolean isAnonymous() {
-		return _anonymous;
-	}
-
-	public BasicDataStore setAnonymous(boolean anonymous) {
-		_anonymous = anonymous;
+	public OAuthDataStore setConsumerKey(String consumerKey) {
+		_consumerKey = consumerKey;
 
 		return this;
 	}
 
-	public BasicDataStore setPassword(String password) {
-		_password = password;
+	public OAuthDataStore setConsumerSecret(String consumerSecret) {
+		_consumerSecret = consumerSecret;
 
 		return this;
 	}
 
-	public BasicDataStore setUser(String user) {
-		_user = user;
-
-		return this;
-	}
-
-	@DefaultValue("false")
+	@DefaultValue("")
 	@Option
-	private boolean _anonymous;
+	private String _consumerKey;
 
-	@ActiveIf(target = "_anonymous", value = "false")
 	@Credential
-	@DefaultValue("test")
+	@DefaultValue("")
 	@Option
-	private String _password;
-
-	@ActiveIf(target = "_anonymous", value = "false")
-	@DefaultValue("test@liferay.com")
-	@Option
-	private String _user;
+	private String _consumerSecret;
 
 }

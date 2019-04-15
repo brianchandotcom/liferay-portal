@@ -14,10 +14,10 @@
 
 package com.liferay.talend.service;
 
-import com.liferay.talend.datastore.AuthenticationMethod;
-import com.liferay.talend.datastore.BasicDataStore;
-import com.liferay.talend.datastore.InputDataStore;
-import com.liferay.talend.datastore.OAuthDataStore;
+import com.liferay.talend.data.store.AuthenticationMethod;
+import com.liferay.talend.data.store.BasicDataStore;
+import com.liferay.talend.data.store.InputDataStore;
+import com.liferay.talend.data.store.OAuthDataStore;
 import com.liferay.talend.http.client.BasicAuthenticationClient;
 
 import io.swagger.v3.oas.models.OpenAPI;

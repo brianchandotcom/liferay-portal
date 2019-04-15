@@ -14,7 +14,7 @@
 
 package com.liferay.talend.dataset;
 
-import com.liferay.talend.datastore.InputDataStore;
+import com.liferay.talend.data.store.InputDataStore;
 
 import java.io.Serializable;
 

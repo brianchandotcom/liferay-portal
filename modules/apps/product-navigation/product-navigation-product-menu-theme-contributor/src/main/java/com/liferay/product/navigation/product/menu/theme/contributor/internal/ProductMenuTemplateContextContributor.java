@@ -86,7 +86,7 @@ public class ProductMenuTemplateContextContributor
 
 		User user = themeDisplay.getUser();
 
-		if (!user.isSetupComplete() && !themeDisplay.isImpersonated()) {
+		if (!themeDisplay.isImpersonated() && !user.isSetupComplete()) {
 			return false;
 		}
 

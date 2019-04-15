@@ -36,8 +36,8 @@ import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 /**
  * @author Zoltán Takács
  */
-@Icon(Icon.IconType.STAR)
-@PartitionMapper(name = "tLiferayInput")
+@Icon(custom = "LiferayInput", value = Icon.IconType.CUSTOM)
+@PartitionMapper(family = "Liferay", name = "Input")
 @Version(1)
 public class LiferayInputMapper implements Serializable {
 

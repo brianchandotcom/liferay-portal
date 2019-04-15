@@ -292,10 +292,11 @@ version 1.1.2.
 	- `startDockerContainer`
 	- `stopDockerContainer`
 
-## 2.0.0 - 2019-04-12
+## 2.0.0 - 2019-04-15
 
 ### Changed
-- [LPS-93873]: Update the [Liferay Gradle Plugins Target Platform] dependency to version 1.1.12
+- [LPS-93873]: Update the [Liferay Gradle Plugins Target Platform] dependency to
+version 1.1.12.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

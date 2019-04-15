@@ -214,6 +214,7 @@ definition {
 
 	test OAuth2TesterSmokeTest {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
+
 		var clientId = "abc123";
 		var clientSecret = "abc123";
 		var portalURL = PropsUtil.get("portal.url");
@@ -243,35 +244,25 @@ definition {
 			resourcePanels = "Portal Services"
 		);
 
-		Navigator.openSpecificURL(
-			url = "http://martamedio.com/oauth2-tester/"
-		);
+		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
 			value1 = "${clientId}"
 		);
 
-		Button.click(
-			button = "Authorize My Application"
-		);
+		Button.click(button = "Authorize My Application");
 
-		Button.click(
-			button = "Authorize"
-		);
+		Button.click(button = "Authorize");
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
 			value1 = "${clientSecret}"
 		);
 
-		Button.click(
-			button = "Obtain OAuth2 Access"
-		);
+		Button.click(button = "Obtain OAuth2 Access");
 
-		Button.click(
-			button = "Launch Request"
-		);
+		Button.click(button = "Launch Request");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",

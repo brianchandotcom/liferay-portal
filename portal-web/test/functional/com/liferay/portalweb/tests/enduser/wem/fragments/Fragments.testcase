@@ -234,7 +234,7 @@ definition {
 				entry = "Fragment Name"
 			);
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
 				value1 = "Error:The fragment entry cannot be deleted because it is required by one or more page templates."
 			);

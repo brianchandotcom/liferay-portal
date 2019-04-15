@@ -421,12 +421,12 @@ definition {
 				displayPageName = "Display Page Name"
 			);
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
 				value1 = "Error:One or more entries could not be deleted."
 			);
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_2",
 				value1 = "Error:You cannot delete asset display page templates that are used by one or more assets."
 			);

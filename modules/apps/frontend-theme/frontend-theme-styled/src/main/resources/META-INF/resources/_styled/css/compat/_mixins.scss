@@ -430,7 +430,7 @@
 
 // User icons
 
-@mixin color-user-icon($bg-color: #999, $color: #FFF) {
+@mixin color-user-icon($color: #999, $bg-color: #FFF) {
 	background-color: $bg-color;
 	color: $color;
 }

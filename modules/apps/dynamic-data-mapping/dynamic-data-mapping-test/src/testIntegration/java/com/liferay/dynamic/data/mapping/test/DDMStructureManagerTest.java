@@ -68,7 +68,7 @@ public class DDMStructureManagerTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_classNameId = _portal.getClassNameId(
-			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
+			"com.liferay.dynamic.data.mapping.model.DDMFormInstance");
 	}
 
 	@Before

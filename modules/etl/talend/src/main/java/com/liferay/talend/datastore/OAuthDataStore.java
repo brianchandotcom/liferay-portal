@@ -18,6 +18,7 @@ import java.io.Serializable;
 
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.type.DataStore;
+import org.talend.sdk.component.api.configuration.ui.DefaultValue;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 
 /**
@@ -50,9 +51,11 @@ public class OAuthDataStore implements Serializable {
 		return this;
 	}
 
+	@DefaultValue("")
 	@Option
 	private String _consumerKey;
 
+	@DefaultValue("")
 	@Option
 	private String _consumerSecret;
 

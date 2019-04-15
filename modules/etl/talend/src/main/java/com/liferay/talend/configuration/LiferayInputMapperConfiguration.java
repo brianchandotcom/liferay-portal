@@ -73,12 +73,12 @@ public class LiferayInputMapperConfiguration implements Serializable {
 	}
 
 	@Option
-	private int _batchSize;
+	private int _batchSize = 100;
 
 	@Option
 	private RestDataSet _restDataSet;
 
 	@Option
-	private int _timeout;
+	private int _timeout = 60000;
 
 }

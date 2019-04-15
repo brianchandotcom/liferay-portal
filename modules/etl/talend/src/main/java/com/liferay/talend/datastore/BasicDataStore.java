@@ -64,15 +64,18 @@ public class BasicDataStore implements Serializable {
 		return this;
 	}
 
+	@DefaultValue("false")
 	@Option
 	private boolean _anonymous;
 
 	@ActiveIf(target = "_anonymous", value = "false")
 	@Credential
+	@DefaultValue("test")
 	@Option
 	private String _password;
 
 	@ActiveIf(target = "_anonymous", value = "false")
+	@DefaultValue("test@liferay.com")
 	@Option
 	private String _user;
 

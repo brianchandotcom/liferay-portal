@@ -93,6 +93,9 @@ public class InputDataStore {
 	@Option
 	private OAuthDataStore _oAuthDataStore;
 
+	@DefaultValue(
+		"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.yaml"
+	)
 	@Option
 	private URL _serverURL;
 

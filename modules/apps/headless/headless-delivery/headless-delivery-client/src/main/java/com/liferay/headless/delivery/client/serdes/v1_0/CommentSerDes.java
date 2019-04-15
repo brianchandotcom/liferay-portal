@@ -57,13 +57,7 @@ public class CommentSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (comment.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(comment.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(comment.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");

@@ -59,13 +59,7 @@ public class DocumentFolderSerDes {
 
 		sb.append("\"creator\": ");
 
-		if (documentFolder.getCreator() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(documentFolder.getCreator());
-		}
-
+		sb.append(CreatorSerDes.toJSON(documentFolder.getCreator()));
 		sb.append(", ");
 
 		sb.append("\"dateCreated\": ");

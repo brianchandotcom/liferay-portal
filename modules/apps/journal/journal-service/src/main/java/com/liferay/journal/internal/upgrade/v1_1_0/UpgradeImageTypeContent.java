@@ -118,6 +118,15 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		copyJournalArticleImagesToJournalRepository();
+		dropJournalArticleImageTable();
+	}
+
+	protected void dropJournalArticleImageTable() throws Exception {
+		runSQL(connection, "drop table JournalArticleImage");
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Deleted table JournalArticleImage");
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -166,6 +175,8 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 					_groupId, _userId, JournalArticle.class.getName(),
 					_resourcePrimaryKey, JournalConstants.SERVICE_NAME,
 					_folderId, image.getTextObj(), fileName, mimeType, false);
+
+				_imageLocalService.deleteImage(image.getImageId());
 			}
 			catch (Exception e) {
 				_log.error(

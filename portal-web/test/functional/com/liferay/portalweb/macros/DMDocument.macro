@@ -1468,8 +1468,6 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_GET_URL_OR_WEBDAV_URL"
 		);
 
-		Click(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN");
-
 		Panel.expandPanel(panel = "Automatically Extracted Metadata");
 	}
 

@@ -66,6 +66,10 @@ definition {
 			value1 = "History"
 		);
 
+		Pause(locator1 = "5000");
+
+		Refresh();
+
 		var key_changeListName = "${changeListName}";
 
 		AssertTextEquals(

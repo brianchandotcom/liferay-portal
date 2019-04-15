@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_CREATED_DATE</td>
-	<td>//div[contains(@class,'sidebar-body')]/dl/dt[3]/following-sibling::dd</td>
+	<td>//div[contains(@class,'sidebar-body')]//dl/dt[5]/following-sibling::dd</td>
 	<td></td>
 </tr>
 <tr>

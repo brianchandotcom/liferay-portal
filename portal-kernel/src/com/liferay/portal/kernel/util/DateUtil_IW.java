@@ -86,6 +86,10 @@ public class DateUtil_IW {
 		return DateUtil.getUTCFormat(text);
 	}
 
+	public int getYear(java.util.Date date) {
+		return DateUtil.getYear(date);
+	}
+
 	public boolean isFormatAmPm(java.util.Locale locale) {
 		return DateUtil.isFormatAmPm(locale);
 	}

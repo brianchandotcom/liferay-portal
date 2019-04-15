@@ -148,9 +148,6 @@ public class StringUtil_IW {
 		return StringUtil.extractLeadingDigits(s);
 	}
 
-
-
-
 	public int indexOfAny(java.lang.String s, char[] chars) {
 		return StringUtil.indexOfAny(s, chars);
 	}
@@ -369,9 +366,6 @@ public class StringUtil_IW {
 		throws java.io.IOException {
 		StringUtil.readLines(is, lines);
 	}
-
-
-
 
 	public java.lang.String removeChar(java.lang.String s, char oldSub) {
 		return StringUtil.removeChar(s, oldSub);

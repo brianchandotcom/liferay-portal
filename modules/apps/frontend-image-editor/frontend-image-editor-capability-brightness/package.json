@@ -8,7 +8,7 @@
 	},
 	"name": "frontend-image-editor-capability-brightness",
 	"scripts": {
-		"build": "liferay-npm-scripts build --soy --bundler",
+		"build": "liferay-npm-scripts",
 		"csf": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},

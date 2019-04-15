@@ -20,7 +20,7 @@
 	},
 	"name": "frontend-js-node-shims",
 	"scripts": {
-		"build": "liferay-npm-scripts build --bundler"
+		"build": "liferay-npm-scripts"
 	},
 	"version": "3.0.0"
 }

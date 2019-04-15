@@ -80,8 +80,38 @@ class AssetTagsSelector extends Component {
 		return this.selectedItems.map(selectedItem => selectedItem.value).join();
 	}
 
+	/**
+	 * Creates a tag with the text introduced in
+	 * the input.
+	 *
+	 * @param  {!Event} event
+	 */
 	_handleInputBlur(event) {
 		event.preventDefault();
+
+		const inputValue = event.target.inputValue;
+
+		if (inputValue) {
+			const item = {
+				label: inputValue,
+				value: inputValue
+			};
+
+			this.selectedItems = this.selectedItems.concat(item);
+			this.tagNames = this._getTagNames();
+
+			if (this.addCallback) {
+				window[this.addCallback](item);
+			}
+
+			this.emit(
+				'itemAdded',
+				{
+					item: item,
+					selectedItems: this.selectedItems
+				}
+			);
+		}
 	}
 
 	_handleInputFocus(event) {

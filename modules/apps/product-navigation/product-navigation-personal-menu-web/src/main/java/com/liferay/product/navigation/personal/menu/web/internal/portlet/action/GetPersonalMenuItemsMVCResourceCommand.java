@@ -194,6 +194,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 				_log.error(pe, pe);
 			}
 
+			jsonObject.put("icon", personalMenuEntry.getIcon(portletRequest));
 			jsonObject.put(
 				"label", personalMenuEntry.getLabel(themeDisplay.getLocale()));
 

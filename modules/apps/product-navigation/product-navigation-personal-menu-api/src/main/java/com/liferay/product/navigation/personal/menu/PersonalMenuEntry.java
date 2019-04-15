@@ -14,6 +14,7 @@
 
 package com.liferay.product.navigation.personal.menu;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -40,6 +41,18 @@ import javax.servlet.http.HttpServletRequest;
  * @review
  */
 public interface PersonalMenuEntry {
+
+	/**
+	 * Returns the icon name to display in the entry.
+	 *
+	 *
+	 * @return the icon name to display in the entry.
+	 * @review
+	 * @param portletRequest
+	 */
+	public default String getIcon(PortletRequest portletRequest) {
+		return StringPool.BLANK;
+	}
 
 	/**
 	 * Returns the label that is displayed in the user personal menu.

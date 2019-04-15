@@ -98,7 +98,7 @@ resourceURL.setResourceID("/get_personal_menu_items");
 									}
 								},
 								items: personalMenuItems,
-								itemsIconAlignment: 'left',
+								itemsIconAlignment: 'right',
 								label: toggle.innerHTML,
 								showToggleIcon: false,
 								spritemap: '<%= themeDisplay.getPathThemeImages().concat("/clay/icons.svg") %>'

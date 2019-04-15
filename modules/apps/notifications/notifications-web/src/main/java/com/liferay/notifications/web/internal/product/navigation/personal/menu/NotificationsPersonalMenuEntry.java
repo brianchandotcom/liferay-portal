@@ -15,10 +15,18 @@
 package com.liferay.notifications.web.internal.product.navigation.personal.menu;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.personal.menu.BasePersonalMenuEntry;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 
+import javax.portlet.PortletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -34,8 +42,33 @@ import org.osgi.service.component.annotations.Component;
 public class NotificationsPersonalMenuEntry extends BasePersonalMenuEntry {
 
 	@Override
+	public String getIcon(PortletRequest portletRequest) {
+		if (_userNotificationEventLocalService == null) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (_userNotificationEventLocalService.
+				getArchivedUserNotificationEventsCount(
+					themeDisplay.getUserId(),
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, false) >
+						0) {
+
+			return "simple-circle";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	protected String getPortletId() {
 		return NotificationsPortletKeys.NOTIFICATIONS;
 	}
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

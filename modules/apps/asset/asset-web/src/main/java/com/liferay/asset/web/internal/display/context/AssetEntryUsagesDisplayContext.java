@@ -66,6 +66,9 @@ public class AssetEntryUsagesDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public int getAllUsageCount() {
@@ -91,11 +94,8 @@ public class AssetEntryUsagesDisplayContext {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			getAssetEntryId());
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		if (assetEntry != null) {
-			_assetEntryTitle = assetEntry.getTitle(themeDisplay.getLocale());
+			_assetEntryTitle = assetEntry.getTitle(_themeDisplay.getLocale());
 		}
 
 		return _assetEntryTitle;
@@ -134,9 +134,6 @@ public class AssetEntryUsagesDisplayContext {
 	}
 
 	public String getAssetEntryUsageName(AssetEntryUsage assetEntryUsage) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		if (assetEntryUsage.getType() == AssetEntryUsageConstants.TYPE_LAYOUT) {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
 				assetEntryUsage.getPlid());
@@ -146,14 +143,14 @@ public class AssetEntryUsagesDisplayContext {
 			}
 
 			if (!_isDraft(layout)) {
-				return layout.getName(themeDisplay.getLocale());
+				return layout.getName(_themeDisplay.getLocale());
 			}
 
 			StringBundler sb = new StringBundler(4);
 
-			sb.append(layout.getName(themeDisplay.getLocale()));
+			sb.append(layout.getName(_themeDisplay.getLocale()));
 			sb.append(" (");
-			sb.append(LanguageUtil.get(themeDisplay.getLocale(), "draft"));
+			sb.append(LanguageUtil.get(_themeDisplay.getLocale(), "draft"));
 			sb.append(")");
 
 			return sb.toString();
@@ -186,7 +183,7 @@ public class AssetEntryUsagesDisplayContext {
 
 		sb.append(layoutPageTemplateEntry.getName());
 		sb.append(" (");
-		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "draft"));
+		sb.append(LanguageUtil.get(_themeDisplay.getLocale(), "draft"));
 		sb.append(")");
 
 		return sb.toString();
@@ -209,9 +206,6 @@ public class AssetEntryUsagesDisplayContext {
 	public String getAssetEntryUsageWhereLabel(AssetEntryUsage assetEntryUsage)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_renderRequest);
 
@@ -221,7 +215,7 @@ public class AssetEntryUsagesDisplayContext {
 			String portletTitle = PortalUtil.getPortletTitle(
 				PortletIdCodec.decodePortletName(
 					assetEntryUsage.getContainerKey()),
-				themeDisplay.getLocale());
+				_themeDisplay.getLocale());
 
 			return LanguageUtil.format(request, "x-widget", portletTitle);
 		}
@@ -415,5 +409,6 @@ public class AssetEntryUsagesDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer _searchContainer;
+	private final ThemeDisplay _themeDisplay;
 
 }

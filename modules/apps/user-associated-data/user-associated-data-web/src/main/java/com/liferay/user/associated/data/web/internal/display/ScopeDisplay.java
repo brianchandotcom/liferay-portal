@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.user.associated.data.web.internal.portlet.action;
-
-import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
+package com.liferay.user.associated.data.web.internal.display;
 
 import java.util.List;
 

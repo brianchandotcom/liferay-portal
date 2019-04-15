@@ -53,7 +53,7 @@
 	<path id="lib.classpath">
 		<fileset
 			dir="${project.dir}/lib/development"
-			excludes="biz.aQute.bnd.jar,com.liferay.ant.bnd.jar"
+			excludes="com.liferay.ant.bnd.jar"
 			includes="*.jar"
 		/>
 		<fileset
@@ -84,15 +84,11 @@
 		<pathelement path="${classpath.full}" />
 		<fileset
 			dir="${project.dir}/lib/development"
-			includes="jsp-api.jar,mail.jar,servlet-api.jar"
+			includes="biz.aQute.bnd.jar,jsp-api.jar,mail.jar,servlet-api.jar"
 		/>
 		<fileset
 			dir="${project.dir}/lib/global"
 			includes="*.jar"
-		/>
-		<fileset
-			dir="${project.dir}/lib/portal"
-			includes="bnd.jar"
 		/>
 		<path refid="lib.pre.classpath" />
 		<path refid="web-lib.classpath" />

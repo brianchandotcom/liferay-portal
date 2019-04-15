@@ -340,10 +340,6 @@ Provide-Capability:\
 	@../../../lib/portal/asm-util.jar,\
 	@../../../lib/portal/asm.jar,\
 	@../../../lib/portal/aspectj-rt.jar,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/header/*,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/osgi/*,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/version/*,\
 	@../../../lib/portal/ccpp.jar,\
 	@../../../lib/portal/commons-beanutils.jar,\
 	@../../../lib/portal/commons-chain.jar,\
@@ -396,6 +392,10 @@ Provide-Capability:\
 	@../../../lib/portal/xstream.jar,\
 	@../../../portal-impl/portal-impl.jar,\
 	@../../../portal-kernel/portal-kernel.jar,\
+	@lib/biz.aQute.bndlib.jar!/aQute/bnd/annotation/metatype/*,\
+	@lib/biz.aQute.bndlib.jar!/aQute/bnd/header/*,\
+	@lib/biz.aQute.bndlib.jar!/aQute/bnd/osgi/*,\
+	@lib/biz.aQute.bndlib.jar!/aQute/bnd/version/*,\
 	@lib/com.liferay.osgi.felix.util.jar,\
 	@lib/com.liferay.osgi.service.tracker.collections.jar,\
 	@lib/com.liferay.petra.concurrent.jar,\

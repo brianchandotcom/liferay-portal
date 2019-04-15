@@ -1,4 +1,11 @@
 Bundle-Name: Liferay Portal Bootstrap
 Bundle-SymbolicName: com.liferay.portal.bootstrap
 Bundle-Version: 1.0.0
--includeresource: META-INF/system.packages.extra.mf=${system.packages.extra.manifest.file}
+-includeresource:\
+	META-INF/system.packages.extra.mf=${system.packages.extra.manifest.file},\
+	@lib/biz.aQute.bndlib.jar!/aQute/bnd/annotation/metatype/*,\
+	@lib/biz.aQute.bndlib.jar!/aQute/bnd/header/*,\
+	@lib/biz.aQute.bndlib.jar!/aQute/bnd/osgi/*,\
+	@lib/biz.aQute.bndlib.jar!/aQute/bnd/version/*,\
+	@lib/biz.aQute.bndlib.jar!/aQute/libg/generics/*,\
+	@lib/biz.aQute.bndlib.jar!/aQute/libg/qtokens/*

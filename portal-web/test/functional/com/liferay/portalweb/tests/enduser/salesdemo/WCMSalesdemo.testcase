@@ -54,7 +54,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "IFrame Page");
 
-		SelectFrame(locator1 = "IFrame#IFRAME_PORTLET");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME_PORTLET");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Embedded#EMBEDDED_TEXT_UPDATED",

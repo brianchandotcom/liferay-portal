@@ -1237,6 +1237,8 @@ definition {
 
 		DMDocument.viewDocumentToolbarCmdPG();
 
+		Click(locator1 = "Icon#INFO");
+
 		DMDocument.viewDocumentAuthorCmdPG(dmDocumentAuthor = "${dmDocumentAuthor}");
 
 		if (isSet(commentBody)) {

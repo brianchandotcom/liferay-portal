@@ -42,7 +42,6 @@ Export-Package:\
 	!com.liferay.portal.scripting.python,\
 	!com.liferay.portal.scripting.ruby,\
 	!com.liferay.portal.search,\
-	!com.liferay.portal.security.access.control,\
 	!com.liferay.portal.security.jaas.ext.*,\
 	!com.liferay.portal.service,\
 	!com.liferay.portal.sharepoint.*,\

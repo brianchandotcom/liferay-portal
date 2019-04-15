@@ -36,7 +36,6 @@ public interface SearchResponseBuilderFactory {
 	 * @param  searchContext the search context
 	 * @return the search response builder
 	 */
-	public SearchResponseBuilder getSearchResponseBuilder(
-		SearchContext searchContext);
+	public SearchResponseBuilder builder(SearchContext searchContext);
 
 }

@@ -40,6 +40,11 @@ public interface SearchRequestBuilder {
 	public SearchRequestBuilder addComplexQueryPart(
 		ComplexQueryPart complexQueryPart);
 
+	public SearchRequestBuilder addFederatedSearchRequest(
+		SearchRequest searchRequest);
+
+	public SearchRequestBuilder addIndex(String index);
+
 	public SearchRequestBuilder addPipelineAggregation(
 		PipelineAggregation pipelineAggregation);
 
@@ -52,12 +57,17 @@ public interface SearchRequestBuilder {
 	public SearchRequestBuilder addSelectedFieldNames(
 		String... selectedFieldNames);
 
+	public SearchRequestBuilder basicFacetSelection(
+		boolean basicFacetSelection);
+
 	/**
 	 * Builds the search request.
 	 *
 	 * @return the search request
 	 */
 	public SearchRequest build();
+
+	public SearchRequestBuilder emptySearchEnabled(boolean emptySearchEnabled);
 
 	public SearchRequestBuilder entryClassNames(String... entryClassNames);
 
@@ -69,6 +79,13 @@ public interface SearchRequestBuilder {
 	 */
 	public SearchRequestBuilder explain(boolean explain);
 
+	public SearchRequestBuilder federatedSearchKey(String federatedSearchKey);
+
+	public SearchRequestBuilder getFederatedSearchRequestBuilder(
+		String federatedSearchKey);
+
+	public SearchRequestBuilder highlightEnabled(boolean highlightEnabled);
+
 	/**
 	 * Enables inclusion of the search engine's response string with the
 	 * returned results.
@@ -79,11 +96,15 @@ public interface SearchRequestBuilder {
 	public SearchRequestBuilder includeResponseString(
 		boolean includeResponseString);
 
+	public SearchRequestBuilder indexes(String... indexes);
+
 	public SearchRequestBuilder modelIndexerClasses(Class<?>... classes);
 
 	public SearchRequestBuilder postFilterQuery(Query query);
 
 	public SearchRequestBuilder query(Query query);
+
+	public SearchRequestBuilder queryString(String queryString);
 
 	/**
 	 * Provides a secondary query to reorder the top documents returned.

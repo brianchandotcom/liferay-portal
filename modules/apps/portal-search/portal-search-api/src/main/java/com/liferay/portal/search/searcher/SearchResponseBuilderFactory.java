@@ -31,6 +31,6 @@ public interface SearchResponseBuilderFactory {
 	 *
 	 * @return the search response builder
 	 */
-	public SearchResponseBuilder getSearchResponseBuilder();
+	public SearchResponseBuilder builder();
 
 }

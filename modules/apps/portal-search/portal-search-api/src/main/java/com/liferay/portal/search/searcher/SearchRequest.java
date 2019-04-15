@@ -41,6 +41,12 @@ public interface SearchRequest {
 
 	public List<String> getEntryClassNames();
 
+	public String getFederatedSearchKey();
+
+	public List<SearchRequest> getFederatedSearchRequests();
+
+	public List<String> getIndexes();
+
 	public List<Class<?>> getModelIndexerClasses();
 
 	public Map<String, PipelineAggregation> getPipelineAggregationsMap();
@@ -48,6 +54,8 @@ public interface SearchRequest {
 	public Query getPostFilterQuery();
 
 	public Query getQuery();
+
+	public String getQueryString();
 
 	/**
 	 * Provides a secondary query to reorder the top documents returned.
@@ -64,6 +72,10 @@ public interface SearchRequest {
 	 * @return the stats that are enabled for each field
 	 */
 	public List<StatsRequest> getStatsRequests();
+
+	public boolean isBasicFacetSelection();
+
+	public boolean isEmptySearchEnabled();
 
 	/**
 	 * Returns <code>true</code> if the explanation for how each hit's score is

@@ -32,6 +32,9 @@ import java.util.Map;
 @ProviderType
 public interface SearchResponseBuilder {
 
+	public SearchResponseBuilder addFederatedSearchResponse(
+		SearchResponse searchResponse);
+
 	public SearchResponseBuilder aggregationResultsMap(
 		Map<String, AggregationResult> aggregationResultsMap);
 
@@ -41,6 +44,8 @@ public interface SearchResponseBuilder {
 	 * @return the search response
 	 */
 	public SearchResponse build();
+
+	public SearchResponseBuilder federatedSearchKey(String key);
 
 	public SearchResponseBuilder hits(Hits hits);
 

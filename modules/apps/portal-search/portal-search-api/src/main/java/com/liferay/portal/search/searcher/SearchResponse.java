@@ -47,6 +47,12 @@ public interface SearchResponse {
 
 	public Stream<Document> getDocumentsStream();
 
+	public String getFederatedSearchKey();
+
+	public SearchResponse getFederatedSearchResponse(String key);
+
+	public Stream<SearchResponse> getFederatedSearchResponsesStream();
+
 	public SearchRequest getRequest();
 
 	/**

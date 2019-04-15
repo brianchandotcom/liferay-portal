@@ -30,6 +30,6 @@ public interface SearchRequestBuilderFactory {
 	 *
 	 * @return the search request builder
 	 */
-	public SearchRequestBuilder getSearchRequestBuilder();
+	public SearchRequestBuilder builder();
 
 }

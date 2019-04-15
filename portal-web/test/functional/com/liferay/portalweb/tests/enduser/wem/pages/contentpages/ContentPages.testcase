@@ -583,6 +583,13 @@ definition {
 	@description = "This is a test for LPS-81870. In edit mode the page should still show the elements of the page that are not from the page itself, like the header, footer, or elements defined by the theme."
 	@priority = "5"
 	test ViewEditModeHeaderFooterTheme {
+		task ("Add a widget page to the site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name"
+			);
+		}
+
 		task ("Add a content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -618,14 +625,16 @@ definition {
 				locator1 = "UserBar#USER_AVATAR_IMAGE"
 			);
 
-			AssertVisible(
-				locator1 = "Home#PAGE",
-				key_pageName = "Test Content Page Name"
-			);
-
 			AssertTextEquals(
 				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_FOOTER",
 				value1 = "Powered By Liferay"
+			);
+		}
+
+		task ("Assert the navigation menu widget with the previously created widget page also displays in the disabled part of the header") {
+			AssertVisible(
+				locator1 = "Home#PAGE",
+				key_pageName = "Test Widget Page Name"
 			);
 		}
 

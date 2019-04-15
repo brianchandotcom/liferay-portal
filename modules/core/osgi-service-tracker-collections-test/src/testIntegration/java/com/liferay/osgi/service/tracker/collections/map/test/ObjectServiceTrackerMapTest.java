@@ -25,10 +25,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -73,6 +75,14 @@ public class ObjectServiceTrackerMapTest {
 
 			_serviceTrackerMap = null;
 		}
+
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
 	}
 
 	@Test
@@ -285,8 +295,8 @@ public class ObjectServiceTrackerMapTest {
 		serviceRegistration1.unregister();
 		serviceRegistration2.unregister();
 
-		registerService(trackedOne2);
-		registerService(trackedOne1);
+		_serviceRegistrations.add(registerService(trackedOne2));
+		_serviceRegistrations.add(registerService(trackedOne1));
 
 		Assert.assertEquals(
 			trackedOne1, _serviceTrackerMap.getService("aTarget"));
@@ -324,8 +334,8 @@ public class ObjectServiceTrackerMapTest {
 		serviceRegistration1.unregister();
 		serviceRegistration2.unregister();
 
-		registerService(trackedOne2);
-		registerService(trackedOne1);
+		_serviceRegistrations.add(registerService(trackedOne2));
+		_serviceRegistrations.add(registerService(trackedOne1));
 
 		Assert.assertEquals(
 			trackedOne1, _serviceTrackerMap.getService("aTarget"));
@@ -346,8 +356,9 @@ public class ObjectServiceTrackerMapTest {
 		properties.put("other", "aProperty");
 		properties.put("target", "aTarget");
 
-		_bundleContext.registerService(
-			TrackedOne.class, new TrackedOne(), properties);
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				TrackedOne.class, new TrackedOne(), properties));
 
 		Assert.assertNotNull(
 			_serviceTrackerMap.getService("aProperty - aTarget"));
@@ -379,8 +390,9 @@ public class ObjectServiceTrackerMapTest {
 		properties.put("other", "aProperty");
 		properties.put("target", "aTarget");
 
-		_bundleContext.registerService(
-			TrackedOne.class, new TrackedOne(), properties);
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				TrackedOne.class, new TrackedOne(), properties));
 
 		Assert.assertNotNull(
 			_serviceTrackerMap.getService("aProperty - aTarget"));
@@ -391,7 +403,8 @@ public class ObjectServiceTrackerMapTest {
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 			createServiceTrackerMap(_bundleContext);
 
-		registerService(new TrackedOne(), "anotherTarget");
+		_serviceRegistrations.add(
+			registerService(new TrackedOne(), "anotherTarget"));
 
 		Assert.assertNull(serviceTrackerMap.getService("aTarget"));
 	}
@@ -446,7 +459,7 @@ public class ObjectServiceTrackerMapTest {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, null, "target");
 
-		registerService(new TrackedOne());
+		_serviceRegistrations.add(registerService(new TrackedOne()));
 
 		Assert.assertNotNull(_serviceTrackerMap.getService("aTarget"));
 	}
@@ -535,11 +548,11 @@ public class ObjectServiceTrackerMapTest {
 
 			TrackedOne trackedOne1 = new TrackedOne();
 
-			registerService(trackedOne1, "one");
+			_serviceRegistrations.add(registerService(trackedOne1, "one"));
 
 			TrackedOne trackedOne2 = new TrackedOne();
 
-			registerService(trackedOne2, "two");
+			_serviceRegistrations.add(registerService(trackedOne2, "two"));
 
 			TrackedTwo trackedTwo1 = serviceTrackerMap.getService("one");
 
@@ -596,11 +609,11 @@ public class ObjectServiceTrackerMapTest {
 
 			TrackedOne trackedOne1 = new TrackedOne("1");
 
-			registerService(trackedOne1, "one");
+			_serviceRegistrations.add(registerService(trackedOne1, "one"));
 
 			TrackedOne trackedOne2 = new TrackedOne("2");
 
-			registerService(trackedOne2, "two");
+			_serviceRegistrations.add(registerService(trackedOne2, "two"));
 
 			TrackedTwo trackedTwo1 = serviceTrackerMap.getService("one-1");
 
@@ -648,12 +661,9 @@ public class ObjectServiceTrackerMapTest {
 
 			TrackedOne trackedOne = new TrackedOne("1");
 
-			ServiceRegistration<TrackedOne> serviceRegistration =
-				registerService(trackedOne, "one");
+			_serviceRegistrations.add(registerService(trackedOne, "one"));
 
 			Assert.assertFalse(serviceTrackerMap.containsKey("one"));
-
-			serviceRegistration.unregister();
 		}
 	}
 
@@ -662,7 +672,7 @@ public class ObjectServiceTrackerMapTest {
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 			createServiceTrackerMap(_bundleContext);
 
-		registerService(new TrackedOne());
+		_serviceRegistrations.add(registerService(new TrackedOne()));
 
 		Assert.assertNotNull(serviceTrackerMap.getService("aTarget"));
 	}
@@ -876,6 +886,8 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	private BundleContext _bundleContext;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 	private ServiceTrackerMap<String, TrackedOne> _serviceTrackerMap;
 
 }

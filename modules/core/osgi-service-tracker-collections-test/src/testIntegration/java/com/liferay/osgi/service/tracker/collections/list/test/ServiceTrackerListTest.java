@@ -17,6 +17,7 @@ package com.liferay.osgi.service.tracker.collections.list.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.test.TrackedOne;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -69,169 +70,176 @@ public class ServiceTrackerListTest {
 	}
 
 	@Test
-	public void testGetServiceWithCustomComparator() throws Exception {
-		ServiceTrackerList<Object, Object> serviceTrackerList =
-			ServiceTrackerListFactory.open(
-				_bundleContext, Object.class,
-				new Comparator<ServiceReference<Object>>() {
+	public void testGetServiceWithCustomComparator() {
+		try (ServiceTrackerList<TrackedOne, TrackedOne> serviceTrackerList =
+				ServiceTrackerListFactory.open(
+					_bundleContext, TrackedOne.class,
+					new Comparator<ServiceReference<TrackedOne>>() {
 
-					@Override
-					public int compare(
-						ServiceReference<Object> serviceReference1,
-						ServiceReference<Object> serviceReference2) {
+						@Override
+						public int compare(
+							ServiceReference<TrackedOne> serviceReference1,
+							ServiceReference<TrackedOne> serviceReference2) {
 
-						return 0;
-					}
+							return 0;
+						}
 
-				});
+					})) {
 
-		Object[] services = {new Object(), new Object()};
+			TrackedOne[] services = {new TrackedOne(), new TrackedOne()};
 
-		Collection<ServiceRegistration<Object>> serviceRegistrations =
-			registerServices(Object.class, services);
+			Collection<ServiceRegistration<TrackedOne>> serviceRegistrations =
+				registerServices(TrackedOne.class, services);
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 2, serviceTrackerList.size());
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 2, serviceTrackerList.size());
 
-		unregister(serviceRegistrations);
-	}
-
-	@Test
-	public void testGetServiceWithServiceTrackerCustomizer() throws Exception {
-		ServiceTrackerList<Object, Object> serviceTrackerList =
-			ServiceTrackerListFactory.open(
-				_bundleContext, Object.class, null,
-				new ServiceTrackerCustomizer<Object, Object>() {
-
-					@Override
-					public Object addingService(
-						ServiceReference<Object> reference) {
-
-						return new CustomizedService();
-					}
-
-					@Override
-					public void modifiedService(
-						ServiceReference<Object> reference, Object service) {
-					}
-
-					@Override
-					public void removedService(
-						ServiceReference<Object> reference, Object service) {
-					}
-
-				});
-
-		ServiceRegistration<Object> serviceRegistration = registerService(
-			Object.class, new Object());
-
-		for (Object service : serviceTrackerList) {
-			Assert.assertTrue(service instanceof CustomizedService);
+			unregister(serviceRegistrations);
 		}
-
-		serviceRegistration.unregister();
 	}
 
 	@Test
-	public void testServiceInsertion() throws Exception {
-		ServiceTrackerList<Object, Object> serviceTrackerList =
-			ServiceTrackerListFactory.open(_bundleContext, Object.class);
+	public void testGetServiceWithServiceTrackerCustomizer() {
+		try (ServiceTrackerList<TrackedOne, TrackedOne> serviceTrackerList =
+				ServiceTrackerListFactory.open(
+					_bundleContext, TrackedOne.class, null,
+					new ServiceTrackerCustomizer<TrackedOne, TrackedOne>() {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+						@Override
+						public TrackedOne addingService(
+							ServiceReference<TrackedOne> reference) {
 
-		ServiceRegistration<Object> serviceRegistration = registerService(
-			Object.class, new Object());
+							return new CustomizedService();
+						}
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 1, serviceTrackerList.size());
+						@Override
+						public void modifiedService(
+							ServiceReference<TrackedOne> reference,
+							TrackedOne service) {
+						}
 
-		serviceRegistration.unregister();
-	}
+						@Override
+						public void removedService(
+							ServiceReference<TrackedOne> reference,
+							TrackedOne service) {
+						}
 
-	@Test
-	public void testServiceIterationOrderWithCustomComparator()
-		throws Exception {
+					})) {
 
-		ServiceTrackerList<Object, Object> serviceTrackerList =
-			ServiceTrackerListFactory.open(
-				_bundleContext, Object.class,
-				new Comparator<ServiceReference<Object>>() {
+			ServiceRegistration<TrackedOne> serviceRegistration =
+				registerService(TrackedOne.class, new TrackedOne());
 
-					@Override
-					public int compare(
-						ServiceReference<Object> serviceReference1,
-						ServiceReference<Object> serviceReference2) {
+			for (TrackedOne service : serviceTrackerList) {
+				Assert.assertTrue(service instanceof CustomizedService);
+			}
 
-						int serviceRanking1 =
-							(Integer)serviceReference1.getProperty(
-								"service.ranking");
-						int serviceRanking2 =
-							(Integer)serviceReference2.getProperty(
-								"service.ranking");
-
-						return serviceRanking1 - serviceRanking2;
-					}
-
-				});
-
-		Object[] services = {new Object(), new Object()};
-
-		Collection<ServiceRegistration<Object>> serviceRegistrations =
-			registerServices(Object.class, services, "service.ranking");
-
-		int i = 0;
-
-		for (Object service : serviceTrackerList) {
-			Assert.assertSame(services[i], service);
-
-			i++;
+			serviceRegistration.unregister();
 		}
-
-		unregister(serviceRegistrations);
 	}
 
 	@Test
-	public void testServiceIterationOrderWithDefaultComparator()
-		throws Exception {
+	public void testServiceInsertion() {
+		try (ServiceTrackerList<TrackedOne, TrackedOne> serviceTrackerList =
+				ServiceTrackerListFactory.open(
+					_bundleContext, TrackedOne.class)) {
 
-		ServiceTrackerList<Object, Object> serviceTrackerList =
-			ServiceTrackerListFactory.open(_bundleContext, Object.class);
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
 
-		Object[] services = {new Object(), new Object()};
+			ServiceRegistration<TrackedOne> serviceRegistration =
+				registerService(TrackedOne.class, new TrackedOne());
 
-		Collection<ServiceRegistration<Object>> serviceRegistrations =
-			registerServices(Object.class, services, "service.ranking");
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 1, serviceTrackerList.size());
 
-		int i = 0;
-
-		for (Object service : serviceTrackerList) {
-			Assert.assertSame(services[services.length - 1 - i], service);
-
-			i++;
+			serviceRegistration.unregister();
 		}
-
-		unregister(serviceRegistrations);
 	}
 
 	@Test
-	public void testServiceRemoval() throws Exception {
-		ServiceTrackerList<Object, Object> serviceTrackerList =
-			ServiceTrackerListFactory.open(_bundleContext, Object.class);
+	public void testServiceIterationOrderWithCustomComparator() {
+		try (ServiceTrackerList<TrackedOne, TrackedOne> serviceTrackerList =
+				ServiceTrackerListFactory.open(
+					_bundleContext, TrackedOne.class,
+					new Comparator<ServiceReference<TrackedOne>>() {
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+						@Override
+						public int compare(
+							ServiceReference<TrackedOne> serviceReference1,
+							ServiceReference<TrackedOne> serviceReference2) {
 
-		ServiceRegistration<Object> serviceRegistration = registerService(
-			Object.class, new Object());
+							int serviceRanking1 =
+								(Integer)serviceReference1.getProperty(
+									"service.ranking");
+							int serviceRanking2 =
+								(Integer)serviceReference2.getProperty(
+									"service.ranking");
 
-		serviceRegistration.unregister();
+							return serviceRanking1 - serviceRanking2;
+						}
 
-		Assert.assertEquals(
-			serviceTrackerList.toString(), 0, serviceTrackerList.size());
+					})) {
+
+			TrackedOne[] services = {new TrackedOne(), new TrackedOne()};
+
+			Collection<ServiceRegistration<TrackedOne>> serviceRegistrations =
+				registerServices(TrackedOne.class, services, "service.ranking");
+
+			int i = 0;
+
+			for (TrackedOne service : serviceTrackerList) {
+				Assert.assertSame(services[i], service);
+
+				i++;
+			}
+
+			unregister(serviceRegistrations);
+		}
 	}
 
-	public static class CustomizedService {
+	@Test
+	public void testServiceIterationOrderWithDefaultComparator() {
+		try (ServiceTrackerList<TrackedOne, TrackedOne> serviceTrackerList =
+				ServiceTrackerListFactory.open(
+					_bundleContext, TrackedOne.class)) {
+
+			TrackedOne[] services = {new TrackedOne(), new TrackedOne()};
+
+			Collection<ServiceRegistration<TrackedOne>> serviceRegistrations =
+				registerServices(TrackedOne.class, services, "service.ranking");
+
+			int i = 0;
+
+			for (TrackedOne service : serviceTrackerList) {
+				Assert.assertSame(services[services.length - 1 - i], service);
+
+				i++;
+			}
+
+			unregister(serviceRegistrations);
+		}
+	}
+
+	@Test
+	public void testServiceRemoval() {
+		try (ServiceTrackerList<TrackedOne, TrackedOne> serviceTrackerList =
+				ServiceTrackerListFactory.open(
+					_bundleContext, TrackedOne.class)) {
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
+
+			ServiceRegistration<TrackedOne> serviceRegistration =
+				registerService(TrackedOne.class, new TrackedOne());
+
+			serviceRegistration.unregister();
+
+			Assert.assertEquals(
+				serviceTrackerList.toString(), 0, serviceTrackerList.size());
+		}
+	}
+
+	public static class CustomizedService extends TrackedOne {
 	}
 
 	protected <T> ServiceRegistration<T> registerService(

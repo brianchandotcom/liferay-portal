@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -188,9 +190,11 @@ public class DDMFormValuesJSONDeserializer
 		while (itr.hasNext()) {
 			String languageId = itr.next();
 
-			localizedValue.addString(
-				LocaleUtil.fromLanguageId(languageId),
-				jsonObject.getString(languageId));
+			if (LanguageUtil.isAvailableLocale(languageId)) {
+				localizedValue.addString(
+					LocaleUtil.fromLanguageId(languageId),
+					jsonObject.getString(languageId));
+			}
 		}
 
 		return localizedValue;
@@ -224,7 +228,7 @@ public class DDMFormValuesJSONDeserializer
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			if (!LanguageUtil.isAvailableLocale(key)) {
+			if (!ArrayUtil.contains(PropsValues.LOCALES, key)) {
 				return false;
 			}
 		}

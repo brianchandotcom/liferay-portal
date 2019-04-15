@@ -14,7 +14,7 @@
 
 package com.liferay.talend.configuration;
 
-import com.liferay.talend.dataset.RestDataSet;
+import com.liferay.talend.dataset.RESTDataSet;
 
 import java.io.Serializable;
 
@@ -44,7 +44,7 @@ public class LiferayInputMapperConfiguration implements Serializable {
 		return _batchSize;
 	}
 
-	public RestDataSet getRestDataSet() {
+	public RESTDataSet getRestDataSet() {
 		return _restDataSet;
 	}
 
@@ -59,7 +59,7 @@ public class LiferayInputMapperConfiguration implements Serializable {
 	}
 
 	public LiferayInputMapperConfiguration setRestDataSet(
-		RestDataSet restDataSet) {
+		RESTDataSet restDataSet) {
 
 		_restDataSet = restDataSet;
 
@@ -76,7 +76,7 @@ public class LiferayInputMapperConfiguration implements Serializable {
 	private int _batchSize = 100;
 
 	@Option
-	private RestDataSet _restDataSet;
+	private RESTDataSet _restDataSet;
 
 	@Option
 	private int _timeout = 60000;

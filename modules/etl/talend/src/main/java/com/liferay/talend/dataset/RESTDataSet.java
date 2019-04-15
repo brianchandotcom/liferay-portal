@@ -29,15 +29,15 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
  * @author Igor Beslic
  * @review
  */
-@DataSet("RestDataSet")
+@DataSet("RESTDataSet")
 @GridLayout({@GridLayout.Row("_inputDataStore"), @GridLayout.Row("_resource")})
-public class RestDataSet implements Serializable {
+public class RESTDataSet implements Serializable {
 
 	public InputDataStore getInputDataStore() {
 		return _inputDataStore;
 	}
 
-	public RestDataSet setInputDataStore(InputDataStore inputDataStore) {
+	public RESTDataSet setInputDataStore(InputDataStore inputDataStore) {
 		_inputDataStore = inputDataStore;
 
 		return this;

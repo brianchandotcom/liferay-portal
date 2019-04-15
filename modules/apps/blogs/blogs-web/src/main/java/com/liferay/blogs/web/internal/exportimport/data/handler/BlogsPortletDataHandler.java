@@ -45,20 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BlogsPortletDataHandler extends BasePortletDataHandler {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             BlogsAdminPortletDataHandler#NAMESPACE}
-	 */
-	@Deprecated
-	public static final String NAMESPACE = "blogs";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             BlogsAdminPortletDataHandler#SCHEMA_VERSION}
-	 */
-	@Deprecated
-	public static final String SCHEMA_VERSION = "1.0.0";
-
 	@Override
 	public PortletPreferences deleteData(
 			PortletDataContext portletDataContext, String portletId,

@@ -47,14 +47,14 @@ import org.talend.sdk.component.api.service.healthcheck.HealthCheckStatus;
 @Service
 public class UIActionService {
 
-	@HealthCheck("checkInputDataStore")
+	@HealthCheck(family = "Liferay", value = "checkInputDataStore")
 	public HealthCheckStatus checkInputDataStore(
 		@Option InputDataStore inputDataStore) {
 
 		return _dataStoreChecker.checkInputDataStore(inputDataStore);
 	}
 
-	@Suggestions("fetchEndpoints")
+	@Suggestions(family = "Liferay", value = "fetchEndpoints")
 	public SuggestionValues fetchEndpoints(
 		@Option("inputDataStore") final InputDataStore inputDataStore) {
 

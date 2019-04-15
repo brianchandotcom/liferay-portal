@@ -428,7 +428,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR_2",
-				value1 = "Error:You cannot delete asset display pages that are used by one or more assets."
+				value1 = "Error:You cannot delete asset display page templates that are used by one or more assets."
 			);
 
 			DisplayPageTemplatesAdmin.viewDisplayPagePresent(

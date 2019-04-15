@@ -41,7 +41,7 @@ public class SearchRequestBuilderFactoryInstantiationTest {
 	@Test
 	public void testGetSearchRequestBuilder() {
 		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.getSearchRequestBuilder();
+			_searchRequestBuilderFactory.builder();
 
 		Assert.assertNotNull(searchRequestBuilder);
 	}

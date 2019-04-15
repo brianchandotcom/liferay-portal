@@ -16,6 +16,8 @@ definition {
 		);
 
 		ChangeList.enableChangeList();
+
+		Refresh();
 	}
 
 	tearDown {

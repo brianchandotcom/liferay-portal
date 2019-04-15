@@ -271,11 +271,22 @@ definition {
 		Panel.expandPanel(panel = "Set and Enable");
 
 		for (var displaySetting : list "${displaySettings}") {
-			if (contains("${displaySetting}", "Social Bookmarks")) {
-				Check.checkHiddenToggleSwitch(locator1 = "ToggleSwitch#ENABLE_SOCIAL_BOOKMARKS");
-			}
-			else {
-				Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "${displaySetting}");
+			Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "${displaySetting}");
+		}
+
+		if (isSet(enableSocialBookmarkSites)){
+			for (var socialBookmarkSite : list "${enableSocialBookmarkSites}") {
+				AddSelection(
+					locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_AVAILABLE_SELECT",
+					value1 = "${socialBookmarkSite}"
+				);
+
+				Click(locator1 = "Button#MOVE_AVAILABLE_TO_CURRENT");
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT",
+					value1 = "${socialBookmarkSite}"
+				);
 			}
 		}
 

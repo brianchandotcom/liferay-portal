@@ -37,14 +37,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public DLFileShortcutTrashRenderer(DLFileShortcut dlFileShortcut) {
-		this(dlFileShortcut, null);
-	}
-
 	public DLFileShortcutTrashRenderer(
 		DLFileShortcut dlFileShortcut, TrashHelper trashHelper) {
 

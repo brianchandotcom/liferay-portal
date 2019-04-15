@@ -52,14 +52,6 @@ public class DLFolderAssetRenderer
 
 	public static final String TYPE = "folder";
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public DLFolderAssetRenderer(Folder folder) {
-		this(folder, null);
-	}
-
 	public DLFolderAssetRenderer(Folder folder, TrashHelper trashHelper) {
 		_folder = folder;
 		_trashHelper = trashHelper;

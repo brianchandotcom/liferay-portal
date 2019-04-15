@@ -14,21 +14,32 @@
 
 package com.liferay.talend.http.client;
 
+import com.liferay.talend.datastore.OAuthDataStore;
+import com.liferay.talend.http.client.codec.XWWWFormURLEncoder;
+
 import javax.json.JsonObject;
 
+import org.talend.sdk.component.api.service.http.Codec;
 import org.talend.sdk.component.api.service.http.Header;
 import org.talend.sdk.component.api.service.http.HttpClient;
+import org.talend.sdk.component.api.service.http.Path;
 import org.talend.sdk.component.api.service.http.Request;
 import org.talend.sdk.component.api.service.http.Response;
 
 /**
  * @author Igor Beslic
  */
-public interface BasicAuthenticationClient extends HttpClient {
+public interface LiferayHttpClient extends HttpClient {
 
-	@Request(method = "POST", path = "/c/portal/login")
-	public Response<JsonObject> checkRequest(
-		@Header("Authorization") String auth,
-		@Header("Content-Type") String contentType);
+	@Codec(encoder = XWWWFormURLEncoder.class)
+	@Request(method = "POST", path = "/o/oauth2/token")
+	public Response<JsonObject> getAccessToken(
+		@Header("Content-Type") String contentType,
+		OAuthDataStore oAuthDataStore);
+
+	@Request
+	public Response<JsonObject> getData(
+		@Header("Authorization") String authorizationHeader,
+		@Header("Accept") String acceptHeader, @Path("") String path);
 
 }

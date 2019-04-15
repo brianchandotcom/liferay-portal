@@ -213,6 +213,8 @@ public interface FragmentCollectionLocalService
 	public FragmentCollection fetchFragmentCollectionByUuidAndGroupId(
 		String uuid, long groupId);
 
+	public String generateFragmentCollectionKey(long groupId, String name);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

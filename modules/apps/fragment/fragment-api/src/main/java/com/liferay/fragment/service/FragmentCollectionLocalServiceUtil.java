@@ -241,6 +241,12 @@ public class FragmentCollectionLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static String generateFragmentCollectionKey(
+		long groupId, String name) {
+
+		return getService().generateFragmentCollectionKey(groupId, name);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

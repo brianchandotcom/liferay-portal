@@ -298,6 +298,8 @@ public interface FragmentEntryLocalService
 	public FragmentEntry fetchFragmentEntryByUuidAndGroupId(
 		String uuid, long groupId);
 
+	public String generateFragmentEntryKey(long groupId, String name);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

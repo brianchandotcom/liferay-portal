@@ -409,6 +409,10 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().fetchFragmentEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static String generateFragmentEntryKey(long groupId, String name) {
+		return getService().generateFragmentEntryKey(groupId, name);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

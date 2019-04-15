@@ -255,6 +255,12 @@ public class FragmentCollectionLocalServiceWrapper
 	}
 
 	@Override
+	public String generateFragmentCollectionKey(long groupId, String name) {
+		return _fragmentCollectionLocalService.generateFragmentCollectionKey(
+			groupId, name);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

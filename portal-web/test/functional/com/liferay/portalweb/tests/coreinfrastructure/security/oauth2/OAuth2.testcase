@@ -243,15 +243,6 @@ definition {
 			resourcePanels = "Portal Services"
 		);
 
-		OAuth2.viewApplication(
-			applicationName = "Third-party Application",
-			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
-			checkboxCheckList = "Authorization Code,Client Credentials,Refresh Token,Resource Owner Password Credentials",
-			clientId = "${clientId}",
-			clientProfile = "Web Application",
-			clientSecret = "${clientSecret}"
-		);
-
 		Navigator.openSpecificURL(
 			url = "http://martamedio.com/oauth2-tester/"
 		);

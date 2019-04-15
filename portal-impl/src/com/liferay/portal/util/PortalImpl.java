@@ -2390,13 +2390,20 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getForwardedHost(HttpServletRequest request) {
-		if (!PropsValues.WEB_SERVER_FORWARDED_HOST_ENABLED) {
+		String forwardedHost = request.getHeader(
+			PropsValues.WEB_SERVER_FORWARDED_HOST_HEADER);
+
+		if (!PropsValues.WEB_SERVER_FORWARDED_HOST_ENABLED ||
+			(forwardedHost == null)) {
+
 			return request.getServerName();
 		}
 
-		return GetterUtil.get(
-			request.getHeader(PropsValues.WEB_SERVER_FORWARDED_HOST_HEADER),
-			request.getServerName());
+		if (!isValidPortalDomain(forwardedHost)) {
+			throw new RuntimeException("Invalid host name " + forwardedHost);
+		}
+
+		return forwardedHost;
 	}
 
 	@Override

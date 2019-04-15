@@ -223,11 +223,6 @@ const altProps = {
 					type: 'id'
 				},
 				{
-					label: 'Tree Path',
-					name: 'treePath',
-					type: 'string'
-				},
-				{
 					label: 'Type',
 					name: 'type',
 					type: 'string'

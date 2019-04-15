@@ -495,31 +495,6 @@ public class OrganizationODataRetrieverTest {
 	}
 
 	@Test
-	public void testGetOrganizationsFilterByTreePath() throws Exception {
-		Organization organization1 = OrganizationTestUtil.addOrganization();
-		Organization organization2 = OrganizationTestUtil.addOrganization();
-
-		_organizations.add(organization1);
-
-		_organizations.add(organization2);
-
-		String filterString =
-			"(treePath eq '" + organization1.getTreePath() + "')";
-
-		int count = _oDataRetriever.getResultsCount(
-			TestPropsValues.getCompanyId(), filterString,
-			LocaleUtil.getDefault());
-
-		Assert.assertEquals(1, count);
-
-		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(), filterString,
-			LocaleUtil.getDefault(), 0, 2);
-
-		Assert.assertEquals(organization1, organizations.get(0));
-	}
-
-	@Test
 	public void testGetOrganizationsFilterByType() throws Exception {
 		Organization parentOrganization =
 			OrganizationTestUtil.addOrganization();

@@ -60,7 +60,6 @@ public class OrganizationEntityModel implements EntityModel {
 			new StringEntityField(
 				"nameTreePath",
 				locale -> Field.getSortableFieldName("nameTreePath_String")),
-			new StringEntityField("treePath", locale -> Field.TREE_PATH),
 			new StringEntityField("type", locale -> Field.TYPE)
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())

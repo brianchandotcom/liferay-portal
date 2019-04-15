@@ -146,11 +146,6 @@ const propertyGroups = [{
 		type: 'string'
 	},
 	{
-		label: 'Tree Path',
-		name: 'treePath',
-		type: 'string'
-	},
-	{
 		label: 'Type',
 		name: 'type',
 		type: 'string'

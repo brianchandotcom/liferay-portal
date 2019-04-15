@@ -48,20 +48,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             BookmarksAdminPortletDataHandler#NAMESPACE}
-	 */
-	@Deprecated
-	public static final String NAMESPACE = "bookmarks";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             BookmarksAdminPortletDataHandler#SCHEMA_VERSION}
-	 */
-	@Deprecated
-	public static final String SCHEMA_VERSION = "1.0.0";
-
 	@Override
 	public PortletPreferences deleteData(
 			PortletDataContext portletDataContext, String portletId,

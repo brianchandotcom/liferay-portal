@@ -58,6 +58,14 @@ definition {
 		return "${currentURL}";
 	}
 
+	macro gotoAccountSettings {
+		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		var key_dropdownItem = "Account Settings";
+
+		Click(locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
+	}
+
 	macro gotoBack {
 		Click(locator1 = "Icon#BACK");
 	}

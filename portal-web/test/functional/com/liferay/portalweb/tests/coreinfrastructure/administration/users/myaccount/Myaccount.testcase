@@ -185,11 +185,7 @@ definition {
 	test ViewMyAccount {
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Account Settings"
-		);
+		Navigator.gotoAccountSettings();
 
 		MyAccount.view();
 	}
@@ -227,11 +223,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Account Settings"
-		);
+		Navigator.gotoAccountSettings();
 
 		MyAccount.view();
 

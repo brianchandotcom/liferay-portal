@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.LexiconUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -69,7 +70,24 @@ public abstract class BaseVerticalCard
 
 	@Override
 	public String getStickerCssClass() {
-		return "sticker-user-icon";
+		String userColorCssClass = "user-icon-default";
+
+		try {
+			if (!(baseModel instanceof AuditedModel)) {
+				return StringPool.BLANK;
+			}
+
+			AuditedModel auditedModel = (AuditedModel)baseModel;
+
+			User user = UserLocalServiceUtil.fetchUser(
+				auditedModel.getUserId());
+
+			userColorCssClass = LexiconUtil.getUserColorCssClass(user);
+		}
+		catch (Exception e) {
+		}
+
+		return "sticker-user-icon " + userColorCssClass;
 	}
 
 	@Override

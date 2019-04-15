@@ -51,7 +51,7 @@ public class BlogsEntryModelSummaryContributor
 	}
 
 	private Summary _createSummary(
-		Document document, String titleField, String contentField) {
+		Document document, String contentField, String titleField) {
 
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 

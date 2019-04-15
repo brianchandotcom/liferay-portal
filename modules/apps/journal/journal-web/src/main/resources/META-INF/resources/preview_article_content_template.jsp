@@ -22,31 +22,31 @@ JournalArticleDisplay articleDisplay = journalDisplayContext.getArticleDisplay()
 
 <div class="container-fluid-1280 mt-2">
 	<%= articleDisplay.getContent() %>
+
+	<c:if test="<%= articleDisplay.isPaginate() %>">
+
+		<%
+		JournalArticle article = journalDisplayContext.getArticle();
+		%>
+
+		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" varImpl="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+		</liferay-portlet:renderURL>
+
+		<liferay-ui:page-iterator
+			cur="<%= articleDisplay.getCurrentPage() %>"
+			curParam='<%= "page" %>'
+			delta="<%= 1 %>"
+			id="articleDisplayPages"
+			maxPages="<%= 25 %>"
+			portletURL="<%= previewArticleContentURL %>"
+			total="<%= articleDisplay.getNumberOfPages() %>"
+			type="article"
+		/>
+
+		<br />
+	</c:if>
 </div>
-
-<c:if test="<%= articleDisplay.isPaginate() %>">
-
-	<%
-	JournalArticle article = journalDisplayContext.getArticle();
-	%>
-
-	<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" varImpl="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
-		<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-		<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-		<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-	</liferay-portlet:renderURL>
-
-	<liferay-ui:page-iterator
-		cur="<%= articleDisplay.getCurrentPage() %>"
-		curParam='<%= "page" %>'
-		delta="<%= 1 %>"
-		id="articleDisplayPages"
-		maxPages="<%= 25 %>"
-		portletURL="<%= previewArticleContentURL %>"
-		total="<%= articleDisplay.getNumberOfPages() %>"
-		type="article"
-	/>
-
-	<br />
-</c:if>

@@ -84,43 +84,49 @@ class FragmentEntryLink extends Component {
 	 * @review
 	 */
 	_handleFragmentKeyUp(event) {
-		event.stopPropagation();
+		if (!this.fragmentEditorEnabled) {
+			event.stopPropagation();
 
-		const direction = getItemMoveDirection(event.which);
-		const {fragmentEntryLinkType} = event.delegateTarget.dataset;
+			const direction = getItemMoveDirection(event.which);
+			const {fragmentEntryLinkType} = event.delegateTarget.dataset;
 
-		if (fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section) {
-			moveRow(
-				direction,
-				getFragmentRowIndex(
+			if (fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section) {
+				moveRow(
+					direction,
+					getFragmentRowIndex(
+						this.layoutData.structure,
+						this.fragmentEntryLinkId
+					),
+					this.store,
+					this.layoutData.structure
+				);
+			}
+			else {
+				const column = getFragmentColumn(
 					this.layoutData.structure,
 					this.fragmentEntryLinkId
-				),
-				this.store,
-				this.layoutData.structure
-			);
-		}
-		else {
-			const column = getFragmentColumn(
-				this.layoutData.structure,
-				this.fragmentEntryLinkId
-			);
-			const fragmentIndex = column.fragmentEntryLinkIds.indexOf(
-				this.fragmentEntryLinkId
-			);
-			const targetFragmentEntryLinkId = column.fragmentEntryLinkIds[
-				fragmentIndex + direction
-			];
+				);
+				const fragmentIndex = column.fragmentEntryLinkIds.indexOf(
+					this.fragmentEntryLinkId
+				);
+				const targetFragmentEntryLinkId = column.fragmentEntryLinkIds[
+					fragmentIndex + direction
+				];
 
-			if (direction && targetFragmentEntryLinkId) {
-				const moveItemPayload = {
-					fragmentEntryLinkId: this.fragmentEntryLinkId,
-					targetBorder: getTargetBorder(direction),
-					targetItemId: targetFragmentEntryLinkId,
-					targetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-				};
+				if (direction && targetFragmentEntryLinkId) {
+					const moveItemPayload = {
+						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						targetBorder: getTargetBorder(direction),
+						targetItemId: targetFragmentEntryLinkId,
+						targetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+					};
 
-				moveItem(this.store, MOVE_FRAGMENT_ENTRY_LINK, moveItemPayload);
+					moveItem(
+						this.store,
+						MOVE_FRAGMENT_ENTRY_LINK,
+						moveItemPayload
+					);
+				}
 			}
 		}
 	}
@@ -214,6 +220,7 @@ const ConnectedFragmentEntryLink = getConnectedComponent(
 		'dropTargetItemId',
 		'dropTargetItemType',
 		'dropTargetBorder',
+		'fragmentEditorEnabled',
 		'hoveredItemId',
 		'hoveredItemType',
 		'imageSelectorURL',

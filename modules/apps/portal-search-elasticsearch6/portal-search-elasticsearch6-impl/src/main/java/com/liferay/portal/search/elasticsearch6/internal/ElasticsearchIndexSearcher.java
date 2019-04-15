@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -268,11 +267,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		searchSearchRequest.setAlternateUidFieldName(
 			queryConfig.getAlternateUidFieldName());
 
-		boolean basicFacetSelection = GetterUtil.getBoolean(
-			searchContext.getAttribute(
-				SearchContextAttributes.ATTRIBUTE_KEY_BASIC_FACET_SELECTION));
-
-		searchSearchRequest.setBasicFacetSelection(basicFacetSelection);
+		searchSearchRequest.setBasicFacetSelection(
+			searchRequest.isBasicFacetSelection());
 
 		searchSearchRequest.putAllFacets(searchContext.getFacets());
 
@@ -322,6 +318,21 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return searchSearchRequest;
 	}
 
+	protected String[] getIndexes(
+		SearchRequest searchRequest, SearchContext searchContext) {
+
+		List<String> indexes = searchRequest.getIndexes();
+
+		if (!indexes.isEmpty()) {
+			return indexes.toArray(new String[indexes.size()]);
+		}
+
+		String indexName = _indexNameBuilder.getIndexName(
+			searchContext.getCompanyId());
+
+		return new String[] {indexName};
+	}
+
 	protected com.liferay.portal.search.query.Query getQuery(
 		SearchRequest searchRequest) {
 
@@ -359,21 +370,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchRequest searchRequest = searchRequestBuilder.build();
 
 		return searchRequest;
-	}
-
-	protected String[] getSelectedIndexNames(
-		QueryConfig queryConfig, SearchContext searchContext) {
-
-		String[] selectedIndexNames = queryConfig.getSelectedIndexNames();
-
-		if (ArrayUtil.isNotEmpty(selectedIndexNames)) {
-			return selectedIndexNames;
-		}
-
-		String indexName = _indexNameBuilder.getIndexName(
-			searchContext.getCompanyId());
-
-		return new String[] {indexName};
 	}
 
 	protected boolean handle(Exception e) {
@@ -419,15 +415,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		BaseSearchRequest baseSearchRequest, SearchRequest searchRequest,
 		Query query, SearchContext searchContext) {
 
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		String[] indexNames = getSelectedIndexNames(queryConfig, searchContext);
-
-		baseSearchRequest.setIndexNames(indexNames);
-
-		baseSearchRequest.setPostFilter(query.getPostFilter());
-		baseSearchRequest.setQuery(query);
-
 		baseSearchRequest.setExplain(searchRequest.isExplain());
 		baseSearchRequest.setIncludeResponseString(
 			searchRequest.isIncludeResponseString());
@@ -437,6 +424,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		baseSearchRequest.setStatsRequests(searchRequest.getStatsRequests());
 
 		setAggregations(baseSearchRequest, searchRequest);
+		setIndexNames(baseSearchRequest, searchRequest, searchContext);
+		setLegacyQuery(baseSearchRequest, query);
+		setLegacyPostFilter(baseSearchRequest, query);
 		setPipelineAggregations(baseSearchRequest, searchRequest);
 		setQuery(baseSearchRequest, searchRequest);
 	}
@@ -461,6 +451,28 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	@Reference(unbind = "-")
 	protected void setIndexNameBuilder(IndexNameBuilder indexNameBuilder) {
 		_indexNameBuilder = indexNameBuilder;
+	}
+
+	protected void setIndexNames(
+		BaseSearchRequest baseSearchRequest, SearchRequest searchRequest,
+		SearchContext searchContext) {
+
+		baseSearchRequest.setIndexNames(
+			getIndexes(searchRequest, searchContext));
+	}
+
+	protected void setLegacyPostFilter(
+		BaseSearchRequest baseSearchRequest, Query query) {
+
+		if (query != null) {
+			baseSearchRequest.setPostFilter(query.getPostFilter());
+		}
+	}
+
+	protected void setLegacyQuery(
+		BaseSearchRequest baseSearchRequest, Query query) {
+
+		baseSearchRequest.setQuery(query);
 	}
 
 	protected void setPipelineAggregations(
@@ -514,15 +526,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	private SearchRequestBuilder _getSearchRequestBuilder(
 		SearchContext searchContext) {
 
-		return _searchRequestBuilderFactory.getSearchRequestBuilder(
-			searchContext);
+		return _searchRequestBuilderFactory.builder(searchContext);
 	}
 
 	private SearchResponseBuilder _getSearchResponseBuilder(
 		SearchContext searchContext) {
 
-		return _searchResponseBuilderFactory.getSearchResponseBuilder(
-			searchContext);
+		return _searchResponseBuilderFactory.builder(searchContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

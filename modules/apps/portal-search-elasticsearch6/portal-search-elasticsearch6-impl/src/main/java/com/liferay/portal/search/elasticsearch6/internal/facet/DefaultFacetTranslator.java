@@ -60,7 +60,7 @@ public class DefaultFacetTranslator implements FacetTranslator {
 
 		List<QueryBuilder> postFilterQueryBuilders = new ArrayList<>();
 
-		if (query.getPostFilter() != null) {
+		if ((query != null) && (query.getPostFilter() != null)) {
 			postFilterQueryBuilders.add(
 				_filterTranslator.translate(query.getPostFilter(), null));
 		}

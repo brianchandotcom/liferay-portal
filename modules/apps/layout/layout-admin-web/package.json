@@ -32,7 +32,7 @@
 	},
 	"name": "layout-admin-web",
 	"scripts": {
-		"build": "liferay-npm-scripts build --soy --bridge --bundler",
+		"build": "liferay-npm-scripts",
 		"csf": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},

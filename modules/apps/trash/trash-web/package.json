@@ -4,7 +4,7 @@
 	},
 	"name": "trash-web",
 	"scripts": {
-		"build": "liferay-npm-scripts build --bundler",
+		"build": "liferay-npm-scripts",
 		"csf": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},

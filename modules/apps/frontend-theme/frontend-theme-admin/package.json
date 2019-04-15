@@ -17,7 +17,7 @@
 	"name": "liferay-admin-theme",
 	"repository": "liferay/liferay-portal",
 	"scripts": {
-		"build": "liferay-npm-scripts theme build"
+		"build": "liferay-npm-scripts"
 	},
 	"version": "3.0.0"
 }

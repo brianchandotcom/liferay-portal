@@ -67,7 +67,7 @@
 	"name": "frontend-taglib-clay",
 	"private": true,
 	"scripts": {
-		"build": "liferay-npm-scripts build --soy --bundler --bridge",
+		"build": "liferay-npm-scripts",
 		"csf": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
 		"test": "liferay-npm-scripts test"

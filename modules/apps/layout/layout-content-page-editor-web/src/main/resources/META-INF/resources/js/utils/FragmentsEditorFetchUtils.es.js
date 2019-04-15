@@ -39,6 +39,25 @@ function _fetch(url, body = {}) {
 }
 
 /**
+ * @param {string} segmentsExperienceId
+ * @param {Array<string>} [fragmentEntryLinkIds=[]]
+ * @return {Promise<Response>}
+ */
+function removeExperience(segmentsExperienceId, fragmentEntryLinkIds = []) {
+	const state = _store.getState();
+
+	const body = {
+		segmentsExperienceId
+	};
+
+	if (fragmentEntryLinkIds && fragmentEntryLinkIds.length) {
+		body.fragmentEntryLinkIds = JSON.stringify(fragmentEntryLinkIds);
+	}
+
+	return _fetch(state.deleteSegmentsExperienceURL, body);
+}
+
+/**
  * @param {string[]} fragmentEntryLinkIds
  * @param {string} segmentsExperienceId
  * @return {Promise<Response>}
@@ -86,6 +105,7 @@ function updatePageEditorLayoutData(layoutData, segmentsExperienceId) {
 }
 
 export {
+	removeExperience,
 	removeFragmentEntryLinks,
 	setStore,
 	updatePageEditorLayoutData

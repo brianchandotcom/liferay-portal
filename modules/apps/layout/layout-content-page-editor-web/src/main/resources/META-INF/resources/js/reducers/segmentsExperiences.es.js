@@ -1,7 +1,7 @@
 import {CREATE_SEGMENTS_EXPERIENCE, DELETE_SEGMENTS_EXPERIENCE, EDIT_SEGMENTS_EXPERIENCE, SELECT_SEGMENTS_EXPERIENCE, UPDATE_SEGMENTS_EXPERIENCE_PRIORITY} from '../actions/actions.es';
 import {deepClone} from '../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
-import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {removeExperience, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 import {getRowFragmentEntryLinkIds} from '../utils/FragmentsEditorGetUtils.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 
@@ -127,45 +127,6 @@ function _switchLayoutDataList(state, segmentsExperienceId) {
 			catch (e) {
 				reject(e);
 			}
-		}
-	);
-}
-
-/**
- *
- *
- * @param {object} config
- * @param {Array<string>} config.fragmentEntryLinkIds
- * @param {string} config.portletNamespace
- * @param {string} config.segmentsExperienceId
- * @param {string} config.deleteSegmentsExperienceURL
- * @returns {Promise}
- */
-function _removeExperience(
-	{
-		fragmentEntryLinkIds,
-		portletNamespace,
-		segmentsExperienceId,
-		deleteSegmentsExperienceURL
-	}
-) {
-	const formData = new FormData();
-
-	formData.append(`${portletNamespace}segmentsExperienceId`, segmentsExperienceId);
-
-	if (fragmentEntryLinkIds) {
-		formData.append(
-			`${portletNamespace}fragmentEntryLinkIds`,
-			JSON.stringify(fragmentEntryLinkIds)
-		);
-	}
-
-	return fetch(
-		deleteSegmentsExperienceURL,
-		{
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
 		}
 	);
 }
@@ -354,15 +315,9 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 						)
 					);
 
-					_removeExperience(
-						{
-							classNameId: nextState.classNameId,
-							classPK: nextState.classPK,
-							deleteSegmentsExperienceURL: nextState.deleteSegmentsExperienceURL,
-							fragmentEntryLinkIds: fragmentEntryLinkIds,
-							portletNamespace: nextState.portletNamespace,
-							segmentsExperienceId
-						}
+					removeExperience(
+						segmentsExperienceId,
+						fragmentEntryLinkIds
 					).then(
 						() => {
 							let availableSegmentsExperiences = Object.assign(

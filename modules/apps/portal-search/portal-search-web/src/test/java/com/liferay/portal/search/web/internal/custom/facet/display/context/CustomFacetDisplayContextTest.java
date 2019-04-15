@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -188,7 +189,8 @@ public class CustomFacetDisplayContextTest {
 		customFacetDisplayBuilder.setFrequencyThreshold(0);
 		customFacetDisplayBuilder.setMaxTerms(0);
 
-		customFacetDisplayBuilder.setCustomDisplayCaption(customDisplayCaption);
+		customFacetDisplayBuilder.setCustomDisplayCaption(
+			Optional.ofNullable(customDisplayCaption));
 		customFacetDisplayBuilder.setFieldToAggregate(fieldToAggregate);
 
 		return customFacetDisplayBuilder.build();

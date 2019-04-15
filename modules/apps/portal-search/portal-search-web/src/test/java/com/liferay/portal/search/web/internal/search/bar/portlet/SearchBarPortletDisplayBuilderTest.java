@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
 
+import java.util.Optional;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -177,7 +179,7 @@ public class SearchBarPortletDisplayBuilderTest {
 			createSearchBarPortletDisplayBuilder();
 
 		searchBarPortletDisplayBuilder.setScopeParameterValue(
-			SearchScope.EVERYTHING.getParameterString());
+			Optional.of(SearchScope.EVERYTHING.getParameterString()));
 
 		Assert.assertEquals(
 			SearchScope.EVERYTHING,

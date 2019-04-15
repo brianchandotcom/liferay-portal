@@ -308,7 +308,7 @@ public class SearchDisplayContextTest {
 			searchResponseBuilder
 		).when(
 			searchResponseBuilderFactory
-		).getSearchResponseBuilder(
+		).builder(
 			Mockito.any()
 		);
 

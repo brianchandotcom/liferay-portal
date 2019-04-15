@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultContentDisplayContext;
+import com.liferay.portlet.internal.MutableRenderParametersImpl;
+
+import java.util.HashMap;
+import java.util.HashSet;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -286,6 +290,12 @@ public class SearchResultContentDisplayBuilderTest {
 		).when(
 			_renderResponse
 		).createRenderURL();
+
+		Mockito.doReturn(
+			new MutableRenderParametersImpl(new HashMap<>(), new HashSet<>())
+		).when(
+			_renderPortletURL
+		).getRenderParameters();
 	}
 
 	@Mock

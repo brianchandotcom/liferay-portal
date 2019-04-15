@@ -34,7 +34,13 @@ rowURL.setParameter("redirect", currentURL);
 rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 %>
 
-<span class="text-default">
+<h2 class="h5">
+	<aui:a href="<%= rowURL.toString() %>">
+		<%= folder.getName() %>
+	</aui:a>
+</h2>
+
+<span>
 	<c:choose>
 		<c:when test="<%= Validator.isNull(folder.getUserName()) %>">
 			<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription} %>" key="modified-x-ago" />
@@ -44,9 +50,3 @@ rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 		</c:otherwise>
 	</c:choose>
 </span>
-
-<h2 class="h5">
-	<aui:a href="<%= rowURL.toString() %>">
-		<%= folder.getName() %>
-	</aui:a>
-</h2>

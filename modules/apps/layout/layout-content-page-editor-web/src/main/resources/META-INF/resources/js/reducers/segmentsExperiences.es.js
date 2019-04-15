@@ -315,12 +315,13 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 						() => {
 							const priority = nextState.availableSegmentsExperiences[segmentsExperienceId].priority;
 
-							let availableSegmentsExperiences = Object.assign(
+							const availableSegmentsExperiences = Object.assign(
 								{},
 								nextState.availableSegmentsExperiences
 							);
 
 							delete availableSegmentsExperiences[segmentsExperienceId];
+
 							const experienceIdToSelect = segmentsExperienceId === nextState.segmentsExperienceId ?
 								nextState.defaultSegmentsExperienceId :
 								nextState.segmentsExperienceId;
@@ -334,8 +335,15 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
 									}
 								}
 							);
-							nextState = _removeLayoutDataItem(nextState, segmentsExperienceId);
-							nextState = _switchLayoutDataToDefault(nextState);
+
+							nextState = _removeLayoutDataItem(
+								nextState,
+								segmentsExperienceId
+							);
+
+							nextState = _switchLayoutDataToDefault(
+								nextState
+							);
 
 							nextState = setIn(
 								nextState,

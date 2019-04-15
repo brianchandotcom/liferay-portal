@@ -114,47 +114,47 @@ function removeRowReducer(state, actionType, payload) {
 	return new Promise(
 		resolve => {
 			if (actionType === REMOVE_ROW) {
-				const nextData = _removeRow(
-					nextState.layoutData,
-					payload.rowId
+				nextState = updateIn(
+					nextState,
+					['layoutData', 'structure'],
+					structure => remove(
+						structure,
+						getRowIndex(structure, payload.rowId)
+					),
+					[]
 				);
-
-				const row = nextState.layoutData.structure[getRowIndex(nextState.layoutData.structure, payload.rowId)];
 
 				const fragmentEntryLinkIds = getRowFragmentEntryLinkIds(
-					row
-				);
-
-				const fragmentsToRemove = fragmentEntryLinkIds.filter(
-					id => !containsFragmentEntryLinkId(
+					state.layoutData.structure[
+						getRowIndex(state.layoutData.structure, payload.rowId)
+					]
+				).filter(
+					fragmentEntryLinkId => !containsFragmentEntryLinkId(
 						nextState.layoutDataList,
-						id,
-						nextState.segmentsExperienceId
+						fragmentEntryLinkId,
+						nextState.segmentsExperienceId || nextState.defaultSegmentsExperienceId
 					)
 				);
 
-				fragmentsToRemove.forEach(
+				fragmentEntryLinkIds.forEach(
 					fragmentEntryLinkId => {
-						nextState = updateWidgets(nextState, fragmentEntryLinkId);
+						nextState = updateWidgets(
+							nextState,
+							fragmentEntryLinkId
+						);
 					}
 				);
 
 				updatePageEditorLayoutData(
-					nextData,
+					nextState.layoutData,
 					nextState.segmentsExperienceId
 				).then(
 					() => removeFragmentEntryLinks(
-						fragmentsToRemove,
+						fragmentEntryLinkIds,
 						nextState.segmentsExperienceId
 					)
 				).then(
 					() => {
-						nextState = setIn(
-							nextState,
-							['layoutData'],
-							nextData
-						);
-
 						resolve(nextState);
 					}
 				).catch(
@@ -491,26 +491,6 @@ function _moveRow(rowId, layoutData, targetItemId, targetItemBorder) {
 	nextStructure = add(nextStructure, row, position);
 
 	return setIn(layoutData, ['structure'], nextStructure);
-}
-
-/**
- * Returns a new layoutData with the row with the given rowId removed
- * @param {object} layoutData
- * @param {string} rowId
- * @return {object}
- * @review
- */
-function _removeRow(layoutData, rowId) {
-	const rowIndex = getRowIndex(layoutData.structure, rowId);
-
-	return updateIn(
-		layoutData,
-		['structure'],
-		structure => remove(
-			structure,
-			rowIndex
-		)
-	);
 }
 
 export {

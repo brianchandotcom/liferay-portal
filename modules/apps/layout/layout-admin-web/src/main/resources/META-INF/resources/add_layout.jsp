@@ -17,12 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
+long sourcePlid = ParamUtil.getLong(request, "sourcePlid");
+
 List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.getAutoSiteNavigationMenus();
 %>
 
 <div class="container-fluid-1280 pt-2">
 	<liferay-frontend:edit-form
-		action="<%= layoutsAdminDisplayContext.getAddLayoutActionURL() %>"
+		action="<%= (sourcePlid <= 0) ? layoutsAdminDisplayContext.getAddLayoutURL() : layoutsAdminDisplayContext.getCopyLayoutURL(sourcePlid) %>"
 		method="post"
 		name="fm"
 		onSubmit="event.preventDefault();"

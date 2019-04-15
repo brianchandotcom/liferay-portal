@@ -79,7 +79,7 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
-		long layoutId = ParamUtil.getLong(uploadPortletRequest, "layoutId");
+		long sourcePlid = ParamUtil.getLong(uploadPortletRequest, "sourcePlid");
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		Map<Locale, String> nameMap = new HashMap<>();
@@ -102,8 +102,7 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			Layout sourceLayout = _layoutLocalService.fetchLayout(
-				groupId, privateLayout, layoutId);
+			Layout sourceLayout = _layoutLocalService.fetchLayout(sourcePlid);
 
 			UnicodeProperties sourceTypeSettingsProperties =
 				sourceLayout.getTypeSettingsProperties();

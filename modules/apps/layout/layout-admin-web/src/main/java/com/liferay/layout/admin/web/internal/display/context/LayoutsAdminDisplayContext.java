@@ -124,11 +124,6 @@ public class LayoutsAdminDisplayContext {
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
 	}
 
-	public String getAddLayoutActionURL() {
-		return ParamUtil.getString(
-			_request, "layoutActionURL", getAddLayoutURL());
-	}
-
 	public List<DropdownItem> getAddLayoutDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -315,14 +310,14 @@ public class LayoutsAdminDisplayContext {
 			"mvcRenderCommandName", "/layout/add_layout");
 
 		copyLayoutRenderURL.setParameter(
-			"layoutActionURL", getCopyLayoutURL(layout));
+			"sourcePlid", String.valueOf(layout.getPlid()));
 
 		copyLayoutRenderURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return copyLayoutRenderURL.toString();
 	}
 
-	public String getCopyLayoutURL(Layout layout) {
+	public String getCopyLayoutURL(long sourcePlid) {
 		PortletURL copyLayoutURL = _liferayPortletResponse.createActionURL();
 
 		copyLayoutURL.setParameter(
@@ -334,8 +329,7 @@ public class LayoutsAdminDisplayContext {
 			"stagingGroupId", String.valueOf(getStagingGroupId()));
 		copyLayoutURL.setParameter(
 			"privateLayout", String.valueOf(isPrivateLayout()));
-		copyLayoutURL.setParameter(
-			"layoutId", String.valueOf(layout.getLayoutId()));
+		copyLayoutURL.setParameter("sourcePlid", String.valueOf(sourcePlid));
 
 		return copyLayoutURL.toString();
 	}

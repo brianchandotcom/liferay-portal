@@ -50,6 +50,7 @@ else {
 <c:if test="<%= isControlPanel %>">
 <div class="upper-tbar-container-fixed">
 </c:if>
+
 <div class="tbar upper-tbar">
 	<div class="container-fluid container-fluid-max-xl">
 		<ul class="tbar-nav">
@@ -62,6 +63,7 @@ else {
 					/>
 				</li>
 			</c:if>
+
 			<li class="tbar-item tbar-item-expand">
 				<div class="tbar-section text-left">
 					<h2 class="text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %>">
@@ -77,6 +79,7 @@ else {
 		</ul>
 	</div>
 </div>
+
 <c:if test="<%= isControlPanel %>">
 </div>
 </c:if>

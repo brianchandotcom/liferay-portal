@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.client.dto.v1_0.parsing;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -23,10 +24,10 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.headless.delivery.client.dto.v1_0.page.Page;
+import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentLiferayPageSerDes;
 import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentSerDes;
-import com.liferay.headless.delivery.client.serdes.v1_0.page.PageSerDes;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -91,10 +92,8 @@ public class JSONParserTest extends BaseJSONParserTestCase {
 		String expectedJSONFormatted = _toStructuredContentPageToJSON(
 			expectedJSON);
 
-		String actualJSON = PageSerDes.toJSON(
-			PageSerDes.toPage(
-				expectedJSONFormatted, StructuredContentSerDes::toDTO),
-			StructuredContentSerDes::toJSON);
+		String actualJSON = StructuredContentLiferayPageSerDes.toJSON(
+			StructuredContentLiferayPageSerDes.toDTO(expectedJSONFormatted));
 
 		String actualJSONFormatted = _toStructuredContentPageToJSON(actualJSON);
 
@@ -138,6 +137,7 @@ public class JSONParserTest extends BaseJSONParserTestCase {
 	};
 	private static final ObjectMapper _outputObjectMapper = new ObjectMapper() {
 		{
+			configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			enable(SerializationFeature.INDENT_OUTPUT);
 			setDateFormat(new ISO8601DateFormat());

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.pagination;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -38,6 +39,19 @@ public class Page<T> {
 		Collection<T> items, Pagination pagination, long totalCount) {
 
 		return new Page<>(items, pagination, totalCount);
+	}
+
+	@JsonCreator
+	public Page(
+		@JsonProperty("items") Collection<T> items,
+		@JsonProperty("page") long page,
+		@JsonProperty("pageSize") long pageSize,
+		@JsonProperty("totalCount") long totalCount) {
+
+		_items = items;
+		_page = page;
+		_pageSize = pageSize;
+		_totalCount = totalCount;
 	}
 
 	@JacksonXmlElementWrapper(localName = "items")

@@ -39,6 +39,12 @@
 		background-color: #FFF;
 	}
 
+	@include sm {
+		.panel {
+			border-color: transparent;
+		}
+	}
+
 	&.contextual-sidebar {
 		$control-menu-height-sm: 56px;
 		$control-menu-height: 49px;

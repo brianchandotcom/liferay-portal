@@ -176,26 +176,14 @@ public abstract class BaseDocumentResourceTestCase {
 			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
 
 		Document document1 = randomDocument();
-		Document document2 = randomDocument();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				document1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		document1 = testGetDocumentFolderDocumentsPage_addDocument(
 			documentFolderId, document1);
 
-		Thread.sleep(1000);
-
-		document2 = testGetDocumentFolderDocumentsPage_addDocument(
-			documentFolderId, document2);
-
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = invokeGetDocumentFolderDocumentsPage(
 				documentFolderId, null,
-				getFilterString(entityField, "eq", document1),
+				getFilterString(entityField, "between", document1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -514,7 +502,9 @@ public abstract class BaseDocumentResourceTestCase {
 			return outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -622,7 +612,9 @@ public abstract class BaseDocumentResourceTestCase {
 			return outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -687,7 +679,9 @@ public abstract class BaseDocumentResourceTestCase {
 			return outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -755,7 +749,9 @@ public abstract class BaseDocumentResourceTestCase {
 			return outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -862,7 +858,9 @@ public abstract class BaseDocumentResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -912,7 +910,9 @@ public abstract class BaseDocumentResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -965,7 +965,9 @@ public abstract class BaseDocumentResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1041,24 +1043,13 @@ public abstract class BaseDocumentResourceTestCase {
 		Long siteId = testGetSiteDocumentsPage_getSiteId();
 
 		Document document1 = randomDocument();
-		Document document2 = randomDocument();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				document1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		document1 = testGetSiteDocumentsPage_addDocument(siteId, document1);
-
-		Thread.sleep(1000);
-
-		document2 = testGetSiteDocumentsPage_addDocument(siteId, document2);
 
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = invokeGetSiteDocumentsPage(
 				siteId, null, null,
-				getFilterString(entityField, "eq", document1),
+				getFilterString(entityField, "between", document1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1347,7 +1338,9 @@ public abstract class BaseDocumentResourceTestCase {
 			return outputObjectMapper.readValue(string, Document.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1868,13 +1861,69 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(document.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(document.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(document.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(document.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(document.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(document.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(document.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(document.getDateModified()));
+			}
 
 			return sb.toString();
 		}

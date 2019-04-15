@@ -70,6 +70,7 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -415,7 +416,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -482,7 +485,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -556,7 +561,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -630,7 +637,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -703,7 +712,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			return outputObjectMapper.readValue(string, WorkflowTask.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1064,13 +1075,73 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCompleted")) {
-			sb.append(_dateFormat.format(workflowTask.getDateCompleted()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							workflowTask.getDateCompleted(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							workflowTask.getDateCompleted(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(workflowTask.getDateCompleted()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(workflowTask.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							workflowTask.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							workflowTask.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(workflowTask.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
@@ -1092,7 +1163,35 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dueDate")) {
-			sb.append(_dateFormat.format(workflowTask.getDueDate()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(workflowTask.getDueDate(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(workflowTask.getDueDate(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(workflowTask.getDueDate()));
+			}
 
 			return sb.toString();
 		}

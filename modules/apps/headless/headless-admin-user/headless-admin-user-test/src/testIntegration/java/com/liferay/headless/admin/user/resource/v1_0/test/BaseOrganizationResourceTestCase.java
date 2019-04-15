@@ -146,23 +146,12 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		Organization organization1 = randomOrganization();
-		Organization organization2 = randomOrganization();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				organization1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		organization1 = testGetOrganizationsPage_addOrganization(organization1);
 
-		Thread.sleep(1000);
-
-		organization2 = testGetOrganizationsPage_addOrganization(organization2);
-
 		for (EntityField entityField : entityFields) {
 			Page<Organization> page = invokeGetOrganizationsPage(
-				null, getFilterString(entityField, "eq", organization1),
+				null, getFilterString(entityField, "between", organization1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -428,7 +417,9 @@ public abstract class BaseOrganizationResourceTestCase {
 			return outputObjectMapper.readValue(string, Organization.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -509,26 +500,14 @@ public abstract class BaseOrganizationResourceTestCase {
 			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
 		Organization organization1 = randomOrganization();
-		Organization organization2 = randomOrganization();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				organization1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
 			parentOrganizationId, organization1);
 
-		Thread.sleep(1000);
-
-		organization2 = testGetOrganizationOrganizationsPage_addOrganization(
-			parentOrganizationId, organization2);
-
 		for (EntityField entityField : entityFields) {
 			Page<Organization> page = invokeGetOrganizationOrganizationsPage(
 				parentOrganizationId, null,
-				getFilterString(entityField, "eq", organization1),
+				getFilterString(entityField, "between", organization1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1195,13 +1174,73 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(organization.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							organization.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							organization.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(organization.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(organization.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							organization.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							organization.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(organization.getDateModified()));
+			}
 
 			return sb.toString();
 		}

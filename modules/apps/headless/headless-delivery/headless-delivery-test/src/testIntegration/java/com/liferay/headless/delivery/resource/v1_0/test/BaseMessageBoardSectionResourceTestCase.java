@@ -226,7 +226,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				string, MessageBoardSection.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -316,7 +318,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				string, MessageBoardSection.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -408,7 +412,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				string, MessageBoardSection.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -503,29 +509,17 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId();
 
 		MessageBoardSection messageBoardSection1 = randomMessageBoardSection();
-		MessageBoardSection messageBoardSection2 = randomMessageBoardSection();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				messageBoardSection1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		messageBoardSection1 =
 			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
 				parentMessageBoardSectionId, messageBoardSection1);
 
-		Thread.sleep(1000);
-
-		messageBoardSection2 =
-			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
-				parentMessageBoardSectionId, messageBoardSection2);
-
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardSection> page =
 				invokeGetMessageBoardSectionMessageBoardSectionsPage(
 					parentMessageBoardSectionId, null,
-					getFilterString(entityField, "eq", messageBoardSection1),
+					getFilterString(
+						entityField, "between", messageBoardSection1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -882,7 +876,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				string, MessageBoardSection.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -972,29 +968,17 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Long siteId = testGetSiteMessageBoardSectionsPage_getSiteId();
 
 		MessageBoardSection messageBoardSection1 = randomMessageBoardSection();
-		MessageBoardSection messageBoardSection2 = randomMessageBoardSection();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				messageBoardSection1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		messageBoardSection1 =
 			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
 				siteId, messageBoardSection1);
 
-		Thread.sleep(1000);
-
-		messageBoardSection2 =
-			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
-				siteId, messageBoardSection2);
-
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardSection> page =
 				invokeGetSiteMessageBoardSectionsPage(
 					siteId, null, null,
-					getFilterString(entityField, "eq", messageBoardSection1),
+					getFilterString(
+						entityField, "between", messageBoardSection1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1326,7 +1310,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				string, MessageBoardSection.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1709,14 +1695,75 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(messageBoardSection.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							messageBoardSection.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							messageBoardSection.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(messageBoardSection.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(
-				_dateFormat.format(messageBoardSection.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							messageBoardSection.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							messageBoardSection.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(messageBoardSection.getDateModified()));
+			}
 
 			return sb.toString();
 		}

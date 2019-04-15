@@ -194,7 +194,9 @@ public abstract class BaseKeywordResourceTestCase {
 			return outputObjectMapper.readValue(string, Keyword.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -263,7 +265,9 @@ public abstract class BaseKeywordResourceTestCase {
 			return outputObjectMapper.readValue(string, Keyword.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -341,23 +345,12 @@ public abstract class BaseKeywordResourceTestCase {
 		Long siteId = testGetSiteKeywordsPage_getSiteId();
 
 		Keyword keyword1 = randomKeyword();
-		Keyword keyword2 = randomKeyword();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				keyword1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		keyword1 = testGetSiteKeywordsPage_addKeyword(siteId, keyword1);
 
-		Thread.sleep(1000);
-
-		keyword2 = testGetSiteKeywordsPage_addKeyword(siteId, keyword2);
-
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = invokeGetSiteKeywordsPage(
-				siteId, null, getFilterString(entityField, "eq", keyword1),
+				siteId, null, getFilterString(entityField, "between", keyword1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -642,7 +635,9 @@ public abstract class BaseKeywordResourceTestCase {
 			return outputObjectMapper.readValue(string, Keyword.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -927,13 +922,69 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(keyword.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(keyword.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(keyword.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(keyword.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(keyword.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(keyword.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(keyword.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(keyword.getDateModified()));
+			}
 
 			return sb.toString();
 		}

@@ -212,7 +212,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return outputObjectMapper.readValue(string, BlogPosting.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -291,7 +293,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return outputObjectMapper.readValue(string, BlogPosting.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -372,7 +376,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return outputObjectMapper.readValue(string, BlogPosting.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -488,7 +494,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -542,7 +550,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -598,7 +608,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -677,25 +689,14 @@ public abstract class BaseBlogPostingResourceTestCase {
 		Long siteId = testGetSiteBlogPostingsPage_getSiteId();
 
 		BlogPosting blogPosting1 = randomBlogPosting();
-		BlogPosting blogPosting2 = randomBlogPosting();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				blogPosting1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		blogPosting1 = testGetSiteBlogPostingsPage_addBlogPosting(
 			siteId, blogPosting1);
 
-		Thread.sleep(1000);
-
-		blogPosting2 = testGetSiteBlogPostingsPage_addBlogPosting(
-			siteId, blogPosting2);
-
 		for (EntityField entityField : entityFields) {
 			Page<BlogPosting> page = invokeGetSiteBlogPostingsPage(
-				siteId, null, getFilterString(entityField, "eq", blogPosting1),
+				siteId, null,
+				getFilterString(entityField, "between", blogPosting1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -987,7 +988,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			return outputObjectMapper.readValue(string, BlogPosting.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1538,19 +1541,108 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(blogPosting.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							blogPosting.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(blogPosting.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(blogPosting.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(blogPosting.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							blogPosting.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							blogPosting.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(blogPosting.getDateModified()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("datePublished")) {
-			sb.append(_dateFormat.format(blogPosting.getDatePublished()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							blogPosting.getDatePublished(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							blogPosting.getDatePublished(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(blogPosting.getDatePublished()));
+			}
 
 			return sb.toString();
 		}

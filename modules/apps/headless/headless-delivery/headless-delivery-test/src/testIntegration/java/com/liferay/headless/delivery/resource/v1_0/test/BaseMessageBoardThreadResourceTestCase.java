@@ -180,29 +180,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId();
 
 		MessageBoardThread messageBoardThread1 = randomMessageBoardThread();
-		MessageBoardThread messageBoardThread2 = randomMessageBoardThread();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				messageBoardThread1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		messageBoardThread1 =
 			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
 				messageBoardSectionId, messageBoardThread1);
 
-		Thread.sleep(1000);
-
-		messageBoardThread2 =
-			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
-				messageBoardSectionId, messageBoardThread2);
-
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardThread> page =
 				invokeGetMessageBoardSectionMessageBoardThreadsPage(
 					messageBoardSectionId, null,
-					getFilterString(entityField, "eq", messageBoardThread1),
+					getFilterString(
+						entityField, "between", messageBoardThread1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -556,7 +544,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				string, MessageBoardThread.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -699,7 +689,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				string, MessageBoardThread.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -788,7 +780,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				string, MessageBoardThread.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -879,7 +873,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				string, MessageBoardThread.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1007,7 +1003,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1063,7 +1061,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1121,7 +1121,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1205,29 +1207,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Long siteId = testGetSiteMessageBoardThreadsPage_getSiteId();
 
 		MessageBoardThread messageBoardThread1 = randomMessageBoardThread();
-		MessageBoardThread messageBoardThread2 = randomMessageBoardThread();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				messageBoardThread1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		messageBoardThread1 =
 			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
 				siteId, messageBoardThread1);
 
-		Thread.sleep(1000);
-
-		messageBoardThread2 =
-			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
-				siteId, messageBoardThread2);
-
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardThread> page =
 				invokeGetSiteMessageBoardThreadsPage(
 					siteId, null, null,
-					getFilterString(entityField, "eq", messageBoardThread1),
+					getFilterString(
+						entityField, "between", messageBoardThread1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1557,7 +1547,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				string, MessageBoardThread.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -2051,13 +2043,75 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(messageBoardThread.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							messageBoardThread.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							messageBoardThread.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(messageBoardThread.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(messageBoardThread.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							messageBoardThread.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							messageBoardThread.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(messageBoardThread.getDateModified()));
+			}
 
 			return sb.toString();
 		}

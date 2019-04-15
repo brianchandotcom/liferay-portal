@@ -181,29 +181,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
 
 		TaxonomyCategory taxonomyCategory1 = randomTaxonomyCategory();
-		TaxonomyCategory taxonomyCategory2 = randomTaxonomyCategory();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				taxonomyCategory1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		taxonomyCategory1 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
 				parentTaxonomyCategoryId, taxonomyCategory1);
 
-		Thread.sleep(1000);
-
-		taxonomyCategory2 =
-			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
-				parentTaxonomyCategoryId, taxonomyCategory2);
-
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyCategoryTaxonomyCategoriesPage(
 					parentTaxonomyCategoryId, null,
-					getFilterString(entityField, "eq", taxonomyCategory1),
+					getFilterString(entityField, "between", taxonomyCategory1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -553,7 +540,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			return outputObjectMapper.readValue(string, TaxonomyCategory.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -690,7 +679,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			return outputObjectMapper.readValue(string, TaxonomyCategory.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -776,7 +767,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			return outputObjectMapper.readValue(string, TaxonomyCategory.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -864,7 +857,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			return outputObjectMapper.readValue(string, TaxonomyCategory.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -958,29 +953,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId();
 
 		TaxonomyCategory taxonomyCategory1 = randomTaxonomyCategory();
-		TaxonomyCategory taxonomyCategory2 = randomTaxonomyCategory();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				taxonomyCategory1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		taxonomyCategory1 =
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(
 				taxonomyVocabularyId, taxonomyCategory1);
 
-		Thread.sleep(1000);
-
-		taxonomyCategory2 =
-			testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(
-				taxonomyVocabularyId, taxonomyCategory2);
-
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyCategory> page =
 				invokeGetTaxonomyVocabularyTaxonomyCategoriesPage(
 					taxonomyVocabularyId, null,
-					getFilterString(entityField, "eq", taxonomyCategory1),
+					getFilterString(entityField, "between", taxonomyCategory1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1327,7 +1309,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			return outputObjectMapper.readValue(string, TaxonomyCategory.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1737,13 +1721,75 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(taxonomyCategory.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							taxonomyCategory.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							taxonomyCategory.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(taxonomyCategory.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(taxonomyCategory.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							taxonomyCategory.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							taxonomyCategory.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(taxonomyCategory.getDateModified()));
+			}
 
 			return sb.toString();
 		}

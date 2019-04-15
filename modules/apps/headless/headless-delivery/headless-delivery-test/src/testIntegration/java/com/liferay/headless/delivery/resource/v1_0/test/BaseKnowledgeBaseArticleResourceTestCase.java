@@ -231,7 +231,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -323,7 +325,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -417,7 +421,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -546,7 +552,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -602,7 +610,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -660,7 +670,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -752,30 +764,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			randomKnowledgeBaseArticle();
-		KnowledgeBaseArticle knowledgeBaseArticle2 =
-			randomKnowledgeBaseArticle();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				knowledgeBaseArticle1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				parentKnowledgeBaseArticleId, knowledgeBaseArticle1);
 
-		Thread.sleep(1000);
-
-		knowledgeBaseArticle2 =
-			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				parentKnowledgeBaseArticleId, knowledgeBaseArticle2);
-
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> page =
 				invokeGetKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 					parentKnowledgeBaseArticleId, null,
-					getFilterString(entityField, "eq", knowledgeBaseArticle1),
+					getFilterString(
+						entityField, "between", knowledgeBaseArticle1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1138,7 +1137,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1236,30 +1237,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			randomKnowledgeBaseArticle();
-		KnowledgeBaseArticle knowledgeBaseArticle2 =
-			randomKnowledgeBaseArticle();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				knowledgeBaseArticle1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		knowledgeBaseArticle1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, knowledgeBaseArticle1);
 
-		Thread.sleep(1000);
-
-		knowledgeBaseArticle2 =
-			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				knowledgeBaseFolderId, knowledgeBaseArticle2);
-
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> page =
 				invokeGetKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 					knowledgeBaseFolderId, null, null,
-					getFilterString(entityField, "eq", knowledgeBaseArticle1),
+					getFilterString(
+						entityField, "between", knowledgeBaseArticle1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1622,7 +1610,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1714,30 +1704,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			randomKnowledgeBaseArticle();
-		KnowledgeBaseArticle knowledgeBaseArticle2 =
-			randomKnowledgeBaseArticle();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				knowledgeBaseArticle1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		knowledgeBaseArticle1 =
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				siteId, knowledgeBaseArticle1);
 
-		Thread.sleep(1000);
-
-		knowledgeBaseArticle2 =
-			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
-				siteId, knowledgeBaseArticle2);
-
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> page =
 				invokeGetSiteKnowledgeBaseArticlesPage(
 					siteId, null, null,
-					getFilterString(entityField, "eq", knowledgeBaseArticle1),
+					getFilterString(
+						entityField, "between", knowledgeBaseArticle1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -2077,7 +2054,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				string, KnowledgeBaseArticle.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -2666,15 +2645,75 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(
-				_dateFormat.format(knowledgeBaseArticle.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							knowledgeBaseArticle.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							knowledgeBaseArticle.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(knowledgeBaseArticle.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(
-				_dateFormat.format(knowledgeBaseArticle.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							knowledgeBaseArticle.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							knowledgeBaseArticle.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(knowledgeBaseArticle.getDateModified()));
+			}
 
 			return sb.toString();
 		}

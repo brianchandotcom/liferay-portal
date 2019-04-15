@@ -157,7 +157,9 @@ public abstract class BaseContentStructureResourceTestCase {
 			return outputObjectMapper.readValue(string, ContentStructure.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -237,28 +239,15 @@ public abstract class BaseContentStructureResourceTestCase {
 		Long siteId = testGetSiteContentStructuresPage_getSiteId();
 
 		ContentStructure contentStructure1 = randomContentStructure();
-		ContentStructure contentStructure2 = randomContentStructure();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				contentStructure1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		contentStructure1 =
 			testGetSiteContentStructuresPage_addContentStructure(
 				siteId, contentStructure1);
 
-		Thread.sleep(1000);
-
-		contentStructure2 =
-			testGetSiteContentStructuresPage_addContentStructure(
-				siteId, contentStructure2);
-
 		for (EntityField entityField : entityFields) {
 			Page<ContentStructure> page = invokeGetSiteContentStructuresPage(
 				siteId, null,
-				getFilterString(entityField, "eq", contentStructure1),
+				getFilterString(entityField, "between", contentStructure1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -865,13 +854,75 @@ public abstract class BaseContentStructureResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(contentStructure.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							contentStructure.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							contentStructure.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(contentStructure.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(contentStructure.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							contentStructure.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							contentStructure.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(contentStructure.getDateModified()));
+			}
 
 			return sb.toString();
 		}

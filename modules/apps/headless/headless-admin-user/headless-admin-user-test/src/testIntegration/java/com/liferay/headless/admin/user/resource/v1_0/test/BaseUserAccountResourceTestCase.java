@@ -150,7 +150,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			return outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -226,26 +228,14 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGetOrganizationUserAccountsPage_getOrganizationId();
 
 		UserAccount userAccount1 = randomUserAccount();
-		UserAccount userAccount2 = randomUserAccount();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				userAccount1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		userAccount1 = testGetOrganizationUserAccountsPage_addUserAccount(
 			organizationId, userAccount1);
 
-		Thread.sleep(1000);
-
-		userAccount2 = testGetOrganizationUserAccountsPage_addUserAccount(
-			organizationId, userAccount2);
-
 		for (EntityField entityField : entityFields) {
 			Page<UserAccount> page = invokeGetOrganizationUserAccountsPage(
 				organizationId, null,
-				getFilterString(entityField, "eq", userAccount1),
+				getFilterString(entityField, "between", userAccount1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -549,23 +539,12 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		UserAccount userAccount1 = randomUserAccount();
-		UserAccount userAccount2 = randomUserAccount();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				userAccount1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		userAccount1 = testGetUserAccountsPage_addUserAccount(userAccount1);
 
-		Thread.sleep(1000);
-
-		userAccount2 = testGetUserAccountsPage_addUserAccount(userAccount2);
-
 		for (EntityField entityField : entityFields) {
 			Page<UserAccount> page = invokeGetUserAccountsPage(
-				null, getFilterString(entityField, "eq", userAccount1),
+				null, getFilterString(entityField, "between", userAccount1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -825,7 +804,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			return outputObjectMapper.readValue(string, UserAccount.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -902,26 +883,14 @@ public abstract class BaseUserAccountResourceTestCase {
 		Long webSiteId = testGetWebSiteUserAccountsPage_getWebSiteId();
 
 		UserAccount userAccount1 = randomUserAccount();
-		UserAccount userAccount2 = randomUserAccount();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				userAccount1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		userAccount1 = testGetWebSiteUserAccountsPage_addUserAccount(
 			webSiteId, userAccount1);
 
-		Thread.sleep(1000);
-
-		userAccount2 = testGetWebSiteUserAccountsPage_addUserAccount(
-			webSiteId, userAccount2);
-
 		for (EntityField entityField : entityFields) {
 			Page<UserAccount> page = invokeGetWebSiteUserAccountsPage(
 				webSiteId, null,
-				getFilterString(entityField, "eq", userAccount1),
+				getFilterString(entityField, "between", userAccount1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1740,7 +1709,35 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("birthDate")) {
-			sb.append(_dateFormat.format(userAccount.getBirthDate()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(userAccount.getBirthDate(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(userAccount.getBirthDate(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(userAccount.getBirthDate()));
+			}
 
 			return sb.toString();
 		}
@@ -1759,13 +1756,72 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(userAccount.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							userAccount.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(userAccount.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(userAccount.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(userAccount.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							userAccount.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							userAccount.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(userAccount.getDateModified()));
+			}
 
 			return sb.toString();
 		}

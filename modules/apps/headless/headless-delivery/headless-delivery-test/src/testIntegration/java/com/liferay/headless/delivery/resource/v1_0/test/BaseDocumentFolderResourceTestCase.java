@@ -216,7 +216,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			return outputObjectMapper.readValue(string, DocumentFolder.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -299,7 +301,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			return outputObjectMapper.readValue(string, DocumentFolder.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -385,7 +389,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			return outputObjectMapper.readValue(string, DocumentFolder.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -475,29 +481,16 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId();
 
 		DocumentFolder documentFolder1 = randomDocumentFolder();
-		DocumentFolder documentFolder2 = randomDocumentFolder();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				documentFolder1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		documentFolder1 =
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
 				parentDocumentFolderId, documentFolder1);
 
-		Thread.sleep(1000);
-
-		documentFolder2 =
-			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
-				parentDocumentFolderId, documentFolder2);
-
 		for (EntityField entityField : entityFields) {
 			Page<DocumentFolder> page =
 				invokeGetDocumentFolderDocumentFoldersPage(
 					parentDocumentFolderId, null,
-					getFilterString(entityField, "eq", documentFolder1),
+					getFilterString(entityField, "between", documentFolder1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -839,7 +832,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			return outputObjectMapper.readValue(string, DocumentFolder.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -925,26 +920,14 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Long siteId = testGetSiteDocumentFoldersPage_getSiteId();
 
 		DocumentFolder documentFolder1 = randomDocumentFolder();
-		DocumentFolder documentFolder2 = randomDocumentFolder();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				documentFolder1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		documentFolder1 = testGetSiteDocumentFoldersPage_addDocumentFolder(
 			siteId, documentFolder1);
 
-		Thread.sleep(1000);
-
-		documentFolder2 = testGetSiteDocumentFoldersPage_addDocumentFolder(
-			siteId, documentFolder2);
-
 		for (EntityField entityField : entityFields) {
 			Page<DocumentFolder> page = invokeGetSiteDocumentFoldersPage(
 				siteId, null, null,
-				getFilterString(entityField, "eq", documentFolder1),
+				getFilterString(entityField, "between", documentFolder1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1254,7 +1237,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			return outputObjectMapper.readValue(string, DocumentFolder.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1616,13 +1601,73 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(documentFolder.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							documentFolder.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							documentFolder.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(documentFolder.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(documentFolder.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							documentFolder.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							documentFolder.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(documentFolder.getDateModified()));
+			}
 
 			return sb.toString();
 		}

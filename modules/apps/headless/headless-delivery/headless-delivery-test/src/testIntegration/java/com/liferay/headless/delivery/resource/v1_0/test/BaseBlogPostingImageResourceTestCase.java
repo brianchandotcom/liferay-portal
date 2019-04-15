@@ -221,7 +221,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			return outputObjectMapper.readValue(string, BlogPostingImage.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -301,28 +303,15 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		Long siteId = testGetSiteBlogPostingImagesPage_getSiteId();
 
 		BlogPostingImage blogPostingImage1 = randomBlogPostingImage();
-		BlogPostingImage blogPostingImage2 = randomBlogPostingImage();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				blogPostingImage1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		blogPostingImage1 =
 			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
 				siteId, blogPostingImage1);
 
-		Thread.sleep(1000);
-
-		blogPostingImage2 =
-			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
-				siteId, blogPostingImage2);
-
 		for (EntityField entityField : entityFields) {
 			Page<BlogPostingImage> page = invokeGetSiteBlogPostingImagesPage(
 				siteId, null,
-				getFilterString(entityField, "eq", blogPostingImage1),
+				getFilterString(entityField, "between", blogPostingImage1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -648,7 +637,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			return outputObjectMapper.readValue(string, BlogPostingImage.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}

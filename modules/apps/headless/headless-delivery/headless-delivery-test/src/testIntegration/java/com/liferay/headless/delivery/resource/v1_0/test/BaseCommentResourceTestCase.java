@@ -167,26 +167,14 @@ public abstract class BaseCommentResourceTestCase {
 		Long blogPostingId = testGetBlogPostingCommentsPage_getBlogPostingId();
 
 		Comment comment1 = randomComment();
-		Comment comment2 = randomComment();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				comment1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		comment1 = testGetBlogPostingCommentsPage_addComment(
 			blogPostingId, comment1);
 
-		Thread.sleep(1000);
-
-		comment2 = testGetBlogPostingCommentsPage_addComment(
-			blogPostingId, comment2);
-
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = invokeGetBlogPostingCommentsPage(
 				blogPostingId, null,
-				getFilterString(entityField, "eq", comment1),
+				getFilterString(entityField, "between", comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -493,7 +481,9 @@ public abstract class BaseCommentResourceTestCase {
 			return outputObjectMapper.readValue(string, Comment.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -604,7 +594,9 @@ public abstract class BaseCommentResourceTestCase {
 			return outputObjectMapper.readValue(string, Comment.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -674,7 +666,9 @@ public abstract class BaseCommentResourceTestCase {
 			return outputObjectMapper.readValue(string, Comment.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -754,26 +748,14 @@ public abstract class BaseCommentResourceTestCase {
 		Long parentCommentId = testGetCommentCommentsPage_getParentCommentId();
 
 		Comment comment1 = randomComment();
-		Comment comment2 = randomComment();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				comment1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		comment1 = testGetCommentCommentsPage_addComment(
 			parentCommentId, comment1);
 
-		Thread.sleep(1000);
-
-		comment2 = testGetCommentCommentsPage_addComment(
-			parentCommentId, comment2);
-
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = invokeGetCommentCommentsPage(
 				parentCommentId, null,
-				getFilterString(entityField, "eq", comment1),
+				getFilterString(entityField, "between", comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1073,7 +1055,9 @@ public abstract class BaseCommentResourceTestCase {
 			return outputObjectMapper.readValue(string, Comment.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1154,23 +1138,13 @@ public abstract class BaseCommentResourceTestCase {
 		Long documentId = testGetDocumentCommentsPage_getDocumentId();
 
 		Comment comment1 = randomComment();
-		Comment comment2 = randomComment();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				comment1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		comment1 = testGetDocumentCommentsPage_addComment(documentId, comment1);
 
-		Thread.sleep(1000);
-
-		comment2 = testGetDocumentCommentsPage_addComment(documentId, comment2);
-
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = invokeGetDocumentCommentsPage(
-				documentId, null, getFilterString(entityField, "eq", comment1),
+				documentId, null,
+				getFilterString(entityField, "between", comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1462,7 +1436,9 @@ public abstract class BaseCommentResourceTestCase {
 			return outputObjectMapper.readValue(string, Comment.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1546,26 +1522,14 @@ public abstract class BaseCommentResourceTestCase {
 			testGetStructuredContentCommentsPage_getStructuredContentId();
 
 		Comment comment1 = randomComment();
-		Comment comment2 = randomComment();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				comment1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		comment1 = testGetStructuredContentCommentsPage_addComment(
 			structuredContentId, comment1);
 
-		Thread.sleep(1000);
-
-		comment2 = testGetStructuredContentCommentsPage_addComment(
-			structuredContentId, comment2);
-
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = invokeGetStructuredContentCommentsPage(
 				structuredContentId, null,
-				getFilterString(entityField, "eq", comment1),
+				getFilterString(entityField, "between", comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1882,7 +1846,9 @@ public abstract class BaseCommentResourceTestCase {
 			return outputObjectMapper.readValue(string, Comment.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -2158,13 +2124,69 @@ public abstract class BaseCommentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(comment.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(comment.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(comment.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(comment.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(comment.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(comment.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(comment.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(comment.getDateModified()));
+			}
 
 			return sb.toString();
 		}

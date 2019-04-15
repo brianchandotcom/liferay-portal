@@ -172,29 +172,17 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
 
 		TaxonomyVocabulary taxonomyVocabulary1 = randomTaxonomyVocabulary();
-		TaxonomyVocabulary taxonomyVocabulary2 = randomTaxonomyVocabulary();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				taxonomyVocabulary1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		taxonomyVocabulary1 =
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				siteId, taxonomyVocabulary1);
 
-		Thread.sleep(1000);
-
-		taxonomyVocabulary2 =
-			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
-				siteId, taxonomyVocabulary2);
-
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> page =
 				invokeGetSiteTaxonomyVocabulariesPage(
 					siteId, null,
-					getFilterString(entityField, "eq", taxonomyVocabulary1),
+					getFilterString(
+						entityField, "between", taxonomyVocabulary1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -525,7 +513,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -664,7 +654,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -753,7 +745,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -844,7 +838,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				string, TaxonomyVocabulary.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1252,13 +1248,75 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(taxonomyVocabulary.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							taxonomyVocabulary.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							taxonomyVocabulary.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(taxonomyVocabulary.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(taxonomyVocabulary.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							taxonomyVocabulary.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							taxonomyVocabulary.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(taxonomyVocabulary.getDateModified()));
+			}
 
 			return sb.toString();
 		}

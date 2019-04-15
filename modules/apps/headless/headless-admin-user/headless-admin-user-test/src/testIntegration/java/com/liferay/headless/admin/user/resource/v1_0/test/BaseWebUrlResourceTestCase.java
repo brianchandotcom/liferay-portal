@@ -337,7 +337,9 @@ public abstract class BaseWebUrlResourceTestCase {
 			return outputObjectMapper.readValue(string, WebUrl.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}

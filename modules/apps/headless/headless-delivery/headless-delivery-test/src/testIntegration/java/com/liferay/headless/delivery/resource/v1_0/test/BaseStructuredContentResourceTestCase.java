@@ -183,29 +183,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGetContentStructureStructuredContentsPage_getContentStructureId();
 
 		StructuredContent structuredContent1 = randomStructuredContent();
-		StructuredContent structuredContent2 = randomStructuredContent();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				structuredContent1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		structuredContent1 =
 			testGetContentStructureStructuredContentsPage_addStructuredContent(
 				contentStructureId, structuredContent1);
 
-		Thread.sleep(1000);
-
-		structuredContent2 =
-			testGetContentStructureStructuredContentsPage_addStructuredContent(
-				contentStructureId, structuredContent2);
-
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContent> page =
 				invokeGetContentStructureStructuredContentsPage(
 					contentStructureId, null,
-					getFilterString(entityField, "eq", structuredContent1),
+					getFilterString(entityField, "between", structuredContent1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -555,28 +542,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long siteId = testGetSiteStructuredContentsPage_getSiteId();
 
 		StructuredContent structuredContent1 = randomStructuredContent();
-		StructuredContent structuredContent2 = randomStructuredContent();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				structuredContent1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		structuredContent1 =
 			testGetSiteStructuredContentsPage_addStructuredContent(
 				siteId, structuredContent1);
 
-		Thread.sleep(1000);
-
-		structuredContent2 =
-			testGetSiteStructuredContentsPage_addStructuredContent(
-				siteId, structuredContent2);
-
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContent> page = invokeGetSiteStructuredContentsPage(
 				siteId, null, null,
-				getFilterString(entityField, "eq", structuredContent1),
+				getFilterString(entityField, "between", structuredContent1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -904,7 +878,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -980,7 +956,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1052,7 +1030,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1141,29 +1121,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGetStructuredContentFolderStructuredContentsPage_getStructuredContentFolderId();
 
 		StructuredContent structuredContent1 = randomStructuredContent();
-		StructuredContent structuredContent2 = randomStructuredContent();
-
-		for (EntityField entityField : entityFields) {
-			BeanUtils.setProperty(
-				structuredContent1, entityField.getName(),
-				DateUtils.addMinutes(new Date(), -2));
-		}
 
 		structuredContent1 =
 			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
 				structuredContentFolderId, structuredContent1);
 
-		Thread.sleep(1000);
-
-		structuredContent2 =
-			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
-				structuredContentFolderId, structuredContent2);
-
 		for (EntityField entityField : entityFields) {
 			Page<StructuredContent> page =
 				invokeGetStructuredContentFolderStructuredContentsPage(
 					structuredContentFolderId, null,
-					getFilterString(entityField, "eq", structuredContent1),
+					getFilterString(entityField, "between", structuredContent1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1518,7 +1485,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1659,7 +1628,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1747,7 +1718,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1836,7 +1809,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 				string, StructuredContent.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -1964,7 +1939,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -2020,7 +1997,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -2078,7 +2057,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 			return outputObjectMapper.readValue(string, Rating.class);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -2733,19 +2714,112 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
-			sb.append(_dateFormat.format(structuredContent.getDateCreated()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							structuredContent.getDateCreated(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							structuredContent.getDateCreated(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(structuredContent.getDateCreated()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateModified")) {
-			sb.append(_dateFormat.format(structuredContent.getDateModified()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							structuredContent.getDateModified(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							structuredContent.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(structuredContent.getDateModified()));
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("datePublished")) {
-			sb.append(_dateFormat.format(structuredContent.getDatePublished()));
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+
+				sb.append(" gt ");
+
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							structuredContent.getDatePublished(), -2)));
+
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							structuredContent.getDatePublished(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(structuredContent.getDatePublished()));
+			}
 
 			return sb.toString();
 		}

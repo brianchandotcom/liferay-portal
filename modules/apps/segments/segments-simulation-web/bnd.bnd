@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Segments Simulation Web
+Bundle-SymbolicName: com.liferay.segments.simulation.web
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.segments.lang)";\
+		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.segments.lang)"
+Web-ContextPath: /segments-simulation-web

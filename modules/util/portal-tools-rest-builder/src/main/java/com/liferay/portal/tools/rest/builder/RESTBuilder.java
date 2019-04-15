@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.yaml.config.Application;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Info;
+import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
@@ -186,6 +187,16 @@ public class RESTBuilder {
 					_createClientDTOFile(context, escapedVersion, schemaName);
 					_createClientSerDesFile(
 						context, escapedVersion, schemaName);
+
+					String pageSchemaName = schemaName + "LiferayPage";
+
+					_putSchema(
+						context, _getPageSchema(schemaName), pageSchemaName);
+
+					_createClientDTOFile(
+						context, escapedVersion, pageSchemaName);
+					_createClientSerDesFile(
+						context, escapedVersion, pageSchemaName);
 				}
 			}
 		}
@@ -930,6 +941,38 @@ public class RESTBuilder {
 		}
 
 		return operations;
+	}
+
+	private Schema _getPageSchema(String schemaName) {
+		Schema longSchema = new Schema();
+
+		longSchema.setType("integer");
+		longSchema.setFormat("int64");
+
+		Map<String, Schema> propertySchemas = new HashMap<>();
+
+		propertySchemas.put("lastPage", longSchema);
+		propertySchemas.put("page", longSchema);
+		propertySchemas.put("pageSize", longSchema);
+		propertySchemas.put("totalCount", longSchema);
+
+		Items items = new Items();
+
+		items.setType("object");
+		items.setReference("/" + schemaName);
+
+		Schema arraySchema = new Schema();
+
+		arraySchema.setItems(items);
+		arraySchema.setType("array");
+
+		propertySchemas.put("items", arraySchema);
+
+		Schema schema = new Schema();
+
+		schema.setPropertySchemas(propertySchemas);
+
+		return schema;
 	}
 
 	private void _putSchema(

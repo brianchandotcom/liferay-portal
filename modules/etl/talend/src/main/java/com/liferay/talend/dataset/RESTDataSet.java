@@ -33,12 +33,20 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 @GridLayout({@GridLayout.Row("_inputDataStore"), @GridLayout.Row("_resource")})
 public class RESTDataSet implements Serializable {
 
+	public String getEndpoint() {
+		return _endpoint;
+	}
+
 	public InputDataStore getInputDataStore() {
 		return _inputDataStore;
 	}
 
 	public String getResource() {
 		return _resource;
+	}
+
+	public void setEndpoint(String endpoint) {
+		_endpoint = endpoint;
 	}
 
 	public RESTDataSet setInputDataStore(InputDataStore inputDataStore) {
@@ -50,6 +58,8 @@ public class RESTDataSet implements Serializable {
 	public void setResource(String resource) {
 		_resource = resource;
 	}
+
+	private String _endpoint;
 
 	@Option
 	private InputDataStore _inputDataStore;

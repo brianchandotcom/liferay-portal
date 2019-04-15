@@ -51,4 +51,31 @@ definition {
 		);
 
 	}
+
+	@priority = "5"
+	test MySQLWithXSSContent {
+
+		SetupWizard.configurePG(
+			databaseType = "MySQL",
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = '''<script>alert("xss")</script>''',
+			administratorLastName = '''<script>alert("xss")</script>''',
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url"),
+			portalName = '''<script>alert("xss")</script>'''
+		);
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert("xss")</script>''';
+
+		var escapedScript = '''\x3cscript\x3ealert("xss")\x3c/script\x3e''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+
 }

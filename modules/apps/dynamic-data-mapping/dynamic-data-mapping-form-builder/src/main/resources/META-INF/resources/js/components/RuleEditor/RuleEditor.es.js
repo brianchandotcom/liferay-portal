@@ -590,7 +590,13 @@ class RuleEditor extends Component {
 					firstOperandOptions,
 					operands: condition.operands.map(
 						(operand, index) => {
-							if (index === 1 && operand.type !== 'field' && operand.type !== 'user') {
+							if (index === 1 && (operand.type == 'integer' || operand.type == 'double')) {
+								operand = {
+									...operand,
+									type: getFieldProperty(pages, condition.operands[0].value, 'dataType')
+								};
+							}
+							else if (index === 1 && operand.type !== 'field' && operand.type !== 'user') {
 								operand = {
 									...operand,
 									type: getFieldProperty(pages, condition.operands[0].value, 'type')
@@ -1350,10 +1356,9 @@ class RuleEditor extends Component {
 
 		let secondOperandType = 'field';
 		let valueType = 'field';
-
 		if (value[0] == 'value') {
 			valueType = 'string';
-			secondOperandType = this._getFieldTypeByFieldName(operands[0].value).type;
+			secondOperandType = this._getFieldTypeByFieldName(operands[0].value).dataType;
 		}
 
 		if (secondOperand && ((secondOperand.type === secondOperandType)) && value[0] !== '') {

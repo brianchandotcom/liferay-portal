@@ -71,54 +71,59 @@ public class ${schemaName}SerDes {
 
 			sb.append("\"${propertyName}\": ");
 
-			if (${schemaVarName}.get${propertyName?cap_first}() == null) {
-				sb.append("null");
-			}
-			else {
-				<#assign
-					propertyType = properties[propertyName]
-				/>
+			<#assign
+				propertyType = properties[propertyName]
+			/>
+			<#if allSchemas[propertyType]??>
+				sb.append(${propertyType}SerDes.toJSON(${schemaVarName}.get${propertyName?cap_first}()));
+			<#else>
+				if (${schemaVarName}.get${propertyName?cap_first}() == null) {
+					sb.append("null");
+				}
+				else {
+					<#if propertyType?contains("[]")>
+						sb.append("[");
 
-				<#if propertyType?contains("[]")>
-					sb.append("[");
+						for (int i = 0; i < ${schemaVarName}.get${propertyName?cap_first}().length; i++) {
+							<#if stringUtil.equals(propertyType, "Date[]") || stringUtil.equals(propertyType, "String[]") || enumSchemas?keys?seq_contains(propertyType)>
+								sb.append("\"");
 
-					for (int i = 0; i < ${schemaVarName}.get${propertyName?cap_first}().length; i++) {
-						<#if stringUtil.equals(propertyType, "Date[]") || stringUtil.equals(propertyType, "String[]") || enumSchemas?keys?seq_contains(propertyType)>
-							sb.append("\"");
+								<#if stringUtil.equals(propertyType, "Date[]")>
+									sb.append(liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()[i]));
+								<#else>
+									sb.append(${schemaVarName}.get${propertyName?cap_first}()[i]);
+								</#if>
 
-							<#if stringUtil.equals(propertyType, "Date[]")>
-								sb.append(liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()[i]));
+								sb.append("\"");
+							<#elseif allSchemas[propertyType?remove_ending("[]")]??>
+								sb.append(${propertyType?remove_ending("[]")}SerDes.toJSON(${schemaVarName}.get${propertyName?cap_first}()[i]));
 							<#else>
 								sb.append(${schemaVarName}.get${propertyName?cap_first}()[i]);
 							</#if>
 
-							sb.append("\"");
-						<#else>
-							sb.append(${schemaVarName}.get${propertyName?cap_first}()[i]);
-						</#if>
-
-						if ((i + 1) < ${schemaVarName}.get${propertyName?cap_first}().length) {
-							sb.append(", ");
+							if ((i + 1) < ${schemaVarName}.get${propertyName?cap_first}().length) {
+								sb.append(", ");
+							}
 						}
-					}
 
-					sb.append("]");
-				<#else>
-					<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "String") || enumSchemas?keys?seq_contains(propertyType)>
-						sb.append("\"");
+						sb.append("]");
+					<#else>
+						<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "String") || enumSchemas?keys?seq_contains(propertyType)>
+							sb.append("\"");
 
-						<#if stringUtil.equals(propertyType, "Date")>
-							sb.append(liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
+							<#if stringUtil.equals(propertyType, "Date")>
+								sb.append(liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
+							<#else>
+								sb.append(${schemaVarName}.get${propertyName?cap_first}());
+							</#if>
+
+							sb.append("\"");
 						<#else>
 							sb.append(${schemaVarName}.get${propertyName?cap_first}());
 						</#if>
-
-						sb.append("\"");
-					<#else>
-						sb.append(${schemaVarName}.get${propertyName?cap_first}());
 					</#if>
-				</#if>
-			}
+				}
+			</#if>
 		</#list>
 
 		sb.append("}");

@@ -80,6 +80,10 @@ class AssetTagsSelector extends Component {
 		return this.selectedItems.map(selectedItem => selectedItem.value).join();
 	}
 
+	_handleInputBlur(event) {
+		event.preventDefault();
+	}
+
 	_handleInputFocus(event) {
 		this.emit('inputFocus', event);
 	}

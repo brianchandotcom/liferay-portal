@@ -111,7 +111,7 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 			"(?=\\)\\s*;\n)"),
 		Pattern.DOTALL);
 	private static final Pattern _parametersPattern = Pattern.compile(
-		"(\\w+)([ \t]*=[ \t]*)((('''|\").*?\\5|\\w.*\\))|.+?\\))",
+		"(\\w+)([ \t]*=[ \t]*)((('''|\").*?\\5|\\w[^\n]*\\))|.+?\\))",
 		Pattern.DOTALL);
 
 }

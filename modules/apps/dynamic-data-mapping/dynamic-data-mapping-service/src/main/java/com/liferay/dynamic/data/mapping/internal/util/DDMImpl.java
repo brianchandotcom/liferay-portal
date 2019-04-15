@@ -817,6 +817,7 @@ public class DDMImpl implements DDM {
 			jsonObject.put("localizable", ddmFormField.isLocalizable());
 			jsonObject.put("multiple", ddmFormField.isMultiple());
 			jsonObject.put("name", ddmFormField.getName());
+			jsonObject.put("readOnly", ddmFormField.isReadOnly());
 			jsonObject.put("repeatable", ddmFormField.isRepeatable());
 			jsonObject.put("required", ddmFormField.isRequired());
 			jsonObject.put("showLabel", ddmFormField.isShowLabel());

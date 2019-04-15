@@ -20,11 +20,11 @@ import com.liferay.portal.remote.cors.configuration.WebContextCORSConfiguration;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.ListIterator;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -47,9 +47,7 @@ public abstract class BaseTestPreparatorBundleActivator
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		this.bundleContext = bundleContext;
-
-		autoCloseables = new ArrayList<>();
+		_bundleContext = bundleContext;
 
 		try {
 			prepareTest();
@@ -63,17 +61,12 @@ public abstract class BaseTestPreparatorBundleActivator
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		ListIterator<AutoCloseable> listIterator = autoCloseables.listIterator(
-			autoCloseables.size());
-
-		while (listIterator.hasPrevious()) {
-			AutoCloseable previousAutoCloseable = listIterator.previous();
-
-			previousAutoCloseable.close();
+		for (AutoCloseable autoCloseable : _autoCloseables) {
+			autoCloseable.close();
 		}
 	}
 
-	protected Configuration createFactoryConfiguration(
+	private Configuration _createFactoryConfiguration(
 		BundleContext bundleContext, String factoryPid,
 		Dictionary<String, Object> properties) {
 
@@ -107,7 +100,7 @@ public abstract class BaseTestPreparatorBundleActivator
 							return;
 						}
 
-						if (isIncluded(properties, updatedProperties)) {
+						if (_isIncluded(properties, updatedProperties)) {
 							countDownLatch.countDown();
 						}
 					}
@@ -159,14 +152,14 @@ public abstract class BaseTestPreparatorBundleActivator
 	protected void createFactoryConfiguration(
 		Dictionary<String, Object> properties) {
 
-		Configuration configuration = createFactoryConfiguration(
-			bundleContext, WebContextCORSConfiguration.class.getName(),
+		Configuration configuration = _createFactoryConfiguration(
+			_bundleContext, WebContextCORSConfiguration.class.getName(),
 			properties);
 
-		autoCloseables.add(configuration::delete);
+		_autoCloseables.add(configuration::delete);
 	}
 
-	protected boolean isIncluded(
+	private boolean _isIncluded(
 		Dictionary<String, ?> properties1, Dictionary<String, ?> properties2) {
 
 		if (properties1.size() > properties2.size()) {
@@ -202,13 +195,13 @@ public abstract class BaseTestPreparatorBundleActivator
 		properties.put("osgi.jaxrs.application.base", "/" + path);
 
 		ServiceRegistration<Application> serviceRegistration =
-			bundleContext.registerService(
+			_bundleContext.registerService(
 				Application.class, application, properties);
 
-		autoCloseables.add(serviceRegistration::unregister);
+		_autoCloseables.add(serviceRegistration::unregister);
 	}
 
-	protected ArrayList<AutoCloseable> autoCloseables;
-	protected BundleContext bundleContext;
+	private final Queue<AutoCloseable> _autoCloseables = new ArrayDeque<>();
+	private BundleContext _bundleContext;
 
 }

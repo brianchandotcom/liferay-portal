@@ -6,7 +6,7 @@
 	},
 	"name": "map-common",
 	"scripts": {
-		"build": "liferay-npm-scripts",
+		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
 		"test": "liferay-npm-scripts test"

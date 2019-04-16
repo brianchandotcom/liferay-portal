@@ -68,7 +68,7 @@
 	},
 	"name": "frontend-js-web",
 	"scripts": {
-		"build": "liferay-npm-scripts",
+		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
 		"start": "webpack-dev-server --config webpack.dev.js",

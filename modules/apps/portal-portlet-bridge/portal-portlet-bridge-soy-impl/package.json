@@ -11,7 +11,7 @@
 	},
 	"name": "portal-portlet-bridge-soy-impl",
 	"scripts": {
-		"build": "liferay-npm-scripts",
+		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},

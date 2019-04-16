@@ -40,7 +40,7 @@
 		"fsevents": "^1.2.7"
 	},
 	"scripts": {
-		"build": "liferay-npm-scripts",
+		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
 		"test_DISABLED": "liferay-npm-scripts test"

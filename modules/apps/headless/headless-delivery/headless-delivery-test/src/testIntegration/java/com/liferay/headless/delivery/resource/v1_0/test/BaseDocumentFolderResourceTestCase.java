@@ -609,8 +609,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
 				parentDocumentFolderId, documentFolder1);
 
-		Thread.sleep(1000);
-
 		documentFolder2 =
 			testGetDocumentFolderDocumentFoldersPage_addDocumentFolder(
 				parentDocumentFolderId, documentFolder2);
@@ -1037,8 +1035,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		documentFolder1 = testGetSiteDocumentFoldersPage_addDocumentFolder(
 			siteId, documentFolder1);
-
-		Thread.sleep(1000);
 
 		documentFolder2 = testGetSiteDocumentFoldersPage_addDocumentFolder(
 			siteId, documentFolder2);

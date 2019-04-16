@@ -310,8 +310,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGetContentStructureStructuredContentsPage_addStructuredContent(
 				contentStructureId, structuredContent1);
 
-		Thread.sleep(1000);
-
 		structuredContent2 =
 			testGetContentStructureStructuredContentsPage_addStructuredContent(
 				contentStructureId, structuredContent2);
@@ -658,8 +656,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		structuredContent1 =
 			testGetSiteStructuredContentsPage_addStructuredContent(
 				siteId, structuredContent1);
-
-		Thread.sleep(1000);
 
 		structuredContent2 =
 			testGetSiteStructuredContentsPage_addStructuredContent(
@@ -1240,8 +1236,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 		structuredContent1 =
 			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
 				structuredContentFolderId, structuredContent1);
-
-		Thread.sleep(1000);
 
 		structuredContent2 =
 			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(

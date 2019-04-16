@@ -311,8 +311,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
 				messageBoardSectionId, messageBoardThread1);
 
-		Thread.sleep(1000);
-
 		messageBoardThread2 =
 			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
 				messageBoardSectionId, messageBoardThread2);
@@ -1328,8 +1326,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		messageBoardThread1 =
 			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
 				siteId, messageBoardThread1);
-
-		Thread.sleep(1000);
 
 		messageBoardThread2 =
 			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(

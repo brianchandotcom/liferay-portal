@@ -345,8 +345,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccount1 = testGetOrganizationUserAccountsPage_addUserAccount(
 			organizationId, userAccount1);
 
-		Thread.sleep(1000);
-
 		userAccount2 = testGetOrganizationUserAccountsPage_addUserAccount(
 			organizationId, userAccount2);
 
@@ -630,8 +628,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		userAccount1 = testGetUserAccountsPage_addUserAccount(userAccount1);
-
-		Thread.sleep(1000);
 
 		userAccount2 = testGetUserAccountsPage_addUserAccount(userAccount2);
 
@@ -990,8 +986,6 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		userAccount1 = testGetWebSiteUserAccountsPage_addUserAccount(
 			webSiteId, userAccount1);
-
-		Thread.sleep(1000);
 
 		userAccount2 = testGetWebSiteUserAccountsPage_addUserAccount(
 			webSiteId, userAccount2);

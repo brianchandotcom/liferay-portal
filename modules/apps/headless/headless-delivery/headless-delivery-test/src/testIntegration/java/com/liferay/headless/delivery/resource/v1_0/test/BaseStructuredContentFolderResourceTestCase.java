@@ -310,8 +310,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGetSiteStructuredContentFoldersPage_addStructuredContentFolder(
 				siteId, structuredContentFolder1);
 
-		Thread.sleep(1000);
-
 		structuredContentFolder2 =
 			testGetSiteStructuredContentFoldersPage_addStructuredContentFolder(
 				siteId, structuredContentFolder2);
@@ -771,8 +769,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		structuredContentFolder1 =
 			testGetStructuredContentFolderStructuredContentFoldersPage_addStructuredContentFolder(
 				parentStructuredContentFolderId, structuredContentFolder1);
-
-		Thread.sleep(1000);
 
 		structuredContentFolder2 =
 			testGetStructuredContentFolderStructuredContentFoldersPage_addStructuredContentFolder(

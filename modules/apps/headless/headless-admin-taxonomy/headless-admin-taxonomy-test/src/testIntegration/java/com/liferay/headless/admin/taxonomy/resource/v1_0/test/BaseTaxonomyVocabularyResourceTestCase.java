@@ -298,8 +298,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				siteId, taxonomyVocabulary1);
 
-		Thread.sleep(1000);
-
 		taxonomyVocabulary2 =
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				siteId, taxonomyVocabulary2);

@@ -362,8 +362,6 @@ public abstract class BaseContentStructureResourceTestCase {
 			testGetSiteContentStructuresPage_addContentStructure(
 				siteId, contentStructure1);
 
-		Thread.sleep(1000);
-
 		contentStructure2 =
 			testGetSiteContentStructuresPage_addContentStructure(
 				siteId, contentStructure2);

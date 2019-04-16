@@ -641,8 +641,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
 				parentMessageBoardSectionId, messageBoardSection1);
 
-		Thread.sleep(1000);
-
 		messageBoardSection2 =
 			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
 				parentMessageBoardSectionId, messageBoardSection2);
@@ -1088,8 +1086,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		messageBoardSection1 =
 			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
 				siteId, messageBoardSection1);
-
-		Thread.sleep(1000);
 
 		messageBoardSection2 =
 			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(

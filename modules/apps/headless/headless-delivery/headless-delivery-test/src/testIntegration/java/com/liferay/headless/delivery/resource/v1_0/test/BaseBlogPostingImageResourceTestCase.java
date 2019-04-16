@@ -428,8 +428,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
 				siteId, blogPostingImage1);
 
-		Thread.sleep(1000);
-
 		blogPostingImage2 =
 			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
 				siteId, blogPostingImage2);

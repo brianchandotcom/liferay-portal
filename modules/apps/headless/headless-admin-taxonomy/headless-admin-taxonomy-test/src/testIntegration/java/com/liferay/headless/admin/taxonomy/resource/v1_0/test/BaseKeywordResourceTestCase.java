@@ -449,8 +449,6 @@ public abstract class BaseKeywordResourceTestCase {
 
 		keyword1 = testGetSiteKeywordsPage_addKeyword(siteId, keyword1);
 
-		Thread.sleep(1000);
-
 		keyword2 = testGetSiteKeywordsPage_addKeyword(siteId, keyword2);
 
 		for (EntityField entityField : entityFields) {

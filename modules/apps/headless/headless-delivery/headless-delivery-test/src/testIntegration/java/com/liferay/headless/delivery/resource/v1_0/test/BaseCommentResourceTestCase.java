@@ -279,8 +279,6 @@ public abstract class BaseCommentResourceTestCase {
 		comment1 = testGetBlogPostingCommentsPage_addComment(
 			blogPostingId, comment1);
 
-		Thread.sleep(1000);
-
 		comment2 = testGetBlogPostingCommentsPage_addComment(
 			blogPostingId, comment2);
 
@@ -853,8 +851,6 @@ public abstract class BaseCommentResourceTestCase {
 		comment1 = testGetCommentCommentsPage_addComment(
 			parentCommentId, comment1);
 
-		Thread.sleep(1000);
-
 		comment2 = testGetCommentCommentsPage_addComment(
 			parentCommentId, comment2);
 
@@ -1236,8 +1232,6 @@ public abstract class BaseCommentResourceTestCase {
 		}
 
 		comment1 = testGetDocumentCommentsPage_addComment(documentId, comment1);
-
-		Thread.sleep(1000);
 
 		comment2 = testGetDocumentCommentsPage_addComment(documentId, comment2);
 
@@ -1627,8 +1621,6 @@ public abstract class BaseCommentResourceTestCase {
 
 		comment1 = testGetStructuredContentCommentsPage_addComment(
 			structuredContentId, comment1);
-
-		Thread.sleep(1000);
 
 		comment2 = testGetStructuredContentCommentsPage_addComment(
 			structuredContentId, comment2);

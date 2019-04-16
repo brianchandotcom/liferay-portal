@@ -796,8 +796,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 		blogPosting1 = testGetSiteBlogPostingsPage_addBlogPosting(
 			siteId, blogPosting1);
 
-		Thread.sleep(1000);
-
 		blogPosting2 = testGetSiteBlogPostingsPage_addBlogPosting(
 			siteId, blogPosting2);
 

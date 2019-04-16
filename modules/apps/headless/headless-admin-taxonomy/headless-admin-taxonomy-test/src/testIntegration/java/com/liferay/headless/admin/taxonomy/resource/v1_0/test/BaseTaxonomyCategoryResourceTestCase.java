@@ -312,8 +312,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
 				parentTaxonomyCategoryId, taxonomyCategory1);
 
-		Thread.sleep(1000);
-
 		taxonomyCategory2 =
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
 				parentTaxonomyCategoryId, taxonomyCategory2);
@@ -1078,8 +1076,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		taxonomyCategory1 =
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(
 				taxonomyVocabularyId, taxonomyCategory1);
-
-		Thread.sleep(1000);
 
 		taxonomyCategory2 =
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(

@@ -288,8 +288,6 @@ public abstract class BaseDocumentResourceTestCase {
 		document1 = testGetDocumentFolderDocumentsPage_addDocument(
 			documentFolderId, document1);
 
-		Thread.sleep(1000);
-
 		document2 = testGetDocumentFolderDocumentsPage_addDocument(
 			documentFolderId, document2);
 
@@ -1145,8 +1143,6 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		document1 = testGetSiteDocumentsPage_addDocument(siteId, document1);
-
-		Thread.sleep(1000);
 
 		document2 = testGetSiteDocumentsPage_addDocument(siteId, document2);
 

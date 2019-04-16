@@ -889,8 +889,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
 				parentMessageBoardMessageId, messageBoardMessage1);
 
-		Thread.sleep(1000);
-
 		messageBoardMessage2 =
 			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
 				parentMessageBoardMessageId, messageBoardMessage2);
@@ -1347,8 +1345,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		messageBoardMessage1 =
 			testGetMessageBoardThreadMessageBoardMessagesPage_addMessageBoardMessage(
 				messageBoardThreadId, messageBoardMessage1);
-
-		Thread.sleep(1000);
 
 		messageBoardMessage2 =
 			testGetMessageBoardThreadMessageBoardMessagesPage_addMessageBoardMessage(

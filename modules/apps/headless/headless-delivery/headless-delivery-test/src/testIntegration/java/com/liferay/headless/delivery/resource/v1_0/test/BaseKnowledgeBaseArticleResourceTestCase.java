@@ -900,8 +900,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				parentKnowledgeBaseArticleId, knowledgeBaseArticle1);
 
-		Thread.sleep(1000);
-
 		knowledgeBaseArticle2 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				parentKnowledgeBaseArticleId, knowledgeBaseArticle2);
@@ -1369,8 +1367,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, knowledgeBaseArticle1);
 
-		Thread.sleep(1000);
-
 		knowledgeBaseArticle2 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, knowledgeBaseArticle2);
@@ -1826,8 +1822,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		knowledgeBaseArticle1 =
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				siteId, knowledgeBaseArticle1);
-
-		Thread.sleep(1000);
 
 		knowledgeBaseArticle2 =
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(

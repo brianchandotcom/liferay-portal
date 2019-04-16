@@ -246,8 +246,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		organization1 = testGetOrganizationsPage_addOrganization(organization1);
 
-		Thread.sleep(1000);
-
 		organization2 = testGetOrganizationsPage_addOrganization(organization2);
 
 		for (EntityField entityField : entityFields) {
@@ -618,8 +616,6 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		organization1 = testGetOrganizationOrganizationsPage_addOrganization(
 			parentOrganizationId, organization1);
-
-		Thread.sleep(1000);
 
 		organization2 = testGetOrganizationOrganizationsPage_addOrganization(
 			parentOrganizationId, organization2);

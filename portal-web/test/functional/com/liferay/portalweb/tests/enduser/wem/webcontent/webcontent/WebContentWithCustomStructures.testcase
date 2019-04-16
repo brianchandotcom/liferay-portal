@@ -1371,6 +1371,8 @@ definition {
 
 		NavItem.gotoTemplates();
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		WebContentTemplates.viewTableEntryCP(
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name"

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.tools.rest.builder.maven;
 
+import com.liferay.portal.tools.rest.builder.RESTBuilder;
 import com.liferay.portal.tools.rest.builder.RESTBuilderArgs;
-import com.liferay.portal.tools.rest.builder.RESTBuilderInvoker;
 
 import java.io.File;
 
@@ -33,7 +33,9 @@ public class BuildRESTMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
-			RESTBuilderInvoker.invoke(baseDir, _restBuilderArgs);
+			RESTBuilder restBuilder = new RESTBuilder(_restBuilderArgs);
+
+			restBuilder.build();
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -43,15 +45,15 @@ public class BuildRESTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setCopyrightFileName(String copyrightFileName) {
-		_restBuilderArgs.setCopyrightFileName(copyrightFileName);
+	public void setCopyrightFile(File copyrightFile) {
+		_restBuilderArgs.setCopyrightFile(copyrightFile);
 	}
 
 	/**
 	 * @parameter
 	 */
-	public void setRESTConfigDirName(String restConfigDirName) {
-		_restBuilderArgs.setRESTConfigDirName(restConfigDirName);
+	public void setRESTConfigDir(File restConfigDir) {
+		_restBuilderArgs.setRESTConfigDir(restConfigDir);
 	}
 
 	/**

@@ -14,38 +14,25 @@
 
 package com.liferay.portal.tools.rest.builder.ant;
 
+import com.liferay.portal.tools.rest.builder.RESTBuilder;
 import com.liferay.portal.tools.rest.builder.RESTBuilderArgs;
-import com.liferay.portal.tools.rest.builder.RESTBuilderInvoker;
 
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Task;
 
 /**
  * @author Peter Shin
  */
-public class BuildRESTTask extends Task {
+public class BuildRESTTask extends RESTBuilderArgs {
 
-	@Override
-	public void execute() throws BuildException {
+	public void execute() {
 		try {
-			Project project = getProject();
+			RESTBuilder restBuilder = new RESTBuilder(this);
 
-			RESTBuilderInvoker.invoke(project.getBaseDir(), _restBuilderArgs);
+			restBuilder.build();
 		}
 		catch (Exception e) {
 			throw new BuildException(e);
 		}
 	}
-
-	public void setCopyrightFileName(String copyrightFileName) {
-		_restBuilderArgs.setCopyrightFileName(copyrightFileName);
-	}
-
-	public void setRESTConfigDirName(String restConfigDirName) {
-		_restBuilderArgs.setRESTConfigDirName(restConfigDirName);
-	}
-
-	private final RESTBuilderArgs _restBuilderArgs = new RESTBuilderArgs();
 
 }

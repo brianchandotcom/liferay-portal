@@ -168,12 +168,6 @@ definition {
 		MenuItem.click(menuItem = "Preview");
 	}
 
-	macro gotoPreviewViaHeaderCP {
-		SiteAdmin.viewPortletTitle(portletTitle = "${webContentTitle}");
-
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Preview");
-	}
-
 	macro gotoViewStatus {
 		var key_webContentTitle = "${webContentTitle}";
 

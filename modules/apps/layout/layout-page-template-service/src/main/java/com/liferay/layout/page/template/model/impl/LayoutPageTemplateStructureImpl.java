@@ -20,7 +20,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.segments.constants.SegmentsConstants;
 
 import java.util.Arrays;
 import java.util.stream.LongStream;
@@ -55,7 +54,8 @@ public class LayoutPageTemplateStructureImpl
 		return getData(segmentsExperienceId);
 	}
 
-	private long _getFirstSegmentsExperienceId(long[] segmentsExperienceIds) {
+	private long _getFirstSegmentsExperienceId(long[] segmentsExperienceIds)
+		throws PortalException {
 
 		LongStream stream = Arrays.stream(segmentsExperienceIds);
 
@@ -70,8 +70,10 @@ public class LayoutPageTemplateStructureImpl
 				return layoutPageTemplateStructureRel != null;
 			}
 		).findFirst(
-		).orElse(
-			SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT
+		).orElseThrow(
+			() -> new PortalException(
+				"No segment experience was found for layout page template " +
+					"structure " + getLayoutPageTemplateStructureId())
 		);
 	}
 

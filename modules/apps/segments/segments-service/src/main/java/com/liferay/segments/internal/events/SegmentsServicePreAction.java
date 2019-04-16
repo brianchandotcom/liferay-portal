@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 import com.liferay.segments.internal.context.RequestContextMapper;
@@ -84,7 +86,7 @@ public class SegmentsServicePreAction extends Action {
 			return;
 		}
 
-		long[] segmentsEntryIds = new long[0];
+		long[] segmentsEntryIds = {SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT};
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -92,10 +94,12 @@ public class SegmentsServicePreAction extends Action {
 			!layout.isTypeControlPanel()) {
 
 			try {
-				segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-					themeDisplay.getScopeGroupId(), User.class.getName(),
-					themeDisplay.getUserId(),
-					_requestContextMapper.map(request));
+				segmentsEntryIds = ArrayUtil.append(
+					_segmentsEntryProvider.getSegmentsEntryIds(
+						themeDisplay.getScopeGroupId(), User.class.getName(),
+						themeDisplay.getUserId(),
+						_requestContextMapper.map(request)),
+					segmentsEntryIds);
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {
@@ -125,9 +129,11 @@ public class SegmentsServicePreAction extends Action {
 
 		Stream<SegmentsExperience> stream = segmentsExperiences.stream();
 
-		return stream.mapToLong(
-			SegmentsExperienceModel::getSegmentsExperienceId
-		).toArray();
+		return ArrayUtil.append(
+			stream.mapToLong(
+				SegmentsExperienceModel::getSegmentsExperienceId
+			).toArray(),
+			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

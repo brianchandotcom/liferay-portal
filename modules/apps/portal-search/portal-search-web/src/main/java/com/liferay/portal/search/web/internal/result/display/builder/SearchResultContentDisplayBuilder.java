@@ -25,7 +25,6 @@ import com.liferay.portal.search.web.internal.result.display.context.SearchResul
 
 import java.util.Locale;
 
-import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -100,10 +99,7 @@ public class SearchResultContentDisplayBuilder {
 				PortletURL redirectPortletURL =
 					_renderResponse.createRenderURL();
 
-				MutableRenderParameters mutableRenderParameters =
-					redirectPortletURL.getRenderParameters();
-
-				mutableRenderParameters.setValue(
+				redirectPortletURL.setParameter(
 					"mvcPath", "/edit_content_redirect.jsp");
 
 				PortletURL editPortletURL = assetRenderer.getURLEdit(

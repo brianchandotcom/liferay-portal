@@ -15,32 +15,28 @@
 package com.liferay.journal.content.web.internal.servlet.taglib.clay;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.RenderRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class JournalArticleVerticalCard implements VerticalCard {
+public class JournalArticleVerticalCard extends BaseVerticalCard {
 
 	public JournalArticleVerticalCard(
 		JournalArticle article, AssetRenderer<JournalArticle> assetRenderer,
 		RenderRequest renderRequest) {
+
+		super(article, renderRequest, null);
 
 		_article = article;
 		_assetRenderer = assetRenderer;
@@ -64,50 +60,6 @@ public class JournalArticleVerticalCard implements VerticalCard {
 		catch (Exception e) {
 			return null;
 		}
-	}
-
-	@Override
-	public List<LabelItem> getLabels() {
-		return new LabelItemList() {
-			{
-				add(
-					labelItem -> {
-						labelItem.setStatus(_article.getStatus());
-					});
-			}
-		};
-	}
-
-	@Override
-	public String getStickerImageSrc() {
-		try {
-			User user = UserLocalServiceUtil.fetchUser(
-				_assetRenderer.getUserId());
-
-			if (user != null) {
-				return user.getPortraitURL(_themeDisplay);
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return StringPool.BLANK;
-	}
-
-	@Override
-	public String getStickerLabel() {
-		User user = UserLocalServiceUtil.fetchUser(_assetRenderer.getUserId());
-
-		if (user != null) {
-			return user.getInitials();
-		}
-
-		return StringPool.BLANK;
-	}
-
-	@Override
-	public String getStickerShape() {
-		return "circle";
 	}
 
 	@Override

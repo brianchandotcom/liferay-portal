@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.registry.internal.RegistryImplBundleActivator
 Bundle-Name: Liferay Registry Implementation
 Bundle-SymbolicName: com.liferay.registry.impl
 Bundle-Version: 3.0.0

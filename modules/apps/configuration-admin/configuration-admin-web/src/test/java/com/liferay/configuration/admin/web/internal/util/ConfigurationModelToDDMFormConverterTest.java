@@ -66,6 +66,11 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
 			ExtendedObjectClassDefinition.ALL);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition, new ExtendedAttributeDefinition[0],
+			ExtendedObjectClassDefinition.OPTIONAL);
+
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
@@ -115,6 +120,10 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
 			ExtendedObjectClassDefinition.ALL);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition, new ExtendedAttributeDefinition[0],
+			ExtendedObjectClassDefinition.OPTIONAL);
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
@@ -169,6 +178,10 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
 			ExtendedObjectClassDefinition.OPTIONAL);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition, new ExtendedAttributeDefinition[0],
+			ExtendedObjectClassDefinition.REQUIRED);
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Password");
 		whenGetType(
@@ -210,6 +223,10 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
 			ExtendedObjectClassDefinition.ALL);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition, new ExtendedAttributeDefinition[0],
+			ExtendedObjectClassDefinition.OPTIONAL);
 		whenGetAttributeDefinitions(
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
@@ -287,6 +304,10 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedObjectClassDefinition,
 			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
 			ExtendedObjectClassDefinition.OPTIONAL);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition, new ExtendedAttributeDefinition[0],
+			ExtendedObjectClassDefinition.REQUIRED);
 		whenGetCardinality(extendedAttributeDefinition, 0);
 		whenGetID(extendedAttributeDefinition, "Text");
 		whenGetType(

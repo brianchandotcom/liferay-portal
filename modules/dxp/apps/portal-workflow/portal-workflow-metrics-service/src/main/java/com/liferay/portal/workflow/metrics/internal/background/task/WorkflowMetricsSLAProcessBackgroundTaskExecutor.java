@@ -217,7 +217,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.setIndexNames("workflow-metrics-token");
+		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 

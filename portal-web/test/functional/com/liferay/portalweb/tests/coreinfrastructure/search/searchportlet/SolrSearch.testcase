@@ -1896,7 +1896,7 @@ definition {
 		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Test");
 
 		SearchPortlets.viewUserResultDetails(
-			pageName = "Home",
+			pageName = "My Profile",
 			userName = "Test Test"
 		);
 	}

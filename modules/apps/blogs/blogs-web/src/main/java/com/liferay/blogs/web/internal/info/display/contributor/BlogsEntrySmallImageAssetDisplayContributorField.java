@@ -17,8 +17,9 @@ package com.liferay.blogs.web.internal.info.display.contributor;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.display.contributor.BaseInfoDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,21 +60,26 @@ public class BlogsEntrySmallImageAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(BlogsEntry blogsEntry, Locale locale) {
+	public Object getValue(BlogsEntry blogsEntry, Locale locale) {
 		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (themeDisplay != null) {
 			try {
-				return blogsEntry.getSmallImageURL(themeDisplay);
+				jsonObject.put(
+					"url", blogsEntry.getSmallImageURL(themeDisplay));
+
+				return jsonObject;
 			}
 			catch (PortalException pe) {
 				_log.error(pe, pe);
 
-				return StringPool.BLANK;
+				return null;
 			}
 		}
 
-		return StringPool.BLANK;
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

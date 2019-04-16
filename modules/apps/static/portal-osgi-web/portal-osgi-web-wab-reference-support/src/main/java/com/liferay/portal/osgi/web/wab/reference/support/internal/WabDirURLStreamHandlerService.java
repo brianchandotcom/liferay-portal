@@ -14,9 +14,6 @@
 
 package com.liferay.portal.osgi.web.wab.reference.support.internal;
 
-import aQute.bnd.osgi.Constants;
-import aQute.bnd.osgi.Jar;
-
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -76,7 +73,7 @@ public class WabDirURLStreamHandlerService
 			File warDir = new File(uri);
 
 			String bundleSymbolicName = _http.getParameter(
-				url.toExternalForm(), Constants.BUNDLE_SYMBOLICNAME);
+				url.toExternalForm(), "Bundle-SymbolicName");
 
 			if (bundleSymbolicName.equals(StringPool.BLANK)) {
 				bundleSymbolicName = _getNameFromDirectory(warDir);
@@ -91,8 +88,7 @@ public class WabDirURLStreamHandlerService
 			}
 
 			parameters.put(
-				Constants.BUNDLE_SYMBOLICNAME,
-				new String[] {bundleSymbolicName});
+				"Bundle-SymbolicName", new String[] {bundleSymbolicName});
 
 			String contextName = _http.getParameter(
 				url.toExternalForm(), "Web-ContextPath");
@@ -124,9 +120,7 @@ public class WabDirURLStreamHandlerService
 				_classLoader, warDir, parameters);
 
 			if (generatedJarFile != null) {
-				try (Jar generatedJar = new Jar(generatedJarFile)) {
-					generatedJar.expand(warDir);
-				}
+				_file.unzip(generatedJarFile, warDir);
 			}
 
 			uri = warDir.toURI();
@@ -141,11 +135,6 @@ public class WabDirURLStreamHandlerService
 		}
 
 		return null;
-	}
-
-	@Reference(unbind = "-")
-	public void setWabGenerator(WabGenerator wabGenerator) {
-		_wabGenerator = wabGenerator;
 	}
 
 	@Activate
@@ -237,8 +226,12 @@ public class WabDirURLStreamHandlerService
 	private ClassLoader _classLoader;
 
 	@Reference
+	private com.liferay.portal.kernel.util.File _file;
+
+	@Reference
 	private Http _http;
 
+	@Reference
 	private WabGenerator _wabGenerator;
 
 }

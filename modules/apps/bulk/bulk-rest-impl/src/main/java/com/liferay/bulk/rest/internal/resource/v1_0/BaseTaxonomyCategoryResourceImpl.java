@@ -35,7 +35,6 @@ import javax.ws.rs.PATCH;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -52,13 +51,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@PATCH
 	@Path("/taxonomy-categories/batch")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
-	public Response patchTaxonomyCategoryBatch(
+	public void patchTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
@@ -66,13 +61,9 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@PUT
 	@Path("/taxonomy-categories/batch")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
-	public Response putTaxonomyCategoryBatch(
+	public void putTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	public void setContextCompany(Company contextCompany) {

@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.ParentKnowledgeBaseFolder;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -82,6 +84,26 @@ public class ParentKnowledgeBaseFolderSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		ParentKnowledgeBaseFolder parentKnowledgeBaseFolder) {
+
+		if (parentKnowledgeBaseFolder == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put(
+			"folderId",
+			String.valueOf(parentKnowledgeBaseFolder.getFolderId()));
+
+		map.put(
+			"folderName",
+			String.valueOf(parentKnowledgeBaseFolder.getFolderName()));
+
+		return map;
 	}
 
 	private static class ParentKnowledgeBaseFolderJSONParser

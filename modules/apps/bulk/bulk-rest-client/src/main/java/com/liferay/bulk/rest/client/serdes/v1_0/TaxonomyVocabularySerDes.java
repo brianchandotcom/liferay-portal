@@ -18,6 +18,8 @@ import com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.bulk.rest.client.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.bulk.rest.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -129,6 +131,33 @@ public class TaxonomyVocabularySerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		TaxonomyVocabulary taxonomyVocabulary) {
+
+		if (taxonomyVocabulary == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put(
+			"multiValued", String.valueOf(taxonomyVocabulary.getMultiValued()));
+
+		map.put("name", String.valueOf(taxonomyVocabulary.getName()));
+
+		map.put("required", String.valueOf(taxonomyVocabulary.getRequired()));
+
+		map.put(
+			"taxonomyCategories",
+			String.valueOf(taxonomyVocabulary.getTaxonomyCategories()));
+
+		map.put(
+			"taxonomyVocabularyId",
+			String.valueOf(taxonomyVocabulary.getTaxonomyVocabularyId()));
+
+		return map;
 	}
 
 	private static class TaxonomyVocabularyJSONParser

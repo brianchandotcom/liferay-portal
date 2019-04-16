@@ -14,11 +14,6 @@
 
 package com.liferay.bulk.rest.resource.v1_0.test;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-
 import com.liferay.bulk.rest.client.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.client.dto.v1_0.Selection;
 import com.liferay.bulk.rest.client.pagination.Page;
@@ -357,32 +352,27 @@ public abstract class BaseSelectionResourceTestCase {
 		return randomSelection();
 	}
 
-	protected static final ObjectMapper inputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+	private String mapToJSON(Map<String, String> map) {
+		if (map == null) {
+			return "null";
 		}
-	};
-	protected static final ObjectMapper outputObjectMapper =
-		new ObjectMapper() {
-			{
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
-			}
-		};
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			sb.append("\"" + entry.getKey() + "\": ");
+			sb.append("\"" + entry.getValue() + "\"");
+			sb.append(",");
+		}
+
+		sb.setLength(sb.length() - 1);
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 	protected Group irrelevantGroup;
 	protected String testContentType = "application/json";

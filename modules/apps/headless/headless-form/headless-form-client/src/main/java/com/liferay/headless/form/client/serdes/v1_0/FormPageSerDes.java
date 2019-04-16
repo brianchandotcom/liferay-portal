@@ -18,6 +18,8 @@ import com.liferay.headless.form.client.dto.v1_0.Field;
 import com.liferay.headless.form.client.dto.v1_0.FormPage;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -114,6 +116,24 @@ public class FormPageSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(FormPage formPage) {
+		if (formPage == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("fields", String.valueOf(formPage.getFields()));
+
+		map.put("headline", String.valueOf(formPage.getHeadline()));
+
+		map.put("id", String.valueOf(formPage.getId()));
+
+		map.put("text", String.valueOf(formPage.getText()));
+
+		return map;
 	}
 
 	private static class FormPageJSONParser extends BaseJSONParser<FormPage> {

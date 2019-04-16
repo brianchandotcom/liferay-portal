@@ -17,6 +17,8 @@ package com.liferay.headless.admin.user.client.serdes.v1_0;
 import com.liferay.headless.admin.user.client.dto.v1_0.SegmentUser;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -93,6 +95,22 @@ public class SegmentUserSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(SegmentUser segmentUser) {
+		if (segmentUser == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("emailAddress", String.valueOf(segmentUser.getEmailAddress()));
+
+		map.put("id", String.valueOf(segmentUser.getId()));
+
+		map.put("name", String.valueOf(segmentUser.getName()));
+
+		return map;
 	}
 
 	private static class SegmentUserJSONParser

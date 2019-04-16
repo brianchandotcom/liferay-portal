@@ -20,6 +20,8 @@ import com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -205,6 +207,56 @@ public class TaxonomyCategorySerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(TaxonomyCategory taxonomyCategory) {
+		if (taxonomyCategory == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"availableLanguages",
+			String.valueOf(taxonomyCategory.getAvailableLanguages()));
+
+		map.put("creator", CreatorSerDes.toJSON(taxonomyCategory.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(taxonomyCategory.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(taxonomyCategory.getDateModified()));
+
+		map.put(
+			"description", String.valueOf(taxonomyCategory.getDescription()));
+
+		map.put("id", String.valueOf(taxonomyCategory.getId()));
+
+		map.put("name", String.valueOf(taxonomyCategory.getName()));
+
+		map.put(
+			"numberOfTaxonomyCategories",
+			String.valueOf(taxonomyCategory.getNumberOfTaxonomyCategories()));
+
+		map.put(
+			"parentTaxonomyCategory",
+			ParentTaxonomyCategorySerDes.toJSON(
+				taxonomyCategory.getParentTaxonomyCategory()));
+
+		map.put(
+			"parentTaxonomyVocabulary",
+			ParentTaxonomyVocabularySerDes.toJSON(
+				taxonomyCategory.getParentTaxonomyVocabulary()));
+
+		map.put("viewableBy", String.valueOf(taxonomyCategory.getViewableBy()));
+
+		return map;
 	}
 
 	private static class TaxonomyCategoryJSONParser

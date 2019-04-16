@@ -21,6 +21,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -205,6 +207,46 @@ public class ContentStructureSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(ContentStructure contentStructure) {
+		if (contentStructure == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"availableLanguages",
+			String.valueOf(contentStructure.getAvailableLanguages()));
+
+		map.put(
+			"contentStructureFields",
+			String.valueOf(contentStructure.getContentStructureFields()));
+
+		map.put("creator", CreatorSerDes.toJSON(contentStructure.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(contentStructure.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(contentStructure.getDateModified()));
+
+		map.put(
+			"description", String.valueOf(contentStructure.getDescription()));
+
+		map.put("id", String.valueOf(contentStructure.getId()));
+
+		map.put("name", String.valueOf(contentStructure.getName()));
+
+		map.put("siteId", String.valueOf(contentStructure.getSiteId()));
+
+		return map;
 	}
 
 	private static class ContentStructureJSONParser

@@ -17,6 +17,8 @@ package com.liferay.headless.admin.taxonomy.client.serdes.v1_0;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -80,6 +82,22 @@ public class ParentTaxonomyVocabularySerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary) {
+
+		if (parentTaxonomyVocabulary == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("id", String.valueOf(parentTaxonomyVocabulary.getId()));
+
+		map.put("name", String.valueOf(parentTaxonomyVocabulary.getName()));
+
+		return map;
 	}
 
 	private static class ParentTaxonomyVocabularyJSONParser

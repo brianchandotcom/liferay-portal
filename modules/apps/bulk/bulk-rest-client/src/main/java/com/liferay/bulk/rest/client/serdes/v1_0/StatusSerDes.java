@@ -17,6 +17,8 @@ package com.liferay.bulk.rest.client.serdes.v1_0;
 import com.liferay.bulk.rest.client.dto.v1_0.Status;
 import com.liferay.bulk.rest.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -61,6 +63,19 @@ public class StatusSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Status status) {
+		if (status == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put(
+			"actionInProgress", String.valueOf(status.getActionInProgress()));
+
+		return map;
 	}
 
 	private static class StatusJSONParser extends BaseJSONParser<Status> {

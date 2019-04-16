@@ -20,6 +20,8 @@ import com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -140,6 +142,39 @@ public class KeywordSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Keyword keyword) {
+		if (keyword == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put("creator", CreatorSerDes.toJSON(keyword.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(keyword.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(keyword.getDateModified()));
+
+		map.put("id", String.valueOf(keyword.getId()));
+
+		map.put(
+			"keywordUsageCount",
+			String.valueOf(keyword.getKeywordUsageCount()));
+
+		map.put("name", String.valueOf(keyword.getName()));
+
+		map.put("siteId", String.valueOf(keyword.getSiteId()));
+
+		return map;
 	}
 
 	private static class KeywordJSONParser extends BaseJSONParser<Keyword> {

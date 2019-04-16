@@ -20,6 +20,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -204,6 +206,67 @@ public class KnowledgeBaseFolderSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		KnowledgeBaseFolder knowledgeBaseFolder) {
+
+		if (knowledgeBaseFolder == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"creator", CreatorSerDes.toJSON(knowledgeBaseFolder.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(
+				knowledgeBaseFolder.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(
+				knowledgeBaseFolder.getDateModified()));
+
+		map.put(
+			"description",
+			String.valueOf(knowledgeBaseFolder.getDescription()));
+
+		map.put("id", String.valueOf(knowledgeBaseFolder.getId()));
+
+		map.put("name", String.valueOf(knowledgeBaseFolder.getName()));
+
+		map.put(
+			"numberOfKnowledgeBaseArticles",
+			String.valueOf(
+				knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles()));
+
+		map.put(
+			"numberOfKnowledgeBaseFolders",
+			String.valueOf(
+				knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders()));
+
+		map.put(
+			"parentKnowledgeBaseFolder",
+			ParentKnowledgeBaseFolderSerDes.toJSON(
+				knowledgeBaseFolder.getParentKnowledgeBaseFolder()));
+
+		map.put(
+			"parentKnowledgeBaseFolderId",
+			String.valueOf(
+				knowledgeBaseFolder.getParentKnowledgeBaseFolderId()));
+
+		map.put("siteId", String.valueOf(knowledgeBaseFolder.getSiteId()));
+
+		map.put(
+			"viewableBy", String.valueOf(knowledgeBaseFolder.getViewableBy()));
+
+		return map;
 	}
 
 	private static class KnowledgeBaseFolderJSONParser

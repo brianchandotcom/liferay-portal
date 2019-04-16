@@ -17,6 +17,8 @@ package com.liferay.headless.form.client.serdes.v1_0;
 import com.liferay.headless.form.client.dto.v1_0.FormDocument;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -134,6 +136,30 @@ public class FormDocumentSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(FormDocument formDocument) {
+		if (formDocument == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("contentUrl", String.valueOf(formDocument.getContentUrl()));
+
+		map.put(
+			"encodingFormat", String.valueOf(formDocument.getEncodingFormat()));
+
+		map.put(
+			"fileExtension", String.valueOf(formDocument.getFileExtension()));
+
+		map.put("id", String.valueOf(formDocument.getId()));
+
+		map.put("sizeInBytes", String.valueOf(formDocument.getSizeInBytes()));
+
+		map.put("title", String.valueOf(formDocument.getTitle()));
+
+		return map;
 	}
 
 	private static class FormDocumentJSONParser

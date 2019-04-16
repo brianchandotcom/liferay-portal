@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -134,6 +136,38 @@ public class MessageBoardAttachmentSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		MessageBoardAttachment messageBoardAttachment) {
+
+		if (messageBoardAttachment == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put(
+			"contentUrl",
+			String.valueOf(messageBoardAttachment.getContentUrl()));
+
+		map.put(
+			"encodingFormat",
+			String.valueOf(messageBoardAttachment.getEncodingFormat()));
+
+		map.put(
+			"fileExtension",
+			String.valueOf(messageBoardAttachment.getFileExtension()));
+
+		map.put("id", String.valueOf(messageBoardAttachment.getId()));
+
+		map.put(
+			"sizeInBytes",
+			String.valueOf(messageBoardAttachment.getSizeInBytes()));
+
+		map.put("title", String.valueOf(messageBoardAttachment.getTitle()));
+
+		return map;
 	}
 
 	private static class MessageBoardAttachmentJSONParser

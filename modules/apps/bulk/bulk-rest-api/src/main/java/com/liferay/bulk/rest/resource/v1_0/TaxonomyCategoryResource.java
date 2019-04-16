@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.model.Company;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.core.Response;
-
 /**
  * To access this resource, run:
  *
@@ -32,11 +30,11 @@ import javax.ws.rs.core.Response;
 @Generated("")
 public interface TaxonomyCategoryResource {
 
-	public Response patchTaxonomyCategoryBatch(
+	public void patchTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception;
 
-	public Response putTaxonomyCategoryBatch(
+	public void putTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception;
 

@@ -20,6 +20,8 @@ import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -103,6 +105,33 @@ public class WorkflowTaskAssignToUserSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		WorkflowTaskAssignToUser workflowTaskAssignToUser) {
+
+		if (workflowTaskAssignToUser == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"assigneeId",
+			String.valueOf(workflowTaskAssignToUser.getAssigneeId()));
+
+		map.put(
+			"comment", String.valueOf(workflowTaskAssignToUser.getComment()));
+
+		map.put(
+			"dueDate",
+			liferayToJSONDateFormat.format(
+				workflowTaskAssignToUser.getDueDate()));
+
+		return map;
 	}
 
 	private static class WorkflowTaskAssignToUserJSONParser

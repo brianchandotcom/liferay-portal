@@ -21,6 +21,8 @@ import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -223,6 +225,54 @@ public class OrganizationSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Organization organization) {
+		if (organization == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put("comment", String.valueOf(organization.getComment()));
+
+		map.put(
+			"contactInformation",
+			ContactInformationSerDes.toJSON(
+				organization.getContactInformation()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(organization.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(organization.getDateModified()));
+
+		map.put("id", String.valueOf(organization.getId()));
+
+		map.put("image", String.valueOf(organization.getImage()));
+
+		map.put("keywords", String.valueOf(organization.getKeywords()));
+
+		map.put("location", LocationSerDes.toJSON(organization.getLocation()));
+
+		map.put("name", String.valueOf(organization.getName()));
+
+		map.put(
+			"numberOfOrganizations",
+			String.valueOf(organization.getNumberOfOrganizations()));
+
+		map.put(
+			"parentOrganization",
+			OrganizationSerDes.toJSON(organization.getParentOrganization()));
+
+		map.put("services", String.valueOf(organization.getServices()));
+
+		return map;
 	}
 
 	private static class OrganizationJSONParser

@@ -23,6 +23,8 @@ import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -402,6 +404,78 @@ public class UserAccountSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(UserAccount userAccount) {
+		if (userAccount == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"additionalName", String.valueOf(userAccount.getAdditionalName()));
+
+		map.put(
+			"alternateName", String.valueOf(userAccount.getAlternateName()));
+
+		map.put(
+			"birthDate",
+			liferayToJSONDateFormat.format(userAccount.getBirthDate()));
+
+		map.put(
+			"contactInformation",
+			ContactInformationSerDes.toJSON(
+				userAccount.getContactInformation()));
+
+		map.put("dashboardURL", String.valueOf(userAccount.getDashboardURL()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(userAccount.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(userAccount.getDateModified()));
+
+		map.put("emailAddress", String.valueOf(userAccount.getEmailAddress()));
+
+		map.put("familyName", String.valueOf(userAccount.getFamilyName()));
+
+		map.put("givenName", String.valueOf(userAccount.getGivenName()));
+
+		map.put(
+			"honorificPrefix",
+			String.valueOf(userAccount.getHonorificPrefix()));
+
+		map.put(
+			"honorificSuffix",
+			String.valueOf(userAccount.getHonorificSuffix()));
+
+		map.put("id", String.valueOf(userAccount.getId()));
+
+		map.put("image", String.valueOf(userAccount.getImage()));
+
+		map.put("jobTitle", String.valueOf(userAccount.getJobTitle()));
+
+		map.put("keywords", String.valueOf(userAccount.getKeywords()));
+
+		map.put("name", String.valueOf(userAccount.getName()));
+
+		map.put(
+			"organizationBriefs",
+			String.valueOf(userAccount.getOrganizationBriefs()));
+
+		map.put("profileURL", String.valueOf(userAccount.getProfileURL()));
+
+		map.put("roleBriefs", String.valueOf(userAccount.getRoleBriefs()));
+
+		map.put("siteBriefs", String.valueOf(userAccount.getSiteBriefs()));
+
+		return map;
 	}
 
 	private static class UserAccountJSONParser

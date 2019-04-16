@@ -17,6 +17,8 @@ package com.liferay.headless.form.client.serdes.v1_0;
 import com.liferay.headless.form.client.dto.v1_0.FieldValue;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -107,6 +109,27 @@ public class FieldValueSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(FieldValue fieldValue) {
+		if (fieldValue == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put(
+			"document", FormDocumentSerDes.toJSON(fieldValue.getDocument()));
+
+		map.put("documentId", String.valueOf(fieldValue.getDocumentId()));
+
+		map.put("id", String.valueOf(fieldValue.getId()));
+
+		map.put("name", String.valueOf(fieldValue.getName()));
+
+		map.put("value", String.valueOf(fieldValue.getValue()));
+
+		return map;
 	}
 
 	private static class FieldValueJSONParser

@@ -20,6 +20,8 @@ import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -171,6 +173,45 @@ public class WorkflowLogSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(WorkflowLog workflowLog) {
+		if (workflowLog == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"auditPerson", CreatorSerDes.toJSON(workflowLog.getAuditPerson()));
+
+		map.put("commentLog", String.valueOf(workflowLog.getCommentLog()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(workflowLog.getDateCreated()));
+
+		map.put("id", String.valueOf(workflowLog.getId()));
+
+		map.put("person", CreatorSerDes.toJSON(workflowLog.getPerson()));
+
+		map.put(
+			"previousPerson",
+			CreatorSerDes.toJSON(workflowLog.getPreviousPerson()));
+
+		map.put(
+			"previousState", String.valueOf(workflowLog.getPreviousState()));
+
+		map.put("state", String.valueOf(workflowLog.getState()));
+
+		map.put("taskId", String.valueOf(workflowLog.getTaskId()));
+
+		map.put("type", String.valueOf(workflowLog.getType()));
+
+		return map;
 	}
 
 	private static class WorkflowLogJSONParser

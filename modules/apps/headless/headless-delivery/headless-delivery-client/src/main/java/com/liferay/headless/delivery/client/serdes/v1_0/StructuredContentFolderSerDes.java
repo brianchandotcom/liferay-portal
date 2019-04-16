@@ -20,6 +20,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -191,6 +193,59 @@ public class StructuredContentFolderSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		StructuredContentFolder structuredContentFolder) {
+
+		if (structuredContentFolder == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"creator",
+			CreatorSerDes.toJSON(structuredContentFolder.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(
+				structuredContentFolder.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(
+				structuredContentFolder.getDateModified()));
+
+		map.put(
+			"description",
+			String.valueOf(structuredContentFolder.getDescription()));
+
+		map.put("id", String.valueOf(structuredContentFolder.getId()));
+
+		map.put("name", String.valueOf(structuredContentFolder.getName()));
+
+		map.put(
+			"numberOfStructuredContentFolders",
+			String.valueOf(
+				structuredContentFolder.getNumberOfStructuredContentFolders()));
+
+		map.put(
+			"numberOfStructuredContents",
+			String.valueOf(
+				structuredContentFolder.getNumberOfStructuredContents()));
+
+		map.put("siteId", String.valueOf(structuredContentFolder.getSiteId()));
+
+		map.put(
+			"viewableBy",
+			String.valueOf(structuredContentFolder.getViewableBy()));
+
+		return map;
 	}
 
 	private static class StructuredContentFolderJSONParser

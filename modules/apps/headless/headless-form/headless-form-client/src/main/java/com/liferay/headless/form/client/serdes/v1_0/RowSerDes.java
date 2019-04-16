@@ -17,6 +17,8 @@ package com.liferay.headless.form.client.serdes.v1_0;
 import com.liferay.headless.form.client.dto.v1_0.Row;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -91,6 +93,22 @@ public class RowSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Row row) {
+		if (row == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("id", String.valueOf(row.getId()));
+
+		map.put("label", String.valueOf(row.getLabel()));
+
+		map.put("value", String.valueOf(row.getValue()));
+
+		return map;
 	}
 
 	private static class RowJSONParser extends BaseJSONParser<Row> {

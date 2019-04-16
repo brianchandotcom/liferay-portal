@@ -18,6 +18,8 @@ import com.liferay.headless.admin.user.client.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.client.dto.v1_0.Service;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -101,6 +103,22 @@ public class ServiceSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Service service) {
+		if (service == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("hoursAvailable", String.valueOf(service.getHoursAvailable()));
+
+		map.put("id", String.valueOf(service.getId()));
+
+		map.put("serviceType", String.valueOf(service.getServiceType()));
+
+		return map;
 	}
 
 	private static class ServiceJSONParser extends BaseJSONParser<Service> {

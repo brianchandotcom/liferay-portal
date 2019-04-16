@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -149,6 +151,36 @@ public class ContentDocumentSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(ContentDocument contentDocument) {
+		if (contentDocument == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("contentUrl", String.valueOf(contentDocument.getContentUrl()));
+
+		map.put(
+			"description", String.valueOf(contentDocument.getDescription()));
+
+		map.put(
+			"encodingFormat",
+			String.valueOf(contentDocument.getEncodingFormat()));
+
+		map.put(
+			"fileExtension",
+			String.valueOf(contentDocument.getFileExtension()));
+
+		map.put("id", String.valueOf(contentDocument.getId()));
+
+		map.put(
+			"sizeInBytes", String.valueOf(contentDocument.getSizeInBytes()));
+
+		map.put("title", String.valueOf(contentDocument.getTitle()));
+
+		return map;
 	}
 
 	private static class ContentDocumentJSONParser

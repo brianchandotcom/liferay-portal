@@ -21,6 +21,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -338,6 +340,93 @@ public class KnowledgeBaseArticleSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		KnowledgeBaseArticle knowledgeBaseArticle) {
+
+		if (knowledgeBaseArticle == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"aggregateRating",
+			AggregateRatingSerDes.toJSON(
+				knowledgeBaseArticle.getAggregateRating()));
+
+		map.put(
+			"articleBody",
+			String.valueOf(knowledgeBaseArticle.getArticleBody()));
+
+		map.put(
+			"creator", CreatorSerDes.toJSON(knowledgeBaseArticle.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(
+				knowledgeBaseArticle.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(
+				knowledgeBaseArticle.getDateModified()));
+
+		map.put(
+			"description",
+			String.valueOf(knowledgeBaseArticle.getDescription()));
+
+		map.put(
+			"encodingFormat",
+			String.valueOf(knowledgeBaseArticle.getEncodingFormat()));
+
+		map.put(
+			"friendlyUrlPath",
+			String.valueOf(knowledgeBaseArticle.getFriendlyUrlPath()));
+
+		map.put("id", String.valueOf(knowledgeBaseArticle.getId()));
+
+		map.put("keywords", String.valueOf(knowledgeBaseArticle.getKeywords()));
+
+		map.put(
+			"numberOfAttachments",
+			String.valueOf(knowledgeBaseArticle.getNumberOfAttachments()));
+
+		map.put(
+			"numberOfKnowledgeBaseArticles",
+			String.valueOf(
+				knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles()));
+
+		map.put(
+			"parentKnowledgeBaseFolder",
+			ParentKnowledgeBaseFolderSerDes.toJSON(
+				knowledgeBaseArticle.getParentKnowledgeBaseFolder()));
+
+		map.put(
+			"parentKnowledgeBaseFolderId",
+			String.valueOf(
+				knowledgeBaseArticle.getParentKnowledgeBaseFolderId()));
+
+		map.put("siteId", String.valueOf(knowledgeBaseArticle.getSiteId()));
+
+		map.put(
+			"taxonomyCategories",
+			String.valueOf(knowledgeBaseArticle.getTaxonomyCategories()));
+
+		map.put(
+			"taxonomyCategoryIds",
+			String.valueOf(knowledgeBaseArticle.getTaxonomyCategoryIds()));
+
+		map.put("title", String.valueOf(knowledgeBaseArticle.getTitle()));
+
+		map.put(
+			"viewableBy", String.valueOf(knowledgeBaseArticle.getViewableBy()));
+
+		return map;
 	}
 
 	private static class KnowledgeBaseArticleJSONParser

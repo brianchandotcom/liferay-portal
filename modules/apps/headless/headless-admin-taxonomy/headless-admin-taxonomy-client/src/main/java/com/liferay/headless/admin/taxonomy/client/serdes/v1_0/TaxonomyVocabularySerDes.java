@@ -21,6 +21,8 @@ import com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -231,6 +233,57 @@ public class TaxonomyVocabularySerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		TaxonomyVocabulary taxonomyVocabulary) {
+
+		if (taxonomyVocabulary == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"assetTypes", String.valueOf(taxonomyVocabulary.getAssetTypes()));
+
+		map.put(
+			"availableLanguages",
+			String.valueOf(taxonomyVocabulary.getAvailableLanguages()));
+
+		map.put(
+			"creator", CreatorSerDes.toJSON(taxonomyVocabulary.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(
+				taxonomyVocabulary.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(
+				taxonomyVocabulary.getDateModified()));
+
+		map.put(
+			"description", String.valueOf(taxonomyVocabulary.getDescription()));
+
+		map.put("id", String.valueOf(taxonomyVocabulary.getId()));
+
+		map.put("name", String.valueOf(taxonomyVocabulary.getName()));
+
+		map.put(
+			"numberOfTaxonomyCategories",
+			String.valueOf(taxonomyVocabulary.getNumberOfTaxonomyCategories()));
+
+		map.put("siteId", String.valueOf(taxonomyVocabulary.getSiteId()));
+
+		map.put(
+			"viewableBy", String.valueOf(taxonomyVocabulary.getViewableBy()));
+
+		return map;
 	}
 
 	private static class TaxonomyVocabularyJSONParser

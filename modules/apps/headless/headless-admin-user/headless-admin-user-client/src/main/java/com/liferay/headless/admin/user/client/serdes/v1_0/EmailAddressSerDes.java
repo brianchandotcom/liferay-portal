@@ -17,6 +17,8 @@ package com.liferay.headless.admin.user.client.serdes.v1_0;
 import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -104,6 +106,24 @@ public class EmailAddressSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(EmailAddress emailAddress) {
+		if (emailAddress == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("emailAddress", String.valueOf(emailAddress.getEmailAddress()));
+
+		map.put("id", String.valueOf(emailAddress.getId()));
+
+		map.put("primary", String.valueOf(emailAddress.getPrimary()));
+
+		map.put("type", String.valueOf(emailAddress.getType()));
+
+		return map;
 	}
 
 	private static class EmailAddressJSONParser

@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.Geo;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -72,6 +74,20 @@ public class GeoSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Geo geo) {
+		if (geo == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("latitude", String.valueOf(geo.getLatitude()));
+
+		map.put("longitude", String.valueOf(geo.getLongitude()));
+
+		return map;
 	}
 
 	private static class GeoJSONParser extends BaseJSONParser<Geo> {

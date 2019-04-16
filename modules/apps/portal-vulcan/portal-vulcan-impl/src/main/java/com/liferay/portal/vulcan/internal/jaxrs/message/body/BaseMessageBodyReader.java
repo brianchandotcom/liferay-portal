@@ -47,7 +47,7 @@ import javax.ws.rs.ext.Providers;
 
 /**
  * @author Javier Gamarra
- * @author Iivca Cardic
+ * @author Ivica Cardic
  */
 public abstract class BaseMessageBodyReader implements MessageBodyReader {
 
@@ -110,7 +110,7 @@ public abstract class BaseMessageBodyReader implements MessageBodyReader {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(constraintViolations.size() * 3);
+		StringBundler sb = new StringBundler(constraintViolations.size() * 4);
 
 		for (ConstraintViolation<Object> constraintViolation :
 				constraintViolations) {
@@ -118,6 +118,7 @@ public abstract class BaseMessageBodyReader implements MessageBodyReader {
 			sb.append(constraintViolation.getPropertyPath());
 			sb.append(StringPool.SPACE);
 			sb.append(constraintViolation.getMessage());
+			sb.append(StringPool.NEW_LINE);
 		}
 
 		throw new ValidationException(sb.toString());

@@ -30,7 +30,7 @@
 		<name>layout-icon</name>
 		<tag-class>com.liferay.taglib.theme.LayoutIconTag</tag-class>
 		<body-content>empty</body-content>
-		<description>Gets an icon image for a page.</description>
+		<description>Deprecated since 7.2, unused.</description>
 		<attribute>
 			<name>layout</name>
 			<required>true</required>
@@ -48,7 +48,7 @@
 		<name>param</name>
 		<tag-class>com.liferay.taglib.util.ParamTag</tag-class>
 		<body-content>JSP</body-content>
-		<description>Adds a new parameter with the name and value specified.</description>
+		<description>Deprecated since 7.2, unused.</description>
 		<attribute>
 			<name>name</name>
 			<required>true</required>

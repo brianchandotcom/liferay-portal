@@ -11,7 +11,7 @@
 		<validator-class>org.apache.taglibs.standard.tlv.JstlCoreTLV</validator-class>
 	</validator>
 	<tag>
-		<description><![CDATA[Catches any Throwable that occurs in its body and optionally exposes it.]]></description>
+		<description>Deprecated since 7.2, unused.</description>
 		<name>catch</name>
 		<tag-class>org.apache.taglibs.standard.tag.common.core.CatchTag</tag-class>
 		<body-content>JSP</body-content>
@@ -79,7 +79,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Iterates over tokens, separated by the supplied delimeters]]></description>
+		<description>Deprecated since 7.2, unused.</description>
 		<name>forTokens</name>
 		<tag-class>org.apache.taglibs.standard.tag.rt.core.ForTokensTag</tag-class>
 		<body-content>JSP</body-content>
@@ -156,7 +156,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Retrieves an absolute or relative URL and exposes its contents to either the page, a String in 'var', or a Reader in 'varReader'.]]></description>
+		<description>Deprecated since 7.2, unused.</description>
 		<name>import</name>
 		<tag-class>org.apache.taglibs.standard.tag.rt.core.ImportTag</tag-class>
 		<tei-class>org.apache.taglibs.standard.tei.ImportTEI</tei-class>
@@ -229,7 +229,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Adds a parameter to a containing 'import' tag's URL.]]></description>
+		<description>Deprecated since 7.2, unused.</description>
 		<name>param</name>
 		<tag-class>org.apache.taglibs.standard.tag.rt.core.ParamTag</tag-class>
 		<body-content>JSP</body-content>
@@ -247,7 +247,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Redirects to a new URL.]]></description>
+		<description>Deprecated since 7.2, unused.</description>
 		<name>redirect</name>
 		<tag-class>org.apache.taglibs.standard.tag.rt.core.RedirectTag</tag-class>
 		<body-content>JSP</body-content>
@@ -265,7 +265,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Removes a scoped variable (from a particular scope, if specified).]]></description>
+		<description>Deprecated since 7.2, unused.</description>
 		<name>remove</name>
 		<tag-class>org.apache.taglibs.standard.tag.common.core.RemoveTag</tag-class>
 		<body-content>empty</body-content>
@@ -283,7 +283,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Sets the result of an expression evaluation in a 'scope']]></description>
+		<description>Deprecated since 7.2, unused.</description>
 		<name>set</name>
 		<tag-class>org.apache.taglibs.standard.tag.rt.core.SetTag</tag-class>
 		<body-content>JSP</body-content>
@@ -322,7 +322,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a URL with optional query parameters.]]></description>
+		<description>Deprecated since 7.2, unused.</description>
 		<name>url</name>
 		<tag-class>org.apache.taglibs.standard.tag.rt.core.UrlTag</tag-class>
 		<body-content>JSP</body-content>

@@ -52,22 +52,22 @@
 <!--RELATED_ASSETS_TABLE-->
 <tr>
 	<td>RELATED_ASSETS_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]//td[1]</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//p</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RELATED_ASSETS_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]//td[2]</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//*[contains(@class,'title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RELATED_ASSETS_TABLE_SCOPE</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]//td[3]</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//p[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RELATED_ASSETS_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]//td[4]//a</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]//a</td>
 	<td></td>
 </tr>
 <tr>

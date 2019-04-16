@@ -1642,25 +1642,6 @@ exports[`ContributorBuilder should render builder without sidebar: initialRender
                 type="hidden"
                 value="and"
               />
-              <div
-                class="criteria-builder-root"
-              >
-                <div
-                  class="criteria-group-item-root color--user"
-                >
-                  <div
-                    class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
-                  >
-                    <div
-                      class="drop-zone-target p-5"
-                    >
-                      <div
-                        class="empty-drop-zone-indicator"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

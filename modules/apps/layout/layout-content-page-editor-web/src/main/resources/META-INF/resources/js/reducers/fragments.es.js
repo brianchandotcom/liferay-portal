@@ -4,7 +4,7 @@ import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
 import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
 import {getColumn, getDropRowPosition, getFragmentColumn, getFragmentRowIndex} from '../utils/FragmentsEditorGetUtils.es';
-import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -395,13 +395,9 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					);
 				}
 				else {
-					_removeFragmentEntryLink(
-						nextState.deleteFragmentEntryLinkURL,
-						nextState.portletNamespace,
-						nextState.classNameId,
-						nextState.classPK,
-						fragmentEntryLinkId,
-						nextData,
+					removeFragmentEntryLinks(
+						nextState.layoutData,
+						[fragmentEntryLinkId],
 						nextState.segmentsExperienceId
 					)
 						.then(
@@ -835,47 +831,6 @@ function _removeFragment(
 	}
 
 	return nextData;
-}
-
-/**
- * @param {string} deleteFragmentEntryLinkURL
- * @param {string} portletNamespace
- * @param {string} classNameId
- * @param {string} classPK
- * @param {string} fragmentEntryLinkId
- * @param {object} layoutData
- * @return {Promise}
- * @review
- */
-function _removeFragmentEntryLink(
-	deleteFragmentEntryLinkURL,
-	portletNamespace,
-	classNameId,
-	classPK,
-	fragmentEntryLinkId,
-	layoutData,
-	segmentsExperienceId
-) {
-	const formData = new FormData();
-
-	formData.append(`${portletNamespace}classNameId`, classNameId);
-	formData.append(`${portletNamespace}classPK`, classPK);
-	formData.append(`${portletNamespace}data`, JSON.stringify(layoutData));
-	formData.append(`${portletNamespace}segmentsExperienceId`, segmentsExperienceId);
-
-	formData.append(
-		`${portletNamespace}fragmentEntryLinkId`,
-		fragmentEntryLinkId
-	);
-
-	return fetch(
-		deleteFragmentEntryLinkURL,
-		{
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
-		}
-	);
 }
 
 export {

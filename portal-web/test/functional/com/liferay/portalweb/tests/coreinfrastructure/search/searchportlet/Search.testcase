@@ -1579,13 +1579,14 @@ definition {
 			vocabularyName = "Fruit Vocabulary"
 		);
 
+		var liferaySiteId = JSONGroup._getSiteIdByGroupName(groupName = "Guest");
 		var webContentFolderName1 = "WC Folder Name 1";
 		var portalURL = PropsUtil.get("portal.url");
 
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
 				-u test@liferay.com:test \
-				-d groupId=20126 \
+				-d groupId=${liferaySiteId} \
 				-d parentFolderId=0 \
 				-d name=${webContentFolderName1} \
 				-d description=''
@@ -1610,7 +1611,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
 				-u test@liferay.com:test \
-				-d groupId=20126 \
+				-d groupId=${liferaySiteId} \
 				-d parentFolderId=0 \
 				-d name=${webContentFolderName2} \
 				-d description=''
@@ -1628,8 +1629,6 @@ definition {
 			serviceContext = "${webContentserviceContext1}",
 			title = "orange"
 		);
-
-		var liferaySiteId = JSONGroup._getSiteIdByGroupName(groupName = "Guest");
 
 		JSONGroup.addGroup(groupName = "New Site");
 

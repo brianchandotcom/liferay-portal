@@ -57,12 +57,12 @@ public class SPDXBuilder {
 		new SPDXBuilder(StringUtil.split(xmls), args[0]);
 	}
 
-	public SPDXBuilder(String[] xmls, String fileName) {
+	public SPDXBuilder(String[] xmls, String rdf) {
 		try {
 			System.setProperty("line.separator", StringPool.NEW_LINE);
 
-			String content = Dom4jUtil.toString(_getDocument(xmls, fileName));
-			String prefix = fileName.substring(0, fileName.lastIndexOf('.'));
+			String content = Dom4jUtil.toString(_getDocument(xmls, rdf));
+			String prefix = rdf.substring(0, rdf.lastIndexOf('.'));
 
 			Files.write(
 				Paths.get(prefix + "-complete.rdf"),
@@ -117,15 +117,13 @@ public class SPDXBuilder {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Document _getDocument(String[] xmls, String fileName)
-		throws Exception {
-
+	private Document _getDocument(String[] xmls, String rdf) throws Exception {
 		Map<String, Element> packageElementMap = new TreeMap<>(
 			String.CASE_INSENSITIVE_ORDER);
 
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
-		Document document = saxReader.read(new File(fileName));
+		Document document = saxReader.read(new File(rdf));
 
 		Element rootElement = document.getRootElement();
 

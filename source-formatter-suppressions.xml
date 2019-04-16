@@ -189,6 +189,11 @@
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-web/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-js/frontend-js-node-shims/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-js/frontend-js-web/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-theme/frontend-theme-admin/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-theme/frontend-theme-classic/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-theme-fjord/frontend-theme-fjord/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-theme-porygon/frontend-theme-porygon/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-theme-westeros-bank/frontend-theme-westeros-bank/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/portal-search/portal-search-web/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/segments/segments-web/package\.json" />
 	</source-check>

@@ -71,19 +71,32 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 <aui:script>
 	<c:if test="<%= (article != null) && (ddmTemplate != null) %>">
+		<portlet:renderURL var="previewArticleContentTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/preview_article_content_template.jsp" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= String.valueOf(article.getArticleId()) %>" />
+			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+		</portlet:renderURL>
+
+		var ddmTemplateKey = document.getElementById('<portlet:namespace />ddmTemplateKey');
+
 		var previewWithTemplate = document.getElementById('<portlet:namespace />previewWithTemplate');
 
 		if (previewWithTemplate) {
 			previewWithTemplate.addEventListener(
 				'click',
 				function(event) {
+					var uri = '<%= previewArticleContentTemplateURL %>';
+
+					uri = Liferay.Util.addParams('<portlet:namespace />ddmTemplateKey=' + ddmTemplateKey.value, uri)
+
 					Liferay.Util.openWindow(
 						{
 							dialog: {
 								destroyOnHide: true
 							},
 							title: '<liferay-ui:message key="preview" />',
-							uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/preview_article_content_template.jsp" /><portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" /><portlet:param name="articleId" value="<%= String.valueOf(article.getArticleId()) %>" /><portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" /></portlet:renderURL>'
+							uri: uri
 						}
 					);
 				}

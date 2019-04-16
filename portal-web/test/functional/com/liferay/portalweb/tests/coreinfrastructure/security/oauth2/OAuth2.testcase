@@ -212,7 +212,7 @@ definition {
 		);
 	}
 
-	test OAuth2TesterSmokeTest {
+	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 
 		var clientId = "abc123";

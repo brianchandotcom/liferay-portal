@@ -100,7 +100,7 @@ definition {
 	@description = "Assert a default user cannot join a normal private site"
 	@priority = "5"
 	test JoinSitePrivateNo {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		// Create a private site
@@ -222,7 +222,7 @@ definition {
 	@description = "Assert a default user can leave a site"
 	@priority = "5"
 	test LeaveSite {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		// Create a generic site

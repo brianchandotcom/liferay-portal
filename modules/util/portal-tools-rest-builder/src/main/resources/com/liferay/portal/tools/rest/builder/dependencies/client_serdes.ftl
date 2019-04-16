@@ -64,21 +64,19 @@ public class ${schemaName}SerDes {
 		</#list>
 
 		<#list properties?keys as propertyName>
-			<#if !propertyName?is_first>
-				sb.append(", ");
-			</#if>
-
-			sb.append("\"${propertyName}\": ");
-
 			<#assign propertyType = properties[propertyName] />
 
-			<#if allSchemas[propertyType]??>
-				sb.append(${propertyType}SerDes.toJSON(${schemaVarName}.get${propertyName?cap_first}()));
-			<#else>
-				if (${schemaVarName}.get${propertyName?cap_first}() == null) {
-					sb.append("null");
+			if (${schemaVarName}.get${propertyName?cap_first}() != null) {
+
+				if (sb.length() > 1) {
+					sb.append(",");
 				}
-				else {
+
+				sb.append("\"${propertyName}\":");
+
+				<#if allSchemas[propertyType]??>
+					sb.append(${propertyType}SerDes.toJSON(${schemaVarName}.get${propertyName?cap_first}()));
+				<#else>
 					<#if propertyType?contains("[]")>
 						sb.append("[");
 
@@ -120,8 +118,8 @@ public class ${schemaName}SerDes {
 							sb.append(${schemaVarName}.get${propertyName?cap_first}());
 						</#if>
 					</#if>
-				}
-			</#if>
+				</#if>
+			}
 		</#list>
 
 		sb.append("}");

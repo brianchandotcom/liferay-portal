@@ -72,7 +72,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 			String value = scriptsJSONObject.getString(entryName);
 
-			if (!value.matches(entry.getValue())) {
+			if (!value.contains(entry.getValue())) {
 				addMessage(
 					fileName,
 					StringBundler.concat(
@@ -86,7 +86,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 	private static final Map<String, String> _requiredScriptsMap =
 		new HashMap<String, String>() {
 			{
-				put("build", "liferay-npm-scripts build.*");
+				put("build", "liferay-npm-scripts build");
 				put("checkFormat", "liferay-npm-scripts lint");
 				put("format", "liferay-npm-scripts format");
 			}

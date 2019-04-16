@@ -110,7 +110,7 @@ public class ReleaseInfo {
 
 	private static final String _CODE_NAME = "Mueller";
 
-	private static final String _DATE = "April 11, 2019";
+	private static final String _DATE = "April 22, 2019";
 
 	private static final String _NAME = "Liferay Community Edition Portal";
 
@@ -126,7 +126,7 @@ public class ReleaseInfo {
 
 	private static final String _VERSION = "7.2.0";
 
-	private static final String _VERSION_DISPLAY_NAME = "7.2.0 CE Beta 2";
+	private static final String _VERSION_DISPLAY_NAME = "7.2.0 CE Beta 3";
 
 	private static String _releaseInfo;
 	private static String _serverInfo;

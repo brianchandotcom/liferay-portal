@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.client;
 
-import aQute.bnd.build.Classpath;
 import aQute.bnd.build.Project;
 import aQute.bnd.build.ProjectBuilder;
 import aQute.bnd.build.Workspace;
@@ -23,18 +22,12 @@ import aQute.bnd.osgi.Jar;
 
 import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
 import com.liferay.arquillian.extension.junit.bridge.server.TestBundleActivator;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 
 import java.io.File;
 
-import java.lang.reflect.Method;
-
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,25 +46,6 @@ import java.util.Set;
 public class BndBundleUtil {
 
 	public static Path createBundle(
-			String className, List<String> filteredMethods, String hostAddress,
-			int port, long passCode)
-		throws Exception {
-
-		ClassLoader classLoader = new URLClassLoader(_getClassPathURLs(), null);
-
-		Class<?> clazz = classLoader.loadClass(BndBundleUtil.class.getName());
-
-		Method method = clazz.getDeclaredMethod(
-			"_createBundle", String.class, List.class, String.class,
-			Integer.TYPE, Long.TYPE);
-
-		method.setAccessible(true);
-
-		return (Path)method.invoke(
-			null, className, filteredMethods, hostAddress, port, passCode);
-	}
-
-	private static Path _createBundle(
 			String className, List<String> filteredMethods, String hostAddress,
 			int port, long passCode)
 		throws Exception {
@@ -184,39 +158,7 @@ public class BndBundleUtil {
 			}
 		}
 
-		String resource = Classpath.class.getName();
-
-		resource = resource.replace(CharPool.PERIOD, CharPool.SLASH);
-
-		resource = "/".concat(resource);
-
-		resource = resource.concat(".class");
-
-		URL bndURL = BndBundleUtil.class.getResource(resource);
-
-		String path = bndURL.getPath();
-
-		int start = path.indexOf(CharPool.SLASH);
-
-		int end = path.indexOf(CharPool.EXCLAMATION);
-
-		classPathFiles.add(0, new File(path.substring(start, end)));
-
 		return classPathFiles;
-	}
-
-	private static URL[] _getClassPathURLs() throws MalformedURLException {
-		List<File> classPathFiles = _getClassPathFiles();
-
-		List<URL> urls = new ArrayList<>();
-
-		for (File file : classPathFiles) {
-			URI uri = file.toURI();
-
-			urls.add(uri.toURL());
-		}
-
-		return urls.toArray(new URL[classPathFiles.size()]);
 	}
 
 }

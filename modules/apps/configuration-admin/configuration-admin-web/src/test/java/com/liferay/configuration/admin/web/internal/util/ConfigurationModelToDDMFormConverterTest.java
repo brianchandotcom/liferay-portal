@@ -25,6 +25,7 @@ import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDe
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.language.LanguageImpl;
 
 import java.util.ListResourceBundle;
@@ -337,6 +338,56 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		Assert.assertFalse(ddmFormField.isRequired());
 	}
 
+	@Test
+	public void testRequiredInputWithTextField() {
+		ExtendedObjectClassDefinition extendedObjectClassDefinition = mock(
+			ExtendedObjectClassDefinition.class);
+
+		ExtendedAttributeDefinition extendedAttributeDefinition = mock(
+			ExtendedAttributeDefinition.class);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
+			ExtendedObjectClassDefinition.ALL);
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition,
+			new ExtendedAttributeDefinition[] {extendedAttributeDefinition},
+			ExtendedObjectClassDefinition.OPTIONAL);
+
+		whenGetAttributeDefinitions(
+			extendedObjectClassDefinition, new ExtendedAttributeDefinition[0],
+			ExtendedObjectClassDefinition.REQUIRED);
+		whenGetCardinality(extendedAttributeDefinition, 0);
+		whenGetID(extendedAttributeDefinition, "Text");
+		whenGetRequiredInput(extendedAttributeDefinition, true);
+		whenGetType(
+			extendedAttributeDefinition, ExtendedAttributeDefinition.STRING);
+
+		ConfigurationModel configurationModel = new ConfigurationModel(
+			extendedObjectClassDefinition, null, null, null, false);
+
+		ConfigurationModelToDDMFormConverter
+			configurationModelToDDMFormConverter = spy(
+				new ConfigurationModelToDDMFormConverter(
+					configurationModel, _enLocale, new EmptyResourceBundle()));
+
+		whenGetConfigurationDDMForm(configurationModelToDDMFormConverter, null);
+
+		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(false);
+
+		DDMFormField ddmFormField = ddmFormFieldsMap.get("Text");
+
+		Assert.assertNotNull(ddmFormField);
+		Assert.assertEquals(DDMFormFieldType.TEXT, ddmFormField.getType());
+		Assert.assertEquals("string", ddmFormField.getDataType());
+		Assert.assertFalse(ddmFormField.isRepeatable());
+		Assert.assertTrue(ddmFormField.isRequired());
+	}
+
 	protected void whenGetAttributeDefinitions(
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,
 		ExtendedAttributeDefinition[] extendedAttributeDefinitions,
@@ -402,6 +453,19 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			extendedAttributeDefinition.getOptionValues()
 		).thenReturn(
 			optionValues
+		);
+	}
+
+	protected void whenGetRequiredInput(
+		ExtendedAttributeDefinition extendedAttributeDefinition,
+		boolean requiredInput) {
+
+		when(
+			extendedAttributeDefinition.getExtensionAttributes(
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedAttributeDefinition.XML_NAMESPACE)
+		).thenReturn(
+			MapUtil.fromArray("required-input", String.valueOf(requiredInput))
 		);
 	}
 

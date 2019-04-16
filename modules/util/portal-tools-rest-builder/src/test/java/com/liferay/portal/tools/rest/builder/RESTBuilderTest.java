@@ -35,7 +35,11 @@ public class RESTBuilderTest {
 	public void testCreateRESTBuilder() throws Exception {
 		String dependenciesPath = _getDependenciesPath();
 
-		new RESTBuilder(dependenciesPath + "copyright.txt", dependenciesPath);
+		RESTBuilder restBuilder = new RESTBuilder(
+			new File(dependenciesPath, "copyright.txt"),
+			new File(dependenciesPath));
+
+		restBuilder.build();
 
 		String filesPath = _getFilesPath();
 

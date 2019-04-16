@@ -107,12 +107,16 @@ definition {
 		);
 
 		if ("${associatedToSite}" == "true") {
-			Alert.viewRequestFailedToComplete();
+			AssertElementPresent(locator1 = "Message#ERROR_DISMISSIBLE");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DELETE_USED_SITE_TEMPLATES",
 				value1 = "You cannot delete site templates that are used by a site."
 			);
+
+			if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE")) {
+				Click(locator1 = "Button#CLOSE_MESSAGE");
+			}
 		}
 		else {
 			Alert.viewSuccessMessage();

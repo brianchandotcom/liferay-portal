@@ -320,8 +320,8 @@ public abstract class BaseSegmentUserResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("email", additionalAssertFieldName)) {
-				if (segmentUser.getEmail() == null) {
+			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
+				if (segmentUser.getEmailAddress() == null) {
 					valid = false;
 				}
 
@@ -375,9 +375,10 @@ public abstract class BaseSegmentUserResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("email", additionalAssertFieldName)) {
+			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						segmentUser1.getEmail(), segmentUser2.getEmail())) {
+						segmentUser1.getEmailAddress(),
+						segmentUser2.getEmailAddress())) {
 
 					return false;
 				}
@@ -458,9 +459,9 @@ public abstract class BaseSegmentUserResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("email")) {
+		if (entityFieldName.equals("emailAddress")) {
 			sb.append("'");
-			sb.append(String.valueOf(segmentUser.getEmail()));
+			sb.append(String.valueOf(segmentUser.getEmailAddress()));
 			sb.append("'");
 
 			return sb.toString();
@@ -486,7 +487,7 @@ public abstract class BaseSegmentUserResourceTestCase {
 	protected SegmentUser randomSegmentUser() {
 		return new SegmentUser() {
 			{
-				email = RandomTestUtil.randomString();
+				emailAddress = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
 			}

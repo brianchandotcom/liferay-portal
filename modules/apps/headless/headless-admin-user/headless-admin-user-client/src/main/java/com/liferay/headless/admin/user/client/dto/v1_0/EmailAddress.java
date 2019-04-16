@@ -23,28 +23,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Email {
+public class EmailAddress {
 
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
-	public void setEmail(
-		UnsafeSupplier<String, Exception> emailUnsafeSupplier) {
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
 
 		try {
-			email = emailUnsafeSupplier.get();
+			emailAddress = emailAddressUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String email;
+	protected String emailAddress;
 
 	public Long getId() {
 		return id;

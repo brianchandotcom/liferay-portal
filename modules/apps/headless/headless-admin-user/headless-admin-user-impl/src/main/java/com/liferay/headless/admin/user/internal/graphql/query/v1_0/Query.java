@@ -14,7 +14,7 @@
 
 package com.liferay.headless.admin.user.internal.graphql.query.v1_0;
 
-import com.liferay.headless.admin.user.dto.v1_0.Email;
+import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
@@ -23,7 +23,7 @@ import com.liferay.headless.admin.user.dto.v1_0.Segment;
 import com.liferay.headless.admin.user.dto.v1_0.SegmentUser;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
-import com.liferay.headless.admin.user.resource.v1_0.EmailResource;
+import com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.PhoneResource;
 import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
@@ -58,12 +58,12 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
-	public static void setEmailResourceComponentServiceObjects(
-		ComponentServiceObjects<EmailResource>
-			emailResourceComponentServiceObjects) {
+	public static void setEmailAddressResourceComponentServiceObjects(
+		ComponentServiceObjects<EmailAddressResource>
+			emailAddressResourceComponentServiceObjects) {
 
-		_emailResourceComponentServiceObjects =
-			emailResourceComponentServiceObjects;
+		_emailAddressResourceComponentServiceObjects =
+			emailAddressResourceComponentServiceObjects;
 	}
 
 	public static void setOrganizationResourceComponentServiceObjects(
@@ -132,27 +132,30 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Email getEmail(@GraphQLName("emailId") Long emailId)
+	public EmailAddress getEmailAddress(
+			@GraphQLName("emailAddressId") Long emailAddressId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_emailResourceComponentServiceObjects,
+			_emailAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			emailResource -> emailResource.getEmail(emailId));
+			emailAddressResource -> emailAddressResource.getEmailAddress(
+				emailAddressId));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Email> getOrganizationEmailsPage(
+	public Collection<EmailAddress> getOrganizationEmailAddressesPage(
 			@GraphQLName("organizationId") Long organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_emailResourceComponentServiceObjects,
+			_emailAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			emailResource -> {
-				Page paginationPage = emailResource.getOrganizationEmailsPage(
-					organizationId);
+			emailAddressResource -> {
+				Page paginationPage =
+					emailAddressResource.getOrganizationEmailAddressesPage(
+						organizationId);
 
 				return paginationPage.getItems();
 			});
@@ -160,16 +163,17 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Collection<Email> getUserAccountEmailsPage(
+	public Collection<EmailAddress> getUserAccountEmailAddressesPage(
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_emailResourceComponentServiceObjects,
+			_emailAddressResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			emailResource -> {
-				Page paginationPage = emailResource.getUserAccountEmailsPage(
-					userAccountId);
+			emailAddressResource -> {
+				Page paginationPage =
+					emailAddressResource.getUserAccountEmailAddressesPage(
+						userAccountId);
 
 				return paginationPage.getItems();
 			});
@@ -564,10 +568,11 @@ public class Query {
 		}
 	}
 
-	private void _populateResourceContext(EmailResource emailResource)
+	private void _populateResourceContext(
+			EmailAddressResource emailAddressResource)
 		throws Exception {
 
-		emailResource.setContextCompany(
+		emailAddressResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
@@ -640,8 +645,8 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private static ComponentServiceObjects<EmailResource>
-		_emailResourceComponentServiceObjects;
+	private static ComponentServiceObjects<EmailAddressResource>
+		_emailAddressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OrganizationResource>
 		_organizationResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PhoneResource>

@@ -1243,8 +1243,8 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("email", additionalAssertFieldName)) {
-				if (userAccount.getEmail() == null) {
+			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
+				if (userAccount.getEmailAddress() == null) {
 					valid = false;
 				}
 
@@ -1467,9 +1467,10 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("email", additionalAssertFieldName)) {
+			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						userAccount1.getEmail(), userAccount2.getEmail())) {
+						userAccount1.getEmailAddress(),
+						userAccount2.getEmailAddress())) {
 
 					return false;
 				}
@@ -1797,9 +1798,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("email")) {
+		if (entityFieldName.equals("emailAddress")) {
 			sb.append("'");
-			sb.append(String.valueOf(userAccount.getEmail()));
+			sb.append(String.valueOf(userAccount.getEmailAddress()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1907,7 +1908,7 @@ public abstract class BaseUserAccountResourceTestCase {
 				dashboardURL = RandomTestUtil.randomString();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
-				email = RandomTestUtil.randomString();
+				emailAddress = RandomTestUtil.randomString();
 				familyName = RandomTestUtil.randomString();
 				givenName = RandomTestUtil.randomString();
 				honorificPrefix = RandomTestUtil.randomString();

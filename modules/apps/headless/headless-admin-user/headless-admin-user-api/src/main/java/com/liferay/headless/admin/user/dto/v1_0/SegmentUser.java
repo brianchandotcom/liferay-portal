@@ -42,21 +42,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "SegmentUser")
 public class SegmentUser {
 
-	@Schema(description = "The email of the segment user")
-	public String getEmail() {
-		return email;
+	@Schema(description = "The email address of the segment user")
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 	@JsonIgnore
-	public void setEmail(
-		UnsafeSupplier<String, Exception> emailUnsafeSupplier) {
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
 
 		try {
-			email = emailUnsafeSupplier.get();
+			emailAddress = emailAddressUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -68,7 +68,7 @@ public class SegmentUser {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String email;
+	protected String emailAddress;
 
 	@Schema(description = "The internal ID of the segment user")
 	public Long getId() {
@@ -149,14 +149,14 @@ public class SegmentUser {
 
 		sb.append("{");
 
-		sb.append("\"email\": ");
+		sb.append("\"emailAddress\": ");
 
-		if (email == null) {
+		if (emailAddress == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("\"");
-			sb.append(email);
+			sb.append(emailAddress);
 			sb.append("\"");
 		}
 

@@ -74,7 +74,7 @@ public class Organization {
 	protected String comment;
 
 	@Schema(
-		description = "The contact information for an Organization, with the list of emails, postal addresses, telephones and web urls linked to that Organization."
+		description = "The contact information for an Organization, with the list of email addresses, postal addresses, telephones and web urls linked to that Organization."
 	)
 	public ContactInformation getContactInformation() {
 		return contactInformation;

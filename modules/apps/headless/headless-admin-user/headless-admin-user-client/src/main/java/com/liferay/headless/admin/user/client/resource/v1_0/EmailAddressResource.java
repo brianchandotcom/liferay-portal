@@ -12,33 +12,14 @@
  * details.
  */
 
-package com.liferay.headless.admin.user.resource.v1_0;
-
-import com.liferay.headless.admin.user.dto.v1_0.Email;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.vulcan.pagination.Page;
+package com.liferay.headless.admin.user.client.resource.v1_0;
 
 import javax.annotation.Generated;
 
 /**
- * To access this resource, run:
- *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-admin-user/v1.0
- *
  * @author Javier Gamarra
  * @generated
  */
 @Generated("")
-public interface EmailResource {
-
-	public Email getEmail(Long emailId) throws Exception;
-
-	public Page<Email> getOrganizationEmailsPage(Long organizationId)
-		throws Exception;
-
-	public Page<Email> getUserAccountEmailsPage(Long userAccountId)
-		throws Exception;
-
-	public void setContextCompany(Company contextCompany);
-
+public class EmailAddressResource {
 }

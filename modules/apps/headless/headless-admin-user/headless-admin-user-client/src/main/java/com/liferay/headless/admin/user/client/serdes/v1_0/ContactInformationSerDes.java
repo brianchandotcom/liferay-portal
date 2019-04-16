@@ -15,7 +15,7 @@
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.ContactInformation;
-import com.liferay.headless.admin.user.client.dto.v1_0.Email;
+import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
@@ -56,19 +56,22 @@ public class ContactInformationSerDes {
 
 		sb.append("{");
 
-		sb.append("\"emails\": ");
+		sb.append("\"emailAddresses\": ");
 
-		if (contactInformation.getEmails() == null) {
+		if (contactInformation.getEmailAddresses() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < contactInformation.getEmails().length; i++) {
-				sb.append(
-					EmailSerDes.toJSON(contactInformation.getEmails()[i]));
+			for (int i = 0; i < contactInformation.getEmailAddresses().length;
+				 i++) {
 
-				if ((i + 1) < contactInformation.getEmails().length) {
+				sb.append(
+					EmailAddressSerDes.toJSON(
+						contactInformation.getEmailAddresses()[i]));
+
+				if ((i + 1) < contactInformation.getEmailAddresses().length) {
 					sb.append(", ");
 				}
 			}
@@ -256,15 +259,15 @@ public class ContactInformationSerDes {
 			ContactInformation contactInformation, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "emails")) {
+			if (Objects.equals(jsonParserFieldName, "emailAddresses")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setEmails(
+					contactInformation.setEmailAddresses(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> EmailSerDes.toDTO((String)object)
+							object -> EmailAddressSerDes.toDTO((String)object)
 						).toArray(
-							size -> new Email[size]
+							size -> new EmailAddress[size]
 						));
 				}
 			}

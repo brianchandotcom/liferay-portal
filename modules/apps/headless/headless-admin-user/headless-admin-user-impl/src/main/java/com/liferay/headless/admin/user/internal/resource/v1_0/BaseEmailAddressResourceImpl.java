@@ -14,8 +14,8 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
-import com.liferay.headless.admin.user.dto.v1_0.Email;
-import com.liferay.headless.admin.user.resource.v1_0.EmailResource;
+import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
+import com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -46,25 +46,27 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseEmailResourceImpl implements EmailResource {
+public abstract class BaseEmailAddressResourceImpl
+	implements EmailAddressResource {
 
 	@Override
 	@GET
-	@Path("/emails/{emailId}")
+	@Path("/email-addresses/{emailAddressId}")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Email")})
-	public Email getEmail(@NotNull @PathParam("emailId") Long emailId)
+	@Tags(value = {@Tag(name = "EmailAddress")})
+	public EmailAddress getEmailAddress(
+			@NotNull @PathParam("emailAddressId") Long emailAddressId)
 		throws Exception {
 
-		return new Email();
+		return new EmailAddress();
 	}
 
 	@Override
 	@GET
-	@Path("/organizations/{organizationId}/emails")
+	@Path("/organizations/{organizationId}/email-addresses")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Email")})
-	public Page<Email> getOrganizationEmailsPage(
+	@Tags(value = {@Tag(name = "EmailAddress")})
+	public Page<EmailAddress> getOrganizationEmailAddressesPage(
 			@NotNull @PathParam("organizationId") Long organizationId)
 		throws Exception {
 
@@ -73,10 +75,10 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 
 	@Override
 	@GET
-	@Path("/user-accounts/{userAccountId}/emails")
+	@Path("/user-accounts/{userAccountId}/email-addresses")
 	@Produces("application/json")
-	@Tags(value = {@Tag(name = "Email")})
-	public Page<Email> getUserAccountEmailsPage(
+	@Tags(value = {@Tag(name = "EmailAddress")})
+	public Page<EmailAddress> getUserAccountEmailAddressesPage(
 			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
@@ -87,7 +89,8 @@ public abstract class BaseEmailResourceImpl implements EmailResource {
 		this.contextCompany = contextCompany;
 	}
 
-	protected void preparePatch(Email email, Email existingEmail) {
+	protected void preparePatch(
+		EmailAddress emailAddress, EmailAddress existingEmailAddress) {
 	}
 
 	protected <T, R> List<R> transform(

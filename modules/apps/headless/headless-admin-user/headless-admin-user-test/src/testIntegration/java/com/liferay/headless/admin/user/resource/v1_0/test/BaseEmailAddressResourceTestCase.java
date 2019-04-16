@@ -19,10 +19,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import com.liferay.headless.admin.user.client.dto.v1_0.Email;
+import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.client.pagination.Page;
-import com.liferay.headless.admin.user.client.serdes.v1_0.EmailSerDes;
-import com.liferay.headless.admin.user.resource.v1_0.EmailResource;
+import com.liferay.headless.admin.user.client.serdes.v1_0.EmailAddressSerDes;
+import com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -76,7 +76,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseEmailResourceTestCase {
+public abstract class BaseEmailAddressResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -106,24 +106,31 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetEmail() throws Exception {
-		Email postEmail = testGetEmail_addEmail();
+	public void testGetEmailAddress() throws Exception {
+		EmailAddress postEmailAddress = testGetEmailAddress_addEmailAddress();
 
-		Email getEmail = invokeGetEmail(postEmail.getId());
+		EmailAddress getEmailAddress = invokeGetEmailAddress(
+			postEmailAddress.getId());
 
-		assertEquals(postEmail, getEmail);
-		assertValid(getEmail);
+		assertEquals(postEmailAddress, getEmailAddress);
+		assertValid(getEmailAddress);
 	}
 
-	protected Email testGetEmail_addEmail() throws Exception {
+	protected EmailAddress testGetEmailAddress_addEmailAddress()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Email invokeGetEmail(Long emailId) throws Exception {
+	protected EmailAddress invokeGetEmailAddress(Long emailAddressId)
+		throws Exception {
+
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/emails/{emailId}", emailId);
+		String location =
+			_resourceURL +
+				_toPath("/email-addresses/{emailAddressId}", emailAddressId);
 
 		options.setLocation(location);
 
@@ -134,7 +141,7 @@ public abstract class BaseEmailResourceTestCase {
 		}
 
 		try {
-			return EmailSerDes.toDTO(string);
+			return EmailAddressSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -145,12 +152,14 @@ public abstract class BaseEmailResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokeGetEmailResponse(Long emailId)
+	protected Http.Response invokeGetEmailAddressResponse(Long emailAddressId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
-		String location = _resourceURL + _toPath("/emails/{emailId}", emailId);
+		String location =
+			_resourceURL +
+				_toPath("/email-addresses/{emailAddressId}", emailAddressId);
 
 		options.setLocation(location);
 
@@ -160,83 +169,71 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	@Test
-	public void testGetOrganizationEmailsPage() throws Exception {
-		Long organizationId = testGetOrganizationEmailsPage_getOrganizationId();
+	public void testGetOrganizationEmailAddressesPage() throws Exception {
+		Long organizationId =
+			testGetOrganizationEmailAddressesPage_getOrganizationId();
 		Long irrelevantOrganizationId =
-			testGetOrganizationEmailsPage_getIrrelevantOrganizationId();
+			testGetOrganizationEmailAddressesPage_getIrrelevantOrganizationId();
 
 		if ((irrelevantOrganizationId != null)) {
-			Email irrelevantEmail = testGetOrganizationEmailsPage_addEmail(
-				irrelevantOrganizationId, randomIrrelevantEmail());
+			EmailAddress irrelevantEmailAddress =
+				testGetOrganizationEmailAddressesPage_addEmailAddress(
+					irrelevantOrganizationId, randomIrrelevantEmailAddress());
 
-			Page<Email> page = invokeGetOrganizationEmailsPage(
+			Page<EmailAddress> page = invokeGetOrganizationEmailAddressesPage(
 				irrelevantOrganizationId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
 			assertEquals(
-				Arrays.asList(irrelevantEmail), (List<Email>)page.getItems());
+				Arrays.asList(irrelevantEmailAddress),
+				(List<EmailAddress>)page.getItems());
 			assertValid(page);
 		}
 
-		Email email1 = testGetOrganizationEmailsPage_addEmail(
-			organizationId, randomEmail());
+		EmailAddress emailAddress1 =
+			testGetOrganizationEmailAddressesPage_addEmailAddress(
+				organizationId, randomEmailAddress());
 
-		Email email2 = testGetOrganizationEmailsPage_addEmail(
-			organizationId, randomEmail());
+		EmailAddress emailAddress2 =
+			testGetOrganizationEmailAddressesPage_addEmailAddress(
+				organizationId, randomEmailAddress());
 
-		Page<Email> page = invokeGetOrganizationEmailsPage(organizationId);
+		Page<EmailAddress> page = invokeGetOrganizationEmailAddressesPage(
+			organizationId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(email1, email2), (List<Email>)page.getItems());
+			Arrays.asList(emailAddress1, emailAddress2),
+			(List<EmailAddress>)page.getItems());
 		assertValid(page);
 	}
 
-	protected Email testGetOrganizationEmailsPage_addEmail(
-			Long organizationId, Email email)
+	protected EmailAddress
+			testGetOrganizationEmailAddressesPage_addEmailAddress(
+				Long organizationId, EmailAddress emailAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetOrganizationEmailsPage_getOrganizationId()
+	protected Long testGetOrganizationEmailAddressesPage_getOrganizationId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetOrganizationEmailsPage_getIrrelevantOrganizationId()
+	protected Long
+			testGetOrganizationEmailAddressesPage_getIrrelevantOrganizationId()
 		throws Exception {
 
 		return null;
 	}
 
-	protected Page<Email> invokeGetOrganizationEmailsPage(Long organizationId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath(
-					"/organizations/{organizationId}/emails", organizationId);
-
-		options.setLocation(location);
-
-		String string = HttpUtil.URLtoString(options);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("HTTP response: " + string);
-		}
-
-		return Page.of(string, EmailSerDes::toDTO);
-	}
-
-	protected Http.Response invokeGetOrganizationEmailsPageResponse(
+	protected Page<EmailAddress> invokeGetOrganizationEmailAddressesPage(
 			Long organizationId)
 		throws Exception {
 
@@ -245,79 +242,8 @@ public abstract class BaseEmailResourceTestCase {
 		String location =
 			_resourceURL +
 				_toPath(
-					"/organizations/{organizationId}/emails", organizationId);
-
-		options.setLocation(location);
-
-		HttpUtil.URLtoByteArray(options);
-
-		return options.getResponse();
-	}
-
-	@Test
-	public void testGetUserAccountEmailsPage() throws Exception {
-		Long userAccountId = testGetUserAccountEmailsPage_getUserAccountId();
-		Long irrelevantUserAccountId =
-			testGetUserAccountEmailsPage_getIrrelevantUserAccountId();
-
-		if ((irrelevantUserAccountId != null)) {
-			Email irrelevantEmail = testGetUserAccountEmailsPage_addEmail(
-				irrelevantUserAccountId, randomIrrelevantEmail());
-
-			Page<Email> page = invokeGetUserAccountEmailsPage(
-				irrelevantUserAccountId);
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantEmail), (List<Email>)page.getItems());
-			assertValid(page);
-		}
-
-		Email email1 = testGetUserAccountEmailsPage_addEmail(
-			userAccountId, randomEmail());
-
-		Email email2 = testGetUserAccountEmailsPage_addEmail(
-			userAccountId, randomEmail());
-
-		Page<Email> page = invokeGetUserAccountEmailsPage(userAccountId);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(email1, email2), (List<Email>)page.getItems());
-		assertValid(page);
-	}
-
-	protected Email testGetUserAccountEmailsPage_addEmail(
-			Long userAccountId, Email email)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetUserAccountEmailsPage_getUserAccountId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetUserAccountEmailsPage_getIrrelevantUserAccountId()
-		throws Exception {
-
-		return null;
-	}
-
-	protected Page<Email> invokeGetUserAccountEmailsPage(Long userAccountId)
-		throws Exception {
-
-		Http.Options options = _createHttpOptions();
-
-		String location =
-			_resourceURL +
-				_toPath("/user-accounts/{userAccountId}/emails", userAccountId);
+					"/organizations/{organizationId}/email-addresses",
+					organizationId);
 
 		options.setLocation(location);
 
@@ -327,10 +253,93 @@ public abstract class BaseEmailResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return Page.of(string, EmailSerDes::toDTO);
+		return Page.of(string, EmailAddressSerDes::toDTO);
 	}
 
-	protected Http.Response invokeGetUserAccountEmailsPageResponse(
+	protected Http.Response invokeGetOrganizationEmailAddressesPageResponse(
+			Long organizationId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/organizations/{organizationId}/email-addresses",
+					organizationId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testGetUserAccountEmailAddressesPage() throws Exception {
+		Long userAccountId =
+			testGetUserAccountEmailAddressesPage_getUserAccountId();
+		Long irrelevantUserAccountId =
+			testGetUserAccountEmailAddressesPage_getIrrelevantUserAccountId();
+
+		if ((irrelevantUserAccountId != null)) {
+			EmailAddress irrelevantEmailAddress =
+				testGetUserAccountEmailAddressesPage_addEmailAddress(
+					irrelevantUserAccountId, randomIrrelevantEmailAddress());
+
+			Page<EmailAddress> page = invokeGetUserAccountEmailAddressesPage(
+				irrelevantUserAccountId);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantEmailAddress),
+				(List<EmailAddress>)page.getItems());
+			assertValid(page);
+		}
+
+		EmailAddress emailAddress1 =
+			testGetUserAccountEmailAddressesPage_addEmailAddress(
+				userAccountId, randomEmailAddress());
+
+		EmailAddress emailAddress2 =
+			testGetUserAccountEmailAddressesPage_addEmailAddress(
+				userAccountId, randomEmailAddress());
+
+		Page<EmailAddress> page = invokeGetUserAccountEmailAddressesPage(
+			userAccountId);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(emailAddress1, emailAddress2),
+			(List<EmailAddress>)page.getItems());
+		assertValid(page);
+	}
+
+	protected EmailAddress testGetUserAccountEmailAddressesPage_addEmailAddress(
+			Long userAccountId, EmailAddress emailAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetUserAccountEmailAddressesPage_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetUserAccountEmailAddressesPage_getIrrelevantUserAccountId()
+		throws Exception {
+
+		return null;
+	}
+
+	protected Page<EmailAddress> invokeGetUserAccountEmailAddressesPage(
 			Long userAccountId)
 		throws Exception {
 
@@ -338,7 +347,32 @@ public abstract class BaseEmailResourceTestCase {
 
 		String location =
 			_resourceURL +
-				_toPath("/user-accounts/{userAccountId}/emails", userAccountId);
+				_toPath(
+					"/user-accounts/{userAccountId}/email-addresses",
+					userAccountId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return Page.of(string, EmailAddressSerDes::toDTO);
+	}
+
+	protected Http.Response invokeGetUserAccountEmailAddressesPageResponse(
+			Long userAccountId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL +
+				_toPath(
+					"/user-accounts/{userAccountId}/email-addresses",
+					userAccountId);
 
 		options.setLocation(location);
 
@@ -354,32 +388,39 @@ public abstract class BaseEmailResourceTestCase {
 			expectedResponseCode, actualResponse.getResponseCode());
 	}
 
-	protected void assertEquals(Email email1, Email email2) {
+	protected void assertEquals(
+		EmailAddress emailAddress1, EmailAddress emailAddress2) {
+
 		Assert.assertTrue(
-			email1 + " does not equal " + email2, equals(email1, email2));
+			emailAddress1 + " does not equal " + emailAddress2,
+			equals(emailAddress1, emailAddress2));
 	}
 
-	protected void assertEquals(List<Email> emails1, List<Email> emails2) {
-		Assert.assertEquals(emails1.size(), emails2.size());
+	protected void assertEquals(
+		List<EmailAddress> emailAddresses1,
+		List<EmailAddress> emailAddresses2) {
 
-		for (int i = 0; i < emails1.size(); i++) {
-			Email email1 = emails1.get(i);
-			Email email2 = emails2.get(i);
+		Assert.assertEquals(emailAddresses1.size(), emailAddresses2.size());
 
-			assertEquals(email1, email2);
+		for (int i = 0; i < emailAddresses1.size(); i++) {
+			EmailAddress emailAddress1 = emailAddresses1.get(i);
+			EmailAddress emailAddress2 = emailAddresses2.get(i);
+
+			assertEquals(emailAddress1, emailAddress2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Email> emails1, List<Email> emails2) {
+		List<EmailAddress> emailAddresses1,
+		List<EmailAddress> emailAddresses2) {
 
-		Assert.assertEquals(emails1.size(), emails2.size());
+		Assert.assertEquals(emailAddresses1.size(), emailAddresses2.size());
 
-		for (Email email1 : emails1) {
+		for (EmailAddress emailAddress1 : emailAddresses1) {
 			boolean contains = false;
 
-			for (Email email2 : emails2) {
-				if (equals(email1, email2)) {
+			for (EmailAddress emailAddress2 : emailAddresses2) {
+				if (equals(emailAddress1, emailAddress2)) {
 					contains = true;
 
 					break;
@@ -387,22 +428,23 @@ public abstract class BaseEmailResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				emails2 + " does not contain " + email1, contains);
+				emailAddresses2 + " does not contain " + emailAddress1,
+				contains);
 		}
 	}
 
-	protected void assertValid(Email email) {
+	protected void assertValid(EmailAddress emailAddress) {
 		boolean valid = true;
 
-		if (email.getId() == null) {
+		if (emailAddress.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("email", additionalAssertFieldName)) {
-				if (email.getEmail() == null) {
+			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
+				if (emailAddress.getEmailAddress() == null) {
 					valid = false;
 				}
 
@@ -410,7 +452,7 @@ public abstract class BaseEmailResourceTestCase {
 			}
 
 			if (Objects.equals("primary", additionalAssertFieldName)) {
-				if (email.getPrimary() == null) {
+				if (emailAddress.getPrimary() == null) {
 					valid = false;
 				}
 
@@ -418,7 +460,7 @@ public abstract class BaseEmailResourceTestCase {
 			}
 
 			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (email.getType() == null) {
+				if (emailAddress.getType() == null) {
 					valid = false;
 				}
 
@@ -433,12 +475,12 @@ public abstract class BaseEmailResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Email> page) {
+	protected void assertValid(Page<EmailAddress> page) {
 		boolean valid = false;
 
-		Collection<Email> emails = page.getItems();
+		Collection<EmailAddress> emailAddresses = page.getItems();
 
-		int size = emails.size();
+		int size = emailAddresses.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -454,16 +496,21 @@ public abstract class BaseEmailResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Email email1, Email email2) {
-		if (email1 == email2) {
+	protected boolean equals(
+		EmailAddress emailAddress1, EmailAddress emailAddress2) {
+
+		if (emailAddress1 == emailAddress2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("email", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(email1.getEmail(), email2.getEmail())) {
+			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						emailAddress1.getEmailAddress(),
+						emailAddress2.getEmailAddress())) {
+
 					return false;
 				}
 
@@ -471,7 +518,9 @@ public abstract class BaseEmailResourceTestCase {
 			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(email1.getId(), email2.getId())) {
+				if (!Objects.deepEquals(
+						emailAddress1.getId(), emailAddress2.getId())) {
+
 					return false;
 				}
 
@@ -480,7 +529,8 @@ public abstract class BaseEmailResourceTestCase {
 
 			if (Objects.equals("primary", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						email1.getPrimary(), email2.getPrimary())) {
+						emailAddress1.getPrimary(),
+						emailAddress2.getPrimary())) {
 
 					return false;
 				}
@@ -489,7 +539,9 @@ public abstract class BaseEmailResourceTestCase {
 			}
 
 			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(email1.getType(), email2.getType())) {
+				if (!Objects.deepEquals(
+						emailAddress1.getType(), emailAddress2.getType())) {
+
 					return false;
 				}
 
@@ -505,13 +557,13 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	protected Collection<EntityField> getEntityFields() throws Exception {
-		if (!(_emailResource instanceof EntityModelResource)) {
+		if (!(_emailAddressResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_emailResource;
+			(EntityModelResource)_emailAddressResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -537,7 +589,7 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Email email) {
+		EntityField entityField, String operator, EmailAddress emailAddress) {
 
 		StringBundler sb = new StringBundler();
 
@@ -549,9 +601,9 @@ public abstract class BaseEmailResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("email")) {
+		if (entityFieldName.equals("emailAddress")) {
 			sb.append("'");
-			sb.append(String.valueOf(email.getEmail()));
+			sb.append(String.valueOf(emailAddress.getEmailAddress()));
 			sb.append("'");
 
 			return sb.toString();
@@ -569,7 +621,7 @@ public abstract class BaseEmailResourceTestCase {
 
 		if (entityFieldName.equals("type")) {
 			sb.append("'");
-			sb.append(String.valueOf(email.getType()));
+			sb.append(String.valueOf(emailAddress.getType()));
 			sb.append("'");
 
 			return sb.toString();
@@ -579,10 +631,10 @@ public abstract class BaseEmailResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
-	protected Email randomEmail() {
-		return new Email() {
+	protected EmailAddress randomEmailAddress() {
+		return new EmailAddress() {
 			{
-				email = RandomTestUtil.randomString();
+				emailAddress = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				primary = RandomTestUtil.randomBoolean();
 				type = RandomTestUtil.randomString();
@@ -590,14 +642,14 @@ public abstract class BaseEmailResourceTestCase {
 		};
 	}
 
-	protected Email randomIrrelevantEmail() {
-		Email randomIrrelevantEmail = randomEmail();
+	protected EmailAddress randomIrrelevantEmailAddress() {
+		EmailAddress randomIrrelevantEmailAddress = randomEmailAddress();
 
-		return randomIrrelevantEmail;
+		return randomIrrelevantEmailAddress;
 	}
 
-	protected Email randomPatchEmail() {
-		return randomEmail();
+	protected EmailAddress randomPatchEmailAddress() {
+		return randomEmailAddress();
 	}
 
 	protected static final ObjectMapper inputObjectMapper = new ObjectMapper() {
@@ -665,7 +717,7 @@ public abstract class BaseEmailResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseEmailResourceTestCase.class);
+		BaseEmailAddressResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -682,7 +734,7 @@ public abstract class BaseEmailResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private EmailResource _emailResource;
+	private EmailAddressResource _emailAddressResource;
 
 	private URL _resourceURL;
 

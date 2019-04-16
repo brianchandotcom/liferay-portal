@@ -51,15 +51,15 @@ public class SegmentUserSerDes {
 
 		sb.append("{");
 
-		sb.append("\"email\": ");
+		sb.append("\"emailAddress\": ");
 
-		if (segmentUser.getEmail() == null) {
+		if (segmentUser.getEmailAddress() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("\"");
 
-			sb.append(segmentUser.getEmail());
+			sb.append(segmentUser.getEmailAddress());
 
 			sb.append("\"");
 		}
@@ -113,9 +113,9 @@ public class SegmentUserSerDes {
 			SegmentUser segmentUser, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "email")) {
+			if (Objects.equals(jsonParserFieldName, "emailAddress")) {
 				if (jsonParserFieldValue != null) {
-					segmentUser.setEmail((String)jsonParserFieldValue);
+					segmentUser.setEmailAddress((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

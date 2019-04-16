@@ -37,26 +37,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Email")
+@GraphQLName("EmailAddress")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Email")
-public class Email {
+@XmlRootElement(name = "EmailAddress")
+public class EmailAddress {
 
 	@Schema(description = "The email address.")
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 	@JsonIgnore
-	public void setEmail(
-		UnsafeSupplier<String, Exception> emailUnsafeSupplier) {
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
 
 		try {
-			email = emailUnsafeSupplier.get();
+			emailAddress = emailAddressUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -68,7 +68,7 @@ public class Email {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String email;
+	protected String emailAddress;
 
 	@Schema(description = "The identifier of the resource.")
 	public Long getId() {
@@ -158,13 +158,13 @@ public class Email {
 			return true;
 		}
 
-		if (!(object instanceof Email)) {
+		if (!(object instanceof EmailAddress)) {
 			return false;
 		}
 
-		Email email = (Email)object;
+		EmailAddress emailAddress = (EmailAddress)object;
 
-		return Objects.equals(toString(), email.toString());
+		return Objects.equals(toString(), emailAddress.toString());
 	}
 
 	@Override
@@ -179,14 +179,14 @@ public class Email {
 
 		sb.append("{");
 
-		sb.append("\"email\": ");
+		sb.append("\"emailAddress\": ");
 
-		if (email == null) {
+		if (emailAddress == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("\"");
-			sb.append(email);
+			sb.append(emailAddress);
 			sb.append("\"");
 		}
 

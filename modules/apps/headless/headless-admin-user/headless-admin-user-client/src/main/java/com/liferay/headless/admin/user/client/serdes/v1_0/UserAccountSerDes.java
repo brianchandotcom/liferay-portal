@@ -161,15 +161,15 @@ public class UserAccountSerDes {
 
 		sb.append(", ");
 
-		sb.append("\"email\": ");
+		sb.append("\"emailAddress\": ");
 
-		if (userAccount.getEmail() == null) {
+		if (userAccount.getEmailAddress() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("\"");
 
-			sb.append(userAccount.getEmail());
+			sb.append(userAccount.getEmailAddress());
 
 			sb.append("\"");
 		}
@@ -464,9 +464,9 @@ public class UserAccountSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "email")) {
+			else if (Objects.equals(jsonParserFieldName, "emailAddress")) {
 				if (jsonParserFieldValue != null) {
-					userAccount.setEmail((String)jsonParserFieldValue);
+					userAccount.setEmailAddress((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "familyName")) {

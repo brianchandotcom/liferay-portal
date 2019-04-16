@@ -25,26 +25,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class ContactInformation {
 
-	public Email[] getEmails() {
-		return emails;
+	public EmailAddress[] getEmailAddresses() {
+		return emailAddresses;
 	}
 
-	public void setEmails(Email[] emails) {
-		this.emails = emails;
+	public void setEmailAddresses(EmailAddress[] emailAddresses) {
+		this.emailAddresses = emailAddresses;
 	}
 
-	public void setEmails(
-		UnsafeSupplier<Email[], Exception> emailsUnsafeSupplier) {
+	public void setEmailAddresses(
+		UnsafeSupplier<EmailAddress[], Exception>
+			emailAddressesUnsafeSupplier) {
 
 		try {
-			emails = emailsUnsafeSupplier.get();
+			emailAddresses = emailAddressesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Email[] emails;
+	protected EmailAddress[] emailAddresses;
 
 	public String getFacebook() {
 		return facebook;

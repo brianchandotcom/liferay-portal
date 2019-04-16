@@ -45,20 +45,21 @@ public class ContactInformation {
 	@Schema(
 		description = "A list of email addresses. One is optionally marked as primary."
 	)
-	public Email[] getEmails() {
-		return emails;
+	public EmailAddress[] getEmailAddresses() {
+		return emailAddresses;
 	}
 
-	public void setEmails(Email[] emails) {
-		this.emails = emails;
+	public void setEmailAddresses(EmailAddress[] emailAddresses) {
+		this.emailAddresses = emailAddresses;
 	}
 
 	@JsonIgnore
-	public void setEmails(
-		UnsafeSupplier<Email[], Exception> emailsUnsafeSupplier) {
+	public void setEmailAddresses(
+		UnsafeSupplier<EmailAddress[], Exception>
+			emailAddressesUnsafeSupplier) {
 
 		try {
-			emails = emailsUnsafeSupplier.get();
+			emailAddresses = emailAddressesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -70,7 +71,7 @@ public class ContactInformation {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Email[] emails;
+	protected EmailAddress[] emailAddresses;
 
 	@Schema(description = "The facebook account of the UserAccount.")
 	public String getFacebook() {
@@ -354,18 +355,18 @@ public class ContactInformation {
 
 		sb.append("{");
 
-		sb.append("\"emails\": ");
+		sb.append("\"emailAddresses\": ");
 
-		if (emails == null) {
+		if (emailAddresses == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("[");
 
-			for (int i = 0; i < emails.length; i++) {
-				sb.append(emails[i]);
+			for (int i = 0; i < emailAddresses.length; i++) {
+				sb.append(emailAddresses[i]);
 
-				if ((i + 1) < emails.length) {
+				if ((i + 1) < emailAddresses.length) {
 					sb.append(", ");
 				}
 			}

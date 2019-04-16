@@ -241,20 +241,20 @@ public class UserAccount {
 	protected Date dateModified;
 
 	@Schema(description = "The main email address of the UserAccount.")
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 	@JsonIgnore
-	public void setEmail(
-		UnsafeSupplier<String, Exception> emailUnsafeSupplier) {
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
 
 		try {
-			email = emailUnsafeSupplier.get();
+			emailAddress = emailAddressUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -266,7 +266,7 @@ public class UserAccount {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String email;
+	protected String emailAddress;
 
 	@Schema(description = "In the US, the surname of the UserAccount.")
 	public String getFamilyName() {
@@ -745,14 +745,14 @@ public class UserAccount {
 
 		sb.append(", ");
 
-		sb.append("\"email\": ");
+		sb.append("\"emailAddress\": ");
 
-		if (email == null) {
+		if (emailAddress == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("\"");
-			sb.append(email);
+			sb.append(emailAddress);
 			sb.append("\"");
 		}
 

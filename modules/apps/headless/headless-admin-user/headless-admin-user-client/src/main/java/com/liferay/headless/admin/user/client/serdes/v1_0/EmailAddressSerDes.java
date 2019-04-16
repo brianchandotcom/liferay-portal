@@ -14,7 +14,7 @@
 
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
-import com.liferay.headless.admin.user.client.dto.v1_0.Email;
+import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
 import java.util.Objects;
@@ -26,22 +26,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class EmailSerDes {
+public class EmailAddressSerDes {
 
-	public static Email toDTO(String json) {
-		EmailJSONParser emailJSONParser = new EmailJSONParser();
+	public static EmailAddress toDTO(String json) {
+		EmailAddressJSONParser emailAddressJSONParser =
+			new EmailAddressJSONParser();
 
-		return emailJSONParser.parseToDTO(json);
+		return emailAddressJSONParser.parseToDTO(json);
 	}
 
-	public static Email[] toDTOs(String json) {
-		EmailJSONParser emailJSONParser = new EmailJSONParser();
+	public static EmailAddress[] toDTOs(String json) {
+		EmailAddressJSONParser emailAddressJSONParser =
+			new EmailAddressJSONParser();
 
-		return emailJSONParser.parseToDTOs(json);
+		return emailAddressJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Email email) {
-		if (email == null) {
+	public static String toJSON(EmailAddress emailAddress) {
+		if (emailAddress == null) {
 			return "null";
 		}
 
@@ -49,15 +51,15 @@ public class EmailSerDes {
 
 		sb.append("{");
 
-		sb.append("\"email\": ");
+		sb.append("\"emailAddress\": ");
 
-		if (email.getEmail() == null) {
+		if (emailAddress.getEmailAddress() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("\"");
 
-			sb.append(email.getEmail());
+			sb.append(emailAddress.getEmailAddress());
 
 			sb.append("\"");
 		}
@@ -66,35 +68,35 @@ public class EmailSerDes {
 
 		sb.append("\"id\": ");
 
-		if (email.getId() == null) {
+		if (emailAddress.getId() == null) {
 			sb.append("null");
 		}
 		else {
-			sb.append(email.getId());
+			sb.append(emailAddress.getId());
 		}
 
 		sb.append(", ");
 
 		sb.append("\"primary\": ");
 
-		if (email.getPrimary() == null) {
+		if (emailAddress.getPrimary() == null) {
 			sb.append("null");
 		}
 		else {
-			sb.append(email.getPrimary());
+			sb.append(emailAddress.getPrimary());
 		}
 
 		sb.append(", ");
 
 		sb.append("\"type\": ");
 
-		if (email.getType() == null) {
+		if (emailAddress.getType() == null) {
 			sb.append("null");
 		}
 		else {
 			sb.append("\"");
 
-			sb.append(email.getType());
+			sb.append(emailAddress.getType());
 
 			sb.append("\"");
 		}
@@ -104,41 +106,43 @@ public class EmailSerDes {
 		return sb.toString();
 	}
 
-	private static class EmailJSONParser extends BaseJSONParser<Email> {
+	private static class EmailAddressJSONParser
+		extends BaseJSONParser<EmailAddress> {
 
 		@Override
-		protected Email createDTO() {
-			return new Email();
+		protected EmailAddress createDTO() {
+			return new EmailAddress();
 		}
 
 		@Override
-		protected Email[] createDTOArray(int size) {
-			return new Email[size];
+		protected EmailAddress[] createDTOArray(int size) {
+			return new EmailAddress[size];
 		}
 
 		@Override
 		protected void setField(
-			Email email, String jsonParserFieldName,
+			EmailAddress emailAddress, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "email")) {
+			if (Objects.equals(jsonParserFieldName, "emailAddress")) {
 				if (jsonParserFieldValue != null) {
-					email.setEmail((String)jsonParserFieldValue);
+					emailAddress.setEmailAddress((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					email.setId(Long.valueOf((String)jsonParserFieldValue));
+					emailAddress.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "primary")) {
 				if (jsonParserFieldValue != null) {
-					email.setPrimary((Boolean)jsonParserFieldValue);
+					emailAddress.setPrimary((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					email.setType((String)jsonParserFieldValue);
+					emailAddress.setType((String)jsonParserFieldValue);
 				}
 			}
 			else {

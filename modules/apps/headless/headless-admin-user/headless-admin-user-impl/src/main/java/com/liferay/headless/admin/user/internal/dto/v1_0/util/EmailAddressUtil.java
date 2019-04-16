@@ -14,23 +14,26 @@
 
 package com.liferay.headless.admin.user.internal.dto.v1_0.util;
 
-import com.liferay.headless.admin.user.dto.v1_0.Email;
-import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
 
 /**
  * @author Javier Gamarra
  */
-public class EmailUtil {
+public class EmailAddressUtil {
 
-	public static Email toEmail(EmailAddress emailAddress) throws Exception {
-		ListType listType = emailAddress.getType();
+	public static EmailAddress toEmail(
+			com.liferay.portal.kernel.model.EmailAddress
+				serviceBuilderEmailAddress)
+		throws Exception {
 
-		return new Email() {
+		ListType listType = serviceBuilderEmailAddress.getType();
+
+		return new EmailAddress() {
 			{
-				email = emailAddress.getAddress();
-				id = emailAddress.getEmailAddressId();
-				primary = emailAddress.isPrimary();
+				emailAddress = serviceBuilderEmailAddress.getAddress();
+				id = serviceBuilderEmailAddress.getEmailAddressId();
+				primary = serviceBuilderEmailAddress.isPrimary();
 				type = listType.getName();
 			}
 		};

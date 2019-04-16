@@ -76,7 +76,7 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(EmailResourceImpl.class);
+			add(EmailAddressResourceImpl.class);
 
 			add(OrganizationResourceImpl.class);
 

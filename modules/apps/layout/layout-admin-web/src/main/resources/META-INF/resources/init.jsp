@@ -90,6 +90,7 @@ page import="com.liferay.portal.kernel.exception.SitemapChangeFrequencyException
 page import="com.liferay.portal.kernel.exception.SitemapIncludeException" %><%@
 page import="com.liferay.portal.kernel.exception.SitemapPagePriorityException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.kernel.model.ColorScheme" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@

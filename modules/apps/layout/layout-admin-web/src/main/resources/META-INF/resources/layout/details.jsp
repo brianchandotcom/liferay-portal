@@ -139,6 +139,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototypeByUuidAndCompanyId(selLayout.getLayoutPrototypeUuid(), company.getCompanyId());
 	%>
 
+	<aui:input name="applyLayoutPrototype" type="hidden" value="<%= false %>" />
 	<aui:input name="layoutPrototypeUuid" type="hidden" value="<%= selLayout.getLayoutPrototypeUuid() %>" />
 
 	<aui:input helpMessage='<%= LanguageUtil.format(request, "if-enabled-this-page-will-inherit-changes-made-to-the-x-page-template", HtmlUtil.escape(layoutPrototype.getName(user.getLocale())), false) %>' label="inherit-changes" name="layoutPrototypeLinkEnabled" type="toggle-switch" value="<%= selLayout.isLayoutPrototypeLinkEnabled() %>" />
@@ -180,12 +181,18 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 				var layoutPrototypeInfoMessage = document.querySelector('.layout-prototype-info-message');
 
+				var applyLayoutPrototype = document.getElementById('<portlet:namespace />applyLayoutPrototype');
+
 				if (layoutPrototypeInfoMessage) {
 					if (layoutPrototypeLinkChecked) {
 						layoutPrototypeInfoMessage.classList.remove('hide');
+
+						applyLayoutPrototype.value = '<%= true %>';
 					}
 					else {
 						layoutPrototypeInfoMessage.classList.add('hide');
+
+						applyLayoutPrototype.value = '<%= false %>';
 					}
 				}
 

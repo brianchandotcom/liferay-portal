@@ -125,6 +125,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 			enctype="multipart/form-data"
 			method="post"
 			name="editLayoutFm"
+			onSubmit="event.preventDefault();"
 		>
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
@@ -252,3 +253,24 @@ renderResponse.setTitle(selLayout.getName(locale));
 		</liferay-frontend:edit-form>
 	</c:otherwise>
 </c:choose>
+
+<aui:script>
+	var form = document.getElementById('<portlet:namespace />editLayoutFm');
+
+	form.addEventListener(
+		'submit',
+		function(event) {
+			var applyLayoutPrototype = document.getElementById('<portlet:namespace />applyLayoutPrototype');
+
+			if (
+				!applyLayoutPrototype || (applyLayoutPrototype.value === 'false') ||
+				(applyLayoutPrototype &&
+				applyLayoutPrototype.value === 'true' &&
+				confirm('<%= UnicodeLanguageUtil.get(request, "activating-back-inherited-changes-may-update-the-page-including-possible-changes-that-could-have-been-made-in-the-page-template.-are-you-sure-you-want-to-continue") %>'))
+			) {
+					submitForm(form);
+			}
+		}
+	);
+
+</aui:script>

@@ -184,11 +184,11 @@ public abstract class BaseJSONParser<T> {
 
 	private void _assertStartsWithAndEndsWith(String prefix, String sufix) {
 		if (!_json.startsWith(prefix)) {
-			throw new IllegalArgumentException(String.format("Expected starts with '%s', but found '%s'", prefix, _json.charAt(0)));
+			throw new IllegalArgumentException(String.format("Expected starts with '%s', but found '%s' in '%s'", prefix, _json.charAt(0), _json));
 		}
 
 		if (!_json.endsWith(sufix)) {
-			throw new IllegalArgumentException(String.format("Expected ends with '%s', but found '%s'", sufix, _json.charAt(_json.length() - 1)));
+			throw new IllegalArgumentException(String.format("Expected ends with '%s', but found '%s' in '%s'", sufix, _json.charAt(_json.length() - 1), _json));
 		}
 	}
 

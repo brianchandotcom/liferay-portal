@@ -97,7 +97,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 
 			var handle;
 
-			var appsAccordion = A.one('#appsAccordion');
+			var appsAccordion = A.one('#<portlet:namespace />appsAccordion');
 
 			appsAccordion.delegate(
 				'click',

@@ -14,8 +14,8 @@
 		}
 	},
 	"dependencies": {
-		"clay-dropdown": "2.13.0",
-		"clay-modal": "2.13.0",
+		"clay-dropdown": "2.14.0",
+		"clay-modal": "2.14.0",
 		"metal": "^2.5.18",
 		"metal-ajax": "^2.1.1",
 		"metal-component": "^2.4.5",

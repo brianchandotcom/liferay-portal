@@ -49,7 +49,7 @@
 		"babel-loader": "^8.0.5",
 		"babel-plugin-module-resolver": "^3.2.0",
 		"check-source-formatting": "^2.0.14",
-		"clay-css": "^2.13.0",
+		"clay-css": "2.14.0",
 		"css-loader": "^2.0.1",
 		"eslint": "^5.8.0",
 		"eslint-config-liferay": "^2.0.18",

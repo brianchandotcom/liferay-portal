@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"clay-button": "2.13.0",
-		"clay-icon": "2.13.0",
+		"clay-button": "2.14.0",
+		"clay-icon": "2.14.0",
 		"metal-soy": "^2.5.11",
 		"metal-state": "^2.13.2"
 	},

@@ -19,6 +19,7 @@ import com.liferay.talend.dataset.OutputDataSet;
 import java.io.Serializable;
 
 import org.talend.sdk.component.api.configuration.Option;
+import org.talend.sdk.component.api.configuration.ui.DefaultValue;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayouts;
 
@@ -29,7 +30,10 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayouts;
 	{
 		@GridLayout(
 			names = GridLayout.FormType.MAIN,
-			value = @GridLayout.Row("_outputDataSet")
+			value = {
+				@GridLayout.Row("_operationAction"),
+				@GridLayout.Row("_outputDataSet")
+			}
 		),
 		@GridLayout(
 			names = GridLayout.FormType.ADVANCED,
@@ -60,6 +64,10 @@ public class LiferayOutputConfiguration implements Serializable {
 
 		return this;
 	}
+
+	@DefaultValue("INSERT")
+	@Option
+	OperationAction _operationAction;
 
 	@Option
 	private OutputDataSet _outputDataSet;

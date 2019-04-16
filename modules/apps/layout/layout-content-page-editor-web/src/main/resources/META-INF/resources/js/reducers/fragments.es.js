@@ -774,9 +774,14 @@ function _getDropFragmentPosition(
 }
 
 /**
+ * Removes a given fragmentEntryLinkId from a given layoutData.
+ * It does not remove it from fragmentEntryLinks array.
+ *
+ * If the fragmentEntryLinkType is "section", it will remove the whole
+ * row (and columns) too.
+ *
  * @param {object} layoutData
  * @param {string} fragmentEntryLinkId
- * @return {Promise}
  * @param {string} [fragmentEntryLinkType=FRAGMENTS_EDITOR_ROW_TYPES.componentRow]
  * @return {object} Next layout data
  * @review

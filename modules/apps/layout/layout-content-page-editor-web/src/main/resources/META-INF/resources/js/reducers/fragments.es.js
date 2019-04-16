@@ -355,29 +355,30 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 			if (actionType === REMOVE_FRAGMENT_ENTRY_LINK) {
 				const {fragmentEntryLinkId} = payload;
 
-				let nextData = setIn(
-					nextState.layoutData,
-					['structure'],
-					[...nextState.layoutData.structure]
-				);
-
-				const fragmentEntryLinkRow = nextData.structure[
+				const fragmentEntryLinkRow = nextState.layoutData.structure[
 					getFragmentRowIndex(
-						nextData.structure,
+						nextState.layoutData.structure,
 						fragmentEntryLinkId
 					)
 				];
 
-				let fragmentEntryLinkType = FRAGMENT_ENTRY_LINK_TYPES.component;
+				const fragmentEntryLinkType = fragmentEntryLinkRow.type === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow ?
+					FRAGMENT_ENTRY_LINK_TYPES.section :
+					FRAGMENT_ENTRY_LINK_TYPES.component;
 
-				if (fragmentEntryLinkRow.type === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
-					fragmentEntryLinkType = FRAGMENT_ENTRY_LINK_TYPES.section;
-				}
+				nextState = setIn(
+					nextState,
+					['layoutData'],
+					_removeFragment(
+						nextState.layoutData,
+						fragmentEntryLinkId,
+						fragmentEntryLinkType
+					)
+				);
 
-				nextData = _removeFragment(
-					nextData,
-					fragmentEntryLinkId,
-					fragmentEntryLinkType
+				nextState = updateWidgets(
+					nextState,
+					payload.fragmentEntryLinkId
 				);
 
 				const _shouldRemoveFragmentEntryLink = !containsFragmentEntryLinkId(
@@ -386,49 +387,46 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					nextState.segmentsExperienceId || nextState.defaultSegmentsExperienceId
 				);
 
-				nextState = setIn(nextState, ['layoutData'], nextData);
+				let updateLayoutDataPromise = updatePageEditorLayoutData(
+					nextState.layoutData,
+					nextState.segmentsExperienceId
+				);
 
 				if (_shouldRemoveFragmentEntryLink) {
-					removeFragmentEntryLinks(
-						nextState.layoutData,
-						[fragmentEntryLinkId],
-						nextState.segmentsExperienceId
-					).then(
-						() => {
-							nextState = updateWidgets(
-								nextState,
-								payload.fragmentEntryLinkId
+					nextState = updateIn(
+						nextState,
+						['fragmentEntryLinks'],
+						fragmentEntryLinks => {
+							const nextFragmentEntryLinks = Object.assign(
+								{},
+								fragmentEntryLinks
 							);
 
-							nextState.setIn(
-								nextState,
-								['fragmentEntryLinks'],
-								nextState.fragmentEntryLinks.filter(
-									_fragmentEntryLink => {
-										return _fragmentEntryLink.fragmentEntryLinkId !==
-											payload.fragmentEntryLinkId;
-									}
-								)
-							);
+							delete nextFragmentEntryLinks[fragmentEntryLinkId];
 
-							resolve(nextState);
-						}
-					).catch(
-						() => {
-							resolve(nextState);
-						}
+							return nextFragmentEntryLinks;
+						},
+						{}
+					);
+
+					updateLayoutDataPromise = updateLayoutDataPromise.then(
+						() => removeFragmentEntryLinks(
+							nextState.layoutData,
+							[fragmentEntryLinkId],
+							nextState.segmentsExperienceId
+						)
 					);
 				}
-				else {
-					updatePageEditorLayoutData(
-						nextData,
-						nextState.segmentsExperienceId
-					).then(
-						() => {
-							resolve(nextState);
-						}
-					);
-				}
+
+				updateLayoutDataPromise.then(
+					() => {
+						resolve(nextState);
+					}
+				).catch(
+					() => {
+						resolve(nextState);
+					}
+				);
 			}
 			else {
 				resolve(nextState);

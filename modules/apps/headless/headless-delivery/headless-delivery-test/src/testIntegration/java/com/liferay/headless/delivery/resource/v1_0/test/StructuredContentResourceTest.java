@@ -135,15 +135,11 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected StructuredContent randomStructuredContent() {
-		return new StructuredContent() {
-			{
-				contentStructureId = _ddmStructure.getStructureId();
-				datePublished = RandomTestUtil.nextDate();
-				description = RandomTestUtil.randomString();
-				siteId = testGroup.getGroupId();
-				title = RandomTestUtil.randomString();
-			}
-		};
+		StructuredContent structuredContent = super.randomStructuredContent();
+
+		structuredContent.setContentStructureId(_ddmStructure.getStructureId());
+
+		return structuredContent;
 	}
 
 	@Override

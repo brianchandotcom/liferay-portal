@@ -38,26 +38,6 @@ public class DocumentFolderResourceTest
 	}
 
 	@Override
-	protected DocumentFolder randomDocumentFolder() {
-		return new DocumentFolder() {
-			{
-				description = RandomTestUtil.randomString();
-				name = RandomTestUtil.randomString();
-				siteId = testGroup.getGroupId();
-			}
-		};
-	}
-
-	protected DocumentFolder randomPatchDocumentFolder() {
-		return new DocumentFolder() {
-			{
-				description = RandomTestUtil.randomString();
-				siteId = testGroup.getGroupId();
-			}
-		};
-	}
-
-	@Override
 	protected DocumentFolder testGetDocumentFolder_addDocumentFolder()
 		throws Exception {
 

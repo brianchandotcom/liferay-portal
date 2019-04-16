@@ -57,9 +57,9 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 					_slaTaskResultWorkflowMetricsIndexer.getIndexName(),
 					_creatWorkflowMetricsSLATaskResultDocument(
 						GetterUtil.getLong(document.get("companyId")),
-						GetterUtil.getString(document.get("name")),
+						GetterUtil.getLong(document.get("processId")),
 						GetterUtil.getLong(document.get("nodeId")),
-						GetterUtil.getLong(document.get("processId")))) {
+						GetterUtil.getString(document.get("name")))) {
 
 					{
 						setType(
@@ -67,19 +67,22 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 								getIndexType());
 					}
 				});
+
+			bulkDocumentRequest.addBulkableDocumentRequest(
+				new IndexDocumentRequest(
+					_tokenWorkflowMetricsIndexer.getIndexName(),
+					_createWorkflowMetricsTokenDocument(
+						GetterUtil.getLong(document.get("companyId")),
+						GetterUtil.getLong(document.get("processId")),
+						GetterUtil.getLong(document.get("nodeId")),
+						GetterUtil.getString(document.get("name")))) {
+
+					{
+						setType(_tokenWorkflowMetricsIndexer.getIndexType());
+					}
+				});
 		}
 
-		bulkDocumentRequest.addBulkableDocumentRequest(
-			new IndexDocumentRequest(
-				_tokenWorkflowMetricsIndexer.getIndexName(),
-				_createWorkflowMetricsTokenDocument(
-					GetterUtil.getLong(document.get("companyId")),
-					GetterUtil.getLong(document.get("processId")))) {
-
-				{
-					setType(_tokenWorkflowMetricsIndexer.getIndexType());
-				}
-			});
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(getIndexName(), document) {
 				{
@@ -163,38 +166,39 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	private Document _createWorkflowMetricsTokenDocument(
-		long companyId, long processId) {
+		long companyId, long processId, long taskId, String taskName) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
-			"WorkflowMetricsToken", digest(companyId, processId, 0, 0, 0));
+			"WorkflowMetricsToken", digest(companyId, processId, 0, taskId, 0));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("completed", false);
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", 0);
 		document.addKeyword("processId", processId);
-		document.addKeyword("taskId", 0);
+		document.addKeyword("taskId", taskId);
+		document.addKeyword("taskName", taskName);
 		document.addKeyword("tokenId", 0);
 
 		return document;
 	}
 
 	private Document _creatWorkflowMetricsSLATaskResultDocument(
-		long companyId, String name, long nodeId, long processId) {
+		long companyId, long processId, long taskId, String taskName) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
 			"WorkflowMetricsSLATaskResult",
-			digest(companyId, 0, processId, 0, nodeId));
+			digest(companyId, 0, processId, 0, taskId));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", 0);
 		document.addKeyword("processId", processId);
 		document.addKeyword("slaDefinitionId", 0);
-		document.addKeyword("taskId", nodeId);
-		document.addKeyword("taskName", name);
+		document.addKeyword("taskId", taskId);
+		document.addKeyword("taskName", taskName);
 
 		return document;
 	}

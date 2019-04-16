@@ -14,8 +14,17 @@
 
 package com.liferay.headless.form.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
 import com.liferay.headless.form.client.dto.v1_0.FormDocument;
 import com.liferay.headless.form.client.pagination.Page;
+import com.liferay.headless.form.client.serdes.v1_0.FormDocumentSerDes;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -97,6 +106,35 @@ public abstract class BaseFormDocumentResourceTestCase {
 	public void tearDown() throws Exception {
 		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testDeserializeFormDocument() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				enable(SerializationFeature.INDENT_OUTPUT);
+				setDateFormat(new ISO8601DateFormat());
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			}
+		};
+
+		FormDocument formDocument1 = randomFormDocument();
+
+		String json = objectMapper.writeValueAsString(formDocument1);
+
+		FormDocument formDocument2 = FormDocumentSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(formDocument1, formDocument2));
 	}
 
 	@Test
@@ -192,8 +230,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 		}
 
 		try {
-			return com.liferay.headless.form.client.serdes.v1_0.
-				FormDocumentSerDes.toDTO(string);
+			return FormDocumentSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

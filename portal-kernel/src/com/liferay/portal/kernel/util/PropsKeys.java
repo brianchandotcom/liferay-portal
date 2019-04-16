@@ -870,11 +870,23 @@ public interface PropsKeys {
 	public static final String DISCUSSION_COMMENTS_FORMAT =
 		"discussion.comments.format";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED =
 		"discussion.email.comments.added.enabled";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DISCUSSION_EMAIL_SUBJECT =
 		"discussion.email.subject";
 

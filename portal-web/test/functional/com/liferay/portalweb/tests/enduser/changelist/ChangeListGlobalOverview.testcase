@@ -15,7 +15,9 @@ definition {
 			portlet = "Settings"
 		);
 
-		ChangeList.enableChangeList();
+		ChangeList.enableChangeList(
+			gotoOverview = "true"
+		);
 
 		Refresh();
 	}
@@ -39,12 +41,6 @@ definition {
 
 	@priority = "5"
 	test AssertOnChangesDisplayedInTheActiveChangeList {
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
-
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
 			changeListName = "Change List Name"
@@ -121,12 +117,6 @@ definition {
 
 	@priority = "5"
 	test AssertOnChangesDisplayedOnOverview {
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
-
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
 			changeListName = "Change List Name"
@@ -211,12 +201,6 @@ definition {
 
 	@priority = "4"
 	test AssertOnStructureContentType {
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
-
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
 			changeListName = "Change List Name"
@@ -257,12 +241,6 @@ definition {
 
 	@priority = "4"
 	test AssertOnTemplateContentType {
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
-
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
 			changeListName = "Change List Name"
@@ -296,12 +274,6 @@ definition {
 
 	@priority = "3"
 	test CancelChangeListCreation {
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
-
 		ChangeList.cancelChangeListCreation();
 	}
 
@@ -309,12 +281,6 @@ definition {
 	@priority = "5"
 	test CreateNewChangeListAndActivate {
 		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CreateNewChangeListAndActivate";
-
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
@@ -370,12 +336,6 @@ definition {
 
 	@priority = "4"
 	test CreateNewChangeListExistingName {
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
-
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
 			changeListName = "Change List Name"
@@ -404,12 +364,6 @@ definition {
 	@description = "Try to create new change list with too long name"
 	@priority = "3"
 	test CreateNewChangeListWithLongName {
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
-
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
 			changeListName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon"
@@ -421,12 +375,6 @@ definition {
 	@description = "Try to create new change list with empty string name"
 	@priority = "3"
 	test CreateNewChangeListWithNoName {
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
-
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
 			changeListName = " "
@@ -438,12 +386,6 @@ definition {
 	@description = "Try to create new change list with empty string in the description"
 	@priority = "3"
 	test CreateNewChangeListWithSpaceInTheDescription {
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
-
 		ChangeList.addNewChangeList(
 			changeListDescription = " ",
 			changeListName = "Change List Name"

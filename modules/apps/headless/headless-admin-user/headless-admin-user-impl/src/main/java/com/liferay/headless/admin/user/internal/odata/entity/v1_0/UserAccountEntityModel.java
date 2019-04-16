@@ -52,7 +52,7 @@ public class UserAccountEntityModel implements EntityModel {
 			new StringEntityField(
 				"alternateName",
 				locale -> Field.getSortableFieldName("screenName")),
-			new StringEntityField("email", locale -> "emailAddress"),
+			new StringEntityField("emailAddress", locale -> "emailAddress"),
 			new StringEntityField(
 				"familyName", locale -> Field.getSortableFieldName("lastName")),
 			new StringEntityField(

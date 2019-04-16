@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,14 +32,24 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (absolutePath.endsWith("/package.json") &&
-			absolutePath.contains("/modules/apps/")) {
+		if (!absolutePath.endsWith("/package.json") ||
+			!absolutePath.contains("/modules/apps/")) {
 
-			JSONObject jsonObject = new JSONObject(content);
-
-			_checkIncorrectEntry(fileName, jsonObject, "devDependencies");
-			_checkRequiredScripts(fileName, jsonObject);
+			return content;
 		}
+
+		String dirName = absolutePath.substring(0, absolutePath.length() - 12);
+
+		if (!FileUtil.exists(dirName + "build.gradle") &&
+			!FileUtil.exists(dirName + "bnd.bnd")) {
+
+			return content;
+		}
+
+		JSONObject jsonObject = new JSONObject(content);
+
+		_checkIncorrectEntry(fileName, jsonObject, "devDependencies");
+		_checkRequiredScripts(fileName, jsonObject);
 
 		return content;
 	}

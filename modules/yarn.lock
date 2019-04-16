@@ -11406,10 +11406,10 @@ liferay-css-parse@~1.7.1:
   resolved "https://registry.yarnpkg.com/liferay-css-parse/-/liferay-css-parse-1.7.1.tgz#c0750cc0f0645d2190eeefee845b6fcb154f3e45"
   integrity sha1-wHUMwPBkXSGQ7u/uhFtvyxVPPkU=
 
-liferay-font-awesome@3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/liferay-font-awesome/-/liferay-font-awesome-3.3.1.tgz#bccccaa9679771b67d0dbefc39905e0a6a72dff3"
-  integrity sha512-/+gAJwF8JWnSDod++UKVYVy1a8VO/Uu/nDtegWtAcVtoh4weqAahT1vQ8edotVRKMhdiZksBml8U5X/x8vQDbA==
+liferay-font-awesome@3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/liferay-font-awesome/-/liferay-font-awesome-3.3.2.tgz#d44b1ad7da68863a046913cdf2dc683ee0c30473"
+  integrity sha512-aXQCOHNge+rNOnT6LsDUH/SBYNTWplfntfkTqZ0RCEBjns4NulK3bnNXDBxLU65Z0bwqN56ZSzk+OZLOi+zMpQ==
   dependencies:
     less "1.4.1"
 

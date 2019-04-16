@@ -52,6 +52,8 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, null, null,
 
 mbAdminListDisplayContext.setEntriesDelta(searchContainer);
 
+searchContainer.setId("mbEntries");
+
 mbEntriesManagementToolbarDisplayContext.populateOrder(searchContainer);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
@@ -80,6 +82,7 @@ String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "al
 	filterLabelItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	searchActionURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchContainerId="mbEntries"
 	searchFormName="searchFm"
 	showInfoButton="<%= false %>"
 	sortingOrder="<%= mbEntriesManagementToolbarDisplayContext.getOrderByType() %>"

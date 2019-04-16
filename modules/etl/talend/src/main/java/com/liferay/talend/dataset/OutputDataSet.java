@@ -22,6 +22,7 @@ import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.action.Suggestable;
 import org.talend.sdk.component.api.configuration.constraint.Required;
 import org.talend.sdk.component.api.configuration.type.DataSet;
+import org.talend.sdk.component.api.configuration.ui.DefaultValue;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 
 /**
@@ -30,19 +31,42 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
  * @review
  */
 @DataSet("OutputDataSet")
-@GridLayout({@GridLayout.Row("_baseDataStore"), @GridLayout.Row("_endpoint")})
+@GridLayout(
+	{
+		@GridLayout.Row("_baseDataStore"), @GridLayout.Row("endpoint"),
+		@GridLayout.Row({"firstPathParam", "secondPathParam", "thirdPathParam"})
+	}
+)
 public class OutputDataSet implements Serializable {
 
 	public String getEndpoint() {
-		return _endpoint;
+		return endpoint;
+	}
+
+	public String getFirstPathParam() {
+		return firstPathParam;
 	}
 
 	public BaseDataStore getInputDataStore() {
 		return _baseDataStore;
 	}
 
+	public String getSecondPathParam() {
+		return secondPathParam;
+	}
+
+	public String getThirdPathParam() {
+		return thirdPathParam;
+	}
+
 	public OutputDataSet setEndpoint(String endpoint) {
-		_endpoint = endpoint;
+		this.endpoint = endpoint;
+
+		return this;
+	}
+
+	public OutputDataSet setFirstPathParam(String firstPathParam) {
+		this.firstPathParam = firstPathParam;
 
 		return this;
 	}
@@ -53,8 +77,17 @@ public class OutputDataSet implements Serializable {
 		return this;
 	}
 
-	@Option
-	private BaseDataStore _baseDataStore;
+	public OutputDataSet setSecondPathParam(String secondPathParam) {
+		this.secondPathParam = secondPathParam;
+
+		return this;
+	}
+
+	public OutputDataSet setThirdPathParam(String thirdPathParam) {
+		this.thirdPathParam = thirdPathParam;
+
+		return this;
+	}
 
 	/**
 	 * DataStore parameter now is not needed, just an example how we can use it
@@ -63,6 +96,21 @@ public class OutputDataSet implements Serializable {
 	@Option
 	@Required
 	@Suggestable(parameters = "_baseDataStore", value = "fetchEndpoints")
-	private String _endpoint;
+	protected String endpoint;
+
+	@DefaultValue("")
+	@Option
+	protected String firstPathParam;
+
+	@DefaultValue("")
+	@Option
+	protected String secondPathParam;
+
+	@DefaultValue("")
+	@Option
+	protected String thirdPathParam;
+
+	@Option
+	private BaseDataStore _baseDataStore;
 
 }

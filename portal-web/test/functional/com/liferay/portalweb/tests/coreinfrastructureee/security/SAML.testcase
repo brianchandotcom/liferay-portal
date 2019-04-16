@@ -658,7 +658,9 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-		Navigator.gotoLoginPage();
+		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
+			Navigator.gotoLoginPage();
+		}
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

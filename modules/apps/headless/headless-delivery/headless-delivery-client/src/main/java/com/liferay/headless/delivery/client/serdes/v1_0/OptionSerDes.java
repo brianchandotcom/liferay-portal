@@ -51,12 +51,13 @@ public class OptionSerDes {
 
 		sb.append("{");
 
-		sb.append("\"label\": ");
+		if (option.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (option.getLabel() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"label\":");
+
 			sb.append("\"");
 
 			sb.append(option.getLabel());
@@ -64,14 +65,13 @@ public class OptionSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (option.getValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"value\": ");
+			sb.append("\"value\":");
 
-		if (option.getValue() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(option.getValue());

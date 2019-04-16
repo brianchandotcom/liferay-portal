@@ -53,12 +53,13 @@ public class ContentDocumentSerDes {
 
 		sb.append("{");
 
-		sb.append("\"contentUrl\": ");
+		if (contentDocument.getContentUrl() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (contentDocument.getContentUrl() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"contentUrl\":");
+
 			sb.append("\"");
 
 			sb.append(contentDocument.getContentUrl());
@@ -66,14 +67,13 @@ public class ContentDocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentDocument.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (contentDocument.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentDocument.getDescription());
@@ -81,14 +81,13 @@ public class ContentDocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentDocument.getEncodingFormat() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"encodingFormat\": ");
+			sb.append("\"encodingFormat\":");
 
-		if (contentDocument.getEncodingFormat() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentDocument.getEncodingFormat());
@@ -96,14 +95,13 @@ public class ContentDocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentDocument.getFileExtension() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"fileExtension\": ");
+			sb.append("\"fileExtension\":");
 
-		if (contentDocument.getFileExtension() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentDocument.getFileExtension());
@@ -111,36 +109,33 @@ public class ContentDocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentDocument.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (contentDocument.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentDocument.getId());
 		}
 
-		sb.append(", ");
+		if (contentDocument.getSizeInBytes() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"sizeInBytes\": ");
+			sb.append("\"sizeInBytes\":");
 
-		if (contentDocument.getSizeInBytes() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentDocument.getSizeInBytes());
 		}
 
-		sb.append(", ");
+		if (contentDocument.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (contentDocument.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentDocument.getTitle());

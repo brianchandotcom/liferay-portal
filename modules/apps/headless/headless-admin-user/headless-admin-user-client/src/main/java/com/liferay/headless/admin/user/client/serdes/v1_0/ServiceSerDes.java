@@ -53,12 +53,13 @@ public class ServiceSerDes {
 
 		sb.append("{");
 
-		sb.append("\"hoursAvailable\": ");
+		if (service.getHoursAvailable() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (service.getHoursAvailable() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"hoursAvailable\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < service.getHoursAvailable().length; i++) {
@@ -74,25 +75,23 @@ public class ServiceSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (service.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (service.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(service.getId());
 		}
 
-		sb.append(", ");
+		if (service.getServiceType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"serviceType\": ");
+			sb.append("\"serviceType\":");
 
-		if (service.getServiceType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(service.getServiceType());

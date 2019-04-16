@@ -59,12 +59,13 @@ public class WorkflowTaskAssignToMeSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"comment\": ");
+		if (workflowTaskAssignToMe.getComment() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (workflowTaskAssignToMe.getComment() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"comment\":");
+
 			sb.append("\"");
 
 			sb.append(workflowTaskAssignToMe.getComment());
@@ -72,14 +73,13 @@ public class WorkflowTaskAssignToMeSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowTaskAssignToMe.getDueDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dueDate\": ");
+			sb.append("\"dueDate\":");
 
-		if (workflowTaskAssignToMe.getDueDate() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(

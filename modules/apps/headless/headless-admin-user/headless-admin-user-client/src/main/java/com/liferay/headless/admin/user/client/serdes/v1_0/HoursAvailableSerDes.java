@@ -53,12 +53,13 @@ public class HoursAvailableSerDes {
 
 		sb.append("{");
 
-		sb.append("\"closes\": ");
+		if (hoursAvailable.getCloses() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (hoursAvailable.getCloses() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"closes\":");
+
 			sb.append("\"");
 
 			sb.append(hoursAvailable.getCloses());
@@ -66,14 +67,13 @@ public class HoursAvailableSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (hoursAvailable.getDayOfWeek() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dayOfWeek\": ");
+			sb.append("\"dayOfWeek\":");
 
-		if (hoursAvailable.getDayOfWeek() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(hoursAvailable.getDayOfWeek());
@@ -81,25 +81,23 @@ public class HoursAvailableSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (hoursAvailable.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (hoursAvailable.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(hoursAvailable.getId());
 		}
 
-		sb.append(", ");
+		if (hoursAvailable.getOpens() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"opens\": ");
+			sb.append("\"opens\":");
 
-		if (hoursAvailable.getOpens() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(hoursAvailable.getOpens());

@@ -57,23 +57,23 @@ public class ParentKnowledgeBaseFolderSerDes {
 
 		sb.append("{");
 
-		sb.append("\"folderId\": ");
+		if (parentKnowledgeBaseFolder.getFolderId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (parentKnowledgeBaseFolder.getFolderId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"folderId\":");
+
 			sb.append(parentKnowledgeBaseFolder.getFolderId());
 		}
 
-		sb.append(", ");
+		if (parentKnowledgeBaseFolder.getFolderName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"folderName\": ");
+			sb.append("\"folderName\":");
 
-		if (parentKnowledgeBaseFolder.getFolderName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(parentKnowledgeBaseFolder.getFolderName());

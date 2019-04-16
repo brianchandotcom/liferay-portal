@@ -55,23 +55,23 @@ public class ParentTaxonomyVocabularySerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (parentTaxonomyVocabulary.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (parentTaxonomyVocabulary.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(parentTaxonomyVocabulary.getId());
 		}
 
-		sb.append(", ");
+		if (parentTaxonomyVocabulary.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (parentTaxonomyVocabulary.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(parentTaxonomyVocabulary.getName());

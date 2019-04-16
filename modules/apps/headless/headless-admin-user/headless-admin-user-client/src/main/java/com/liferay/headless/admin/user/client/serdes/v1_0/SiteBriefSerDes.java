@@ -51,23 +51,23 @@ public class SiteBriefSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (siteBrief.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (siteBrief.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(siteBrief.getId());
 		}
 
-		sb.append(", ");
+		if (siteBrief.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (siteBrief.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(siteBrief.getName());

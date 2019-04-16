@@ -53,23 +53,23 @@ public class StructuredContentLinkSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (structuredContentLink.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (structuredContentLink.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(structuredContentLink.getId());
 		}
 
-		sb.append(", ");
+		if (structuredContentLink.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (structuredContentLink.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(structuredContentLink.getTitle());

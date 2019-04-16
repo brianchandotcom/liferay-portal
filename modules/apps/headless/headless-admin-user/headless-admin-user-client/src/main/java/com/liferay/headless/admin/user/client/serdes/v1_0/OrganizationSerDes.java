@@ -61,12 +61,13 @@ public class OrganizationSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"comment\": ");
+		if (organization.getComment() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (organization.getComment() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"comment\":");
+
 			sb.append("\"");
 
 			sb.append(organization.getComment());
@@ -74,21 +75,25 @@ public class OrganizationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (organization.getContactInformation() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"contactInformation\": ");
+			sb.append("\"contactInformation\":");
 
-		sb.append(
-			ContactInformationSerDes.toJSON(
-				organization.getContactInformation()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (organization.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(
+				ContactInformationSerDes.toJSON(
+					organization.getContactInformation()));
 		}
-		else {
+
+		if (organization.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -97,14 +102,13 @@ public class OrganizationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (organization.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (organization.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -113,25 +117,23 @@ public class OrganizationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (organization.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (organization.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(organization.getId());
 		}
 
-		sb.append(", ");
+		if (organization.getImage() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"image\": ");
+			sb.append("\"image\":");
 
-		if (organization.getImage() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(organization.getImage());
@@ -139,14 +141,13 @@ public class OrganizationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (organization.getKeywords() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"keywords\": ");
+			sb.append("\"keywords\":");
 
-		if (organization.getKeywords() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < organization.getKeywords().length; i++) {
@@ -164,19 +165,23 @@ public class OrganizationSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (organization.getLocation() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"location\": ");
+			sb.append("\"location\":");
 
-		sb.append(LocationSerDes.toJSON(organization.getLocation()));
-		sb.append(", ");
-
-		sb.append("\"name\": ");
-
-		if (organization.getName() == null) {
-			sb.append("null");
+			sb.append(LocationSerDes.toJSON(organization.getLocation()));
 		}
-		else {
+
+		if (organization.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"name\":");
+
 			sb.append("\"");
 
 			sb.append(organization.getName());
@@ -184,31 +189,35 @@ public class OrganizationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (organization.getNumberOfOrganizations() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfOrganizations\": ");
+			sb.append("\"numberOfOrganizations\":");
 
-		if (organization.getNumberOfOrganizations() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(organization.getNumberOfOrganizations());
 		}
 
-		sb.append(", ");
+		if (organization.getParentOrganization() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"parentOrganization\": ");
+			sb.append("\"parentOrganization\":");
 
-		sb.append(
-			OrganizationSerDes.toJSON(organization.getParentOrganization()));
-		sb.append(", ");
-
-		sb.append("\"services\": ");
-
-		if (organization.getServices() == null) {
-			sb.append("null");
+			sb.append(
+				OrganizationSerDes.toJSON(
+					organization.getParentOrganization()));
 		}
-		else {
+
+		if (organization.getServices() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"services\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < organization.getServices().length; i++) {

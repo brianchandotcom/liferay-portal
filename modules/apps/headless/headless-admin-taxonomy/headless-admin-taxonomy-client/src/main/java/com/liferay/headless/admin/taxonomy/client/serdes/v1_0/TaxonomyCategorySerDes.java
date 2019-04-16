@@ -59,12 +59,13 @@ public class TaxonomyCategorySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"availableLanguages\": ");
+		if (taxonomyCategory.getAvailableLanguages() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (taxonomyCategory.getAvailableLanguages() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"availableLanguages\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < taxonomyCategory.getAvailableLanguages().length;
@@ -84,19 +85,23 @@ public class TaxonomyCategorySerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (taxonomyCategory.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(taxonomyCategory.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (taxonomyCategory.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(taxonomyCategory.getCreator()));
 		}
-		else {
+
+		if (taxonomyCategory.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -106,14 +111,13 @@ public class TaxonomyCategorySerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (taxonomyCategory.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (taxonomyCategory.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -123,14 +127,13 @@ public class TaxonomyCategorySerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (taxonomyCategory.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (taxonomyCategory.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(taxonomyCategory.getDescription());
@@ -138,25 +141,23 @@ public class TaxonomyCategorySerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (taxonomyCategory.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (taxonomyCategory.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(taxonomyCategory.getId());
 		}
 
-		sb.append(", ");
+		if (taxonomyCategory.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (taxonomyCategory.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(taxonomyCategory.getName());
@@ -164,39 +165,47 @@ public class TaxonomyCategorySerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (taxonomyCategory.getNumberOfTaxonomyCategories() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfTaxonomyCategories\": ");
+			sb.append("\"numberOfTaxonomyCategories\":");
 
-		if (taxonomyCategory.getNumberOfTaxonomyCategories() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(taxonomyCategory.getNumberOfTaxonomyCategories());
 		}
 
-		sb.append(", ");
+		if (taxonomyCategory.getParentTaxonomyCategory() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"parentTaxonomyCategory\": ");
+			sb.append("\"parentTaxonomyCategory\":");
 
-		sb.append(
-			ParentTaxonomyCategorySerDes.toJSON(
-				taxonomyCategory.getParentTaxonomyCategory()));
-		sb.append(", ");
-
-		sb.append("\"parentTaxonomyVocabulary\": ");
-
-		sb.append(
-			ParentTaxonomyVocabularySerDes.toJSON(
-				taxonomyCategory.getParentTaxonomyVocabulary()));
-		sb.append(", ");
-
-		sb.append("\"viewableBy\": ");
-
-		if (taxonomyCategory.getViewableBy() == null) {
-			sb.append("null");
+			sb.append(
+				ParentTaxonomyCategorySerDes.toJSON(
+					taxonomyCategory.getParentTaxonomyCategory()));
 		}
-		else {
+
+		if (taxonomyCategory.getParentTaxonomyVocabulary() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"parentTaxonomyVocabulary\":");
+
+			sb.append(
+				ParentTaxonomyVocabularySerDes.toJSON(
+					taxonomyCategory.getParentTaxonomyVocabulary()));
+		}
+
+		if (taxonomyCategory.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"viewableBy\":");
+
 			sb.append("\"");
 
 			sb.append(taxonomyCategory.getViewableBy());

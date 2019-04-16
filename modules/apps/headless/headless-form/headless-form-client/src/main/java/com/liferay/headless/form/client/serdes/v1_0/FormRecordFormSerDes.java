@@ -53,23 +53,23 @@ public class FormRecordFormSerDes {
 
 		sb.append("{");
 
-		sb.append("\"draft\": ");
+		if (formRecordForm.getDraft() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (formRecordForm.getDraft() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"draft\":");
+
 			sb.append(formRecordForm.getDraft());
 		}
 
-		sb.append(", ");
+		if (formRecordForm.getFieldValues() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"fieldValues\": ");
+			sb.append("\"fieldValues\":");
 
-		if (formRecordForm.getFieldValues() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(formRecordForm.getFieldValues());

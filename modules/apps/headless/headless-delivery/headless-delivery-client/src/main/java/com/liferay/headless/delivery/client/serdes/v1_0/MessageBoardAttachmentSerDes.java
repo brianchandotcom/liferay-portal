@@ -53,12 +53,13 @@ public class MessageBoardAttachmentSerDes {
 
 		sb.append("{");
 
-		sb.append("\"contentUrl\": ");
+		if (messageBoardAttachment.getContentUrl() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (messageBoardAttachment.getContentUrl() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"contentUrl\":");
+
 			sb.append("\"");
 
 			sb.append(messageBoardAttachment.getContentUrl());
@@ -66,14 +67,13 @@ public class MessageBoardAttachmentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardAttachment.getEncodingFormat() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"encodingFormat\": ");
+			sb.append("\"encodingFormat\":");
 
-		if (messageBoardAttachment.getEncodingFormat() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardAttachment.getEncodingFormat());
@@ -81,14 +81,13 @@ public class MessageBoardAttachmentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardAttachment.getFileExtension() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"fileExtension\": ");
+			sb.append("\"fileExtension\":");
 
-		if (messageBoardAttachment.getFileExtension() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardAttachment.getFileExtension());
@@ -96,36 +95,33 @@ public class MessageBoardAttachmentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardAttachment.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (messageBoardAttachment.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardAttachment.getId());
 		}
 
-		sb.append(", ");
+		if (messageBoardAttachment.getSizeInBytes() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"sizeInBytes\": ");
+			sb.append("\"sizeInBytes\":");
 
-		if (messageBoardAttachment.getSizeInBytes() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardAttachment.getSizeInBytes());
 		}
 
-		sb.append(", ");
+		if (messageBoardAttachment.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (messageBoardAttachment.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardAttachment.getTitle());

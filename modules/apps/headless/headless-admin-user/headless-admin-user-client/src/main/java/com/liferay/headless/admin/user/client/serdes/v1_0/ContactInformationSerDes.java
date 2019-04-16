@@ -58,12 +58,13 @@ public class ContactInformationSerDes {
 
 		sb.append("{");
 
-		sb.append("\"emailAddresses\": ");
+		if (contactInformation.getEmailAddresses() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (contactInformation.getEmailAddresses() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"emailAddresses\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < contactInformation.getEmailAddresses().length;
@@ -81,14 +82,13 @@ public class ContactInformationSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (contactInformation.getFacebook() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"facebook\": ");
+			sb.append("\"facebook\":");
 
-		if (contactInformation.getFacebook() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contactInformation.getFacebook());
@@ -96,25 +96,23 @@ public class ContactInformationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contactInformation.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (contactInformation.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contactInformation.getId());
 		}
 
-		sb.append(", ");
+		if (contactInformation.getJabber() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"jabber\": ");
+			sb.append("\"jabber\":");
 
-		if (contactInformation.getJabber() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contactInformation.getJabber());
@@ -122,14 +120,13 @@ public class ContactInformationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contactInformation.getPostalAddresses() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"postalAddresses\": ");
+			sb.append("\"postalAddresses\":");
 
-		if (contactInformation.getPostalAddresses() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < contactInformation.getPostalAddresses().length;
@@ -147,14 +144,13 @@ public class ContactInformationSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (contactInformation.getSkype() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"skype\": ");
+			sb.append("\"skype\":");
 
-		if (contactInformation.getSkype() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contactInformation.getSkype());
@@ -162,14 +158,13 @@ public class ContactInformationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contactInformation.getSms() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"sms\": ");
+			sb.append("\"sms\":");
 
-		if (contactInformation.getSms() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contactInformation.getSms());
@@ -177,14 +172,13 @@ public class ContactInformationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contactInformation.getTelephones() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"telephones\": ");
+			sb.append("\"telephones\":");
 
-		if (contactInformation.getTelephones() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < contactInformation.getTelephones().length;
@@ -201,14 +195,13 @@ public class ContactInformationSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (contactInformation.getTwitter() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"twitter\": ");
+			sb.append("\"twitter\":");
 
-		if (contactInformation.getTwitter() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contactInformation.getTwitter());
@@ -216,14 +209,13 @@ public class ContactInformationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contactInformation.getWebUrls() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"webUrls\": ");
+			sb.append("\"webUrls\":");
 
-		if (contactInformation.getWebUrls() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < contactInformation.getWebUrls().length; i++) {

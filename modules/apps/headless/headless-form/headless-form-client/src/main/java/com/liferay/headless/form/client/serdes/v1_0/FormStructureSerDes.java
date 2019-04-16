@@ -61,12 +61,13 @@ public class FormStructureSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"availableLanguages\": ");
+		if (formStructure.getAvailableLanguages() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (formStructure.getAvailableLanguages() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"availableLanguages\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < formStructure.getAvailableLanguages().length;
@@ -86,19 +87,23 @@ public class FormStructureSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (formStructure.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(formStructure.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (formStructure.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(formStructure.getCreator()));
 		}
-		else {
+
+		if (formStructure.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -107,14 +112,13 @@ public class FormStructureSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formStructure.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (formStructure.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -124,14 +128,13 @@ public class FormStructureSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formStructure.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (formStructure.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(formStructure.getDescription());
@@ -139,14 +142,13 @@ public class FormStructureSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formStructure.getFormPages() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"formPages\": ");
+			sb.append("\"formPages\":");
 
-		if (formStructure.getFormPages() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < formStructure.getFormPages().length; i++) {
@@ -161,25 +163,23 @@ public class FormStructureSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (formStructure.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (formStructure.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(formStructure.getId());
 		}
 
-		sb.append(", ");
+		if (formStructure.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (formStructure.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(formStructure.getName());
@@ -187,22 +187,25 @@ public class FormStructureSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formStructure.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (formStructure.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(formStructure.getSiteId());
 		}
 
-		sb.append(", ");
+		if (formStructure.getSuccessPage() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"successPage\": ");
+			sb.append("\"successPage\":");
 
-		sb.append(SuccessPageSerDes.toJSON(formStructure.getSuccessPage()));
+			sb.append(SuccessPageSerDes.toJSON(formStructure.getSuccessPage()));
+		}
 
 		sb.append("}");
 

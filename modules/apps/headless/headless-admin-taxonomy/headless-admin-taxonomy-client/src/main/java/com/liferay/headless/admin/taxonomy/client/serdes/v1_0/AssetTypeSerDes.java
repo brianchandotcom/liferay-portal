@@ -51,23 +51,23 @@ public class AssetTypeSerDes {
 
 		sb.append("{");
 
-		sb.append("\"required\": ");
+		if (assetType.getRequired() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (assetType.getRequired() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"required\":");
+
 			sb.append(assetType.getRequired());
 		}
 
-		sb.append(", ");
+		if (assetType.getSubtype() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"subtype\": ");
+			sb.append("\"subtype\":");
 
-		if (assetType.getSubtype() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(assetType.getSubtype());
@@ -75,14 +75,13 @@ public class AssetTypeSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (assetType.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"type\": ");
+			sb.append("\"type\":");
 
-		if (assetType.getType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(assetType.getType());

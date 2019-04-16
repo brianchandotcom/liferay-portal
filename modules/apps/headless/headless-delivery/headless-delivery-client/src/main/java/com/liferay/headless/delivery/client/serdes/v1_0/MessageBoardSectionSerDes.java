@@ -59,17 +59,23 @@ public class MessageBoardSectionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"creator\": ");
+		if (messageBoardSection.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(CreatorSerDes.toJSON(messageBoardSection.getCreator()));
-		sb.append(", ");
+			sb.append("\"creator\":");
 
-		sb.append("\"dateCreated\": ");
-
-		if (messageBoardSection.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(messageBoardSection.getCreator()));
 		}
-		else {
+
+		if (messageBoardSection.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -79,14 +85,13 @@ public class MessageBoardSectionSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardSection.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (messageBoardSection.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -96,14 +101,13 @@ public class MessageBoardSectionSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardSection.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (messageBoardSection.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardSection.getDescription());
@@ -111,58 +115,53 @@ public class MessageBoardSectionSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardSection.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (messageBoardSection.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardSection.getId());
 		}
 
-		sb.append(", ");
+		if (messageBoardSection.getNumberOfMessageBoardSections() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfMessageBoardSections\": ");
+			sb.append("\"numberOfMessageBoardSections\":");
 
-		if (messageBoardSection.getNumberOfMessageBoardSections() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardSection.getNumberOfMessageBoardSections());
 		}
 
-		sb.append(", ");
+		if (messageBoardSection.getNumberOfMessageBoardThreads() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfMessageBoardThreads\": ");
+			sb.append("\"numberOfMessageBoardThreads\":");
 
-		if (messageBoardSection.getNumberOfMessageBoardThreads() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardSection.getNumberOfMessageBoardThreads());
 		}
 
-		sb.append(", ");
+		if (messageBoardSection.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (messageBoardSection.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardSection.getSiteId());
 		}
 
-		sb.append(", ");
+		if (messageBoardSection.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (messageBoardSection.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardSection.getTitle());
@@ -170,14 +169,13 @@ public class MessageBoardSectionSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardSection.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"viewableBy\": ");
+			sb.append("\"viewableBy\":");
 
-		if (messageBoardSection.getViewableBy() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardSection.getViewableBy());

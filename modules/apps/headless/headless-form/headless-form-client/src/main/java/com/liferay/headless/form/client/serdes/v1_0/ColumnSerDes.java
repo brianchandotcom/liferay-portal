@@ -51,23 +51,23 @@ public class ColumnSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (column.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (column.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(column.getId());
 		}
 
-		sb.append(", ");
+		if (column.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"label\": ");
+			sb.append("\"label\":");
 
-		if (column.getLabel() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(column.getLabel());
@@ -75,14 +75,13 @@ public class ColumnSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (column.getValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"value\": ");
+			sb.append("\"value\":");
 
-		if (column.getValue() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(column.getValue());

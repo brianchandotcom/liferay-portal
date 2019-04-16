@@ -51,12 +51,13 @@ public class ValueSerDes {
 
 		sb.append("{");
 
-		sb.append("\"data\": ");
+		if (value.getData() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (value.getData() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"data\":");
+
 			sb.append("\"");
 
 			sb.append(value.getData());
@@ -64,29 +65,43 @@ public class ValueSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (value.getDocument() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"document\": ");
+			sb.append("\"document\":");
 
-		sb.append(ContentDocumentSerDes.toJSON(value.getDocument()));
-		sb.append(", ");
-
-		sb.append("\"geo\": ");
-
-		sb.append(GeoSerDes.toJSON(value.getGeo()));
-		sb.append(", ");
-
-		sb.append("\"image\": ");
-
-		sb.append(ContentDocumentSerDes.toJSON(value.getImage()));
-		sb.append(", ");
-
-		sb.append("\"link\": ");
-
-		if (value.getLink() == null) {
-			sb.append("null");
+			sb.append(ContentDocumentSerDes.toJSON(value.getDocument()));
 		}
-		else {
+
+		if (value.getGeo() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"geo\":");
+
+			sb.append(GeoSerDes.toJSON(value.getGeo()));
+		}
+
+		if (value.getImage() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"image\":");
+
+			sb.append(ContentDocumentSerDes.toJSON(value.getImage()));
+		}
+
+		if (value.getLink() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"link\":");
+
 			sb.append("\"");
 
 			sb.append(value.getLink());
@@ -94,13 +109,17 @@ public class ValueSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (value.getStructuredContentLink() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"structuredContentLink\": ");
+			sb.append("\"structuredContentLink\":");
 
-		sb.append(
-			StructuredContentLinkSerDes.toJSON(
-				value.getStructuredContentLink()));
+			sb.append(
+				StructuredContentLinkSerDes.toJSON(
+					value.getStructuredContentLink()));
+		}
 
 		sb.append("}");
 

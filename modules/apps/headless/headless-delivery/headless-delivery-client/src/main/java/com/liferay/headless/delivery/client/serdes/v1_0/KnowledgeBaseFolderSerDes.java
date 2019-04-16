@@ -59,17 +59,23 @@ public class KnowledgeBaseFolderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"creator\": ");
+		if (knowledgeBaseFolder.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(CreatorSerDes.toJSON(knowledgeBaseFolder.getCreator()));
-		sb.append(", ");
+			sb.append("\"creator\":");
 
-		sb.append("\"dateCreated\": ");
-
-		if (knowledgeBaseFolder.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(knowledgeBaseFolder.getCreator()));
 		}
-		else {
+
+		if (knowledgeBaseFolder.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -79,14 +85,13 @@ public class KnowledgeBaseFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseFolder.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (knowledgeBaseFolder.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -96,14 +101,13 @@ public class KnowledgeBaseFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseFolder.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (knowledgeBaseFolder.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(knowledgeBaseFolder.getDescription());
@@ -111,25 +115,23 @@ public class KnowledgeBaseFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseFolder.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (knowledgeBaseFolder.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(knowledgeBaseFolder.getId());
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseFolder.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (knowledgeBaseFolder.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(knowledgeBaseFolder.getName());
@@ -137,65 +139,65 @@ public class KnowledgeBaseFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfKnowledgeBaseArticles\": ");
+			sb.append("\"numberOfKnowledgeBaseArticles\":");
 
-		if (knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles());
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfKnowledgeBaseFolders\": ");
+			sb.append("\"numberOfKnowledgeBaseFolders\":");
 
-		if (knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders());
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseFolder.getParentKnowledgeBaseFolder() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"parentKnowledgeBaseFolder\": ");
+			sb.append("\"parentKnowledgeBaseFolder\":");
 
-		sb.append(
-			ParentKnowledgeBaseFolderSerDes.toJSON(
-				knowledgeBaseFolder.getParentKnowledgeBaseFolder()));
-		sb.append(", ");
-
-		sb.append("\"parentKnowledgeBaseFolderId\": ");
-
-		if (knowledgeBaseFolder.getParentKnowledgeBaseFolderId() == null) {
-			sb.append("null");
+			sb.append(
+				ParentKnowledgeBaseFolderSerDes.toJSON(
+					knowledgeBaseFolder.getParentKnowledgeBaseFolder()));
 		}
-		else {
+
+		if (knowledgeBaseFolder.getParentKnowledgeBaseFolderId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"parentKnowledgeBaseFolderId\":");
+
 			sb.append(knowledgeBaseFolder.getParentKnowledgeBaseFolderId());
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseFolder.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (knowledgeBaseFolder.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(knowledgeBaseFolder.getSiteId());
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseFolder.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"viewableBy\": ");
+			sb.append("\"viewableBy\":");
 
-		if (knowledgeBaseFolder.getViewableBy() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(knowledgeBaseFolder.getViewableBy());

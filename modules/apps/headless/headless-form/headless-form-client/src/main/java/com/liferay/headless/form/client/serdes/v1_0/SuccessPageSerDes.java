@@ -53,12 +53,13 @@ public class SuccessPageSerDes {
 
 		sb.append("{");
 
-		sb.append("\"description\": ");
+		if (successPage.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (successPage.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"description\":");
+
 			sb.append("\"");
 
 			sb.append(successPage.getDescription());
@@ -66,14 +67,13 @@ public class SuccessPageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (successPage.getHeadline() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"headline\": ");
+			sb.append("\"headline\":");
 
-		if (successPage.getHeadline() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(successPage.getHeadline());
@@ -81,14 +81,13 @@ public class SuccessPageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (successPage.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (successPage.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(successPage.getId());
 		}
 

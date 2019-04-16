@@ -53,12 +53,13 @@ public class AdaptedImageSerDes {
 
 		sb.append("{");
 
-		sb.append("\"contentUrl\": ");
+		if (adaptedImage.getContentUrl() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (adaptedImage.getContentUrl() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"contentUrl\":");
+
 			sb.append("\"");
 
 			sb.append(adaptedImage.getContentUrl());
@@ -66,25 +67,23 @@ public class AdaptedImageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (adaptedImage.getHeight() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"height\": ");
+			sb.append("\"height\":");
 
-		if (adaptedImage.getHeight() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(adaptedImage.getHeight());
 		}
 
-		sb.append(", ");
+		if (adaptedImage.getResolutionName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"resolutionName\": ");
+			sb.append("\"resolutionName\":");
 
-		if (adaptedImage.getResolutionName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(adaptedImage.getResolutionName());
@@ -92,25 +91,23 @@ public class AdaptedImageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (adaptedImage.getSizeInBytes() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"sizeInBytes\": ");
+			sb.append("\"sizeInBytes\":");
 
-		if (adaptedImage.getSizeInBytes() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(adaptedImage.getSizeInBytes());
 		}
 
-		sb.append(", ");
+		if (adaptedImage.getWidth() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"width\": ");
+			sb.append("\"width\":");
 
-		if (adaptedImage.getWidth() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(adaptedImage.getWidth());
 		}
 

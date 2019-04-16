@@ -51,12 +51,13 @@ public class CreatorSerDes {
 
 		sb.append("{");
 
-		sb.append("\"additionalName\": ");
+		if (creator.getAdditionalName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (creator.getAdditionalName() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"additionalName\":");
+
 			sb.append("\"");
 
 			sb.append(creator.getAdditionalName());
@@ -64,14 +65,13 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (creator.getFamilyName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"familyName\": ");
+			sb.append("\"familyName\":");
 
-		if (creator.getFamilyName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(creator.getFamilyName());
@@ -79,14 +79,13 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (creator.getGivenName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"givenName\": ");
+			sb.append("\"givenName\":");
 
-		if (creator.getGivenName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(creator.getGivenName());
@@ -94,25 +93,23 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (creator.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (creator.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(creator.getId());
 		}
 
-		sb.append(", ");
+		if (creator.getImage() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"image\": ");
+			sb.append("\"image\":");
 
-		if (creator.getImage() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(creator.getImage());
@@ -120,14 +117,13 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (creator.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (creator.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(creator.getName());
@@ -135,14 +131,13 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (creator.getProfileURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"profileURL\": ");
+			sb.append("\"profileURL\":");
 
-		if (creator.getProfileURL() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(creator.getProfileURL());

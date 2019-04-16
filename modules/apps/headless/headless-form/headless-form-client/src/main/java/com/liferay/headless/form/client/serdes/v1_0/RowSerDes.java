@@ -51,23 +51,23 @@ public class RowSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (row.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (row.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(row.getId());
 		}
 
-		sb.append(", ");
+		if (row.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"label\": ");
+			sb.append("\"label\":");
 
-		if (row.getLabel() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(row.getLabel());
@@ -75,14 +75,13 @@ public class RowSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (row.getValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"value\": ");
+			sb.append("\"value\":");
 
-		if (row.getValue() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(row.getValue());

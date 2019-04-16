@@ -61,17 +61,24 @@ public class StructuredContentFolderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"creator\": ");
+		if (structuredContentFolder.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(CreatorSerDes.toJSON(structuredContentFolder.getCreator()));
-		sb.append(", ");
+			sb.append("\"creator\":");
 
-		sb.append("\"dateCreated\": ");
-
-		if (structuredContentFolder.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(
+				CreatorSerDes.toJSON(structuredContentFolder.getCreator()));
 		}
-		else {
+
+		if (structuredContentFolder.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -81,14 +88,13 @@ public class StructuredContentFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContentFolder.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (structuredContentFolder.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -98,14 +104,13 @@ public class StructuredContentFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContentFolder.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (structuredContentFolder.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(structuredContentFolder.getDescription());
@@ -113,25 +118,23 @@ public class StructuredContentFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContentFolder.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (structuredContentFolder.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(structuredContentFolder.getId());
 		}
 
-		sb.append(", ");
+		if (structuredContentFolder.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (structuredContentFolder.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(structuredContentFolder.getName());
@@ -139,50 +142,46 @@ public class StructuredContentFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
-
-		sb.append("\"numberOfStructuredContentFolders\": ");
-
-		if (structuredContentFolder.getNumberOfStructuredContentFolders() ==
+		if (structuredContentFolder.getNumberOfStructuredContentFolders() !=
 				null) {
 
-			sb.append("null");
-		}
-		else {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"numberOfStructuredContentFolders\":");
+
 			sb.append(
 				structuredContentFolder.getNumberOfStructuredContentFolders());
 		}
 
-		sb.append(", ");
+		if (structuredContentFolder.getNumberOfStructuredContents() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfStructuredContents\": ");
+			sb.append("\"numberOfStructuredContents\":");
 
-		if (structuredContentFolder.getNumberOfStructuredContents() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(structuredContentFolder.getNumberOfStructuredContents());
 		}
 
-		sb.append(", ");
+		if (structuredContentFolder.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (structuredContentFolder.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(structuredContentFolder.getSiteId());
 		}
 
-		sb.append(", ");
+		if (structuredContentFolder.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"viewableBy\": ");
+			sb.append("\"viewableBy\":");
 
-		if (structuredContentFolder.getViewableBy() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(structuredContentFolder.getViewableBy());

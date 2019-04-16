@@ -51,23 +51,23 @@ public class WebUrlSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (webUrl.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (webUrl.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(webUrl.getId());
 		}
 
-		sb.append(", ");
+		if (webUrl.getUrl() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"url\": ");
+			sb.append("\"url\":");
 
-		if (webUrl.getUrl() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(webUrl.getUrl());
@@ -75,14 +75,13 @@ public class WebUrlSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (webUrl.getUrlType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"urlType\": ");
+			sb.append("\"urlType\":");
 
-		if (webUrl.getUrlType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(webUrl.getUrlType());

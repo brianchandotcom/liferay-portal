@@ -53,12 +53,13 @@ public class RenderedContentSerDes {
 
 		sb.append("{");
 
-		sb.append("\"renderedContentURL\": ");
+		if (renderedContent.getRenderedContentURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (renderedContent.getRenderedContentURL() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"renderedContentURL\":");
+
 			sb.append("\"");
 
 			sb.append(renderedContent.getRenderedContentURL());
@@ -66,14 +67,13 @@ public class RenderedContentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (renderedContent.getTemplateName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"templateName\": ");
+			sb.append("\"templateName\":");
 
-		if (renderedContent.getTemplateName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(renderedContent.getTemplateName());

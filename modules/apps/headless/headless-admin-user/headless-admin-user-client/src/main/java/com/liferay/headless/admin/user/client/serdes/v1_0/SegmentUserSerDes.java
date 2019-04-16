@@ -53,12 +53,13 @@ public class SegmentUserSerDes {
 
 		sb.append("{");
 
-		sb.append("\"emailAddress\": ");
+		if (segmentUser.getEmailAddress() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (segmentUser.getEmailAddress() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"emailAddress\":");
+
 			sb.append("\"");
 
 			sb.append(segmentUser.getEmailAddress());
@@ -66,25 +67,23 @@ public class SegmentUserSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (segmentUser.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (segmentUser.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(segmentUser.getId());
 		}
 
-		sb.append(", ");
+		if (segmentUser.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (segmentUser.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(segmentUser.getName());

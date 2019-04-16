@@ -53,12 +53,13 @@ public class PostalAddressSerDes {
 
 		sb.append("{");
 
-		sb.append("\"addressCountry\": ");
+		if (postalAddress.getAddressCountry() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (postalAddress.getAddressCountry() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"addressCountry\":");
+
 			sb.append("\"");
 
 			sb.append(postalAddress.getAddressCountry());
@@ -66,14 +67,13 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (postalAddress.getAddressLocality() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"addressLocality\": ");
+			sb.append("\"addressLocality\":");
 
-		if (postalAddress.getAddressLocality() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(postalAddress.getAddressLocality());
@@ -81,14 +81,13 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (postalAddress.getAddressRegion() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"addressRegion\": ");
+			sb.append("\"addressRegion\":");
 
-		if (postalAddress.getAddressRegion() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(postalAddress.getAddressRegion());
@@ -96,14 +95,13 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (postalAddress.getAddressType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"addressType\": ");
+			sb.append("\"addressType\":");
 
-		if (postalAddress.getAddressType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(postalAddress.getAddressType());
@@ -111,25 +109,23 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (postalAddress.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (postalAddress.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(postalAddress.getId());
 		}
 
-		sb.append(", ");
+		if (postalAddress.getPostalCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"postalCode\": ");
+			sb.append("\"postalCode\":");
 
-		if (postalAddress.getPostalCode() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(postalAddress.getPostalCode());
@@ -137,25 +133,23 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (postalAddress.getPrimary() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"primary\": ");
+			sb.append("\"primary\":");
 
-		if (postalAddress.getPrimary() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(postalAddress.getPrimary());
 		}
 
-		sb.append(", ");
+		if (postalAddress.getStreetAddressLine1() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"streetAddressLine1\": ");
+			sb.append("\"streetAddressLine1\":");
 
-		if (postalAddress.getStreetAddressLine1() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(postalAddress.getStreetAddressLine1());
@@ -163,14 +157,13 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (postalAddress.getStreetAddressLine2() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"streetAddressLine2\": ");
+			sb.append("\"streetAddressLine2\":");
 
-		if (postalAddress.getStreetAddressLine2() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(postalAddress.getStreetAddressLine2());
@@ -178,14 +171,13 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (postalAddress.getStreetAddressLine3() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"streetAddressLine3\": ");
+			sb.append("\"streetAddressLine3\":");
 
-		if (postalAddress.getStreetAddressLine3() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(postalAddress.getStreetAddressLine3());

@@ -53,23 +53,23 @@ public class TaxonomyCategorySerDes {
 
 		sb.append("{");
 
-		sb.append("\"taxonomyCategoryId\": ");
+		if (taxonomyCategory.getTaxonomyCategoryId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (taxonomyCategory.getTaxonomyCategoryId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"taxonomyCategoryId\":");
+
 			sb.append(taxonomyCategory.getTaxonomyCategoryId());
 		}
 
-		sb.append(", ");
+		if (taxonomyCategory.getTaxonomyCategoryName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"taxonomyCategoryName\": ");
+			sb.append("\"taxonomyCategoryName\":");
 
-		if (taxonomyCategory.getTaxonomyCategoryName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(taxonomyCategory.getTaxonomyCategoryName());

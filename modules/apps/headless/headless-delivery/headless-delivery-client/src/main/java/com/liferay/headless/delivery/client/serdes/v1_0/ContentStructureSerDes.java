@@ -61,12 +61,13 @@ public class ContentStructureSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"availableLanguages\": ");
+		if (contentStructure.getAvailableLanguages() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (contentStructure.getAvailableLanguages() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"availableLanguages\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < contentStructure.getAvailableLanguages().length;
@@ -86,14 +87,13 @@ public class ContentStructureSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (contentStructure.getContentStructureFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"contentStructureFields\": ");
+			sb.append("\"contentStructureFields\":");
 
-		if (contentStructure.getContentStructureFields() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0;
@@ -113,19 +113,23 @@ public class ContentStructureSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (contentStructure.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(contentStructure.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (contentStructure.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(contentStructure.getCreator()));
 		}
-		else {
+
+		if (contentStructure.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -135,14 +139,13 @@ public class ContentStructureSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentStructure.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (contentStructure.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -152,14 +155,13 @@ public class ContentStructureSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentStructure.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (contentStructure.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentStructure.getDescription());
@@ -167,25 +169,23 @@ public class ContentStructureSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentStructure.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (contentStructure.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentStructure.getId());
 		}
 
-		sb.append(", ");
+		if (contentStructure.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (contentStructure.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentStructure.getName());
@@ -193,14 +193,13 @@ public class ContentStructureSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentStructure.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (contentStructure.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentStructure.getSiteId());
 		}
 

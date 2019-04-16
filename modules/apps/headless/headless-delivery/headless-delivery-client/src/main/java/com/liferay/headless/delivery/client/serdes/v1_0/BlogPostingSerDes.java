@@ -61,18 +61,24 @@ public class BlogPostingSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"aggregateRating\": ");
+		if (blogPosting.getAggregateRating() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(
-			AggregateRatingSerDes.toJSON(blogPosting.getAggregateRating()));
-		sb.append(", ");
+			sb.append("\"aggregateRating\":");
 
-		sb.append("\"alternativeHeadline\": ");
-
-		if (blogPosting.getAlternativeHeadline() == null) {
-			sb.append("null");
+			sb.append(
+				AggregateRatingSerDes.toJSON(blogPosting.getAggregateRating()));
 		}
-		else {
+
+		if (blogPosting.getAlternativeHeadline() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"alternativeHeadline\":");
+
 			sb.append("\"");
 
 			sb.append(blogPosting.getAlternativeHeadline());
@@ -80,14 +86,13 @@ public class BlogPostingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getArticleBody() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"articleBody\": ");
+			sb.append("\"articleBody\":");
 
-		if (blogPosting.getArticleBody() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(blogPosting.getArticleBody());
@@ -95,19 +100,23 @@ public class BlogPostingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(blogPosting.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (blogPosting.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(blogPosting.getCreator()));
 		}
-		else {
+
+		if (blogPosting.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -116,14 +125,13 @@ public class BlogPostingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (blogPosting.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -132,14 +140,13 @@ public class BlogPostingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getDatePublished() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"datePublished\": ");
+			sb.append("\"datePublished\":");
 
-		if (blogPosting.getDatePublished() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -148,14 +155,13 @@ public class BlogPostingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (blogPosting.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(blogPosting.getDescription());
@@ -163,14 +169,13 @@ public class BlogPostingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getEncodingFormat() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"encodingFormat\": ");
+			sb.append("\"encodingFormat\":");
 
-		if (blogPosting.getEncodingFormat() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(blogPosting.getEncodingFormat());
@@ -178,14 +183,13 @@ public class BlogPostingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getFriendlyUrlPath() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"friendlyUrlPath\": ");
+			sb.append("\"friendlyUrlPath\":");
 
-		if (blogPosting.getFriendlyUrlPath() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(blogPosting.getFriendlyUrlPath());
@@ -193,14 +197,13 @@ public class BlogPostingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getHeadline() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"headline\": ");
+			sb.append("\"headline\":");
 
-		if (blogPosting.getHeadline() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(blogPosting.getHeadline());
@@ -208,30 +211,33 @@ public class BlogPostingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (blogPosting.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(blogPosting.getId());
 		}
 
-		sb.append(", ");
+		if (blogPosting.getImage() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"image\": ");
+			sb.append("\"image\":");
 
-		sb.append(ImageSerDes.toJSON(blogPosting.getImage()));
-		sb.append(", ");
-
-		sb.append("\"keywords\": ");
-
-		if (blogPosting.getKeywords() == null) {
-			sb.append("null");
+			sb.append(ImageSerDes.toJSON(blogPosting.getImage()));
 		}
-		else {
+
+		if (blogPosting.getKeywords() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"keywords\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < blogPosting.getKeywords().length; i++) {
@@ -249,36 +255,33 @@ public class BlogPostingSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getNumberOfComments() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfComments\": ");
+			sb.append("\"numberOfComments\":");
 
-		if (blogPosting.getNumberOfComments() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(blogPosting.getNumberOfComments());
 		}
 
-		sb.append(", ");
+		if (blogPosting.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (blogPosting.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(blogPosting.getSiteId());
 		}
 
-		sb.append(", ");
+		if (blogPosting.getTaxonomyCategories() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"taxonomyCategories\": ");
+			sb.append("\"taxonomyCategories\":");
 
-		if (blogPosting.getTaxonomyCategories() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < blogPosting.getTaxonomyCategories().length;
@@ -296,14 +299,13 @@ public class BlogPostingSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getTaxonomyCategoryIds() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"taxonomyCategoryIds\": ");
+			sb.append("\"taxonomyCategoryIds\":");
 
-		if (blogPosting.getTaxonomyCategoryIds() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < blogPosting.getTaxonomyCategoryIds().length;
@@ -319,14 +321,13 @@ public class BlogPostingSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (blogPosting.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"viewableBy\": ");
+			sb.append("\"viewableBy\":");
 
-		if (blogPosting.getViewableBy() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(blogPosting.getViewableBy());

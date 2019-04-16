@@ -53,23 +53,23 @@ public class ContentSetElementSerDes {
 
 		sb.append("{");
 
-		sb.append("\"content\": ");
+		if (contentSetElement.getContent() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (contentSetElement.getContent() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"content\":");
+
 			sb.append(contentSetElement.getContent());
 		}
 
-		sb.append(", ");
+		if (contentSetElement.getContentType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"contentType\": ");
+			sb.append("\"contentType\":");
 
-		if (contentSetElement.getContentType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentSetElement.getContentType());
@@ -77,25 +77,23 @@ public class ContentSetElementSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentSetElement.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (contentSetElement.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentSetElement.getId());
 		}
 
-		sb.append(", ");
+		if (contentSetElement.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (contentSetElement.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentSetElement.getTitle());

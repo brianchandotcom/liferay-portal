@@ -51,23 +51,23 @@ public class OptionSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (option.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (option.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(option.getId());
 		}
 
-		sb.append(", ");
+		if (option.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"label\": ");
+			sb.append("\"label\":");
 
-		if (option.getLabel() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(option.getLabel());
@@ -75,14 +75,13 @@ public class OptionSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (option.getValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"value\": ");
+			sb.append("\"value\":");
 
-		if (option.getValue() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(option.getValue());

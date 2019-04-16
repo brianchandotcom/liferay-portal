@@ -59,23 +59,23 @@ public class WorkflowTaskSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"completed\": ");
+		if (workflowTask.getCompleted() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (workflowTask.getCompleted() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"completed\":");
+
 			sb.append(workflowTask.getCompleted());
 		}
 
-		sb.append(", ");
+		if (workflowTask.getDateCompleted() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateCompleted\": ");
+			sb.append("\"dateCompleted\":");
 
-		if (workflowTask.getDateCompleted() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -85,14 +85,13 @@ public class WorkflowTaskSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowTask.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateCreated\": ");
+			sb.append("\"dateCreated\":");
 
-		if (workflowTask.getDateCreated() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -101,14 +100,13 @@ public class WorkflowTaskSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowTask.getDefinitionName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"definitionName\": ");
+			sb.append("\"definitionName\":");
 
-		if (workflowTask.getDefinitionName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(workflowTask.getDefinitionName());
@@ -116,14 +114,13 @@ public class WorkflowTaskSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowTask.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (workflowTask.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(workflowTask.getDescription());
@@ -131,14 +128,13 @@ public class WorkflowTaskSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowTask.getDueDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dueDate\": ");
+			sb.append("\"dueDate\":");
 
-		if (workflowTask.getDueDate() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -147,25 +143,23 @@ public class WorkflowTaskSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowTask.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (workflowTask.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(workflowTask.getId());
 		}
 
-		sb.append(", ");
+		if (workflowTask.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (workflowTask.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(workflowTask.getName());
@@ -173,20 +167,24 @@ public class WorkflowTaskSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowTask.getObjectReviewed() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"objectReviewed\": ");
+			sb.append("\"objectReviewed\":");
 
-		sb.append(
-			ObjectReviewedSerDes.toJSON(workflowTask.getObjectReviewed()));
-		sb.append(", ");
-
-		sb.append("\"transitions\": ");
-
-		if (workflowTask.getTransitions() == null) {
-			sb.append("null");
+			sb.append(
+				ObjectReviewedSerDes.toJSON(workflowTask.getObjectReviewed()));
 		}
-		else {
+
+		if (workflowTask.getTransitions() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"transitions\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < workflowTask.getTransitions().length; i++) {

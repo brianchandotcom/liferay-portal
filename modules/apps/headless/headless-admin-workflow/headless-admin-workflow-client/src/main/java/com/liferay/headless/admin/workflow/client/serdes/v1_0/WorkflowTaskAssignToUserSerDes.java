@@ -61,23 +61,23 @@ public class WorkflowTaskAssignToUserSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"assigneeId\": ");
+		if (workflowTaskAssignToUser.getAssigneeId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (workflowTaskAssignToUser.getAssigneeId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"assigneeId\":");
+
 			sb.append(workflowTaskAssignToUser.getAssigneeId());
 		}
 
-		sb.append(", ");
+		if (workflowTaskAssignToUser.getComment() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"comment\": ");
+			sb.append("\"comment\":");
 
-		if (workflowTaskAssignToUser.getComment() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(workflowTaskAssignToUser.getComment());
@@ -85,14 +85,13 @@ public class WorkflowTaskAssignToUserSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowTaskAssignToUser.getDueDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dueDate\": ");
+			sb.append("\"dueDate\":");
 
-		if (workflowTaskAssignToUser.getDueDate() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(

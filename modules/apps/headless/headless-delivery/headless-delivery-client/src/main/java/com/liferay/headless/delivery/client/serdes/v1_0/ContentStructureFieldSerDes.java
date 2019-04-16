@@ -55,12 +55,13 @@ public class ContentStructureFieldSerDes {
 
 		sb.append("{");
 
-		sb.append("\"dataType\": ");
+		if (contentStructureField.getDataType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (contentStructureField.getDataType() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"dataType\":");
+
 			sb.append("\"");
 
 			sb.append(contentStructureField.getDataType());
@@ -68,14 +69,13 @@ public class ContentStructureFieldSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getInputControl() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"inputControl\": ");
+			sb.append("\"inputControl\":");
 
-		if (contentStructureField.getInputControl() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentStructureField.getInputControl());
@@ -83,14 +83,13 @@ public class ContentStructureFieldSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"label\": ");
+			sb.append("\"label\":");
 
-		if (contentStructureField.getLabel() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentStructureField.getLabel());
@@ -98,36 +97,33 @@ public class ContentStructureFieldSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getLocalizable() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"localizable\": ");
+			sb.append("\"localizable\":");
 
-		if (contentStructureField.getLocalizable() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentStructureField.getLocalizable());
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getMultiple() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"multiple\": ");
+			sb.append("\"multiple\":");
 
-		if (contentStructureField.getMultiple() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentStructureField.getMultiple());
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (contentStructureField.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentStructureField.getName());
@@ -135,14 +131,13 @@ public class ContentStructureFieldSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getNestedContentStructureFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"nestedContentStructureFields\": ");
+			sb.append("\"nestedContentStructureFields\":");
 
-		if (contentStructureField.getNestedContentStructureFields() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0;
@@ -165,14 +160,13 @@ public class ContentStructureFieldSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getOptions() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"options\": ");
+			sb.append("\"options\":");
 
-		if (contentStructureField.getOptions() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < contentStructureField.getOptions().length;
@@ -189,14 +183,13 @@ public class ContentStructureFieldSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getPredefinedValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"predefinedValue\": ");
+			sb.append("\"predefinedValue\":");
 
-		if (contentStructureField.getPredefinedValue() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentStructureField.getPredefinedValue());
@@ -204,36 +197,33 @@ public class ContentStructureFieldSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getRepeatable() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"repeatable\": ");
+			sb.append("\"repeatable\":");
 
-		if (contentStructureField.getRepeatable() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentStructureField.getRepeatable());
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getRequired() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"required\": ");
+			sb.append("\"required\":");
 
-		if (contentStructureField.getRequired() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentStructureField.getRequired());
 		}
 
-		sb.append(", ");
+		if (contentStructureField.getShowLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"showLabel\": ");
+			sb.append("\"showLabel\":");
 
-		if (contentStructureField.getShowLabel() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentStructureField.getShowLabel());
 		}
 

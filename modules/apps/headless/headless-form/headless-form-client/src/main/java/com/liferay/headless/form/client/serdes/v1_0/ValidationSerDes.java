@@ -51,12 +51,13 @@ public class ValidationSerDes {
 
 		sb.append("{");
 
-		sb.append("\"errorMessage\": ");
+		if (validation.getErrorMessage() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (validation.getErrorMessage() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"errorMessage\":");
+
 			sb.append("\"");
 
 			sb.append(validation.getErrorMessage());
@@ -64,14 +65,13 @@ public class ValidationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (validation.getExpression() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"expression\": ");
+			sb.append("\"expression\":");
 
-		if (validation.getExpression() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(validation.getExpression());
@@ -79,14 +79,13 @@ public class ValidationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (validation.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (validation.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(validation.getId());
 		}
 

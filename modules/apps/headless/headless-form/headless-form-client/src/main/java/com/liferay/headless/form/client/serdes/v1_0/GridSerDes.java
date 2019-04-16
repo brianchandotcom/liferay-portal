@@ -54,12 +54,13 @@ public class GridSerDes {
 
 		sb.append("{");
 
-		sb.append("\"columns\": ");
+		if (grid.getColumns() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (grid.getColumns() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"columns\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < grid.getColumns().length; i++) {
@@ -73,25 +74,23 @@ public class GridSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (grid.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (grid.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(grid.getId());
 		}
 
-		sb.append(", ");
+		if (grid.getRows() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"rows\": ");
+			sb.append("\"rows\":");
 
-		if (grid.getRows() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < grid.getRows().length; i++) {

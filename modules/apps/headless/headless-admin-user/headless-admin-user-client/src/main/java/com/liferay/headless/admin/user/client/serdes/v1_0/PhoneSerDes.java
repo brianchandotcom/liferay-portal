@@ -51,12 +51,13 @@ public class PhoneSerDes {
 
 		sb.append("{");
 
-		sb.append("\"extension\": ");
+		if (phone.getExtension() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (phone.getExtension() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"extension\":");
+
 			sb.append("\"");
 
 			sb.append(phone.getExtension());
@@ -64,25 +65,23 @@ public class PhoneSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (phone.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (phone.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(phone.getId());
 		}
 
-		sb.append(", ");
+		if (phone.getPhoneNumber() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"phoneNumber\": ");
+			sb.append("\"phoneNumber\":");
 
-		if (phone.getPhoneNumber() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(phone.getPhoneNumber());
@@ -90,14 +89,13 @@ public class PhoneSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (phone.getPhoneType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"phoneType\": ");
+			sb.append("\"phoneType\":");
 
-		if (phone.getPhoneType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(phone.getPhoneType());
@@ -105,14 +103,13 @@ public class PhoneSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (phone.getPrimary() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"primary\": ");
+			sb.append("\"primary\":");
 
-		if (phone.getPrimary() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(phone.getPrimary());
 		}
 

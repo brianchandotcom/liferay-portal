@@ -54,12 +54,13 @@ public class ContentFieldSerDes {
 
 		sb.append("{");
 
-		sb.append("\"dataType\": ");
+		if (contentField.getDataType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (contentField.getDataType() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"dataType\":");
+
 			sb.append("\"");
 
 			sb.append(contentField.getDataType());
@@ -67,14 +68,13 @@ public class ContentFieldSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentField.getInputControl() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"inputControl\": ");
+			sb.append("\"inputControl\":");
 
-		if (contentField.getInputControl() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentField.getInputControl());
@@ -82,14 +82,13 @@ public class ContentFieldSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentField.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"label\": ");
+			sb.append("\"label\":");
 
-		if (contentField.getLabel() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentField.getLabel());
@@ -97,14 +96,13 @@ public class ContentFieldSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentField.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (contentField.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(contentField.getName());
@@ -112,14 +110,13 @@ public class ContentFieldSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (contentField.getNestedFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"nestedFields\": ");
+			sb.append("\"nestedFields\":");
 
-		if (contentField.getNestedFields() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < contentField.getNestedFields().length; i++) {
@@ -135,22 +132,25 @@ public class ContentFieldSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (contentField.getRepeatable() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"repeatable\": ");
+			sb.append("\"repeatable\":");
 
-		if (contentField.getRepeatable() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(contentField.getRepeatable());
 		}
 
-		sb.append(", ");
+		if (contentField.getValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"value\": ");
+			sb.append("\"value\":");
 
-		sb.append(ValueSerDes.toJSON(contentField.getValue()));
+			sb.append(ValueSerDes.toJSON(contentField.getValue()));
+		}
 
 		sb.append("}");
 

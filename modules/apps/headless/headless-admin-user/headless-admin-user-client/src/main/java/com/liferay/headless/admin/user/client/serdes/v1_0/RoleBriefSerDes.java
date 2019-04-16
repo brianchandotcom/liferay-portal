@@ -51,23 +51,23 @@ public class RoleBriefSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (roleBrief.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (roleBrief.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(roleBrief.getId());
 		}
 
-		sb.append(", ");
+		if (roleBrief.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (roleBrief.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(roleBrief.getName());

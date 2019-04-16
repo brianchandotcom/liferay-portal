@@ -57,17 +57,23 @@ public class KeywordSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"creator\": ");
+		if (keyword.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(CreatorSerDes.toJSON(keyword.getCreator()));
-		sb.append(", ");
+			sb.append("\"creator\":");
 
-		sb.append("\"dateCreated\": ");
-
-		if (keyword.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(keyword.getCreator()));
 		}
-		else {
+
+		if (keyword.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(keyword.getDateCreated()));
@@ -75,14 +81,13 @@ public class KeywordSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (keyword.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (keyword.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -91,36 +96,33 @@ public class KeywordSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (keyword.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (keyword.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(keyword.getId());
 		}
 
-		sb.append(", ");
+		if (keyword.getKeywordUsageCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"keywordUsageCount\": ");
+			sb.append("\"keywordUsageCount\":");
 
-		if (keyword.getKeywordUsageCount() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(keyword.getKeywordUsageCount());
 		}
 
-		sb.append(", ");
+		if (keyword.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (keyword.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(keyword.getName());
@@ -128,14 +130,13 @@ public class KeywordSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (keyword.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (keyword.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(keyword.getSiteId());
 		}
 

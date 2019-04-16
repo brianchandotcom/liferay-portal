@@ -59,17 +59,23 @@ public class DocumentFolderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"creator\": ");
+		if (documentFolder.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(CreatorSerDes.toJSON(documentFolder.getCreator()));
-		sb.append(", ");
+			sb.append("\"creator\":");
 
-		sb.append("\"dateCreated\": ");
-
-		if (documentFolder.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(documentFolder.getCreator()));
 		}
-		else {
+
+		if (documentFolder.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -79,14 +85,13 @@ public class DocumentFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (documentFolder.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (documentFolder.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -96,14 +101,13 @@ public class DocumentFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (documentFolder.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (documentFolder.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(documentFolder.getDescription());
@@ -111,25 +115,23 @@ public class DocumentFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (documentFolder.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (documentFolder.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(documentFolder.getId());
 		}
 
-		sb.append(", ");
+		if (documentFolder.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (documentFolder.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(documentFolder.getName());
@@ -137,47 +139,43 @@ public class DocumentFolderSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (documentFolder.getNumberOfDocumentFolders() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfDocumentFolders\": ");
+			sb.append("\"numberOfDocumentFolders\":");
 
-		if (documentFolder.getNumberOfDocumentFolders() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(documentFolder.getNumberOfDocumentFolders());
 		}
 
-		sb.append(", ");
+		if (documentFolder.getNumberOfDocuments() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfDocuments\": ");
+			sb.append("\"numberOfDocuments\":");
 
-		if (documentFolder.getNumberOfDocuments() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(documentFolder.getNumberOfDocuments());
 		}
 
-		sb.append(", ");
+		if (documentFolder.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (documentFolder.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(documentFolder.getSiteId());
 		}
 
-		sb.append(", ");
+		if (documentFolder.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"viewableBy\": ");
+			sb.append("\"viewableBy\":");
 
-		if (documentFolder.getViewableBy() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(documentFolder.getViewableBy());

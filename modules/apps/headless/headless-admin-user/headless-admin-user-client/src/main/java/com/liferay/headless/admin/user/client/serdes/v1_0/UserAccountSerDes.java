@@ -63,12 +63,13 @@ public class UserAccountSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"additionalName\": ");
+		if (userAccount.getAdditionalName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (userAccount.getAdditionalName() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"additionalName\":");
+
 			sb.append("\"");
 
 			sb.append(userAccount.getAdditionalName());
@@ -76,14 +77,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getAlternateName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"alternateName\": ");
+			sb.append("\"alternateName\":");
 
-		if (userAccount.getAlternateName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(userAccount.getAlternateName());
@@ -91,14 +91,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getBirthDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"birthDate\": ");
+			sb.append("\"birthDate\":");
 
-		if (userAccount.getBirthDate() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -107,21 +106,25 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getContactInformation() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"contactInformation\": ");
+			sb.append("\"contactInformation\":");
 
-		sb.append(
-			ContactInformationSerDes.toJSON(
-				userAccount.getContactInformation()));
-		sb.append(", ");
-
-		sb.append("\"dashboardURL\": ");
-
-		if (userAccount.getDashboardURL() == null) {
-			sb.append("null");
+			sb.append(
+				ContactInformationSerDes.toJSON(
+					userAccount.getContactInformation()));
 		}
-		else {
+
+		if (userAccount.getDashboardURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dashboardURL\":");
+
 			sb.append("\"");
 
 			sb.append(userAccount.getDashboardURL());
@@ -129,14 +132,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateCreated\": ");
+			sb.append("\"dateCreated\":");
 
-		if (userAccount.getDateCreated() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -145,14 +147,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (userAccount.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -161,14 +162,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getEmailAddress() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"emailAddress\": ");
+			sb.append("\"emailAddress\":");
 
-		if (userAccount.getEmailAddress() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(userAccount.getEmailAddress());
@@ -176,14 +176,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getFamilyName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"familyName\": ");
+			sb.append("\"familyName\":");
 
-		if (userAccount.getFamilyName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(userAccount.getFamilyName());
@@ -191,14 +190,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getGivenName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"givenName\": ");
+			sb.append("\"givenName\":");
 
-		if (userAccount.getGivenName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(userAccount.getGivenName());
@@ -206,14 +204,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getHonorificPrefix() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"honorificPrefix\": ");
+			sb.append("\"honorificPrefix\":");
 
-		if (userAccount.getHonorificPrefix() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(userAccount.getHonorificPrefix());
@@ -221,14 +218,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getHonorificSuffix() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"honorificSuffix\": ");
+			sb.append("\"honorificSuffix\":");
 
-		if (userAccount.getHonorificSuffix() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(userAccount.getHonorificSuffix());
@@ -236,25 +232,23 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (userAccount.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(userAccount.getId());
 		}
 
-		sb.append(", ");
+		if (userAccount.getImage() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"image\": ");
+			sb.append("\"image\":");
 
-		if (userAccount.getImage() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(userAccount.getImage());
@@ -262,14 +256,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getJobTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"jobTitle\": ");
+			sb.append("\"jobTitle\":");
 
-		if (userAccount.getJobTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(userAccount.getJobTitle());
@@ -277,14 +270,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getKeywords() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"keywords\": ");
+			sb.append("\"keywords\":");
 
-		if (userAccount.getKeywords() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < userAccount.getKeywords().length; i++) {
@@ -302,14 +294,13 @@ public class UserAccountSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (userAccount.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (userAccount.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(userAccount.getName());
@@ -317,14 +308,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getOrganizationBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"organizationBriefs\": ");
+			sb.append("\"organizationBriefs\":");
 
-		if (userAccount.getOrganizationBriefs() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < userAccount.getOrganizationBriefs().length;
@@ -342,14 +332,13 @@ public class UserAccountSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (userAccount.getProfileURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"profileURL\": ");
+			sb.append("\"profileURL\":");
 
-		if (userAccount.getProfileURL() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(userAccount.getProfileURL());
@@ -357,14 +346,13 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (userAccount.getRoleBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"roleBriefs\": ");
+			sb.append("\"roleBriefs\":");
 
-		if (userAccount.getRoleBriefs() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < userAccount.getRoleBriefs().length; i++) {
@@ -379,14 +367,13 @@ public class UserAccountSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (userAccount.getSiteBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteBriefs\": ");
+			sb.append("\"siteBriefs\":");
 
-		if (userAccount.getSiteBriefs() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < userAccount.getSiteBriefs().length; i++) {

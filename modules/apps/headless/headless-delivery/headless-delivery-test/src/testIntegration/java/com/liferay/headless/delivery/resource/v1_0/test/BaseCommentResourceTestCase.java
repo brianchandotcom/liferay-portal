@@ -119,6 +119,34 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testClientDesSer() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				setDateFormat(new ISO8601DateFormat());
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			}
+		};
+
+		Comment comment = randomComment();
+
+		String json1 = objectMapper.writeValueAsString(comment);
+
+		String json2 = CommentSerDes.toJSON(comment);
+
+		Assert.assertEquals(json1, json2);
+	}
+
+	@Test
 	public void testClientSerDes() throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{

@@ -57,17 +57,23 @@ public class CommentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"creator\": ");
+		if (comment.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(CreatorSerDes.toJSON(comment.getCreator()));
-		sb.append(", ");
+			sb.append("\"creator\":");
 
-		sb.append("\"dateCreated\": ");
-
-		if (comment.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(comment.getCreator()));
 		}
-		else {
+
+		if (comment.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(comment.getDateCreated()));
@@ -75,14 +81,13 @@ public class CommentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (comment.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (comment.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -91,36 +96,33 @@ public class CommentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (comment.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (comment.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(comment.getId());
 		}
 
-		sb.append(", ");
+		if (comment.getNumberOfComments() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfComments\": ");
+			sb.append("\"numberOfComments\":");
 
-		if (comment.getNumberOfComments() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(comment.getNumberOfComments());
 		}
 
-		sb.append(", ");
+		if (comment.getText() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"text\": ");
+			sb.append("\"text\":");
 
-		if (comment.getText() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(comment.getText());

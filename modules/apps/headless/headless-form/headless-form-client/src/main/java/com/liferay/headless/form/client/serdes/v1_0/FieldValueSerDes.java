@@ -51,39 +51,43 @@ public class FieldValueSerDes {
 
 		sb.append("{");
 
-		sb.append("\"document\": ");
+		if (fieldValue.getDocument() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(FormDocumentSerDes.toJSON(fieldValue.getDocument()));
-		sb.append(", ");
+			sb.append("\"document\":");
 
-		sb.append("\"documentId\": ");
-
-		if (fieldValue.getDocumentId() == null) {
-			sb.append("null");
+			sb.append(FormDocumentSerDes.toJSON(fieldValue.getDocument()));
 		}
-		else {
+
+		if (fieldValue.getDocumentId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"documentId\":");
+
 			sb.append(fieldValue.getDocumentId());
 		}
 
-		sb.append(", ");
+		if (fieldValue.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (fieldValue.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(fieldValue.getId());
 		}
 
-		sb.append(", ");
+		if (fieldValue.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (fieldValue.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(fieldValue.getName());
@@ -91,14 +95,13 @@ public class FieldValueSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (fieldValue.getValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"value\": ");
+			sb.append("\"value\":");
 
-		if (fieldValue.getValue() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(fieldValue.getValue());

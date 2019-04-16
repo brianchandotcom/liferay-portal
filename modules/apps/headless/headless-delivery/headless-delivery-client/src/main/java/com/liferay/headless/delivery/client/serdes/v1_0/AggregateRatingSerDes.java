@@ -53,45 +53,43 @@ public class AggregateRatingSerDes {
 
 		sb.append("{");
 
-		sb.append("\"bestRating\": ");
+		if (aggregateRating.getBestRating() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (aggregateRating.getBestRating() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"bestRating\":");
+
 			sb.append(aggregateRating.getBestRating());
 		}
 
-		sb.append(", ");
+		if (aggregateRating.getRatingCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"ratingCount\": ");
+			sb.append("\"ratingCount\":");
 
-		if (aggregateRating.getRatingCount() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(aggregateRating.getRatingCount());
 		}
 
-		sb.append(", ");
+		if (aggregateRating.getRatingValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"ratingValue\": ");
+			sb.append("\"ratingValue\":");
 
-		if (aggregateRating.getRatingValue() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(aggregateRating.getRatingValue());
 		}
 
-		sb.append(", ");
+		if (aggregateRating.getWorstRating() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"worstRating\": ");
+			sb.append("\"worstRating\":");
 
-		if (aggregateRating.getWorstRating() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(aggregateRating.getWorstRating());
 		}
 

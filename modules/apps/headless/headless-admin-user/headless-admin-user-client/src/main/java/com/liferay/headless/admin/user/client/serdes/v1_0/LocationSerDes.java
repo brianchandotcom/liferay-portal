@@ -51,12 +51,13 @@ public class LocationSerDes {
 
 		sb.append("{");
 
-		sb.append("\"addressCountry\": ");
+		if (location.getAddressCountry() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (location.getAddressCountry() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"addressCountry\":");
+
 			sb.append("\"");
 
 			sb.append(location.getAddressCountry());
@@ -64,14 +65,13 @@ public class LocationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (location.getAddressRegion() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"addressRegion\": ");
+			sb.append("\"addressRegion\":");
 
-		if (location.getAddressRegion() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(location.getAddressRegion());
@@ -79,14 +79,13 @@ public class LocationSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (location.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (location.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(location.getId());
 		}
 

@@ -53,12 +53,13 @@ public class FormPageSerDes {
 
 		sb.append("{");
 
-		sb.append("\"fields\": ");
+		if (formPage.getFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (formPage.getFields() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"fields\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < formPage.getFields().length; i++) {
@@ -72,14 +73,13 @@ public class FormPageSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (formPage.getHeadline() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"headline\": ");
+			sb.append("\"headline\":");
 
-		if (formPage.getHeadline() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(formPage.getHeadline());
@@ -87,25 +87,23 @@ public class FormPageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formPage.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (formPage.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(formPage.getId());
 		}
 
-		sb.append(", ");
+		if (formPage.getText() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"text\": ");
+			sb.append("\"text\":");
 
-		if (formPage.getText() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(formPage.getText());

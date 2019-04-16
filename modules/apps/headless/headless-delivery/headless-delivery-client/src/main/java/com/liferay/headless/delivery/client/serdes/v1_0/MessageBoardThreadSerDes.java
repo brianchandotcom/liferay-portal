@@ -59,19 +59,25 @@ public class MessageBoardThreadSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"aggregateRating\": ");
+		if (messageBoardThread.getAggregateRating() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(
-			AggregateRatingSerDes.toJSON(
-				messageBoardThread.getAggregateRating()));
-		sb.append(", ");
+			sb.append("\"aggregateRating\":");
 
-		sb.append("\"articleBody\": ");
-
-		if (messageBoardThread.getArticleBody() == null) {
-			sb.append("null");
+			sb.append(
+				AggregateRatingSerDes.toJSON(
+					messageBoardThread.getAggregateRating()));
 		}
-		else {
+
+		if (messageBoardThread.getArticleBody() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"articleBody\":");
+
 			sb.append("\"");
 
 			sb.append(messageBoardThread.getArticleBody());
@@ -79,19 +85,23 @@ public class MessageBoardThreadSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(messageBoardThread.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (messageBoardThread.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(messageBoardThread.getCreator()));
 		}
-		else {
+
+		if (messageBoardThread.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -101,14 +111,13 @@ public class MessageBoardThreadSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (messageBoardThread.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -118,14 +127,13 @@ public class MessageBoardThreadSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getEncodingFormat() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"encodingFormat\": ");
+			sb.append("\"encodingFormat\":");
 
-		if (messageBoardThread.getEncodingFormat() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardThread.getEncodingFormat());
@@ -133,14 +141,13 @@ public class MessageBoardThreadSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getHeadline() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"headline\": ");
+			sb.append("\"headline\":");
 
-		if (messageBoardThread.getHeadline() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardThread.getHeadline());
@@ -148,25 +155,23 @@ public class MessageBoardThreadSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (messageBoardThread.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardThread.getId());
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getKeywords() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"keywords\": ");
+			sb.append("\"keywords\":");
 
-		if (messageBoardThread.getKeywords() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < messageBoardThread.getKeywords().length; i++) {
@@ -184,58 +189,53 @@ public class MessageBoardThreadSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getNumberOfMessageBoardAttachments() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfMessageBoardAttachments\": ");
+			sb.append("\"numberOfMessageBoardAttachments\":");
 
-		if (messageBoardThread.getNumberOfMessageBoardAttachments() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardThread.getNumberOfMessageBoardAttachments());
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getNumberOfMessageBoardMessages() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfMessageBoardMessages\": ");
+			sb.append("\"numberOfMessageBoardMessages\":");
 
-		if (messageBoardThread.getNumberOfMessageBoardMessages() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardThread.getNumberOfMessageBoardMessages());
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getShowAsQuestion() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"showAsQuestion\": ");
+			sb.append("\"showAsQuestion\":");
 
-		if (messageBoardThread.getShowAsQuestion() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardThread.getShowAsQuestion());
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (messageBoardThread.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardThread.getSiteId());
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getThreadType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"threadType\": ");
+			sb.append("\"threadType\":");
 
-		if (messageBoardThread.getThreadType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardThread.getThreadType());
@@ -243,14 +243,13 @@ public class MessageBoardThreadSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardThread.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"viewableBy\": ");
+			sb.append("\"viewableBy\":");
 
-		if (messageBoardThread.getViewableBy() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardThread.getViewableBy());

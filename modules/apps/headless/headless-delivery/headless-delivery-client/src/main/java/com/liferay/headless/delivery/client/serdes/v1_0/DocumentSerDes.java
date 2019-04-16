@@ -60,12 +60,13 @@ public class DocumentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"adaptedImages\": ");
+		if (document.getAdaptedImages() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (document.getAdaptedImages() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"adaptedImages\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < document.getAdaptedImages().length; i++) {
@@ -80,19 +81,24 @@ public class DocumentSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (document.getAggregateRating() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"aggregateRating\": ");
+			sb.append("\"aggregateRating\":");
 
-		sb.append(AggregateRatingSerDes.toJSON(document.getAggregateRating()));
-		sb.append(", ");
-
-		sb.append("\"contentUrl\": ");
-
-		if (document.getContentUrl() == null) {
-			sb.append("null");
+			sb.append(
+				AggregateRatingSerDes.toJSON(document.getAggregateRating()));
 		}
-		else {
+
+		if (document.getContentUrl() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"contentUrl\":");
+
 			sb.append("\"");
 
 			sb.append(document.getContentUrl());
@@ -100,19 +106,23 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (document.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(document.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (document.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(document.getCreator()));
 		}
-		else {
+
+		if (document.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -121,14 +131,13 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (document.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (document.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -137,14 +146,13 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (document.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (document.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(document.getDescription());
@@ -152,25 +160,23 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (document.getDocumentFolderId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"documentFolderId\": ");
+			sb.append("\"documentFolderId\":");
 
-		if (document.getDocumentFolderId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(document.getDocumentFolderId());
 		}
 
-		sb.append(", ");
+		if (document.getEncodingFormat() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"encodingFormat\": ");
+			sb.append("\"encodingFormat\":");
 
-		if (document.getEncodingFormat() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(document.getEncodingFormat());
@@ -178,14 +184,13 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (document.getFileExtension() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"fileExtension\": ");
+			sb.append("\"fileExtension\":");
 
-		if (document.getFileExtension() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(document.getFileExtension());
@@ -193,25 +198,23 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (document.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (document.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(document.getId());
 		}
 
-		sb.append(", ");
+		if (document.getKeywords() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"keywords\": ");
+			sb.append("\"keywords\":");
 
-		if (document.getKeywords() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < document.getKeywords().length; i++) {
@@ -229,36 +232,33 @@ public class DocumentSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (document.getNumberOfComments() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfComments\": ");
+			sb.append("\"numberOfComments\":");
 
-		if (document.getNumberOfComments() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(document.getNumberOfComments());
 		}
 
-		sb.append(", ");
+		if (document.getSizeInBytes() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"sizeInBytes\": ");
+			sb.append("\"sizeInBytes\":");
 
-		if (document.getSizeInBytes() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(document.getSizeInBytes());
 		}
 
-		sb.append(", ");
+		if (document.getTaxonomyCategories() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"taxonomyCategories\": ");
+			sb.append("\"taxonomyCategories\":");
 
-		if (document.getTaxonomyCategories() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < document.getTaxonomyCategories().length; i++) {
@@ -274,14 +274,13 @@ public class DocumentSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (document.getTaxonomyCategoryIds() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"taxonomyCategoryIds\": ");
+			sb.append("\"taxonomyCategoryIds\":");
 
-		if (document.getTaxonomyCategoryIds() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < document.getTaxonomyCategoryIds().length; i++) {
@@ -295,14 +294,13 @@ public class DocumentSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (document.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (document.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(document.getTitle());
@@ -310,14 +308,13 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (document.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"viewableBy\": ");
+			sb.append("\"viewableBy\":");
 
-		if (document.getViewableBy() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(document.getViewableBy());

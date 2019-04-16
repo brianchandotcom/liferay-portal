@@ -51,12 +51,13 @@ public class MediaFormSerDes {
 
 		sb.append("{");
 
-		sb.append("\"description\": ");
+		if (mediaForm.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (mediaForm.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"description\":");
+
 			sb.append("\"");
 
 			sb.append(mediaForm.getDescription());
@@ -64,25 +65,23 @@ public class MediaFormSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (mediaForm.getFolderId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"folderId\": ");
+			sb.append("\"folderId\":");
 
-		if (mediaForm.getFolderId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(mediaForm.getFolderId());
 		}
 
-		sb.append(", ");
+		if (mediaForm.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (mediaForm.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(mediaForm.getName());
@@ -90,14 +89,13 @@ public class MediaFormSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (mediaForm.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (mediaForm.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(mediaForm.getTitle());

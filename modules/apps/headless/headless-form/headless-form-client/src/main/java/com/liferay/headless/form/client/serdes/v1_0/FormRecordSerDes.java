@@ -59,17 +59,23 @@ public class FormRecordSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"creator\": ");
+		if (formRecord.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(CreatorSerDes.toJSON(formRecord.getCreator()));
-		sb.append(", ");
+			sb.append("\"creator\":");
 
-		sb.append("\"dateCreated\": ");
-
-		if (formRecord.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(formRecord.getCreator()));
 		}
-		else {
+
+		if (formRecord.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -78,14 +84,13 @@ public class FormRecordSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formRecord.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (formRecord.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -94,14 +99,13 @@ public class FormRecordSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formRecord.getDatePublished() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"datePublished\": ");
+			sb.append("\"datePublished\":");
 
-		if (formRecord.getDatePublished() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -110,25 +114,23 @@ public class FormRecordSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formRecord.getDraft() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"draft\": ");
+			sb.append("\"draft\":");
 
-		if (formRecord.getDraft() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(formRecord.getDraft());
 		}
 
-		sb.append(", ");
+		if (formRecord.getFieldValues() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"fieldValues\": ");
+			sb.append("\"fieldValues\":");
 
-		if (formRecord.getFieldValues() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < formRecord.getFieldValues().length; i++) {
@@ -143,30 +145,33 @@ public class FormRecordSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (formRecord.getForm() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"form\": ");
+			sb.append("\"form\":");
 
-		sb.append(FormSerDes.toJSON(formRecord.getForm()));
-		sb.append(", ");
-
-		sb.append("\"formId\": ");
-
-		if (formRecord.getFormId() == null) {
-			sb.append("null");
+			sb.append(FormSerDes.toJSON(formRecord.getForm()));
 		}
-		else {
+
+		if (formRecord.getFormId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"formId\":");
+
 			sb.append(formRecord.getFormId());
 		}
 
-		sb.append(", ");
+		if (formRecord.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (formRecord.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(formRecord.getId());
 		}
 

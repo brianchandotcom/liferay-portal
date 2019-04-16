@@ -51,23 +51,23 @@ public class GeoSerDes {
 
 		sb.append("{");
 
-		sb.append("\"latitude\": ");
+		if (geo.getLatitude() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (geo.getLatitude() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"latitude\":");
+
 			sb.append(geo.getLatitude());
 		}
 
-		sb.append(", ");
+		if (geo.getLongitude() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"longitude\": ");
+			sb.append("\"longitude\":");
 
-		if (geo.getLongitude() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(geo.getLongitude());
 		}
 

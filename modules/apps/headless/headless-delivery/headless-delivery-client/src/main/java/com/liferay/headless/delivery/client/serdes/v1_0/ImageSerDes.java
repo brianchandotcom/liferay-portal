@@ -51,12 +51,13 @@ public class ImageSerDes {
 
 		sb.append("{");
 
-		sb.append("\"caption\": ");
+		if (image.getCaption() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (image.getCaption() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"caption\":");
+
 			sb.append("\"");
 
 			sb.append(image.getCaption());
@@ -64,14 +65,13 @@ public class ImageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (image.getContentUrl() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"contentUrl\": ");
+			sb.append("\"contentUrl\":");
 
-		if (image.getContentUrl() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(image.getContentUrl());
@@ -79,14 +79,13 @@ public class ImageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (image.getImageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"imageId\": ");
+			sb.append("\"imageId\":");
 
-		if (image.getImageId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(image.getImageId());
 		}
 

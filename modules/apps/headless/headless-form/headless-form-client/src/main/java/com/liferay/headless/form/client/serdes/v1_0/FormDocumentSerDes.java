@@ -53,12 +53,13 @@ public class FormDocumentSerDes {
 
 		sb.append("{");
 
-		sb.append("\"contentUrl\": ");
+		if (formDocument.getContentUrl() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (formDocument.getContentUrl() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"contentUrl\":");
+
 			sb.append("\"");
 
 			sb.append(formDocument.getContentUrl());
@@ -66,14 +67,13 @@ public class FormDocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formDocument.getEncodingFormat() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"encodingFormat\": ");
+			sb.append("\"encodingFormat\":");
 
-		if (formDocument.getEncodingFormat() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(formDocument.getEncodingFormat());
@@ -81,14 +81,13 @@ public class FormDocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formDocument.getFileExtension() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"fileExtension\": ");
+			sb.append("\"fileExtension\":");
 
-		if (formDocument.getFileExtension() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(formDocument.getFileExtension());
@@ -96,36 +95,33 @@ public class FormDocumentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (formDocument.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (formDocument.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(formDocument.getId());
 		}
 
-		sb.append(", ");
+		if (formDocument.getSizeInBytes() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"sizeInBytes\": ");
+			sb.append("\"sizeInBytes\":");
 
-		if (formDocument.getSizeInBytes() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(formDocument.getSizeInBytes());
 		}
 
-		sb.append(", ");
+		if (formDocument.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (formDocument.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(formDocument.getTitle());

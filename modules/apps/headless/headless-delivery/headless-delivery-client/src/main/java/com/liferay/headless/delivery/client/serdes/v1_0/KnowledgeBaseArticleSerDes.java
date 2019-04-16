@@ -61,19 +61,25 @@ public class KnowledgeBaseArticleSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"aggregateRating\": ");
+		if (knowledgeBaseArticle.getAggregateRating() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(
-			AggregateRatingSerDes.toJSON(
-				knowledgeBaseArticle.getAggregateRating()));
-		sb.append(", ");
+			sb.append("\"aggregateRating\":");
 
-		sb.append("\"articleBody\": ");
-
-		if (knowledgeBaseArticle.getArticleBody() == null) {
-			sb.append("null");
+			sb.append(
+				AggregateRatingSerDes.toJSON(
+					knowledgeBaseArticle.getAggregateRating()));
 		}
-		else {
+
+		if (knowledgeBaseArticle.getArticleBody() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"articleBody\":");
+
 			sb.append("\"");
 
 			sb.append(knowledgeBaseArticle.getArticleBody());
@@ -81,19 +87,23 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(knowledgeBaseArticle.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (knowledgeBaseArticle.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(knowledgeBaseArticle.getCreator()));
 		}
-		else {
+
+		if (knowledgeBaseArticle.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -103,14 +113,13 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (knowledgeBaseArticle.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -120,14 +129,13 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (knowledgeBaseArticle.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(knowledgeBaseArticle.getDescription());
@@ -135,14 +143,13 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getEncodingFormat() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"encodingFormat\": ");
+			sb.append("\"encodingFormat\":");
 
-		if (knowledgeBaseArticle.getEncodingFormat() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(knowledgeBaseArticle.getEncodingFormat());
@@ -150,14 +157,13 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getFriendlyUrlPath() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"friendlyUrlPath\": ");
+			sb.append("\"friendlyUrlPath\":");
 
-		if (knowledgeBaseArticle.getFriendlyUrlPath() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(knowledgeBaseArticle.getFriendlyUrlPath());
@@ -165,25 +171,23 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (knowledgeBaseArticle.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(knowledgeBaseArticle.getId());
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getKeywords() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"keywords\": ");
+			sb.append("\"keywords\":");
 
-		if (knowledgeBaseArticle.getKeywords() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < knowledgeBaseArticle.getKeywords().length;
@@ -203,65 +207,65 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getNumberOfAttachments() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfAttachments\": ");
+			sb.append("\"numberOfAttachments\":");
 
-		if (knowledgeBaseArticle.getNumberOfAttachments() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(knowledgeBaseArticle.getNumberOfAttachments());
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfKnowledgeBaseArticles\": ");
+			sb.append("\"numberOfKnowledgeBaseArticles\":");
 
-		if (knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles());
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getParentKnowledgeBaseFolder() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"parentKnowledgeBaseFolder\": ");
+			sb.append("\"parentKnowledgeBaseFolder\":");
 
-		sb.append(
-			ParentKnowledgeBaseFolderSerDes.toJSON(
-				knowledgeBaseArticle.getParentKnowledgeBaseFolder()));
-		sb.append(", ");
-
-		sb.append("\"parentKnowledgeBaseFolderId\": ");
-
-		if (knowledgeBaseArticle.getParentKnowledgeBaseFolderId() == null) {
-			sb.append("null");
+			sb.append(
+				ParentKnowledgeBaseFolderSerDes.toJSON(
+					knowledgeBaseArticle.getParentKnowledgeBaseFolder()));
 		}
-		else {
+
+		if (knowledgeBaseArticle.getParentKnowledgeBaseFolderId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"parentKnowledgeBaseFolderId\":");
+
 			sb.append(knowledgeBaseArticle.getParentKnowledgeBaseFolderId());
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (knowledgeBaseArticle.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(knowledgeBaseArticle.getSiteId());
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getTaxonomyCategories() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"taxonomyCategories\": ");
+			sb.append("\"taxonomyCategories\":");
 
-		if (knowledgeBaseArticle.getTaxonomyCategories() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0;
@@ -281,14 +285,13 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getTaxonomyCategoryIds() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"taxonomyCategoryIds\": ");
+			sb.append("\"taxonomyCategoryIds\":");
 
-		if (knowledgeBaseArticle.getTaxonomyCategoryIds() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0;
@@ -307,14 +310,13 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (knowledgeBaseArticle.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(knowledgeBaseArticle.getTitle());
@@ -322,14 +324,13 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (knowledgeBaseArticle.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"viewableBy\": ");
+			sb.append("\"viewableBy\":");
 
-		if (knowledgeBaseArticle.getViewableBy() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(knowledgeBaseArticle.getViewableBy());

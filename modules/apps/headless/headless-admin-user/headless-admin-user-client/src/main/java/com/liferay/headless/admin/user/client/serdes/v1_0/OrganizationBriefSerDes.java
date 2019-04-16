@@ -53,23 +53,23 @@ public class OrganizationBriefSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (organizationBrief.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (organizationBrief.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(organizationBrief.getId());
 		}
 
-		sb.append(", ");
+		if (organizationBrief.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (organizationBrief.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(organizationBrief.getName());

@@ -57,28 +57,33 @@ public class RatingSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"bestRating\": ");
+		if (rating.getBestRating() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (rating.getBestRating() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"bestRating\":");
+
 			sb.append(rating.getBestRating());
 		}
 
-		sb.append(", ");
+		if (rating.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(rating.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (rating.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(rating.getCreator()));
 		}
-		else {
+
+		if (rating.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(rating.getDateCreated()));
@@ -86,14 +91,13 @@ public class RatingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (rating.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (rating.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(rating.getDateModified()));
@@ -101,36 +105,33 @@ public class RatingSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (rating.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (rating.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(rating.getId());
 		}
 
-		sb.append(", ");
+		if (rating.getRatingValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"ratingValue\": ");
+			sb.append("\"ratingValue\":");
 
-		if (rating.getRatingValue() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(rating.getRatingValue());
 		}
 
-		sb.append(", ");
+		if (rating.getWorstRating() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"worstRating\": ");
+			sb.append("\"worstRating\":");
 
-		if (rating.getWorstRating() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(rating.getWorstRating());
 		}
 

@@ -53,12 +53,13 @@ public class EmailAddressSerDes {
 
 		sb.append("{");
 
-		sb.append("\"emailAddress\": ");
+		if (emailAddress.getEmailAddress() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (emailAddress.getEmailAddress() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"emailAddress\":");
+
 			sb.append("\"");
 
 			sb.append(emailAddress.getEmailAddress());
@@ -66,36 +67,33 @@ public class EmailAddressSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (emailAddress.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (emailAddress.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(emailAddress.getId());
 		}
 
-		sb.append(", ");
+		if (emailAddress.getPrimary() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"primary\": ");
+			sb.append("\"primary\":");
 
-		if (emailAddress.getPrimary() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(emailAddress.getPrimary());
 		}
 
-		sb.append(", ");
+		if (emailAddress.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"type\": ");
+			sb.append("\"type\":");
 
-		if (emailAddress.getType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(emailAddress.getType());

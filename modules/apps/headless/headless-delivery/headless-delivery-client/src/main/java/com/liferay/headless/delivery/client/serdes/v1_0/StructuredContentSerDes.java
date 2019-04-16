@@ -63,19 +63,25 @@ public class StructuredContentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"aggregateRating\": ");
+		if (structuredContent.getAggregateRating() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(
-			AggregateRatingSerDes.toJSON(
-				structuredContent.getAggregateRating()));
-		sb.append(", ");
+			sb.append("\"aggregateRating\":");
 
-		sb.append("\"availableLanguages\": ");
-
-		if (structuredContent.getAvailableLanguages() == null) {
-			sb.append("null");
+			sb.append(
+				AggregateRatingSerDes.toJSON(
+					structuredContent.getAggregateRating()));
 		}
-		else {
+
+		if (structuredContent.getAvailableLanguages() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"availableLanguages\":");
+
 			sb.append("[");
 
 			for (int i = 0;
@@ -97,14 +103,13 @@ public class StructuredContentSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getContentFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"contentFields\": ");
+			sb.append("\"contentFields\":");
 
-		if (structuredContent.getContentFields() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < structuredContent.getContentFields().length;
@@ -122,30 +127,33 @@ public class StructuredContentSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getContentStructureId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"contentStructureId\": ");
+			sb.append("\"contentStructureId\":");
 
-		if (structuredContent.getContentStructureId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(structuredContent.getContentStructureId());
 		}
 
-		sb.append(", ");
+		if (structuredContent.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(structuredContent.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (structuredContent.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(structuredContent.getCreator()));
 		}
-		else {
+
+		if (structuredContent.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -155,14 +163,13 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (structuredContent.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -172,14 +179,13 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getDatePublished() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"datePublished\": ");
+			sb.append("\"datePublished\":");
 
-		if (structuredContent.getDatePublished() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -189,14 +195,13 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (structuredContent.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(structuredContent.getDescription());
@@ -204,14 +209,13 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getFriendlyUrlPath() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"friendlyUrlPath\": ");
+			sb.append("\"friendlyUrlPath\":");
 
-		if (structuredContent.getFriendlyUrlPath() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(structuredContent.getFriendlyUrlPath());
@@ -219,25 +223,23 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (structuredContent.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(structuredContent.getId());
 		}
 
-		sb.append(", ");
+		if (structuredContent.getKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"key\": ");
+			sb.append("\"key\":");
 
-		if (structuredContent.getKey() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(structuredContent.getKey());
@@ -245,14 +247,13 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getKeywords() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"keywords\": ");
+			sb.append("\"keywords\":");
 
-		if (structuredContent.getKeywords() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < structuredContent.getKeywords().length; i++) {
@@ -270,25 +271,23 @@ public class StructuredContentSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getNumberOfComments() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfComments\": ");
+			sb.append("\"numberOfComments\":");
 
-		if (structuredContent.getNumberOfComments() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(structuredContent.getNumberOfComments());
 		}
 
-		sb.append(", ");
+		if (structuredContent.getRenderedContents() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"renderedContents\": ");
+			sb.append("\"renderedContents\":");
 
-		if (structuredContent.getRenderedContents() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < structuredContent.getRenderedContents().length;
@@ -306,25 +305,23 @@ public class StructuredContentSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (structuredContent.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(structuredContent.getSiteId());
 		}
 
-		sb.append(", ");
+		if (structuredContent.getTaxonomyCategories() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"taxonomyCategories\": ");
+			sb.append("\"taxonomyCategories\":");
 
-		if (structuredContent.getTaxonomyCategories() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0;
@@ -344,14 +341,13 @@ public class StructuredContentSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getTaxonomyCategoryIds() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"taxonomyCategoryIds\": ");
+			sb.append("\"taxonomyCategoryIds\":");
 
-		if (structuredContent.getTaxonomyCategoryIds() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0;
@@ -369,14 +365,13 @@ public class StructuredContentSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (structuredContent.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(structuredContent.getTitle());
@@ -384,14 +379,13 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getUuid() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"uuid\": ");
+			sb.append("\"uuid\":");
 
-		if (structuredContent.getUuid() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(structuredContent.getUuid());
@@ -399,14 +393,13 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (structuredContent.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"viewableBy\": ");
+			sb.append("\"viewableBy\":");
 
-		if (structuredContent.getViewableBy() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(structuredContent.getViewableBy());

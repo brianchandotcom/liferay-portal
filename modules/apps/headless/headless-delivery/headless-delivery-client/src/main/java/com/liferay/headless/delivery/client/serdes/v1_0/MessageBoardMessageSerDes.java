@@ -59,30 +59,35 @@ public class MessageBoardMessageSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"aggregateRating\": ");
+		if (messageBoardMessage.getAggregateRating() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(
-			AggregateRatingSerDes.toJSON(
-				messageBoardMessage.getAggregateRating()));
-		sb.append(", ");
+			sb.append("\"aggregateRating\":");
 
-		sb.append("\"anonymous\": ");
-
-		if (messageBoardMessage.getAnonymous() == null) {
-			sb.append("null");
+			sb.append(
+				AggregateRatingSerDes.toJSON(
+					messageBoardMessage.getAggregateRating()));
 		}
-		else {
+
+		if (messageBoardMessage.getAnonymous() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"anonymous\":");
+
 			sb.append(messageBoardMessage.getAnonymous());
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getArticleBody() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"articleBody\": ");
+			sb.append("\"articleBody\":");
 
-		if (messageBoardMessage.getArticleBody() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardMessage.getArticleBody());
@@ -90,19 +95,23 @@ public class MessageBoardMessageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(messageBoardMessage.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (messageBoardMessage.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(messageBoardMessage.getCreator()));
 		}
-		else {
+
+		if (messageBoardMessage.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(
@@ -112,14 +121,13 @@ public class MessageBoardMessageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (messageBoardMessage.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -129,14 +137,13 @@ public class MessageBoardMessageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getEncodingFormat() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"encodingFormat\": ");
+			sb.append("\"encodingFormat\":");
 
-		if (messageBoardMessage.getEncodingFormat() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardMessage.getEncodingFormat());
@@ -144,14 +151,13 @@ public class MessageBoardMessageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getHeadline() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"headline\": ");
+			sb.append("\"headline\":");
 
-		if (messageBoardMessage.getHeadline() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardMessage.getHeadline());
@@ -159,25 +165,23 @@ public class MessageBoardMessageSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (messageBoardMessage.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardMessage.getId());
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getKeywords() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"keywords\": ");
+			sb.append("\"keywords\":");
 
-		if (messageBoardMessage.getKeywords() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < messageBoardMessage.getKeywords().length; i++) {
@@ -195,58 +199,53 @@ public class MessageBoardMessageSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getNumberOfMessageBoardAttachments() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfMessageBoardAttachments\": ");
+			sb.append("\"numberOfMessageBoardAttachments\":");
 
-		if (messageBoardMessage.getNumberOfMessageBoardAttachments() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardMessage.getNumberOfMessageBoardAttachments());
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getNumberOfMessageBoardMessages() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"numberOfMessageBoardMessages\": ");
+			sb.append("\"numberOfMessageBoardMessages\":");
 
-		if (messageBoardMessage.getNumberOfMessageBoardMessages() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardMessage.getNumberOfMessageBoardMessages());
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getShowAsAnswer() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"showAsAnswer\": ");
+			sb.append("\"showAsAnswer\":");
 
-		if (messageBoardMessage.getShowAsAnswer() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardMessage.getShowAsAnswer());
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"siteId\": ");
+			sb.append("\"siteId\":");
 
-		if (messageBoardMessage.getSiteId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(messageBoardMessage.getSiteId());
 		}
 
-		sb.append(", ");
+		if (messageBoardMessage.getViewableBy() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"viewableBy\": ");
+			sb.append("\"viewableBy\":");
 
-		if (messageBoardMessage.getViewableBy() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(messageBoardMessage.getViewableBy());

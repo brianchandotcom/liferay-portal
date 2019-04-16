@@ -53,23 +53,23 @@ public class ObjectReviewedSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (objectReviewed.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (objectReviewed.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(objectReviewed.getId());
 		}
 
-		sb.append(", ");
+		if (objectReviewed.getResourceType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"resourceType\": ");
+			sb.append("\"resourceType\":");
 
-		if (objectReviewed.getResourceType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(objectReviewed.getResourceType());

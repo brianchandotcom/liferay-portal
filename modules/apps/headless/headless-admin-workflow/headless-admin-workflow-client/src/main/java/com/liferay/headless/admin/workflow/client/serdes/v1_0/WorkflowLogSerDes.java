@@ -59,17 +59,23 @@ public class WorkflowLogSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"auditPerson\": ");
+		if (workflowLog.getAuditPerson() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append(CreatorSerDes.toJSON(workflowLog.getAuditPerson()));
-		sb.append(", ");
+			sb.append("\"auditPerson\":");
 
-		sb.append("\"commentLog\": ");
-
-		if (workflowLog.getCommentLog() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(workflowLog.getAuditPerson()));
 		}
-		else {
+
+		if (workflowLog.getCommentLog() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"commentLog\":");
+
 			sb.append("\"");
 
 			sb.append(workflowLog.getCommentLog());
@@ -77,14 +83,13 @@ public class WorkflowLogSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowLog.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateCreated\": ");
+			sb.append("\"dateCreated\":");
 
-		if (workflowLog.getDateCreated() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(
@@ -93,35 +98,43 @@ public class WorkflowLogSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowLog.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (workflowLog.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(workflowLog.getId());
 		}
 
-		sb.append(", ");
+		if (workflowLog.getPerson() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"person\": ");
+			sb.append("\"person\":");
 
-		sb.append(CreatorSerDes.toJSON(workflowLog.getPerson()));
-		sb.append(", ");
-
-		sb.append("\"previousPerson\": ");
-
-		sb.append(CreatorSerDes.toJSON(workflowLog.getPreviousPerson()));
-		sb.append(", ");
-
-		sb.append("\"previousState\": ");
-
-		if (workflowLog.getPreviousState() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(workflowLog.getPerson()));
 		}
-		else {
+
+		if (workflowLog.getPreviousPerson() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"previousPerson\":");
+
+			sb.append(CreatorSerDes.toJSON(workflowLog.getPreviousPerson()));
+		}
+
+		if (workflowLog.getPreviousState() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"previousState\":");
+
 			sb.append("\"");
 
 			sb.append(workflowLog.getPreviousState());
@@ -129,14 +142,13 @@ public class WorkflowLogSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowLog.getState() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"state\": ");
+			sb.append("\"state\":");
 
-		if (workflowLog.getState() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(workflowLog.getState());
@@ -144,25 +156,23 @@ public class WorkflowLogSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (workflowLog.getTaskId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"taskId\": ");
+			sb.append("\"taskId\":");
 
-		if (workflowLog.getTaskId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(workflowLog.getTaskId());
 		}
 
-		sb.append(", ");
+		if (workflowLog.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"type\": ");
+			sb.append("\"type\":");
 
-		if (workflowLog.getType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(workflowLog.getType());

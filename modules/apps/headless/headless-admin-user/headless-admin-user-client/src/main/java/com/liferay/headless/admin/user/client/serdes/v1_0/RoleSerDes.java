@@ -57,12 +57,13 @@ public class RoleSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		sb.append("\"availableLanguages\": ");
+		if (role.getAvailableLanguages() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (role.getAvailableLanguages() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"availableLanguages\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < role.getAvailableLanguages().length; i++) {
@@ -80,19 +81,23 @@ public class RoleSerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (role.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"creator\": ");
+			sb.append("\"creator\":");
 
-		sb.append(CreatorSerDes.toJSON(role.getCreator()));
-		sb.append(", ");
-
-		sb.append("\"dateCreated\": ");
-
-		if (role.getDateCreated() == null) {
-			sb.append("null");
+			sb.append(CreatorSerDes.toJSON(role.getCreator()));
 		}
-		else {
+
+		if (role.getDateCreated() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateCreated\":");
+
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(role.getDateCreated()));
@@ -100,14 +105,13 @@ public class RoleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (role.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dateModified\": ");
+			sb.append("\"dateModified\":");
 
-		if (role.getDateModified() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(role.getDateModified()));
@@ -115,14 +119,13 @@ public class RoleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (role.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"description\": ");
+			sb.append("\"description\":");
 
-		if (role.getDescription() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(role.getDescription());
@@ -130,25 +133,23 @@ public class RoleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (role.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (role.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(role.getId());
 		}
 
-		sb.append(", ");
+		if (role.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (role.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(role.getName());
@@ -156,14 +157,13 @@ public class RoleSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (role.getRoleType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"roleType\": ");
+			sb.append("\"roleType\":");
 
-		if (role.getRoleType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(role.getRoleType());

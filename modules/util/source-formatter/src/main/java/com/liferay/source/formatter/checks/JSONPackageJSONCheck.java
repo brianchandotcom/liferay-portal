@@ -17,9 +17,6 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.util.FileUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONObject;
 
 /**
@@ -49,7 +46,22 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		JSONObject jsonObject = new JSONObject(content);
 
 		_checkIncorrectEntry(fileName, jsonObject, "devDependencies");
-		_checkRequiredScripts(fileName, jsonObject);
+
+		if (jsonObject.isNull("scripts")) {
+			return content;
+		}
+
+		JSONObject scriptsJSONObject = jsonObject.getJSONObject("scripts");
+
+		_checkScript(
+			fileName, scriptsJSONObject, "build", "liferay-npm-scripts build",
+			false);
+		_checkScript(
+			fileName, scriptsJSONObject, "checkFormat",
+			"liferay-npm-scripts lint", true);
+		_checkScript(
+			fileName, scriptsJSONObject, "format", "liferay-npm-scripts format",
+			true);
 
 		return content;
 	}
@@ -62,42 +74,28 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkRequiredScripts(String fileName, JSONObject jsonObject) {
-		if (jsonObject.isNull("scripts")) {
+	private void _checkScript(
+		String fileName, JSONObject scriptsJSONObject, String key,
+		String expectedValue, boolean requiredScript) {
+
+		if (scriptsJSONObject.isNull(key)) {
+			if (requiredScript) {
+				addMessage(
+					fileName, "Missing entry '" + key + "' in 'scripts'");
+			}
+
 			return;
 		}
 
-		JSONObject scriptsJSONObject = jsonObject.getJSONObject("scripts");
+		String value = scriptsJSONObject.getString(key);
 
-		for (Map.Entry<String, String> entry : _requiredScriptsMap.entrySet()) {
-			String entryName = entry.getKey();
-
-			if (scriptsJSONObject.isNull(entryName)) {
-				addMessage(
-					fileName, "Missing entry '" + entryName + "' in 'scripts'");
-
-				continue;
-			}
-
-			String value = scriptsJSONObject.getString(entryName);
-
-			if (!value.contains(entry.getValue())) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Value '", value, "' for entry '", entryName,
-						"' does not contain '", entry.getValue(), "'"));
-			}
+		if (!value.contains(expectedValue)) {
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Value '", value, "' for entry '", key,
+					"' does not contain '", expectedValue, "'"));
 		}
 	}
-
-	private static final Map<String, String> _requiredScriptsMap =
-		new HashMap<String, String>() {
-			{
-				put("build", "liferay-npm-scripts build");
-				put("checkFormat", "liferay-npm-scripts lint");
-				put("format", "liferay-npm-scripts format");
-			}
-		};
 
 }

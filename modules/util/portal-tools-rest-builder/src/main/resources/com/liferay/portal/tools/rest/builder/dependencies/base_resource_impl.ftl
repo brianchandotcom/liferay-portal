@@ -72,7 +72,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 				return responseBuilder.build();
 			<#elseif javaMethodSignature.returnType?contains("Page<")>
 				return Page.of(Collections.emptyList());
-			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch") && !javaMethodSignature.operation.requestBody.content?keys?seq_contains("multipart/form-data")>
+			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch") && !javaMethodSignature.operation.requestBody.content?keys?seq_contains("multipart/form-data") && !stringUtil.equals(javaMethodSignature.returnType, "void")>
 				<#assign firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0] />
 
 				${schemaName} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});

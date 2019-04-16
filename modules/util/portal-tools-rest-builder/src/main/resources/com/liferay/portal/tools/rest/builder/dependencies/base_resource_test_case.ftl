@@ -113,6 +113,34 @@ public abstract class Base${schemaName}ResourceTestCase {
 	}
 
 	@Test
+	public void testClientDesSer() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				setDateFormat(new ISO8601DateFormat());
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			}
+		};
+
+		${schemaName} ${schemaVarName} = random${schemaName}();
+
+		String json1 = objectMapper.writeValueAsString(${schemaVarName});
+
+		String json2 = ${schemaName}SerDes.toJSON(${schemaVarName});
+
+		Assert.assertEquals(json1, json2);
+	}
+
+	@Test
 	public void testClientSerDes() throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{

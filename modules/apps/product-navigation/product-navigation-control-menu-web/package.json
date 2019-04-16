@@ -22,7 +22,7 @@
 	},
 	"name": "product-navigation-control-menu-web",
 	"scripts": {
-		"build": "liferay-npm-scripts",
+		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},

@@ -36,11 +36,15 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration;
-import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfigurationTrackerUtil;
+import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfigurationTracker;
 
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Samuel Trong Tran
@@ -48,7 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PersonalApplicationURLUtil {
 
 	public static String getPersonalApplicationURL(
-			HttpServletRequest request, String portletID)
+			HttpServletRequest request, String portletId)
 		throws PortalException {
 
 		User user = PortalUtil.getUser(request);
@@ -61,7 +65,7 @@ public class PersonalApplicationURLUtil {
 			WebKeys.THEME_DISPLAY);
 
 		PersonalMenuConfiguration personalMenuConfiguration =
-			PersonalMenuConfigurationTrackerUtil.
+			_getPersonalMenuConfigurationTracker().
 				getCompanyPersonalMenuConfiguration(
 					themeDisplay.getCompanyId());
 
@@ -102,7 +106,7 @@ public class PersonalApplicationURLUtil {
 		}
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			request, portletID, layout, PortletRequest.RENDER_PHASE);
+			request, portletId, layout, PortletRequest.RENDER_PHASE);
 
 		return liferayPortletURL.toString();
 	}
@@ -137,7 +141,32 @@ public class PersonalApplicationURLUtil {
 			layout.getTypeSettings());
 	}
 
+	private static PersonalMenuConfigurationTracker
+		_getPersonalMenuConfigurationTracker() {
+
+		return _serviceTracker.getService();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PersonalApplicationURLUtil.class);
+
+	private static final ServiceTracker
+		<PersonalMenuConfigurationTracker, PersonalMenuConfigurationTracker>
+			_serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			PersonalMenuConfigurationTracker.class);
+
+		ServiceTracker
+			<PersonalMenuConfigurationTracker, PersonalMenuConfigurationTracker>
+				serviceTracker = new ServiceTracker<>(
+					bundle.getBundleContext(),
+					PersonalMenuConfigurationTracker.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 
 }

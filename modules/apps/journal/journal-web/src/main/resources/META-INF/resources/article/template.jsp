@@ -37,17 +37,6 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 				<input class="field form-control lfr-input-text" id="<portlet:namespace />ddmTemplateName" readonly="readonly" title="<%= LanguageUtil.get(request, "template-name") %>" type="text" value="<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "no-template") %>" />
 			</div>
 
-			<c:if test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
-				<div class="input-group-item input-group-item-shrink">
-					<clay:button
-						icon="pencil"
-						id='<%= liferayPortletResponse.getNamespace() + "editDDMTemplate" %>'
-						monospaced="<%= true %>"
-						style="secondary"
-					/>
-				</div>
-			</c:if>
-
 			<c:if test="<%= (article != null) && (ddmTemplate != null) %>">
 				<div class="input-group-item input-group-item-shrink">
 					<clay:button
@@ -62,6 +51,10 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 		<div class="form-group">
 			<aui:button id="selectDDMTemplate" value="select" />
+
+			<c:if test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
+				<aui:button id="editDDMTemplate" value="edit" />
+			</c:if>
 
 			<c:if test="<%= ddmTemplate != null %>">
 				<aui:button id="clearDDMTemplate" value="clear" />

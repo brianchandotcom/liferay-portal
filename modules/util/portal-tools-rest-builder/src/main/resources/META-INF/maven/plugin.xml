@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.rest.builder</artifactId>
-	<version>1.0.18</version>
+	<version>1.0.19</version>
 	<goalPrefix>rest-builder</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -28,8 +28,8 @@
 			<threadSafe>false</threadSafe>
 			<parameters>
 				<parameter>
-					<name>RESTConfigDirName</name>
-					<type>java.lang.String</type>
+					<name>RESTConfigDir</name>
+					<type>java.io.File</type>
 					<required>false</required>
 					<editable>true</editable>
 					<description/>
@@ -42,8 +42,8 @@
 					<description/>
 				</parameter>
 				<parameter>
-					<name>copyrightFileName</name>
-					<type>java.lang.String</type>
+					<name>copyrightFile</name>
+					<type>java.io.File</type>
 					<required>false</required>
 					<editable>true</editable>
 					<description/>

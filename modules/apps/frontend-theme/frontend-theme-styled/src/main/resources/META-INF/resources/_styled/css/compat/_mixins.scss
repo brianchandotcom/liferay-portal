@@ -273,7 +273,6 @@
 // Optional hyphenation
 
 @mixin hyphens($mode: auto) {
-	-moz-hyphens: $mode;
 	-ms-hyphens: $mode; // IE10+
 	-o-hyphens: $mode;
 	-webkit-hyphens: $mode;

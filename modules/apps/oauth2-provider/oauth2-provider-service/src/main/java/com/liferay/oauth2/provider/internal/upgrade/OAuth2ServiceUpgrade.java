@@ -42,17 +42,18 @@ public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 				UpgradeOAuth2ScopeGrant());
 		registry.register(
 			"1.1.0", "1.2.0",
-			addColumns(OAuth2ScopeGrantTable.class, "scopeAliases TEXT null"));
+			getAddColumnsUpgradeProcess(
+				OAuth2ScopeGrantTable.class, "scopeAliases TEXT null"));
 		registry.register(
 			"1.2.0", "2.0.0",
 			new UpgradeOAuth2ApplicationScopeAliases(
 				_companyLocalService, _scopeLocator),
-			dropColumns(
+			getDropColumnsUpgradeProcess(
 				OAuth2ApplicationScopeAliasesTable.class, "scopeAliases",
 				"scopeAliasesHash"));
 	}
 
-	protected UpgradeProcess addColumns(
+	protected UpgradeProcess getAddColumnsUpgradeProcess(
 		Class<?> tableClass, String... columnDefinitions) {
 
 		return new UpgradeProcess() {
@@ -68,7 +69,7 @@ public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 		};
 	}
 
-	protected UpgradeProcess dropColumns(
+	protected UpgradeProcess getDropColumnsUpgradeProcess(
 		Class<?> tableClass, String... tableNames) {
 
 		return new UpgradeProcess() {

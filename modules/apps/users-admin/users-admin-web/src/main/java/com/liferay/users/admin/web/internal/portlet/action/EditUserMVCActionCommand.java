@@ -15,7 +15,6 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
-import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -79,7 +78,6 @@ import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -360,27 +358,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected List<AnnouncementsDelivery> getAnnouncementsDeliveries(
-		ActionRequest actionRequest) {
-
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected List<AnnouncementsDelivery> getAnnouncementsDeliveries(
-			ActionRequest actionRequest, User user)
-		throws Exception {
-
-		return null;
-	}
-
 	protected long getListTypeId(
 			PortletRequest portletRequest, String parameterName, String type)
 		throws Exception {
@@ -392,14 +369,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			parameterValue, type);
 
 		return listType.getListTypeId();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void setAnnouncementsDeliveryLocalService(
-		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
 	}
 
 	@Reference(unbind = "-")

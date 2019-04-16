@@ -51,6 +51,10 @@ public class ConfigYAML {
 		return _forcePredictableOperationId;
 	}
 
+	public boolean isWarningsEnabled() {
+		return _warningsEnabled;
+	}
+
 	public void setApiDir(String apiDir) {
 		_apiDir = apiDir;
 	}
@@ -85,6 +89,10 @@ public class ConfigYAML {
 		_testDir = testDir;
 	}
 
+	public void setWarningsEnabled(boolean warningsEnabled) {
+		_warningsEnabled = warningsEnabled;
+	}
+
 	private String _apiDir;
 	private String _apiPackagePath;
 	private Application _application;
@@ -93,5 +101,6 @@ public class ConfigYAML {
 	private boolean _forcePredictableOperationId = true;
 	private String _implDir = "src/main/java";
 	private String _testDir;
+	private boolean _warningsEnabled = true;
 
 }

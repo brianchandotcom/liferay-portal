@@ -220,7 +220,9 @@ public class RESTBuilder {
 			content = _fixOpenAPIOperationIds(freeMarkerTool, content);
 		}
 
-		_validate(content);
+		if (_configYAML.isWarningsEnabled()) {
+			_validate(content);
+		}
 
 		FileUtil.write(file, content);
 	}

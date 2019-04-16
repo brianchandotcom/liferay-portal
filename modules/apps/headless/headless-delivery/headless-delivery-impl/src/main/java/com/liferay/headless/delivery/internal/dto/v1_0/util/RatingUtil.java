@@ -31,14 +31,14 @@ public class RatingUtil {
 
 		return new Rating() {
 			{
-				bestRating = 1;
+				bestRating = 1D;
 				creator = CreatorUtil.toCreator(
 					portal, userLocalService.getUser(ratingsEntry.getUserId()));
 				dateCreated = ratingsEntry.getCreateDate();
 				dateModified = ratingsEntry.getModifiedDate();
 				id = ratingsEntry.getEntryId();
 				ratingValue = ratingsEntry.getScore();
-				worstRating = 0;
+				worstRating = 0D;
 			}
 		};
 	}

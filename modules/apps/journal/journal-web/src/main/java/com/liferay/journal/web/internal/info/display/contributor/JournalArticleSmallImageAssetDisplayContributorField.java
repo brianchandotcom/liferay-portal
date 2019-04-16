@@ -19,6 +19,8 @@ import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -57,11 +59,15 @@ public class JournalArticleSmallImageAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(JournalArticle article, Locale locale) {
+	public Object getValue(JournalArticle article, Locale locale) {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		if (themeDisplay != null) {
-			return article.getArticleImageURL(themeDisplay);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("url", article.getArticleImageURL(themeDisplay));
+
+			return jsonObject;
 		}
 
 		return StringPool.BLANK;

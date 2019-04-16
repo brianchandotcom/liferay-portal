@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -53,7 +52,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -264,7 +262,7 @@ public class JournalEditArticleDisplayContext {
 		return _ddmStructureKey;
 	}
 
-	public DDMTemplate getDDMTemplate() throws PortalException {
+	public DDMTemplate getDDMTemplate() {
 		long ddmTemplateId = ParamUtil.getLong(_request, "ddmTemplateId");
 
 		if (ddmTemplateId > 0) {
@@ -282,22 +280,6 @@ public class JournalEditArticleDisplayContext {
 			_ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 				groupId, PortalUtil.getClassNameId(DDMStructure.class),
 				getDDMTemplateKey(), true);
-		}
-
-		if (_ddmTemplate == null) {
-			DDMStructure ddmStructure = getDDMStructure();
-
-			List<DDMTemplate> ddmTemplates =
-				DDMTemplateServiceUtil.getTemplates(
-					_themeDisplay.getCompanyId(), ddmStructure.getGroupId(),
-					PortalUtil.getClassNameId(DDMStructure.class),
-					ddmStructure.getStructureId(),
-					PortalUtil.getClassNameId(JournalArticle.class), true,
-					WorkflowConstants.STATUS_APPROVED);
-
-			if (!ddmTemplates.isEmpty()) {
-				_ddmTemplate = ddmTemplates.get(0);
-			}
 		}
 
 		return _ddmTemplate;

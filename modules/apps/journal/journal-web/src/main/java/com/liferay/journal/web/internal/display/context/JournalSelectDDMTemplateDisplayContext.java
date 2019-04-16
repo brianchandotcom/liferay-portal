@@ -124,17 +124,29 @@ public class JournalSelectDDMTemplateDisplayContext {
 		templateSearch.setOrderByComparator(orderByComparator);
 		templateSearch.setOrderByType(orderByType);
 
-		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
-			themeDisplay.getScopeGroupId());
+		List<DDMTemplate> results = null;
 
-		List<DDMTemplate> results = DDMTemplateServiceUtil.search(
-			themeDisplay.getCompanyId(), groupIds,
-			new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
-			new long[] {getDDMStructureId()},
-			PortalUtil.getClassNameId(JournalArticle.class.getName()),
-			_getKeywords(), StringPool.BLANK, StringPool.BLANK,
-			WorkflowConstants.STATUS_ANY, templateSearch.getStart(),
-			templateSearch.getEnd(), templateSearch.getOrderByComparator());
+		if (Validator.isNotNull(_getKeywords())) {
+			long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				themeDisplay.getScopeGroupId());
+
+			results = DDMTemplateServiceUtil.search(
+				themeDisplay.getCompanyId(), groupIds,
+				new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
+				new long[] {getDDMStructureId()},
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				_getKeywords(), StringPool.BLANK, StringPool.BLANK,
+				WorkflowConstants.STATUS_ANY, templateSearch.getStart(),
+				templateSearch.getEnd(), templateSearch.getOrderByComparator());
+		}
+		else {
+			results = DDMTemplateServiceUtil.getTemplates(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				PortalUtil.getClassNameId(DDMStructure.class),
+				getDDMStructureId(),
+				PortalUtil.getClassNameId(JournalArticle.class.getName()), true,
+				WorkflowConstants.STATUS_ANY);
+		}
 
 		templateSearch.setResults(results);
 

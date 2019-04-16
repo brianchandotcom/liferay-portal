@@ -160,26 +160,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 			'click',
 			function(event) {
 				if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>')) {
-					Liferay.Util.openWindow(
-						{
-							dialog: {
-								destroyOnHide: true
-							},
-							dialogIframe: {
-								bodyCssClass: 'dialog-with-footer'
-							},
-							id: '<portlet:namespace />editDDMTemplate',
-							title: '<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : StringPool.BLANK %>',
-
-							<portlet:renderURL var="editDDMTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-								<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
-								<portlet:param name="closeRedirect" value="<%= currentURL %>" />
-								<portlet:param name="ddmTemplateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
-							</portlet:renderURL>
-
-							uri: '<%= editDDMTemplateURL %>'
-						}
-					);
+					location.href = '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_ddm_template.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="ddmTemplateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" /></portlet:renderURL>';
 				}
 			}
 		);

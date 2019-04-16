@@ -20,7 +20,7 @@ import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.model.DLContentDataBlobModel;
 import com.liferay.document.library.content.service.DLContentLocalService;
 import com.liferay.document.library.content.service.persistence.DLContentPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -39,17 +39,18 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the document library content local service.
@@ -65,7 +66,7 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class DLContentLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DLContentLocalService, IdentifiableOSGiService {
+	implements DLContentLocalService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -342,78 +343,17 @@ public abstract class DLContentLocalServiceBaseImpl
 		}
 	}
 
-	/**
-	 * Returns the document library content local service.
-	 *
-	 * @return the document library content local service
-	 */
-	public DLContentLocalService getDLContentLocalService() {
-		return dlContentLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DLContentLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the document library content local service.
-	 *
-	 * @param dlContentLocalService the document library content local service
-	 */
-	public void setDLContentLocalService(
-		DLContentLocalService dlContentLocalService) {
-
-		this.dlContentLocalService = dlContentLocalService;
-	}
-
-	/**
-	 * Returns the document library content persistence.
-	 *
-	 * @return the document library content persistence
-	 */
-	public DLContentPersistence getDLContentPersistence() {
-		return dlContentPersistence;
-	}
-
-	/**
-	 * Sets the document library content persistence.
-	 *
-	 * @param dlContentPersistence the document library content persistence
-	 */
-	public void setDLContentPersistence(
-		DLContentPersistence dlContentPersistence) {
-
-		this.dlContentPersistence = dlContentPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.document.library.content.model.DLContent",
-			dlContentLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.document.library.content.model.DLContent");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		dlContentLocalService = (DLContentLocalService)aopProxy;
 	}
 
 	/**
@@ -458,20 +398,13 @@ public abstract class DLContentLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DLContentLocalService.class)
 	protected DLContentLocalService dlContentLocalService;
 
-	@BeanReference(type = DLContentPersistence.class)
+	@Reference
 	protected DLContentPersistence dlContentPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

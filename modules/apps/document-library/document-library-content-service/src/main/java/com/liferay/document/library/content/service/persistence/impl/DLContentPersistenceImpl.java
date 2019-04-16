@@ -21,7 +21,9 @@ import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.model.impl.DLContentImpl;
 import com.liferay.document.library.content.model.impl.DLContentModelImpl;
 import com.liferay.document.library.content.service.persistence.DLContentPersistence;
+import com.liferay.document.library.content.service.persistence.impl.constants.DLPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,16 +31,17 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -51,6 +54,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * The persistence implementation for the document library content service.
  *
@@ -61,6 +71,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = DLContentPersistence.class)
 @ProviderType
 public class DLContentPersistenceImpl
 	extends BasePersistenceImpl<DLContent> implements DLContentPersistence {
@@ -2217,7 +2228,6 @@ public class DLContentPersistenceImpl
 
 		setModelImplClass(DLContentImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(DLContentModelImpl.ENTITY_CACHE_ENABLED);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2236,8 +2246,8 @@ public class DLContentPersistenceImpl
 	@Override
 	public void cacheResult(DLContent dlContent) {
 		entityCache.putResult(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED, DLContentImpl.class,
-			dlContent.getPrimaryKey(), dlContent);
+			entityCacheEnabled, DLContentImpl.class, dlContent.getPrimaryKey(),
+			dlContent);
 
 		finderCache.putResult(
 			_finderPathFetchByC_R_P_V,
@@ -2259,8 +2269,8 @@ public class DLContentPersistenceImpl
 	public void cacheResult(List<DLContent> dlContents) {
 		for (DLContent dlContent : dlContents) {
 			if (entityCache.getResult(
-					DLContentModelImpl.ENTITY_CACHE_ENABLED,
-					DLContentImpl.class, dlContent.getPrimaryKey()) == null) {
+					entityCacheEnabled, DLContentImpl.class,
+					dlContent.getPrimaryKey()) == null) {
 
 				cacheResult(dlContent);
 			}
@@ -2296,8 +2306,7 @@ public class DLContentPersistenceImpl
 	@Override
 	public void clearCache(DLContent dlContent) {
 		entityCache.removeResult(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED, DLContentImpl.class,
-			dlContent.getPrimaryKey());
+			entityCacheEnabled, DLContentImpl.class, dlContent.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2312,7 +2321,7 @@ public class DLContentPersistenceImpl
 
 		for (DLContent dlContent : dlContents) {
 			entityCache.removeResult(
-				DLContentModelImpl.ENTITY_CACHE_ENABLED, DLContentImpl.class,
+				entityCacheEnabled, DLContentImpl.class,
 				dlContent.getPrimaryKey());
 
 			clearUniqueFindersCache((DLContentModelImpl)dlContent, true);
@@ -2513,7 +2522,7 @@ public class DLContentPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!DLContentModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -2591,8 +2600,8 @@ public class DLContentPersistenceImpl
 		}
 
 		entityCache.putResult(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED, DLContentImpl.class,
-			dlContent.getPrimaryKey(), dlContent, false);
+			entityCacheEnabled, DLContentImpl.class, dlContent.getPrimaryKey(),
+			dlContent, false);
 
 		clearUniqueFindersCache(dlContentModelImpl, false);
 		cacheUniqueFindersCache(dlContentModelImpl);
@@ -2874,27 +2883,27 @@ public class DLContentPersistenceImpl
 	/**
 	 * Initializes the document library content persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		DLContentModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		DLContentModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, DLContentImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLContentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, DLContentImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLContentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByC_R = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, DLContentImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLContentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2903,8 +2912,7 @@ public class DLContentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_R = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, DLContentImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLContentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
@@ -2912,14 +2920,12 @@ public class DLContentPersistenceImpl
 			DLContentModelImpl.VERSION_COLUMN_BITMASK);
 
 		_finderPathCountByC_R = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByC_R_P = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, DLContentImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLContentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2928,8 +2934,7 @@ public class DLContentPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_R_P = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, DLContentImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLContentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2941,8 +2946,7 @@ public class DLContentPersistenceImpl
 			DLContentModelImpl.VERSION_COLUMN_BITMASK);
 
 		_finderPathCountByC_R_P = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2950,8 +2954,7 @@ public class DLContentPersistenceImpl
 			});
 
 		_finderPathWithPaginationFindByC_R_LikeP = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, DLContentImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLContentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_LikeP",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2960,8 +2963,7 @@ public class DLContentPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByC_R_LikeP = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_R_LikeP",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2969,8 +2971,7 @@ public class DLContentPersistenceImpl
 			});
 
 		_finderPathFetchByC_R_P_V = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, DLContentImpl.class,
+			entityCacheEnabled, finderCacheEnabled, DLContentImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R_P_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2982,8 +2983,7 @@ public class DLContentPersistenceImpl
 			DLContentModelImpl.VERSION_COLUMN_BITMASK);
 
 		_finderPathCountByC_R_P_V = new FinderPath(
-			DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2991,20 +2991,55 @@ public class DLContentPersistenceImpl
 			});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(DLContentImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(
+		target = DLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.document.library.content.model.DLContent"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = DLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = DLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_DLCONTENT =

@@ -36,11 +36,11 @@ components:
                     readOnly: true
                     type: string
             type: object
-        Email:
+        EmailAddress:
             #@review
             description: Email address. Properties follow https://schema.org/email specification.
             properties:
-                email:
+                emailAddress:
                     description: The email address.
                     readOnly: true
                     type: string
@@ -67,12 +67,12 @@ components:
                     readOnly: true
                     type: string
                 contactInformation:
-                    description: The contact information for an Organization, with the list of emails, postal addresses, telephones and web urls linked to that Organization.
+                    description: The contact information for an Organization, with the list of email addresses, postal addresses, telephones and web urls linked to that Organization.
                     properties:
-                        emails:
+                        emailAddresses:
                             description: A list of email addresses. One is optionally marked as primary.
                             items:
-                                $ref: "#/components/schemas/Email"
+                                $ref: "#/components/schemas/EmailAddress"
                             readOnly: true
                             type: array
                         postalAddresses:
@@ -384,8 +384,8 @@ components:
             #@review
             description: Represents a user who belongs to a segment.
             properties:
-                email:
-                    description: The email of the segment user
+                emailAddress:
+                    description: The email address of the segment user
                     readOnly: true
                     type: string
                 id:
@@ -432,10 +432,10 @@ components:
                 contactInformation:
                     description: https://www.schema.org/ContactInformation
                     properties:
-                        emails:
+                        emailAddresses:
                             description: A list of email addresses. One is optionally marked as primary.
                             items:
-                                $ref: "#/components/schemas/Email"
+                                $ref: "#/components/schemas/EmailAddress"
                             readOnly: true
                             type: array
                         facebook:
@@ -496,7 +496,7 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
-                email:
+                emailAddress:
                     description: The main email address of the UserAccount.
                     readOnly: true
                     type: string
@@ -587,12 +587,12 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/emails/{emailId}":
+    "/email-addresses/{emailAddressId}":
         get:
-            operationId: getEmail
+            operationId: getEmailAddress
             parameters:
                 - in: path
-                  name: emailId
+                  name: emailAddressId
                   required: true
                   schema:
                       format: int64
@@ -602,9 +602,9 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Email"
+                                $ref: "#/components/schemas/EmailAddress"
                     description: ""
-            tags: ["Email"]
+            tags: ["EmailAddress"]
     "/my-user-account":
         get:
             operationId: getMyUserAccount
@@ -668,9 +668,9 @@ paths:
                                 $ref: "#/components/schemas/Organization"
                     description: ""
             tags: ["Organization"]
-    "/organizations/{organizationId}/emails":
+    "/organizations/{organizationId}/email-addresses":
         get:
-            operationId: getOrganizationEmailsPage
+            operationId: getOrganizationEmailAddressesPage
             parameters:
                 - in: path
                   name: organizationId
@@ -684,10 +684,10 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Email"
+                                    $ref: "#/components/schemas/EmailAddress"
                                 type: array
                     description: ""
-            tags: ["Email"]
+            tags: ["EmailAddress"]
     "/organizations/{organizationId}/phones":
         get:
             operationId: getOrganizationPhonesPage
@@ -1052,9 +1052,9 @@ paths:
                                 $ref: "#/components/schemas/UserAccount"
                     description: ""
             tags: ["UserAccount"]
-    "/user-accounts/{userAccountId}/emails":
+    "/user-accounts/{userAccountId}/email-addresses":
         get:
-            operationId: getUserAccountEmailsPage
+            operationId: getUserAccountEmailAddressesPage
             parameters:
                 - in: path
                   name: userAccountId
@@ -1068,10 +1068,10 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Email"
+                                    $ref: "#/components/schemas/EmailAddress"
                                 type: array
                     description: ""
-            tags: ["Email"]
+            tags: ["EmailAddress"]
     "/user-accounts/{userAccountId}/phones":
         get:
             operationId: getUserAccountPhonesPage

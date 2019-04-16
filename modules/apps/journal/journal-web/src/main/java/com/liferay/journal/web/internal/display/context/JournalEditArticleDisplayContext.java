@@ -265,11 +265,18 @@ public class JournalEditArticleDisplayContext {
 	public DDMTemplate getDDMTemplate() {
 		long ddmTemplateId = ParamUtil.getLong(_request, "ddmTemplateId");
 
+		if (ddmTemplateId == -1) {
+			return null;
+		}
+
 		if (ddmTemplateId > 0) {
 			_ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(
 				ddmTemplateId);
+
+			return _ddmTemplate;
 		}
-		else if (Validator.isNotNull(getDDMTemplateKey())) {
+
+		if (Validator.isNotNull(getDDMTemplateKey())) {
 			long groupId = ParamUtil.getLong(
 				_request, "groupId", _themeDisplay.getSiteGroupId());
 
@@ -280,9 +287,11 @@ public class JournalEditArticleDisplayContext {
 			_ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 				groupId, PortalUtil.getClassNameId(DDMStructure.class),
 				getDDMTemplateKey(), true);
+
+			return _ddmTemplate;
 		}
 
-		return _ddmTemplate;
+		return null;
 	}
 
 	public String getDDMTemplateKey() {

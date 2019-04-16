@@ -34,7 +34,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 		<div class="form-group input-group mb-2">
 			<div class="input-group-item">
-				<input class="field form-control lfr-input-text" id="<portlet:namespace />ddmTemplateName" readonly="readonly" title="<%= LanguageUtil.get(request, "template-name") %>" type="text" value='<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "no-template") %>' />
+				<input class="field form-control lfr-input-text" id="<portlet:namespace />ddmTemplateName" readonly="readonly" title="<%= LanguageUtil.get(request, "template-name") %>" type="text" value="<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "no-template") %>" />
 			</div>
 
 			<c:if test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
@@ -60,8 +60,12 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 			</c:if>
 		</div>
 
-		<div class="btn-group">
+		<div class="form-group">
 			<aui:button id="selectDDMTemplate" value="select" />
+
+			<c:if test="<%= ddmTemplate != null %>">
+				<aui:button id="clearDDMTemplate" value="clear" />
+			</c:if>
 		</div>
 	</c:when>
 	<c:otherwise>
@@ -104,6 +108,33 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 		}
 	</c:if>
 
+	function changeDDMTemplate(newDDMTemplateId) {
+		var oldDDMTemplateId = '<%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>';
+
+		if (document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value != '') {
+			oldDDMTemplateId = document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value;
+		}
+
+		if (oldDDMTemplateId != newDDMTemplateId) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>')) {
+				document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value = newDDMTemplateId;
+
+				submitForm(document.<portlet:namespace />fm1, null, false, false);
+			}
+		}
+	}
+
+	var clearDDMTemplateButton = document.getElementById('<portlet:namespace />clearDDMTemplate');
+
+	if (clearDDMTemplateButton) {
+		clearDDMTemplateButton.addEventListener(
+			'click',
+			function(event) {
+				changeDDMTemplate(-1);
+			}
+		);
+	}
+
 	var selectDDMTemplateButton = document.getElementById('<portlet:namespace />selectDDMTemplate');
 
 	if (selectDDMTemplateButton) {
@@ -122,19 +153,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_template.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>'
 					},
 					function(event) {
-						var ddmTemplateId = '<%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>';
-
-						if (document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value != '') {
-							ddmTemplateId = document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value;
-						}
-
-						if (ddmTemplateId != event.ddmtemplateid) {
-							if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>')) {
-								document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value = event.ddmtemplateid;
-
-								submitForm(document.<portlet:namespace />fm1, null, false, false);
-							}
-						}
+						changeDDMTemplate(event.ddmtemplateid);
 					}
 				);
 			}

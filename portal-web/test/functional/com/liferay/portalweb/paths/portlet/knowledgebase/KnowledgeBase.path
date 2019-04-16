@@ -74,7 +74,7 @@
 <!--DESCRIPTIVE_VIEW-->
 <tr>
 	<td>DESCRIPTIVE_VIEW_ARTICLE_PRIORITY</td>
-	<td>//div[contains(.,'${key_kbArticleTitle}')]//span[@class='kb-descriptive-details' and contains(.,'Priority')]</td>
+	<td>//li[contains(.,'${key_kbArticleTitle}')]//span[@class='kb-descriptive-details' and contains(.,'Priority')]</td>
 	<td></td>
 </tr>
 <tr>

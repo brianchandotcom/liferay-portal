@@ -17,17 +17,23 @@ package com.liferay.portal.remote.cors.client.test;
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.HttpImpl;
 
 import java.io.File;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.ws.rs.HttpMethod;
 
 import org.jboss.shrinkwrap.api.Archive;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 
 import org.osgi.framework.BundleActivator;
@@ -58,14 +64,44 @@ public abstract class BaseCORSClientTestCase {
 		digesterUtil.setDigester(new DigesterImpl());
 	}
 
-	protected WebTarget getWebTarget(String path) {
-		Client client = ClientBuilder.newClient();
+	protected void assertURL(String urlString, boolean allowOrigin)
+		throws Exception {
 
-		WebTarget target = client.target("http://localhost:8080");
+		URL url = new URL("http://localhost:8080/o" + urlString);
 
-		target = target.path("o");
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
 
-		return target.path(path);
+		httpURLConnection.setRequestProperty("Origin", _TEST_CORS_URI);
+		httpURLConnection.setRequestProperty(
+			_ACCESS_CONTROL_REQUEST_METHOD, HttpMethod.GET);
+
+		Map<String, List<String>> headerFields =
+			httpURLConnection.getHeaderFields();
+
+		if (allowOrigin) {
+			Assert.assertEquals(
+				_TEST_CORS_URI,
+				StringUtil.merge(
+					headerFields.get(_ACCESS_CONTROL_ALLOW_ORIGIN)));
+		}
+		else {
+			Assert.assertNull(headerFields.get(_ACCESS_CONTROL_ALLOW_ORIGIN));
+		}
+
+		Assert.assertEquals(
+			"get", StringUtil.read(httpURLConnection.getInputStream()));
+
+
+		Assert.assertEquals(200, httpURLConnection.getResponseCode());
 	}
+
+	private static final String _ACCESS_CONTROL_ALLOW_ORIGIN =
+		"Access-Control-Allow-Origin";
+
+	private static final String _ACCESS_CONTROL_REQUEST_METHOD =
+		"Access-Control-Request-Method";
+
+	private static final String _TEST_CORS_URI = "http://test-cors.com";
 
 }

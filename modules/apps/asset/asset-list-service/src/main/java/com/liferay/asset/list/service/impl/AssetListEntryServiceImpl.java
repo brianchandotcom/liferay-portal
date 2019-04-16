@@ -195,7 +195,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 		long groupId, int start, int end,
 		OrderByComparator<AssetListEntry> orderByComparator) {
 
-		return assetListEntryPersistence.findByGroupId(
+		return assetListEntryPersistence.filterFindByGroupId(
 			groupId, start, end, orderByComparator);
 	}
 
@@ -204,7 +204,7 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 		long groupId, String title, int start, int end,
 		OrderByComparator<AssetListEntry> orderByComparator) {
 
-		return assetListEntryPersistence.findByG_LikeT(
+		return assetListEntryPersistence.filterFindByG_LikeT(
 			groupId,
 			_customSQL.keywords(title, false, WildcardMode.SURROUND)[0], start,
 			end, orderByComparator);
@@ -212,12 +212,12 @@ public class AssetListEntryServiceImpl extends AssetListEntryServiceBaseImpl {
 
 	@Override
 	public int getAssetListEntriesCount(long groupId) {
-		return assetListEntryPersistence.countByGroupId(groupId);
+		return assetListEntryPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override
 	public int getAssetListEntriesCount(long groupId, String title) {
-		return assetListEntryPersistence.countByG_LikeT(
+		return assetListEntryPersistence.filterCountByG_LikeT(
 			groupId,
 			_customSQL.keywords(title, false, WildcardMode.SURROUND)[0]);
 	}

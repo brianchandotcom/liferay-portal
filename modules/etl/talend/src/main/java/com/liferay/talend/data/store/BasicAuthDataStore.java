@@ -26,14 +26,14 @@ import org.talend.sdk.component.api.configuration.ui.widget.Credential;
 /**
  * @author Igor Beslic
  */
-@DataStore("BasicDataStore")
+@DataStore("BasicAuthDataStore")
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
 	value = {
 		@GridLayout.Row({"_user", "_password"}), @GridLayout.Row("_anonymous")
 	}
 )
-public class BasicDataStore implements Serializable {
+public class BasicAuthDataStore implements Serializable {
 
 	public String getPassword() {
 		return _password;
@@ -47,19 +47,19 @@ public class BasicDataStore implements Serializable {
 		return _anonymous;
 	}
 
-	public BasicDataStore setAnonymous(boolean anonymous) {
+	public BasicAuthDataStore setAnonymous(boolean anonymous) {
 		_anonymous = anonymous;
 
 		return this;
 	}
 
-	public BasicDataStore setPassword(String password) {
+	public BasicAuthDataStore setPassword(String password) {
 		_password = password;
 
 		return this;
 	}
 
-	public BasicDataStore setUser(String user) {
+	public BasicAuthDataStore setUser(String user) {
 		_user = user;
 
 		return this;

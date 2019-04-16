@@ -14,7 +14,7 @@
 
 package com.liferay.talend.dataset;
 
-import com.liferay.talend.data.store.InputDataStore;
+import com.liferay.talend.data.store.BaseDataStore;
 
 import java.io.Serializable;
 
@@ -30,15 +30,15 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
  * @review
  */
 @DataSet("InputDataSet")
-@GridLayout({@GridLayout.Row("_inputDataStore"), @GridLayout.Row("_endpoint")})
+@GridLayout({@GridLayout.Row("_baseDataStore"), @GridLayout.Row("_endpoint")})
 public class InputDataSet implements Serializable {
 
 	public String getEndpoint() {
 		return _endpoint;
 	}
 
-	public InputDataStore getInputDataStore() {
-		return _inputDataStore;
+	public BaseDataStore getInputDataStore() {
+		return _baseDataStore;
 	}
 
 	public InputDataSet setEndpoint(String endpoint) {
@@ -47,11 +47,14 @@ public class InputDataSet implements Serializable {
 		return this;
 	}
 
-	public InputDataSet setInputDataStore(InputDataStore inputDataStore) {
-		_inputDataStore = inputDataStore;
+	public InputDataSet setInputDataStore(BaseDataStore baseDataStore) {
+		_baseDataStore = baseDataStore;
 
 		return this;
 	}
+
+	@Option
+	private BaseDataStore _baseDataStore;
 
 	/**
 	 * DataStore parameter now is not needed, just an example how we can use it
@@ -59,10 +62,7 @@ public class InputDataSet implements Serializable {
 	 */
 	@Option
 	@Required
-	@Suggestable(parameters = "_inputDataStore", value = "fetchEndpoints")
+	@Suggestable(parameters = "_baseDataStore", value = "fetchEndpoints")
 	private String _endpoint;
-
-	@Option
-	private InputDataStore _inputDataStore;
 
 }

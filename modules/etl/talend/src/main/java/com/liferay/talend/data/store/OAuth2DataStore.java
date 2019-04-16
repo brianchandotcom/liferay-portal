@@ -25,12 +25,12 @@ import org.talend.sdk.component.api.configuration.ui.widget.Credential;
 /**
  * @author Igor Beslic
  */
-@DataStore("OAuthDataStore")
+@DataStore("OAuth2DataStore")
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
 	value = {@GridLayout.Row({"_consumerKey", "_consumerSecret"})}
 )
-public class OAuthDataStore implements Serializable {
+public class OAuth2DataStore implements Serializable {
 
 	public String getConsumerKey() {
 		return _consumerKey;
@@ -40,13 +40,13 @@ public class OAuthDataStore implements Serializable {
 		return _consumerSecret;
 	}
 
-	public OAuthDataStore setConsumerKey(String consumerKey) {
+	public OAuth2DataStore setConsumerKey(String consumerKey) {
 		_consumerKey = consumerKey;
 
 		return this;
 	}
 
-	public OAuthDataStore setConsumerSecret(String consumerSecret) {
+	public OAuth2DataStore setConsumerSecret(String consumerSecret) {
 		_consumerSecret = consumerSecret;
 
 		return this;

@@ -56,7 +56,7 @@ public class LiferayInputEmitter implements Serializable {
 	@Producer
 	public Record next() {
 		JsonObject data = _connectionService.getResponseJsonObject(
-			_liferayInputMapperConfiguration.getRestDataSet());
+			_liferayInputMapperConfiguration.getInputDataSet());
 
 		if (data != null) {
 			if (_logger.isLoggable(Level.FINE)) {

@@ -14,7 +14,7 @@
 
 package com.liferay.talend.service;
 
-import com.liferay.talend.data.store.InputDataStore;
+import com.liferay.talend.data.store.BaseDataStore;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
@@ -47,16 +47,16 @@ import org.talend.sdk.component.api.service.healthcheck.HealthCheckStatus;
 @Service
 public class UIActionService {
 
-	@HealthCheck(family = "Liferay", value = "checkInputDataStore")
+	@HealthCheck(family = "Liferay", value = "checkBaseDataStore")
 	public HealthCheckStatus checkInputDataStore(
-		@Option InputDataStore inputDataStore) {
+		@Option BaseDataStore baseDataStore) {
 
-		return _dataStoreChecker.checkInputDataStore(inputDataStore);
+		return _dataStoreChecker.checkInputDataStore(baseDataStore);
 	}
 
 	@Suggestions(family = "Liferay", value = "fetchEndpoints")
 	public SuggestionValues fetchEndpoints(
-		@Option("inputDataStore") final InputDataStore inputDataStore) {
+		@Option("baseDataStore") final BaseDataStore baseDataStore) {
 
 		List<SuggestionValues.Item> items = new ArrayList<>();
 

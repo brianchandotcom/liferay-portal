@@ -301,17 +301,6 @@ public class LayoutImportController implements ImportController {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void deleteMissingLayouts(
-			PortletDataContext portletDataContext,
-			List<String> sourceLayoutUuids, List<Layout> previousLayouts,
-			ServiceContext serviceContext)
-		throws Exception {
-	}
-
 	protected void deletePortletData(PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -1021,80 +1010,8 @@ public class LayoutImportController implements ImportController {
 	 * @deprecated As of Judson (7.1.x)
 	 */
 	@Deprecated
-	protected void setExportImportLifecycleManager(
-		ExportImportLifecycleManager exportImportLifecycleManager) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void setLayoutPrototypeLocalService(
-		LayoutPrototypeLocalService layoutPrototypeLocalService) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void setLayoutSetPrototypeLocalService(
-		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void setPortletImportController(
-		PortletImportController portletImportController) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
 	protected void setPortletScope(
 		PortletDataContext portletDataContext, Element portletElement) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void updateLayoutPriorities(
-		PortletDataContext portletDataContext, List<Element> layoutElements,
-		boolean privateLayout) {
 	}
 
 	protected void validateFile(
@@ -1314,20 +1231,6 @@ public class LayoutImportController implements ImportController {
 			Layout.class.getSimpleName());
 
 		validateLayoutPrototypes(companyId, headerElement, layoutsElement);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #validateLayoutPrototypes(long, Element, Element)}
-	 */
-	@Deprecated
-	protected void validateLayoutPrototypes(
-			long companyId, Element layoutsElement)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by " +
-				"#validateLayoutPrototypes(long, Element, Element)");
 	}
 
 	protected void validateLayoutPrototypes(

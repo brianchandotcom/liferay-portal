@@ -996,23 +996,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 		return zipWriter.getFile();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void exportPortlet(
-			PortletDataContext portletDataContext, Layout layout,
-			Element parentElement, boolean exportPermissions,
-			boolean exportPortletArchivedSetups, boolean exportPortletData,
-			boolean exportPortletSetup, boolean exportPortletUserPreferences)
-		throws Exception {
-
-		exportPortlet(
-			portletDataContext, layout.getPlid(), parentElement,
-			exportPermissions, exportPortletArchivedSetups, exportPortletData,
-			exportPortletSetup, exportPortletUserPreferences);
-	}
-
 	protected void exportPortletPreference(
 			PortletDataContext portletDataContext, long ownerId, int ownerType,
 			boolean defaultUser, PortletPreferences portletPreferences,

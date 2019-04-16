@@ -424,31 +424,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #importPortletData(PortletDataContext portletDataContext,
-	 *             javax.portlet.PortletPreferences portletPreferences, Element
-	 *             portletDataElement)}
-	 */
-	@Deprecated
-	public String importPortletData(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences, Element portletDataElement)
-		throws Exception {
-
-		PortletPreferencesImpl portletPreferencesImpl = null;
-
-		if (portletPreferences != null) {
-			portletPreferencesImpl =
-				(PortletPreferencesImpl)
-					PortletPreferencesFactoryUtil.fromDefaultXML(
-						portletPreferences.getPreferences());
-		}
-
-		return importPortletData(
-			portletDataContext, portletPreferencesImpl, portletDataElement);
-	}
-
 	@Override
 	public void importPortletPreferences(
 			PortletDataContext portletDataContext, long companyId, long groupId,
@@ -943,24 +918,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             deletePortletData(PortletDataContext portletDataContext,
-	 *             javax.portlet.PortletPreferences portletPreferences)}
-	 */
-	@Deprecated
-	protected String deletePortletData(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		javax.portlet.PortletPreferences portletPreferencesImpl =
-			PortletPreferencesFactoryUtil.fromDefaultXML(
-				portletPreferences.getPreferences());
-
-		return deletePortletData(portletDataContext, portletPreferencesImpl);
-	}
-
 	protected void doImportPortletInfo(
 			PortletDataContext portletDataContext, long userId)
 		throws Exception {
@@ -1351,15 +1308,6 @@ public class PortletImportControllerImpl implements PortletImportController {
 		PortletItemLocalService portletItemLocalService) {
 
 		_portletItemLocalService = portletItemLocalService;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
 	}
 
 	@Reference(unbind = "-")

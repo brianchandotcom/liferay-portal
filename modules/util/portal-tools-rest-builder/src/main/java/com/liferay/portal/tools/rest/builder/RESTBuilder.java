@@ -220,6 +220,8 @@ public class RESTBuilder {
 			content = _fixOpenAPIOperationIds(freeMarkerTool, content);
 		}
 
+		_validate(content);
+
 		FileUtil.write(file, content);
 	}
 
@@ -981,6 +983,43 @@ public class RESTBuilder {
 		context.put("schemaVarName", schemaVarName);
 		context.put(
 			"schemaVarNames", TextFormatter.formatPlural(schemaVarName));
+	}
+
+	private void _validate(String content) {
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(content);
+
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		for (Map.Entry<String, Schema> entry1 : schemas.entrySet()) {
+			Schema schema = entry1.getValue();
+
+			Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+			for (Map.Entry<String, Schema> entry2 :
+					propertySchemas.entrySet()) {
+
+				String propertyName = entry2.getKey();
+				Schema propertySchema = entry2.getValue();
+
+				if (propertyName.startsWith("numberOf") &&
+					Objects.equals(propertySchema.getType(), "number")) {
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("The property \"");
+					sb.append(entry1.getKey());
+					sb.append('.');
+					sb.append(propertyName);
+					sb.append(
+						"\" should use \"type: integer\" instead of \"type: " +
+							"number\"");
+
+					System.out.println(sb.toString());
+				}
+			}
+		}
 	}
 
 	private final File _configDir;

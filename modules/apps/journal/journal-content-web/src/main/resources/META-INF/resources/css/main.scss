@@ -16,6 +16,12 @@
 				margin-top: 24px;
 			}
 		}
+
+		&:after {
+			clear: both;
+			content: '';
+			display: block;
+		}
 	}
 
 	.portlet .portlet-header {

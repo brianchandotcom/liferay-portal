@@ -4,9 +4,6 @@ apply plugin: "com.liferay.patcher"
 
 task patch(type: PatchTask)
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
 dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.8.8"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.fileinstall", transitive: false, version: "3.6.4"

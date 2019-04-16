@@ -128,7 +128,7 @@ components:
                 numberOfTaxonomyCategories:
                     description: The number of times this TaxonomyCategory has been used in other Assets.
                     readOnly: true
-                    type: number
+                    type: integer
                 parentTaxonomyCategory:
                     description: In the hierarchical structure of categories, the parent TaxonomyCategory, if exists.
                     properties:
@@ -201,7 +201,7 @@ components:
                 numberOfTaxonomyCategories:
                     description: The number of TaxonomyCategories that directly depend on this resource.
                     readOnly: true
-                    type: number
+                    type: integer
                 siteId:
                     description: The site identificator where this TaxonomyVocabulary is scoped.
                     format: int64

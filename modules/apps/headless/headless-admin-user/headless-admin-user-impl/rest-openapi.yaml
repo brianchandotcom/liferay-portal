@@ -146,7 +146,7 @@ components:
                 numberOfOrganizations:
                     description: The number of child Organizations that belong to this Organization.
                     readOnly: true
-                    type: number
+                    type: integer
                 parentOrganization:
                     allOf:
                         - $ref: "#/components/schemas/Organization"

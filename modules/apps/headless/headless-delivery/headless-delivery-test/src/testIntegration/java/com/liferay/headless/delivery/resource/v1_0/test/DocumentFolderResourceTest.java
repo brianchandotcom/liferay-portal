@@ -64,7 +64,8 @@ public class DocumentFolderResourceTest
 		DocumentFolder postDocumentFolder = invokePostSiteDocumentFolder(
 			testGroup.getGroupId(), randomDocumentFolder());
 
-		Assert.assertEquals(0L, postDocumentFolder.getNumberOfDocuments());
+		Assert.assertEquals(
+			Integer.valueOf(0), postDocumentFolder.getNumberOfDocuments());
 
 		DLAppTestUtil.addFileEntryWithWorkflow(
 			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
@@ -75,7 +76,8 @@ public class DocumentFolderResourceTest
 		DocumentFolder getDocumentFolder = invokeGetDocumentFolder(
 			postDocumentFolder.getId());
 
-		Assert.assertEquals(1L, getDocumentFolder.getNumberOfDocuments());
+		Assert.assertEquals(
+			Integer.valueOf(1), getDocumentFolder.getNumberOfDocuments());
 
 		return postDocumentFolder;
 	}

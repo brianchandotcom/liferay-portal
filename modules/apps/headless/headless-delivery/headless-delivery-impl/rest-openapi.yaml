@@ -97,7 +97,7 @@ components:
                 numberOfComments:
                     description: The number of comments this BlogPosting has received.
                     readOnly: true
-                    type: number
+                    type: integer
                 siteId:
                     description: The site identificator where this BlogPosting is scoped.
                     format: int64
@@ -194,7 +194,7 @@ components:
                 numberOfComments:
                     description: The number of child comments associated with this Comment.
                     readOnly: true
-                    type: number
+                    type: integer
                 text:
                     description: The content of the Comment.
                     type: string
@@ -550,7 +550,7 @@ components:
                 numberOfComments:
                     description: A list of child comments of this content.
                     readOnly: true
-                    type: number
+                    type: integer
                 sizeInBytes:
                     description: The size in bytes of the binary files.
                     readOnly: true
@@ -618,11 +618,11 @@ components:
                 numberOfDocumentFolders:
                     description: The number of child DocumentFolders that depend on this resources.
                     readOnly: true
-                    type: number
+                    type: integer
                 numberOfDocuments:
                     description: The number of child Documents that depend on this resources.
                     readOnly: true
-                    type: number
+                    type: integer
                 siteId:
                     description: The site identificator where this DocumentFolder is scoped.
                     format: int64
@@ -686,11 +686,11 @@ components:
                 numberOfAttachments:
                     description: The number of KnowledgeBaseAttachments that are stored in this article.
                     readOnly: true
-                    type: number
+                    type: integer
                 numberOfKnowledgeBaseArticles:
                     description: The number of child KBArticle that are asociated with this resouce.
                     readOnly: true
-                    type: number
+                    type: integer
                 parentKnowledgeBaseFolder:
                     description: The parent KnowledgeBaseFolder of this article, if any.
                     properties:
@@ -808,11 +808,11 @@ components:
                 numberOfKnowledgeBaseArticles:
                     description: The number of child KnowledgeBaseArticles asociated with this resource.
                     readOnly: true
-                    type: number
+                    type: integer
                 numberOfKnowledgeBaseFolders:
                     description: The number of child KnowledgeBaseFolders asociated with this resource.
                     readOnly: true
-                    type: number
+                    type: integer
                 parentKnowledgeBaseFolder:
                     description: The parent KnowledgeBaseFolder of this article, if any.
                     properties:
@@ -1165,7 +1165,7 @@ components:
                 numberOfComments:
                     description: The number of child comments this StructuredContent has received.
                     readOnly: true
-                    type: number
+                    type: integer
                 renderedContents:
                     description: A list of rendered StructuredContents, the result of using a template to process the content, returning html.
                     items:
@@ -1253,11 +1253,11 @@ components:
                 numberOfStructuredContentFolders:
                     description: The number of child StructuredContentFolders that belong to this resource.
                     readOnly: true
-                    type: number
+                    type: integer
                 numberOfStructuredContents:
                     description: The number of child StructuredContents that belong to this resource.
                     readOnly: true
-                    type: number
+                    type: integer
                 siteId:
                     description: The site identificator where this StructuredContentFolder is scoped.
                     format: int64

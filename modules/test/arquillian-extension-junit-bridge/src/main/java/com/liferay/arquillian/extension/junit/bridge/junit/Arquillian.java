@@ -16,26 +16,20 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
+import com.liferay.arquillian.extension.junit.bridge.client.SocketUtil;
 import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 import com.liferay.petra.string.CharPool;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 
 import java.lang.annotation.Annotation;
 
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.URI;
 import java.net.URL;
 
-import java.nio.channels.ServerSocketChannel;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -152,7 +146,7 @@ public class Arquillian extends Runner implements Filterable {
 		ServerSocket serverSocket = null;
 
 		try {
-			serverSocket = _getServerSocket();
+			serverSocket = SocketUtil.getServerSocket();
 
 			long bundleId = _installBundle(
 				frameworkMBean, serverSocket.getLocalPort());
@@ -161,37 +155,32 @@ public class Arquillian extends Runner implements Filterable {
 				frameworkMBean.startBundle(bundleId);
 
 				while (true) {
-					try (Socket socket = serverSocket.accept();
-						InputStream inputStream = socket.getInputStream();
-						OutputStream outputStream = socket.getOutputStream();
-						ObjectInputStream objectInputStream =
-							new ObjectInputStream(inputStream);
-						ObjectOutputStream objectOutputStream =
-							new ObjectOutputStream(outputStream)) {
+					try {
+						SocketUtil.connect();
 
-						if (_passCode != objectInputStream.readLong()) {
+						if (_passCode != SocketUtil.readLong()) {
 							_logger.log(
 								Level.WARNING,
 								"Pass code mismatch, dropped connection from " +
-									socket.getRemoteSocketAddress());
+									SocketUtil.getRemoteSocketAddress());
 
 							continue;
 						}
 
-						objectOutputStream.writeUTF(_clazz.getName());
-
-						objectOutputStream.flush();
+						SocketUtil.writeUTF(_clazz.getName());
 
 						while (true) {
 							RunNotifierCommand runNotifierCommand =
-								(RunNotifierCommand)
-									objectInputStream.readObject();
+								(RunNotifierCommand)SocketUtil.readObject();
 
 							runNotifierCommand.execute(runNotifier);
 						}
 					}
 					catch (EOFException eofe) {
 						break;
+					}
+					finally {
+						SocketUtil.close();
 					}
 				}
 			}
@@ -217,37 +206,14 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private static ServerSocket _getServerSocket() throws IOException {
-		if (_serverSocket != null) {
-			return _serverSocket;
-		}
-
-		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-
-		int port = _START_PORT;
-
-		while (true) {
-			try {
-				ServerSocket serverSocket = serverSocketChannel.socket();
-
-				serverSocket.bind(new InetSocketAddress(_inetAddress, port));
-
-				_serverSocket = serverSocket;
-
-				return serverSocket;
-			}
-			catch (IOException ioe) {
-				port++;
-			}
-		}
-	}
-
 	private long _installBundle(FrameworkMBean frameworkMBean, int port)
 		throws Exception {
 
+		InetAddress inetAddress = SocketUtil.getInetAddress();
+
 		Path path = BndBundleUtil.createBundle(
 			_filteredSortedTestClass._filteredMethodNames,
-			_inetAddress.getHostAddress(), port, _passCode);
+			inetAddress.getHostAddress(), port, _passCode);
 
 		URI uri = path.toUri();
 
@@ -261,8 +227,6 @@ public class Arquillian extends Runner implements Filterable {
 			Files.delete(path);
 		}
 	}
-
-	private static final int _START_PORT = 32764;
 
 	private static final Logger _logger = Logger.getLogger(
 		Arquillian.class.getName());
@@ -314,10 +278,6 @@ public class Arquillian extends Runner implements Filterable {
 			}
 		}
 	};
-
-	private static final InetAddress _inetAddress =
-		InetAddress.getLoopbackAddress();
-	private static ServerSocket _serverSocket;
 
 	private final Class<?> _clazz;
 	private FilteredSortedTestClass _filteredSortedTestClass;

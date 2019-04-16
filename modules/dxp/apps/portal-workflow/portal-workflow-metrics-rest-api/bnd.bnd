@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Portal Workflow Metrics Rest API
+Bundle-Name: Liferay Portal Workflow Metrics REST API
 Bundle-SymbolicName: com.liferay.portal.workflow.metrics.rest.api
 Bundle-Version: 1.0.0
 Export-Package:\

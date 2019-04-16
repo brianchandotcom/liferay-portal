@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
-import com.liferay.portal.service.util.test.PortletPreferencesImplTestUtil;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.HtmlImpl;
 
@@ -80,8 +79,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 		Assert.assertEquals(expectedXML, actualXML);
 
 		portletPreferencesImpl =
-			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
-				expectedXML);
+			(PortletPreferencesImpl)
+				PortletPreferencesFactoryUtil.fromDefaultXML(expectedXML);
 
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
@@ -134,7 +133,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 			portletPreferencesImpl);
 
 		portletPreferencesImpl =
-			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(actualXML);
+			(PortletPreferencesImpl)
+				PortletPreferencesFactoryUtil.fromDefaultXML(actualXML);
 
 		preferencesMap = portletPreferencesImpl.getPreferences();
 
@@ -237,8 +237,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 		Assert.assertEquals(expectedXML, actualXML);
 
 		portletPreferencesImpl =
-			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
-				expectedXML);
+			(PortletPreferencesImpl)
+				PortletPreferencesFactoryUtil.fromDefaultXML(expectedXML);
 
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
@@ -278,8 +278,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 		Assert.assertEquals(expectedXML, actualXML);
 
 		portletPreferencesImpl =
-			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
-				expectedXML);
+			(PortletPreferencesImpl)
+				PortletPreferencesFactoryUtil.fromDefaultXML(expectedXML);
 
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();
@@ -318,8 +318,8 @@ public class PortletPreferencesFactoryImplUnitTest {
 		Assert.assertEquals(expectedXML, actualXML);
 
 		portletPreferencesImpl =
-			PortletPreferencesImplTestUtil.toPortletPreferencesImpl(
-				expectedXML);
+			(PortletPreferencesImpl)
+				PortletPreferencesFactoryUtil.fromDefaultXML(expectedXML);
 
 		Map<String, Preference> preferencesMap =
 			portletPreferencesImpl.getPreferences();

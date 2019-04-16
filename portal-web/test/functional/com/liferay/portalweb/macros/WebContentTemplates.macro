@@ -425,6 +425,8 @@ definition {
 			);
 		}
 		else {
+			var key_ddlTemplateDescription = "${templateDescription}";
+
 			AssertTextEquals(
 				locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_DESCRIPTION",
 				value1 = "${templateDescription}"

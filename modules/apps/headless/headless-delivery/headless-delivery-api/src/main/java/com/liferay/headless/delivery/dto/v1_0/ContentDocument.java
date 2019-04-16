@@ -183,17 +183,17 @@ public class ContentDocument {
 	protected Long id;
 
 	@Schema(description = "The size in bytes of the ContentDocument.")
-	public Number getSizeInBytes() {
+	public Long getSizeInBytes() {
 		return sizeInBytes;
 	}
 
-	public void setSizeInBytes(Number sizeInBytes) {
+	public void setSizeInBytes(Long sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
 	}
 
 	@JsonIgnore
 	public void setSizeInBytes(
-		UnsafeSupplier<Number, Exception> sizeInBytesUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> sizeInBytesUnsafeSupplier) {
 
 		try {
 			sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -208,7 +208,7 @@ public class ContentDocument {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number sizeInBytes;
+	protected Long sizeInBytes;
 
 	@Schema(description = "The text describing the ContentDocument.")
 	public String getTitle() {

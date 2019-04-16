@@ -155,17 +155,17 @@ public class MessageBoardAttachment {
 	protected Long id;
 
 	@Schema(description = "The size in bytes of the binary file.")
-	public Number getSizeInBytes() {
+	public Long getSizeInBytes() {
 		return sizeInBytes;
 	}
 
-	public void setSizeInBytes(Number sizeInBytes) {
+	public void setSizeInBytes(Long sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
 	}
 
 	@JsonIgnore
 	public void setSizeInBytes(
-		UnsafeSupplier<Number, Exception> sizeInBytesUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> sizeInBytesUnsafeSupplier) {
 
 		try {
 			sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -180,7 +180,7 @@ public class MessageBoardAttachment {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number sizeInBytes;
+	protected Long sizeInBytes;
 
 	@Schema(description = "The title of the binary file.")
 	public String getTitle() {

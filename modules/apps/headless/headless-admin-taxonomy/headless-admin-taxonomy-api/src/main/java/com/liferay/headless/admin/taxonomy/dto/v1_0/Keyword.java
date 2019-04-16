@@ -159,17 +159,17 @@ public class Keyword {
 	@Schema(
 		description = "The number of times this Keyword has been used in other Assets."
 	)
-	public Number getKeywordUsageCount() {
+	public Integer getKeywordUsageCount() {
 		return keywordUsageCount;
 	}
 
-	public void setKeywordUsageCount(Number keywordUsageCount) {
+	public void setKeywordUsageCount(Integer keywordUsageCount) {
 		this.keywordUsageCount = keywordUsageCount;
 	}
 
 	@JsonIgnore
 	public void setKeywordUsageCount(
-		UnsafeSupplier<Number, Exception> keywordUsageCountUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> keywordUsageCountUnsafeSupplier) {
 
 		try {
 			keywordUsageCount = keywordUsageCountUnsafeSupplier.get();
@@ -184,7 +184,7 @@ public class Keyword {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number keywordUsageCount;
+	protected Integer keywordUsageCount;
 
 	@Schema(description = "The name of the Keyword.")
 	public String getName() {

@@ -109,16 +109,16 @@ public class Keyword {
 
 	protected Long id;
 
-	public Number getKeywordUsageCount() {
+	public Integer getKeywordUsageCount() {
 		return keywordUsageCount;
 	}
 
-	public void setKeywordUsageCount(Number keywordUsageCount) {
+	public void setKeywordUsageCount(Integer keywordUsageCount) {
 		this.keywordUsageCount = keywordUsageCount;
 	}
 
 	public void setKeywordUsageCount(
-		UnsafeSupplier<Number, Exception> keywordUsageCountUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> keywordUsageCountUnsafeSupplier) {
 
 		try {
 			keywordUsageCount = keywordUsageCountUnsafeSupplier.get();
@@ -128,7 +128,7 @@ public class Keyword {
 		}
 	}
 
-	protected Number keywordUsageCount;
+	protected Integer keywordUsageCount;
 
 	public String getName() {
 		return name;

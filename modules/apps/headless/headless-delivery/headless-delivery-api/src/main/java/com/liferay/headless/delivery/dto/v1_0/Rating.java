@@ -46,17 +46,17 @@ public class Rating {
 	@Schema(
 		description = "The best possible rating a content can receive, by default normalized to 1.0."
 	)
-	public Number getBestRating() {
+	public Double getBestRating() {
 		return bestRating;
 	}
 
-	public void setBestRating(Number bestRating) {
+	public void setBestRating(Double bestRating) {
 		this.bestRating = bestRating;
 	}
 
 	@JsonIgnore
 	public void setBestRating(
-		UnsafeSupplier<Number, Exception> bestRatingUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> bestRatingUnsafeSupplier) {
 
 		try {
 			bestRating = bestRatingUnsafeSupplier.get();
@@ -71,7 +71,7 @@ public class Rating {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number bestRating;
+	protected Double bestRating;
 
 	@Schema(description = "The creator of the Rating")
 	public Creator getCreator() {
@@ -184,17 +184,17 @@ public class Rating {
 	protected Long id;
 
 	@Schema(description = "The value of the Rating.")
-	public Number getRatingValue() {
+	public Double getRatingValue() {
 		return ratingValue;
 	}
 
-	public void setRatingValue(Number ratingValue) {
+	public void setRatingValue(Double ratingValue) {
 		this.ratingValue = ratingValue;
 	}
 
 	@JsonIgnore
 	public void setRatingValue(
-		UnsafeSupplier<Number, Exception> ratingValueUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> ratingValueUnsafeSupplier) {
 
 		try {
 			ratingValue = ratingValueUnsafeSupplier.get();
@@ -209,22 +209,22 @@ public class Rating {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number ratingValue;
+	protected Double ratingValue;
 
 	@Schema(
 		description = "The worst possible rating a content can receive, by default normalized to 0.0."
 	)
-	public Number getWorstRating() {
+	public Double getWorstRating() {
 		return worstRating;
 	}
 
-	public void setWorstRating(Number worstRating) {
+	public void setWorstRating(Double worstRating) {
 		this.worstRating = worstRating;
 	}
 
 	@JsonIgnore
 	public void setWorstRating(
-		UnsafeSupplier<Number, Exception> worstRatingUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> worstRatingUnsafeSupplier) {
 
 		try {
 			worstRating = worstRatingUnsafeSupplier.get();
@@ -239,7 +239,7 @@ public class Rating {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number worstRating;
+	protected Double worstRating;
 
 	@Override
 	public boolean equals(Object object) {

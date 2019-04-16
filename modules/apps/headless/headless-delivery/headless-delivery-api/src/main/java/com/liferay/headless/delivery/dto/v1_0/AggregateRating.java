@@ -45,17 +45,17 @@ public class AggregateRating {
 	@Schema(
 		description = "The best rating possible (by default normalized to 1.0)."
 	)
-	public Number getBestRating() {
+	public Double getBestRating() {
 		return bestRating;
 	}
 
-	public void setBestRating(Number bestRating) {
+	public void setBestRating(Double bestRating) {
 		this.bestRating = bestRating;
 	}
 
 	@JsonIgnore
 	public void setBestRating(
-		UnsafeSupplier<Number, Exception> bestRatingUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> bestRatingUnsafeSupplier) {
 
 		try {
 			bestRating = bestRatingUnsafeSupplier.get();
@@ -70,20 +70,20 @@ public class AggregateRating {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number bestRating;
+	protected Double bestRating;
 
 	@Schema(description = "The number of ratings.")
-	public Number getRatingCount() {
+	public Integer getRatingCount() {
 		return ratingCount;
 	}
 
-	public void setRatingCount(Number ratingCount) {
+	public void setRatingCount(Integer ratingCount) {
 		this.ratingCount = ratingCount;
 	}
 
 	@JsonIgnore
 	public void setRatingCount(
-		UnsafeSupplier<Number, Exception> ratingCountUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> ratingCountUnsafeSupplier) {
 
 		try {
 			ratingCount = ratingCountUnsafeSupplier.get();
@@ -98,20 +98,20 @@ public class AggregateRating {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number ratingCount;
+	protected Integer ratingCount;
 
 	@Schema(description = "The average rating.")
-	public Number getRatingValue() {
+	public Double getRatingValue() {
 		return ratingValue;
 	}
 
-	public void setRatingValue(Number ratingValue) {
+	public void setRatingValue(Double ratingValue) {
 		this.ratingValue = ratingValue;
 	}
 
 	@JsonIgnore
 	public void setRatingValue(
-		UnsafeSupplier<Number, Exception> ratingValueUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> ratingValueUnsafeSupplier) {
 
 		try {
 			ratingValue = ratingValueUnsafeSupplier.get();
@@ -126,22 +126,22 @@ public class AggregateRating {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number ratingValue;
+	protected Double ratingValue;
 
 	@Schema(
 		description = "The worst rating possible (by default normalized to 0.0)."
 	)
-	public Number getWorstRating() {
+	public Double getWorstRating() {
 		return worstRating;
 	}
 
-	public void setWorstRating(Number worstRating) {
+	public void setWorstRating(Double worstRating) {
 		this.worstRating = worstRating;
 	}
 
 	@JsonIgnore
 	public void setWorstRating(
-		UnsafeSupplier<Number, Exception> worstRatingUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> worstRatingUnsafeSupplier) {
 
 		try {
 			worstRating = worstRatingUnsafeSupplier.get();
@@ -156,7 +156,7 @@ public class AggregateRating {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number worstRating;
+	protected Double worstRating;
 
 	@Override
 	public boolean equals(Object object) {

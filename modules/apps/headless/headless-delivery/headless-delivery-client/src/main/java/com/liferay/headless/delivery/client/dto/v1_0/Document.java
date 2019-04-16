@@ -331,16 +331,16 @@ public class Document {
 
 	protected Integer numberOfComments;
 
-	public Number getSizeInBytes() {
+	public Long getSizeInBytes() {
 		return sizeInBytes;
 	}
 
-	public void setSizeInBytes(Number sizeInBytes) {
+	public void setSizeInBytes(Long sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
 	}
 
 	public void setSizeInBytes(
-		UnsafeSupplier<Number, Exception> sizeInBytesUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> sizeInBytesUnsafeSupplier) {
 
 		try {
 			sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -350,7 +350,7 @@ public class Document {
 		}
 	}
 
-	protected Number sizeInBytes;
+	protected Long sizeInBytes;
 
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;

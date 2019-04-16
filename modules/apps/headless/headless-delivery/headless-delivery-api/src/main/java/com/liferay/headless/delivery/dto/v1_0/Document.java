@@ -448,17 +448,17 @@ public class Document {
 	protected Integer numberOfComments;
 
 	@Schema(description = "The size in bytes of the binary files.")
-	public Number getSizeInBytes() {
+	public Long getSizeInBytes() {
 		return sizeInBytes;
 	}
 
-	public void setSizeInBytes(Number sizeInBytes) {
+	public void setSizeInBytes(Long sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
 	}
 
 	@JsonIgnore
 	public void setSizeInBytes(
-		UnsafeSupplier<Number, Exception> sizeInBytesUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> sizeInBytesUnsafeSupplier) {
 
 		try {
 			sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -473,7 +473,7 @@ public class Document {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number sizeInBytes;
+	protected Long sizeInBytes;
 
 	@Schema(description = "The categories asociated with this Document.")
 	public TaxonomyCategory[] getTaxonomyCategories() {

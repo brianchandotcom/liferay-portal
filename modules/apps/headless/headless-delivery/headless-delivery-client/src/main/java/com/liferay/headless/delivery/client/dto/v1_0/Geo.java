@@ -25,16 +25,16 @@ import javax.annotation.Generated;
 @Generated("")
 public class Geo {
 
-	public Number getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Number latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
 	public void setLatitude(
-		UnsafeSupplier<Number, Exception> latitudeUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> latitudeUnsafeSupplier) {
 
 		try {
 			latitude = latitudeUnsafeSupplier.get();
@@ -44,18 +44,18 @@ public class Geo {
 		}
 	}
 
-	protected Number latitude;
+	protected Double latitude;
 
-	public Number getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Number longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 
 	public void setLongitude(
-		UnsafeSupplier<Number, Exception> longitudeUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> longitudeUnsafeSupplier) {
 
 		try {
 			longitude = longitudeUnsafeSupplier.get();
@@ -65,6 +65,6 @@ public class Geo {
 		}
 	}
 
-	protected Number longitude;
+	protected Double longitude;
 
 }

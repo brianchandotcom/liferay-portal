@@ -46,16 +46,16 @@ public class AdaptedImage {
 
 	protected String contentUrl;
 
-	public Number getHeight() {
+	public Integer getHeight() {
 		return height;
 	}
 
-	public void setHeight(Number height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 
 	public void setHeight(
-		UnsafeSupplier<Number, Exception> heightUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> heightUnsafeSupplier) {
 
 		try {
 			height = heightUnsafeSupplier.get();
@@ -65,7 +65,7 @@ public class AdaptedImage {
 		}
 	}
 
-	protected Number height;
+	protected Integer height;
 
 	public String getResolutionName() {
 		return resolutionName;
@@ -88,16 +88,16 @@ public class AdaptedImage {
 
 	protected String resolutionName;
 
-	public Number getSizeInBytes() {
+	public Long getSizeInBytes() {
 		return sizeInBytes;
 	}
 
-	public void setSizeInBytes(Number sizeInBytes) {
+	public void setSizeInBytes(Long sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
 	}
 
 	public void setSizeInBytes(
-		UnsafeSupplier<Number, Exception> sizeInBytesUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> sizeInBytesUnsafeSupplier) {
 
 		try {
 			sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -107,18 +107,18 @@ public class AdaptedImage {
 		}
 	}
 
-	protected Number sizeInBytes;
+	protected Long sizeInBytes;
 
-	public Number getWidth() {
+	public Integer getWidth() {
 		return width;
 	}
 
-	public void setWidth(Number width) {
+	public void setWidth(Integer width) {
 		this.width = width;
 	}
 
 	public void setWidth(
-		UnsafeSupplier<Number, Exception> widthUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> widthUnsafeSupplier) {
 
 		try {
 			width = widthUnsafeSupplier.get();
@@ -128,6 +128,6 @@ public class AdaptedImage {
 		}
 	}
 
-	protected Number width;
+	protected Integer width;
 
 }

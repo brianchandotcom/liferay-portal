@@ -27,16 +27,16 @@ import javax.annotation.Generated;
 @Generated("")
 public class Rating {
 
-	public Number getBestRating() {
+	public Double getBestRating() {
 		return bestRating;
 	}
 
-	public void setBestRating(Number bestRating) {
+	public void setBestRating(Double bestRating) {
 		this.bestRating = bestRating;
 	}
 
 	public void setBestRating(
-		UnsafeSupplier<Number, Exception> bestRatingUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> bestRatingUnsafeSupplier) {
 
 		try {
 			bestRating = bestRatingUnsafeSupplier.get();
@@ -46,7 +46,7 @@ public class Rating {
 		}
 	}
 
-	protected Number bestRating;
+	protected Double bestRating;
 
 	public Creator getCreator() {
 		return creator;
@@ -130,16 +130,16 @@ public class Rating {
 
 	protected Long id;
 
-	public Number getRatingValue() {
+	public Double getRatingValue() {
 		return ratingValue;
 	}
 
-	public void setRatingValue(Number ratingValue) {
+	public void setRatingValue(Double ratingValue) {
 		this.ratingValue = ratingValue;
 	}
 
 	public void setRatingValue(
-		UnsafeSupplier<Number, Exception> ratingValueUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> ratingValueUnsafeSupplier) {
 
 		try {
 			ratingValue = ratingValueUnsafeSupplier.get();
@@ -149,18 +149,18 @@ public class Rating {
 		}
 	}
 
-	protected Number ratingValue;
+	protected Double ratingValue;
 
-	public Number getWorstRating() {
+	public Double getWorstRating() {
 		return worstRating;
 	}
 
-	public void setWorstRating(Number worstRating) {
+	public void setWorstRating(Double worstRating) {
 		this.worstRating = worstRating;
 	}
 
 	public void setWorstRating(
-		UnsafeSupplier<Number, Exception> worstRatingUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> worstRatingUnsafeSupplier) {
 
 		try {
 			worstRating = worstRatingUnsafeSupplier.get();
@@ -170,6 +170,6 @@ public class Rating {
 		}
 	}
 
-	protected Number worstRating;
+	protected Double worstRating;
 
 }

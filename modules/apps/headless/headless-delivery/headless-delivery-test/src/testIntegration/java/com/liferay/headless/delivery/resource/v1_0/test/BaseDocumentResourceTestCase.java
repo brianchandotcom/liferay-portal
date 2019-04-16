@@ -2023,6 +2023,7 @@ public abstract class BaseDocumentResourceTestCase {
 				encodingFormat = RandomTestUtil.randomString();
 				fileExtension = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				sizeInBytes = RandomTestUtil.randomLong();
 				title = RandomTestUtil.randomString();
 			}
 		};

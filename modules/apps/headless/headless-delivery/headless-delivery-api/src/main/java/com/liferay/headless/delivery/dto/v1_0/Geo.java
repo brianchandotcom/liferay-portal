@@ -43,17 +43,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Geo {
 
 	@Schema(description = "The latitude of a point in space.")
-	public Number getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Number latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
 	@JsonIgnore
 	public void setLatitude(
-		UnsafeSupplier<Number, Exception> latitudeUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> latitudeUnsafeSupplier) {
 
 		try {
 			latitude = latitudeUnsafeSupplier.get();
@@ -68,20 +68,20 @@ public class Geo {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number latitude;
+	protected Double latitude;
 
 	@Schema(description = "The longitude of a point in space.")
-	public Number getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Number longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 
 	@JsonIgnore
 	public void setLongitude(
-		UnsafeSupplier<Number, Exception> longitudeUnsafeSupplier) {
+		UnsafeSupplier<Double, Exception> longitudeUnsafeSupplier) {
 
 		try {
 			longitude = longitudeUnsafeSupplier.get();
@@ -96,7 +96,7 @@ public class Geo {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number longitude;
+	protected Double longitude;
 
 	@Override
 	public boolean equals(Object object) {

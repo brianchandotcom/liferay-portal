@@ -71,17 +71,17 @@ public class AdaptedImage {
 	protected String contentUrl;
 
 	@Schema(description = "The height of the image.")
-	public Number getHeight() {
+	public Integer getHeight() {
 		return height;
 	}
 
-	public void setHeight(Number height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 
 	@JsonIgnore
 	public void setHeight(
-		UnsafeSupplier<Number, Exception> heightUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> heightUnsafeSupplier) {
 
 		try {
 			height = heightUnsafeSupplier.get();
@@ -96,7 +96,7 @@ public class AdaptedImage {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number height;
+	protected Integer height;
 
 	@Schema(description = "A descriptive name of this version.")
 	public String getResolutionName() {
@@ -127,17 +127,17 @@ public class AdaptedImage {
 	protected String resolutionName;
 
 	@Schema(description = "The size in bytes of the image.")
-	public Number getSizeInBytes() {
+	public Long getSizeInBytes() {
 		return sizeInBytes;
 	}
 
-	public void setSizeInBytes(Number sizeInBytes) {
+	public void setSizeInBytes(Long sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
 	}
 
 	@JsonIgnore
 	public void setSizeInBytes(
-		UnsafeSupplier<Number, Exception> sizeInBytesUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> sizeInBytesUnsafeSupplier) {
 
 		try {
 			sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -152,20 +152,20 @@ public class AdaptedImage {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number sizeInBytes;
+	protected Long sizeInBytes;
 
 	@Schema(description = "The width of the image.")
-	public Number getWidth() {
+	public Integer getWidth() {
 		return width;
 	}
 
-	public void setWidth(Number width) {
+	public void setWidth(Integer width) {
 		this.width = width;
 	}
 
 	@JsonIgnore
 	public void setWidth(
-		UnsafeSupplier<Number, Exception> widthUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> widthUnsafeSupplier) {
 
 		try {
 			width = widthUnsafeSupplier.get();
@@ -180,7 +180,7 @@ public class AdaptedImage {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Number width;
+	protected Integer width;
 
 	@Override
 	public boolean equals(Object object) {

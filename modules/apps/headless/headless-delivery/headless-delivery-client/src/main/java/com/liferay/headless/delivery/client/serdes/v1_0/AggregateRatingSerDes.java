@@ -165,8 +165,7 @@ public class AggregateRatingSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "bestRating")) {
 				if (jsonParserFieldValue != null) {
-					aggregateRating.setBestRating(
-						Integer.valueOf((String)jsonParserFieldValue));
+					aggregateRating.setBestRating((Double)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "ratingCount")) {
@@ -178,13 +177,13 @@ public class AggregateRatingSerDes {
 			else if (Objects.equals(jsonParserFieldName, "ratingValue")) {
 				if (jsonParserFieldValue != null) {
 					aggregateRating.setRatingValue(
-						Integer.valueOf((String)jsonParserFieldValue));
+						(Double)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "worstRating")) {
 				if (jsonParserFieldValue != null) {
 					aggregateRating.setWorstRating(
-						Integer.valueOf((String)jsonParserFieldValue));
+						(Double)jsonParserFieldValue);
 				}
 			}
 			else {

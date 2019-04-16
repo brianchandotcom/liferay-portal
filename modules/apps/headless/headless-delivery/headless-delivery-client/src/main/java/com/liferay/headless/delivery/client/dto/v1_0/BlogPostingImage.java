@@ -140,16 +140,16 @@ public class BlogPostingImage {
 
 	protected Long id;
 
-	public Number getSizeInBytes() {
+	public Long getSizeInBytes() {
 		return sizeInBytes;
 	}
 
-	public void setSizeInBytes(Number sizeInBytes) {
+	public void setSizeInBytes(Long sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
 	}
 
 	public void setSizeInBytes(
-		UnsafeSupplier<Number, Exception> sizeInBytesUnsafeSupplier) {
+		UnsafeSupplier<Long, Exception> sizeInBytesUnsafeSupplier) {
 
 		try {
 			sizeInBytes = sizeInBytesUnsafeSupplier.get();
@@ -159,7 +159,7 @@ public class BlogPostingImage {
 		}
 	}
 
-	protected Number sizeInBytes;
+	protected Long sizeInBytes;
 
 	public String getTitle() {
 		return title;

@@ -613,22 +613,21 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		String propertyValue = getFirstPropertyValue(
 			"test.batch.class.names.excludes");
 
-		if (propertyValue != null) {
-			if (!privatePortalBranch) {
-				if (propertyValue.isEmpty()) {
-					propertyValue = _GLOB_MODULES_PRIVATE;
-				}
-				else {
-					propertyValue = JenkinsResultsParserUtil.combine(
-						propertyValue, ",", _GLOB_MODULES_PRIVATE);
-				}
-			}
+		if (propertyValue == null) {
+			propertyValue = JenkinsResultsParserUtil.getProperty(
+				jobProperties, "test.class.names.excludes");
+		}
 
+		if (testPrivatePortalBranch) {
 			return propertyValue;
 		}
 
-		return JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.class.names.excludes");
+		if (propertyValue.isEmpty()) {
+			return _GLOB_MODULES_PRIVATE;
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			propertyValue, ",", _GLOB_MODULES_PRIVATE);
 	}
 
 	private String _getTestClassNamesIncludesPropertyValue() {

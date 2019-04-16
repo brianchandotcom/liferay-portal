@@ -18,6 +18,8 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
+import java.util.Locale;
+
 import org.jsoup.nodes.Element;
 
 /**
@@ -32,6 +34,12 @@ public interface EditableElementParser {
 	}
 
 	public String getFieldTemplate();
+
+	public default JSONObject getFieldTemplateConfigJSONObject(
+		String fieldName, Locale locale) {
+
+		return JSONFactoryUtil.createJSONObject();
+	}
 
 	public String getValue(Element element);
 

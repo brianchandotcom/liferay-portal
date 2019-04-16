@@ -314,24 +314,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		if (Validator.isNotNull(layoutPrototypeUuid) &&
 			!layoutPrototypeLinkEnabled) {
 
-			LayoutPrototype layoutPrototype =
-				layoutPrototypeLocalService.
-					getLayoutPrototypeByUuidAndCompanyId(
-						layoutPrototypeUuid, layout.getCompanyId());
-
-			try {
-				SitesUtil.applyLayoutPrototype(
-					layoutPrototype, layout, layoutPrototypeLinkEnabled);
-			}
-			catch (PortalException pe) {
-				throw pe;
-			}
-			catch (SystemException se) {
-				throw se;
-			}
-			catch (Exception e) {
-				throw new SystemException(e);
-			}
+			_applyLayoutPrototype(
+				layoutPrototypeUuid, layout, layoutPrototypeLinkEnabled);
 		}
 
 		// Resources
@@ -2548,11 +2532,23 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		if (Validator.isNotNull(layoutPrototypeUuid)) {
 			draftLayout.setLayoutPrototypeUuid(layoutPrototypeUuid);
 
+			boolean applyLayoutPrototype = ParamUtil.getBoolean(
+				serviceContext, "applyLayoutPrototype");
+
 			boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
 				serviceContext, "layoutPrototypeLinkEnabled");
 
 			draftLayout.setLayoutPrototypeLinkEnabled(
 				layoutPrototypeLinkEnabled);
+
+			if (applyLayoutPrototype) {
+				serviceContext.setAttribute(
+					"applyLayoutPrototype", Boolean.FALSE);
+
+				_applyLayoutPrototype(
+					layoutPrototypeUuid, draftLayout,
+					layoutPrototypeLinkEnabled);
+			}
 		}
 
 		draftLayout.setExpandoBridgeAttributes(serviceContext);
@@ -3195,6 +3191,30 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return layouts;
+	}
+
+	private void _applyLayoutPrototype(
+			String layoutPrototypeUuid, Layout layout,
+			boolean layoutPrototypeLinkEnabled)
+		throws PortalException {
+
+		LayoutPrototype layoutPrototype =
+			layoutPrototypeLocalService.getLayoutPrototypeByUuidAndCompanyId(
+				layoutPrototypeUuid, layout.getCompanyId());
+
+		try {
+			SitesUtil.applyLayoutPrototype(
+				layoutPrototype, layout, layoutPrototypeLinkEnabled);
+		}
+		catch (PortalException pe) {
+			throw pe;
+		}
+		catch (SystemException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	private SearchContext _buildSearchContext(

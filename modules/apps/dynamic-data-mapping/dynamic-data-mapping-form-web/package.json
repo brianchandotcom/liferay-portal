@@ -174,7 +174,6 @@
 	"private": true,
 	"scripts": {
 		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
-		"checkFormat": "npm run csf",
 		"checkFormat": "csf src/**/*.es.js src/**/*.jsp test/**/*.es.js",
 		"format": "npm run csf -- -i",
 		"start": "node watch.js",

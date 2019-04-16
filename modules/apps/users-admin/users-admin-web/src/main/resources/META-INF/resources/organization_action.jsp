@@ -182,4 +182,16 @@ long organizationGroupId = organization.getGroupId();
 			url="<%= taglibDeleteURL %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= hasUpdatePermission %>">
+		<portlet:actionURL name="/users_admin/edit_organization_assignments" var="removeOrganizationURL">
+			<portlet:param name="assignmentsRedirect" value="<%= redirect %>" />
+			<portlet:param name="removeOrganizationIds" value="<%= String.valueOf(organizationId) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message="remove"
+			url="<%= removeOrganizationURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

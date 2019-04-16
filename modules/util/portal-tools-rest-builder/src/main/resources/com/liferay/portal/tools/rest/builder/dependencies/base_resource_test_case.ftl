@@ -465,8 +465,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						${schemaVarName}1);
 
-						Thread.sleep(1000);
-
 						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
 
 						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>

@@ -1,10 +1,12 @@
 @if $compat-icons {
-	span[class^="icon-monospaced"], .icon-monospaced {
-		display: inline-block;
-		height: $icon-monospaced-size;
-		line-height: 34px;
-		text-align: center;
-		width: $icon-monospaced-size;
+	.icon-monospaced {
+		&, &[class^="icon-"], &[class*=" icon-"] {
+			display: inline-block;
+			height: $icon-monospaced-size;
+			line-height: 34px;
+			text-align: center;
+			width: $icon-monospaced-size;
+		}
 	}
 
 	.icon-monospaced.lexicon-icon {

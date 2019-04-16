@@ -82,9 +82,6 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 							dialog: {
 								destroyOnHide: true
 							},
-							dialogIframe: {
-								bodyCssClass: 'dialog-with-footer'
-							},
 							title: '<liferay-ui:message key="preview" />',
 							uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/preview_article_content_template.jsp" /><portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" /><portlet:param name="articleId" value="<%= String.valueOf(article.getArticleId()) %>" /><portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" /></portlet:renderURL>'
 						}

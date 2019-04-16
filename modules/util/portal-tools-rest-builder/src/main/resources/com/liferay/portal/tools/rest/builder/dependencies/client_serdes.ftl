@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -130,6 +131,46 @@ public class ${schemaName}SerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(${schemaName} ${schemaVarName}) {
+		if (${schemaVarName} == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		<#assign
+		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
+		/>
+
+		<#list properties?keys as propertyName>
+			<#assign
+			propertyType = properties[propertyName]
+			/>
+
+			<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "Date[]")>
+				DateFormat liferayToJSONDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+				<#break>
+			</#if>
+		</#list>
+
+		<#list properties?keys as propertyName>
+
+			<#assign
+				propertyType = properties[propertyName]
+			/>
+
+			<#if allSchemas[propertyType]??>
+				map.put("${propertyName}", ${propertyType}SerDes.toJSON(${schemaVarName}.get${propertyName?cap_first}()));
+			<#elseif stringUtil.equals(propertyType, "Date")>
+				map.put("${propertyName}", liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
+			<#else>
+				map.put("${propertyName}", String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
+			</#if>
+		</#list>
+
+		return map;
 	}
 
 	private static class ${schemaName}JSONParser extends BaseJSONParser<${schemaName}> {

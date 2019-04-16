@@ -1234,7 +1234,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			sb.append("\"" + entry.getKey() + "\": ");
 			sb.append("\"" + entry.getValue() + "\"");
+			sb.append(",");
 		}
+		sb.setLength(sb.length() - 1);
 
 		sb.append("}");
 

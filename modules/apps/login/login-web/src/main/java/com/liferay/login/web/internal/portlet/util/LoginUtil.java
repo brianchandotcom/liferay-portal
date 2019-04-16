@@ -16,13 +16,11 @@ package com.liferay.login.web.internal.portlet.util;
 
 import com.liferay.login.web.internal.constants.LoginPortletKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -48,29 +46,12 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Scott Lee
  */
 public class LoginUtil {
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             AuthenticatedSessionManagerUtil#getAuthenticatedUserId(
-	 *             HttpServletRequest, String, String, String)}
-	 */
-	@Deprecated
-	public static long getAuthenticatedUserId(
-			HttpServletRequest httpServletRequest, String login,
-			String password, String authType)
-		throws PortalException {
-
-		return AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
-			httpServletRequest, login, password, authType);
-	}
 
 	public static Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
@@ -184,37 +165,6 @@ public class LoginUtil {
 		return portletURL;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             AuthenticatedSessionManagerUtil#login(HttpServletRequest,
-	 *             HttpServletResponse, String, String, boolean, String)}
-	 */
-	@Deprecated
-	public static void login(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String login,
-			String password, boolean rememberMe, String authType)
-		throws Exception {
-
-		AuthenticatedSessionManagerUtil.login(
-			httpServletRequest, httpServletResponse, login, password,
-			rememberMe, authType);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             AuthenticatedSessionManagerUtil#renewSession(
-	 *             HttpServletRequest, HttpSession)}
-	 */
-	@Deprecated
-	public static HttpSession renewSession(
-			HttpServletRequest httpServletRequest, HttpSession session)
-		throws Exception {
-
-		return AuthenticatedSessionManagerUtil.renewSession(
-			httpServletRequest, session);
-	}
-
 	public static void sendPassword(ActionRequest actionRequest)
 		throws Exception {
 
@@ -247,16 +197,6 @@ public class LoginUtil {
 		UserLocalServiceUtil.sendPassword(
 			company.getCompanyId(), toAddress, fromName, fromAddress, subject,
 			body, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             AuthenticatedSessionManagerUtil#signOutSimultaneousLogins(
-	 *             long)}
-	 */
-	@Deprecated
-	public static void signOutSimultaneousLogins(long userId) throws Exception {
-		AuthenticatedSessionManagerUtil.signOutSimultaneousLogins(userId);
 	}
 
 }

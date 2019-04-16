@@ -37,7 +37,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 				<input class="field form-control lfr-input-text" id="<portlet:namespace />ddmTemplateName" readonly="readonly" title="<%= LanguageUtil.get(request, "template-name") %>" type="text" value="<%= (ddmTemplate != null) ? HtmlUtil.escape(ddmTemplate.getName(locale)) : LanguageUtil.get(request, "no-template") %>" />
 			</div>
 
-			<c:if test="<%= (article != null) && (ddmTemplate != null) %>">
+			<c:if test="<%= article != null %>">
 				<div class="input-group-item input-group-item-shrink">
 					<clay:button
 						icon="view"

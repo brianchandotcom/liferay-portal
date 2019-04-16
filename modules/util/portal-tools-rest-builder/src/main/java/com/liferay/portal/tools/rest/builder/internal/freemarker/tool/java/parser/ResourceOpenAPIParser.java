@@ -585,6 +585,10 @@ public class ResourceOpenAPIParser {
 
 			sortedContents.putAll(response.getContent());
 
+			if (sortedContents.isEmpty()) {
+				return void.class.getName();
+			}
+
 			for (Content content : sortedContents.values()) {
 				Schema schema = content.getSchema();
 

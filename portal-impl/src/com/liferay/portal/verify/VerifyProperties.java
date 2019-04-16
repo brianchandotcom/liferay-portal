@@ -669,6 +669,23 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.currency.converter.web"
 		},
 
+		// Discussion
+
+		{
+			"discussion.email.body", "discussion.email.body",
+			"com.liferay.comment.api"
+		},
+
+		{
+			"discussion.email.comments.added.enabled",
+			"discussion.email.comments.added.enabled", "com.liferay.comment.api"
+		},
+
+		{
+			"discussion.email.subject", "discussion.email.subject",
+			"com.liferay.comment.api"
+		},
+
 		// Document Library
 
 		{

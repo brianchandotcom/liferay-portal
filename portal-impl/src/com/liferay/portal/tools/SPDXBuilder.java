@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import java.util.List;
 import java.util.Map;
@@ -62,11 +61,13 @@ public class SPDXBuilder {
 			System.setProperty("line.separator", StringPool.NEW_LINE);
 
 			String content = Dom4jUtil.toString(_getDocument(xmls, rdf));
-			String prefix = rdf.substring(0, rdf.lastIndexOf('.'));
+
+			File rdfFile = new File(rdf);
+
+			File file = new File(rdfFile.getParentFile(), "spdx-complete.rdf");
 
 			Files.write(
-				Paths.get(prefix + "-complete.rdf"),
-				content.getBytes(StandardCharsets.UTF_8));
+				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
 		}
 		catch (Exception e) {
 			e.printStackTrace();

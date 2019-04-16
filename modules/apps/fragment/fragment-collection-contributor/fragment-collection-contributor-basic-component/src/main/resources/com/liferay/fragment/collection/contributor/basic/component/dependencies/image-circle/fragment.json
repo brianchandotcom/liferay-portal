@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "image-circle",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Image Circle",
+	"thumbnail": "image_circle.png",
+	"type": "component"
+}

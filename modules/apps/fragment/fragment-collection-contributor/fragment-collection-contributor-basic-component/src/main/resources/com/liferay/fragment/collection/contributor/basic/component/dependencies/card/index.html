@@ -1,21 +1,20 @@
-<div class="p-3">
-	<div class="card shadow-sm">
-		<lfr-editable id="cardImg00" type="image">
-			<img alt="" class="rounded-top mw-100" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=" style="width:100vw;">
+<div class="component-card pb-4">
+	<div class="card shadow-sm m-0">
+		<lfr-editable id="01-img" type="image">
+			<img alt="responsive image" class="img-fluid rounded-top" src="https://dummyimage.com/16:9x1080/A7A9BC/A7A9BC.png">
 		</lfr-editable>
-
-		<div class="card-body">
-			<h3 class="h2">
-				<lfr-editable id="cardTitle00" type="rich-text">Heading Example</lfr-editable>
-			</h3>
-
-			<div class="mt-3">
-				<lfr-editable id="cardContent00" type="rich-text">
-					This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+		<div class="card-body py-4">
+			<lfr-editable id="02-title" type="rich-text">
+				<h2>Card Title Example</h2>
+			</lfr-editable>
+			<div class="mb-4">
+				<lfr-editable id="03-content" type="rich-text">
+					<p>This is an example of quick text to fill the body of the card with some content in order to present it properly in page. We hope you like it.</p>
 				</lfr-editable>
 			</div>
-
-			<button type="button" class="btn btn-secondary">Read More</button>
+			<lfr-editable id="04-link" type="link">
+				<a href="#" class="link">Go somewhere</a>
+			</lfr-editable>
 		</div>
 	</div>
 </div>

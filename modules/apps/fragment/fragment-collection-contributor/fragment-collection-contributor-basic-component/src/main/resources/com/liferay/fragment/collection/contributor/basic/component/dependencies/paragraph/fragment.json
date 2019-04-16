@@ -1,9 +1,9 @@
 {
 	"cssPath": "index.css",
-	"fragmentEntryKey": "text",
+	"fragmentEntryKey": "paragraph",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Text",
-	"thumbnail": "text.png",
+	"thumbnail": "paragraph.png",
 	"type": "component"
 }

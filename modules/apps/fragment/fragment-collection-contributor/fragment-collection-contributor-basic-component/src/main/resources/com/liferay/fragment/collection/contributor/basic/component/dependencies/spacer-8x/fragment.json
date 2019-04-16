@@ -1,9 +1,9 @@
 {
 	"cssPath": "index.css",
-	"fragmentEntryKey": "quote",
+	"fragmentEntryKey": "spacer-8x",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Quote",
-	"thumbnail": "quote.png",
+	"name": "Spacer 8x",
+	"thumbnail": "spacer_8x.png",
 	"type": "component"
 }

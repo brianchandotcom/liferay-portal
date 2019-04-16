@@ -29,8 +29,11 @@ import org.talend.sdk.component.api.processor.AfterGroup;
 import org.talend.sdk.component.api.processor.BeforeGroup;
 import org.talend.sdk.component.api.processor.ElementListener;
 import org.talend.sdk.component.api.processor.Input;
+import org.talend.sdk.component.api.processor.Output;
+import org.talend.sdk.component.api.processor.OutputEmitter;
 import org.talend.sdk.component.api.processor.Processor;
 import org.talend.sdk.component.api.record.Record;
+import org.talend.sdk.component.api.service.configuration.LocalConfiguration;
 
 /**
  * @author Zoltán Takács
@@ -43,10 +46,12 @@ public class LiferayOutput implements Serializable {
 	public LiferayOutput(
 		@Option("liferayOutputConfiguration") final
 			LiferayOutputConfiguration liferayOutputConfiguration,
-		final TalendService talendService) {
+		final TalendService talendService,
+		final LocalConfiguration localConfiguration) {
 
 		_liferayOutputConfiguration = liferayOutputConfiguration;
 		_talendService = talendService;
+		_localConfiguration = localConfiguration;
 	}
 
 	@AfterGroup
@@ -62,7 +67,10 @@ public class LiferayOutput implements Serializable {
 	}
 
 	@ElementListener
-	public void onNext(@Input final Record record) {
+	public void onNext(
+		@Input final Record inputRecord,
+		@Output final OutputEmitter<Record> mainFlowEmitter,
+		@Output("REJECT") final OutputEmitter<Record> rejectFlowEmitter) {
 	}
 
 	@PreDestroy
@@ -70,6 +78,7 @@ public class LiferayOutput implements Serializable {
 	}
 
 	private final LiferayOutputConfiguration _liferayOutputConfiguration;
+	private final LocalConfiguration _localConfiguration;
 	private final TalendService _talendService;
 
 }

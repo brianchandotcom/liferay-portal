@@ -1,0 +1,16 @@
+.section-features .intro {
+	margin: 0 auto;
+	max-width: 100%;
+	width: 600px;
+}
+.section-features .item {
+	margin-bottom: 48px;
+	padding-left: 80px;
+}
+.section-features .description {
+	color: #6B6C7E;
+}
+.section-features .feature-image {
+	float: left;
+	margin-left: -64px;
+}

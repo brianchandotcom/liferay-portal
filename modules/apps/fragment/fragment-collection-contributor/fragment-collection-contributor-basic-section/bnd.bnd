@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Fragment Collection Contributor Basic Section
+Bundle-SymbolicName: com.liferay.fragment.collection.contributor.basic.section
+Bundle-Version: 1.0.0
+Web-ContextPath: /fragment-collection-contributor-basic-section
+-dsannotations-options: inherit

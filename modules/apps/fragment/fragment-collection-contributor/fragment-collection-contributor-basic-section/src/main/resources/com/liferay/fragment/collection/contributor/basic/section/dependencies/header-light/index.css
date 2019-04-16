@@ -1,0 +1,8 @@
+.navbar-section .portlet {
+	margin: 0;
+}
+
+.navbar-section .navbar-nav .nav-link {
+	font-weight: 600;
+	padding: 0 1rem;
+}

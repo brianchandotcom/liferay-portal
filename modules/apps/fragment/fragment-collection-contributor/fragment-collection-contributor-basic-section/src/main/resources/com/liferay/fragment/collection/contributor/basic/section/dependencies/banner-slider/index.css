@@ -1,0 +1,11 @@
+.banner-carousel .carousel-inner {
+	max-height: 528px;
+}
+
+.bd-example.banner-carousel .carousel-caption {
+	left: 0;
+	max-width: 100%;
+	right: 0;
+	top: 168px;
+	width: 624px;
+}

@@ -1,0 +1,12 @@
+.navbar.footer-navigation-fragment {
+	border-top: 1px solid #E7E7ED;
+}
+
+.footer-navigation-fragment .portlet {
+	margin-bottom: 0;
+}
+
+.footer-navigation-fragment .navbar-nav .nav-link {
+	font-weight: 600;
+	padding: 0 1rem;
+}

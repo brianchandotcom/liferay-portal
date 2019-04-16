@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "banner-slider",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Banner Slider",
+	"thumbnail": "banner_slider.png",
+	"type": "section"
+}

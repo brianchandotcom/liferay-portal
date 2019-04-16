@@ -1,0 +1,8 @@
+.navbar-dark-fragment .portlet {
+	margin: 0;
+}
+
+.navbar-dark-fragment .navbar-nav .nav-link {
+	font-weight: 600;
+	padding: 0 1rem;
+}

@@ -1,0 +1,13 @@
+.banner {
+	background-color: #A7A9BC;
+	background-image: url("https://dummyimage.com/16:9x1080/A7A9BC/A7A9BC.png");
+	background-position: center;
+	background-size: cover;
+	color: #FFF;
+	min-height: 528px;
+}
+
+.banner .banner-content {
+	max-width: 100%;
+	width: 600px;
+}

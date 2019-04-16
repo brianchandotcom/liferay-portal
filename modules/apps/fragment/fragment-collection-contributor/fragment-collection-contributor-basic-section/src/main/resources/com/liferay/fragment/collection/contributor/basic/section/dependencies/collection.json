@@ -1,0 +1,17 @@
+{
+	"fragments": [
+		"banner",
+		"banner-center",
+		"banner-cover",
+		"banner-cover-center",
+		"banner-slider",
+		"features",
+		"footer-nav-dark",
+		"footer-nav-light",
+		"header-dark",
+		"header-light",
+		"highlights",
+		"highlights-circle"
+	],
+	"name": "Basic Sections"
+}

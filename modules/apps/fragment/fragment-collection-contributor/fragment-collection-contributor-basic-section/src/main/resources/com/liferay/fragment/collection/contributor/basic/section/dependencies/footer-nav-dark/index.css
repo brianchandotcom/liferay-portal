@@ -1,0 +1,8 @@
+.footer-navigation-fragment .portlet {
+	margin-bottom: 0;
+}
+
+.footer-navigation-fragment .navbar-nav .nav-link {
+	font-weight: 600;
+	padding: 0 1rem;
+}

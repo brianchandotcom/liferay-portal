@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "footer-nav-dark",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Footer Nav Dark",
+	"thumbnail": "footer_nav_dark.png",
+	"type": "section"
+}

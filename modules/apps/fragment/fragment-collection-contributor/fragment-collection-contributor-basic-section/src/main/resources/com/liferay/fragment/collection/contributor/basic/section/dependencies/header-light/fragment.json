@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "header-light",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Header Light",
+	"thumbnail": "header_light.png",
+	"type": "section"
+}

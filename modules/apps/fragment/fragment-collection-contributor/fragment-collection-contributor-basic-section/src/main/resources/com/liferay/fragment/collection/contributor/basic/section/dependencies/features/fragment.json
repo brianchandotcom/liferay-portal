@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "features",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Features",
+	"thumbnail": "features.png",
+	"type": "section"
+}

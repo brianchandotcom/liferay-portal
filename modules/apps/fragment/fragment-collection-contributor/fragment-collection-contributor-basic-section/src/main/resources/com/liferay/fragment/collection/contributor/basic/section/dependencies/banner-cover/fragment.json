@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "banner-cover",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Banner Cover",
+	"thumbnail": "banner_cover.png",
+	"type": "section"
+}

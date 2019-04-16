@@ -949,12 +949,6 @@ definition {
 
 	macro viewAssetMetadataPG {
 		var key_categoryName = "${categoryName}";
-		var key_vocabularyName = "${vocabularyName}";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "AP#METADATA_VOCABULARY",
-			value1 = "${vocabularyName}"
-		);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#METADATA_CATEGORY",

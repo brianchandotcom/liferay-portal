@@ -1033,8 +1033,7 @@ definition {
 
 		if (isSet(categoryName)) {
 			AssetPublisherPortlet.viewAssetMetadataPG(
-				categoryName = "${categoryName}",
-				vocabularyName = "Vocabulary Name"
+				categoryName = "${categoryName}"
 			);
 		}
 	}

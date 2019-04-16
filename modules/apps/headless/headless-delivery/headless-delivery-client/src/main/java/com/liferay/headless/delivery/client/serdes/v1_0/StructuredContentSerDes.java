@@ -23,6 +23,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -415,6 +417,93 @@ public class StructuredContentSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		StructuredContent structuredContent) {
+
+		if (structuredContent == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"aggregateRating",
+			AggregateRatingSerDes.toJSON(
+				structuredContent.getAggregateRating()));
+
+		map.put(
+			"availableLanguages",
+			String.valueOf(structuredContent.getAvailableLanguages()));
+
+		map.put(
+			"contentFields",
+			String.valueOf(structuredContent.getContentFields()));
+
+		map.put(
+			"contentStructureId",
+			String.valueOf(structuredContent.getContentStructureId()));
+
+		map.put(
+			"creator", CreatorSerDes.toJSON(structuredContent.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(structuredContent.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(
+				structuredContent.getDateModified()));
+
+		map.put(
+			"datePublished",
+			liferayToJSONDateFormat.format(
+				structuredContent.getDatePublished()));
+
+		map.put(
+			"description", String.valueOf(structuredContent.getDescription()));
+
+		map.put(
+			"friendlyUrlPath",
+			String.valueOf(structuredContent.getFriendlyUrlPath()));
+
+		map.put("id", String.valueOf(structuredContent.getId()));
+
+		map.put("key", String.valueOf(structuredContent.getKey()));
+
+		map.put("keywords", String.valueOf(structuredContent.getKeywords()));
+
+		map.put(
+			"numberOfComments",
+			String.valueOf(structuredContent.getNumberOfComments()));
+
+		map.put(
+			"renderedContents",
+			String.valueOf(structuredContent.getRenderedContents()));
+
+		map.put("siteId", String.valueOf(structuredContent.getSiteId()));
+
+		map.put(
+			"taxonomyCategories",
+			String.valueOf(structuredContent.getTaxonomyCategories()));
+
+		map.put(
+			"taxonomyCategoryIds",
+			String.valueOf(structuredContent.getTaxonomyCategoryIds()));
+
+		map.put("title", String.valueOf(structuredContent.getTitle()));
+
+		map.put("uuid", String.valueOf(structuredContent.getUuid()));
+
+		map.put(
+			"viewableBy", String.valueOf(structuredContent.getViewableBy()));
+
+		return map;
 	}
 
 	private static class StructuredContentJSONParser

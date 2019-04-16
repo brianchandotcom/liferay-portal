@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -149,6 +151,35 @@ public class BlogPostingImageSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(BlogPostingImage blogPostingImage) {
+		if (blogPostingImage == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("contentUrl", String.valueOf(blogPostingImage.getContentUrl()));
+
+		map.put(
+			"encodingFormat",
+			String.valueOf(blogPostingImage.getEncodingFormat()));
+
+		map.put(
+			"fileExtension",
+			String.valueOf(blogPostingImage.getFileExtension()));
+
+		map.put("id", String.valueOf(blogPostingImage.getId()));
+
+		map.put(
+			"sizeInBytes", String.valueOf(blogPostingImage.getSizeInBytes()));
+
+		map.put("title", String.valueOf(blogPostingImage.getTitle()));
+
+		map.put("viewableBy", String.valueOf(blogPostingImage.getViewableBy()));
+
+		return map;
 	}
 
 	private static class BlogPostingImageJSONParser

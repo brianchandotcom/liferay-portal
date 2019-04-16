@@ -20,6 +20,8 @@ import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -172,6 +174,40 @@ public class RoleSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Role role) {
+		if (role == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"availableLanguages", String.valueOf(role.getAvailableLanguages()));
+
+		map.put("creator", CreatorSerDes.toJSON(role.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(role.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(role.getDateModified()));
+
+		map.put("description", String.valueOf(role.getDescription()));
+
+		map.put("id", String.valueOf(role.getId()));
+
+		map.put("name", String.valueOf(role.getName()));
+
+		map.put("roleType", String.valueOf(role.getRoleType()));
+
+		return map;
 	}
 
 	private static class RoleJSONParser extends BaseJSONParser<Role> {

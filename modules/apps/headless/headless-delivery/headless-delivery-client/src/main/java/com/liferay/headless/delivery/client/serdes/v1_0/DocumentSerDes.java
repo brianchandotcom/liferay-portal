@@ -22,6 +22,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -326,6 +328,67 @@ public class DocumentSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Document document) {
+		if (document == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put("adaptedImages", String.valueOf(document.getAdaptedImages()));
+
+		map.put(
+			"aggregateRating",
+			AggregateRatingSerDes.toJSON(document.getAggregateRating()));
+
+		map.put("contentUrl", String.valueOf(document.getContentUrl()));
+
+		map.put("creator", CreatorSerDes.toJSON(document.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(document.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(document.getDateModified()));
+
+		map.put("description", String.valueOf(document.getDescription()));
+
+		map.put(
+			"documentFolderId", String.valueOf(document.getDocumentFolderId()));
+
+		map.put("encodingFormat", String.valueOf(document.getEncodingFormat()));
+
+		map.put("fileExtension", String.valueOf(document.getFileExtension()));
+
+		map.put("id", String.valueOf(document.getId()));
+
+		map.put("keywords", String.valueOf(document.getKeywords()));
+
+		map.put(
+			"numberOfComments", String.valueOf(document.getNumberOfComments()));
+
+		map.put("sizeInBytes", String.valueOf(document.getSizeInBytes()));
+
+		map.put(
+			"taxonomyCategories",
+			String.valueOf(document.getTaxonomyCategories()));
+
+		map.put(
+			"taxonomyCategoryIds",
+			String.valueOf(document.getTaxonomyCategoryIds()));
+
+		map.put("title", String.valueOf(document.getTitle()));
+
+		map.put("viewableBy", String.valueOf(document.getViewableBy()));
+
+		return map;
 	}
 
 	private static class DocumentJSONParser extends BaseJSONParser<Document> {

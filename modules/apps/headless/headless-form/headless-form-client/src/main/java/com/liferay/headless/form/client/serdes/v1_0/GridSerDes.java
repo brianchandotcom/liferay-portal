@@ -19,6 +19,8 @@ import com.liferay.headless.form.client.dto.v1_0.Grid;
 import com.liferay.headless.form.client.dto.v1_0.Row;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -106,6 +108,22 @@ public class GridSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Grid grid) {
+		if (grid == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("columns", String.valueOf(grid.getColumns()));
+
+		map.put("id", String.valueOf(grid.getId()));
+
+		map.put("rows", String.valueOf(grid.getRows()));
+
+		return map;
 	}
 
 	private static class GridJSONParser extends BaseJSONParser<Grid> {

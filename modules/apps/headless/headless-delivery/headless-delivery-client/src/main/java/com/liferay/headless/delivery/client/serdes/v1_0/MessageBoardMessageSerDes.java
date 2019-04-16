@@ -20,6 +20,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -255,6 +257,75 @@ public class MessageBoardMessageSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		MessageBoardMessage messageBoardMessage) {
+
+		if (messageBoardMessage == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"aggregateRating",
+			AggregateRatingSerDes.toJSON(
+				messageBoardMessage.getAggregateRating()));
+
+		map.put(
+			"anonymous", String.valueOf(messageBoardMessage.getAnonymous()));
+
+		map.put(
+			"articleBody",
+			String.valueOf(messageBoardMessage.getArticleBody()));
+
+		map.put(
+			"creator", CreatorSerDes.toJSON(messageBoardMessage.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(
+				messageBoardMessage.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(
+				messageBoardMessage.getDateModified()));
+
+		map.put(
+			"encodingFormat",
+			String.valueOf(messageBoardMessage.getEncodingFormat()));
+
+		map.put("headline", String.valueOf(messageBoardMessage.getHeadline()));
+
+		map.put("id", String.valueOf(messageBoardMessage.getId()));
+
+		map.put("keywords", String.valueOf(messageBoardMessage.getKeywords()));
+
+		map.put(
+			"numberOfMessageBoardAttachments",
+			String.valueOf(
+				messageBoardMessage.getNumberOfMessageBoardAttachments()));
+
+		map.put(
+			"numberOfMessageBoardMessages",
+			String.valueOf(
+				messageBoardMessage.getNumberOfMessageBoardMessages()));
+
+		map.put(
+			"showAsAnswer",
+			String.valueOf(messageBoardMessage.getShowAsAnswer()));
+
+		map.put("siteId", String.valueOf(messageBoardMessage.getSiteId()));
+
+		map.put(
+			"viewableBy", String.valueOf(messageBoardMessage.getViewableBy()));
+
+		return map;
 	}
 
 	private static class MessageBoardMessageJSONParser

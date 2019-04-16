@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -136,6 +138,38 @@ public class KnowledgeBaseAttachmentSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		KnowledgeBaseAttachment knowledgeBaseAttachment) {
+
+		if (knowledgeBaseAttachment == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put(
+			"contentUrl",
+			String.valueOf(knowledgeBaseAttachment.getContentUrl()));
+
+		map.put(
+			"encodingFormat",
+			String.valueOf(knowledgeBaseAttachment.getEncodingFormat()));
+
+		map.put(
+			"fileExtension",
+			String.valueOf(knowledgeBaseAttachment.getFileExtension()));
+
+		map.put("id", String.valueOf(knowledgeBaseAttachment.getId()));
+
+		map.put(
+			"sizeInBytes",
+			String.valueOf(knowledgeBaseAttachment.getSizeInBytes()));
+
+		map.put("title", String.valueOf(knowledgeBaseAttachment.getTitle()));
+
+		return map;
 	}
 
 	private static class KnowledgeBaseAttachmentJSONParser

@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.Image;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -91,6 +93,22 @@ public class ImageSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Image image) {
+		if (image == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("caption", String.valueOf(image.getCaption()));
+
+		map.put("contentUrl", String.valueOf(image.getContentUrl()));
+
+		map.put("imageId", String.valueOf(image.getImageId()));
+
+		return map;
 	}
 
 	private static class ImageJSONParser extends BaseJSONParser<Image> {

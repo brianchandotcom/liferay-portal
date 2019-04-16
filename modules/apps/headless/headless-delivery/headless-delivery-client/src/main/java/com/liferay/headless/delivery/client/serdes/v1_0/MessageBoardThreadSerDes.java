@@ -20,6 +20,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -259,6 +261,74 @@ public class MessageBoardThreadSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		MessageBoardThread messageBoardThread) {
+
+		if (messageBoardThread == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"aggregateRating",
+			AggregateRatingSerDes.toJSON(
+				messageBoardThread.getAggregateRating()));
+
+		map.put(
+			"articleBody", String.valueOf(messageBoardThread.getArticleBody()));
+
+		map.put(
+			"creator", CreatorSerDes.toJSON(messageBoardThread.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(
+				messageBoardThread.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(
+				messageBoardThread.getDateModified()));
+
+		map.put(
+			"encodingFormat",
+			String.valueOf(messageBoardThread.getEncodingFormat()));
+
+		map.put("headline", String.valueOf(messageBoardThread.getHeadline()));
+
+		map.put("id", String.valueOf(messageBoardThread.getId()));
+
+		map.put("keywords", String.valueOf(messageBoardThread.getKeywords()));
+
+		map.put(
+			"numberOfMessageBoardAttachments",
+			String.valueOf(
+				messageBoardThread.getNumberOfMessageBoardAttachments()));
+
+		map.put(
+			"numberOfMessageBoardMessages",
+			String.valueOf(
+				messageBoardThread.getNumberOfMessageBoardMessages()));
+
+		map.put(
+			"showAsQuestion",
+			String.valueOf(messageBoardThread.getShowAsQuestion()));
+
+		map.put("siteId", String.valueOf(messageBoardThread.getSiteId()));
+
+		map.put(
+			"threadType", String.valueOf(messageBoardThread.getThreadType()));
+
+		map.put(
+			"viewableBy", String.valueOf(messageBoardThread.getViewableBy()));
+
+		return map;
 	}
 
 	private static class MessageBoardThreadJSONParser

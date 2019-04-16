@@ -17,6 +17,8 @@ package com.liferay.headless.form.client.serdes.v1_0;
 import com.liferay.headless.form.client.dto.v1_0.MediaForm;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -106,6 +108,24 @@ public class MediaFormSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(MediaForm mediaForm) {
+		if (mediaForm == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("description", String.valueOf(mediaForm.getDescription()));
+
+		map.put("folderId", String.valueOf(mediaForm.getFolderId()));
+
+		map.put("name", String.valueOf(mediaForm.getName()));
+
+		map.put("title", String.valueOf(mediaForm.getTitle()));
+
+		return map;
 	}
 
 	private static class MediaFormJSONParser extends BaseJSONParser<MediaForm> {

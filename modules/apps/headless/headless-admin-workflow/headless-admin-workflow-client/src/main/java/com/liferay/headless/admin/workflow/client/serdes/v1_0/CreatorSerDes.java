@@ -17,6 +17,8 @@ package com.liferay.headless.admin.workflow.client.serdes.v1_0;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.Creator;
 import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -151,6 +153,30 @@ public class CreatorSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Creator creator) {
+		if (creator == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("additionalName", String.valueOf(creator.getAdditionalName()));
+
+		map.put("familyName", String.valueOf(creator.getFamilyName()));
+
+		map.put("givenName", String.valueOf(creator.getGivenName()));
+
+		map.put("id", String.valueOf(creator.getId()));
+
+		map.put("image", String.valueOf(creator.getImage()));
+
+		map.put("name", String.valueOf(creator.getName()));
+
+		map.put("profileURL", String.valueOf(creator.getProfileURL()));
+
+		return map;
 	}
 
 	private static class CreatorJSONParser extends BaseJSONParser<Creator> {

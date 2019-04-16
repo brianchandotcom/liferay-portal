@@ -17,6 +17,8 @@ package com.liferay.headless.admin.user.client.serdes.v1_0;
 import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -76,6 +78,20 @@ public class RoleBriefSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(RoleBrief roleBrief) {
+		if (roleBrief == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("id", String.valueOf(roleBrief.getId()));
+
+		map.put("name", String.valueOf(roleBrief.getName()));
+
+		return map;
 	}
 
 	private static class RoleBriefJSONParser extends BaseJSONParser<RoleBrief> {

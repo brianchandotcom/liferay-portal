@@ -20,6 +20,8 @@ import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -205,6 +207,48 @@ public class WorkflowTaskSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(WorkflowTask workflowTask) {
+		if (workflowTask == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put("completed", String.valueOf(workflowTask.getCompleted()));
+
+		map.put(
+			"dateCompleted",
+			liferayToJSONDateFormat.format(workflowTask.getDateCompleted()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(workflowTask.getDateCreated()));
+
+		map.put(
+			"definitionName", String.valueOf(workflowTask.getDefinitionName()));
+
+		map.put("description", String.valueOf(workflowTask.getDescription()));
+
+		map.put(
+			"dueDate",
+			liferayToJSONDateFormat.format(workflowTask.getDueDate()));
+
+		map.put("id", String.valueOf(workflowTask.getId()));
+
+		map.put("name", String.valueOf(workflowTask.getName()));
+
+		map.put(
+			"objectReviewed",
+			ObjectReviewedSerDes.toJSON(workflowTask.getObjectReviewed()));
+
+		map.put("transitions", String.valueOf(workflowTask.getTransitions()));
+
+		return map;
 	}
 
 	private static class WorkflowTaskJSONParser

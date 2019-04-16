@@ -21,6 +21,8 @@ import com.liferay.headless.form.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -258,6 +260,54 @@ public class FormSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Form form) {
+		if (form == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"availableLanguages", String.valueOf(form.getAvailableLanguages()));
+
+		map.put("creator", CreatorSerDes.toJSON(form.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(form.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(form.getDateModified()));
+
+		map.put(
+			"datePublished",
+			liferayToJSONDateFormat.format(form.getDatePublished()));
+
+		map.put("defaultLanguage", String.valueOf(form.getDefaultLanguage()));
+
+		map.put("description", String.valueOf(form.getDescription()));
+
+		map.put("formRecords", String.valueOf(form.getFormRecords()));
+
+		map.put("formRecordsIds", String.valueOf(form.getFormRecordsIds()));
+
+		map.put("id", String.valueOf(form.getId()));
+
+		map.put("name", String.valueOf(form.getName()));
+
+		map.put("siteId", String.valueOf(form.getSiteId()));
+
+		map.put("structure", FormStructureSerDes.toJSON(form.getStructure()));
+
+		map.put("structureId", String.valueOf(form.getStructureId()));
+
+		return map;
 	}
 
 	private static class FormJSONParser extends BaseJSONParser<Form> {

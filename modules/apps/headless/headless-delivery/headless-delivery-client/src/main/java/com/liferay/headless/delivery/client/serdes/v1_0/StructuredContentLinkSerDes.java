@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -78,6 +80,22 @@ public class StructuredContentLinkSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		StructuredContentLink structuredContentLink) {
+
+		if (structuredContentLink == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("id", String.valueOf(structuredContentLink.getId()));
+
+		map.put("title", String.valueOf(structuredContentLink.getTitle()));
+
+		return map;
 	}
 
 	private static class StructuredContentLinkJSONParser

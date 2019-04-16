@@ -20,6 +20,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -186,6 +188,47 @@ public class DocumentFolderSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(DocumentFolder documentFolder) {
+		if (documentFolder == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put("creator", CreatorSerDes.toJSON(documentFolder.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(documentFolder.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(documentFolder.getDateModified()));
+
+		map.put("description", String.valueOf(documentFolder.getDescription()));
+
+		map.put("id", String.valueOf(documentFolder.getId()));
+
+		map.put("name", String.valueOf(documentFolder.getName()));
+
+		map.put(
+			"numberOfDocumentFolders",
+			String.valueOf(documentFolder.getNumberOfDocumentFolders()));
+
+		map.put(
+			"numberOfDocuments",
+			String.valueOf(documentFolder.getNumberOfDocuments()));
+
+		map.put("siteId", String.valueOf(documentFolder.getSiteId()));
+
+		map.put("viewableBy", String.valueOf(documentFolder.getViewableBy()));
+
+		return map;
 	}
 
 	private static class DocumentFolderJSONParser

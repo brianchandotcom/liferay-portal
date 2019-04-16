@@ -21,6 +21,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -335,6 +337,76 @@ public class BlogPostingSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(BlogPosting blogPosting) {
+		if (blogPosting == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"aggregateRating",
+			AggregateRatingSerDes.toJSON(blogPosting.getAggregateRating()));
+
+		map.put(
+			"alternativeHeadline",
+			String.valueOf(blogPosting.getAlternativeHeadline()));
+
+		map.put("articleBody", String.valueOf(blogPosting.getArticleBody()));
+
+		map.put("creator", CreatorSerDes.toJSON(blogPosting.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(blogPosting.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(blogPosting.getDateModified()));
+
+		map.put(
+			"datePublished",
+			liferayToJSONDateFormat.format(blogPosting.getDatePublished()));
+
+		map.put("description", String.valueOf(blogPosting.getDescription()));
+
+		map.put(
+			"encodingFormat", String.valueOf(blogPosting.getEncodingFormat()));
+
+		map.put(
+			"friendlyUrlPath",
+			String.valueOf(blogPosting.getFriendlyUrlPath()));
+
+		map.put("headline", String.valueOf(blogPosting.getHeadline()));
+
+		map.put("id", String.valueOf(blogPosting.getId()));
+
+		map.put("image", ImageSerDes.toJSON(blogPosting.getImage()));
+
+		map.put("keywords", String.valueOf(blogPosting.getKeywords()));
+
+		map.put(
+			"numberOfComments",
+			String.valueOf(blogPosting.getNumberOfComments()));
+
+		map.put("siteId", String.valueOf(blogPosting.getSiteId()));
+
+		map.put(
+			"taxonomyCategories",
+			String.valueOf(blogPosting.getTaxonomyCategories()));
+
+		map.put(
+			"taxonomyCategoryIds",
+			String.valueOf(blogPosting.getTaxonomyCategoryIds()));
+
+		map.put("viewableBy", String.valueOf(blogPosting.getViewableBy()));
+
+		return map;
 	}
 
 	private static class BlogPostingJSONParser

@@ -17,6 +17,8 @@ package com.liferay.headless.admin.user.client.serdes.v1_0;
 import com.liferay.headless.admin.user.client.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -108,6 +110,24 @@ public class HoursAvailableSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(HoursAvailable hoursAvailable) {
+		if (hoursAvailable == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("closes", String.valueOf(hoursAvailable.getCloses()));
+
+		map.put("dayOfWeek", String.valueOf(hoursAvailable.getDayOfWeek()));
+
+		map.put("id", String.valueOf(hoursAvailable.getId()));
+
+		map.put("opens", String.valueOf(hoursAvailable.getOpens()));
+
+		return map;
 	}
 
 	private static class HoursAvailableJSONParser

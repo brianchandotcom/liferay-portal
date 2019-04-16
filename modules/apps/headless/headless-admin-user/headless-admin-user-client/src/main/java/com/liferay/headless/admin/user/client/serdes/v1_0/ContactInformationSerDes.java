@@ -21,6 +21,8 @@ import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -236,6 +238,41 @@ public class ContactInformationSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		ContactInformation contactInformation) {
+
+		if (contactInformation == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("emails", String.valueOf(contactInformation.getEmails()));
+
+		map.put("facebook", String.valueOf(contactInformation.getFacebook()));
+
+		map.put("id", String.valueOf(contactInformation.getId()));
+
+		map.put("jabber", String.valueOf(contactInformation.getJabber()));
+
+		map.put(
+			"postalAddresses",
+			String.valueOf(contactInformation.getPostalAddresses()));
+
+		map.put("skype", String.valueOf(contactInformation.getSkype()));
+
+		map.put("sms", String.valueOf(contactInformation.getSms()));
+
+		map.put(
+			"telephones", String.valueOf(contactInformation.getTelephones()));
+
+		map.put("twitter", String.valueOf(contactInformation.getTwitter()));
+
+		map.put("webUrls", String.valueOf(contactInformation.getWebUrls()));
+
+		return map;
 	}
 
 	private static class ContactInformationJSONParser

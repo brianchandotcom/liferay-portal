@@ -17,6 +17,8 @@ package com.liferay.bulk.rest.client.serdes.v1_0;
 import com.liferay.bulk.rest.client.dto.v1_0.DocumentBulkSelection;
 import com.liferay.bulk.rest.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -87,6 +89,27 @@ public class DocumentBulkSelectionSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		DocumentBulkSelection documentBulkSelection) {
+
+		if (documentBulkSelection == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put(
+			"documentIds",
+			String.valueOf(documentBulkSelection.getDocumentIds()));
+
+		map.put(
+			"selectionScope",
+			SelectionScopeSerDes.toJSON(
+				documentBulkSelection.getSelectionScope()));
+
+		return map;
 	}
 
 	private static class DocumentBulkSelectionJSONParser

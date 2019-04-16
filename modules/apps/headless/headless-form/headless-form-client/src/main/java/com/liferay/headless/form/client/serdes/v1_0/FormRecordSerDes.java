@@ -21,6 +21,8 @@ import com.liferay.headless.form.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -171,6 +173,43 @@ public class FormRecordSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(FormRecord formRecord) {
+		if (formRecord == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put("creator", CreatorSerDes.toJSON(formRecord.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(formRecord.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(formRecord.getDateModified()));
+
+		map.put(
+			"datePublished",
+			liferayToJSONDateFormat.format(formRecord.getDatePublished()));
+
+		map.put("draft", String.valueOf(formRecord.getDraft()));
+
+		map.put("fieldValues", String.valueOf(formRecord.getFieldValues()));
+
+		map.put("form", FormSerDes.toJSON(formRecord.getForm()));
+
+		map.put("formId", String.valueOf(formRecord.getFormId()));
+
+		map.put("id", String.valueOf(formRecord.getId()));
+
+		return map;
 	}
 
 	private static class FormRecordJSONParser

@@ -20,6 +20,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -186,6 +188,57 @@ public class MessageBoardSectionSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		MessageBoardSection messageBoardSection) {
+
+		if (messageBoardSection == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"creator", CreatorSerDes.toJSON(messageBoardSection.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(
+				messageBoardSection.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(
+				messageBoardSection.getDateModified()));
+
+		map.put(
+			"description",
+			String.valueOf(messageBoardSection.getDescription()));
+
+		map.put("id", String.valueOf(messageBoardSection.getId()));
+
+		map.put(
+			"numberOfMessageBoardSections",
+			String.valueOf(
+				messageBoardSection.getNumberOfMessageBoardSections()));
+
+		map.put(
+			"numberOfMessageBoardThreads",
+			String.valueOf(
+				messageBoardSection.getNumberOfMessageBoardThreads()));
+
+		map.put("siteId", String.valueOf(messageBoardSection.getSiteId()));
+
+		map.put("title", String.valueOf(messageBoardSection.getTitle()));
+
+		map.put(
+			"viewableBy", String.valueOf(messageBoardSection.getViewableBy()));
+
+		return map;
 	}
 
 	private static class MessageBoardSectionJSONParser

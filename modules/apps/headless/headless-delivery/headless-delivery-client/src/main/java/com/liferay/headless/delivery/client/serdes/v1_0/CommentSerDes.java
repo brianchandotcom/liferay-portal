@@ -20,6 +20,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -129,6 +131,36 @@ public class CommentSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Comment comment) {
+		if (comment == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put("creator", CreatorSerDes.toJSON(comment.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(comment.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(comment.getDateModified()));
+
+		map.put("id", String.valueOf(comment.getId()));
+
+		map.put(
+			"numberOfComments", String.valueOf(comment.getNumberOfComments()));
+
+		map.put("text", String.valueOf(comment.getText()));
+
+		return map;
 	}
 
 	private static class CommentJSONParser extends BaseJSONParser<Comment> {

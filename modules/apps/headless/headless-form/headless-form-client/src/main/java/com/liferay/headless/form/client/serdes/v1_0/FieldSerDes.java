@@ -18,6 +18,8 @@ import com.liferay.headless.form.client.dto.v1_0.Field;
 import com.liferay.headless.form.client.dto.v1_0.Option;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -381,6 +383,68 @@ public class FieldSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Field field) {
+		if (field == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("autocomplete", String.valueOf(field.getAutocomplete()));
+
+		map.put("dataSourceType", String.valueOf(field.getDataSourceType()));
+
+		map.put("dataType", String.valueOf(field.getDataType()));
+
+		map.put("displayStyle", String.valueOf(field.getDisplayStyle()));
+
+		map.put("grid", GridSerDes.toJSON(field.getGrid()));
+
+		map.put("hasFormRules", String.valueOf(field.getHasFormRules()));
+
+		map.put("id", String.valueOf(field.getId()));
+
+		map.put("immutable", String.valueOf(field.getImmutable()));
+
+		map.put("inline", String.valueOf(field.getInline()));
+
+		map.put("inputControl", String.valueOf(field.getInputControl()));
+
+		map.put("label", String.valueOf(field.getLabel()));
+
+		map.put("localizable", String.valueOf(field.getLocalizable()));
+
+		map.put("multiple", String.valueOf(field.getMultiple()));
+
+		map.put("name", String.valueOf(field.getName()));
+
+		map.put("options", String.valueOf(field.getOptions()));
+
+		map.put("placeholder", String.valueOf(field.getPlaceholder()));
+
+		map.put("predefinedValue", String.valueOf(field.getPredefinedValue()));
+
+		map.put("readOnly", String.valueOf(field.getReadOnly()));
+
+		map.put("repeatable", String.valueOf(field.getRepeatable()));
+
+		map.put("required", String.valueOf(field.getRequired()));
+
+		map.put("showAsSwitcher", String.valueOf(field.getShowAsSwitcher()));
+
+		map.put("showLabel", String.valueOf(field.getShowLabel()));
+
+		map.put("style", String.valueOf(field.getStyle()));
+
+		map.put("text", String.valueOf(field.getText()));
+
+		map.put("tooltip", String.valueOf(field.getTooltip()));
+
+		map.put("validation", ValidationSerDes.toJSON(field.getValidation()));
+
+		return map;
 	}
 
 	private static class FieldJSONParser extends BaseJSONParser<Field> {

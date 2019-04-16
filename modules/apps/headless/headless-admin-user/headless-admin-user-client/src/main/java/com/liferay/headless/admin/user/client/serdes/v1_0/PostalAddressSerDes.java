@@ -17,6 +17,8 @@ package com.liferay.headless.admin.user.client.serdes.v1_0;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -194,6 +196,47 @@ public class PostalAddressSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(PostalAddress postalAddress) {
+		if (postalAddress == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put(
+			"addressCountry",
+			String.valueOf(postalAddress.getAddressCountry()));
+
+		map.put(
+			"addressLocality",
+			String.valueOf(postalAddress.getAddressLocality()));
+
+		map.put(
+			"addressRegion", String.valueOf(postalAddress.getAddressRegion()));
+
+		map.put("addressType", String.valueOf(postalAddress.getAddressType()));
+
+		map.put("id", String.valueOf(postalAddress.getId()));
+
+		map.put("postalCode", String.valueOf(postalAddress.getPostalCode()));
+
+		map.put("primary", String.valueOf(postalAddress.getPrimary()));
+
+		map.put(
+			"streetAddressLine1",
+			String.valueOf(postalAddress.getStreetAddressLine1()));
+
+		map.put(
+			"streetAddressLine2",
+			String.valueOf(postalAddress.getStreetAddressLine2()));
+
+		map.put(
+			"streetAddressLine3",
+			String.valueOf(postalAddress.getStreetAddressLine3()));
+
+		return map;
 	}
 
 	private static class PostalAddressJSONParser

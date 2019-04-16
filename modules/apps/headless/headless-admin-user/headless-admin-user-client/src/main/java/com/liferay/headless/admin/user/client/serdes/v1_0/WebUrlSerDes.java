@@ -17,6 +17,8 @@ package com.liferay.headless.admin.user.client.serdes.v1_0;
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -91,6 +93,22 @@ public class WebUrlSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(WebUrl webUrl) {
+		if (webUrl == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("id", String.valueOf(webUrl.getId()));
+
+		map.put("url", String.valueOf(webUrl.getUrl()));
+
+		map.put("urlType", String.valueOf(webUrl.getUrlType()));
+
+		return map;
 	}
 
 	private static class WebUrlJSONParser extends BaseJSONParser<WebUrl> {

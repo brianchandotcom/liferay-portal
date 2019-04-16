@@ -20,6 +20,8 @@ import com.liferay.headless.delivery.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -135,6 +137,37 @@ public class RatingSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Rating rating) {
+		if (rating == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put("bestRating", String.valueOf(rating.getBestRating()));
+
+		map.put("creator", CreatorSerDes.toJSON(rating.getCreator()));
+
+		map.put(
+			"dateCreated",
+			liferayToJSONDateFormat.format(rating.getDateCreated()));
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(rating.getDateModified()));
+
+		map.put("id", String.valueOf(rating.getId()));
+
+		map.put("ratingValue", String.valueOf(rating.getRatingValue()));
+
+		map.put("worstRating", String.valueOf(rating.getWorstRating()));
+
+		return map;
 	}
 
 	private static class RatingJSONParser extends BaseJSONParser<Rating> {

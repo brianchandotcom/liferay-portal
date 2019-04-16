@@ -18,6 +18,8 @@ import com.liferay.headless.delivery.client.dto.v1_0.ContentStructureField;
 import com.liferay.headless.delivery.client.dto.v1_0.Option;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -238,6 +240,57 @@ public class ContentStructureFieldSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(
+		ContentStructureField contentStructureField) {
+
+		if (contentStructureField == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put(
+			"dataType", String.valueOf(contentStructureField.getDataType()));
+
+		map.put(
+			"inputControl",
+			String.valueOf(contentStructureField.getInputControl()));
+
+		map.put("label", String.valueOf(contentStructureField.getLabel()));
+
+		map.put(
+			"localizable",
+			String.valueOf(contentStructureField.getLocalizable()));
+
+		map.put(
+			"multiple", String.valueOf(contentStructureField.getMultiple()));
+
+		map.put("name", String.valueOf(contentStructureField.getName()));
+
+		map.put(
+			"nestedContentStructureFields",
+			String.valueOf(
+				contentStructureField.getNestedContentStructureFields()));
+
+		map.put("options", String.valueOf(contentStructureField.getOptions()));
+
+		map.put(
+			"predefinedValue",
+			String.valueOf(contentStructureField.getPredefinedValue()));
+
+		map.put(
+			"repeatable",
+			String.valueOf(contentStructureField.getRepeatable()));
+
+		map.put(
+			"required", String.valueOf(contentStructureField.getRequired()));
+
+		map.put(
+			"showLabel", String.valueOf(contentStructureField.getShowLabel()));
+
+		return map;
 	}
 
 	private static class ContentStructureFieldJSONParser

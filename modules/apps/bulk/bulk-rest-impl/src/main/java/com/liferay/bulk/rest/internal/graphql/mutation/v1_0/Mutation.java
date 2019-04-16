@@ -38,8 +38,6 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import javax.ws.rs.core.Response;
-
 import org.osgi.service.component.ComponentServiceObjects;
 
 /**
@@ -82,12 +80,12 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Response patchKeywordBatch(
+	public void patchKeywordBatch(
 			@GraphQLName("keywordBulkSelection") KeywordBulkSelection
 				keywordBulkSelection)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			keywordResource -> keywordResource.patchKeywordBatch(
@@ -95,12 +93,12 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Response putKeywordBatch(
+	public void putKeywordBatch(
 			@GraphQLName("keywordBulkSelection") KeywordBulkSelection
 				keywordBulkSelection)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			keywordResource -> keywordResource.putKeywordBatch(
@@ -140,12 +138,12 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Response patchTaxonomyCategoryBatch(
+	public void patchTaxonomyCategoryBatch(
 			@GraphQLName("taxonomyCategoryBulkSelection")
 				TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_taxonomyCategoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			taxonomyCategoryResource ->
@@ -154,12 +152,12 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
-	public Response putTaxonomyCategoryBatch(
+	public void putTaxonomyCategoryBatch(
 			@GraphQLName("taxonomyCategoryBulkSelection")
 				TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_taxonomyCategoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			taxonomyCategoryResource ->

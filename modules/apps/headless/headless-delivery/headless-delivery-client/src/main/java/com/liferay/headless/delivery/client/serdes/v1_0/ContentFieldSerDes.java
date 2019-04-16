@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -153,6 +155,30 @@ public class ContentFieldSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(ContentField contentField) {
+		if (contentField == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("dataType", String.valueOf(contentField.getDataType()));
+
+		map.put("inputControl", String.valueOf(contentField.getInputControl()));
+
+		map.put("label", String.valueOf(contentField.getLabel()));
+
+		map.put("name", String.valueOf(contentField.getName()));
+
+		map.put("nestedFields", String.valueOf(contentField.getNestedFields()));
+
+		map.put("repeatable", String.valueOf(contentField.getRepeatable()));
+
+		map.put("value", ValueSerDes.toJSON(contentField.getValue()));
+
+		return map;
 	}
 
 	private static class ContentFieldJSONParser

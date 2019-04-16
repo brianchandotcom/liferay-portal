@@ -17,6 +17,8 @@ package com.liferay.headless.form.client.serdes.v1_0;
 import com.liferay.headless.form.client.dto.v1_0.SuccessPage;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -93,6 +95,22 @@ public class SuccessPageSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(SuccessPage successPage) {
+		if (successPage == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("description", String.valueOf(successPage.getDescription()));
+
+		map.put("headline", String.valueOf(successPage.getHeadline()));
+
+		map.put("id", String.valueOf(successPage.getId()));
+
+		return map;
 	}
 
 	private static class SuccessPageJSONParser

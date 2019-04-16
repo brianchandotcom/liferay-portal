@@ -17,6 +17,8 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 import com.liferay.headless.delivery.client.dto.v1_0.Value;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -103,6 +105,31 @@ public class ValueSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static Map<String, String> toMap(Value value) {
+		if (value == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put("data", String.valueOf(value.getData()));
+
+		map.put("document", ContentDocumentSerDes.toJSON(value.getDocument()));
+
+		map.put("geo", GeoSerDes.toJSON(value.getGeo()));
+
+		map.put("image", ContentDocumentSerDes.toJSON(value.getImage()));
+
+		map.put("link", String.valueOf(value.getLink()));
+
+		map.put(
+			"structuredContentLink",
+			StructuredContentLinkSerDes.toJSON(
+				value.getStructuredContentLink()));
+
+		return map;
 	}
 
 	private static class ValueJSONParser extends BaseJSONParser<Value> {

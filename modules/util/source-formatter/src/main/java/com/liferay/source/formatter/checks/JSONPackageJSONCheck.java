@@ -86,8 +86,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 					fileName,
 					StringBundler.concat(
 						"Value '", value, "' for entry '", entryName,
-						"' does not match expected value '", entry.getValue(),
-						"'"));
+						"' does not contain '", entry.getValue(), "'"));
 			}
 		}
 	}

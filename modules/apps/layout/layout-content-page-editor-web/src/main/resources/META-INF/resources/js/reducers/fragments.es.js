@@ -383,7 +383,7 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 				const _shouldRemoveFragmentEntryLink = !containsFragmentEntryLinkId(
 					nextState.layoutDataList,
 					fragmentEntryLinkId,
-					nextState.segmentsExperienceId
+					nextState.segmentsExperienceId || nextState.defaultSegmentsExperienceId
 				);
 
 				nextState = setIn(nextState, ['layoutData'], nextData);

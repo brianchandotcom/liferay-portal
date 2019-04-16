@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUTOGENERATEID</td>
+	<td>//input[contains(@id,'autoArticleId')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIDEBAR</td>
 	<td>//div[contains(@class,'contextual-sidebar-visible')]</td>
 	<td></td>

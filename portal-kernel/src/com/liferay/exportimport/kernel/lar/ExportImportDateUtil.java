@@ -105,11 +105,22 @@ public class ExportImportDateUtil {
 			portletRequest, paramPrefix + "Minute");
 		int dateAmPm = ParamUtil.getInteger(
 			portletRequest, paramPrefix + "AmPm");
+		boolean usePortalTimeZone = ParamUtil.getBoolean(
+			portletRequest, "usePortalTimeZone");
+
+		TimeZone timeZone = null;
+
+		if (usePortalTimeZone) {
+			timeZone = themeDisplay.getTimeZone();
+		}
+		else {
+			timeZone = TimeZoneUtil.getTimeZone(
+				ParamUtil.getString(portletRequest, "timeZoneId"));
+		}
 
 		return getCalendar(
 			dateAmPm, dateYear, dateMonth, dateDay, dateHour, dateMinute,
-			themeDisplay.getLocale(), themeDisplay.getTimeZone(),
-			timeZoneSensitive);
+			themeDisplay.getLocale(), timeZone, timeZoneSensitive);
 	}
 
 	public static DateRange getDateRange(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.jaxrs.security.internal.response;
+package com.liferay.portal.remote.jaxrs.security.internal.entity;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

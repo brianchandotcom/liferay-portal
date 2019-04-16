@@ -16,6 +16,7 @@ dependencies {
 	compile group: "commons-io", name: "commons-io", version: "2.5"
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.28"
 
+	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
 	compileInclude group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.13"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.23"
 	compileInclude project(":apps:portal-vulcan:portal-vulcan-api")

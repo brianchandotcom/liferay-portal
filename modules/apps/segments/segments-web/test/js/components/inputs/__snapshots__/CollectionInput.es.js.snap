@@ -5,12 +5,14 @@ exports[`CollectionInput should render collection type 1`] = `
   <input
     class="criterion-input form-control"
     data-testid="collection-key-input"
+    placeholder="key"
     type="text"
     value="testKey"
   />
   <input
     class="criterion-input form-control"
     data-testid="collection-value-input"
+    placeholder="value"
     type="text"
     value="testValue"
   />

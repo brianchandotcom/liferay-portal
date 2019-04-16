@@ -137,6 +137,20 @@ public class ViewTreeManagementToolbarDisplayContext {
 							dropdownItem.setQuickAction(true);
 						});
 				}
+
+				add(
+					dropdownItem -> {
+						dropdownItem.putData("action", Constants.REMOVE);
+						dropdownItem.setHref(
+							StringBundler.concat(
+								"javascript:", _renderResponse.getNamespace(),
+								"removeOrganizationsAndUsers();"));
+						dropdownItem.setIcon("remove-role");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, Constants.REMOVE));
+						dropdownItem.setQuickAction(true);
+					});
 			}
 		};
 	}
@@ -144,7 +158,12 @@ public class ViewTreeManagementToolbarDisplayContext {
 	public List<String> getAvailableActionDropdownItems(
 		Organization organization) {
 
-		return ListUtil.toList(Constants.DELETE);
+		List<String> availableActionDropdownItems = new ArrayList<>();
+
+		availableActionDropdownItems.add(Constants.DELETE);
+		availableActionDropdownItems.add(Constants.REMOVE);
+
+		return availableActionDropdownItems;
 	}
 
 	public List<String> getAvailableActionDropdownItems(User user) {
@@ -157,6 +176,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 			availableActionDropdownItems.add(Constants.DELETE);
 			availableActionDropdownItems.add(Constants.RESTORE);
 		}
+
+		availableActionDropdownItems.add(Constants.REMOVE);
 
 		return availableActionDropdownItems;
 	}

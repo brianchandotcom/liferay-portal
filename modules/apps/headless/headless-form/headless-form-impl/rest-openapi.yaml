@@ -85,7 +85,8 @@ components:
                     format: int64
                     type: integer
                 sizeInBytes:
-                    type: number
+                    format: int64
+                    type: integer
                 title:
                     type: string
             type: object

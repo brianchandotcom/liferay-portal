@@ -77,7 +77,7 @@ components:
                 keywordUsageCount:
                     description: The number of times this Keyword has been used in other Assets.
                     readOnly: true
-                    type: number
+                    type: integer
                 name:
                     description: The name of the Keyword.
                     type: string

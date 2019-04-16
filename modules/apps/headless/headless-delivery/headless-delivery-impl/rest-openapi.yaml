@@ -6,18 +6,21 @@ components:
             properties:
                 bestRating:
                     description: The best rating possible (by default normalized to 1.0).
+                    format: double
                     readOnly: true
                     type: number
                 ratingCount:
                     description: The number of ratings.
                     readOnly: true
-                    type: number
+                    type: integer
                 ratingValue:
                     description: The average rating.
+                    format: double
                     readOnly: true
                     type: number
                 worstRating:
                     description: The worst rating possible (by default normalized to 0.0).
+                    format: double
                     readOnly: true
                     type: number
             type: object
@@ -156,8 +159,9 @@ components:
                     type: integer
                 sizeInBytes:
                     description: The size in bytes of the image.
+                    format: int64
                     readOnly: true
-                    type: number
+                    type: integer
                 title:
                     description: The text describing the image.
                     type: string
@@ -225,8 +229,9 @@ components:
                     type: integer
                 sizeInBytes:
                     description: The size in bytes of the ContentDocument.
+                    format: int64
                     readOnly: true
-                    type: number
+                    type: integer
                 title:
                     description: The text describing the ContentDocument.
                     type: string
@@ -273,9 +278,11 @@ components:
                             properties:
                                 latitude:
                                     description: The latitude of a point in space.
+                                    format: double
                                     type: number
                                 longitude:
                                     description: The longitude of a point in space.
+                                    format: double
                                     type: number
                             type: object
                         image:
@@ -483,16 +490,17 @@ components:
                                 type: string
                             height:
                                 description: The height of the image.
-                                type: number
+                                type: integer
                             resolutionName:
                                 description: A descriptive name of this version.
                                 type: string
                             sizeInBytes:
                                 description: The size in bytes of the image.
-                                type: number
+                                format: int64
+                                type: integer
                             width:
                                 description: The width of the image.
-                                type: number
+                                type: integer
                         type: object
                     readOnly: true
                     type: array
@@ -553,8 +561,9 @@ components:
                     type: integer
                 sizeInBytes:
                     description: The size in bytes of the binary files.
+                    format: int64
                     readOnly: true
-                    type: number
+                    type: integer
                 taxonomyCategories:
                     description: The categories asociated with this Document.
                     items:
@@ -769,8 +778,9 @@ components:
                     type: integer
                 sizeInBytes:
                     description: The size in bytes of the binary file.
+                    format: int64
                     readOnly: true
-                    type: number
+                    type: integer
                 title:
                     description: The main title of the binary file.
                     type: string
@@ -866,8 +876,9 @@ components:
                     type: integer
                 sizeInBytes:
                     description: The size in bytes of the binary file.
+                    format: int64
                     readOnly: true
-                    type: number
+                    type: integer
                 title:
                     description: The title of the binary file.
                     type: string
@@ -1069,6 +1080,7 @@ components:
             properties:
                 bestRating:
                     description: The best possible rating a content can receive, by default normalized to 1.0.
+                    format: double
                     readOnly: true
                     type: number
                 creator:
@@ -1093,9 +1105,11 @@ components:
                     type: integer
                 ratingValue:
                     description: The value of the Rating.
+                    format: double
                     type: number
                 worstRating:
                     description: The worst possible rating a content can receive, by default normalized to 0.0.
+                    format: double
                     readOnly: true
                     type: number
             type: object

@@ -17,7 +17,7 @@ package com.liferay.talend.service;
 import com.liferay.talend.data.store.AuthenticationMethod;
 import com.liferay.talend.data.store.BasicDataStore;
 import com.liferay.talend.data.store.InputDataStore;
-import com.liferay.talend.dataset.RESTDataSet;
+import com.liferay.talend.dataset.InputDataSet;
 import com.liferay.talend.http.client.LiferayHttpClient;
 import com.liferay.talend.http.client.exception.ConnectionException;
 import com.liferay.talend.http.client.exception.MalformedURLException;
@@ -60,10 +60,10 @@ public class ConnectionService {
 		return serverURL;
 	}
 
-	public JsonObject getResponseJsonObject(RESTDataSet restDataSet)
+	public JsonObject getResponseJsonObject(InputDataSet inputDataSet)
 		throws ConnectionException {
 
-		InputDataStore inputDataStore = restDataSet.getInputDataStore();
+		InputDataStore inputDataStore = inputDataSet.getInputDataStore();
 
 		String authorizationHeader = _getAuthorizationHeader(inputDataStore);
 
@@ -74,17 +74,17 @@ public class ConnectionService {
 		Response<JsonObject> jsonObjectResponse =
 			_liferayHttpClient.getJsonObjectResponse(
 				authorizationHeader, "application/json",
-				restDataSet.getEndpoint());
+				inputDataSet.getEndpoint());
 
 		_validateResponse(jsonObjectResponse);
 
 		return jsonObjectResponse.body();
 	}
 
-	public String getResponseRawString(RESTDataSet restDataSet)
+	public String getResponseRawString(InputDataSet inputDataSet)
 		throws ConnectionException {
 
-		InputDataStore inputDataStore = restDataSet.getInputDataStore();
+		InputDataStore inputDataStore = inputDataSet.getInputDataStore();
 
 		String authorizationHeader = _getAuthorizationHeader(inputDataStore);
 
@@ -93,7 +93,7 @@ public class ConnectionService {
 		_liferayHttpClient.base(serverURL.toString());
 
 		Response<String> response = _liferayHttpClient.getRawStringResponse(
-			authorizationHeader, "*/*", restDataSet.getEndpoint());
+			authorizationHeader, "*/*", inputDataSet.getEndpoint());
 
 		_validateResponse(response);
 

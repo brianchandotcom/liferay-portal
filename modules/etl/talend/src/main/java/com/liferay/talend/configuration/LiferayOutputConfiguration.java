@@ -14,10 +14,9 @@
 
 package com.liferay.talend.configuration;
 
-import com.liferay.talend.dataset.RESTDataSet;
-
 import java.io.Serializable;
 
+import com.liferay.talend.dataset.OutputDataSet;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayouts;
@@ -29,7 +28,7 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayouts;
 	{
 		@GridLayout(
 			names = GridLayout.FormType.MAIN,
-			value = @GridLayout.Row("_restDataSet")
+			value = @GridLayout.Row("_outputDataSet")
 		),
 		@GridLayout(
 			names = GridLayout.FormType.ADVANCED,
@@ -39,16 +38,16 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayouts;
 )
 public class LiferayOutputConfiguration implements Serializable {
 
-	public RESTDataSet getRestDataSet() {
-		return _restDataSet;
+	public OutputDataSet getRestDataSet() {
+		return _outputDataSet;
 	}
 
 	public int getTimeout() {
 		return _timeout;
 	}
 
-	public LiferayOutputConfiguration setRestDataSet(RESTDataSet restDataSet) {
-		_restDataSet = restDataSet;
+	public LiferayOutputConfiguration setRestDataSet(OutputDataSet outputDataSet) {
+		this._outputDataSet = outputDataSet;
 
 		return this;
 	}
@@ -60,7 +59,7 @@ public class LiferayOutputConfiguration implements Serializable {
 	}
 
 	@Option
-	private RESTDataSet _restDataSet;
+	private OutputDataSet _outputDataSet;
 
 	@Option
 	private int _timeout = 60000;

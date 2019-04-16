@@ -14,7 +14,7 @@
 
 package com.liferay.talend.configuration;
 
-import com.liferay.talend.dataset.RESTDataSet;
+import com.liferay.talend.dataset.InputDataSet;
 
 import java.io.Serializable;
 
@@ -30,7 +30,7 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayouts;
 	{
 		@GridLayout(
 			names = GridLayout.FormType.MAIN,
-			value = @GridLayout.Row("_restDataSet")
+			value = @GridLayout.Row("_inputDataSet")
 		),
 		@GridLayout(
 			names = GridLayout.FormType.ADVANCED,
@@ -44,8 +44,8 @@ public class LiferayInputMapperConfiguration implements Serializable {
 		return _batchSize;
 	}
 
-	public RESTDataSet getRestDataSet() {
-		return _restDataSet;
+	public InputDataSet getRestDataSet() {
+		return _inputDataSet;
 	}
 
 	public int getTimeout() {
@@ -59,9 +59,9 @@ public class LiferayInputMapperConfiguration implements Serializable {
 	}
 
 	public LiferayInputMapperConfiguration setRestDataSet(
-		RESTDataSet restDataSet) {
+		InputDataSet inputDataSet) {
 
-		_restDataSet = restDataSet;
+		_inputDataSet = inputDataSet;
 
 		return this;
 	}
@@ -76,7 +76,7 @@ public class LiferayInputMapperConfiguration implements Serializable {
 	private int _batchSize = 100;
 
 	@Option
-	private RESTDataSet _restDataSet;
+	private InputDataSet _inputDataSet;
 
 	@Option
 	private int _timeout = 60000;

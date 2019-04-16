@@ -62,6 +62,8 @@ definition {
 
 		NavItem.gotoTemplates();
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		for (var templateName : list "Carousel Display,Thumbnail Display,Content List Display") {
 			WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
 

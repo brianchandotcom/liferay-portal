@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -133,16 +135,87 @@ public class ProcessSerDes {
 		return sb.toString();
 	}
 
+	public static Map<String, String> toMap(Process process) {
+		if (process == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		if (process.getDueAfterInstanceCount() == null) {
+			map.put("dueAfterInstanceCount", null);
+		}
+		else {
+			map.put(
+				"dueAfterInstanceCount",
+				String.valueOf(process.getDueAfterInstanceCount()));
+		}
+
+		if (process.getDueInInstanceCount() == null) {
+			map.put("dueInInstanceCount", null);
+		}
+		else {
+			map.put(
+				"dueInInstanceCount",
+				String.valueOf(process.getDueInInstanceCount()));
+		}
+
+		if (process.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(process.getId()));
+		}
+
+		if (process.getInstanceCount() == null) {
+			map.put("instanceCount", null);
+		}
+		else {
+			map.put(
+				"instanceCount", String.valueOf(process.getInstanceCount()));
+		}
+
+		if (process.getOnTimeInstanceCount() == null) {
+			map.put("onTimeInstanceCount", null);
+		}
+		else {
+			map.put(
+				"onTimeInstanceCount",
+				String.valueOf(process.getOnTimeInstanceCount()));
+		}
+
+		if (process.getOverdueInstanceCount() == null) {
+			map.put("overdueInstanceCount", null);
+		}
+		else {
+			map.put(
+				"overdueInstanceCount",
+				String.valueOf(process.getOverdueInstanceCount()));
+		}
+
+		if (process.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(process.getTitle()));
+		}
+
+		return map;
+	}
+
 	private static class ProcessJSONParser extends BaseJSONParser<Process> {
 
+		@Override
 		protected Process createDTO() {
 			return new Process();
 		}
 
+		@Override
 		protected Process[] createDTOArray(int size) {
 			return new Process[size];
 		}
 
+		@Override
 		protected void setField(
 			Process process, String jsonParserFieldName,
 			Object jsonParserFieldValue) {

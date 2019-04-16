@@ -14,13 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,10 +30,11 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.ProcessSerDes;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 
 import java.lang.reflect.InvocationTargetException;
@@ -53,10 +47,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -181,8 +177,6 @@ public abstract class BaseProcessResourceTestCase {
 
 		process1 = testGetProcessesPage_addProcess(process1);
 
-		Thread.sleep(1000);
-
 		process2 = testGetProcessesPage_addProcess(process2);
 
 		for (EntityField entityField : entityFields) {
@@ -270,10 +264,7 @@ public abstract class BaseProcessResourceTestCase {
 			_log.debug("HTTP response: " + string);
 		}
 
-		return outputObjectMapper.readValue(
-			string,
-			new TypeReference<Page<Process>>() {
-			});
+		return Page.of(string, ProcessSerDes::toDTO);
 	}
 
 	protected Http.Response invokeGetProcessesPageResponse(
@@ -328,10 +319,12 @@ public abstract class BaseProcessResourceTestCase {
 		}
 
 		try {
-			return outputObjectMapper.readValue(string, Process.class);
+			return ProcessSerDes.toDTO(string);
 		}
 		catch (Exception e) {
-			_log.error("Unable to process HTTP response: " + string, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
 
 			throw e;
 		}
@@ -702,97 +695,11 @@ public abstract class BaseProcessResourceTestCase {
 		return randomProcess();
 	}
 
-	protected static final ObjectMapper inputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-		}
-	};
-	protected static final ObjectMapper outputObjectMapper =
-		new ObjectMapper() {
-			{
-				addMixIn(Process.class, ProcessMixin.class);
-				setFilterProvider(
-					new SimpleFilterProvider() {
-						{
-							addFilter(
-								"Liferay.Vulcan",
-								SimpleBeanPropertyFilter.serializeAll());
-						}
-					});
-			}
-		};
-
 	protected Group irrelevantGroup;
 	protected String testContentType = "application/json";
 	protected Group testGroup;
 	protected Locale testLocale;
 	protected String testUserNameAndPassword = "test@liferay.com:test";
-
-	protected static class ProcessMixin {
-
-		@JsonProperty
-		Long dueAfterInstanceCount;
-		@JsonProperty
-		Long dueInInstanceCount;
-		@JsonProperty
-		Long id;
-		@JsonProperty
-		Long instanceCount;
-		@JsonProperty
-		Long onTimeInstanceCount;
-		@JsonProperty
-		Long overdueInstanceCount;
-		@JsonProperty
-		String title;
-
-	}
-
-	protected static class Page<T> {
-
-		public Collection<T> getItems() {
-			return new ArrayList<>(items);
-		}
-
-		public long getLastPage() {
-			return lastPage;
-		}
-
-		public long getPage() {
-			return page;
-		}
-
-		public long getPageSize() {
-			return pageSize;
-		}
-
-		public long getTotalCount() {
-			return totalCount;
-		}
-
-		@JsonProperty
-		protected Collection<T> items;
-
-		@JsonProperty
-		protected long lastPage;
-
-		@JsonProperty
-		protected long page;
-
-		@JsonProperty
-		protected long pageSize;
-
-		@JsonProperty
-		protected long totalCount;
-
-	}
 
 	private Http.Options _createHttpOptions() {
 		Http.Options options = new Http.Options();
@@ -810,6 +717,41 @@ public abstract class BaseProcessResourceTestCase {
 		options.addHeader("Content-Type", testContentType);
 
 		return options;
+	}
+
+	private String _toJSON(Map<String, String> map) {
+		if (map == null) {
+			return "null";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		Set<Map.Entry<String, String>> set = map.entrySet();
+
+		Iterator<Map.Entry<String, String>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, String> entry = iterator.next();
+
+			sb.append("\"" + entry.getKey() + "\": ");
+
+			if (entry.getValue() == null) {
+				sb.append("null");
+			}
+			else {
+				sb.append("\"" + entry.getValue() + "\"");
+			}
+
+			if (iterator.hasNext()) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private String _toPath(String template, Object... values) {

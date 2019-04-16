@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -190,16 +192,85 @@ public class SLASerDes {
 		return sb.toString();
 	}
 
+	public static Map<String, String> toMap(SLA sla) {
+		if (sla == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		if (sla.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put("description", String.valueOf(sla.getDescription()));
+		}
+
+		if (sla.getDuration() == null) {
+			map.put("duration", null);
+		}
+		else {
+			map.put("duration", String.valueOf(sla.getDuration()));
+		}
+
+		if (sla.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(sla.getId()));
+		}
+
+		if (sla.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(sla.getName()));
+		}
+
+		if (sla.getPauseNodeKeys() == null) {
+			map.put("pauseNodeKeys", null);
+		}
+		else {
+			map.put("pauseNodeKeys", String.valueOf(sla.getPauseNodeKeys()));
+		}
+
+		if (sla.getProcessId() == null) {
+			map.put("processId", null);
+		}
+		else {
+			map.put("processId", String.valueOf(sla.getProcessId()));
+		}
+
+		if (sla.getStartNodeKeys() == null) {
+			map.put("startNodeKeys", null);
+		}
+		else {
+			map.put("startNodeKeys", String.valueOf(sla.getStartNodeKeys()));
+		}
+
+		if (sla.getStopNodeKeys() == null) {
+			map.put("stopNodeKeys", null);
+		}
+		else {
+			map.put("stopNodeKeys", String.valueOf(sla.getStopNodeKeys()));
+		}
+
+		return map;
+	}
+
 	private static class SLAJSONParser extends BaseJSONParser<SLA> {
 
+		@Override
 		protected SLA createDTO() {
 			return new SLA();
 		}
 
+		@Override
 		protected SLA[] createDTOArray(int size) {
 			return new SLA[size];
 		}
 
+		@Override
 		protected void setField(
 			SLA sla, String jsonParserFieldName, Object jsonParserFieldValue) {
 

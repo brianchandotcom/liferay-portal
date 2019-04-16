@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.GenericError;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -84,17 +86,44 @@ public class GenericErrorSerDes {
 		return sb.toString();
 	}
 
+	public static Map<String, String> toMap(GenericError genericError) {
+		if (genericError == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		if (genericError.getFieldName() == null) {
+			map.put("fieldName", null);
+		}
+		else {
+			map.put("fieldName", String.valueOf(genericError.getFieldName()));
+		}
+
+		if (genericError.getMessage() == null) {
+			map.put("message", null);
+		}
+		else {
+			map.put("message", String.valueOf(genericError.getMessage()));
+		}
+
+		return map;
+	}
+
 	private static class GenericErrorJSONParser
 		extends BaseJSONParser<GenericError> {
 
+		@Override
 		protected GenericError createDTO() {
 			return new GenericError();
 		}
 
+		@Override
 		protected GenericError[] createDTOArray(int size) {
 			return new GenericError[size];
 		}
 
+		@Override
 		protected void setField(
 			GenericError genericError, String jsonParserFieldName,
 			Object jsonParserFieldValue) {

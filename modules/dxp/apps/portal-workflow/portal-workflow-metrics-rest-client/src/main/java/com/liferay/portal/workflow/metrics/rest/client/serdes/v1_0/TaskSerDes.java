@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -100,16 +102,61 @@ public class TaskSerDes {
 		return sb.toString();
 	}
 
+	public static Map<String, String> toMap(Task task) {
+		if (task == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		if (task.getInstanceCount() == null) {
+			map.put("instanceCount", null);
+		}
+		else {
+			map.put("instanceCount", String.valueOf(task.getInstanceCount()));
+		}
+
+		if (task.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(task.getName()));
+		}
+
+		if (task.getOnTimeInstanceCount() == null) {
+			map.put("onTimeInstanceCount", null);
+		}
+		else {
+			map.put(
+				"onTimeInstanceCount",
+				String.valueOf(task.getOnTimeInstanceCount()));
+		}
+
+		if (task.getOverdueInstanceCount() == null) {
+			map.put("overdueInstanceCount", null);
+		}
+		else {
+			map.put(
+				"overdueInstanceCount",
+				String.valueOf(task.getOverdueInstanceCount()));
+		}
+
+		return map;
+	}
+
 	private static class TaskJSONParser extends BaseJSONParser<Task> {
 
+		@Override
 		protected Task createDTO() {
 			return new Task();
 		}
 
+		@Override
 		protected Task[] createDTOArray(int size) {
 			return new Task[size];
 		}
 
+		@Override
 		protected void setField(
 			Task task, String jsonParserFieldName,
 			Object jsonParserFieldValue) {

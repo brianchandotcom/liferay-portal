@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -115,16 +117,64 @@ public class NodeSerDes {
 		return sb.toString();
 	}
 
+	public static Map<String, String> toMap(Node node) {
+		if (node == null) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		if (node.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(node.getId()));
+		}
+
+		if (node.getInitial() == null) {
+			map.put("initial", null);
+		}
+		else {
+			map.put("initial", String.valueOf(node.getInitial()));
+		}
+
+		if (node.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(node.getName()));
+		}
+
+		if (node.getTerminal() == null) {
+			map.put("terminal", null);
+		}
+		else {
+			map.put("terminal", String.valueOf(node.getTerminal()));
+		}
+
+		if (node.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(node.getType()));
+		}
+
+		return map;
+	}
+
 	private static class NodeJSONParser extends BaseJSONParser<Node> {
 
+		@Override
 		protected Node createDTO() {
 			return new Node();
 		}
 
+		@Override
 		protected Node[] createDTOArray(int size) {
 			return new Node[size];
 		}
 
+		@Override
 		protected void setField(
 			Node node, String jsonParserFieldName,
 			Object jsonParserFieldValue) {

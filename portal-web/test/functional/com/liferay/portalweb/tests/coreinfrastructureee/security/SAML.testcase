@@ -569,7 +569,9 @@ definition {
 
 		Navigator.gotoLoginPage();
 
-		AssertConsoleTextPresent(value1 = "Validation failure: Failed to resolve both a data and a key encryption credential");
+		// Unignore after LPS-90460 is resolved
+
+		// AssertConsoleTextPresent(value1 = "Validation failure: Failed to resolve both a data and a key encryption credential");
 	}
 
 	@priority = "4"

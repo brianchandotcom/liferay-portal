@@ -64,8 +64,6 @@ AUI.add(
 
 				var evaluator = instance.get('evaluator');
 
-				var type = instance.get('type');
-
 				if (evaluator && evaluator.isEvaluating()) {
 					evaluator.onceAfter(
 						'evaluationEnded',
@@ -76,10 +74,13 @@ AUI.add(
 						}
 					);
 				}
-				else if (type === 'checkbox_multiple' || type === 'radio') {
-					setTimeout(function() {
-						instance.showPendingErrorMessage();
-					}, 100);
+				else if (['checkbox_multiple', 'radio'].indexOf(instance.get('type')) !== -1) {
+					setTimeout(
+						function() {
+							instance.showPendingErrorMessage();
+						},
+						100
+					);
 				}
 				else {
 					instance.showErrorMessage();

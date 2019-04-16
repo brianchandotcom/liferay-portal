@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -265,15 +264,6 @@ public class LanguageExtension {
 
 			return new AggregateResourceBundle(
 				resourceBundles.toArray(new ResourceBundle[0]));
-		}
-
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             #loadResourceBundle(Locale)}
-		 */
-		@Deprecated
-		public ResourceBundle loadResourceBundle(String languageId) {
-			return loadResourceBundle(LocaleUtil.fromLanguageId(languageId));
 		}
 
 		private final List

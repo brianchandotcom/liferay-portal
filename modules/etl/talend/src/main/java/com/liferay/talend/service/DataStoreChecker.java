@@ -18,7 +18,7 @@ import com.liferay.talend.data.store.AuthenticationMethod;
 import com.liferay.talend.data.store.BasicDataStore;
 import com.liferay.talend.data.store.InputDataStore;
 import com.liferay.talend.data.store.OAuthDataStore;
-import com.liferay.talend.dataset.RESTDataSet;
+import com.liferay.talend.dataset.InputDataSet;
 import com.liferay.talend.http.client.exception.ConnectionException;
 import com.liferay.talend.http.client.exception.OAuth2Exception;
 
@@ -46,13 +46,13 @@ public class DataStoreChecker {
 				"Username and password are required");
 		}
 
-		RESTDataSet restDataSet = new RESTDataSet();
+		InputDataSet inputDataSet = new InputDataSet();
 
-		restDataSet.setEndpoint("/c/portal/login");
-		restDataSet.setInputDataStore(inputDataStore);
+		inputDataSet.setEndpoint("/c/portal/login");
+		inputDataSet.setInputDataStore(inputDataStore);
 
 		try {
-			_connectionService.getResponseRawString(restDataSet);
+			_connectionService.getResponseRawString(inputDataSet);
 		}
 		catch (ConnectionException ce) {
 			return new HealthCheckStatus(

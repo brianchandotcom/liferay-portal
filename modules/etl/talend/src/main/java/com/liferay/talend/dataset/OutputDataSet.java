@@ -15,23 +15,22 @@
 package com.liferay.talend.dataset;
 
 import com.liferay.talend.data.store.InputDataStore;
-
-import java.io.Serializable;
-
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.action.Suggestable;
 import org.talend.sdk.component.api.configuration.constraint.Required;
 import org.talend.sdk.component.api.configuration.type.DataSet;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 
+import java.io.Serializable;
+
 /**
  * @author Zoltán Takács
  * @author Igor Beslic
  * @review
  */
-@DataSet("RESTDataSet")
+@DataSet("OutputDataSet")
 @GridLayout({@GridLayout.Row("_inputDataStore"), @GridLayout.Row("_endpoint")})
-public class RESTDataSet implements Serializable {
+public class OutputDataSet implements Serializable {
 
 	public String getEndpoint() {
 		return _endpoint;
@@ -41,13 +40,13 @@ public class RESTDataSet implements Serializable {
 		return _inputDataStore;
 	}
 
-	public RESTDataSet setEndpoint(String endpoint) {
+	public OutputDataSet setEndpoint(String endpoint) {
 		_endpoint = endpoint;
 
 		return this;
 	}
 
-	public RESTDataSet setInputDataStore(InputDataStore inputDataStore) {
+	public OutputDataSet setInputDataStore(InputDataStore inputDataStore) {
 		_inputDataStore = inputDataStore;
 
 		return this;

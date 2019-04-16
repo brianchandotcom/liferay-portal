@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth.verifier.internal.portal.session;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -76,7 +77,9 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 				catch (PrincipalException pe) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Unable to verify CSRF token for " + csrfOrigin);
+							StringBundler.concat(
+								"Unable to verify CSRF token for ", csrfOrigin,
+								": ", pe.getMessage()));
 					}
 
 					return authVerifierResult;

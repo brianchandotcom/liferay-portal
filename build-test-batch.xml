@@ -4950,13 +4950,13 @@ ${output.content}</echo>
 			</test-action>
 
 			<test-set-up>
-				<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout --verbose > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
+				<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --verbose
+tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/lib/biz.aQute.bndlib.jar --gzip --verbose</echo>
 
 				<execute>
 					<![CDATA[
-						mkdir -p modules/core/portal-bootstrap
-
-						tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout --verbose > modules/core/portal-bootstrap/system.packages.extra.mf
+						tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --verbose
+						tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/lib/biz.aQute.bndlib.jar --gzip --verbose
 					]]>
 				</execute>
 

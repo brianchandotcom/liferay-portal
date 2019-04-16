@@ -1,0 +1,38 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+apply plugin: "nebula.optional-base"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
+dependencies {
+	compile group: "commons-configuration", name: "commons-configuration", optional, version: "1.10"
+}
+
+deploy {
+	finalizedBy deployJar
+}
+
+deployJar {
+	ext {
+		autoClean = false
+	}
+
+	from jar
+	into "../../../lib/portal"
+
+	rename {
+		"commons-configuration.jar"
+	}
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/commons/configuration/PropertiesConfiguration.java"
+
+	originalLibModuleName = "commons-configuration"
+}

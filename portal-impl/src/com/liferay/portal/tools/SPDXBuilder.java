@@ -21,6 +21,7 @@ import com.liferay.portal.xml.SAXReaderFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -29,9 +30,15 @@ import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -39,6 +46,7 @@ import org.dom4j.Element;
 import org.dom4j.Namespace;
 import org.dom4j.Node;
 import org.dom4j.QName;
+import org.dom4j.io.DocumentSource;
 import org.dom4j.io.SAXReader;
 
 /**
@@ -62,14 +70,28 @@ public class SPDXBuilder {
 		try {
 			System.setProperty("line.separator", StringPool.NEW_LINE);
 
-			String content = Dom4jUtil.toString(_getDocument(xmls, rdf));
-
+			Document document = _getDocument(xmls, rdf);
 			File rdfFile = new File(rdf);
 
+			String content = Dom4jUtil.toString(document);
 			File file = new File(rdfFile.getParentFile(), "versions-spdx.xml");
 
 			Files.write(
 				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
+
+			TransformerFactory transformerFactory =
+				TransformerFactory.newInstance();
+
+			Transformer transformer = transformerFactory.newTransformer(
+				new StreamSource(
+					new File(rdfFile.getParentFile(), "versions.xsl")));
+
+			File versionHtmlFile = new File(
+				rdfFile.getParentFile(), "versions-spdx.html");
+
+			transformer.transform(
+				new DocumentSource(document),
+				new StreamResult(new FileOutputStream(versionHtmlFile)));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -181,6 +203,13 @@ public class SPDXBuilder {
 		}
 
 		Document document = DocumentHelper.createDocument();
+
+		Map<String, String> args = new HashMap<>();
+
+		args.put("href", "versions.xsl");
+		args.put("type", "text/xsl");
+
+		document.addProcessingInstruction("xml-stylesheet", args);
 
 		Element versionsElement = document.addElement("versions");
 

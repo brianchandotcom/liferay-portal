@@ -1012,15 +1012,13 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	private SearchRequestBuilder _getSearchRequestBuilder(
 		SearchContext searchContext) {
 
-		return _searchRequestBuilderFactory.getSearchRequestBuilder(
-			searchContext);
+		return _searchRequestBuilderFactory.builder(searchContext);
 	}
 
 	private SearchResponseBuilder _getSearchResponseBuilder(
 		SearchContext searchContext) {
 
-		return _searchResponseBuilderFactory.getSearchResponseBuilder(
-			searchContext);
+		return _searchResponseBuilderFactory.builder(searchContext);
 	}
 
 	private static final String _VERSION_FIELD = "_version_";

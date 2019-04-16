@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -460,14 +459,6 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected Serializable getDocumentLibraryValue(String url) {
-		return null;
-	}
-
 	protected Field getField(
 			Element dynamicElementElement, DDMStructure ddmStructure,
 			String[] availableLanguageIds, String defaultLanguageId)
@@ -679,24 +670,6 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return serializable;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected FileEntry getFileEntryByDocumentLibraryURL(String url) {
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected FileEntry getFileEntryByOldDocumentLibraryURL(String url)
-		throws PortalException {
-
-		return null;
 	}
 
 	protected void getJournalMetadataElement(Element metadataElement) {

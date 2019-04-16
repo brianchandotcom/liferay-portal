@@ -40,7 +40,8 @@ public interface DLGoogleDriveCompanyConfiguration {
 	 * @return the client ID
 	 */
 	@ExtendedAttributeDefinition(
-		descriptionArguments = "https://console.developers.google.com/apis/credentials/oauthclient"
+		descriptionArguments = "https://console.developers.google.com/apis/credentials/oauthclient",
+		requiredInput = true
 	)
 	@Meta.AD(
 		description = "client-id-description", name = "client-id",
@@ -56,7 +57,8 @@ public interface DLGoogleDriveCompanyConfiguration {
 	 * @return the client secret
 	 */
 	@ExtendedAttributeDefinition(
-		descriptionArguments = "https://console.developers.google.com/apis/credentials/oauthclient"
+		descriptionArguments = "https://console.developers.google.com/apis/credentials/oauthclient",
+		requiredInput = true
 	)
 	@Meta.AD(
 		description = "client-secret-description", name = "client-secret",

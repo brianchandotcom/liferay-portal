@@ -181,18 +181,18 @@ public class KnowledgeBaseFolder {
 
 	protected String name;
 
-	public Number getNumberOfKnowledgeBaseArticles() {
+	public Integer getNumberOfKnowledgeBaseArticles() {
 		return numberOfKnowledgeBaseArticles;
 	}
 
 	public void setNumberOfKnowledgeBaseArticles(
-		Number numberOfKnowledgeBaseArticles) {
+		Integer numberOfKnowledgeBaseArticles) {
 
 		this.numberOfKnowledgeBaseArticles = numberOfKnowledgeBaseArticles;
 	}
 
 	public void setNumberOfKnowledgeBaseArticles(
-		UnsafeSupplier<Number, Exception>
+		UnsafeSupplier<Integer, Exception>
 			numberOfKnowledgeBaseArticlesUnsafeSupplier) {
 
 		try {
@@ -204,20 +204,20 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	protected Number numberOfKnowledgeBaseArticles;
+	protected Integer numberOfKnowledgeBaseArticles;
 
-	public Number getNumberOfKnowledgeBaseFolders() {
+	public Integer getNumberOfKnowledgeBaseFolders() {
 		return numberOfKnowledgeBaseFolders;
 	}
 
 	public void setNumberOfKnowledgeBaseFolders(
-		Number numberOfKnowledgeBaseFolders) {
+		Integer numberOfKnowledgeBaseFolders) {
 
 		this.numberOfKnowledgeBaseFolders = numberOfKnowledgeBaseFolders;
 	}
 
 	public void setNumberOfKnowledgeBaseFolders(
-		UnsafeSupplier<Number, Exception>
+		UnsafeSupplier<Integer, Exception>
 			numberOfKnowledgeBaseFoldersUnsafeSupplier) {
 
 		try {
@@ -229,7 +229,7 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	protected Number numberOfKnowledgeBaseFolders;
+	protected Integer numberOfKnowledgeBaseFolders;
 
 	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
 		return parentKnowledgeBaseFolder;

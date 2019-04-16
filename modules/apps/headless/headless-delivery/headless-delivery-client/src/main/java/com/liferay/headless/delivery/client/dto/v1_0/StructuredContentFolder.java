@@ -181,19 +181,19 @@ public class StructuredContentFolder {
 
 	protected String name;
 
-	public Number getNumberOfStructuredContentFolders() {
+	public Integer getNumberOfStructuredContentFolders() {
 		return numberOfStructuredContentFolders;
 	}
 
 	public void setNumberOfStructuredContentFolders(
-		Number numberOfStructuredContentFolders) {
+		Integer numberOfStructuredContentFolders) {
 
 		this.numberOfStructuredContentFolders =
 			numberOfStructuredContentFolders;
 	}
 
 	public void setNumberOfStructuredContentFolders(
-		UnsafeSupplier<Number, Exception>
+		UnsafeSupplier<Integer, Exception>
 			numberOfStructuredContentFoldersUnsafeSupplier) {
 
 		try {
@@ -205,20 +205,20 @@ public class StructuredContentFolder {
 		}
 	}
 
-	protected Number numberOfStructuredContentFolders;
+	protected Integer numberOfStructuredContentFolders;
 
-	public Number getNumberOfStructuredContents() {
+	public Integer getNumberOfStructuredContents() {
 		return numberOfStructuredContents;
 	}
 
 	public void setNumberOfStructuredContents(
-		Number numberOfStructuredContents) {
+		Integer numberOfStructuredContents) {
 
 		this.numberOfStructuredContents = numberOfStructuredContents;
 	}
 
 	public void setNumberOfStructuredContents(
-		UnsafeSupplier<Number, Exception>
+		UnsafeSupplier<Integer, Exception>
 			numberOfStructuredContentsUnsafeSupplier) {
 
 		try {
@@ -230,7 +230,7 @@ public class StructuredContentFolder {
 		}
 	}
 
-	protected Number numberOfStructuredContents;
+	protected Integer numberOfStructuredContents;
 
 	public Long getSiteId() {
 		return siteId;

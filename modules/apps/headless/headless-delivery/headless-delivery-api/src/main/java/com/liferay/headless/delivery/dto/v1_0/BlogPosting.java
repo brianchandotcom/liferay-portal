@@ -479,17 +479,17 @@ public class BlogPosting {
 	@Schema(
 		description = "The number of comments this BlogPosting has received."
 	)
-	public Number getNumberOfComments() {
+	public Integer getNumberOfComments() {
 		return numberOfComments;
 	}
 
-	public void setNumberOfComments(Number numberOfComments) {
+	public void setNumberOfComments(Integer numberOfComments) {
 		this.numberOfComments = numberOfComments;
 	}
 
 	@JsonIgnore
 	public void setNumberOfComments(
-		UnsafeSupplier<Number, Exception> numberOfCommentsUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> numberOfCommentsUnsafeSupplier) {
 
 		try {
 			numberOfComments = numberOfCommentsUnsafeSupplier.get();
@@ -504,7 +504,7 @@ public class BlogPosting {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number numberOfComments;
+	protected Integer numberOfComments;
 
 	@Schema(
 		description = "The site identificator where this BlogPosting is scoped."

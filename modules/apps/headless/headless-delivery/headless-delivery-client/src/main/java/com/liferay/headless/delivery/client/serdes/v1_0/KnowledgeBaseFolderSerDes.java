@@ -264,7 +264,7 @@ public class KnowledgeBaseFolderSerDes {
 
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setNumberOfKnowledgeBaseArticles(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -272,7 +272,7 @@ public class KnowledgeBaseFolderSerDes {
 
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setNumberOfKnowledgeBaseFolders(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

@@ -157,7 +157,7 @@ public class RatingSerDes {
 			if (Objects.equals(jsonParserFieldName, "bestRating")) {
 				if (jsonParserFieldValue != null) {
 					rating.setBestRating(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
@@ -185,13 +185,13 @@ public class RatingSerDes {
 			else if (Objects.equals(jsonParserFieldName, "ratingValue")) {
 				if (jsonParserFieldValue != null) {
 					rating.setRatingValue(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "worstRating")) {
 				if (jsonParserFieldValue != null) {
 					rating.setWorstRating(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

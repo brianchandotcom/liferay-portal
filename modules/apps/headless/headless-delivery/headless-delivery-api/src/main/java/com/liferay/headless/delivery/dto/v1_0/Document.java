@@ -420,17 +420,17 @@ public class Document {
 	protected String[] keywords;
 
 	@Schema(description = "A list of child comments of this content.")
-	public Number getNumberOfComments() {
+	public Integer getNumberOfComments() {
 		return numberOfComments;
 	}
 
-	public void setNumberOfComments(Number numberOfComments) {
+	public void setNumberOfComments(Integer numberOfComments) {
 		this.numberOfComments = numberOfComments;
 	}
 
 	@JsonIgnore
 	public void setNumberOfComments(
-		UnsafeSupplier<Number, Exception> numberOfCommentsUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> numberOfCommentsUnsafeSupplier) {
 
 		try {
 			numberOfComments = numberOfCommentsUnsafeSupplier.get();
@@ -445,7 +445,7 @@ public class Document {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number numberOfComments;
+	protected Integer numberOfComments;
 
 	@Schema(description = "The size in bytes of the binary files.")
 	public Number getSizeInBytes() {

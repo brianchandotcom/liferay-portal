@@ -119,25 +119,25 @@ public class AggregateRatingSerDes {
 			if (Objects.equals(jsonParserFieldName, "bestRating")) {
 				if (jsonParserFieldValue != null) {
 					aggregateRating.setBestRating(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "ratingCount")) {
 				if (jsonParserFieldValue != null) {
 					aggregateRating.setRatingCount(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "ratingValue")) {
 				if (jsonParserFieldValue != null) {
 					aggregateRating.setRatingValue(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "worstRating")) {
 				if (jsonParserFieldValue != null) {
 					aggregateRating.setWorstRating(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

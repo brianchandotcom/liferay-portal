@@ -181,16 +181,16 @@ public class DocumentFolder {
 
 	protected String name;
 
-	public Number getNumberOfDocumentFolders() {
+	public Integer getNumberOfDocumentFolders() {
 		return numberOfDocumentFolders;
 	}
 
-	public void setNumberOfDocumentFolders(Number numberOfDocumentFolders) {
+	public void setNumberOfDocumentFolders(Integer numberOfDocumentFolders) {
 		this.numberOfDocumentFolders = numberOfDocumentFolders;
 	}
 
 	public void setNumberOfDocumentFolders(
-		UnsafeSupplier<Number, Exception>
+		UnsafeSupplier<Integer, Exception>
 			numberOfDocumentFoldersUnsafeSupplier) {
 
 		try {
@@ -202,18 +202,18 @@ public class DocumentFolder {
 		}
 	}
 
-	protected Number numberOfDocumentFolders;
+	protected Integer numberOfDocumentFolders;
 
-	public Number getNumberOfDocuments() {
+	public Integer getNumberOfDocuments() {
 		return numberOfDocuments;
 	}
 
-	public void setNumberOfDocuments(Number numberOfDocuments) {
+	public void setNumberOfDocuments(Integer numberOfDocuments) {
 		this.numberOfDocuments = numberOfDocuments;
 	}
 
 	public void setNumberOfDocuments(
-		UnsafeSupplier<Number, Exception> numberOfDocumentsUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> numberOfDocumentsUnsafeSupplier) {
 
 		try {
 			numberOfDocuments = numberOfDocumentsUnsafeSupplier.get();
@@ -223,7 +223,7 @@ public class DocumentFolder {
 		}
 	}
 
-	protected Number numberOfDocuments;
+	protected Integer numberOfDocuments;
 
 	public Long getSiteId() {
 		return siteId;

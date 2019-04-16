@@ -92,13 +92,14 @@ public class GeoSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "latitude")) {
 				if (jsonParserFieldValue != null) {
-					geo.setLatitude(Long.valueOf((String)jsonParserFieldValue));
+					geo.setLatitude(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "longitude")) {
 				if (jsonParserFieldValue != null) {
 					geo.setLongitude(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

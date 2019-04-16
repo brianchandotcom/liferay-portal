@@ -251,17 +251,17 @@ public class DocumentFolder {
 	@Schema(
 		description = "The number of child DocumentFolders that depend on this resources."
 	)
-	public Number getNumberOfDocumentFolders() {
+	public Integer getNumberOfDocumentFolders() {
 		return numberOfDocumentFolders;
 	}
 
-	public void setNumberOfDocumentFolders(Number numberOfDocumentFolders) {
+	public void setNumberOfDocumentFolders(Integer numberOfDocumentFolders) {
 		this.numberOfDocumentFolders = numberOfDocumentFolders;
 	}
 
 	@JsonIgnore
 	public void setNumberOfDocumentFolders(
-		UnsafeSupplier<Number, Exception>
+		UnsafeSupplier<Integer, Exception>
 			numberOfDocumentFoldersUnsafeSupplier) {
 
 		try {
@@ -278,22 +278,22 @@ public class DocumentFolder {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number numberOfDocumentFolders;
+	protected Integer numberOfDocumentFolders;
 
 	@Schema(
 		description = "The number of child Documents that depend on this resources."
 	)
-	public Number getNumberOfDocuments() {
+	public Integer getNumberOfDocuments() {
 		return numberOfDocuments;
 	}
 
-	public void setNumberOfDocuments(Number numberOfDocuments) {
+	public void setNumberOfDocuments(Integer numberOfDocuments) {
 		this.numberOfDocuments = numberOfDocuments;
 	}
 
 	@JsonIgnore
 	public void setNumberOfDocuments(
-		UnsafeSupplier<Number, Exception> numberOfDocumentsUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> numberOfDocumentsUnsafeSupplier) {
 
 		try {
 			numberOfDocuments = numberOfDocumentsUnsafeSupplier.get();
@@ -308,7 +308,7 @@ public class DocumentFolder {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number numberOfDocuments;
+	protected Integer numberOfDocuments;
 
 	@Schema(
 		description = "The site identificator where this DocumentFolder is scoped."

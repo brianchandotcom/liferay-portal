@@ -156,17 +156,17 @@ public class Comment {
 	@Schema(
 		description = "The number of child comments associated with this Comment."
 	)
-	public Number getNumberOfComments() {
+	public Integer getNumberOfComments() {
 		return numberOfComments;
 	}
 
-	public void setNumberOfComments(Number numberOfComments) {
+	public void setNumberOfComments(Integer numberOfComments) {
 		this.numberOfComments = numberOfComments;
 	}
 
 	@JsonIgnore
 	public void setNumberOfComments(
-		UnsafeSupplier<Number, Exception> numberOfCommentsUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> numberOfCommentsUnsafeSupplier) {
 
 		try {
 			numberOfComments = numberOfCommentsUnsafeSupplier.get();
@@ -181,7 +181,7 @@ public class Comment {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number numberOfComments;
+	protected Integer numberOfComments;
 
 	@Schema(description = "The content of the Comment.")
 	public String getText() {

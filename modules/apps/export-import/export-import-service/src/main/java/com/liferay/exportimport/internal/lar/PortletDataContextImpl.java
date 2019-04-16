@@ -1935,7 +1935,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public void removePrimaryKey(String path) {
-		String primaryKeyString = getPrimaryKeyString(String.class, path);
+		String primaryKeyString = getPrimaryKeyString(
+			String.class, (Serializable)path);
 
 		_primaryKeys.remove(primaryKeyString);
 		_scopedPrimaryKeys.remove(primaryKeyString);
@@ -2523,14 +2524,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		Class<?> clazz, Serializable primaryKey) {
 
 		return getPrimaryKeyString(clazz.getName(), primaryKey);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected String getPrimaryKeyString(Class<?> clazz, String primaryKey) {
-		return getPrimaryKeyString(clazz, (Serializable)primaryKey);
 	}
 
 	protected String getPrimaryKeyString(

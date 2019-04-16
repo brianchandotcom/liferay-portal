@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -255,7 +254,7 @@ public class JournalArticleAssetInfoDisplayContributor
 	private Object _sanitizeFieldValue(
 			JournalArticle article, DDMFormFieldValue ddmFormFieldValue,
 			Locale locale)
-		throws SanitizerException {
+		throws PortalException {
 
 		Value value = ddmFormFieldValue.getValue();
 
@@ -281,7 +280,12 @@ public class JournalArticleAssetInfoDisplayContributor
 			return numberFormat.format(GetterUtil.getDouble(valueString));
 		}
 		else if (Objects.equals(ddmFormFieldValue.getType(), "ddm-image")) {
-			return _transformFileEntryURL(valueString);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				valueString);
+
+			jsonObject.put("url", _transformFileEntryURL(valueString));
+
+			return jsonObject;
 		}
 
 		return SanitizerUtil.sanitize(

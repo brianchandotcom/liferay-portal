@@ -46,17 +46,10 @@ public abstract class BaseTestPreparatorBundleActivator
 	implements BundleActivator {
 
 	@Override
-	public void start(BundleContext bundleContext) throws Exception {
+	public void start(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		try {
-			prepareTest();
-		}
-		catch (Exception e) {
-			stop(bundleContext);
-
-			throw new RuntimeException(e);
-		}
+		prepareTest();
 	}
 
 	@Override

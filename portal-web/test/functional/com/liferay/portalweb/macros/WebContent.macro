@@ -672,16 +672,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro closeSidebar {
-		Pause(locator1 = "1000");
-
-		Click(locator1 = "WC#SIDEBAR_BUTTON");
-
-		Pause(locator1 = "1000");
-
-		AssertNotVisible(locator1 = "WC#SIDEBAR_BODY");
-	}
-
 	macro deleteCP {
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",

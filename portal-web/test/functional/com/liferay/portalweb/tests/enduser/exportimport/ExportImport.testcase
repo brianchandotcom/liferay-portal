@@ -919,8 +919,6 @@ definition {
 			webContentTitle = "Exported Article"
 		);
 
-		WebContent.closeSidebar();
-
 		DDLRecord.addRepeatableField(fieldName = "Separator");
 
 		DDLRecord.populateFieldText(

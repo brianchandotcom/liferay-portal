@@ -115,6 +115,64 @@ definition {
 		OAuth2.deleteApplication(applicationName = "OAuth Application Edited");
 	}
 
+	test AuthorizeExternalApplication {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+
+		var clientId = "abc123";
+		var clientSecret = "abc123";
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration"
+		);
+
+		OAuth2.addApplication(
+			applicationName = "Third-party Application",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			clientProfile = "Web Application"
+		);
+
+		OAuth2.inputApplicationValues(
+			clientId = "${clientId}",
+			clientSecret = "${clientSecret}"
+		);
+
+		Navigator.gotoBack();
+
+		OAuth2.editScopes(
+			applicationName = "Third-party Application",
+			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
+			resourcePanels = "Portal Services"
+		);
+
+		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
+			value1 = "${clientId}"
+		);
+
+		Button.click(button = "Authorize My Application");
+
+		Button.click(button = "Authorize");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
+			value1 = "${clientSecret}"
+		);
+
+		Button.click(button = "Obtain OAuth2 Access");
+
+		Button.click(button = "Launch Request");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com"
+		);
+	}
+
 	test EditApplicationScopes {
 		property prepare.oauth2.global.scopes = "true";
 
@@ -209,64 +267,6 @@ definition {
 			applicationName = "OAuth Application",
 			resourcePanels = "Portal Services,Sample QA app",
 			uncheckedGlobalScope = "Everything"
-		);
-	}
-
-	test AuthorizeExternalApplication {
-		property custom.properties = "virtual.hosts.default.site.name=Guest";
-
-		var clientId = "abc123";
-		var clientSecret = "abc123";
-		var portalURL = PropsUtil.get("portal.url");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration"
-		);
-
-		OAuth2.addApplication(
-			applicationName = "Third-party Application",
-			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
-			clientProfile = "Web Application"
-		);
-
-		OAuth2.inputApplicationValues(
-			clientId = "${clientId}",
-			clientSecret = "${clientSecret}"
-		);
-
-		Navigator.gotoBack();
-
-		OAuth2.editScopes(
-			applicationName = "Third-party Application",
-			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
-			resourcePanels = "Portal Services"
-		);
-
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId}"
-		);
-
-		Button.click(button = "Authorize My Application");
-
-		Button.click(button = "Authorize");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret}"
-		);
-
-		Button.click(button = "Obtain OAuth2 Access");
-
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com"
 		);
 	}
 

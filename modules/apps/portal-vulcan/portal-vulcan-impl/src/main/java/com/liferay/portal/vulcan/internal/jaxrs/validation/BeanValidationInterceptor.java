@@ -106,7 +106,11 @@ public class BeanValidationInterceptor
 		ResourceProvider resourceProvider =
 			classResourceInfo.getResourceProvider();
 
-		return resourceProvider.getInstance(message);
+		Object instance = resourceProvider.getInstance(message);
+
+		resourceProvider.releaseInstance(message, instance);
+
+		return instance;
 	}
 
 	@Override

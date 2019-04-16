@@ -141,7 +141,9 @@ definition {
 
 		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
 
-		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+		// Unignore when LPS-94171 is resolved
+
+		// AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
 	@description = "This is a use case for LPS-72807."

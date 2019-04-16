@@ -36,10 +36,12 @@ definition {
 			value1 = "USA"
 		);
 
-		Select(
-			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT",
-			value1 = "RSA"
-		);
+		if ("${certificateUsage}" == "SIGNING") {
+			Select(
+				locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT",
+				value1 = "RSA"
+			);
+		}
 
 		Select(
 			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT",

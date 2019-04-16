@@ -98,7 +98,6 @@ boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowResto
 		searchContainer="<%= searchContainer %>"
 		var="userSearchContainer"
 	>
-		<aui:input disabled="<%= true %>" name="usersRedirect" type="hidden" value="<%= currentURLObj.toString() %>" />
 		<aui:input name="deleteUserIds" type="hidden" />
 		<aui:input name="status" type="hidden" value="<%= status %>" />
 

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -88,16 +89,51 @@ public class ViewTreeManagementToolbarDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.putData("action", "delete");
+						dropdownItem.putData("action", Constants.DELETE);
 						dropdownItem.setHref(
 							StringBundler.concat(
 								"javascript:", _renderResponse.getNamespace(),
 								"delete();"));
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
+							LanguageUtil.get(_request, Constants.DELETE));
 						dropdownItem.setQuickAction(true);
 					});
+
+				if (!Objects.equals(getNavigation(), "active")) {
+					add(
+						dropdownItem -> {
+							dropdownItem.putData("action", Constants.RESTORE);
+							dropdownItem.setHref(
+								StringBundler.concat(
+									"javascript:",
+									_renderResponse.getNamespace(),
+									"deleteUsers('", Constants.RESTORE, "');"));
+							dropdownItem.setIcon("undo");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, Constants.RESTORE));
+							dropdownItem.setQuickAction(true);
+						});
+				}
+
+				if (!Objects.equals(getNavigation(), "inactive")) {
+					add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", Constants.DEACTIVATE);
+							dropdownItem.setHref(
+								StringBundler.concat(
+									"javascript:",
+									_renderResponse.getNamespace(),
+									"deleteUsers('", Constants.DEACTIVATE,
+									"');"));
+							dropdownItem.setIcon("hidden");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_request, Constants.DEACTIVATE));
+							dropdownItem.setQuickAction(true);
+						});
+				}
 			}
 		};
 	}
@@ -107,7 +143,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 
 		List<String> availableActionDropdownItems = new ArrayList<>();
 
-		availableActionDropdownItems.add("delete");
+		availableActionDropdownItems.add(Constants.DELETE);
 
 		return availableActionDropdownItems;
 	}
@@ -115,8 +151,12 @@ public class ViewTreeManagementToolbarDisplayContext {
 	public List<String> getAvailableActionDropdownItems(User user) {
 		List<String> availableActionDropdownItems = new ArrayList<>();
 
-		if (!user.isActive()) {
-			availableActionDropdownItems.add("delete");
+		if (user.isActive()) {
+			availableActionDropdownItems.add(Constants.DEACTIVATE);
+		}
+		else {
+			availableActionDropdownItems.add(Constants.DELETE);
+			availableActionDropdownItems.add(Constants.RESTORE);
 		}
 
 		return availableActionDropdownItems;

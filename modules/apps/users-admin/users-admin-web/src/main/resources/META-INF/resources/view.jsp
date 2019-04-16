@@ -112,21 +112,17 @@ else {
 		if (((cmd == '<%= Constants.DEACTIVATE %>') && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>')) || ((cmd == '<%= Constants.DELETE %>') && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>')) || (cmd == '<%= Constants.RESTORE %>')) {
 			var form = document.<portlet:namespace />fm;
 
-			var usersRedirect = Liferay.Util.getFormElement(form, 'usersRedirect');
-
-			if (usersRedirect) {
-				Liferay.Util.postForm(
-					form,
-					{
-						data: {
-							deleteUserIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser'),
-							redirect: usersRedirect.value,
-							'<%= Constants.CMD %>': cmd
-						},
-						url: '<portlet:actionURL name="/users_admin/edit_user" />'
-					}
-				);
-			}
+			Liferay.Util.postForm(
+				form,
+				{
+					data: {
+						deleteUserIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser'),
+						redirect: '<%= currentURL %>',
+						'<%= Constants.CMD %>': cmd
+					},
+					url: '<portlet:actionURL name="/users_admin/edit_user" />'
+				}
+			);
 		}
 	}
 

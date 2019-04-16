@@ -154,11 +154,21 @@ public class ${schemaName}SerDes {
 			<#assign propertyType = properties[propertyName] />
 
 			<#if allSchemas[propertyType]??>
-				map.put("${propertyName}", ${propertyType}SerDes.toJSON(${schemaVarName}.get${propertyName?cap_first}()));
+				if (${schemaVarName}.get${propertyName?cap_first}() == null) {
+					map.put("${propertyName}", null);
+				}
+				else {
+					map.put("${propertyName}", ${propertyType}SerDes.toJSON(${schemaVarName}.get${propertyName?cap_first}()));
+				}
 			<#elseif stringUtil.equals(propertyType, "Date")>
 				map.put("${propertyName}", liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
 			<#else>
-				map.put("${propertyName}", String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
+				if (${schemaVarName}.get${propertyName?cap_first}() == null) {
+					map.put("${propertyName}", null);
+				}
+				else {
+					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
+				}
 			</#if>
 		</#list>
 

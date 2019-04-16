@@ -89,13 +89,23 @@ public class TaxonomyCategorySerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put(
-			"taxonomyCategoryId",
-			String.valueOf(taxonomyCategory.getTaxonomyCategoryId()));
+		if (taxonomyCategory.getTaxonomyCategoryId() == null) {
+			map.put("taxonomyCategoryId", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryId",
+				String.valueOf(taxonomyCategory.getTaxonomyCategoryId()));
+		}
 
-		map.put(
-			"taxonomyCategoryName",
-			String.valueOf(taxonomyCategory.getTaxonomyCategoryName()));
+		if (taxonomyCategory.getTaxonomyCategoryName() == null) {
+			map.put("taxonomyCategoryName", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryName",
+				String.valueOf(taxonomyCategory.getTaxonomyCategoryName()));
+		}
 
 		return map;
 	}

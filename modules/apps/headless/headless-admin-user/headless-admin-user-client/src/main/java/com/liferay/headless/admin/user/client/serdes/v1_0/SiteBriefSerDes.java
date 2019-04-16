@@ -87,9 +87,19 @@ public class SiteBriefSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(siteBrief.getId()));
+		if (siteBrief.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(siteBrief.getId()));
+		}
 
-		map.put("name", String.valueOf(siteBrief.getName()));
+		if (siteBrief.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(siteBrief.getName()));
+		}
 
 		return map;
 	}

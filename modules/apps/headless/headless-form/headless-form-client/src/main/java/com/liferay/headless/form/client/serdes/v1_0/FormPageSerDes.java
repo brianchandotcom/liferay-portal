@@ -125,13 +125,33 @@ public class FormPageSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("fields", String.valueOf(formPage.getFields()));
+		if (formPage.getFields() == null) {
+			map.put("fields", null);
+		}
+		else {
+			map.put("fields", String.valueOf(formPage.getFields()));
+		}
 
-		map.put("headline", String.valueOf(formPage.getHeadline()));
+		if (formPage.getHeadline() == null) {
+			map.put("headline", null);
+		}
+		else {
+			map.put("headline", String.valueOf(formPage.getHeadline()));
+		}
 
-		map.put("id", String.valueOf(formPage.getId()));
+		if (formPage.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(formPage.getId()));
+		}
 
-		map.put("text", String.valueOf(formPage.getText()));
+		if (formPage.getText() == null) {
+			map.put("text", null);
+		}
+		else {
+			map.put("text", String.valueOf(formPage.getText()));
+		}
 
 		return map;
 	}

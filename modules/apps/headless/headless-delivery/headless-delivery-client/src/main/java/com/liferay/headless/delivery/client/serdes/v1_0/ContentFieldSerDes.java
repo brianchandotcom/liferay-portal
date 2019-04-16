@@ -164,19 +164,56 @@ public class ContentFieldSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("dataType", String.valueOf(contentField.getDataType()));
+		if (contentField.getDataType() == null) {
+			map.put("dataType", null);
+		}
+		else {
+			map.put("dataType", String.valueOf(contentField.getDataType()));
+		}
 
-		map.put("inputControl", String.valueOf(contentField.getInputControl()));
+		if (contentField.getInputControl() == null) {
+			map.put("inputControl", null);
+		}
+		else {
+			map.put(
+				"inputControl", String.valueOf(contentField.getInputControl()));
+		}
 
-		map.put("label", String.valueOf(contentField.getLabel()));
+		if (contentField.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(contentField.getLabel()));
+		}
 
-		map.put("name", String.valueOf(contentField.getName()));
+		if (contentField.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(contentField.getName()));
+		}
 
-		map.put("nestedFields", String.valueOf(contentField.getNestedFields()));
+		if (contentField.getNestedFields() == null) {
+			map.put("nestedFields", null);
+		}
+		else {
+			map.put(
+				"nestedFields", String.valueOf(contentField.getNestedFields()));
+		}
 
-		map.put("repeatable", String.valueOf(contentField.getRepeatable()));
+		if (contentField.getRepeatable() == null) {
+			map.put("repeatable", null);
+		}
+		else {
+			map.put("repeatable", String.valueOf(contentField.getRepeatable()));
+		}
 
-		map.put("value", ValueSerDes.toJSON(contentField.getValue()));
+		if (contentField.getValue() == null) {
+			map.put("value", null);
+		}
+		else {
+			map.put("value", ValueSerDes.toJSON(contentField.getValue()));
+		}
 
 		return map;
 	}

@@ -149,9 +149,19 @@ public class RatingSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put("bestRating", String.valueOf(rating.getBestRating()));
+		if (rating.getBestRating() == null) {
+			map.put("bestRating", null);
+		}
+		else {
+			map.put("bestRating", String.valueOf(rating.getBestRating()));
+		}
 
-		map.put("creator", CreatorSerDes.toJSON(rating.getCreator()));
+		if (rating.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", CreatorSerDes.toJSON(rating.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -161,11 +171,26 @@ public class RatingSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(rating.getDateModified()));
 
-		map.put("id", String.valueOf(rating.getId()));
+		if (rating.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(rating.getId()));
+		}
 
-		map.put("ratingValue", String.valueOf(rating.getRatingValue()));
+		if (rating.getRatingValue() == null) {
+			map.put("ratingValue", null);
+		}
+		else {
+			map.put("ratingValue", String.valueOf(rating.getRatingValue()));
+		}
 
-		map.put("worstRating", String.valueOf(rating.getWorstRating()));
+		if (rating.getWorstRating() == null) {
+			map.put("worstRating", null);
+		}
+		else {
+			map.put("worstRating", String.valueOf(rating.getWorstRating()));
+		}
 
 		return map;
 	}

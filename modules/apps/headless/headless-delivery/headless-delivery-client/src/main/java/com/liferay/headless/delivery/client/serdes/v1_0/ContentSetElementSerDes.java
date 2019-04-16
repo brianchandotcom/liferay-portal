@@ -117,14 +117,35 @@ public class ContentSetElementSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("content", String.valueOf(contentSetElement.getContent()));
+		if (contentSetElement.getContent() == null) {
+			map.put("content", null);
+		}
+		else {
+			map.put("content", String.valueOf(contentSetElement.getContent()));
+		}
 
-		map.put(
-			"contentType", String.valueOf(contentSetElement.getContentType()));
+		if (contentSetElement.getContentType() == null) {
+			map.put("contentType", null);
+		}
+		else {
+			map.put(
+				"contentType",
+				String.valueOf(contentSetElement.getContentType()));
+		}
 
-		map.put("id", String.valueOf(contentSetElement.getId()));
+		if (contentSetElement.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(contentSetElement.getId()));
+		}
 
-		map.put("title", String.valueOf(contentSetElement.getTitle()));
+		if (contentSetElement.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(contentSetElement.getTitle()));
+		}
 
 		return map;
 	}

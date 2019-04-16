@@ -112,11 +112,27 @@ public class ServiceSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("hoursAvailable", String.valueOf(service.getHoursAvailable()));
+		if (service.getHoursAvailable() == null) {
+			map.put("hoursAvailable", null);
+		}
+		else {
+			map.put(
+				"hoursAvailable", String.valueOf(service.getHoursAvailable()));
+		}
 
-		map.put("id", String.valueOf(service.getId()));
+		if (service.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(service.getId()));
+		}
 
-		map.put("serviceType", String.valueOf(service.getServiceType()));
+		if (service.getServiceType() == null) {
+			map.put("serviceType", null);
+		}
+		else {
+			map.put("serviceType", String.valueOf(service.getServiceType()));
+		}
 
 		return map;
 	}

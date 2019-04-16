@@ -186,10 +186,21 @@ public class RoleSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"availableLanguages", String.valueOf(role.getAvailableLanguages()));
+		if (role.getAvailableLanguages() == null) {
+			map.put("availableLanguages", null);
+		}
+		else {
+			map.put(
+				"availableLanguages",
+				String.valueOf(role.getAvailableLanguages()));
+		}
 
-		map.put("creator", CreatorSerDes.toJSON(role.getCreator()));
+		if (role.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", CreatorSerDes.toJSON(role.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -199,13 +210,33 @@ public class RoleSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(role.getDateModified()));
 
-		map.put("description", String.valueOf(role.getDescription()));
+		if (role.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put("description", String.valueOf(role.getDescription()));
+		}
 
-		map.put("id", String.valueOf(role.getId()));
+		if (role.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(role.getId()));
+		}
 
-		map.put("name", String.valueOf(role.getName()));
+		if (role.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(role.getName()));
+		}
 
-		map.put("roleType", String.valueOf(role.getRoleType()));
+		if (role.getRoleType() == null) {
+			map.put("roleType", null);
+		}
+		else {
+			map.put("roleType", String.valueOf(role.getRoleType()));
+		}
 
 		return map;
 	}

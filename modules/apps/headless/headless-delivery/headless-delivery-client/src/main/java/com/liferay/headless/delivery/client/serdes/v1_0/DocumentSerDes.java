@@ -340,15 +340,36 @@ public class DocumentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put("adaptedImages", String.valueOf(document.getAdaptedImages()));
+		if (document.getAdaptedImages() == null) {
+			map.put("adaptedImages", null);
+		}
+		else {
+			map.put(
+				"adaptedImages", String.valueOf(document.getAdaptedImages()));
+		}
 
-		map.put(
-			"aggregateRating",
-			AggregateRatingSerDes.toJSON(document.getAggregateRating()));
+		if (document.getAggregateRating() == null) {
+			map.put("aggregateRating", null);
+		}
+		else {
+			map.put(
+				"aggregateRating",
+				AggregateRatingSerDes.toJSON(document.getAggregateRating()));
+		}
 
-		map.put("contentUrl", String.valueOf(document.getContentUrl()));
+		if (document.getContentUrl() == null) {
+			map.put("contentUrl", null);
+		}
+		else {
+			map.put("contentUrl", String.valueOf(document.getContentUrl()));
+		}
 
-		map.put("creator", CreatorSerDes.toJSON(document.getCreator()));
+		if (document.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", CreatorSerDes.toJSON(document.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -358,35 +379,99 @@ public class DocumentSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(document.getDateModified()));
 
-		map.put("description", String.valueOf(document.getDescription()));
+		if (document.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put("description", String.valueOf(document.getDescription()));
+		}
 
-		map.put(
-			"documentFolderId", String.valueOf(document.getDocumentFolderId()));
+		if (document.getDocumentFolderId() == null) {
+			map.put("documentFolderId", null);
+		}
+		else {
+			map.put(
+				"documentFolderId",
+				String.valueOf(document.getDocumentFolderId()));
+		}
 
-		map.put("encodingFormat", String.valueOf(document.getEncodingFormat()));
+		if (document.getEncodingFormat() == null) {
+			map.put("encodingFormat", null);
+		}
+		else {
+			map.put(
+				"encodingFormat", String.valueOf(document.getEncodingFormat()));
+		}
 
-		map.put("fileExtension", String.valueOf(document.getFileExtension()));
+		if (document.getFileExtension() == null) {
+			map.put("fileExtension", null);
+		}
+		else {
+			map.put(
+				"fileExtension", String.valueOf(document.getFileExtension()));
+		}
 
-		map.put("id", String.valueOf(document.getId()));
+		if (document.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(document.getId()));
+		}
 
-		map.put("keywords", String.valueOf(document.getKeywords()));
+		if (document.getKeywords() == null) {
+			map.put("keywords", null);
+		}
+		else {
+			map.put("keywords", String.valueOf(document.getKeywords()));
+		}
 
-		map.put(
-			"numberOfComments", String.valueOf(document.getNumberOfComments()));
+		if (document.getNumberOfComments() == null) {
+			map.put("numberOfComments", null);
+		}
+		else {
+			map.put(
+				"numberOfComments",
+				String.valueOf(document.getNumberOfComments()));
+		}
 
-		map.put("sizeInBytes", String.valueOf(document.getSizeInBytes()));
+		if (document.getSizeInBytes() == null) {
+			map.put("sizeInBytes", null);
+		}
+		else {
+			map.put("sizeInBytes", String.valueOf(document.getSizeInBytes()));
+		}
 
-		map.put(
-			"taxonomyCategories",
-			String.valueOf(document.getTaxonomyCategories()));
+		if (document.getTaxonomyCategories() == null) {
+			map.put("taxonomyCategories", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategories",
+				String.valueOf(document.getTaxonomyCategories()));
+		}
 
-		map.put(
-			"taxonomyCategoryIds",
-			String.valueOf(document.getTaxonomyCategoryIds()));
+		if (document.getTaxonomyCategoryIds() == null) {
+			map.put("taxonomyCategoryIds", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryIds",
+				String.valueOf(document.getTaxonomyCategoryIds()));
+		}
 
-		map.put("title", String.valueOf(document.getTitle()));
+		if (document.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(document.getTitle()));
+		}
 
-		map.put("viewableBy", String.valueOf(document.getViewableBy()));
+		if (document.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put("viewableBy", String.valueOf(document.getViewableBy()));
+		}
 
 		return map;
 	}

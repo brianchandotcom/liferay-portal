@@ -114,20 +114,51 @@ public class ValueSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("data", String.valueOf(value.getData()));
+		if (value.getData() == null) {
+			map.put("data", null);
+		}
+		else {
+			map.put("data", String.valueOf(value.getData()));
+		}
 
-		map.put("document", ContentDocumentSerDes.toJSON(value.getDocument()));
+		if (value.getDocument() == null) {
+			map.put("document", null);
+		}
+		else {
+			map.put(
+				"document", ContentDocumentSerDes.toJSON(value.getDocument()));
+		}
 
-		map.put("geo", GeoSerDes.toJSON(value.getGeo()));
+		if (value.getGeo() == null) {
+			map.put("geo", null);
+		}
+		else {
+			map.put("geo", GeoSerDes.toJSON(value.getGeo()));
+		}
 
-		map.put("image", ContentDocumentSerDes.toJSON(value.getImage()));
+		if (value.getImage() == null) {
+			map.put("image", null);
+		}
+		else {
+			map.put("image", ContentDocumentSerDes.toJSON(value.getImage()));
+		}
 
-		map.put("link", String.valueOf(value.getLink()));
+		if (value.getLink() == null) {
+			map.put("link", null);
+		}
+		else {
+			map.put("link", String.valueOf(value.getLink()));
+		}
 
-		map.put(
-			"structuredContentLink",
-			StructuredContentLinkSerDes.toJSON(
-				value.getStructuredContentLink()));
+		if (value.getStructuredContentLink() == null) {
+			map.put("structuredContentLink", null);
+		}
+		else {
+			map.put(
+				"structuredContentLink",
+				StructuredContentLinkSerDes.toJSON(
+					value.getStructuredContentLink()));
+		}
 
 		return map;
 	}

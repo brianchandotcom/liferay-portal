@@ -117,13 +117,33 @@ public class MediaFormSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("description", String.valueOf(mediaForm.getDescription()));
+		if (mediaForm.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put("description", String.valueOf(mediaForm.getDescription()));
+		}
 
-		map.put("folderId", String.valueOf(mediaForm.getFolderId()));
+		if (mediaForm.getFolderId() == null) {
+			map.put("folderId", null);
+		}
+		else {
+			map.put("folderId", String.valueOf(mediaForm.getFolderId()));
+		}
 
-		map.put("name", String.valueOf(mediaForm.getName()));
+		if (mediaForm.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(mediaForm.getName()));
+		}
 
-		map.put("title", String.valueOf(mediaForm.getTitle()));
+		if (mediaForm.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(mediaForm.getTitle()));
+		}
 
 		return map;
 	}

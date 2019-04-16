@@ -102,11 +102,26 @@ public class RowSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(row.getId()));
+		if (row.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(row.getId()));
+		}
 
-		map.put("label", String.valueOf(row.getLabel()));
+		if (row.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(row.getLabel()));
+		}
 
-		map.put("value", String.valueOf(row.getValue()));
+		if (row.getValue() == null) {
+			map.put("value", null);
+		}
+		else {
+			map.put("value", String.valueOf(row.getValue()));
+		}
 
 		return map;
 	}

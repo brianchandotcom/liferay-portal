@@ -118,16 +118,42 @@ public class FieldValueSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put(
-			"document", FormDocumentSerDes.toJSON(fieldValue.getDocument()));
+		if (fieldValue.getDocument() == null) {
+			map.put("document", null);
+		}
+		else {
+			map.put(
+				"document",
+				FormDocumentSerDes.toJSON(fieldValue.getDocument()));
+		}
 
-		map.put("documentId", String.valueOf(fieldValue.getDocumentId()));
+		if (fieldValue.getDocumentId() == null) {
+			map.put("documentId", null);
+		}
+		else {
+			map.put("documentId", String.valueOf(fieldValue.getDocumentId()));
+		}
 
-		map.put("id", String.valueOf(fieldValue.getId()));
+		if (fieldValue.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(fieldValue.getId()));
+		}
 
-		map.put("name", String.valueOf(fieldValue.getName()));
+		if (fieldValue.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(fieldValue.getName()));
+		}
 
-		map.put("value", String.valueOf(fieldValue.getValue()));
+		if (fieldValue.getValue() == null) {
+			map.put("value", null);
+		}
+		else {
+			map.put("value", String.valueOf(fieldValue.getValue()));
+		}
 
 		return map;
 	}

@@ -219,15 +219,31 @@ public class ContentStructureSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"availableLanguages",
-			String.valueOf(contentStructure.getAvailableLanguages()));
+		if (contentStructure.getAvailableLanguages() == null) {
+			map.put("availableLanguages", null);
+		}
+		else {
+			map.put(
+				"availableLanguages",
+				String.valueOf(contentStructure.getAvailableLanguages()));
+		}
 
-		map.put(
-			"contentStructureFields",
-			String.valueOf(contentStructure.getContentStructureFields()));
+		if (contentStructure.getContentStructureFields() == null) {
+			map.put("contentStructureFields", null);
+		}
+		else {
+			map.put(
+				"contentStructureFields",
+				String.valueOf(contentStructure.getContentStructureFields()));
+		}
 
-		map.put("creator", CreatorSerDes.toJSON(contentStructure.getCreator()));
+		if (contentStructure.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator", CreatorSerDes.toJSON(contentStructure.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -237,14 +253,35 @@ public class ContentStructureSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(contentStructure.getDateModified()));
 
-		map.put(
-			"description", String.valueOf(contentStructure.getDescription()));
+		if (contentStructure.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(contentStructure.getDescription()));
+		}
 
-		map.put("id", String.valueOf(contentStructure.getId()));
+		if (contentStructure.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(contentStructure.getId()));
+		}
 
-		map.put("name", String.valueOf(contentStructure.getName()));
+		if (contentStructure.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(contentStructure.getName()));
+		}
 
-		map.put("siteId", String.valueOf(contentStructure.getSiteId()));
+		if (contentStructure.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(contentStructure.getSiteId()));
+		}
 
 		return map;
 	}

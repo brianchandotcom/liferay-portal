@@ -93,12 +93,23 @@ public class RenderedContentSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put(
-			"renderedContentURL",
-			String.valueOf(renderedContent.getRenderedContentURL()));
+		if (renderedContent.getRenderedContentURL() == null) {
+			map.put("renderedContentURL", null);
+		}
+		else {
+			map.put(
+				"renderedContentURL",
+				String.valueOf(renderedContent.getRenderedContentURL()));
+		}
 
-		map.put(
-			"templateName", String.valueOf(renderedContent.getTemplateName()));
+		if (renderedContent.getTemplateName() == null) {
+			map.put("templateName", null);
+		}
+		else {
+			map.put(
+				"templateName",
+				String.valueOf(renderedContent.getTemplateName()));
+		}
 
 		return map;
 	}

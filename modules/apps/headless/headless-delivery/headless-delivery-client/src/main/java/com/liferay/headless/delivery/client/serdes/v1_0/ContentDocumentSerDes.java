@@ -160,25 +160,63 @@ public class ContentDocumentSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("contentUrl", String.valueOf(contentDocument.getContentUrl()));
+		if (contentDocument.getContentUrl() == null) {
+			map.put("contentUrl", null);
+		}
+		else {
+			map.put(
+				"contentUrl", String.valueOf(contentDocument.getContentUrl()));
+		}
 
-		map.put(
-			"description", String.valueOf(contentDocument.getDescription()));
+		if (contentDocument.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(contentDocument.getDescription()));
+		}
 
-		map.put(
-			"encodingFormat",
-			String.valueOf(contentDocument.getEncodingFormat()));
+		if (contentDocument.getEncodingFormat() == null) {
+			map.put("encodingFormat", null);
+		}
+		else {
+			map.put(
+				"encodingFormat",
+				String.valueOf(contentDocument.getEncodingFormat()));
+		}
 
-		map.put(
-			"fileExtension",
-			String.valueOf(contentDocument.getFileExtension()));
+		if (contentDocument.getFileExtension() == null) {
+			map.put("fileExtension", null);
+		}
+		else {
+			map.put(
+				"fileExtension",
+				String.valueOf(contentDocument.getFileExtension()));
+		}
 
-		map.put("id", String.valueOf(contentDocument.getId()));
+		if (contentDocument.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(contentDocument.getId()));
+		}
 
-		map.put(
-			"sizeInBytes", String.valueOf(contentDocument.getSizeInBytes()));
+		if (contentDocument.getSizeInBytes() == null) {
+			map.put("sizeInBytes", null);
+		}
+		else {
+			map.put(
+				"sizeInBytes",
+				String.valueOf(contentDocument.getSizeInBytes()));
+		}
 
-		map.put("title", String.valueOf(contentDocument.getTitle()));
+		if (contentDocument.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(contentDocument.getTitle()));
+		}
 
 		return map;
 	}

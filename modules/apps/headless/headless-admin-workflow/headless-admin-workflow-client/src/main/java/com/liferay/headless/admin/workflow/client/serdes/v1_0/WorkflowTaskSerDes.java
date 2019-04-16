@@ -219,7 +219,12 @@ public class WorkflowTaskSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put("completed", String.valueOf(workflowTask.getCompleted()));
+		if (workflowTask.getCompleted() == null) {
+			map.put("completed", null);
+		}
+		else {
+			map.put("completed", String.valueOf(workflowTask.getCompleted()));
+		}
 
 		map.put(
 			"dateCompleted",
@@ -229,24 +234,57 @@ public class WorkflowTaskSerDes {
 			"dateCreated",
 			liferayToJSONDateFormat.format(workflowTask.getDateCreated()));
 
-		map.put(
-			"definitionName", String.valueOf(workflowTask.getDefinitionName()));
+		if (workflowTask.getDefinitionName() == null) {
+			map.put("definitionName", null);
+		}
+		else {
+			map.put(
+				"definitionName",
+				String.valueOf(workflowTask.getDefinitionName()));
+		}
 
-		map.put("description", String.valueOf(workflowTask.getDescription()));
+		if (workflowTask.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description", String.valueOf(workflowTask.getDescription()));
+		}
 
 		map.put(
 			"dueDate",
 			liferayToJSONDateFormat.format(workflowTask.getDueDate()));
 
-		map.put("id", String.valueOf(workflowTask.getId()));
+		if (workflowTask.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(workflowTask.getId()));
+		}
 
-		map.put("name", String.valueOf(workflowTask.getName()));
+		if (workflowTask.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(workflowTask.getName()));
+		}
 
-		map.put(
-			"objectReviewed",
-			ObjectReviewedSerDes.toJSON(workflowTask.getObjectReviewed()));
+		if (workflowTask.getObjectReviewed() == null) {
+			map.put("objectReviewed", null);
+		}
+		else {
+			map.put(
+				"objectReviewed",
+				ObjectReviewedSerDes.toJSON(workflowTask.getObjectReviewed()));
+		}
 
-		map.put("transitions", String.valueOf(workflowTask.getTransitions()));
+		if (workflowTask.getTransitions() == null) {
+			map.put("transitions", null);
+		}
+		else {
+			map.put(
+				"transitions", String.valueOf(workflowTask.getTransitions()));
+		}
 
 		return map;
 	}

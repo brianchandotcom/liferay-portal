@@ -107,16 +107,40 @@ public class AggregateRatingSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("bestRating", String.valueOf(aggregateRating.getBestRating()));
+		if (aggregateRating.getBestRating() == null) {
+			map.put("bestRating", null);
+		}
+		else {
+			map.put(
+				"bestRating", String.valueOf(aggregateRating.getBestRating()));
+		}
 
-		map.put(
-			"ratingCount", String.valueOf(aggregateRating.getRatingCount()));
+		if (aggregateRating.getRatingCount() == null) {
+			map.put("ratingCount", null);
+		}
+		else {
+			map.put(
+				"ratingCount",
+				String.valueOf(aggregateRating.getRatingCount()));
+		}
 
-		map.put(
-			"ratingValue", String.valueOf(aggregateRating.getRatingValue()));
+		if (aggregateRating.getRatingValue() == null) {
+			map.put("ratingValue", null);
+		}
+		else {
+			map.put(
+				"ratingValue",
+				String.valueOf(aggregateRating.getRatingValue()));
+		}
 
-		map.put(
-			"worstRating", String.valueOf(aggregateRating.getWorstRating()));
+		if (aggregateRating.getWorstRating() == null) {
+			map.put("worstRating", null);
+		}
+		else {
+			map.put(
+				"worstRating",
+				String.valueOf(aggregateRating.getWorstRating()));
+		}
 
 		return map;
 	}

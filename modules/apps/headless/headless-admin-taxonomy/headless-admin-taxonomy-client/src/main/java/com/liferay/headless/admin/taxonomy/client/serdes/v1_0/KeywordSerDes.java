@@ -154,7 +154,12 @@ public class KeywordSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put("creator", CreatorSerDes.toJSON(keyword.getCreator()));
+		if (keyword.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", CreatorSerDes.toJSON(keyword.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -164,15 +169,35 @@ public class KeywordSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(keyword.getDateModified()));
 
-		map.put("id", String.valueOf(keyword.getId()));
+		if (keyword.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(keyword.getId()));
+		}
 
-		map.put(
-			"keywordUsageCount",
-			String.valueOf(keyword.getKeywordUsageCount()));
+		if (keyword.getKeywordUsageCount() == null) {
+			map.put("keywordUsageCount", null);
+		}
+		else {
+			map.put(
+				"keywordUsageCount",
+				String.valueOf(keyword.getKeywordUsageCount()));
+		}
 
-		map.put("name", String.valueOf(keyword.getName()));
+		if (keyword.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(keyword.getName()));
+		}
 
-		map.put("siteId", String.valueOf(keyword.getSiteId()));
+		if (keyword.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(keyword.getSiteId()));
+		}
 
 		return map;
 	}

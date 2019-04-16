@@ -143,7 +143,12 @@ public class CommentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put("creator", CreatorSerDes.toJSON(comment.getCreator()));
+		if (comment.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", CreatorSerDes.toJSON(comment.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -153,12 +158,28 @@ public class CommentSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(comment.getDateModified()));
 
-		map.put("id", String.valueOf(comment.getId()));
+		if (comment.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(comment.getId()));
+		}
 
-		map.put(
-			"numberOfComments", String.valueOf(comment.getNumberOfComments()));
+		if (comment.getNumberOfComments() == null) {
+			map.put("numberOfComments", null);
+		}
+		else {
+			map.put(
+				"numberOfComments",
+				String.valueOf(comment.getNumberOfComments()));
+		}
 
-		map.put("text", String.valueOf(comment.getText()));
+		if (comment.getText() == null) {
+			map.put("text", null);
+		}
+		else {
+			map.put("text", String.valueOf(comment.getText()));
+		}
 
 		return map;
 	}

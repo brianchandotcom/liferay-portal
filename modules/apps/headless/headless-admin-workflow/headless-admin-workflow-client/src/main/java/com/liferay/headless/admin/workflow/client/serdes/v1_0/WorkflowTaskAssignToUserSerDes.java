@@ -119,12 +119,23 @@ public class WorkflowTaskAssignToUserSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"assigneeId",
-			String.valueOf(workflowTaskAssignToUser.getAssigneeId()));
+		if (workflowTaskAssignToUser.getAssigneeId() == null) {
+			map.put("assigneeId", null);
+		}
+		else {
+			map.put(
+				"assigneeId",
+				String.valueOf(workflowTaskAssignToUser.getAssigneeId()));
+		}
 
-		map.put(
-			"comment", String.valueOf(workflowTaskAssignToUser.getComment()));
+		if (workflowTaskAssignToUser.getComment() == null) {
+			map.put("comment", null);
+		}
+		else {
+			map.put(
+				"comment",
+				String.valueOf(workflowTaskAssignToUser.getComment()));
+		}
 
 		map.put(
 			"dueDate",

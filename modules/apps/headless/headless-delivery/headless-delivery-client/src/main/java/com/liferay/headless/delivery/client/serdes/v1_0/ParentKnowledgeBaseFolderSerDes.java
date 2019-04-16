@@ -95,13 +95,23 @@ public class ParentKnowledgeBaseFolderSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put(
-			"folderId",
-			String.valueOf(parentKnowledgeBaseFolder.getFolderId()));
+		if (parentKnowledgeBaseFolder.getFolderId() == null) {
+			map.put("folderId", null);
+		}
+		else {
+			map.put(
+				"folderId",
+				String.valueOf(parentKnowledgeBaseFolder.getFolderId()));
+		}
 
-		map.put(
-			"folderName",
-			String.valueOf(parentKnowledgeBaseFolder.getFolderName()));
+		if (parentKnowledgeBaseFolder.getFolderName() == null) {
+			map.put("folderName", null);
+		}
+		else {
+			map.put(
+				"folderName",
+				String.valueOf(parentKnowledgeBaseFolder.getFolderName()));
+		}
 
 		return map;
 	}

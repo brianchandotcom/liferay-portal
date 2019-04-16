@@ -102,11 +102,26 @@ public class OptionSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(option.getId()));
+		if (option.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(option.getId()));
+		}
 
-		map.put("label", String.valueOf(option.getLabel()));
+		if (option.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(option.getLabel()));
+		}
 
-		map.put("value", String.valueOf(option.getValue()));
+		if (option.getValue() == null) {
+			map.put("value", null);
+		}
+		else {
+			map.put("value", String.valueOf(option.getValue()));
+		}
 
 		return map;
 	}

@@ -78,7 +78,13 @@ public class ChangeTransitionSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("transition", String.valueOf(changeTransition.getTransition()));
+		if (changeTransition.getTransition() == null) {
+			map.put("transition", null);
+		}
+		else {
+			map.put(
+				"transition", String.valueOf(changeTransition.getTransition()));
+		}
 
 		return map;
 	}

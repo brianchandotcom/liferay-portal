@@ -145,19 +145,52 @@ public class FormDocumentSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("contentUrl", String.valueOf(formDocument.getContentUrl()));
+		if (formDocument.getContentUrl() == null) {
+			map.put("contentUrl", null);
+		}
+		else {
+			map.put("contentUrl", String.valueOf(formDocument.getContentUrl()));
+		}
 
-		map.put(
-			"encodingFormat", String.valueOf(formDocument.getEncodingFormat()));
+		if (formDocument.getEncodingFormat() == null) {
+			map.put("encodingFormat", null);
+		}
+		else {
+			map.put(
+				"encodingFormat",
+				String.valueOf(formDocument.getEncodingFormat()));
+		}
 
-		map.put(
-			"fileExtension", String.valueOf(formDocument.getFileExtension()));
+		if (formDocument.getFileExtension() == null) {
+			map.put("fileExtension", null);
+		}
+		else {
+			map.put(
+				"fileExtension",
+				String.valueOf(formDocument.getFileExtension()));
+		}
 
-		map.put("id", String.valueOf(formDocument.getId()));
+		if (formDocument.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(formDocument.getId()));
+		}
 
-		map.put("sizeInBytes", String.valueOf(formDocument.getSizeInBytes()));
+		if (formDocument.getSizeInBytes() == null) {
+			map.put("sizeInBytes", null);
+		}
+		else {
+			map.put(
+				"sizeInBytes", String.valueOf(formDocument.getSizeInBytes()));
+		}
 
-		map.put("title", String.valueOf(formDocument.getTitle()));
+		if (formDocument.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(formDocument.getTitle()));
+		}
 
 		return map;
 	}

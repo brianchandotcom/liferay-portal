@@ -102,11 +102,26 @@ public class ColumnSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(column.getId()));
+		if (column.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(column.getId()));
+		}
 
-		map.put("label", String.valueOf(column.getLabel()));
+		if (column.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(column.getLabel()));
+		}
 
-		map.put("value", String.valueOf(column.getValue()));
+		if (column.getValue() == null) {
+			map.put("value", null);
+		}
+		else {
+			map.put("value", String.valueOf(column.getValue()));
+		}
 
 		return map;
 	}

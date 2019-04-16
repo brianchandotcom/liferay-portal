@@ -185,7 +185,12 @@ public class FormRecordSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put("creator", CreatorSerDes.toJSON(formRecord.getCreator()));
+		if (formRecord.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", CreatorSerDes.toJSON(formRecord.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -199,15 +204,40 @@ public class FormRecordSerDes {
 			"datePublished",
 			liferayToJSONDateFormat.format(formRecord.getDatePublished()));
 
-		map.put("draft", String.valueOf(formRecord.getDraft()));
+		if (formRecord.getDraft() == null) {
+			map.put("draft", null);
+		}
+		else {
+			map.put("draft", String.valueOf(formRecord.getDraft()));
+		}
 
-		map.put("fieldValues", String.valueOf(formRecord.getFieldValues()));
+		if (formRecord.getFieldValues() == null) {
+			map.put("fieldValues", null);
+		}
+		else {
+			map.put("fieldValues", String.valueOf(formRecord.getFieldValues()));
+		}
 
-		map.put("form", FormSerDes.toJSON(formRecord.getForm()));
+		if (formRecord.getForm() == null) {
+			map.put("form", null);
+		}
+		else {
+			map.put("form", FormSerDes.toJSON(formRecord.getForm()));
+		}
 
-		map.put("formId", String.valueOf(formRecord.getFormId()));
+		if (formRecord.getFormId() == null) {
+			map.put("formId", null);
+		}
+		else {
+			map.put("formId", String.valueOf(formRecord.getFormId()));
+		}
 
-		map.put("id", String.valueOf(formRecord.getId()));
+		if (formRecord.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(formRecord.getId()));
+		}
 
 		return map;
 	}

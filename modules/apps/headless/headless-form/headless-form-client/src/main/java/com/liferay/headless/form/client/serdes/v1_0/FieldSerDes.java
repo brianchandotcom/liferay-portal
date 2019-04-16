@@ -392,57 +392,191 @@ public class FieldSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("autocomplete", String.valueOf(field.getAutocomplete()));
+		if (field.getAutocomplete() == null) {
+			map.put("autocomplete", null);
+		}
+		else {
+			map.put("autocomplete", String.valueOf(field.getAutocomplete()));
+		}
 
-		map.put("dataSourceType", String.valueOf(field.getDataSourceType()));
+		if (field.getDataSourceType() == null) {
+			map.put("dataSourceType", null);
+		}
+		else {
+			map.put(
+				"dataSourceType", String.valueOf(field.getDataSourceType()));
+		}
 
-		map.put("dataType", String.valueOf(field.getDataType()));
+		if (field.getDataType() == null) {
+			map.put("dataType", null);
+		}
+		else {
+			map.put("dataType", String.valueOf(field.getDataType()));
+		}
 
-		map.put("displayStyle", String.valueOf(field.getDisplayStyle()));
+		if (field.getDisplayStyle() == null) {
+			map.put("displayStyle", null);
+		}
+		else {
+			map.put("displayStyle", String.valueOf(field.getDisplayStyle()));
+		}
 
-		map.put("grid", GridSerDes.toJSON(field.getGrid()));
+		if (field.getGrid() == null) {
+			map.put("grid", null);
+		}
+		else {
+			map.put("grid", GridSerDes.toJSON(field.getGrid()));
+		}
 
-		map.put("hasFormRules", String.valueOf(field.getHasFormRules()));
+		if (field.getHasFormRules() == null) {
+			map.put("hasFormRules", null);
+		}
+		else {
+			map.put("hasFormRules", String.valueOf(field.getHasFormRules()));
+		}
 
-		map.put("id", String.valueOf(field.getId()));
+		if (field.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(field.getId()));
+		}
 
-		map.put("immutable", String.valueOf(field.getImmutable()));
+		if (field.getImmutable() == null) {
+			map.put("immutable", null);
+		}
+		else {
+			map.put("immutable", String.valueOf(field.getImmutable()));
+		}
 
-		map.put("inline", String.valueOf(field.getInline()));
+		if (field.getInline() == null) {
+			map.put("inline", null);
+		}
+		else {
+			map.put("inline", String.valueOf(field.getInline()));
+		}
 
-		map.put("inputControl", String.valueOf(field.getInputControl()));
+		if (field.getInputControl() == null) {
+			map.put("inputControl", null);
+		}
+		else {
+			map.put("inputControl", String.valueOf(field.getInputControl()));
+		}
 
-		map.put("label", String.valueOf(field.getLabel()));
+		if (field.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(field.getLabel()));
+		}
 
-		map.put("localizable", String.valueOf(field.getLocalizable()));
+		if (field.getLocalizable() == null) {
+			map.put("localizable", null);
+		}
+		else {
+			map.put("localizable", String.valueOf(field.getLocalizable()));
+		}
 
-		map.put("multiple", String.valueOf(field.getMultiple()));
+		if (field.getMultiple() == null) {
+			map.put("multiple", null);
+		}
+		else {
+			map.put("multiple", String.valueOf(field.getMultiple()));
+		}
 
-		map.put("name", String.valueOf(field.getName()));
+		if (field.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(field.getName()));
+		}
 
-		map.put("options", String.valueOf(field.getOptions()));
+		if (field.getOptions() == null) {
+			map.put("options", null);
+		}
+		else {
+			map.put("options", String.valueOf(field.getOptions()));
+		}
 
-		map.put("placeholder", String.valueOf(field.getPlaceholder()));
+		if (field.getPlaceholder() == null) {
+			map.put("placeholder", null);
+		}
+		else {
+			map.put("placeholder", String.valueOf(field.getPlaceholder()));
+		}
 
-		map.put("predefinedValue", String.valueOf(field.getPredefinedValue()));
+		if (field.getPredefinedValue() == null) {
+			map.put("predefinedValue", null);
+		}
+		else {
+			map.put(
+				"predefinedValue", String.valueOf(field.getPredefinedValue()));
+		}
 
-		map.put("readOnly", String.valueOf(field.getReadOnly()));
+		if (field.getReadOnly() == null) {
+			map.put("readOnly", null);
+		}
+		else {
+			map.put("readOnly", String.valueOf(field.getReadOnly()));
+		}
 
-		map.put("repeatable", String.valueOf(field.getRepeatable()));
+		if (field.getRepeatable() == null) {
+			map.put("repeatable", null);
+		}
+		else {
+			map.put("repeatable", String.valueOf(field.getRepeatable()));
+		}
 
-		map.put("required", String.valueOf(field.getRequired()));
+		if (field.getRequired() == null) {
+			map.put("required", null);
+		}
+		else {
+			map.put("required", String.valueOf(field.getRequired()));
+		}
 
-		map.put("showAsSwitcher", String.valueOf(field.getShowAsSwitcher()));
+		if (field.getShowAsSwitcher() == null) {
+			map.put("showAsSwitcher", null);
+		}
+		else {
+			map.put(
+				"showAsSwitcher", String.valueOf(field.getShowAsSwitcher()));
+		}
 
-		map.put("showLabel", String.valueOf(field.getShowLabel()));
+		if (field.getShowLabel() == null) {
+			map.put("showLabel", null);
+		}
+		else {
+			map.put("showLabel", String.valueOf(field.getShowLabel()));
+		}
 
-		map.put("style", String.valueOf(field.getStyle()));
+		if (field.getStyle() == null) {
+			map.put("style", null);
+		}
+		else {
+			map.put("style", String.valueOf(field.getStyle()));
+		}
 
-		map.put("text", String.valueOf(field.getText()));
+		if (field.getText() == null) {
+			map.put("text", null);
+		}
+		else {
+			map.put("text", String.valueOf(field.getText()));
+		}
 
-		map.put("tooltip", String.valueOf(field.getTooltip()));
+		if (field.getTooltip() == null) {
+			map.put("tooltip", null);
+		}
+		else {
+			map.put("tooltip", String.valueOf(field.getTooltip()));
+		}
 
-		map.put("validation", ValidationSerDes.toJSON(field.getValidation()));
+		if (field.getValidation() == null) {
+			map.put("validation", null);
+		}
+		else {
+			map.put(
+				"validation", ValidationSerDes.toJSON(field.getValidation()));
+		}
 
 		return map;
 	}

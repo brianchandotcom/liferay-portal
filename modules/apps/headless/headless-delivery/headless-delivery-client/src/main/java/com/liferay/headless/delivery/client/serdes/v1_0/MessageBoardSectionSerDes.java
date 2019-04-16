@@ -202,8 +202,14 @@ public class MessageBoardSectionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"creator", CreatorSerDes.toJSON(messageBoardSection.getCreator()));
+		if (messageBoardSection.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator",
+				CreatorSerDes.toJSON(messageBoardSection.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -215,28 +221,64 @@ public class MessageBoardSectionSerDes {
 			liferayToJSONDateFormat.format(
 				messageBoardSection.getDateModified()));
 
-		map.put(
-			"description",
-			String.valueOf(messageBoardSection.getDescription()));
+		if (messageBoardSection.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(messageBoardSection.getDescription()));
+		}
 
-		map.put("id", String.valueOf(messageBoardSection.getId()));
+		if (messageBoardSection.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(messageBoardSection.getId()));
+		}
 
-		map.put(
-			"numberOfMessageBoardSections",
-			String.valueOf(
-				messageBoardSection.getNumberOfMessageBoardSections()));
+		if (messageBoardSection.getNumberOfMessageBoardSections() == null) {
+			map.put("numberOfMessageBoardSections", null);
+		}
+		else {
+			map.put(
+				"numberOfMessageBoardSections",
+				String.valueOf(
+					messageBoardSection.getNumberOfMessageBoardSections()));
+		}
 
-		map.put(
-			"numberOfMessageBoardThreads",
-			String.valueOf(
-				messageBoardSection.getNumberOfMessageBoardThreads()));
+		if (messageBoardSection.getNumberOfMessageBoardThreads() == null) {
+			map.put("numberOfMessageBoardThreads", null);
+		}
+		else {
+			map.put(
+				"numberOfMessageBoardThreads",
+				String.valueOf(
+					messageBoardSection.getNumberOfMessageBoardThreads()));
+		}
 
-		map.put("siteId", String.valueOf(messageBoardSection.getSiteId()));
+		if (messageBoardSection.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(messageBoardSection.getSiteId()));
+		}
 
-		map.put("title", String.valueOf(messageBoardSection.getTitle()));
+		if (messageBoardSection.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(messageBoardSection.getTitle()));
+		}
 
-		map.put(
-			"viewableBy", String.valueOf(messageBoardSection.getViewableBy()));
+		if (messageBoardSection.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put(
+				"viewableBy",
+				String.valueOf(messageBoardSection.getViewableBy()));
+		}
 
 		return map;
 	}

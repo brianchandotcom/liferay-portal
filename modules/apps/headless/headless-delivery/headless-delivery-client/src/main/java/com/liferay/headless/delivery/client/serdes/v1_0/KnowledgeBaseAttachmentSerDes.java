@@ -149,25 +149,56 @@ public class KnowledgeBaseAttachmentSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put(
-			"contentUrl",
-			String.valueOf(knowledgeBaseAttachment.getContentUrl()));
+		if (knowledgeBaseAttachment.getContentUrl() == null) {
+			map.put("contentUrl", null);
+		}
+		else {
+			map.put(
+				"contentUrl",
+				String.valueOf(knowledgeBaseAttachment.getContentUrl()));
+		}
 
-		map.put(
-			"encodingFormat",
-			String.valueOf(knowledgeBaseAttachment.getEncodingFormat()));
+		if (knowledgeBaseAttachment.getEncodingFormat() == null) {
+			map.put("encodingFormat", null);
+		}
+		else {
+			map.put(
+				"encodingFormat",
+				String.valueOf(knowledgeBaseAttachment.getEncodingFormat()));
+		}
 
-		map.put(
-			"fileExtension",
-			String.valueOf(knowledgeBaseAttachment.getFileExtension()));
+		if (knowledgeBaseAttachment.getFileExtension() == null) {
+			map.put("fileExtension", null);
+		}
+		else {
+			map.put(
+				"fileExtension",
+				String.valueOf(knowledgeBaseAttachment.getFileExtension()));
+		}
 
-		map.put("id", String.valueOf(knowledgeBaseAttachment.getId()));
+		if (knowledgeBaseAttachment.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(knowledgeBaseAttachment.getId()));
+		}
 
-		map.put(
-			"sizeInBytes",
-			String.valueOf(knowledgeBaseAttachment.getSizeInBytes()));
+		if (knowledgeBaseAttachment.getSizeInBytes() == null) {
+			map.put("sizeInBytes", null);
+		}
+		else {
+			map.put(
+				"sizeInBytes",
+				String.valueOf(knowledgeBaseAttachment.getSizeInBytes()));
+		}
 
-		map.put("title", String.valueOf(knowledgeBaseAttachment.getTitle()));
+		if (knowledgeBaseAttachment.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put(
+				"title", String.valueOf(knowledgeBaseAttachment.getTitle()));
+		}
 
 		return map;
 	}

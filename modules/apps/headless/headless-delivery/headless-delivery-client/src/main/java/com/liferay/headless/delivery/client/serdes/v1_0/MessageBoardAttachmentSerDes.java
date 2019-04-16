@@ -147,25 +147,55 @@ public class MessageBoardAttachmentSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put(
-			"contentUrl",
-			String.valueOf(messageBoardAttachment.getContentUrl()));
+		if (messageBoardAttachment.getContentUrl() == null) {
+			map.put("contentUrl", null);
+		}
+		else {
+			map.put(
+				"contentUrl",
+				String.valueOf(messageBoardAttachment.getContentUrl()));
+		}
 
-		map.put(
-			"encodingFormat",
-			String.valueOf(messageBoardAttachment.getEncodingFormat()));
+		if (messageBoardAttachment.getEncodingFormat() == null) {
+			map.put("encodingFormat", null);
+		}
+		else {
+			map.put(
+				"encodingFormat",
+				String.valueOf(messageBoardAttachment.getEncodingFormat()));
+		}
 
-		map.put(
-			"fileExtension",
-			String.valueOf(messageBoardAttachment.getFileExtension()));
+		if (messageBoardAttachment.getFileExtension() == null) {
+			map.put("fileExtension", null);
+		}
+		else {
+			map.put(
+				"fileExtension",
+				String.valueOf(messageBoardAttachment.getFileExtension()));
+		}
 
-		map.put("id", String.valueOf(messageBoardAttachment.getId()));
+		if (messageBoardAttachment.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(messageBoardAttachment.getId()));
+		}
 
-		map.put(
-			"sizeInBytes",
-			String.valueOf(messageBoardAttachment.getSizeInBytes()));
+		if (messageBoardAttachment.getSizeInBytes() == null) {
+			map.put("sizeInBytes", null);
+		}
+		else {
+			map.put(
+				"sizeInBytes",
+				String.valueOf(messageBoardAttachment.getSizeInBytes()));
+		}
 
-		map.put("title", String.valueOf(messageBoardAttachment.getTitle()));
+		if (messageBoardAttachment.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(messageBoardAttachment.getTitle()));
+		}
 
 		return map;
 	}

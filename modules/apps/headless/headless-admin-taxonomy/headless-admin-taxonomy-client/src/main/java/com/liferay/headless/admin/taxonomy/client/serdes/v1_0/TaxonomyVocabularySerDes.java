@@ -247,15 +247,32 @@ public class TaxonomyVocabularySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"assetTypes", String.valueOf(taxonomyVocabulary.getAssetTypes()));
+		if (taxonomyVocabulary.getAssetTypes() == null) {
+			map.put("assetTypes", null);
+		}
+		else {
+			map.put(
+				"assetTypes",
+				String.valueOf(taxonomyVocabulary.getAssetTypes()));
+		}
 
-		map.put(
-			"availableLanguages",
-			String.valueOf(taxonomyVocabulary.getAvailableLanguages()));
+		if (taxonomyVocabulary.getAvailableLanguages() == null) {
+			map.put("availableLanguages", null);
+		}
+		else {
+			map.put(
+				"availableLanguages",
+				String.valueOf(taxonomyVocabulary.getAvailableLanguages()));
+		}
 
-		map.put(
-			"creator", CreatorSerDes.toJSON(taxonomyVocabulary.getCreator()));
+		if (taxonomyVocabulary.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator",
+				CreatorSerDes.toJSON(taxonomyVocabulary.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -267,21 +284,54 @@ public class TaxonomyVocabularySerDes {
 			liferayToJSONDateFormat.format(
 				taxonomyVocabulary.getDateModified()));
 
-		map.put(
-			"description", String.valueOf(taxonomyVocabulary.getDescription()));
+		if (taxonomyVocabulary.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(taxonomyVocabulary.getDescription()));
+		}
 
-		map.put("id", String.valueOf(taxonomyVocabulary.getId()));
+		if (taxonomyVocabulary.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(taxonomyVocabulary.getId()));
+		}
 
-		map.put("name", String.valueOf(taxonomyVocabulary.getName()));
+		if (taxonomyVocabulary.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(taxonomyVocabulary.getName()));
+		}
 
-		map.put(
-			"numberOfTaxonomyCategories",
-			String.valueOf(taxonomyVocabulary.getNumberOfTaxonomyCategories()));
+		if (taxonomyVocabulary.getNumberOfTaxonomyCategories() == null) {
+			map.put("numberOfTaxonomyCategories", null);
+		}
+		else {
+			map.put(
+				"numberOfTaxonomyCategories",
+				String.valueOf(
+					taxonomyVocabulary.getNumberOfTaxonomyCategories()));
+		}
 
-		map.put("siteId", String.valueOf(taxonomyVocabulary.getSiteId()));
+		if (taxonomyVocabulary.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(taxonomyVocabulary.getSiteId()));
+		}
 
-		map.put(
-			"viewableBy", String.valueOf(taxonomyVocabulary.getViewableBy()));
+		if (taxonomyVocabulary.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put(
+				"viewableBy",
+				String.valueOf(taxonomyVocabulary.getViewableBy()));
+		}
 
 		return map;
 	}

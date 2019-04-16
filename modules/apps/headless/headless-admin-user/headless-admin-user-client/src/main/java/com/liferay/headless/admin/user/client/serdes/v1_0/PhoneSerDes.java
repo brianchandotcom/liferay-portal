@@ -128,15 +128,40 @@ public class PhoneSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("extension", String.valueOf(phone.getExtension()));
+		if (phone.getExtension() == null) {
+			map.put("extension", null);
+		}
+		else {
+			map.put("extension", String.valueOf(phone.getExtension()));
+		}
 
-		map.put("id", String.valueOf(phone.getId()));
+		if (phone.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(phone.getId()));
+		}
 
-		map.put("phoneNumber", String.valueOf(phone.getPhoneNumber()));
+		if (phone.getPhoneNumber() == null) {
+			map.put("phoneNumber", null);
+		}
+		else {
+			map.put("phoneNumber", String.valueOf(phone.getPhoneNumber()));
+		}
 
-		map.put("phoneType", String.valueOf(phone.getPhoneType()));
+		if (phone.getPhoneType() == null) {
+			map.put("phoneType", null);
+		}
+		else {
+			map.put("phoneType", String.valueOf(phone.getPhoneType()));
+		}
 
-		map.put("primary", String.valueOf(phone.getPrimary()));
+		if (phone.getPrimary() == null) {
+			map.put("primary", null);
+		}
+		else {
+			map.put("primary", String.valueOf(phone.getPrimary()));
+		}
 
 		return map;
 	}

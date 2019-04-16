@@ -272,10 +272,21 @@ public class FormSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"availableLanguages", String.valueOf(form.getAvailableLanguages()));
+		if (form.getAvailableLanguages() == null) {
+			map.put("availableLanguages", null);
+		}
+		else {
+			map.put(
+				"availableLanguages",
+				String.valueOf(form.getAvailableLanguages()));
+		}
 
-		map.put("creator", CreatorSerDes.toJSON(form.getCreator()));
+		if (form.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", CreatorSerDes.toJSON(form.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -289,23 +300,70 @@ public class FormSerDes {
 			"datePublished",
 			liferayToJSONDateFormat.format(form.getDatePublished()));
 
-		map.put("defaultLanguage", String.valueOf(form.getDefaultLanguage()));
+		if (form.getDefaultLanguage() == null) {
+			map.put("defaultLanguage", null);
+		}
+		else {
+			map.put(
+				"defaultLanguage", String.valueOf(form.getDefaultLanguage()));
+		}
 
-		map.put("description", String.valueOf(form.getDescription()));
+		if (form.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put("description", String.valueOf(form.getDescription()));
+		}
 
-		map.put("formRecords", String.valueOf(form.getFormRecords()));
+		if (form.getFormRecords() == null) {
+			map.put("formRecords", null);
+		}
+		else {
+			map.put("formRecords", String.valueOf(form.getFormRecords()));
+		}
 
-		map.put("formRecordsIds", String.valueOf(form.getFormRecordsIds()));
+		if (form.getFormRecordsIds() == null) {
+			map.put("formRecordsIds", null);
+		}
+		else {
+			map.put("formRecordsIds", String.valueOf(form.getFormRecordsIds()));
+		}
 
-		map.put("id", String.valueOf(form.getId()));
+		if (form.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(form.getId()));
+		}
 
-		map.put("name", String.valueOf(form.getName()));
+		if (form.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(form.getName()));
+		}
 
-		map.put("siteId", String.valueOf(form.getSiteId()));
+		if (form.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(form.getSiteId()));
+		}
 
-		map.put("structure", FormStructureSerDes.toJSON(form.getStructure()));
+		if (form.getStructure() == null) {
+			map.put("structure", null);
+		}
+		else {
+			map.put(
+				"structure", FormStructureSerDes.toJSON(form.getStructure()));
+		}
 
-		map.put("structureId", String.valueOf(form.getStructureId()));
+		if (form.getStructureId() == null) {
+			map.put("structureId", null);
+		}
+		else {
+			map.put("structureId", String.valueOf(form.getStructureId()));
+		}
 
 		return map;
 	}

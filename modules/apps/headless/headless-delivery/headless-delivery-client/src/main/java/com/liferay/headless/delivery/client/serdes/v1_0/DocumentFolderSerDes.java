@@ -200,7 +200,13 @@ public class DocumentFolderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put("creator", CreatorSerDes.toJSON(documentFolder.getCreator()));
+		if (documentFolder.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator", CreatorSerDes.toJSON(documentFolder.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -210,23 +216,60 @@ public class DocumentFolderSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(documentFolder.getDateModified()));
 
-		map.put("description", String.valueOf(documentFolder.getDescription()));
+		if (documentFolder.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description", String.valueOf(documentFolder.getDescription()));
+		}
 
-		map.put("id", String.valueOf(documentFolder.getId()));
+		if (documentFolder.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(documentFolder.getId()));
+		}
 
-		map.put("name", String.valueOf(documentFolder.getName()));
+		if (documentFolder.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(documentFolder.getName()));
+		}
 
-		map.put(
-			"numberOfDocumentFolders",
-			String.valueOf(documentFolder.getNumberOfDocumentFolders()));
+		if (documentFolder.getNumberOfDocumentFolders() == null) {
+			map.put("numberOfDocumentFolders", null);
+		}
+		else {
+			map.put(
+				"numberOfDocumentFolders",
+				String.valueOf(documentFolder.getNumberOfDocumentFolders()));
+		}
 
-		map.put(
-			"numberOfDocuments",
-			String.valueOf(documentFolder.getNumberOfDocuments()));
+		if (documentFolder.getNumberOfDocuments() == null) {
+			map.put("numberOfDocuments", null);
+		}
+		else {
+			map.put(
+				"numberOfDocuments",
+				String.valueOf(documentFolder.getNumberOfDocuments()));
+		}
 
-		map.put("siteId", String.valueOf(documentFolder.getSiteId()));
+		if (documentFolder.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(documentFolder.getSiteId()));
+		}
 
-		map.put("viewableBy", String.valueOf(documentFolder.getViewableBy()));
+		if (documentFolder.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put(
+				"viewableBy", String.valueOf(documentFolder.getViewableBy()));
+		}
 
 		return map;
 	}

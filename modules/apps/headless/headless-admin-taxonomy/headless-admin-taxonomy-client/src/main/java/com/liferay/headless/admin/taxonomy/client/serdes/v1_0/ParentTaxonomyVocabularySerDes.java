@@ -93,9 +93,19 @@ public class ParentTaxonomyVocabularySerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(parentTaxonomyVocabulary.getId()));
+		if (parentTaxonomyVocabulary.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(parentTaxonomyVocabulary.getId()));
+		}
 
-		map.put("name", String.valueOf(parentTaxonomyVocabulary.getName()));
+		if (parentTaxonomyVocabulary.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(parentTaxonomyVocabulary.getName()));
+		}
 
 		return map;
 	}

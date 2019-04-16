@@ -91,9 +91,19 @@ public class OrganizationBriefSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(organizationBrief.getId()));
+		if (organizationBrief.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(organizationBrief.getId()));
+		}
 
-		map.put("name", String.valueOf(organizationBrief.getName()));
+		if (organizationBrief.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(organizationBrief.getName()));
+		}
 
 		return map;
 	}

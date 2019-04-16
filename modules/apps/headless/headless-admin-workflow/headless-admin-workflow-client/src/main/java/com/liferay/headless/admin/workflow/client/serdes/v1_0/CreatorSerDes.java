@@ -162,19 +162,55 @@ public class CreatorSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("additionalName", String.valueOf(creator.getAdditionalName()));
+		if (creator.getAdditionalName() == null) {
+			map.put("additionalName", null);
+		}
+		else {
+			map.put(
+				"additionalName", String.valueOf(creator.getAdditionalName()));
+		}
 
-		map.put("familyName", String.valueOf(creator.getFamilyName()));
+		if (creator.getFamilyName() == null) {
+			map.put("familyName", null);
+		}
+		else {
+			map.put("familyName", String.valueOf(creator.getFamilyName()));
+		}
 
-		map.put("givenName", String.valueOf(creator.getGivenName()));
+		if (creator.getGivenName() == null) {
+			map.put("givenName", null);
+		}
+		else {
+			map.put("givenName", String.valueOf(creator.getGivenName()));
+		}
 
-		map.put("id", String.valueOf(creator.getId()));
+		if (creator.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(creator.getId()));
+		}
 
-		map.put("image", String.valueOf(creator.getImage()));
+		if (creator.getImage() == null) {
+			map.put("image", null);
+		}
+		else {
+			map.put("image", String.valueOf(creator.getImage()));
+		}
 
-		map.put("name", String.valueOf(creator.getName()));
+		if (creator.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(creator.getName()));
+		}
 
-		map.put("profileURL", String.valueOf(creator.getProfileURL()));
+		if (creator.getProfileURL() == null) {
+			map.put("profileURL", null);
+		}
+		else {
+			map.put("profileURL", String.valueOf(creator.getProfileURL()));
+		}
 
 		return map;
 	}

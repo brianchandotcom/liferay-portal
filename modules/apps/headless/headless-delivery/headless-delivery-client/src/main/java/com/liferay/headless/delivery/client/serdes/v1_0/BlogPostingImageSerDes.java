@@ -160,24 +160,62 @@ public class BlogPostingImageSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("contentUrl", String.valueOf(blogPostingImage.getContentUrl()));
+		if (blogPostingImage.getContentUrl() == null) {
+			map.put("contentUrl", null);
+		}
+		else {
+			map.put(
+				"contentUrl", String.valueOf(blogPostingImage.getContentUrl()));
+		}
 
-		map.put(
-			"encodingFormat",
-			String.valueOf(blogPostingImage.getEncodingFormat()));
+		if (blogPostingImage.getEncodingFormat() == null) {
+			map.put("encodingFormat", null);
+		}
+		else {
+			map.put(
+				"encodingFormat",
+				String.valueOf(blogPostingImage.getEncodingFormat()));
+		}
 
-		map.put(
-			"fileExtension",
-			String.valueOf(blogPostingImage.getFileExtension()));
+		if (blogPostingImage.getFileExtension() == null) {
+			map.put("fileExtension", null);
+		}
+		else {
+			map.put(
+				"fileExtension",
+				String.valueOf(blogPostingImage.getFileExtension()));
+		}
 
-		map.put("id", String.valueOf(blogPostingImage.getId()));
+		if (blogPostingImage.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(blogPostingImage.getId()));
+		}
 
-		map.put(
-			"sizeInBytes", String.valueOf(blogPostingImage.getSizeInBytes()));
+		if (blogPostingImage.getSizeInBytes() == null) {
+			map.put("sizeInBytes", null);
+		}
+		else {
+			map.put(
+				"sizeInBytes",
+				String.valueOf(blogPostingImage.getSizeInBytes()));
+		}
 
-		map.put("title", String.valueOf(blogPostingImage.getTitle()));
+		if (blogPostingImage.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(blogPostingImage.getTitle()));
+		}
 
-		map.put("viewableBy", String.valueOf(blogPostingImage.getViewableBy()));
+		if (blogPostingImage.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put(
+				"viewableBy", String.valueOf(blogPostingImage.getViewableBy()));
+		}
 
 		return map;
 	}

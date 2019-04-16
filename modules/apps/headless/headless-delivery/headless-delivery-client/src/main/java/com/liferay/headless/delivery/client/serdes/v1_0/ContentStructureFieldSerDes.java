@@ -251,44 +251,109 @@ public class ContentStructureFieldSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put(
-			"dataType", String.valueOf(contentStructureField.getDataType()));
+		if (contentStructureField.getDataType() == null) {
+			map.put("dataType", null);
+		}
+		else {
+			map.put(
+				"dataType",
+				String.valueOf(contentStructureField.getDataType()));
+		}
 
-		map.put(
-			"inputControl",
-			String.valueOf(contentStructureField.getInputControl()));
+		if (contentStructureField.getInputControl() == null) {
+			map.put("inputControl", null);
+		}
+		else {
+			map.put(
+				"inputControl",
+				String.valueOf(contentStructureField.getInputControl()));
+		}
 
-		map.put("label", String.valueOf(contentStructureField.getLabel()));
+		if (contentStructureField.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(contentStructureField.getLabel()));
+		}
 
-		map.put(
-			"localizable",
-			String.valueOf(contentStructureField.getLocalizable()));
+		if (contentStructureField.getLocalizable() == null) {
+			map.put("localizable", null);
+		}
+		else {
+			map.put(
+				"localizable",
+				String.valueOf(contentStructureField.getLocalizable()));
+		}
 
-		map.put(
-			"multiple", String.valueOf(contentStructureField.getMultiple()));
+		if (contentStructureField.getMultiple() == null) {
+			map.put("multiple", null);
+		}
+		else {
+			map.put(
+				"multiple",
+				String.valueOf(contentStructureField.getMultiple()));
+		}
 
-		map.put("name", String.valueOf(contentStructureField.getName()));
+		if (contentStructureField.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(contentStructureField.getName()));
+		}
 
-		map.put(
-			"nestedContentStructureFields",
-			String.valueOf(
-				contentStructureField.getNestedContentStructureFields()));
+		if (contentStructureField.getNestedContentStructureFields() == null) {
+			map.put("nestedContentStructureFields", null);
+		}
+		else {
+			map.put(
+				"nestedContentStructureFields",
+				String.valueOf(
+					contentStructureField.getNestedContentStructureFields()));
+		}
 
-		map.put("options", String.valueOf(contentStructureField.getOptions()));
+		if (contentStructureField.getOptions() == null) {
+			map.put("options", null);
+		}
+		else {
+			map.put(
+				"options", String.valueOf(contentStructureField.getOptions()));
+		}
 
-		map.put(
-			"predefinedValue",
-			String.valueOf(contentStructureField.getPredefinedValue()));
+		if (contentStructureField.getPredefinedValue() == null) {
+			map.put("predefinedValue", null);
+		}
+		else {
+			map.put(
+				"predefinedValue",
+				String.valueOf(contentStructureField.getPredefinedValue()));
+		}
 
-		map.put(
-			"repeatable",
-			String.valueOf(contentStructureField.getRepeatable()));
+		if (contentStructureField.getRepeatable() == null) {
+			map.put("repeatable", null);
+		}
+		else {
+			map.put(
+				"repeatable",
+				String.valueOf(contentStructureField.getRepeatable()));
+		}
 
-		map.put(
-			"required", String.valueOf(contentStructureField.getRequired()));
+		if (contentStructureField.getRequired() == null) {
+			map.put("required", null);
+		}
+		else {
+			map.put(
+				"required",
+				String.valueOf(contentStructureField.getRequired()));
+		}
 
-		map.put(
-			"showLabel", String.valueOf(contentStructureField.getShowLabel()));
+		if (contentStructureField.getShowLabel() == null) {
+			map.put("showLabel", null);
+		}
+		else {
+			map.put(
+				"showLabel",
+				String.valueOf(contentStructureField.getShowLabel()));
+		}
 
 		return map;
 	}

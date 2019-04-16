@@ -179,9 +179,19 @@ public class SegmentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put("active", String.valueOf(segment.getActive()));
+		if (segment.getActive() == null) {
+			map.put("active", null);
+		}
+		else {
+			map.put("active", String.valueOf(segment.getActive()));
+		}
 
-		map.put("criteria", String.valueOf(segment.getCriteria()));
+		if (segment.getCriteria() == null) {
+			map.put("criteria", null);
+		}
+		else {
+			map.put("criteria", String.valueOf(segment.getCriteria()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -191,13 +201,33 @@ public class SegmentSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(segment.getDateModified()));
 
-		map.put("id", String.valueOf(segment.getId()));
+		if (segment.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(segment.getId()));
+		}
 
-		map.put("name", String.valueOf(segment.getName()));
+		if (segment.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(segment.getName()));
+		}
 
-		map.put("siteId", String.valueOf(segment.getSiteId()));
+		if (segment.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(segment.getSiteId()));
+		}
 
-		map.put("source", String.valueOf(segment.getSource()));
+		if (segment.getSource() == null) {
+			map.put("source", null);
+		}
+		else {
+			map.put("source", String.valueOf(segment.getSource()));
+		}
 
 		return map;
 	}

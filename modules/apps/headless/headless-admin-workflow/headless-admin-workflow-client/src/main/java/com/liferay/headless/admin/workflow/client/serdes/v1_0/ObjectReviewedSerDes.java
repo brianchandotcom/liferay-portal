@@ -89,10 +89,21 @@ public class ObjectReviewedSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(objectReviewed.getId()));
+		if (objectReviewed.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(objectReviewed.getId()));
+		}
 
-		map.put(
-			"resourceType", String.valueOf(objectReviewed.getResourceType()));
+		if (objectReviewed.getResourceType() == null) {
+			map.put("resourceType", null);
+		}
+		else {
+			map.put(
+				"resourceType",
+				String.valueOf(objectReviewed.getResourceType()));
+		}
 
 		return map;
 	}

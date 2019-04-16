@@ -83,9 +83,19 @@ public class GeoSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("latitude", String.valueOf(geo.getLatitude()));
+		if (geo.getLatitude() == null) {
+			map.put("latitude", null);
+		}
+		else {
+			map.put("latitude", String.valueOf(geo.getLatitude()));
+		}
 
-		map.put("longitude", String.valueOf(geo.getLongitude()));
+		if (geo.getLongitude() == null) {
+			map.put("longitude", null);
+		}
+		else {
+			map.put("longitude", String.valueOf(geo.getLongitude()));
+		}
 
 		return map;
 	}

@@ -349,17 +349,38 @@ public class BlogPostingSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"aggregateRating",
-			AggregateRatingSerDes.toJSON(blogPosting.getAggregateRating()));
+		if (blogPosting.getAggregateRating() == null) {
+			map.put("aggregateRating", null);
+		}
+		else {
+			map.put(
+				"aggregateRating",
+				AggregateRatingSerDes.toJSON(blogPosting.getAggregateRating()));
+		}
 
-		map.put(
-			"alternativeHeadline",
-			String.valueOf(blogPosting.getAlternativeHeadline()));
+		if (blogPosting.getAlternativeHeadline() == null) {
+			map.put("alternativeHeadline", null);
+		}
+		else {
+			map.put(
+				"alternativeHeadline",
+				String.valueOf(blogPosting.getAlternativeHeadline()));
+		}
 
-		map.put("articleBody", String.valueOf(blogPosting.getArticleBody()));
+		if (blogPosting.getArticleBody() == null) {
+			map.put("articleBody", null);
+		}
+		else {
+			map.put(
+				"articleBody", String.valueOf(blogPosting.getArticleBody()));
+		}
 
-		map.put("creator", CreatorSerDes.toJSON(blogPosting.getCreator()));
+		if (blogPosting.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", CreatorSerDes.toJSON(blogPosting.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -373,38 +394,100 @@ public class BlogPostingSerDes {
 			"datePublished",
 			liferayToJSONDateFormat.format(blogPosting.getDatePublished()));
 
-		map.put("description", String.valueOf(blogPosting.getDescription()));
+		if (blogPosting.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description", String.valueOf(blogPosting.getDescription()));
+		}
 
-		map.put(
-			"encodingFormat", String.valueOf(blogPosting.getEncodingFormat()));
+		if (blogPosting.getEncodingFormat() == null) {
+			map.put("encodingFormat", null);
+		}
+		else {
+			map.put(
+				"encodingFormat",
+				String.valueOf(blogPosting.getEncodingFormat()));
+		}
 
-		map.put(
-			"friendlyUrlPath",
-			String.valueOf(blogPosting.getFriendlyUrlPath()));
+		if (blogPosting.getFriendlyUrlPath() == null) {
+			map.put("friendlyUrlPath", null);
+		}
+		else {
+			map.put(
+				"friendlyUrlPath",
+				String.valueOf(blogPosting.getFriendlyUrlPath()));
+		}
 
-		map.put("headline", String.valueOf(blogPosting.getHeadline()));
+		if (blogPosting.getHeadline() == null) {
+			map.put("headline", null);
+		}
+		else {
+			map.put("headline", String.valueOf(blogPosting.getHeadline()));
+		}
 
-		map.put("id", String.valueOf(blogPosting.getId()));
+		if (blogPosting.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(blogPosting.getId()));
+		}
 
-		map.put("image", ImageSerDes.toJSON(blogPosting.getImage()));
+		if (blogPosting.getImage() == null) {
+			map.put("image", null);
+		}
+		else {
+			map.put("image", ImageSerDes.toJSON(blogPosting.getImage()));
+		}
 
-		map.put("keywords", String.valueOf(blogPosting.getKeywords()));
+		if (blogPosting.getKeywords() == null) {
+			map.put("keywords", null);
+		}
+		else {
+			map.put("keywords", String.valueOf(blogPosting.getKeywords()));
+		}
 
-		map.put(
-			"numberOfComments",
-			String.valueOf(blogPosting.getNumberOfComments()));
+		if (blogPosting.getNumberOfComments() == null) {
+			map.put("numberOfComments", null);
+		}
+		else {
+			map.put(
+				"numberOfComments",
+				String.valueOf(blogPosting.getNumberOfComments()));
+		}
 
-		map.put("siteId", String.valueOf(blogPosting.getSiteId()));
+		if (blogPosting.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(blogPosting.getSiteId()));
+		}
 
-		map.put(
-			"taxonomyCategories",
-			String.valueOf(blogPosting.getTaxonomyCategories()));
+		if (blogPosting.getTaxonomyCategories() == null) {
+			map.put("taxonomyCategories", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategories",
+				String.valueOf(blogPosting.getTaxonomyCategories()));
+		}
 
-		map.put(
-			"taxonomyCategoryIds",
-			String.valueOf(blogPosting.getTaxonomyCategoryIds()));
+		if (blogPosting.getTaxonomyCategoryIds() == null) {
+			map.put("taxonomyCategoryIds", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryIds",
+				String.valueOf(blogPosting.getTaxonomyCategoryIds()));
+		}
 
-		map.put("viewableBy", String.valueOf(blogPosting.getViewableBy()));
+		if (blogPosting.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put("viewableBy", String.valueOf(blogPosting.getViewableBy()));
+		}
 
 		return map;
 	}

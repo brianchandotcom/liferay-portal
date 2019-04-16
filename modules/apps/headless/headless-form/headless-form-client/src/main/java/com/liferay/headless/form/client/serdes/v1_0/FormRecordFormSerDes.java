@@ -89,9 +89,20 @@ public class FormRecordFormSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("draft", String.valueOf(formRecordForm.getDraft()));
+		if (formRecordForm.getDraft() == null) {
+			map.put("draft", null);
+		}
+		else {
+			map.put("draft", String.valueOf(formRecordForm.getDraft()));
+		}
 
-		map.put("fieldValues", String.valueOf(formRecordForm.getFieldValues()));
+		if (formRecordForm.getFieldValues() == null) {
+			map.put("fieldValues", null);
+		}
+		else {
+			map.put(
+				"fieldValues", String.valueOf(formRecordForm.getFieldValues()));
+		}
 
 		return map;
 	}

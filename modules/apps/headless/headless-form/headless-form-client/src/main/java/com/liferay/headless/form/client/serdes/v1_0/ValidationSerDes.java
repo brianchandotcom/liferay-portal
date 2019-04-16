@@ -102,11 +102,27 @@ public class ValidationSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("errorMessage", String.valueOf(validation.getErrorMessage()));
+		if (validation.getErrorMessage() == null) {
+			map.put("errorMessage", null);
+		}
+		else {
+			map.put(
+				"errorMessage", String.valueOf(validation.getErrorMessage()));
+		}
 
-		map.put("expression", String.valueOf(validation.getExpression()));
+		if (validation.getExpression() == null) {
+			map.put("expression", null);
+		}
+		else {
+			map.put("expression", String.valueOf(validation.getExpression()));
+		}
 
-		map.put("id", String.valueOf(validation.getId()));
+		if (validation.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(validation.getId()));
+		}
 
 		return map;
 	}

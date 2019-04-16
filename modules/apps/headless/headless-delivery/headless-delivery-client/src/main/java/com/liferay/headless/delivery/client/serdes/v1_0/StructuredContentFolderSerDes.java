@@ -207,9 +207,14 @@ public class StructuredContentFolderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"creator",
-			CreatorSerDes.toJSON(structuredContentFolder.getCreator()));
+		if (structuredContentFolder.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator",
+				CreatorSerDes.toJSON(structuredContentFolder.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -221,29 +226,68 @@ public class StructuredContentFolderSerDes {
 			liferayToJSONDateFormat.format(
 				structuredContentFolder.getDateModified()));
 
-		map.put(
-			"description",
-			String.valueOf(structuredContentFolder.getDescription()));
+		if (structuredContentFolder.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(structuredContentFolder.getDescription()));
+		}
 
-		map.put("id", String.valueOf(structuredContentFolder.getId()));
+		if (structuredContentFolder.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(structuredContentFolder.getId()));
+		}
 
-		map.put("name", String.valueOf(structuredContentFolder.getName()));
+		if (structuredContentFolder.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(structuredContentFolder.getName()));
+		}
 
-		map.put(
-			"numberOfStructuredContentFolders",
-			String.valueOf(
-				structuredContentFolder.getNumberOfStructuredContentFolders()));
+		if (structuredContentFolder.getNumberOfStructuredContentFolders() ==
+				null) {
 
-		map.put(
-			"numberOfStructuredContents",
-			String.valueOf(
-				structuredContentFolder.getNumberOfStructuredContents()));
+			map.put("numberOfStructuredContentFolders", null);
+		}
+		else {
+			map.put(
+				"numberOfStructuredContentFolders",
+				String.valueOf(
+					structuredContentFolder.
+						getNumberOfStructuredContentFolders()));
+		}
 
-		map.put("siteId", String.valueOf(structuredContentFolder.getSiteId()));
+		if (structuredContentFolder.getNumberOfStructuredContents() == null) {
+			map.put("numberOfStructuredContents", null);
+		}
+		else {
+			map.put(
+				"numberOfStructuredContents",
+				String.valueOf(
+					structuredContentFolder.getNumberOfStructuredContents()));
+		}
 
-		map.put(
-			"viewableBy",
-			String.valueOf(structuredContentFolder.getViewableBy()));
+		if (structuredContentFolder.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put(
+				"siteId", String.valueOf(structuredContentFolder.getSiteId()));
+		}
+
+		if (structuredContentFolder.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put(
+				"viewableBy",
+				String.valueOf(structuredContentFolder.getViewableBy()));
+		}
 
 		return map;
 	}

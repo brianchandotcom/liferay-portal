@@ -431,25 +431,51 @@ public class StructuredContentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"aggregateRating",
-			AggregateRatingSerDes.toJSON(
-				structuredContent.getAggregateRating()));
+		if (structuredContent.getAggregateRating() == null) {
+			map.put("aggregateRating", null);
+		}
+		else {
+			map.put(
+				"aggregateRating",
+				AggregateRatingSerDes.toJSON(
+					structuredContent.getAggregateRating()));
+		}
 
-		map.put(
-			"availableLanguages",
-			String.valueOf(structuredContent.getAvailableLanguages()));
+		if (structuredContent.getAvailableLanguages() == null) {
+			map.put("availableLanguages", null);
+		}
+		else {
+			map.put(
+				"availableLanguages",
+				String.valueOf(structuredContent.getAvailableLanguages()));
+		}
 
-		map.put(
-			"contentFields",
-			String.valueOf(structuredContent.getContentFields()));
+		if (structuredContent.getContentFields() == null) {
+			map.put("contentFields", null);
+		}
+		else {
+			map.put(
+				"contentFields",
+				String.valueOf(structuredContent.getContentFields()));
+		}
 
-		map.put(
-			"contentStructureId",
-			String.valueOf(structuredContent.getContentStructureId()));
+		if (structuredContent.getContentStructureId() == null) {
+			map.put("contentStructureId", null);
+		}
+		else {
+			map.put(
+				"contentStructureId",
+				String.valueOf(structuredContent.getContentStructureId()));
+		}
 
-		map.put(
-			"creator", CreatorSerDes.toJSON(structuredContent.getCreator()));
+		if (structuredContent.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator",
+				CreatorSerDes.toJSON(structuredContent.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -465,43 +491,111 @@ public class StructuredContentSerDes {
 			liferayToJSONDateFormat.format(
 				structuredContent.getDatePublished()));
 
-		map.put(
-			"description", String.valueOf(structuredContent.getDescription()));
+		if (structuredContent.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(structuredContent.getDescription()));
+		}
 
-		map.put(
-			"friendlyUrlPath",
-			String.valueOf(structuredContent.getFriendlyUrlPath()));
+		if (structuredContent.getFriendlyUrlPath() == null) {
+			map.put("friendlyUrlPath", null);
+		}
+		else {
+			map.put(
+				"friendlyUrlPath",
+				String.valueOf(structuredContent.getFriendlyUrlPath()));
+		}
 
-		map.put("id", String.valueOf(structuredContent.getId()));
+		if (structuredContent.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(structuredContent.getId()));
+		}
 
-		map.put("key", String.valueOf(structuredContent.getKey()));
+		if (structuredContent.getKey() == null) {
+			map.put("key", null);
+		}
+		else {
+			map.put("key", String.valueOf(structuredContent.getKey()));
+		}
 
-		map.put("keywords", String.valueOf(structuredContent.getKeywords()));
+		if (structuredContent.getKeywords() == null) {
+			map.put("keywords", null);
+		}
+		else {
+			map.put(
+				"keywords", String.valueOf(structuredContent.getKeywords()));
+		}
 
-		map.put(
-			"numberOfComments",
-			String.valueOf(structuredContent.getNumberOfComments()));
+		if (structuredContent.getNumberOfComments() == null) {
+			map.put("numberOfComments", null);
+		}
+		else {
+			map.put(
+				"numberOfComments",
+				String.valueOf(structuredContent.getNumberOfComments()));
+		}
 
-		map.put(
-			"renderedContents",
-			String.valueOf(structuredContent.getRenderedContents()));
+		if (structuredContent.getRenderedContents() == null) {
+			map.put("renderedContents", null);
+		}
+		else {
+			map.put(
+				"renderedContents",
+				String.valueOf(structuredContent.getRenderedContents()));
+		}
 
-		map.put("siteId", String.valueOf(structuredContent.getSiteId()));
+		if (structuredContent.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(structuredContent.getSiteId()));
+		}
 
-		map.put(
-			"taxonomyCategories",
-			String.valueOf(structuredContent.getTaxonomyCategories()));
+		if (structuredContent.getTaxonomyCategories() == null) {
+			map.put("taxonomyCategories", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategories",
+				String.valueOf(structuredContent.getTaxonomyCategories()));
+		}
 
-		map.put(
-			"taxonomyCategoryIds",
-			String.valueOf(structuredContent.getTaxonomyCategoryIds()));
+		if (structuredContent.getTaxonomyCategoryIds() == null) {
+			map.put("taxonomyCategoryIds", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryIds",
+				String.valueOf(structuredContent.getTaxonomyCategoryIds()));
+		}
 
-		map.put("title", String.valueOf(structuredContent.getTitle()));
+		if (structuredContent.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(structuredContent.getTitle()));
+		}
 
-		map.put("uuid", String.valueOf(structuredContent.getUuid()));
+		if (structuredContent.getUuid() == null) {
+			map.put("uuid", null);
+		}
+		else {
+			map.put("uuid", String.valueOf(structuredContent.getUuid()));
+		}
 
-		map.put(
-			"viewableBy", String.valueOf(structuredContent.getViewableBy()));
+		if (structuredContent.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put(
+				"viewableBy",
+				String.valueOf(structuredContent.getViewableBy()));
+		}
 
 		return map;
 	}

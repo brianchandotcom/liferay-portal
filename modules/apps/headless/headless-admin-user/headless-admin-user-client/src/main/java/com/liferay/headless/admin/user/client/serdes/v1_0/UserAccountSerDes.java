@@ -416,22 +416,45 @@ public class UserAccountSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"additionalName", String.valueOf(userAccount.getAdditionalName()));
+		if (userAccount.getAdditionalName() == null) {
+			map.put("additionalName", null);
+		}
+		else {
+			map.put(
+				"additionalName",
+				String.valueOf(userAccount.getAdditionalName()));
+		}
 
-		map.put(
-			"alternateName", String.valueOf(userAccount.getAlternateName()));
+		if (userAccount.getAlternateName() == null) {
+			map.put("alternateName", null);
+		}
+		else {
+			map.put(
+				"alternateName",
+				String.valueOf(userAccount.getAlternateName()));
+		}
 
 		map.put(
 			"birthDate",
 			liferayToJSONDateFormat.format(userAccount.getBirthDate()));
 
-		map.put(
-			"contactInformation",
-			ContactInformationSerDes.toJSON(
-				userAccount.getContactInformation()));
+		if (userAccount.getContactInformation() == null) {
+			map.put("contactInformation", null);
+		}
+		else {
+			map.put(
+				"contactInformation",
+				ContactInformationSerDes.toJSON(
+					userAccount.getContactInformation()));
+		}
 
-		map.put("dashboardURL", String.valueOf(userAccount.getDashboardURL()));
+		if (userAccount.getDashboardURL() == null) {
+			map.put("dashboardURL", null);
+		}
+		else {
+			map.put(
+				"dashboardURL", String.valueOf(userAccount.getDashboardURL()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -441,39 +464,110 @@ public class UserAccountSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(userAccount.getDateModified()));
 
-		map.put("emailAddress", String.valueOf(userAccount.getEmailAddress()));
+		if (userAccount.getEmailAddress() == null) {
+			map.put("emailAddress", null);
+		}
+		else {
+			map.put(
+				"emailAddress", String.valueOf(userAccount.getEmailAddress()));
+		}
 
-		map.put("familyName", String.valueOf(userAccount.getFamilyName()));
+		if (userAccount.getFamilyName() == null) {
+			map.put("familyName", null);
+		}
+		else {
+			map.put("familyName", String.valueOf(userAccount.getFamilyName()));
+		}
 
-		map.put("givenName", String.valueOf(userAccount.getGivenName()));
+		if (userAccount.getGivenName() == null) {
+			map.put("givenName", null);
+		}
+		else {
+			map.put("givenName", String.valueOf(userAccount.getGivenName()));
+		}
 
-		map.put(
-			"honorificPrefix",
-			String.valueOf(userAccount.getHonorificPrefix()));
+		if (userAccount.getHonorificPrefix() == null) {
+			map.put("honorificPrefix", null);
+		}
+		else {
+			map.put(
+				"honorificPrefix",
+				String.valueOf(userAccount.getHonorificPrefix()));
+		}
 
-		map.put(
-			"honorificSuffix",
-			String.valueOf(userAccount.getHonorificSuffix()));
+		if (userAccount.getHonorificSuffix() == null) {
+			map.put("honorificSuffix", null);
+		}
+		else {
+			map.put(
+				"honorificSuffix",
+				String.valueOf(userAccount.getHonorificSuffix()));
+		}
 
-		map.put("id", String.valueOf(userAccount.getId()));
+		if (userAccount.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(userAccount.getId()));
+		}
 
-		map.put("image", String.valueOf(userAccount.getImage()));
+		if (userAccount.getImage() == null) {
+			map.put("image", null);
+		}
+		else {
+			map.put("image", String.valueOf(userAccount.getImage()));
+		}
 
-		map.put("jobTitle", String.valueOf(userAccount.getJobTitle()));
+		if (userAccount.getJobTitle() == null) {
+			map.put("jobTitle", null);
+		}
+		else {
+			map.put("jobTitle", String.valueOf(userAccount.getJobTitle()));
+		}
 
-		map.put("keywords", String.valueOf(userAccount.getKeywords()));
+		if (userAccount.getKeywords() == null) {
+			map.put("keywords", null);
+		}
+		else {
+			map.put("keywords", String.valueOf(userAccount.getKeywords()));
+		}
 
-		map.put("name", String.valueOf(userAccount.getName()));
+		if (userAccount.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(userAccount.getName()));
+		}
 
-		map.put(
-			"organizationBriefs",
-			String.valueOf(userAccount.getOrganizationBriefs()));
+		if (userAccount.getOrganizationBriefs() == null) {
+			map.put("organizationBriefs", null);
+		}
+		else {
+			map.put(
+				"organizationBriefs",
+				String.valueOf(userAccount.getOrganizationBriefs()));
+		}
 
-		map.put("profileURL", String.valueOf(userAccount.getProfileURL()));
+		if (userAccount.getProfileURL() == null) {
+			map.put("profileURL", null);
+		}
+		else {
+			map.put("profileURL", String.valueOf(userAccount.getProfileURL()));
+		}
 
-		map.put("roleBriefs", String.valueOf(userAccount.getRoleBriefs()));
+		if (userAccount.getRoleBriefs() == null) {
+			map.put("roleBriefs", null);
+		}
+		else {
+			map.put("roleBriefs", String.valueOf(userAccount.getRoleBriefs()));
+		}
 
-		map.put("siteBriefs", String.valueOf(userAccount.getSiteBriefs()));
+		if (userAccount.getSiteBriefs() == null) {
+			map.put("siteBriefs", null);
+		}
+		else {
+			map.put("siteBriefs", String.valueOf(userAccount.getSiteBriefs()));
+		}
 
 		return map;
 	}

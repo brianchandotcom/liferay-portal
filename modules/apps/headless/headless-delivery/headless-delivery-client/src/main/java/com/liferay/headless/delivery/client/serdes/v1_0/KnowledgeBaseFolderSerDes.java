@@ -220,8 +220,14 @@ public class KnowledgeBaseFolderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"creator", CreatorSerDes.toJSON(knowledgeBaseFolder.getCreator()));
+		if (knowledgeBaseFolder.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator",
+				CreatorSerDes.toJSON(knowledgeBaseFolder.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -233,38 +239,84 @@ public class KnowledgeBaseFolderSerDes {
 			liferayToJSONDateFormat.format(
 				knowledgeBaseFolder.getDateModified()));
 
-		map.put(
-			"description",
-			String.valueOf(knowledgeBaseFolder.getDescription()));
+		if (knowledgeBaseFolder.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(knowledgeBaseFolder.getDescription()));
+		}
 
-		map.put("id", String.valueOf(knowledgeBaseFolder.getId()));
+		if (knowledgeBaseFolder.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(knowledgeBaseFolder.getId()));
+		}
 
-		map.put("name", String.valueOf(knowledgeBaseFolder.getName()));
+		if (knowledgeBaseFolder.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(knowledgeBaseFolder.getName()));
+		}
 
-		map.put(
-			"numberOfKnowledgeBaseArticles",
-			String.valueOf(
-				knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles()));
+		if (knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles() == null) {
+			map.put("numberOfKnowledgeBaseArticles", null);
+		}
+		else {
+			map.put(
+				"numberOfKnowledgeBaseArticles",
+				String.valueOf(
+					knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles()));
+		}
 
-		map.put(
-			"numberOfKnowledgeBaseFolders",
-			String.valueOf(
-				knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders()));
+		if (knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders() == null) {
+			map.put("numberOfKnowledgeBaseFolders", null);
+		}
+		else {
+			map.put(
+				"numberOfKnowledgeBaseFolders",
+				String.valueOf(
+					knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders()));
+		}
 
-		map.put(
-			"parentKnowledgeBaseFolder",
-			ParentKnowledgeBaseFolderSerDes.toJSON(
-				knowledgeBaseFolder.getParentKnowledgeBaseFolder()));
+		if (knowledgeBaseFolder.getParentKnowledgeBaseFolder() == null) {
+			map.put("parentKnowledgeBaseFolder", null);
+		}
+		else {
+			map.put(
+				"parentKnowledgeBaseFolder",
+				ParentKnowledgeBaseFolderSerDes.toJSON(
+					knowledgeBaseFolder.getParentKnowledgeBaseFolder()));
+		}
 
-		map.put(
-			"parentKnowledgeBaseFolderId",
-			String.valueOf(
-				knowledgeBaseFolder.getParentKnowledgeBaseFolderId()));
+		if (knowledgeBaseFolder.getParentKnowledgeBaseFolderId() == null) {
+			map.put("parentKnowledgeBaseFolderId", null);
+		}
+		else {
+			map.put(
+				"parentKnowledgeBaseFolderId",
+				String.valueOf(
+					knowledgeBaseFolder.getParentKnowledgeBaseFolderId()));
+		}
 
-		map.put("siteId", String.valueOf(knowledgeBaseFolder.getSiteId()));
+		if (knowledgeBaseFolder.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(knowledgeBaseFolder.getSiteId()));
+		}
 
-		map.put(
-			"viewableBy", String.valueOf(knowledgeBaseFolder.getViewableBy()));
+		if (knowledgeBaseFolder.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put(
+				"viewableBy",
+				String.valueOf(knowledgeBaseFolder.getViewableBy()));
+		}
 
 		return map;
 	}

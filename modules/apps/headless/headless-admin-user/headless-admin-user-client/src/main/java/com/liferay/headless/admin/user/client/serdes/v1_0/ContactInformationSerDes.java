@@ -252,30 +252,82 @@ public class ContactInformationSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put(
-			"emailAddresses",
-			String.valueOf(contactInformation.getEmailAddresses()));
+		if (contactInformation.getEmailAddresses() == null) {
+			map.put("emailAddresses", null);
+		}
+		else {
+			map.put(
+				"emailAddresses",
+				String.valueOf(contactInformation.getEmailAddresses()));
+		}
 
-		map.put("facebook", String.valueOf(contactInformation.getFacebook()));
+		if (contactInformation.getFacebook() == null) {
+			map.put("facebook", null);
+		}
+		else {
+			map.put(
+				"facebook", String.valueOf(contactInformation.getFacebook()));
+		}
 
-		map.put("id", String.valueOf(contactInformation.getId()));
+		if (contactInformation.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(contactInformation.getId()));
+		}
 
-		map.put("jabber", String.valueOf(contactInformation.getJabber()));
+		if (contactInformation.getJabber() == null) {
+			map.put("jabber", null);
+		}
+		else {
+			map.put("jabber", String.valueOf(contactInformation.getJabber()));
+		}
 
-		map.put(
-			"postalAddresses",
-			String.valueOf(contactInformation.getPostalAddresses()));
+		if (contactInformation.getPostalAddresses() == null) {
+			map.put("postalAddresses", null);
+		}
+		else {
+			map.put(
+				"postalAddresses",
+				String.valueOf(contactInformation.getPostalAddresses()));
+		}
 
-		map.put("skype", String.valueOf(contactInformation.getSkype()));
+		if (contactInformation.getSkype() == null) {
+			map.put("skype", null);
+		}
+		else {
+			map.put("skype", String.valueOf(contactInformation.getSkype()));
+		}
 
-		map.put("sms", String.valueOf(contactInformation.getSms()));
+		if (contactInformation.getSms() == null) {
+			map.put("sms", null);
+		}
+		else {
+			map.put("sms", String.valueOf(contactInformation.getSms()));
+		}
 
-		map.put(
-			"telephones", String.valueOf(contactInformation.getTelephones()));
+		if (contactInformation.getTelephones() == null) {
+			map.put("telephones", null);
+		}
+		else {
+			map.put(
+				"telephones",
+				String.valueOf(contactInformation.getTelephones()));
+		}
 
-		map.put("twitter", String.valueOf(contactInformation.getTwitter()));
+		if (contactInformation.getTwitter() == null) {
+			map.put("twitter", null);
+		}
+		else {
+			map.put("twitter", String.valueOf(contactInformation.getTwitter()));
+		}
 
-		map.put("webUrls", String.valueOf(contactInformation.getWebUrls()));
+		if (contactInformation.getWebUrls() == null) {
+			map.put("webUrls", null);
+		}
+		else {
+			map.put("webUrls", String.valueOf(contactInformation.getWebUrls()));
+		}
 
 		return map;
 	}

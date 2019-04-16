@@ -102,11 +102,26 @@ public class AssetTypeSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("required", String.valueOf(assetType.getRequired()));
+		if (assetType.getRequired() == null) {
+			map.put("required", null);
+		}
+		else {
+			map.put("required", String.valueOf(assetType.getRequired()));
+		}
 
-		map.put("subtype", String.valueOf(assetType.getSubtype()));
+		if (assetType.getSubtype() == null) {
+			map.put("subtype", null);
+		}
+		else {
+			map.put("subtype", String.valueOf(assetType.getSubtype()));
+		}
 
-		map.put("type", String.valueOf(assetType.getType()));
+		if (assetType.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(assetType.getType()));
+		}
 
 		return map;
 	}

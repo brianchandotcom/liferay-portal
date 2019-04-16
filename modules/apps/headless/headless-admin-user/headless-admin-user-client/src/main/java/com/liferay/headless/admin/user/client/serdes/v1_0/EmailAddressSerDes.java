@@ -115,13 +115,34 @@ public class EmailAddressSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("emailAddress", String.valueOf(emailAddress.getEmailAddress()));
+		if (emailAddress.getEmailAddress() == null) {
+			map.put("emailAddress", null);
+		}
+		else {
+			map.put(
+				"emailAddress", String.valueOf(emailAddress.getEmailAddress()));
+		}
 
-		map.put("id", String.valueOf(emailAddress.getId()));
+		if (emailAddress.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(emailAddress.getId()));
+		}
 
-		map.put("primary", String.valueOf(emailAddress.getPrimary()));
+		if (emailAddress.getPrimary() == null) {
+			map.put("primary", null);
+		}
+		else {
+			map.put("primary", String.valueOf(emailAddress.getPrimary()));
+		}
 
-		map.put("type", String.valueOf(emailAddress.getType()));
+		if (emailAddress.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(emailAddress.getType()));
+		}
 
 		return map;
 	}

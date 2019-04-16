@@ -102,11 +102,26 @@ public class WebUrlSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(webUrl.getId()));
+		if (webUrl.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(webUrl.getId()));
+		}
 
-		map.put("url", String.valueOf(webUrl.getUrl()));
+		if (webUrl.getUrl() == null) {
+			map.put("url", null);
+		}
+		else {
+			map.put("url", String.valueOf(webUrl.getUrl()));
+		}
 
-		map.put("urlType", String.valueOf(webUrl.getUrlType()));
+		if (webUrl.getUrlType() == null) {
+			map.put("urlType", null);
+		}
+		else {
+			map.put("urlType", String.valueOf(webUrl.getUrlType()));
+		}
 
 		return map;
 	}

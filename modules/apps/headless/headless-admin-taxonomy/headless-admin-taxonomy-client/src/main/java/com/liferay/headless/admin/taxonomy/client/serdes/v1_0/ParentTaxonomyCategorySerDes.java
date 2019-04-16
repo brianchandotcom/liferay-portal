@@ -91,9 +91,19 @@ public class ParentTaxonomyCategorySerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(parentTaxonomyCategory.getId()));
+		if (parentTaxonomyCategory.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(parentTaxonomyCategory.getId()));
+		}
 
-		map.put("name", String.valueOf(parentTaxonomyCategory.getName()));
+		if (parentTaxonomyCategory.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(parentTaxonomyCategory.getName()));
+		}
 
 		return map;
 	}

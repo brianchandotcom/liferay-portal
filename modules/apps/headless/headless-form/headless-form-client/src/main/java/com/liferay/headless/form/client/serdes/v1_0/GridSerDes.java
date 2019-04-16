@@ -117,11 +117,26 @@ public class GridSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("columns", String.valueOf(grid.getColumns()));
+		if (grid.getColumns() == null) {
+			map.put("columns", null);
+		}
+		else {
+			map.put("columns", String.valueOf(grid.getColumns()));
+		}
 
-		map.put("id", String.valueOf(grid.getId()));
+		if (grid.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(grid.getId()));
+		}
 
-		map.put("rows", String.valueOf(grid.getRows()));
+		if (grid.getRows() == null) {
+			map.put("rows", null);
+		}
+		else {
+			map.put("rows", String.valueOf(grid.getRows()));
+		}
 
 		return map;
 	}

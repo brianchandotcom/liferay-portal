@@ -104,11 +104,27 @@ public class SuccessPageSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("description", String.valueOf(successPage.getDescription()));
+		if (successPage.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description", String.valueOf(successPage.getDescription()));
+		}
 
-		map.put("headline", String.valueOf(successPage.getHeadline()));
+		if (successPage.getHeadline() == null) {
+			map.put("headline", null);
+		}
+		else {
+			map.put("headline", String.valueOf(successPage.getHeadline()));
+		}
 
-		map.put("id", String.valueOf(successPage.getId()));
+		if (successPage.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(successPage.getId()));
+		}
 
 		return map;
 	}

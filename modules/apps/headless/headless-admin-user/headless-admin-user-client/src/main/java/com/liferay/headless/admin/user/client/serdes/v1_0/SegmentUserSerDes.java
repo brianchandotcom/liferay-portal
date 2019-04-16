@@ -104,11 +104,27 @@ public class SegmentUserSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("emailAddress", String.valueOf(segmentUser.getEmailAddress()));
+		if (segmentUser.getEmailAddress() == null) {
+			map.put("emailAddress", null);
+		}
+		else {
+			map.put(
+				"emailAddress", String.valueOf(segmentUser.getEmailAddress()));
+		}
 
-		map.put("id", String.valueOf(segmentUser.getId()));
+		if (segmentUser.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(segmentUser.getId()));
+		}
 
-		map.put("name", String.valueOf(segmentUser.getName()));
+		if (segmentUser.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(segmentUser.getName()));
+		}
 
 		return map;
 	}

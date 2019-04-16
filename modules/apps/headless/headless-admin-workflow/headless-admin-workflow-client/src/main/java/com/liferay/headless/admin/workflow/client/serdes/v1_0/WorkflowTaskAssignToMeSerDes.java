@@ -106,7 +106,13 @@ public class WorkflowTaskAssignToMeSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put("comment", String.valueOf(workflowTaskAssignToMe.getComment()));
+		if (workflowTaskAssignToMe.getComment() == null) {
+			map.put("comment", null);
+		}
+		else {
+			map.put(
+				"comment", String.valueOf(workflowTaskAssignToMe.getComment()));
+		}
 
 		map.put(
 			"dueDate",

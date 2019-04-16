@@ -87,9 +87,19 @@ public class RoleBriefSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(roleBrief.getId()));
+		if (roleBrief.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(roleBrief.getId()));
+		}
 
-		map.put("name", String.valueOf(roleBrief.getName()));
+		if (roleBrief.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(roleBrief.getName()));
+		}
 
 		return map;
 	}

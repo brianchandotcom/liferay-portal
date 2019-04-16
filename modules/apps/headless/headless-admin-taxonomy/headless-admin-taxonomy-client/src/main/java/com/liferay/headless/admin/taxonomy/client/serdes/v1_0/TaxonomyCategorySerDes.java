@@ -219,11 +219,22 @@ public class TaxonomyCategorySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"availableLanguages",
-			String.valueOf(taxonomyCategory.getAvailableLanguages()));
+		if (taxonomyCategory.getAvailableLanguages() == null) {
+			map.put("availableLanguages", null);
+		}
+		else {
+			map.put(
+				"availableLanguages",
+				String.valueOf(taxonomyCategory.getAvailableLanguages()));
+		}
 
-		map.put("creator", CreatorSerDes.toJSON(taxonomyCategory.getCreator()));
+		if (taxonomyCategory.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator", CreatorSerDes.toJSON(taxonomyCategory.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -233,28 +244,66 @@ public class TaxonomyCategorySerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(taxonomyCategory.getDateModified()));
 
-		map.put(
-			"description", String.valueOf(taxonomyCategory.getDescription()));
+		if (taxonomyCategory.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(taxonomyCategory.getDescription()));
+		}
 
-		map.put("id", String.valueOf(taxonomyCategory.getId()));
+		if (taxonomyCategory.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(taxonomyCategory.getId()));
+		}
 
-		map.put("name", String.valueOf(taxonomyCategory.getName()));
+		if (taxonomyCategory.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(taxonomyCategory.getName()));
+		}
 
-		map.put(
-			"numberOfTaxonomyCategories",
-			String.valueOf(taxonomyCategory.getNumberOfTaxonomyCategories()));
+		if (taxonomyCategory.getNumberOfTaxonomyCategories() == null) {
+			map.put("numberOfTaxonomyCategories", null);
+		}
+		else {
+			map.put(
+				"numberOfTaxonomyCategories",
+				String.valueOf(
+					taxonomyCategory.getNumberOfTaxonomyCategories()));
+		}
 
-		map.put(
-			"parentTaxonomyCategory",
-			ParentTaxonomyCategorySerDes.toJSON(
-				taxonomyCategory.getParentTaxonomyCategory()));
+		if (taxonomyCategory.getParentTaxonomyCategory() == null) {
+			map.put("parentTaxonomyCategory", null);
+		}
+		else {
+			map.put(
+				"parentTaxonomyCategory",
+				ParentTaxonomyCategorySerDes.toJSON(
+					taxonomyCategory.getParentTaxonomyCategory()));
+		}
 
-		map.put(
-			"parentTaxonomyVocabulary",
-			ParentTaxonomyVocabularySerDes.toJSON(
-				taxonomyCategory.getParentTaxonomyVocabulary()));
+		if (taxonomyCategory.getParentTaxonomyVocabulary() == null) {
+			map.put("parentTaxonomyVocabulary", null);
+		}
+		else {
+			map.put(
+				"parentTaxonomyVocabulary",
+				ParentTaxonomyVocabularySerDes.toJSON(
+					taxonomyCategory.getParentTaxonomyVocabulary()));
+		}
 
-		map.put("viewableBy", String.valueOf(taxonomyCategory.getViewableBy()));
+		if (taxonomyCategory.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put(
+				"viewableBy", String.valueOf(taxonomyCategory.getViewableBy()));
+		}
 
 		return map;
 	}

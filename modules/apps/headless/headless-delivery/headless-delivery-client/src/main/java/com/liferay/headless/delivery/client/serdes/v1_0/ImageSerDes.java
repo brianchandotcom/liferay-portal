@@ -102,11 +102,26 @@ public class ImageSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("caption", String.valueOf(image.getCaption()));
+		if (image.getCaption() == null) {
+			map.put("caption", null);
+		}
+		else {
+			map.put("caption", String.valueOf(image.getCaption()));
+		}
 
-		map.put("contentUrl", String.valueOf(image.getContentUrl()));
+		if (image.getContentUrl() == null) {
+			map.put("contentUrl", null);
+		}
+		else {
+			map.put("contentUrl", String.valueOf(image.getContentUrl()));
+		}
 
-		map.put("imageId", String.valueOf(image.getImageId()));
+		if (image.getImageId() == null) {
+			map.put("imageId", null);
+		}
+		else {
+			map.put("imageId", String.valueOf(image.getImageId()));
+		}
 
 		return map;
 	}

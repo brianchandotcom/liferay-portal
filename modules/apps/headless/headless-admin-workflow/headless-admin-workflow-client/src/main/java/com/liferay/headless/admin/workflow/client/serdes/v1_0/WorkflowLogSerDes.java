@@ -185,31 +185,78 @@ public class WorkflowLogSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"auditPerson", CreatorSerDes.toJSON(workflowLog.getAuditPerson()));
+		if (workflowLog.getAuditPerson() == null) {
+			map.put("auditPerson", null);
+		}
+		else {
+			map.put(
+				"auditPerson",
+				CreatorSerDes.toJSON(workflowLog.getAuditPerson()));
+		}
 
-		map.put("commentLog", String.valueOf(workflowLog.getCommentLog()));
+		if (workflowLog.getCommentLog() == null) {
+			map.put("commentLog", null);
+		}
+		else {
+			map.put("commentLog", String.valueOf(workflowLog.getCommentLog()));
+		}
 
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(workflowLog.getDateCreated()));
 
-		map.put("id", String.valueOf(workflowLog.getId()));
+		if (workflowLog.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(workflowLog.getId()));
+		}
 
-		map.put("person", CreatorSerDes.toJSON(workflowLog.getPerson()));
+		if (workflowLog.getPerson() == null) {
+			map.put("person", null);
+		}
+		else {
+			map.put("person", CreatorSerDes.toJSON(workflowLog.getPerson()));
+		}
 
-		map.put(
-			"previousPerson",
-			CreatorSerDes.toJSON(workflowLog.getPreviousPerson()));
+		if (workflowLog.getPreviousPerson() == null) {
+			map.put("previousPerson", null);
+		}
+		else {
+			map.put(
+				"previousPerson",
+				CreatorSerDes.toJSON(workflowLog.getPreviousPerson()));
+		}
 
-		map.put(
-			"previousState", String.valueOf(workflowLog.getPreviousState()));
+		if (workflowLog.getPreviousState() == null) {
+			map.put("previousState", null);
+		}
+		else {
+			map.put(
+				"previousState",
+				String.valueOf(workflowLog.getPreviousState()));
+		}
 
-		map.put("state", String.valueOf(workflowLog.getState()));
+		if (workflowLog.getState() == null) {
+			map.put("state", null);
+		}
+		else {
+			map.put("state", String.valueOf(workflowLog.getState()));
+		}
 
-		map.put("taskId", String.valueOf(workflowLog.getTaskId()));
+		if (workflowLog.getTaskId() == null) {
+			map.put("taskId", null);
+		}
+		else {
+			map.put("taskId", String.valueOf(workflowLog.getTaskId()));
+		}
 
-		map.put("type", String.valueOf(workflowLog.getType()));
+		if (workflowLog.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(workflowLog.getType()));
+		}
 
 		return map;
 	}

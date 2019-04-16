@@ -91,9 +91,19 @@ public class StructuredContentLinkSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("id", String.valueOf(structuredContentLink.getId()));
+		if (structuredContentLink.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(structuredContentLink.getId()));
+		}
 
-		map.put("title", String.valueOf(structuredContentLink.getTitle()));
+		if (structuredContentLink.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(structuredContentLink.getTitle()));
+		}
 
 		return map;
 	}

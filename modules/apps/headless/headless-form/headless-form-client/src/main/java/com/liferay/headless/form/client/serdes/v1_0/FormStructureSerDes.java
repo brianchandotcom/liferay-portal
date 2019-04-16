@@ -219,11 +219,22 @@ public class FormStructureSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"availableLanguages",
-			String.valueOf(formStructure.getAvailableLanguages()));
+		if (formStructure.getAvailableLanguages() == null) {
+			map.put("availableLanguages", null);
+		}
+		else {
+			map.put(
+				"availableLanguages",
+				String.valueOf(formStructure.getAvailableLanguages()));
+		}
 
-		map.put("creator", CreatorSerDes.toJSON(formStructure.getCreator()));
+		if (formStructure.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator", CreatorSerDes.toJSON(formStructure.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -233,19 +244,50 @@ public class FormStructureSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(formStructure.getDateModified()));
 
-		map.put("description", String.valueOf(formStructure.getDescription()));
+		if (formStructure.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description", String.valueOf(formStructure.getDescription()));
+		}
 
-		map.put("formPages", String.valueOf(formStructure.getFormPages()));
+		if (formStructure.getFormPages() == null) {
+			map.put("formPages", null);
+		}
+		else {
+			map.put("formPages", String.valueOf(formStructure.getFormPages()));
+		}
 
-		map.put("id", String.valueOf(formStructure.getId()));
+		if (formStructure.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(formStructure.getId()));
+		}
 
-		map.put("name", String.valueOf(formStructure.getName()));
+		if (formStructure.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(formStructure.getName()));
+		}
 
-		map.put("siteId", String.valueOf(formStructure.getSiteId()));
+		if (formStructure.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(formStructure.getSiteId()));
+		}
 
-		map.put(
-			"successPage",
-			SuccessPageSerDes.toJSON(formStructure.getSuccessPage()));
+		if (formStructure.getSuccessPage() == null) {
+			map.put("successPage", null);
+		}
+		else {
+			map.put(
+				"successPage",
+				SuccessPageSerDes.toJSON(formStructure.getSuccessPage()));
+		}
 
 		return map;
 	}

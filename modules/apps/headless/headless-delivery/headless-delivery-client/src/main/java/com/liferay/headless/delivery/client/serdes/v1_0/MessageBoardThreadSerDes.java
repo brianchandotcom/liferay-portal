@@ -275,16 +275,33 @@ public class MessageBoardThreadSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"aggregateRating",
-			AggregateRatingSerDes.toJSON(
-				messageBoardThread.getAggregateRating()));
+		if (messageBoardThread.getAggregateRating() == null) {
+			map.put("aggregateRating", null);
+		}
+		else {
+			map.put(
+				"aggregateRating",
+				AggregateRatingSerDes.toJSON(
+					messageBoardThread.getAggregateRating()));
+		}
 
-		map.put(
-			"articleBody", String.valueOf(messageBoardThread.getArticleBody()));
+		if (messageBoardThread.getArticleBody() == null) {
+			map.put("articleBody", null);
+		}
+		else {
+			map.put(
+				"articleBody",
+				String.valueOf(messageBoardThread.getArticleBody()));
+		}
 
-		map.put(
-			"creator", CreatorSerDes.toJSON(messageBoardThread.getCreator()));
+		if (messageBoardThread.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator",
+				CreatorSerDes.toJSON(messageBoardThread.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -296,37 +313,91 @@ public class MessageBoardThreadSerDes {
 			liferayToJSONDateFormat.format(
 				messageBoardThread.getDateModified()));
 
-		map.put(
-			"encodingFormat",
-			String.valueOf(messageBoardThread.getEncodingFormat()));
+		if (messageBoardThread.getEncodingFormat() == null) {
+			map.put("encodingFormat", null);
+		}
+		else {
+			map.put(
+				"encodingFormat",
+				String.valueOf(messageBoardThread.getEncodingFormat()));
+		}
 
-		map.put("headline", String.valueOf(messageBoardThread.getHeadline()));
+		if (messageBoardThread.getHeadline() == null) {
+			map.put("headline", null);
+		}
+		else {
+			map.put(
+				"headline", String.valueOf(messageBoardThread.getHeadline()));
+		}
 
-		map.put("id", String.valueOf(messageBoardThread.getId()));
+		if (messageBoardThread.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(messageBoardThread.getId()));
+		}
 
-		map.put("keywords", String.valueOf(messageBoardThread.getKeywords()));
+		if (messageBoardThread.getKeywords() == null) {
+			map.put("keywords", null);
+		}
+		else {
+			map.put(
+				"keywords", String.valueOf(messageBoardThread.getKeywords()));
+		}
 
-		map.put(
-			"numberOfMessageBoardAttachments",
-			String.valueOf(
-				messageBoardThread.getNumberOfMessageBoardAttachments()));
+		if (messageBoardThread.getNumberOfMessageBoardAttachments() == null) {
+			map.put("numberOfMessageBoardAttachments", null);
+		}
+		else {
+			map.put(
+				"numberOfMessageBoardAttachments",
+				String.valueOf(
+					messageBoardThread.getNumberOfMessageBoardAttachments()));
+		}
 
-		map.put(
-			"numberOfMessageBoardMessages",
-			String.valueOf(
-				messageBoardThread.getNumberOfMessageBoardMessages()));
+		if (messageBoardThread.getNumberOfMessageBoardMessages() == null) {
+			map.put("numberOfMessageBoardMessages", null);
+		}
+		else {
+			map.put(
+				"numberOfMessageBoardMessages",
+				String.valueOf(
+					messageBoardThread.getNumberOfMessageBoardMessages()));
+		}
 
-		map.put(
-			"showAsQuestion",
-			String.valueOf(messageBoardThread.getShowAsQuestion()));
+		if (messageBoardThread.getShowAsQuestion() == null) {
+			map.put("showAsQuestion", null);
+		}
+		else {
+			map.put(
+				"showAsQuestion",
+				String.valueOf(messageBoardThread.getShowAsQuestion()));
+		}
 
-		map.put("siteId", String.valueOf(messageBoardThread.getSiteId()));
+		if (messageBoardThread.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(messageBoardThread.getSiteId()));
+		}
 
-		map.put(
-			"threadType", String.valueOf(messageBoardThread.getThreadType()));
+		if (messageBoardThread.getThreadType() == null) {
+			map.put("threadType", null);
+		}
+		else {
+			map.put(
+				"threadType",
+				String.valueOf(messageBoardThread.getThreadType()));
+		}
 
-		map.put(
-			"viewableBy", String.valueOf(messageBoardThread.getViewableBy()));
+		if (messageBoardThread.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put(
+				"viewableBy",
+				String.valueOf(messageBoardThread.getViewableBy()));
+		}
 
 		return map;
 	}

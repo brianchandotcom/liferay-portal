@@ -205,36 +205,89 @@ public class PostalAddressSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put(
-			"addressCountry",
-			String.valueOf(postalAddress.getAddressCountry()));
+		if (postalAddress.getAddressCountry() == null) {
+			map.put("addressCountry", null);
+		}
+		else {
+			map.put(
+				"addressCountry",
+				String.valueOf(postalAddress.getAddressCountry()));
+		}
 
-		map.put(
-			"addressLocality",
-			String.valueOf(postalAddress.getAddressLocality()));
+		if (postalAddress.getAddressLocality() == null) {
+			map.put("addressLocality", null);
+		}
+		else {
+			map.put(
+				"addressLocality",
+				String.valueOf(postalAddress.getAddressLocality()));
+		}
 
-		map.put(
-			"addressRegion", String.valueOf(postalAddress.getAddressRegion()));
+		if (postalAddress.getAddressRegion() == null) {
+			map.put("addressRegion", null);
+		}
+		else {
+			map.put(
+				"addressRegion",
+				String.valueOf(postalAddress.getAddressRegion()));
+		}
 
-		map.put("addressType", String.valueOf(postalAddress.getAddressType()));
+		if (postalAddress.getAddressType() == null) {
+			map.put("addressType", null);
+		}
+		else {
+			map.put(
+				"addressType", String.valueOf(postalAddress.getAddressType()));
+		}
 
-		map.put("id", String.valueOf(postalAddress.getId()));
+		if (postalAddress.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(postalAddress.getId()));
+		}
 
-		map.put("postalCode", String.valueOf(postalAddress.getPostalCode()));
+		if (postalAddress.getPostalCode() == null) {
+			map.put("postalCode", null);
+		}
+		else {
+			map.put(
+				"postalCode", String.valueOf(postalAddress.getPostalCode()));
+		}
 
-		map.put("primary", String.valueOf(postalAddress.getPrimary()));
+		if (postalAddress.getPrimary() == null) {
+			map.put("primary", null);
+		}
+		else {
+			map.put("primary", String.valueOf(postalAddress.getPrimary()));
+		}
 
-		map.put(
-			"streetAddressLine1",
-			String.valueOf(postalAddress.getStreetAddressLine1()));
+		if (postalAddress.getStreetAddressLine1() == null) {
+			map.put("streetAddressLine1", null);
+		}
+		else {
+			map.put(
+				"streetAddressLine1",
+				String.valueOf(postalAddress.getStreetAddressLine1()));
+		}
 
-		map.put(
-			"streetAddressLine2",
-			String.valueOf(postalAddress.getStreetAddressLine2()));
+		if (postalAddress.getStreetAddressLine2() == null) {
+			map.put("streetAddressLine2", null);
+		}
+		else {
+			map.put(
+				"streetAddressLine2",
+				String.valueOf(postalAddress.getStreetAddressLine2()));
+		}
 
-		map.put(
-			"streetAddressLine3",
-			String.valueOf(postalAddress.getStreetAddressLine3()));
+		if (postalAddress.getStreetAddressLine3() == null) {
+			map.put("streetAddressLine3", null);
+		}
+		else {
+			map.put(
+				"streetAddressLine3",
+				String.valueOf(postalAddress.getStreetAddressLine3()));
+		}
 
 		return map;
 	}

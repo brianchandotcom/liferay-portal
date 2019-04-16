@@ -126,16 +126,43 @@ public class AdaptedImageSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("contentUrl", String.valueOf(adaptedImage.getContentUrl()));
+		if (adaptedImage.getContentUrl() == null) {
+			map.put("contentUrl", null);
+		}
+		else {
+			map.put("contentUrl", String.valueOf(adaptedImage.getContentUrl()));
+		}
 
-		map.put("height", String.valueOf(adaptedImage.getHeight()));
+		if (adaptedImage.getHeight() == null) {
+			map.put("height", null);
+		}
+		else {
+			map.put("height", String.valueOf(adaptedImage.getHeight()));
+		}
 
-		map.put(
-			"resolutionName", String.valueOf(adaptedImage.getResolutionName()));
+		if (adaptedImage.getResolutionName() == null) {
+			map.put("resolutionName", null);
+		}
+		else {
+			map.put(
+				"resolutionName",
+				String.valueOf(adaptedImage.getResolutionName()));
+		}
 
-		map.put("sizeInBytes", String.valueOf(adaptedImage.getSizeInBytes()));
+		if (adaptedImage.getSizeInBytes() == null) {
+			map.put("sizeInBytes", null);
+		}
+		else {
+			map.put(
+				"sizeInBytes", String.valueOf(adaptedImage.getSizeInBytes()));
+		}
 
-		map.put("width", String.valueOf(adaptedImage.getWidth()));
+		if (adaptedImage.getWidth() == null) {
+			map.put("width", null);
+		}
+		else {
+			map.put("width", String.valueOf(adaptedImage.getWidth()));
+		}
 
 		return map;
 	}

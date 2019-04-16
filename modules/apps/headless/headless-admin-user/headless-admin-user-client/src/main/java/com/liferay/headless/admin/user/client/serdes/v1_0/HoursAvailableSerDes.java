@@ -119,13 +119,33 @@ public class HoursAvailableSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("closes", String.valueOf(hoursAvailable.getCloses()));
+		if (hoursAvailable.getCloses() == null) {
+			map.put("closes", null);
+		}
+		else {
+			map.put("closes", String.valueOf(hoursAvailable.getCloses()));
+		}
 
-		map.put("dayOfWeek", String.valueOf(hoursAvailable.getDayOfWeek()));
+		if (hoursAvailable.getDayOfWeek() == null) {
+			map.put("dayOfWeek", null);
+		}
+		else {
+			map.put("dayOfWeek", String.valueOf(hoursAvailable.getDayOfWeek()));
+		}
 
-		map.put("id", String.valueOf(hoursAvailable.getId()));
+		if (hoursAvailable.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(hoursAvailable.getId()));
+		}
 
-		map.put("opens", String.valueOf(hoursAvailable.getOpens()));
+		if (hoursAvailable.getOpens() == null) {
+			map.put("opens", null);
+		}
+		else {
+			map.put("opens", String.valueOf(hoursAvailable.getOpens()));
+		}
 
 		return map;
 	}

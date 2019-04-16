@@ -102,11 +102,28 @@ public class LocationSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		map.put("addressCountry", String.valueOf(location.getAddressCountry()));
+		if (location.getAddressCountry() == null) {
+			map.put("addressCountry", null);
+		}
+		else {
+			map.put(
+				"addressCountry", String.valueOf(location.getAddressCountry()));
+		}
 
-		map.put("addressRegion", String.valueOf(location.getAddressRegion()));
+		if (location.getAddressRegion() == null) {
+			map.put("addressRegion", null);
+		}
+		else {
+			map.put(
+				"addressRegion", String.valueOf(location.getAddressRegion()));
+		}
 
-		map.put("id", String.valueOf(location.getId()));
+		if (location.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(location.getId()));
+		}
 
 		return map;
 	}

@@ -354,17 +354,33 @@ public class KnowledgeBaseArticleSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put(
-			"aggregateRating",
-			AggregateRatingSerDes.toJSON(
-				knowledgeBaseArticle.getAggregateRating()));
+		if (knowledgeBaseArticle.getAggregateRating() == null) {
+			map.put("aggregateRating", null);
+		}
+		else {
+			map.put(
+				"aggregateRating",
+				AggregateRatingSerDes.toJSON(
+					knowledgeBaseArticle.getAggregateRating()));
+		}
 
-		map.put(
-			"articleBody",
-			String.valueOf(knowledgeBaseArticle.getArticleBody()));
+		if (knowledgeBaseArticle.getArticleBody() == null) {
+			map.put("articleBody", null);
+		}
+		else {
+			map.put(
+				"articleBody",
+				String.valueOf(knowledgeBaseArticle.getArticleBody()));
+		}
 
-		map.put(
-			"creator", CreatorSerDes.toJSON(knowledgeBaseArticle.getCreator()));
+		if (knowledgeBaseArticle.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put(
+				"creator",
+				CreatorSerDes.toJSON(knowledgeBaseArticle.getCreator()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -376,55 +392,127 @@ public class KnowledgeBaseArticleSerDes {
 			liferayToJSONDateFormat.format(
 				knowledgeBaseArticle.getDateModified()));
 
-		map.put(
-			"description",
-			String.valueOf(knowledgeBaseArticle.getDescription()));
+		if (knowledgeBaseArticle.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description",
+				String.valueOf(knowledgeBaseArticle.getDescription()));
+		}
 
-		map.put(
-			"encodingFormat",
-			String.valueOf(knowledgeBaseArticle.getEncodingFormat()));
+		if (knowledgeBaseArticle.getEncodingFormat() == null) {
+			map.put("encodingFormat", null);
+		}
+		else {
+			map.put(
+				"encodingFormat",
+				String.valueOf(knowledgeBaseArticle.getEncodingFormat()));
+		}
 
-		map.put(
-			"friendlyUrlPath",
-			String.valueOf(knowledgeBaseArticle.getFriendlyUrlPath()));
+		if (knowledgeBaseArticle.getFriendlyUrlPath() == null) {
+			map.put("friendlyUrlPath", null);
+		}
+		else {
+			map.put(
+				"friendlyUrlPath",
+				String.valueOf(knowledgeBaseArticle.getFriendlyUrlPath()));
+		}
 
-		map.put("id", String.valueOf(knowledgeBaseArticle.getId()));
+		if (knowledgeBaseArticle.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(knowledgeBaseArticle.getId()));
+		}
 
-		map.put("keywords", String.valueOf(knowledgeBaseArticle.getKeywords()));
+		if (knowledgeBaseArticle.getKeywords() == null) {
+			map.put("keywords", null);
+		}
+		else {
+			map.put(
+				"keywords", String.valueOf(knowledgeBaseArticle.getKeywords()));
+		}
 
-		map.put(
-			"numberOfAttachments",
-			String.valueOf(knowledgeBaseArticle.getNumberOfAttachments()));
+		if (knowledgeBaseArticle.getNumberOfAttachments() == null) {
+			map.put("numberOfAttachments", null);
+		}
+		else {
+			map.put(
+				"numberOfAttachments",
+				String.valueOf(knowledgeBaseArticle.getNumberOfAttachments()));
+		}
 
-		map.put(
-			"numberOfKnowledgeBaseArticles",
-			String.valueOf(
-				knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles()));
+		if (knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles() == null) {
+			map.put("numberOfKnowledgeBaseArticles", null);
+		}
+		else {
+			map.put(
+				"numberOfKnowledgeBaseArticles",
+				String.valueOf(
+					knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles()));
+		}
 
-		map.put(
-			"parentKnowledgeBaseFolder",
-			ParentKnowledgeBaseFolderSerDes.toJSON(
-				knowledgeBaseArticle.getParentKnowledgeBaseFolder()));
+		if (knowledgeBaseArticle.getParentKnowledgeBaseFolder() == null) {
+			map.put("parentKnowledgeBaseFolder", null);
+		}
+		else {
+			map.put(
+				"parentKnowledgeBaseFolder",
+				ParentKnowledgeBaseFolderSerDes.toJSON(
+					knowledgeBaseArticle.getParentKnowledgeBaseFolder()));
+		}
 
-		map.put(
-			"parentKnowledgeBaseFolderId",
-			String.valueOf(
-				knowledgeBaseArticle.getParentKnowledgeBaseFolderId()));
+		if (knowledgeBaseArticle.getParentKnowledgeBaseFolderId() == null) {
+			map.put("parentKnowledgeBaseFolderId", null);
+		}
+		else {
+			map.put(
+				"parentKnowledgeBaseFolderId",
+				String.valueOf(
+					knowledgeBaseArticle.getParentKnowledgeBaseFolderId()));
+		}
 
-		map.put("siteId", String.valueOf(knowledgeBaseArticle.getSiteId()));
+		if (knowledgeBaseArticle.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(knowledgeBaseArticle.getSiteId()));
+		}
 
-		map.put(
-			"taxonomyCategories",
-			String.valueOf(knowledgeBaseArticle.getTaxonomyCategories()));
+		if (knowledgeBaseArticle.getTaxonomyCategories() == null) {
+			map.put("taxonomyCategories", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategories",
+				String.valueOf(knowledgeBaseArticle.getTaxonomyCategories()));
+		}
 
-		map.put(
-			"taxonomyCategoryIds",
-			String.valueOf(knowledgeBaseArticle.getTaxonomyCategoryIds()));
+		if (knowledgeBaseArticle.getTaxonomyCategoryIds() == null) {
+			map.put("taxonomyCategoryIds", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryIds",
+				String.valueOf(knowledgeBaseArticle.getTaxonomyCategoryIds()));
+		}
 
-		map.put("title", String.valueOf(knowledgeBaseArticle.getTitle()));
+		if (knowledgeBaseArticle.getTitle() == null) {
+			map.put("title", null);
+		}
+		else {
+			map.put("title", String.valueOf(knowledgeBaseArticle.getTitle()));
+		}
 
-		map.put(
-			"viewableBy", String.valueOf(knowledgeBaseArticle.getViewableBy()));
+		if (knowledgeBaseArticle.getViewableBy() == null) {
+			map.put("viewableBy", null);
+		}
+		else {
+			map.put(
+				"viewableBy",
+				String.valueOf(knowledgeBaseArticle.getViewableBy()));
+		}
 
 		return map;
 	}

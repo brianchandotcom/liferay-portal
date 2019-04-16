@@ -237,12 +237,22 @@ public class OrganizationSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		map.put("comment", String.valueOf(organization.getComment()));
+		if (organization.getComment() == null) {
+			map.put("comment", null);
+		}
+		else {
+			map.put("comment", String.valueOf(organization.getComment()));
+		}
 
-		map.put(
-			"contactInformation",
-			ContactInformationSerDes.toJSON(
-				organization.getContactInformation()));
+		if (organization.getContactInformation() == null) {
+			map.put("contactInformation", null);
+		}
+		else {
+			map.put(
+				"contactInformation",
+				ContactInformationSerDes.toJSON(
+					organization.getContactInformation()));
+		}
 
 		map.put(
 			"dateCreated",
@@ -252,25 +262,67 @@ public class OrganizationSerDes {
 			"dateModified",
 			liferayToJSONDateFormat.format(organization.getDateModified()));
 
-		map.put("id", String.valueOf(organization.getId()));
+		if (organization.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(organization.getId()));
+		}
 
-		map.put("image", String.valueOf(organization.getImage()));
+		if (organization.getImage() == null) {
+			map.put("image", null);
+		}
+		else {
+			map.put("image", String.valueOf(organization.getImage()));
+		}
 
-		map.put("keywords", String.valueOf(organization.getKeywords()));
+		if (organization.getKeywords() == null) {
+			map.put("keywords", null);
+		}
+		else {
+			map.put("keywords", String.valueOf(organization.getKeywords()));
+		}
 
-		map.put("location", LocationSerDes.toJSON(organization.getLocation()));
+		if (organization.getLocation() == null) {
+			map.put("location", null);
+		}
+		else {
+			map.put(
+				"location", LocationSerDes.toJSON(organization.getLocation()));
+		}
 
-		map.put("name", String.valueOf(organization.getName()));
+		if (organization.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(organization.getName()));
+		}
 
-		map.put(
-			"numberOfOrganizations",
-			String.valueOf(organization.getNumberOfOrganizations()));
+		if (organization.getNumberOfOrganizations() == null) {
+			map.put("numberOfOrganizations", null);
+		}
+		else {
+			map.put(
+				"numberOfOrganizations",
+				String.valueOf(organization.getNumberOfOrganizations()));
+		}
 
-		map.put(
-			"parentOrganization",
-			OrganizationSerDes.toJSON(organization.getParentOrganization()));
+		if (organization.getParentOrganization() == null) {
+			map.put("parentOrganization", null);
+		}
+		else {
+			map.put(
+				"parentOrganization",
+				OrganizationSerDes.toJSON(
+					organization.getParentOrganization()));
+		}
 
-		map.put("services", String.valueOf(organization.getServices()));
+		if (organization.getServices() == null) {
+			map.put("services", null);
+		}
+		else {
+			map.put("services", String.valueOf(organization.getServices()));
+		}
 
 		return map;
 	}

@@ -1328,12 +1328,19 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			sb.append("\"" + entry.getKey() + "\": ");
-			sb.append("\"" + entry.getValue() + "\"");
+
+			if (entry.getValue() == null) {
+				sb.append("null");
+			}
+			else {
+				sb.append("\"" + entry.getValue() + "\"");
+			}
+
 			sb.append(", ");
 		}
 
 		if (sb.length() > 1) {
-			sb.setLength(sb.length() - 1);
+			sb.setLength(sb.length() - 2);
 		}
 
 		sb.append("}");

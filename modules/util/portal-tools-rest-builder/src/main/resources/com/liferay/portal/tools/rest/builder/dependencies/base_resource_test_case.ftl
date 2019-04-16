@@ -839,7 +839,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch", "post", "put") && invokeArguments?ends_with("${schemaVarName}")>
 				options.setBody(${schemaName}SerDes.toJSON(${schemaVarName}), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch", "post", "put") && invokeArguments?ends_with("multipartBody")>
-				options.addPart("${schemaVarName}", inputObjectMapper.writeValueAsString(multipartBody.getValues()));
+				options.addPart("${schemaVarName}", mapToJSON(multipartBody.getValues()));
 
 				BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -1232,27 +1232,25 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	</#if>
 
-	protected static final ObjectMapper inputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter("Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+	private String mapToJSON(Map<String, String> map) {
+
+		if (map == null) {
+			return "null";
 		}
-	};
-	protected static final ObjectMapper outputObjectMapper = new ObjectMapper() {
-		{
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter("Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			sb.append("\"" + entry.getKey() + "\": ");
+			sb.append("\"" + entry.getValue() + "\"");
 		}
-	};
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 	protected Group irrelevantGroup;
 	protected String testContentType = "application/json";

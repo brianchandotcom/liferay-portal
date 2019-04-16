@@ -1000,18 +1000,17 @@ public class RESTBuilder {
 			for (Map.Entry<String, Schema> entry2 :
 					propertySchemas.entrySet()) {
 
-				String propertyName = entry2.getKey();
 				Schema propertySchema = entry2.getValue();
 
-				if (propertyName.startsWith("numberOf") &&
-					Objects.equals(propertySchema.getType(), "number")) {
+				if (Objects.equals(propertySchema.getType(), "number") &&
+					(propertySchema.getFormat() == null)) {
 
 					StringBuilder sb = new StringBuilder();
 
 					sb.append("The property \"");
 					sb.append(entry1.getKey());
 					sb.append('.');
-					sb.append(propertyName);
+					sb.append(entry2.getKey());
 					sb.append(
 						"\" should use \"type: integer\" instead of \"type: " +
 							"number\"");

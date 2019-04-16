@@ -1008,7 +1008,10 @@ public class RESTBuilder {
 
 				Schema propertySchema = entry2.getValue();
 
-				if (Objects.equals(propertySchema.getType(), "number")) {
+				if (Objects.equals(propertySchema.getType(), "number") &&
+					!Objects.equals(propertySchema.getFormat(), "float") &&
+					!Objects.equals(propertySchema.getFormat(), "double")) {
+
 					StringBuilder sb = new StringBuilder();
 
 					sb.append("The property \"");

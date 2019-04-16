@@ -210,7 +210,7 @@ definition {
 
 		AssetPublisherPortlet.configureDisplaySettings(
 			displaySettings = "Comments,Comment Ratings,Flags,Print,Ratings,Related Assets",
-			enableSocialBookmarkSites = "AddThis,Delicious,Digg,Evernote,Facebook,LinkedIn,Reddit,Slashdot,Twitter"
+			enableSocialBookmarkSites = "Facebook,LinkedIn,Twitter,AddThis,Delicious,Digg,Evernote,Reddit,Slashdot"
 		);
 
 		Navigator.gotoSitePage(pageName = "ADT Test Page", siteName = "Test Site Name");

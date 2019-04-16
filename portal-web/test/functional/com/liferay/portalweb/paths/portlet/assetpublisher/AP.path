@@ -74,17 +74,17 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_GENERIC_TITLE_1</td>
-	<td>//h4[contains(@class,'asset-title')]</td>
+	<td>//h4/*[contains(@class,'asset-title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_GENERIC_TITLE_2</td>
-	<td>xPath=(//h4[contains(@class,'asset-title')])[2]</td>
+	<td>xPath=(//h4/*[contains(@class,'asset-title')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_GENERIC_TITLE_3</td>
-	<td>xPath=(//h4[contains(@class,'asset-title')])[3]</td>
+	<td>xPath=(//h4/*[contains(@class,'asset-title')])[3]</td>
 	<td></td>
 </tr>
 <tr>

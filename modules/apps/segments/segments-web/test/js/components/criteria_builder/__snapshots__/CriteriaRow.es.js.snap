@@ -36,7 +36,7 @@ exports[`CriteriaRow should render 1`] = `
         value=""
       />
       <button
-        class="btn btn-outline-secondary btn-monospaced btn-outline-borderless duplicate-button"
+        class="btn btn-outline-secondary btn-monospaced btn-outline-borderless"
         type="button"
       >
         <svg
@@ -55,11 +55,11 @@ exports[`CriteriaRow should render 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="lexicon-icon lexicon-icon-trash icon"
+          class="lexicon-icon lexicon-icon-times-circle icon"
           viewBox="0 0 512 512"
         >
           <use
-            xlink:href="#trash"
+            xlink:href="#times-circle"
           />
         </svg>
       </button>

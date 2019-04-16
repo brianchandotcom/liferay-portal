@@ -86,7 +86,7 @@ public class JournalSelectDDMTemplateManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"modified-date", "id"};
+		return new String[] {"modified-date"};
 	}
 
 	private final JournalSelectDDMTemplateDisplayContext

@@ -34,11 +34,6 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 			modelVar="ddmTemplate"
 		>
 			<liferay-ui:search-container-column-text
-				name="id"
-				value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="name"
 			>

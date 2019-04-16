@@ -53,9 +53,6 @@
 		"metal-soy": "^2.16.0",
 		"metal-state": "^2.16.0"
 	},
-	"devDependencies": {
-		"@babel/preset-env": "7.4.2"
-	},
 	"jest": {
 		"moduleNameMapper": {
 			"(.*)\\.soy": "$1.soy.js"

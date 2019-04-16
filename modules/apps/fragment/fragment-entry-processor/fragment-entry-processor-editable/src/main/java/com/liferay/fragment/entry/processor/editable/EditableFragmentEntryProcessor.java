@@ -245,8 +245,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			String value = StringPool.BLANK;
 
+			JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
+				"config");
+
 			if (_isMapped(editableValueJSONObject, mode)) {
 				value = _getMappedValue(
+					editableElementParser, editableValueJSONObject, mode,
+					locale);
+
+				configJSONObject = _getMappedValueConfigJSONObject(
 					editableElementParser, editableValueJSONObject, mode,
 					locale);
 			}
@@ -260,9 +267,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				editableElementParser.replace(element, value);
 			}
 			else {
-				JSONObject configJSONObject =
-					editableValueJSONObject.getJSONObject("config");
-
 				editableElementParser.replace(element, value, configJSONObject);
 			}
 		}
@@ -420,6 +424,47 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return GetterUtil.get(fieldValue, StringPool.BLANK);
+	}
+
+	private JSONObject _getMappedValueConfigJSONObject(
+			EditableElementParser editableElementParser, JSONObject jsonObject,
+			String mode, Locale locale)
+		throws PortalException {
+
+		String value = jsonObject.getString("mappedField");
+
+		if (Validator.isNotNull(value)) {
+			return editableElementParser.getFieldTemplateConfigJSONObject(
+				value, locale);
+		}
+
+		if (!_isMapped(jsonObject, mode)) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		long classNameId = jsonObject.getLong("classNameId");
+		long classPK = jsonObject.getLong("classPK");
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			classNameId, classPK);
+
+		if (assetEntry == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			assetEntry.getClassName());
+
+		if ((trashHandler == null) ||
+			trashHandler.isInTrash(assetEntry.getClassPK())) {
+
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		String fieldId = jsonObject.getString("fieldId");
+
+		return editableElementParser.getFieldTemplateConfigJSONObject(
+			fieldId, locale);
 	}
 
 	private String _getSegmentsExperienceValue(

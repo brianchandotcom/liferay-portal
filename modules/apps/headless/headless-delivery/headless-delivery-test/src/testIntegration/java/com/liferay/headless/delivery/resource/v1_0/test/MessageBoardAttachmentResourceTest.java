@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardAttachment;
+import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardAttachmentSerDes;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.test.util.MBTestUtil;
@@ -113,9 +114,8 @@ public class MessageBoardAttachmentResourceTest
 				new ByteArrayInputStream(randomString.getBytes()), 0));
 
 		return MultipartBody.of(
-			binaryFileMap, __ -> inputObjectMapper,
-			inputObjectMapper.convertValue(
-				messageBoardAttachment, HashMap.class));
+			binaryFileMap, __ -> null,
+			MessageBoardAttachmentSerDes.toMap(messageBoardAttachment));
 	}
 
 	private MBThread _mbThread;

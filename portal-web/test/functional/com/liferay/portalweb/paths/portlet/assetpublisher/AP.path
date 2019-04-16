@@ -205,7 +205,7 @@
 </tr>
 <tr>
 	<td>METADATA_CATEGORY</td>
-	<td>//dd[contains(@class,'categories')]/span/a[contains(.,'${key_categoryName}')]</td>
+	<td>//div[contains(@class,'categories')]/span/a[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

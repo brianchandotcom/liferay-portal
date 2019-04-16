@@ -28,8 +28,8 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
  * @author Igor Beslic
  * @author Zoltán Takács
  */
-@Checkable("checkBaseDataStore")
-@DataStore("BaseDataStore")
+@Checkable("checkGenericDataStore")
+@DataStore("GenericDataStore")
 @GridLayout(
 	{
 		@GridLayout.Row("_authenticationMethod"),
@@ -38,17 +38,17 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 		@GridLayout.Row("_oAuth2DataStore")
 	}
 )
-public class BaseDataStore {
+public class GenericDataStore {
 
 	public AuthenticationMethod getAuthenticationMethod() {
 		return _authenticationMethod;
 	}
 
-	public BasicAuthDataStore getBasicDataStore() {
+	public BasicAuthDataStore getBasicAuthDataStore() {
 		return _basicAuthDataStore;
 	}
 
-	public OAuth2DataStore getoAuthDataStore() {
+	public OAuth2DataStore getoAuth2DataStore() {
 		return _oAuth2DataStore;
 	}
 
@@ -56,7 +56,7 @@ public class BaseDataStore {
 		return _openAPISpecURL;
 	}
 
-	public BaseDataStore setAuthenticationMethod(
+	public GenericDataStore setAuthenticationMethod(
 		AuthenticationMethod authenticationMethod) {
 
 		_authenticationMethod = authenticationMethod;
@@ -64,19 +64,23 @@ public class BaseDataStore {
 		return this;
 	}
 
-	public BaseDataStore setBasicDataStore(BasicAuthDataStore dataStore) {
+	public GenericDataStore setBasicAuthDataStore(
+		BasicAuthDataStore dataStore) {
+
 		_basicAuthDataStore = dataStore;
 
 		return this;
 	}
 
-	public BaseDataStore setoAuthDataStore(OAuth2DataStore oAuth2DataStore) {
+	public GenericDataStore setoAuth2DataStore(
+		OAuth2DataStore oAuth2DataStore) {
+
 		_oAuth2DataStore = oAuth2DataStore;
 
 		return this;
 	}
 
-	public BaseDataStore setOpenAPISpecURL(URL openAPISpecURL) {
+	public GenericDataStore setOpenAPISpecURL(URL openAPISpecURL) {
 		_openAPISpecURL = openAPISpecURL;
 
 		return this;

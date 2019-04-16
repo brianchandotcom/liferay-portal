@@ -14,7 +14,7 @@
 
 package com.liferay.talend.dataset;
 
-import com.liferay.talend.data.store.BaseDataStore;
+import com.liferay.talend.data.store.GenericDataStore;
 
 import java.io.Serializable;
 
@@ -33,7 +33,7 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 @DataSet("OutputDataSet")
 @GridLayout(
 	{
-		@GridLayout.Row("_baseDataStore"), @GridLayout.Row("endpoint"),
+		@GridLayout.Row("_genericDataStore"), @GridLayout.Row("endpoint"),
 		@GridLayout.Row({"firstPathParam", "secondPathParam", "thirdPathParam"})
 	}
 )
@@ -47,8 +47,8 @@ public class OutputDataSet implements Serializable {
 		return firstPathParam;
 	}
 
-	public BaseDataStore getInputDataStore() {
-		return _baseDataStore;
+	public GenericDataStore getGenericDataStore() {
+		return _genericDataStore;
 	}
 
 	public String getSecondPathParam() {
@@ -71,8 +71,10 @@ public class OutputDataSet implements Serializable {
 		return this;
 	}
 
-	public OutputDataSet setInputDataStore(BaseDataStore baseDataStore) {
-		_baseDataStore = baseDataStore;
+	public OutputDataSet setGenericDataStore(
+		GenericDataStore genericDataStore) {
+
+		_genericDataStore = genericDataStore;
 
 		return this;
 	}
@@ -95,7 +97,7 @@ public class OutputDataSet implements Serializable {
 	 */
 	@Option
 	@Required
-	@Suggestable(parameters = "_baseDataStore", value = "fetchEndpoints")
+	@Suggestable(parameters = "_genericDataStore", value = "fetchEndpoints")
 	protected String endpoint;
 
 	@DefaultValue("")
@@ -111,6 +113,6 @@ public class OutputDataSet implements Serializable {
 	protected String thirdPathParam;
 
 	@Option
-	private BaseDataStore _baseDataStore;
+	private GenericDataStore _genericDataStore;
 
 }

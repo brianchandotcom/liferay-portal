@@ -15,8 +15,8 @@
 package com.liferay.talend.service;
 
 import com.liferay.talend.data.store.AuthenticationMethod;
-import com.liferay.talend.data.store.BaseDataStore;
 import com.liferay.talend.data.store.BasicAuthDataStore;
+import com.liferay.talend.data.store.GenericDataStore;
 import com.liferay.talend.dataset.InputDataSet;
 import com.liferay.talend.http.client.LiferayHttpClient;
 import com.liferay.talend.http.client.exception.ConnectionException;
@@ -41,8 +41,8 @@ import org.talend.sdk.component.api.service.http.Response;
 @Service
 public class ConnectionService {
 
-	public static URL getServerURL(BaseDataStore baseDataStore) {
-		URL openAPISpecURL = baseDataStore.getOpenAPISpecURL();
+	public static URL getServerURL(GenericDataStore genericDataStore) {
+		URL openAPISpecURL = genericDataStore.getOpenAPISpecURL();
 
 		String protocol = openAPISpecURL.getProtocol();
 		String host = openAPISpecURL.getHost();
@@ -63,11 +63,11 @@ public class ConnectionService {
 	public JsonObject getResponseJsonObject(InputDataSet inputDataSet)
 		throws ConnectionException {
 
-		BaseDataStore baseDataStore = inputDataSet.getInputDataStore();
+		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
 
-		String authorizationHeader = _getAuthorizationHeader(baseDataStore);
+		String authorizationHeader = _getAuthorizationHeader(genericDataStore);
 
-		URL serverURL = getServerURL(baseDataStore);
+		URL serverURL = getServerURL(genericDataStore);
 
 		_liferayHttpClient.base(serverURL.toString());
 
@@ -84,11 +84,11 @@ public class ConnectionService {
 	public String getResponseRawString(InputDataSet inputDataSet)
 		throws ConnectionException {
 
-		BaseDataStore baseDataStore = inputDataSet.getInputDataStore();
+		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
 
-		String authorizationHeader = _getAuthorizationHeader(baseDataStore);
+		String authorizationHeader = _getAuthorizationHeader(genericDataStore);
 
-		URL serverURL = getServerURL(baseDataStore);
+		URL serverURL = getServerURL(genericDataStore);
 
 		_liferayHttpClient.base(serverURL.toString());
 
@@ -101,17 +101,17 @@ public class ConnectionService {
 	}
 
 	public JsonObject requestAuthorizationJsonObject(
-			BaseDataStore baseDataStore)
+			GenericDataStore genericDataStore)
 		throws ConnectionException {
 
-		URL serverURL = getServerURL(baseDataStore);
+		URL serverURL = getServerURL(genericDataStore);
 
 		_liferayHttpClient.base(serverURL.toString());
 
 		Response<JsonObject> jsonObjectResponse =
 			_liferayHttpClient.getAccessToken(
 				"application/x-www-form-urlencoded",
-				baseDataStore.getoAuthDataStore());
+				genericDataStore.getoAuth2DataStore());
 
 		if (jsonObjectResponse == null) {
 			throw new OAuth2Exception(
@@ -140,19 +140,19 @@ public class ConnectionService {
 		return jsonObjectResponse.body();
 	}
 
-	private String _getAuthorizationHeader(BaseDataStore baseDataStore) {
-		if (baseDataStore.getAuthenticationMethod() ==
+	private String _getAuthorizationHeader(GenericDataStore genericDataStore) {
+		if (genericDataStore.getAuthenticationMethod() ==
 				AuthenticationMethod.OAUTH2) {
 
-			return "Bearer " + _getBearerToken(baseDataStore);
+			return "Bearer " + _getBearerToken(genericDataStore);
 		}
 
-		return "Basic " + _getBasicToken(baseDataStore);
+		return "Basic " + _getBasicToken(genericDataStore);
 	}
 
-	private String _getBasicToken(BaseDataStore baseDataStore) {
+	private String _getBasicToken(GenericDataStore genericDataStore) {
 		BasicAuthDataStore basicAuthDataStore =
-			baseDataStore.getBasicDataStore();
+			genericDataStore.getBasicAuthDataStore();
 
 		Base64.Encoder base64Encoder = Base64.getEncoder();
 
@@ -167,9 +167,9 @@ public class ConnectionService {
 		return new String(base64Encoder.encode(base64Seed.getBytes()));
 	}
 
-	private String _getBearerToken(BaseDataStore baseDataStore) {
+	private String _getBearerToken(GenericDataStore genericDataStore) {
 		JsonObject authorizationJsonObject = requestAuthorizationJsonObject(
-			baseDataStore);
+			genericDataStore);
 
 		String tokenType = authorizationJsonObject.getString("token_type");
 

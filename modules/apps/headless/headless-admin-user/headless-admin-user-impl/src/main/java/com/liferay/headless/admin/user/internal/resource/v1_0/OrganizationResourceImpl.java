@@ -17,7 +17,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.ContactInformation;
-import com.liferay.headless.admin.user.dto.v1_0.Email;
+import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.dto.v1_0.Location;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
@@ -25,7 +25,7 @@ import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Service;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
-import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
@@ -180,11 +180,11 @@ public class OrganizationResourceImpl
 				comment = organization.getComments();
 				contactInformation = new ContactInformation() {
 					{
-						emails = transformToArray(
+						emailAddresses = transformToArray(
 							_emailAddressService.getEmailAddresses(
 								organization.getModelClassName(),
 								organization.getOrganizationId()),
-							EmailUtil::toEmail, Email.class);
+							EmailAddressUtil::toEmail, EmailAddress.class);
 						postalAddresses = transformToArray(
 							organization.getAddresses(),
 							address -> PostalAddressUtil.toPostalAddress(

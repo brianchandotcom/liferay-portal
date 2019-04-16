@@ -15,9 +15,8 @@
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.admin.user.client.dto.v1_0.Email;
+import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
@@ -39,7 +38,7 @@ import org.junit.runner.RunWith;
  * @author Javier Gamarra
  */
 @RunWith(Arquillian.class)
-public class EmailResourceTest extends BaseEmailResourceTestCase {
+public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 
 	@Before
 	@Override
@@ -52,66 +51,70 @@ public class EmailResourceTest extends BaseEmailResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"email", "primary"};
+		return new String[] {"emailAddress", "primary"};
 	}
 
 	@Override
-	protected Email randomEmail() {
-		return new Email() {
+	protected EmailAddress randomEmailAddress() {
+		return new EmailAddress() {
 			{
-				email = RandomTestUtil.randomString() + "@liferay.com";
+				emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 				primary = false;
 			}
 		};
 	}
 
 	@Override
-	protected Email testGetEmail_addEmail() throws Exception {
+	protected EmailAddress testGetEmailAddress_addEmailAddress()
+		throws Exception {
+
 		return _addEmailAddress(
-			randomEmail(), Contact.class.getName(), _user.getContactId(),
+			randomEmailAddress(), Contact.class.getName(), _user.getContactId(),
 			ListTypeConstants.CONTACT_EMAIL_ADDRESS);
 	}
 
 	@Override
-	protected Email testGetOrganizationEmailsPage_addEmail(
-			Long organizationId, Email email)
+	protected EmailAddress
+			testGetOrganizationEmailAddressesPage_addEmailAddress(
+				Long organizationId, EmailAddress emailAddress)
 		throws Exception {
 
 		return _addEmailAddress(
-			email, _organization.getModelClassName(),
+			emailAddress, _organization.getModelClassName(),
 			_organization.getOrganizationId(),
 			ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS);
 	}
 
 	@Override
-	protected Long testGetOrganizationEmailsPage_getOrganizationId() {
+	protected Long testGetOrganizationEmailAddressesPage_getOrganizationId() {
 		return _organization.getOrganizationId();
 	}
 
 	@Override
-	protected Email testGetUserAccountEmailsPage_addEmail(
-			Long userAccountId, Email email)
+	protected EmailAddress testGetUserAccountEmailAddressesPage_addEmailAddress(
+			Long userAccountId, EmailAddress emailAddress)
 		throws Exception {
 
 		return _addEmailAddress(
-			email, Contact.class.getName(), _user.getContactId(),
+			emailAddress, Contact.class.getName(), _user.getContactId(),
 			ListTypeConstants.CONTACT_EMAIL_ADDRESS);
 	}
 
 	@Override
-	protected Long testGetUserAccountEmailsPage_getUserAccountId() {
+	protected Long testGetUserAccountEmailAddressesPage_getUserAccountId() {
 		return _user.getUserId();
 	}
 
-	private Email _addEmailAddress(
-			Email email, String className, long classPK, String listTypeId)
+	private EmailAddress _addEmailAddress(
+			EmailAddress emailAddress, String className, long classPK,
+			String listTypeId)
 		throws Exception {
 
 		return _toEmail(
 			EmailAddressLocalServiceUtil.addEmailAddress(
-				_user.getUserId(), className, classPK, email.getEmail(),
-				_getListTypeId(listTypeId), email.getPrimary(),
-				new ServiceContext()));
+				_user.getUserId(), className, classPK,
+				emailAddress.getEmailAddress(), _getListTypeId(listTypeId),
+				emailAddress.getPrimary(), new ServiceContext()));
 	}
 
 	private long _getListTypeId(String listTypeId) {
@@ -122,12 +125,15 @@ public class EmailResourceTest extends BaseEmailResourceTestCase {
 		return listType.getListTypeId();
 	}
 
-	private Email _toEmail(EmailAddress emailAddress) {
-		return new Email() {
+	private EmailAddress _toEmail(
+		com.liferay.portal.kernel.model.EmailAddress
+			serviceBuilderEmailAddress) {
+
+		return new EmailAddress() {
 			{
-				email = emailAddress.getAddress();
-				id = emailAddress.getEmailAddressId();
-				primary = emailAddress.isPrimary();
+				emailAddress = serviceBuilderEmailAddress.getAddress();
+				id = serviceBuilderEmailAddress.getEmailAddressId();
+				primary = serviceBuilderEmailAddress.isPrimary();
 			}
 		};
 	}

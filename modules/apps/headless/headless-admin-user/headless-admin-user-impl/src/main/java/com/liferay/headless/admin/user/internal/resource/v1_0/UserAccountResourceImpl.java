@@ -17,7 +17,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.ContactInformation;
-import com.liferay.headless.admin.user.dto.v1_0.Email;
+import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
@@ -25,7 +25,7 @@ import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.dto.v1_0.SiteBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
-import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
@@ -238,9 +238,9 @@ public class UserAccountResourceImpl
 				birthDate = user.getBirthday();
 				contactInformation = new ContactInformation() {
 					{
-						emails = transformToArray(
-							user.getEmailAddresses(), EmailUtil::toEmail,
-							Email.class);
+						emailAddresses = transformToArray(
+							user.getEmailAddresses(), EmailAddressUtil::toEmail,
+							EmailAddress.class);
 						facebook = contact.getFacebookSn();
 						jabber = contact.getJabberSn();
 						postalAddresses = transformToArray(
@@ -261,7 +261,7 @@ public class UserAccountResourceImpl
 				};
 				dateCreated = user.getCreateDate();
 				dateModified = user.getModifiedDate();
-				email = user.getEmailAddress();
+				emailAddress = user.getEmailAddress();
 				familyName = user.getLastName();
 				givenName = user.getFirstName();
 				honorificPrefix = _getListTypeMessage(contact.getPrefixId());

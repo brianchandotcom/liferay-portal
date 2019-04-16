@@ -14,9 +14,9 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
-import com.liferay.headless.admin.user.dto.v1_0.Email;
-import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailUtil;
-import com.liferay.headless.admin.user.resource.v1_0.EmailResource;
+import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
+import com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -33,18 +33,20 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/email.properties",
-	scope = ServiceScope.PROTOTYPE, service = EmailResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/email-address.properties",
+	scope = ServiceScope.PROTOTYPE, service = EmailAddressResource.class
 )
-public class EmailResourceImpl extends BaseEmailResourceImpl {
+public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 
 	@Override
-	public Email getEmail(Long emailId) throws Exception {
-		return EmailUtil.toEmail(_emailAddressService.getEmailAddress(emailId));
+	public EmailAddress getEmailAddress(Long emailId) throws Exception {
+		return EmailAddressUtil.toEmail(
+			_emailAddressService.getEmailAddress(emailId));
 	}
 
 	@Override
-	public Page<Email> getOrganizationEmailsPage(Long organizationId)
+	public Page<EmailAddress> getOrganizationEmailAddressesPage(
+			Long organizationId)
 		throws Exception {
 
 		Organization organization = _organizationService.getOrganization(
@@ -55,11 +57,12 @@ public class EmailResourceImpl extends BaseEmailResourceImpl {
 				_emailAddressService.getEmailAddresses(
 					organization.getModelClassName(),
 					organization.getOrganizationId()),
-				EmailUtil::toEmail));
+				EmailAddressUtil::toEmail));
 	}
 
 	@Override
-	public Page<Email> getUserAccountEmailsPage(Long userAccountId)
+	public Page<EmailAddress> getUserAccountEmailAddressesPage(
+			Long userAccountId)
 		throws Exception {
 
 		User user = _userService.getUserById(userAccountId);
@@ -68,7 +71,7 @@ public class EmailResourceImpl extends BaseEmailResourceImpl {
 			transform(
 				_emailAddressService.getEmailAddresses(
 					Contact.class.getName(), user.getContactId()),
-				EmailUtil::toEmail));
+				EmailAddressUtil::toEmail));
 	}
 
 	@Reference

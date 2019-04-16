@@ -69,14 +69,6 @@ public class PortletPreferencesTestUtil {
 			portlet.getPortletId());
 	}
 
-	public static String getPortletPreferencesXML() {
-		return getPortletPreferencesXML(null, null);
-	}
-
-	public static String getPortletPreferencesXML(String name) {
-		return getPortletPreferencesXML(name, null);
-	}
-
 	public static String getPortletPreferencesXML(
 		String name, String[] values) {
 
@@ -107,10 +99,6 @@ public class PortletPreferencesTestUtil {
 		sb.append("</portlet-preferences>");
 
 		return sb.toString();
-	}
-
-	public static String getPortletPreferencesXML(String[] values) {
-		return getPortletPreferencesXML(null, values);
 	}
 
 }

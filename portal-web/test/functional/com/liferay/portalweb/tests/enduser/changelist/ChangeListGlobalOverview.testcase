@@ -68,7 +68,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "ChangeLists"
+			portlet = "Change Lists"
 		);
 
 		ChangeList.viewChangeOnOverview(

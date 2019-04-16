@@ -825,11 +825,6 @@ components:
                             type: string
                     readOnly: true
                     type: object
-                parentKnowledgeBaseFolderId:
-                    description: The parent KnowledgeBaseFolder identifier of this article, if any.
-                    format: int64
-                    type: integer
-                    writeOnly: true
                 siteId:
                     description: The site identificator where this KnowledgeBaseFolder is scoped.
                     format: int64

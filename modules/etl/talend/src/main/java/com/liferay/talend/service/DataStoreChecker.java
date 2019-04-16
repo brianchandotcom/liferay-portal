@@ -15,9 +15,9 @@
 package com.liferay.talend.service;
 
 import com.liferay.talend.data.store.AuthenticationMethod;
-import com.liferay.talend.data.store.BasicDataStore;
-import com.liferay.talend.data.store.InputDataStore;
-import com.liferay.talend.data.store.OAuthDataStore;
+import com.liferay.talend.data.store.BaseDataStore;
+import com.liferay.talend.data.store.BasicAuthDataStore;
+import com.liferay.talend.data.store.OAuth2DataStore;
 import com.liferay.talend.dataset.InputDataSet;
 import com.liferay.talend.http.client.exception.ConnectionException;
 import com.liferay.talend.http.client.exception.OAuth2Exception;
@@ -33,13 +33,14 @@ import org.talend.sdk.component.api.service.healthcheck.HealthCheckStatus;
 public class DataStoreChecker {
 
 	public HealthCheckStatus checkBasicDataStore(
-		@Option InputDataStore inputDataStore) {
+		@Option BaseDataStore baseDataStore) {
 
-		BasicDataStore basicDataStore = inputDataStore.getBasicDataStore();
+		BasicAuthDataStore basicAuthDataStore =
+			baseDataStore.getBasicDataStore();
 
-		if (!basicDataStore.isAnonymous() &&
-			(isNull(basicDataStore.getUser()) ||
-			 isNull(basicDataStore.getPassword()))) {
+		if (!basicAuthDataStore.isAnonymous() &&
+			(isNull(basicAuthDataStore.getUser()) ||
+			 isNull(basicAuthDataStore.getPassword()))) {
 
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO,
@@ -49,7 +50,7 @@ public class DataStoreChecker {
 		InputDataSet inputDataSet = new InputDataSet();
 
 		inputDataSet.setEndpoint("/c/portal/login");
-		inputDataSet.setInputDataStore(inputDataStore);
+		inputDataSet.setInputDataStore(baseDataStore);
 
 		try {
 			_connectionService.getResponseRawString(inputDataSet);
@@ -65,31 +66,27 @@ public class DataStoreChecker {
 			HealthCheckStatus.Status.OK, "Connection succeeded!");
 	}
 
-	public HealthCheckStatus checkInputDataStore(
-		InputDataStore inputDataStore) {
-
-		if (inputDataStore.getOpenAPISpecURL() == null) {
+	public HealthCheckStatus checkInputDataStore(BaseDataStore baseDataStore) {
+		if (baseDataStore.getOpenAPISpecURL() == null) {
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO,
 				"OpenAPI Specification URL is required");
 		}
 
-		if (inputDataStore.getAuthenticationMethod() ==
+		if (baseDataStore.getAuthenticationMethod() ==
 				AuthenticationMethod.OAUTH2) {
 
-			return checkOAuthDataStore(inputDataStore);
+			return checkOAuthDataStore(baseDataStore);
 		}
 
-		return checkBasicDataStore(inputDataStore);
+		return checkBasicDataStore(baseDataStore);
 	}
 
-	public HealthCheckStatus checkOAuthDataStore(
-		InputDataStore inputDataStore) {
+	public HealthCheckStatus checkOAuthDataStore(BaseDataStore baseDataStore) {
+		OAuth2DataStore oAuth2DataStore = baseDataStore.getoAuthDataStore();
 
-		OAuthDataStore oAuthDataStore = inputDataStore.getoAuthDataStore();
-
-		if (isNull(oAuthDataStore.getConsumerKey()) ||
-			isNull(oAuthDataStore.getConsumerSecret())) {
+		if (isNull(oAuth2DataStore.getConsumerKey()) ||
+			isNull(oAuth2DataStore.getConsumerSecret())) {
 
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO,
@@ -97,7 +94,7 @@ public class DataStoreChecker {
 		}
 
 		try {
-			_connectionService.requestAuthorizationJsonObject(inputDataStore);
+			_connectionService.requestAuthorizationJsonObject(baseDataStore);
 		}
 		catch (OAuth2Exception oae) {
 			return new HealthCheckStatus(

@@ -14,7 +14,7 @@
 
 package com.liferay.talend.http.client;
 
-import com.liferay.talend.data.store.OAuthDataStore;
+import com.liferay.talend.data.store.OAuth2DataStore;
 import com.liferay.talend.http.client.codec.XWWWFormURLEncoder;
 
 import javax.json.JsonObject;
@@ -36,7 +36,7 @@ public interface LiferayHttpClient extends HttpClient {
 	@Request(method = "POST", path = "/o/oauth2/token")
 	public Response<JsonObject> getAccessToken(
 		@Header("Content-Type") String contentType,
-		OAuthDataStore oAuthDataStore);
+		OAuth2DataStore oAuth2DataStore);
 
 	@Request(method = "GET", path = "/{endpointPath}")
 	public Response<JsonObject> getJsonObjectResponse(

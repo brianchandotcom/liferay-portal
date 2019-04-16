@@ -14,9 +14,10 @@
 
 package com.liferay.talend.configuration;
 
+import com.liferay.talend.dataset.OutputDataSet;
+
 import java.io.Serializable;
 
-import com.liferay.talend.dataset.OutputDataSet;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
 import org.talend.sdk.component.api.configuration.ui.layout.GridLayouts;
@@ -38,7 +39,7 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayouts;
 )
 public class LiferayOutputConfiguration implements Serializable {
 
-	public OutputDataSet getRestDataSet() {
+	public OutputDataSet getOutputDataSet() {
 		return _outputDataSet;
 	}
 
@@ -46,8 +47,10 @@ public class LiferayOutputConfiguration implements Serializable {
 		return _timeout;
 	}
 
-	public LiferayOutputConfiguration setRestDataSet(OutputDataSet outputDataSet) {
-		this._outputDataSet = outputDataSet;
+	public LiferayOutputConfiguration setOutputDataSet(
+		OutputDataSet outputDataSet) {
+
+		_outputDataSet = outputDataSet;
 
 		return this;
 	}

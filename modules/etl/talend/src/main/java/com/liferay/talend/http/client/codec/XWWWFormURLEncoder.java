@@ -14,7 +14,7 @@
 
 package com.liferay.talend.http.client.codec;
 
-import com.liferay.talend.data.store.OAuthDataStore;
+import com.liferay.talend.data.store.OAuth2DataStore;
 import com.liferay.talend.http.client.exception.EncoderException;
 
 import org.talend.sdk.component.api.service.http.Encoder;
@@ -26,22 +26,22 @@ public class XWWWFormURLEncoder implements Encoder {
 
 	@Override
 	public byte[] encode(Object object) throws EncoderException {
-		if (object instanceof OAuthDataStore) {
-			return _encode((OAuthDataStore)object);
+		if (object instanceof OAuth2DataStore) {
+			return _encode((OAuth2DataStore)object);
 		}
 
 		throw new EncoderException(
 			"Unable to encode payload of type " + object.getClass());
 	}
 
-	private byte[] _encode(OAuthDataStore oAuthDataStore) {
+	private byte[] _encode(OAuth2DataStore oAuth2DataStore) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("client_id=");
-		sb.append(oAuthDataStore.getConsumerKey());
+		sb.append(oAuth2DataStore.getConsumerKey());
 		sb.append("&");
 		sb.append("client_secret=");
-		sb.append(oAuthDataStore.getConsumerSecret());
+		sb.append(oAuth2DataStore.getConsumerSecret());
 		sb.append("&");
 		sb.append("grant_type=client_credentials");
 		sb.append("&");

@@ -28,34 +28,35 @@ import org.talend.sdk.component.api.configuration.ui.layout.GridLayout;
  * @author Igor Beslic
  * @author Zoltán Takács
  */
-@Checkable("checkInputDataStore")
-@DataStore("InputDataStore")
+@Checkable("checkBaseDataStore")
+@DataStore("BaseDataStore")
 @GridLayout(
 	{
 		@GridLayout.Row("_authenticationMethod"),
-		@GridLayout.Row("_openAPISpecURL"), @GridLayout.Row("_basicDataStore"),
-		@GridLayout.Row("_oAuthDataStore")
+		@GridLayout.Row("_openAPISpecURL"),
+		@GridLayout.Row("_basicAuthDataStore"),
+		@GridLayout.Row("_oAuth2DataStore")
 	}
 )
-public class InputDataStore {
+public class BaseDataStore {
 
 	public AuthenticationMethod getAuthenticationMethod() {
 		return _authenticationMethod;
 	}
 
-	public BasicDataStore getBasicDataStore() {
-		return _basicDataStore;
+	public BasicAuthDataStore getBasicDataStore() {
+		return _basicAuthDataStore;
 	}
 
-	public OAuthDataStore getoAuthDataStore() {
-		return _oAuthDataStore;
+	public OAuth2DataStore getoAuthDataStore() {
+		return _oAuth2DataStore;
 	}
 
 	public URL getOpenAPISpecURL() {
 		return _openAPISpecURL;
 	}
 
-	public InputDataStore setAuthenticationMethod(
+	public BaseDataStore setAuthenticationMethod(
 		AuthenticationMethod authenticationMethod) {
 
 		_authenticationMethod = authenticationMethod;
@@ -63,19 +64,19 @@ public class InputDataStore {
 		return this;
 	}
 
-	public InputDataStore setBasicDataStore(BasicDataStore dataStore) {
-		_basicDataStore = dataStore;
+	public BaseDataStore setBasicDataStore(BasicAuthDataStore dataStore) {
+		_basicAuthDataStore = dataStore;
 
 		return this;
 	}
 
-	public InputDataStore setoAuthDataStore(OAuthDataStore oAuthDataStore) {
-		_oAuthDataStore = oAuthDataStore;
+	public BaseDataStore setoAuthDataStore(OAuth2DataStore oAuth2DataStore) {
+		_oAuth2DataStore = oAuth2DataStore;
 
 		return this;
 	}
 
-	public InputDataStore setOpenAPISpecURL(URL openAPISpecURL) {
+	public BaseDataStore setOpenAPISpecURL(URL openAPISpecURL) {
 		_openAPISpecURL = openAPISpecURL;
 
 		return this;
@@ -88,11 +89,11 @@ public class InputDataStore {
 
 	@ActiveIf(target = "_authenticationMethod", value = "BASIC")
 	@Option
-	private BasicDataStore _basicDataStore;
+	private BasicAuthDataStore _basicAuthDataStore;
 
 	@ActiveIf(target = "_authenticationMethod", value = "OAUTH2")
 	@Option
-	private OAuthDataStore _oAuthDataStore;
+	private OAuth2DataStore _oAuth2DataStore;
 
 	@DefaultValue(
 		"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.yaml"

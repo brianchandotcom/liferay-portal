@@ -44,7 +44,7 @@ public class LiferayInputMapperConfiguration implements Serializable {
 		return _batchSize;
 	}
 
-	public InputDataSet getRestDataSet() {
+	public InputDataSet getInputDataSet() {
 		return _inputDataSet;
 	}
 
@@ -58,7 +58,7 @@ public class LiferayInputMapperConfiguration implements Serializable {
 		return this;
 	}
 
-	public LiferayInputMapperConfiguration setRestDataSet(
+	public LiferayInputMapperConfiguration setInputDataSet(
 		InputDataSet inputDataSet) {
 
 		_inputDataSet = inputDataSet;

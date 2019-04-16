@@ -166,17 +166,6 @@ public class KnowledgeBaseFolderSerDes {
 				knowledgeBaseFolder.getParentKnowledgeBaseFolder()));
 		sb.append(", ");
 
-		sb.append("\"parentKnowledgeBaseFolderId\": ");
-
-		if (knowledgeBaseFolder.getParentKnowledgeBaseFolderId() == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(knowledgeBaseFolder.getParentKnowledgeBaseFolderId());
-		}
-
-		sb.append(", ");
-
 		sb.append("\"siteId\": ");
 
 		if (knowledgeBaseFolder.getSiteId() == null) {
@@ -264,7 +253,7 @@ public class KnowledgeBaseFolderSerDes {
 
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setNumberOfKnowledgeBaseArticles(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -272,7 +261,7 @@ public class KnowledgeBaseFolderSerDes {
 
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setNumberOfKnowledgeBaseFolders(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -282,14 +271,6 @@ public class KnowledgeBaseFolderSerDes {
 					knowledgeBaseFolder.setParentKnowledgeBaseFolder(
 						ParentKnowledgeBaseFolderSerDes.toDTO(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "parentKnowledgeBaseFolderId")) {
-
-				if (jsonParserFieldValue != null) {
-					knowledgeBaseFolder.setParentKnowledgeBaseFolderId(
-						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

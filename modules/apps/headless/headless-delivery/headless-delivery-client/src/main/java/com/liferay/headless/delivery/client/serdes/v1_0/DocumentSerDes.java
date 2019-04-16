@@ -422,13 +422,13 @@ public class DocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "numberOfComments")) {
 				if (jsonParserFieldValue != null) {
 					document.setNumberOfComments(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
 				if (jsonParserFieldValue != null) {
 					document.setSizeInBytes(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

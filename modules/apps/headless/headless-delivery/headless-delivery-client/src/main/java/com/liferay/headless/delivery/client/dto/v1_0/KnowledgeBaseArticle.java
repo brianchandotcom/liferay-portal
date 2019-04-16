@@ -268,16 +268,16 @@ public class KnowledgeBaseArticle {
 
 	protected String[] keywords;
 
-	public Number getNumberOfAttachments() {
+	public Integer getNumberOfAttachments() {
 		return numberOfAttachments;
 	}
 
-	public void setNumberOfAttachments(Number numberOfAttachments) {
+	public void setNumberOfAttachments(Integer numberOfAttachments) {
 		this.numberOfAttachments = numberOfAttachments;
 	}
 
 	public void setNumberOfAttachments(
-		UnsafeSupplier<Number, Exception> numberOfAttachmentsUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> numberOfAttachmentsUnsafeSupplier) {
 
 		try {
 			numberOfAttachments = numberOfAttachmentsUnsafeSupplier.get();
@@ -287,20 +287,20 @@ public class KnowledgeBaseArticle {
 		}
 	}
 
-	protected Number numberOfAttachments;
+	protected Integer numberOfAttachments;
 
-	public Number getNumberOfKnowledgeBaseArticles() {
+	public Integer getNumberOfKnowledgeBaseArticles() {
 		return numberOfKnowledgeBaseArticles;
 	}
 
 	public void setNumberOfKnowledgeBaseArticles(
-		Number numberOfKnowledgeBaseArticles) {
+		Integer numberOfKnowledgeBaseArticles) {
 
 		this.numberOfKnowledgeBaseArticles = numberOfKnowledgeBaseArticles;
 	}
 
 	public void setNumberOfKnowledgeBaseArticles(
-		UnsafeSupplier<Number, Exception>
+		UnsafeSupplier<Integer, Exception>
 			numberOfKnowledgeBaseArticlesUnsafeSupplier) {
 
 		try {
@@ -312,7 +312,7 @@ public class KnowledgeBaseArticle {
 		}
 	}
 
-	protected Number numberOfKnowledgeBaseArticles;
+	protected Integer numberOfKnowledgeBaseArticles;
 
 	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
 		return parentKnowledgeBaseFolder;

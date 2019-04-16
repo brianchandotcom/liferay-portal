@@ -462,17 +462,17 @@ public class StructuredContent {
 	@Schema(
 		description = "The number of child comments this StructuredContent has received."
 	)
-	public Number getNumberOfComments() {
+	public Integer getNumberOfComments() {
 		return numberOfComments;
 	}
 
-	public void setNumberOfComments(Number numberOfComments) {
+	public void setNumberOfComments(Integer numberOfComments) {
 		this.numberOfComments = numberOfComments;
 	}
 
 	@JsonIgnore
 	public void setNumberOfComments(
-		UnsafeSupplier<Number, Exception> numberOfCommentsUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> numberOfCommentsUnsafeSupplier) {
 
 		try {
 			numberOfComments = numberOfCommentsUnsafeSupplier.get();
@@ -487,7 +487,7 @@ public class StructuredContent {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number numberOfComments;
+	protected Integer numberOfComments;
 
 	@Schema(
 		description = "A list of rendered StructuredContents, the result of using a template to process the content, returning html."

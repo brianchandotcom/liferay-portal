@@ -251,12 +251,12 @@ public class StructuredContentFolder {
 	@Schema(
 		description = "The number of child StructuredContentFolders that belong to this resource."
 	)
-	public Number getNumberOfStructuredContentFolders() {
+	public Integer getNumberOfStructuredContentFolders() {
 		return numberOfStructuredContentFolders;
 	}
 
 	public void setNumberOfStructuredContentFolders(
-		Number numberOfStructuredContentFolders) {
+		Integer numberOfStructuredContentFolders) {
 
 		this.numberOfStructuredContentFolders =
 			numberOfStructuredContentFolders;
@@ -264,7 +264,7 @@ public class StructuredContentFolder {
 
 	@JsonIgnore
 	public void setNumberOfStructuredContentFolders(
-		UnsafeSupplier<Number, Exception>
+		UnsafeSupplier<Integer, Exception>
 			numberOfStructuredContentFoldersUnsafeSupplier) {
 
 		try {
@@ -281,24 +281,24 @@ public class StructuredContentFolder {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number numberOfStructuredContentFolders;
+	protected Integer numberOfStructuredContentFolders;
 
 	@Schema(
 		description = "The number of child StructuredContents that belong to this resource."
 	)
-	public Number getNumberOfStructuredContents() {
+	public Integer getNumberOfStructuredContents() {
 		return numberOfStructuredContents;
 	}
 
 	public void setNumberOfStructuredContents(
-		Number numberOfStructuredContents) {
+		Integer numberOfStructuredContents) {
 
 		this.numberOfStructuredContents = numberOfStructuredContents;
 	}
 
 	@JsonIgnore
 	public void setNumberOfStructuredContents(
-		UnsafeSupplier<Number, Exception>
+		UnsafeSupplier<Integer, Exception>
 			numberOfStructuredContentsUnsafeSupplier) {
 
 		try {
@@ -315,7 +315,7 @@ public class StructuredContentFolder {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number numberOfStructuredContents;
+	protected Integer numberOfStructuredContents;
 
 	@Schema(
 		description = "The site identificator where this StructuredContentFolder is scoped."

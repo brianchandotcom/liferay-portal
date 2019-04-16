@@ -1097,18 +1097,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"parentKnowledgeBaseFolderId", additionalAssertFieldName)) {
-
-				if (knowledgeBaseFolder.getParentKnowledgeBaseFolderId() ==
-						null) {
-
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (knowledgeBaseFolder.getViewableBy() == null) {
 					valid = false;
@@ -1266,20 +1254,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						knowledgeBaseFolder1.getParentKnowledgeBaseFolder(),
 						knowledgeBaseFolder2.getParentKnowledgeBaseFolder())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"parentKnowledgeBaseFolderId", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						knowledgeBaseFolder1.getParentKnowledgeBaseFolderId(),
-						knowledgeBaseFolder2.
-							getParentKnowledgeBaseFolderId())) {
 
 					return false;
 				}
@@ -1461,11 +1435,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("parentKnowledgeBaseFolderId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("siteId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1488,7 +1457,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
-				parentKnowledgeBaseFolderId = RandomTestUtil.randomLong();
 				siteId = testGroup.getGroupId();
 			}
 		};

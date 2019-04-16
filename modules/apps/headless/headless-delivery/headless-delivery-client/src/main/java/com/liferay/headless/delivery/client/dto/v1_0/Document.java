@@ -310,16 +310,16 @@ public class Document {
 
 	protected String[] keywords;
 
-	public Number getNumberOfComments() {
+	public Integer getNumberOfComments() {
 		return numberOfComments;
 	}
 
-	public void setNumberOfComments(Number numberOfComments) {
+	public void setNumberOfComments(Integer numberOfComments) {
 		this.numberOfComments = numberOfComments;
 	}
 
 	public void setNumberOfComments(
-		UnsafeSupplier<Number, Exception> numberOfCommentsUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> numberOfCommentsUnsafeSupplier) {
 
 		try {
 			numberOfComments = numberOfCommentsUnsafeSupplier.get();
@@ -329,7 +329,7 @@ public class Document {
 		}
 	}
 
-	protected Number numberOfComments;
+	protected Integer numberOfComments;
 
 	public Number getSizeInBytes() {
 		return sizeInBytes;

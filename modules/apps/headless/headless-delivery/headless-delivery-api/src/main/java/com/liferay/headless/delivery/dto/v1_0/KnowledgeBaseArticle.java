@@ -370,17 +370,17 @@ public class KnowledgeBaseArticle {
 	@Schema(
 		description = "The number of KnowledgeBaseAttachments that are stored in this article."
 	)
-	public Number getNumberOfAttachments() {
+	public Integer getNumberOfAttachments() {
 		return numberOfAttachments;
 	}
 
-	public void setNumberOfAttachments(Number numberOfAttachments) {
+	public void setNumberOfAttachments(Integer numberOfAttachments) {
 		this.numberOfAttachments = numberOfAttachments;
 	}
 
 	@JsonIgnore
 	public void setNumberOfAttachments(
-		UnsafeSupplier<Number, Exception> numberOfAttachmentsUnsafeSupplier) {
+		UnsafeSupplier<Integer, Exception> numberOfAttachmentsUnsafeSupplier) {
 
 		try {
 			numberOfAttachments = numberOfAttachmentsUnsafeSupplier.get();
@@ -395,24 +395,24 @@ public class KnowledgeBaseArticle {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number numberOfAttachments;
+	protected Integer numberOfAttachments;
 
 	@Schema(
 		description = "The number of child KBArticle that are asociated with this resouce."
 	)
-	public Number getNumberOfKnowledgeBaseArticles() {
+	public Integer getNumberOfKnowledgeBaseArticles() {
 		return numberOfKnowledgeBaseArticles;
 	}
 
 	public void setNumberOfKnowledgeBaseArticles(
-		Number numberOfKnowledgeBaseArticles) {
+		Integer numberOfKnowledgeBaseArticles) {
 
 		this.numberOfKnowledgeBaseArticles = numberOfKnowledgeBaseArticles;
 	}
 
 	@JsonIgnore
 	public void setNumberOfKnowledgeBaseArticles(
-		UnsafeSupplier<Number, Exception>
+		UnsafeSupplier<Integer, Exception>
 			numberOfKnowledgeBaseArticlesUnsafeSupplier) {
 
 		try {
@@ -429,7 +429,7 @@ public class KnowledgeBaseArticle {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Number numberOfKnowledgeBaseArticles;
+	protected Integer numberOfKnowledgeBaseArticles;
 
 	@Schema(
 		description = "The parent KnowledgeBaseFolder of this article, if any."

@@ -126,11 +126,6 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders());
 		}
 
-		if (knowledgeBaseFolder.getParentKnowledgeBaseFolderId() != null) {
-			existingKnowledgeBaseFolder.setParentKnowledgeBaseFolderId(
-				knowledgeBaseFolder.getParentKnowledgeBaseFolderId());
-		}
-
 		if (knowledgeBaseFolder.getSiteId() != null) {
 			existingKnowledgeBaseFolder.setSiteId(
 				knowledgeBaseFolder.getSiteId());

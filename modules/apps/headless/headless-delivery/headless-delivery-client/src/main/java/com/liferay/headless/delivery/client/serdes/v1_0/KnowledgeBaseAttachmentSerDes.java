@@ -183,7 +183,7 @@ public class KnowledgeBaseAttachmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseAttachment.setSizeInBytes(
-						Long.valueOf((String)jsonParserFieldValue));
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

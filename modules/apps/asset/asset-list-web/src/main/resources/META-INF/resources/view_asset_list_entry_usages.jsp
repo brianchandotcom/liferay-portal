@@ -136,7 +136,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 					>
 						<liferay-ui:search-container-column-text
 							name="name"
-							value="<%= assetListEntryUsagesDisplayContext.getAssetListEntryUsageName(assetListEntryUsage) %>"
+							value="<%= HtmlUtil.escape(assetListEntryUsagesDisplayContext.getAssetListEntryUsageName(assetListEntryUsage)) %>"
 						/>
 
 						<liferay-ui:search-container-column-text

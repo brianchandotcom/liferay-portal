@@ -68,7 +68,7 @@
 							<liferay-ui:icon
 								cssClass="asset-selector"
 								data="<%= entry.getValue() %>"
-								id="<%= themeDisplay.getScopeGroupId() + FriendlyURLNormalizerUtil.normalize(entry.getKey()) %>"
+								id="<%= themeDisplay.getScopeGroupId() + HtmlUtil.getAUICompatibleId(entry.getKey()) %>"
 								message="<%= HtmlUtil.escape(entry.getKey()) %>"
 								url="javascript:;"
 							/>
@@ -192,7 +192,7 @@
 									}
 								}
 							},
-							title: delegateTarget.dataset.title,
+							title: A.Escape.html(delegateTarget.dataset.title),
 							url: delegateTarget.dataset.href
 						}
 					);

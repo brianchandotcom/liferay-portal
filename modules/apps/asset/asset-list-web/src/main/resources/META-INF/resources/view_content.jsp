@@ -35,7 +35,7 @@
 
 			<liferay-ui:search-container-column-text
 				name="title"
-				value="<%= assetRenderer.getTitle(locale) %>"
+				value="<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

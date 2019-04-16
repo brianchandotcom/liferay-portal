@@ -86,7 +86,7 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 			continue;
 		}
 
-		String onClick = "addRow('" + group.getGroupId() + "', '" + group.getDescriptiveName(themeDisplay.getLocale()) + "', '" + group.getScopeLabel(themeDisplay) + "');";
+		String onClick = "addRow('" + group.getGroupId() + "', '" + HtmlUtil.escapeJS(HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale()))) + "', '" + group.getScopeLabel(themeDisplay) + "');";
 	%>
 
 		<liferay-ui:icon

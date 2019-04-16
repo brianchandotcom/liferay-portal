@@ -1,0 +1,15 @@
+com/liferay/asset/kernel/model/AssetRendererFactory.getClassName()Ljava/lang/String;:SAFE
+com/liferay/asset/kernel/model/AssetRendererFactory.getSubtypeTitle(Ljava/util/Locale;)Ljava/lang/String;:SAFE
+com/liferay/asset/kernel/model/AssetRendererFactory.getTypeName(Ljava/util/Locale;)Ljava/lang/String;:SAFE
+com/liferay/asset/kernel/model/AssetRenderer.getTitle(Ljava/util/Locale;)Ljava/lang/String;:TAINTED
+com/liferay/asset/kernel/model/ClassTypeField.getName()Ljava/lang/String;:SAFE
+com/liferay/asset/list/web/internal/display/context/AssetListEntryUsagesDisplayContext.getAssetListEntryUsageName(Lcom/liferay/asset/list/model/AssetListEntryUsage;)Ljava/lang/String;:TAINTED
+com/liferay/asset/list/web/internal/display/context/EditAssetListDisplayContext.encodeName(JLjava/lang/String;Ljava/util/Locale;)Ljava/lang/String;:1
+com/liferay/asset/list/web/internal/display/context/EditAssetListDisplayContext.getManualAddIconDataMap()Ljava/util/Map;:SAFE
+com/liferay/asset/list/web/internal/display/context/EditAssetListDisplayContext.getSelectSegmentsEntryURL()Ljava/lang/String;:SAFE
+com/liferay/asset/list/web/internal/display/context/SelectAssetListDisplayContext.getEventName()Ljava/lang/String;:TAINTED
+com/liferay/portal/kernel/model/Group.getScopeDescriptiveName(Lcom/liferay/portal/kernel/theme/ThemeDisplay;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/model/Group.getScopeLabel(Lcom/liferay/portal/kernel/theme/ThemeDisplay;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/security/permission/ResourceActionsUtil.getModelResource(Ljava/util/Locale;Ljava/lang/String;)Ljava/lang/String;:0
+com/liferay/portal/kernel/util/HtmlUtil.getAUICompatibleId(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/workflow/WorkflowConstants.getStatusLabel(I)Ljava/lang/String;:SAFE

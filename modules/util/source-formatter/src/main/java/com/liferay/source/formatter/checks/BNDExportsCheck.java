@@ -151,6 +151,12 @@ public class BNDExportsCheck extends BaseFileCheck {
 
 					@Override
 					public boolean accept(File pathname) {
+						String fileName = pathname.getName();
+
+						if (fileName.startsWith(".lfrbuild-")) {
+							return false;
+						}
+
 						return pathname.isFile();
 					}
 

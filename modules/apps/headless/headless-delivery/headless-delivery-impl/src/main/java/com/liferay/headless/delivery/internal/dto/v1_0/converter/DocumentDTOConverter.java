@@ -154,13 +154,17 @@ public class DocumentDTOConverter implements DTOConverter {
 		return new AdaptedImage() {
 			{
 				contentUrl = String.valueOf(adaptiveMedia.getURI());
-				height = _getValue(
-					adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT);
+				height = Integer.valueOf(
+					_getValue(
+						adaptiveMedia,
+						AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT));
 				resolutionName = _getValue(
 					adaptiveMedia,
 					AMAttribute.getConfigurationUuidAMAttribute());
-				sizeInBytes = _getValue(
-					adaptiveMedia, AMAttribute.getContentLengthAMAttribute());
+				sizeInBytes = Long.valueOf(
+					_getValue(
+						adaptiveMedia,
+						AMAttribute.getContentLengthAMAttribute()));
 				width = _getValue(
 					adaptiveMedia, AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
 			}

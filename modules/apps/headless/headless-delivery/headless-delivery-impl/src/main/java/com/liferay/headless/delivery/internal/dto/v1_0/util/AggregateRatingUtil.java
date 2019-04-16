@@ -29,10 +29,10 @@ public class AggregateRatingUtil {
 
 		return new AggregateRating() {
 			{
-				bestRating = 1;
+				bestRating = 1D;
 				ratingCount = ratingsStats.getTotalEntries();
 				ratingValue = ratingsStats.getAverageScore();
-				worstRating = 0;
+				worstRating = 0D;
 			}
 		};
 	}

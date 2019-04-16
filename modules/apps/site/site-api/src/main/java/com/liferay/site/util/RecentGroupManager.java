@@ -148,9 +148,7 @@ public class RecentGroupManager {
 				continue;
 			}
 
-			String friendlyURL = group.getFriendlyURL();
-
-			if (!friendlyURL.equals("/global")) {
+			if (!group.isCompany()) {
 				Layout layout = _layoutLocalService.fetchFirstLayout(
 					group.getGroupId(), false,
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);

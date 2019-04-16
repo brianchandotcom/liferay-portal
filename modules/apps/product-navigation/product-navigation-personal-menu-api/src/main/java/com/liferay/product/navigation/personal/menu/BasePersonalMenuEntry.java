@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfigurationTracker;
 import com.liferay.product.navigation.personal.menu.util.PersonalApplicationURLUtil;
 
 import java.util.Locale;
@@ -34,8 +33,6 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides a skeletal implementation of the {@link PersonalMenuEntry} to
@@ -103,8 +100,5 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(locale, getClass());
 	}
-
-	@Reference
-	protected PersonalMenuConfigurationTracker personalMenuConfigurationTracker;
 
 }

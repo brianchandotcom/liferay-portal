@@ -94,7 +94,9 @@ definition {
 
 		PortletEntry.inputName(name = "German Staging Test Page");
 
-		Click(locator1 = "Button#SAVE");
+		Button.click(button = "Save");
+
+		Alert.viewSuccessMessage();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

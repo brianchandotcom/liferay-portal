@@ -18,7 +18,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.oauth2.provider.shortcut.internal.constants.OAuth2ProviderShortcutConstants;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -239,6 +241,11 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 	private SAPEntryLocalService _sapEntryLocalService;
 
 	private List<String> _scopeAliasesList;
+
+	@Reference(
+		target = "(osgi.jaxrs.name=" + OAuth2ProviderShortcutConstants.APPLICATION_NAME + ")"
+	)
+	private ScopeFinder _scopeFinder;
 
 	@Reference
 	private UserLocalService _userLocalService;

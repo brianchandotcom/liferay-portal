@@ -61,7 +61,7 @@ function removeExperience(segmentsExperienceId, fragmentEntryLinkIds = []) {
  * @param {{}} layoutData
  * @param {string[]} fragmentEntryLinkIds
  * @param {string} segmentsExperienceId
- * @return {Promise<Response>}
+ * @return {Promise<Response[]>}
  */
 function removeFragmentEntryLinks(
 	layoutData,

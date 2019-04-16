@@ -1573,15 +1573,9 @@ definition {
 			vocabularyName = "Fruit Vocabulary"
 		);
 
-		var organicCategoryId = JSONCategory.getCategoryId(
-			categoryName = "organic",
-			groupName = "Guest",
-			vocabularyName = "Fruit Vocabulary"
-		);
-
 		var liferaySiteId = JSONGroup._getSiteIdByGroupName(groupName = "Guest");
-		var webContentFolderName1 = "WC Folder Name 1";
 		var portalURL = PropsUtil.get("portal.url");
+		var webContentFolderName1 = "WC Folder Name 1";
 
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
@@ -1591,9 +1585,20 @@ definition {
 				-d name=${webContentFolderName1} \
 				-d description=''
 		''';
-		var webContentFolderId1 = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${webContentFolderName1}')]['folderId']");
+
+		var webContentFolderId1 = JSONCurlUtil.post(
+			"${curl}",
+			"$.[?(@['name'] == '${webContentFolderName1}')]['folderId']"
+		);
+
 		var webContentFolderId1 = StringUtil.replace("${webContentFolderId1}", "[&quot;", "");
 		var webContentFolderId1 = StringUtil.replace("${webContentFolderId1}", "&quot;]", "");
+
+		var organicCategoryId = JSONCategory.getCategoryId(
+			categoryName = "organic",
+			groupName = "Guest",
+			vocabularyName = "Fruit Vocabulary"
+		);
 
 		var webContentserviceContext1 = '''{"assetTagNames": ["ripe"], "assetCategoryIds": ["${organicCategoryId}"]}''';
 
@@ -1606,7 +1611,6 @@ definition {
 		);
 
 		var webContentFolderName2 = "WC Folder Name 2";
-		var portalURL = PropsUtil.get("portal.url");
 
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
@@ -1616,7 +1620,12 @@ definition {
 				-d name=${webContentFolderName2} \
 				-d description=''
 		''';
-		var webContentFolderId2 = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${webContentFolderName2}')]['folderId']");
+
+		var webContentFolderId2 = JSONCurlUtil.post(
+			"${curl}",
+			"$.[?(@['name'] == '${webContentFolderName2}')]['folderId']"
+		);
+
 		var webContentFolderId2 = StringUtil.replace("${webContentFolderId2}", "[&quot;", "");
 		var webContentFolderId2 = StringUtil.replace("${webContentFolderId2}", "&quot;]", "");
 

@@ -68,17 +68,17 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 				HttpServletRequest originalServletRequest =
 					PortalUtil.getOriginalServletRequest(request);
 
-				String csrfOrigin = originalServletRequest.getRequestURI();
+				String requestURI = originalServletRequest.getRequestURI();
 
 				try {
 					AuthTokenUtil.checkCSRFToken(
-						originalServletRequest, csrfOrigin);
+						originalServletRequest, requestURI);
 				}
 				catch (PrincipalException pe) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							StringBundler.concat(
-								"Unable to verify CSRF token for ", csrfOrigin,
+								"Unable to verify CSRF token for ", requestURI,
 								": ", pe.getMessage()));
 					}
 

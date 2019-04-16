@@ -29,7 +29,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,27 +45,19 @@ public class TaxonomyCategoryResourceImpl
 	extends BaseTaxonomyCategoryResourceImpl {
 
 	@Override
-	public Response patchTaxonomyCategoryBatch(
+	public void patchTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception {
 
 		_update(true, taxonomyCategoryBulkSelection);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
-	public Response putTaxonomyCategoryBatch(
+	public void putTaxonomyCategoryBatch(
 			TaxonomyCategoryBulkSelection documentSelection)
 		throws Exception {
 
 		_update(false, documentSelection);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	private void _update(

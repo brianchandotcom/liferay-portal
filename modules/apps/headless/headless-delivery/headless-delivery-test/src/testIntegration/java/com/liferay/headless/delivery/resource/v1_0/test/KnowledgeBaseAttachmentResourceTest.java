@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseAttachment;
+import com.liferay.headless.delivery.client.serdes.v1_0.KnowledgeBaseAttachmentSerDes;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
@@ -107,9 +108,8 @@ public class KnowledgeBaseAttachmentResourceTest
 				new ByteArrayInputStream(randomString.getBytes()), 0));
 
 		return MultipartBody.of(
-			binaryFileMap, __ -> inputObjectMapper,
-			inputObjectMapper.convertValue(
-				knowledgeBaseAttachment, HashMap.class));
+			binaryFileMap, __ -> null,
+			KnowledgeBaseAttachmentSerDes.toMap(knowledgeBaseAttachment));
 	}
 
 	private KBArticle _kbArticle;

@@ -43,7 +43,6 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,14 +58,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Override
-	public Response patchKeywordBatch(KeywordBulkSelection keywordBulkSelection)
+	public void patchKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
 		_update(true, keywordBulkSelection);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
@@ -83,14 +78,10 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	@Override
-	public Response putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
+	public void putKeywordBatch(KeywordBulkSelection keywordBulkSelection)
 		throws Exception {
 
 		_update(false, keywordBulkSelection);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	private Set<String> _getAssetTagNames(

@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.rest.builder;
 
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -62,23 +62,26 @@ public class BuildRESTTask extends JavaExec {
 		_restConfigDir = restConfigDir;
 	}
 
+	private static void _addArg(List<String> args, String name, File file) {
+		if (file != null) {
+			_addArg(args, name, file.getAbsolutePath());
+		}
+	}
+
+	private static void _addArg(List<String> args, String name, String value) {
+		if (Validator.isNotNull(value)) {
+			args.add(name);
+			args.add(value);
+		}
+	}
+
 	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
-		args.add("copyright.file=" + _relativize(getCopyrightFile()));
-		args.add("rest.config.dir=" + _relativize(getRESTConfigDir()));
+		_addArg(args, "--copyright-file", getCopyrightFile());
+		_addArg(args, "--rest-config-dir", getRESTConfigDir());
 
 		return args;
-	}
-
-	private String _relativize(File file) {
-		if (file == null) {
-			return null;
-		}
-
-		String relativePath = FileUtil.relativize(file, getWorkingDir());
-
-		return relativePath.replace('\\', '/');
 	}
 
 	private Object _copyrightFile;

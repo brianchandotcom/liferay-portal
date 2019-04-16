@@ -127,7 +127,9 @@ public class GenericError {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(fieldName);
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -138,7 +140,9 @@ public class GenericError {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(message);
+			sb.append("\"");
 		}
 
 		sb.append("}");

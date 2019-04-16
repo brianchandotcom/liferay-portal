@@ -1,0 +1,120 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
+
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.GenericError;
+import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
+
+import java.util.Objects;
+
+import javax.annotation.Generated;
+
+/**
+ * @author Rafael Praxedes
+ * @generated
+ */
+@Generated("")
+public class GenericErrorSerDes {
+
+	public static GenericError toDTO(String json) {
+		GenericErrorJSONParser genericErrorJSONParser =
+			new GenericErrorJSONParser();
+
+		return genericErrorJSONParser.parseToDTO(json);
+	}
+
+	public static GenericError[] toDTOs(String json) {
+		GenericErrorJSONParser genericErrorJSONParser =
+			new GenericErrorJSONParser();
+
+		return genericErrorJSONParser.parseToDTOs(json);
+	}
+
+	public static String toJSON(GenericError genericError) {
+		if (genericError == null) {
+			return "null";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"fieldName\": ");
+
+		if (genericError.getFieldName() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+
+			sb.append(genericError.getFieldName());
+
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"message\": ");
+
+		if (genericError.getMessage() == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+
+			sb.append(genericError.getMessage());
+
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static class GenericErrorJSONParser
+		extends BaseJSONParser<GenericError> {
+
+		protected GenericError createDTO() {
+			return new GenericError();
+		}
+
+		protected GenericError[] createDTOArray(int size) {
+			return new GenericError[size];
+		}
+
+		protected void setField(
+			GenericError genericError, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "fieldName")) {
+				if (jsonParserFieldValue != null) {
+					genericError.setFieldName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "message")) {
+				if (jsonParserFieldValue != null) {
+					genericError.setMessage((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
+}

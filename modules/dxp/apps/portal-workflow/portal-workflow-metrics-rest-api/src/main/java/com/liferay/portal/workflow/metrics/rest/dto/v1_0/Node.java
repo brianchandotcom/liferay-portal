@@ -224,7 +224,9 @@ public class Node {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(name);
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -246,7 +248,9 @@ public class Node {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(type);
+			sb.append("\"");
 		}
 
 		sb.append("}");

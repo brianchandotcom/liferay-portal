@@ -285,7 +285,9 @@ public class SLA {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(description);
+			sb.append("\"");
 		}
 
 		sb.append(", ");
@@ -318,7 +320,9 @@ public class SLA {
 			sb.append("null");
 		}
 		else {
+			sb.append("\"");
 			sb.append(name);
+			sb.append("\"");
 		}
 
 		sb.append(", ");

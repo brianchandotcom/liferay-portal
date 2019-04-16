@@ -13,14 +13,14 @@
 	{@param? _closeDialog: any}
 	{@param? _dataSource: string|[]|list<?>}
 	{@param? _handleDataChange: any}
-	{@param? _handleEmailAdded: any}
-	{@param? _handleEmailInputChange: any}
-	{@param? _handleEmailRemoved: any}
+	{@param? _handleEmailAddressAdded: any}
+	{@param? _handleEmailAddressInputChange: any}
+	{@param? _handleEmailAddressRemoved: any}
 	{@param? _handleInputChange: any}
 	{@param? _handleSubmit: any}
 	{@param? _inputValue: string}
 	{@param? _userEmailAddresses: list<?>}
-	{@param? emailErrorMessage: string}
+	{@param? emailAddressErrorMessage: string}
 	{@param? submitting: bool}
 
 	<div class="sharing-modal-content" id="{$id}">
@@ -30,16 +30,16 @@
 			method="post"
 		>
 			<div class="sharing-modal-form-content">
-				<div class="form-group {$emailErrorMessage ? ' has-error' : '' }">
+				<div class="form-group {$emailAddressErrorMessage ? ' has-error' : '' }">
 					{call ClayMultiSelect.render}
 						{param contentRenderer: 'sharingUser' /}
 						{param dataSource: $_dataSource ? $_dataSource : [] /}
 						{param elementClasses: 'clay-multi-select' /}
 						{param events: [
 							'dataChange': $_handleDataChange,
-							'inputChange': $_handleEmailInputChange,
-							'labelItemAdded': $_handleEmailAdded,
-							'labelItemRemoved': $_handleEmailRemoved
+							'inputChange': $_handleEmailAddressInputChange,
+							'labelItemAdded': $_handleEmailAddressAdded,
+							'labelItemRemoved': $_handleEmailAddressRemoved
 						] /}
 						{param helpText kind="text"}{msg desc=""}you-can-use-a-comma-to-enter-multiple-collaborators{/msg}{/param}
 						{param inputValue: $_inputValue /}
@@ -50,8 +50,8 @@
 						{param showSelectButton: false /}
 						{param spritemap: $spritemap /}
 					{/call}
-					{if $emailErrorMessage}
-						<div class="form-feedback-item">{$emailErrorMessage}</div>
+					{if $emailAddressErrorMessage}
+						<div class="form-feedback-item">{$emailAddressErrorMessage}</div>
 					{/if}
 				</div>
 

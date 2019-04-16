@@ -45,11 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.SHARING,
-		"mvc.command.name=/sharing/verify_email"
+		"mvc.command.name=/sharing/verify_email_address"
 	},
 	service = MVCResourceCommand.class
 )
-public class SharingVerifyEmailMVCResourceCommand
+public class SharingVerifyEmailAddressMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -68,10 +68,10 @@ public class SharingVerifyEmailMVCResourceCommand
 				themeDisplay.getUserId());
 		}
 
-		String email = ParamUtil.getString(request, "email");
+		String emailAddress = ParamUtil.getString(request, "emailAddress");
 
 		User user = _userLocalService.fetchUserByEmailAddress(
-			themeDisplay.getCompanyId(), email);
+			themeDisplay.getCompanyId(), emailAddress);
 
 		HttpServletResponse response = _portal.getHttpServletResponse(
 			resourceResponse);
@@ -80,7 +80,7 @@ public class SharingVerifyEmailMVCResourceCommand
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("userEmail", email);
+		jsonObject.put("userEmailAddress", emailAddress);
 		jsonObject.put("userExists", user != null);
 
 		JSONPortletResponseUtil.writeJSON(

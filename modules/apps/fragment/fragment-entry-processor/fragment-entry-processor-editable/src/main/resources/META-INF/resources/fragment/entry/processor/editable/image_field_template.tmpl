@@ -1,3 +1,7 @@
 [#if field_name??]
-	${field_name}
+	[#if field_name?is_hash]
+		${field_name.url}
+	[#elseif field_name?is_string]
+		${field_name}
+	[/#if]
 [/#if]

@@ -17,6 +17,7 @@ package com.liferay.fragment.entry.processor.editable.parser.impl;
 import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Html;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.jsoup.nodes.Element;
@@ -44,6 +46,20 @@ public class ImageEditableElementParser implements EditableElementParser {
 	@Override
 	public String getFieldTemplate() {
 		return _TMPL_IMAGE_FIELD_TEMPLATE;
+	}
+
+	@Override
+	public JSONObject getFieldTemplateConfigJSONObject(
+		String fieldName, Locale locale) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put(
+			"alt",
+			StringUtil.replace(
+				_TMPL_IMAGE_FIELD_ALT_TEMPLATE, "field_name", fieldName));
+
+		return jsonObject;
 	}
 
 	@Override
@@ -72,6 +88,13 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 		if (configJSONObject == null) {
 			return;
+		}
+
+		String alt = configJSONObject.getString("alt");
+
+		if (Validator.isNotNull(alt)) {
+			replaceableElement.attr(
+				"alt", StringUtil.trim(_html.unescape(alt)));
 		}
 
 		String imageLink = configJSONObject.getString("imageLink");
@@ -110,6 +133,12 @@ public class ImageEditableElementParser implements EditableElementParser {
 					new Object[] {"<em>", "</em>"}, false));
 		}
 	}
+
+	private static final String _TMPL_IMAGE_FIELD_ALT_TEMPLATE =
+		StringUtil.read(
+			EditableFragmentEntryProcessor.class,
+			"/META-INF/resources/fragment/entry/processor/editable" +
+				"/image_field_alt_template.tmpl");
 
 	private static final String _TMPL_IMAGE_FIELD_TEMPLATE = StringUtil.read(
 		EditableFragmentEntryProcessor.class,

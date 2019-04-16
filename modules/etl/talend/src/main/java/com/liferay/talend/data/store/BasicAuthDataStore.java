@@ -30,54 +30,54 @@ import org.talend.sdk.component.api.configuration.ui.widget.Credential;
 @GridLayout(
 	names = GridLayout.FormType.MAIN,
 	value = {
-		@GridLayout.Row({"_user", "_password"}), @GridLayout.Row("_anonymous")
+		@GridLayout.Row({"user", "password"}), @GridLayout.Row("anonymous")
 	}
 )
 public class BasicAuthDataStore implements Serializable {
 
 	public String getPassword() {
-		return _password;
+		return password;
 	}
 
 	public String getUser() {
-		return _user;
+		return user;
 	}
 
 	public boolean isAnonymous() {
-		return _anonymous;
+		return anonymous;
 	}
 
 	public BasicAuthDataStore setAnonymous(boolean anonymous) {
-		_anonymous = anonymous;
+		this.anonymous = anonymous;
 
 		return this;
 	}
 
 	public BasicAuthDataStore setPassword(String password) {
-		_password = password;
+		this.password = password;
 
 		return this;
 	}
 
 	public BasicAuthDataStore setUser(String user) {
-		_user = user;
+		this.user = user;
 
 		return this;
 	}
 
 	@DefaultValue("false")
 	@Option
-	private boolean _anonymous;
+	protected boolean anonymous;
 
-	@ActiveIf(target = "_anonymous", value = "false")
+	@ActiveIf(target = "anonymous", value = "false")
 	@Credential
 	@DefaultValue("test")
 	@Option
-	private String _password;
+	protected String password;
 
-	@ActiveIf(target = "_anonymous", value = "false")
+	@ActiveIf(target = "anonymous", value = "false")
 	@DefaultValue("test@liferay.com")
 	@Option
-	private String _user;
+	protected String user;
 
 }

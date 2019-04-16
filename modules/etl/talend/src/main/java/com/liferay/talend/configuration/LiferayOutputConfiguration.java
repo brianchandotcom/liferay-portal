@@ -67,7 +67,7 @@ public class LiferayOutputConfiguration implements Serializable {
 
 	@DefaultValue("INSERT")
 	@Option
-	OperationAction _operationAction;
+	private OperationAction _operationAction;
 
 	@Option
 	private OutputDataSet _outputDataSet;

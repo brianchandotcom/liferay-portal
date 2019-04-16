@@ -19,6 +19,7 @@ import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.service.base.DLContentLocalServiceBaseImpl;
 import com.liferay.document.library.content.service.util.comparator.DLContentVersionComparator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -31,10 +32,16 @@ import java.io.InputStream;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@Component(
+	property = "model.class.name=com.liferay.document.library.content.model.DLContent",
+	service = AopService.class
+)
 public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 	@Override

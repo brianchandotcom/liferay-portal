@@ -26,7 +26,10 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated since 7.2, unused
  */
+
+@Deprecated
 public class GetUrlTag extends TagSupport {
 
 	@Override

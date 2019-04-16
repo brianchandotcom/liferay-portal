@@ -16,7 +16,10 @@ package com.liferay.taglib.ui;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated since 7.2, unused
  */
+
+@Deprecated
 public class OrganizationSearchFormTag<R> extends SearchFormTag<R> {
 
 	@Override

@@ -70,13 +70,13 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 				SourceFile.fromCode("extern", StringPool.BLANK), sourceFile,
 				compilerOptions);
 
-			String compiledContent = compiler.toSource();
+			String compiledString = compiler.toSource();
 
-			if (compiledContent.isEmpty()) {
+			if (compiledString.isEmpty()) {
 				return content;
 			}
 
-			return compiledContent;
+			return compiledString;
 		}
 		finally {
 			if (_clearThreadTraceMethod != null) {

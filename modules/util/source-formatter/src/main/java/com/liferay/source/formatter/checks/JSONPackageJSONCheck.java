@@ -53,8 +53,6 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 	private void _checkRequiredScripts(String fileName, JSONObject jsonObject) {
 		if (jsonObject.isNull("scripts")) {
-			addMessage(fileName, "Missing entry 'scripts'");
-
 			return;
 		}
 

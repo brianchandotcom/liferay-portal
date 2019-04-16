@@ -17,7 +17,9 @@
 	"name": "liferay-westeros-bank-theme",
 	"repository": "liferay/liferay-portal",
 	"scripts": {
-		"build": "liferay-npm-scripts build"
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "3.0.0"
 }

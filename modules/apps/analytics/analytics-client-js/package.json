@@ -57,8 +57,8 @@
 	},
 	"scripts": {
 		"build": "rimraf build/ && webpack",
-		"format": "prettier-eslint --write 'src/**/*.js' 'src/**/*.js'",
-		"lint": "eslint src/",
+		"checkFormat": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format",
 		"test": "karma start karma.conf.js"
 	},
 	"version": "1.0.0"

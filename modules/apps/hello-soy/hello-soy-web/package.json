@@ -5,7 +5,9 @@
 	},
 	"name": "hello-soy-web",
 	"scripts": {
-		"build": "liferay-npm-scripts build"
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "3.0.0"
 }

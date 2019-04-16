@@ -174,8 +174,8 @@
 	"private": true,
 	"scripts": {
 		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
-		"checkFormat": "csf src/**/*.es.js src/**/*.jsp test/**/*.es.js",
-		"format": "npm run csf -- -i",
+		"checkFormat": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format",
 		"start": "node watch.js",
 		"test:coverage:open": "opn build/coverage/lcov-report/index.html",
 		"test:snapshots": "NODE_ENV=test jest --coverage -u",

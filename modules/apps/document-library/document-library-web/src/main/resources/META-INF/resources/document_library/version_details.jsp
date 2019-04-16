@@ -24,12 +24,28 @@ boolean checkedOut = GetterUtil.getBoolean(request.getAttribute("edit_file_entry
 	<aui:fieldset>
 		<h5 class="control-label"><liferay-ui:message key="select-whether-this-is-a-major-or-minor-version" /></h5>
 
-		<aui:input checked="<%= checkedOut %>" label="major-version" name="versionDetailsVersionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MAJOR %>" />
+		<aui:input checked="<%= checkedOut %>" label="major-version" name="versionDetailsVersionIncrease" onChange='<%= renderResponse.getNamespace() + "showVersionNotes();" %>' type="radio" value="<%= DLVersionNumberIncrease.MAJOR %>" />
 
-		<aui:input checked="<%= !checkedOut %>" label="minor-version" name="versionDetailsVersionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MINOR %>" />
+		<aui:input checked="<%= !checkedOut %>" label="minor-version" name="versionDetailsVersionIncrease" onChange='<%= renderResponse.getNamespace() + "showVersionNotes();" %>' type="radio" value="<%= DLVersionNumberIncrease.MINOR %>" />
 
-		<aui:input checked="<%= false %>" label="keep-current-version-number" name="versionDetailsVersionIncrease" type="radio" value="<%= DLVersionNumberIncrease.NONE %>" />
+		<aui:input checked="<%= false %>" label="keep-current-version-number" name="versionDetailsVersionIncrease" onChange='<%= renderResponse.getNamespace() + "hideVersionNotes();" %>' type="radio" value="<%= DLVersionNumberIncrease.NONE %>" />
 
 		<aui:input label="version-notes" maxLength="75" name="versionDetailsChangeLog" />
 	</aui:fieldset>
+
+	<aui:script>
+		var versionNotes = document.getElementById('<portlet:namespace />versionDetailsChangeLog');
+
+		function <portlet:namespace />hideVersionNotes() {
+			if (versionNotes) {
+				versionNotes.parentNode.classList.add('hide');
+			}
+		}
+
+		function <portlet:namespace />showVersionNotes() {
+			if (versionNotes) {
+				versionNotes.parentNode.classList.remove('hide');
+			}
+		}
+	</aui:script>
 </div>

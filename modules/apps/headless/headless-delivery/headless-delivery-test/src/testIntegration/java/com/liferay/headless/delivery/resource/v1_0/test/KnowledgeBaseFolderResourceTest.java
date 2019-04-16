@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -36,6 +37,16 @@ public class KnowledgeBaseFolderResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "name"};
+	}
+
+	@Override
+	protected KnowledgeBaseFolder randomKnowledgeBaseFolder() {
+		KnowledgeBaseFolder knowledgeBaseFolder =
+			super.randomKnowledgeBaseFolder();
+
+		knowledgeBaseFolder.setParentKnowledgeBaseFolderId(0L);
+
+		return knowledgeBaseFolder;
 	}
 
 	@Override

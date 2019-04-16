@@ -807,7 +807,7 @@ definition {
 		);
 
 		Workflow.publishInvalidWorkflowDefinition(
-			errorMessage = "The StartNode node cannot have an incoming transition."
+			errorMessage = "The Start node cannot have an incoming transition."
 		);
 	}
 

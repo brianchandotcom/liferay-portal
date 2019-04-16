@@ -891,18 +891,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				_log.debug("HTTP response: " + string);
 			}
 
-			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
-				try {
-					return outputObjectMapper.readValue(string, Boolean.class);
-				}
-				catch (Exception e) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to process HTTP response: " + string, e);
-					}
-
-					throw e;
-				}
-			<#elseif javaMethodSignature.returnType?contains("Page<")>
+			<#if javaMethodSignature.returnType?contains("Page<")>
 				return Page.of(string, ${schemaName}SerDes::toDTO);
 			<#elseif javaMethodSignature.returnType?ends_with("String")>
 				return string;

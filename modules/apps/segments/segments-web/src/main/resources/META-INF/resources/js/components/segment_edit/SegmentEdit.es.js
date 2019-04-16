@@ -47,7 +47,7 @@ class SegmentEdit extends Component {
 		redirect: PropTypes.string.isRequired,
 		requestMembersCountURL: PropTypes.string,
 		setValues: PropTypes.func,
-		showInEditMode: PropTypes.bools,
+		showInEditMode: PropTypes.bool,
 		source: PropTypes.string,
 		validateForm: PropTypes.func,
 		values: PropTypes.object

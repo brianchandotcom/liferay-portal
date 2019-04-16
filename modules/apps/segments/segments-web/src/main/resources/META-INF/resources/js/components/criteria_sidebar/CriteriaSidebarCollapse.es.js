@@ -57,7 +57,7 @@ class CriteriaSidebarCollapse extends Component {
 			property => {
 				const propertyLabel = property.label.toLowerCase();
 
-				return propertyLabel.includes(searchValue.toLowerCase());
+				return propertyLabel.indexOf(searchValue.toLowerCase()) !== -1;
 			}
 		);
 	}

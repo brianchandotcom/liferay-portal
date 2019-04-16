@@ -73,18 +73,6 @@ public class WikiPageAssetRenderer
 		return page.getResourcePrimKey();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #WikiPageAssetRenderer(WikiPage, WikiEngineRenderer,
-	 *             TrashHelper)}
-	 */
-	@Deprecated
-	public WikiPageAssetRenderer(
-		WikiPage page, WikiEngineRenderer wikiEngineRenderer) {
-
-		this(page, wikiEngineRenderer, null);
-	}
-
 	public WikiPageAssetRenderer(
 		WikiPage page, WikiEngineRenderer wikiEngineRenderer,
 		TrashHelper trashHelper) {

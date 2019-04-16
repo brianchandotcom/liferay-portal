@@ -16,6 +16,8 @@ package com.liferay.portal.tools;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.Dom4jUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 
@@ -73,11 +75,13 @@ public class SPDXBuilder {
 			Document document = _getDocument(xmls, rdf);
 			File rdfFile = new File(rdf);
 
-			String content = Dom4jUtil.toString(document);
-			File file = new File(rdfFile.getParentFile(), "versions-spdx.xml");
+			_write(
+				new File(rdfFile.getParentFile(), "versions-spdx.xml"),
+				Dom4jUtil.toString(document));
 
-			Files.write(
-				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
+			_write(
+				new File(rdfFile.getParentFile(), "versions-spdx.csv"),
+				_toCSV(document));
 
 			TransformerFactory transformerFactory =
 				TransformerFactory.newInstance();
@@ -161,6 +165,18 @@ public class SPDXBuilder {
 		return libraryElements;
 	}
 
+	private String _encode(Node node) {
+		if (node == null) {
+			return StringPool.BLANK;
+		}
+
+		String text = node.getText();
+
+		text = StringUtil.trim(text.replaceAll("\\s+", " "));
+
+		return CSVUtil.encode(text);
+	}
+
 	@SuppressWarnings("unchecked")
 	private Document _getDocument(String[] xmls, String rdf) throws Exception {
 		Comparator<String> comparator = String.CASE_INSENSITIVE_ORDER;
@@ -241,6 +257,56 @@ public class SPDXBuilder {
 		sb.append(versionNode.getText());
 
 		return sb.toString();
+	}
+
+	@SuppressWarnings("unchecked")
+	private String _toCSV(Document document) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("File Name,Version,Project,License,Comments");
+
+		List<Node> libraryNodes = document.selectNodes("//library");
+
+		for (Node libraryNode : libraryNodes) {
+			sb.append('\n');
+
+			sb.append(_encode(libraryNode.selectSingleNode("file-name")));
+			sb.append(',');
+			sb.append(_encode(libraryNode.selectSingleNode("version")));
+			sb.append(',');
+			sb.append(_encode(libraryNode.selectSingleNode("project-name")));
+			sb.append(',');
+
+			String[] licenses = new String[0];
+
+			List<Node> licenseNameNodes = libraryNode.selectNodes(
+				"./licenses/license/license-name");
+
+			if (!licenseNameNodes.isEmpty()) {
+				String text = StringPool.BLANK;
+
+				if (licenseNameNodes.get(0) != null) {
+					Node node = licenseNameNodes.get(0);
+
+					text = node.getText();
+
+					text = StringUtil.trim(text.replaceAll("\\s+", " "));
+				}
+
+				licenses = ArrayUtil.append(licenses, text);
+			}
+
+			sb.append(CSVUtil.encode(licenses));
+
+			sb.append(',');
+			sb.append(_encode(libraryNode.selectSingleNode("comments")));
+		}
+
+		return sb.toString();
+	}
+
+	private void _write(File file, String s) throws Exception {
+		Files.write(file.toPath(), s.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private static final QName _QNAME_DOWNLOAD_LOCATION = new QName(

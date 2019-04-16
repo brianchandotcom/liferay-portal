@@ -176,10 +176,20 @@
 		<suppress checks="XMLLookAndFeelCompatibilityVersionCheck" files="modules/private/commerce/.*" />
 		<suppress checks="XMLServiceReferenceCheck" files="modules/private/.*" />
 
-		<!-- Temporary suppressions. Chema, please fix -->
+		<!-- Temporary suppressions for project-templates (Chema) -->
 
 		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/sdk/project-templates/project-templates-form-field/src/main/resources/archetype-resources/package\.json" />
 		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/sdk/project-templates/project-templates-soy-portlet/src/main/resources/archetype-resources/package\.json" />
-		<suppress checks="JSONScriptsCheck" files="modules/apps/hello-soy/hello-soy-web/package\.json" />
+
+		<!-- Temporary suppressions for frontend build setup (Chema) -->
+
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/analytics/analytics-client-js/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-builder/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-web/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-js/frontend-js-node-shims/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-js/frontend-js-web/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/portal-search/portal-search-web/package\.json" />
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/segments/segments-web/package\.json" />
 	</source-check>
 </suppressions>

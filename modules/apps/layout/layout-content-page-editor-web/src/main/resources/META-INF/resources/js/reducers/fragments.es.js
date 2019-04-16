@@ -380,50 +380,54 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					fragmentEntryLinkType
 				);
 
-				const _shouldNotRemove = containsFragmentEntryLinkId(
+				const _shouldRemoveFragmentEntryLink = !containsFragmentEntryLinkId(
 					nextState.layoutDataList,
 					fragmentEntryLinkId,
 					nextState.segmentsExperienceId
 				);
 
-				if (_shouldNotRemove) {
-					updatePageEditorLayoutData(nextData, nextState.segmentsExperienceId).then(
+				nextState = setIn(nextState, ['layoutData'], nextData);
+
+				if (_shouldRemoveFragmentEntryLink) {
+					removeFragmentEntryLinks(
+						nextState.layoutData,
+						[fragmentEntryLinkId],
+						nextState.segmentsExperienceId
+					).then(
 						() => {
-							nextState = setIn(nextState, ['layoutData'], nextData);
+							nextState = updateWidgets(
+								nextState,
+								payload.fragmentEntryLinkId
+							);
+
+							nextState.setIn(
+								nextState,
+								['fragmentEntryLinks'],
+								nextState.fragmentEntryLinks.filter(
+									_fragmentEntryLink => {
+										return _fragmentEntryLink.fragmentEntryLinkId !==
+											payload.fragmentEntryLinkId;
+									}
+								)
+							);
+
+							resolve(nextState);
+						}
+					).catch(
+						() => {
 							resolve(nextState);
 						}
 					);
 				}
 				else {
-					removeFragmentEntryLinks(
-						nextState.layoutData,
-						[fragmentEntryLinkId],
+					updatePageEditorLayoutData(
+						nextData,
 						nextState.segmentsExperienceId
-					)
-						.then(
-							() => {
-								nextState = setIn(nextState, ['layoutData'], nextData);
-								nextState = updateWidgets(nextState, payload.fragmentEntryLinkId);
-
-								nextState.setIn(
-									nextState,
-									['fragmentEntryLinks'],
-									nextState.fragmentEntryLinks.filter(
-										_fragmentEntryLink => {
-											return _fragmentEntryLink.fragmentEntryLinkId !==
-											payload.fragmentEntryLinkId;
-										}
-									)
-								);
-
-								resolve(nextState);
-							}
-						)
-						.catch(
-							() => {
-								resolve(nextState);
-							}
-						);
+					).then(
+						() => {
+							resolve(nextState);
+						}
+					);
 				}
 			}
 			else {

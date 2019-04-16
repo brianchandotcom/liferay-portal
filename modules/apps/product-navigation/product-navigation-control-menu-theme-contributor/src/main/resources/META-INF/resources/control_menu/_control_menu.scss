@@ -72,7 +72,6 @@
 
 .control-menu-icon {
 	display: inline-block;
-	padding: 0 2px;
 }
 
 .control-menu-level-1 {
@@ -80,10 +79,10 @@
 	color: $control-menu-level-1-color;
 
 	> .container-fluid {
-		padding: 6px 1rem 7px 1rem;
+		padding: 8px;
 
 		@include sm() {
-			padding: 10px 1.25rem;
+			padding: 12px;
 		}
 	}
 
@@ -111,6 +110,18 @@
 	@include display(flex);
 	@include flex-wrap(wrap);
 	@include justify-content(space-between);
+
+	> li > .control-menu-nav > .control-menu-nav-item {
+		@include xs {
+			margin-left: 4px;
+			margin-right: 4px;
+		}
+
+		@include sm {
+			margin-left: 8px;
+			margin-right: 8px;
+		}
+	}
 
 	> .control-menu-nav-item {
 		@include align-self(center);
@@ -218,7 +229,7 @@
 }
 
 .control-menu-nav-item {
-	display: inline-block;
+	display: inline-flex;
 }
 
 .control-menu-nav-item-content {
@@ -283,13 +294,10 @@
 }
 
 %control-menu-icon-monospaced {
-	height: 35px;
-	line-height: 35px;
-	margin-left: 3px;
-	margin-right: 3px;
-	padding: 0;
+	height: 32px;
+	line-height: 34px;
 	text-align: center;
-	width: 35px;
+	width: 32px;
 }
 
 .tools-control-group {

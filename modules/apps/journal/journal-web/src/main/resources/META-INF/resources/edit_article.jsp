@@ -197,11 +197,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 			article: {
 				editUrl: '<%= journalEditArticleDisplayContext.getEditArticleURL() %>',
 				id: '<%= (article != null) ? HtmlUtil.escape(journalEditArticleDisplayContext.getArticleId()) : StringPool.BLANK %>',
-
-				<c:if test="<%= (article != null) && !article.isNew() %>">
-					previewUrl: '<%= HtmlUtil.escapeJS(journalEditArticleDisplayContext.getPreviewContentURL()) %>',
-				</c:if>
-
 				title: '<%= (article != null) ? HtmlUtil.escapeJS(article.getTitle(locale)) : StringPool.BLANK %>'
 			},
 			namespace: '<portlet:namespace />',

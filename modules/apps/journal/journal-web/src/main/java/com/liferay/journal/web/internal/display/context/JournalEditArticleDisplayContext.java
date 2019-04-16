@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -30,7 +29,6 @@ import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
-import com.liferay.journal.web.util.JournalUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,7 +60,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -400,37 +397,6 @@ public class JournalEditArticleDisplayContext {
 		_portletResource = ParamUtil.getString(_request, "portletResource");
 
 		return _portletResource;
-	}
-
-	public String getPreviewContentURL() throws Exception {
-		PortletURL previewContentURL =
-			_liferayPortletResponse.createLiferayPortletURL(
-				JournalUtil.getPreviewPlid(_article, _themeDisplay),
-				JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
-
-		previewContentURL.setParameter(
-			"mvcPath", "/preview_article_content.jsp");
-
-		if (_article == null) {
-			return previewContentURL.toString();
-		}
-
-		previewContentURL.setParameter(
-			"groupId", String.valueOf(_article.getGroupId()));
-		previewContentURL.setParameter(
-			"articleId", String.valueOf(_article.getVersion()));
-
-		String ddmTemplateKey = _article.getDDMTemplateKey();
-
-		DDMTemplate ddmTemplate = getDDMTemplate();
-
-		if (ddmTemplate != null) {
-			ddmTemplateKey = ddmTemplate.getTemplateKey();
-		}
-
-		previewContentURL.setParameter("ddmTemplateKey", ddmTemplateKey);
-
-		return previewContentURL.toString();
 	}
 
 	public String getPublishButtonLabel() throws PortalException {

@@ -2,23 +2,8 @@ AUI.add(
 	'liferay-portlet-journal',
 	function(A) {
 		var Lang = A.Lang;
-		var Util = Liferay.Util;
 
 		var SELECTOR_ACTION_NAME = '#javax-portlet-action';
-
-		var STR_ACTION_NAME = 'javax.portlet.action';
-
-		var STR_ADD_ARTICLE = 'addArticle';
-
-		var STR_ARTICLE = 'article';
-
-		var STR_ARTICLE_ID = 'articleId';
-
-		var STR_CLICK = 'click';
-
-		var STR_STRINGS = 'strings';
-
-		var STR_UPDATE_ARTICLE = 'updateArticle';
 
 		var Journal = A.Component.create(
 			{
@@ -61,22 +46,13 @@ AUI.add(
 						var form = instance._getPrincipalForm();
 
 						var eventHandles = [
-							form.delegate('change', instance._onFormChanged, ':input', instance),
 							form.on('submit', instance._onFormSubmit, instance)
 						];
-
-						var basicPreviewButton = instance.one('#basicPreviewButton');
-
-						if (basicPreviewButton) {
-							eventHandles.push(basicPreviewButton.on(STR_CLICK, instance._previewArticle, instance));
-
-							Util.toggleDisabled(basicPreviewButton, false);
-						}
 
 						var buttonRow = instance.one('.journal-article-button-row');
 
 						if (buttonRow) {
-							eventHandles.push(buttonRow.delegate(STR_CLICK, instance._onButtonClick, 'button', instance));
+							eventHandles.push(buttonRow.delegate('click', instance._onButtonClick, 'button', instance));
 						}
 
 						eventHandles.push(Liferay.on('inputLocalized:localeChanged', instance._onLocaleChange.bind(instance)));
@@ -100,31 +76,6 @@ AUI.add(
 						return instance.one('form[name=' + instance.ns(formName || 'fm1') + ']');
 					},
 
-					_hasUnsavedChanges: function() {
-						var instance = this;
-
-						var form = instance._getPrincipalForm();
-
-						var unsavedChanges = instance._formChanged;
-
-						if (!unsavedChanges && typeof CKEDITOR !== 'undefined') {
-							A.Object.some(
-								CKEDITOR.instances,
-								function(item, index) {
-									var parentForm = A.one('#' + item.element.getId()).ancestor('form');
-
-									if (parentForm.compareTo(form)) {
-										unsavedChanges = item.checkDirty();
-									}
-
-									return unsavedChanges;
-								}
-							);
-						}
-
-						return unsavedChanges;
-					},
-
 					_onButtonClick: function(event) {
 						var instance = this;
 
@@ -135,12 +86,6 @@ AUI.add(
 
 							instance.one(SELECTOR_ACTION_NAME, form).val(actionName);
 						}
-					},
-
-					_onFormChanged: function(event) {
-						var instance = this;
-
-						instance._formChanged = true;
 					},
 
 					_onFormSubmit: function(event) {
@@ -167,39 +112,12 @@ AUI.add(
 						}
 					},
 
-					_previewArticle: function(event) {
-						var instance = this;
-
-						event.preventDefault();
-
-						var strings = instance.get(STR_STRINGS);
-
-						if (!instance._hasUnsavedChanges()) {
-							var article = instance.get(STR_ARTICLE);
-
-							Liferay.fire(
-								'previewArticle',
-								{
-									title: article.title,
-									uri: article.previewUrl
-								}
-							);
-						}
-						else if (confirm(strings.saveAsDraftBeforePreview)) {
-							var form = instance._getPrincipalForm();
-
-							instance.one(SELECTOR_ACTION_NAME, form).val('previewArticle');
-
-							submitForm(form);
-						}
-					},
-
 					_saveArticle: function(actionName) {
 						var instance = this;
 
 						var form = instance._getPrincipalForm();
 
-						var article = instance.get(STR_ARTICLE);
+						var article = instance.get('article');
 
 						var articleId = article.id;
 
@@ -212,15 +130,15 @@ AUI.add(
 						}
 
 						if (!actionName) {
-							actionName = articleId ? STR_UPDATE_ARTICLE : STR_ADD_ARTICLE;
+							actionName = articleId ? 'updateArticle' : 'addArticle';
 						}
 
-						var actionNameInput = instance._getByName(form, STR_ACTION_NAME);
+						var actionNameInput = instance._getByName(form, 'javax.portlet.action');
 
 						actionNameInput.val(actionName);
 
 						if (!articleId) {
-							var articleIdInput = instance._getByName(form, STR_ARTICLE_ID);
+							var articleIdInput = instance._getByName(form, 'articleId');
 							var newArticleIdInput = instance._getByName(form, 'newArticleId');
 
 							articleIdInput.val(newArticleIdInput.val());

@@ -305,6 +305,12 @@ if (hints != null) {
 									yearElement.disabled = checked;
 								}
 
+								var label = A.one('label[for="<portlet:namespace /><%= fieldParam %>"]');
+
+								if (label) {
+									label.toggleClass('disabled', checked);
+								}
+
 								<c:if test="<%= showTime %>">
 									var timeElement = Liferay.Util.getFormElement(form, '<%= fieldParam %>Time');
 

@@ -5,4 +5,5 @@ application:
     className: "PortalWorkflowMetricsRESTApplication"
     name: "Liferay.Portal.Workflow.Metrics.REST"
 author: "Rafael Praxedes"
+clientDir: "../portal-workflow-metrics-rest-client/src/main/java"
 testDir: "../portal-workflow-metrics-rest-test/src/testIntegration/java"

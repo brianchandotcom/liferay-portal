@@ -59,8 +59,7 @@ public abstract class BaseTestPreparatorBundleActivator
 		}
 	}
 
-	private Configuration _createFactoryConfiguration(
-		BundleContext bundleContext, String factoryPid,
+	protected void createFactoryConfiguration(
 		Dictionary<String, Object> properties) {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -68,10 +67,11 @@ public abstract class BaseTestPreparatorBundleActivator
 		Dictionary<String, Object> registrationProperties =
 			new HashMapDictionary<>();
 
-		registrationProperties.put(Constants.SERVICE_PID, factoryPid);
+		registrationProperties.put(
+			Constants.SERVICE_PID, WebContextCORSConfiguration.class.getName());
 
 		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
-			bundleContext.registerService(
+			_bundleContext.registerService(
 				ManagedServiceFactory.class,
 				new ManagedServiceFactory() {
 
@@ -82,7 +82,7 @@ public abstract class BaseTestPreparatorBundleActivator
 					@Override
 					public String getName() {
 						return "Test managed service factory for PID " +
-							factoryPid;
+							WebContextCORSConfiguration.class.getName();
 					}
 
 					@Override
@@ -93,9 +93,24 @@ public abstract class BaseTestPreparatorBundleActivator
 							return;
 						}
 
-						if (_isIncluded(properties, updatedProperties)) {
-							countDownLatch.countDown();
+						if (properties.size() > updatedProperties.size()) {
+							return;
 						}
+
+						Enumeration<String> keys = properties.keys();
+
+						while (keys.hasMoreElements()) {
+							String key = keys.nextElement();
+
+							if (!Objects.deepEquals(
+									properties.get(key),
+									updatedProperties.get(key))) {
+
+								return;
+							}
+						}
+
+						countDownLatch.countDown();
 					}
 
 				},
@@ -103,22 +118,23 @@ public abstract class BaseTestPreparatorBundleActivator
 
 		try {
 			ServiceReference<ConfigurationAdmin> serviceReference =
-				bundleContext.getServiceReference(ConfigurationAdmin.class);
+				_bundleContext.getServiceReference(ConfigurationAdmin.class);
 
-			ConfigurationAdmin configurationAdmin = bundleContext.getService(
+			ConfigurationAdmin configurationAdmin = _bundleContext.getService(
 				serviceReference);
 
 			Configuration configuration = null;
 
 			try {
 				configuration = configurationAdmin.createFactoryConfiguration(
-					factoryPid, StringPool.QUESTION);
+					WebContextCORSConfiguration.class.getName(),
+					StringPool.QUESTION);
 
 				configuration.update(properties);
 
 				countDownLatch.await(5, TimeUnit.MINUTES);
 
-				return configuration;
+				_autoCloseables.add(configuration::delete);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
@@ -134,44 +150,12 @@ public abstract class BaseTestPreparatorBundleActivator
 				throw new RuntimeException(ie);
 			}
 			finally {
-				bundleContext.ungetService(serviceReference);
+				_bundleContext.ungetService(serviceReference);
 			}
 		}
 		finally {
 			serviceRegistration.unregister();
 		}
-	}
-
-	protected void createFactoryConfiguration(
-		Dictionary<String, Object> properties) {
-
-		Configuration configuration = _createFactoryConfiguration(
-			_bundleContext, WebContextCORSConfiguration.class.getName(),
-			properties);
-
-		_autoCloseables.add(configuration::delete);
-	}
-
-	private boolean _isIncluded(
-		Dictionary<String, ?> properties1, Dictionary<String, ?> properties2) {
-
-		if (properties1.size() > properties2.size()) {
-			return false;
-		}
-
-		Enumeration<String> keys = properties1.keys();
-
-		while (keys.hasMoreElements()) {
-			String key = keys.nextElement();
-
-			if (!Objects.deepEquals(
-					properties1.get(key), properties2.get(key))) {
-
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	protected abstract void prepareTest();

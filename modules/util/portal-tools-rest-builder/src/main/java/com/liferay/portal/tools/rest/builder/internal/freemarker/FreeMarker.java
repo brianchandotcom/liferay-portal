@@ -49,7 +49,7 @@ public class FreeMarker {
 	}
 
 	public String processTemplate(
-			String copyrightFileName, String name, Map<String, Object> context)
+			File copyrightFile, String name, Map<String, Object> context)
 		throws Exception {
 
 		Template template = _configuration.getTemplate(name);
@@ -62,9 +62,7 @@ public class FreeMarker {
 
 		String content = stringBuffer.toString();
 
-		if ((copyrightFileName != null) && !copyrightFileName.isEmpty()) {
-			File copyrightFile = new File(copyrightFileName);
-
+		if ((copyrightFile != null) && copyrightFile.exists()) {
 			content = FileUtil.read(copyrightFile) + "\n\n" + content;
 		}
 

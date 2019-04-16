@@ -16,6 +16,8 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.util;
 
 import com.liferay.portal.tools.rest.builder.internal.freemarker.FreeMarker;
 
+import java.io.File;
+
 import java.util.Map;
 
 /**
@@ -24,11 +26,11 @@ import java.util.Map;
 public class FreeMarkerUtil {
 
 	public static String processTemplate(
-			String copyrightFileName, String name, Map<String, Object> context)
+			File copyrightFile, String name, Map<String, Object> context)
 		throws Exception {
 
 		return _freeMarker.processTemplate(
-			copyrightFileName,
+			copyrightFile,
 			"com/liferay/portal/tools/rest/builder/dependencies/" + name +
 				".ftl",
 			context);

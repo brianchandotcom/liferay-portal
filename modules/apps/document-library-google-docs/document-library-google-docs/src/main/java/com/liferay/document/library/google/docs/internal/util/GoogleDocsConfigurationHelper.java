@@ -32,7 +32,7 @@ public class GoogleDocsConfigurationHelper {
 	}
 
 	public String getGoogleAppsAPIKey() {
-		return _dlGoogleDriveCompanyConfiguration.clientSecret();
+		return _dlGoogleDriveCompanyConfiguration.pickerAPIKey();
 	}
 
 	public String getGoogleClientId() {

@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.concurrent.Callable;
 
@@ -125,6 +127,26 @@ public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
 					layout = _layoutLocalService.getLayout(
 						layoutPageTemplateEntry.getPlid());
 				}
+			}
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+			if (layoutPageTemplateEntry != null) {
+				UnicodeProperties typeSettingsProperties =
+					layout.getTypeSettingsProperties();
+
+				long classNameId = GetterUtil.getLong(
+					typeSettingsProperties.getProperty("assetClassNameId"));
+
+				long classTypeId = GetterUtil.getLong(
+					typeSettingsProperties.getProperty("assetClassTypeId"));
+
+				_layoutPageTemplateEntryLocalService.
+					updateLayoutPageTemplateEntry(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+						classNameId, classTypeId);
 			}
 
 			draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);

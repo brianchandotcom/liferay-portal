@@ -42,7 +42,7 @@ class ListHeadItem extends React.Component {
 						<span className="sticker sticker-sm">
 							<span className="inline-item">
 								<Icon
-									elementClasses={`icon-${iconColor}`}
+									elementClasses={`text-${iconColor}`}
 									iconName={iconName}
 								/>
 							</span>

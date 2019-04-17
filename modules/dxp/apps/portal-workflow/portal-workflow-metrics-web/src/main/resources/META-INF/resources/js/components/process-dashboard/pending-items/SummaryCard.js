@@ -48,12 +48,19 @@ export default class SummaryCard extends React.Component {
 				<div>
 					<div className={'header'}>
 						{iconName && (
-							<Icon
-								elementClasses={['iconBadge', `icon-${iconColor}`, 'mr-3']}
-								iconName={iconName}
-							/>
+							<span
+								className={`bg-${iconColor}-light mr-3 sticker sticker-circle`}
+							>
+								<span className="inline-item">
+									<Icon
+										elementClasses={`text-${iconColor}`}
+										iconName={iconName}
+									/>
+								</span>
+							</span>
 						)}
-						{title}
+
+						<span>{title}</span>
 					</div>
 					<div className={'body'}>{total}</div>
 					<div className={'footer'}>

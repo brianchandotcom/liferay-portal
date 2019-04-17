@@ -1,21 +1,21 @@
 const PANELS = [
 	{
 		addressedToField: 'overdueInstanceCount',
-		iconColor: 'red',
+		iconColor: 'danger',
 		iconName: 'exclamation-circle',
 		title: Liferay.Language.get('overdue'),
 		totalField: 'instanceCount'
 	},
 	{
 		addressedToField: 'dueInInstanceCount',
-		iconColor: 'orange',
+		iconColor: 'warning',
 		iconName: 'warning',
 		title: Liferay.Language.get('due-in-7-days'),
 		totalField: 'instanceCount'
 	},
 	{
 		addressedToField: 'dueAfterInstanceCount',
-		iconColor: 'green',
+		iconColor: 'success',
 		iconName: 'check-circle',
 		title: Liferay.Language.get('due-after-7-days'),
 		totalField: 'instanceCount'

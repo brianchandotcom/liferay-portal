@@ -46,28 +46,6 @@ $c: ".workflow-process-dashboard";
 			}
 		}
 
-		.iconBadge {
-			border-radius: 50%;
-			height: 32px;
-			line-height: 32px;
-			padding: 9px;
-			text-align: center;
-			vertical-align: middle;
-			width: 32px;
-		}
-
-		.icon-green {
-			background: #EDF9F0;
-		}
-
-		.icon-orange {
-			background: #FFF4EC;
-		}
-
-		.icon-red {
-			background: #FEEFEF;
-		}
-
 		&:hover {
 			border: none;
 			box-shadow: 0 0 0 2px #80ACFF;
@@ -76,18 +54,6 @@ $c: ".workflow-process-dashboard";
 		&:last-child {
 			margin-right: 0;
 		}
-	}
-
-	.icon-green {
-		color: #287D3C;
-	}
-
-	.icon-orange {
-		color: #B95000;
-	}
-
-	.icon-red {
-		color: #DA1414;
 	}
 
 	.table-list {

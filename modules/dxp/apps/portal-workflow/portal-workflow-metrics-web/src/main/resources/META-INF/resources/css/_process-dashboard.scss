@@ -22,6 +22,7 @@ $c: ".workflow-process-dashboard";
 	.process-dashboard-summary-card {
 		border: 1px solid #E7E7ED;
 		border-radius: 4px;
+		box-sizing: border-box;
 		color: #30313F !important;
 		display: inline-flex;
 		font-size: 14px;
@@ -47,8 +48,8 @@ $c: ".workflow-process-dashboard";
 		}
 
 		&:hover {
-			border: none;
-			box-shadow: 0 0 0 2px #80ACFF;
+			border: 2px solid #80ACFF;
+			padding: 15px;
 		}
 
 		&:last-child {

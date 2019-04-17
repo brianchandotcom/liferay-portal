@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.asset.model;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
@@ -352,9 +353,24 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public String getURLViewInContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		String noSuchEntryRedirect) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String noSuchEntryRedirect)
+		throws PortalException {
+
+		if (_assetDisplayPageFriendlyURLProvider != null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			String friendlyURL =
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					getClassName(), getClassPK(), themeDisplay);
+
+			if (Validator.isNotNull(friendlyURL)) {
+				return friendlyURL;
+			}
+		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -475,6 +491,14 @@ public class DLFileEntryAssetRenderer
 		return false;
 	}
 
+	public void setAssetDisplayPageFriendlyURLProvider(
+		AssetDisplayPageFriendlyURLProvider
+			assetDisplayPageFriendlyURLProvider) {
+
+		_assetDisplayPageFriendlyURLProvider =
+			assetDisplayPageFriendlyURLProvider;
+	}
+
 	private boolean _hasViewInContextGroupLayout(
 		ThemeDisplay themeDisplay, long groupId) {
 
@@ -504,6 +528,8 @@ public class DLFileEntryAssetRenderer
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryAssetRenderer.class);
 
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;

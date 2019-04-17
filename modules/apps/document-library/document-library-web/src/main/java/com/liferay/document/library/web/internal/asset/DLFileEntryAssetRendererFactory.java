@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.asset;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
@@ -120,6 +121,8 @@ public class DLFileEntryAssetRendererFactory
 				fileEntry, fileVersion, _dlFileEntryLocalService, _trashHelper,
 				_dlURLHelper);
 
+		dlFileEntryAssetRenderer.setAssetDisplayPageFriendlyURLProvider(
+			_assetDisplayPageFriendlyURLProvider);
 		dlFileEntryAssetRenderer.setAssetRendererType(type);
 
 		return dlFileEntryAssetRenderer;
@@ -259,6 +262,10 @@ public class DLFileEntryAssetRendererFactory
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryAssetRendererFactory.class);
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	private DLAppLocalService _dlAppLocalService;
 	private DLFileEntryLocalService _dlFileEntryLocalService;

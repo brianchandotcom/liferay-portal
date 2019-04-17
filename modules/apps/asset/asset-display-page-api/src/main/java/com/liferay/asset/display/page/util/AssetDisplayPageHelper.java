@@ -29,12 +29,12 @@ public class AssetDisplayPageHelper {
 
 	public static LayoutPageTemplateEntry
 			getAssetDisplayPageLayoutPageTemplateEntry(
-				long groupId, AssetEntry assetEntry)
+				long groupId, long classNameId, long classPK, long classTypeId)
 		throws PortalException {
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
-				groupId, assetEntry.getClassNameId(), assetEntry.getClassPK());
+				groupId, classNameId, classPK);
 
 		if ((assetDisplayPageEntry == null) ||
 			(assetDisplayPageEntry.getType() ==
@@ -53,8 +53,7 @@ public class AssetDisplayPageHelper {
 
 		return LayoutPageTemplateEntryServiceUtil.
 			fetchDefaultLayoutPageTemplateEntry(
-				groupId, assetEntry.getClassNameId(),
-				assetEntry.getClassTypeId());
+				groupId, classNameId, classTypeId);
 	}
 
 	public static boolean hasAssetDisplayPage(
@@ -62,7 +61,24 @@ public class AssetDisplayPageHelper {
 		throws PortalException {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			getAssetDisplayPageLayoutPageTemplateEntry(groupId, assetEntry);
+			getAssetDisplayPageLayoutPageTemplateEntry(
+				groupId, assetEntry.getClassNameId(), assetEntry.getClassPK(),
+				assetEntry.getClassTypeId());
+
+		if (layoutPageTemplateEntry != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean hasAssetDisplayPage(
+			long groupId, long classNameId, long classPK, long classTypeId)
+		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			getAssetDisplayPageLayoutPageTemplateEntry(
+				groupId, classNameId, classPK, classTypeId);
 
 		if (layoutPageTemplateEntry != null) {
 			return true;

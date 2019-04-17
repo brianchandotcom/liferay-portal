@@ -530,7 +530,8 @@ public class JournalArticleActionDropdownItemsProvider {
 
 			sb.append(
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					assetEntry, _themeDisplay));
+					assetEntry.getClassName(), assetEntry.getClassPK(),
+					_themeDisplay));
 			sb.append(StringPool.SLASH);
 			sb.append(_article.getId());
 

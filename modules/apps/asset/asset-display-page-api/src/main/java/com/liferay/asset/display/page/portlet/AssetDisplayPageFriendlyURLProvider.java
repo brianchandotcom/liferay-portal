@@ -14,7 +14,6 @@
 
 package com.liferay.asset.display.page.portlet;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -22,10 +21,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
  * @author Alejandro Tardín
  */
 public interface AssetDisplayPageFriendlyURLProvider {
-
-	public String getFriendlyURL(
-			AssetEntry assetEntry, ThemeDisplay themeDisplay)
-		throws PortalException;
 
 	public String getFriendlyURL(
 			String className, long classPK, ThemeDisplay themeDisplay)

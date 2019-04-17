@@ -16,22 +16,16 @@ package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayPageFriendlyURLResolverConstants;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,70 +39,44 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 	@Override
 	public String getFriendlyURL(
-			AssetEntry assetEntry, ThemeDisplay themeDisplay)
+			String className, long classPK, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		if (!AssetDisplayPageHelper.hasAssetDisplayPage(
-				themeDisplay.getScopeGroupId(), assetEntry)) {
-
-			return null;
-		}
-
 		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				assetEntry.getClassName());
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
 
 		if (infoDisplayContributor == null) {
 			return null;
 		}
 
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+
+		if (!AssetDisplayPageHelper.hasAssetDisplayPage(
+				themeDisplay.getScopeGroupId(),
+				infoDisplayObjectProvider.getClassNameId(),
+				infoDisplayObjectProvider.getClassPK(),
+				infoDisplayObjectProvider.getClassTypeId())) {
+
+			return null;
+		}
+
 		StringBundler sb = new StringBundler(3);
 
-		Group group = _groupLocalService.getGroup(assetEntry.getGroupId());
+		Group group = _groupLocalService.getGroup(
+			infoDisplayObjectProvider.getGroupId());
 
 		sb.append(
 			_portal.getGroupFriendlyURL(
 				group.getPublicLayoutSet(), themeDisplay));
 
-		String urlTitle = null;
+		String urlTitle = infoDisplayObjectProvider.getURLTitle(
+			themeDisplay.getLocale());
 
-		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
-
-		if (assetRenderer != null) {
-			urlTitle = assetRenderer.getUrlTitle(themeDisplay.getLocale());
-		}
-
-		FriendlyURLResolver friendlyURLResolver =
-			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				infoDisplayContributor.getInfoURLSeparator());
-
-		if (Validator.isNotNull(urlTitle) && (friendlyURLResolver != null)) {
-			sb.append(infoDisplayContributor.getInfoURLSeparator());
-			sb.append(assetRenderer.getUrlTitle(themeDisplay.getLocale()));
-		}
-		else {
-			sb.append(
-				AssetDisplayPageFriendlyURLResolverConstants.
-					ASSET_DISPLAY_PAGE_URL_SEPARATOR);
-			sb.append(assetEntry.getEntryId());
-		}
+		sb.append(infoDisplayContributor.getInfoURLSeparator());
+		sb.append(urlTitle);
 
 		return sb.toString();
-	}
-
-	@Override
-	public String getFriendlyURL(
-			String className, long classPK, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			className, classPK);
-
-		if (assetEntry != null) {
-			return getFriendlyURL(assetEntry, themeDisplay);
-		}
-
-		return StringPool.BLANK;
 	}
 
 	@Reference

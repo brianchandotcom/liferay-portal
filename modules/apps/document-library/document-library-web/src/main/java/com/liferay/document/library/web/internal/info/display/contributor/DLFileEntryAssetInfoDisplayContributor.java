@@ -15,8 +15,11 @@
 package com.liferay.document.library.web.internal.info.display.contributor;
 
 import com.liferay.asset.info.display.contributor.BaseAssetInfoDisplayContributor;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.HashMap;
@@ -35,6 +38,71 @@ public class DLFileEntryAssetInfoDisplayContributor
 	@Override
 	public String getClassName() {
 		return DLFileEntryConstants.getClassName();
+	}
+
+	@Override
+	public InfoDisplayObjectProvider getInfoDisplayObjectProvider(long classPK)
+		throws PortalException {
+
+		InfoDisplayObjectProvider<AssetEntry> infoDisplayObjectProvider =
+			super.getInfoDisplayObjectProvider(classPK);
+
+		return new InfoDisplayObjectProvider<AssetEntry>() {
+
+			@Override
+			public long getClassNameId() {
+				return infoDisplayObjectProvider.getClassNameId();
+			}
+
+			@Override
+			public long getClassPK() {
+				return infoDisplayObjectProvider.getClassPK();
+			}
+
+			@Override
+			public long getClassTypeId() {
+				return infoDisplayObjectProvider.getClassTypeId();
+			}
+
+			@Override
+			public String getDescription(Locale locale) {
+				return infoDisplayObjectProvider.getDescription(locale);
+			}
+
+			@Override
+			public AssetEntry getDisplayObject() {
+				return infoDisplayObjectProvider.getDisplayObject();
+			}
+
+			@Override
+			public long getGroupId() {
+				return infoDisplayObjectProvider.getGroupId();
+			}
+
+			@Override
+			public String getKeywords(Locale locale) {
+				return infoDisplayObjectProvider.getKeywords(locale);
+			}
+
+			@Override
+			public String getTitle(Locale locale) {
+				return infoDisplayObjectProvider.getTitle(locale);
+			}
+
+			@Override
+			public String getURLTitle(Locale locale) {
+				return String.valueOf(infoDisplayObjectProvider.getClassPK());
+			}
+
+		};
+	}
+
+	@Override
+	public InfoDisplayObjectProvider getInfoDisplayObjectProvider(
+			long groupId, String urlTitle)
+		throws PortalException {
+
+		return getInfoDisplayObjectProvider(Long.valueOf(urlTitle));
 	}
 
 	@Override

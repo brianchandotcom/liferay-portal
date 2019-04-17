@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.rest.extender.test.internal.service;
+package com.liferay.portal.remote.rest.extender.client.test;
 
 import java.util.Collections;
 import java.util.Set;

@@ -21,4 +21,17 @@
 			margin-bottom: 8px;
 		}
 	}
+
+	.table {
+		&.table-fixed {
+			table-layout: fixed;
+			white-space: normal;
+		}
+
+		&.table-list {
+			td {
+				word-break: break-all;
+			}
+		}
+	}
 }

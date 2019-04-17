@@ -7,6 +7,7 @@ import {
 import { AppContext } from './AppContext';
 import fetch from '../shared/rest/fetch';
 import HeaderController from '../shared/components/header-controller/HeaderController';
+import InstanceListCard from './process-dashboard/instance-list/InstanceListCard';
 import ProcessDashboard from './process-dashboard/ProcessDashboard';
 import ProcessListCard from './process-list/ProcessListCard';
 import React from 'react';
@@ -76,6 +77,11 @@ export default class AppComponent extends React.Component {
 							<Route
 								path="/dashboard/:processId/:pageSize/:page/:sort"
 								render={withParams(ProcessDashboard)}
+							/>
+
+							<Route
+								path="/instances/:processId/:pageSize/:page"
+								render={withParams(InstanceListCard)}
 							/>
 
 							<Route

@@ -18,8 +18,8 @@ import com.liferay.frontend.js.jquery.web.configuration.JSJQueryConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
@@ -67,7 +67,7 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 				request);
 
 		String comboURL = _portal.getStaticResourceURL(
-				request, _comboContextPath, "minifierType=js", _lastModified);
+			request, _comboContextPath, "minifierType=js", _lastModified);
 
 		sb.append("<script data-senna-track=\"permanent\" src=\"");
 		sb.append(comboURL);
@@ -75,7 +75,6 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 		Bundle bundle = _bundleContext.getBundle();
 
 		for (String fileName : _FILE_NAMES) {
-
 			sb.append("&");
 
 			sb.append(

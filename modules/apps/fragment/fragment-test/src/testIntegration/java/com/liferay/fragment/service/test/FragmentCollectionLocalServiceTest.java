@@ -357,7 +357,8 @@ public class FragmentCollectionLocalServiceTest {
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionNameComparator);
 
-		FragmentCollection lastFragmentCollection = fragmentCollections.get(1);
+		FragmentCollection lastFragmentCollection = fragmentCollections.get(
+			fragmentCollections.size() - 1);
 
 		Assert.assertEquals(
 			fragmentCollections.toString(), fragmentCollection.getName(),

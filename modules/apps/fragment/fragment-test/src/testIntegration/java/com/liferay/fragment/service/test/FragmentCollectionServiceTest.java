@@ -334,7 +334,8 @@ public class FragmentCollectionServiceTest {
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionCreateDateComparator);
 
-		FragmentCollection lastFragmentCollection = fragmentCollections.get(1);
+		FragmentCollection lastFragmentCollection = fragmentCollections.get(
+			fragmentCollections.size() - 1);
 
 		Assert.assertEquals(fragmentCollection, lastFragmentCollection);
 	}
@@ -390,7 +391,8 @@ public class FragmentCollectionServiceTest {
 				_group.getGroupId(), "Collection", QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
 
-		FragmentCollection lastFragmentCollection = fragmentCollections.get(1);
+		FragmentCollection lastFragmentCollection = fragmentCollections.get(
+			fragmentCollections.size() - 1);
 
 		Assert.assertEquals(
 			fragmentCollections.toString(), lastFragmentCollection.getName(),
@@ -442,7 +444,8 @@ public class FragmentCollectionServiceTest {
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionNameComparator);
 
-		FragmentCollection lastFragmentCollection = fragmentCollections.get(1);
+		FragmentCollection lastFragmentCollection = fragmentCollections.get(
+			fragmentCollections.size() - 1);
 
 		Assert.assertEquals(
 			fragmentCollection.toString(), lastFragmentCollection.getName(),

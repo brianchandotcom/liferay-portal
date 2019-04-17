@@ -163,7 +163,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(${schemaVarName});
 		String json2 = ${schemaName}SerDes.toJSON(${schemaVarName});
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	<#assign

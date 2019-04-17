@@ -68,7 +68,7 @@ public class ${schemaName}SerDes {
 
 			if (${schemaVarName}.get${propertyName?cap_first}() != null) {
 				if (sb.length() > 1) {
-					sb.append(",");
+					sb.append(", ");
 				}
 
 				sb.append("\"${propertyName}\":");

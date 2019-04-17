@@ -62,7 +62,7 @@
 <!--NODES-->
 <tr>
 	<td>NODES_TAB</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Nodes')]</td>
+	<td>//ul[contains(@class,'nav-tabs')]//a[contains(.,'Nodes')]</td>
 	<td></td>
 </tr>
 <tr>

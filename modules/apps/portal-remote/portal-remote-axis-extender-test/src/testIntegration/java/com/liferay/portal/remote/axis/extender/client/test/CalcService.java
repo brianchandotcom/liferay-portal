@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.axis.extender.test.internal;
+package com.liferay.portal.remote.axis.extender.client.test;
 
 /**
  * @author Carlos Sierra Andrés

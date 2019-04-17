@@ -14,25 +14,31 @@
 
 package com.liferay.portal.remote.axis.extender.client.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.remote.axis.extender.test.service.http.CalcServiceSoap;
 import com.liferay.portal.remote.axis.extender.test.service.http.CalcServiceSoapService;
 import com.liferay.portal.remote.axis.extender.test.service.http.CalcServiceSoapServiceLocator;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.net.URL;
 
-import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.junit.Arquillian;
-
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@RunAsClient
 @RunWith(Arquillian.class)
 public class AxisExtenderTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testGreeter() throws Exception {

@@ -2,7 +2,5 @@ apply plugin: "nebula.optional-base"
 
 dependencies {
 	testIntegrationCompile group: "axis", name: "axis", optional, version: "1.4"
-	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-liferay", version: "1.0.4"
-	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.4"
-	testIntegrationCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -184,27 +184,6 @@ definition {
 		);
 	}
 
-	@summary = "Input a small image with the url '${templateSmallImageURL}'"
-	macro inputSmallImage {
-		if (isSet(templateSmallImageURL)) {
-			if (IsElementNotPresent(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE_URL")) {
-				Check(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE");
-			}
-			else {
-				Click(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE");
-
-				Check(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE");
-			}
-		}
-
-		Check(locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE_URL");
-
-		Type(
-			locator1 = "DDMEditTemplate#DETAILS_SMALL_IMAGE_URL_INPUT",
-			value1 = "${templateSmallImageURL}"
-		);
-	}
-
 	@summary = "Input most basic fields inside a template"
 	macro inputTemplateAddScreenFields {
 		if (isSet(templateName)) {

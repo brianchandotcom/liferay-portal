@@ -447,7 +447,7 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 				endpointUrl: '<%= HtmlUtil.escapeJS(liferayAnalyticsEndpointURL) %>'
 			};
 
-			Analytics.create(...config);
+			Analytics.create({...config});
 
 			Analytics.registerMiddleware(
 				function(request) {
@@ -475,7 +475,7 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 						Analytics.dispose();
 
 						if (!themeDisplay.isControlPanel()) {
-							Analytics.create(...config);
+							Analytics.create({...config});
 
 							if (themeDisplay.isSignedIn()) {
 								Analytics.setIdentity(

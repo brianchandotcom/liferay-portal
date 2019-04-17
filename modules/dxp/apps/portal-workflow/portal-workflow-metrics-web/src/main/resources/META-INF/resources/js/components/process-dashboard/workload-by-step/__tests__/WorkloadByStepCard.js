@@ -15,7 +15,7 @@ test('Should component receive props', () => {
 				overdueInstanceCount: 0
 			}
 		],
-		totalCount: 0
+		totalCount: 1
 	};
 
 	const component = mount(
@@ -98,7 +98,7 @@ test('Should render component', () => {
 				overdueInstanceCount: 0
 			}
 		],
-		totalCount: 0
+		totalCount: 1
 	};
 
 	const component = mount(

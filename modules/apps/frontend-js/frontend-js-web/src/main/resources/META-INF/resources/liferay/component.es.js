@@ -96,7 +96,7 @@ const _onStartNavigate = function(event) {
 				const component = components[componentId];
 				const componentConfig = componentConfigs[componentId];
 
-				const cacheableComponent = DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS.every(
+				const cacheablePortletUri = DEFAULT_CACHE_VALIDATION_PORTLET_PARAMS.every(
 					param => {
 						let cacheable = false;
 
@@ -110,7 +110,10 @@ const _onStartNavigate = function(event) {
 					}
 				);
 
+				const cacheableComponent = isFunction(component.isCacheable) ? component.isCacheable(uri) : false;
+
 				return cacheableComponent &&
+					cacheablePortletUri &&
 					componentConfig &&
 					componentConfig.cacheState &&
 					component.element &&

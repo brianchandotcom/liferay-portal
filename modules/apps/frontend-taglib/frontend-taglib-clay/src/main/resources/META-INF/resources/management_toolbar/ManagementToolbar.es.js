@@ -82,6 +82,18 @@ class ManagementToolbar extends ClayComponent {
 		}
 	}
 
+	isCacheable(uri) {
+		let cacheable = true;
+
+		if (this._searchContainer && this._searchContainer.select) {
+			const keepSelection = this._searchContainer.select.get('keepSelection');
+
+			cacheable = keepSelection.test(uri);
+		}
+
+		return cacheable;
+	}
+
 	/**
 	 * Deselects all searchContainer rows
 	 * @param {!Event} event

@@ -171,10 +171,10 @@ public class LayoutSiteNavigationMenuItemType
 		Layout layout = _fetchLayout(siteNavigationMenuItem);
 
 		if (layout.isPublicLayout()) {
-			return LanguageUtil.get(locale, "public-pages");
+			return LanguageUtil.get(locale, "public-page");
 		}
 
-		return LanguageUtil.get(locale, "private-pages");
+		return LanguageUtil.get(locale, "private-page");
 	}
 
 	@Override

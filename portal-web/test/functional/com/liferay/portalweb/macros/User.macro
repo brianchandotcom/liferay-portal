@@ -1476,8 +1476,7 @@ definition {
 		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
 		AssertElementPresent(
-			locator1 = "ProductMenu#PANEL_EXPANDED",
-			key_panel = "user"
+			locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN"
 		);
 	}
 

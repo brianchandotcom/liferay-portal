@@ -20,10 +20,13 @@ class BackRedirectWrapper extends React.Component {
 
 class ChildLinkWrapper extends React.Component {
 	render() {
-		const { children, className, currentPath, to } = this.props;
+		const { children, className, currentPath, to, ...props } = this.props;
+
+		const eventProps = getEventProps(props);
 
 		return (
 			<Link
+				{...eventProps}
 				children={children}
 				className={className}
 				to={{
@@ -46,6 +49,16 @@ const withParams = Component =>
 			/>
 		)
 	);
+
+function getEventProps(props) {
+	return Object.keys(props)
+		.filter(key => key.startsWith('on'))
+		.reduce((obj, key) => {
+			obj[key] = props[key];
+
+			return obj;
+		}, {});
+}
 
 const BackLink = withParams(BackLinkWrapper);
 const BackRedirect = withParams(BackRedirectWrapper);

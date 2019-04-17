@@ -92,3 +92,17 @@ test('Should remove a item', () => {
 	instance.removeItem();
 	expect(component).toMatchSnapshot();
 });
+
+test('Should test props change', () => {
+	const data = { items: [], totalCount: 0 };
+
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAListCard />
+		</Router>
+	);
+	const instance = component.find(SLAListCard).instance();
+
+	instance.componentWillReceiveProps({});
+	expect(component).toMatchSnapshot();
+});

@@ -15,7 +15,6 @@
 package com.liferay.portlet.preferences.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
@@ -103,17 +102,10 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 				new Class<?>[] {PortletPreferencesPersistence.class},
 				new SynchronousInvocationHandler(
 					_threadCount,
-					new Runnable() {
-
-						@Override
-						public void run() {
-							ReflectionTestUtil.setFieldValue(
-								portletPreferencesLocalServiceImpl,
-								"portletPreferencesPersistence",
-								portletPreferencesPersistence);
-						}
-
-					},
+					() -> ReflectionTestUtil.setFieldValue(
+						portletPreferencesLocalServiceImpl,
+						"portletPreferencesPersistence",
+						portletPreferencesPersistence),
 					PortletPreferencesPersistence.class.getMethod(
 						"update", BaseModel.class),
 					portletPreferencesPersistence)));
@@ -194,16 +186,9 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 				UniqueStringRandomizerBumper.INSTANCE);
 
 			Callable<PortletPreferences> callable =
-				new Callable<PortletPreferences>() {
-
-					@Override
-					public PortletPreferences call() throws PortalException {
-						return _portletPreferencesLocalService.getPreferences(
-							TestPropsValues.getCompanyId(), ownerId, ownerType,
-							plid, portletId);
-					}
-
-				};
+				() -> _portletPreferencesLocalService.getPreferences(
+					TestPropsValues.getCompanyId(), ownerId, ownerType, plid,
+					portletId);
 
 			List<FutureTask<PortletPreferences>> futureTasks =
 				new ArrayList<>();

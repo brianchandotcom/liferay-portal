@@ -19,15 +19,16 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
@@ -57,7 +58,7 @@ public class PortletPreferencesFactoryImplTest {
 
 		_layout = LayoutTestUtil.addLayout(_group);
 
-		_portlet = PortletLocalServiceUtil.getPortletById(
+		_portlet = _portletLocalService.getPortletById(
 			_layout.getCompanyId(), _PORTLET_ID);
 	}
 
@@ -73,7 +74,7 @@ public class PortletPreferencesFactoryImplTest {
 			_layout, _portlet, portletPreferencesXML);
 
 		PortletPreferences layoutPortletSetup =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+			_portletPreferencesFactory.getLayoutPortletSetup(
 				_layout, _PORTLET_ID);
 
 		Assert.assertArrayEquals(
@@ -96,13 +97,13 @@ public class PortletPreferencesFactoryImplTest {
 		String portletPreferencesXML =
 			PortletPreferencesTestUtil.getPortletPreferencesXML(name, values);
 
-		PortletPreferencesLocalServiceUtil.addPortletPreferences(
+		_portletPreferencesLocalService.addPortletPreferences(
 			TestPropsValues.getCompanyId(), ownerId, ownerType,
 			_layout.getPlid(), customizableColumnPortletId, _portlet,
 			portletPreferencesXML);
 
 		PortletPreferences layoutPortletSetup =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+			_portletPreferencesFactory.getLayoutPortletSetup(
 				_layout, customizableColumnPortletId);
 
 		Assert.assertArrayEquals(
@@ -116,5 +117,14 @@ public class PortletPreferencesFactoryImplTest {
 
 	private Layout _layout;
 	private Portlet _portlet;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
+
+	@Inject
+	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

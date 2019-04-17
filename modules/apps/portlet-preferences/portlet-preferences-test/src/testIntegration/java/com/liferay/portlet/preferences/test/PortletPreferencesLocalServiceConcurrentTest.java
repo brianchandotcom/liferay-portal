@@ -17,7 +17,7 @@ package com.liferay.portlet.preferences.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
@@ -36,6 +36,7 @@ import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedMultipleLogs;
 import com.liferay.portal.test.rule.ExpectedType;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -84,8 +85,7 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 
 		AopInvocationHandler aopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
-				PortletPreferencesLocalServiceUtil.getService(),
-				AopInvocationHandler.class);
+				_portletPreferencesLocalService, AopInvocationHandler.class);
 
 		final PortletPreferencesLocalServiceImpl
 			portletPreferencesLocalServiceImpl =
@@ -198,10 +198,9 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 
 					@Override
 					public PortletPreferences call() throws PortalException {
-						return PortletPreferencesLocalServiceUtil.
-							getPreferences(
-								TestPropsValues.getCompanyId(), ownerId,
-								ownerType, plid, portletId);
+						return _portletPreferencesLocalService.getPreferences(
+							TestPropsValues.getCompanyId(), ownerId, ownerType,
+							plid, portletId);
 					}
 
 				};
@@ -234,7 +233,7 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 				portletPreferencesSet.size());
 
 			_portletPreferences =
-				PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				_portletPreferencesLocalService.getPortletPreferences(
 					ownerId, ownerType, plid, portletId);
 		}
 		finally {
@@ -245,6 +244,9 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 	@DeleteAfterTestRun
 	private com.liferay.portal.kernel.model.PortletPreferences
 		_portletPreferences;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	private int _threadCount;
 

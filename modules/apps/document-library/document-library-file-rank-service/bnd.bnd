@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.document.library.file.rank.service
 Bundle-Version: 2.0.0
 Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true
+-dsannotations-options: inherit

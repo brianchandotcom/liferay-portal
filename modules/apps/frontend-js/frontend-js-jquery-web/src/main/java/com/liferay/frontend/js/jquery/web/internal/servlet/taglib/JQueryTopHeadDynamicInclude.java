@@ -15,8 +15,10 @@
 package com.liferay.frontend.js.jquery.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.jquery.web.configuration.JSJQueryConfiguration;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
@@ -29,6 +31,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -57,25 +60,47 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = response.getWriter();
 
+		StringBundler sb = new StringBundler();
+
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				request);
 
+		String comboURL = _portal.getStaticResourceURL(
+				request, _comboContextPath, "minifierType=js", _lastModified);
+
+		sb.append("<script data-senna-track=\"permanent\" src=\"");
+		sb.append(comboURL);
+
+		Bundle bundle = _bundleContext.getBundle();
+
 		for (String fileName : _FILE_NAMES) {
-			printWriter.print("<script data-senna-track=\"permanent\" src=\"");
 
-			printWriter.print(
+			sb.append("&");
+
+			sb.append(
 				absolutePortalURLBuilder.forModule(
-					_bundleContext.getBundle(), fileName
+					bundle, fileName
 				).build());
-
-			printWriter.println("\" type=\"text/javascript\"></script>");
 		}
+
+		sb.append("\" type=\"text/javascript\"></script>");
+
+		printWriter.println(sb.toString());
 	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
+	}
+
+	@Reference(unbind = "-")
+	public void setPortal(Portal portal) {
+		String pathContext = portal.getPathContext();
+
+		_comboContextPath = pathContext.concat("/combo");
+
+		_portal = portal;
 	}
 
 	@Activate
@@ -89,6 +114,8 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		_jsJQueryConfiguration = ConfigurableUtil.createConfigurable(
 			JSJQueryConfiguration.class, properties);
+
+		_lastModified = System.currentTimeMillis();
 	}
 
 	private static final String[] _FILE_NAMES = {
@@ -99,6 +126,9 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private BundleContext _bundleContext;
+	private String _comboContextPath;
 	private volatile JSJQueryConfiguration _jsJQueryConfiguration;
+	private volatile long _lastModified;
+	private Portal _portal;
 
 }

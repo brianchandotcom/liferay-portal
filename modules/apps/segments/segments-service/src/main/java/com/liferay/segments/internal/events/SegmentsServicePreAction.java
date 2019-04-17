@@ -37,6 +37,7 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperienceModel;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.simulator.SegmentsEntrySimulator;
 
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eduardo García
@@ -86,37 +90,55 @@ public class SegmentsServicePreAction extends Action {
 			return;
 		}
 
-		long[] segmentsEntryIds = {SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT};
+		long[] segmentsEntryIds = new long[0];
 
 		Layout layout = themeDisplay.getLayout();
 
 		if (_segmentsServiceConfiguration.segmentationEnabled() &&
 			!layout.isTypeControlPanel()) {
 
-			try {
-				segmentsEntryIds = ArrayUtil.append(
-					_segmentsEntryProvider.getSegmentsEntryIds(
-						themeDisplay.getScopeGroupId(), User.class.getName(),
-						themeDisplay.getUserId(),
-						_requestContextMapper.map(request)),
-					segmentsEntryIds);
-			}
-			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(pe.getMessage());
-				}
-			}
+			segmentsEntryIds = _getSegmentsEntryIds(
+				request, themeDisplay.getScopeGroupId(),
+				themeDisplay.getUserId());
 		}
 
 		request.setAttribute(
-			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
+			SegmentsWebKeys.SEGMENTS_ENTRY_IDS,
+			ArrayUtil.append(
+				segmentsEntryIds, SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT));
+
+		long[] segmentsExperienceIds = _getSegmentsExperienceIds(
+			layout.getGroupId(), segmentsEntryIds,
+			_portal.getClassNameId(Layout.class.getName()), layout.getPlid());
 
 		request.setAttribute(
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-			_getSegmentsExperienceIds(
-				layout.getGroupId(), segmentsEntryIds,
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid()));
+			ArrayUtil.append(
+				segmentsExperienceIds,
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT));
+	}
+
+	private long[] _getSegmentsEntryIds(
+		HttpServletRequest request, long groupId, long userId) {
+
+		if ((_segmentsEntrySimulator != null) &&
+			_segmentsEntrySimulator.isSimulationActive(userId)) {
+
+			return _segmentsEntrySimulator.getSimulatedSegmentsEntryIds(userId);
+		}
+
+		try {
+			return _segmentsEntryProvider.getSegmentsEntryIds(
+				groupId, User.class.getName(), userId,
+				_requestContextMapper.map(request));
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe.getMessage());
+			}
+
+			return new long[0];
+		}
 	}
 
 	private long[] _getSegmentsExperienceIds(
@@ -129,11 +151,9 @@ public class SegmentsServicePreAction extends Action {
 
 		Stream<SegmentsExperience> stream = segmentsExperiences.stream();
 
-		return ArrayUtil.append(
-			stream.mapToLong(
-				SegmentsExperienceModel::getSegmentsExperienceId
-			).toArray(),
-			new long[] {SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT});
+		return stream.mapToLong(
+			SegmentsExperienceModel::getSegmentsExperienceId
+		).toArray();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -150,6 +170,14 @@ public class SegmentsServicePreAction extends Action {
 
 	@Reference
 	private SegmentsEntryProvider _segmentsEntryProvider;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private volatile SegmentsEntrySimulator _segmentsEntrySimulator;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

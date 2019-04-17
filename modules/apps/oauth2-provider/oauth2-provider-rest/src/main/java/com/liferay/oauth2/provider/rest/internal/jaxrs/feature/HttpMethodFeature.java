@@ -17,11 +17,11 @@ package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.reflect.AnnotationLocator;
 
 import java.lang.annotation.Annotation;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -56,6 +56,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	property = {
+		"ignore.missing.scopes=HEAD", "ignore.missing.scopes=OPTIONS",
 		"osgi.jaxrs.application.select=(|(&(!(oauth2.scope.checker.type=*))(!(oauth2.scopechecker.type=*)))(|(oauth2.scope.checker.type=http.method)(oauth2.scopechecker.type=http.method)))",
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.OAuth2)",
@@ -80,18 +81,33 @@ public class HttpMethodFeature implements Feature {
 
 		Configuration configuration = context.getConfiguration();
 
+		Map<String, Object> applicationProperties =
+			(Map<String, Object>)configuration.getProperty(
+				"osgi.jaxrs.application.serviceProperties");
+
+		Object ignoreScopesObject = applicationProperties.get(
+			"ignore.missing.scopes");
+
+		if (ignoreScopesObject != null) {
+			_ignoreMissingScopes = new HashSet<>(
+				StringPlus.asList(ignoreScopesObject));
+		}
+
 		_serviceRegistration = _bundleContext.registerService(
 			ScopeFinder.class, new CollectionScopeFinder(_scopes),
-			new Hashtable<>(
-				(Map<String, Object>)configuration.getProperty(
-					"osgi.jaxrs.application.serviceProperties")));
+			new Hashtable<>(applicationProperties));
 
 		return true;
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_bundleContext = bundleContext;
+
+		_ignoreMissingScopes = new HashSet<>(
+			StringPlus.asList(properties.get("ignore.missing.scopes")));
 	}
 
 	@Deactivate
@@ -123,6 +139,7 @@ public class HttpMethodFeature implements Feature {
 	}
 
 	private BundleContext _bundleContext;
+	private Set<String> _ignoreMissingScopes;
 
 	@Reference
 	private ScopeChecker _scopeChecker;
@@ -138,7 +155,12 @@ public class HttpMethodFeature implements Feature {
 
 			Request request = containerRequestContext.getRequest();
 
-			if (_scopeChecker.checkScope(request.getMethod())) {
+			String requestMethod = request.getMethod();
+
+			if (_scopeChecker.checkScope(requestMethod) ||
+				(!_scopes.contains(requestMethod) &&
+				 _ignoreMissingScopes.contains(requestMethod))) {
+
 				return true;
 			}
 

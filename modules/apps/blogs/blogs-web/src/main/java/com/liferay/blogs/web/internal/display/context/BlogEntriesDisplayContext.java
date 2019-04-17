@@ -269,6 +269,7 @@ public class BlogEntriesDisplayContext {
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setKeywords(keywords);
 			searchContext.setStart(searchContainer.getStart());
+			searchContext.setIncludeDiscussions(true);
 
 			String entriesNavigation = ParamUtil.getString(
 				_request, "entriesNavigation");
@@ -310,8 +311,7 @@ public class BlogEntriesDisplayContext {
 			for (int i = 0; i < docs.length; i++) {
 				Document doc = hits.doc(i);
 
-				long entryId = GetterUtil.getLong(
-					doc.get(Field.ENTRY_CLASS_PK));
+				long entryId = GetterUtil.getLong(doc.get(Field.CLASS_PK));
 
 				BlogsEntry entry = null;
 

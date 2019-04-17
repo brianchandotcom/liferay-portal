@@ -1561,6 +1561,11 @@ definition {
 			checkboxName = "Blogs Entry"
 		);
 
+		AssertElementNotPresent(
+			locator1 = "Checkbox#ANY_CHECKBOX",
+			checkboxName = "fruit"
+		);
+
 		SearchFacetPortlet.uncheckFacet(facetValueName = "Blogs Entry");
 
 		AssertVisible(

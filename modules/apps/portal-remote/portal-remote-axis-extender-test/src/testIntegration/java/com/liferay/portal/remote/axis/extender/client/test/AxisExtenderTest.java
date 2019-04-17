@@ -22,7 +22,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,9 +37,8 @@ public class AxisExtenderTest {
 	@Test
 	public void testGreeter() throws Exception {
 		URL url = new URL(
-			_url,
-			"/o/com.liferay.portal.remote.axis.extender.test/api/axis" +
-				"/CalcService?wsdl");
+			"http://localhost:8080/o/com.liferay.portal.remote.axis.extender." +
+				"test/api/axis/CalcService?wsdl");
 
 		CalcServiceSoapService calcServiceSoapService =
 			new CalcServiceSoapServiceLocator();
@@ -50,8 +48,5 @@ public class AxisExtenderTest {
 
 		Assert.assertEquals(5, calcServiceSoap.sum(2, 3));
 	}
-
-	@ArquillianResource
-	private URL _url;
 
 }

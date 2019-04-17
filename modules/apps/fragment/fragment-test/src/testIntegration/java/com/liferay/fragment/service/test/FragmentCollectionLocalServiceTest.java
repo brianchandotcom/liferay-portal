@@ -33,13 +33,16 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 import java.util.List;
 
 import org.junit.Assert;
@@ -60,7 +63,8 @@ public class FragmentCollectionLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerTestRule.INSTANCE, PersistenceTestRule.INSTANCE,
+			PermissionCheckerMethodTestRule.INSTANCE,
+			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(
 				Propagation.REQUIRED, "com.liferay.fragment.service"));
 
@@ -75,14 +79,14 @@ public class FragmentCollectionLocalServiceTest {
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), "Fragment Collection");
 
-		FragmentCollection fragmentCollectionActual =
+		FragmentCollection persistedFragmentCollection =
 			FragmentCollectionUtil.fetchByUUID_G(
 				fragmentCollection.getUuid(), fragmentCollection.getGroupId());
 
-		Assert.assertEquals(fragmentCollection, fragmentCollectionActual);
+		Assert.assertEquals(fragmentCollection, persistedFragmentCollection);
 
 		Assert.assertEquals(
-			"Fragment Collection", fragmentCollectionActual.getName());
+			"Fragment Collection", persistedFragmentCollection.getName());
 	}
 
 	@Test(expected = FragmentCollectionNameException.class)
@@ -100,15 +104,15 @@ public class FragmentCollectionLocalServiceTest {
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				"FRAGMENTCOLLECTIONKEY");
 
-		FragmentCollection fragmentCollectionActual =
+		FragmentCollection persistedFragmentCollection =
 			FragmentCollectionUtil.fetchByUUID_G(
 				fragmentCollection.getUuid(), fragmentCollection.getGroupId());
 
-		Assert.assertEquals(fragmentCollection, fragmentCollectionActual);
+		Assert.assertEquals(fragmentCollection, persistedFragmentCollection);
 
 		Assert.assertEquals(
 			StringUtil.toLowerCase("FRAGMENTCOLLECTIONKEY"),
-			fragmentCollectionActual.getFragmentCollectionKey());
+			persistedFragmentCollection.getFragmentCollectionKey());
 	}
 
 	@Test(expected = FragmentCollectionNameException.class)
@@ -211,6 +215,11 @@ public class FragmentCollectionLocalServiceTest {
 	public void testGetFragmentCollectionsByKeywords() throws Exception {
 		String fragmentCollectionName = RandomTestUtil.randomString();
 
+		List<FragmentCollection> originalFragmentCollections =
+			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+				_group.getGroupId(), fragmentCollectionName, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
 		FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId(), fragmentCollectionName);
 
@@ -223,7 +232,8 @@ public class FragmentCollectionLocalServiceTest {
 				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			actualFragmentCollections.toString(), 2,
+			actualFragmentCollections.toString(),
+			originalFragmentCollections.size() + 2,
 			actualFragmentCollections.size());
 	}
 
@@ -231,29 +241,33 @@ public class FragmentCollectionLocalServiceTest {
 	public void testGetFragmentCollectionsByOrderByCreateDateComparatorAsc()
 		throws Exception {
 
-		Date date = new Date();
+		LocalDateTime now = LocalDateTime.now();
 
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), "Fragment Collection",
-				new Date(date.getTime() + Time.SECOND));
+				Timestamp.valueOf(now));
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId(), "A Fragment Collection",
-			new Date(date.getTime() + Time.SECOND * 2));
+			Timestamp.valueOf(now));
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId(), "B Fragment Collection",
-			new Date(date.getTime() + Time.SECOND * 3));
+			Timestamp.valueOf(now));
 
 		FragmentCollectionCreateDateComparator
-			ascFragmentCollectionCreateDateComparator =
+			fragmentCollectionCreateDateComparator =
 				new FragmentCollectionCreateDateComparator(true);
 
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				ascFragmentCollectionCreateDateComparator);
+				fragmentCollectionCreateDateComparator);
 
 		FragmentCollection firstFragmentCollection = fragmentCollections.get(0);
 
@@ -264,29 +278,33 @@ public class FragmentCollectionLocalServiceTest {
 	public void testGetFragmentCollectionsByOrderByCreateDateComparatorDesc()
 		throws Exception {
 
-		Date date = new Date();
+		LocalDateTime now = LocalDateTime.now();
 
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), "Fragment Collection",
-				new Date(date.getTime() + Time.SECOND));
+				Timestamp.valueOf(now));
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId(), "A Fragment Collection",
-			new Date(date.getTime() + Time.SECOND * 2));
+			Timestamp.valueOf(now));
+
+		now = now.plus(1, ChronoUnit.MINUTES);
 
 		FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId(), "B Fragment Collection",
-			new Date(date.getTime() + Time.SECOND * 3));
+			Timestamp.valueOf(now));
 
 		FragmentCollectionCreateDateComparator
-			descFragmentCollectionCreateDateComparator =
+			fragmentCollectionCreateDateComparator =
 				new FragmentCollectionCreateDateComparator(false);
 
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				descFragmentCollectionCreateDateComparator);
+				fragmentCollectionCreateDateComparator);
 
 		FragmentCollection lastFragmentCollection = fragmentCollections.get(
 			fragmentCollections.size() - 1);
@@ -308,13 +326,13 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId(), "AB Fragment");
 
-		FragmentCollectionNameComparator ascFragmentCollectionNameComparator =
+		FragmentCollectionNameComparator fragmentCollectionNameComparator =
 			new FragmentCollectionNameComparator(true);
 
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
 				_group.getGroupId(), "Collection", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, ascFragmentCollectionNameComparator);
+				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
 
 		FragmentCollection firstFragmentCollection = fragmentCollections.get(0);
 
@@ -337,13 +355,13 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId(), "AB Fragment");
 
-		FragmentCollectionNameComparator descFragmentCollectionNameComparator =
+		FragmentCollectionNameComparator fragmentCollectionNameComparator =
 			new FragmentCollectionNameComparator(false);
 
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
 				_group.getGroupId(), "Collection", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, descFragmentCollectionNameComparator);
+				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
 
 		FragmentCollection lastFragmentCollection = fragmentCollections.get(1);
 
@@ -362,13 +380,14 @@ public class FragmentCollectionLocalServiceTest {
 
 		FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId(), "AB Fragment Collection");
-		FragmentCollectionNameComparator ascFragmentCollectionNameComparator =
+
+		FragmentCollectionNameComparator fragmentCollectionNameComparator =
 			new FragmentCollectionNameComparator(true);
 
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				ascFragmentCollectionNameComparator);
+				fragmentCollectionNameComparator);
 
 		FragmentCollection firstFragmentCollection = fragmentCollections.get(0);
 
@@ -388,13 +407,13 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentTestUtil.addFragmentCollection(
 			_group.getGroupId(), "AB Fragment Collection");
 
-		FragmentCollectionNameComparator descFragmentCollectionNameComparator =
+		FragmentCollectionNameComparator fragmentCollectionNameComparator =
 			new FragmentCollectionNameComparator(false);
 
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				descFragmentCollectionNameComparator);
+				fragmentCollectionNameComparator);
 
 		FragmentCollection lastFragmentCollection = fragmentCollections.get(1);
 
@@ -408,14 +427,11 @@ public class FragmentCollectionLocalServiceTest {
 		int collectionSize = 5;
 
 		for (int i = 0; i < collectionSize; i++) {
-			String fragmentCollectionName =
-				"Fragment Collection " + String.valueOf(i);
+			String fragmentCollectionName = "Fragment Collection " + i;
 
 			FragmentTestUtil.addFragmentCollection(
 				_group.getGroupId(), fragmentCollectionName);
 		}
-
-		//get all fragments but the first and last
 
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(

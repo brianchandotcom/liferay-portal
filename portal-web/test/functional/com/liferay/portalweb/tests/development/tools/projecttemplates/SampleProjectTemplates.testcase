@@ -28,7 +28,7 @@ definition {
 
 	@priority = "5"
 	test MvcPortletTemplateSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property project.templates = "mvc-portlet";
 		property test.name.skip.portal.instance = "SampleProjectTemplates#MvcPortletTemplateSmoke";
 

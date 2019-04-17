@@ -3,7 +3,7 @@ import getCN from 'classnames';
 import Icon from '../../../shared/components/Icon';
 import React from 'react';
 
-const CLASSNAME = 'process-dashboard-summary-card';
+const CLASS_NAME = 'process-dashboard-summary-card';
 
 export default class SummaryCard extends React.Component {
 	constructor(props) {
@@ -34,14 +34,14 @@ export default class SummaryCard extends React.Component {
 			total
 		} = this.props;
 
-		const classes = getCN(CLASSNAME, elementClasses);
+		const className = getCN(CLASS_NAME, elementClasses);
 
 		const { inOver } = this.state;
 
 		return (
 			<a
-				className={classes}
 				href={'#'}
+				className={className}
 				onMouseOut={this.handleMouseOut}
 				onMouseOver={this.handleMouseOver}
 			>

@@ -1,6 +1,6 @@
 import {Config} from 'metal-state';
 
-import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../utils/constants';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 const LayoutDataShape = Config.shapeOf(
@@ -21,7 +21,10 @@ const LayoutDataShape = Config.shapeOf(
 							}
 						)
 					),
-					rowId: Config.string()
+					rowId: Config.string(),
+					type: Config
+						.oneOf(Object.values(FRAGMENTS_EDITOR_ROW_TYPES))
+						.value(FRAGMENTS_EDITOR_ROW_TYPES.componentRow)
 				}
 			)
 		)

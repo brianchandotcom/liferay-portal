@@ -115,7 +115,7 @@ definition {
 			templateLanguage = "${templateLanguage}",
 			templateName = "${templateName}",
 			templateScript = "${templateScript}",
-			templateSmallImageURL = "${templateSmallImageURL}"
+			imageSourceURL = "${imageSourceURL}"
 		);
 
 		DDLDataDefinition.save();
@@ -223,9 +223,9 @@ definition {
 			templateLanguage = "${templateLanguage}"
 		);
 
-		if (isSet(templateSmallImageURL)) {
-			WebContentTemplates.inputSmallImage(
-				templateSmallImageURL = "${templateSmallImageURL}"
+		if (isSet(imageSourceURL)) {
+			WebContent.addFeaturedImageFromURL(
+				imageSourceURL = "${imageSourceURL}"
 			);
 		}
 
@@ -271,7 +271,7 @@ definition {
 			templateLanguage = "${templateLanguage}",
 			templateName = "${templateName}",
 			templateScript = "${templateScript}",
-			templateSmallImageURL = "${templateSmallImageURL}"
+			imageSourceURL = "${imageSourceURL}"
 		);
 
 		DDLDataDefinition.save();

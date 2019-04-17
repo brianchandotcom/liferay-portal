@@ -87,7 +87,7 @@ definition {
 
 		WebContentTemplates.addCP(
 			templateName = "WC Template Name",
-			templateSmallImageURL = "http://localhost:8080/webdav/staging-site-name-staging/document_library/Document_1.jpg"
+			imageSourceURL = "http://localhost:8080/webdav/staging-site-name-staging/document_library/Document_1.jpg"
 		);
 
 		ProductMenu.gotoPortlet(
@@ -97,6 +97,8 @@ definition {
 		);
 
 		Navigator.gotoNavItem(navItem = "Templates");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		WebContentTemplates.viewTableEntryCP(
 			templateName = "WC Template Name",
@@ -121,6 +123,8 @@ definition {
 		);
 
 		Navigator.gotoNavItem(navItem = "Templates");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		WebContentTemplates.viewTableEntryCP(
 			templateName = "WC Template Name",

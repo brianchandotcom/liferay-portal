@@ -19,8 +19,6 @@ package com.liferay.product.navigation.control.menu.web.internal.constants;
  */
 public class ProductNavigationControlMenuWebKeys {
 
-	public static final String LAYOUT_BACK_URL = "LAYOUT_BACK_URL";
-
 	public static final String PORTLET_BACK_URL = "PORTLET_BACK_URL";
 
 	public static final String PORTLET_DESCRIPTION = "PORTLET_DESCRIPTION";

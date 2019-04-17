@@ -313,64 +313,6 @@ public class FragmentCollectionLocalServiceTest {
 	}
 
 	@Test
-	public void testGetFragmentCollectionsByOrderByNameComparatorAndKeywordsAsc()
-		throws Exception {
-
-		FragmentCollection fragmentCollection =
-			FragmentTestUtil.addFragmentCollection(
-				_group.getGroupId(), "AA Fragment Collection");
-
-		FragmentTestUtil.addFragmentCollection(
-			_group.getGroupId(), "AC Fragment Collection");
-
-		FragmentTestUtil.addFragmentCollection(
-			_group.getGroupId(), "AB Fragment");
-
-		FragmentCollectionNameComparator fragmentCollectionNameComparator =
-			new FragmentCollectionNameComparator(true);
-
-		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionLocalServiceUtil.getFragmentCollections(
-				_group.getGroupId(), "Collection", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
-
-		FragmentCollection firstFragmentCollection = fragmentCollections.get(0);
-
-		Assert.assertEquals(
-			fragmentCollections.toString(), fragmentCollection.getName(),
-			firstFragmentCollection.getName());
-	}
-
-	@Test
-	public void testGetFragmentCollectionsByOrderByNameComparatorAndKeywordsDesc()
-		throws Exception {
-
-		FragmentCollection fragmentCollection =
-			FragmentTestUtil.addFragmentCollection(
-				_group.getGroupId(), "AA Fragment Collection");
-
-		FragmentTestUtil.addFragmentCollection(
-			_group.getGroupId(), "AC Fragment Collection");
-
-		FragmentTestUtil.addFragmentCollection(
-			_group.getGroupId(), "AB Fragment");
-
-		FragmentCollectionNameComparator fragmentCollectionNameComparator =
-			new FragmentCollectionNameComparator(false);
-
-		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionLocalServiceUtil.getFragmentCollections(
-				_group.getGroupId(), "Collection", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
-
-		FragmentCollection lastFragmentCollection = fragmentCollections.get(1);
-
-		Assert.assertEquals(
-			fragmentCollections.toString(), fragmentCollection.getName(),
-			lastFragmentCollection.getName());
-	}
-
-	@Test
 	public void testGetFragmentCollectionsByOrderByNameComparatorAsc()
 		throws Exception {
 

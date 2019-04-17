@@ -1,9 +1,0 @@
-{
-	"cssPath": "index.css",
-	"fragmentEntryKey": "header-navigation-light",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "Header navigation light",
-	"thumbnail": "header_navigation_light.png",
-	"type": "section"
-}

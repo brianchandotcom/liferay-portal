@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Fragment Collection Contributor Footer
-Bundle-SymbolicName: com.liferay.fragment.collection.contributor.footer
-Bundle-Version: 1.0.0
-Web-ContextPath: /fragment-collection-contributor-footer
--dsannotations-options: inherit

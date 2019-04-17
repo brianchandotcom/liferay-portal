@@ -1,9 +1,0 @@
-{
-	"cssPath": "index.css",
-	"fragmentEntryKey": "footer-simple",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "Footer simple",
-	"thumbnail": "footer_simple.png",
-	"type": "section"
-}

@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Fragment Collection Contributor Alert
-Bundle-SymbolicName: com.liferay.fragment.collection.contributor.alert
-Bundle-Version: 1.0.0
-Web-ContextPath: /fragment-collection-contributor-alert
--dsannotations-options: inherit

@@ -1,9 +1,0 @@
-{
-	"fragments": [
-		"alert-simple-danger",
-		"alert-simple-primary",
-		"alert-simple-success",
-		"alert-simple-warning"
-	],
-	"name": "Alerts"
-}

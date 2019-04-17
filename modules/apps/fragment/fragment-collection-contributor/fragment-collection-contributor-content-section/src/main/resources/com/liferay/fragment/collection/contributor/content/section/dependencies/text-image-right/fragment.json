@@ -1,9 +1,0 @@
-{
-	"cssPath": "index.css",
-	"fragmentEntryKey": "text-image-right",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "Text image right",
-	"thumbnail": "text_image_right.png",
-	"type": "section"
-}

@@ -1,9 +1,0 @@
-{
-	"cssPath": "index.css",
-	"fragmentEntryKey": "footer-logo",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "Footer logo",
-	"thumbnail": "footer_logo.png",
-	"type": "section"
-}

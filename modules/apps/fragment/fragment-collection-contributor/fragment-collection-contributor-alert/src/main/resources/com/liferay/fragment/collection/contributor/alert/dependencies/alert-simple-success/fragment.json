@@ -1,9 +1,0 @@
-{
-	"cssPath": "index.css",
-	"fragmentEntryKey": "alert-simple-success",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "Alert simple success",
-	"thumbnail": "alert_simple_success.png",
-	"type": "section"
-}

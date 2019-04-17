@@ -21,30 +21,33 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new Segments
 %>
 
 <aui:form method="post" name="segmentsSimulationFm">
-	<div class="container-fluid segments-container">
-		<table class="table table-autofit table-condensed table-responsive">
-			<tbody>
+	<ul class="list-unstyled">
 
-				<%
-				for (SegmentsEntry segmentsEntry : segmentsSimulationDisplayContext.getSegmentsEntries()) {
-				%>
+		<%
+		for (SegmentsEntry segmentsEntry : segmentsSimulationDisplayContext.getSegmentsEntries()) {
+		%>
 
-					<tr>
-						<td class="lfr-checkbox-column text-left text-middle">
-							<input class="simulated-segment" name="<%= segmentsSimulationDisplayContext.getPortletNamespace() + "segmentsEntryId" %>" type="checkbox" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
-						</td>
-						<td class="table-cell-content">
-							<liferay-ui:message key="<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>" />
-						</td>
-					</tr>
+			<li class="bg-transparent list-group-item list-group-item-flex">
+				<span>
+					<div class="custom-checkbox">
+						<label class="position-relative text-light">
+							<input class="custom-control-input simulated-segment" name="<%= segmentsSimulationDisplayContext.getPortletNamespace() + "segmentsEntryId" %>" type="checkbox" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
 
-				<%
-				}
-				%>
+							<span class="custom-control-label">
+								<span class="custom-control-label-text">
+									<liferay-ui:message key="<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>" />
+								</span>
+							</span>
+						</label>
+					</div>
+				</span>
+			</li>
 
-			</tbody>
-		</table>
-	</div>
+		<%
+		}
+		%>
+
+	</ul>
 </aui:form>
 
 <aui:script use="liferay-portlet-segments-simulation">

@@ -20,7 +20,7 @@ export default class WorkloadByStepTable extends React.Component {
 					<thead>
 						<tr>
 							<th className="table-cell-expand table-head-title">
-								<ListHeadItem name="title" title={stepNameTitle} />
+								{stepNameTitle}
 							</th>
 
 							<th className="table-head-title text-right">

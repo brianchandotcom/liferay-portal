@@ -58,7 +58,7 @@ class WorkloadByStepCard extends React.Component {
 
 		return client
 			.get(
-				`/processes/${processId}/slas?page=${page}&pageSize=${pageSize}&sort=${sort}`
+				`/processes/${processId}/tasks?page=${page}&pageSize=${pageSize}&sort=${sort}`
 			)
 			.then(({ data }) => {
 				this.setState({

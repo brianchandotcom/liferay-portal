@@ -156,7 +156,7 @@ class SLAListCard extends React.Component {
 
 				{showConfirmDialog && <SLAConfirmDialog itemToRemove={itemToRemove} />}
 
-				<div className="lfr-search-container-wrapper container-fluid-1280">
+				<div className="container-fluid-1280 lfr-search-container-wrapper">
 					{showSLAsUpdatingAlert && (
 						<div className="alert alert-dismissible alert-info" role="alert">
 							<span className="alert-indicator">

@@ -586,7 +586,12 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		if (Validator.isNotNull(queryString)) {
 			sb.append(StringPool.QUESTION);
-			sb.append(queryString);
+			if (queryString.startsWith(StringPool.AMPERSAND)){
+				sb.append(queryString.substring(1));
+			}
+			else{
+				sb.append(queryString);
+			}
 		}
 
 		String portletFileEntryURL = sb.toString();

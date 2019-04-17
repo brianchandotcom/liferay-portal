@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service.impl;
+package com.liferay.portal.service.test;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

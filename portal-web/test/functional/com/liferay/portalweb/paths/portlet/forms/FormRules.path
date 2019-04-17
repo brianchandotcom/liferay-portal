@@ -101,12 +101,12 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_ACTION_TARGET</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'action')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_actionTarget}')] | //div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_actionTarget}']</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class, 'show')]//li[.='${key_actionTarget}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_JUMP_TO_PAGE_ACTION_TARGET</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target-action')]//div/following-sibling::div//div[contains(@id,'action') and contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target-action')]//div[contains(@class,'select-field-trigger')]/div</td>
 	<td></td>
 </tr>
 <tr>

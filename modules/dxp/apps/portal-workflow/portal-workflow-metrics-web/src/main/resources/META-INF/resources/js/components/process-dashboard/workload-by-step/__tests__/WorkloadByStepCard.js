@@ -35,24 +35,6 @@ test('Should component receive props', () => {
 	expect(component).toMatchSnapshot();
 });
 
-test('Should component reload page', () => {
-	const component = mount(
-		<Router client={fetchFailure()}>
-			<WorkloadByStepCard page={1} pageSize={10} processId={35315} />
-		</Router>
-	);
-
-	window.location.reload = jest.fn();
-
-	const instance = component.find(WorkloadByStepCard).instance();
-
-	instance.reloadPage();
-
-	expect(window.location.reload).toHaveBeenCalled();
-
-	window.location.reload.mockRestore();
-});
-
 test('Should component set error state after request fails', () => {
 	const component = mount(
 		<Router client={fetchFailure()}>

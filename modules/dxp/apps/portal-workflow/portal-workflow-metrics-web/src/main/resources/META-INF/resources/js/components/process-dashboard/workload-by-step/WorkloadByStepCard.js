@@ -1,11 +1,10 @@
 import { AppContext } from '../../AppContext';
-import autobind from 'autobind-decorator';
 import Icon from '../../../shared/components/Icon';
 import ListView from '../../../shared/components/list/ListView';
-import { openErrorToast } from '../../../shared/util/toast';
 import PaginationBar from '../../../shared/components/pagination/PaginationBar';
 import Panel from '../../../shared/components/Panel';
 import React from 'react';
+import ReloadButton from '../../../shared/components/list/ReloadButton';
 import Tooltip from '../../../shared/components/Tooltip';
 import WorkloadByStepTable from './WorkloadByStepTable';
 
@@ -44,7 +43,8 @@ class WorkloadByStepCard extends React.Component {
 				this.setState({
 					error: Liferay.Language.get(
 						'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-					)
+					),
+					loading: false
 				})
 			);
 	}
@@ -66,30 +66,17 @@ class WorkloadByStepCard extends React.Component {
 				});
 
 				return data;
-			})
-			.catch(openErrorToast);
-	}
-
-	@autobind
-	reloadPage() {
-		location.reload();
+			});
 	}
 
 	render() {
 		const emptyMessageText = Liferay.Language.get(
 			'there-are-no-pending-items-at-the-moment'
 		);
-		const { error, items = [], totalCount } = this.state;
-		const { loading } = this;
+		const { error, items = [], loading, totalCount } = this.state;
 		const { page, pageSize } = this.props;
 
 		const fetching = !loading && !totalCount;
-
-		const reloadButton = (
-			<button className="btn btn-link btn-sm" onClick={this.reloadPage}>
-				{Liferay.Language.get('reload-page')}
-			</button>
-		);
 
 		return (
 			<Panel className="container-fluid-1280 mt-4">
@@ -109,11 +96,13 @@ class WorkloadByStepCard extends React.Component {
 				</Panel.Header>
 				<Panel.Body>
 					<ListView
-						emptyActionButton={reloadButton}
+						className="border-0"
+						emptyActionButton={<ReloadButton />}
 						emptyMessageClassName="small"
 						emptyMessageText={emptyMessageText}
 						errorMessageText={error}
 						fetching={fetching}
+						hideAnimation
 						loading={loading}
 					>
 						<WorkloadByStepTable items={items} />

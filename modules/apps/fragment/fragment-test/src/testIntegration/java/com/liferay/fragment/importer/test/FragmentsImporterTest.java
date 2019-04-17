@@ -175,6 +175,8 @@ public class FragmentsImporterTest {
 		);
 
 		Assert.assertTrue(fragmentEntryNames.contains("resource"));
+
+		Assert.assertTrue(fragmentEntryNames.contains("resources"));
 	}
 
 	@Test

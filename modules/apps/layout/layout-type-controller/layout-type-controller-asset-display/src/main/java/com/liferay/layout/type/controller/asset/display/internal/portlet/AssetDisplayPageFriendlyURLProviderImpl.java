@@ -70,11 +70,9 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			_portal.getGroupFriendlyURL(
 				group.getPublicLayoutSet(), themeDisplay));
 
-		String urlTitle = infoDisplayObjectProvider.getURLTitle(
-			themeDisplay.getLocale());
-
 		sb.append(infoDisplayContributor.getInfoURLSeparator());
-		sb.append(urlTitle);
+		sb.append(
+			infoDisplayObjectProvider.getURLTitle(themeDisplay.getLocale()));
 
 		return sb.toString();
 	}

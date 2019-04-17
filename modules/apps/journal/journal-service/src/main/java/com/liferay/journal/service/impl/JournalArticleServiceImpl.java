@@ -752,8 +752,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
-			groupId, articleId, version, null, null, languageId,
-			portletRequestModel, themeDisplay);
+			groupId, articleId, version, null, article.getDDMTemplateKey(),
+			languageId, portletRequestModel, themeDisplay);
 	}
 
 	/**
@@ -813,8 +813,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
-			groupId, articleId, null, null, languageId, portletRequestModel,
-			themeDisplay);
+			groupId, articleId, null, article.getDDMTemplateKey(), languageId,
+			portletRequestModel, themeDisplay);
 	}
 
 	/**

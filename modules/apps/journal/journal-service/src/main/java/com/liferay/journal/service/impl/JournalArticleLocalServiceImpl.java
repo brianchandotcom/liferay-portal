@@ -2280,8 +2280,11 @@ public class JournalArticleLocalServiceImpl
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		JournalArticle article = fetchDisplayArticle(groupId, articleId);
+
 		return getArticleContent(
-			groupId, articleId, viewMode, null, languageId, null, themeDisplay);
+			groupId, articleId, viewMode, article.getDDMTemplateKey(),
+			languageId, null, themeDisplay);
 	}
 
 	@Override
@@ -2463,9 +2466,11 @@ public class JournalArticleLocalServiceImpl
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		JournalArticle article = getDisplayArticle(groupId, articleId);
+
 		return getArticleDisplay(
-			groupId, articleId, null, viewMode, languageId, page,
-			portletRequestModel, themeDisplay);
+			groupId, articleId, article.getDDMTemplateKey(), viewMode,
+			languageId, page, portletRequestModel, themeDisplay);
 	}
 
 	/**
@@ -2555,8 +2560,11 @@ public class JournalArticleLocalServiceImpl
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		JournalArticle article = getDisplayArticle(groupId, articleId);
+
 		return getArticleDisplay(
-			groupId, articleId, null, viewMode, languageId, themeDisplay);
+			groupId, articleId, article.getDDMTemplateKey(), viewMode,
+			languageId, themeDisplay);
 	}
 
 	@Override
@@ -3865,8 +3873,9 @@ public class JournalArticleLocalServiceImpl
 
 		try {
 			getArticleDisplay(
-				article, null, Constants.VIEW, article.getDefaultLanguageId(),
-				0, portletRequestModel, themeDisplay, true);
+				article, article.getDDMTemplateKey(), Constants.VIEW,
+				article.getDefaultLanguageId(), 0, portletRequestModel,
+				themeDisplay, true);
 		}
 		catch (Exception e) {
 			return false;
@@ -8131,7 +8140,7 @@ public class JournalArticleLocalServiceImpl
 				serviceContext.getLiferayPortletResponse());
 
 			JournalArticleDisplay articleDisplay = getArticleDisplay(
-				article, null, Constants.VIEW,
+				article, article.getDDMTemplateKey(), Constants.VIEW,
 				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), 1,
 				portletRequestModel, serviceContext.getThemeDisplay());
 

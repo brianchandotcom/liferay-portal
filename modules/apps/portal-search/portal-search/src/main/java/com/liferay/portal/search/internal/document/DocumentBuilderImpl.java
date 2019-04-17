@@ -46,7 +46,7 @@ public class DocumentBuilderImpl implements DocumentBuilder {
 	}
 
 	@Override
-	public DocumentBuilder setDouble(String name, double value) {
+	public DocumentBuilder setDouble(String name, Double value) {
 		setFieldValue(name, value);
 
 		return this;
@@ -60,7 +60,7 @@ public class DocumentBuilderImpl implements DocumentBuilder {
 	}
 
 	@Override
-	public DocumentBuilder setFloat(String name, float value) {
+	public DocumentBuilder setFloat(String name, Float value) {
 		setFieldValue(name, value);
 
 		return this;
@@ -92,7 +92,7 @@ public class DocumentBuilderImpl implements DocumentBuilder {
 	}
 
 	@Override
-	public DocumentBuilder setInteger(String name, int value) {
+	public DocumentBuilder setInteger(String name, Integer value) {
 		setFieldValue(name, value);
 
 		return this;
@@ -106,7 +106,7 @@ public class DocumentBuilderImpl implements DocumentBuilder {
 	}
 
 	@Override
-	public DocumentBuilder setLong(String name, long value) {
+	public DocumentBuilder setLong(String name, Long value) {
 		setFieldValue(name, value);
 
 		return this;
@@ -143,6 +143,13 @@ public class DocumentBuilderImpl implements DocumentBuilder {
 	@Override
 	public DocumentBuilder setValues(String name, Collection<Object> values) {
 		_documentImpl.setFieldValues(name, values);
+
+		return this;
+	}
+
+	@Override
+	public DocumentBuilder unsetValue(String name) {
+		_documentImpl.unsetField(name);
 
 		return this;
 	}

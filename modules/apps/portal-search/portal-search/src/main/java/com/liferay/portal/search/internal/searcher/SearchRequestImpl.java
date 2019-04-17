@@ -212,6 +212,12 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		queryConfig.setHighlightEnabled(highlightEnabled);
 	}
 
+	public void setHighlightFields(String... highlightFields) {
+		QueryConfig queryConfig = _searchContext.getQueryConfig();
+
+		queryConfig.setHighlightFieldNames(highlightFields);
+	}
+
 	public void setIncludeResponseString(boolean includeResponseString) {
 		_includeResponseString = includeResponseString;
 	}
@@ -242,6 +248,12 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 
 	public void setRescoreQuery(Query query) {
 		_rescoreQuery = query;
+	}
+
+	public void setSelectedFieldNames(String... selectedFieldNames) {
+		QueryConfig queryConfig = _searchContext.getQueryConfig();
+
+		queryConfig.setSelectedFieldNames(selectedFieldNames);
 	}
 
 	public void setSorts(Sort... sorts) {

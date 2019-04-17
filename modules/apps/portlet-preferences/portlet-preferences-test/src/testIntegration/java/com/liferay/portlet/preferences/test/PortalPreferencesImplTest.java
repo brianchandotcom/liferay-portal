@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.service.test.SynchronousInvocationHandler;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
@@ -37,7 +38,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.ConcurrentModificationException;
@@ -83,6 +83,9 @@ public class PortalPreferencesImplTest {
 
 		_platformTransactionManager = ReflectionTestUtil.getFieldValue(
 			_originalTransactionExecutor, "_platformTransactionManager");
+
+		_synchronizeThreadLocal = ReflectionTestUtil.getFieldValue(
+			SynchronousInvocationHandler.class, "_synchronizeThreadLocal");
 	}
 
 	@Before
@@ -94,12 +97,12 @@ public class PortalPreferencesImplTest {
 
 		portalPreferences.setValue(_NAMESPACE, "testKey", "testValue");
 
-		_synchronizeThreadLocal.set(true);
+		SynchronousInvocationHandler.enable();
 	}
 
 	@After
 	public void tearDown() throws Throwable {
-		_synchronizeThreadLocal.set(false);
+		SynchronousInvocationHandler.disable();
 
 		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
@@ -340,7 +343,21 @@ public class PortalPreferencesImplTest {
 			ProxyUtil.newProxyInstance(
 				PortalPreferencesLocalService.class.getClassLoader(),
 				new Class<?>[] {PortalPreferencesLocalService.class},
-				new SynchronousInvocationHandler(_testOwnerId)));
+				new SynchronousInvocationHandler(
+					2,
+					() -> {
+						ReflectionTestUtil.setFieldValue(
+							_aopInvocationHandler, "_transactionExecutor",
+							new SynchronizedTransactionExecutor(_testOwnerId));
+
+						_aopInvocationHandler.setTarget(
+							_aopInvocationHandler.getTarget());
+
+						ReflectionTestUtil.setFieldValue(
+							PortalPreferencesLocalServiceUtil.class, "_service",
+							_portalPreferencesLocalService);
+					},
+					_updatePreferencesMethod, _portalPreferencesLocalService)));
 
 		Thread thread1 = new Thread(futureTask1, "Update Thread 1");
 
@@ -414,43 +431,6 @@ public class PortalPreferencesImplTest {
 
 	}
 
-	protected static class SynchronousInvocationHandler
-		implements InvocationHandler {
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] args)
-			throws Throwable {
-
-			if (_synchronizeThreadLocal.get() &&
-				_updatePreferencesMethod.equals(method)) {
-
-				_cyclicBarrier.await();
-			}
-
-			return method.invoke(_portalPreferencesLocalService, args);
-		}
-
-		private SynchronousInvocationHandler(long testOwnerId) {
-			_cyclicBarrier = new CyclicBarrier(
-				2,
-				() -> {
-					ReflectionTestUtil.setFieldValue(
-						_aopInvocationHandler, "_transactionExecutor",
-						new SynchronizedTransactionExecutor(testOwnerId));
-
-					_aopInvocationHandler.setTarget(
-						_aopInvocationHandler.getTarget());
-
-					ReflectionTestUtil.setFieldValue(
-						PortalPreferencesLocalServiceUtil.class, "_service",
-						_portalPreferencesLocalService);
-				});
-		}
-
-		private final CyclicBarrier _cyclicBarrier;
-
-	}
-
 	private static final String _KEY_1 = "key1";
 
 	private static final String _KEY_2 = "key2";
@@ -472,8 +452,7 @@ public class PortalPreferencesImplTest {
 	@Inject
 	private static PortalPreferencesLocalService _portalPreferencesLocalService;
 
-	private static final ThreadLocal<Boolean> _synchronizeThreadLocal =
-		new InheritableThreadLocal<>();
+	private static ThreadLocal<Boolean> _synchronizeThreadLocal;
 	private static Method _updatePreferencesMethod;
 
 	@Inject

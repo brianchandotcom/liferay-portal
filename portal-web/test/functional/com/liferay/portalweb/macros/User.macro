@@ -1469,7 +1469,7 @@ definition {
 
 		MenuItem.click(menuItem = "Impersonate User");
 
-		SelectWindow(locator1 = "title=Welcome - ${siteName}");
+		SelectWindow(locator1 = "title=Home - ${siteName}");
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 

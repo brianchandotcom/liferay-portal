@@ -54,13 +54,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return;
 		}
 
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
-		boolean visible = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("visible"), true);
-
-		if (layout.isHidden() || !visible) {
+		if (!_isVisible(layout)) {
 			return;
 		}
 
@@ -69,11 +63,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				layout.getTypeSettingsProperty("siteNavigationMenuId"),
 				CharPool.COMMA));
 
-		for (long siteNavigationMenuId : siteNavigationMenuIds) {
-			if (siteNavigationMenuId > 0) {
-				_addSiteNavigationMenuItem(siteNavigationMenuId, layout);
-			}
-		}
+		_addLayoutSiteNavigationMenuItems(siteNavigationMenuIds, layout);
 	}
 
 	@Override
@@ -93,6 +83,38 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 		catch (PortalException pe) {
 			throw new ModelListenerException(pe);
+		}
+	}
+
+	@Override
+	public void onAfterUpdate(Layout layout) throws ModelListenerException {
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		if (!_isVisible(layout)) {
+			return;
+		}
+
+		boolean published = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("published"));
+
+		if (!published) {
+			long[] siteNavigationMenuIds = GetterUtil.getLongValues(
+				StringUtil.split(
+					layout.getTypeSettingsProperty("siteNavigationMenuId"),
+					CharPool.COMMA));
+
+			_addLayoutSiteNavigationMenuItems(siteNavigationMenuIds, layout);
+		}
+	}
+
+	private void _addLayoutSiteNavigationMenuItems(
+		long[] siteNavigationMenuIds, Layout layout) {
+
+		for (long siteNavigationMenuId : siteNavigationMenuIds) {
+			if (siteNavigationMenuId > 0) {
+				_addSiteNavigationMenuItem(siteNavigationMenuId, layout);
+			}
 		}
 	}
 
@@ -185,6 +207,23 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 
 		return 0;
+	}
+
+	private boolean _isVisible(Layout layout) {
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		boolean visible = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("visible"), true);
+
+		if (layout.isHidden() || !visible ||
+			(Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
+			 Objects.equals(layout.getCreateDate(), layout.getPublishDate()))) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _menuItemExists(long siteNavigationMenuId, Layout layout) {

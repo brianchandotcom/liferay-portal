@@ -187,11 +187,11 @@ class SegmentEdit extends Component {
 		Liferay.Util.openWindow(
 			{
 				dialog: {
-					bodyContent: `<iframe frameborder="0" width="100%" height="100%" src="${url}"></iframe>`,
 					destroyOnHide: true
 				},
 				id: 'segment-members-dialog',
-				title: sub(Liferay.Language.get('x-members'), [this.props.values.name])
+				title: sub(Liferay.Language.get('x-members'), [this.props.values.name]),
+				uri: url
 			}
 		);
 	}

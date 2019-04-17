@@ -1,7 +1,6 @@
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildJQuery(type: Copy)
-task buildJQueryPluginsForm
 
 File jsDestinationDir = file("tmp/META-INF/resources")
 
@@ -22,29 +21,8 @@ buildJQuery {
 	into jqueryDestinationDir
 }
 
-buildJQueryPluginsForm {
-	File jQueryPluginsFormJsFile = file("src/main/resources/META-INF/resources/jquery/form.js")
-
-	dependsOn npmInstall
-
-	doLast {
-		String text = file(npmInstall.nodeModulesDir + "/jquery-form/jquery.form.js").text
-
-		text = text.replace("typeof define === 'function'", "false && typeof define === 'function'")
-
-		text = ";(function(jQuery){" + System.getProperty("line.separator") + text + '})(AUI.$);'
-
-		jQueryPluginsFormJsFile.text = text
-	}
-
-	onlyIf {
-		!jQueryPluginsFormJsFile.exists()
-	}
-}
-
 classes {
 	dependsOn buildJQuery
-	dependsOn buildJQueryPluginsForm
 }
 
 clean {

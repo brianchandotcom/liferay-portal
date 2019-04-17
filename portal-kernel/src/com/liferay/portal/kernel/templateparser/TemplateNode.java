@@ -135,41 +135,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		String type = getType();
 
 		if (type.equals("document_library") || type.equals("image")) {
-			String data = (String)get("data");
-
-			try {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
-
-				String uuid = jsonObject.getString("uuid");
-				long groupId = jsonObject.getLong("groupId");
-
-				if (Validator.isNull(uuid) && (groupId == 0)) {
-					return StringPool.BLANK;
-				}
-
-				FileEntry fileEntry =
-					DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-						uuid, groupId);
-
-				return DLUtil.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null,
-					StringPool.BLANK, false, true);
-			}
-			catch (Exception e) {
-			}
-
-			return StringPool.BLANK;
+			return _getFileEntryData();
 		}
 		else if (type.equals("link_to_layout")) {
-			String data = (String)get("data");
-
-			int pos = data.indexOf(CharPool.AT);
-
-			if (pos != -1) {
-				data = data.substring(0, pos);
-			}
-
-			return data;
+			return _getLinkToLayoutData();
 		}
 
 		return (String)get("data");
@@ -346,6 +315,45 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _getFileEntryData() {
+		String data = (String)get("data");
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
+
+			String uuid = jsonObject.getString("uuid");
+			long groupId = jsonObject.getLong("groupId");
+
+			if (Validator.isNull(uuid) && (groupId == 0)) {
+				return StringPool.BLANK;
+			}
+
+			FileEntry fileEntry =
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					uuid, groupId);
+
+			return DLUtil.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+				false, true);
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getLinkToLayoutData() {
+		String data = (String)get("data");
+
+		int pos = data.indexOf(CharPool.AT);
+
+		if (pos != -1) {
+			data = data.substring(0, pos);
+		}
+
+		return data;
 	}
 
 	private String _getLinkToLayoutFriendlyURL() {

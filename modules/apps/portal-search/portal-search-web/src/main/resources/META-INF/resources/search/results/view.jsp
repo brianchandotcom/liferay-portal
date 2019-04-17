@@ -123,7 +123,9 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 					</h4>
 
 					<h6 class="text-default">
-						<strong><%= searchResultSummaryDisplayContext.getModelResource() %></strong>
+						<c:if test="<%= searchResultSummaryDisplayContext.isModelResourceVisible() %>">
+							<strong><%= searchResultSummaryDisplayContext.getModelResource() %></strong>
+						</c:if>
 
 						<c:if test="<%= searchResultSummaryDisplayContext.isLocaleReminderVisible() %>">
 							<liferay-ui:icon
@@ -148,6 +150,30 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 						</h6>
 					</c:if>
 
+					<c:if test="<%= searchResultSummaryDisplayContext.isFieldsVisible() %>">
+						<h6 class="search-document-content text-default">
+
+							<%
+							boolean separate = false;
+
+							for (SearchResultFieldDisplayContext searchResultFieldDisplayContext : searchResultSummaryDisplayContext.getFieldDisplayContexts()) {
+							%>
+
+								<c:if test="<%= separate %>">
+									&#183;
+								</c:if>
+
+								<span class="badge"><%= searchResultFieldDisplayContext.getName() %></span>
+								<span><%= searchResultFieldDisplayContext.getValuesToString() %></span>
+
+							<%
+								separate = true;
+							}
+							%>
+
+						</h6>
+					</c:if>
+
 					<c:if test="<%= searchResultSummaryDisplayContext.isAssetCategoriesOrTagsVisible() %>">
 						<h6 class="search-document-tags text-default">
 							<liferay-asset:asset-tags-summary
@@ -167,13 +193,13 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 					</c:if>
 
 					<c:if test="<%= searchResultSummaryDisplayContext.isDocumentFormVisible() %>">
-						<h6 class="expand-details text-default"><a href="javascript:;"><liferay-ui:message key="details" />...</a></h6>
+						<h6 class="expand-details text-default"><span style="font-size:xx-small;"><a href="javascript:;"><liferay-ui:message key="details" />...</a></span></h6>
 
 						<div class="hide table-details table-responsive">
 							<table class="table">
 								<thead>
 									<tr>
-										<th>
+										<th style="text-align:right; ">
 											<liferay-ui:message key="key" />
 										</th>
 										<th>
@@ -189,12 +215,12 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 									%>
 
 										<tr>
-											<td style="word-break:break-all;" width="25%">
+											<td style="padding-bottom:0; padding-top:0; text-align:right; word-break:break-all;" width="15%">
 												<strong><%= HtmlUtil.escape(searchResultFieldDisplayContext.getName()) %></strong>
 											</td>
-											<td>
+											<td style="padding-bottom:0; padding-top:0;">
 												<code>
-													<%= HtmlUtil.escape(searchResultFieldDisplayContext.getValuesToString()) %>
+													<%= searchResultFieldDisplayContext.getValuesToString() %>
 												</code>
 											</td>
 										</tr>

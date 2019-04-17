@@ -29,6 +29,7 @@ public class QueryTypeEntriesHolder {
 		add("match", "Match");
 		add("match_phrase", "Match Phrase");
 		add("match_phrase_prefix", "Match Phrase Prefix");
+		add("multi_match", "Multi Match");
 		add("prefix", "Prefix");
 		add("query_string", "Query String");
 		add("regexp", "Regexp");
@@ -46,8 +47,8 @@ public class QueryTypeEntriesHolder {
 		_queryTypeEntries.add(
 			new QueryTypeEntry() {
 				{
-					setTypeId(typeId);
 					setName(name);
+					setTypeId(typeId);
 				}
 			});
 	}

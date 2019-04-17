@@ -99,14 +99,6 @@
 								<tr>
 									<td>
 										<strong><%= HtmlUtil.escape(searchResultFieldDisplayContext.getName()) %></strong>
-
-										<br />
-
-										<em>
-											<liferay-ui:message key="array" /> = <%= searchResultFieldDisplayContext.isArray() %>, <liferay-ui:message key="boost" /> = <%= searchResultFieldDisplayContext.getBoost() %>,<br />
-
-											<liferay-ui:message key="numeric" /> = <%= searchResultFieldDisplayContext.isNumeric() %>, <liferay-ui:message key="tokenized" /> = <%= searchResultFieldDisplayContext.isTokenized() %>
-										</em>
 									</td>
 									<td>
 										<code>

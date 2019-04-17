@@ -50,6 +50,17 @@ public class SearchResultsPortletPreferencesImpl
 	}
 
 	@Override
+	public Optional<String> getFieldsToDisplayOptional() {
+		return _portletPreferencesHelper.getString(
+			SearchResultsPortletPreferences.PREFERENCE_KEY_FIELDS_TO_DISPLAY);
+	}
+
+	@Override
+	public String getFieldsToDisplayString() {
+		return getFieldsToDisplayOptional().orElse(StringPool.BLANK);
+	}
+
+	@Override
 	public int getPaginationDelta() {
 		return _portletPreferencesHelper.getInteger(
 			SearchResultsPortletPreferences.PREFERENCE_KEY_PAGINATION_DELTA,

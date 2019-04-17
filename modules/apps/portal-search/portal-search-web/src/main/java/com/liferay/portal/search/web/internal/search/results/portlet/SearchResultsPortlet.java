@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.legacy.document.DocumentBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
@@ -297,6 +298,8 @@ public class SearchResultsPortlet extends MVCPortlet {
 			getCurrentURL(renderRequest)
 		).setDocument(
 			document
+		).setDocumentBuilderFactory(
+			documentBuilderFactory
 		).setFastDateFormatFactory(
 			fastDateFormatFactory
 		).setHighlightEnabled(
@@ -309,22 +312,25 @@ public class SearchResultsPortlet extends MVCPortlet {
 			language
 		).setLocale(
 			themeDisplay.getLocale()
+		).setPortletURLFactory(
+			portletURLFactory
+		).setRenderRequest(
+			renderRequest
+		).setRenderResponse(
+			renderResponse
+		).setRequest(
+			getHttpServletRequest(renderRequest)
+		).setResourceActions(
+			resourceActions
+		).setSearchResultImageContributorsStream(
+			_searchResultImageContributors.stream()
+		).setSearchResultPreferences(
+			searchResultPreferences
+		).setSummaryBuilderFactory(
+			summaryBuilderFactory
+		).setThemeDisplay(
+			themeDisplay
 		);
-		searchResultSummaryDisplayBuilder.setPortletURLFactory(
-			portletURLFactory);
-		searchResultSummaryDisplayBuilder.setRenderRequest(renderRequest);
-		searchResultSummaryDisplayBuilder.setRenderResponse(renderResponse);
-		searchResultSummaryDisplayBuilder.setRequest(
-			getHttpServletRequest(renderRequest));
-		searchResultSummaryDisplayBuilder.setResourceActions(resourceActions);
-		searchResultSummaryDisplayBuilder.
-			setSearchResultImageContributorsStream(
-				_searchResultImageContributors.stream());
-		searchResultSummaryDisplayBuilder.setSearchResultPreferences(
-			searchResultPreferences);
-		searchResultSummaryDisplayBuilder.setSummaryBuilderFactory(
-			summaryBuilderFactory);
-		searchResultSummaryDisplayBuilder.setThemeDisplay(themeDisplay);
 
 		return searchResultSummaryDisplayBuilder.build();
 	}
@@ -414,6 +420,9 @@ public class SearchResultsPortlet extends MVCPortlet {
 	protected AssetEntryLocalService assetEntryLocalService;
 
 	protected AssetRendererFactoryLookup assetRendererFactoryLookup;
+
+	@Reference
+	protected DocumentBuilderFactory documentBuilderFactory;
 
 	@Reference
 	protected FastDateFormatFactory fastDateFormatFactory;

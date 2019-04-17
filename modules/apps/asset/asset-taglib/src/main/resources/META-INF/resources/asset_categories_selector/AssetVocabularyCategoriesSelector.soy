@@ -28,6 +28,7 @@
 
 		{call ClayMultiSelect.render}
 			{param autocompleteFilterCondition: 'label' /}
+			{param creatable: false /}
 			{param dataSource: $_dataSource ?: [] /}
 			{param events: [
 				'inputBlur': $_handleInputOnBlur,

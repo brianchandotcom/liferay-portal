@@ -111,7 +111,7 @@ components:
                 priority:
                     example: 1.2
                     format: double
-                    type: number
+                    type: integer
                 src:
                     description: URL of the location
                     type: string
@@ -204,7 +204,7 @@ components:
                     example: 1.2
                     format: double
                     minimum: 0
-                    type: number
+                    type: integer
                 title:
                     additionalProperties:
                         type: string
@@ -439,7 +439,7 @@ components:
                 priority:
                     example: 1.2
                     format: double
-                    type: number
+                    type: integer
                 required:
                     example: true
                     type: boolean
@@ -476,7 +476,7 @@ components:
                 priority:
                     example: 1.2
                     format: double
-                    type: number
+                    type: integer
             required:
                 - externalReferenceCode
                 - key
@@ -488,7 +488,7 @@ components:
                     example: 202
                     format: bigdecimal
                     minimum: 0
-                    type: number
+                    type: integer
                 freeShipping:
                     example: true
                     type: boolean
@@ -496,7 +496,7 @@ components:
                     example: 202
                     format: bigdecimal
                     minimum: 0
-                    type: number
+                    type: integer
                 shippable:
                     example: true
                     type: boolean
@@ -504,7 +504,7 @@ components:
                     example: 202
                     format: bigdecimal
                     minimum: 0
-                    type: number
+                    type: integer
                 shippingSeparately:
                     example: true
                     type: boolean
@@ -512,12 +512,12 @@ components:
                     example: 202
                     format: bigdecimal
                     minimum: 0
-                    type: number
+                    type: integer
                 width:
                     example: 202
                     format: bigdecimal
                     minimum: 0
-                    type: number
+                    type: integer
             type: object
         ProductSubscriptionConfiguration:
             properties:
@@ -568,12 +568,12 @@ components:
                     example: 101
                     format: bigdecimal
                     minimum: 0
-                    type: number
+                    type: integer
                 depth:
                     example: 1.1
                     format: double
                     minimum: 0
-                    type: number
+                    type: integer
                 displayDate:
                     format: date
                     type: string
@@ -590,7 +590,7 @@ components:
                     example: 20.2
                     format: double
                     minimum: 0
-                    type: number
+                    type: integer
                 id:
                     example: 30130
                     format: int64
@@ -619,7 +619,7 @@ components:
                     example: 101
                     format: bigdecimal
                     minimum: 0
-                    type: number
+                    type: integer
                 productId:
                     example: 30129
                     format: int64
@@ -630,7 +630,7 @@ components:
                     example: 202
                     format: bigdecimal
                     minimum: 0
-                    type: number
+                    type: integer
                 published:
                     example: true
                     type: boolean
@@ -644,12 +644,12 @@ components:
                     example: 1.1
                     format: double
                     minimum: 0
-                    type: number
+                    type: integer
                 width:
                     example: 20.2
                     format: double
                     minimum: 0
-                    type: number
+                    type: integer
             required:
                 - externalReferenceCode
                 - sku
@@ -711,7 +711,7 @@ components:
                     example: 1.2
                     format: double
                     minimum: 0
-                    type: number
+                    type: integer
                 product:
                     items:
                         $ref: '#/components/schemas/Product'

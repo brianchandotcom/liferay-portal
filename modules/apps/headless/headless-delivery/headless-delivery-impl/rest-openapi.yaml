@@ -8,7 +8,7 @@ components:
                     description: The best rating possible (by default normalized to 1.0).
                     format: double
                     readOnly: true
-                    type: number
+                    type: integer
                 ratingCount:
                     description: The number of ratings.
                     readOnly: true
@@ -17,12 +17,12 @@ components:
                     description: The average rating.
                     format: double
                     readOnly: true
-                    type: number
+                    type: integer
                 worstRating:
                     description: The worst rating possible (by default normalized to 0.0).
                     format: double
                     readOnly: true
-                    type: number
+                    type: integer
             type: object
         BlogPosting:
             #@review
@@ -279,11 +279,11 @@ components:
                                 latitude:
                                     description: The latitude of a point in space.
                                     format: double
-                                    type: number
+                                    type: integer
                                 longitude:
                                     description: The longitude of a point in space.
                                     format: double
-                                    type: number
+                                    type: integer
                             type: object
                         image:
                             allOf:
@@ -1082,7 +1082,7 @@ components:
                     description: The best possible rating a content can receive, by default normalized to 1.0.
                     format: double
                     readOnly: true
-                    type: number
+                    type: integer
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1106,12 +1106,12 @@ components:
                 ratingValue:
                     description: The value of the Rating.
                     format: double
-                    type: number
+                    type: integer
                 worstRating:
                     description: The worst possible rating a content can receive, by default normalized to 0.0.
                     format: double
                     readOnly: true
-                    type: number
+                    type: integer
             type: object
         StructuredContent:
             #@review

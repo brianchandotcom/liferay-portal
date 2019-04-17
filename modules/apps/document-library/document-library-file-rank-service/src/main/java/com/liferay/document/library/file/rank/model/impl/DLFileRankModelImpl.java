@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -104,21 +103,6 @@ public class DLFileRankModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.document.library.file.rank.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.document.library.file.rank.model.DLFileRank"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.document.library.file.rank.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.document.library.file.rank.model.DLFileRank"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.document.library.file.rank.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.document.library.file.rank.model.DLFileRank"),
-		true);
-
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
@@ -131,9 +115,13 @@ public class DLFileRankModelImpl
 
 	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.document.library.file.rank.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.document.library.file.rank.model.DLFileRank"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public DLFileRankModelImpl() {
 	}
@@ -507,12 +495,12 @@ public class DLFileRankModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -639,6 +627,8 @@ public class DLFileRankModelImpl
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 		DLFileRank.class, ModelWrapper.class
 	};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _fileRankId;
 	private long _groupId;

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Search Elasticsearch 6 SPI
+Bundle-SymbolicName: com.liferay.portal.search.elasticsearch6.spi
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.elasticsearch6.spi.index,\
+	com.liferay.portal.search.elasticsearch6.spi.index.helper

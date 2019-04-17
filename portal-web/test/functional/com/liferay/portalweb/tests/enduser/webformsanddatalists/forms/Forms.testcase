@@ -227,6 +227,14 @@ definition {
 		Site.addBlankCP(siteName = "Form Site");
 
 		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Form Page");
+
+		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
 			portlet = "Memberships"
@@ -282,7 +290,7 @@ definition {
 			userScreenName = "usersn"
 		);
 
-		ProductMenu.gotoSite(site = "Form Site");
+		Navigator.openSiteURL(siteName = "Form Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

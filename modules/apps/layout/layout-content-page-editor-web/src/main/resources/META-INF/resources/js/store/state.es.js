@@ -138,6 +138,7 @@ const INITIAL_STATE = {
 		.objectOf(
 			Config.shapeOf(
 				{
+					active: Config.bool(),
 					name: Config.string(),
 					priority: Config.number(),
 					segmentsEntryId: Config.string(),

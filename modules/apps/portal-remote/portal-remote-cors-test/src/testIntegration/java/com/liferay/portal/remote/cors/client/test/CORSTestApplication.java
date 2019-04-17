@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.cors.test.internal;
+package com.liferay.portal.remote.cors.client.test;
 
 import com.liferay.portal.remote.cors.annotation.CORS;
 

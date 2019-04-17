@@ -14,49 +14,42 @@
 
 package com.liferay.portal.remote.cors.client.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.remote.cors.test.internal.CORSTestApplication;
-import com.liferay.portal.remote.cors.test.internal.activator.BaseTestPreparatorBundleActivator;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.Archive;
+import java.util.Dictionary;
 
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Marta Medio
  */
-@RunAsClient
 @RunWith(Arquillian.class)
 public class CORSAnnotationClientTest extends BaseCORSClientTestCase {
 
-	@Deployment
-	public static Archive<?> getDeployment() throws Exception {
-		return BaseCORSClientTestCase.getArchive(
-			CORSAnnotationTestPreparatorBundleActivator.class);
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("liferay.cors.annotation", true);
+
+		registerJaxRsApplication(new CORSTestApplication(), "test", properties);
 	}
 
 	@Test
 	public void testCORSApplication() throws Exception {
 		assertURL("/test/cors-app", true);
-	}
-
-	public static class CORSAnnotationTestPreparatorBundleActivator
-		extends BaseTestPreparatorBundleActivator {
-
-		protected void prepareTest() {
-			HashMapDictionary<String, Object> properties =
-				new HashMapDictionary<>();
-
-			properties.put("liferay.cors.annotation", true);
-
-			registerJaxRsApplication(
-				new CORSTestApplication(), "test", properties);
-		}
-
 	}
 
 }

@@ -21,9 +21,7 @@ class SLAListItem extends React.Component {
 			<tr>
 				<td className="table-cell-expand">
 					<div className="table-list-title">
-						<span className="text-truncate-inline">
-							<span title={name}>{name}</span>
-						</span>
+						<ChildLink to={`/sla/edit/${processId}/${id}`}>{name}</ChildLink>
 					</div>
 				</td>
 

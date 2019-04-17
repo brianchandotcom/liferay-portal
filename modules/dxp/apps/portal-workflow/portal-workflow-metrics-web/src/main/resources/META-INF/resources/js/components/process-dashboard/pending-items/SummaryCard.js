@@ -1,11 +1,13 @@
+import { AppContext } from '../../AppContext';
 import autobind from 'autobind-decorator';
+import { ChildLink } from '../../../shared/components/router/routerWrapper';
 import getCN from 'classnames';
 import Icon from '../../../shared/components/Icon';
 import React from 'react';
 
 const CLASS_NAME = 'process-dashboard-summary-card';
 
-export default class SummaryCard extends React.Component {
+class SummaryCard extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -30,20 +32,25 @@ export default class SummaryCard extends React.Component {
 			iconColor,
 			iconName,
 			percentage,
+			processId,
 			title,
 			total
 		} = this.props;
 
 		const className = getCN(CLASS_NAME, elementClasses);
 
+		const { defaultDelta } = this.context;
+
+		const dashboardItemsPath = `/instances/${processId}/${defaultDelta}/1`;
+
 		const { inOver } = this.state;
 
 		return (
-			<a
-				href={'#'}
+			<ChildLink
 				className={className}
 				onMouseOut={this.handleMouseOut}
 				onMouseOver={this.handleMouseOver}
+				to={dashboardItemsPath}
 			>
 				<div>
 					<div className={'header'}>
@@ -62,19 +69,23 @@ export default class SummaryCard extends React.Component {
 
 						<span>{title}</span>
 					</div>
+
 					<div className={'body'}>{total}</div>
+
 					<div className={'footer'}>
-						{percentage &&
-							(!inOver ? (
-								percentage
-							) : (
-								<span className={'highlight-hover'}>
-									{Liferay.Language.get('see-items')}
-								</span>
-							))}
+						{!inOver && percentage}
+
+						{inOver && (
+							<span className={'highlight-hover'}>
+								{Liferay.Language.get('see-items')}
+							</span>
+						)}
 					</div>
 				</div>
-			</a>
+			</ChildLink>
 		);
 	}
 }
+
+SummaryCard.contextType = AppContext;
+export default SummaryCard;

@@ -58,6 +58,7 @@ class PendingItemsCard extends React.Component {
 
 	render() {
 		const { loading, process } = this.state;
+		const { processId } = this.props;
 
 		if (loading) {
 			return <LoadingState />;
@@ -104,6 +105,7 @@ class PendingItemsCard extends React.Component {
 											  )}%`
 											: false
 									}
+									processId={processId}
 									title={title}
 									total={process[addressedToField]}
 								/>

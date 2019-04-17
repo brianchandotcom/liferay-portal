@@ -20,6 +20,7 @@ import com.liferay.portal.search.web.internal.search.results.constants.SearchRes
 import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletPreferences;
 import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletPreferencesImpl;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
+import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -54,8 +55,14 @@ public class SearchResultsPortletSharedSearchContributor
 				searchResultsPortletPreferences.
 					getFederatedSearchKeyOptional());
 
-		searchRequestBuilder.highlightEnabled(
-			searchResultsPortletPreferences.isHighlightEnabled());
+		if (searchResultsPortletPreferences.isHighlightEnabled()) {
+			searchRequestBuilder.highlightEnabled(true);
+
+			String[] fieldsToDisplay = SearchStringUtil.splitAndUnquote(
+				searchResultsPortletPreferences.getFieldsToDisplayOptional());
+
+			searchRequestBuilder.highlightFields(fieldsToDisplay);
+		}
 	}
 
 	protected void paginate(

@@ -27,6 +27,9 @@ public interface SearchResultsPortletPreferences {
 	public static final String PREFERENCE_KEY_FEDERATED_SEARCH_KEY =
 		"federatedSearchKey";
 
+	public static final String PREFERENCE_KEY_FIELDS_TO_DISPLAY =
+		"fieldsToDisplay";
+
 	public static final String PREFERENCE_KEY_HIGHLIGHT_ENABLED =
 		"highlightEnabled";
 
@@ -44,6 +47,10 @@ public interface SearchResultsPortletPreferences {
 	public Optional<String> getFederatedSearchKeyOptional();
 
 	public String getFederatedSearchKeyString();
+
+	public Optional<String> getFieldsToDisplayOptional();
+
+	public String getFieldsToDisplayString();
 
 	public int getPaginationDelta();
 

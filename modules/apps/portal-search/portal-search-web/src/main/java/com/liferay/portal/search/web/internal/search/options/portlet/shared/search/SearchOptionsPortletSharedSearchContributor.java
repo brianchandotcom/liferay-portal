@@ -14,12 +14,11 @@
 
 package com.liferay.portal.search.web.internal.search.options.portlet.shared.search;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.web.internal.search.options.constants.SearchOptionsPortletKeys;
 import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferences;
 import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -53,13 +52,12 @@ public class SearchOptionsPortletSharedSearchContributor
 			searchOptionsPortletPreferences.isBasicFacetSelection()
 		).emptySearchEnabled(
 			searchOptionsPortletPreferences.isAllowEmptySearches()
+		).fields(
+			SearchStringUtil.splitAndUnquote(
+				searchOptionsPortletPreferences.getFieldsToReturnOptional())
 		).indexes(
-			searchOptionsPortletPreferences.getIndexesOptional(
-			).map(
-				indexes -> StringUtil.split(indexes, CharPool.PIPE)
-			).orElse(
-				null
-			)
+			SearchStringUtil.splitAndUnquote(
+				searchOptionsPortletPreferences.getIndexesOptional())
 		);
 	}
 

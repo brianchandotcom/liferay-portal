@@ -67,6 +67,10 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _fieldAssetTagNames;
 	}
 
+	public List<SearchResultFieldDisplayContext> getFieldDisplayContexts() {
+		return _fieldDisplayContexts;
+	}
+
 	public String getHighlightedTitle() {
 		return _highlightedTitle;
 	}
@@ -131,12 +135,20 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _documentFormVisible;
 	}
 
+	public boolean isFieldsVisible() {
+		return _fieldsVisible;
+	}
+
 	public boolean isIconVisible() {
 		return _iconVisible;
 	}
 
 	public boolean isLocaleReminderVisible() {
 		return _localeReminderVisible;
+	}
+
+	public boolean isModelResourceVisible() {
+		return _modelResourceVisible;
 	}
 
 	public boolean isTemporarilyUnavailable() {
@@ -222,6 +234,16 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		_fieldAssetTagNames = fieldAssetTagNames;
 	}
 
+	public void setFieldDisplayContexts(
+		List<SearchResultFieldDisplayContext> fieldDisplayContexts) {
+
+		_fieldDisplayContexts = fieldDisplayContexts;
+	}
+
+	public void setFieldsVisible(boolean fieldsVisible) {
+		_fieldsVisible = fieldsVisible;
+	}
+
 	public void setHighlightedTitle(String highlightedTitle) {
 		_highlightedTitle = highlightedTitle;
 	}
@@ -248,6 +270,10 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 
 	public void setModelResource(String modelResource) {
 		_modelResource = modelResource;
+	}
+
+	public void setModelResourceVisible(boolean modelResourceVisible) {
+		_modelResourceVisible = modelResourceVisible;
 	}
 
 	public void setPathThemeImages(String pathThemeImages) {
@@ -299,6 +325,8 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	private boolean _documentFormVisible;
 	private String _fieldAssetCategoryIds;
 	private String _fieldAssetTagNames;
+	private List<SearchResultFieldDisplayContext> _fieldDisplayContexts;
+	private boolean _fieldsVisible;
 	private String _highlightedTitle;
 	private String _iconId;
 	private boolean _iconVisible;
@@ -306,6 +334,7 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	private String _localeReminder;
 	private boolean _localeReminderVisible;
 	private String _modelResource;
+	private boolean _modelResourceVisible;
 	private String _pathThemeImages;
 	private PortletURL _portletURL;
 	private boolean _temporarilyUnavailable;

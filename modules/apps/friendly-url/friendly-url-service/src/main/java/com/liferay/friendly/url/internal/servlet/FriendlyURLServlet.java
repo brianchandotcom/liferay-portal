@@ -450,7 +450,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		public boolean isValidForward() {
 			String path = getPath();
 
-			if (path.charAt(0) != CharPool.SLASH) {
+			if (!path.startsWith(Portal.PATH_MAIN)) {
 				return false;
 			}
 

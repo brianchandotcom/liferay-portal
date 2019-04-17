@@ -168,6 +168,9 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 				defaultCompanyId, user, "oauthTestApplication",
 				Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
 				Arrays.asList("everything.read", "GET"));
+
+			createServiceAccessProfile(
+				user.getUserId(), "#get*", true, true, "GUEST_OAUTH2_TEST");
 		}
 
 	}

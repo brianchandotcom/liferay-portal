@@ -108,6 +108,9 @@ public class SAPClientTest extends BaseClientTestCase {
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplication",
 				Collections.singletonList("GET"));
+
+			createServiceAccessProfile(
+				user.getUserId(), "#is*", false, true, "CUSTOM_SAP");
 		}
 
 	}

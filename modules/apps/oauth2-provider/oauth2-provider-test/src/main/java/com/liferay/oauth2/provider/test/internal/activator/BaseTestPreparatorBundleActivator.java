@@ -34,7 +34,10 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.service.access.policy.model.SAPEntry;
+import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
 import java.io.IOException;
 
@@ -43,8 +46,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -291,6 +297,37 @@ public abstract class BaseTestPreparatorBundleActivator
 				oAuth2Application.getOAuth2ApplicationId()));
 
 		return oAuth2Application;
+	}
+
+	protected void createServiceAccessProfile(
+		long userId, String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, String name) {
+
+		ServiceReference<SAPEntryLocalService> serviceReference =
+			bundleContext.getServiceReference(SAPEntryLocalService.class);
+
+		SAPEntryLocalService sapEntryLocalService = bundleContext.getService(
+			serviceReference);
+
+		try {
+			autoCloseables.add(
+				() -> bundleContext.ungetService(serviceReference));
+
+			Map<Locale, String> titleMap = new HashMap<>();
+
+			titleMap.put(LocaleUtil.getDefault(), name);
+
+			SAPEntry sapEntry = sapEntryLocalService.addSAPEntry(
+				userId, allowedServiceSignatures, defaultSAPEntry, enabled,
+				name, titleMap, new ServiceContext());
+
+			autoCloseables.add(
+				() -> sapEntryLocalService.deleteSAPEntry(
+					sapEntry.getSapEntryId()));
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 	protected void deleteConfiguration(

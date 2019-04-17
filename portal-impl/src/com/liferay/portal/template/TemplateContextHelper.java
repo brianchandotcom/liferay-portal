@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ParamUtil_IW;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -292,7 +293,18 @@ public class TemplateContextHelper {
 			Layout layout = themeDisplay.getLayout();
 			List<Layout> layouts = themeDisplay.getLayouts();
 
-			contextObjects.put("bodyCssClass", StringPool.BLANK);
+			HttpServletRequest originalRequest =
+				PortalUtil.getOriginalServletRequest(request);
+
+			String namespace =
+				PortalUtil.getPortletNamespace(
+					ParamUtil.getString(request, "p_p_id"));
+
+			String bodyCssClass =
+				ParamUtil.getString(
+					originalRequest, namespace + "bodyCssClass");
+
+			contextObjects.put("bodyCssClass", bodyCssClass);
 			contextObjects.put("colorScheme", themeDisplay.getColorScheme());
 			contextObjects.put("company", themeDisplay.getCompany());
 			contextObjects.put("layout", layout);

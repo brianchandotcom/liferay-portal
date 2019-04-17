@@ -1591,7 +1591,7 @@ definition {
 
 		SearchFacetPortlet.checkFacet(facetValueName = "fruit");
 
-		Search.viewNoResultAssetTitle(searchAssetTitle = "apple");
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
 
 		Refresh();
 
@@ -1605,7 +1605,7 @@ definition {
 			checkboxName = "fruit"
 		);
 
-		Search.viewNoResultAssetTitle(searchAssetTitle = "apple");
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
 	}
 
 	@description = "This is a use case for LPS-74299."

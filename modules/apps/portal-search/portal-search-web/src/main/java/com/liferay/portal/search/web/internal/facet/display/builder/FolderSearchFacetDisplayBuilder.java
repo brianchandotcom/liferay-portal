@@ -129,7 +129,7 @@ public class FolderSearchFacetDisplayBuilder {
 
 		String displayName = getDisplayName(folderId);
 
-		if ((folderId == 0) || Validator.isNull(displayName)) {
+		if ((folderId == 0) || (displayName == null)) {
 			return null;
 		}
 
@@ -180,11 +180,11 @@ public class FolderSearchFacetDisplayBuilder {
 	protected String getDisplayName(long folderId) {
 		String title = _folderTitleLookup.getFolderTitle(folderId);
 
-		if (title != null) {
+		if (Validator.isNotNull(title)) {
 			return title;
 		}
 
-		return StringPool.BLANK;
+		return null;
 	}
 
 	protected FolderSearchFacetTermDisplayContext

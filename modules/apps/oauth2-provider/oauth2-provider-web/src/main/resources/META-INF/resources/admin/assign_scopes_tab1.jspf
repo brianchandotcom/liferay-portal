@@ -14,7 +14,7 @@
  */
 --%>
 
-<div aria-orientation="vertical" class="panel-group" id="appsAccordion" role="tablist">
+<div aria-orientation="vertical" class="panel-group" id="<portlet:namespace />appsAccordion" role="tablist">
 
 	<%
 	List<Map.Entry<String, String>> applicationsNamesDescriptionsList = assignScopesDisplayContext.getSortedApplicationNamesDescriptions();

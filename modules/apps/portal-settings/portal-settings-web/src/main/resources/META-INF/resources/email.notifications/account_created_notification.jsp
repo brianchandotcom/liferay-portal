@@ -44,11 +44,11 @@ String sectionName = StringPool.BLANK;
 	<liferay-ui:error key="emailUserAddedBody" message="please-enter-a-valid-body" />
 
 	<liferay-frontend:email-notification-settings
-		bodyLabel="body-with-password"
+		bodyLabel='<%= LanguageUtil.get(resourceBundle, "body-with-password") %>'
 		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_BODY)) %>'
 		emailParam="adminEmailUserAdded"
 		fieldPrefix="settings"
-		helpMessage="account-created-notification-body-with-password-help"
+		helpMessage='<%= LanguageUtil.get(resourceBundle, "account-created-notification-body-with-password-help") %>'
 		showEmailEnabled="<%= false %>"
 		showSubject="<%= false %>"
 	/>
@@ -56,11 +56,11 @@ String sectionName = StringPool.BLANK;
 	<liferay-ui:error key="emailUserAddedNoPasswordBody" message="please-enter-a-valid-body" />
 
 	<liferay-frontend:email-notification-settings
-		bodyLabel="body-without-password"
+		bodyLabel='<%= LanguageUtil.get(resourceBundle, "body-without-password") %>'
 		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedNoPasswordBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY)) %>'
 		emailParam="adminEmailUserAddedNoPassword"
 		fieldPrefix="settings"
-		helpMessage="account-created-notification-body-without-password-help"
+		helpMessage='<%= LanguageUtil.get(resourceBundle, "account-created-notification-body-without-password-help") %>'
 		showEmailEnabled="<%= false %>"
 		showSubject="<%= false %>"
 	/>

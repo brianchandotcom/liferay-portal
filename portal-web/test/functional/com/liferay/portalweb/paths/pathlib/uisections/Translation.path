@@ -10,17 +10,18 @@
 <tbody>
 <tr>
 	<td>ADD</td>
-	<td>//div[contains(@class,'translation-manager')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@class,'translation-manager')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_LANGUAGE</td>
-	<td>//li[contains(@class,'translation-item')]/a[contains(.,'${key_localizedLanguage}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//button[contains(text(),'${key_localizedLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVAILABLE_TRANSLATION</td>
-	<td>//div[contains(@class,'available-translations')]/span/span[contains(.,'${key_localizedLanguage}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//button[contains(text(),'${key_localizedLanguage}')]
+	</td>
 	<td></td>
 </tr>
 <tr>

@@ -4,13 +4,13 @@
  * This renders the field mappings page.
  */
 {template .render}
-	{@param spritemap: string}
 	{@param indexList: list<[cssClass: string, name: string, url: string]>}
 	{@param selectedIndexName: string}
+	{@param spritemap: string}
+	{@param? _decreaseFontSize: any}
+	{@param? _increaseFontSize: any}
 	{@param? _selectText: any}
 	{@param? _switchTheme: any}
-	{@param? _increaseFontSize: any}
-	{@param? _decreaseFontSize: any}
 
 	<div class="container-fluid container-fluid-max-xl container-form-lg portal-search-admin-field-mappings">
 		<div class="row">
@@ -48,6 +48,7 @@
 						{let $switchThemeToolTip kind="text"}
 							{msg desc=""}dark-theme{/msg}
 						{/let}
+
 						{call ClayButton.render}
 							{param data: [
 								'title': $switchThemeToolTip
@@ -66,6 +67,7 @@
 							{let $zoomInToolTip kind="text"}
 								{msg desc=""}zoom-in{/msg}
 							{/let}
+
 							{call ClayButton.render}
 								{param data: [
 									'title': $zoomInToolTip
@@ -83,6 +85,7 @@
 							{let $zoomOutToolTip kind="text"}
 								{msg desc=""}zoom-out{/msg}
 							{/let}
+
 							{call ClayButton.render}
 								{param data: [
 									'title': $zoomOutToolTip
@@ -101,6 +104,7 @@
 						{let $copyToolTip kind="text"}
 							{msg desc=""}copy{/msg}
 						{/let}
+
 						{call ClayButton.render}
 							{param data: [
 								'title': $copyToolTip

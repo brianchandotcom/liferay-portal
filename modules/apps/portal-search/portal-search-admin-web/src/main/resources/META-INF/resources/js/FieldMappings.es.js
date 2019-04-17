@@ -70,7 +70,10 @@ class FieldMappings extends PortletBase {
 	}
 
 	_switchTheme(event) {
-		document.querySelector('#richEditor').classList.toggle('ace_dark');
+		const richEditorElement = document.querySelector('#richEditor');
+
+		richEditorElement.classList.toggle('ace_dark');
+
 		if (Liferay.Language.get('dark-theme') == event.currentTarget.dataset.title) {
 			event.currentTarget.dataset.title = Liferay.Language.get('light-theme');
 		}

@@ -81,8 +81,21 @@ public class SegmentsSimulationDisplayContext {
 		return portletURL;
 	}
 
+	public boolean isShowEmptyMessage() {
+		if (_showEmptyMessage != null) {
+			return _showEmptyMessage;
+		}
+
+		List<SegmentsEntry> segmentsEntries = getSegmentsEntries();
+
+		_showEmptyMessage = segmentsEntries.isEmpty();
+
+		return _showEmptyMessage;
+	}
+
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private List<SegmentsEntry> _segmentsEntries;
+	private Boolean _showEmptyMessage;
 	private final ThemeDisplay _themeDisplay;
 
 }

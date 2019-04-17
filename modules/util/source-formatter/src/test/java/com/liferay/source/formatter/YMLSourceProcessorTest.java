@@ -22,6 +22,11 @@ import org.junit.Test;
 public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testDataTypesCheck() throws Exception {
+		test("EnforceDataTypes.testyaml");
+	}
+
+	@Test
 	public void testSortDefinitionsAndWhitespaceCheck() throws Exception {
 		test("SortDefinitionsAndWhitespace.testyaml");
 	}

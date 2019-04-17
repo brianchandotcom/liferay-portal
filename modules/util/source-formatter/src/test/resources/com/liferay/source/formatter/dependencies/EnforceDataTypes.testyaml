@@ -1,0 +1,21 @@
+components:
+    schemas:
+        AggregateRating:
+            #@review
+            description: https://www.schema.org/AggregateRating
+            properties:
+                bestRating:
+                    description: The best rating possible (by default normalized to 1.0).
+                    format: double
+                    readOnly: true
+                    type: number
+                dateCreated:
+                    description: The creation date of the BlogPosting.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                ratingCount:
+                    description: The number of ratings.
+                    readOnly: true
+                    type: integer
+            type: object

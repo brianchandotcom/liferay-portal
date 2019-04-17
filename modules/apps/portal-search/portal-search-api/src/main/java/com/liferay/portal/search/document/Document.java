@@ -38,13 +38,6 @@ public interface Document {
 
 	public Map<String, Field> getFields();
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by
-	 * 		{@link Document#getValue(String)}
-	 */
-	@Deprecated
-	public Object getFieldValue(String name);
-
 	public Float getFloat(String name);
 
 	public List<Float> getFloats(String name);

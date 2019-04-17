@@ -9,6 +9,7 @@
 	{@param spritemap: string}
 	{@param? _dataSource: ?}
 	{@param? _handleButtonClicked: any}
+	{@param? _handleErrorAddinglabelItem: any}
 	{@param? _handleInputFocus: any}
 	{@param? _handleInputOnBlur: any}
 	{@param? _handleItemAdded: any}
@@ -31,6 +32,7 @@
 			{param creatable: false /}
 			{param dataSource: $_dataSource ?: [] /}
 			{param events: [
+				'errorAddinglabelItem': $_handleErrorAddinglabelItem,
 				'inputBlur': $_handleInputOnBlur,
 				'inputFocus': $_handleInputFocus,
 				'inputValueChanged': $_handleSyncInputValue,

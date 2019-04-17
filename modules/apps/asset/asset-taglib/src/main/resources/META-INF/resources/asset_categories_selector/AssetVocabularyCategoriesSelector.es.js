@@ -99,6 +99,16 @@ class AssetVocabularyCategoriesSelector extends Component {
 	}
 
 	/**
+	 * Show the category error
+	 *
+	 * @private
+	 * @review
+	 */
+	_handleErrorAddinglabelItem() {
+		this._unexistingCategoryError = true;
+	}
+
+	/**
 	 * Hides the category error
 	 *
 	 * @private
@@ -130,8 +140,15 @@ class AssetVocabularyCategoriesSelector extends Component {
 		this.selectedItems = event.data.selectedItems;
 	}
 
+	/**
+	 * Sync the _intpuvalue and hide the category error
+	 *
+	 * @private
+	 * @review
+	 */
 	_handleSyncInputValue(val) {
 		this._inputValue = val.newVal;
+		this._unexistingCategoryError = false;
 	}
 
 	syncSelectedItems() {

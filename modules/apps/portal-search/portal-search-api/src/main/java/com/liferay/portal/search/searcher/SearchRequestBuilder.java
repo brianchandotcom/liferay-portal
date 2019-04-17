@@ -81,10 +81,14 @@ public interface SearchRequestBuilder {
 
 	public SearchRequestBuilder federatedSearchKey(String federatedSearchKey);
 
+	public SearchRequestBuilder fields(String... fields);
+
 	public SearchRequestBuilder getFederatedSearchRequestBuilder(
 		String federatedSearchKey);
 
 	public SearchRequestBuilder highlightEnabled(boolean highlightEnabled);
+
+	public SearchRequestBuilder highlightFields(String... highlightFields);
 
 	/**
 	 * Enables inclusion of the search engine's response string with the

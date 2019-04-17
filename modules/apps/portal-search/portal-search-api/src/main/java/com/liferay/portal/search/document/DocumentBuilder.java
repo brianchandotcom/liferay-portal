@@ -33,11 +33,11 @@ public interface DocumentBuilder {
 
 	public DocumentBuilder setDates(String name, String... values);
 
-	public DocumentBuilder setDouble(String name, double value);
+	public DocumentBuilder setDouble(String name, Double value);
 
 	public DocumentBuilder setDoubles(String name, Double... values);
 
-	public DocumentBuilder setFloat(String name, float value);
+	public DocumentBuilder setFloat(String name, Float value);
 
 	public DocumentBuilder setFloats(String name, Float... values);
 
@@ -47,11 +47,11 @@ public interface DocumentBuilder {
 	public DocumentBuilder setGeoLocationPoints(
 		String name, GeoLocationPoint... values);
 
-	public DocumentBuilder setInteger(String name, int value);
+	public DocumentBuilder setInteger(String name, Integer value);
 
 	public DocumentBuilder setIntegers(String name, Integer... values);
 
-	public DocumentBuilder setLong(String name, long value);
+	public DocumentBuilder setLong(String name, Long value);
 
 	public DocumentBuilder setLongs(String name, Long... values);
 
@@ -62,5 +62,7 @@ public interface DocumentBuilder {
 	public DocumentBuilder setValue(String name, Object value);
 
 	public DocumentBuilder setValues(String name, Collection<Object> values);
+
+	public DocumentBuilder unsetValue(String name);
 
 }

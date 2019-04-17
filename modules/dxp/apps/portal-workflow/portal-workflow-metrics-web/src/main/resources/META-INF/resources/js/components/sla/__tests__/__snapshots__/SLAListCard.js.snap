@@ -284,7 +284,7 @@ exports[`Should remove a item 1`] = `
           </div>
         </nav>
         <div
-          className="lfr-search-container-wrapper container-fluid-1280"
+          className="container-fluid-1280 lfr-search-container-wrapper"
         >
           <ListView
             emptyMessageText="SLA allows to define and measure process performance."
@@ -293,12 +293,16 @@ exports[`Should remove a item 1`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
-                <span
-                  aria-hidden="true"
-                  className="loading-animation"
-                />
-              </LoadingState>
+              <div
+                className="border-1 pb-6 pt-6 sheet"
+              >
+                <LoadingState>
+                  <span
+                    aria-hidden="true"
+                    className="loading-animation"
+                  />
+                </LoadingState>
+              </div>
             </div>
           </ListView>
         </div>
@@ -342,13 +346,17 @@ Array [
     </div>
   </nav>,
   <div
-    className="lfr-search-container-wrapper container-fluid-1280"
+    className="container-fluid-1280 lfr-search-container-wrapper"
   >
     <div>
-      <span
-        aria-hidden="true"
-        className="loading-animation"
-      />
+      <div
+        className="border-1 pb-6 pt-6 sheet"
+      >
+        <span
+          aria-hidden="true"
+          className="loading-animation"
+        />
+      </div>
     </div>
   </div>,
 ]
@@ -388,13 +396,17 @@ Array [
     </div>
   </nav>,
   <div
-    className="lfr-search-container-wrapper container-fluid-1280"
+    className="container-fluid-1280 lfr-search-container-wrapper"
   >
     <div>
-      <span
-        aria-hidden="true"
-        className="loading-animation"
-      />
+      <div
+        className="border-1 pb-6 pt-6 sheet"
+      >
+        <span
+          aria-hidden="true"
+          className="loading-animation"
+        />
+      </div>
     </div>
   </div>,
 ]
@@ -684,7 +696,7 @@ exports[`Should render toast with SLA saved message 1`] = `
           </div>
         </nav>
         <div
-          className="lfr-search-container-wrapper container-fluid-1280"
+          className="container-fluid-1280 lfr-search-container-wrapper"
         >
           <ListView
             emptyMessageText="SLA allows to define and measure process performance."
@@ -693,12 +705,16 @@ exports[`Should render toast with SLA saved message 1`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
-                <span
-                  aria-hidden="true"
-                  className="loading-animation"
-                />
-              </LoadingState>
+              <div
+                className="border-1 pb-6 pt-6 sheet"
+              >
+                <LoadingState>
+                  <span
+                    aria-hidden="true"
+                    className="loading-animation"
+                  />
+                </LoadingState>
+              </div>
             </div>
           </ListView>
         </div>
@@ -992,7 +1008,7 @@ exports[`Should render toast with SLA updated message 1`] = `
           </div>
         </nav>
         <div
-          className="lfr-search-container-wrapper container-fluid-1280"
+          className="container-fluid-1280 lfr-search-container-wrapper"
         >
           <ListView
             emptyMessageText="SLA allows to define and measure process performance."
@@ -1001,12 +1017,16 @@ exports[`Should render toast with SLA updated message 1`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
-                <span
-                  aria-hidden="true"
-                  className="loading-animation"
-                />
-              </LoadingState>
+              <div
+                className="border-1 pb-6 pt-6 sheet"
+              >
+                <LoadingState>
+                  <span
+                    aria-hidden="true"
+                    className="loading-animation"
+                  />
+                </LoadingState>
+              </div>
             </div>
           </ListView>
         </div>

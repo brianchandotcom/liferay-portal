@@ -1,0 +1,188 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<div
+  className="table-responsive"
+>
+  <table
+    className="show-quick-actions-on-hover table table-fixed table-heading-nowrap table-hover table-list"
+  >
+    <thead>
+      <tr>
+        <th
+          className="text-center table-head-title"
+          style={
+            Object {
+              "width": "10%",
+            }
+          }
+        >
+          ID
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "30%",
+            }
+          }
+        >
+          Item Subject
+        </th>
+        <th
+          className="table-head-title"
+          style={
+            Object {
+              "width": "25%",
+            }
+          }
+        >
+          Process Step
+        </th>
+        <th
+          className="table-head-title"
+          style={
+            Object {
+              "width": "20%",
+            }
+          }
+        >
+          Created By
+        </th>
+        <th
+          className="pr-4 table-head-title text-right"
+          style={
+            Object {
+              "width": "15%",
+            }
+          }
+        >
+          Creation Date
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          className="lfr-title-column table-title text-center"
+        >
+          <span
+            className="mr-3 sticker sticker-sm bg-success-light"
+          >
+            <span
+              className="inline-item"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-check-circle text-success"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle"
+                />
+              </svg>
+            </span>
+          </span>
+          <strong>
+            12351
+          </strong>
+        </td>
+        <td>
+          Process: Item Subject Test
+        </td>
+        <td>
+          Step 1, Step 2, Step 3
+        </td>
+        <td>
+          User Test
+        </td>
+        <td
+          className="pr-4 text-right"
+        >
+          Feb 01, 12:00 AM
+        </td>
+      </tr>
+      <tr>
+        <td
+          className="lfr-title-column table-title text-center"
+        >
+          <span
+            className="mr-3 sticker sticker-sm bg-danger-light"
+          >
+            <span
+              className="inline-item"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-exclamation-circle text-danger"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-circle"
+                />
+              </svg>
+            </span>
+          </span>
+          <strong>
+            12351
+          </strong>
+        </td>
+        <td>
+          Process: Item Subject Test 2
+        </td>
+        <td>
+          Step 1, Step 2
+        </td>
+        <td>
+          User Test
+        </td>
+        <td
+          className="pr-4 text-right"
+        >
+          Feb 02, 12:00 AM
+        </td>
+      </tr>
+      <tr>
+        <td
+          className="lfr-title-column table-title text-center"
+        >
+          <span
+            className="mr-3 sticker sticker-sm bg-info-light"
+          >
+            <span
+              className="inline-item"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-hr text-info"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#hr"
+                />
+              </svg>
+            </span>
+          </span>
+          <strong>
+            12351
+          </strong>
+        </td>
+        <td>
+          Process: Item Subject Test 3
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          User Test
+        </td>
+        <td
+          className="pr-4 text-right"
+        >
+          Feb 03, 12:00 AM
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

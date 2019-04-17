@@ -64,10 +64,14 @@ Array [
         className="lfr-search-container-wrapper container-fluid-1280"
       >
         <div>
-          <span
-            aria-hidden="true"
-            className="loading-animation"
-          />
+          <div
+            className="border-1 pb-6 pt-6 sheet"
+          >
+            <span
+              aria-hidden="true"
+              className="loading-animation"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -137,10 +141,14 @@ exports[`Should render default component without custom header 1`] = `
       className="lfr-search-container-wrapper container-fluid-1280"
     >
       <div>
-        <span
-          aria-hidden="true"
-          className="loading-animation"
-        />
+        <div
+          className="border-1 pb-6 pt-6 sheet"
+        >
+          <span
+            aria-hidden="true"
+            className="loading-animation"
+          />
+        </div>
       </div>
     </div>
   </div>

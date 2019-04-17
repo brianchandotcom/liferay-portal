@@ -431,7 +431,7 @@ exports[`Should cancel dialog through SLA List 1`] = `
           </div>
         </nav>
         <div
-          className="lfr-search-container-wrapper container-fluid-1280"
+          className="container-fluid-1280 lfr-search-container-wrapper"
         >
           <ListView
             emptyMessageText="SLA allows to define and measure process performance."
@@ -440,12 +440,16 @@ exports[`Should cancel dialog through SLA List 1`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
-                <span
-                  aria-hidden="true"
-                  className="loading-animation"
-                />
-              </LoadingState>
+              <div
+                className="border-1 pb-6 pt-6 sheet"
+              >
+                <LoadingState>
+                  <span
+                    aria-hidden="true"
+                    className="loading-animation"
+                  />
+                </LoadingState>
+              </div>
             </div>
           </ListView>
         </div>
@@ -739,7 +743,7 @@ exports[`Should cancel dialog through SLA List 2`] = `
           </div>
         </nav>
         <div
-          className="lfr-search-container-wrapper container-fluid-1280"
+          className="container-fluid-1280 lfr-search-container-wrapper"
         >
           <ListView
             emptyMessageText="SLA allows to define and measure process performance."
@@ -748,12 +752,16 @@ exports[`Should cancel dialog through SLA List 2`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
-                <span
-                  aria-hidden="true"
-                  className="loading-animation"
-                />
-              </LoadingState>
+              <div
+                className="border-1 pb-6 pt-6 sheet"
+              >
+                <LoadingState>
+                  <span
+                    aria-hidden="true"
+                    className="loading-animation"
+                  />
+                </LoadingState>
+              </div>
             </div>
           </ListView>
         </div>

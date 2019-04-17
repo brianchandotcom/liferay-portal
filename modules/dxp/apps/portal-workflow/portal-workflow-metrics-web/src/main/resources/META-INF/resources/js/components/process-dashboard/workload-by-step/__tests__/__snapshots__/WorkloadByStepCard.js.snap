@@ -156,27 +156,24 @@ exports[`Should component receive props 1`] = `
                   className="panel-body"
                 >
                   <ListView
-                    emptyActionButton={
-                      <button
-                        className="btn btn-link btn-sm"
-                        onClick={[Function]}
-                      >
-                        Reload Page
-                      </button>
-                    }
+                    className="border-0"
+                    emptyActionButton={<ReloadButton />}
                     emptyMessageClassName="small"
                     emptyMessageText="There are no pending items at the moment."
                     errorMessageText={null}
                     fetching={true}
+                    hideAnimation={true}
+                    loading={false}
                   >
                     <div>
                       <EmptyState
-                        hideAnimation="small"
+                        className="border-0"
+                        hideAnimation={true}
                         message="There are no pending items at the moment."
                         messageClassName="small"
                       >
                         <div
-                          className="border-0 sheet taglib-empty-result-message"
+                          className="border-0 pb-5 pt-6 sheet taglib-empty-result-message"
                         >
                           <div
                             className="sheet-text text-center"
@@ -354,27 +351,24 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                   className="panel-body"
                 >
                   <ListView
-                    emptyActionButton={
-                      <button
-                        className="btn btn-link btn-sm"
-                        onClick={[Function]}
-                      >
-                        Reload Page
-                      </button>
-                    }
+                    className="border-0"
+                    emptyActionButton={<ReloadButton />}
                     emptyMessageClassName="small"
                     emptyMessageText="There are no pending items at the moment."
                     errorMessageText={null}
                     fetching={true}
+                    hideAnimation={true}
+                    loading={false}
                   >
                     <div>
                       <EmptyState
-                        hideAnimation="small"
+                        className="border-0"
+                        hideAnimation={true}
                         message="There are no pending items at the moment."
                         messageClassName="small"
                       >
                         <div
-                          className="border-0 sheet taglib-empty-result-message"
+                          className="border-0 pb-5 pt-6 sheet taglib-empty-result-message"
                         >
                           <div
                             className="sheet-text text-center"
@@ -556,27 +550,24 @@ exports[`Should render component 1`] = `
                   className="panel-body"
                 >
                   <ListView
-                    emptyActionButton={
-                      <button
-                        className="btn btn-link btn-sm"
-                        onClick={[Function]}
-                      >
-                        Reload Page
-                      </button>
-                    }
+                    className="border-0"
+                    emptyActionButton={<ReloadButton />}
                     emptyMessageClassName="small"
                     emptyMessageText="There are no pending items at the moment."
                     errorMessageText={null}
                     fetching={true}
+                    hideAnimation={true}
+                    loading={false}
                   >
                     <div>
                       <EmptyState
-                        hideAnimation="small"
+                        className="border-0"
+                        hideAnimation={true}
                         message="There are no pending items at the moment."
                         messageClassName="small"
                       >
                         <div
-                          className="border-0 sheet taglib-empty-result-message"
+                          className="border-0 pb-5 pt-6 sheet taglib-empty-result-message"
                         >
                           <div
                             className="sheet-text text-center"
@@ -646,7 +637,7 @@ exports[`Should render component with empty data 1`] = `
     >
       <div>
         <div
-          className="border-0 sheet taglib-empty-result-message"
+          className="border-0 pb-5 pt-6 sheet taglib-empty-result-message"
         >
           <div
             className="sheet-text text-center"
@@ -708,7 +699,7 @@ exports[`Should render component with error state 1`] = `
     >
       <div>
         <div
-          className="border-0 sheet taglib-empty-result-message"
+          className="border-0 pb-5 pt-6 sheet taglib-empty-result-message"
         >
           <div
             className="sheet-text text-center"

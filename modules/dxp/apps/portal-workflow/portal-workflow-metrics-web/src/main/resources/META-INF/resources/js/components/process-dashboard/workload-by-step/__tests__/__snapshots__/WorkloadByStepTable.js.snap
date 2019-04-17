@@ -12,32 +12,7 @@ exports[`Should display hyphen when the task has no count 1`] = `
         <th
           className="table-cell-expand table-head-title"
         >
-          <a
-            className="inline-item text-truncate-inline"
-            href="/?backPath=%2F"
-            onClick={[Function]}
-          >
-            <span
-              className="text-truncate title"
-              data-title="Step Name"
-              title="Step Name"
-            >
-              Step Name
-            </span>
-            <span
-              className="inline-item inline-item-after"
-            >
-              <svg
-                className="lexicon-icon lexicon-icon-order-arrow-down"
-                focusable="false"
-                role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
-                />
-              </svg>
-            </span>
-          </a>
+          Step Name
         </th>
         <th
           className="table-head-title text-right"
@@ -57,7 +32,7 @@ exports[`Should display hyphen when the task has no count 1`] = `
                   className="inline-item"
                 >
                   <svg
-                    className="lexicon-icon lexicon-icon-exclamation-circle icon-red"
+                    className="lexicon-icon lexicon-icon-exclamation-circle text-red"
                     focusable="false"
                     role="presentation"
                   >
@@ -108,7 +83,7 @@ exports[`Should display hyphen when the task has no count 1`] = `
                   className="inline-item"
                 >
                   <svg
-                    className="lexicon-icon lexicon-icon-check-circle icon-green"
+                    className="lexicon-icon lexicon-icon-check-circle text-green"
                     focusable="false"
                     role="presentation"
                   >
@@ -213,32 +188,7 @@ exports[`Should render component 1`] = `
         <th
           className="table-cell-expand table-head-title"
         >
-          <a
-            className="inline-item text-truncate-inline"
-            href="/?backPath=%2F"
-            onClick={[Function]}
-          >
-            <span
-              className="text-truncate title"
-              data-title="Step Name"
-              title="Step Name"
-            >
-              Step Name
-            </span>
-            <span
-              className="inline-item inline-item-after"
-            >
-              <svg
-                className="lexicon-icon lexicon-icon-order-arrow-down"
-                focusable="false"
-                role="presentation"
-              >
-                <use
-                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down"
-                />
-              </svg>
-            </span>
-          </a>
+          Step Name
         </th>
         <th
           className="table-head-title text-right"
@@ -258,7 +208,7 @@ exports[`Should render component 1`] = `
                   className="inline-item"
                 >
                   <svg
-                    className="lexicon-icon lexicon-icon-exclamation-circle icon-red"
+                    className="lexicon-icon lexicon-icon-exclamation-circle text-red"
                     focusable="false"
                     role="presentation"
                   >
@@ -309,7 +259,7 @@ exports[`Should render component 1`] = `
                   className="inline-item"
                 >
                   <svg
-                    className="lexicon-icon lexicon-icon-check-circle icon-green"
+                    className="lexicon-icon lexicon-icon-check-circle text-green"
                     focusable="false"
                     role="presentation"
                   >

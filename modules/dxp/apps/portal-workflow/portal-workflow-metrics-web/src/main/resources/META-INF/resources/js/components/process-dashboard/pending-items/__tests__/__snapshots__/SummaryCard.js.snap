@@ -1,0 +1,310 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should test mouse over 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SummaryCard
+        elementClasses="test"
+        iconColor="black"
+        iconName="test"
+        percentage={10}
+        title="test"
+        total={10}
+      >
+        <withRouter()
+          className="process-dashboard-summary-card test"
+          onMouseOut={[Function]}
+          onMouseOver={[Function]}
+          to="/instances/undefined/20/1"
+        >
+          <Route>
+            <Component
+              className="process-dashboard-summary-card test"
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    Object {
+                      "hash": "",
+                      "pathname": "/",
+                      "search": "?backPath=%2F",
+                    },
+                    Object {
+                      "hash": "",
+                      "pathname": "/slas/1234",
+                      "search": "?backPath=%2Fprocesses",
+                    },
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 3,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/processes/1/10/title%3Aasc",
+                  "search": "?backPath=%2F",
+                }
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              onMouseOut={[Function]}
+              onMouseOver={[Function]}
+              to="/instances/undefined/20/1"
+            >
+              <ChildLinkWrapper
+                backPath="/"
+                className="process-dashboard-summary-card test"
+                currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/",
+                        "search": "?backPath=%2F",
+                      },
+                      Object {
+                        "hash": "",
+                        "pathname": "/slas/1234",
+                        "search": "?backPath=%2Fprocesses",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 3,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+                to="/instances/undefined/20/1"
+              >
+                <Link
+                  className="process-dashboard-summary-card test"
+                  onMouseOut={[Function]}
+                  onMouseOver={[Function]}
+                  replace={false}
+                  to={
+                    Object {
+                      "pathname": "/instances/undefined/20/1",
+                      "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                    }
+                  }
+                >
+                  <a
+                    className="process-dashboard-summary-card test"
+                    href="/instances/undefined/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                    onClick={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
+                  >
+                    <div>
+                      <div
+                        className="header"
+                      >
+                        <span
+                          className="bg-black-light mr-3 sticker sticker-circle"
+                        >
+                          <span
+                            className="inline-item"
+                          >
+                            <Icon
+                              elementClasses="text-black"
+                              iconName="test"
+                            >
+                              <svg
+                                className="lexicon-icon lexicon-icon-test text-black"
+                                focusable="false"
+                                role="presentation"
+                              >
+                                <use
+                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#test"
+                                />
+                              </svg>
+                            </Icon>
+                          </span>
+                        </span>
+                        <span>
+                          test
+                        </span>
+                      </div>
+                      <div
+                        className="body"
+                      >
+                        10
+                      </div>
+                      <div
+                        className="footer"
+                      >
+                        10
+                      </div>
+                    </div>
+                  </a>
+                </Link>
+              </ChildLinkWrapper>
+            </Component>
+          </Route>
+        </withRouter()>
+      </SummaryCard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;

@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.UserFinderUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -36,10 +36,11 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.social.kernel.model.SocialRelationConstants;
-import com.liferay.social.kernel.service.SocialRelationLocalServiceUtil;
+import com.liferay.social.kernel.service.SocialRelationLocalService;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -72,40 +73,40 @@ public class UserFinderTest {
 		_group = GroupTestUtil.addGroup();
 		_groupUser = UserTestUtil.addUser();
 
-		GroupLocalServiceUtil.addUserGroup(_groupUser.getUserId(), _group);
+		_groupLocalService.addUserGroup(_groupUser.getUserId(), _group);
 
 		_organization = OrganizationTestUtil.addOrganization(true);
 		_organizationUser = UserTestUtil.addUser();
 
-		OrganizationLocalServiceUtil.addUserOrganization(
+		_organizationLocalService.addUserOrganization(
 			_organizationUser.getUserId(), _organization);
 
 		_socialUser = UserTestUtil.addUser();
 
-		SocialRelationLocalServiceUtil.addRelation(
+		_socialRelationLocalService.addRelation(
 			_groupUser.getUserId(), _socialUser.getUserId(),
 			SocialRelationConstants.TYPE_BI_CONNECTION);
 
 		_userGroup = UserGroupTestUtil.addUserGroup();
 		_userGroupUser = UserTestUtil.addUser();
 
-		UserGroupLocalServiceUtil.addUserUserGroup(
+		_userGroupLocalService.addUserUserGroup(
 			_userGroupUser.getUserId(), _userGroup);
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
-		UserLocalServiceUtil.deleteUser(_groupUser);
+		_groupLocalService.deleteGroup(_group);
+		_userLocalService.deleteUser(_groupUser);
 
-		UserLocalServiceUtil.deleteUser(_organizationUser);
+		_userLocalService.deleteUser(_organizationUser);
 
-		OrganizationLocalServiceUtil.deleteOrganization(_organization);
+		_organizationLocalService.deleteOrganization(_organization);
 
-		UserLocalServiceUtil.deleteUser(_socialUser);
-		UserLocalServiceUtil.deleteUser(_userGroupUser);
+		_userLocalService.deleteUser(_socialUser);
+		_userLocalService.deleteUser(_userGroupUser);
 
-		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
+		_userGroupLocalService.deleteUserGroup(_userGroup);
 	}
 
 	@Before
@@ -120,7 +121,7 @@ public class UserFinderTest {
 				_userGroup.getGroupId()
 			});
 
-		_inheritedUserGroupsExpectedCount = UserFinderUtil.countByKeywords(
+		_inheritedUserGroupsExpectedCount = _userFinder.countByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserGroupsParams);
 
@@ -134,38 +135,38 @@ public class UserFinderTest {
 
 	@After
 	public void tearDown() throws Exception {
-		RoleLocalServiceUtil.deleteRole(_roleId);
+		_roleLocalService.deleteRole(_roleId);
 
-		GroupLocalServiceUtil.clearOrganizationGroups(
+		_groupLocalService.clearOrganizationGroups(
 			_organization.getOrganizationId());
-		GroupLocalServiceUtil.clearUserGroupGroups(_userGroup.getUserGroupId());
+		_groupLocalService.clearUserGroupGroups(_userGroup.getUserGroupId());
 	}
 
 	@Test
 	public void testCountByGroups() throws Exception {
 		long groupId = _group.getGroupId();
 
-		Map<Long, Integer> counts = UserFinderUtil.countByGroups(
+		Map<Long, Integer> counts = _userFinder.countByGroups(
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
 			new long[] {groupId});
 
 		Assert.assertEquals(counts.toString(), 1, counts.size());
 		Assert.assertEquals(2, (int)counts.get(groupId));
 
-		GroupLocalServiceUtil.addOrganizationGroup(
+		_groupLocalService.addOrganizationGroup(
 			_organization.getOrganizationId(), groupId);
 
-		counts = UserFinderUtil.countByGroups(
+		counts = _userFinder.countByGroups(
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
 			new long[] {groupId});
 
 		Assert.assertEquals(counts.toString(), 1, counts.size());
 		Assert.assertEquals(3, (int)counts.get(groupId));
 
-		GroupLocalServiceUtil.addUserGroupGroup(
+		_groupLocalService.addUserGroupGroup(
 			_userGroup.getUserGroupId(), groupId);
 
-		counts = UserFinderUtil.countByGroups(
+		counts = _userFinder.countByGroups(
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
 			new long[] {groupId});
 
@@ -174,7 +175,7 @@ public class UserFinderTest {
 
 		long organizationGroupId = _organization.getGroupId();
 
-		counts = UserFinderUtil.countByGroups(
+		counts = _userFinder.countByGroups(
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
 			new long[] {groupId, organizationGroupId});
 
@@ -184,7 +185,7 @@ public class UserFinderTest {
 
 	@Test
 	public void testCountByKeywordsWithInheritedGroups() throws Exception {
-		int count = UserFinderUtil.countByKeywords(
+		int count = _userFinder.countByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserGroupsParams);
 
@@ -193,14 +194,14 @@ public class UserFinderTest {
 
 	@Test
 	public void testCountByKeywordsWithInheritedRoles() throws Exception {
-		int expectedCount = UserFinderUtil.countByKeywords(
+		int expectedCount = _userFinder.countByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserRolesParams);
 
-		RoleLocalServiceUtil.addGroupRole(_organization.getGroupId(), _roleId);
-		RoleLocalServiceUtil.addGroupRole(_userGroup.getGroupId(), _roleId);
+		_roleLocalService.addGroupRole(_organization.getGroupId(), _roleId);
+		_roleLocalService.addGroupRole(_userGroup.getGroupId(), _roleId);
 
-		int count = UserFinderUtil.countByKeywords(
+		int count = _userFinder.countByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserRolesParams);
 
@@ -211,16 +212,16 @@ public class UserFinderTest {
 	public void testCountByKeywordsWithInheritedRolesThroughSite()
 		throws Exception {
 
-		int expectedCount = UserFinderUtil.countByKeywords(
+		int expectedCount = _userFinder.countByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserRolesParams);
 
-		GroupLocalServiceUtil.addOrganizationGroup(
+		_groupLocalService.addOrganizationGroup(
 			_organization.getOrganizationId(), _group);
-		GroupLocalServiceUtil.addUserGroupGroup(
+		_groupLocalService.addUserGroupGroup(
 			_userGroup.getUserGroupId(), _group);
 
-		int count = UserFinderUtil.countByKeywords(
+		int count = _userFinder.countByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserRolesParams);
 
@@ -233,7 +234,7 @@ public class UserFinderTest {
 
 		params.put("usersGroups", _group.getGroupId());
 
-		List<User> users = UserFinderUtil.findByKeywords(
+		List<User> users = _userFinder.findByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, params, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
@@ -247,7 +248,7 @@ public class UserFinderTest {
 
 		params.put("usersOrgs", _organization.getOrganizationId());
 
-		List<User> users = UserFinderUtil.findByKeywords(
+		List<User> users = _userFinder.findByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, params, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
@@ -261,7 +262,7 @@ public class UserFinderTest {
 
 		params.put("usersUserGroups", _userGroup.getUserGroupId());
 
-		List<User> users = UserFinderUtil.findByKeywords(
+		List<User> users = _userFinder.findByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, params, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
@@ -271,7 +272,7 @@ public class UserFinderTest {
 
 	@Test
 	public void testFindByKeywordsWithInheritedGroups() throws Exception {
-		List<User> users = UserFinderUtil.findByKeywords(
+		List<User> users = _userFinder.findByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserGroupsParams,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -287,15 +288,15 @@ public class UserFinderTest {
 
 	@Test
 	public void testFindByKeywordsWithInheritedRoles() throws Exception {
-		List<User> expectedUsers = UserFinderUtil.findByKeywords(
+		List<User> expectedUsers = _userFinder.findByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserRolesParams,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		RoleLocalServiceUtil.addGroupRole(_organization.getGroupId(), _roleId);
-		RoleLocalServiceUtil.addGroupRole(_userGroup.getGroupId(), _roleId);
+		_roleLocalService.addGroupRole(_organization.getGroupId(), _roleId);
+		_roleLocalService.addGroupRole(_userGroup.getGroupId(), _roleId);
 
-		List<User> users = UserFinderUtil.findByKeywords(
+		List<User> users = _userFinder.findByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserRolesParams,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -313,17 +314,17 @@ public class UserFinderTest {
 	public void testFindByKeywordsWithInheritedRolesThroughSite()
 		throws Exception {
 
-		List<User> expectedUsers = UserFinderUtil.findByKeywords(
+		List<User> expectedUsers = _userFinder.findByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserRolesParams,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		GroupLocalServiceUtil.addOrganizationGroup(
+		_groupLocalService.addOrganizationGroup(
 			_organization.getOrganizationId(), _group);
-		GroupLocalServiceUtil.addUserGroupGroup(
+		_groupLocalService.addUserGroupGroup(
 			_userGroup.getUserGroupId(), _group);
 
-		List<User> users = UserFinderUtil.findByKeywords(
+		List<User> users = _userFinder.findByKeywords(
 			TestPropsValues.getCompanyId(), null,
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserRolesParams,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -339,7 +340,7 @@ public class UserFinderTest {
 
 	@Test
 	public void testFindBySocialUsers() throws Exception {
-		List<User> users = UserFinderUtil.findBySocialUsers(
+		List<User> users = _userFinder.findBySocialUsers(
 			TestPropsValues.getCompanyId(), _groupUser.getUserId(),
 			SocialRelationConstants.TYPE_BI_CONNECTION, StringPool.EQUAL,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
@@ -349,16 +350,41 @@ public class UserFinderTest {
 	}
 
 	private static Group _group;
+
+	@Inject
+	private static GroupLocalService _groupLocalService;
+
 	private static User _groupUser;
 	private static Organization _organization;
+
+	@Inject
+	private static OrganizationLocalService _organizationLocalService;
+
 	private static User _organizationUser;
+
+	@Inject
+	private static SocialRelationLocalService _socialRelationLocalService;
+
 	private static User _socialUser;
 	private static UserGroup _userGroup;
+
+	@Inject
+	private static UserGroupLocalService _userGroupLocalService;
+
 	private static User _userGroupUser;
+
+	@Inject
+	private static UserLocalService _userLocalService;
 
 	private int _inheritedUserGroupsExpectedCount;
 	private LinkedHashMap<String, Object> _inheritedUserGroupsParams;
 	private LinkedHashMap<String, Object> _inheritedUserRolesParams;
 	private long _roleId;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserFinder _userFinder;
 
 }

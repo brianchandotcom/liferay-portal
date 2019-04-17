@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -74,7 +75,7 @@ public class UserServiceWhenAddingUserWithDefaultSitesEnabledTest {
 			PropsKeys.ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES,
 			organizationGroup.getDescriptiveName());
 
-		CompanyLocalServiceUtil.updatePreferences(
+		_companyLocalService.updatePreferences(
 			_group.getCompanyId(), properties);
 
 		UnicodeProperties typeSettingsProperties =
@@ -85,7 +86,7 @@ public class UserServiceWhenAddingUserWithDefaultSitesEnabledTest {
 		typeSettingsProperties.put(
 			"defaultSiteRoleIds", String.valueOf(_siteRole.getRoleId()));
 
-		GroupLocalServiceUtil.updateGroup(
+		_groupLocalService.updateGroup(
 			_group.getGroupId(), typeSettingsProperties.toString());
 
 		_user = UserTestUtil.addUser();
@@ -109,7 +110,7 @@ public class UserServiceWhenAddingUserWithDefaultSitesEnabledTest {
 			ArrayUtil.contains(_user.getGroupIds(), _group.getGroupId()));
 
 		List<UserGroupRole> userGroupRoles =
-			UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+			_userGroupRoleLocalService.getUserGroupRoles(
 				_user.getUserId(), _group.getGroupId());
 
 		Assert.assertEquals(
@@ -120,8 +121,14 @@ public class UserServiceWhenAddingUserWithDefaultSitesEnabledTest {
 		Assert.assertEquals(_siteRole.getRoleId(), userGroupRole.getRoleId());
 	}
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@DeleteAfterTestRun
 	private Organization _organization;
@@ -131,5 +138,8 @@ public class UserServiceWhenAddingUserWithDefaultSitesEnabledTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

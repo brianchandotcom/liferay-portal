@@ -14,7 +14,7 @@
 
 package com.liferay.user.service.test;
 
-import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServiceUtil;
+import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class UserLocalServiceTest {
 	public void testGetCompanyUsers() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		List<User> companyUsers = UserLocalServiceUtil.getCompanyUsers(
+		List<User> companyUsers = _userLocalService.getCompanyUsers(
 			_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(companyUsers.toString(), 1, companyUsers.size());
@@ -74,9 +75,9 @@ public class UserLocalServiceTest {
 
 		_addUsers(20);
 
-		UserLocalServiceUtil.addGroupUsers(group.getGroupId(), _users);
+		_userLocalService.addGroupUsers(group.getGroupId(), _users);
 
-		List<User> allGroupUsers = UserLocalServiceUtil.getGroupUsers(
+		List<User> allGroupUsers = _userLocalService.getGroupUsers(
 			group.getGroupId());
 
 		Assert.assertEquals(
@@ -86,7 +87,7 @@ public class UserLocalServiceTest {
 		int start = 5;
 		int delta = 5;
 
-		List<User> partialGroupUsers = UserLocalServiceUtil.getGroupUsers(
+		List<User> partialGroupUsers = _userLocalService.getGroupUsers(
 			group.getGroupId(), WorkflowConstants.STATUS_APPROVED, start,
 			start + delta, null);
 
@@ -105,10 +106,10 @@ public class UserLocalServiceTest {
 
 		_users.add(user2);
 
-		AnnouncementsDeliveryLocalServiceUtil.addUserDelivery(
+		_announcementsDeliveryLocalService.addUserDelivery(
 			user1.getUserId(), "general");
 
-		List<User> users = UserLocalServiceUtil.getNoAnnouncementsDeliveries(
+		List<User> users = _userLocalService.getNoAnnouncementsDeliveries(
 			"general");
 
 		Assert.assertFalse(users.toString(), users.contains(user1));
@@ -121,9 +122,9 @@ public class UserLocalServiceTest {
 
 		_users.add(user);
 
-		GroupLocalServiceUtil.deleteGroup(user.getGroupId());
+		_groupLocalService.deleteGroup(user.getGroupId());
 
-		List<User> users = UserLocalServiceUtil.getNoGroups();
+		List<User> users = _userLocalService.getNoGroups();
 
 		Assert.assertTrue(users.toString(), users.contains(user));
 	}
@@ -144,9 +145,9 @@ public class UserLocalServiceTest {
 
 			_organizations.add(organization);
 
-			UserLocalServiceUtil.addOrganizationUsers(
+			_userLocalService.addOrganizationUsers(
 				organization.getOrganizationId(), commonUserIds);
-			UserLocalServiceUtil.addOrganizationUsers(
+			_userLocalService.addOrganizationUsers(
 				organization.getOrganizationId(), uniqueUserIds);
 
 			organizationIds[i] = organization.getOrganizationId();
@@ -167,9 +168,9 @@ public class UserLocalServiceTest {
 
 			_userGroups.add(userGroup);
 
-			UserLocalServiceUtil.addUserGroupUsers(
+			_userLocalService.addUserGroupUsers(
 				userGroup.getUserGroupId(), commonUserIds);
-			UserLocalServiceUtil.addUserGroupUsers(
+			_userLocalService.addUserGroupUsers(
 				userGroup.getUserGroupId(), uniqueUserIds);
 
 			userGroupIds[i] = userGroup.getUserGroupId();
@@ -181,19 +182,19 @@ public class UserLocalServiceTest {
 
 		Assert.assertEquals(
 			0,
-			UserLocalServiceUtil.getOrganizationsAndUserGroupsUsersCount(
+			_userLocalService.getOrganizationsAndUserGroupsUsersCount(
 				null, null));
 		Assert.assertEquals(
 			0,
-			UserLocalServiceUtil.getOrganizationsAndUserGroupsUsersCount(
+			_userLocalService.getOrganizationsAndUserGroupsUsersCount(
 				emptyLongArray.clone(), null));
 		Assert.assertEquals(
 			0,
-			UserLocalServiceUtil.getOrganizationsAndUserGroupsUsersCount(
+			_userLocalService.getOrganizationsAndUserGroupsUsersCount(
 				null, emptyLongArray.clone()));
 		Assert.assertEquals(
 			0,
-			UserLocalServiceUtil.getOrganizationsAndUserGroupsUsersCount(
+			_userLocalService.getOrganizationsAndUserGroupsUsersCount(
 				emptyLongArray.clone(), emptyLongArray.clone()));
 
 		int commonUsersCount = commonUserIds.length;
@@ -201,24 +202,24 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(
 			commonUsersCount + uniqueOrganizationUsersCount +
 				uniqueUserGroupUsersCount,
-			UserLocalServiceUtil.getOrganizationsAndUserGroupsUsersCount(
+			_userLocalService.getOrganizationsAndUserGroupsUsersCount(
 				organizationIds, userGroupIds));
 
 		Assert.assertEquals(
 			commonUsersCount + uniqueOrganizationUsersCount,
-			UserLocalServiceUtil.getOrganizationsAndUserGroupsUsersCount(
+			_userLocalService.getOrganizationsAndUserGroupsUsersCount(
 				organizationIds, null));
 		Assert.assertEquals(
 			commonUsersCount + uniqueOrganizationUsersCount,
-			UserLocalServiceUtil.getOrganizationsAndUserGroupsUsersCount(
+			_userLocalService.getOrganizationsAndUserGroupsUsersCount(
 				organizationIds, emptyLongArray.clone()));
 		Assert.assertEquals(
 			commonUsersCount + uniqueUserGroupUsersCount,
-			UserLocalServiceUtil.getOrganizationsAndUserGroupsUsersCount(
+			_userLocalService.getOrganizationsAndUserGroupsUsersCount(
 				null, userGroupIds));
 		Assert.assertEquals(
 			commonUsersCount + uniqueUserGroupUsersCount,
-			UserLocalServiceUtil.getOrganizationsAndUserGroupsUsersCount(
+			_userLocalService.getOrganizationsAndUserGroupsUsersCount(
 				emptyLongArray.clone(), userGroupIds));
 	}
 
@@ -228,12 +229,11 @@ public class UserLocalServiceTest {
 
 		_addUsers(20);
 
-		UserLocalServiceUtil.addOrganizationUsers(
+		_userLocalService.addOrganizationUsers(
 			organization.getOrganizationId(), _users);
 
-		List<User> organizationUsers =
-			UserLocalServiceUtil.getOrganizationUsers(
-				organization.getOrganizationId());
+		List<User> organizationUsers = _userLocalService.getOrganizationUsers(
+			organization.getOrganizationId());
 
 		Assert.assertEquals(
 			organizationUsers.toString(), _users.size(),
@@ -243,7 +243,7 @@ public class UserLocalServiceTest {
 		int start = 5;
 		int delta = 5;
 
-		organizationUsers = UserLocalServiceUtil.getOrganizationUsers(
+		organizationUsers = _userLocalService.getOrganizationUsers(
 			organization.getOrganizationId(), WorkflowConstants.STATUS_APPROVED,
 			start, start + delta, null);
 
@@ -258,10 +258,9 @@ public class UserLocalServiceTest {
 
 		_addUsers(20);
 
-		UserLocalServiceUtil.addUserGroupUsers(
-			userGroup.getUserGroupId(), _users);
+		_userLocalService.addUserGroupUsers(userGroup.getUserGroupId(), _users);
 
-		List<User> userGroupUsers = UserLocalServiceUtil.getUserGroupUsers(
+		List<User> userGroupUsers = _userLocalService.getUserGroupUsers(
 			userGroup.getUserGroupId());
 
 		Assert.assertEquals(
@@ -271,7 +270,7 @@ public class UserLocalServiceTest {
 		int start = 5;
 		int delta = 5;
 
-		userGroupUsers = UserLocalServiceUtil.getUserGroupUsers(
+		userGroupUsers = _userLocalService.getUserGroupUsers(
 			userGroup.getUserGroupId(), start, start + delta);
 
 		Assert.assertEquals(
@@ -293,14 +292,24 @@ public class UserLocalServiceTest {
 		return userIds;
 	}
 
+	@Inject
+	private AnnouncementsDeliveryLocalService
+		_announcementsDeliveryLocalService;
+
 	@DeleteAfterTestRun
 	private Company _company;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private final List<UserGroup> _userGroups = new ArrayList<>();
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

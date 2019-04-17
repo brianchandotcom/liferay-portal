@@ -20,14 +20,15 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -65,7 +66,7 @@ public class UserServiceWhenCallingGetGtUsersMethodsTest {
 
 		_assert(
 			size,
-			gtUserId -> UserServiceUtil.getGtCompanyUsers(
+			gtUserId -> _userService.getGtCompanyUsers(
 				gtUserId, TestPropsValues.getCompanyId(), size));
 	}
 
@@ -83,7 +84,7 @@ public class UserServiceWhenCallingGetGtUsersMethodsTest {
 
 		_assert(
 			size,
-			gtUserId -> UserServiceUtil.getGtOrganizationUsers(
+			gtUserId -> _userService.getGtOrganizationUsers(
 				gtUserId, _organization.getOrganizationId(), size));
 	}
 
@@ -101,14 +102,14 @@ public class UserServiceWhenCallingGetGtUsersMethodsTest {
 			userIds[i] = user.getUserId();
 		}
 
-		UserLocalServiceUtil.setUserGroupUsers(
+		_userLocalService.setUserGroupUsers(
 			_userGroup.getUserGroupId(), userIds);
 
 		int size = 5;
 
 		_assert(
 			size,
-			gtUserId -> UserServiceUtil.getGtUserGroupUsers(
+			gtUserId -> _userService.getGtUserGroupUsers(
 				gtUserId, _userGroup.getUserGroupId(), size));
 	}
 
@@ -147,7 +148,13 @@ public class UserServiceWhenCallingGetGtUsersMethodsTest {
 	@DeleteAfterTestRun
 	private UserGroup _userGroup;
 
+	@Inject
+	private UserLocalService _userLocalService;
+
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();
+
+	@Inject
+	private UserService _userService;
 
 }

@@ -21,13 +21,14 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.UserPermission;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -61,21 +62,30 @@ public class UserPermissionTest {
 			_role, User.class.getName(), ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(_user.getCompanyId()), ActionKeys.VIEW);
 
-		UserLocalServiceUtil.addRoleUser(_role.getRoleId(), _user);
+		_userLocalService.addRoleUser(_role.getRoleId(), _user);
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_user);
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_user);
 
 		Assert.assertTrue(
-			UserPermissionUtil.contains(
+			_userPermission.contains(
 				permissionChecker, ResourceConstants.PRIMKEY_DNE,
 				ActionKeys.VIEW));
 	}
+
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@DeleteAfterTestRun
 	private Role _role;
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+	@Inject
+	private UserPermission _userPermission;
 
 }

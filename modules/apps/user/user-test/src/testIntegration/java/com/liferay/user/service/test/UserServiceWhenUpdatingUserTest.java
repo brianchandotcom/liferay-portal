@@ -21,13 +21,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserServiceUtil;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -71,11 +72,11 @@ public class UserServiceWhenUpdatingUserTest {
 		childGroup.setMembershipRestriction(
 			GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS);
 
-		GroupLocalServiceUtil.updateGroup(childGroup);
+		_groupLocalService.updateGroup(childGroup);
 
 		groups.add(childGroup);
 
-		GroupLocalServiceUtil.addUserGroups(user.getUserId(), groups);
+		_groupLocalService.addUserGroups(user.getUserId(), groups);
 
 		user = _updateUser(user);
 
@@ -100,7 +101,7 @@ public class UserServiceWhenUpdatingUserTest {
 		long[] userGroupIds = null;
 		ServiceContext serviceContext = new ServiceContext();
 
-		return UserServiceUtil.updateUser(
+		return _userService.updateUser(
 			user.getUserId(), user.getPassword(), StringPool.BLANK,
 			StringPool.BLANK, user.isPasswordReset(),
 			user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
@@ -115,5 +116,11 @@ public class UserServiceWhenUpdatingUserTest {
 			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
 			serviceContext);
 	}
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private UserService _userService;
 
 }

@@ -17,13 +17,14 @@ package com.liferay.user.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
+import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUtil;
 
@@ -61,7 +62,7 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 		_defaultPasswordPolicy.setChangeRequired(true);
 
 		_defaultPasswordPolicy =
-			PasswordPolicyLocalServiceUtil.updatePasswordPolicy(
+			_passwordPolicyLocalService.updatePasswordPolicy(
 				_defaultPasswordPolicy);
 
 		_testPasswordPolicy = PasswordPolicyTestUtil.addPasswordPolicy(
@@ -70,16 +71,15 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 		_testPasswordPolicy.setChangeable(false);
 		_testPasswordPolicy.setChangeRequired(false);
 
-		_testPasswordPolicy =
-			PasswordPolicyLocalServiceUtil.updatePasswordPolicy(
-				_testPasswordPolicy);
+		_testPasswordPolicy = _passwordPolicyLocalService.updatePasswordPolicy(
+			_testPasswordPolicy);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		_defaultPasswordPolicy.setDefaultPolicy(false);
 
-		PasswordPolicyLocalServiceUtil.updatePasswordPolicy(
+		_passwordPolicyLocalService.updatePasswordPolicy(
 			_defaultPasswordPolicy);
 	}
 
@@ -95,10 +95,10 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 
 		long[] users = {_user.getUserId()};
 
-		UserLocalServiceUtil.addPasswordPolicyUsers(
+		_userLocalService.addPasswordPolicyUsers(
 			_testPasswordPolicy.getPasswordPolicyId(), users);
 
-		_user = UserLocalServiceUtil.getUser(_user.getUserId());
+		_user = _userLocalService.getUser(_user.getUserId());
 
 		Assert.assertFalse(_user.isPasswordReset());
 	}
@@ -106,10 +106,16 @@ public class UserServiceWhenAddingOrRemovingPasswordPolicyUsersTest {
 	@DeleteAfterTestRun
 	private PasswordPolicy _defaultPasswordPolicy;
 
+	@Inject
+	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
 	@DeleteAfterTestRun
 	private PasswordPolicy _testPasswordPolicy;
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

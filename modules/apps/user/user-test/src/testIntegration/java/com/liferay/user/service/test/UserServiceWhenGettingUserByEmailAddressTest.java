@@ -17,11 +17,12 @@ package com.liferay.user.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -50,9 +51,9 @@ public class UserServiceWhenGettingUserByEmailAddressTest {
 	public void testShouldFailIfUserDeleted() throws Exception {
 		User user = UserTestUtil.addUser(true);
 
-		UserServiceUtil.deleteUser(user.getUserId());
+		_userService.deleteUser(user.getUserId());
 
-		UserServiceUtil.getUserByEmailAddress(
+		_userService.getUserByEmailAddress(
 			TestPropsValues.getCompanyId(), user.getEmailAddress());
 	}
 
@@ -61,14 +62,20 @@ public class UserServiceWhenGettingUserByEmailAddressTest {
 		User user = UserTestUtil.addUser(true);
 
 		try {
-			User retrievedUser = UserServiceUtil.getUserByEmailAddress(
+			User retrievedUser = _userService.getUserByEmailAddress(
 				TestPropsValues.getCompanyId(), user.getEmailAddress());
 
 			Assert.assertEquals(user, retrievedUser);
 		}
 		finally {
-			UserLocalServiceUtil.deleteUser(user);
+			_userLocalService.deleteUser(user);
 		}
 	}
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+	@Inject
+	private UserService _userService;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserServiceUtil;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -129,7 +130,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 		try {
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-			boolean sentPassword = UserServiceUtil.sendPasswordByEmailAddress(
+			boolean sentPassword = _userService.sendPasswordByEmailAddress(
 				_user.getCompanyId(), _user.getEmailAddress());
 
 			Assert.assertTrue(sentPassword);
@@ -153,7 +154,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 		try {
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-			boolean sentPassword = UserServiceUtil.sendPasswordByScreenName(
+			boolean sentPassword = _userService.sendPasswordByScreenName(
 				_user.getCompanyId(), _user.getScreenName());
 
 			Assert.assertTrue(sentPassword);
@@ -177,7 +178,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 		try {
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-			boolean sentPassword = UserServiceUtil.sendPasswordByUserId(
+			boolean sentPassword = _userService.sendPasswordByUserId(
 				_user.getUserId());
 
 			Assert.assertTrue(sentPassword);
@@ -201,7 +202,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 		try {
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-			boolean sentPassword = UserServiceUtil.sendPasswordByEmailAddress(
+			boolean sentPassword = _userService.sendPasswordByEmailAddress(
 				_user.getCompanyId(), _user.getEmailAddress());
 
 			Assert.assertFalse(sentPassword);
@@ -225,7 +226,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 		try {
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-			boolean sentPassword = UserServiceUtil.sendPasswordByScreenName(
+			boolean sentPassword = _userService.sendPasswordByScreenName(
 				_user.getCompanyId(), _user.getScreenName());
 
 			Assert.assertFalse(sentPassword);
@@ -249,7 +250,7 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 		try {
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-			boolean sentPassword = UserServiceUtil.sendPasswordByUserId(
+			boolean sentPassword = _userService.sendPasswordByUserId(
 				_user.getUserId());
 
 			Assert.assertFalse(sentPassword);
@@ -315,5 +316,8 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserService _userService;
 
 }

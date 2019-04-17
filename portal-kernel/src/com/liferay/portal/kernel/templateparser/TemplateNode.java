@@ -15,8 +15,10 @@
 package com.liferay.portal.kernel.templateparser;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.CharPool;
@@ -134,7 +136,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	public String getData() {
 		String type = getType();
 
-		if (type.equals("document_library") || type.equals("image")) {
+		if (type.equals("ddm-journal-article")) {
+			return _getDDMJournalArticleData();
+		}
+		else if (type.equals("document_library") || type.equals("image")) {
 			return _getFileEntryData();
 		}
 		else if (type.equals("link_to_layout")) {
@@ -263,6 +268,34 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			else {
 				data = data.substring(x + 1, y);
 			}
+		}
+
+		return data;
+	}
+
+	private String _getDDMJournalArticleData() {
+		String data = (String)get("data");
+
+		if (_themeDisplay == null) {
+			return data;
+		}
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
+
+			String className = jsonObject.getString("className");
+			long classPK = jsonObject.getLong("classPK");
+
+			if (Validator.isNull(className) && (classPK == 0)) {
+				return StringPool.BLANK;
+			}
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+				className, classPK);
+
+			return assetEntry.getTitle(_themeDisplay.getLocale());
+		}
+		catch (Exception e) {
 		}
 
 		return data;

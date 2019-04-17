@@ -38,7 +38,7 @@ if (persistState) {
 		<div class="h4 panel-title">
 			<c:choose>
 				<c:when test="<%= collapsible %>">
-					<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" href="#<%= id %>Content" role="button">
+					<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-parent="#<%= id %>" data-toggle="collapse" href="#<%= id %>Content" role="button">
 						<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
 							<i class="<%= iconCssClass %>"></i>
 						</c:if>

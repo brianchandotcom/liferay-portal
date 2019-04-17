@@ -138,6 +138,7 @@ if (vocabulary != null) {
 		{
 			contentBox: '#<portlet:namespace />extraFields',
 			fieldIndexes: '<portlet:namespace />indexes',
+			minimumRows: 1,
 			namespace: '<portlet:namespace />',
 			on: {
 				clone: function(event) {

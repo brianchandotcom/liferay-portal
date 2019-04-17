@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -145,9 +144,9 @@ public class UserLocalServiceTest {
 
 			_organizations.add(organization);
 
-			UserServiceUtil.addOrganizationUsers(
+			UserLocalServiceUtil.addOrganizationUsers(
 				organization.getOrganizationId(), commonUserIds);
-			UserServiceUtil.addOrganizationUsers(
+			UserLocalServiceUtil.addOrganizationUsers(
 				organization.getOrganizationId(), uniqueUserIds);
 
 			organizationIds[i] = organization.getOrganizationId();
@@ -168,9 +167,9 @@ public class UserLocalServiceTest {
 
 			_userGroups.add(userGroup);
 
-			UserServiceUtil.addUserGroupUsers(
+			UserLocalServiceUtil.addUserGroupUsers(
 				userGroup.getUserGroupId(), commonUserIds);
-			UserServiceUtil.addUserGroupUsers(
+			UserLocalServiceUtil.addUserGroupUsers(
 				userGroup.getUserGroupId(), uniqueUserIds);
 
 			userGroupIds[i] = userGroup.getUserGroupId();

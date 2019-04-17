@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.web.internal.facet.display.builder.FolderSearchFacetDisplayBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -236,6 +238,40 @@ public class FolderSearchFacetDisplayContextTest {
 		Assert.assertFalse(folderSearchFacetDisplayContext.isRenderNothing());
 	}
 
+	@Test
+	public void testViewPermissionGrantedForSearchResultButDeniedForParentFolder()
+		throws Exception {
+
+		List<TermCollector> termCollectors = addFoldersAndCreateTermCollectors(
+			"zeroFolderId", null, "null", "", "   ", "assert", "volatile",
+			"alpha");
+
+		setUpMultipleTermCollectors(termCollectors);
+
+		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
+			createDisplayContext(null);
+
+		List<FolderSearchFacetTermDisplayContext>
+			folderSearchFacetTermDisplayContexts =
+				folderSearchFacetDisplayContext.
+					getFolderSearchFacetTermDisplayContexts();
+
+		String nameFrequencyString = buildNameFrequencyString(
+			folderSearchFacetTermDisplayContexts);
+
+		Assert.assertEquals(
+			folderSearchFacetTermDisplayContexts.toString(),
+			"assert:6|volatile:7|alpha:8", nameFrequencyString);
+
+		Assert.assertEquals(
+			termCollectors.toString(), 36,
+			getTotalTermCollectorFrequencyCount(termCollectors));
+		Assert.assertEquals(
+			folderSearchFacetTermDisplayContexts.toString(), 21,
+			getTotalFolderSearchFacetTermDisplayContextFrequencyCount(
+				folderSearchFacetTermDisplayContexts));
+	}
+
 	protected void addFolder(long folderId, String title) throws Exception {
 		Mockito.doReturn(
 			title
@@ -244,6 +280,50 @@ public class FolderSearchFacetDisplayContextTest {
 		).getFolderTitle(
 			folderId
 		);
+	}
+
+	protected List<TermCollector> addFoldersAndCreateTermCollectors(
+			String... folderNames)
+		throws Exception {
+
+		List<TermCollector> termCollectors = new ArrayList<>();
+
+		int folderId = 0;
+
+		for (String folderName : folderNames) {
+			addFolder(folderId, folderName);
+
+			int frequency = folderId + 1;
+
+			termCollectors.add(createTermCollector(folderId, frequency));
+
+			folderId++;
+		}
+
+		return termCollectors;
+	}
+
+	protected String buildNameFrequencyString(
+			List<FolderSearchFacetTermDisplayContext>
+				folderSearchFacetTermDisplayContexts)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(
+			folderSearchFacetTermDisplayContexts.size() * 4);
+
+		for (FolderSearchFacetTermDisplayContext
+				folderSearchFacetTermDisplayContext :
+					folderSearchFacetTermDisplayContexts) {
+
+			sb.append(folderSearchFacetTermDisplayContext.getDisplayName());
+			sb.append(StringPool.COLON);
+			sb.append(folderSearchFacetTermDisplayContext.getFrequency());
+			sb.append(StringPool.PIPE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	protected FolderSearchFacetDisplayContext createDisplayContext(
@@ -281,6 +361,44 @@ public class FolderSearchFacetDisplayContextTest {
 		).getTerm();
 
 		return termCollector;
+	}
+
+	protected int getTotalFolderSearchFacetTermDisplayContextFrequencyCount(
+		List<FolderSearchFacetTermDisplayContext>
+			folderSearchFacetTermDisplayContexts) {
+
+		int total = 0;
+
+		for (FolderSearchFacetTermDisplayContext
+				folderSearchFacetTermDisplayContext :
+					folderSearchFacetTermDisplayContexts) {
+
+			total += folderSearchFacetTermDisplayContext.getFrequency();
+		}
+
+		return total;
+	}
+
+	protected int getTotalTermCollectorFrequencyCount(
+		List<TermCollector> termCollectors) {
+
+		int total = 0;
+
+		for (TermCollector termCollector : termCollectors) {
+			total += termCollector.getFrequency();
+		}
+
+		return total;
+	}
+
+	protected void setUpMultipleTermCollectors(
+		List<TermCollector> termCollectors) {
+
+		Mockito.doReturn(
+			termCollectors
+		).when(
+			_facetCollector
+		).getTermCollectors();
 	}
 
 	protected void setUpOneTermCollector(long folderId, int count) {

@@ -17,11 +17,17 @@ package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
+import com.liferay.petra.reflect.AnnotationLocator;
+
+import java.lang.annotation.Annotation;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Priority;
 
@@ -29,6 +35,8 @@ import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.DynamicFeature;
+import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
@@ -66,18 +74,14 @@ public class HttpMethodFeature implements Feature {
 		contracts.put(
 			ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8);
 
+		context.register((DynamicFeature)this::_collectHttpMethods);
 		context.register(
 			new HttpScopeCheckerContainerRequestFilter(), contracts);
 
 		Configuration configuration = context.getConfiguration();
 
 		_serviceRegistration = _bundleContext.registerService(
-			ScopeFinder.class,
-			new CollectionScopeFinder(
-				Arrays.asList(
-					HttpMethod.DELETE, HttpMethod.GET, HttpMethod.HEAD,
-					HttpMethod.OPTIONS, HttpMethod.PATCH, HttpMethod.POST,
-					HttpMethod.PUT)),
+			ScopeFinder.class, new CollectionScopeFinder(_scopes),
 			new Hashtable<>(
 				(Map<String, Object>)configuration.getProperty(
 					"osgi.jaxrs.application.serviceProperties")));
@@ -97,11 +101,33 @@ public class HttpMethodFeature implements Feature {
 		}
 	}
 
+	private void _collectHttpMethods(
+		ResourceInfo resourceInfo, FeatureContext featureContext) {
+
+		List<Annotation> annotations = AnnotationLocator.locate(
+			resourceInfo.getResourceMethod(), null);
+
+		for (Annotation annotation : annotations) {
+			Class<? extends Annotation> annotationType =
+				annotation.annotationType();
+
+			HttpMethod[] annotationsByType =
+				annotationType.getAnnotationsByType(HttpMethod.class);
+
+			if (annotationsByType != null) {
+				for (HttpMethod httpMethod : annotationsByType) {
+					_scopes.add(httpMethod.value());
+				}
+			}
+		}
+	}
+
 	private BundleContext _bundleContext;
 
 	@Reference
 	private ScopeChecker _scopeChecker;
 
+	private final Set<String> _scopes = new HashSet<>();
 	private ServiceRegistration<ScopeFinder> _serviceRegistration;
 
 	private class HttpScopeCheckerContainerRequestFilter

@@ -916,7 +916,7 @@ definition {
 		ItemSelector.viewBlogImageDetails(
 			imageFileName = "Document_1.jpg",
 			imageFormat = "jpg",
-			imageSize = "13KB",
+			imageSize = "13 KB",
 			imageStatus = "approved",
 			lastModifiedBy = "Test Test",
 			uploadFileName = "Document_1.jpg",

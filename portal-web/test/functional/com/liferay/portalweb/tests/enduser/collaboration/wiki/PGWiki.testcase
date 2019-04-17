@@ -167,7 +167,7 @@ definition {
 
 		WikiPage.viewAttachmentPGViaEdit(
 			attachmentFileName = "Document_1.jpg",
-			attachmentFileSize = "13KB",
+			attachmentFileSize = "13 KB",
 			wikiPageTitle = "FrontPage"
 		);
 	}
@@ -195,7 +195,7 @@ definition {
 
 		WikiPage.viewAttachmentPGViaEdit(
 			attachmentFileName = "Document_1.jpg",
-			attachmentFileSize = "13KB",
+			attachmentFileSize = "13 KB",
 			numberOfAttachments = "3",
 			wikiPageTitle = "FrontPage"
 		);
@@ -206,7 +206,7 @@ definition {
 
 		WikiPage.viewAttachmentPGViaEdit(
 			attachmentFileName = "Document_2.mp3",
-			attachmentFileSize = "864B",
+			attachmentFileSize = "864 B",
 			numberOfAttachments = "3",
 			wikiPageTitle = "FrontPage"
 		);
@@ -217,7 +217,7 @@ definition {
 
 		WikiPage.viewAttachmentPGViaEdit(
 			attachmentFileName = "Document_3.doc",
-			attachmentFileSize = "24KB",
+			attachmentFileSize = "24 KB",
 			numberOfAttachments = "3",
 			wikiPageTitle = "FrontPage"
 		);

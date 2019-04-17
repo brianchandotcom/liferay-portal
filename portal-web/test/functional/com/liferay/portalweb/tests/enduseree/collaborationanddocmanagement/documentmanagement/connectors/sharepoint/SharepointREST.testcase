@@ -306,7 +306,7 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
 
-		DMDocument.viewCP(dmDocumentSize = "34KB", dmDocumentTitle = "Document_3.doc");
+		DMDocument.viewCP(dmDocumentSize = "34 KB", dmDocumentTitle = "Document_3.doc");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -333,7 +333,7 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
 
-		DMDocument.viewCP(dmDocumentSize = "30KB", dmDocumentTitle = "Document_3.doc");
+		DMDocument.viewCP(dmDocumentSize = "30 KB", dmDocumentTitle = "Document_3.doc");
 
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = "image/jpeg",

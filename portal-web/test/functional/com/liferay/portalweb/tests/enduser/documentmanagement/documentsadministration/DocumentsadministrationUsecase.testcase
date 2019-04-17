@@ -221,7 +221,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(
-			dmDocumentSize = "4.3MB",
+			dmDocumentSize = "4.3 MB",
 			dmDocumentTitle = "DM Document Title"
 		);
 
@@ -267,7 +267,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "Upload documents no larger than 293KB."
+			value1 = "Upload documents no larger than 293 KB."
 		);
 
 		DMDocument.editCmd(

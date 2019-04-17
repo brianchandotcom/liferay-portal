@@ -167,49 +167,13 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public String getFriendlyUrl() {
-		if (_themeDisplay == null) {
-			return getUrl();
-		}
-
 		String type = getType();
 
-		if (!type.equals("link_to_layout")) {
-			return StringPool.BLANK;
+		if (type.equals("link_to_layout")) {
+			return _getLinkToLayoutFriendlyURL();
 		}
 
-		String layoutType = getLayoutType();
-
-		if (Validator.isNull(layoutType)) {
-			return StringPool.BLANK;
-		}
-
-		long groupId = getLayoutGroupId();
-
-		if (groupId == 0) {
-			groupId = _themeDisplay.getScopeGroupId();
-		}
-
-		boolean privateLayout = layoutType.startsWith("private");
-
-		try {
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				groupId, privateLayout, getLayoutId());
-
-			String layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(
-				layout, _themeDisplay);
-
-			return HttpUtil.removeDomain(layoutFriendlyURL);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Error finding friendly URL on page " +
-						_themeDisplay.getURLCurrent(),
-					e);
-			}
-
-			return getUrl();
-		}
+		return StringPool.BLANK;
 	}
 
 	public String getName() {
@@ -321,6 +285,46 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 
 		return data;
+	}
+
+	private String _getLinkToLayoutFriendlyURL() {
+		if (_themeDisplay == null) {
+			return getUrl();
+		}
+
+		String layoutType = getLayoutType();
+
+		if (Validator.isNull(layoutType)) {
+			return StringPool.BLANK;
+		}
+
+		long groupId = getLayoutGroupId();
+
+		if (groupId == 0) {
+			groupId = _themeDisplay.getScopeGroupId();
+		}
+
+		boolean privateLayout = layoutType.startsWith("private");
+
+		try {
+			Layout layout = LayoutLocalServiceUtil.getLayout(
+				groupId, privateLayout, getLayoutId());
+
+			String layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(
+				layout, _themeDisplay);
+
+			return HttpUtil.removeDomain(layoutFriendlyURL);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Error finding friendly URL on page " +
+						_themeDisplay.getURLCurrent(),
+					e);
+			}
+
+			return getUrl();
+		}
 	}
 
 	private static final String _LAYOUT_TYPE_PRIVATE_GROUP = "private-group";

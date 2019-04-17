@@ -123,7 +123,7 @@ public class FragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
 
-		_giveSiteMemberManageFragmentPermissions();
+		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -138,7 +138,7 @@ public class FragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
 
-		_giveSiteMemberManageFragmentPermissions();
+		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -183,7 +183,7 @@ public class FragmentCollectionServiceTest {
 			fragmentCollection2.getFragmentCollectionId()
 		};
 
-		_giveSiteMemberManageFragmentPermissions();
+		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -209,7 +209,7 @@ public class FragmentCollectionServiceTest {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		_giveSiteMemberManageFragmentPermissions();
+		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -235,7 +235,7 @@ public class FragmentCollectionServiceTest {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		_giveSiteMemberViewFragmentPermissions();
+		_setRolePermissions(ActionKeys.VIEW);
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -446,8 +446,6 @@ public class FragmentCollectionServiceTest {
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 		}
 
-		//get all fragments but the first and last
-
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionServiceUtil.getFragmentCollections(
 				_group.getGroupId(), 1, 4, null);
@@ -507,7 +505,7 @@ public class FragmentCollectionServiceTest {
 	public void testGetTempFileNamesWithPermissions()
 		throws Exception, PortalException {
 
-		_giveSiteMemberManageFragmentPermissions();
+		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -534,7 +532,7 @@ public class FragmentCollectionServiceTest {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		_giveSiteMemberManageFragmentPermissions();
+		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -543,25 +541,14 @@ public class FragmentCollectionServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
-	private void _giveSiteMemberManageFragmentPermissions() throws Exception {
+	private void _setRolePermissions(String permissionType) throws Exception {
 		Role siteMemberRole = RoleLocalServiceUtil.getRole(
 			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
 			_company.getCompanyId(), "com.liferay.fragment",
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			siteMemberRole.getRoleId(),
-			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
-	}
-
-	private void _giveSiteMemberViewFragmentPermissions() throws Exception {
-		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			_company.getCompanyId(), "com.liferay.fragment",
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			siteMemberRole.getRoleId(), ActionKeys.VIEW);
+			siteMemberRole.getRoleId(), permissionType);
 	}
 
 	@DeleteAfterTestRun

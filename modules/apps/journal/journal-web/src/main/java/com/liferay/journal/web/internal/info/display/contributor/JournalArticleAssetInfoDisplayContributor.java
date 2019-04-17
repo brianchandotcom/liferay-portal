@@ -44,12 +44,15 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -258,7 +261,21 @@ public class JournalArticleAssetInfoDisplayContributor
 
 		String valueString = value.getString(locale);
 
-		if (Objects.equals(ddmFormFieldValue.getType(), "ddm-decimal")) {
+		if (Objects.equals(ddmFormFieldValue.getType(), "ddm-date")) {
+			try {
+				DateFormat dateFormat = DateFormat.getDateInstance(
+					DateFormat.SHORT, locale);
+
+				Date date = DateUtil.parseDate(
+					"yyyy-MM-dd", valueString, locale);
+
+				return dateFormat.format(date);
+			}
+			catch (Exception e) {
+				return valueString;
+			}
+		}
+		else if (Objects.equals(ddmFormFieldValue.getType(), "ddm-decimal")) {
 			NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 			return numberFormat.format(GetterUtil.getDouble(valueString));

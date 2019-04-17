@@ -33,7 +33,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -125,9 +124,10 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		_bundleContext = bundleContext;
 
+		_lastModified = System.currentTimeMillis();
+
 		_jsJQueryConfiguration = ConfigurableUtil.createConfigurable(
 			JSJQueryConfiguration.class, properties);
-		_lastModified = System.currentTimeMillis();
 	}
 
 	private static final String[] _FILE_NAMES = {

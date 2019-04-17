@@ -1143,7 +1143,7 @@ definition {
 			siteName = "Site Name"
 		);
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "Web Content Content 1"
 		);
@@ -1176,7 +1176,7 @@ definition {
 
 		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "Web Content Content 1"
 		);
@@ -1220,7 +1220,7 @@ definition {
 
 		Navigator.gotoSitePage(pageName = "Staging Test Page 2", siteName = "Site Name");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "Web Content Content 2"
 		);

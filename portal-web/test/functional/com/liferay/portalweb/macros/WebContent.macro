@@ -1807,7 +1807,7 @@ definition {
 			AssertElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT_IMAGE_ON_LIVE");
 		}
 		else {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "${webContentContent}"
 			);

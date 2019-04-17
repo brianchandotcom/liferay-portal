@@ -236,7 +236,7 @@ AUI.add(
 									instance.deleteRow(currentRow);
 								}
 							},
-							'.lfr-autorow-controls .btn'
+							'.lfr-autorow-controls .btn:not(:disabled)'
 						);
 
 						baseRows.each(

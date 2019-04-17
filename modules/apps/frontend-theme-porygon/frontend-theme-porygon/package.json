@@ -25,7 +25,7 @@
 	"name": "liferay-porygon-theme",
 	"repository": "liferay/liferay-portal",
 	"scripts": {
-		"build": "liferay-npm-scripts build",
+		"build": "liferay-npm-scripts theme build",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format"
 	},

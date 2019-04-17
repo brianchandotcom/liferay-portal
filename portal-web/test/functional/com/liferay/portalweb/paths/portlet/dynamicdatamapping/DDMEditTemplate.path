@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>CACHEABLE_CHECKBOX</td>
-	<td>//input[contains(@id,'DDMPortlet_cacheable')]</td>
+	<td>//input[contains(@id,'JournalPortlet_cacheable')]</td>
 	<td></td>
 </tr>
 <tr>

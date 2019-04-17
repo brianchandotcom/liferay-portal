@@ -1119,11 +1119,10 @@ definition {
 		MenuItem.click(menuItem = "${itemsPerPage}");
 	}
 
-	macro preview {
-		AssertTextEquals(
-			locator1 = "WCPreview#PREVIEW_TITLE",
-			value1 = "${webContentTitle}"
-		);
+	macro previewviatemplate {
+		Panel.expandPanel(panel = "Default Template");
+
+		Click(locator1 = "WCEditWebContent#PREVIEW_TEMPLATE");
 
 		SelectFrame(locator1 = "WCPreview#PREVIEW_IFRAME");
 

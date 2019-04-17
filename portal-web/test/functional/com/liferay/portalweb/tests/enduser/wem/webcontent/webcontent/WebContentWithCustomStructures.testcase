@@ -934,10 +934,9 @@ definition {
 			webContentTitle = "WC WebContent Title"
 		);
 
-		WebContent.preview(
+		WebContent.previewviatemplate(
 			fieldName = "Text",
-			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
+			webContentText = "WC WebContent Text"
 		);
 	}
 

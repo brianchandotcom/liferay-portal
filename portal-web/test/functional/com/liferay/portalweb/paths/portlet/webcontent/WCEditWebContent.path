@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_TEMPLATE</td>
+	<td>//button[contains(@id,'previewWithTemplate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FEATURED_IMAGE_URL_INPUT</td>
 	<td>//div[contains(@class,'input-String-wrapper')]/input[contains(@id,'URL')]</td>
 	<td></td>

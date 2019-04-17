@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>PREVIEW_IFRAME</td>
-	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'preview_article_content')]</td>
+	<td>//div[contains(@class,'dialog-iframe-modal')]//iframe[@title='Preview']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BODY_FIELD</td>
-	<td>//div[@class='journal-article-preview']</td>
+	<td>//div[@class='portlet-body']/div[contains(@class,'container')]</td>
 	<td></td>
 </tr>
 </tbody>

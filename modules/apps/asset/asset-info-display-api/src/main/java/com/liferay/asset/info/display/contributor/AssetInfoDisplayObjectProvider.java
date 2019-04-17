@@ -15,6 +15,7 @@
 package com.liferay.asset.info.display.contributor;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -82,6 +83,13 @@ public class AssetInfoDisplayObjectProvider
 	@Override
 	public String getTitle(Locale locale) {
 		return _assetEntry.getTitle(locale);
+	}
+
+	@Override
+	public String getURLTitle(Locale locale) {
+		AssetRenderer assetRenderer = _assetEntry.getAssetRenderer();
+
+		return assetRenderer.getUrlTitle(locale);
 	}
 
 	private final AssetEntry _assetEntry;

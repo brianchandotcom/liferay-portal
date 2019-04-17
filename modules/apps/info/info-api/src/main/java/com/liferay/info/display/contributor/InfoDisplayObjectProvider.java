@@ -39,4 +39,6 @@ public interface InfoDisplayObjectProvider<T> extends Serializable {
 
 	public String getTitle(Locale locale);
 
+	public String getURLTitle(Locale locale);
+
 }

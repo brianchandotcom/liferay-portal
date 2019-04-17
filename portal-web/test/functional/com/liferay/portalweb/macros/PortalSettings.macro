@@ -1269,8 +1269,6 @@ definition {
 	}
 
 	macro viewDefaultLanguageCP {
-		Navigator.gotoNavTab(navTab = "Miscellaneous");
-
 		AssertSelectedLabel(
 			locator1 = "Select#DEFAULT_LANGUAGE",
 			value1 = "${defaultPortalLanguage}"

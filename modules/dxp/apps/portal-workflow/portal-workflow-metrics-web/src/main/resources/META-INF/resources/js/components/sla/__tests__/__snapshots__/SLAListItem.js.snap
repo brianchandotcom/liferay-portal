@@ -8,11 +8,10 @@ exports[`Should render component 1`] = `
     <div
       className="table-list-title"
     >
-      <span
-        className="text-truncate-inline"
-      >
-        <span />
-      </span>
+      <a
+        href="/sla/edit/undefined/1234?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+        onClick={[Function]}
+      />
     </div>
   </td>
   <td />
@@ -164,11 +163,162 @@ exports[`Should render component 2`] = `
             <div
               className="table-list-title"
             >
-              <span
-                className="text-truncate-inline"
+              <withRouter()
+                to="/sla/edit/undefined/undefined"
               >
-                <span />
-              </span>
+                <Route>
+                  <Component
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "?backPath=%2F",
+                          },
+                          Object {
+                            "hash": "",
+                            "pathname": "/slas/1234",
+                            "search": "?backPath=%2Fprocesses",
+                          },
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 3,
+                        "listen": [Function],
+                        "location": Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        "push": [Function],
+                        "replace": [Function],
+                      }
+                    }
+                    location={
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      }
+                    }
+                    match={
+                      Object {
+                        "isExact": false,
+                        "params": Object {},
+                        "path": "/",
+                        "url": "/",
+                      }
+                    }
+                    to="/sla/edit/undefined/undefined"
+                  >
+                    <ChildLinkWrapper
+                      backPath="/"
+                      currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/slas/1234",
+                              "search": "?backPath=%2Fprocesses",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 3,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      to="/sla/edit/undefined/undefined"
+                    >
+                      <Link
+                        replace={false}
+                        to={
+                          Object {
+                            "pathname": "/sla/edit/undefined/undefined",
+                            "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                          }
+                        }
+                      >
+                        <a
+                          href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                          onClick={[Function]}
+                        />
+                      </Link>
+                    </ChildLinkWrapper>
+                  </Component>
+                </Route>
+              </withRouter()>
             </div>
           </td>
           <td />

@@ -1,1239 +1,2031 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should add a tag 1`] = `
-<div
-  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onFocus={[Function]}
+<MultiSelect
+  data={
+    Array [
+      Object {
+        "desc": "ops",
+        "id": "1",
+      },
+      Object {
+        "desc": "message",
+        "id": "2",
+      },
+      Object {
+        "desc": "meeting",
+        "id": "3",
+      },
+      Object {
+        "desc": "assist",
+        "id": "4",
+      },
+      Object {
+        "desc": "not real",
+        "id": "5",
+      },
+      Object {
+        "desc": "advocate",
+        "id": "6",
+      },
+      Object {
+        "desc": "Maybe",
+        "id": "7",
+      },
+      Object {
+        "desc": "much",
+        "id": "8",
+      },
+      Object {
+        "desc": "so much",
+        "id": "9",
+      },
+      Object {
+        "desc": "to do any",
+        "id": "10",
+      },
+      Object {
+        "desc": "a long component text example to test its overflow behavior.",
+        "id": "11",
+      },
+    ]
+  }
+  selectedTagsId={
+    Array [
+      "5",
+      "2",
+      "6",
+      "7",
+    ]
+  }
 >
   <div
-    className="col-11 p-0 d-flex flex-wrap"
+    className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+    onFocus={[Function]}
   >
-    <span
-      className="label label-dismissible label-secondary"
-      key="0"
-      tabIndex="-1"
+    <div
+      className="col-11 p-0 d-flex flex-wrap"
     >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="0"
+        tabIndex="-1"
       >
-        ops
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="0"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="1"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        message
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="1"
-          onClick={[Function]}
-          type="button"
+          message
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="0"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="2"
-      tabIndex="-1"
-    >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="1"
+        tabIndex="-1"
       >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="3"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        Maybe
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="3"
-          onClick={[Function]}
-          type="button"
+          not real
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="1"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="4"
-      tabIndex="-1"
-    >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="2"
+        tabIndex="-1"
       >
-        test
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="4"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          advocate
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="2"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <input
-      className="form-control-inset"
-      onFocus={[Function]}
-      onKeyUp={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    className="col-1 mt-1 text-right"
-    onClick={[Function]}
-    style={
-      Object {
-        "paddingRight": "0px",
+      <span
+        className="label label-dismissible label-secondary"
+        key="3"
+        tabIndex="-1"
+      >
+        <span
+          className="label-item label-item-expand"
+        >
+          Maybe
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="3"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <input
+        className="form-control-inset"
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyUp={[Function]}
+        placeholder=""
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="col-1 mt-1 text-right"
+      onClick={[Function]}
+      style={
+        Object {
+          "paddingRight": "0px",
+        }
       }
-    }
-  >
-    <Icon
-      iconName="caret-double"
-    />
+    >
+      <Icon
+        iconName="caret-double"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-caret-double"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+          />
+        </svg>
+      </Icon>
+    </div>
   </div>
-</div>
+</MultiSelect>
 `;
 
 exports[`Should hide the dropdown list 1`] = `
-<div
-  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onFocus={[Function]}
+<MultiSelect
+  data={
+    Array [
+      Object {
+        "desc": "ops",
+        "id": "1",
+      },
+      Object {
+        "desc": "message",
+        "id": "2",
+      },
+      Object {
+        "desc": "meeting",
+        "id": "3",
+      },
+      Object {
+        "desc": "assist",
+        "id": "4",
+      },
+      Object {
+        "desc": "not real",
+        "id": "5",
+      },
+      Object {
+        "desc": "advocate",
+        "id": "6",
+      },
+      Object {
+        "desc": "Maybe",
+        "id": "7",
+      },
+      Object {
+        "desc": "much",
+        "id": "8",
+      },
+      Object {
+        "desc": "so much",
+        "id": "9",
+      },
+      Object {
+        "desc": "to do any",
+        "id": "10",
+      },
+      Object {
+        "desc": "a long component text example to test its overflow behavior.",
+        "id": "11",
+      },
+    ]
+  }
+  selectedTagsId={
+    Array [
+      "5",
+      "2",
+      "6",
+      "7",
+    ]
+  }
 >
   <div
-    className="col-11 p-0 d-flex flex-wrap"
+    className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+    onFocus={[Function]}
   >
-    <span
-      className="label label-dismissible label-secondary"
-      key="0"
-      tabIndex="-1"
+    <div
+      className="col-11 p-0 d-flex flex-wrap"
     >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="0"
+        tabIndex="-1"
       >
-        ops
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="0"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="1"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        message
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="1"
-          onClick={[Function]}
-          type="button"
+          message
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="0"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="2"
-      tabIndex="-1"
-    >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="1"
+        tabIndex="-1"
       >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="3"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        Maybe
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="3"
-          onClick={[Function]}
-          type="button"
+          not real
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="1"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <input
-      className="form-control-inset"
-      onFocus={[Function]}
-      onKeyUp={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    className="col-1 mt-1 text-right"
-    onClick={[Function]}
-    style={
-      Object {
-        "paddingRight": "0px",
+      <span
+        className="label label-dismissible label-secondary"
+        key="2"
+        tabIndex="-1"
+      >
+        <span
+          className="label-item label-item-expand"
+        >
+          advocate
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="2"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <span
+        className="label label-dismissible label-secondary"
+        key="3"
+        tabIndex="-1"
+      >
+        <span
+          className="label-item label-item-expand"
+        >
+          Maybe
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="3"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <input
+        className="form-control-inset"
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyUp={[Function]}
+        placeholder=""
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="col-1 mt-1 text-right"
+      onClick={[Function]}
+      style={
+        Object {
+          "paddingRight": "0px",
+        }
       }
-    }
-  >
-    <Icon
-      iconName="caret-double"
-    />
+    >
+      <Icon
+        iconName="caret-double"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-caret-double"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+          />
+        </svg>
+      </Icon>
+    </div>
   </div>
-</div>
+</MultiSelect>
 `;
 
 exports[`Should remove a tag 1`] = `
-<div
-  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onFocus={[Function]}
+<MultiSelect
+  data={
+    Array [
+      Object {
+        "desc": "ops",
+        "id": "1",
+      },
+      Object {
+        "desc": "message",
+        "id": "2",
+      },
+      Object {
+        "desc": "meeting",
+        "id": "3",
+      },
+      Object {
+        "desc": "assist",
+        "id": "4",
+      },
+      Object {
+        "desc": "not real",
+        "id": "5",
+      },
+      Object {
+        "desc": "advocate",
+        "id": "6",
+      },
+      Object {
+        "desc": "Maybe",
+        "id": "7",
+      },
+      Object {
+        "desc": "much",
+        "id": "8",
+      },
+      Object {
+        "desc": "so much",
+        "id": "9",
+      },
+      Object {
+        "desc": "to do any",
+        "id": "10",
+      },
+      Object {
+        "desc": "a long component text example to test its overflow behavior.",
+        "id": "11",
+      },
+    ]
+  }
+  selectedTagsId={
+    Array [
+      "2",
+      "6",
+      "7",
+    ]
+  }
 >
   <div
-    className="col-11 p-0 d-flex flex-wrap"
+    className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+    onFocus={[Function]}
   >
-    <span
-      className="label label-dismissible label-secondary"
-      key="0"
-      tabIndex="-1"
+    <div
+      className="col-11 p-0 d-flex flex-wrap"
     >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="0"
+        tabIndex="-1"
       >
-        message
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="0"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="1"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="1"
-          onClick={[Function]}
-          type="button"
+          message
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="0"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="2"
-      tabIndex="-1"
-    >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="1"
+        tabIndex="-1"
       >
-        Maybe
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          not real
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="1"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <input
-      className="form-control-inset"
-      onFocus={[Function]}
-      onKeyUp={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    className="col-1 mt-1 text-right"
-    onClick={[Function]}
-    style={
-      Object {
-        "paddingRight": "0px",
+      <span
+        className="label label-dismissible label-secondary"
+        key="2"
+        tabIndex="-1"
+      >
+        <span
+          className="label-item label-item-expand"
+        >
+          advocate
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="2"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <span
+        className="label label-dismissible label-secondary"
+        key="3"
+        tabIndex="-1"
+      >
+        <span
+          className="label-item label-item-expand"
+        >
+          Maybe
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="3"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <input
+        className="form-control-inset"
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyUp={[Function]}
+        placeholder=""
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="col-1 mt-1 text-right"
+      onClick={[Function]}
+      style={
+        Object {
+          "paddingRight": "0px",
+        }
       }
-    }
-  >
-    <Icon
-      iconName="caret-double"
-    />
+    >
+      <Icon
+        iconName="caret-double"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-caret-double"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+          />
+        </svg>
+      </Icon>
+    </div>
   </div>
-</div>
+</MultiSelect>
 `;
 
 exports[`Should search 1`] = `
-<div
-  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onFocus={[Function]}
+<MultiSelect
+  data={
+    Array [
+      Object {
+        "desc": "ops",
+        "id": "1",
+      },
+      Object {
+        "desc": "message",
+        "id": "2",
+      },
+      Object {
+        "desc": "meeting",
+        "id": "3",
+      },
+      Object {
+        "desc": "assist",
+        "id": "4",
+      },
+      Object {
+        "desc": "not real",
+        "id": "5",
+      },
+      Object {
+        "desc": "advocate",
+        "id": "6",
+      },
+      Object {
+        "desc": "Maybe",
+        "id": "7",
+      },
+      Object {
+        "desc": "much",
+        "id": "8",
+      },
+      Object {
+        "desc": "so much",
+        "id": "9",
+      },
+      Object {
+        "desc": "to do any",
+        "id": "10",
+      },
+      Object {
+        "desc": "a long component text example to test its overflow behavior.",
+        "id": "11",
+      },
+    ]
+  }
+  selectedTagsId={
+    Array [
+      "2",
+      "6",
+      "7",
+    ]
+  }
 >
   <div
-    className="col-11 p-0 d-flex flex-wrap"
+    className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+    onFocus={[Function]}
   >
-    <span
-      className="label label-dismissible label-secondary"
-      key="0"
-      tabIndex="-1"
+    <div
+      className="col-11 p-0 d-flex flex-wrap"
     >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="0"
+        tabIndex="-1"
       >
-        message
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="0"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="1"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="1"
-          onClick={[Function]}
-          type="button"
+          message
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="0"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="2"
-      tabIndex="-1"
-    >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="1"
+        tabIndex="-1"
       >
-        Maybe
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          advocate
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="1"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <input
-      className="form-control-inset"
-      onFocus={[Function]}
-      onKeyUp={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    className="col-1 mt-1 text-right"
-    onClick={[Function]}
-    style={
-      Object {
-        "paddingRight": "0px",
+      <span
+        className="label label-dismissible label-secondary"
+        key="2"
+        tabIndex="-1"
+      >
+        <span
+          className="label-item label-item-expand"
+        >
+          Maybe
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="2"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <input
+        className="form-control-inset"
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyUp={[Function]}
+        placeholder=""
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="col-1 mt-1 text-right"
+      onClick={[Function]}
+      style={
+        Object {
+          "paddingRight": "0px",
+        }
       }
-    }
-  >
-    <Icon
-      iconName="caret-double"
-    />
+    >
+      <Icon
+        iconName="caret-double"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-caret-double"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+          />
+        </svg>
+      </Icon>
+    </div>
   </div>
-</div>
+</MultiSelect>
 `;
 
 exports[`Should show the dropdown list 1`] = `
-<div
-  className="is-active align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onFocus={[Function]}
+<MultiSelect
+  data={
+    Array [
+      Object {
+        "desc": "ops",
+        "id": "1",
+      },
+      Object {
+        "desc": "message",
+        "id": "2",
+      },
+      Object {
+        "desc": "meeting",
+        "id": "3",
+      },
+      Object {
+        "desc": "assist",
+        "id": "4",
+      },
+      Object {
+        "desc": "not real",
+        "id": "5",
+      },
+      Object {
+        "desc": "advocate",
+        "id": "6",
+      },
+      Object {
+        "desc": "Maybe",
+        "id": "7",
+      },
+      Object {
+        "desc": "much",
+        "id": "8",
+      },
+      Object {
+        "desc": "so much",
+        "id": "9",
+      },
+      Object {
+        "desc": "to do any",
+        "id": "10",
+      },
+      Object {
+        "desc": "a long component text example to test its overflow behavior.",
+        "id": "11",
+      },
+    ]
+  }
+  selectedTagsId={
+    Array [
+      "2",
+      "6",
+      "7",
+    ]
+  }
 >
   <div
-    className="col-11 p-0 d-flex flex-wrap"
+    className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+    onFocus={[Function]}
   >
-    <span
-      className="label label-dismissible label-secondary"
-      key="0"
-      tabIndex="-1"
+    <div
+      className="col-11 p-0 d-flex flex-wrap"
     >
       <span
-        className="label-item label-item-expand"
-      >
-        ops
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="0"
-          onClick={[Function]}
-          type="button"
-        >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="1"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        message
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="1"
-          onClick={[Function]}
-          type="button"
-        >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="2"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
-        >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="3"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        Maybe
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="3"
-          onClick={[Function]}
-          type="button"
-        >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <input
-      className="form-control-inset"
-      onFocus={[Function]}
-      onKeyUp={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    className="col-1 mt-1 text-right"
-    onClick={[Function]}
-    style={
-      Object {
-        "paddingRight": "0px",
-      }
-    }
-  >
-    <Icon
-      iconName="caret-double"
-    />
-  </div>
-  <div
-    className="drop-suggestion dropdown-menu"
-    tabIndex="-1"
-  >
-    <ul
-      className="list-unstyled"
-    >
-      <li
-        data-tag="meeting"
+        className="label label-dismissible label-secondary"
         key="0"
-        onClick={[Function]}
+        tabIndex="-1"
       >
-        <a
-          className="dropdown-item "
-          data-senna-off={true}
-          href="javascript:;"
+        <span
+          className="label-item label-item-expand"
         >
-          meeting
-        </a>
-      </li>
-      <li
-        data-tag="assist"
+          message
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="0"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <span
+        className="label label-dismissible label-secondary"
         key="1"
-        onClick={[Function]}
+        tabIndex="-1"
       >
-        <a
-          className="dropdown-item "
-          data-senna-off={true}
-          href="javascript:;"
+        <span
+          className="label-item label-item-expand"
         >
-          assist
-        </a>
-      </li>
-      <li
-        data-tag="not real"
+          advocate
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="1"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <span
+        className="label label-dismissible label-secondary"
         key="2"
-        onClick={[Function]}
+        tabIndex="-1"
       >
-        <a
-          className="dropdown-item "
-          data-senna-off={true}
-          href="javascript:;"
+        <span
+          className="label-item label-item-expand"
         >
-          not real
-        </a>
-      </li>
-      <li
-        data-tag="much"
-        key="3"
-        onClick={[Function]}
+          Maybe
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="2"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <input
+        className="form-control-inset"
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyUp={[Function]}
+        placeholder=""
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="col-1 mt-1 text-right"
+      onClick={[Function]}
+      style={
+        Object {
+          "paddingRight": "0px",
+        }
+      }
+    >
+      <Icon
+        iconName="caret-double"
       >
-        <a
-          className="dropdown-item "
-          data-senna-off={true}
-          href="javascript:;"
+        <svg
+          className="lexicon-icon lexicon-icon-caret-double"
+          focusable="false"
+          role="presentation"
         >
-          much
-        </a>
-      </li>
-      <li
-        data-tag="so much"
-        key="4"
-        onClick={[Function]}
-      >
-        <a
-          className="dropdown-item "
-          data-senna-off={true}
-          href="javascript:;"
-        >
-          so much
-        </a>
-      </li>
-      <li
-        data-tag="to do any"
-        key="5"
-        onClick={[Function]}
-      >
-        <a
-          className="dropdown-item "
-          data-senna-off={true}
-          href="javascript:;"
-        >
-          to do any
-        </a>
-      </li>
-      <li
-        data-tag="a long component text example to test its overflow behavior."
-        key="6"
-        onClick={[Function]}
-      >
-        <a
-          className="dropdown-item "
-          data-senna-off={true}
-          href="javascript:;"
-          onBlur={[Function]}
-        >
-          a long component text example to test its overflow behavior.
-        </a>
-      </li>
-    </ul>
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+          />
+        </svg>
+      </Icon>
+    </div>
   </div>
-</div>
+</MultiSelect>
 `;
 
 exports[`Should test component render 1`] = `
-<div
-  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onFocus={[Function]}
+<MultiSelect
+  data={
+    Array [
+      Object {
+        "desc": "ops",
+        "id": "1",
+      },
+      Object {
+        "desc": "message",
+        "id": "2",
+      },
+      Object {
+        "desc": "meeting",
+        "id": "3",
+      },
+      Object {
+        "desc": "assist",
+        "id": "4",
+      },
+      Object {
+        "desc": "not real",
+        "id": "5",
+      },
+      Object {
+        "desc": "advocate",
+        "id": "6",
+      },
+      Object {
+        "desc": "Maybe",
+        "id": "7",
+      },
+      Object {
+        "desc": "much",
+        "id": "8",
+      },
+      Object {
+        "desc": "so much",
+        "id": "9",
+      },
+      Object {
+        "desc": "to do any",
+        "id": "10",
+      },
+      Object {
+        "desc": "a long component text example to test its overflow behavior.",
+        "id": "11",
+      },
+    ]
+  }
+  selectedTagsId={
+    Array [
+      "2",
+      "6",
+      "7",
+    ]
+  }
 >
   <div
-    className="col-11 p-0 d-flex flex-wrap"
+    className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+    onFocus={[Function]}
   >
-    <span
-      className="label label-dismissible label-secondary"
-      key="0"
-      tabIndex="-1"
+    <div
+      className="col-11 p-0 d-flex flex-wrap"
     >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="0"
+        tabIndex="-1"
       >
-        ops
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="0"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="1"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        message
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="1"
-          onClick={[Function]}
-          type="button"
+          message
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="0"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="2"
-      tabIndex="-1"
-    >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="1"
+        tabIndex="-1"
       >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="3"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        Maybe
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="3"
-          onClick={[Function]}
-          type="button"
+          advocate
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="1"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <input
-      className="form-control-inset"
-      onFocus={[Function]}
-      onKeyUp={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    className="col-1 mt-1 text-right"
-    onClick={[Function]}
-    style={
-      Object {
-        "paddingRight": "0px",
+      <span
+        className="label label-dismissible label-secondary"
+        key="2"
+        tabIndex="-1"
+      >
+        <span
+          className="label-item label-item-expand"
+        >
+          Maybe
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="2"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <input
+        className="form-control-inset"
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyUp={[Function]}
+        placeholder=""
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="col-1 mt-1 text-right"
+      onClick={[Function]}
+      style={
+        Object {
+          "paddingRight": "0px",
+        }
       }
-    }
-  >
-    <Icon
-      iconName="caret-double"
-    />
+    >
+      <Icon
+        iconName="caret-double"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-caret-double"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+          />
+        </svg>
+      </Icon>
+    </div>
   </div>
-</div>
+</MultiSelect>
 `;
 
 exports[`Should test keydown press 1`] = `
-<div
-  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onFocus={[Function]}
+<MultiSelect
+  data={
+    Array [
+      Object {
+        "desc": "ops",
+        "id": "1",
+      },
+      Object {
+        "desc": "message",
+        "id": "2",
+      },
+      Object {
+        "desc": "meeting",
+        "id": "3",
+      },
+      Object {
+        "desc": "assist",
+        "id": "4",
+      },
+      Object {
+        "desc": "not real",
+        "id": "5",
+      },
+      Object {
+        "desc": "advocate",
+        "id": "6",
+      },
+      Object {
+        "desc": "Maybe",
+        "id": "7",
+      },
+      Object {
+        "desc": "much",
+        "id": "8",
+      },
+      Object {
+        "desc": "so much",
+        "id": "9",
+      },
+      Object {
+        "desc": "to do any",
+        "id": "10",
+      },
+      Object {
+        "desc": "a long component text example to test its overflow behavior.",
+        "id": "11",
+      },
+    ]
+  }
+  selectedTagsId={
+    Array [
+      "2",
+      "6",
+      "7",
+    ]
+  }
 >
   <div
-    className="col-11 p-0 d-flex flex-wrap"
+    className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+    onFocus={[Function]}
   >
-    <span
-      className="label label-dismissible label-secondary"
-      key="0"
-      tabIndex="-1"
+    <div
+      className="col-11 p-0 d-flex flex-wrap"
     >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="0"
+        tabIndex="-1"
       >
-        message
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="0"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="1"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="1"
-          onClick={[Function]}
-          type="button"
+          message
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="0"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="2"
-      tabIndex="-1"
-    >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="1"
+        tabIndex="-1"
       >
-        Maybe
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          advocate
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="1"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <input
-      className="form-control-inset"
-      onFocus={[Function]}
-      onKeyUp={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    className="col-1 mt-1 text-right"
-    onClick={[Function]}
-    style={
-      Object {
-        "paddingRight": "0px",
+      <span
+        className="label label-dismissible label-secondary"
+        key="2"
+        tabIndex="-1"
+      >
+        <span
+          className="label-item label-item-expand"
+        >
+          Maybe
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="2"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <input
+        className="form-control-inset"
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyUp={[Function]}
+        placeholder=""
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="col-1 mt-1 text-right"
+      onClick={[Function]}
+      style={
+        Object {
+          "paddingRight": "0px",
+        }
       }
-    }
-  >
-    <Icon
-      iconName="caret-double"
-    />
+    >
+      <Icon
+        iconName="caret-double"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-caret-double"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+          />
+        </svg>
+      </Icon>
+    </div>
   </div>
-</div>
+</MultiSelect>
 `;
 
 exports[`Should test keyenter press 1`] = `
-<div
-  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onFocus={[Function]}
+<MultiSelect
+  data={
+    Array [
+      Object {
+        "desc": "ops",
+        "id": "1",
+      },
+      Object {
+        "desc": "message",
+        "id": "2",
+      },
+      Object {
+        "desc": "meeting",
+        "id": "3",
+      },
+      Object {
+        "desc": "assist",
+        "id": "4",
+      },
+      Object {
+        "desc": "not real",
+        "id": "5",
+      },
+      Object {
+        "desc": "advocate",
+        "id": "6",
+      },
+      Object {
+        "desc": "Maybe",
+        "id": "7",
+      },
+      Object {
+        "desc": "much",
+        "id": "8",
+      },
+      Object {
+        "desc": "so much",
+        "id": "9",
+      },
+      Object {
+        "desc": "to do any",
+        "id": "10",
+      },
+      Object {
+        "desc": "a long component text example to test its overflow behavior.",
+        "id": "11",
+      },
+    ]
+  }
+  selectedTagsId={
+    Array [
+      "2",
+      "6",
+      "7",
+    ]
+  }
 >
   <div
-    className="col-11 p-0 d-flex flex-wrap"
+    className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+    onFocus={[Function]}
   >
-    <span
-      className="label label-dismissible label-secondary"
-      key="0"
-      tabIndex="-1"
+    <div
+      className="col-11 p-0 d-flex flex-wrap"
     >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="0"
+        tabIndex="-1"
       >
-        message
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="0"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="1"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="1"
-          onClick={[Function]}
-          type="button"
+          message
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="0"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="2"
-      tabIndex="-1"
-    >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="1"
+        tabIndex="-1"
       >
-        Maybe
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="3"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        ops
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="3"
-          onClick={[Function]}
-          type="button"
+          advocate
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="1"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <input
-      className="form-control-inset"
-      onFocus={[Function]}
-      onKeyUp={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    className="col-1 mt-1 text-right"
-    onClick={[Function]}
-    style={
-      Object {
-        "paddingRight": "0px",
+      <span
+        className="label label-dismissible label-secondary"
+        key="2"
+        tabIndex="-1"
+      >
+        <span
+          className="label-item label-item-expand"
+        >
+          Maybe
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="2"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <input
+        className="form-control-inset"
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyUp={[Function]}
+        placeholder=""
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="col-1 mt-1 text-right"
+      onClick={[Function]}
+      style={
+        Object {
+          "paddingRight": "0px",
+        }
       }
-    }
-  >
-    <Icon
-      iconName="caret-double"
-    />
+    >
+      <Icon
+        iconName="caret-double"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-caret-double"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+          />
+        </svg>
+      </Icon>
+    </div>
   </div>
-</div>
+</MultiSelect>
 `;
 
 exports[`Should test keyup press 1`] = `
-<div
-  className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-  onFocus={[Function]}
+<MultiSelect
+  data={
+    Array [
+      Object {
+        "desc": "ops",
+        "id": "1",
+      },
+      Object {
+        "desc": "message",
+        "id": "2",
+      },
+      Object {
+        "desc": "meeting",
+        "id": "3",
+      },
+      Object {
+        "desc": "assist",
+        "id": "4",
+      },
+      Object {
+        "desc": "not real",
+        "id": "5",
+      },
+      Object {
+        "desc": "advocate",
+        "id": "6",
+      },
+      Object {
+        "desc": "Maybe",
+        "id": "7",
+      },
+      Object {
+        "desc": "much",
+        "id": "8",
+      },
+      Object {
+        "desc": "so much",
+        "id": "9",
+      },
+      Object {
+        "desc": "to do any",
+        "id": "10",
+      },
+      Object {
+        "desc": "a long component text example to test its overflow behavior.",
+        "id": "11",
+      },
+    ]
+  }
+  selectedTagsId={
+    Array [
+      "2",
+      "6",
+      "7",
+    ]
+  }
 >
   <div
-    className="col-11 p-0 d-flex flex-wrap"
+    className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+    onFocus={[Function]}
   >
-    <span
-      className="label label-dismissible label-secondary"
-      key="0"
-      tabIndex="-1"
+    <div
+      className="col-11 p-0 d-flex flex-wrap"
     >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="0"
+        tabIndex="-1"
       >
-        message
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="0"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
-      </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="1"
-      tabIndex="-1"
-    >
-      <span
-        className="label-item label-item-expand"
-      >
-        advocate
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="1"
-          onClick={[Function]}
-          type="button"
+          message
+        </span>
+        <span
+          className="label-item label-item-after"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="0"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <span
-      className="label label-dismissible label-secondary"
-      key="2"
-      tabIndex="-1"
-    >
       <span
-        className="label-item label-item-expand"
+        className="label label-dismissible label-secondary"
+        key="1"
+        tabIndex="-1"
       >
-        Maybe
-      </span>
-      <span
-        className="label-item label-item-after"
-      >
-        <button
-          aria-label="Close"
-          className="close"
-          data-tag-index="2"
-          onClick={[Function]}
-          type="button"
+        <span
+          className="label-item label-item-expand"
         >
-          <Icon
-            iconName="times"
-          />
-        </button>
+          advocate
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="1"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
       </span>
-    </span>
-    <input
-      className="form-control-inset"
-      onFocus={[Function]}
-      onKeyUp={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    className="col-1 mt-1 text-right"
-    onClick={[Function]}
-    style={
-      Object {
-        "paddingRight": "0px",
+      <span
+        className="label label-dismissible label-secondary"
+        key="2"
+        tabIndex="-1"
+      >
+        <span
+          className="label-item label-item-expand"
+        >
+          Maybe
+        </span>
+        <span
+          className="label-item label-item-after"
+        >
+          <button
+            aria-label="Close"
+            className="close"
+            data-tag-index="2"
+            onClick={[Function]}
+            tabIndex="-1"
+            type="button"
+          >
+            <Icon
+              iconName="times"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-times"
+                focusable="false"
+                role="presentation"
+              >
+                <use
+                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
+                />
+              </svg>
+            </Icon>
+          </button>
+        </span>
+      </span>
+      <input
+        className="form-control-inset"
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyUp={[Function]}
+        placeholder=""
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="col-1 mt-1 text-right"
+      onClick={[Function]}
+      style={
+        Object {
+          "paddingRight": "0px",
+        }
       }
-    }
-  >
-    <Icon
-      iconName="caret-double"
-    />
+    >
+      <Icon
+        iconName="caret-double"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-caret-double"
+          focusable="false"
+          role="presentation"
+        >
+          <use
+            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+          />
+        </svg>
+      </Icon>
+    </div>
   </div>
-</div>
+</MultiSelect>
 `;

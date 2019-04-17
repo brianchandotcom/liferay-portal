@@ -1035,3 +1035,315 @@ exports[`Should render toast with SLA updated message 1`] = `
   </MemoryRouter>
 </MockRouter>
 `;
+
+exports[`Should test props change 1`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/",
+          "search": "?backPath=%2F",
+        },
+        Object {
+          "pathname": "/slas/1234",
+          "search": "?backPath=%2Fprocesses",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+            Object {
+              "hash": "",
+              "pathname": "/slas/1234",
+              "search": "?backPath=%2Fprocesses",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 3,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SLAListCard>
+        <nav
+          className="management-bar management-bar-light navbar navbar-expand-md"
+        >
+          <div
+            className="container-fluid container-fluid-max-xl"
+          >
+            <ul
+              className="navbar-nav autofit-row"
+            >
+              <li
+                className="nav-item autofit-col-expand autofit-float-end"
+              >
+                <withRouter()
+                  className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+                  to="/sla/new/undefined"
+                >
+                  <Route>
+                    <Component
+                      className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "?backPath=%2F",
+                            },
+                            Object {
+                              "hash": "",
+                              "pathname": "/slas/1234",
+                              "search": "?backPath=%2Fprocesses",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 3,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      to="/sla/new/undefined"
+                    >
+                      <ChildLinkWrapper
+                        backPath="/"
+                        className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+                        currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/",
+                                "search": "?backPath=%2F",
+                              },
+                              Object {
+                                "hash": "",
+                                "pathname": "/slas/1234",
+                                "search": "?backPath=%2Fprocesses",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 3,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        to="/sla/new/undefined"
+                      >
+                        <Link
+                          className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+                          replace={false}
+                          to={
+                            Object {
+                              "pathname": "/sla/new/undefined",
+                              "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                            }
+                          }
+                        >
+                          <a
+                            className="btn btn-primary nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
+                            href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                            onClick={[Function]}
+                          >
+                            <Icon
+                              iconName="plus"
+                            >
+                              <svg
+                                className="lexicon-icon lexicon-icon-plus"
+                                focusable="false"
+                                role="presentation"
+                              >
+                                <use
+                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus"
+                                />
+                              </svg>
+                            </Icon>
+                          </a>
+                        </Link>
+                      </ChildLinkWrapper>
+                    </Component>
+                  </Route>
+                </withRouter()>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div
+          className="container-fluid-1280 lfr-search-container-wrapper"
+        >
+          <ListView
+            emptyMessageText="SLA allows to define and measure process performance."
+            emptyTitleText="No SLAs Yet"
+            fetching={false}
+            loading={true}
+          >
+            <div>
+              <div
+                className="border-1 pb-6 pt-6 sheet"
+              >
+                <LoadingState>
+                  <span
+                    aria-hidden="true"
+                    className="loading-animation"
+                  />
+                </LoadingState>
+              </div>
+            </div>
+          </ListView>
+        </div>
+      </SLAListCard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;

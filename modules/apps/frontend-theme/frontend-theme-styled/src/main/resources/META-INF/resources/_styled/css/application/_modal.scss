@@ -21,10 +21,10 @@
 
 .modal-body {
 	overflow: auto;
-	padding: 0;
 
 	&.dialog-iframe-bd {
 		overflow: hidden;
+		padding: 0;
 	}
 }
 

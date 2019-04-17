@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.templateparser;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.CharPool;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,6 +43,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alexander Chow
@@ -169,7 +178,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	public String getFriendlyUrl() {
 		String type = getType();
 
-		if (type.equals("link_to_layout")) {
+		if (type.equals("ddm-journal-article")) {
+			return _getDDMJournalArticleFriendlyURL();
+		}
+		else if (type.equals("link_to_layout")) {
 			return _getLinkToLayoutFriendlyURL();
 		}
 
@@ -285,6 +297,55 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 
 		return data;
+	}
+
+	private String _getDDMJournalArticleFriendlyURL() {
+		if (_themeDisplay == null) {
+			return StringPool.BLANK;
+		}
+
+		String data = (String)get("data");
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						jsonObject.getString("className"));
+
+			if (assetRendererFactory == null) {
+				return StringPool.BLANK;
+			}
+
+			long classPK = GetterUtil.getLong(jsonObject.getLong("classPK"));
+
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(classPK);
+
+			if (assetRenderer == null) {
+				return StringPool.BLANK;
+			}
+
+			HttpServletRequest request = _themeDisplay.getRequest();
+
+			PortletRequest portletRequest =
+				(PortletRequest)request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST);
+
+			PortletResponse portletResponse =
+				(PortletResponse)request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+			return assetRenderer.getURLViewInContext(
+				PortalUtil.getLiferayPortletRequest(portletRequest),
+				PortalUtil.getLiferayPortletResponse(portletResponse),
+				StringPool.BLANK);
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getLinkToLayoutFriendlyURL() {

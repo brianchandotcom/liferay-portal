@@ -28,7 +28,7 @@ public class UADConstants {
 	public static final String SCOPE_REGULAR_SITES = "regular-sites";
 
 	public static final String[] SCOPES = {
-		SCOPE_INSTANCE, SCOPE_PERSONAL_SITE, SCOPE_REGULAR_SITES
+		SCOPE_PERSONAL_SITE, SCOPE_REGULAR_SITES, SCOPE_INSTANCE
 	};
 
 }

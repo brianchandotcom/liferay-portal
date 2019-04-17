@@ -262,13 +262,8 @@ renderResponse.setTitle(selLayout.getName(locale));
 		function(event) {
 			var applyLayoutPrototype = document.getElementById('<portlet:namespace />applyLayoutPrototype');
 
-			if (
-				!applyLayoutPrototype || (applyLayoutPrototype.value === 'false') ||
-				(applyLayoutPrototype &&
-				applyLayoutPrototype.value === 'true' &&
-				confirm('<%= UnicodeLanguageUtil.get(request, "activating-back-inherited-changes-may-update-the-page-including-possible-changes-that-could-have-been-made-in-the-page-template.-are-you-sure-you-want-to-continue") %>'))
-			) {
-					submitForm(form);
+			if (!applyLayoutPrototype || (applyLayoutPrototype.value === 'false') || (applyLayoutPrototype && (applyLayoutPrototype.value === 'true') && confirm('<%= UnicodeLanguageUtil.get(request, "activating-back-inherited-changes-may-update-the-page-including-possible-changes-that-could-have-been-made-in-the-page-template.-are-you-sure-you-want-to-continue") %>'))) {
+				submitForm(form);
 			}
 		}
 	);

@@ -15,18 +15,13 @@
 package com.liferay.headless.form.internal.resource.v1_0;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.headless.form.dto.v1_0.FieldValue;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
-import com.liferay.headless.form.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.form.internal.dto.v1_0.util.FormRecordUtil;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -64,8 +59,10 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 					ddmFormInstance.getVersion(),
 					WorkflowConstants.STATUS_DRAFT);
 
-		return _toFormRecord(
-			ddmFormInstanceRecordVersion.getFormInstanceRecord());
+		return FormRecordUtil.toFormRecord(
+			ddmFormInstanceRecordVersion.getFormInstanceRecord(),
+			contextAcceptLanguage.getPreferredLocale(), _portal,
+			_userLocalService);
 	}
 
 	@Override
@@ -79,56 +76,19 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 					formId, WorkflowConstants.STATUS_ANY,
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
-				this::_toFormRecord),
+				formRecord -> FormRecordUtil.toFormRecord(
+					formRecord, contextAcceptLanguage.getPreferredLocale(),
+					_portal, _userLocalService)),
 			pagination,
 			_ddmFormInstanceRecordService.getFormInstanceRecordsCount(formId));
 	}
 
 	@Override
 	public FormRecord getFormRecord(Long formRecordId) throws Exception {
-		return _toFormRecord(
-			_ddmFormInstanceRecordService.getFormInstanceRecord(formRecordId));
-	}
-
-	private FormRecord _toFormRecord(
-			DDMFormInstanceRecord ddmFormInstanceRecord)
-		throws PortalException {
-
-		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
-
-		return new FormRecord() {
-			{
-				creator = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.getUser(
-						ddmFormInstanceRecord.getUserId()));
-				draft =
-					ddmFormInstanceRecord.getStatus() ==
-						WorkflowConstants.STATUS_DRAFT;
-				dateCreated = ddmFormInstanceRecord.getCreateDate();
-				dateModified = ddmFormInstanceRecord.getModifiedDate();
-				datePublished = ddmFormInstanceRecord.getLastPublishDate();
-				fieldValues = transformToArray(
-					ddmFormValues.getDDMFormFieldValues(),
-					ddmFormFieldValue -> {
-						Value localizedValue = ddmFormFieldValue.getValue();
-
-						if (localizedValue == null) {
-							return null;
-						}
-
-						return new FieldValue() {
-							{
-								name = ddmFormFieldValue.getName();
-								value = localizedValue.getString(
-									contextAcceptLanguage.getPreferredLocale());
-							}
-						};
-					},
-					FieldValue.class);
-				id = ddmFormInstanceRecord.getFormInstanceRecordId();
-			}
-		};
+		return FormRecordUtil.toFormRecord(
+			_ddmFormInstanceRecordService.getFormInstanceRecord(formRecordId),
+			contextAcceptLanguage.getPreferredLocale(), _portal,
+			_userLocalService);
 	}
 
 	@Reference

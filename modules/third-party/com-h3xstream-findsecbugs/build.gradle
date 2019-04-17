@@ -6,7 +6,8 @@ task patch(type: PatchTask)
 
 dependencies {
 	compileOnly group: "com.google.code.findbugs", name: "findbugs", version: "3.0.1"
-	compileOnly group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.7.1"
+	compileOnly group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.9.0"
+	compileOnly group: "org.apache.bcel", name: "bcel", version: "6.3.1"
 }
 
 patch {

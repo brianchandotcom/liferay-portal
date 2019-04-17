@@ -281,11 +281,11 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			"findsecbugs.injection.customconfigfile.XssServletDetector",
 			"liferay-config/liferay-XssServletDetector.txt|XSS_SERVLET");
 
-		javaExec.systemProperty("findsecbugs.taint.outputsummaries", "true");
+		javaExec.systemProperty("findsecbugs.taint.outputconfigs", "true");
 
 		String customConfigFile = "liferay-config/liferay.txt";
 
-		File derivedSummariesTxtFile = project.file("derived-summaries.txt");
+		File derivedSummariesTxtFile = project.file("derived-config.txt");
 
 		if (derivedSummariesTxtFile.exists()) {
 			customConfigFile =
@@ -433,7 +433,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	 */
 	private static final String _UNZIP_JAR_TASK_NAME = "unzipJar";
 
-	private static final String _VERSION = "1.7.1.LIFERAY-PATCHED-1";
+	private static final String _VERSION = "1.9.0.LIFERAY-PATCHED-1";
 
 	private static final Transformer<File, Task> _reportsFileGetter =
 		new Transformer<File, Task>() {

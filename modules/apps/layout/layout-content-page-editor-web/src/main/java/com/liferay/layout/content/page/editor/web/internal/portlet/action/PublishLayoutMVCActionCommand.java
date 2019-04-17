@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Date;
 import java.util.concurrent.Callable;
@@ -101,6 +102,15 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 				draftLayout.getClassPK());
 
 			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+
+			UnicodeProperties typeSettingsProperties =
+				draftLayout.getTypeSettingsProperties();
+
+			typeSettingsProperties.setProperty("published", "true");
+
+			_layoutLocalService.updateLayout(
+				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(), typeSettingsProperties.toString());
 
 			_layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),

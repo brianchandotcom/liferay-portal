@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 
 import java.text.NumberFormat;
 
@@ -231,7 +232,7 @@ public class TextFormatter {
 
 		numberFormat.setMinimumFractionDigits(0);
 
-		return numberFormat.format(size) + suffix;
+		return numberFormat.format(size) + StringPool.SPACE + suffix;
 	}
 
 	public static String formatStorageSize(int size, Locale locale) {

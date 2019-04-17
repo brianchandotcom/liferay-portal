@@ -21,30 +21,39 @@ import com.liferay.document.library.file.rank.util.comparator.FileRankCreateDate
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 
 import java.util.List;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(
+	configurationPid = "com.liferay.document.library.file.rank.internal.configuration.DLFileRankServiceConfiguration",
 	property = "model.class.name=com.liferay.document.library.file.rank.model.DLFileRank",
 	service = AopService.class
 )
 public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
+
+	@Activate
+	@Modified
+	public void activate(Map<String, Object> properties) {
+		_dlFileRankServiceConfiguration = ConfigurableUtil.createConfigurable(
+			DLFileRankServiceConfiguration.class, properties);
+	}
 
 	@Override
 	public DLFileRank addFileRank(
@@ -86,7 +95,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 	@Override
 	public void checkFileRanks() {
-		int maxSize = _getMaxSize();
+		int maxSize = _dlFileRankServiceConfiguration.maxSize();
 
 		List<Object[]> staleFileRanks = dlFileRankFinder.findByStaleRanks(
 			maxSize);
@@ -192,7 +201,7 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 
 	@Override
 	public List<DLFileRank> getFileRanks(long groupId, long userId) {
-		int maxSize = _getMaxSize();
+		int maxSize = _dlFileRankServiceConfiguration.maxSize();
 
 		return dlFileRankPersistence.findByG_U_A(
 			groupId, userId, true, 0, maxSize,
@@ -249,30 +258,10 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 		}
 	}
 
-	@Reference
-	protected ConfigurationProvider configurationProvider;
-
-	private int _getMaxSize() {
-		int maxSize = 5;
-
-		try {
-			DLFileRankServiceConfiguration dlFileRankServiceConfiguration =
-				configurationProvider.getSystemConfiguration(
-					DLFileRankServiceConfiguration.class);
-
-			maxSize = dlFileRankServiceConfiguration.maxSize();
-		}
-		catch (ConfigurationException ce) {
-			_log.error(
-				"Unable to get document library file rank service " +
-					"configuration",
-				ce);
-		}
-
-		return maxSize;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileRankLocalServiceImpl.class);
+
+	private volatile DLFileRankServiceConfiguration
+		_dlFileRankServiceConfiguration;
 
 }

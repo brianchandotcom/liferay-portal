@@ -28,4 +28,10 @@ const validateNodeKeys = nodeKeys => {
 	}
 };
 
-export { hasErrors, validateDuration, validateHours, validateName, validateNodeKeys };
+export {
+	hasErrors,
+	validateDuration,
+	validateHours,
+	validateName,
+	validateNodeKeys
+};

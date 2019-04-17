@@ -1,4 +1,4 @@
-import ListHeadItem from '../../shared/components/list/ListHeadItem';
+import ListHeadItem from '../../../shared/components/list/ListHeadItem';
 import React from 'react';
 import WorkloadByStepItem from './WorkloadByStepItem';
 

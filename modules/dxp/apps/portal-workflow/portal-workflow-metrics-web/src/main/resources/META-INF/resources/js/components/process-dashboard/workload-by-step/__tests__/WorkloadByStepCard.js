@@ -1,8 +1,8 @@
-import fetch from '../../../test/mock/fetch';
-import fetchFailure from '../../../test/mock/fetchFailure';
+import fetch from '../../../../test/mock/fetch';
+import fetchFailure from '../../../../test/mock/fetchFailure';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { MockRouter as Router } from '../../../test/mock/MockRouter';
+import { MockRouter as Router } from '../../../../test/mock/MockRouter';
 import WorkloadByStepCard from '../WorkloadByStepCard';
 
 test('Should component receive props', () => {

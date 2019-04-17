@@ -1,6 +1,6 @@
 import PendingItemsCard from './pending-items/PendingItemsCard';
 import React from 'react';
-import WorkloadByStepCard from './WorkloadByStepCard';
+import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard';
 
 const CLASSNAME = 'workflow-process-dashboard';
 

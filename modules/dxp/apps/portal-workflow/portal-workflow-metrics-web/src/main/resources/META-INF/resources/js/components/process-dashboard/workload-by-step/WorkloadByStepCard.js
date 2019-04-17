@@ -1,12 +1,12 @@
-import { AppContext } from '../AppContext';
+import { AppContext } from '../../AppContext';
 import autobind from 'autobind-decorator';
-import Icon from '../../shared/components/Icon';
-import ListView from '../../shared/components/list/ListView';
-import { openErrorToast } from '../../shared/util/toast';
-import PaginationBar from '../../shared/components/pagination/PaginationBar';
-import Panel from '../../shared/components/Panel';
+import Icon from '../../../shared/components/Icon';
+import ListView from '../../../shared/components/list/ListView';
+import { openErrorToast } from '../../../shared/util/toast';
+import PaginationBar from '../../../shared/components/pagination/PaginationBar';
+import Panel from '../../../shared/components/Panel';
 import React from 'react';
-import Tooltip from '../../shared/components/Tooltip';
+import Tooltip from '../../../shared/components/Tooltip';
 import WorkloadByStepTable from './WorkloadByStepTable';
 
 class WorkloadByStepCard extends React.Component {

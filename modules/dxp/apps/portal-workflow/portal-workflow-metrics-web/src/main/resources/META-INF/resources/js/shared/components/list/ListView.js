@@ -10,25 +10,27 @@ export default class ListView extends React.Component {
 	render() {
 		const {
 			children,
+			className = 'border-1',
 			emptyActionButton,
 			emptyMessageClassName,
 			emptyMessageText,
 			emptyTitleText,
+			errorMessageClassName = 'small',
 			errorMessageText,
 			fetching,
+			hideAnimation = false,
 			loading,
 			searching
 		} = this.props;
-
-		const hideAnimation = emptyMessageClassName || errorMessageText;
 
 		const errorRender = secondaryRender =>
 			errorMessageText ? (
 				<EmptyState
 					actionButton={emptyActionButton}
-					hideAnimation={hideAnimation}
+					className={className}
+					hideAnimation
 					message={errorMessageText}
-					messageClassName={emptyMessageClassName}
+					messageClassName={errorMessageClassName}
 					type="error"
 				/>
 			) : (
@@ -38,6 +40,7 @@ export default class ListView extends React.Component {
 		const emptyFetchRender = secondaryRender =>
 			fetching ? (
 				<EmptyState
+					className={className}
 					hideAnimation={hideAnimation}
 					message={emptyMessageText}
 					messageClassName={emptyMessageClassName}
@@ -50,6 +53,7 @@ export default class ListView extends React.Component {
 		const emptySearchRender = secondaryRender =>
 			searching ? (
 				<EmptyState
+					className={className}
 					hideAnimation={hideAnimation}
 					message={emptyMessageText}
 					messageClassName={emptyMessageClassName}
@@ -60,7 +64,13 @@ export default class ListView extends React.Component {
 			);
 
 		const loadingRender = secondaryRender =>
-			loading ? <LoadingState /> : secondaryRender;
+			loading ? (
+				<div className={`${className} pb-6 pt-6 sheet`}>
+					<LoadingState />
+				</div>
+			) : (
+				secondaryRender
+			);
 
 		return (
 			<div>

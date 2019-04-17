@@ -1965,18 +1965,23 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 	</target>
 
 	<target name="unzip-tomcat">
-		<for list="${app.server.tomcat.legacy.versions}" param="app.server.tomcat.legacy.version">
-			<sequential>
-				<var name="app.server.tomcat.legacy.dir" value="${app.server.parent.dir}/tomcat-@{app.server.tomcat.legacy.version}" />
+		<if>
+			<equals arg1="${app.server.tomcat.legacy.cleanup.enabled}" arg2="true" />
+			<then>
+				<for list="${app.server.tomcat.legacy.versions}" param="app.server.tomcat.legacy.version">
+					<sequential>
+						<var name="app.server.tomcat.legacy.dir" value="${app.server.parent.dir}/tomcat-@{app.server.tomcat.legacy.version}" />
 
-				<if>
-					<available file="${app.server.tomcat.legacy.dir}" type="dir" />
-					<then>
-						<delete dir="${app.server.tomcat.legacy.dir}" />
-					</then>
-				</if>
-			</sequential>
-		</for>
+						<if>
+							<available file="${app.server.tomcat.legacy.dir}" type="dir" />
+							<then>
+								<delete dir="${app.server.tomcat.legacy.dir}" />
+							</then>
+						</if>
+					</sequential>
+				</for>
+			</then>
+		</if>
 
 		<delete dir="${app.server.tomcat.dir}" />
 

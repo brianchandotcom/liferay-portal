@@ -53,7 +53,7 @@ public class RoleBriefSerDes {
 
 		if (roleBrief.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -63,7 +63,7 @@ public class RoleBriefSerDes {
 
 		if (roleBrief.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");

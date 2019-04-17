@@ -61,7 +61,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getAvailableLanguages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"availableLanguages\":");
@@ -87,7 +87,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -97,7 +97,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -113,7 +113,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -129,7 +129,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -143,7 +143,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -153,7 +153,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -167,7 +167,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getNumberOfTaxonomyCategories() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfTaxonomyCategories\":");
@@ -177,7 +177,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getParentTaxonomyCategory() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"parentTaxonomyCategory\":");
@@ -189,7 +189,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getParentTaxonomyVocabulary() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"parentTaxonomyVocabulary\":");
@@ -201,7 +201,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

@@ -57,7 +57,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getDataType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataType\":");
@@ -71,7 +71,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getInputControl() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"inputControl\":");
@@ -85,7 +85,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getLabel() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"label\":");
@@ -99,7 +99,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getLocalizable() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"localizable\":");
@@ -109,7 +109,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getMultiple() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"multiple\":");
@@ -119,7 +119,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -133,7 +133,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getNestedContentStructureFields() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"nestedContentStructureFields\":");
@@ -162,7 +162,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getOptions() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"options\":");
@@ -185,7 +185,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getPredefinedValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"predefinedValue\":");
@@ -199,7 +199,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getRepeatable() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"repeatable\":");
@@ -209,7 +209,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getRequired() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"required\":");
@@ -219,7 +219,7 @@ public class ContentStructureFieldSerDes {
 
 		if (contentStructureField.getShowLabel() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"showLabel\":");

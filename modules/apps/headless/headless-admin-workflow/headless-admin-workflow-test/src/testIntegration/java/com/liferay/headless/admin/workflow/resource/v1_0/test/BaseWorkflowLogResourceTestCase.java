@@ -166,7 +166,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(workflowLog);
 		String json2 = WorkflowLogSerDes.toJSON(workflowLog);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -165,7 +165,8 @@ public abstract class BaseSegmentUserResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(segmentUser);
 		String json2 = SegmentUserSerDes.toJSON(segmentUser);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

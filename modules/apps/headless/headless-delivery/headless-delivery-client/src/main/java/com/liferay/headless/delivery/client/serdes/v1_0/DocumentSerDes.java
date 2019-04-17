@@ -62,7 +62,7 @@ public class DocumentSerDes {
 
 		if (document.getAdaptedImages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"adaptedImages\":");
@@ -83,7 +83,7 @@ public class DocumentSerDes {
 
 		if (document.getAggregateRating() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"aggregateRating\":");
@@ -94,7 +94,7 @@ public class DocumentSerDes {
 
 		if (document.getContentUrl() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contentUrl\":");
@@ -108,7 +108,7 @@ public class DocumentSerDes {
 
 		if (document.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -118,7 +118,7 @@ public class DocumentSerDes {
 
 		if (document.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -133,7 +133,7 @@ public class DocumentSerDes {
 
 		if (document.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -148,7 +148,7 @@ public class DocumentSerDes {
 
 		if (document.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -162,7 +162,7 @@ public class DocumentSerDes {
 
 		if (document.getDocumentFolderId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"documentFolderId\":");
@@ -172,7 +172,7 @@ public class DocumentSerDes {
 
 		if (document.getEncodingFormat() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"encodingFormat\":");
@@ -186,7 +186,7 @@ public class DocumentSerDes {
 
 		if (document.getFileExtension() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"fileExtension\":");
@@ -200,7 +200,7 @@ public class DocumentSerDes {
 
 		if (document.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -210,7 +210,7 @@ public class DocumentSerDes {
 
 		if (document.getKeywords() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywords\":");
@@ -234,7 +234,7 @@ public class DocumentSerDes {
 
 		if (document.getNumberOfComments() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfComments\":");
@@ -244,7 +244,7 @@ public class DocumentSerDes {
 
 		if (document.getSizeInBytes() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"sizeInBytes\":");
@@ -254,7 +254,7 @@ public class DocumentSerDes {
 
 		if (document.getTaxonomyCategories() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategories\":");
@@ -276,7 +276,7 @@ public class DocumentSerDes {
 
 		if (document.getTaxonomyCategoryIds() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategoryIds\":");
@@ -296,7 +296,7 @@ public class DocumentSerDes {
 
 		if (document.getTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"title\":");
@@ -310,7 +310,7 @@ public class DocumentSerDes {
 
 		if (document.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

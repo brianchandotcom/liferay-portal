@@ -55,7 +55,7 @@ public class ParentTaxonomyCategorySerDes {
 
 		if (parentTaxonomyCategory.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -65,7 +65,7 @@ public class ParentTaxonomyCategorySerDes {
 
 		if (parentTaxonomyCategory.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");

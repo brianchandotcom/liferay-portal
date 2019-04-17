@@ -53,7 +53,7 @@ public class ValueSerDes {
 
 		if (value.getData() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"data\":");
@@ -67,7 +67,7 @@ public class ValueSerDes {
 
 		if (value.getDocument() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"document\":");
@@ -77,7 +77,7 @@ public class ValueSerDes {
 
 		if (value.getGeo() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"geo\":");
@@ -87,7 +87,7 @@ public class ValueSerDes {
 
 		if (value.getImage() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"image\":");
@@ -97,7 +97,7 @@ public class ValueSerDes {
 
 		if (value.getLink() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"link\":");
@@ -111,7 +111,7 @@ public class ValueSerDes {
 
 		if (value.getStructuredContentLink() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"structuredContentLink\":");

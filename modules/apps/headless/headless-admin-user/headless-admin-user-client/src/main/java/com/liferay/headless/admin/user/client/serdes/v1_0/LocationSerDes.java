@@ -53,7 +53,7 @@ public class LocationSerDes {
 
 		if (location.getAddressCountry() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"addressCountry\":");
@@ -67,7 +67,7 @@ public class LocationSerDes {
 
 		if (location.getAddressRegion() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"addressRegion\":");
@@ -81,7 +81,7 @@ public class LocationSerDes {
 
 		if (location.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");

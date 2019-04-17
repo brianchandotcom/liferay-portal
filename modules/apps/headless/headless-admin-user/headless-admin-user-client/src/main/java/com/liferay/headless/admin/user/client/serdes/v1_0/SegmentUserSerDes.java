@@ -55,7 +55,7 @@ public class SegmentUserSerDes {
 
 		if (segmentUser.getEmailAddress() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"emailAddress\":");
@@ -69,7 +69,7 @@ public class SegmentUserSerDes {
 
 		if (segmentUser.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -79,7 +79,7 @@ public class SegmentUserSerDes {
 
 		if (segmentUser.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");

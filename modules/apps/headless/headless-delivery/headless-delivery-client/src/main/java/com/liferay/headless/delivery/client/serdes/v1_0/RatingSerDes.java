@@ -59,7 +59,7 @@ public class RatingSerDes {
 
 		if (rating.getBestRating() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"bestRating\":");
@@ -69,7 +69,7 @@ public class RatingSerDes {
 
 		if (rating.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -79,7 +79,7 @@ public class RatingSerDes {
 
 		if (rating.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -93,7 +93,7 @@ public class RatingSerDes {
 
 		if (rating.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -107,7 +107,7 @@ public class RatingSerDes {
 
 		if (rating.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -117,7 +117,7 @@ public class RatingSerDes {
 
 		if (rating.getRatingValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"ratingValue\":");
@@ -127,7 +127,7 @@ public class RatingSerDes {
 
 		if (rating.getWorstRating() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"worstRating\":");

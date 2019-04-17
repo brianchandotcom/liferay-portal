@@ -59,7 +59,7 @@ public class ParentKnowledgeBaseFolderSerDes {
 
 		if (parentKnowledgeBaseFolder.getFolderId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"folderId\":");
@@ -69,7 +69,7 @@ public class ParentKnowledgeBaseFolderSerDes {
 
 		if (parentKnowledgeBaseFolder.getFolderName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"folderName\":");

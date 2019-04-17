@@ -55,7 +55,7 @@ public class SuccessPageSerDes {
 
 		if (successPage.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -69,7 +69,7 @@ public class SuccessPageSerDes {
 
 		if (successPage.getHeadline() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"headline\":");
@@ -83,7 +83,7 @@ public class SuccessPageSerDes {
 
 		if (successPage.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");

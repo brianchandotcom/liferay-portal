@@ -55,7 +55,7 @@ public class AggregateRatingSerDes {
 
 		if (aggregateRating.getBestRating() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"bestRating\":");
@@ -65,7 +65,7 @@ public class AggregateRatingSerDes {
 
 		if (aggregateRating.getRatingCount() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"ratingCount\":");
@@ -75,7 +75,7 @@ public class AggregateRatingSerDes {
 
 		if (aggregateRating.getRatingValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"ratingValue\":");
@@ -85,7 +85,7 @@ public class AggregateRatingSerDes {
 
 		if (aggregateRating.getWorstRating() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"worstRating\":");

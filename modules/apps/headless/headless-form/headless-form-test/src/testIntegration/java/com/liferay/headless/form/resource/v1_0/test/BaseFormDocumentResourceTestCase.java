@@ -161,7 +161,8 @@ public abstract class BaseFormDocumentResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(formDocument);
 		String json2 = FormDocumentSerDes.toJSON(formDocument);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

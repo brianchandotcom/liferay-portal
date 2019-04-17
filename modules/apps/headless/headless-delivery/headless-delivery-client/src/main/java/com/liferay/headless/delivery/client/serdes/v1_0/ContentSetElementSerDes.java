@@ -55,7 +55,7 @@ public class ContentSetElementSerDes {
 
 		if (contentSetElement.getContent() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"content\":");
@@ -65,7 +65,7 @@ public class ContentSetElementSerDes {
 
 		if (contentSetElement.getContentType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contentType\":");
@@ -79,7 +79,7 @@ public class ContentSetElementSerDes {
 
 		if (contentSetElement.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -89,7 +89,7 @@ public class ContentSetElementSerDes {
 
 		if (contentSetElement.getTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"title\":");

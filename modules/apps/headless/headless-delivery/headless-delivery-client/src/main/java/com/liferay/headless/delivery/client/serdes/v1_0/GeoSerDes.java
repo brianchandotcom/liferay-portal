@@ -53,7 +53,7 @@ public class GeoSerDes {
 
 		if (geo.getLatitude() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"latitude\":");
@@ -63,7 +63,7 @@ public class GeoSerDes {
 
 		if (geo.getLongitude() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"longitude\":");

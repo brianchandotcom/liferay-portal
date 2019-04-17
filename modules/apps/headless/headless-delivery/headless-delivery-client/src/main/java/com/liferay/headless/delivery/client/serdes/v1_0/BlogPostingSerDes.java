@@ -63,7 +63,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getAggregateRating() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"aggregateRating\":");
@@ -74,7 +74,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getAlternativeHeadline() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"alternativeHeadline\":");
@@ -88,7 +88,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getArticleBody() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"articleBody\":");
@@ -102,7 +102,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -112,7 +112,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -127,7 +127,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -142,7 +142,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getDatePublished() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"datePublished\":");
@@ -157,7 +157,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -171,7 +171,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getEncodingFormat() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"encodingFormat\":");
@@ -185,7 +185,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getFriendlyUrlPath() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"friendlyUrlPath\":");
@@ -199,7 +199,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getHeadline() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"headline\":");
@@ -213,7 +213,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -223,7 +223,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getImage() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"image\":");
@@ -233,7 +233,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getKeywords() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywords\":");
@@ -257,7 +257,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getNumberOfComments() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfComments\":");
@@ -267,7 +267,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -277,7 +277,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getTaxonomyCategories() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategories\":");
@@ -301,7 +301,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getTaxonomyCategoryIds() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategoryIds\":");
@@ -323,7 +323,7 @@ public class BlogPostingSerDes {
 
 		if (blogPosting.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

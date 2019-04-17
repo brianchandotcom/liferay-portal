@@ -53,7 +53,7 @@ public class ImageSerDes {
 
 		if (image.getCaption() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"caption\":");
@@ -67,7 +67,7 @@ public class ImageSerDes {
 
 		if (image.getContentUrl() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contentUrl\":");
@@ -81,7 +81,7 @@ public class ImageSerDes {
 
 		if (image.getImageId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"imageId\":");

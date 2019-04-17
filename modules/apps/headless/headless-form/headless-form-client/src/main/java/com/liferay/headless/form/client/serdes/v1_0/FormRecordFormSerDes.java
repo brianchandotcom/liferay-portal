@@ -55,7 +55,7 @@ public class FormRecordFormSerDes {
 
 		if (formRecordForm.getDraft() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"draft\":");
@@ -65,7 +65,7 @@ public class FormRecordFormSerDes {
 
 		if (formRecordForm.getFieldValues() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"fieldValues\":");

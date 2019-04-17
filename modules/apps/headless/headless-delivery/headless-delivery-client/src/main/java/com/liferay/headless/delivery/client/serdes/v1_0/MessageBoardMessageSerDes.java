@@ -61,7 +61,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getAggregateRating() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"aggregateRating\":");
@@ -73,7 +73,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getAnonymous() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"anonymous\":");
@@ -83,7 +83,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getArticleBody() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"articleBody\":");
@@ -97,7 +97,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -107,7 +107,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -123,7 +123,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -139,7 +139,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getEncodingFormat() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"encodingFormat\":");
@@ -153,7 +153,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getHeadline() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"headline\":");
@@ -167,7 +167,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -177,7 +177,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getKeywords() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywords\":");
@@ -201,7 +201,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getNumberOfMessageBoardAttachments() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfMessageBoardAttachments\":");
@@ -211,7 +211,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getNumberOfMessageBoardMessages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfMessageBoardMessages\":");
@@ -221,7 +221,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getShowAsAnswer() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"showAsAnswer\":");
@@ -231,7 +231,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -241,7 +241,7 @@ public class MessageBoardMessageSerDes {
 
 		if (messageBoardMessage.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

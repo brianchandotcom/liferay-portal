@@ -60,7 +60,7 @@ public class ContactInformationSerDes {
 
 		if (contactInformation.getEmailAddresses() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"emailAddresses\":");
@@ -84,7 +84,7 @@ public class ContactInformationSerDes {
 
 		if (contactInformation.getFacebook() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"facebook\":");
@@ -98,7 +98,7 @@ public class ContactInformationSerDes {
 
 		if (contactInformation.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -108,7 +108,7 @@ public class ContactInformationSerDes {
 
 		if (contactInformation.getJabber() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"jabber\":");
@@ -122,7 +122,7 @@ public class ContactInformationSerDes {
 
 		if (contactInformation.getPostalAddresses() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"postalAddresses\":");
@@ -146,7 +146,7 @@ public class ContactInformationSerDes {
 
 		if (contactInformation.getSkype() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"skype\":");
@@ -160,7 +160,7 @@ public class ContactInformationSerDes {
 
 		if (contactInformation.getSms() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"sms\":");
@@ -174,7 +174,7 @@ public class ContactInformationSerDes {
 
 		if (contactInformation.getTelephones() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"telephones\":");
@@ -197,7 +197,7 @@ public class ContactInformationSerDes {
 
 		if (contactInformation.getTwitter() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"twitter\":");
@@ -211,7 +211,7 @@ public class ContactInformationSerDes {
 
 		if (contactInformation.getWebUrls() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"webUrls\":");

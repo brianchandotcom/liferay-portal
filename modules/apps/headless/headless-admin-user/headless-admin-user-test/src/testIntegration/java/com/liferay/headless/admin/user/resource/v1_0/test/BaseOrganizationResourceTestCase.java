@@ -169,7 +169,8 @@ public abstract class BaseOrganizationResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(organization);
 		String json2 = OrganizationSerDes.toJSON(organization);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

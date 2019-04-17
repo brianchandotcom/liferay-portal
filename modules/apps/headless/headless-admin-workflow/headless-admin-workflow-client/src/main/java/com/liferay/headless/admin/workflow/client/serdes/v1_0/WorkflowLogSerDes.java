@@ -61,7 +61,7 @@ public class WorkflowLogSerDes {
 
 		if (workflowLog.getAuditPerson() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"auditPerson\":");
@@ -71,7 +71,7 @@ public class WorkflowLogSerDes {
 
 		if (workflowLog.getCommentLog() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"commentLog\":");
@@ -85,7 +85,7 @@ public class WorkflowLogSerDes {
 
 		if (workflowLog.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -100,7 +100,7 @@ public class WorkflowLogSerDes {
 
 		if (workflowLog.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -110,7 +110,7 @@ public class WorkflowLogSerDes {
 
 		if (workflowLog.getPerson() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"person\":");
@@ -120,7 +120,7 @@ public class WorkflowLogSerDes {
 
 		if (workflowLog.getPreviousPerson() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"previousPerson\":");
@@ -130,7 +130,7 @@ public class WorkflowLogSerDes {
 
 		if (workflowLog.getPreviousState() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"previousState\":");
@@ -144,7 +144,7 @@ public class WorkflowLogSerDes {
 
 		if (workflowLog.getState() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"state\":");
@@ -158,7 +158,7 @@ public class WorkflowLogSerDes {
 
 		if (workflowLog.getTaskId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taskId\":");
@@ -168,7 +168,7 @@ public class WorkflowLogSerDes {
 
 		if (workflowLog.getType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"type\":");

@@ -163,7 +163,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(emailAddress);
 		String json2 = EmailAddressSerDes.toJSON(emailAddress);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

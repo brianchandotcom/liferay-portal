@@ -56,7 +56,7 @@ public class GridSerDes {
 
 		if (grid.getColumns() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"columns\":");
@@ -76,7 +76,7 @@ public class GridSerDes {
 
 		if (grid.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -86,7 +86,7 @@ public class GridSerDes {
 
 		if (grid.getRows() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"rows\":");

@@ -63,7 +63,7 @@ public class WorkflowTaskAssignToUserSerDes {
 
 		if (workflowTaskAssignToUser.getAssigneeId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"assigneeId\":");
@@ -73,7 +73,7 @@ public class WorkflowTaskAssignToUserSerDes {
 
 		if (workflowTaskAssignToUser.getComment() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"comment\":");
@@ -87,7 +87,7 @@ public class WorkflowTaskAssignToUserSerDes {
 
 		if (workflowTaskAssignToUser.getDueDate() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dueDate\":");

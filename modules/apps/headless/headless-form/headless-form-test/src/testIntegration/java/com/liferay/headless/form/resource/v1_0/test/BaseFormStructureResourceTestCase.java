@@ -165,7 +165,8 @@ public abstract class BaseFormStructureResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(formStructure);
 		String json2 = FormStructureSerDes.toJSON(formStructure);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

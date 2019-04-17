@@ -61,7 +61,7 @@ public class DocumentFolderSerDes {
 
 		if (documentFolder.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -71,7 +71,7 @@ public class DocumentFolderSerDes {
 
 		if (documentFolder.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -87,7 +87,7 @@ public class DocumentFolderSerDes {
 
 		if (documentFolder.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -103,7 +103,7 @@ public class DocumentFolderSerDes {
 
 		if (documentFolder.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -117,7 +117,7 @@ public class DocumentFolderSerDes {
 
 		if (documentFolder.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -127,7 +127,7 @@ public class DocumentFolderSerDes {
 
 		if (documentFolder.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -141,7 +141,7 @@ public class DocumentFolderSerDes {
 
 		if (documentFolder.getNumberOfDocumentFolders() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfDocumentFolders\":");
@@ -151,7 +151,7 @@ public class DocumentFolderSerDes {
 
 		if (documentFolder.getNumberOfDocuments() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfDocuments\":");
@@ -161,7 +161,7 @@ public class DocumentFolderSerDes {
 
 		if (documentFolder.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -171,7 +171,7 @@ public class DocumentFolderSerDes {
 
 		if (documentFolder.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

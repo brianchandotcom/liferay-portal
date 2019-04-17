@@ -61,7 +61,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getAggregateRating() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"aggregateRating\":");
@@ -73,7 +73,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getArticleBody() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"articleBody\":");
@@ -87,7 +87,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -97,7 +97,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -113,7 +113,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -129,7 +129,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getEncodingFormat() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"encodingFormat\":");
@@ -143,7 +143,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getHeadline() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"headline\":");
@@ -157,7 +157,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -167,7 +167,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getKeywords() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywords\":");
@@ -191,7 +191,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getNumberOfMessageBoardAttachments() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfMessageBoardAttachments\":");
@@ -201,7 +201,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getNumberOfMessageBoardMessages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfMessageBoardMessages\":");
@@ -211,7 +211,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getShowAsQuestion() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"showAsQuestion\":");
@@ -221,7 +221,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -231,7 +231,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getThreadType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"threadType\":");
@@ -245,7 +245,7 @@ public class MessageBoardThreadSerDes {
 
 		if (messageBoardThread.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

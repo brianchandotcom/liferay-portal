@@ -55,7 +55,7 @@ public class ServiceSerDes {
 
 		if (service.getHoursAvailable() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"hoursAvailable\":");
@@ -77,7 +77,7 @@ public class ServiceSerDes {
 
 		if (service.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -87,7 +87,7 @@ public class ServiceSerDes {
 
 		if (service.getServiceType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"serviceType\":");

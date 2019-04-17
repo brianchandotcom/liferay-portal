@@ -55,7 +55,7 @@ public class AdaptedImageSerDes {
 
 		if (adaptedImage.getContentUrl() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contentUrl\":");
@@ -69,7 +69,7 @@ public class AdaptedImageSerDes {
 
 		if (adaptedImage.getHeight() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"height\":");
@@ -79,7 +79,7 @@ public class AdaptedImageSerDes {
 
 		if (adaptedImage.getResolutionName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"resolutionName\":");
@@ -93,7 +93,7 @@ public class AdaptedImageSerDes {
 
 		if (adaptedImage.getSizeInBytes() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"sizeInBytes\":");
@@ -103,7 +103,7 @@ public class AdaptedImageSerDes {
 
 		if (adaptedImage.getWidth() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"width\":");

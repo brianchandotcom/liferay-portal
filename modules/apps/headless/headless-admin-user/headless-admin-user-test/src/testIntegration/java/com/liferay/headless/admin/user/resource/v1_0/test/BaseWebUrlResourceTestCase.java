@@ -163,7 +163,8 @@ public abstract class BaseWebUrlResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(webUrl);
 		String json2 = WebUrlSerDes.toJSON(webUrl);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

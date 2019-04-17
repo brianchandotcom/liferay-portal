@@ -57,7 +57,7 @@ public class ParentTaxonomyVocabularySerDes {
 
 		if (parentTaxonomyVocabulary.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -67,7 +67,7 @@ public class ParentTaxonomyVocabularySerDes {
 
 		if (parentTaxonomyVocabulary.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");

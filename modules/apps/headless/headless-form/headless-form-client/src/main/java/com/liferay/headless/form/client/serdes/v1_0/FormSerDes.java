@@ -61,7 +61,7 @@ public class FormSerDes {
 
 		if (form.getAvailableLanguages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"availableLanguages\":");
@@ -85,7 +85,7 @@ public class FormSerDes {
 
 		if (form.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -95,7 +95,7 @@ public class FormSerDes {
 
 		if (form.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -109,7 +109,7 @@ public class FormSerDes {
 
 		if (form.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -123,7 +123,7 @@ public class FormSerDes {
 
 		if (form.getDatePublished() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"datePublished\":");
@@ -137,7 +137,7 @@ public class FormSerDes {
 
 		if (form.getDefaultLanguage() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"defaultLanguage\":");
@@ -151,7 +151,7 @@ public class FormSerDes {
 
 		if (form.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -165,7 +165,7 @@ public class FormSerDes {
 
 		if (form.getFormRecords() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"formRecords\":");
@@ -185,7 +185,7 @@ public class FormSerDes {
 
 		if (form.getFormRecordsIds() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"formRecordsIds\":");
@@ -205,7 +205,7 @@ public class FormSerDes {
 
 		if (form.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -215,7 +215,7 @@ public class FormSerDes {
 
 		if (form.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -229,7 +229,7 @@ public class FormSerDes {
 
 		if (form.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -239,7 +239,7 @@ public class FormSerDes {
 
 		if (form.getStructure() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"structure\":");
@@ -249,7 +249,7 @@ public class FormSerDes {
 
 		if (form.getStructureId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"structureId\":");

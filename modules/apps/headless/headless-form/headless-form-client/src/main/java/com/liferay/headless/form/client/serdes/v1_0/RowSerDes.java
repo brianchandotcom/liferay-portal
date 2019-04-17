@@ -53,7 +53,7 @@ public class RowSerDes {
 
 		if (row.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -63,7 +63,7 @@ public class RowSerDes {
 
 		if (row.getLabel() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"label\":");
@@ -77,7 +77,7 @@ public class RowSerDes {
 
 		if (row.getValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"value\":");

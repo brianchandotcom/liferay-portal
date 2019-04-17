@@ -169,7 +169,8 @@ public abstract class BaseUserAccountResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(userAccount);
 		String json2 = UserAccountSerDes.toJSON(userAccount);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

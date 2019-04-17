@@ -63,7 +63,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getAggregateRating() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"aggregateRating\":");
@@ -75,7 +75,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getArticleBody() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"articleBody\":");
@@ -89,7 +89,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -99,7 +99,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -115,7 +115,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -131,7 +131,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -145,7 +145,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getEncodingFormat() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"encodingFormat\":");
@@ -159,7 +159,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getFriendlyUrlPath() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"friendlyUrlPath\":");
@@ -173,7 +173,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -183,7 +183,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getKeywords() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywords\":");
@@ -209,7 +209,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getNumberOfAttachments() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfAttachments\":");
@@ -219,7 +219,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfKnowledgeBaseArticles\":");
@@ -229,7 +229,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getParentKnowledgeBaseFolder() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"parentKnowledgeBaseFolder\":");
@@ -241,7 +241,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getParentKnowledgeBaseFolderId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"parentKnowledgeBaseFolderId\":");
@@ -251,7 +251,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -261,7 +261,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getTaxonomyCategories() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategories\":");
@@ -287,7 +287,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getTaxonomyCategoryIds() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategoryIds\":");
@@ -312,7 +312,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"title\":");
@@ -326,7 +326,7 @@ public class KnowledgeBaseArticleSerDes {
 
 		if (knowledgeBaseArticle.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

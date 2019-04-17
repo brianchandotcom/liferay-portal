@@ -55,7 +55,7 @@ public class MessageBoardAttachmentSerDes {
 
 		if (messageBoardAttachment.getContentUrl() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contentUrl\":");
@@ -69,7 +69,7 @@ public class MessageBoardAttachmentSerDes {
 
 		if (messageBoardAttachment.getEncodingFormat() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"encodingFormat\":");
@@ -83,7 +83,7 @@ public class MessageBoardAttachmentSerDes {
 
 		if (messageBoardAttachment.getFileExtension() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"fileExtension\":");
@@ -97,7 +97,7 @@ public class MessageBoardAttachmentSerDes {
 
 		if (messageBoardAttachment.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -107,7 +107,7 @@ public class MessageBoardAttachmentSerDes {
 
 		if (messageBoardAttachment.getSizeInBytes() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"sizeInBytes\":");
@@ -117,7 +117,7 @@ public class MessageBoardAttachmentSerDes {
 
 		if (messageBoardAttachment.getTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"title\":");

@@ -65,7 +65,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getAggregateRating() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"aggregateRating\":");
@@ -77,7 +77,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getAvailableLanguages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"availableLanguages\":");
@@ -105,7 +105,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getContentFields() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contentFields\":");
@@ -129,7 +129,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getContentStructureId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contentStructureId\":");
@@ -139,7 +139,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -149,7 +149,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -165,7 +165,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -181,7 +181,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getDatePublished() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"datePublished\":");
@@ -197,7 +197,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -211,7 +211,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getFriendlyUrlPath() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"friendlyUrlPath\":");
@@ -225,7 +225,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -235,7 +235,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getKey() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"key\":");
@@ -249,7 +249,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getKeywords() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywords\":");
@@ -273,7 +273,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getNumberOfComments() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfComments\":");
@@ -283,7 +283,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getRenderedContents() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"renderedContents\":");
@@ -307,7 +307,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -317,7 +317,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getTaxonomyCategories() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategories\":");
@@ -343,7 +343,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getTaxonomyCategoryIds() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategoryIds\":");
@@ -367,7 +367,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"title\":");
@@ -381,7 +381,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getUuid() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"uuid\":");
@@ -395,7 +395,7 @@ public class StructuredContentSerDes {
 
 		if (structuredContent.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

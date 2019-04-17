@@ -172,7 +172,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(blogPosting);
 		String json2 = BlogPostingSerDes.toJSON(blogPosting);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

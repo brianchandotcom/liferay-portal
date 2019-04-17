@@ -53,7 +53,7 @@ public class OptionSerDes {
 
 		if (option.getLabel() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"label\":");
@@ -67,7 +67,7 @@ public class OptionSerDes {
 
 		if (option.getValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"value\":");

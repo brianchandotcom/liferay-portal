@@ -55,7 +55,7 @@ public class ObjectReviewedSerDes {
 
 		if (objectReviewed.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -65,7 +65,7 @@ public class ObjectReviewedSerDes {
 
 		if (objectReviewed.getResourceType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"resourceType\":");

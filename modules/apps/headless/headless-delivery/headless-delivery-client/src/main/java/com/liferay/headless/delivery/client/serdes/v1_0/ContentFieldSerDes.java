@@ -56,7 +56,7 @@ public class ContentFieldSerDes {
 
 		if (contentField.getDataType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataType\":");
@@ -70,7 +70,7 @@ public class ContentFieldSerDes {
 
 		if (contentField.getInputControl() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"inputControl\":");
@@ -84,7 +84,7 @@ public class ContentFieldSerDes {
 
 		if (contentField.getLabel() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"label\":");
@@ -98,7 +98,7 @@ public class ContentFieldSerDes {
 
 		if (contentField.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -112,7 +112,7 @@ public class ContentFieldSerDes {
 
 		if (contentField.getNestedFields() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"nestedFields\":");
@@ -134,7 +134,7 @@ public class ContentFieldSerDes {
 
 		if (contentField.getRepeatable() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"repeatable\":");
@@ -144,7 +144,7 @@ public class ContentFieldSerDes {
 
 		if (contentField.getValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"value\":");

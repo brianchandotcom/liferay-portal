@@ -173,7 +173,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(messageBoardThread);
 		String json2 = MessageBoardThreadSerDes.toJSON(messageBoardThread);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

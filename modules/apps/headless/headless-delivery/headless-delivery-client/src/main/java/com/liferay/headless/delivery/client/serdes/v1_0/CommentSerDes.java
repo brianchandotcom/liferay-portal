@@ -59,7 +59,7 @@ public class CommentSerDes {
 
 		if (comment.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -69,7 +69,7 @@ public class CommentSerDes {
 
 		if (comment.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -83,7 +83,7 @@ public class CommentSerDes {
 
 		if (comment.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -98,7 +98,7 @@ public class CommentSerDes {
 
 		if (comment.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -108,7 +108,7 @@ public class CommentSerDes {
 
 		if (comment.getNumberOfComments() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfComments\":");
@@ -118,7 +118,7 @@ public class CommentSerDes {
 
 		if (comment.getText() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"text\":");

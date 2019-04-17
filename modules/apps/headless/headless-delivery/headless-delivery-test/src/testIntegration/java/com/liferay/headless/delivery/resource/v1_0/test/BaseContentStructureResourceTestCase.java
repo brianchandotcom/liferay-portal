@@ -169,7 +169,8 @@ public abstract class BaseContentStructureResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(contentStructure);
 		String json2 = ContentStructureSerDes.toJSON(contentStructure);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

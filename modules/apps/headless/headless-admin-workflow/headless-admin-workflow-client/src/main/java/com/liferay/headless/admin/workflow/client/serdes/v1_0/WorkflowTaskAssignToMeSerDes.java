@@ -61,7 +61,7 @@ public class WorkflowTaskAssignToMeSerDes {
 
 		if (workflowTaskAssignToMe.getComment() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"comment\":");
@@ -75,7 +75,7 @@ public class WorkflowTaskAssignToMeSerDes {
 
 		if (workflowTaskAssignToMe.getDueDate() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dueDate\":");

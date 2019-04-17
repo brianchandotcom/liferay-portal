@@ -55,7 +55,7 @@ public class FormPageSerDes {
 
 		if (formPage.getFields() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"fields\":");
@@ -75,7 +75,7 @@ public class FormPageSerDes {
 
 		if (formPage.getHeadline() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"headline\":");
@@ -89,7 +89,7 @@ public class FormPageSerDes {
 
 		if (formPage.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -99,7 +99,7 @@ public class FormPageSerDes {
 
 		if (formPage.getText() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"text\":");

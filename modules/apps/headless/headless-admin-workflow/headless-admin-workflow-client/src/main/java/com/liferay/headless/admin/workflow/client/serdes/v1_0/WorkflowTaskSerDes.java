@@ -61,7 +61,7 @@ public class WorkflowTaskSerDes {
 
 		if (workflowTask.getCompleted() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"completed\":");
@@ -71,7 +71,7 @@ public class WorkflowTaskSerDes {
 
 		if (workflowTask.getDateCompleted() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCompleted\":");
@@ -87,7 +87,7 @@ public class WorkflowTaskSerDes {
 
 		if (workflowTask.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -102,7 +102,7 @@ public class WorkflowTaskSerDes {
 
 		if (workflowTask.getDefinitionName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"definitionName\":");
@@ -116,7 +116,7 @@ public class WorkflowTaskSerDes {
 
 		if (workflowTask.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -130,7 +130,7 @@ public class WorkflowTaskSerDes {
 
 		if (workflowTask.getDueDate() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dueDate\":");
@@ -145,7 +145,7 @@ public class WorkflowTaskSerDes {
 
 		if (workflowTask.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -155,7 +155,7 @@ public class WorkflowTaskSerDes {
 
 		if (workflowTask.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -169,7 +169,7 @@ public class WorkflowTaskSerDes {
 
 		if (workflowTask.getObjectReviewed() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"objectReviewed\":");
@@ -180,7 +180,7 @@ public class WorkflowTaskSerDes {
 
 		if (workflowTask.getTransitions() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"transitions\":");

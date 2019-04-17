@@ -55,7 +55,7 @@ public class StructuredContentLinkSerDes {
 
 		if (structuredContentLink.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -65,7 +65,7 @@ public class StructuredContentLinkSerDes {
 
 		if (structuredContentLink.getTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"title\":");

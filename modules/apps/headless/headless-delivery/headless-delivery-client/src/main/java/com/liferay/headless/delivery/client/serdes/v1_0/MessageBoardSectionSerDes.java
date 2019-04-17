@@ -61,7 +61,7 @@ public class MessageBoardSectionSerDes {
 
 		if (messageBoardSection.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -71,7 +71,7 @@ public class MessageBoardSectionSerDes {
 
 		if (messageBoardSection.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -87,7 +87,7 @@ public class MessageBoardSectionSerDes {
 
 		if (messageBoardSection.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -103,7 +103,7 @@ public class MessageBoardSectionSerDes {
 
 		if (messageBoardSection.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -117,7 +117,7 @@ public class MessageBoardSectionSerDes {
 
 		if (messageBoardSection.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -127,7 +127,7 @@ public class MessageBoardSectionSerDes {
 
 		if (messageBoardSection.getNumberOfMessageBoardSections() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfMessageBoardSections\":");
@@ -137,7 +137,7 @@ public class MessageBoardSectionSerDes {
 
 		if (messageBoardSection.getNumberOfMessageBoardThreads() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfMessageBoardThreads\":");
@@ -147,7 +147,7 @@ public class MessageBoardSectionSerDes {
 
 		if (messageBoardSection.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -157,7 +157,7 @@ public class MessageBoardSectionSerDes {
 
 		if (messageBoardSection.getTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"title\":");
@@ -171,7 +171,7 @@ public class MessageBoardSectionSerDes {
 
 		if (messageBoardSection.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

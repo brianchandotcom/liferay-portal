@@ -65,7 +65,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getAdditionalName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"additionalName\":");
@@ -79,7 +79,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getAlternateName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"alternateName\":");
@@ -93,7 +93,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getBirthDate() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"birthDate\":");
@@ -108,7 +108,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getContactInformation() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contactInformation\":");
@@ -120,7 +120,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getDashboardURL() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dashboardURL\":");
@@ -134,7 +134,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -149,7 +149,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -164,7 +164,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getEmailAddress() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"emailAddress\":");
@@ -178,7 +178,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getFamilyName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"familyName\":");
@@ -192,7 +192,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getGivenName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"givenName\":");
@@ -206,7 +206,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getHonorificPrefix() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"honorificPrefix\":");
@@ -220,7 +220,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getHonorificSuffix() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"honorificSuffix\":");
@@ -234,7 +234,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -244,7 +244,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getImage() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"image\":");
@@ -258,7 +258,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getJobTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"jobTitle\":");
@@ -272,7 +272,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getKeywords() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywords\":");
@@ -296,7 +296,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -310,7 +310,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getOrganizationBriefs() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"organizationBriefs\":");
@@ -334,7 +334,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getProfileURL() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"profileURL\":");
@@ -348,7 +348,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getRoleBriefs() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"roleBriefs\":");
@@ -369,7 +369,7 @@ public class UserAccountSerDes {
 
 		if (userAccount.getSiteBriefs() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteBriefs\":");

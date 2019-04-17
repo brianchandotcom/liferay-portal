@@ -53,7 +53,7 @@ public class CreatorSerDes {
 
 		if (creator.getAdditionalName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"additionalName\":");
@@ -67,7 +67,7 @@ public class CreatorSerDes {
 
 		if (creator.getFamilyName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"familyName\":");
@@ -81,7 +81,7 @@ public class CreatorSerDes {
 
 		if (creator.getGivenName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"givenName\":");
@@ -95,7 +95,7 @@ public class CreatorSerDes {
 
 		if (creator.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -105,7 +105,7 @@ public class CreatorSerDes {
 
 		if (creator.getImage() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"image\":");
@@ -119,7 +119,7 @@ public class CreatorSerDes {
 
 		if (creator.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -133,7 +133,7 @@ public class CreatorSerDes {
 
 		if (creator.getProfileURL() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"profileURL\":");

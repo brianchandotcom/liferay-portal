@@ -61,7 +61,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -71,7 +71,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -87,7 +87,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -103,7 +103,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -117,7 +117,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -127,7 +127,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -141,7 +141,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfKnowledgeBaseArticles\":");
@@ -151,7 +151,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfKnowledgeBaseFolders\":");
@@ -161,7 +161,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getParentKnowledgeBaseFolder() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"parentKnowledgeBaseFolder\":");
@@ -173,7 +173,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getParentKnowledgeBaseFolderId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"parentKnowledgeBaseFolderId\":");
@@ -183,7 +183,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -193,7 +193,7 @@ public class KnowledgeBaseFolderSerDes {
 
 		if (knowledgeBaseFolder.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

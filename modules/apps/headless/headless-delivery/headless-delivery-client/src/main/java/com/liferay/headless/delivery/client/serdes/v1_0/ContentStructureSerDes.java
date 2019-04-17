@@ -63,7 +63,7 @@ public class ContentStructureSerDes {
 
 		if (contentStructure.getAvailableLanguages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"availableLanguages\":");
@@ -89,7 +89,7 @@ public class ContentStructureSerDes {
 
 		if (contentStructure.getContentStructureFields() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contentStructureFields\":");
@@ -115,7 +115,7 @@ public class ContentStructureSerDes {
 
 		if (contentStructure.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -125,7 +125,7 @@ public class ContentStructureSerDes {
 
 		if (contentStructure.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -141,7 +141,7 @@ public class ContentStructureSerDes {
 
 		if (contentStructure.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -157,7 +157,7 @@ public class ContentStructureSerDes {
 
 		if (contentStructure.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -171,7 +171,7 @@ public class ContentStructureSerDes {
 
 		if (contentStructure.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -181,7 +181,7 @@ public class ContentStructureSerDes {
 
 		if (contentStructure.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -195,7 +195,7 @@ public class ContentStructureSerDes {
 
 		if (contentStructure.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");

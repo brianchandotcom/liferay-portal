@@ -55,7 +55,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getTaxonomyCategoryId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategoryId\":");
@@ -65,7 +65,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getTaxonomyCategoryName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategoryName\":");

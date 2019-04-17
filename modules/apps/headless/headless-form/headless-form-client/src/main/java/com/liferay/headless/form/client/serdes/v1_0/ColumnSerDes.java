@@ -53,7 +53,7 @@ public class ColumnSerDes {
 
 		if (column.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -63,7 +63,7 @@ public class ColumnSerDes {
 
 		if (column.getLabel() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"label\":");
@@ -77,7 +77,7 @@ public class ColumnSerDes {
 
 		if (column.getValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"value\":");

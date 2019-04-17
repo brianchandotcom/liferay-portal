@@ -171,7 +171,8 @@ public abstract class BaseKeywordResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(keyword);
 		String json2 = KeywordSerDes.toJSON(keyword);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

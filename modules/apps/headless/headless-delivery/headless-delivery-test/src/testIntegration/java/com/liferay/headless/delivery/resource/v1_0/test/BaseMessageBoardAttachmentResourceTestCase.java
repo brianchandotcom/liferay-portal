@@ -171,7 +171,8 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		String json2 = MessageBoardAttachmentSerDes.toJSON(
 			messageBoardAttachment);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

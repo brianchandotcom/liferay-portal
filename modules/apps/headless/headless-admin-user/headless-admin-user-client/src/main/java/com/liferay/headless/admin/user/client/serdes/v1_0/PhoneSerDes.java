@@ -53,7 +53,7 @@ public class PhoneSerDes {
 
 		if (phone.getExtension() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"extension\":");
@@ -67,7 +67,7 @@ public class PhoneSerDes {
 
 		if (phone.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -77,7 +77,7 @@ public class PhoneSerDes {
 
 		if (phone.getPhoneNumber() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"phoneNumber\":");
@@ -91,7 +91,7 @@ public class PhoneSerDes {
 
 		if (phone.getPhoneType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"phoneType\":");
@@ -105,7 +105,7 @@ public class PhoneSerDes {
 
 		if (phone.getPrimary() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"primary\":");

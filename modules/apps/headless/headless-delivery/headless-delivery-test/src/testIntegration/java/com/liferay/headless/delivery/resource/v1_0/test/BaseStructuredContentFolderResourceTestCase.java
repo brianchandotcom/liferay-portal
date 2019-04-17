@@ -176,7 +176,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		String json2 = StructuredContentFolderSerDes.toJSON(
 			structuredContentFolder);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

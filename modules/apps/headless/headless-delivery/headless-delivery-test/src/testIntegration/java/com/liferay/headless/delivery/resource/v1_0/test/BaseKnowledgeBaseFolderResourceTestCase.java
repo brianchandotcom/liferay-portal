@@ -170,7 +170,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(knowledgeBaseFolder);
 		String json2 = KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

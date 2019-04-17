@@ -55,7 +55,7 @@ public class RenderedContentSerDes {
 
 		if (renderedContent.getRenderedContentURL() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"renderedContentURL\":");
@@ -69,7 +69,7 @@ public class RenderedContentSerDes {
 
 		if (renderedContent.getTemplateName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"templateName\":");

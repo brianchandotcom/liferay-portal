@@ -55,7 +55,7 @@ public class ContentDocumentSerDes {
 
 		if (contentDocument.getContentUrl() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contentUrl\":");
@@ -69,7 +69,7 @@ public class ContentDocumentSerDes {
 
 		if (contentDocument.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -83,7 +83,7 @@ public class ContentDocumentSerDes {
 
 		if (contentDocument.getEncodingFormat() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"encodingFormat\":");
@@ -97,7 +97,7 @@ public class ContentDocumentSerDes {
 
 		if (contentDocument.getFileExtension() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"fileExtension\":");
@@ -111,7 +111,7 @@ public class ContentDocumentSerDes {
 
 		if (contentDocument.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -121,7 +121,7 @@ public class ContentDocumentSerDes {
 
 		if (contentDocument.getSizeInBytes() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"sizeInBytes\":");
@@ -131,7 +131,7 @@ public class ContentDocumentSerDes {
 
 		if (contentDocument.getTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"title\":");

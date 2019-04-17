@@ -63,7 +63,7 @@ public class FormStructureSerDes {
 
 		if (formStructure.getAvailableLanguages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"availableLanguages\":");
@@ -89,7 +89,7 @@ public class FormStructureSerDes {
 
 		if (formStructure.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -99,7 +99,7 @@ public class FormStructureSerDes {
 
 		if (formStructure.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -114,7 +114,7 @@ public class FormStructureSerDes {
 
 		if (formStructure.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -130,7 +130,7 @@ public class FormStructureSerDes {
 
 		if (formStructure.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -144,7 +144,7 @@ public class FormStructureSerDes {
 
 		if (formStructure.getFormPages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"formPages\":");
@@ -165,7 +165,7 @@ public class FormStructureSerDes {
 
 		if (formStructure.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -175,7 +175,7 @@ public class FormStructureSerDes {
 
 		if (formStructure.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -189,7 +189,7 @@ public class FormStructureSerDes {
 
 		if (formStructure.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -199,7 +199,7 @@ public class FormStructureSerDes {
 
 		if (formStructure.getSuccessPage() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"successPage\":");

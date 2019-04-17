@@ -55,7 +55,7 @@ public class EmailAddressSerDes {
 
 		if (emailAddress.getEmailAddress() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"emailAddress\":");
@@ -69,7 +69,7 @@ public class EmailAddressSerDes {
 
 		if (emailAddress.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -79,7 +79,7 @@ public class EmailAddressSerDes {
 
 		if (emailAddress.getPrimary() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"primary\":");
@@ -89,7 +89,7 @@ public class EmailAddressSerDes {
 
 		if (emailAddress.getType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"type\":");

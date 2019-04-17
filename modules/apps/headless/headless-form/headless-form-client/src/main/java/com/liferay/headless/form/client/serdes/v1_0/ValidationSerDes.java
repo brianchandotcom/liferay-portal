@@ -53,7 +53,7 @@ public class ValidationSerDes {
 
 		if (validation.getErrorMessage() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"errorMessage\":");
@@ -67,7 +67,7 @@ public class ValidationSerDes {
 
 		if (validation.getExpression() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"expression\":");
@@ -81,7 +81,7 @@ public class ValidationSerDes {
 
 		if (validation.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");

@@ -55,7 +55,7 @@ public class FieldSerDes {
 
 		if (field.getAutocomplete() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"autocomplete\":");
@@ -65,7 +65,7 @@ public class FieldSerDes {
 
 		if (field.getDataSourceType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataSourceType\":");
@@ -79,7 +79,7 @@ public class FieldSerDes {
 
 		if (field.getDataType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataType\":");
@@ -93,7 +93,7 @@ public class FieldSerDes {
 
 		if (field.getDisplayStyle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"displayStyle\":");
@@ -107,7 +107,7 @@ public class FieldSerDes {
 
 		if (field.getGrid() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"grid\":");
@@ -117,7 +117,7 @@ public class FieldSerDes {
 
 		if (field.getHasFormRules() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"hasFormRules\":");
@@ -127,7 +127,7 @@ public class FieldSerDes {
 
 		if (field.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -137,7 +137,7 @@ public class FieldSerDes {
 
 		if (field.getImmutable() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"immutable\":");
@@ -147,7 +147,7 @@ public class FieldSerDes {
 
 		if (field.getInline() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"inline\":");
@@ -157,7 +157,7 @@ public class FieldSerDes {
 
 		if (field.getInputControl() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"inputControl\":");
@@ -171,7 +171,7 @@ public class FieldSerDes {
 
 		if (field.getLabel() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"label\":");
@@ -185,7 +185,7 @@ public class FieldSerDes {
 
 		if (field.getLocalizable() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"localizable\":");
@@ -195,7 +195,7 @@ public class FieldSerDes {
 
 		if (field.getMultiple() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"multiple\":");
@@ -205,7 +205,7 @@ public class FieldSerDes {
 
 		if (field.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -219,7 +219,7 @@ public class FieldSerDes {
 
 		if (field.getOptions() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"options\":");
@@ -239,7 +239,7 @@ public class FieldSerDes {
 
 		if (field.getPlaceholder() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"placeholder\":");
@@ -253,7 +253,7 @@ public class FieldSerDes {
 
 		if (field.getPredefinedValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"predefinedValue\":");
@@ -267,7 +267,7 @@ public class FieldSerDes {
 
 		if (field.getReadOnly() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"readOnly\":");
@@ -277,7 +277,7 @@ public class FieldSerDes {
 
 		if (field.getRepeatable() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"repeatable\":");
@@ -287,7 +287,7 @@ public class FieldSerDes {
 
 		if (field.getRequired() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"required\":");
@@ -297,7 +297,7 @@ public class FieldSerDes {
 
 		if (field.getShowAsSwitcher() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"showAsSwitcher\":");
@@ -307,7 +307,7 @@ public class FieldSerDes {
 
 		if (field.getShowLabel() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"showLabel\":");
@@ -317,7 +317,7 @@ public class FieldSerDes {
 
 		if (field.getStyle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"style\":");
@@ -331,7 +331,7 @@ public class FieldSerDes {
 
 		if (field.getText() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"text\":");
@@ -345,7 +345,7 @@ public class FieldSerDes {
 
 		if (field.getTooltip() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"tooltip\":");
@@ -359,7 +359,7 @@ public class FieldSerDes {
 
 		if (field.getValidation() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"validation\":");

@@ -164,7 +164,8 @@ public abstract class BaseRoleResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(role);
 		String json2 = RoleSerDes.toJSON(role);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

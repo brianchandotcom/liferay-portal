@@ -63,7 +63,7 @@ public class StructuredContentFolderSerDes {
 
 		if (structuredContentFolder.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -74,7 +74,7 @@ public class StructuredContentFolderSerDes {
 
 		if (structuredContentFolder.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -90,7 +90,7 @@ public class StructuredContentFolderSerDes {
 
 		if (structuredContentFolder.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -106,7 +106,7 @@ public class StructuredContentFolderSerDes {
 
 		if (structuredContentFolder.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -120,7 +120,7 @@ public class StructuredContentFolderSerDes {
 
 		if (structuredContentFolder.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -130,7 +130,7 @@ public class StructuredContentFolderSerDes {
 
 		if (structuredContentFolder.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -146,7 +146,7 @@ public class StructuredContentFolderSerDes {
 				null) {
 
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfStructuredContentFolders\":");
@@ -157,7 +157,7 @@ public class StructuredContentFolderSerDes {
 
 		if (structuredContentFolder.getNumberOfStructuredContents() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfStructuredContents\":");
@@ -167,7 +167,7 @@ public class StructuredContentFolderSerDes {
 
 		if (structuredContentFolder.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -177,7 +177,7 @@ public class StructuredContentFolderSerDes {
 
 		if (structuredContentFolder.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

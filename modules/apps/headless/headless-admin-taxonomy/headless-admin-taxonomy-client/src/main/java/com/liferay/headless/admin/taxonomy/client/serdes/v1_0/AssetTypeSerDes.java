@@ -53,7 +53,7 @@ public class AssetTypeSerDes {
 
 		if (assetType.getRequired() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"required\":");
@@ -63,7 +63,7 @@ public class AssetTypeSerDes {
 
 		if (assetType.getSubtype() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"subtype\":");
@@ -77,7 +77,7 @@ public class AssetTypeSerDes {
 
 		if (assetType.getType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"type\":");

@@ -59,7 +59,7 @@ public class SegmentSerDes {
 
 		if (segment.getActive() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"active\":");
@@ -69,7 +69,7 @@ public class SegmentSerDes {
 
 		if (segment.getCriteria() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"criteria\":");
@@ -83,7 +83,7 @@ public class SegmentSerDes {
 
 		if (segment.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -97,7 +97,7 @@ public class SegmentSerDes {
 
 		if (segment.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -112,7 +112,7 @@ public class SegmentSerDes {
 
 		if (segment.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -122,7 +122,7 @@ public class SegmentSerDes {
 
 		if (segment.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -136,7 +136,7 @@ public class SegmentSerDes {
 
 		if (segment.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -146,7 +146,7 @@ public class SegmentSerDes {
 
 		if (segment.getSource() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"source\":");

@@ -59,7 +59,7 @@ public class KeywordSerDes {
 
 		if (keyword.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -69,7 +69,7 @@ public class KeywordSerDes {
 
 		if (keyword.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -83,7 +83,7 @@ public class KeywordSerDes {
 
 		if (keyword.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -98,7 +98,7 @@ public class KeywordSerDes {
 
 		if (keyword.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -108,7 +108,7 @@ public class KeywordSerDes {
 
 		if (keyword.getKeywordUsageCount() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywordUsageCount\":");
@@ -118,7 +118,7 @@ public class KeywordSerDes {
 
 		if (keyword.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -132,7 +132,7 @@ public class KeywordSerDes {
 
 		if (keyword.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");

@@ -61,7 +61,7 @@ public class FormRecordSerDes {
 
 		if (formRecord.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -71,7 +71,7 @@ public class FormRecordSerDes {
 
 		if (formRecord.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -86,7 +86,7 @@ public class FormRecordSerDes {
 
 		if (formRecord.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -101,7 +101,7 @@ public class FormRecordSerDes {
 
 		if (formRecord.getDatePublished() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"datePublished\":");
@@ -116,7 +116,7 @@ public class FormRecordSerDes {
 
 		if (formRecord.getDraft() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"draft\":");
@@ -126,7 +126,7 @@ public class FormRecordSerDes {
 
 		if (formRecord.getFieldValues() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"fieldValues\":");
@@ -147,7 +147,7 @@ public class FormRecordSerDes {
 
 		if (formRecord.getForm() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"form\":");
@@ -157,7 +157,7 @@ public class FormRecordSerDes {
 
 		if (formRecord.getFormId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"formId\":");
@@ -167,7 +167,7 @@ public class FormRecordSerDes {
 
 		if (formRecord.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");

@@ -63,7 +63,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getAssetTypes() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"assetTypes\":");
@@ -87,7 +87,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getAvailableLanguages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"availableLanguages\":");
@@ -115,7 +115,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getCreator() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"creator\":");
@@ -125,7 +125,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -141,7 +141,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -157,7 +157,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -171,7 +171,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -181,7 +181,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -195,7 +195,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getNumberOfTaxonomyCategories() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfTaxonomyCategories\":");
@@ -205,7 +205,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -215,7 +215,7 @@ public class TaxonomyVocabularySerDes {
 
 		if (taxonomyVocabulary.getViewableBy() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewableBy\":");

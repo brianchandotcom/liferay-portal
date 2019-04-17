@@ -166,7 +166,8 @@ public abstract class BaseContentSetElementResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(contentSetElement);
 		String json2 = ContentSetElementSerDes.toJSON(contentSetElement);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

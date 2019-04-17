@@ -171,7 +171,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(documentFolder);
 		String json2 = DocumentFolderSerDes.toJSON(documentFolder);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

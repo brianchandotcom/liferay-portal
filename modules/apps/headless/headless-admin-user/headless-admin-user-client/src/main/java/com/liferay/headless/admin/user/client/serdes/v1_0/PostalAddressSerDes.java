@@ -55,7 +55,7 @@ public class PostalAddressSerDes {
 
 		if (postalAddress.getAddressCountry() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"addressCountry\":");
@@ -69,7 +69,7 @@ public class PostalAddressSerDes {
 
 		if (postalAddress.getAddressLocality() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"addressLocality\":");
@@ -83,7 +83,7 @@ public class PostalAddressSerDes {
 
 		if (postalAddress.getAddressRegion() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"addressRegion\":");
@@ -97,7 +97,7 @@ public class PostalAddressSerDes {
 
 		if (postalAddress.getAddressType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"addressType\":");
@@ -111,7 +111,7 @@ public class PostalAddressSerDes {
 
 		if (postalAddress.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -121,7 +121,7 @@ public class PostalAddressSerDes {
 
 		if (postalAddress.getPostalCode() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"postalCode\":");
@@ -135,7 +135,7 @@ public class PostalAddressSerDes {
 
 		if (postalAddress.getPrimary() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"primary\":");
@@ -145,7 +145,7 @@ public class PostalAddressSerDes {
 
 		if (postalAddress.getStreetAddressLine1() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"streetAddressLine1\":");
@@ -159,7 +159,7 @@ public class PostalAddressSerDes {
 
 		if (postalAddress.getStreetAddressLine2() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"streetAddressLine2\":");
@@ -173,7 +173,7 @@ public class PostalAddressSerDes {
 
 		if (postalAddress.getStreetAddressLine3() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"streetAddressLine3\":");

@@ -63,7 +63,7 @@ public class OrganizationSerDes {
 
 		if (organization.getComment() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"comment\":");
@@ -77,7 +77,7 @@ public class OrganizationSerDes {
 
 		if (organization.getContactInformation() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"contactInformation\":");
@@ -89,7 +89,7 @@ public class OrganizationSerDes {
 
 		if (organization.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -104,7 +104,7 @@ public class OrganizationSerDes {
 
 		if (organization.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -119,7 +119,7 @@ public class OrganizationSerDes {
 
 		if (organization.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -129,7 +129,7 @@ public class OrganizationSerDes {
 
 		if (organization.getImage() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"image\":");
@@ -143,7 +143,7 @@ public class OrganizationSerDes {
 
 		if (organization.getKeywords() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywords\":");
@@ -167,7 +167,7 @@ public class OrganizationSerDes {
 
 		if (organization.getLocation() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"location\":");
@@ -177,7 +177,7 @@ public class OrganizationSerDes {
 
 		if (organization.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -191,7 +191,7 @@ public class OrganizationSerDes {
 
 		if (organization.getNumberOfOrganizations() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"numberOfOrganizations\":");
@@ -201,7 +201,7 @@ public class OrganizationSerDes {
 
 		if (organization.getParentOrganization() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"parentOrganization\":");
@@ -213,7 +213,7 @@ public class OrganizationSerDes {
 
 		if (organization.getServices() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"services\":");

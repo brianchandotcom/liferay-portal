@@ -144,13 +144,9 @@ public class SearcherImpl implements Searcher {
 		SearchRequestImpl searchRequestImpl,
 		SearchResponseBuilder searchResponseBuilder) {
 
-		boolean indexerSearch = false;
+		List<String> indexes = searchRequestImpl.getIndexes();
 
-		if (getCompanyId(searchRequestImpl) != 0) {
-			indexerSearch = true;
-		}
-
-		if (indexerSearch) {
+		if (indexes.isEmpty()) {
 			doIndexerSearch(searchRequestImpl, searchResponseBuilder);
 		}
 		else {

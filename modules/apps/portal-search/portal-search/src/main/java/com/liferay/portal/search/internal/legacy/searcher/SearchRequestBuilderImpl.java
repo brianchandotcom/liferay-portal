@@ -173,6 +173,15 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	}
 
 	@Override
+	public SearchRequestBuilder fields(String... fields) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setSelectedFieldNames(
+				fields));
+
+		return this;
+	}
+
+	@Override
 	public SearchRequestBuilder getFederatedSearchRequestBuilder(
 		String federatedSearchKey) {
 
@@ -189,6 +198,15 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		withSearchRequestImpl(
 			searchRequestImpl -> searchRequestImpl.setHighlightEnabled(
 				highlightEnabled));
+
+		return this;
+	}
+
+	@Override
+	public SearchRequestBuilder highlightFields(String... highlightFields) {
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setHighlightFields(
+				highlightFields));
 
 		return this;
 	}

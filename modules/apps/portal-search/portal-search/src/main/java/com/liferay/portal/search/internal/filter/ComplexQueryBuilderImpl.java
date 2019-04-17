@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.filter.ComplexQueryBuilder;
 import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.internal.util.SearchStringUtil;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
@@ -159,6 +160,10 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 			}
 
 			if ("match".equals(type)) {
+				if (Validator.isBlank(value)) {
+					return null;
+				}
+
 				return _queries.match(field, value);
 			}
 
@@ -168,6 +173,15 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 
 			if ("match_phrase_prefix".equals(type)) {
 				return _queries.matchPhrasePrefix(field, value);
+			}
+
+			if ("multi_match".equals(type)) {
+				if (Validator.isBlank(value)) {
+					return null;
+				}
+
+				return _queries.multiMatch(
+					value, SearchStringUtil.splitAndUnquote(field));
 			}
 
 			if ("prefix".equals(type)) {

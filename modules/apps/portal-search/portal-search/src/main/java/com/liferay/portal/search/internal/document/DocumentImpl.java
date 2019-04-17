@@ -67,11 +67,6 @@ public class DocumentImpl implements Document {
 	}
 
 	@Override
-	public Object getFieldValue(String name) {
-		return getValue(name);
-	}
-
-	@Override
 	public Float getFloat(String name) {
 		return getValue(name, GetterUtil::getFloat);
 	}
@@ -166,6 +161,10 @@ public class DocumentImpl implements Document {
 
 	public void setFieldValues(String name, Collection<Object> values) {
 		_fields.put(name, new FieldImpl(name, values));
+	}
+
+	public void unsetField(String name) {
+		_fields.remove(name);
 	}
 
 	private final Map<String, Field> _fields;

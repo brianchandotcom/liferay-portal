@@ -296,15 +296,14 @@ public class TemplateContextHelper {
 			HttpServletRequest originalRequest =
 				PortalUtil.getOriginalServletRequest(request);
 
-			String namespace =
-				PortalUtil.getPortletNamespace(
-					ParamUtil.getString(request, "p_p_id"));
+			String namespace = PortalUtil.getPortletNamespace(
+				ParamUtil.getString(request, "p_p_id"));
 
-			String bodyCssClass =
-				ParamUtil.getString(
-					originalRequest, namespace + "bodyCssClass");
+			String bodyCssClass = ParamUtil.getString(
+				originalRequest, namespace + "bodyCssClass");
 
 			contextObjects.put("bodyCssClass", bodyCssClass);
+
 			contextObjects.put("colorScheme", themeDisplay.getColorScheme());
 			contextObjects.put("company", themeDisplay.getCompany());
 			contextObjects.put("layout", layout);

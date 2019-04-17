@@ -27,6 +27,10 @@ public class UADConstants {
 
 	public static final String SCOPE_REGULAR_SITES = "regular-sites";
 
+	/**
+	 * Order matters here. These correspond to filter buttons presented in the
+	 * UI.
+	 */
 	public static final String[] SCOPES = {
 		SCOPE_PERSONAL_SITE, SCOPE_REGULAR_SITES, SCOPE_INSTANCE
 	};

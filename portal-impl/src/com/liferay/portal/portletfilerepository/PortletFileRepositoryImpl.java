@@ -586,10 +586,11 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		if (Validator.isNotNull(queryString)) {
 			sb.append(StringPool.QUESTION);
-			if (queryString.startsWith(StringPool.AMPERSAND)){
+
+			if (queryString.startsWith(StringPool.AMPERSAND)) {
 				sb.append(queryString.substring(1));
 			}
-			else{
+			else {
 				sb.append(queryString);
 			}
 		}

@@ -1,17 +1,18 @@
-<nav class="navbar navbar-light navbar-section bg-white py-4">
-	<div class="container">
-		<div class="d-flex align-items-center">
-			<a href="/web/guest">
-				<lfr-editable id="01-logo" type="image">
-					<img alt="" height="36" src="https://dummyimage.com/1080/A7A9BC/A7A9BC.png">
-				</lfr-editable>
-			</a>
-		</div>
-		<div class="d-flex align-items-center">
+<header class="section-header navbar navbar-light border-bottom border-light bg-white py-4">
+	<div class="container justify-content-between flex-column flex-lg-row">
+		<lfr-editable id="01-logo" type="image">
+			<img alt="logo image" class="section-header-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=" />
+		</lfr-editable>
+
+		<div class="d-flex align-items-center flex-column flex-lg-row mt-3 mt-lg-0">
 			<lfr-widget-nav></lfr-widget-nav>
-			<lfr-editable id="03-link" type="link">
-				<a href="#" class="btn btn-sm btn-secondary ml-3 bg-transparent">Sign In</a>
-			</lfr-editable>
+
+			<span class="mt-4 mt-lg-0 ml-lg-3">
+				<lfr-editable id="03-link" type="link">
+					<a href="#" class="btn btn-sm btn-secondary bg-transparent">Sign In</a>
+					<!-- <a href="#" class="btn btn-sm btn-outline-dark">Sign In</a> -->
+				</lfr-editable>
+			</span>
 		</div>
 	</div>
-</nav>
+</header>

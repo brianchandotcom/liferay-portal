@@ -1,8 +1,12 @@
-.navbar-dark-fragment .portlet {
+.section-header .section-header-logo {
+	width: 32px;
+}
+
+.section-header .portlet {
 	margin: 0;
 }
 
-.navbar-dark-fragment .navbar-nav .nav-link {
+.section-header .navbar-nav .nav-link {
 	font-weight: 600;
 	padding: 0 1rem;
 }

@@ -1,20 +1,24 @@
-<footer class="navbar navbar-light footer-navigation-fragment bg-white pt-6 pb-8">
-	<div class="container">
+<footer class="section-footer navbar navbar-light bg-white border-top border-light pt-6 pb-8">
+	<div class="container justify-content-between flex-column flex-lg-row">
 		<div class="d-flex align-items-center">
-			<div class="mr-3">
-				<lfr-editable id="01-logo" type="image">
-					<img alt="responsive circle image" class="rounded-circle" height="32" src="https://dummyimage.com/1080/A7A9BC/A7A9BC.png">
-				</lfr-editable>
-			</div>
+			<lfr-editable id="01-logo" type="image">
+				<img alt="logo image" class="section-footer-logo mr-3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=" />
+			</lfr-editable>
+
 			<lfr-editable id="02-copy" type="text">
 				© 2019 Sitebrand
 			</lfr-editable>
 		</div>
-		<div class="d-flex align-items-center">
+
+		<div class="d-flex align-items-center flex-column flex-lg-row mt-3 mt-lg-0">
 			<lfr-widget-nav></lfr-widget-nav>
-			<lfr-editable id="03-link" type="link">
-				<a href="#" class="btn btn-sm btn-secondary ml-3 bg-transparent">Sign In</a>
-			</lfr-editable>
+
+			<span class="mt-4 mt-lg-0 ml-lg-3">
+				<lfr-editable id="03-link" type="link">
+					<a href="#" class="btn btn-sm btn-secondary bg-transparent">Sign In</a>
+					<!-- <a href="#" class="btn btn-sm btn-outline-dark">Sign In</a> -->
+				</lfr-editable>
+			</span>
 		</div>
 	</div>
 </footer>

@@ -1,12 +1,12 @@
-.navbar.footer-navigation-fragment {
-	border-top: 1px solid #E7E7ED;
+.section-footer .section-footer-logo {
+	width: 32px;
 }
 
-.footer-navigation-fragment .portlet {
+.section-footer .portlet {
 	margin-bottom: 0;
 }
 
-.footer-navigation-fragment .navbar-nav .nav-link {
+.section-footer .navbar-nav .nav-link {
 	font-weight: 600;
 	padding: 0 1rem;
 }

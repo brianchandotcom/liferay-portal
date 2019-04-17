@@ -37,8 +37,6 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = content.replaceAll("([ \t]*.*''')(\\).*)", "$1\n$2");
-
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
@@ -67,11 +65,11 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 					continue;
 				}
 
-				String s = StringUtil.removeSubstrings(line, "\\", "'''");
-
 				if (!insideMultiLineString) {
 					sb.append(_fixIndentation(line, level));
 					sb.append("\n");
+
+					String s = StringUtil.removeSubstrings(line, "\\");
 
 					if (StringUtil.count(line, "'''") == 1) {
 						insideMultiLineString = true;
@@ -80,12 +78,16 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 						int y = line.indexOf("'''");
 
 						if ((x != -1) && (x < y)) {
+							s = StringUtil.removeSubstrings(line, "'''");
+
 							level += getLevel(
 								s, new String[] {"(", "{"},
 								new String[] {")", "}"});
 						}
 					}
 					else if (!line.matches(".*?'''[({)}]'''.*")) {
+						s = s.replaceFirst("([^']*)('''.*''')([^']*)", "$1$3");
+
 						level += getLevel(
 							s, new String[] {"(", "{"},
 							new String[] {")", "}"});
@@ -97,6 +99,12 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 
 					if (StringUtil.count(line, "'''") == 1) {
 						insideMultiLineString = false;
+
+						if (line.endsWith("''');")) {
+							level += getLevel(
+								")", new String[] {"(", "{"},
+								new String[] {")", "}"});
+						}
 					}
 				}
 			}
@@ -106,9 +114,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			sb.setIndex(sb.index() - 1);
 		}
 
-		content = sb.toString();
-
-		return content.replaceAll("([ \t]*.*''')\n(?:[ \t]*)(\\).*)", "$1$2");
+		return sb.toString();
 	}
 
 	private String _fixIndentation(String line, int level) {

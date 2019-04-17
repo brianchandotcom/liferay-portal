@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.oauth2.provider.test.internal.TestApplication;
+import com.liferay.oauth2.provider.test.internal.TestApplicationWithHead;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -62,7 +63,41 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 
 		Assert.assertEquals("get", builder.get(String.class));
 
-		Response response = builder.post(
+		builder = authorize(
+			webTarget.request(), getToken("oauthTestApplicationAfter"));
+
+		Response response = builder.head();
+
+		Assert.assertEquals(200, response.getStatus());
+
+		webTarget = getWebTarget("/methods-with-head");
+
+		builder = authorize(
+			webTarget.request(), getToken("oauthTestApplicationAfter"));
+
+		response = builder.head();
+
+		Assert.assertEquals(403, response.getStatus());
+
+		webTarget = getWebTarget("/methods-with-head");
+
+		builder = authorize(
+			webTarget.request(), getToken("oauthTestApplicationAfterWithHead"));
+
+		response = builder.method("CUSTOM");
+
+		Assert.assertEquals(403, response.getStatus());
+
+		webTarget = getWebTarget("/methods-with-head");
+
+		builder = authorize(
+			webTarget.request(), getToken("oauthTestApplicationAfterWithHead"));
+
+		response = builder.head();
+
+		Assert.assertEquals(200, response.getStatus());
+
+		response = builder.post(
 			Entity.entity("post", MediaType.TEXT_PLAIN_TYPE));
 
 		Assert.assertEquals("post", response.readEntity(String.class));
@@ -102,9 +137,16 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 			registerJaxRsApplication(
 				new TestApplication(), "methods", properties);
 
+			registerJaxRsApplication(
+				new TestApplicationWithHead(), "methods-with-head", properties);
+
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationAfter",
 				Arrays.asList("GET", "POST"));
+
+			createOAuth2Application(
+				defaultCompanyId, user, "oauthTestApplicationAfterWithHead",
+				Arrays.asList("GET", "HEAD", "POST"));
 
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationWrong",

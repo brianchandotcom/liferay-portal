@@ -51,26 +51,26 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 	@Test
 	public void test() throws Exception {
 		Assert.assertEquals(
-			"HEAD",
+			"GET",
 			getToken(
 				"oauthTestApplication", null,
 				getAuthorizationCodeBiFunction(
-					"test@liferay.com", "test", null, "HEAD"),
+					"test@liferay.com", "test", null, "GET"),
 				this::parseScopeString));
 
 		Assert.assertEquals(
-			"HEAD",
+			"GET",
 			getToken(
 				"oauthTestApplication", null,
-				getClientCredentialsResponseBiFunction("HEAD"),
+				getClientCredentialsResponseBiFunction("GET"),
 				this::parseScopeString));
 
 		Assert.assertEquals(
-			"HEAD",
+			"GET",
 			getToken(
 				"oauthTestApplication", null,
 				getResourceOwnerPasswordBiFunction(
-					"test@liferay.com", "test", "HEAD"),
+					"test@liferay.com", "test", "GET"),
 				this::parseScopeString));
 
 		String scopeString = getToken(
@@ -79,7 +79,7 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 			this::parseScopeString);
 
 		Assert.assertEquals(
-			new HashSet<>(Arrays.asList("HEAD", "GET", "OPTIONS", "POST")),
+			new HashSet<>(Arrays.asList("GET", "POST")),
 			new HashSet<>(Arrays.asList(scopeString.split(" "))));
 
 		Assert.assertEquals(
@@ -87,7 +87,7 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 			getToken(
 				"oauthTestApplication", null,
 				getResourceOwnerPasswordBiFunction(
-					"test@liferay.com", "test", "HEAD GET OPTIONS POST PUT"),
+					"test@liferay.com", "test", "GET POST PUT"),
 				this::parseError));
 	}
 
@@ -112,7 +112,7 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 				Arrays.asList(
 					GrantType.AUTHORIZATION_CODE, GrantType.CLIENT_CREDENTIALS,
 					GrantType.RESOURCE_OWNER_PASSWORD),
-				Arrays.asList("HEAD", "GET", "OPTIONS", "POST"));
+				Arrays.asList("GET", "POST"));
 		}
 
 	}

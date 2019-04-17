@@ -64,7 +64,6 @@
 
 		int[] monthIds = CalendarUtil.getMonthIds();
 		String[] months = CalendarUtil.getMonths(locale);
-		boolean usePortalTimeZone = true;
 		String timeZoneID = timeZone.getID();
 		%>
 
@@ -427,9 +426,7 @@
 			</tbody>
 		</table>
 
-		<aui:input label="use-global-timezone" name="usePortalTimeZone" type="checkbox" value="<%= usePortalTimeZone %>" />
-
-		<aui:input cssClass="calendar-portlet-time-zone-field" disabled="<%= usePortalTimeZone %>" label="time-zone" name="timeZoneId" type="timeZone" value="<%= timeZoneID %>" />
+		<aui:input cssClass="calendar-portlet-time-zone-field" label="time-zone" name="timeZoneId" type="timeZone" value="<%= timeZoneID %>" />
 
 		<script>
 			(function() {
@@ -490,17 +487,4 @@
 
 	Liferay.Util.toggleRadio('<portlet:namespace />yearlyTypeDayOfWeek', ['<portlet:namespace />schedulerYearlyDayOfWeekTypeDay', '<portlet:namespace />schedulerYearlyDayOfWeekTypeMonth','<portlet:namespace />schedulerYearlyDayOfWeekTypeYear'], ['<portlet:namespace />schedulerYearlyDayOfMonthTypeDay','<portlet:namespace />schedulerYearlyDayOfMonthTypeMonth','<portlet:namespace />schedulerYearlyDayOfMonthTypeYear']);
 
-</aui:script>
-
-<aui:script use="aui-base">
-	var usePortalTimeZoneCheckbox = A.one('#<portlet:namespace />usePortalTimeZone');
-
-	if (usePortalTimeZoneCheckbox) {
-		usePortalTimeZoneCheckbox.on(
-			'change',
-			function(event) {
-				document.getElementById('<portlet:namespace />timeZoneId').disabled = usePortalTimeZoneCheckbox.attr('checked');
-			}
-		);
-	}
 </aui:script>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.asset;
+package com.liferay.layout.admin.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.asset.model.LayoutRevisionAssetRenderer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutRevision;

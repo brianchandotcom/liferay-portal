@@ -16,7 +16,6 @@ package com.liferay.comment.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.comment.web.internal.asset.CommentAssetRendererFactory;
 import com.liferay.comment.web.internal.constants.CommentPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;

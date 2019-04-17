@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.comment.web.internal.asset;
+package com.liferay.comment.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.comment.constants.CommentConstants;
-import com.liferay.comment.web.internal.asset.model.CommentAssetRenderer;
 import com.liferay.comment.web.internal.constants.CommentPortletKeys;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;

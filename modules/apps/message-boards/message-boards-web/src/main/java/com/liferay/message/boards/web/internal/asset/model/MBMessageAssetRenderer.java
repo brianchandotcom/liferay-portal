@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.permission.MBDiscussionPermission;
-import com.liferay.message.boards.web.internal.asset.MBMessageAssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;

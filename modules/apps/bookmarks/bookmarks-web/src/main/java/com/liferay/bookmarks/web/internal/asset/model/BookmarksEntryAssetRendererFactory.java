@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.blogs.web.asset;
+package com.liferay.bookmarks.web.internal.asset.model;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.blogs.constants.BlogsConstants;
-import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.blogs.web.asset.model.BlogsEntryAssetRenderer;
+import com.liferay.bookmarks.constants.BookmarksConstants;
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -45,75 +43,53 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jorge Ferrer
+ * @author Julio Camarero
  * @author Juan Fernández
  * @author Raymond Augé
  * @author Sergio González
  */
 @Component(
-	immediate = true, property = "javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+	immediate = true,
+	property = "javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 	service = AssetRendererFactory.class
 )
-public class BlogsEntryAssetRendererFactory
-	extends BaseAssetRendererFactory<BlogsEntry> {
+public class BookmarksEntryAssetRendererFactory
+	extends BaseAssetRendererFactory<BookmarksEntry> {
 
-	public static final String TYPE = "blog";
+	public static final String TYPE = "bookmark";
 
-	public BlogsEntryAssetRendererFactory() {
-		setClassName(BlogsEntry.class.getName());
+	public BookmarksEntryAssetRendererFactory() {
+		setClassName(BookmarksEntry.class.getName());
 		setLinkable(true);
-		setPortletId(BlogsPortletKeys.BLOGS);
+		setPortletId(BookmarksPortletKeys.BOOKMARKS);
 		setSearchable(true);
 	}
 
 	@Override
-	public AssetRenderer<BlogsEntry> getAssetRenderer(long classPK, int type)
+	public AssetRenderer<BookmarksEntry> getAssetRenderer(
+			long classPK, int type)
 		throws PortalException {
 
-		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
+		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
 
-		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
-			new BlogsEntryAssetRenderer(
-				entry,
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						"com.liferay.blogs.web"));
+		BookmarksEntryAssetRenderer bookmarksEntryAssetRenderer =
+			new BookmarksEntryAssetRenderer(
+				entry, _bookmarksEntryModelResourcePermission);
 
-		blogsEntryAssetRenderer.setAssetDisplayPageFriendlyURLProvider(
-			_assetDisplayPageFriendlyURLProvider);
-		blogsEntryAssetRenderer.setAssetRendererType(type);
-		blogsEntryAssetRenderer.setServletContext(_servletContext);
+		bookmarksEntryAssetRenderer.setAssetRendererType(type);
+		bookmarksEntryAssetRenderer.setServletContext(_servletContext);
 
-		return blogsEntryAssetRenderer;
-	}
-
-	@Override
-	public AssetRenderer<BlogsEntry> getAssetRenderer(
-			long groupId, String urlTitle)
-		throws PortalException {
-
-		BlogsEntry entry = _blogsEntryLocalService.getEntry(groupId, urlTitle);
-
-		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
-			new BlogsEntryAssetRenderer(
-				entry,
-				ResourceBundleLoaderUtil.
-					getResourceBundleLoaderByBundleSymbolicName(
-						"com.liferay.blogs.web"));
-
-		blogsEntryAssetRenderer.setServletContext(_servletContext);
-
-		return blogsEntryAssetRenderer;
+		return bookmarksEntryAssetRenderer;
 	}
 
 	@Override
 	public String getClassName() {
-		return BlogsEntry.class.getName();
+		return BookmarksEntry.class.getName();
 	}
 
 	@Override
 	public String getIconCssClass() {
-		return "blogs";
+		return "bookmarks";
 	}
 
 	@Override
@@ -128,9 +104,14 @@ public class BlogsEntryAssetRendererFactory
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
 			liferayPortletRequest, getGroup(liferayPortletRequest),
-			BlogsPortletKeys.BLOGS, 0, 0, PortletRequest.RENDER_PHASE);
+			BookmarksPortletKeys.BOOKMARKS, 0, 0, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/bookmarks/edit_entry");
+		portletURL.setParameter(
+			"folderId",
+			String.valueOf(BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		portletURL.setParameter("showFolderSelector", Boolean.TRUE.toString());
 
 		return portletURL;
 	}
@@ -142,7 +123,7 @@ public class BlogsEntryAssetRendererFactory
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				BlogsPortletKeys.BLOGS, PortletRequest.RENDER_PHASE);
+				BookmarksPortletKeys.BOOKMARKS, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);
@@ -167,28 +148,28 @@ public class BlogsEntryAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return _blogsEntryModelResourcePermission.contains(
+		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
 	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
-	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
-	private ModelResourcePermission<BlogsEntry>
-		_blogsEntryModelResourcePermission;
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
+	)
+	private ModelResourcePermission<BookmarksEntry>
+		_bookmarksEntryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;
 
-	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
+	@Reference(
+		target = "(resource.name=" + BookmarksConstants.RESOURCE_NAME + ")"
+	)
 	private PortletResourcePermission _portletResourcePermission;
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.blogs.web)")
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)")
 	private ServletContext _servletContext;
 
 }

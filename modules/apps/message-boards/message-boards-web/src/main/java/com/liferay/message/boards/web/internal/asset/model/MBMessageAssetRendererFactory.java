@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.asset;
+package com.liferay.message.boards.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.web.internal.asset.model.MBMessageAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;

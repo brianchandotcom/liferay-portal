@@ -12,30 +12,26 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.asset;
+package com.liferay.document.library.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.bookmarks.web.internal.asset.model.BookmarksFolderAssetRenderer;
-import com.liferay.bookmarks.web.internal.asset.model.BookmarksRootFolderAssetRenderer;
+import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,47 +41,37 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
+	property = "javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 	service = AssetRendererFactory.class
 )
-public class BookmarksFolderAssetRendererFactory
-	extends BaseAssetRendererFactory<BookmarksFolder> {
+public class DLFolderAssetRendererFactory
+	extends BaseAssetRendererFactory<Folder> {
 
-	public static final String TYPE = "bookmark_folder";
+	public static final String TYPE = "document_folder";
 
-	public BookmarksFolderAssetRendererFactory() {
+	public DLFolderAssetRendererFactory() {
 		setCategorizable(false);
-		setClassName(BookmarksFolder.class.getName());
-		setPortletId(BookmarksPortletKeys.BOOKMARKS);
+		setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
 		setSearchable(true);
 	}
 
 	@Override
-	public AssetRenderer<BookmarksFolder> getAssetRenderer(
-			long classPK, int type)
+	public AssetRenderer<Folder> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		BookmarksFolder folder =
-			_bookmarksFolderLocalService.fetchBookmarksFolder(classPK);
+		Folder folder = _dlAppLocalService.getFolder(classPK);
 
-		if (folder == null) {
-			return new BookmarksRootFolderAssetRenderer(
-				_groupLocalService.getGroup(classPK));
-		}
+		DLFolderAssetRenderer dlFolderAssetRenderer = new DLFolderAssetRenderer(
+			folder, _trashHelper);
 
-		BookmarksFolderAssetRenderer bookmarksFolderAssetRenderer =
-			new BookmarksFolderAssetRenderer(
-				folder, _trashHelper, _bookmarksFolderModelResourcePermission);
+		dlFolderAssetRenderer.setAssetRendererType(type);
 
-		bookmarksFolderAssetRenderer.setAssetRendererType(type);
-		bookmarksFolderAssetRenderer.setServletContext(_servletContext);
-
-		return bookmarksFolderAssetRenderer;
+		return dlFolderAssetRenderer;
 	}
 
 	@Override
 	public String getClassName() {
-		return BookmarksFolder.class.getName();
+		return DLFolder.class.getName();
 	}
 
 	@Override
@@ -105,7 +91,7 @@ public class BookmarksFolderAssetRendererFactory
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				BookmarksPortletKeys.BOOKMARKS, PortletRequest.RENDER_PHASE);
+				DLPortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);
@@ -121,24 +107,21 @@ public class BookmarksFolderAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return _bookmarksFolderModelResourcePermission.contains(
+		return _folderModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference
-	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
 	)
-	private ModelResourcePermission<BookmarksFolder>
-		_bookmarksFolderModelResourcePermission;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)")
-	private ServletContext _servletContext;
+	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
 	@Reference
 	private TrashHelper _trashHelper;

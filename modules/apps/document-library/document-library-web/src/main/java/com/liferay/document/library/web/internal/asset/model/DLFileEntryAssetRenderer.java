@@ -25,7 +25,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.document.library.web.internal.asset.DLFileEntryAssetRendererFactory;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;

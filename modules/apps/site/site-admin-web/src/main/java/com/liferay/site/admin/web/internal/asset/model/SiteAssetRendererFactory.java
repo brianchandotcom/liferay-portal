@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.asset;
+package com.liferay.site.admin.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.site.admin.web.internal.asset.model.SiteAssetRenderer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

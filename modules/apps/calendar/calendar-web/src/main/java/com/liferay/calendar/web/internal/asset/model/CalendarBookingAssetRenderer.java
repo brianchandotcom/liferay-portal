@@ -20,7 +20,6 @@ import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.web.internal.asset.CalendarBookingAssetRendererFactory;
 import com.liferay.calendar.web.internal.constants.CalendarWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

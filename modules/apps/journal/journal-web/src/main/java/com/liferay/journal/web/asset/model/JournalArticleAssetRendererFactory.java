@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.asset;
+package com.liferay.journal.web.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -30,8 +30,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.journal.web.asset.model.JournalArticleAssetRenderer;
-import com.liferay.journal.web.asset.model.JournalArticleClassTypeReader;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;

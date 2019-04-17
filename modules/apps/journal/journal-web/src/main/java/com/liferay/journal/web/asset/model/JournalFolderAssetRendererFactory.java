@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.asset;
+package com.liferay.journal.web.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.web.internal.asset.model.DLFolderAssetRenderer;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.trash.TrashHelper;
@@ -34,6 +32,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,37 +42,39 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
+	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 	service = AssetRendererFactory.class
 )
-public class DLFolderAssetRendererFactory
-	extends BaseAssetRendererFactory<Folder> {
+public class JournalFolderAssetRendererFactory
+	extends BaseAssetRendererFactory<JournalFolder> {
 
-	public static final String TYPE = "document_folder";
+	public static final String TYPE = "content_folder";
 
-	public DLFolderAssetRendererFactory() {
+	public JournalFolderAssetRendererFactory() {
 		setCategorizable(false);
-		setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
+		setClassName(JournalFolder.class.getName());
+		setPortletId(JournalPortletKeys.JOURNAL);
 		setSearchable(true);
 	}
 
 	@Override
-	public AssetRenderer<Folder> getAssetRenderer(long classPK, int type)
+	public AssetRenderer<JournalFolder> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		Folder folder = _dlAppLocalService.getFolder(classPK);
+		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
 
-		DLFolderAssetRenderer dlFolderAssetRenderer = new DLFolderAssetRenderer(
-			folder, _trashHelper);
+		JournalFolderAssetRenderer journalFolderAssetRenderer =
+			new JournalFolderAssetRenderer(folder, _trashHelper);
 
-		dlFolderAssetRenderer.setAssetRendererType(type);
+		journalFolderAssetRenderer.setAssetRendererType(type);
+		journalFolderAssetRenderer.setServletContext(_servletContext);
 
-		return dlFolderAssetRenderer;
+		return journalFolderAssetRenderer;
 	}
 
 	@Override
 	public String getClassName() {
-		return DLFolder.class.getName();
+		return JournalFolder.class.getName();
 	}
 
 	@Override
@@ -92,7 +94,7 @@ public class DLFolderAssetRendererFactory
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				DLPortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
+				JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);
@@ -108,21 +110,33 @@ public class DLFolderAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return _folderModelResourcePermission.contains(
+		return _journalFolderModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
-	private DLAppLocalService _dlAppLocalService;
+	@Reference(unbind = "-")
+	protected void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+
+		_journalFolderLocalService = journalFolderLocalService;
+	}
+
+	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
 	)
-	private ModelResourcePermission<Folder> _folderModelResourcePermission;
+	private ModelResourcePermission<JournalFolder>
+		_journalFolderModelResourcePermission;
+
+	private ServletContext _servletContext;
 
 	@Reference
 	private TrashHelper _trashHelper;

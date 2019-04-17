@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.internal.asset;
+package com.liferay.dynamic.data.mapping.form.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.form.web.internal.asset.model.DDMFormAssetRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;

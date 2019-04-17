@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.web.internal.asset.BookmarksEntryAssetRendererFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

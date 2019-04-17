@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.microblogs.web.internal.asset;
+package com.liferay.microblogs.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.MicroblogsEntryLocalService;
-import com.liferay.microblogs.web.internal.asset.model.MicroblogsEntryAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;

@@ -12,75 +12,83 @@
  * details.
  */
 
-package com.liferay.message.boards.web.internal.asset;
+package com.liferay.bookmarks.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.message.boards.web.internal.asset.model.MBCategoryAssetRenderer;
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Julio Camarero
- * @author Juan Fernández
- * @author Raymond Augé
- * @author Sergio González
- * @author Jonathan Lee
+ * @author Alexander Chow
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
+	property = "javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 	service = AssetRendererFactory.class
 )
-public class MBCategoryAssetRendererFactory
-	extends BaseAssetRendererFactory<MBCategory> {
+public class BookmarksFolderAssetRendererFactory
+	extends BaseAssetRendererFactory<BookmarksFolder> {
 
-	public static final String TYPE = "category";
+	public static final String TYPE = "bookmark_folder";
 
-	public MBCategoryAssetRendererFactory() {
+	public BookmarksFolderAssetRendererFactory() {
 		setCategorizable(false);
-		setPortletId(MBPortletKeys.MESSAGE_BOARDS);
-		setSelectable(false);
+		setClassName(BookmarksFolder.class.getName());
+		setPortletId(BookmarksPortletKeys.BOOKMARKS);
+		setSearchable(true);
 	}
 
 	@Override
-	public AssetRenderer<MBCategory> getAssetRenderer(long classPK, int type)
+	public AssetRenderer<BookmarksFolder> getAssetRenderer(
+			long classPK, int type)
 		throws PortalException {
 
-		MBCategory category = _mbCategoryLocalService.getMBCategory(classPK);
+		BookmarksFolder folder =
+			_bookmarksFolderLocalService.fetchBookmarksFolder(classPK);
 
-		MBCategoryAssetRenderer mbCategoryAssetRenderer =
-			new MBCategoryAssetRenderer(
-				category, _categoryModelResourcePermission);
+		if (folder == null) {
+			return new BookmarksRootFolderAssetRenderer(
+				_groupLocalService.getGroup(classPK));
+		}
 
-		mbCategoryAssetRenderer.setAssetRendererType(type);
+		BookmarksFolderAssetRenderer bookmarksFolderAssetRenderer =
+			new BookmarksFolderAssetRenderer(
+				folder, _trashHelper, _bookmarksFolderModelResourcePermission);
 
-		return mbCategoryAssetRenderer;
+		bookmarksFolderAssetRenderer.setAssetRendererType(type);
+		bookmarksFolderAssetRenderer.setServletContext(_servletContext);
+
+		return bookmarksFolderAssetRenderer;
 	}
 
 	@Override
 	public String getClassName() {
-		return MBCategory.class.getName();
+		return BookmarksFolder.class.getName();
 	}
 
 	@Override
 	public String getIconCssClass() {
-		return "comments";
+		return "folder";
 	}
 
 	@Override
@@ -95,7 +103,7 @@ public class MBCategoryAssetRendererFactory
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
+				BookmarksPortletKeys.BOOKMARKS, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);
@@ -111,25 +119,26 @@ public class MBCategoryAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		MBCategory category = _mbCategoryLocalService.getMBCategory(classPK);
-
-		return _categoryModelResourcePermission.contains(
-			permissionChecker, category, actionId);
+		return _bookmarksFolderModelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
+	@Reference
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
-	private ModelResourcePermission<MBCategory>
-		_categoryModelResourcePermission;
+	private ModelResourcePermission<BookmarksFolder>
+		_bookmarksFolderModelResourcePermission;
 
-	private MBCategoryLocalService _mbCategoryLocalService;
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)")
+	private ServletContext _servletContext;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

@@ -130,7 +130,7 @@
 	</javadoc>
 	<javadoc>
 		<name>TasksEntryAssetRendererFactory</name>
-		<type>com.liferay.tasks.asset.TasksEntryAssetRendererFactory</type>
+		<type>com.liferay.tasks.asset.model.TasksEntryAssetRendererFactory</type>
 		<author><![CDATA[Matthew Kong]]></author>
 		<method>
 			<name>getAssetRenderer</name>

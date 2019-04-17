@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.contacts.web.internal.asset;
+package com.liferay.contacts.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.contacts.constants.ContactsPortletKeys;
-import com.liferay.contacts.web.internal.asset.model.UserAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;

@@ -12,75 +12,74 @@
  * details.
  */
 
-package com.liferay.journal.web.asset;
+package com.liferay.message.boards.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.web.asset.model.JournalFolderAssetRenderer;
+import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alexander Chow
+ * @author Julio Camarero
+ * @author Juan Fernández
+ * @author Raymond Augé
+ * @author Sergio González
+ * @author Jonathan Lee
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 	service = AssetRendererFactory.class
 )
-public class JournalFolderAssetRendererFactory
-	extends BaseAssetRendererFactory<JournalFolder> {
+public class MBCategoryAssetRendererFactory
+	extends BaseAssetRendererFactory<MBCategory> {
 
-	public static final String TYPE = "content_folder";
+	public static final String TYPE = "category";
 
-	public JournalFolderAssetRendererFactory() {
+	public MBCategoryAssetRendererFactory() {
 		setCategorizable(false);
-		setClassName(JournalFolder.class.getName());
-		setPortletId(JournalPortletKeys.JOURNAL);
-		setSearchable(true);
+		setPortletId(MBPortletKeys.MESSAGE_BOARDS);
+		setSelectable(false);
 	}
 
 	@Override
-	public AssetRenderer<JournalFolder> getAssetRenderer(long classPK, int type)
+	public AssetRenderer<MBCategory> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
+		MBCategory category = _mbCategoryLocalService.getMBCategory(classPK);
 
-		JournalFolderAssetRenderer journalFolderAssetRenderer =
-			new JournalFolderAssetRenderer(folder, _trashHelper);
+		MBCategoryAssetRenderer mbCategoryAssetRenderer =
+			new MBCategoryAssetRenderer(
+				category, _categoryModelResourcePermission);
 
-		journalFolderAssetRenderer.setAssetRendererType(type);
-		journalFolderAssetRenderer.setServletContext(_servletContext);
+		mbCategoryAssetRenderer.setAssetRendererType(type);
 
-		return journalFolderAssetRenderer;
+		return mbCategoryAssetRenderer;
 	}
 
 	@Override
 	public String getClassName() {
-		return JournalFolder.class.getName();
+		return MBCategory.class.getName();
 	}
 
 	@Override
 	public String getIconCssClass() {
-		return "folder";
+		return "comments";
 	}
 
 	@Override
@@ -95,7 +94,7 @@ public class JournalFolderAssetRendererFactory
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
+				MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);
@@ -111,35 +110,25 @@ public class JournalFolderAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return _journalFolderModelResourcePermission.contains(
-			permissionChecker, classPK, actionId);
-	}
+		MBCategory category = _mbCategoryLocalService.getMBCategory(classPK);
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+		return _categoryModelResourcePermission.contains(
+			permissionChecker, category, actionId);
 	}
 
 	@Reference(unbind = "-")
-	protected void setJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
+	protected void setMBCategoryLocalService(
+		MBCategoryLocalService mbCategoryLocalService) {
 
-		_journalFolderLocalService = journalFolderLocalService;
+		_mbCategoryLocalService = mbCategoryLocalService;
 	}
 
-	private JournalFolderLocalService _journalFolderLocalService;
-
 	@Reference(
-		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
 	)
-	private ModelResourcePermission<JournalFolder>
-		_journalFolderModelResourcePermission;
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
-	private ServletContext _servletContext;
-
-	@Reference
-	private TrashHelper _trashHelper;
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

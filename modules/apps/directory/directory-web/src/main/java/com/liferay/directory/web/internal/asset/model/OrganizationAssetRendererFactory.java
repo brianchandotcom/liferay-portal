@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.directory.web.internal.asset;
+package com.liferay.directory.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.directory.web.internal.asset.model.OrganizationAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalService;

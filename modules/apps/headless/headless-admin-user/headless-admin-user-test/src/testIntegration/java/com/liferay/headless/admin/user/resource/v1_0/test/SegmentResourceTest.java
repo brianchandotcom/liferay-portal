@@ -40,7 +40,7 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_user = UserTestUtil.addUser();
+		_user = UserTestUtil.addGroupAdminUser(testGroup);
 	}
 
 	@Override

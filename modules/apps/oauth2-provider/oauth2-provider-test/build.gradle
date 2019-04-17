@@ -10,6 +10,7 @@ dependencies {
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-spi")
+	compileOnly project(":apps:portal-security:portal-security-service-access-policy-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-string")
 

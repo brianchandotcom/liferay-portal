@@ -1563,20 +1563,11 @@ public class ServicePreAction extends Action {
 		themeDisplay.setURLHome(urlHome);
 
 		if (layout != null) {
-			if (layout.isTypePortlet()) {
-				String layoutTemplateId =
-					layoutTypePortlet.getLayoutTemplateId();
+			if (layout.isTypePortlet() && hasUpdateLayoutPermission) {
+				themeDisplay.setShowLayoutTemplatesIcon(true);
 
-				boolean freeformLayout = layoutTemplateId.equals("freeform");
-
-				themeDisplay.setFreeformLayout(freeformLayout);
-
-				if (hasUpdateLayoutPermission) {
-					themeDisplay.setShowLayoutTemplatesIcon(true);
-
-					if (!group.isUser()) {
-						themeDisplay.setShowPageCustomizationIcon(true);
-					}
+				if (!group.isUser()) {
+					themeDisplay.setShowPageCustomizationIcon(true);
 				}
 			}
 

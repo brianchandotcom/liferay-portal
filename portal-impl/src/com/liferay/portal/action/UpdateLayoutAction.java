@@ -26,14 +26,11 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.PortletJSONUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -45,7 +42,6 @@ import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -115,43 +111,6 @@ public class UpdateLayoutAction extends JSONAction {
 
 					updateLayout = false;
 				}
-			}
-		}
-		else if (cmd.equals("drag")) {
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
-
-			if (LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.UPDATE)) {
-
-				String height = ParamUtil.getString(request, "height");
-				String width = ParamUtil.getString(request, "width");
-				String top = ParamUtil.getString(request, "top");
-				String left = ParamUtil.getString(request, "left");
-
-				PortletPreferences portletPreferences =
-					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-						layout, portletId);
-
-				StringBundler sb = new StringBundler(12);
-
-				sb.append("height=");
-				sb.append(height);
-				sb.append("\n");
-				sb.append("width=");
-				sb.append(width);
-				sb.append("\n");
-				sb.append("top=");
-				sb.append(top);
-				sb.append("\n");
-				sb.append("left=");
-				sb.append(left);
-				sb.append("\n");
-
-				portletPreferences.setValue(
-					"portlet-freeform-styles", sb.toString());
-
-				portletPreferences.store();
 			}
 		}
 		else if (cmd.equals("minimize")) {

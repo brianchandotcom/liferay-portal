@@ -366,13 +366,6 @@
 							'dd'
 						]
 					},
-					'liferay-layout-freeform': {
-						path: 'layout_freeform.js',
-						requires: [
-							'liferay-layout-column',
-							'resize'
-						]
-					},
 					'liferay-list-view': {
 						path: 'list_view.js',
 						requires: [

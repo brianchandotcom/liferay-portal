@@ -13,13 +13,6 @@
 		</layout-template>
 	</standard>
 	<custom>
-		<layout-template id="freeform">
-			<template-path>/layouttpl/custom/freeform.ftl</template-path>
-			<thumbnail-path>/layouttpl/custom/freeform.png</thumbnail-path>
-			<roles>
-				<role-name>User</role-name>
-			</roles>
-		</layout-template>
 		<layout-template id="1_column">
 			<template-path>/layouttpl/custom/1_column.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/1_column.png</thumbnail-path>

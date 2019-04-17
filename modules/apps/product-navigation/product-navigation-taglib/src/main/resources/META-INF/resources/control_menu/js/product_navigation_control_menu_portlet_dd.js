@@ -58,13 +58,7 @@ AUI.add(
 							portletItemOptions.delegateConfig.dragConfig.plugins = defaultLayoutOptions.delegateConfig.dragConfig.plugins;
 						}
 
-						var portletItemClass = 'PortletItem';
-
-						if (themeDisplay.isFreeformLayout()) {
-							portletItemClass = 'FreeFormPortletItem';
-						}
-
-						var portletItem = new ControlMenu[portletItemClass](portletItemOptions);
+						var portletItem = new ControlMenu['PortletItem'](portletItemOptions);
 
 						portletItem.on('drag:end', instance._onDragEnd, instance);
 

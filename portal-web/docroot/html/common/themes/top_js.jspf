@@ -280,9 +280,6 @@
 			isAddSessionIdToURL: function() {
 				return <%= themeDisplay.isAddSessionIdToURL() %>;
 			},
-			isFreeformLayout: function() {
-				return <%= themeDisplay.isFreeformLayout() %>;
-			},
 			isImpersonated: function() {
 				return <%= themeDisplay.isImpersonated() %>;
 			},

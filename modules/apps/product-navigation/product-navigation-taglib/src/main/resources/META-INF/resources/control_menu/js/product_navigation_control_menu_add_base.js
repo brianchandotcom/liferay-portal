@@ -383,34 +383,7 @@ AUI.add(
 			}
 		);
 
-		var FreeFormPortletItem = A.Component.create(
-			{
-				ATTRS: {
-					lazyStart: {
-						value: false
-					}
-				},
-
-				EXTENDS: PortletItem,
-
-				NAME: 'FreeFormPortletItem',
-
-				prototype: {
-					initializer: function() {
-						var instance = this;
-
-						var placeholder = instance.get('placeholder');
-
-						if (placeholder) {
-							placeholder.addClass(Layout.options.freeformPlaceholderClass);
-						}
-					}
-				}
-			}
-		);
-
 		ControlMenu.AddBase = AddBase;
-		ControlMenu.FreeFormPortletItem = FreeFormPortletItem;
 		ControlMenu.PortletItem = PortletItem;
 	},
 	'',

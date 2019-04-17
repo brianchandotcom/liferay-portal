@@ -45,13 +45,7 @@ AUI.add(
 					portletItemOptions.on = defaultLayoutOptions.on;
 				}
 
-				var portletItemClass = 'PortletItem';
-
-				if (themeDisplay.isFreeformLayout()) {
-					portletItemClass = 'FreeFormPortletItem';
-				}
-
-				var portletItem = new ControlMenu[portletItemClass](portletItemOptions);
+				var portletItem = new ControlMenu['PortletItem'](portletItemOptions);
 
 				portletItem.on('drag:end', instance._onDragEnd, instance);
 
@@ -187,34 +181,7 @@ AUI.add(
 			}
 		);
 
-		var FreeFormPortletItem = A.Component.create(
-			{
-				ATTRS: {
-					lazyStart: {
-						value: false
-					}
-				},
-
-				EXTENDS: PortletItem,
-
-				NAME: 'FreeFormPortletItem',
-
-				prototype: {
-					initializer: function() {
-						var instance = this;
-
-						var placeholder = instance.get('placeholder');
-
-						if (placeholder) {
-							placeholder.addClass(Layout.options.freeformPlaceholderClass);
-						}
-					}
-				}
-			}
-		);
-
 		ControlMenu.AddContentDragDrop = AddContentDragDrop;
-		ControlMenu.FreeFormPortletItem = FreeFormPortletItem;
 		ControlMenu.PortletItem = PortletItem;
 	},
 	'',

@@ -150,27 +150,14 @@ if (layout != null) {
 		<aui:script position="inline">
 			Liferay.Data.layoutConfig = {
 				container: '#main-content',
-
-				<c:choose>
-					<c:when test="<%= !themeDisplay.isFreeformLayout() %>">
-						dropNodes: '.portlet-column',
-					</c:when>
-					<c:otherwise>
-						dropNodes: '.portlet-boundary',
-						freeForm: true,
-						freeformPlaceholderClass: 'lfr-freeform-layout-drag-indicator',
-					</c:otherwise>
-				</c:choose>
+				dropNodes: '.portlet-column',
 
 				<c:choose>
 					<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
 						handles: Liferay.Data.PORTLET_TOUCH_DRAG_HANDLE_SELECTOR || ['.portlet-title-default'],
 					</c:when>
-					<c:when test="<%= !themeDisplay.isFreeformLayout() %>">
-						handles: Liferay.Data.PORTLET_DRAG_HANDLE_SELECTOR || ['.portlet-title-default', '.portlet-topper'],
-					</c:when>
 					<c:otherwise>
-						handles: Liferay.Data.PORTLET_FREEFORM_DRAG_HANDLE_SELECTOR || ['.portlet-header-bar', '.portlet-title-default', '.portlet-topper'],
+						handles: Liferay.Data.PORTLET_DRAG_HANDLE_SELECTOR || ['.portlet-title-default', '.portlet-topper'],
 					</c:otherwise>
 				</c:choose>
 

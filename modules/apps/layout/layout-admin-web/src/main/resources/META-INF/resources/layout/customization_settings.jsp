@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean curFreeformLayout = false;
 Group group = null;
 String langType = null;
 boolean prototypeGroup = false;
@@ -35,8 +34,6 @@ if (selLayout != null) {
 		layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
 	}
 
-	curFreeformLayout = layoutTemplateId.equals("freeform");
-
 	group = selLayout.getGroup();
 
 	if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
@@ -45,7 +42,7 @@ if (selLayout != null) {
 
 	Theme selLayoutTheme = selLayout.getTheme();
 
-	if (!curFreeformLayout && !prototypeGroup) {
+	if (!prototypeGroup) {
 		LayoutTemplate layoutTemplate = LayoutTemplateLocalServiceUtil.getLayoutTemplate(layoutTemplateId, false, selLayoutTheme.getThemeId());
 
 		if (layoutTemplate != null) {
@@ -67,11 +64,6 @@ if (selLayout != null) {
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 <c:choose>
-	<c:when test="<%= curFreeformLayout %>">
-		<div class="alert alert-warning">
-			<liferay-ui:message key="it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" />
-		</div>
-	</c:when>
 	<c:when test="<%= prototypeGroup %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message key="it-is-not-possible-to-specify-customization-settings-for-pages-in-site-templates-or-page-templates" />

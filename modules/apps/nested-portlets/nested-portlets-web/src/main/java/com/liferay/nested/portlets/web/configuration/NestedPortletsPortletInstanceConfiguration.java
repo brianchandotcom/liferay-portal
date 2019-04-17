@@ -39,7 +39,7 @@ public interface NestedPortletsPortletInstanceConfiguration {
 	public String layoutTemplateId();
 
 	@Meta.AD(
-		deflt = "freeform,1_column", id = "layout.template.unsupported",
+		deflt = "1_column", id = "layout.template.unsupported",
 		name = "layout-templates-unsupported", required = false
 	)
 	public String[] layoutTemplatesUnsupported();

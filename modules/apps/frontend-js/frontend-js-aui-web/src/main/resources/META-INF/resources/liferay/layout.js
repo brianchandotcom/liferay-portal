@@ -402,12 +402,6 @@ AUI.add(
 				}
 			};
 
-			var layoutModule = 'liferay-layout-column';
-
-			if (themeDisplay.isFreeformLayout()) {
-				layoutModule = 'liferay-layout-freeform';
-			}
-
 			var eventHandles = [];
 
 			if (A.UA.ie || A.UA.edge) {
@@ -431,14 +425,9 @@ AUI.add(
 			}
 
 			A.use(
-				layoutModule,
+				'liferay-layout-column',
 				function() {
-					if (themeDisplay.isFreeformLayout()) {
-						Layout.FreeFormLayout.register();
-					}
-					else {
-						Layout.ColumnLayout.register();
-					}
+					Layout.ColumnLayout.register();
 
 					Layout.bindDragDropListeners();
 

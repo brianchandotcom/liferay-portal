@@ -267,10 +267,6 @@
 				}
 			}
 
-			if (themeDisplay.isFreeformLayout()) {
-				container.prepend(placeHolder);
-			}
-
 			data.currentURL = Liferay.currentURL;
 
 			instance.addHTML(

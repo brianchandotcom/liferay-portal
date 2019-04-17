@@ -141,7 +141,6 @@
 	the_title = ""
 	selectable = theme_display.isTilesSelectable()
 	is_maximized = layoutTypePortlet.hasStateMax()
-	is_freeform = themeDisplay.isFreeformLayout()
 
 	page_javascript_1 = ""
 	page_javascript_2 = ""

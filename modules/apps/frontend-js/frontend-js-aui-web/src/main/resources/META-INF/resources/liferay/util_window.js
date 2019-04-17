@@ -369,6 +369,17 @@ AUI.add(
 						modal.iframeConfig = dialogIframeConfig;
 						modal.plug(A.Plugin.DialogIframe, dialogIframeConfig);
 
+						// LPS-93620
+
+						var originalFn = modal.iframe._onLoadIframe;
+
+						modal.iframe._onLoadIframe = function() {
+							try {
+								originalFn.call(this);
+							}
+							catch (err) {}
+						};
+
 						modal.get('boundingBox').addClass('dialog-iframe-modal');
 					}
 

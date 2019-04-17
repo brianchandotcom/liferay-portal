@@ -19,7 +19,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
@@ -66,24 +68,41 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				request);
 
-		String comboURL = _portal.getStaticResourceURL(
-			request, _comboContextPath, "minifierType=js", _lastModified);
-
-		sb.append("<script data-senna-track=\"permanent\" src=\"");
-		sb.append(comboURL);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Bundle bundle = _bundleContext.getBundle();
 
-		for (String fileName : _FILE_NAMES) {
-			sb.append("&");
+		if (themeDisplay.isThemeJsFastLoad()) {
+			String comboURL = _portal.getStaticResourceURL(
+				request, _comboContextPath, "minifierType=js", _lastModified);
 
-			sb.append(
-				absolutePortalURLBuilder.forModule(
-					bundle, fileName
-				).build());
+			sb.append("<script data-senna-track=\"permanent\" src=\"");
+			sb.append(comboURL);
+
+			for (String fileName : _FILE_NAMES) {
+				sb.append("&");
+
+				sb.append(
+					absolutePortalURLBuilder.forModule(
+						bundle, fileName
+					).build());
+			}
+
+			sb.append("\" type=\"text/javascript\"></script>");
 		}
+		else {
+			for (String fileName : _FILE_NAMES) {
+				sb.append("<script data-senna-track=\"permanent\" src=\"");
 
-		sb.append("\" type=\"text/javascript\"></script>");
+				sb.append(
+					absolutePortalURLBuilder.forModule(
+						bundle, fileName
+					).build());
+
+				sb.append("\" type=\"text/javascript\"></script>");
+			}
+		}
 
 		printWriter.println(sb.toString());
 	}

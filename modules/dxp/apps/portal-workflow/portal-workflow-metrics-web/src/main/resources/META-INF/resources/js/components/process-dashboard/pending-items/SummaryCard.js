@@ -1,6 +1,6 @@
 import autobind from 'autobind-decorator';
 import getCN from 'classnames';
-import Icon from '../../shared/components/Icon';
+import Icon from '../../../shared/components/Icon';
 import React from 'react';
 
 const CLASSNAME = 'process-dashboard-summary-card';

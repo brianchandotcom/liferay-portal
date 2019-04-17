@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
-import { AppContext } from '../AppContext';
-import { getPercentage } from '../../shared/util/util';
-import Icon from '../../shared/components/Icon';
-import LoadingState from '../../shared/components/loading/LoadingState';
-import { openErrorToast } from '../../shared/util/toast';
-import Panel from '../../shared/components/Panel';
+import { AppContext } from '../../AppContext';
+import { getPercentage } from '../../../shared/util/util';
+import Icon from '../../../shared/components/Icon';
+import LoadingState from '../../../shared/components/loading/LoadingState';
+import { openErrorToast } from '../../../shared/util/toast';
+import Panel from '../../../shared/components/Panel';
 import PANELS from './Panels';
 import SummaryCard from './SummaryCard';
-import Tooltip from '../../shared/components/Tooltip';
+import Tooltip from '../../../shared/components/Tooltip';
 
 class PendingItemsCard extends React.Component {
 	constructor(props) {

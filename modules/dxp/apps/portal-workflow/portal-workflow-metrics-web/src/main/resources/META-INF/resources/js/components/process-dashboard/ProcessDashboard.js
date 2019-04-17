@@ -1,4 +1,4 @@
-import PendingItemsCard from './PendingItemsCard';
+import PendingItemsCard from './pending-items/PendingItemsCard';
 import React from 'react';
 import WorkloadByStepCard from './WorkloadByStepCard';
 

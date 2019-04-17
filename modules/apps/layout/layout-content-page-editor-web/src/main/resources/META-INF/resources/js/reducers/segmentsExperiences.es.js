@@ -223,6 +223,7 @@ function createSegmentsExperienceReducer(state, actionType, payload) {
 						const {
 							active,
 							nameCurrentValue,
+							priority,
 							segmentsEntryId,
 							segmentsExperienceId
 						} = obj;
@@ -236,6 +237,7 @@ function createSegmentsExperienceReducer(state, actionType, payload) {
 							{
 								active,
 								name: nameCurrentValue,
+								priority,
 								segmentsEntryId,
 								segmentsExperienceId
 							}

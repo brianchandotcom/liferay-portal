@@ -115,6 +115,13 @@ public class AssetInfoDisplayContributorAdapter
 	}
 
 	@Override
+	public InfoDisplayObjectProvider getInfoDisplayObjectProvider(long classPK)
+		throws PortalException {
+
+		return _assetDisplayContributor.getInfoDisplayObjectProvider(classPK);
+	}
+
+	@Override
 	public InfoDisplayObjectProvider<AssetEntry> getInfoDisplayObjectProvider(
 			long groupId, String urlTitle)
 		throws PortalException {

@@ -124,6 +124,10 @@ public interface AssetDisplayContributor {
 	}
 
 	public InfoDisplayObjectProvider<AssetEntry> getInfoDisplayObjectProvider(
+			long classPK)
+		throws PortalException;
+
+	public InfoDisplayObjectProvider<AssetEntry> getInfoDisplayObjectProvider(
 			long groupId, String urlTitle)
 		throws PortalException;
 

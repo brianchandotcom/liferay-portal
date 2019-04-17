@@ -49,6 +49,9 @@ public interface InfoDisplayContributor<T> {
 	public Object getInfoDisplayFieldValue(T t, String fieldName, Locale locale)
 		throws PortalException;
 
+	public InfoDisplayObjectProvider getInfoDisplayObjectProvider(long classPK)
+		throws PortalException;
+
 	public InfoDisplayObjectProvider<T> getInfoDisplayObjectProvider(
 			long groupId, String urlTitle)
 		throws PortalException;

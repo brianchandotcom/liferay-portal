@@ -136,6 +136,25 @@ public abstract class BaseAssetDisplayContributor<T>
 
 	@Override
 	public InfoDisplayObjectProvider<AssetEntry> getInfoDisplayObjectProvider(
+			long classPK)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					PortalUtil.getClassNameId(getClassName()));
+
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			classPK);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			getClassName(), assetRenderer.getClassPK());
+
+		return new AssetInfoDisplayObjectProvider(assetEntry);
+	}
+
+	@Override
+	public InfoDisplayObjectProvider<AssetEntry> getInfoDisplayObjectProvider(
 			long groupId, String urlTitle)
 		throws PortalException {
 

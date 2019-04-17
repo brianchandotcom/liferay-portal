@@ -64,7 +64,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 					new HashMapDictionary<String, Object>() {
 						{
 							put("clientId", clientId);
-							put("clientSecret", apiKey);
+							put("pickerAPIKey", apiKey);
 						}
 					});
 			}

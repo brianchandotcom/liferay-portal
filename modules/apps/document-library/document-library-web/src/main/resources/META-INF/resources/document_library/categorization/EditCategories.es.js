@@ -84,6 +84,17 @@ class EditCategories extends Component {
 	}
 
 	/**
+	 * Checks if the vocabulary have errors
+	 *
+	 * @private
+	 * @review
+	 * @return {Boolean} true if it has a error, false if has not error.
+	 */
+	_checkErrors() {
+		return !!this.element.querySelector('.has-error');
+	}
+
+	/**
 	 * Creates the ajax request.
 	 *
 	 * @param {String} url Url of the request
@@ -242,7 +253,7 @@ class EditCategories extends Component {
 	_handleFormSubmit(event) {
 		event.preventDefault();
 
-		if (!this._validateRequiredVocabularies()) {
+		if (!this._validateRequiredVocabularies() || this._checkErrors()) {
 			return;
 		}
 

@@ -109,13 +109,13 @@ class AssetVocabularyCategoriesSelector extends Component {
 	}
 
 	/**
-	 * Hides the category error
+	 * Prevent auto clean
 	 *
 	 * @private
 	 * @review
 	 */
-	_handleInputOnBlur() {
-		this._unexistingCategoryError = false;
+	_handleInputOnBlur(event) {
+		event.preventDefault();
 	}
 
 	/**

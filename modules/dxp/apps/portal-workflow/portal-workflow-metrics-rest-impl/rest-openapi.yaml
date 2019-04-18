@@ -46,6 +46,14 @@ components:
                 type:
                     type: string
             type: object
+        NodeKey:
+            description: https://www.schema.org/NodeKey
+            properties:
+                executionType:
+                    type: string
+                id:
+                    type: string
+            type: object
         Process:
             description: https://www.schema.org/Process
             properties:
@@ -84,22 +92,37 @@ components:
                 name:
                     type: string
                 pauseNodeKeys:
-                    items:
-                        type: string
-                    type: array
+                    properties:
+                        nodeKeys:
+                            items:
+                                $ref: "#/components/schemas/NodeKey"
+                            type: array
+                        status:
+                            type: integer
+                    type: object
                 processId:
                     format: int64
                     type: integer
                 startNodeKeys:
-                    items:
-                        type: string
-                    type: array
+                    properties:
+                        nodeKeys:
+                            items:
+                                $ref: "#/components/schemas/NodeKey"
+                            type: array
+                        status:
+                            type: integer
+                    type: object
                 status:
                     type: integer
                 stopNodeKeys:
-                    items:
-                        type: string
-                    type: array
+                    properties:
+                        nodeKeys:
+                            items:
+                                $ref: "#/components/schemas/NodeKey"
+                            type: array
+                        status:
+                            type: integer
+                    type: object
             type: object
         Task:
             description: https://www.schema.org/Task

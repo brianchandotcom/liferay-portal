@@ -85,6 +85,8 @@ public class ${schemaName}SerDes {
 
 								<#if stringUtil.equals(propertyType, "Date[]")>
 									sb.append(liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()[i]));
+								<#elseif stringUtil.equals(propertyType, "String")>
+									sb.append(_escapeString(${schemaVarName}.get${propertyName?cap_first}()[i]));
 								<#else>
 									sb.append(${schemaVarName}.get${propertyName?cap_first}()[i]);
 								</#if>
@@ -108,6 +110,8 @@ public class ${schemaName}SerDes {
 
 							<#if stringUtil.equals(propertyType, "Date")>
 								sb.append(liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
+							<#elseif stringUtil.equals(propertyType, "String")>
+								sb.append(_escapeString(${schemaVarName}.get${propertyName?cap_first}()));
 							<#else>
 								sb.append(${schemaVarName}.get${propertyName?cap_first}());
 							</#if>
@@ -240,6 +244,10 @@ public class ${schemaName}SerDes {
 				throw new IllegalArgumentException("Unsupported field name " + jsonParserFieldName);
 			}
 		}
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

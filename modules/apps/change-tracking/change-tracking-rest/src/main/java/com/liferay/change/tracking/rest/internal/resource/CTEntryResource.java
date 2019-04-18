@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=change-tracking-application)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Change.Tracking.REST)",
 		"osgi.jaxrs.resource=true"
 	},
 	scope = ServiceScope.PROTOTYPE, service = CTEntryResource.class

@@ -160,12 +160,12 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 				int lastIndexOfSlash = name.lastIndexOf('/');
 
-				if (lastIndexOfSlash > 0) {
-					name = name.substring(lastIndexOfSlash + 1);
+				if (lastIndexOfSlash < 0) {
+					lastIndexOfSlash = 0;
 				}
 
 				name = name.substring(
-					0, name.length() + 1 - filePattern.length());
+					lastIndexOfSlash, name.length() + 1 - filePattern.length());
 
 				namedConfigurationContents.add(
 					namedConfigurationContentBiFunction.apply(

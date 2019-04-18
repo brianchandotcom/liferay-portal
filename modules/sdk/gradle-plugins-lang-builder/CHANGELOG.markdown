@@ -112,6 +112,15 @@ http://titlecapitalization.com.
 ### Changed
 - [LPS-87590]: Update the [Liferay Lang Builder] dependency to version 1.0.28.
 
+## 3.0.6 - 2019-01-22
+
+### Changed
+- [LPS-89388]: Update the [Liferay Lang Builder] dependency to version 1.0.29.
+
+### Fixed
+- [LPS-89388]: The `BuildLangTask` did not remove keys from the
+`Language_xx.properties` files when the `Language.properties` file was empty.
+
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [Liferay Lang Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/lang-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -126,3 +135,4 @@ http://titlecapitalization.com.
 [LPS-85092]: https://issues.liferay.com/browse/LPS-85092
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LPS-87590]: https://issues.liferay.com/browse/LPS-87590
+[LPS-89388]: https://issues.liferay.com/browse/LPS-89388

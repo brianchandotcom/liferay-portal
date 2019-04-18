@@ -6427,6 +6427,13 @@ version 1.0.0.
 - [LPS-89415]: Set the [Liferay Portal Tools REST Builder] dependency to version
 1.0.0.
 
+## 3.13.65 - 2019-01-22
+
+### Changed
+- [LPS-89388]: Update the [Liferay Gradle Plugins Lang Builder] dependency to
+version 3.0.6.
+- [LPS-89388]: Update the [Liferay Lang Builder] dependency to version 1.0.29.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6925,5 +6932,6 @@ version 1.0.0.
 [LPS-88909]: https://issues.liferay.com/browse/LPS-88909
 [LPS-89126]: https://issues.liferay.com/browse/LPS-89126
 [LPS-89228]: https://issues.liferay.com/browse/LPS-89228
+[LPS-89388]: https://issues.liferay.com/browse/LPS-89388
 [LPS-89415]: https://issues.liferay.com/browse/LPS-89415
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

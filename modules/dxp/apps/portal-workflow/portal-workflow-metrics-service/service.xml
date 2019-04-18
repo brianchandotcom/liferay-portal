@@ -74,9 +74,11 @@
 		<column name="description" type="String" />
 		<column name="duration" type="long" />
 		<column name="processId" type="long" />
+		<column name="processVersion" type="String" />
 		<column name="pauseNodeKeys" type="String" />
 		<column name="startNodeKeys" type="String" />
 		<column name="stopNodeKeys" type="String" />
+		<column name="status" type="int" />
 
 		<!-- Finder methods -->
 

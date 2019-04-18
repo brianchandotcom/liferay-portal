@@ -1260,7 +1260,7 @@ definition {
 			value1 = "${portalURL}/web/page-type-test-site-name/embedded-page"
 		);
 
-		SelectFrame(locator1 = "IFrame#EMBEDDED_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_IFRAME");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Embedded#EMBEDDED_TEXT_YES",

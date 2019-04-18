@@ -6,7 +6,7 @@ definition {
 	}
 
 	macro assertVideoTitle {
-		SelectFrame(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "YoutubePortlet#VIDEO_TITLE",

@@ -71,8 +71,7 @@ public class BNDSettings {
 				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
 			}
 
-			exportPackageNames.add(
-				line.replace(CharPool.PERIOD, CharPool.SLASH));
+			exportPackageNames.add(line);
 		}
 
 		matcher = _exportContentsPattern.matcher(_content);
@@ -96,8 +95,7 @@ public class BNDSettings {
 				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
 			}
 
-			exportPackageNames.add(
-				line.replace(CharPool.PERIOD, CharPool.SLASH));
+			exportPackageNames.add(line);
 		}
 
 		_exportPackageNames = exportPackageNames;

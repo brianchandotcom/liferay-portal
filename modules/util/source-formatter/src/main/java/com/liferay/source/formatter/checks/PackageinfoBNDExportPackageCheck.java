@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.BNDSettings;
 
 import java.io.IOException;
@@ -50,8 +52,10 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 		}
 
 		for (String exportPackageName : bndSettings.getExportPackageNames()) {
-			String suffix =
-				"/src/main/resources/" + exportPackageName + "/packageinfo";
+			String suffix = StringBundler.concat(
+				"/src/main/resources/",
+				exportPackageName.replace(CharPool.PERIOD, CharPool.SLASH),
+				"/packageinfo");
 
 			if (fileName.endsWith(suffix)) {
 				return true;

@@ -158,10 +158,6 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 				String name = url.getFile();
 
-				if (name.startsWith("/")) {
-					name = name.substring(1);
-				}
-
 				int lastIndexOfSlash = name.lastIndexOf('/');
 
 				if (lastIndexOfSlash > 0) {

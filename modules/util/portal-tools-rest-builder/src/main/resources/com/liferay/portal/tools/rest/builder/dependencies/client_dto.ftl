@@ -95,4 +95,79 @@ public class ${schemaName} {
 		protected ${propertyType} ${propertyName};
 	</#list>
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof ${schemaName})) {
+			return false;
+		}
+
+		${schemaName} ${schemaVarName} = (${schemaName})object;
+
+		return Objects.equals(toString(), ${schemaVarName}.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		<#list properties?keys as propertyName>
+			<#if !propertyName?is_first>
+				sb.append(", ");
+			</#if>
+
+			sb.append("\"${propertyName}\": ");
+
+			if (${propertyName} == null) {
+				sb.append("null");
+			}
+			else {
+				<#assign propertyType = properties[propertyName] />
+
+				<#if propertyType?contains("[]")>
+					sb.append("[");
+
+					for (int i = 0; i < ${propertyName}.length; i++) {
+						<#if stringUtil.equals(propertyType, "Date[]") || stringUtil.equals(propertyType, "String[]") || enumSchemas?keys?seq_contains(propertyType)>
+							sb.append("\"");
+							sb.append(${propertyName}[i]);
+							sb.append("\"");
+						<#else>
+							sb.append(${propertyName}[i]);
+						</#if>
+
+						if ((i + 1) < ${propertyName}.length) {
+							sb.append(", ");
+						}
+					}
+
+					sb.append("]");
+				<#else>
+					<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "String") || enumSchemas?keys?seq_contains(propertyType)>
+						sb.append("\"");
+						sb.append(${propertyName});
+						sb.append("\"");
+					<#else>
+						sb.append(${propertyName});
+					</#if>
+				</#if>
+			}
+		</#list>
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 }

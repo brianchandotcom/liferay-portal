@@ -80,13 +80,13 @@ public class ${schemaName}SerDes {
 						sb.append("[");
 
 						for (int i = 0; i < ${schemaVarName}.get${propertyName?cap_first}().length; i++) {
-							<#if stringUtil.equals(propertyType, "Date[]") || stringUtil.equals(propertyType, "String[]") || enumSchemas?keys?seq_contains(propertyType)>
+							<#if stringUtil.equals(propertyType, "Date[]") || stringUtil.equals(propertyType, "Object[]") || stringUtil.equals(propertyType, "String[]") || enumSchemas?keys?seq_contains(propertyType)>
 								sb.append("\"");
 
 								<#if stringUtil.equals(propertyType, "Date[]")>
 									sb.append(liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()[i]));
-								<#elseif stringUtil.equals(propertyType, "String")>
-									sb.append(_escapeString(${schemaVarName}.get${propertyName?cap_first}()[i]));
+								<#elseif stringUtil.equals(propertyType, "Object[]") || stringUtil.equals(propertyType, "String[]")>
+									sb.append(_escape(${schemaVarName}.get${propertyName?cap_first}()[i]));
 								<#else>
 									sb.append(${schemaVarName}.get${propertyName?cap_first}()[i]);
 								</#if>
@@ -105,13 +105,13 @@ public class ${schemaName}SerDes {
 
 						sb.append("]");
 					<#else>
-						<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "String") || enumSchemas?keys?seq_contains(propertyType)>
+						<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "Object") || stringUtil.equals(propertyType, "String") || enumSchemas?keys?seq_contains(propertyType)>
 							sb.append("\"");
 
 							<#if stringUtil.equals(propertyType, "Date")>
 								sb.append(liferayToJSONDateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
-							<#elseif stringUtil.equals(propertyType, "String")>
-								sb.append(_escapeString(${schemaVarName}.get${propertyName?cap_first}()));
+							<#elseif stringUtil.equals(propertyType, "Object") || stringUtil.equals(propertyType, "String")>
+								sb.append(_escape(${schemaVarName}.get${propertyName?cap_first}()));
 							<#else>
 								sb.append(${schemaVarName}.get${propertyName?cap_first}());
 							</#if>
@@ -176,7 +176,9 @@ public class ${schemaName}SerDes {
 		return map;
 	}
 
-	private static String _escapeString(String string) {
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
 		return string.replaceAll("\"", "\\\\\"");
 	}
 

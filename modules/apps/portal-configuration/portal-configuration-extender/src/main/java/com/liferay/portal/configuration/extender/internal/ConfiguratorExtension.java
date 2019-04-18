@@ -63,7 +63,7 @@ public class ConfiguratorExtension implements Extension {
 				_createConfiguration(namedConfigurationContent);
 			}
 			catch (IOException ioe) {
-				continue;
+				_logger.log(Logger.LOG_WARNING, ioe.getMessage(), ioe);
 			}
 		}
 	}

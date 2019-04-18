@@ -18,12 +18,16 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,18 +49,71 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	}
 
 	@Override
-	public Page<SLA> getProcessSLAsPage(Long processId, Pagination pagination)
+	public Page<SLA> getProcessSLAsPage(
+			Long processId, Integer status, Pagination pagination)
 		throws Exception {
 
-		return Page.of(
-			transform(
+		if (status != null) {
+			return Page.of(
+				transform(
+					_workflowMetricsSLADefinitionLocalService.
+						getWorkflowMetricsSLADefinitions(
+							contextCompany.getCompanyId(), processId, status,
+							pagination.getStartPosition(),
+							pagination.getEndPosition(), null),
+					this::_toSLA),
+				pagination,
+				_workflowMetricsSLADefinitionLocalService.
+					getWorkflowMetricsSLADefinitionsCount(
+						contextCompany.getCompanyId(), processId, status));
+		}
+
+		int draftCount =
+			_workflowMetricsSLADefinitionLocalService.
+				getWorkflowMetricsSLADefinitionsCount(
+					contextCompany.getCompanyId(), processId,
+					WorkflowConstants.STATUS_DRAFT);
+
+		if (draftCount == 0) {
+			return Page.of(
+				transform(
+					_workflowMetricsSLADefinitionLocalService.
+						getWorkflowMetricsSLADefinitions(
+							contextCompany.getCompanyId(), processId,
+							WorkflowConstants.STATUS_APPROVED,
+							pagination.getStartPosition(),
+							pagination.getEndPosition(), null),
+					this::_toSLA),
+				pagination,
+				_workflowMetricsSLADefinitionLocalService.
+					getWorkflowMetricsSLADefinitionsCount(
+						contextCompany.getCompanyId(), processId));
+		}
+
+		List<WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
+			_workflowMetricsSLADefinitionLocalService.
+				getWorkflowMetricsSLADefinitions(
+					contextCompany.getCompanyId(), processId,
+					WorkflowConstants.STATUS_DRAFT,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null);
+
+		if (workflowMetricsSLADefinitions.size() < pagination.getPageSize()) {
+			workflowMetricsSLADefinitions = new ArrayList<>(
+				workflowMetricsSLADefinitions);
+
+			workflowMetricsSLADefinitions.addAll(
 				_workflowMetricsSLADefinitionLocalService.
 					getWorkflowMetricsSLADefinitions(
 						contextCompany.getCompanyId(), processId,
-						pagination.getStartPosition(),
-						pagination.getEndPosition(), null),
-				this::_toSLA),
-			pagination,
+						WorkflowConstants.STATUS_APPROVED,
+						pagination.getStartPosition() +
+							workflowMetricsSLADefinitions.size() - draftCount,
+						pagination.getEndPosition() - draftCount, null));
+		}
+
+		return Page.of(
+			transform(workflowMetricsSLADefinitions, this::_toSLA), pagination,
 			_workflowMetricsSLADefinitionLocalService.
 				getWorkflowMetricsSLADefinitionsCount(
 					contextCompany.getCompanyId(), processId));
@@ -111,6 +168,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 
 		return new SLA() {
 			{
+				dateModified = workflowMetricsSLADefinition.getModifiedDate();
 				description = workflowMetricsSLADefinition.getDescription();
 				duration = workflowMetricsSLADefinition.getDuration();
 				id = workflowMetricsSLADefinition.getPrimaryKey();
@@ -122,6 +180,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 					workflowMetricsSLADefinition.getStartNodeKeys());
 				stopNodeKeys = StringUtil.split(
 					workflowMetricsSLADefinition.getStopNodeKeys());
+				status = workflowMetricsSLADefinition.getStatus();
 			}
 		};
 	}

@@ -31,13 +31,16 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -73,6 +76,10 @@ public class MSCognitiveServicesImageAssetAutoTagProvider
 				return Collections.emptyList();
 			}
 
+			checkAPIEndpoint(
+				msCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
+					apiEndpoint());
+
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
 			JSONObject responseJSONObject = _queryComputerVisionJSONObject(
@@ -90,6 +97,20 @@ public class MSCognitiveServicesImageAssetAutoTagProvider
 			_log.error(e, e);
 
 			return Collections.emptyList();
+		}
+	}
+
+	protected void checkAPIEndpoint(String apiEndpoint)
+		throws MalformedURLException, UnknownHostException {
+
+		URL url = new URL(apiEndpoint);
+
+		if (InetAddressUtil.isLocalInetAddress(
+				InetAddressUtil.getInetAddressByName(url.getHost()))) {
+
+			throw new SecurityException(
+				"Microsoft Cognitive Services Image Auto Tagging API " +
+					"Endpoint cannot be a local address");
 		}
 	}
 

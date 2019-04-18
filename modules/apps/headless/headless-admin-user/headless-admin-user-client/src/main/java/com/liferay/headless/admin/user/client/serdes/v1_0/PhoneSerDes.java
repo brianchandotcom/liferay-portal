@@ -60,7 +60,7 @@ public class PhoneSerDes {
 
 			sb.append("\"");
 
-			sb.append(phone.getExtension());
+			sb.append(_escapeString(phone.getExtension()));
 
 			sb.append("\"");
 		}
@@ -84,7 +84,7 @@ public class PhoneSerDes {
 
 			sb.append("\"");
 
-			sb.append(phone.getPhoneNumber());
+			sb.append(_escapeString(phone.getPhoneNumber()));
 
 			sb.append("\"");
 		}
@@ -98,7 +98,7 @@ public class PhoneSerDes {
 
 			sb.append("\"");
 
-			sb.append(phone.getPhoneType());
+			sb.append(_escapeString(phone.getPhoneType()));
 
 			sb.append("\"");
 		}
@@ -211,6 +211,10 @@ public class PhoneSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

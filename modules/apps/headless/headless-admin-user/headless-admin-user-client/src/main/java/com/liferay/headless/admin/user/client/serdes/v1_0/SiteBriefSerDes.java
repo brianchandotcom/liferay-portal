@@ -70,7 +70,7 @@ public class SiteBriefSerDes {
 
 			sb.append("\"");
 
-			sb.append(siteBrief.getName());
+			sb.append(_escapeString(siteBrief.getName()));
 
 			sb.append("\"");
 		}
@@ -137,6 +137,10 @@ public class SiteBriefSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

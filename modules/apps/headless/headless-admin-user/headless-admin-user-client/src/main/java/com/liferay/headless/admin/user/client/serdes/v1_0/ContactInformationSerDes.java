@@ -91,7 +91,7 @@ public class ContactInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(contactInformation.getFacebook());
+			sb.append(_escapeString(contactInformation.getFacebook()));
 
 			sb.append("\"");
 		}
@@ -115,7 +115,7 @@ public class ContactInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(contactInformation.getJabber());
+			sb.append(_escapeString(contactInformation.getJabber()));
 
 			sb.append("\"");
 		}
@@ -153,7 +153,7 @@ public class ContactInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(contactInformation.getSkype());
+			sb.append(_escapeString(contactInformation.getSkype()));
 
 			sb.append("\"");
 		}
@@ -167,7 +167,7 @@ public class ContactInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(contactInformation.getSms());
+			sb.append(_escapeString(contactInformation.getSms()));
 
 			sb.append("\"");
 		}
@@ -204,7 +204,7 @@ public class ContactInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(contactInformation.getTwitter());
+			sb.append(_escapeString(contactInformation.getTwitter()));
 
 			sb.append("\"");
 		}
@@ -428,6 +428,10 @@ public class ContactInformationSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

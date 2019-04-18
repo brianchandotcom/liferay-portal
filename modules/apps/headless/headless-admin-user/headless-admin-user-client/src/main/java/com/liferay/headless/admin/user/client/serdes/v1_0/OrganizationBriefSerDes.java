@@ -72,7 +72,7 @@ public class OrganizationBriefSerDes {
 
 			sb.append("\"");
 
-			sb.append(organizationBrief.getName());
+			sb.append(_escapeString(organizationBrief.getName()));
 
 			sb.append("\"");
 		}
@@ -143,6 +143,10 @@ public class OrganizationBriefSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

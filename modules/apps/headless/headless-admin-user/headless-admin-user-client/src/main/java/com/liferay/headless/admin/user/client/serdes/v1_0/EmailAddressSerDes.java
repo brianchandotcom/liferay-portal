@@ -62,7 +62,7 @@ public class EmailAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(emailAddress.getEmailAddress());
+			sb.append(_escapeString(emailAddress.getEmailAddress()));
 
 			sb.append("\"");
 		}
@@ -96,7 +96,7 @@ public class EmailAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(emailAddress.getType());
+			sb.append(_escapeString(emailAddress.getType()));
 
 			sb.append("\"");
 		}
@@ -190,6 +190,10 @@ public class EmailAddressSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

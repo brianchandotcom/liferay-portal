@@ -72,7 +72,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getAdditionalName());
+			sb.append(_escapeString(userAccount.getAdditionalName()));
 
 			sb.append("\"");
 		}
@@ -86,7 +86,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getAlternateName());
+			sb.append(_escapeString(userAccount.getAlternateName()));
 
 			sb.append("\"");
 		}
@@ -127,7 +127,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getDashboardURL());
+			sb.append(_escapeString(userAccount.getDashboardURL()));
 
 			sb.append("\"");
 		}
@@ -171,7 +171,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getEmailAddress());
+			sb.append(_escapeString(userAccount.getEmailAddress()));
 
 			sb.append("\"");
 		}
@@ -185,7 +185,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getFamilyName());
+			sb.append(_escapeString(userAccount.getFamilyName()));
 
 			sb.append("\"");
 		}
@@ -199,7 +199,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getGivenName());
+			sb.append(_escapeString(userAccount.getGivenName()));
 
 			sb.append("\"");
 		}
@@ -213,7 +213,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getHonorificPrefix());
+			sb.append(_escapeString(userAccount.getHonorificPrefix()));
 
 			sb.append("\"");
 		}
@@ -227,7 +227,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getHonorificSuffix());
+			sb.append(_escapeString(userAccount.getHonorificSuffix()));
 
 			sb.append("\"");
 		}
@@ -251,7 +251,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getImage());
+			sb.append(_escapeString(userAccount.getImage()));
 
 			sb.append("\"");
 		}
@@ -265,7 +265,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getJobTitle());
+			sb.append(_escapeString(userAccount.getJobTitle()));
 
 			sb.append("\"");
 		}
@@ -303,7 +303,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getName());
+			sb.append(_escapeString(userAccount.getName()));
 
 			sb.append("\"");
 		}
@@ -341,7 +341,7 @@ public class UserAccountSerDes {
 
 			sb.append("\"");
 
-			sb.append(userAccount.getProfileURL());
+			sb.append(_escapeString(userAccount.getProfileURL()));
 
 			sb.append("\"");
 		}
@@ -723,6 +723,10 @@ public class UserAccountSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

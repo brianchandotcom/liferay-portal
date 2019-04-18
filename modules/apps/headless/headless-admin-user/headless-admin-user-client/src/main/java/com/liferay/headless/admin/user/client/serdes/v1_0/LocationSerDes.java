@@ -60,7 +60,7 @@ public class LocationSerDes {
 
 			sb.append("\"");
 
-			sb.append(location.getAddressCountry());
+			sb.append(_escapeString(location.getAddressCountry()));
 
 			sb.append("\"");
 		}
@@ -74,7 +74,7 @@ public class LocationSerDes {
 
 			sb.append("\"");
 
-			sb.append(location.getAddressRegion());
+			sb.append(_escapeString(location.getAddressRegion()));
 
 			sb.append("\"");
 		}
@@ -165,6 +165,10 @@ public class LocationSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

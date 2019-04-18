@@ -70,7 +70,7 @@ public class AssetTypeSerDes {
 
 			sb.append("\"");
 
-			sb.append(assetType.getSubtype());
+			sb.append(_escapeString(assetType.getSubtype()));
 
 			sb.append("\"");
 		}
@@ -84,7 +84,7 @@ public class AssetTypeSerDes {
 
 			sb.append("\"");
 
-			sb.append(assetType.getType());
+			sb.append(_escapeString(assetType.getType()));
 
 			sb.append("\"");
 		}
@@ -163,6 +163,10 @@ public class AssetTypeSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

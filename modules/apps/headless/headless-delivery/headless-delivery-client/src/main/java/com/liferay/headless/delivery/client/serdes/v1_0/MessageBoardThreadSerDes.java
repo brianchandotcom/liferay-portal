@@ -80,7 +80,7 @@ public class MessageBoardThreadSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardThread.getArticleBody());
+			sb.append(_escapeString(messageBoardThread.getArticleBody()));
 
 			sb.append("\"");
 		}
@@ -136,7 +136,7 @@ public class MessageBoardThreadSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardThread.getEncodingFormat());
+			sb.append(_escapeString(messageBoardThread.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -150,7 +150,7 @@ public class MessageBoardThreadSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardThread.getHeadline());
+			sb.append(_escapeString(messageBoardThread.getHeadline()));
 
 			sb.append("\"");
 		}
@@ -238,7 +238,7 @@ public class MessageBoardThreadSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardThread.getThreadType());
+			sb.append(_escapeString(messageBoardThread.getThreadType()));
 
 			sb.append("\"");
 		}
@@ -522,6 +522,10 @@ public class MessageBoardThreadSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

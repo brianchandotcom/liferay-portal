@@ -110,7 +110,7 @@ public class MessageBoardSectionSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardSection.getDescription());
+			sb.append(_escapeString(messageBoardSection.getDescription()));
 
 			sb.append("\"");
 		}
@@ -164,7 +164,7 @@ public class MessageBoardSectionSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardSection.getTitle());
+			sb.append(_escapeString(messageBoardSection.getTitle()));
 
 			sb.append("\"");
 		}
@@ -369,6 +369,10 @@ public class MessageBoardSectionSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

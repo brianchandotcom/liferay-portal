@@ -144,7 +144,7 @@ public class FormSerDes {
 
 			sb.append("\"");
 
-			sb.append(form.getDefaultLanguage());
+			sb.append(_escapeString(form.getDefaultLanguage()));
 
 			sb.append("\"");
 		}
@@ -158,7 +158,7 @@ public class FormSerDes {
 
 			sb.append("\"");
 
-			sb.append(form.getDescription());
+			sb.append(_escapeString(form.getDescription()));
 
 			sb.append("\"");
 		}
@@ -222,7 +222,7 @@ public class FormSerDes {
 
 			sb.append("\"");
 
-			sb.append(form.getName());
+			sb.append(_escapeString(form.getName()));
 
 			sb.append("\"");
 		}
@@ -474,6 +474,10 @@ public class FormSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

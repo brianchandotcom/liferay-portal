@@ -62,7 +62,7 @@ public class FormDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(formDocument.getContentUrl());
+			sb.append(_escapeString(formDocument.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -76,7 +76,7 @@ public class FormDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(formDocument.getEncodingFormat());
+			sb.append(_escapeString(formDocument.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -90,7 +90,7 @@ public class FormDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(formDocument.getFileExtension());
+			sb.append(_escapeString(formDocument.getFileExtension()));
 
 			sb.append("\"");
 		}
@@ -124,7 +124,7 @@ public class FormDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(formDocument.getTitle());
+			sb.append(_escapeString(formDocument.getTitle()));
 
 			sb.append("\"");
 		}
@@ -248,6 +248,10 @@ public class FormDocumentSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -64,7 +64,7 @@ public class ContentStructureFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentStructureField.getDataType());
+			sb.append(_escapeString(contentStructureField.getDataType()));
 
 			sb.append("\"");
 		}
@@ -78,7 +78,7 @@ public class ContentStructureFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentStructureField.getInputControl());
+			sb.append(_escapeString(contentStructureField.getInputControl()));
 
 			sb.append("\"");
 		}
@@ -92,7 +92,7 @@ public class ContentStructureFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentStructureField.getLabel());
+			sb.append(_escapeString(contentStructureField.getLabel()));
 
 			sb.append("\"");
 		}
@@ -126,7 +126,7 @@ public class ContentStructureFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentStructureField.getName());
+			sb.append(_escapeString(contentStructureField.getName()));
 
 			sb.append("\"");
 		}
@@ -192,7 +192,8 @@ public class ContentStructureFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentStructureField.getPredefinedValue());
+			sb.append(
+				_escapeString(contentStructureField.getPredefinedValue()));
 
 			sb.append("\"");
 		}
@@ -458,6 +459,10 @@ public class ContentStructureFieldSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

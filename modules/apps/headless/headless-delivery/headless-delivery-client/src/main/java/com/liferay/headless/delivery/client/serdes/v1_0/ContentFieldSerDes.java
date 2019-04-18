@@ -63,7 +63,7 @@ public class ContentFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentField.getDataType());
+			sb.append(_escapeString(contentField.getDataType()));
 
 			sb.append("\"");
 		}
@@ -77,7 +77,7 @@ public class ContentFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentField.getInputControl());
+			sb.append(_escapeString(contentField.getInputControl()));
 
 			sb.append("\"");
 		}
@@ -91,7 +91,7 @@ public class ContentFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentField.getLabel());
+			sb.append(_escapeString(contentField.getLabel()));
 
 			sb.append("\"");
 		}
@@ -105,7 +105,7 @@ public class ContentFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentField.getName());
+			sb.append(_escapeString(contentField.getName()));
 
 			sb.append("\"");
 		}
@@ -285,6 +285,10 @@ public class ContentFieldSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

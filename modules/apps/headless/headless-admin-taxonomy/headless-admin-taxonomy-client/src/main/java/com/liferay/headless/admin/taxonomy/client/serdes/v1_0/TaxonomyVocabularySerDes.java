@@ -164,7 +164,7 @@ public class TaxonomyVocabularySerDes {
 
 			sb.append("\"");
 
-			sb.append(taxonomyVocabulary.getDescription());
+			sb.append(_escapeString(taxonomyVocabulary.getDescription()));
 
 			sb.append("\"");
 		}
@@ -188,7 +188,7 @@ public class TaxonomyVocabularySerDes {
 
 			sb.append("\"");
 
-			sb.append(taxonomyVocabulary.getName());
+			sb.append(_escapeString(taxonomyVocabulary.getName()));
 
 			sb.append("\"");
 		}
@@ -433,6 +433,10 @@ public class TaxonomyVocabularySerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

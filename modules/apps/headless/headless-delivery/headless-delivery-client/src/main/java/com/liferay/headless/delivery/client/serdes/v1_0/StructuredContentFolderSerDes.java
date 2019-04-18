@@ -113,7 +113,7 @@ public class StructuredContentFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(structuredContentFolder.getDescription());
+			sb.append(_escapeString(structuredContentFolder.getDescription()));
 
 			sb.append("\"");
 		}
@@ -137,7 +137,7 @@ public class StructuredContentFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(structuredContentFolder.getName());
+			sb.append(_escapeString(structuredContentFolder.getName()));
 
 			sb.append("\"");
 		}
@@ -381,6 +381,10 @@ public class StructuredContentFolderSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

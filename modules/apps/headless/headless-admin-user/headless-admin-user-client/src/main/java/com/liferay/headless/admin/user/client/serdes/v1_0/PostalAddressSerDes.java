@@ -62,7 +62,7 @@ public class PostalAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(postalAddress.getAddressCountry());
+			sb.append(_escapeString(postalAddress.getAddressCountry()));
 
 			sb.append("\"");
 		}
@@ -76,7 +76,7 @@ public class PostalAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(postalAddress.getAddressLocality());
+			sb.append(_escapeString(postalAddress.getAddressLocality()));
 
 			sb.append("\"");
 		}
@@ -90,7 +90,7 @@ public class PostalAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(postalAddress.getAddressRegion());
+			sb.append(_escapeString(postalAddress.getAddressRegion()));
 
 			sb.append("\"");
 		}
@@ -104,7 +104,7 @@ public class PostalAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(postalAddress.getAddressType());
+			sb.append(_escapeString(postalAddress.getAddressType()));
 
 			sb.append("\"");
 		}
@@ -128,7 +128,7 @@ public class PostalAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(postalAddress.getPostalCode());
+			sb.append(_escapeString(postalAddress.getPostalCode()));
 
 			sb.append("\"");
 		}
@@ -152,7 +152,7 @@ public class PostalAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(postalAddress.getStreetAddressLine1());
+			sb.append(_escapeString(postalAddress.getStreetAddressLine1()));
 
 			sb.append("\"");
 		}
@@ -166,7 +166,7 @@ public class PostalAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(postalAddress.getStreetAddressLine2());
+			sb.append(_escapeString(postalAddress.getStreetAddressLine2()));
 
 			sb.append("\"");
 		}
@@ -180,7 +180,7 @@ public class PostalAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(postalAddress.getStreetAddressLine3());
+			sb.append(_escapeString(postalAddress.getStreetAddressLine3()));
 
 			sb.append("\"");
 		}
@@ -371,6 +371,10 @@ public class PostalAddressSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

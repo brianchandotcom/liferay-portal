@@ -82,7 +82,7 @@ public class KnowledgeBaseArticleSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseArticle.getArticleBody());
+			sb.append(_escapeString(knowledgeBaseArticle.getArticleBody()));
 
 			sb.append("\"");
 		}
@@ -138,7 +138,7 @@ public class KnowledgeBaseArticleSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseArticle.getDescription());
+			sb.append(_escapeString(knowledgeBaseArticle.getDescription()));
 
 			sb.append("\"");
 		}
@@ -152,7 +152,7 @@ public class KnowledgeBaseArticleSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseArticle.getEncodingFormat());
+			sb.append(_escapeString(knowledgeBaseArticle.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -166,7 +166,7 @@ public class KnowledgeBaseArticleSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseArticle.getFriendlyUrlPath());
+			sb.append(_escapeString(knowledgeBaseArticle.getFriendlyUrlPath()));
 
 			sb.append("\"");
 		}
@@ -319,7 +319,7 @@ public class KnowledgeBaseArticleSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseArticle.getTitle());
+			sb.append(_escapeString(knowledgeBaseArticle.getTitle()));
 
 			sb.append("\"");
 		}
@@ -677,6 +677,10 @@ public class KnowledgeBaseArticleSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

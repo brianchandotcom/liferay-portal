@@ -70,7 +70,7 @@ public class WebUrlSerDes {
 
 			sb.append("\"");
 
-			sb.append(webUrl.getUrl());
+			sb.append(_escapeString(webUrl.getUrl()));
 
 			sb.append("\"");
 		}
@@ -84,7 +84,7 @@ public class WebUrlSerDes {
 
 			sb.append("\"");
 
-			sb.append(webUrl.getUrlType());
+			sb.append(_escapeString(webUrl.getUrlType()));
 
 			sb.append("\"");
 		}
@@ -163,6 +163,10 @@ public class WebUrlSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

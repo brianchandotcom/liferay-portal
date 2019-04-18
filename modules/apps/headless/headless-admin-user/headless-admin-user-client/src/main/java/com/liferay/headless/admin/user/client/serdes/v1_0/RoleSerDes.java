@@ -128,7 +128,7 @@ public class RoleSerDes {
 
 			sb.append("\"");
 
-			sb.append(role.getDescription());
+			sb.append(_escapeString(role.getDescription()));
 
 			sb.append("\"");
 		}
@@ -152,7 +152,7 @@ public class RoleSerDes {
 
 			sb.append("\"");
 
-			sb.append(role.getName());
+			sb.append(_escapeString(role.getName()));
 
 			sb.append("\"");
 		}
@@ -166,7 +166,7 @@ public class RoleSerDes {
 
 			sb.append("\"");
 
-			sb.append(role.getRoleType());
+			sb.append(_escapeString(role.getRoleType()));
 
 			sb.append("\"");
 		}
@@ -306,6 +306,10 @@ public class RoleSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

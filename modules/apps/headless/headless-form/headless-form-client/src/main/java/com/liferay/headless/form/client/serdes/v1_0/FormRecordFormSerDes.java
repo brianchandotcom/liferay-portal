@@ -72,7 +72,7 @@ public class FormRecordFormSerDes {
 
 			sb.append("\"");
 
-			sb.append(formRecordForm.getFieldValues());
+			sb.append(_escapeString(formRecordForm.getFieldValues()));
 
 			sb.append("\"");
 		}
@@ -141,6 +141,10 @@ public class FormRecordFormSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

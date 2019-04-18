@@ -204,7 +204,7 @@ public class StructuredContentSerDes {
 
 			sb.append("\"");
 
-			sb.append(structuredContent.getDescription());
+			sb.append(_escapeString(structuredContent.getDescription()));
 
 			sb.append("\"");
 		}
@@ -218,7 +218,7 @@ public class StructuredContentSerDes {
 
 			sb.append("\"");
 
-			sb.append(structuredContent.getFriendlyUrlPath());
+			sb.append(_escapeString(structuredContent.getFriendlyUrlPath()));
 
 			sb.append("\"");
 		}
@@ -242,7 +242,7 @@ public class StructuredContentSerDes {
 
 			sb.append("\"");
 
-			sb.append(structuredContent.getKey());
+			sb.append(_escapeString(structuredContent.getKey()));
 
 			sb.append("\"");
 		}
@@ -374,7 +374,7 @@ public class StructuredContentSerDes {
 
 			sb.append("\"");
 
-			sb.append(structuredContent.getTitle());
+			sb.append(_escapeString(structuredContent.getTitle()));
 
 			sb.append("\"");
 		}
@@ -388,7 +388,7 @@ public class StructuredContentSerDes {
 
 			sb.append("\"");
 
-			sb.append(structuredContent.getUuid());
+			sb.append(_escapeString(structuredContent.getUuid()));
 
 			sb.append("\"");
 		}
@@ -770,6 +770,10 @@ public class StructuredContentSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

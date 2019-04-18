@@ -101,7 +101,8 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 				/>
 
 				<liferay-ui:search-container-column-text
-					property="remoteIPInfo"
+					name="remoteIPInfo"
+					value='<%= oAuth2Authorization.getRemoteIPInfo() + ", " + oAuth2Authorization.getRemoteHostInfo() %>'
 				/>
 
 				<liferay-ui:search-container-column-jsp

@@ -221,8 +221,12 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			File file = new File(bndFileLocation + "bnd.bnd");
 
 			if (file.exists()) {
-				return new BNDSettings(
+				BNDSettings bndSettings = new BNDSettings(
 					bndFileLocation + "bnd.bnd", FileUtil.read(file));
+
+				_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
+
+				return bndSettings;
 			}
 
 			bndFileLocation = StringUtil.replaceLast(
@@ -696,10 +700,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected boolean isSubrepository() {
 		return _subrepository;
-	}
-
-	protected void putBNDSettings(BNDSettings bndSettings) {
-		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
 	}
 
 	protected String stripQuotes(String s) {

@@ -150,7 +150,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 				if (bndSettings != null) {
 					Properties bndLanguageProperties =
-						_getBNDLanguageProperties(bndSettings);
+						bndSettings.getLanguageProperties();
 
 					if ((bndLanguageProperties == null) ||
 						bndLanguageProperties.containsKey(languageKey)) {
@@ -163,17 +163,6 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					fileName, "Missing language key '" + languageKey + "'");
 			}
 		}
-	}
-
-	private Properties _getBNDLanguageProperties(BNDSettings bndSettings)
-		throws IOException {
-
-		Properties bndFileLanguageProperties =
-			bndSettings.getLanguageProperties();
-
-		putBNDSettings(bndSettings);
-
-		return bndFileLanguageProperties;
 	}
 
 	private Properties _getBuildGradleLanguageProperties(String absolutePath)

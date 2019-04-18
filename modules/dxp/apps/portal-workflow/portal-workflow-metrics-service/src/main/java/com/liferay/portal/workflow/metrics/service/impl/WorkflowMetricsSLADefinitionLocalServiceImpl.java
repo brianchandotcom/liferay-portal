@@ -18,11 +18,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.aggregation.AggregationResult;
+import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.aggregation.bucket.Bucket;
+import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
+import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
+import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -30,10 +35,12 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDuplicateNameException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionDurationException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionNameException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionPauseNodeKeysException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStartNodeKeysException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStopNodeKeysException;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
@@ -42,8 +49,12 @@ import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWo
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.service.base.WorkflowMetricsSLADefinitionLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -62,9 +73,12 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
 		Date now = new Date();
 
+		String latestProcessVersion = _getLatestProcessVersion(
+			serviceContext.getCompanyId(), processId);
+
 		validate(
-			0, serviceContext.getCompanyId(), processId, name, duration,
-			pauseNodeKeys, startNodeKeys, stopNodeKeys);
+			0, serviceContext.getCompanyId(), processId, latestProcessVersion,
+			name, duration, pauseNodeKeys, startNodeKeys, stopNodeKeys);
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
 			workflowMetricsSLADefinitionPersistence.create(
@@ -82,8 +96,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
 		workflowMetricsSLADefinition.setProcessId(processId);
-		workflowMetricsSLADefinition.setProcessVersion(
-			_getLatestProcessVersion(serviceContext.getCompanyId(), processId));
+		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
 		workflowMetricsSLADefinition.setPauseNodeKeys(
 			StringUtil.merge(pauseNodeKeys));
 		workflowMetricsSLADefinition.setStartNodeKeys(
@@ -189,7 +202,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 			long workflowMetricsSLADefinitionId, String name,
 			String description, long duration, String[] pauseNodeKeys,
-			String[] startNodeKeys, String[] stopNodeKeys,
+			String[] startNodeKeys, String[] stopNodeKeys, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -197,26 +210,28 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinitionPersistence.findByPrimaryKey(
 				workflowMetricsSLADefinitionId);
 
+		String latestProcessVersion = _getLatestProcessVersion(
+			workflowMetricsSLADefinition.getCompanyId(),
+			workflowMetricsSLADefinition.getProcessId());
+
 		validate(
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId(),
 			workflowMetricsSLADefinition.getCompanyId(),
-			workflowMetricsSLADefinition.getProcessId(), name, duration,
-			pauseNodeKeys, startNodeKeys, stopNodeKeys);
+			workflowMetricsSLADefinition.getProcessId(), latestProcessVersion,
+			name, duration, pauseNodeKeys, startNodeKeys, stopNodeKeys);
 
 		workflowMetricsSLADefinition.setModifiedDate(new Date());
 		workflowMetricsSLADefinition.setName(name);
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
-		workflowMetricsSLADefinition.setProcessVersion(
-			_getLatestProcessVersion(
-				workflowMetricsSLADefinition.getCompanyId(),
-				workflowMetricsSLADefinition.getProcessId()));
+		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
 		workflowMetricsSLADefinition.setPauseNodeKeys(
 			StringUtil.merge(pauseNodeKeys));
 		workflowMetricsSLADefinition.setStartNodeKeys(
 			StringUtil.merge(startNodeKeys));
 		workflowMetricsSLADefinition.setStopNodeKeys(
 			StringUtil.merge(stopNodeKeys));
+		workflowMetricsSLADefinition.setStatus(status);
 
 		workflowMetricsSLADefinitionPersistence.update(
 			workflowMetricsSLADefinition);
@@ -240,8 +255,9 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	protected void validate(
 			long workflowMetricsSLADefinitionId, long companyId, long processId,
-			String name, long duration, String[] pauseNodeKeys,
-			String[] startNodeKeys, String[] stopNodeKeys)
+			String processVersion, String name, long duration,
+			String[] pauseNodeKeys, String[] startNodeKeys,
+			String[] stopNodeKeys)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -250,14 +266,6 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		if (duration <= 0) {
 			throw new WorkflowMetricsSLADefinitionDurationException();
-		}
-
-		if (ArrayUtil.isEmpty(startNodeKeys)) {
-			throw new WorkflowMetricsSLADefinitionStartNodeKeysException();
-		}
-
-		if (ArrayUtil.isEmpty(stopNodeKeys)) {
-			throw new WorkflowMetricsSLADefinitionStopNodeKeysException();
 		}
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
@@ -271,6 +279,89 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 			throw new WorkflowMetricsSLADefinitionDuplicateNameException();
 		}
+
+		validateTimeframe(
+			companyId, pauseNodeKeys, processId, processVersion, startNodeKeys,
+			stopNodeKeys);
+	}
+
+	protected void validateTimeframe(
+			long companyId, String[] pauseNodeKeys, long processId,
+			String processVersion, String[] startNodeKeys,
+			String[] stopNodeKeys)
+		throws PortalException {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		Set<String> pauseNodeIds = _getNodeIds(pauseNodeKeys);
+
+		searchSearchRequest.addAggregation(
+			_createNodeIdAggregation("pause", pauseNodeIds));
+
+		Set<String> startNodeIds = _getNodeIds(startNodeKeys);
+
+		searchSearchRequest.addAggregation(
+			_createNodeIdAggregation("start", startNodeIds));
+
+		Set<String> stopNodeIds = _getNodeIds(stopNodeKeys);
+
+		searchSearchRequest.addAggregation(
+			_createNodeIdAggregation("stop", stopNodeIds));
+
+		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		searchSearchRequest.setQuery(
+			booleanQuery.addMustQueryClauses(
+				_queries.term("companyId", companyId),
+				_queries.term("processId", processId),
+				_queries.term("version", processVersion)));
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		Map<String, AggregationResult> aggregationResultsMap =
+			searchSearchResponse.getAggregationResultsMap();
+
+		long pauseNodeIdsCount = _getNodeIdsCount(
+			(FilterAggregationResult)aggregationResultsMap.get("pause"));
+
+		if (pauseNodeIdsCount != pauseNodeIds.size()) {
+			throw new WorkflowMetricsSLADefinitionPauseNodeKeysException();
+		}
+
+		long startNodeIdsCount = _getNodeIdsCount(
+			(FilterAggregationResult)aggregationResultsMap.get("start"));
+
+		if (startNodeIds.isEmpty() ||
+			(startNodeIdsCount != startNodeIds.size())) {
+
+			throw new WorkflowMetricsSLADefinitionStartNodeKeysException();
+		}
+
+		long stopNodeIdsCount = _getNodeIdsCount(
+			(FilterAggregationResult)aggregationResultsMap.get("stop"));
+
+		if (stopNodeIds.isEmpty() || (stopNodeIdsCount != stopNodeIds.size())) {
+			throw new WorkflowMetricsSLADefinitionStopNodeKeysException();
+		}
+	}
+
+	private FilterAggregation _createNodeIdAggregation(
+		String aggregationName, Set<String> nodeIds) {
+
+		TermsQuery termsQuery = _queries.terms("nodeId");
+
+		termsQuery.addValues(nodeIds.toArray());
+
+		FilterAggregation filterAggregation = _aggregations.filter(
+			aggregationName, termsQuery);
+
+		filterAggregation.addChildAggregation(
+			_aggregations.terms("nodeId", "nodeId"));
+
+		return filterAggregation;
 	}
 
 	private String _getLatestProcessVersion(long companyId, long processId) {
@@ -305,6 +396,33 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			StringPool.BLANK
 		);
 	}
+
+	private Set<String> _getNodeIds(String[] nodeKeys) {
+		return Stream.of(
+			nodeKeys
+		).map(
+			nodeKey -> StringUtil.split(nodeKey)
+		).map(
+			nodeKeyParts -> nodeKeyParts[0]
+		).collect(
+			Collectors.toSet()
+		);
+	}
+
+	private long _getNodeIdsCount(
+		FilterAggregationResult filterAggregationResult) {
+
+		TermsAggregationResult termsAggregationResult =
+			(TermsAggregationResult)
+				filterAggregationResult.getChildAggregationResult("nodeId");
+
+		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
+
+		return buckets.size();
+	}
+
+	@ServiceReference(type = Aggregations.class)
+	private Aggregations _aggregations;
 
 	@ServiceReference(type = Queries.class)
 	private Queries _queries;

@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
-import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.persistence.FragmentCollectionUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -123,14 +123,14 @@ public class FragmentCollectionLocalServiceTest {
 	@Test
 	public void testAddMultipleFragmentCollections() throws PortalException {
 		int originalFragmentCollectionsCount =
-			FragmentCollectionLocalServiceUtil.getFragmentCollectionsCount();
+			_fragmentCollectionLocalService.getFragmentCollectionsCount();
 
 		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
 		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
 		int actualFragmentCollectionsCount =
-			FragmentCollectionLocalServiceUtil.getFragmentCollectionsCount();
+			_fragmentCollectionLocalService.getFragmentCollectionsCount();
 
 		Assert.assertEquals(
 			originalFragmentCollectionsCount + 2,
@@ -142,11 +142,11 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		FragmentCollectionLocalServiceUtil.deleteFragmentCollection(
+		_fragmentCollectionLocalService.deleteFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertNull(
-			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+			_fragmentCollectionLocalService.fetchFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
 	}
 
@@ -157,11 +157,11 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		FragmentCollectionLocalServiceUtil.deleteFragmentCollection(
+		_fragmentCollectionLocalService.deleteFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertNull(
-			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+			_fragmentCollectionLocalService.fetchFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
 	}
 
@@ -175,11 +175,11 @@ public class FragmentCollectionLocalServiceTest {
 		FragmentTestUtil.addFragmentEntry(
 			fragmentCollection.getFragmentCollectionId());
 
-		FragmentCollectionLocalServiceUtil.deleteFragmentCollection(
+		_fragmentCollectionLocalService.deleteFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertNull(
-			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+			_fragmentCollectionLocalService.fetchFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
 	}
 
@@ -192,7 +192,7 @@ public class FragmentCollectionLocalServiceTest {
 
 		Assert.assertEquals(
 			fragmentCollection,
-			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+			_fragmentCollectionLocalService.fetchFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
 	}
 
@@ -207,7 +207,7 @@ public class FragmentCollectionLocalServiceTest {
 
 		Assert.assertEquals(
 			fragmentCollection,
-			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+			_fragmentCollectionLocalService.fetchFragmentCollection(
 				_group.getGroupId(), "FRAGMENTCOLLECTIONKEY"));
 	}
 
@@ -216,7 +216,7 @@ public class FragmentCollectionLocalServiceTest {
 		String fragmentCollectionName = RandomTestUtil.randomString();
 
 		List<FragmentCollection> originalFragmentCollections =
-			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+			_fragmentCollectionLocalService.getFragmentCollections(
 				_group.getGroupId(), fragmentCollectionName, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
@@ -227,7 +227,7 @@ public class FragmentCollectionLocalServiceTest {
 			_group.getGroupId(), fragmentCollectionName);
 
 		List<FragmentCollection> actualFragmentCollections =
-			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+			_fragmentCollectionLocalService.getFragmentCollections(
 				_group.getGroupId(), fragmentCollectionName, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
@@ -265,7 +265,7 @@ public class FragmentCollectionLocalServiceTest {
 				new FragmentCollectionCreateDateComparator(true);
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+			_fragmentCollectionLocalService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionCreateDateComparator);
 
@@ -302,7 +302,7 @@ public class FragmentCollectionLocalServiceTest {
 				new FragmentCollectionCreateDateComparator(false);
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+			_fragmentCollectionLocalService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionCreateDateComparator);
 
@@ -327,7 +327,7 @@ public class FragmentCollectionLocalServiceTest {
 			new FragmentCollectionNameComparator(true);
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+			_fragmentCollectionLocalService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionNameComparator);
 
@@ -353,7 +353,7 @@ public class FragmentCollectionLocalServiceTest {
 			new FragmentCollectionNameComparator(false);
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+			_fragmentCollectionLocalService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionNameComparator);
 
@@ -377,7 +377,7 @@ public class FragmentCollectionLocalServiceTest {
 		}
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+			_fragmentCollectionLocalService.getFragmentCollections(
 				_group.getGroupId(), 1, 4, null);
 
 		Assert.assertEquals(
@@ -399,7 +399,7 @@ public class FragmentCollectionLocalServiceTest {
 	@Test
 	public void testGetOSGIServiceIdentifier() {
 		Assert.assertEquals(
-			FragmentCollectionLocalServiceUtil.getOSGiServiceIdentifier(),
+			_fragmentCollectionLocalService.getOSGiServiceIdentifier(),
 			FragmentCollectionLocalService.class.getName());
 	}
 
@@ -410,7 +410,7 @@ public class FragmentCollectionLocalServiceTest {
 				_group.getGroupId(), "Fragment Collection");
 
 		fragmentCollection =
-			FragmentCollectionLocalServiceUtil.updateFragmentCollection(
+			_fragmentCollectionLocalService.updateFragmentCollection(
 				fragmentCollection.getFragmentCollectionId(),
 				"Fragment Collection New", "Fragment Description");
 
@@ -420,6 +420,9 @@ public class FragmentCollectionLocalServiceTest {
 		Assert.assertEquals(
 			"Fragment Description", fragmentCollection.getDescription());
 	}
+
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

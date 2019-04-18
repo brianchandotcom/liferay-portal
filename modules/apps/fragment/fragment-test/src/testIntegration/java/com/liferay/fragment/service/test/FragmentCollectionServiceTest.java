@@ -17,7 +17,7 @@ package com.liferay.fragment.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -99,7 +100,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.addFragmentCollection(
+		_fragmentCollectionService.addFragmentCollection(
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			StringPool.BLANK, serviceContext);
 	}
@@ -114,7 +115,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.addFragmentCollection(
+		_fragmentCollectionService.addFragmentCollection(
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
@@ -129,7 +130,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.addFragmentCollection(
+		_fragmentCollectionService.addFragmentCollection(
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			StringPool.BLANK, serviceContext);
 	}
@@ -144,7 +145,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.addFragmentCollection(
+		_fragmentCollectionService.addFragmentCollection(
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 	}
@@ -166,7 +167,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.deleteFragmentCollections(
+		_fragmentCollectionService.deleteFragmentCollections(
 			fragmentCollections);
 	}
 
@@ -189,7 +190,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.deleteFragmentCollections(
+		_fragmentCollectionService.deleteFragmentCollections(
 			fragmentCollections);
 	}
 
@@ -202,7 +203,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.deleteFragmentCollection(
+		_fragmentCollectionService.deleteFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());
 	}
 
@@ -215,7 +216,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.deleteFragmentCollection(
+		_fragmentCollectionService.deleteFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());
 	}
 
@@ -228,7 +229,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.fetchFragmentCollection(
+		_fragmentCollectionService.fetchFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());
 	}
 
@@ -241,14 +242,14 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.fetchFragmentCollection(
+		_fragmentCollectionService.fetchFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());
 	}
 
 	@Test
 	public void testGetFragmentCollections() throws Exception {
 		List<FragmentCollection> originalFragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
+			_fragmentCollectionService.getFragmentCollections(
 				_group.getGroupId());
 
 		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
@@ -256,7 +257,7 @@ public class FragmentCollectionServiceTest {
 		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
 		List<FragmentCollection> actualFragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
+			_fragmentCollectionService.getFragmentCollections(
 				_group.getGroupId());
 
 		Assert.assertEquals(
@@ -293,7 +294,7 @@ public class FragmentCollectionServiceTest {
 				new FragmentCollectionCreateDateComparator(true);
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
+			_fragmentCollectionService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionCreateDateComparator);
 
@@ -330,7 +331,7 @@ public class FragmentCollectionServiceTest {
 				new FragmentCollectionCreateDateComparator(false);
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
+			_fragmentCollectionService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionCreateDateComparator);
 
@@ -358,7 +359,7 @@ public class FragmentCollectionServiceTest {
 			new FragmentCollectionNameComparator(true);
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
+			_fragmentCollectionService.getFragmentCollections(
 				_group.getGroupId(), "Collection", QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
 
@@ -387,7 +388,7 @@ public class FragmentCollectionServiceTest {
 			new FragmentCollectionNameComparator(false);
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
+			_fragmentCollectionService.getFragmentCollections(
 				_group.getGroupId(), "Collection", QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, fragmentCollectionNameComparator);
 
@@ -414,7 +415,7 @@ public class FragmentCollectionServiceTest {
 			new FragmentCollectionNameComparator(true);
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
+			_fragmentCollectionService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionNameComparator);
 
@@ -440,7 +441,7 @@ public class FragmentCollectionServiceTest {
 			new FragmentCollectionNameComparator(false);
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
+			_fragmentCollectionService.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				fragmentCollectionNameComparator);
 
@@ -461,7 +462,7 @@ public class FragmentCollectionServiceTest {
 		}
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
+			_fragmentCollectionService.getFragmentCollections(
 				_group.getGroupId(), 1, 4, null);
 
 		Assert.assertEquals(
@@ -472,7 +473,7 @@ public class FragmentCollectionServiceTest {
 	@Test
 	public void testGetFragmentCollectionsCount() throws Exception {
 		int originalFragmentCollectionsCount =
-			FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+			_fragmentCollectionService.getFragmentCollectionsCount(
 				_group.getGroupId());
 
 		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
@@ -480,7 +481,7 @@ public class FragmentCollectionServiceTest {
 		FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
 		int actualFragmentCollectionsCount =
-			FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+			_fragmentCollectionService.getFragmentCollectionsCount(
 				_group.getGroupId());
 
 		Assert.assertEquals(
@@ -491,7 +492,7 @@ public class FragmentCollectionServiceTest {
 	@Test
 	public void testGetFragmentCollectionsCountFilterByName() throws Exception {
 		int originalFragmentCollectionsCount =
-			FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+			_fragmentCollectionService.getFragmentCollectionsCount(
 				_group.getGroupId(), "Test");
 
 		FragmentTestUtil.addFragmentCollection(
@@ -501,7 +502,7 @@ public class FragmentCollectionServiceTest {
 			_group.getGroupId(), "Collection Test Name");
 
 		int actualFragmentCollectionsCount =
-			FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+			_fragmentCollectionService.getFragmentCollectionsCount(
 				_group.getGroupId(), "Test");
 
 		Assert.assertEquals(
@@ -513,7 +514,7 @@ public class FragmentCollectionServiceTest {
 	public void testGetTempFileNamesWithoutPermissions() throws Exception {
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.getTempFileNames(
+		_fragmentCollectionService.getTempFileNames(
 			_group.getGroupId(), StringPool.BLANK);
 	}
 
@@ -523,7 +524,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.getTempFileNames(
+		_fragmentCollectionService.getTempFileNames(
 			_group.getGroupId(), StringPool.BLANK);
 	}
 
@@ -536,7 +537,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.updateFragmentCollection(
+		_fragmentCollectionService.updateFragmentCollection(
 			fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
@@ -550,7 +551,7 @@ public class FragmentCollectionServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		FragmentCollectionServiceUtil.updateFragmentCollection(
+		_fragmentCollectionService.updateFragmentCollection(
 			fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
@@ -567,6 +568,9 @@ public class FragmentCollectionServiceTest {
 
 	@DeleteAfterTestRun
 	private Company _company;
+
+	@Inject
+	private FragmentCollectionService _fragmentCollectionService;
 
 	private Group _group;
 	private User _groupUser;

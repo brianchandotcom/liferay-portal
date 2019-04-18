@@ -18,9 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -72,12 +73,12 @@ public class FragmentEntryLinkServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		FragmentCollection fragmentCollection =
-			FragmentCollectionLocalServiceUtil.addFragmentCollection(
+			_fragmentCollectionLocalService.addFragmentCollection(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				"Fragment Collection", StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.addFragmentEntry(
+			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(), "Fragment Name",
 				StringPool.BLANK, "<div>test</div>", StringPool.BLANK,
@@ -88,14 +89,14 @@ public class FragmentEntryLinkServiceTest {
 		long classPK = RandomTestUtil.randomLong();
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentEntry.getFragmentEntryId(), classNameId, classPK,
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), StringPool.BLANK, 0, serviceContext);
 
 		Assert.assertNotNull(
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
 
 		Assert.assertEquals(classNameId, fragmentEntryLink.getClassNameId());
@@ -119,29 +120,29 @@ public class FragmentEntryLinkServiceTest {
 		long classPK = RandomTestUtil.randomLong();
 
 		FragmentCollection fragmentCollection =
-			FragmentCollectionLocalServiceUtil.addFragmentCollection(
+			_fragmentCollectionLocalService.addFragmentCollection(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				"Fragment Collection", StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.addFragmentEntry(
+			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(), "Fragment Name",
 				StringPool.BLANK, "<div>test</div>", StringPool.BLANK,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		List<FragmentEntryLink> originalFragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+		_fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentEntry.getFragmentEntryId(),
 			PortalUtil.getClassNameId(Layout.class), classPK,
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), StringPool.BLANK, 0, serviceContext);
 
-		FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+		_fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentEntry.getFragmentEntryId(),
 			PortalUtil.getClassNameId(Layout.class), classPK,
@@ -149,7 +150,7 @@ public class FragmentEntryLinkServiceTest {
 			fragmentEntry.getJs(), StringPool.BLANK, 1, serviceContext);
 
 		List<FragmentEntryLink> actualFragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
@@ -167,30 +168,30 @@ public class FragmentEntryLinkServiceTest {
 		long classPK = RandomTestUtil.randomLong();
 
 		FragmentCollection fragmentCollection =
-			FragmentCollectionLocalServiceUtil.addFragmentCollection(
+			_fragmentCollectionLocalService.addFragmentCollection(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				"Fragment Collection", StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.addFragmentEntry(
+			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(), "Fragment Name",
 				StringPool.BLANK, "<div>test</div>", StringPool.BLANK,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class), classPK,
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), StringPool.BLANK, 0, serviceContext);
 
-		FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLink(
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId());
 
 		Assert.assertNull(
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
 	}
 
@@ -203,19 +204,19 @@ public class FragmentEntryLinkServiceTest {
 		long classPK = RandomTestUtil.randomLong();
 
 		FragmentCollection fragmentCollection =
-			FragmentCollectionLocalServiceUtil.addFragmentCollection(
+			_fragmentCollectionLocalService.addFragmentCollection(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				"Fragment Collection", StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.addFragmentEntry(
+			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(), "Fragment Name",
 				StringPool.BLANK, "<div>test</div>", StringPool.BLANK,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntryLink fragmentEntryLink1 =
-			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class), classPK,
@@ -223,22 +224,22 @@ public class FragmentEntryLinkServiceTest {
 				fragmentEntry.getJs(), StringPool.BLANK, 0, serviceContext);
 
 		FragmentEntryLink fragmentEntryLink2 =
-			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class), classPK,
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), StringPool.BLANK, 0, serviceContext);
 
-		FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLinks(
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
 			_group.getGroupId());
 
 		Assert.assertNull(
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink1.getFragmentEntryLinkId()));
 
 		Assert.assertNull(
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink2.getFragmentEntryLinkId()));
 	}
 
@@ -249,19 +250,19 @@ public class FragmentEntryLinkServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		FragmentCollection fragmentCollection =
-			FragmentCollectionLocalServiceUtil.addFragmentCollection(
+			_fragmentCollectionLocalService.addFragmentCollection(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				"Fragment Collection", StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.addFragmentEntry(
+			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(), "Fragment Name",
 				StringPool.BLANK, "<div>test</div>", StringPool.BLANK,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class),
@@ -270,11 +271,20 @@ public class FragmentEntryLinkServiceTest {
 				StringPool.BLANK, 0, serviceContext);
 
 		fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId(), 1);
 
 		Assert.assertEquals(1, fragmentEntryLink.getPosition());
 	}
+
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

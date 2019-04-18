@@ -7,7 +7,7 @@ $c: '.ddm-form-builder';
 	}
 
 	.ddm-resize-handle, .ddm-resize-column {
-		top: 0!important;
+		top: 0 !important;
 	}
 
 	@for $range from 1 to 13 {
@@ -25,17 +25,17 @@ $c: '.ddm-form-builder';
 
 	.ddm-field-container {
 		.ddm-resize-handle-left {
-			left: -1px!important;
+			left: -1px !important;
 		}
 
 		.ddm-resize-handle-right {
-			left: inherit!important;
-			right: -1px!important;
+			left: inherit !important;
+			right: -1px !important;
 		}
 
 		.ddm-resize-handle-left,
 		.ddm-resize-handle-right {
-			background-color: #CCCCCC;
+			background-color: #CCC;
 			cursor: inherit;
 			opacity: 0;
 			transition: opacity ease-out 0.3s;

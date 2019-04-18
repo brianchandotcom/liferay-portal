@@ -14,12 +14,12 @@ $c: '.ddm-layout-builder';
 	}
 
 	.ddm-resize-handle-left {
-		left: -1px!important;
+		left: -1px !important;
 	}
 
 	.ddm-resize-handle-right {
-		left: inherit!important;
-		right: -1px!important;
+		left: inherit !important;
+		right: -1px !important;
 	}
 
 	.ddm-resize-column {
@@ -28,7 +28,7 @@ $c: '.ddm-layout-builder';
 	}
 
 	.ddm-resize-handle, .ddm-resize-column {
-		top: 0!important;
+		top: 0 !important;
 	}
 
 	@for $range from 1 to 13 {

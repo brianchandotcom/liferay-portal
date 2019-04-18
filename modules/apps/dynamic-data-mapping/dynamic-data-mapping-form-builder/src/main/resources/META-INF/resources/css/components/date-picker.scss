@@ -17,7 +17,7 @@
 			width: 75%;
 
 			select {
-				margin: 0 1px 0;
+				margin: 0 1px;
 			}
 		}
 
@@ -57,7 +57,7 @@
 
 	.day.active {
 		background-color: #0B5FFF;
-		color: #FFFFFF !important;
+		color: #FFF !important;
 	}
 
 	.day.outside {
@@ -70,7 +70,7 @@
 	}
 
 	.datepicker {
-		padding: 16px 16px;
+		padding: 16px;
 	}
 
 	.dropdown-menu {
@@ -97,7 +97,7 @@
 
 	.extension-time {
 		align-items: center;
-		background-color: rgba(241, 242, 245, 0.50);
+		background-color: rgba(241, 242, 245, 0.5);
 		color: #6B6C7E;
 		display: flex;
 		padding: 16px 32px;

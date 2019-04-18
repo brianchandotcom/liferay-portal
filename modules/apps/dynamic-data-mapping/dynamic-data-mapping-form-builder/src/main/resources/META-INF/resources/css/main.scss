@@ -38,9 +38,9 @@
 .liferay-ddm-form-builder-calculator {
 	flex-direction: column;
 
-	.calculator-button-area li{
+	.calculator-button-area li {
 		&.disabled {
-			pointer-events:none;
+			pointer-events: none;
 		}
 	}
 }
@@ -117,6 +117,7 @@ textarea[class^="form-builder-page-header"] {
 			position: absolute;
 			right: 10px;
 			top: 13px;
+
 			&:hover {
 				color: #65B6F0;
 			}

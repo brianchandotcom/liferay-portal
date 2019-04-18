@@ -922,7 +922,7 @@ definition {
 	}
 
 	macro gotoEntry {
-		LexiconCard.clickCard(
+		LexiconCard.clickCardTitle(
 			card = "${dmDocumentTitle}"
 		);
 	}

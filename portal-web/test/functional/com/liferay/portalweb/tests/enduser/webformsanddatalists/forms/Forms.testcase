@@ -4623,7 +4623,7 @@ definition {
 
 		Form.closeSidebar();
 
-		FormFields.viewSwitcher(fieldName = "Multiple Selection");
+		FormFields.viewSwitcher(fieldName = "Switcher 1");
 
 		FormFields.viewSwitcherLabelNotPresent(
 			fieldLabel = "Multiple Selection",

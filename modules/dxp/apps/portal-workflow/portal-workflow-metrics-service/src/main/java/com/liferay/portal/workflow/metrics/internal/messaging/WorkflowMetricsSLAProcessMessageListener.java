@@ -18,6 +18,8 @@ import com.liferay.portal.background.task.constants.BackgroundTaskContextMapCons
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.metrics.internal.background.task.WorkflowMetricsSLAProcessBackgroundTaskExecutor;
 import com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
@@ -88,6 +91,13 @@ public class WorkflowMetricsSLAProcessMessageListener
 			_workflowMetricsSLADefinitionLocalService.
 				getActionableDynamicQuery();
 
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(
+					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
+			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(WorkflowMetricsSLADefinition workflowMetricsSLADefinition) -> {
 				Map<String, Serializable> taskContextMap = new HashMap<>();

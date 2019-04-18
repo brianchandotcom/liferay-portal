@@ -74,6 +74,6 @@ String googleDocsRedirect = ParamUtil.getString(request, "googleDocsRedirect");
 			</div>
 		</div>
 
-		<iframe class="google-docs-iframe" frameborder="0" id="<portlet:namespace />gDocsIFrame" src="<%= googleDocsEditURL %>"></iframe>
+		<iframe class="google-docs-iframe" frameborder="0" id="<portlet:namespace />gDocsIFrame" src="<%= HtmlUtil.escapeAttribute(googleDocsEditURL) %>"></iframe>
 	</body>
 </html>

@@ -14,20 +14,29 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.NodeKey;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.PauseNodeKeys;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.StartNodeKeys;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.StopNodeKeys;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -128,22 +137,34 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 
 	@Override
 	public SLA postProcessSLA(Long processId, SLA sla) throws Exception {
+		PauseNodeKeys pauseNodeKeys = sla.getPauseNodeKeys();
+		StartNodeKeys startNodeKeys = sla.getStartNodeKeys();
+		StopNodeKeys stopNodeKeys = sla.getStopNodeKeys();
+
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(
 					sla.getName(), sla.getDescription(), sla.getDuration(),
-					processId, sla.getPauseNodeKeys(), sla.getStartNodeKeys(),
-					sla.getStopNodeKeys(), _createServiceContext()));
+					processId, _toStringArray(pauseNodeKeys.getNodeKeys()),
+					_toStringArray(startNodeKeys.getNodeKeys()),
+					_toStringArray(stopNodeKeys.getNodeKeys()),
+					_createServiceContext()));
 	}
 
 	@Override
 	public SLA putSLA(Long slaId, SLA sla) throws Exception {
+		PauseNodeKeys pauseNodeKeys = sla.getPauseNodeKeys();
+		StartNodeKeys startNodeKeys = sla.getStartNodeKeys();
+		StopNodeKeys stopNodeKeys = sla.getStopNodeKeys();
+
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				updateWorkflowMetricsSLADefinition(
 					slaId, sla.getName(), sla.getDescription(),
-					sla.getDuration(), sla.getPauseNodeKeys(),
-					sla.getStartNodeKeys(), sla.getStopNodeKeys(),
+					sla.getDuration(),
+					_toStringArray(pauseNodeKeys.getNodeKeys()),
+					_toStringArray(startNodeKeys.getNodeKeys()),
+					_toStringArray(stopNodeKeys.getNodeKeys()), sla.getStatus(),
 					_createServiceContext()));
 	}
 
@@ -163,6 +184,29 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 		return permissionChecker.getUserId();
 	}
 
+	private NodeKey[] _toNodeKeys(String[] nodeKeys) {
+		return Stream.of(
+			nodeKeys
+		).map(
+			nodeKey -> StringUtil.split(nodeKey, StringPool.COLON)
+		).map(
+			nodeKeyParts -> new NodeKey() {
+				{
+					id = nodeKeyParts[0];
+
+					if (nodeKeyParts.length == 1) {
+						executionType = StringPool.BLANK;
+					}
+					else {
+						executionType = nodeKeyParts[1];
+					}
+				}
+			}
+		).toArray(
+			NodeKey[]::new
+		);
+	}
+
 	private SLA _toSLA(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
@@ -173,16 +217,74 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 				duration = workflowMetricsSLADefinition.getDuration();
 				id = workflowMetricsSLADefinition.getPrimaryKey();
 				name = workflowMetricsSLADefinition.getName();
-				pauseNodeKeys = StringUtil.split(
-					workflowMetricsSLADefinition.getPauseNodeKeys());
+				pauseNodeKeys = new PauseNodeKeys() {
+					{
+						nodeKeys = _toNodeKeys(
+							StringUtil.split(
+								workflowMetricsSLADefinition.
+									getPauseNodeKeys()));
+
+						status = WorkflowConstants.STATUS_APPROVED;
+					}
+				};
 				processId = workflowMetricsSLADefinition.getProcessId();
-				startNodeKeys = StringUtil.split(
-					workflowMetricsSLADefinition.getStartNodeKeys());
-				stopNodeKeys = StringUtil.split(
-					workflowMetricsSLADefinition.getStopNodeKeys());
+				startNodeKeys = new StartNodeKeys() {
+					{
+						nodeKeys = _toNodeKeys(
+							StringUtil.split(
+								workflowMetricsSLADefinition.
+									getStartNodeKeys()));
+
+						status = _toStatus(
+							workflowMetricsSLADefinition.getStartNodeKeys());
+					}
+				};
+
 				status = workflowMetricsSLADefinition.getStatus();
+
+				stopNodeKeys = new StopNodeKeys() {
+					{
+						nodeKeys = _toNodeKeys(
+							StringUtil.split(
+								workflowMetricsSLADefinition.
+									getStopNodeKeys()));
+
+						status = _toStatus(
+							workflowMetricsSLADefinition.getStopNodeKeys());
+					}
+				};
 			}
 		};
+	}
+
+	private int _toStatus(String nodeKeys) {
+		if (Validator.isNull(nodeKeys)) {
+			return WorkflowConstants.STATUS_DRAFT;
+		}
+
+		return WorkflowConstants.STATUS_APPROVED;
+	}
+
+	private String[] _toStringArray(NodeKey[] nodeKeys) {
+		if (nodeKeys == null) {
+			return new String[0];
+		}
+
+		return Stream.of(
+			nodeKeys
+		).map(
+			nodeKey -> {
+				if (nodeKey.getExecutionType() == null) {
+					return nodeKey.getId();
+				}
+
+				return StringBundler.concat(
+					nodeKey.getId(), CharPool.COLON,
+					nodeKey.getExecutionType());
+			}
+		).toArray(
+			String[]::new
+		);
 	}
 
 	@Reference

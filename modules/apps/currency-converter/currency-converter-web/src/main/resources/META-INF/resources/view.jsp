@@ -100,8 +100,8 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 								%>
 
 									<th>
-										<liferay-ui:message key='<%= "currency." + symbol %>' /><br />
-										(<%= symbol %>)
+										<liferay-ui:message key='<%= "currency." + HtmlUtil.escape(symbol) %>' /><br />
+										(<%= HtmlUtil.escape(symbol) %>)
 									</th>
 
 								<%
@@ -120,7 +120,7 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 
 								<tr>
 									<td>
-										<%= symbol %>
+										<%= HtmlUtil.escape(symbol) %>
 									</td>
 
 									<%
@@ -168,7 +168,7 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 				<tbody>
 					<tr>
 						<td class="col-md-4 currency-data">
-							<span class="currency-header"><%= currencyConverter.getFromSymbol() %></span>
+							<span class="currency-header"><%= HtmlUtil.escape(currencyConverter.getFromSymbol()) %></span>
 							<%= number %>
 						</td>
 						<td class="col-md-4 currency-data">
@@ -178,7 +178,7 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 							decimalFormat.setMinimumFractionDigits(2);
 							%>
 
-							<span class="currency-header"><%= currencyConverter.getToSymbol() %></span>
+							<span class="currency-header"><%= HtmlUtil.escape(currencyConverter.getToSymbol()) %></span>
 							<%= decimalFormat.format(number * currencyConverter.getRate()) %>
 						</td>
 						<td class="col-md-4 currency-data">
@@ -239,7 +239,7 @@ NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 			</table>
 
 			<div class="conversion-graph">
-				<img class="currency-graph" height="420" src="http://www.indexmundi.com/xrates/image.aspx?c1=<%= from %>&c2=<%= to %>&days=<%= HtmlUtil.escape(chartId) %>" width="512" />
+				<img class="currency-graph" height="420" src="http://www.indexmundi.com/xrates/image.aspx?c1=<%= HtmlUtil.escapeAttribute(HtmlUtil.escapeURL(from)) %>&c2=<%= HtmlUtil.escapeAttribute(HtmlUtil.escapeURL(to)) %>&days=<%= HtmlUtil.escape(chartId) %>" width="512" />
 			</div>
 		</c:otherwise>
 	</c:choose>

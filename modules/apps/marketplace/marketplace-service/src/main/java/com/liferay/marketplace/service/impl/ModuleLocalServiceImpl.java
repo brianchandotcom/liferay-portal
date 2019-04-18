@@ -63,7 +63,7 @@ public class ModuleLocalServiceImpl extends ModuleLocalServiceBaseImpl {
 			return module;
 		}
 
-		App app = appLocalService.getApp(appId);
+		App app = appPersistence.findByPrimaryKey(appId);
 
 		validate(bundleSymbolicName, contextName);
 

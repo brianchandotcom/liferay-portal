@@ -22,6 +22,7 @@ import com.liferay.marketplace.exception.AppVersionException;
 import com.liferay.marketplace.internal.bundle.BundleManagerUtil;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.model.Module;
+import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.marketplace.service.base.AppLocalServiceBaseImpl;
 import com.liferay.marketplace.util.comparator.AppTitleComparator;
 import com.liferay.petra.string.StringBundler;
@@ -93,7 +94,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		List<Module> modules = modulePersistence.findByAppId(app.getAppId());
 
 		for (Module module : modules) {
-			moduleLocalService.deleteModule(module);
+			_moduleLocalService.deleteModule(module);
 		}
 
 		// File
@@ -301,7 +302,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		List<Module> modules = modulePersistence.findByAppId(app.getAppId());
 
 		for (Module module : modules) {
-			moduleLocalService.deleteModule(module.getModuleId());
+			_moduleLocalService.deleteModule(module.getModuleId());
 
 			if (module.isBundle()) {
 				BundleManagerUtil.uninstallBundle(
@@ -510,6 +511,9 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		AppLocalServiceImpl.class);
 
 	private List<App> _installedApps;
+
+	@Reference
+	private ModuleLocalService _moduleLocalService;
 
 	@Reference
 	private Portal _portal;

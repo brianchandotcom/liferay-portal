@@ -91,7 +91,7 @@ public class SearchResultsPortletTest {
 	public void testDocumentWithoutSummaryIsRemoved() throws Exception {
 		Document document = createDocumentWithSummary();
 
-		setUpSearchResponseDocuments(document, new DocumentImpl());
+		setUpSearchResponseDocuments(document, createDocument());
 
 		render();
 
@@ -107,6 +107,16 @@ public class SearchResultsPortletTest {
 		Assert.assertEquals(
 			Arrays.asList(expectedDocuments),
 			searchResultsPortletDisplayContext.getDocuments());
+	}
+
+	protected Document createDocument() {
+		Document document = new DocumentImpl();
+
+		String className = RandomTestUtil.randomString();
+
+		document.addKeyword(Field.ENTRY_CLASS_NAME, className);
+
+		return document;
 	}
 
 	protected Document createDocumentWithSummary() throws Exception {

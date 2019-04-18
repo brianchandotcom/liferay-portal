@@ -29,7 +29,25 @@ public class NamedConfigurationPathContentFactory
 
 	@Override
 	public NamedConfigurationContent create(URL url) throws IOException {
-		return new PropertiesFileNamedConfigurationContent(url);
+		String name = url.getFile();
+
+		if (name.startsWith("/")) {
+			name = name.substring(1);
+		}
+
+		int lastIndexOfSlash = name.lastIndexOf('/');
+
+		if (lastIndexOfSlash > 0) {
+			name = name.substring(lastIndexOfSlash + 1);
+		}
+
+		if (!name.endsWith(".properties")) {
+			throw new IllegalArgumentException(
+				"File name does not end with .properties");
+		}
+
+		return new PropertiesFileNamedConfigurationContent(
+			name.substring(0, name.length() - 11), url.openStream());
 	}
 
 	@Override

@@ -32,7 +32,25 @@ public class ConfigFileNamedConfigurationPathContentFactory
 
 	@Override
 	public NamedConfigurationContent create(URL url) throws IOException {
-		return new ConfigFileNamedConfigurationContent(url);
+		String name = url.getFile();
+
+		if (name.startsWith("/")) {
+			name = name.substring(1);
+		}
+
+		int lastIndexOfSlash = name.lastIndexOf('/');
+
+		if (lastIndexOfSlash > 0) {
+			name = name.substring(lastIndexOfSlash + 1);
+		}
+
+		if (!name.endsWith(".config")) {
+			throw new IllegalArgumentException(
+				"File name does not end with .config");
+		}
+
+		return new ConfigFileNamedConfigurationContent(
+			name.substring(0, name.length() - 7), url.openStream());
 	}
 
 	@Override

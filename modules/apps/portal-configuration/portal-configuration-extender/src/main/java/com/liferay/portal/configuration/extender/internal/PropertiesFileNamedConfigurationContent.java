@@ -14,10 +14,7 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
-import java.io.IOException;
 import java.io.InputStream;
-
-import java.net.URL;
 
 /**
  * @author Carlos Sierra Andrés
@@ -30,29 +27,6 @@ public final class PropertiesFileNamedConfigurationContent
 
 		_name = name;
 		_inputStream = inputStream;
-	}
-
-	public PropertiesFileNamedConfigurationContent(URL url) throws IOException {
-		String name = url.getFile();
-
-		if (name.startsWith("/")) {
-			name = name.substring(1);
-		}
-
-		int lastIndexOfSlash = name.lastIndexOf('/');
-
-		if (lastIndexOfSlash > 0) {
-			name = name.substring(lastIndexOfSlash + 1);
-		}
-
-		if (!name.endsWith(".properties")) {
-			throw new IllegalArgumentException(
-				"File name does not end with .properties");
-		}
-
-		_name = name.substring(0, name.length() - 11);
-
-		_inputStream = url.openStream();
 	}
 
 	@Override

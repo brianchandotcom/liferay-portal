@@ -16,10 +16,7 @@ package com.liferay.portal.configuration.extender.internal.support.config.file;
 
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContent;
 
-import java.io.IOException;
 import java.io.InputStream;
-
-import java.net.URL;
 
 /**
  * @author Carlos Sierra Andrés
@@ -32,29 +29,6 @@ public final class ConfigFileNamedConfigurationContent
 
 		_name = name;
 		_inputStream = inputStream;
-	}
-
-	public ConfigFileNamedConfigurationContent(URL url) throws IOException {
-		String name = url.getFile();
-
-		if (name.startsWith("/")) {
-			name = name.substring(1);
-		}
-
-		int lastIndexOfSlash = name.lastIndexOf('/');
-
-		if (lastIndexOfSlash > 0) {
-			name = name.substring(lastIndexOfSlash + 1);
-		}
-
-		if (!name.endsWith(".config")) {
-			throw new IllegalArgumentException(
-				"File name does not end with .config");
-		}
-
-		_name = name.substring(0, name.length() - 7);
-
-		_inputStream = url.openStream();
 	}
 
 	@Override

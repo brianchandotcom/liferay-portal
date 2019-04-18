@@ -118,7 +118,7 @@ renderResponse.setTitle(oAuth2Application.getName());
 
 				<p class="authorization text-truncate">
 					<span><liferay-ui:message key="remoteIPInfo" /></span>:
-					<%= HtmlUtil.escape(oAuth2Authorization.getRemoteIPInfo()) %>
+					<%= HtmlUtil.escape(oAuth2Authorization.getRemoteIPInfo()) %>, <%= HtmlUtil.escape(oAuth2Authorization.getRemoteHostInfo()) %>
 				</p>
 
 				<p class="buttons">

@@ -26,7 +26,7 @@ class Numeric extends Component {
 		 * @type {string}
 		 */
 
-		dataType: Config.string(),
+		dataType: Config.string().value('integer'),
 
 		/**
 		 * @default undefined

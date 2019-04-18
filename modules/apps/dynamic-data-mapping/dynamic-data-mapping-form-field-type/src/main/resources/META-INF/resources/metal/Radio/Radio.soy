@@ -55,7 +55,7 @@
 
 	{if $options}
 		<div class="ddm-radio">
-			{let $radioValue: $predefinedValue ? $predefinedValue : $value /}
+			{let $radioValue: $value ?: $predefinedValue ?: '' /}
 
 			{for $radio in $options}
 				{call ClayRadio.render data="$radio"}

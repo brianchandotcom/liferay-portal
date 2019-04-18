@@ -44,6 +44,8 @@ definition {
 	@description = "User can add a display page."
 	@priority = "3"
 	test AddBlankDisplayPage {
+		AssertElementPresent(locator1 = "Button#ANY", key_text = "Publish");
+
 		task ("Publish the display page") {
 			Button.clickPublish();
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 /**
  * @author Iván Zaera
@@ -73,6 +74,7 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 		template.put(
 			"googleClientId",
 			_googleDocsConfigurationHelper.getGoogleClientId());
+		template.put("htmlUtil", HtmlUtil.getHtml());
 		template.put("namespace", _namespace);
 		template.put("onFilePickCallback", _onFilePickCallback);
 

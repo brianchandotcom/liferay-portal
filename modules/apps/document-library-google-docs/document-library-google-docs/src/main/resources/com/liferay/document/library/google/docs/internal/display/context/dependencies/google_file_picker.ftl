@@ -114,9 +114,9 @@ GoogleFilePicker.prototype = {
 	}
 };
 
-GoogleFilePicker.API_KEY = '${googleAppsAPIKey}';
+GoogleFilePicker.API_KEY = '${htmlUtil.escapeJS(googleAppsAPIKey)}';
 
-GoogleFilePicker.CLIENT_ID = '${googleClientId}';
+GoogleFilePicker.CLIENT_ID = '${htmlUtil.escapeJS(googleClientId)}';
 
 GoogleFilePicker.SCOPE = [
 	'https://www.googleapis.com/auth/drive.readonly',

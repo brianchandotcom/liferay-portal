@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.Segment;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -48,9 +49,20 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 
 		segment.setActive(true);
 		segment.setCriteria(
-			"{\"criteria\": {\"user\":{\"conjunction\":\"and\"," +
-				"\"filterString\":\"(firstName eq '" + _user.getFirstName() +
-					"')\",\"typeValue\":\"model\"}}}");
+			JSONUtil.put(
+				"criteria",
+				JSONUtil.put(
+					"user",
+					JSONUtil.put(
+						"conjunction", "and"
+					).put(
+						"filterString",
+						String.format(
+							"(firstName eq '%s')", _user.getFirstName())
+					).put(
+						"typeValue", "model"
+					))
+			).toString());
 		segment.setSource(SegmentsConstants.SOURCE_DEFAULT);
 
 		return segment;

@@ -106,10 +106,12 @@ public class ConfiguratorExtender extends AbstractExtender {
 		for (NamedConfigurationContentFactory namedConfigurationContentFactory :
 				_namedConfigurationContentFactories) {
 
+			String filePattern =
+				namedConfigurationContentFactory.getFilePattern();
+
 			try {
 				Enumeration<URL> entries = bundle.findEntries(
-					configurationPath,
-					namedConfigurationContentFactory.getFilePattern(), true);
+					configurationPath, filePattern, true);
 
 				if (entries == null) {
 					continue;
@@ -119,7 +121,8 @@ public class ConfiguratorExtender extends AbstractExtender {
 					URL url = entries.nextElement();
 
 					namedConfigurationContents.add(
-						namedConfigurationContentFactory.create(url));
+						namedConfigurationContentFactory.create(
+							_getName(url, filePattern), url.openStream()));
 				}
 			}
 			catch (Throwable t) {
@@ -167,6 +170,22 @@ public class ConfiguratorExtender extends AbstractExtender {
 	protected void warn(Bundle bundle, String s, Throwable throwable) {
 		_logger.log(
 			Logger.LOG_WARNING, StringBundler.concat("[", bundle, "] ", s));
+	}
+
+	private String _getName(URL url, String filePattern) {
+		String name = url.getFile();
+
+		if (name.startsWith("/")) {
+			name = name.substring(1);
+		}
+
+		int lastIndexOfSlash = name.lastIndexOf('/');
+
+		if (lastIndexOfSlash > 0) {
+			name = name.substring(lastIndexOfSlash + 1);
+		}
+
+		return name.substring(0, name.length() + 1 - filePattern.length());
 	}
 
 	private ConfigurationAdmin _configurationAdmin;

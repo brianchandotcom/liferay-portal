@@ -14,9 +14,7 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
-import java.io.IOException;
-
-import java.net.URL;
+import java.io.InputStream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,21 +26,10 @@ public class NamedConfigurationPathContentFactory
 	implements NamedConfigurationContentFactory {
 
 	@Override
-	public NamedConfigurationContent create(URL url) throws IOException {
-		String name = url.getFile();
+	public NamedConfigurationContent create(
+		String name, InputStream inputStream) {
 
-		if (name.startsWith("/")) {
-			name = name.substring(1);
-		}
-
-		int lastIndexOfSlash = name.lastIndexOf('/');
-
-		if (lastIndexOfSlash > 0) {
-			name = name.substring(lastIndexOfSlash + 1);
-		}
-
-		return new PropertiesFileNamedConfigurationContent(
-			name.substring(0, name.length() - 11), url.openStream());
+		return new PropertiesFileNamedConfigurationContent(name, inputStream);
 	}
 
 	@Override

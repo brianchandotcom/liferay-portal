@@ -17,9 +17,7 @@ package com.liferay.portal.configuration.extender.internal.support.config.file;
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContent;
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContentFactory;
 
-import java.io.IOException;
-
-import java.net.URL;
+import java.io.InputStream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,21 +29,10 @@ public class ConfigFileNamedConfigurationPathContentFactory
 	implements NamedConfigurationContentFactory {
 
 	@Override
-	public NamedConfigurationContent create(URL url) throws IOException {
-		String name = url.getFile();
+	public NamedConfigurationContent create(
+		String name, InputStream inputStream) {
 
-		if (name.startsWith("/")) {
-			name = name.substring(1);
-		}
-
-		int lastIndexOfSlash = name.lastIndexOf('/');
-
-		if (lastIndexOfSlash > 0) {
-			name = name.substring(lastIndexOfSlash + 1);
-		}
-
-		return new ConfigFileNamedConfigurationContent(
-			name.substring(0, name.length() - 7), url.openStream());
+		return new ConfigFileNamedConfigurationContent(name, inputStream);
 	}
 
 	@Override

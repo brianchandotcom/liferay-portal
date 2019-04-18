@@ -55,6 +55,8 @@ public class GoogleDriveBackgroundTaskConstants {
 	 */
 	public static final String CREATE = "create";
 
+	public static final String DOCS_GOOGLE_COM_URL = "https://docs.google.com/";
+
 	/**
 	 * Provides the ID of the file entry to link to the Google Drive file.
 	 */

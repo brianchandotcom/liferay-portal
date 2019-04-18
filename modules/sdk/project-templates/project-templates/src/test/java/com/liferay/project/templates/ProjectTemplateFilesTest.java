@@ -57,7 +57,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.w3c.dom.Document;
@@ -69,7 +68,6 @@ import org.w3c.dom.NodeList;
  */
 public class ProjectTemplateFilesTest {
 
-	@Ignore
 	@Test
 	public void testProjectTemplateFiles() throws Exception {
 		DocumentBuilderFactory documentBuilderFactory =

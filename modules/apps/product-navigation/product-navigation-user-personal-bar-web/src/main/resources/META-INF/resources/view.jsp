@@ -16,6 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
+<style type="text/css">
+	.personal-menu-dropdown .btn .sticker .inline-item {
+		font-size: unset;
+	}
+</style>
+
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<span class="user-avatar-link">

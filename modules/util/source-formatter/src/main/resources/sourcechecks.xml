@@ -263,6 +263,7 @@
 		<check name="JavaInternalPackageCheck">
 			<property name="enabled" value="false" />
 		</check>
+		<check name="JavaLogClassNameCheck" />
 		<check name="JavaLogLevelCheck" />
 		<check name="JavaLogParametersCheck">
 			<property name="enabled" value="false" />

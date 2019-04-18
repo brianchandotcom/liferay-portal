@@ -131,7 +131,7 @@ public class PortalPreferencesImplTest {
 	}
 
 	@Test
-	public void testReset() throws Exception {
+	public void testReset() {
 		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
@@ -162,7 +162,7 @@ public class PortalPreferencesImplTest {
 	}
 
 	@Test
-	public void testSetSameKeyDifferentValues() throws Exception {
+	public void testSetSameKeyDifferentValues() {
 		FutureTask<Void> futureTask1 = new FutureTask<>(
 			new Callable<Void>() {
 
@@ -255,7 +255,7 @@ public class PortalPreferencesImplTest {
 	}
 
 	@Test
-	public void testSetValueSameKey() throws Exception {
+	public void testSetValueSameKey() {
 		FutureTask<Void> futureTask1 = new FutureTask<>(
 			new Callable<Void>() {
 
@@ -347,7 +347,7 @@ public class PortalPreferencesImplTest {
 	}
 
 	@Test
-	public void testSetValuesSameKey() throws Exception {
+	public void testSetValuesSameKey() {
 		FutureTask<Void> futureTask1 = new FutureTask<>(
 			new Callable<Void>() {
 

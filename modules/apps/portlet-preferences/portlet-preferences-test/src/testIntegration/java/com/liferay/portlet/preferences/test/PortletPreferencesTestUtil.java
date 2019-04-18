@@ -28,15 +28,13 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class PortletPreferencesTestUtil {
 
 	public static PortletPreferences addGroupPortletPreferences(
-			Layout layout, Portlet portlet)
-		throws Exception {
+		Layout layout, Portlet portlet) {
 
 		return addGroupPortletPreferences(layout, portlet, null);
 	}
 
 	public static PortletPreferences addGroupPortletPreferences(
-			Layout layout, Portlet portlet, String defaultPreferences)
-		throws Exception {
+		Layout layout, Portlet portlet, String defaultPreferences) {
 
 		return PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			layout.getCompanyId(), layout.getGroupId(),

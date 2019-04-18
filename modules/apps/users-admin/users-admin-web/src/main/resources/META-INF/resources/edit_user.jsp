@@ -34,6 +34,7 @@ if (selUser != null) {
 }
 %>
 
+
 <liferay-frontend:screen-navigation
 	containerCssClass="col-lg-8"
 	containerWrapperCssClass="container-fluid container-fluid-max-xl container-form-lg"

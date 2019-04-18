@@ -22,6 +22,7 @@ String containerWrapperCssClass = (String)request.getAttribute("liferay-frontend
 String fullContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:fullContainerCssClass");
 String headerContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:headerContainerCssClass");
 String id = (String)request.getAttribute("liferay-frontend:screen-navigation:id");
+boolean inverted = (boolean)request.getAttribute("liferay-frontend:screen-navigation:inverted");
 String menubarCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:menubarCssClass");
 String navCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:navCssClass");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:screen-navigation:portletURL");
@@ -37,6 +38,7 @@ LiferayPortletResponse liferayPortletResponseCopy = liferayPortletResponse;
 	<div class="page-header">
 		<div class="<%= headerContainerCssClass %>">
 			<clay:navigation-bar
+				inverted="<%= inverted %>"
 				navigationItems="<%=
 					new JSPNavigationItemList(pageContext) {
 						{

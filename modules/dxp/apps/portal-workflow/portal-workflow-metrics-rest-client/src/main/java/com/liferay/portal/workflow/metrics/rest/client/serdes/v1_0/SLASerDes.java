@@ -17,6 +17,9 @@ package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -51,12 +54,30 @@ public class SLASerDes {
 
 		sb.append("{");
 
-		sb.append("\"description\": ");
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (sla.getDescription() == null) {
-			sb.append("null");
+		if (sla.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"dateModified\":");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(sla.getDateModified()));
+
+			sb.append("\"");
 		}
-		else {
+
+		if (sla.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"description\":");
+
 			sb.append("\"");
 
 			sb.append(sla.getDescription());
@@ -64,36 +85,33 @@ public class SLASerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (sla.getDuration() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"duration\": ");
+			sb.append("\"duration\":");
 
-		if (sla.getDuration() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(sla.getDuration());
 		}
 
-		sb.append(", ");
+		if (sla.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (sla.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(sla.getId());
 		}
 
-		sb.append(", ");
+		if (sla.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (sla.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(sla.getName());
@@ -101,14 +119,13 @@ public class SLASerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (sla.getPauseNodeKeys() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"pauseNodeKeys\": ");
+			sb.append("\"pauseNodeKeys\":");
 
-		if (sla.getPauseNodeKeys() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < sla.getPauseNodeKeys().length; i++) {
@@ -126,25 +143,23 @@ public class SLASerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (sla.getProcessId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"processId\": ");
+			sb.append("\"processId\":");
 
-		if (sla.getProcessId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(sla.getProcessId());
 		}
 
-		sb.append(", ");
+		if (sla.getStartNodeKeys() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"startNodeKeys\": ");
+			sb.append("\"startNodeKeys\":");
 
-		if (sla.getStartNodeKeys() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < sla.getStartNodeKeys().length; i++) {
@@ -162,14 +177,23 @@ public class SLASerDes {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (sla.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"stopNodeKeys\": ");
+			sb.append("\"status\":");
 
-		if (sla.getStopNodeKeys() == null) {
-			sb.append("null");
+			sb.append(sla.getStatus());
 		}
-		else {
+
+		if (sla.getStopNodeKeys() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
+
+			sb.append("\"stopNodeKeys\":");
+
 			sb.append("[");
 
 			for (int i = 0; i < sla.getStopNodeKeys().length; i++) {
@@ -198,6 +222,13 @@ public class SLASerDes {
 		}
 
 		Map<String, String> map = new HashMap<>();
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		map.put(
+			"dateModified",
+			liferayToJSONDateFormat.format(sla.getDateModified()));
 
 		if (sla.getDescription() == null) {
 			map.put("description", null);
@@ -248,6 +279,13 @@ public class SLASerDes {
 			map.put("startNodeKeys", String.valueOf(sla.getStartNodeKeys()));
 		}
 
+		if (sla.getStatus() == null) {
+			map.put("status", null);
+		}
+		else {
+			map.put("status", String.valueOf(sla.getStatus()));
+		}
+
 		if (sla.getStopNodeKeys() == null) {
 			map.put("stopNodeKeys", null);
 		}
@@ -274,7 +312,12 @@ public class SLASerDes {
 		protected void setField(
 			SLA sla, String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					sla.setDateModified(toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					sla.setDescription((String)jsonParserFieldValue);
 				}
@@ -310,6 +353,12 @@ public class SLASerDes {
 				if (jsonParserFieldValue != null) {
 					sla.setStartNodeKeys(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					sla.setStatus(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "stopNodeKeys")) {

@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -39,6 +40,33 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SLA")
 public class SLA {
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date dateModified;
 
 	public String getDescription() {
 		return description;
@@ -225,6 +253,33 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] startNodeKeys;
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	@JsonIgnore
+	public void setStatus(
+		UnsafeSupplier<Integer, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer status;
+
 	public String[] getStopNodeKeys() {
 		return stopNodeKeys;
 	}
@@ -278,6 +333,19 @@ public class SLA {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
 
 		sb.append("\"description\": ");
 
@@ -380,6 +448,17 @@ public class SLA {
 			}
 
 			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"status\": ");
+
+		if (status == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(status);
 		}
 
 		sb.append(", ");

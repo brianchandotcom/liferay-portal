@@ -51,34 +51,33 @@ public class NodeSerDes {
 
 		sb.append("{");
 
-		sb.append("\"id\": ");
+		if (node.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (node.getId() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"id\":");
+
 			sb.append(node.getId());
 		}
 
-		sb.append(", ");
+		if (node.getInitial() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"initial\": ");
+			sb.append("\"initial\":");
 
-		if (node.getInitial() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(node.getInitial());
 		}
 
-		sb.append(", ");
+		if (node.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (node.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(node.getName());
@@ -86,25 +85,23 @@ public class NodeSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (node.getTerminal() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"terminal\": ");
+			sb.append("\"terminal\":");
 
-		if (node.getTerminal() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(node.getTerminal());
 		}
 
-		sb.append(", ");
+		if (node.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"type\": ");
+			sb.append("\"type\":");
 
-		if (node.getType() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(node.getType());

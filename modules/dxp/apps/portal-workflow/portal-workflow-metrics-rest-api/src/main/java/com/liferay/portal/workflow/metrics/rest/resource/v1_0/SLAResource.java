@@ -32,7 +32,8 @@ import javax.annotation.Generated;
 @Generated("")
 public interface SLAResource {
 
-	public Page<SLA> getProcessSLAsPage(Long processId, Pagination pagination)
+	public Page<SLA> getProcessSLAsPage(
+			Long processId, Integer status, Pagination pagination)
 		throws Exception;
 
 	public SLA postProcessSLA(Long processId, SLA sla) throws Exception;

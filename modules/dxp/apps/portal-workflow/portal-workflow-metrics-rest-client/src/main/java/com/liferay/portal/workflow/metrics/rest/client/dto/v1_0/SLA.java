@@ -16,6 +16,8 @@ package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
 
+import java.util.Date;
+
 import javax.annotation.Generated;
 
 /**
@@ -24,6 +26,27 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public class SLA {
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateModified;
 
 	public String getDescription() {
 		return description;
@@ -167,6 +190,27 @@ public class SLA {
 	}
 
 	protected String[] startNodeKeys;
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public void setStatus(
+		UnsafeSupplier<Integer, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer status;
 
 	public String[] getStopNodeKeys() {
 		return stopNodeKeys;

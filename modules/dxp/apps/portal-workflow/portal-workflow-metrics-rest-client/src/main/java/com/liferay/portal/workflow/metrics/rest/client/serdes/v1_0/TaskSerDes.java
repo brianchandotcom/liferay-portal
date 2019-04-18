@@ -51,23 +51,23 @@ public class TaskSerDes {
 
 		sb.append("{");
 
-		sb.append("\"instanceCount\": ");
+		if (task.getInstanceCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (task.getInstanceCount() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"instanceCount\":");
+
 			sb.append(task.getInstanceCount());
 		}
 
-		sb.append(", ");
+		if (task.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\":");
 
-		if (task.getName() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(task.getName());
@@ -75,25 +75,23 @@ public class TaskSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (task.getOnTimeInstanceCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"onTimeInstanceCount\": ");
+			sb.append("\"onTimeInstanceCount\":");
 
-		if (task.getOnTimeInstanceCount() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(task.getOnTimeInstanceCount());
 		}
 
-		sb.append(", ");
+		if (task.getOverdueInstanceCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"overdueInstanceCount\": ");
+			sb.append("\"overdueInstanceCount\":");
 
-		if (task.getOverdueInstanceCount() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(task.getOverdueInstanceCount());
 		}
 

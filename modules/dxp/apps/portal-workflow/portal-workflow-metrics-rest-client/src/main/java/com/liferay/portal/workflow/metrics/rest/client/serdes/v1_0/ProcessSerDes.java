@@ -51,78 +51,73 @@ public class ProcessSerDes {
 
 		sb.append("{");
 
-		sb.append("\"dueAfterInstanceCount\": ");
+		if (process.getDueAfterInstanceCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (process.getDueAfterInstanceCount() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"dueAfterInstanceCount\":");
+
 			sb.append(process.getDueAfterInstanceCount());
 		}
 
-		sb.append(", ");
+		if (process.getDueInInstanceCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"dueInInstanceCount\": ");
+			sb.append("\"dueInInstanceCount\":");
 
-		if (process.getDueInInstanceCount() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(process.getDueInInstanceCount());
 		}
 
-		sb.append(", ");
+		if (process.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\":");
 
-		if (process.getId() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(process.getId());
 		}
 
-		sb.append(", ");
+		if (process.getInstanceCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"instanceCount\": ");
+			sb.append("\"instanceCount\":");
 
-		if (process.getInstanceCount() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(process.getInstanceCount());
 		}
 
-		sb.append(", ");
+		if (process.getOnTimeInstanceCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"onTimeInstanceCount\": ");
+			sb.append("\"onTimeInstanceCount\":");
 
-		if (process.getOnTimeInstanceCount() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(process.getOnTimeInstanceCount());
 		}
 
-		sb.append(", ");
+		if (process.getOverdueInstanceCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"overdueInstanceCount\": ");
+			sb.append("\"overdueInstanceCount\":");
 
-		if (process.getOverdueInstanceCount() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(process.getOverdueInstanceCount());
 		}
 
-		sb.append(", ");
+		if (process.getTitle() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\":");
 
-		if (process.getTitle() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(process.getTitle());

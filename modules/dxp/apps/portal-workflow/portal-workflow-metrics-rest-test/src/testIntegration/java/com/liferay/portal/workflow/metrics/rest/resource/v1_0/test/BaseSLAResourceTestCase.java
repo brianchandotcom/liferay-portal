@@ -14,6 +14,14 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -63,6 +71,7 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -107,6 +116,62 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
+	public void testClientSerDesToDTO() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				enable(SerializationFeature.INDENT_OUTPUT);
+				setDateFormat(new ISO8601DateFormat());
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			}
+		};
+
+		SLA sla1 = randomSLA();
+
+		String json = objectMapper.writeValueAsString(sla1);
+
+		SLA sla2 = SLASerDes.toDTO(json);
+
+		Assert.assertTrue(equals(sla1, sla2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				setDateFormat(new ISO8601DateFormat());
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			}
+		};
+
+		SLA sla = randomSLA();
+
+		String json1 = objectMapper.writeValueAsString(sla);
+		String json2 = SLASerDes.toJSON(sla);
+
+		Assert.assertEquals(json1, json2);
+	}
+
+	@Test
 	public void testGetProcessSLAsPage() throws Exception {
 		Long processId = testGetProcessSLAsPage_getProcessId();
 		Long irrelevantProcessId =
@@ -117,7 +182,7 @@ public abstract class BaseSLAResourceTestCase {
 				irrelevantProcessId, randomIrrelevantSLA());
 
 			Page<SLA> page = invokeGetProcessSLAsPage(
-				irrelevantProcessId, Pagination.of(1, 2));
+				irrelevantProcessId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -131,7 +196,7 @@ public abstract class BaseSLAResourceTestCase {
 		SLA sla2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
 		Page<SLA> page = invokeGetProcessSLAsPage(
-			processId, Pagination.of(1, 2));
+			processId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -151,14 +216,14 @@ public abstract class BaseSLAResourceTestCase {
 		SLA sla3 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
 		Page<SLA> page1 = invokeGetProcessSLAsPage(
-			processId, Pagination.of(1, 2));
+			processId, null, Pagination.of(1, 2));
 
 		List<SLA> slas1 = (List<SLA>)page1.getItems();
 
 		Assert.assertEquals(slas1.toString(), 2, slas1.size());
 
 		Page<SLA> page2 = invokeGetProcessSLAsPage(
-			processId, Pagination.of(2, 2));
+			processId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -194,7 +259,7 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected Page<SLA> invokeGetProcessSLAsPage(
-			Long processId, Pagination pagination)
+			Long processId, Integer status, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -219,7 +284,7 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	protected Http.Response invokeGetProcessSLAsPageResponse(
-			Long processId, Pagination pagination)
+			Long processId, Integer status, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -523,6 +588,10 @@ public abstract class BaseSLAResourceTestCase {
 	protected void assertValid(SLA sla) {
 		boolean valid = true;
 
+		if (sla.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (sla.getId() == null) {
 			valid = false;
 		}
@@ -578,6 +647,14 @@ public abstract class BaseSLAResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (sla.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("stopNodeKeys", additionalAssertFieldName)) {
 				if (sla.getStopNodeKeys() == null) {
 					valid = false;
@@ -622,6 +699,16 @@ public abstract class BaseSLAResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sla1.getDateModified(), sla2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -683,6 +770,14 @@ public abstract class BaseSLAResourceTestCase {
 				if (!Objects.deepEquals(
 						sla1.getStartNodeKeys(), sla2.getStartNodeKeys())) {
 
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(sla1.getStatus(), sla2.getStatus())) {
 					return false;
 				}
 
@@ -752,6 +847,37 @@ public abstract class BaseSLAResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(sla.getDateModified(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(sla.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(sla.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("description")) {
 			sb.append("'");
 			sb.append(String.valueOf(sla.getDescription()));
@@ -793,6 +919,11 @@ public abstract class BaseSLAResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("status")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("stopNodeKeys")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -805,6 +936,7 @@ public abstract class BaseSLAResourceTestCase {
 	protected SLA randomSLA() {
 		return new SLA() {
 			{
+				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
 				duration = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();

@@ -130,6 +130,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<SLA> getProcessSLAsPage(
 			@GraphQLName("processId") Long processId,
+			@GraphQLName("status") Integer status,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -138,7 +139,7 @@ public class Query {
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
 			slaResource -> {
 				Page paginationPage = slaResource.getProcessSLAsPage(
-					processId, Pagination.of(pageSize, page));
+					processId, status, Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});

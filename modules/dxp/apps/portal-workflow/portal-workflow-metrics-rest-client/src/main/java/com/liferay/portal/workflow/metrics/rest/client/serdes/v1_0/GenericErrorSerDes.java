@@ -53,12 +53,13 @@ public class GenericErrorSerDes {
 
 		sb.append("{");
 
-		sb.append("\"fieldName\": ");
+		if (genericError.getFieldName() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		if (genericError.getFieldName() == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"fieldName\":");
+
 			sb.append("\"");
 
 			sb.append(genericError.getFieldName());
@@ -66,14 +67,13 @@ public class GenericErrorSerDes {
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (genericError.getMessage() != null) {
+			if (sb.length() > 1) {
+				sb.append(",");
+			}
 
-		sb.append("\"message\": ");
+			sb.append("\"message\":");
 
-		if (genericError.getMessage() == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
 
 			sb.append(genericError.getMessage());

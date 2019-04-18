@@ -1710,11 +1710,6 @@ definition {
 			value1 = "${dmDocumentTitle} (Version ${dmDocumentVersionNumber})"
 		);
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION",
-			value1 = "${dmDocumentDescription}"
-		);
-
 		DMDocument.viewDocumentVersionNumberCmdPG(
 			dmDocumentVersionNumber = "${dmDocumentVersionNumber}"
 		);

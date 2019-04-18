@@ -53,9 +53,17 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		JSONObject scriptsJSONObject = jsonObject.getJSONObject("scripts");
 
-		_checkScript(
-			fileName, scriptsJSONObject, "build", "liferay-npm-scripts build",
-			false);
+		if (absolutePath.contains("/modules/apps/frontend-theme")) {
+			_checkScript(
+				fileName, scriptsJSONObject, "build",
+				"liferay-npm-scripts theme build", false);
+		}
+		else {
+			_checkScript(
+				fileName, scriptsJSONObject, "build",
+				"liferay-npm-scripts build", false);
+		}
+
 		_checkScript(
 			fileName, scriptsJSONObject, "checkFormat",
 			"liferay-npm-scripts lint", true);

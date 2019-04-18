@@ -14,19 +14,9 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
 
 import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Peter Shin
@@ -52,71 +42,16 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private List<String> _getBNDExportPackages(String fileName)
-		throws IOException {
-
+	private boolean _hasBNDExportPackage(String fileName) throws IOException {
 		BNDSettings bndSettings = getBNDSettings(fileName);
 
 		if (bndSettings == null) {
-			return Collections.emptyList();
+			return false;
 		}
 
-		Matcher matcher = _exportPackagePattern.matcher(
-			bndSettings.getContent());
-
-		if (!matcher.find()) {
-			return Collections.emptyList();
-		}
-
-		List<String> exportPackages = new ArrayList<>();
-
-		for (String line : StringUtil.splitLines(matcher.group(3))) {
-			line = StringUtil.trim(line);
-
-			if (Validator.isNull(line) || line.equals("\\")) {
-				continue;
-			}
-
-			line = StringUtil.removeSubstring(line, ",\\");
-
-			if (line.indexOf(StringPool.SEMICOLON) != -1) {
-				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
-			}
-
-			exportPackages.add(line.replace(CharPool.PERIOD, CharPool.SLASH));
-		}
-
-		matcher = _exportContentsPattern.matcher(bndSettings.getContent());
-
-		if (!matcher.find()) {
-			return exportPackages;
-		}
-
-		for (String line : StringUtil.splitLines(matcher.group(3))) {
-			line = StringUtil.trim(line);
-
-			if (Validator.isNull(line) || line.equals("\\")) {
-				continue;
-			}
-
-			line = StringUtil.removeSubstring(line, ",\\");
-
-			if (line.indexOf(StringPool.SEMICOLON) != -1) {
-				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
-			}
-
-			exportPackages.add(line.replace(CharPool.PERIOD, CharPool.SLASH));
-		}
-
-		return exportPackages;
-	}
-
-	private boolean _hasBNDExportPackage(String fileName) throws IOException {
-		List<String> bndExportPackages = _getBNDExportPackages(fileName);
-
-		for (String bndExportPackage : bndExportPackages) {
+		for (String exportPackageName : bndSettings.getExportPackageNames()) {
 			String suffix =
-				"/src/main/resources/" + bndExportPackage + "/packageinfo";
+				"/src/main/resources/" + exportPackageName + "/packageinfo";
 
 			if (fileName.endsWith(suffix)) {
 				return true;
@@ -125,12 +60,5 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 
 		return false;
 	}
-
-	private static final Pattern _exportContentsPattern = Pattern.compile(
-		"\n-exportcontents:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
-		Pattern.DOTALL | Pattern.MULTILINE);
-	private static final Pattern _exportPackagePattern = Pattern.compile(
-		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
-		Pattern.DOTALL | Pattern.MULTILINE);
 
 }

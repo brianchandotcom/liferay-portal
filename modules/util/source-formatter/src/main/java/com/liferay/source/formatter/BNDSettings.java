@@ -15,11 +15,16 @@
 package com.liferay.source.formatter;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,6 +41,68 @@ public class BNDSettings {
 
 	public String getContent() {
 		return _content;
+	}
+
+	public List<String> getExportPackageNames() throws IOException {
+		if (_exportPackageNames != null) {
+			return _exportPackageNames;
+		}
+
+		List<String> exportPackageNames = new ArrayList<>();
+
+		Matcher matcher = _exportPackagePattern.matcher(_content);
+
+		if (!matcher.find()) {
+			_exportPackageNames = exportPackageNames;
+
+			return exportPackageNames;
+		}
+
+		for (String line : StringUtil.splitLines(matcher.group(3))) {
+			line = StringUtil.trim(line);
+
+			if (Validator.isNull(line) || line.equals("\\")) {
+				continue;
+			}
+
+			line = StringUtil.removeSubstring(line, ",\\");
+
+			if (line.indexOf(StringPool.SEMICOLON) != -1) {
+				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
+			}
+
+			exportPackageNames.add(
+				line.replace(CharPool.PERIOD, CharPool.SLASH));
+		}
+
+		matcher = _exportContentsPattern.matcher(_content);
+
+		if (!matcher.find()) {
+			_exportPackageNames = exportPackageNames;
+
+			return exportPackageNames;
+		}
+
+		for (String line : StringUtil.splitLines(matcher.group(3))) {
+			line = StringUtil.trim(line);
+
+			if (Validator.isNull(line) || line.equals("\\")) {
+				continue;
+			}
+
+			line = StringUtil.removeSubstring(line, ",\\");
+
+			if (line.indexOf(StringPool.SEMICOLON) != -1) {
+				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
+			}
+
+			exportPackageNames.add(
+				line.replace(CharPool.PERIOD, CharPool.SLASH));
+		}
+
+		_exportPackageNames = exportPackageNames;
+
+		return exportPackageNames;
 	}
 
 	public String getFileLocation() {
@@ -102,10 +169,17 @@ public class BNDSettings {
 
 	private static final Pattern _contentDirPattern = Pattern.compile(
 		"\\scontent=(.*?)(,\\\\|\n|$)");
+	private static final Pattern _exportContentsPattern = Pattern.compile(
+		"\n-exportcontents:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
+		Pattern.DOTALL | Pattern.MULTILINE);
+	private static final Pattern _exportPackagePattern = Pattern.compile(
+		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
+		Pattern.DOTALL | Pattern.MULTILINE);
 	private static final Pattern _releaseVersionPattern = Pattern.compile(
 		"Bundle-Version: (.*)(\n|\\Z)");
 
 	private final String _content;
+	private List<String> _exportPackageNames;
 	private final String _fileName;
 	private Properties _languageProperties;
 	private String _releaseVersion;

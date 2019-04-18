@@ -1,0 +1,1 @@
+com/liferay/currency/converter/util/CurrencyConverterUtil.getAllSymbols(Ljava/util/Locale;)Ljava/util/Map;:SAFE

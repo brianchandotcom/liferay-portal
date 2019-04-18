@@ -197,16 +197,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected BNDSettings getBNDSettings(String fileName) throws IOException {
-		for (Map.Entry<String, BNDSettings> entry :
-				_bndSettingsMap.entrySet()) {
-
-			String bndFileLocation = entry.getKey();
-
-			if (fileName.startsWith(bndFileLocation)) {
-				return entry.getValue();
-			}
-		}
-
 		String bndFileLocation = fileName;
 
 		while (true) {
@@ -218,13 +208,19 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 			bndFileLocation = bndFileLocation.substring(0, pos + 1);
 
+			BNDSettings bndSettings = _bndSettingsMap.get(bndFileLocation);
+
+			if (bndSettings != null) {
+				return bndSettings;
+			}
+
 			File file = new File(bndFileLocation + "bnd.bnd");
 
 			if (file.exists()) {
-				BNDSettings bndSettings = new BNDSettings(
+				bndSettings = new BNDSettings(
 					bndFileLocation + "bnd.bnd", FileUtil.read(file));
 
-				_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
+				_bndSettingsMap.put(bndFileLocation, bndSettings);
 
 				return bndSettings;
 			}

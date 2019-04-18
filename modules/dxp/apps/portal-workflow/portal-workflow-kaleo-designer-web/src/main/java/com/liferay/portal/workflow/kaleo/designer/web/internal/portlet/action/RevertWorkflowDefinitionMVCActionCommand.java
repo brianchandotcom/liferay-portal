@@ -109,10 +109,11 @@ public class RevertWorkflowDefinitionMVCActionCommand
 	}
 
 	/**
-	 * Adds a success message to the workflow definition reversion action
+	 * Returns a success message when the workflow definition is successfully
+	 * reverted to a previous version.
 	 *
-	 * @param  actionRequest The actionRequest object of the action
-	 * @review
+	 * @param  actionRequest The action request used to construct the message
+	 * @return the success message, including the date of the restored version
 	 */
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {

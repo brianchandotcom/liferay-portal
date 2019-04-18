@@ -106,28 +106,10 @@ public class ConfiguratorExtender extends AbstractExtender {
 		for (NamedConfigurationContentFactory namedConfigurationContentFactory :
 				_namedConfigurationContentFactories) {
 
-			String filePattern =
-				namedConfigurationContentFactory.getFilePattern();
-
-			try {
-				Enumeration<URL> entries = bundle.findEntries(
-					configurationPath, filePattern, true);
-
-				if (entries == null) {
-					continue;
-				}
-
-				while (entries.hasMoreElements()) {
-					URL url = entries.nextElement();
-
-					namedConfigurationContents.add(
-						namedConfigurationContentFactory.create(
-							_getName(url, filePattern), url.openStream()));
-				}
-			}
-			catch (Throwable t) {
-				_logger.log(Logger.LOG_INFO, t.getMessage(), t);
-			}
+			_addNamedConfigurations(
+				bundle, configurationPath, namedConfigurationContents,
+				namedConfigurationContentFactory,
+				namedConfigurationContentFactory.getFilePattern());
 		}
 
 		if (namedConfigurationContents.isEmpty()) {
@@ -170,6 +152,33 @@ public class ConfiguratorExtender extends AbstractExtender {
 	protected void warn(Bundle bundle, String s, Throwable throwable) {
 		_logger.log(
 			Logger.LOG_WARNING, StringBundler.concat("[", bundle, "] ", s));
+	}
+
+	private void _addNamedConfigurations(
+		Bundle bundle, String configurationPath,
+		List<NamedConfigurationContent> namedConfigurationContents,
+		NamedConfigurationContentFactory namedConfigurationContentFactory,
+		String filePattern) {
+
+		try {
+			Enumeration<URL> entries = bundle.findEntries(
+				configurationPath, filePattern, true);
+
+			if (entries == null) {
+				return;
+			}
+
+			while (entries.hasMoreElements()) {
+				URL url = entries.nextElement();
+
+				namedConfigurationContents.add(
+					namedConfigurationContentFactory.create(
+						_getName(url, filePattern), url.openStream()));
+			}
+		}
+		catch (Throwable t) {
+			_logger.log(Logger.LOG_INFO, t.getMessage(), t);
+		}
 	}
 
 	private String _getName(URL url, String filePattern) {

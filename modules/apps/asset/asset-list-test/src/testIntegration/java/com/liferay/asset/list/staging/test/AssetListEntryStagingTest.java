@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
-import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListStagingTestUtil;
 import com.liferay.asset.list.util.AssetListTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -238,7 +237,7 @@ public class AssetListEntryStagingTest {
 
 		Assert.assertEquals(stagingAsset.getTitle(), liveAsset.getTitle());
 
-		stagingAsset = AssetListEntryServiceUtil.updateAssetListEntry(
+		stagingAsset = AssetListEntryLocalServiceUtil.updateAssetListEntry(
 			stagingAsset.getAssetListEntryId(), "Test Title Edit");
 
 		AssetListStagingTestUtil.publishLayouts(_stagingGroup, _liveGroup);

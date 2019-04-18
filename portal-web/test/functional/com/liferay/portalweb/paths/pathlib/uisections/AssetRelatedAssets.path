@@ -41,7 +41,7 @@
 <!--This is temporary. After path restructure, the ideal solution is to make the path variable more generic.-->
 <tr>
 	<td>KB_RELATED_ASSETS_LINKS</td>
-	<td>//ul[@class='asset-links-list']/li/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td>//ul[@class='list-group sidebar-list-group']/li//a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

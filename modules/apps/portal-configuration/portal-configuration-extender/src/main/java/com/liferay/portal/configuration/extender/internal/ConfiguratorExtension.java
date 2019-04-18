@@ -81,18 +81,6 @@ public class ConfiguratorExtension implements Extension {
 		}
 	}
 
-	private boolean _configurationExists(String filter)
-		throws InvalidSyntaxException, IOException {
-
-		if (ArrayUtil.isNotEmpty(
-				_configurationAdmin.listConfigurations(filter))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private void _process(ConfigurationDescription configurationDescription)
 		throws InvalidSyntaxException, IOException {
 
@@ -102,7 +90,10 @@ public class ConfiguratorExtension implements Extension {
 		if (configurationDescription.getFactoryPid() == null) {
 			String pid = configurationDescription.getPid();
 
-			if (_configurationExists("(service.pid=" + pid + ")")) {
+			if (ArrayUtil.isNotEmpty(
+					_configurationAdmin.listConfigurations(
+						"(service.pid=" + pid + ")"))) {
+
 				return;
 			}
 
@@ -113,8 +104,9 @@ public class ConfiguratorExtension implements Extension {
 			configuratorURL =
 				_bundleSymbolicName + "#" + configurationDescription.getPid();
 
-			if (_configurationExists(
-					"(configurator.url=" + configuratorURL + ")")) {
+			if (ArrayUtil.isNotEmpty(
+					_configurationAdmin.listConfigurations(
+						"(configurator.url=" + configuratorURL + ")"))) {
 
 				return;
 			}

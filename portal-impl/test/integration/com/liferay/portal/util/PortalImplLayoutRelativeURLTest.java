@@ -100,7 +100,7 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 			layoutRelativeURL,
 			PortalUtil.getLayoutRelativeURL(layout, themeDisplay));
 
-		themeDisplay.setRefererPlid(1);
+		themeDisplay.setRefererPlid(Long.MAX_VALUE);
 
 		try {
 			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay);

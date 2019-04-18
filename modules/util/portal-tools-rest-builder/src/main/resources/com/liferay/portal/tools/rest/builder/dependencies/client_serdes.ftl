@@ -176,6 +176,10 @@ public class ${schemaName}SerDes {
 		return map;
 	}
 
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class ${schemaName}JSONParser extends BaseJSONParser<${schemaName}> {
 
 		@Override
@@ -244,10 +248,6 @@ public class ${schemaName}SerDes {
 				throw new IllegalArgumentException("Unsupported field name " + jsonParserFieldName);
 			}
 		}
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

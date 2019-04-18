@@ -22,13 +22,11 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Gabriel Albuquerque
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class DataRecordCollectionResourceTest
 	extends BaseDataRecordCollectionResourceTestCase {

@@ -25,13 +25,11 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Jeyvison Nascimento
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {

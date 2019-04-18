@@ -37,14 +37,15 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfiguratorExtension implements Extension {
 
 	public ConfiguratorExtension(
-		ConfigurationAdmin configurationAdmin, Logger logger, String namespace,
+		ConfigurationAdmin configurationAdmin, Logger logger,
+		String bundleSymbolicName,
 		Collection<NamedConfigurationContent> namedConfigurationContents,
 		Collection<ConfigurationDescriptionFactory>
 			configurationDescriptionFactories) {
 
 		_configurationAdmin = configurationAdmin;
 		_logger = logger;
-		_namespace = namespace;
+		_bundleSymbolicName = bundleSymbolicName;
 		_configurationContents = namedConfigurationContents;
 		_configurationDescriptionFactories = configurationDescriptionFactories;
 	}
@@ -117,7 +118,7 @@ public class ConfiguratorExtension implements Extension {
 		}
 		else {
 			configuratorURL =
-				_namespace + "#" + configurationDescription.getPid();
+				_bundleSymbolicName + "#" + configurationDescription.getPid();
 
 			if (_configurationExists(
 					"(configurator.url=" + configuratorURL + ")")) {
@@ -155,11 +156,11 @@ public class ConfiguratorExtension implements Extension {
 		configuration.update(properties);
 	}
 
+	private final String _bundleSymbolicName;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final Collection<NamedConfigurationContent> _configurationContents;
 	private final Collection<ConfigurationDescriptionFactory>
 		_configurationDescriptionFactories;
 	private final Logger _logger;
-	private final String _namespace;
 
 }

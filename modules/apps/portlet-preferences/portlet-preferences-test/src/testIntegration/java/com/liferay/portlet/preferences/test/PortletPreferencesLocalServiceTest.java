@@ -274,11 +274,7 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);
 
-		Group group = GroupTestUtil.addGroup();
-
-		_groups.add(group);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = _createNewLayout(false);
 
 		Portlet portlet = _portletLocalService.getPortletById(
 			layout.getCompanyId(), String.valueOf(_PORTLET_ID + 1));
@@ -303,11 +299,7 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);
 
-		Group group = GroupTestUtil.addGroup();
-
-		_groups.add(group);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = _createNewLayout(false);
 
 		Portlet portlet = _portletLocalService.getPortletById(
 			layout.getCompanyId(), String.valueOf(_PORTLET_ID + 1));
@@ -332,11 +324,7 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			_layout, _portlet);
 
-		Group group = GroupTestUtil.addGroup();
-
-		_groups.add(group);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = _createNewLayout(false);
 
 		Portlet portlet = _portletLocalService.getPortletById(
 			layout.getCompanyId(), String.valueOf(_PORTLET_ID + 1));
@@ -524,7 +512,7 @@ public class PortletPreferencesLocalServiceTest {
 		PortletPreferencesTestUtil.addGroupPortletPreferences(
 			_layout, _portlet);
 
-		Layout layout = LayoutTestUtil.addLayout(GroupTestUtil.addGroup());
+		Layout layout = _createNewLayout(false);
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
@@ -942,8 +930,7 @@ public class PortletPreferencesLocalServiceTest {
 
 	@Test
 	public void testGetLayoutPrivatePortletPreferences() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
-			GroupTestUtil.addGroup(), true);
+		Layout layout = _createNewLayout(true);
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
@@ -960,8 +947,7 @@ public class PortletPreferencesLocalServiceTest {
 
 	@Test
 	public void testGetNotLayoutPrivatePortletPreferences() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
-			GroupTestUtil.addGroup(), false);
+		Layout layout = _createNewLayout(false);
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
@@ -1011,7 +997,7 @@ public class PortletPreferencesLocalServiceTest {
 			portletPreferencesList.toString(), 1,
 			portletPreferencesList.size());
 
-		Layout layout = LayoutTestUtil.addLayout(GroupTestUtil.addGroup());
+		Layout layout = _createNewLayout(false);
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
@@ -1070,7 +1056,7 @@ public class PortletPreferencesLocalServiceTest {
 		Assert.assertEquals(
 			portletPreferences.getPortletId(), _portlet.getPortletId());
 
-		Layout layout = LayoutTestUtil.addLayout(GroupTestUtil.addGroup());
+		Layout layout = _createNewLayout(false);
 
 		Portlet portlet1 = _portletLocalService.getPortletById(
 			layout.getCompanyId(), String.valueOf(_PORTLET_ID + 1));
@@ -1107,11 +1093,7 @@ public class PortletPreferencesLocalServiceTest {
 			portletPreferencesList.toString(), 1,
 			portletPreferencesList.size());
 
-		Group group = GroupTestUtil.addGroup();
-
-		_groups.add(group);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = _createNewLayout(false);
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
@@ -1146,11 +1128,7 @@ public class PortletPreferencesLocalServiceTest {
 
 		assertOwner(_layout, portletPreferencesImpl);
 
-		Group group = GroupTestUtil.addGroup();
-
-		_groups.add(group);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = _createNewLayout(false);
 
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
 			layout, _portlet);
@@ -1181,11 +1159,7 @@ public class PortletPreferencesLocalServiceTest {
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 				_portlet.getPortletId()));
 
-		Group group = GroupTestUtil.addGroup();
-
-		_groups.add(group);
-
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = _createNewLayout(false);
 
 		PortletPreferencesTestUtil.addGroupPortletPreferences(layout, _portlet);
 
@@ -1506,6 +1480,14 @@ public class PortletPreferencesLocalServiceTest {
 
 	protected void resetService() throws Exception {
 		_serviceBag.replace();
+	}
+
+	private Layout _createNewLayout(boolean privateLayout) throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		_groups.add(group);
+
+		return LayoutTestUtil.addLayout(group, privateLayout);
 	}
 
 	private PortletPreferencesImpl _toPortletPreferencesImpl(

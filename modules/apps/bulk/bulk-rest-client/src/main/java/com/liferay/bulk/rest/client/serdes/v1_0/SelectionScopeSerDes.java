@@ -55,7 +55,7 @@ public class SelectionScopeSerDes {
 
 		if (selectionScope.getFolderId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"folderId\":");
@@ -65,7 +65,7 @@ public class SelectionScopeSerDes {
 
 		if (selectionScope.getRepositoryId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"repositoryId\":");
@@ -75,7 +75,7 @@ public class SelectionScopeSerDes {
 
 		if (selectionScope.getSelectAll() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"selectAll\":");
@@ -119,6 +119,12 @@ public class SelectionScopeSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class SelectionScopeJSONParser

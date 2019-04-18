@@ -109,7 +109,7 @@ public class WorkflowTaskSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(workflowTask.getDefinitionName()));
+			sb.append(_escape(workflowTask.getDefinitionName()));
 
 			sb.append("\"");
 		}
@@ -123,7 +123,7 @@ public class WorkflowTaskSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(workflowTask.getDescription()));
+			sb.append(_escape(workflowTask.getDescription()));
 
 			sb.append("\"");
 		}
@@ -162,7 +162,7 @@ public class WorkflowTaskSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(workflowTask.getName()));
+			sb.append(_escape(workflowTask.getName()));
 
 			sb.append("\"");
 		}
@@ -190,7 +190,7 @@ public class WorkflowTaskSerDes {
 			for (int i = 0; i < workflowTask.getTransitions().length; i++) {
 				sb.append("\"");
 
-				sb.append(workflowTask.getTransitions()[i]);
+				sb.append(_escape(workflowTask.getTransitions()[i]));
 
 				sb.append("\"");
 
@@ -287,6 +287,12 @@ public class WorkflowTaskSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class WorkflowTaskJSONParser
 		extends BaseJSONParser<WorkflowTask> {
 
@@ -369,10 +375,6 @@ public class WorkflowTaskSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -331,4 +331,176 @@ public class KnowledgeBaseFolder {
 
 	protected ViewableBy viewableBy;
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof KnowledgeBaseFolder)) {
+			return false;
+		}
+
+		KnowledgeBaseFolder knowledgeBaseFolder = (KnowledgeBaseFolder)object;
+
+		return Objects.equals(toString(), knowledgeBaseFolder.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"creator\": ");
+
+		if (creator == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(creator);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(description);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"numberOfKnowledgeBaseArticles\": ");
+
+		if (numberOfKnowledgeBaseArticles == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(numberOfKnowledgeBaseArticles);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"numberOfKnowledgeBaseFolders\": ");
+
+		if (numberOfKnowledgeBaseFolders == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(numberOfKnowledgeBaseFolders);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"parentKnowledgeBaseFolder\": ");
+
+		if (parentKnowledgeBaseFolder == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(parentKnowledgeBaseFolder);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"parentKnowledgeBaseFolderId\": ");
+
+		if (parentKnowledgeBaseFolderId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(parentKnowledgeBaseFolderId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"siteId\": ");
+
+		if (siteId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(siteId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"viewableBy\": ");
+
+		if (viewableBy == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(viewableBy);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 }

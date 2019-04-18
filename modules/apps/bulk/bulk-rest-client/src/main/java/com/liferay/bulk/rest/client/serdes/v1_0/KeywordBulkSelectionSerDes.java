@@ -55,7 +55,7 @@ public class KeywordBulkSelectionSerDes {
 
 		if (keywordBulkSelection.getDocumentBulkSelection() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"documentBulkSelection\":");
@@ -67,7 +67,7 @@ public class KeywordBulkSelectionSerDes {
 
 		if (keywordBulkSelection.getKeywordsToAdd() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywordsToAdd\":");
@@ -79,7 +79,7 @@ public class KeywordBulkSelectionSerDes {
 
 				sb.append("\"");
 
-				sb.append(keywordBulkSelection.getKeywordsToAdd()[i]);
+				sb.append(_escape(keywordBulkSelection.getKeywordsToAdd()[i]));
 
 				sb.append("\"");
 
@@ -93,7 +93,7 @@ public class KeywordBulkSelectionSerDes {
 
 		if (keywordBulkSelection.getKeywordsToRemove() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"keywordsToRemove\":");
@@ -105,7 +105,8 @@ public class KeywordBulkSelectionSerDes {
 
 				sb.append("\"");
 
-				sb.append(keywordBulkSelection.getKeywordsToRemove()[i]);
+				sb.append(
+					_escape(keywordBulkSelection.getKeywordsToRemove()[i]));
 
 				sb.append("\"");
 
@@ -162,6 +163,12 @@ public class KeywordBulkSelectionSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class KeywordBulkSelectionJSONParser

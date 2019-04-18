@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -148,5 +149,107 @@ public class Comment {
 	}
 
 	protected String text;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Comment)) {
+			return false;
+		}
+
+		Comment comment = (Comment)object;
+
+		return Objects.equals(toString(), comment.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"creator\": ");
+
+		if (creator == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(creator);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"numberOfComments\": ");
+
+		if (numberOfComments == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(numberOfComments);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"text\": ");
+
+		if (text == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(text);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

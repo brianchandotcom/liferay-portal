@@ -80,7 +80,7 @@ public class WorkflowTaskAssignToUserSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(workflowTaskAssignToUser.getComment()));
+			sb.append(_escape(workflowTaskAssignToUser.getComment()));
 
 			sb.append("\"");
 		}
@@ -144,6 +144,12 @@ public class WorkflowTaskAssignToUserSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class WorkflowTaskAssignToUserJSONParser
 		extends BaseJSONParser<WorkflowTaskAssignToUser> {
 
@@ -186,10 +192,6 @@ public class WorkflowTaskAssignToUserSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

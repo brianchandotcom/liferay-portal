@@ -16,6 +16,8 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -127,5 +129,96 @@ public class Phone {
 	}
 
 	protected Boolean primary;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Phone)) {
+			return false;
+		}
+
+		Phone phone = (Phone)object;
+
+		return Objects.equals(toString(), phone.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"extension\": ");
+
+		if (extension == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(extension);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"phoneNumber\": ");
+
+		if (phoneNumber == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(phoneNumber);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"phoneType\": ");
+
+		if (phoneType == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(phoneType);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"primary\": ");
+
+		if (primary == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(primary);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

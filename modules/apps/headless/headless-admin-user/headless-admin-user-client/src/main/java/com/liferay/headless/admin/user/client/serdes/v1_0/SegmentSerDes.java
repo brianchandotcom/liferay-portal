@@ -76,7 +76,7 @@ public class SegmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(segment.getCriteria()));
+			sb.append(_escape(segment.getCriteria()));
 
 			sb.append("\"");
 		}
@@ -129,7 +129,7 @@ public class SegmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(segment.getName()));
+			sb.append(_escape(segment.getName()));
 
 			sb.append("\"");
 		}
@@ -153,7 +153,7 @@ public class SegmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(segment.getSource()));
+			sb.append(_escape(segment.getSource()));
 
 			sb.append("\"");
 		}
@@ -226,6 +226,12 @@ public class SegmentSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class SegmentJSONParser extends BaseJSONParser<Segment> {
 
 		@Override
@@ -292,10 +298,6 @@ public class SegmentSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

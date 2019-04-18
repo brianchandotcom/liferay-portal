@@ -16,6 +16,8 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -232,5 +234,161 @@ public class PostalAddress {
 	}
 
 	protected String streetAddressLine3;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof PostalAddress)) {
+			return false;
+		}
+
+		PostalAddress postalAddress = (PostalAddress)object;
+
+		return Objects.equals(toString(), postalAddress.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"addressCountry\": ");
+
+		if (addressCountry == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(addressCountry);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"addressLocality\": ");
+
+		if (addressLocality == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(addressLocality);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"addressRegion\": ");
+
+		if (addressRegion == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(addressRegion);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"addressType\": ");
+
+		if (addressType == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(addressType);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"postalCode\": ");
+
+		if (postalCode == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(postalCode);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"primary\": ");
+
+		if (primary == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(primary);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"streetAddressLine1\": ");
+
+		if (streetAddressLine1 == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(streetAddressLine1);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"streetAddressLine2\": ");
+
+		if (streetAddressLine2 == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(streetAddressLine2);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"streetAddressLine3\": ");
+
+		if (streetAddressLine3 == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(streetAddressLine3);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

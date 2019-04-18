@@ -125,7 +125,7 @@ public class KeywordSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(keyword.getName()));
+			sb.append(_escape(keyword.getName()));
 
 			sb.append("\"");
 		}
@@ -203,6 +203,12 @@ public class KeywordSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class KeywordJSONParser extends BaseJSONParser<Keyword> {
 
 		@Override
@@ -266,10 +272,6 @@ public class KeywordSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -16,6 +16,8 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -66,5 +68,69 @@ public class DataLayoutColumn {
 	}
 
 	protected String[] fieldNames;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DataLayoutColumn)) {
+			return false;
+		}
+
+		DataLayoutColumn dataLayoutColumn = (DataLayoutColumn)object;
+
+		return Objects.equals(toString(), dataLayoutColumn.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"columnSize\": ");
+
+		if (columnSize == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(columnSize);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"fieldNames\": ");
+
+		if (fieldNames == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < fieldNames.length; i++) {
+				sb.append("\"");
+				sb.append(fieldNames[i]);
+				sb.append("\"");
+
+				if ((i + 1) < fieldNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

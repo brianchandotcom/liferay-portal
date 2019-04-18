@@ -168,7 +168,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(dataDefinition);
 		String json2 = DataDefinitionSerDes.toJSON(dataDefinition);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

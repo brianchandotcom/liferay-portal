@@ -99,7 +99,8 @@ public class TaxonomyVocabularySerDes {
 
 				sb.append("\"");
 
-				sb.append(taxonomyVocabulary.getAvailableLanguages()[i]);
+				sb.append(
+					_escape(taxonomyVocabulary.getAvailableLanguages()[i]));
 
 				sb.append("\"");
 
@@ -164,7 +165,7 @@ public class TaxonomyVocabularySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(taxonomyVocabulary.getDescription()));
+			sb.append(_escape(taxonomyVocabulary.getDescription()));
 
 			sb.append("\"");
 		}
@@ -188,7 +189,7 @@ public class TaxonomyVocabularySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(taxonomyVocabulary.getName()));
+			sb.append(_escape(taxonomyVocabulary.getName()));
 
 			sb.append("\"");
 		}
@@ -333,6 +334,12 @@ public class TaxonomyVocabularySerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class TaxonomyVocabularyJSONParser
 		extends BaseJSONParser<TaxonomyVocabulary> {
 
@@ -433,10 +440,6 @@ public class TaxonomyVocabularySerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

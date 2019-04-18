@@ -57,7 +57,7 @@ public class DataDefinitionPermissionSerDes {
 
 		if (dataDefinitionPermission.getAddDataDefinition() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"addDataDefinition\":");
@@ -67,7 +67,7 @@ public class DataDefinitionPermissionSerDes {
 
 		if (dataDefinitionPermission.getDefinePermissions() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"definePermissions\":");
@@ -77,7 +77,7 @@ public class DataDefinitionPermissionSerDes {
 
 		if (dataDefinitionPermission.getDelete() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"delete\":");
@@ -87,7 +87,7 @@ public class DataDefinitionPermissionSerDes {
 
 		if (dataDefinitionPermission.getRoleNames() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"roleNames\":");
@@ -99,7 +99,7 @@ public class DataDefinitionPermissionSerDes {
 
 				sb.append("\"");
 
-				sb.append(dataDefinitionPermission.getRoleNames()[i]);
+				sb.append(_escape(dataDefinitionPermission.getRoleNames()[i]));
 
 				sb.append("\"");
 
@@ -113,7 +113,7 @@ public class DataDefinitionPermissionSerDes {
 
 		if (dataDefinitionPermission.getUpdate() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"update\":");
@@ -123,7 +123,7 @@ public class DataDefinitionPermissionSerDes {
 
 		if (dataDefinitionPermission.getView() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"view\":");
@@ -198,6 +198,12 @@ public class DataDefinitionPermissionSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataDefinitionPermissionJSONParser

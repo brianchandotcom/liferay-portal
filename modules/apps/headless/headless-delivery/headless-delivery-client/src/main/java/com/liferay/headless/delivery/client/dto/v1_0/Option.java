@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -66,5 +68,61 @@ public class Option {
 	}
 
 	protected String value;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Option)) {
+			return false;
+		}
+
+		Option option = (Option)object;
+
+		return Objects.equals(toString(), option.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"label\": ");
+
+		if (label == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(label);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"value\": ");
+
+		if (value == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

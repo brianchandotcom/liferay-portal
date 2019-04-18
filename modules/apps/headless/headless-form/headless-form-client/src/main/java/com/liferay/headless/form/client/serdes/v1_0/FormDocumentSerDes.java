@@ -62,7 +62,7 @@ public class FormDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(formDocument.getContentUrl()));
+			sb.append(_escape(formDocument.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -76,7 +76,7 @@ public class FormDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(formDocument.getEncodingFormat()));
+			sb.append(_escape(formDocument.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -90,7 +90,7 @@ public class FormDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(formDocument.getFileExtension()));
+			sb.append(_escape(formDocument.getFileExtension()));
 
 			sb.append("\"");
 		}
@@ -124,7 +124,7 @@ public class FormDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(formDocument.getTitle()));
+			sb.append(_escape(formDocument.getTitle()));
 
 			sb.append("\"");
 		}
@@ -191,6 +191,12 @@ public class FormDocumentSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class FormDocumentJSONParser
 		extends BaseJSONParser<FormDocument> {
 
@@ -248,10 +254,6 @@ public class FormDocumentSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

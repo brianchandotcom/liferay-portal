@@ -59,7 +59,7 @@ public class TaxonomyCategoryBulkSelectionSerDes {
 
 		if (taxonomyCategoryBulkSelection.getDocumentBulkSelection() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"documentBulkSelection\":");
@@ -73,7 +73,7 @@ public class TaxonomyCategoryBulkSelectionSerDes {
 				null) {
 
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategoryIdsToAdd\":");
@@ -103,7 +103,7 @@ public class TaxonomyCategoryBulkSelectionSerDes {
 				null) {
 
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategoryIdsToRemove\":");
@@ -180,6 +180,12 @@ public class TaxonomyCategoryBulkSelectionSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class TaxonomyCategoryBulkSelectionJSONParser

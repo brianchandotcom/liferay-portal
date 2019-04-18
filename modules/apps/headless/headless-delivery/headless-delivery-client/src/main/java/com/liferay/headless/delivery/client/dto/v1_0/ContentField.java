@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -167,5 +169,130 @@ public class ContentField {
 	}
 
 	protected Value value;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof ContentField)) {
+			return false;
+		}
+
+		ContentField contentField = (ContentField)object;
+
+		return Objects.equals(toString(), contentField.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"dataType\": ");
+
+		if (dataType == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dataType);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"inputControl\": ");
+
+		if (inputControl == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(inputControl);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"label\": ");
+
+		if (label == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(label);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"nestedFields\": ");
+
+		if (nestedFields == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < nestedFields.length; i++) {
+				sb.append(nestedFields[i]);
+
+				if ((i + 1) < nestedFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"repeatable\": ");
+
+		if (repeatable == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(repeatable);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"value\": ");
+
+		if (value == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(value);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

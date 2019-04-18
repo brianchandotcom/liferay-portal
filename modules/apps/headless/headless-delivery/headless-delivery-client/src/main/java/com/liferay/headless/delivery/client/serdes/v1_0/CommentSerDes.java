@@ -125,7 +125,7 @@ public class CommentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(comment.getText()));
+			sb.append(_escape(comment.getText()));
 
 			sb.append("\"");
 		}
@@ -186,6 +186,12 @@ public class CommentSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class CommentJSONParser extends BaseJSONParser<Comment> {
 
 		@Override
@@ -243,10 +249,6 @@ public class CommentSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

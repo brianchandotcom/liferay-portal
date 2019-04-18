@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -66,5 +68,60 @@ public class ParentKnowledgeBaseFolder {
 	}
 
 	protected String folderName;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof ParentKnowledgeBaseFolder)) {
+			return false;
+		}
+
+		ParentKnowledgeBaseFolder parentKnowledgeBaseFolder =
+			(ParentKnowledgeBaseFolder)object;
+
+		return Objects.equals(toString(), parentKnowledgeBaseFolder.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"folderId\": ");
+
+		if (folderId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(folderId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"folderName\": ");
+
+		if (folderName == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(folderName);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

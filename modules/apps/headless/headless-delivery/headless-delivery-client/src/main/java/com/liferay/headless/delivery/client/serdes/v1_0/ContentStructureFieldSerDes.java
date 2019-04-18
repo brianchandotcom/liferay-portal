@@ -64,7 +64,7 @@ public class ContentStructureFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentStructureField.getDataType()));
+			sb.append(_escape(contentStructureField.getDataType()));
 
 			sb.append("\"");
 		}
@@ -78,7 +78,7 @@ public class ContentStructureFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentStructureField.getInputControl()));
+			sb.append(_escape(contentStructureField.getInputControl()));
 
 			sb.append("\"");
 		}
@@ -92,7 +92,7 @@ public class ContentStructureFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentStructureField.getLabel()));
+			sb.append(_escape(contentStructureField.getLabel()));
 
 			sb.append("\"");
 		}
@@ -126,7 +126,7 @@ public class ContentStructureFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentStructureField.getName()));
+			sb.append(_escape(contentStructureField.getName()));
 
 			sb.append("\"");
 		}
@@ -192,8 +192,7 @@ public class ContentStructureFieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(
-				_escapeString(contentStructureField.getPredefinedValue()));
+			sb.append(_escape(contentStructureField.getPredefinedValue()));
 
 			sb.append("\"");
 		}
@@ -349,6 +348,12 @@ public class ContentStructureFieldSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class ContentStructureFieldJSONParser
 		extends BaseJSONParser<ContentStructureField> {
 
@@ -459,10 +464,6 @@ public class ContentStructureFieldSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

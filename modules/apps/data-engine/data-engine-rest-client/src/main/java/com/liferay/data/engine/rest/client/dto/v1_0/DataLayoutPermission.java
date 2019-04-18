@@ -16,6 +16,8 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -148,5 +150,114 @@ public class DataLayoutPermission {
 	}
 
 	protected Boolean view;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DataLayoutPermission)) {
+			return false;
+		}
+
+		DataLayoutPermission dataLayoutPermission =
+			(DataLayoutPermission)object;
+
+		return Objects.equals(toString(), dataLayoutPermission.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"addDataLayout\": ");
+
+		if (addDataLayout == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(addDataLayout);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"definePermissions\": ");
+
+		if (definePermissions == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(definePermissions);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"delete\": ");
+
+		if (delete == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(delete);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"roleNames\": ");
+
+		if (roleNames == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < roleNames.length; i++) {
+				sb.append("\"");
+				sb.append(roleNames[i]);
+				sb.append("\"");
+
+				if ((i + 1) < roleNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"update\": ");
+
+		if (update == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(update);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"view\": ");
+
+		if (view == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(view);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

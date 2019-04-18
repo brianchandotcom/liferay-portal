@@ -16,6 +16,8 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -106,5 +108,100 @@ public class DataRecordCollection {
 	}
 
 	protected LocalizedValue[] name;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DataRecordCollection)) {
+			return false;
+		}
+
+		DataRecordCollection dataRecordCollection =
+			(DataRecordCollection)object;
+
+		return Objects.equals(toString(), dataRecordCollection.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"dataDefinitionId\": ");
+
+		if (dataDefinitionId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(dataDefinitionId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < description.length; i++) {
+				sb.append(description[i]);
+
+				if ((i + 1) < description.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < name.length; i++) {
+				sb.append(name[i]);
+
+				if ((i + 1) < name.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

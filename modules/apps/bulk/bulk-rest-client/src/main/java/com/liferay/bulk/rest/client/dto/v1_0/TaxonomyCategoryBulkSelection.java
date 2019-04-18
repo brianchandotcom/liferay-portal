@@ -16,6 +16,8 @@ package com.liferay.bulk.rest.client.dto.v1_0;
 
 import com.liferay.bulk.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -96,5 +98,90 @@ public class TaxonomyCategoryBulkSelection {
 	}
 
 	protected Long[] taxonomyCategoryIdsToRemove;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof TaxonomyCategoryBulkSelection)) {
+			return false;
+		}
+
+		TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection =
+			(TaxonomyCategoryBulkSelection)object;
+
+		return Objects.equals(
+			toString(), taxonomyCategoryBulkSelection.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"documentBulkSelection\": ");
+
+		if (documentBulkSelection == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(documentBulkSelection);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyCategoryIdsToAdd\": ");
+
+		if (taxonomyCategoryIdsToAdd == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategoryIdsToAdd.length; i++) {
+				sb.append(taxonomyCategoryIdsToAdd[i]);
+
+				if ((i + 1) < taxonomyCategoryIdsToAdd.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyCategoryIdsToRemove\": ");
+
+		if (taxonomyCategoryIdsToRemove == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategoryIdsToRemove.length; i++) {
+				sb.append(taxonomyCategoryIdsToRemove[i]);
+
+				if ((i + 1) < taxonomyCategoryIdsToRemove.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

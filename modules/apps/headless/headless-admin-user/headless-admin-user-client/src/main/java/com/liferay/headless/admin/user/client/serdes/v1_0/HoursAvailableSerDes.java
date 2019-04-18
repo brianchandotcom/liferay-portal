@@ -62,7 +62,7 @@ public class HoursAvailableSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(hoursAvailable.getCloses()));
+			sb.append(_escape(hoursAvailable.getCloses()));
 
 			sb.append("\"");
 		}
@@ -76,7 +76,7 @@ public class HoursAvailableSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(hoursAvailable.getDayOfWeek()));
+			sb.append(_escape(hoursAvailable.getDayOfWeek()));
 
 			sb.append("\"");
 		}
@@ -100,7 +100,7 @@ public class HoursAvailableSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(hoursAvailable.getOpens()));
+			sb.append(_escape(hoursAvailable.getOpens()));
 
 			sb.append("\"");
 		}
@@ -148,6 +148,12 @@ public class HoursAvailableSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class HoursAvailableJSONParser
 		extends BaseJSONParser<HoursAvailable> {
 
@@ -193,10 +199,6 @@ public class HoursAvailableSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

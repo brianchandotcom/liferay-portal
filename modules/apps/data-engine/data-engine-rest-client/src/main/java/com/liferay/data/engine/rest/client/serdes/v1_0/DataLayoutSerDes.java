@@ -62,7 +62,7 @@ public class DataLayoutSerDes {
 
 		if (dataLayout.getDataDefinitionId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataDefinitionId\":");
@@ -72,7 +72,7 @@ public class DataLayoutSerDes {
 
 		if (dataLayout.getDataLayoutPages() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataLayoutPages\":");
@@ -94,7 +94,7 @@ public class DataLayoutSerDes {
 
 		if (dataLayout.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -109,7 +109,7 @@ public class DataLayoutSerDes {
 
 		if (dataLayout.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -124,21 +124,21 @@ public class DataLayoutSerDes {
 
 		if (dataLayout.getDefaultLanguageId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"defaultLanguageId\":");
 
 			sb.append("\"");
 
-			sb.append(dataLayout.getDefaultLanguageId());
+			sb.append(_escape(dataLayout.getDefaultLanguageId()));
 
 			sb.append("\"");
 		}
 
 		if (dataLayout.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -160,7 +160,7 @@ public class DataLayoutSerDes {
 
 		if (dataLayout.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -170,7 +170,7 @@ public class DataLayoutSerDes {
 
 		if (dataLayout.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -190,21 +190,21 @@ public class DataLayoutSerDes {
 
 		if (dataLayout.getPaginationMode() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"paginationMode\":");
 
 			sb.append("\"");
 
-			sb.append(dataLayout.getPaginationMode());
+			sb.append(_escape(dataLayout.getPaginationMode()));
 
 			sb.append("\"");
 		}
 
 		if (dataLayout.getUserId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"userId\":");
@@ -300,6 +300,12 @@ public class DataLayoutSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataLayoutJSONParser

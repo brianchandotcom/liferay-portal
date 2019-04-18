@@ -62,7 +62,7 @@ public class BlogPostingImageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(blogPostingImage.getContentUrl()));
+			sb.append(_escape(blogPostingImage.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -76,7 +76,7 @@ public class BlogPostingImageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(blogPostingImage.getEncodingFormat()));
+			sb.append(_escape(blogPostingImage.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -90,7 +90,7 @@ public class BlogPostingImageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(blogPostingImage.getFileExtension()));
+			sb.append(_escape(blogPostingImage.getFileExtension()));
 
 			sb.append("\"");
 		}
@@ -124,7 +124,7 @@ public class BlogPostingImageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(blogPostingImage.getTitle()));
+			sb.append(_escape(blogPostingImage.getTitle()));
 
 			sb.append("\"");
 		}
@@ -215,6 +215,12 @@ public class BlogPostingImageSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class BlogPostingImageJSONParser
 		extends BaseJSONParser<BlogPostingImage> {
 
@@ -281,10 +287,6 @@ public class BlogPostingImageSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

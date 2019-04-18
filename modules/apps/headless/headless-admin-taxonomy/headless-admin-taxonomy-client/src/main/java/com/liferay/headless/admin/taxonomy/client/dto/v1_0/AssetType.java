@@ -16,6 +16,8 @@ package com.liferay.headless.admin.taxonomy.client.dto.v1_0;
 
 import com.liferay.headless.admin.taxonomy.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -85,5 +87,72 @@ public class AssetType {
 	}
 
 	protected String type;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof AssetType)) {
+			return false;
+		}
+
+		AssetType assetType = (AssetType)object;
+
+		return Objects.equals(toString(), assetType.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"required\": ");
+
+		if (required == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(required);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"subtype\": ");
+
+		if (subtype == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(subtype);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"type\": ");
+
+		if (type == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

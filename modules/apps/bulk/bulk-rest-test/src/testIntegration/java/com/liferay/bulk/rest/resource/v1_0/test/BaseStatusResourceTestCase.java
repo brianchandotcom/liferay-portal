@@ -161,7 +161,8 @@ public abstract class BaseStatusResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(status);
 		String json2 = StatusSerDes.toJSON(status);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

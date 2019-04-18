@@ -247,6 +247,12 @@ public class FormRecordSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class FormRecordJSONParser
 		extends BaseJSONParser<FormRecord> {
 
@@ -330,10 +336,6 @@ public class FormRecordSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

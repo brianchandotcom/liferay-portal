@@ -16,6 +16,8 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -86,5 +88,80 @@ public class Service {
 	}
 
 	protected String serviceType;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Service)) {
+			return false;
+		}
+
+		Service service = (Service)object;
+
+		return Objects.equals(toString(), service.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"hoursAvailable\": ");
+
+		if (hoursAvailable == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < hoursAvailable.length; i++) {
+				sb.append(hoursAvailable[i]);
+
+				if ((i + 1) < hoursAvailable.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"serviceType\": ");
+
+		if (serviceType == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(serviceType);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

@@ -62,7 +62,7 @@ public class EmailAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(emailAddress.getEmailAddress()));
+			sb.append(_escape(emailAddress.getEmailAddress()));
 
 			sb.append("\"");
 		}
@@ -96,7 +96,7 @@ public class EmailAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(emailAddress.getType()));
+			sb.append(_escape(emailAddress.getType()));
 
 			sb.append("\"");
 		}
@@ -145,6 +145,12 @@ public class EmailAddressSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class EmailAddressJSONParser
 		extends BaseJSONParser<EmailAddress> {
 
@@ -190,10 +196,6 @@ public class EmailAddressSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

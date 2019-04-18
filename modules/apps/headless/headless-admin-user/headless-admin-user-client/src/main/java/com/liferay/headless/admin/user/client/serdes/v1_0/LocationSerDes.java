@@ -60,7 +60,7 @@ public class LocationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(location.getAddressCountry()));
+			sb.append(_escape(location.getAddressCountry()));
 
 			sb.append("\"");
 		}
@@ -74,7 +74,7 @@ public class LocationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(location.getAddressRegion()));
+			sb.append(_escape(location.getAddressRegion()));
 
 			sb.append("\"");
 		}
@@ -127,6 +127,12 @@ public class LocationSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class LocationJSONParser extends BaseJSONParser<Location> {
 
 		@Override
@@ -165,10 +171,6 @@ public class LocationSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

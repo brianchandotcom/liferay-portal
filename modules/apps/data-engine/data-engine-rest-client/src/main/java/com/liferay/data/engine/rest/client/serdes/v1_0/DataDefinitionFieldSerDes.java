@@ -58,7 +58,7 @@ public class DataDefinitionFieldSerDes {
 
 		if (dataDefinitionField.getCustomProperties() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"customProperties\":");
@@ -84,7 +84,7 @@ public class DataDefinitionFieldSerDes {
 
 		if (dataDefinitionField.getDefaultValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"defaultValue\":");
@@ -108,21 +108,21 @@ public class DataDefinitionFieldSerDes {
 
 		if (dataDefinitionField.getFieldType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"fieldType\":");
 
 			sb.append("\"");
 
-			sb.append(dataDefinitionField.getFieldType());
+			sb.append(_escape(dataDefinitionField.getFieldType()));
 
 			sb.append("\"");
 		}
 
 		if (dataDefinitionField.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -132,7 +132,7 @@ public class DataDefinitionFieldSerDes {
 
 		if (dataDefinitionField.getIndexable() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"indexable\":");
@@ -142,7 +142,7 @@ public class DataDefinitionFieldSerDes {
 
 		if (dataDefinitionField.getLabel() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"label\":");
@@ -164,7 +164,7 @@ public class DataDefinitionFieldSerDes {
 
 		if (dataDefinitionField.getLocalizable() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"localizable\":");
@@ -174,21 +174,21 @@ public class DataDefinitionFieldSerDes {
 
 		if (dataDefinitionField.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
 
 			sb.append("\"");
 
-			sb.append(dataDefinitionField.getName());
+			sb.append(_escape(dataDefinitionField.getName()));
 
 			sb.append("\"");
 		}
 
 		if (dataDefinitionField.getRepeatable() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"repeatable\":");
@@ -198,7 +198,7 @@ public class DataDefinitionFieldSerDes {
 
 		if (dataDefinitionField.getTip() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"tip\":");
@@ -315,6 +315,12 @@ public class DataDefinitionFieldSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataDefinitionFieldJSONParser

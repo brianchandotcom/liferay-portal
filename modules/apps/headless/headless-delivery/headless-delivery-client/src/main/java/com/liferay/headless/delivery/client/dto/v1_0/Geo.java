@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -66,5 +68,57 @@ public class Geo {
 	}
 
 	protected Double longitude;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Geo)) {
+			return false;
+		}
+
+		Geo geo = (Geo)object;
+
+		return Objects.equals(toString(), geo.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"latitude\": ");
+
+		if (latitude == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(latitude);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"longitude\": ");
+
+		if (longitude == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(longitude);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

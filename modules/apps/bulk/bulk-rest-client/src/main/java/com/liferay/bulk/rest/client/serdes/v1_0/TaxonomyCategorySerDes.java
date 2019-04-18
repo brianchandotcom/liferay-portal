@@ -55,7 +55,7 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getTaxonomyCategoryId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategoryId\":");
@@ -65,14 +65,14 @@ public class TaxonomyCategorySerDes {
 
 		if (taxonomyCategory.getTaxonomyCategoryName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"taxonomyCategoryName\":");
 
 			sb.append("\"");
 
-			sb.append(taxonomyCategory.getTaxonomyCategoryName());
+			sb.append(_escape(taxonomyCategory.getTaxonomyCategoryName()));
 
 			sb.append("\"");
 		}
@@ -108,6 +108,12 @@ public class TaxonomyCategorySerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class TaxonomyCategoryJSONParser

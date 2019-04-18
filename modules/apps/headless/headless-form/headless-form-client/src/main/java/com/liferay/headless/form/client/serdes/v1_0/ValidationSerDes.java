@@ -60,7 +60,7 @@ public class ValidationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(validation.getErrorMessage()));
+			sb.append(_escape(validation.getErrorMessage()));
 
 			sb.append("\"");
 		}
@@ -74,7 +74,7 @@ public class ValidationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(validation.getExpression()));
+			sb.append(_escape(validation.getExpression()));
 
 			sb.append("\"");
 		}
@@ -126,6 +126,12 @@ public class ValidationSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class ValidationJSONParser
 		extends BaseJSONParser<Validation> {
 
@@ -166,10 +172,6 @@ public class ValidationSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

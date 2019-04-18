@@ -445,4 +445,290 @@ public class Document {
 
 	protected ViewableBy viewableBy;
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Document)) {
+			return false;
+		}
+
+		Document document = (Document)object;
+
+		return Objects.equals(toString(), document.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"adaptedImages\": ");
+
+		if (adaptedImages == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < adaptedImages.length; i++) {
+				sb.append(adaptedImages[i]);
+
+				if ((i + 1) < adaptedImages.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"aggregateRating\": ");
+
+		if (aggregateRating == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(aggregateRating);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"contentUrl\": ");
+
+		if (contentUrl == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(contentUrl);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"creator\": ");
+
+		if (creator == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(creator);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(description);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"documentFolderId\": ");
+
+		if (documentFolderId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(documentFolderId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"encodingFormat\": ");
+
+		if (encodingFormat == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(encodingFormat);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"fileExtension\": ");
+
+		if (fileExtension == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(fileExtension);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"keywords\": ");
+
+		if (keywords == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < keywords.length; i++) {
+				sb.append("\"");
+				sb.append(keywords[i]);
+				sb.append("\"");
+
+				if ((i + 1) < keywords.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"numberOfComments\": ");
+
+		if (numberOfComments == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(numberOfComments);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"sizeInBytes\": ");
+
+		if (sizeInBytes == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(sizeInBytes);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyCategories\": ");
+
+		if (taxonomyCategories == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategories.length; i++) {
+				sb.append(taxonomyCategories[i]);
+
+				if ((i + 1) < taxonomyCategories.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyCategoryIds\": ");
+
+		if (taxonomyCategoryIds == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategoryIds.length; i++) {
+				sb.append(taxonomyCategoryIds[i]);
+
+				if ((i + 1) < taxonomyCategoryIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"title\": ");
+
+		if (title == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(title);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"viewableBy\": ");
+
+		if (viewableBy == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(viewableBy);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 }

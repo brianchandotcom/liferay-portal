@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -64,5 +66,60 @@ public class StructuredContentLink {
 	}
 
 	protected String title;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof StructuredContentLink)) {
+			return false;
+		}
+
+		StructuredContentLink structuredContentLink =
+			(StructuredContentLink)object;
+
+		return Objects.equals(toString(), structuredContentLink.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"title\": ");
+
+		if (title == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(title);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

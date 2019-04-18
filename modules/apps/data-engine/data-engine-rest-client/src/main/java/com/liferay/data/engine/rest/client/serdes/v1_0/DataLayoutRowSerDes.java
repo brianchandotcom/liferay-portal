@@ -57,7 +57,7 @@ public class DataLayoutRowSerDes {
 
 		if (dataLayoutRow.getDataLayoutColums() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataLayoutColums\":");
@@ -101,6 +101,12 @@ public class DataLayoutRowSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataLayoutRowJSONParser

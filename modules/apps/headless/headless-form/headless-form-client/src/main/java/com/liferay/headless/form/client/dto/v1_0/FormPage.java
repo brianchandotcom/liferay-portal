@@ -16,6 +16,8 @@ package com.liferay.headless.form.client.dto.v1_0;
 
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -104,5 +106,93 @@ public class FormPage {
 	}
 
 	protected String text;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof FormPage)) {
+			return false;
+		}
+
+		FormPage formPage = (FormPage)object;
+
+		return Objects.equals(toString(), formPage.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"fields\": ");
+
+		if (fields == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < fields.length; i++) {
+				sb.append(fields[i]);
+
+				if ((i + 1) < fields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"headline\": ");
+
+		if (headline == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(headline);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"text\": ");
+
+		if (text == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(text);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

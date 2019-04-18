@@ -140,6 +140,12 @@ public class GridSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class GridJSONParser extends BaseJSONParser<Grid> {
 
 		@Override
@@ -192,10 +198,6 @@ public class GridSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

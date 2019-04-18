@@ -71,7 +71,7 @@ public class FormSerDes {
 			for (int i = 0; i < form.getAvailableLanguages().length; i++) {
 				sb.append("\"");
 
-				sb.append(form.getAvailableLanguages()[i]);
+				sb.append(_escape(form.getAvailableLanguages()[i]));
 
 				sb.append("\"");
 
@@ -144,7 +144,7 @@ public class FormSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(form.getDefaultLanguage()));
+			sb.append(_escape(form.getDefaultLanguage()));
 
 			sb.append("\"");
 		}
@@ -158,7 +158,7 @@ public class FormSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(form.getDescription()));
+			sb.append(_escape(form.getDescription()));
 
 			sb.append("\"");
 		}
@@ -222,7 +222,7 @@ public class FormSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(form.getName()));
+			sb.append(_escape(form.getName()));
 
 			sb.append("\"");
 		}
@@ -368,6 +368,12 @@ public class FormSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class FormJSONParser extends BaseJSONParser<Form> {
 
 		@Override
@@ -474,10 +480,6 @@ public class FormSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

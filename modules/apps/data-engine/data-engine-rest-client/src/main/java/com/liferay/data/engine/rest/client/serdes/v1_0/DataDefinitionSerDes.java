@@ -65,7 +65,7 @@ public class DataDefinitionSerDes {
 
 		if (dataDefinition.getDataDefinitionFields() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataDefinitionFields\":");
@@ -89,7 +89,7 @@ public class DataDefinitionSerDes {
 
 		if (dataDefinition.getDataDefinitionRules() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataDefinitionRules\":");
@@ -113,7 +113,7 @@ public class DataDefinitionSerDes {
 
 		if (dataDefinition.getDateCreated() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateCreated\":");
@@ -129,7 +129,7 @@ public class DataDefinitionSerDes {
 
 		if (dataDefinition.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dateModified\":");
@@ -145,7 +145,7 @@ public class DataDefinitionSerDes {
 
 		if (dataDefinition.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -167,7 +167,7 @@ public class DataDefinitionSerDes {
 
 		if (dataDefinition.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -177,7 +177,7 @@ public class DataDefinitionSerDes {
 
 		if (dataDefinition.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -198,7 +198,7 @@ public class DataDefinitionSerDes {
 
 		if (dataDefinition.getSiteId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"siteId\":");
@@ -208,21 +208,21 @@ public class DataDefinitionSerDes {
 
 		if (dataDefinition.getStorageType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"storageType\":");
 
 			sb.append("\"");
 
-			sb.append(dataDefinition.getStorageType());
+			sb.append(_escape(dataDefinition.getStorageType()));
 
 			sb.append("\"");
 		}
 
 		if (dataDefinition.getUserId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"userId\":");
@@ -316,6 +316,12 @@ public class DataDefinitionSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataDefinitionJSONParser

@@ -17,6 +17,7 @@ package com.liferay.headless.admin.taxonomy.client.dto.v1_0;
 import com.liferay.headless.admin.taxonomy.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -169,5 +170,118 @@ public class Keyword {
 	}
 
 	protected Long siteId;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Keyword)) {
+			return false;
+		}
+
+		Keyword keyword = (Keyword)object;
+
+		return Objects.equals(toString(), keyword.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"creator\": ");
+
+		if (creator == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(creator);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"keywordUsageCount\": ");
+
+		if (keywordUsageCount == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(keywordUsageCount);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"siteId\": ");
+
+		if (siteId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(siteId);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

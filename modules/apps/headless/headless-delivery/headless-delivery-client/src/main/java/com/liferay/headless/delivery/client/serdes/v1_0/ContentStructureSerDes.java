@@ -75,7 +75,7 @@ public class ContentStructureSerDes {
 
 				sb.append("\"");
 
-				sb.append(contentStructure.getAvailableLanguages()[i]);
+				sb.append(_escape(contentStructure.getAvailableLanguages()[i]));
 
 				sb.append("\"");
 
@@ -164,7 +164,7 @@ public class ContentStructureSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentStructure.getDescription()));
+			sb.append(_escape(contentStructure.getDescription()));
 
 			sb.append("\"");
 		}
@@ -188,7 +188,7 @@ public class ContentStructureSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentStructure.getName()));
+			sb.append(_escape(contentStructure.getName()));
 
 			sb.append("\"");
 		}
@@ -285,6 +285,12 @@ public class ContentStructureSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class ContentStructureJSONParser
 		extends BaseJSONParser<ContentStructure> {
 
@@ -371,10 +377,6 @@ public class ContentStructureSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

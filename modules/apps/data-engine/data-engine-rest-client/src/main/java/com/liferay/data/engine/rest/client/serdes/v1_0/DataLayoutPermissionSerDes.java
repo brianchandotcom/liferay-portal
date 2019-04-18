@@ -55,7 +55,7 @@ public class DataLayoutPermissionSerDes {
 
 		if (dataLayoutPermission.getAddDataLayout() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"addDataLayout\":");
@@ -65,7 +65,7 @@ public class DataLayoutPermissionSerDes {
 
 		if (dataLayoutPermission.getDefinePermissions() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"definePermissions\":");
@@ -75,7 +75,7 @@ public class DataLayoutPermissionSerDes {
 
 		if (dataLayoutPermission.getDelete() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"delete\":");
@@ -85,7 +85,7 @@ public class DataLayoutPermissionSerDes {
 
 		if (dataLayoutPermission.getRoleNames() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"roleNames\":");
@@ -97,7 +97,7 @@ public class DataLayoutPermissionSerDes {
 
 				sb.append("\"");
 
-				sb.append(dataLayoutPermission.getRoleNames()[i]);
+				sb.append(_escape(dataLayoutPermission.getRoleNames()[i]));
 
 				sb.append("\"");
 
@@ -111,7 +111,7 @@ public class DataLayoutPermissionSerDes {
 
 		if (dataLayoutPermission.getUpdate() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"update\":");
@@ -121,7 +121,7 @@ public class DataLayoutPermissionSerDes {
 
 		if (dataLayoutPermission.getView() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"view\":");
@@ -192,6 +192,12 @@ public class DataLayoutPermissionSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataLayoutPermissionJSONParser

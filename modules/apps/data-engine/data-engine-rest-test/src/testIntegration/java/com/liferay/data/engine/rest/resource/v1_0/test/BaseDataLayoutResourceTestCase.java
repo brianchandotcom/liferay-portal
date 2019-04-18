@@ -168,7 +168,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(dataLayout);
 		String json2 = DataLayoutSerDes.toJSON(dataLayout);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

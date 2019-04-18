@@ -55,26 +55,30 @@ public class DataRecordValueSerDes {
 
 		if (dataRecordValue.getKey() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"key\":");
 
 			sb.append("\"");
 
-			sb.append(dataRecordValue.getKey());
+			sb.append(_escape(dataRecordValue.getKey()));
 
 			sb.append("\"");
 		}
 
 		if (dataRecordValue.getValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"value\":");
 
-			sb.append(dataRecordValue.getValue());
+			sb.append("\"");
+
+			sb.append(_escape(dataRecordValue.getValue()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -104,6 +108,12 @@ public class DataRecordValueSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataRecordValueJSONParser

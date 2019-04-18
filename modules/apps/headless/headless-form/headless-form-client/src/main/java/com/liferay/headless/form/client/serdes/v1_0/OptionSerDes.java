@@ -70,7 +70,7 @@ public class OptionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(option.getLabel()));
+			sb.append(_escape(option.getLabel()));
 
 			sb.append("\"");
 		}
@@ -84,7 +84,7 @@ public class OptionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(option.getValue()));
+			sb.append(_escape(option.getValue()));
 
 			sb.append("\"");
 		}
@@ -125,6 +125,12 @@ public class OptionSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class OptionJSONParser extends BaseJSONParser<Option> {
 
 		@Override
@@ -163,10 +169,6 @@ public class OptionSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

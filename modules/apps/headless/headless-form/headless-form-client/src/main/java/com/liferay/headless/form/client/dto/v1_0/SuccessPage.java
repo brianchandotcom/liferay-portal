@@ -16,6 +16,8 @@ package com.liferay.headless.form.client.dto.v1_0;
 
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -85,5 +87,72 @@ public class SuccessPage {
 	}
 
 	protected Long id;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof SuccessPage)) {
+			return false;
+		}
+
+		SuccessPage successPage = (SuccessPage)object;
+
+		return Objects.equals(toString(), successPage.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(description);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"headline\": ");
+
+		if (headline == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(headline);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

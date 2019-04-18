@@ -55,7 +55,7 @@ public class DataRecordSerDes {
 
 		if (dataRecord.getDataRecordCollectionId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataRecordCollectionId\":");
@@ -65,7 +65,7 @@ public class DataRecordSerDes {
 
 		if (dataRecord.getDataRecordValues() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataRecordValues\":");
@@ -87,7 +87,7 @@ public class DataRecordSerDes {
 
 		if (dataRecord.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -133,6 +133,12 @@ public class DataRecordSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataRecordJSONParser

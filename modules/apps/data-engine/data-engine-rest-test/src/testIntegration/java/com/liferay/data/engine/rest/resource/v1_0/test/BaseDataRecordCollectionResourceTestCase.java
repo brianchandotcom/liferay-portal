@@ -170,7 +170,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(dataRecordCollection);
 		String json2 = DataRecordCollectionSerDes.toJSON(dataRecordCollection);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

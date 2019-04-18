@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -235,5 +236,183 @@ public class DataLayout {
 	}
 
 	protected Long userId;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DataLayout)) {
+			return false;
+		}
+
+		DataLayout dataLayout = (DataLayout)object;
+
+		return Objects.equals(toString(), dataLayout.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"dataDefinitionId\": ");
+
+		if (dataDefinitionId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(dataDefinitionId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dataLayoutPages\": ");
+
+		if (dataLayoutPages == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < dataLayoutPages.length; i++) {
+				sb.append(dataLayoutPages[i]);
+
+				if ((i + 1) < dataLayoutPages.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"defaultLanguageId\": ");
+
+		if (defaultLanguageId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(defaultLanguageId);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < description.length; i++) {
+				sb.append(description[i]);
+
+				if ((i + 1) < description.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < name.length; i++) {
+				sb.append(name[i]);
+
+				if ((i + 1) < name.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"paginationMode\": ");
+
+		if (paginationMode == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(paginationMode);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"userId\": ");
+
+		if (userId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(userId);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

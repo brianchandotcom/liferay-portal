@@ -101,7 +101,7 @@ public class DocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(document.getContentUrl()));
+			sb.append(_escape(document.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -155,7 +155,7 @@ public class DocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(document.getDescription()));
+			sb.append(_escape(document.getDescription()));
 
 			sb.append("\"");
 		}
@@ -179,7 +179,7 @@ public class DocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(document.getEncodingFormat()));
+			sb.append(_escape(document.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -193,7 +193,7 @@ public class DocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(document.getFileExtension()));
+			sb.append(_escape(document.getFileExtension()));
 
 			sb.append("\"");
 		}
@@ -220,7 +220,7 @@ public class DocumentSerDes {
 			for (int i = 0; i < document.getKeywords().length; i++) {
 				sb.append("\"");
 
-				sb.append(document.getKeywords()[i]);
+				sb.append(_escape(document.getKeywords()[i]));
 
 				sb.append("\"");
 
@@ -303,7 +303,7 @@ public class DocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(document.getTitle()));
+			sb.append(_escape(document.getTitle()));
 
 			sb.append("\"");
 		}
@@ -473,6 +473,12 @@ public class DocumentSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class DocumentJSONParser extends BaseJSONParser<Document> {
 
 		@Override
@@ -617,10 +623,6 @@ public class DocumentSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

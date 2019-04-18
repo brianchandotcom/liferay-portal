@@ -76,7 +76,7 @@ public class ParentKnowledgeBaseFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(parentKnowledgeBaseFolder.getFolderName()));
+			sb.append(_escape(parentKnowledgeBaseFolder.getFolderName()));
 
 			sb.append("\"");
 		}
@@ -116,6 +116,12 @@ public class ParentKnowledgeBaseFolderSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class ParentKnowledgeBaseFolderJSONParser
 		extends BaseJSONParser<ParentKnowledgeBaseFolder> {
 
@@ -152,10 +158,6 @@ public class ParentKnowledgeBaseFolderSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

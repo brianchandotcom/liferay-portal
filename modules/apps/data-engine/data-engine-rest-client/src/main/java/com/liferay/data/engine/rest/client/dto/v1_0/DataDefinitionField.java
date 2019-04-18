@@ -16,6 +16,8 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -232,5 +234,189 @@ public class DataDefinitionField {
 	}
 
 	protected LocalizedValue[] tip;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DataDefinitionField)) {
+			return false;
+		}
+
+		DataDefinitionField dataDefinitionField = (DataDefinitionField)object;
+
+		return Objects.equals(toString(), dataDefinitionField.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"customProperties\": ");
+
+		if (customProperties == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < customProperties.length; i++) {
+				sb.append(customProperties[i]);
+
+				if ((i + 1) < customProperties.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"defaultValue\": ");
+
+		if (defaultValue == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < defaultValue.length; i++) {
+				sb.append(defaultValue[i]);
+
+				if ((i + 1) < defaultValue.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"fieldType\": ");
+
+		if (fieldType == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(fieldType);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"indexable\": ");
+
+		if (indexable == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(indexable);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"label\": ");
+
+		if (label == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < label.length; i++) {
+				sb.append(label[i]);
+
+				if ((i + 1) < label.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"localizable\": ");
+
+		if (localizable == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(localizable);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"repeatable\": ");
+
+		if (repeatable == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(repeatable);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"tip\": ");
+
+		if (tip == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < tip.length; i++) {
+				sb.append(tip[i]);
+
+				if ((i + 1) < tip.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

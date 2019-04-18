@@ -16,6 +16,8 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -86,5 +88,78 @@ public class DataRecord {
 	}
 
 	protected Long id;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DataRecord)) {
+			return false;
+		}
+
+		DataRecord dataRecord = (DataRecord)object;
+
+		return Objects.equals(toString(), dataRecord.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"dataRecordCollectionId\": ");
+
+		if (dataRecordCollectionId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(dataRecordCollectionId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dataRecordValues\": ");
+
+		if (dataRecordValues == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < dataRecordValues.length; i++) {
+				sb.append(dataRecordValues[i]);
+
+				if ((i + 1) < dataRecordValues.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

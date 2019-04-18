@@ -275,4 +275,154 @@ public class DocumentFolder {
 
 	protected ViewableBy viewableBy;
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DocumentFolder)) {
+			return false;
+		}
+
+		DocumentFolder documentFolder = (DocumentFolder)object;
+
+		return Objects.equals(toString(), documentFolder.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"creator\": ");
+
+		if (creator == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(creator);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(description);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"numberOfDocumentFolders\": ");
+
+		if (numberOfDocumentFolders == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(numberOfDocumentFolders);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"numberOfDocuments\": ");
+
+		if (numberOfDocuments == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(numberOfDocuments);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"siteId\": ");
+
+		if (siteId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(siteId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"viewableBy\": ");
+
+		if (viewableBy == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(viewableBy);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 }

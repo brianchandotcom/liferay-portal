@@ -113,7 +113,7 @@ public class StructuredContentFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(structuredContentFolder.getDescription()));
+			sb.append(_escape(structuredContentFolder.getDescription()));
 
 			sb.append("\"");
 		}
@@ -137,7 +137,7 @@ public class StructuredContentFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(structuredContentFolder.getName()));
+			sb.append(_escape(structuredContentFolder.getName()));
 
 			sb.append("\"");
 		}
@@ -291,6 +291,12 @@ public class StructuredContentFolderSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class StructuredContentFolderJSONParser
 		extends BaseJSONParser<StructuredContentFolder> {
 
@@ -381,10 +387,6 @@ public class StructuredContentFolderSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

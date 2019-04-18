@@ -55,26 +55,30 @@ public class LocalizedValueSerDes {
 
 		if (localizedValue.getKey() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"key\":");
 
 			sb.append("\"");
 
-			sb.append(localizedValue.getKey());
+			sb.append(_escape(localizedValue.getKey()));
 
 			sb.append("\"");
 		}
 
 		if (localizedValue.getValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"value\":");
 
-			sb.append(localizedValue.getValue());
+			sb.append("\"");
+
+			sb.append(_escape(localizedValue.getValue()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -104,6 +108,12 @@ public class LocalizedValueSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class LocalizedValueJSONParser

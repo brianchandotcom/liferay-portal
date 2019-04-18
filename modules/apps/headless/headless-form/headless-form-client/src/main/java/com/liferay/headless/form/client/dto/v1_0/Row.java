@@ -16,6 +16,8 @@ package com.liferay.headless.form.client.dto.v1_0;
 
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -85,5 +87,72 @@ public class Row {
 	}
 
 	protected String value;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Row)) {
+			return false;
+		}
+
+		Row row = (Row)object;
+
+		return Objects.equals(toString(), row.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"label\": ");
+
+		if (label == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(label);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"value\": ");
+
+		if (value == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

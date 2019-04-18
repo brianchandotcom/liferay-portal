@@ -464,4 +464,295 @@ public class BlogPosting {
 
 	protected ViewableBy viewableBy;
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof BlogPosting)) {
+			return false;
+		}
+
+		BlogPosting blogPosting = (BlogPosting)object;
+
+		return Objects.equals(toString(), blogPosting.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"aggregateRating\": ");
+
+		if (aggregateRating == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(aggregateRating);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"alternativeHeadline\": ");
+
+		if (alternativeHeadline == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(alternativeHeadline);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"articleBody\": ");
+
+		if (articleBody == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(articleBody);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"creator\": ");
+
+		if (creator == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(creator);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"datePublished\": ");
+
+		if (datePublished == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(datePublished);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(description);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"encodingFormat\": ");
+
+		if (encodingFormat == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(encodingFormat);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"friendlyUrlPath\": ");
+
+		if (friendlyUrlPath == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(friendlyUrlPath);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"headline\": ");
+
+		if (headline == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(headline);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"image\": ");
+
+		if (image == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(image);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"keywords\": ");
+
+		if (keywords == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < keywords.length; i++) {
+				sb.append("\"");
+				sb.append(keywords[i]);
+				sb.append("\"");
+
+				if ((i + 1) < keywords.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"numberOfComments\": ");
+
+		if (numberOfComments == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(numberOfComments);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"siteId\": ");
+
+		if (siteId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(siteId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyCategories\": ");
+
+		if (taxonomyCategories == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategories.length; i++) {
+				sb.append(taxonomyCategories[i]);
+
+				if ((i + 1) < taxonomyCategories.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyCategoryIds\": ");
+
+		if (taxonomyCategoryIds == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategoryIds.length; i++) {
+				sb.append(taxonomyCategoryIds[i]);
+
+				if ((i + 1) < taxonomyCategoryIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"viewableBy\": ");
+
+		if (viewableBy == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(viewableBy);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 }

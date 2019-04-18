@@ -16,6 +16,8 @@ package com.liferay.bulk.rest.client.dto.v1_0;
 
 import com.liferay.bulk.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -45,5 +47,46 @@ public class Status {
 	}
 
 	protected Boolean actionInProgress;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Status)) {
+			return false;
+		}
+
+		Status status = (Status)object;
+
+		return Objects.equals(toString(), status.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"actionInProgress\": ");
+
+		if (actionInProgress == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(actionInProgress);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

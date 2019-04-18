@@ -16,6 +16,8 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -88,5 +90,98 @@ public class DataLayoutPage {
 	}
 
 	protected LocalizedValue[] title;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DataLayoutPage)) {
+			return false;
+		}
+
+		DataLayoutPage dataLayoutPage = (DataLayoutPage)object;
+
+		return Objects.equals(toString(), dataLayoutPage.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"dataLayoutRows\": ");
+
+		if (dataLayoutRows == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < dataLayoutRows.length; i++) {
+				sb.append(dataLayoutRows[i]);
+
+				if ((i + 1) < dataLayoutRows.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < description.length; i++) {
+				sb.append(description[i]);
+
+				if ((i + 1) < description.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"title\": ");
+
+		if (title == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < title.length; i++) {
+				sb.append(title[i]);
+
+				if ((i + 1) < title.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

@@ -74,7 +74,7 @@ public class ParentTaxonomyVocabularySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(parentTaxonomyVocabulary.getName()));
+			sb.append(_escape(parentTaxonomyVocabulary.getName()));
 
 			sb.append("\"");
 		}
@@ -108,6 +108,12 @@ public class ParentTaxonomyVocabularySerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class ParentTaxonomyVocabularyJSONParser
@@ -146,10 +152,6 @@ public class ParentTaxonomyVocabularySerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

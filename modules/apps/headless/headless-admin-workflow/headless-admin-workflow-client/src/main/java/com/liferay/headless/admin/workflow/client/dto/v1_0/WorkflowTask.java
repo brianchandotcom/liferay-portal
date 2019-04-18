@@ -17,6 +17,7 @@ package com.liferay.headless.admin.workflow.client.dto.v1_0;
 import com.liferay.headless.admin.workflow.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -233,5 +234,169 @@ public class WorkflowTask {
 	}
 
 	protected String[] transitions;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof WorkflowTask)) {
+			return false;
+		}
+
+		WorkflowTask workflowTask = (WorkflowTask)object;
+
+		return Objects.equals(toString(), workflowTask.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"completed\": ");
+
+		if (completed == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(completed);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCompleted\": ");
+
+		if (dateCompleted == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCompleted);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"definitionName\": ");
+
+		if (definitionName == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(definitionName);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(description);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dueDate\": ");
+
+		if (dueDate == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dueDate);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"objectReviewed\": ");
+
+		if (objectReviewed == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(objectReviewed);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"transitions\": ");
+
+		if (transitions == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < transitions.length; i++) {
+				sb.append("\"");
+				sb.append(transitions[i]);
+				sb.append("\"");
+
+				if ((i + 1) < transitions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

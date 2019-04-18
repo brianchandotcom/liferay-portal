@@ -16,6 +16,8 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -232,5 +234,195 @@ public class ContactInformation {
 	}
 
 	protected WebUrl[] webUrls;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof ContactInformation)) {
+			return false;
+		}
+
+		ContactInformation contactInformation = (ContactInformation)object;
+
+		return Objects.equals(toString(), contactInformation.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"emailAddresses\": ");
+
+		if (emailAddresses == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < emailAddresses.length; i++) {
+				sb.append(emailAddresses[i]);
+
+				if ((i + 1) < emailAddresses.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"facebook\": ");
+
+		if (facebook == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(facebook);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"jabber\": ");
+
+		if (jabber == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(jabber);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"postalAddresses\": ");
+
+		if (postalAddresses == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < postalAddresses.length; i++) {
+				sb.append(postalAddresses[i]);
+
+				if ((i + 1) < postalAddresses.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"skype\": ");
+
+		if (skype == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(skype);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"sms\": ");
+
+		if (sms == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(sms);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"telephones\": ");
+
+		if (telephones == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < telephones.length; i++) {
+				sb.append(telephones[i]);
+
+				if ((i + 1) < telephones.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"twitter\": ");
+
+		if (twitter == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(twitter);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"webUrls\": ");
+
+		if (webUrls == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < webUrls.length; i++) {
+				sb.append(webUrls[i]);
+
+				if ((i + 1) < webUrls.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

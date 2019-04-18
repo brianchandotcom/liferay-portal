@@ -59,7 +59,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 		if (dataRecordCollectionPermission.getAddDataRecord() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"addDataRecord\":");
@@ -71,7 +71,7 @@ public class DataRecordCollectionPermissionSerDes {
 				null) {
 
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"addDataRecordCollection\":");
@@ -82,7 +82,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 		if (dataRecordCollectionPermission.getDefinePermissions() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"definePermissions\":");
@@ -92,7 +92,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 		if (dataRecordCollectionPermission.getDelete() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"delete\":");
@@ -102,7 +102,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 		if (dataRecordCollectionPermission.getDeleteDataRecord() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"deleteDataRecord\":");
@@ -112,7 +112,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 		if (dataRecordCollectionPermission.getExportDataRecord() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"exportDataRecord\":");
@@ -122,7 +122,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 		if (dataRecordCollectionPermission.getRoleNames() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"roleNames\":");
@@ -135,7 +135,8 @@ public class DataRecordCollectionPermissionSerDes {
 
 				sb.append("\"");
 
-				sb.append(dataRecordCollectionPermission.getRoleNames()[i]);
+				sb.append(
+					_escape(dataRecordCollectionPermission.getRoleNames()[i]));
 
 				sb.append("\"");
 
@@ -151,7 +152,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 		if (dataRecordCollectionPermission.getUpdate() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"update\":");
@@ -161,7 +162,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 		if (dataRecordCollectionPermission.getUpdateDataRecord() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"updateDataRecord\":");
@@ -171,7 +172,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 		if (dataRecordCollectionPermission.getView() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"view\":");
@@ -181,7 +182,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 		if (dataRecordCollectionPermission.getViewDataRecord() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"viewDataRecord\":");
@@ -313,6 +314,12 @@ public class DataRecordCollectionPermissionSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataRecordCollectionPermissionJSONParser

@@ -55,7 +55,7 @@ public class DataLayoutColumnSerDes {
 
 		if (dataLayoutColumn.getColumnSize() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"columnSize\":");
@@ -65,7 +65,7 @@ public class DataLayoutColumnSerDes {
 
 		if (dataLayoutColumn.getFieldNames() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"fieldNames\":");
@@ -75,7 +75,7 @@ public class DataLayoutColumnSerDes {
 			for (int i = 0; i < dataLayoutColumn.getFieldNames().length; i++) {
 				sb.append("\"");
 
-				sb.append(dataLayoutColumn.getFieldNames()[i]);
+				sb.append(_escape(dataLayoutColumn.getFieldNames()[i]));
 
 				sb.append("\"");
 
@@ -116,6 +116,12 @@ public class DataLayoutColumnSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataLayoutColumnJSONParser

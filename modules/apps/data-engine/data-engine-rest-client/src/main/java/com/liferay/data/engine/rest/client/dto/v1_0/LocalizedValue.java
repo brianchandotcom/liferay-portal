@@ -16,6 +16,8 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -64,5 +66,59 @@ public class LocalizedValue {
 	}
 
 	protected Object value;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof LocalizedValue)) {
+			return false;
+		}
+
+		LocalizedValue localizedValue = (LocalizedValue)object;
+
+		return Objects.equals(toString(), localizedValue.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"key\": ");
+
+		if (key == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(key);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"value\": ");
+
+		if (value == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(value);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

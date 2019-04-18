@@ -16,6 +16,8 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -104,5 +106,83 @@ public class EmailAddress {
 	}
 
 	protected String type;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof EmailAddress)) {
+			return false;
+		}
+
+		EmailAddress emailAddress = (EmailAddress)object;
+
+		return Objects.equals(toString(), emailAddress.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"emailAddress\": ");
+
+		if (emailAddress == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(emailAddress);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"primary\": ");
+
+		if (primary == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(primary);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"type\": ");
+
+		if (type == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

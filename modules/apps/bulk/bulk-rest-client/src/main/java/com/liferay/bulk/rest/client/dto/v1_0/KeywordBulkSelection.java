@@ -16,6 +16,8 @@ package com.liferay.bulk.rest.client.dto.v1_0;
 
 import com.liferay.bulk.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -90,5 +92,93 @@ public class KeywordBulkSelection {
 	}
 
 	protected String[] keywordsToRemove;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof KeywordBulkSelection)) {
+			return false;
+		}
+
+		KeywordBulkSelection keywordBulkSelection =
+			(KeywordBulkSelection)object;
+
+		return Objects.equals(toString(), keywordBulkSelection.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"documentBulkSelection\": ");
+
+		if (documentBulkSelection == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(documentBulkSelection);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"keywordsToAdd\": ");
+
+		if (keywordsToAdd == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < keywordsToAdd.length; i++) {
+				sb.append("\"");
+				sb.append(keywordsToAdd[i]);
+				sb.append("\"");
+
+				if ((i + 1) < keywordsToAdd.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"keywordsToRemove\": ");
+
+		if (keywordsToRemove == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < keywordsToRemove.length; i++) {
+				sb.append("\"");
+				sb.append(keywordsToRemove[i]);
+				sb.append("\"");
+
+				if ((i + 1) < keywordsToRemove.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

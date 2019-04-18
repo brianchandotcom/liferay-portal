@@ -55,14 +55,14 @@ public class GenericErrorSerDes {
 
 		if (genericError.getMessage() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"message\":");
 
 			sb.append("\"");
 
-			sb.append(genericError.getMessage());
+			sb.append(_escape(genericError.getMessage()));
 
 			sb.append("\"");
 		}
@@ -87,6 +87,12 @@ public class GenericErrorSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class GenericErrorJSONParser

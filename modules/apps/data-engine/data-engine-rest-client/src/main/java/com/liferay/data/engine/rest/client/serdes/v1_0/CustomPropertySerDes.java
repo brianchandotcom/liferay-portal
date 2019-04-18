@@ -55,26 +55,30 @@ public class CustomPropertySerDes {
 
 		if (customProperty.getKey() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"key\":");
 
 			sb.append("\"");
 
-			sb.append(customProperty.getKey());
+			sb.append(_escape(customProperty.getKey()));
 
 			sb.append("\"");
 		}
 
 		if (customProperty.getValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"value\":");
 
-			sb.append(customProperty.getValue());
+			sb.append("\"");
+
+			sb.append(_escape(customProperty.getValue()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -104,6 +108,12 @@ public class CustomPropertySerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class CustomPropertyJSONParser

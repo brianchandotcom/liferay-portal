@@ -16,6 +16,8 @@ package com.liferay.headless.form.client.dto.v1_0;
 
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -125,5 +127,94 @@ public class FieldValue {
 	}
 
 	protected String value;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof FieldValue)) {
+			return false;
+		}
+
+		FieldValue fieldValue = (FieldValue)object;
+
+		return Objects.equals(toString(), fieldValue.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"document\": ");
+
+		if (document == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(document);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"documentId\": ");
+
+		if (documentId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(documentId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"value\": ");
+
+		if (value == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

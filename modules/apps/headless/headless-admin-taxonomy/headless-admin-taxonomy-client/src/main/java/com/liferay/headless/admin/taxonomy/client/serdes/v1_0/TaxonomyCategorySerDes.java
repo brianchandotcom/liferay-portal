@@ -73,7 +73,7 @@ public class TaxonomyCategorySerDes {
 
 				sb.append("\"");
 
-				sb.append(taxonomyCategory.getAvailableLanguages()[i]);
+				sb.append(_escape(taxonomyCategory.getAvailableLanguages()[i]));
 
 				sb.append("\"");
 
@@ -136,7 +136,7 @@ public class TaxonomyCategorySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(taxonomyCategory.getDescription()));
+			sb.append(_escape(taxonomyCategory.getDescription()));
 
 			sb.append("\"");
 		}
@@ -160,7 +160,7 @@ public class TaxonomyCategorySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(taxonomyCategory.getName()));
+			sb.append(_escape(taxonomyCategory.getName()));
 
 			sb.append("\"");
 		}
@@ -317,6 +317,12 @@ public class TaxonomyCategorySerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class TaxonomyCategoryJSONParser
 		extends BaseJSONParser<TaxonomyCategory> {
 
@@ -415,10 +421,6 @@ public class TaxonomyCategorySerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

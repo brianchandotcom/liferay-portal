@@ -162,7 +162,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(taxonomyCategory);
 		String json2 = TaxonomyCategorySerDes.toJSON(taxonomyCategory);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

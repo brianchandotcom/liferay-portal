@@ -16,6 +16,8 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -106,5 +108,85 @@ public class HoursAvailable {
 	}
 
 	protected String opens;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof HoursAvailable)) {
+			return false;
+		}
+
+		HoursAvailable hoursAvailable = (HoursAvailable)object;
+
+		return Objects.equals(toString(), hoursAvailable.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"closes\": ");
+
+		if (closes == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(closes);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dayOfWeek\": ");
+
+		if (dayOfWeek == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dayOfWeek);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"opens\": ");
+
+		if (opens == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(opens);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

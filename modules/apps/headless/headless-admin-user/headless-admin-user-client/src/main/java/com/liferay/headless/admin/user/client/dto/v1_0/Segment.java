@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -190,5 +191,133 @@ public class Segment {
 	}
 
 	protected String source;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Segment)) {
+			return false;
+		}
+
+		Segment segment = (Segment)object;
+
+		return Objects.equals(toString(), segment.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"active\": ");
+
+		if (active == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(active);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"criteria\": ");
+
+		if (criteria == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(criteria);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"siteId\": ");
+
+		if (siteId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(siteId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"source\": ");
+
+		if (source == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(source);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

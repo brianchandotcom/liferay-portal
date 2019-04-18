@@ -70,7 +70,7 @@ public class RowSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(row.getLabel()));
+			sb.append(_escape(row.getLabel()));
 
 			sb.append("\"");
 		}
@@ -84,7 +84,7 @@ public class RowSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(row.getValue()));
+			sb.append(_escape(row.getValue()));
 
 			sb.append("\"");
 		}
@@ -125,6 +125,12 @@ public class RowSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class RowJSONParser extends BaseJSONParser<Row> {
 
 		@Override
@@ -162,10 +168,6 @@ public class RowSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

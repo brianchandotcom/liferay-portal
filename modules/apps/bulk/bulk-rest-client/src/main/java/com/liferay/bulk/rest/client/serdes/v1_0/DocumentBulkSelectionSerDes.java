@@ -55,7 +55,7 @@ public class DocumentBulkSelectionSerDes {
 
 		if (documentBulkSelection.getDocumentIds() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"documentIds\":");
@@ -67,7 +67,7 @@ public class DocumentBulkSelectionSerDes {
 
 				sb.append("\"");
 
-				sb.append(documentBulkSelection.getDocumentIds()[i]);
+				sb.append(_escape(documentBulkSelection.getDocumentIds()[i]));
 
 				sb.append("\"");
 
@@ -81,7 +81,7 @@ public class DocumentBulkSelectionSerDes {
 
 		if (documentBulkSelection.getSelectionScope() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"selectionScope\":");
@@ -125,6 +125,12 @@ public class DocumentBulkSelectionSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DocumentBulkSelectionJSONParser

@@ -16,6 +16,8 @@ package com.liferay.headless.form.client.dto.v1_0;
 
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -66,5 +68,59 @@ public class FormRecordForm {
 	}
 
 	protected String fieldValues;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof FormRecordForm)) {
+			return false;
+		}
+
+		FormRecordForm formRecordForm = (FormRecordForm)object;
+
+		return Objects.equals(toString(), formRecordForm.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"draft\": ");
+
+		if (draft == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(draft);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"fieldValues\": ");
+
+		if (fieldValues == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(fieldValues);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

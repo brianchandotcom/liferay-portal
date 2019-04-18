@@ -58,7 +58,7 @@ public class DataLayoutPageSerDes {
 
 		if (dataLayoutPage.getDataLayoutRows() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataLayoutRows\":");
@@ -82,7 +82,7 @@ public class DataLayoutPageSerDes {
 
 		if (dataLayoutPage.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -104,7 +104,7 @@ public class DataLayoutPageSerDes {
 
 		if (dataLayoutPage.getTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"title\":");
@@ -160,6 +160,12 @@ public class DataLayoutPageSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataLayoutPageJSONParser

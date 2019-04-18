@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -66,5 +68,61 @@ public class RenderedContent {
 	}
 
 	protected String templateName;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof RenderedContent)) {
+			return false;
+		}
+
+		RenderedContent renderedContent = (RenderedContent)object;
+
+		return Objects.equals(toString(), renderedContent.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"renderedContentURL\": ");
+
+		if (renderedContentURL == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(renderedContentURL);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"templateName\": ");
+
+		if (templateName == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(templateName);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -147,5 +149,105 @@ public class Value {
 	}
 
 	protected StructuredContentLink structuredContentLink;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Value)) {
+			return false;
+		}
+
+		Value value = (Value)object;
+
+		return Objects.equals(toString(), value.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"data\": ");
+
+		if (data == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(data);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"document\": ");
+
+		if (document == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(document);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"geo\": ");
+
+		if (geo == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(geo);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"image\": ");
+
+		if (image == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(image);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"link\": ");
+
+		if (link == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(link);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"structuredContentLink\": ");
+
+		if (structuredContentLink == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(structuredContentLink);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

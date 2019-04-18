@@ -16,6 +16,8 @@ package com.liferay.bulk.rest.client.dto.v1_0;
 
 import com.liferay.bulk.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -66,5 +68,59 @@ public class TaxonomyCategory {
 	}
 
 	protected String taxonomyCategoryName;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof TaxonomyCategory)) {
+			return false;
+		}
+
+		TaxonomyCategory taxonomyCategory = (TaxonomyCategory)object;
+
+		return Objects.equals(toString(), taxonomyCategory.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"taxonomyCategoryId\": ");
+
+		if (taxonomyCategoryId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(taxonomyCategoryId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyCategoryName\": ");
+
+		if (taxonomyCategoryName == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(taxonomyCategoryName);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

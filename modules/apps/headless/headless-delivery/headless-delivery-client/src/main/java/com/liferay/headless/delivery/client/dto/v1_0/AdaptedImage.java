@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -129,5 +131,94 @@ public class AdaptedImage {
 	}
 
 	protected Integer width;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof AdaptedImage)) {
+			return false;
+		}
+
+		AdaptedImage adaptedImage = (AdaptedImage)object;
+
+		return Objects.equals(toString(), adaptedImage.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"contentUrl\": ");
+
+		if (contentUrl == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(contentUrl);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"height\": ");
+
+		if (height == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(height);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"resolutionName\": ");
+
+		if (resolutionName == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(resolutionName);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"sizeInBytes\": ");
+
+		if (sizeInBytes == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(sizeInBytes);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"width\": ");
+
+		if (width == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(width);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

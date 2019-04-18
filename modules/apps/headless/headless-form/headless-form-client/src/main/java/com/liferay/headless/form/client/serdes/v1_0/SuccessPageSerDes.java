@@ -62,7 +62,7 @@ public class SuccessPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(successPage.getDescription()));
+			sb.append(_escape(successPage.getDescription()));
 
 			sb.append("\"");
 		}
@@ -76,7 +76,7 @@ public class SuccessPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(successPage.getHeadline()));
+			sb.append(_escape(successPage.getHeadline()));
 
 			sb.append("\"");
 		}
@@ -128,6 +128,12 @@ public class SuccessPageSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class SuccessPageJSONParser
 		extends BaseJSONParser<SuccessPage> {
 
@@ -168,10 +174,6 @@ public class SuccessPageSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

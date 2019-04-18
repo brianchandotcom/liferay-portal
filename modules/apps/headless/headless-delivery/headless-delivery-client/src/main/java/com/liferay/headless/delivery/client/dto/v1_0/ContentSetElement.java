@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -106,5 +108,83 @@ public class ContentSetElement {
 	}
 
 	protected String title;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof ContentSetElement)) {
+			return false;
+		}
+
+		ContentSetElement contentSetElement = (ContentSetElement)object;
+
+		return Objects.equals(toString(), contentSetElement.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"content\": ");
+
+		if (content == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(content);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"contentType\": ");
+
+		if (contentType == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(contentType);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"title\": ");
+
+		if (title == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(title);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

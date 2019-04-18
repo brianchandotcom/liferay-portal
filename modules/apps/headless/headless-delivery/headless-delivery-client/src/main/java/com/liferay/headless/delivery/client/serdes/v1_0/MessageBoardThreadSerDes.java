@@ -80,7 +80,7 @@ public class MessageBoardThreadSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(messageBoardThread.getArticleBody()));
+			sb.append(_escape(messageBoardThread.getArticleBody()));
 
 			sb.append("\"");
 		}
@@ -136,7 +136,7 @@ public class MessageBoardThreadSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(messageBoardThread.getEncodingFormat()));
+			sb.append(_escape(messageBoardThread.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -150,7 +150,7 @@ public class MessageBoardThreadSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(messageBoardThread.getHeadline()));
+			sb.append(_escape(messageBoardThread.getHeadline()));
 
 			sb.append("\"");
 		}
@@ -177,7 +177,7 @@ public class MessageBoardThreadSerDes {
 			for (int i = 0; i < messageBoardThread.getKeywords().length; i++) {
 				sb.append("\"");
 
-				sb.append(messageBoardThread.getKeywords()[i]);
+				sb.append(_escape(messageBoardThread.getKeywords()[i]));
 
 				sb.append("\"");
 
@@ -238,7 +238,7 @@ public class MessageBoardThreadSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(messageBoardThread.getThreadType()));
+			sb.append(_escape(messageBoardThread.getThreadType()));
 
 			sb.append("\"");
 		}
@@ -401,6 +401,12 @@ public class MessageBoardThreadSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class MessageBoardThreadJSONParser
 		extends BaseJSONParser<MessageBoardThread> {
 
@@ -522,10 +528,6 @@ public class MessageBoardThreadSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

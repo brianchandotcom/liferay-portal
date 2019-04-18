@@ -16,6 +16,8 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -112,5 +114,105 @@ public class DataDefinitionRule {
 	}
 
 	protected String ruleType;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DataDefinitionRule)) {
+			return false;
+		}
+
+		DataDefinitionRule dataDefinitionRule = (DataDefinitionRule)object;
+
+		return Objects.equals(toString(), dataDefinitionRule.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"dataDefinitionFieldNames\": ");
+
+		if (dataDefinitionFieldNames == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < dataDefinitionFieldNames.length; i++) {
+				sb.append("\"");
+				sb.append(dataDefinitionFieldNames[i]);
+				sb.append("\"");
+
+				if ((i + 1) < dataDefinitionFieldNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dataDefinitionRuleParameters\": ");
+
+		if (dataDefinitionRuleParameters == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < dataDefinitionRuleParameters.length; i++) {
+				sb.append(dataDefinitionRuleParameters[i]);
+
+				if ((i + 1) < dataDefinitionRuleParameters.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"ruleType\": ");
+
+		if (ruleType == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(ruleType);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

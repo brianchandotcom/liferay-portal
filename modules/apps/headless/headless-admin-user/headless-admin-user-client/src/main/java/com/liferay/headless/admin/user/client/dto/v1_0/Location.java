@@ -16,6 +16,8 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -85,5 +87,72 @@ public class Location {
 	}
 
 	protected Long id;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Location)) {
+			return false;
+		}
+
+		Location location = (Location)object;
+
+		return Objects.equals(toString(), location.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"addressCountry\": ");
+
+		if (addressCountry == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(addressCountry);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"addressRegion\": ");
+
+		if (addressRegion == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(addressRegion);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

@@ -53,7 +53,7 @@ public class SelectionSerDes {
 
 		if (selection.getSize() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"size\":");
@@ -81,6 +81,12 @@ public class SelectionSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class SelectionJSONParser extends BaseJSONParser<Selection> {

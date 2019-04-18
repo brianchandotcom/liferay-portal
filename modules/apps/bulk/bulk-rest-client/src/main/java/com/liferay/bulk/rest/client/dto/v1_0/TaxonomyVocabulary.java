@@ -16,6 +16,8 @@ package com.liferay.bulk.rest.client.dto.v1_0;
 
 import com.liferay.bulk.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -128,5 +130,102 @@ public class TaxonomyVocabulary {
 	}
 
 	protected Long taxonomyVocabularyId;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof TaxonomyVocabulary)) {
+			return false;
+		}
+
+		TaxonomyVocabulary taxonomyVocabulary = (TaxonomyVocabulary)object;
+
+		return Objects.equals(toString(), taxonomyVocabulary.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"multiValued\": ");
+
+		if (multiValued == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(multiValued);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"required\": ");
+
+		if (required == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(required);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyCategories\": ");
+
+		if (taxonomyCategories == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategories.length; i++) {
+				sb.append(taxonomyCategories[i]);
+
+				if ((i + 1) < taxonomyCategories.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taxonomyVocabularyId\": ");
+
+		if (taxonomyVocabularyId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(taxonomyVocabularyId);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

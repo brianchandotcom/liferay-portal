@@ -162,7 +162,8 @@ public abstract class BaseSelectionResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(selection);
 		String json2 = SelectionSerDes.toJSON(selection);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

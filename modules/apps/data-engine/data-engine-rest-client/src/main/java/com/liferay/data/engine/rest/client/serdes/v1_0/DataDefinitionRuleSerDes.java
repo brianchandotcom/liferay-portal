@@ -57,7 +57,7 @@ public class DataDefinitionRuleSerDes {
 
 		if (dataDefinitionRule.getDataDefinitionFieldNames() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataDefinitionFieldNames\":");
@@ -70,7 +70,9 @@ public class DataDefinitionRuleSerDes {
 
 				sb.append("\"");
 
-				sb.append(dataDefinitionRule.getDataDefinitionFieldNames()[i]);
+				sb.append(
+					_escape(
+						dataDefinitionRule.getDataDefinitionFieldNames()[i]));
 
 				sb.append("\"");
 
@@ -87,7 +89,7 @@ public class DataDefinitionRuleSerDes {
 
 		if (dataDefinitionRule.getDataDefinitionRuleParameters() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataDefinitionRuleParameters\":");
@@ -117,28 +119,28 @@ public class DataDefinitionRuleSerDes {
 
 		if (dataDefinitionRule.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
 
 			sb.append("\"");
 
-			sb.append(dataDefinitionRule.getName());
+			sb.append(_escape(dataDefinitionRule.getName()));
 
 			sb.append("\"");
 		}
 
 		if (dataDefinitionRule.getRuleType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"ruleType\":");
 
 			sb.append("\"");
 
-			sb.append(dataDefinitionRule.getRuleType());
+			sb.append(_escape(dataDefinitionRule.getRuleType()));
 
 			sb.append("\"");
 		}
@@ -193,6 +195,12 @@ public class DataDefinitionRuleSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataDefinitionRuleJSONParser

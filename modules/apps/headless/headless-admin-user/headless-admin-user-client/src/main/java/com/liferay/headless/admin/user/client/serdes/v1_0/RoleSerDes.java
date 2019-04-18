@@ -69,7 +69,7 @@ public class RoleSerDes {
 			for (int i = 0; i < role.getAvailableLanguages().length; i++) {
 				sb.append("\"");
 
-				sb.append(role.getAvailableLanguages()[i]);
+				sb.append(_escape(role.getAvailableLanguages()[i]));
 
 				sb.append("\"");
 
@@ -128,7 +128,7 @@ public class RoleSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(role.getDescription()));
+			sb.append(_escape(role.getDescription()));
 
 			sb.append("\"");
 		}
@@ -152,7 +152,7 @@ public class RoleSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(role.getName()));
+			sb.append(_escape(role.getName()));
 
 			sb.append("\"");
 		}
@@ -166,7 +166,7 @@ public class RoleSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(role.getRoleType()));
+			sb.append(_escape(role.getRoleType()));
 
 			sb.append("\"");
 		}
@@ -241,6 +241,12 @@ public class RoleSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class RoleJSONParser extends BaseJSONParser<Role> {
 
 		@Override
@@ -306,10 +312,6 @@ public class RoleSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

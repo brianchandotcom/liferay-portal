@@ -16,6 +16,8 @@ package com.liferay.bulk.rest.client.dto.v1_0;
 
 import com.liferay.bulk.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -67,5 +69,70 @@ public class DocumentBulkSelection {
 	}
 
 	protected SelectionScope selectionScope;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DocumentBulkSelection)) {
+			return false;
+		}
+
+		DocumentBulkSelection documentBulkSelection =
+			(DocumentBulkSelection)object;
+
+		return Objects.equals(toString(), documentBulkSelection.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"documentIds\": ");
+
+		if (documentIds == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < documentIds.length; i++) {
+				sb.append("\"");
+				sb.append(documentIds[i]);
+				sb.append("\"");
+
+				if ((i + 1) < documentIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"selectionScope\": ");
+
+		if (selectionScope == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(selectionScope);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

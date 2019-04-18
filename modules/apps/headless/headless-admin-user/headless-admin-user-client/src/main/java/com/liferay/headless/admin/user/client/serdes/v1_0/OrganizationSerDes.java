@@ -70,7 +70,7 @@ public class OrganizationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(organization.getComment()));
+			sb.append(_escape(organization.getComment()));
 
 			sb.append("\"");
 		}
@@ -136,7 +136,7 @@ public class OrganizationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(organization.getImage()));
+			sb.append(_escape(organization.getImage()));
 
 			sb.append("\"");
 		}
@@ -153,7 +153,7 @@ public class OrganizationSerDes {
 			for (int i = 0; i < organization.getKeywords().length; i++) {
 				sb.append("\"");
 
-				sb.append(organization.getKeywords()[i]);
+				sb.append(_escape(organization.getKeywords()[i]));
 
 				sb.append("\"");
 
@@ -184,7 +184,7 @@ public class OrganizationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(organization.getName()));
+			sb.append(_escape(organization.getName()));
 
 			sb.append("\"");
 		}
@@ -336,6 +336,12 @@ public class OrganizationSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class OrganizationJSONParser
 		extends BaseJSONParser<Organization> {
 
@@ -442,10 +448,6 @@ public class OrganizationSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

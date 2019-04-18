@@ -110,7 +110,7 @@ public class KnowledgeBaseFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(knowledgeBaseFolder.getDescription()));
+			sb.append(_escape(knowledgeBaseFolder.getDescription()));
 
 			sb.append("\"");
 		}
@@ -134,7 +134,7 @@ public class KnowledgeBaseFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(knowledgeBaseFolder.getName()));
+			sb.append(_escape(knowledgeBaseFolder.getName()));
 
 			sb.append("\"");
 		}
@@ -323,6 +323,12 @@ public class KnowledgeBaseFolderSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class KnowledgeBaseFolderJSONParser
 		extends BaseJSONParser<KnowledgeBaseFolder> {
 
@@ -428,10 +434,6 @@ public class KnowledgeBaseFolderSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

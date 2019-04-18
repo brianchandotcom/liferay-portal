@@ -17,6 +17,7 @@ package com.liferay.headless.form.client.dto.v1_0;
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -316,5 +317,233 @@ public class Form {
 	}
 
 	protected Long structureId;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Form)) {
+			return false;
+		}
+
+		Form form = (Form)object;
+
+		return Objects.equals(toString(), form.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"availableLanguages\": ");
+
+		if (availableLanguages == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < availableLanguages.length; i++) {
+				sb.append("\"");
+				sb.append(availableLanguages[i]);
+				sb.append("\"");
+
+				if ((i + 1) < availableLanguages.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"creator\": ");
+
+		if (creator == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(creator);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"datePublished\": ");
+
+		if (datePublished == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(datePublished);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"defaultLanguage\": ");
+
+		if (defaultLanguage == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(defaultLanguage);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(description);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"formRecords\": ");
+
+		if (formRecords == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < formRecords.length; i++) {
+				sb.append(formRecords[i]);
+
+				if ((i + 1) < formRecords.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"formRecordsIds\": ");
+
+		if (formRecordsIds == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < formRecordsIds.length; i++) {
+				sb.append(formRecordsIds[i]);
+
+				if ((i + 1) < formRecordsIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"siteId\": ");
+
+		if (siteId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(siteId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"structure\": ");
+
+		if (structure == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(structure);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"structureId\": ");
+
+		if (structureId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(structureId);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

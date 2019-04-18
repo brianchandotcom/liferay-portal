@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.client.dto.v1_0;
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -465,5 +466,338 @@ public class UserAccount {
 	}
 
 	protected SiteBrief[] siteBriefs;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof UserAccount)) {
+			return false;
+		}
+
+		UserAccount userAccount = (UserAccount)object;
+
+		return Objects.equals(toString(), userAccount.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"additionalName\": ");
+
+		if (additionalName == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(additionalName);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"alternateName\": ");
+
+		if (alternateName == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(alternateName);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"birthDate\": ");
+
+		if (birthDate == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(birthDate);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"contactInformation\": ");
+
+		if (contactInformation == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(contactInformation);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dashboardURL\": ");
+
+		if (dashboardURL == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dashboardURL);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"emailAddress\": ");
+
+		if (emailAddress == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(emailAddress);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"familyName\": ");
+
+		if (familyName == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(familyName);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"givenName\": ");
+
+		if (givenName == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(givenName);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"honorificPrefix\": ");
+
+		if (honorificPrefix == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(honorificPrefix);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"honorificSuffix\": ");
+
+		if (honorificSuffix == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(honorificSuffix);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"image\": ");
+
+		if (image == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(image);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"jobTitle\": ");
+
+		if (jobTitle == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(jobTitle);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"keywords\": ");
+
+		if (keywords == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < keywords.length; i++) {
+				sb.append("\"");
+				sb.append(keywords[i]);
+				sb.append("\"");
+
+				if ((i + 1) < keywords.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(name);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"organizationBriefs\": ");
+
+		if (organizationBriefs == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < organizationBriefs.length; i++) {
+				sb.append(organizationBriefs[i]);
+
+				if ((i + 1) < organizationBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"profileURL\": ");
+
+		if (profileURL == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(profileURL);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"roleBriefs\": ");
+
+		if (roleBriefs == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < roleBriefs.length; i++) {
+				sb.append(roleBriefs[i]);
+
+				if ((i + 1) < roleBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"siteBriefs\": ");
+
+		if (siteBriefs == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < siteBriefs.length; i++) {
+				sb.append(siteBriefs[i]);
+
+				if ((i + 1) < siteBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

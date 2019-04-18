@@ -82,7 +82,7 @@ public class FormPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(formPage.getHeadline()));
+			sb.append(_escape(formPage.getHeadline()));
 
 			sb.append("\"");
 		}
@@ -106,7 +106,7 @@ public class FormPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(formPage.getText()));
+			sb.append(_escape(formPage.getText()));
 
 			sb.append("\"");
 		}
@@ -152,6 +152,12 @@ public class FormPageSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class FormPageJSONParser extends BaseJSONParser<FormPage> {
@@ -204,10 +210,6 @@ public class FormPageSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

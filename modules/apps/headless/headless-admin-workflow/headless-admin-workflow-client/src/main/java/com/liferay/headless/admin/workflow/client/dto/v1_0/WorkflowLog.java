@@ -17,6 +17,7 @@ package com.liferay.headless.admin.workflow.client.dto.v1_0;
 import com.liferay.headless.admin.workflow.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -232,5 +233,155 @@ public class WorkflowLog {
 	}
 
 	protected String type;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof WorkflowLog)) {
+			return false;
+		}
+
+		WorkflowLog workflowLog = (WorkflowLog)object;
+
+		return Objects.equals(toString(), workflowLog.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"auditPerson\": ");
+
+		if (auditPerson == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(auditPerson);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"commentLog\": ");
+
+		if (commentLog == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(commentLog);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"person\": ");
+
+		if (person == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(person);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"previousPerson\": ");
+
+		if (previousPerson == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(previousPerson);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"previousState\": ");
+
+		if (previousState == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(previousState);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"state\": ");
+
+		if (state == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(state);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"taskId\": ");
+
+		if (taskId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(taskId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"type\": ");
+
+		if (type == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

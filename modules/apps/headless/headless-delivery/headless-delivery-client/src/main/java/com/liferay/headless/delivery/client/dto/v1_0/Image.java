@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -87,5 +89,72 @@ public class Image {
 	}
 
 	protected Long imageId;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Image)) {
+			return false;
+		}
+
+		Image image = (Image)object;
+
+		return Objects.equals(toString(), image.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"caption\": ");
+
+		if (caption == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(caption);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"contentUrl\": ");
+
+		if (contentUrl == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(contentUrl);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"imageId\": ");
+
+		if (imageId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(imageId);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

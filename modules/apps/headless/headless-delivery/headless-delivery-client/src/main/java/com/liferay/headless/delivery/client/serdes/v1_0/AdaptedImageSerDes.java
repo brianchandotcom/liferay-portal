@@ -62,7 +62,7 @@ public class AdaptedImageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(adaptedImage.getContentUrl()));
+			sb.append(_escape(adaptedImage.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -86,7 +86,7 @@ public class AdaptedImageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(adaptedImage.getResolutionName()));
+			sb.append(_escape(adaptedImage.getResolutionName()));
 
 			sb.append("\"");
 		}
@@ -164,6 +164,12 @@ public class AdaptedImageSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class AdaptedImageJSONParser
 		extends BaseJSONParser<AdaptedImage> {
 
@@ -217,10 +223,6 @@ public class AdaptedImageSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

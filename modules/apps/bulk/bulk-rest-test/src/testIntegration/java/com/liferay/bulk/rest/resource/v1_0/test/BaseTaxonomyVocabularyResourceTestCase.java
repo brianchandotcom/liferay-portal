@@ -163,7 +163,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(taxonomyVocabulary);
 		String json2 = TaxonomyVocabularySerDes.toJSON(taxonomyVocabulary);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -16,6 +16,8 @@ package com.liferay.bulk.rest.client.dto.v1_0;
 
 import com.liferay.bulk.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -87,5 +89,68 @@ public class SelectionScope {
 	}
 
 	protected Boolean selectAll;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof SelectionScope)) {
+			return false;
+		}
+
+		SelectionScope selectionScope = (SelectionScope)object;
+
+		return Objects.equals(toString(), selectionScope.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"folderId\": ");
+
+		if (folderId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(folderId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"repositoryId\": ");
+
+		if (repositoryId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(repositoryId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"selectAll\": ");
+
+		if (selectAll == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(selectAll);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

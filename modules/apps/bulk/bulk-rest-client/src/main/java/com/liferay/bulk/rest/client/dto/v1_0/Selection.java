@@ -16,6 +16,8 @@ package com.liferay.bulk.rest.client.dto.v1_0;
 
 import com.liferay.bulk.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -43,5 +45,46 @@ public class Selection {
 	}
 
 	protected Long size;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Selection)) {
+			return false;
+		}
+
+		Selection selection = (Selection)object;
+
+		return Objects.equals(toString(), selection.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"size\": ");
+
+		if (size == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(size);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

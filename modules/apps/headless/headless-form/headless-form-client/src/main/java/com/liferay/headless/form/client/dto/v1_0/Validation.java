@@ -16,6 +16,8 @@ package com.liferay.headless.form.client.dto.v1_0;
 
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -85,5 +87,72 @@ public class Validation {
 	}
 
 	protected Long id;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Validation)) {
+			return false;
+		}
+
+		Validation validation = (Validation)object;
+
+		return Objects.equals(toString(), validation.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"errorMessage\": ");
+
+		if (errorMessage == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(errorMessage);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"expression\": ");
+
+		if (expression == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(expression);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

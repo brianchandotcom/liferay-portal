@@ -17,6 +17,7 @@ package com.liferay.headless.form.client.dto.v1_0;
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -211,5 +212,150 @@ public class FormRecord {
 	}
 
 	protected Long id;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof FormRecord)) {
+			return false;
+		}
+
+		FormRecord formRecord = (FormRecord)object;
+
+		return Objects.equals(toString(), formRecord.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"creator\": ");
+
+		if (creator == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(creator);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"datePublished\": ");
+
+		if (datePublished == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(datePublished);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"draft\": ");
+
+		if (draft == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(draft);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"fieldValues\": ");
+
+		if (fieldValues == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < fieldValues.length; i++) {
+				sb.append(fieldValues[i]);
+
+				if ((i + 1) < fieldValues.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"form\": ");
+
+		if (form == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(form);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"formId\": ");
+
+		if (formId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(formId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

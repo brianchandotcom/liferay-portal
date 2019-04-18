@@ -16,6 +16,8 @@ package com.liferay.bulk.rest.client.dto.v1_0;
 
 import com.liferay.bulk.rest.client.function.UnsafeSupplier;
 
+import java.util.Objects;
+
 import javax.annotation.Generated;
 
 /**
@@ -45,5 +47,48 @@ public class GenericError {
 	}
 
 	protected String message;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof GenericError)) {
+			return false;
+		}
+
+		GenericError genericError = (GenericError)object;
+
+		return Objects.equals(toString(), genericError.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"message\": ");
+
+		if (message == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(message);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

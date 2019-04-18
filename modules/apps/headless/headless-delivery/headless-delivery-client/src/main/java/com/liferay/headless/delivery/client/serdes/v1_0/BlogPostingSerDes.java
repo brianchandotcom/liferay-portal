@@ -81,7 +81,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(blogPosting.getAlternativeHeadline()));
+			sb.append(_escape(blogPosting.getAlternativeHeadline()));
 
 			sb.append("\"");
 		}
@@ -95,7 +95,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(blogPosting.getArticleBody()));
+			sb.append(_escape(blogPosting.getArticleBody()));
 
 			sb.append("\"");
 		}
@@ -164,7 +164,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(blogPosting.getDescription()));
+			sb.append(_escape(blogPosting.getDescription()));
 
 			sb.append("\"");
 		}
@@ -178,7 +178,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(blogPosting.getEncodingFormat()));
+			sb.append(_escape(blogPosting.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -192,7 +192,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(blogPosting.getFriendlyUrlPath()));
+			sb.append(_escape(blogPosting.getFriendlyUrlPath()));
 
 			sb.append("\"");
 		}
@@ -206,7 +206,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(blogPosting.getHeadline()));
+			sb.append(_escape(blogPosting.getHeadline()));
 
 			sb.append("\"");
 		}
@@ -243,7 +243,7 @@ public class BlogPostingSerDes {
 			for (int i = 0; i < blogPosting.getKeywords().length; i++) {
 				sb.append("\"");
 
-				sb.append(blogPosting.getKeywords()[i]);
+				sb.append(_escape(blogPosting.getKeywords()[i]));
 
 				sb.append("\"");
 
@@ -493,6 +493,12 @@ public class BlogPostingSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class BlogPostingJSONParser
 		extends BaseJSONParser<BlogPosting> {
 
@@ -642,10 +648,6 @@ public class BlogPostingSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

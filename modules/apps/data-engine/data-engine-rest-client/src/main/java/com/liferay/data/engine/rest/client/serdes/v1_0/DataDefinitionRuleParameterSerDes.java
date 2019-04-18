@@ -59,26 +59,30 @@ public class DataDefinitionRuleParameterSerDes {
 
 		if (dataDefinitionRuleParameter.getKey() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"key\":");
 
 			sb.append("\"");
 
-			sb.append(dataDefinitionRuleParameter.getKey());
+			sb.append(_escape(dataDefinitionRuleParameter.getKey()));
 
 			sb.append("\"");
 		}
 
 		if (dataDefinitionRuleParameter.getValue() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"value\":");
 
-			sb.append(dataDefinitionRuleParameter.getValue());
+			sb.append("\"");
+
+			sb.append(_escape(dataDefinitionRuleParameter.getValue()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -113,6 +117,12 @@ public class DataDefinitionRuleParameterSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataDefinitionRuleParameterJSONParser

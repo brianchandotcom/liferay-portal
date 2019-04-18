@@ -57,7 +57,7 @@ public class DataRecordCollectionSerDes {
 
 		if (dataRecordCollection.getDataDefinitionId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"dataDefinitionId\":");
@@ -67,7 +67,7 @@ public class DataRecordCollectionSerDes {
 
 		if (dataRecordCollection.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"description\":");
@@ -91,7 +91,7 @@ public class DataRecordCollectionSerDes {
 
 		if (dataRecordCollection.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"id\":");
@@ -101,7 +101,7 @@ public class DataRecordCollectionSerDes {
 
 		if (dataRecordCollection.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
 			sb.append("\"name\":");
@@ -168,6 +168,12 @@ public class DataRecordCollectionSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class DataRecordCollectionJSONParser

@@ -90,7 +90,7 @@ public class FieldValueSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(fieldValue.getName()));
+			sb.append(_escape(fieldValue.getName()));
 
 			sb.append("\"");
 		}
@@ -104,7 +104,7 @@ public class FieldValueSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(fieldValue.getValue()));
+			sb.append(_escape(fieldValue.getValue()));
 
 			sb.append("\"");
 		}
@@ -161,6 +161,12 @@ public class FieldValueSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class FieldValueJSONParser
 		extends BaseJSONParser<FieldValue> {
 
@@ -213,10 +219,6 @@ public class FieldValueSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

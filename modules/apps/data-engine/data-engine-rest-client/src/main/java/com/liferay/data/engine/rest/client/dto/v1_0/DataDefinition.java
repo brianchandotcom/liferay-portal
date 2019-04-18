@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -240,5 +241,191 @@ public class DataDefinition {
 	}
 
 	protected Long userId;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DataDefinition)) {
+			return false;
+		}
+
+		DataDefinition dataDefinition = (DataDefinition)object;
+
+		return Objects.equals(toString(), dataDefinition.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		sb.append("\"dataDefinitionFields\": ");
+
+		if (dataDefinitionFields == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < dataDefinitionFields.length; i++) {
+				sb.append(dataDefinitionFields[i]);
+
+				if ((i + 1) < dataDefinitionFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dataDefinitionRules\": ");
+
+		if (dataDefinitionRules == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < dataDefinitionRules.length; i++) {
+				sb.append(dataDefinitionRules[i]);
+
+				if ((i + 1) < dataDefinitionRules.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateCreated\": ");
+
+		if (dateCreated == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateCreated);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"dateModified\": ");
+
+		if (dateModified == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(dateModified);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"description\": ");
+
+		if (description == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < description.length; i++) {
+				sb.append(description[i]);
+
+				if ((i + 1) < description.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"id\": ");
+
+		if (id == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(id);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"name\": ");
+
+		if (name == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("[");
+
+			for (int i = 0; i < name.length; i++) {
+				sb.append(name[i]);
+
+				if ((i + 1) < name.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"siteId\": ");
+
+		if (siteId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(siteId);
+		}
+
+		sb.append(", ");
+
+		sb.append("\"storageType\": ");
+
+		if (storageType == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append("\"");
+			sb.append(storageType);
+			sb.append("\"");
+		}
+
+		sb.append(", ");
+
+		sb.append("\"userId\": ");
+
+		if (userId == null) {
+			sb.append("null");
+		}
+		else {
+			sb.append(userId);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 }

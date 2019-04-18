@@ -70,7 +70,7 @@ public class RoleBriefSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(roleBrief.getName()));
+			sb.append(_escape(roleBrief.getName()));
 
 			sb.append("\"");
 		}
@@ -102,6 +102,12 @@ public class RoleBriefSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class RoleBriefJSONParser extends BaseJSONParser<RoleBrief> {
@@ -137,10 +143,6 @@ public class RoleBriefSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -62,7 +62,7 @@ public class ContentDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentDocument.getContentUrl()));
+			sb.append(_escape(contentDocument.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -76,7 +76,7 @@ public class ContentDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentDocument.getDescription()));
+			sb.append(_escape(contentDocument.getDescription()));
 
 			sb.append("\"");
 		}
@@ -90,7 +90,7 @@ public class ContentDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentDocument.getEncodingFormat()));
+			sb.append(_escape(contentDocument.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -104,7 +104,7 @@ public class ContentDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentDocument.getFileExtension()));
+			sb.append(_escape(contentDocument.getFileExtension()));
 
 			sb.append("\"");
 		}
@@ -138,7 +138,7 @@ public class ContentDocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escapeString(contentDocument.getTitle()));
+			sb.append(_escape(contentDocument.getTitle()));
 
 			sb.append("\"");
 		}
@@ -216,6 +216,12 @@ public class ContentDocumentSerDes {
 		return map;
 	}
 
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 	private static class ContentDocumentJSONParser
 		extends BaseJSONParser<ContentDocument> {
 
@@ -280,10 +286,6 @@ public class ContentDocumentSerDes {
 			}
 		}
 
-	}
-
-	private static String _escapeString(String string) {
-		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

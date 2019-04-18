@@ -156,30 +156,29 @@ public class ConfiguratorExtender extends AbstractExtender {
 			while (entries.hasMoreElements()) {
 				URL url = entries.nextElement();
 
+				String name = url.getFile();
+
+				if (name.startsWith("/")) {
+					name = name.substring(1);
+				}
+
+				int lastIndexOfSlash = name.lastIndexOf('/');
+
+				if (lastIndexOfSlash > 0) {
+					name = name.substring(lastIndexOfSlash + 1);
+				}
+
+				name = name.substring(
+					0, name.length() + 1 - filePattern.length());
+
 				namedConfigurationContents.add(
 					namedConfigurationContentBiFunction.apply(
-						_getName(url, filePattern), url.openStream()));
+						name, url.openStream()));
 			}
 		}
 		catch (Throwable t) {
 			_logger.log(Logger.LOG_INFO, t.getMessage(), t);
 		}
-	}
-
-	private String _getName(URL url, String filePattern) {
-		String name = url.getFile();
-
-		if (name.startsWith("/")) {
-			name = name.substring(1);
-		}
-
-		int lastIndexOfSlash = name.lastIndexOf('/');
-
-		if (lastIndexOfSlash > 0) {
-			name = name.substring(lastIndexOfSlash + 1);
-		}
-
-		return name.substring(0, name.length() + 1 - filePattern.length());
 	}
 
 	private ConfigurationAdmin _configurationAdmin;

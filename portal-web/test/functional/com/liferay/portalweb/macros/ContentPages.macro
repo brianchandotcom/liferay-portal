@@ -49,7 +49,7 @@ definition {
 
 	macro clickPencil {
 		Click(
-			locator1 = "Button#PENCIL"
+			locator1 = "Icon#EDIT_PENCIL"
 		);
 	}
 }

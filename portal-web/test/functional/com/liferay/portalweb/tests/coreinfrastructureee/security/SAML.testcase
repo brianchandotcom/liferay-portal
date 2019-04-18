@@ -417,7 +417,10 @@ definition {
 			value1 = "Unable to process SAML request."
 		);
 
-		AssertConsoleTextPresent(value1 = "Data encryption key was null");
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "Data encryption key was null",
+			nodePort = "9080"
+		);
 	}
 
 	@priority = "4"

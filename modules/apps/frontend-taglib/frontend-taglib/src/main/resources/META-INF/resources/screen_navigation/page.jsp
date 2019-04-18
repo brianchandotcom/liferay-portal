@@ -29,32 +29,31 @@ ScreenNavigationCategory selectedScreenNavigationCategory = (ScreenNavigationCat
 ScreenNavigationEntry selectedScreenNavigationEntry = (ScreenNavigationEntry)request.getAttribute("liferay-frontend:screen-navigation:selectedScreenNavigationEntry");
 List<ScreenNavigationCategory> screenNavigationCategories = (List<ScreenNavigationCategory>)request.getAttribute("liferay-frontend:screen-navigation:screenNavigationCategories");
 List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntry>)request.getAttribute("liferay-frontend:screen-navigation:screenNavigationEntries");
+
+LiferayPortletResponse liferayPortletResponseCopy = liferayPortletResponse;
 %>
 
 <c:if test="<%= screenNavigationCategories.size() > 1 %>">
 	<div class="page-header">
 		<div class="<%= headerContainerCssClass %>">
-			<nav>
-				<ul class="nav nav-underline">
+			<clay:navigation-bar
+				navigationItems="<%=
+					new JSPNavigationItemList(pageContext) {
+						{
+							for (ScreenNavigationCategory screenNavigationCategory : screenNavigationCategories) {
+								PortletURL screenNavigationCategoryURL = PortletURLUtil.clone(portletURL, liferayPortletResponseCopy);
 
-					<%
-					for (ScreenNavigationCategory screenNavigationCategory : screenNavigationCategories) {
-						PortletURL screenNavigationCategoryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-						screenNavigationCategoryURL.setParameter("screenNavigationCategoryKey", screenNavigationCategory.getCategoryKey());
-						screenNavigationCategoryURL.setParameter("screenNavigationEntryKey", StringPool.BLANK);
-					%>
-
-						<li class="nav-item">
-							<a class="nav-link <%= Objects.equals(selectedScreenNavigationCategory.getCategoryKey(), screenNavigationCategory.getCategoryKey()) ? "active" : StringPool.BLANK %>" href="<%= screenNavigationCategoryURL.toString() %>"><%= screenNavigationCategory.getLabel(themeDisplay.getLocale()) %></a>
-						</li>
-
-					<%
+								add(
+									navigationItem -> {
+										navigationItem.setActive(Objects.equals(selectedScreenNavigationCategory.getCategoryKey(), screenNavigationCategory.getCategoryKey()));
+										navigationItem.setHref(screenNavigationCategoryURL, "screenNavigationCategoryKey", screenNavigationCategory.getCategoryKey(), "screenNavigationEntryKey", StringPool.BLANK);
+										navigationItem.setLabel(screenNavigationCategory.getLabel(themeDisplay.getLocale()));
+								});
+							}
+						}
 					}
-					%>
-
-				</ul>
-			</nav>
+				%>"
+			/>
 		</div>
 	</div>
 </c:if>

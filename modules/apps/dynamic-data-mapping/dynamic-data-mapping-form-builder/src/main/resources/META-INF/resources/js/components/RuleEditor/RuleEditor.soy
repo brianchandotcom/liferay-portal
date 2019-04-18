@@ -198,6 +198,7 @@
 					{param operators: $condition.operators /}
 					{param readOnly: $readOnly /}
 					{param roles: $roles /}
+					{param secondOperandDataType: isNonnull($condition.operands[1]) ? $condition.operands[1].dataType : '' /}
 					{param secondOperandFieldName: '' /}
 					{param secondOperandType: isNonnull($condition.operands[1]) ? $condition.operands[1].type : '' /}
 					{param secondOperandValue: isNonnull($condition.operands[1]) ? $condition.operands[1].value : '' /}
@@ -627,7 +628,7 @@
 		label: string,
 		value: string
 	]>}
-
+	{@param? secondOperandDataType: string}
 	{@param? secondOperandFieldName: string}
 	{@param? secondOperandType: string}
 	{@param? secondOperandValue: any}
@@ -717,30 +718,17 @@
 											{param value: [$secondOperandValue] /}
 										{/delcall}
 									{else}
-										{if $secondOperandType == 'integer' or $secondOperandType == 'double'}
-											{delcall PageRenderer.RegisterFieldType variant="'numeric'"}
-												{param events: [
-													'fieldEdited': $_handleSecondOperandValueEdited
-												] /}
-												{param dataType: $secondOperandType /}
-												{param name: $secondOperandFieldName /}
-												{param readOnly: $readOnly /}
-												{param ref: 'secondOperand' + $index /}
-												{param spritemap: $spritemap /}
-												{param value: $secondOperandValue /}
-											{/delcall}
-										{else}
-											{delcall PageRenderer.RegisterFieldType variant="$secondOperandType"}
-												{param events: [
-													'fieldEdited': $_handleSecondOperandValueEdited
-												] /}
-												{param name: $secondOperandFieldName /}
-												{param readOnly: $readOnly /}
-												{param ref: 'secondOperand' + $index /}
-												{param spritemap: $spritemap /}
-												{param value: $secondOperandValue /}
-											{/delcall}
-										{/if}
+										{delcall PageRenderer.RegisterFieldType variant="$secondOperandType"}
+											{param dataType: $secondOperandDataType /}
+											{param events: [
+												'fieldEdited': $_handleSecondOperandValueEdited
+											] /}
+											{param name: $secondOperandFieldName /}
+											{param readOnly: $readOnly /}
+											{param ref: 'secondOperand' + $index /}
+											{param spritemap: $spritemap /}
+											{param value: $secondOperandValue /}
+										{/delcall}
 									{/if}
 								</div>
 							{/if}

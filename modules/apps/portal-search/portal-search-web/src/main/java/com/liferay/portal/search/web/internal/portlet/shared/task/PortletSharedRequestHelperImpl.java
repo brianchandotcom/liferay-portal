@@ -51,7 +51,8 @@ public class PortletSharedRequestHelperImpl
 
 	@Override
 	public String getCompleteURL(RenderRequest renderRequest) {
-		return _http.getCompleteURL(getSharedRequest(renderRequest));
+		return getCompleteOriginalURL(
+			portal.getHttpServletRequest(renderRequest));
 	}
 
 	@Override
@@ -169,8 +170,5 @@ public class PortletSharedRequestHelperImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletSharedRequestHelperImpl.class);
-
-	@Reference
-	private Http _http;
 
 }

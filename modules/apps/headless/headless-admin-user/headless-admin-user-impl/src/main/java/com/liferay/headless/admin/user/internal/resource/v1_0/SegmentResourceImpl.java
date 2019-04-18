@@ -66,7 +66,7 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 
 	@Override
 	public Page<Segment> getSiteUserAccountSegmentsPage(
-			Long siteId, Long userAccountId, Pagination pagination)
+			Long siteId, Long userAccountId)
 		throws Exception {
 
 		User user = _userService.getUserById(userAccountId);
@@ -79,8 +79,7 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 			transformToList(
 				ArrayUtil.toArray(segmentsEntryIds),
 				segmentsEntryId -> _toSegment(
-					_segmentsEntryService.getSegmentsEntry(segmentsEntryId))),
-			pagination, segmentsEntryIds.length);
+					_segmentsEntryService.getSegmentsEntry(segmentsEntryId))));
 	}
 
 	private Context _createSegmentsContext() {

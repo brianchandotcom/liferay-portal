@@ -491,7 +491,7 @@ definition {
 		Alert.closePortalLocalizationWarning();
 
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
+			category = "Generador de sitios",
 			panel = "Site Administration",
 			portlet = "Páginas del sitio web"
 		);
@@ -510,7 +510,7 @@ definition {
 		Alert.closePortalLocalizationWarning();
 
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
+			category = "Generador de sitios",
 			panel = "Site Administration",
 			portlet = "Páginas del sitio web"
 		);
@@ -950,7 +950,7 @@ definition {
 		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
+			category = "Generador de sitios",
 			panel = "Site Administration",
 			portlet = "Páginas del sitio web"
 		);

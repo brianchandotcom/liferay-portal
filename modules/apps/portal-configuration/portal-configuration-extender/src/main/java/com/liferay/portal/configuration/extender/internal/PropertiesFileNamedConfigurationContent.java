@@ -32,7 +32,7 @@ public final class PropertiesFileNamedConfigurationContent
 		_inputStream = inputStream;
 	}
 
-	public PropertiesFileNamedConfigurationContent(URL url) {
+	public PropertiesFileNamedConfigurationContent(URL url) throws IOException {
 		String name = url.getFile();
 
 		if (name.startsWith("/")) {
@@ -52,12 +52,7 @@ public final class PropertiesFileNamedConfigurationContent
 
 		_name = name.substring(0, name.length() - 11);
 
-		try {
-			_inputStream = url.openStream();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		_inputStream = url.openStream();
 	}
 
 	@Override

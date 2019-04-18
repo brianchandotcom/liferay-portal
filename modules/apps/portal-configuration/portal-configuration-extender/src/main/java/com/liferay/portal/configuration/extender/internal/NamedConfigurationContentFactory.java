@@ -14,6 +14,8 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
+import java.io.IOException;
+
 import java.net.URL;
 
 /**
@@ -21,7 +23,7 @@ import java.net.URL;
  */
 public interface NamedConfigurationContentFactory {
 
-	public NamedConfigurationContent create(URL url);
+	public NamedConfigurationContent create(URL url) throws IOException;
 
 	public String getFilePattern();
 

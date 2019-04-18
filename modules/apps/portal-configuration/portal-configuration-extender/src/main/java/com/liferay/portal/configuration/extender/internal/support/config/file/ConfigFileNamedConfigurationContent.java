@@ -34,7 +34,7 @@ public final class ConfigFileNamedConfigurationContent
 		_inputStream = inputStream;
 	}
 
-	public ConfigFileNamedConfigurationContent(URL url) {
+	public ConfigFileNamedConfigurationContent(URL url) throws IOException {
 		String name = url.getFile();
 
 		if (name.startsWith("/")) {
@@ -54,12 +54,7 @@ public final class ConfigFileNamedConfigurationContent
 
 		_name = name.substring(0, name.length() - 7);
 
-		try {
-			_inputStream = url.openStream();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		_inputStream = url.openStream();
 	}
 
 	@Override

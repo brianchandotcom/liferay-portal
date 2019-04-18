@@ -14,6 +14,8 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
+import java.io.IOException;
+
 import java.net.URL;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,7 +28,7 @@ public class NamedConfigurationPathContentFactory
 	implements NamedConfigurationContentFactory {
 
 	@Override
-	public NamedConfigurationContent create(URL url) {
+	public NamedConfigurationContent create(URL url) throws IOException {
 		return new PropertiesFileNamedConfigurationContent(url);
 	}
 

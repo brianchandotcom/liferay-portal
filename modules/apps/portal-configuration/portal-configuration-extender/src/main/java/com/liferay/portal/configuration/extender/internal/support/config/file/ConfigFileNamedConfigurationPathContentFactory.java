@@ -17,6 +17,8 @@ package com.liferay.portal.configuration.extender.internal.support.config.file;
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContent;
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContentFactory;
 
+import java.io.IOException;
+
 import java.net.URL;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,7 +31,7 @@ public class ConfigFileNamedConfigurationPathContentFactory
 	implements NamedConfigurationContentFactory {
 
 	@Override
-	public NamedConfigurationContent create(URL url) {
+	public NamedConfigurationContent create(URL url) throws IOException {
 		return new ConfigFileNamedConfigurationContent(url);
 	}
 

@@ -381,7 +381,7 @@ public abstract class BaseJSONParser<T> {
 
 		_setCaptureStart();
 
-		while (_lastChar != '"') {
+		while (_lastChar != '"' || _json.charAt(_index-2) == '\\') {
 			_readNextChar();
 		}
 

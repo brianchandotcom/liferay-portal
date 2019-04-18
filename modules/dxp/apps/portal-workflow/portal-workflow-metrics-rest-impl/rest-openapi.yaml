@@ -50,6 +50,9 @@ components:
         SLA:
             description: https://www.schema.org/SLA
             properties:
+                dateModified:
+                    format: date-time
+                    type: string
                 description:
                     type: string
                 duration:
@@ -71,6 +74,8 @@ components:
                     items:
                         type: string
                     type: array
+                status:
+                    type: integer
                 stopNodeKeys:
                     items:
                         type: string
@@ -185,6 +190,11 @@ paths:
                 - in: query
                   name: pageSize
                   required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: status
+                  required: false
                   schema:
                       type: integer
             responses:

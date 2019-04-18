@@ -74,10 +74,6 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 				portalCacheManager.getPortalCache(
 					portalCacheClusterEvent.getPortalCacheName());
 
-		if (portalCache == null) {
-			return;
-		}
-
 		PortalCacheClusterEventType portalCacheClusterEventType =
 			portalCacheClusterEvent.getEventType();
 

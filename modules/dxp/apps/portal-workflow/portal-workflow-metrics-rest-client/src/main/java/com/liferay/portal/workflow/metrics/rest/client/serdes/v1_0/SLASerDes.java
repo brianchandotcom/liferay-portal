@@ -128,21 +128,7 @@ public class SLASerDes {
 
 			sb.append("\"pauseNodeKeys\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < sla.getPauseNodeKeys().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(sla.getPauseNodeKeys()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < sla.getPauseNodeKeys().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(sla.getPauseNodeKeys()));
 		}
 
 		if (sla.getProcessId() != null) {
@@ -162,21 +148,7 @@ public class SLASerDes {
 
 			sb.append("\"startNodeKeys\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < sla.getStartNodeKeys().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(sla.getStartNodeKeys()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < sla.getStartNodeKeys().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(sla.getStartNodeKeys()));
 		}
 
 		if (sla.getStatus() != null) {
@@ -196,21 +168,7 @@ public class SLASerDes {
 
 			sb.append("\"stopNodeKeys\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < sla.getStopNodeKeys().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(sla.getStopNodeKeys()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < sla.getStopNodeKeys().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(sla.getStopNodeKeys()));
 		}
 
 		sb.append("}");
@@ -383,7 +341,8 @@ public class SLASerDes {
 			else if (Objects.equals(jsonParserFieldName, "pauseNodeKeys")) {
 				if (jsonParserFieldValue != null) {
 					sla.setPauseNodeKeys(
-						toStrings((Object[])jsonParserFieldValue));
+						PauseNodeKeysSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "processId")) {
@@ -395,7 +354,8 @@ public class SLASerDes {
 			else if (Objects.equals(jsonParserFieldName, "startNodeKeys")) {
 				if (jsonParserFieldValue != null) {
 					sla.setStartNodeKeys(
-						toStrings((Object[])jsonParserFieldValue));
+						StartNodeKeysSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
@@ -407,7 +367,7 @@ public class SLASerDes {
 			else if (Objects.equals(jsonParserFieldName, "stopNodeKeys")) {
 				if (jsonParserFieldValue != null) {
 					sla.setStopNodeKeys(
-						toStrings((Object[])jsonParserFieldValue));
+						StopNodeKeysSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

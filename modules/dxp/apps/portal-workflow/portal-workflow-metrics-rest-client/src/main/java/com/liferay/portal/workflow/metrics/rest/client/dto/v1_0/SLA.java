@@ -130,16 +130,16 @@ public class SLA {
 
 	protected String name;
 
-	public String[] getPauseNodeKeys() {
+	public PauseNodeKeys getPauseNodeKeys() {
 		return pauseNodeKeys;
 	}
 
-	public void setPauseNodeKeys(String[] pauseNodeKeys) {
+	public void setPauseNodeKeys(PauseNodeKeys pauseNodeKeys) {
 		this.pauseNodeKeys = pauseNodeKeys;
 	}
 
 	public void setPauseNodeKeys(
-		UnsafeSupplier<String[], Exception> pauseNodeKeysUnsafeSupplier) {
+		UnsafeSupplier<PauseNodeKeys, Exception> pauseNodeKeysUnsafeSupplier) {
 
 		try {
 			pauseNodeKeys = pauseNodeKeysUnsafeSupplier.get();
@@ -149,7 +149,7 @@ public class SLA {
 		}
 	}
 
-	protected String[] pauseNodeKeys;
+	protected PauseNodeKeys pauseNodeKeys;
 
 	public Long getProcessId() {
 		return processId;
@@ -172,16 +172,16 @@ public class SLA {
 
 	protected Long processId;
 
-	public String[] getStartNodeKeys() {
+	public StartNodeKeys getStartNodeKeys() {
 		return startNodeKeys;
 	}
 
-	public void setStartNodeKeys(String[] startNodeKeys) {
+	public void setStartNodeKeys(StartNodeKeys startNodeKeys) {
 		this.startNodeKeys = startNodeKeys;
 	}
 
 	public void setStartNodeKeys(
-		UnsafeSupplier<String[], Exception> startNodeKeysUnsafeSupplier) {
+		UnsafeSupplier<StartNodeKeys, Exception> startNodeKeysUnsafeSupplier) {
 
 		try {
 			startNodeKeys = startNodeKeysUnsafeSupplier.get();
@@ -191,7 +191,7 @@ public class SLA {
 		}
 	}
 
-	protected String[] startNodeKeys;
+	protected StartNodeKeys startNodeKeys;
 
 	public Integer getStatus() {
 		return status;
@@ -214,16 +214,16 @@ public class SLA {
 
 	protected Integer status;
 
-	public String[] getStopNodeKeys() {
+	public StopNodeKeys getStopNodeKeys() {
 		return stopNodeKeys;
 	}
 
-	public void setStopNodeKeys(String[] stopNodeKeys) {
+	public void setStopNodeKeys(StopNodeKeys stopNodeKeys) {
 		this.stopNodeKeys = stopNodeKeys;
 	}
 
 	public void setStopNodeKeys(
-		UnsafeSupplier<String[], Exception> stopNodeKeysUnsafeSupplier) {
+		UnsafeSupplier<StopNodeKeys, Exception> stopNodeKeysUnsafeSupplier) {
 
 		try {
 			stopNodeKeys = stopNodeKeysUnsafeSupplier.get();
@@ -233,7 +233,7 @@ public class SLA {
 		}
 	}
 
-	protected String[] stopNodeKeys;
+	protected StopNodeKeys stopNodeKeys;
 
 	@Override
 	public boolean equals(Object object) {

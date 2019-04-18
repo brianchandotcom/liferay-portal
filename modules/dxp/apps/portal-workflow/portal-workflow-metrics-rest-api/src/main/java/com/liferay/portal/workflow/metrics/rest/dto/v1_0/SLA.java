@@ -186,17 +186,17 @@ public class SLA {
 	protected String name;
 
 	@Schema
-	public String[] getPauseNodeKeys() {
+	public PauseNodeKeys getPauseNodeKeys() {
 		return pauseNodeKeys;
 	}
 
-	public void setPauseNodeKeys(String[] pauseNodeKeys) {
+	public void setPauseNodeKeys(PauseNodeKeys pauseNodeKeys) {
 		this.pauseNodeKeys = pauseNodeKeys;
 	}
 
 	@JsonIgnore
 	public void setPauseNodeKeys(
-		UnsafeSupplier<String[], Exception> pauseNodeKeysUnsafeSupplier) {
+		UnsafeSupplier<PauseNodeKeys, Exception> pauseNodeKeysUnsafeSupplier) {
 
 		try {
 			pauseNodeKeys = pauseNodeKeysUnsafeSupplier.get();
@@ -211,7 +211,7 @@ public class SLA {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] pauseNodeKeys;
+	protected PauseNodeKeys pauseNodeKeys;
 
 	@Schema
 	public Long getProcessId() {
@@ -242,17 +242,17 @@ public class SLA {
 	protected Long processId;
 
 	@Schema
-	public String[] getStartNodeKeys() {
+	public StartNodeKeys getStartNodeKeys() {
 		return startNodeKeys;
 	}
 
-	public void setStartNodeKeys(String[] startNodeKeys) {
+	public void setStartNodeKeys(StartNodeKeys startNodeKeys) {
 		this.startNodeKeys = startNodeKeys;
 	}
 
 	@JsonIgnore
 	public void setStartNodeKeys(
-		UnsafeSupplier<String[], Exception> startNodeKeysUnsafeSupplier) {
+		UnsafeSupplier<StartNodeKeys, Exception> startNodeKeysUnsafeSupplier) {
 
 		try {
 			startNodeKeys = startNodeKeysUnsafeSupplier.get();
@@ -267,7 +267,7 @@ public class SLA {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] startNodeKeys;
+	protected StartNodeKeys startNodeKeys;
 
 	@Schema
 	public Integer getStatus() {
@@ -298,17 +298,17 @@ public class SLA {
 	protected Integer status;
 
 	@Schema
-	public String[] getStopNodeKeys() {
+	public StopNodeKeys getStopNodeKeys() {
 		return stopNodeKeys;
 	}
 
-	public void setStopNodeKeys(String[] stopNodeKeys) {
+	public void setStopNodeKeys(StopNodeKeys stopNodeKeys) {
 		this.stopNodeKeys = stopNodeKeys;
 	}
 
 	@JsonIgnore
 	public void setStopNodeKeys(
-		UnsafeSupplier<String[], Exception> stopNodeKeysUnsafeSupplier) {
+		UnsafeSupplier<StopNodeKeys, Exception> stopNodeKeysUnsafeSupplier) {
 
 		try {
 			stopNodeKeys = stopNodeKeysUnsafeSupplier.get();
@@ -323,7 +323,7 @@ public class SLA {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] stopNodeKeys;
+	protected StopNodeKeys stopNodeKeys;
 
 	@Override
 	public boolean equals(Object object) {
@@ -424,21 +424,7 @@ public class SLA {
 
 			sb.append("\"pauseNodeKeys\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < pauseNodeKeys.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(pauseNodeKeys[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < pauseNodeKeys.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(pauseNodeKeys));
 		}
 
 		if (processId != null) {
@@ -458,21 +444,7 @@ public class SLA {
 
 			sb.append("\"startNodeKeys\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < startNodeKeys.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(startNodeKeys[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < startNodeKeys.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(startNodeKeys));
 		}
 
 		if (status != null) {
@@ -492,21 +464,7 @@ public class SLA {
 
 			sb.append("\"stopNodeKeys\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < stopNodeKeys.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(stopNodeKeys[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < stopNodeKeys.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(stopNodeKeys));
 		}
 
 		sb.append("}");

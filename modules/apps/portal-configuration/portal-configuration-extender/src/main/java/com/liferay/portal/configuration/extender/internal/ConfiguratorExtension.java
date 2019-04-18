@@ -84,10 +84,9 @@ public class ConfiguratorExtension implements Extension {
 	private boolean _configurationExists(String filter)
 		throws InvalidSyntaxException, IOException {
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filter);
+		if (ArrayUtil.isNotEmpty(
+				_configurationAdmin.listConfigurations(filter))) {
 
-		if (ArrayUtil.isNotEmpty(configurations)) {
 			return true;
 		}
 

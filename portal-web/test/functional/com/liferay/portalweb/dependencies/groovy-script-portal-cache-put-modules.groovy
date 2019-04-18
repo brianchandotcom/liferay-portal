@@ -5,7 +5,7 @@ import java.lang.reflect.Constructor;
 
 
 try {
-	ClassLoader testModuleClassLoader = ClassLoaderPool.getClassLoader("com.liferay.cluster.test.module_2.0.0");
+	ClassLoader testModuleClassLoader = ClassLoaderPool.getClassLoader("com.liferay.cluster.test.module_3.0.0");
 
 	Class<?> clazz = testModuleClassLoader.loadClass("com.liferay.cluster.test.module.internel.ClusterTestClass");
 

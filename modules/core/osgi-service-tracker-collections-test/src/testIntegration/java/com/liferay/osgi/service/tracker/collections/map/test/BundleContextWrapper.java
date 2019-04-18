@@ -31,7 +31,9 @@ import org.osgi.framework.BundleListener;
 import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceListener;
+import org.osgi.framework.ServiceObjects;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
@@ -137,6 +139,13 @@ public class BundleContextWrapper implements BundleContext {
 	}
 
 	@Override
+	public <S> ServiceObjects<S> getServiceObjects(
+		ServiceReference<S> serviceReference) {
+
+		return _bundleContext.getServiceObjects(serviceReference);
+	}
+
+	@Override
 	public <S> ServiceReference<S> getServiceReference(Class<S> clazz) {
 		return _bundleContext.getServiceReference(clazz);
 	}
@@ -185,6 +194,15 @@ public class BundleContextWrapper implements BundleContext {
 		Class<S> clazz, S service, Dictionary<String, ?> properties) {
 
 		return _bundleContext.registerService(clazz, service, properties);
+	}
+
+	@Override
+	public <S> ServiceRegistration<S> registerService(
+		Class<S> clazz, ServiceFactory<S> serviceFactory,
+		Dictionary<String, ?> properties) {
+
+		return _bundleContext.registerService(
+			clazz, serviceFactory, properties);
 	}
 
 	@Override

@@ -51,7 +51,7 @@ public class ConfiguratorExtension implements Extension {
 	}
 
 	@Override
-	public void destroy() throws Exception {
+	public void destroy() {
 	}
 
 	@Override

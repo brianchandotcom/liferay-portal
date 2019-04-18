@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
 import com.liferay.registry.dependency.ServiceDependencyManager;
+import com.liferay.spring.mock.web.portlet.MockPortletRequest;
 
 import java.util.List;
 
@@ -36,7 +37,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Philip Jones

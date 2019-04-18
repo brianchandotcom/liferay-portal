@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
+import com.liferay.spring.mock.web.portlet.MockActionRequest;
+import com.liferay.spring.mock.web.portlet.MockActionResponse;
+import com.liferay.spring.mock.web.portlet.MockPortletConfig;
 
 import java.io.IOException;
 
@@ -54,9 +57,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.portlet.MockActionRequest;
-import org.springframework.mock.web.portlet.MockActionResponse;
-import org.springframework.mock.web.portlet.MockPortletConfig;
 
 /**
  * @author Manuel de la Peña

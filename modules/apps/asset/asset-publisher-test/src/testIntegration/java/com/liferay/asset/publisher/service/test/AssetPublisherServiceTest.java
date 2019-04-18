@@ -39,6 +39,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.spring.mock.web.portlet.MockPortletPreferences;
+import com.liferay.spring.mock.web.portlet.MockPortletRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +53,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.portlet.MockPortletPreferences;
-import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * Tests basic capabilities of the Asset Publisher and its integration with

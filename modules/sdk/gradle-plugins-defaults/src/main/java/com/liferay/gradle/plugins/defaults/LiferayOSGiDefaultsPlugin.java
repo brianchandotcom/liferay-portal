@@ -657,10 +657,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.addDependency(
 			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+			"com.liferay.portletmvc4spring", "portletmvc4spring-test", "5.1.0");
+		GradleUtil.addDependency(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 			"org.powermock", "powermock-module-junit4", "1.6.1");
 		GradleUtil.addDependency(
 			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
-			"org.springframework", "spring-test", "3.2.15.RELEASE");
+			"org.springframework", "spring-test", "5.1.5.RELEASE");
 	}
 
 	private Task _addTaskAlias(

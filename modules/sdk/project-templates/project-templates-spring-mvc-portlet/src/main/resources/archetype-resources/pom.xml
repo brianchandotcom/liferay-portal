@@ -15,9 +15,9 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc-portlet</artifactId>
-			<version>4.1.9.RELEASE</version>
+			<groupId>com.liferay.portletmvc4spring</groupId>
+			<artifactId>com.liferay.portletmvc4spring.framework</artifactId>
+			<version>5.1.0</version>
 		</dependency>
 #if (${liferayVersion.startsWith("7.0")})
 		<dependency>

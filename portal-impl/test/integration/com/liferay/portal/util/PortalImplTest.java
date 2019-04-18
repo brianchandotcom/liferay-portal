@@ -27,6 +27,7 @@ import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.bundle.portalimpl.TestAlwaysAllowDoAsUser;
 import com.liferay.portal.util.test.AtomicState;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
+import com.liferay.spring.mock.web.portlet.MockPortletRequest;
 
 import java.io.InputStream;
 
@@ -41,7 +42,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Peter Fellwock

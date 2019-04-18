@@ -4683,12 +4683,17 @@ public class ProjectTemplatesTest {
 
 			_testExists(zipFile, "WEB-INF/lib/commons-logging-1.2.jar");
 
-			for (String jarName : _SPRING_MVC_PORTLET_JAR_NAMES) {
+			for (String jarName : _SPRING_MVC_JAR_NAMES) {
 				_testExists(
 					zipFile,
 					"WEB-INF/lib/spring-" + jarName + "-" +
-						_SPRING_MVC_PORTLET_VERSION + ".jar");
+						_SPRING_MVC_VERSION + ".jar");
 			}
+
+			_testExists(
+				zipFile,
+				"WEB-INF/lib/com.liferay.portletmvc4spring.framework-" +
+					_PORTLETMVC4SPRING_VERSION + ".jar");
 		}
 		finally {
 			ZipFile.closeQuietly(zipFile);
@@ -5620,15 +5625,16 @@ public class ProjectTemplatesTest {
 
 	private static final String _OUTPUT_FILENAME_GLOB_REGEX = "*.{jar,war}";
 
+	private static final String _PORTLETMVC4SPRING_VERSION = "5.1.0";
+
 	private static final String _REPOSITORY_CDN_URL =
 		"https://repository-cdn.liferay.com/nexus/content/groups/public";
 
-	private static final String[] _SPRING_MVC_PORTLET_JAR_NAMES = {
-		"aop", "beans", "context", "core", "expression", "web", "webmvc",
-		"webmvc-portlet"
+	private static final String[] _SPRING_MVC_JAR_NAMES = {
+		"aop", "beans", "context", "core", "expression", "web", "webmvc"
 	};
 
-	private static final String _SPRING_MVC_PORTLET_VERSION = "4.1.9.RELEASE";
+	private static final String _SPRING_MVC_VERSION = "5.1.5.RELEASE";
 
 	private static final boolean _TEST_DEBUG_BUNDLE_DIFFS = Boolean.getBoolean(
 		"test.debug.bundle.diffs");

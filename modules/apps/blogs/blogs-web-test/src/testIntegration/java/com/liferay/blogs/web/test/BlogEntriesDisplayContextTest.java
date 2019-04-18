@@ -55,6 +55,8 @@ import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
+import com.liferay.spring.mock.web.portlet.MockActionRequest;
+import com.liferay.spring.mock.web.portlet.MockPortletConfig;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -110,8 +112,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.portlet.MockActionRequest;
-import org.springframework.mock.web.portlet.MockPortletConfig;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;

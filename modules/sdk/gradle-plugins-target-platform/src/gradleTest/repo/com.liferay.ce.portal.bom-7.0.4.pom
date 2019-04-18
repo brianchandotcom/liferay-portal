@@ -3434,12 +3434,12 @@
 			<dependency>
 				<artifactId>spring-test</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>spring-instrument</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>smtp</artifactId>
@@ -3459,7 +3459,7 @@
 			<dependency>
 				<artifactId>spring-instrument-tomcat</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>4.3.23.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>tomcat-catalina</artifactId>
@@ -3620,7 +3620,7 @@
 			<dependency>
 				<artifactId>spring-context</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>xml-apis</artifactId>
@@ -3633,9 +3633,9 @@
 				<version>1.1.1</version>
 			</dependency>
 			<dependency>
-				<artifactId>spring-webmvc-portlet</artifactId>
-				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<artifactId>com.liferay.portletmvc4spring.framework</artifactId>
+				<groupId>com.liferay.portletmvc4spring</groupId>
+				<version>5.1.0</version>
 			</dependency>
 			<dependency>
 				<artifactId>odmg</artifactId>
@@ -3785,7 +3785,7 @@
 			<dependency>
 				<artifactId>spring-aop</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>axiom-api</artifactId>
@@ -3865,12 +3865,12 @@
 			<dependency>
 				<artifactId>spring-tx</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>spring-oxm</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>com.hp.hpl.jena</artifactId>
@@ -3880,7 +3880,7 @@
 			<dependency>
 				<artifactId>spring-expression</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>ant</artifactId>
@@ -4055,7 +4055,7 @@
 			<dependency>
 				<artifactId>spring-aspects</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>javax.ccpp.ccpp-ri</artifactId>
@@ -4120,12 +4120,12 @@
 			<dependency>
 				<artifactId>spring-webmvc</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>spring-core</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>pdfbox</artifactId>
@@ -4250,7 +4250,7 @@
 			<dependency>
 				<artifactId>spring-context-support</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>ccpp</artifactId>
@@ -4365,7 +4365,7 @@
 			<dependency>
 				<artifactId>spring-jms</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>commons-beanutils</artifactId>
@@ -4435,7 +4435,7 @@
 			<dependency>
 				<artifactId>spring-orm</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>4.3.23.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>ridl</artifactId>
@@ -4470,7 +4470,7 @@
 			<dependency>
 				<artifactId>spring-web</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>chemistry-opencmis-commons-api</artifactId>
@@ -4510,7 +4510,7 @@
 			<dependency>
 				<artifactId>spring-beans</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>commons-collections</artifactId>
@@ -4555,7 +4555,7 @@
 			<dependency>
 				<artifactId>spring-jdbc</artifactId>
 				<groupId>org.springframework</groupId>
-				<version>4.1.9.RELEASE</version>
+				<version>5.1.5.RELEASE</version>
 			</dependency>
 			<dependency>
 				<artifactId>saaj-impl</artifactId>

@@ -9,6 +9,64 @@ $card-tab-padding-left-width: 20px;
 $card-horizontal-on-border: #65B6F0 !default;
 $card-horizontal-on-border-width: 2px !default;
 
+// Lfr Page Layouts Card
+
+$lfr-page-layouts-card-after-highlight: () !default;
+$lfr-page-layouts-card-after-highlight: map-merge((
+	border-radius: map-get($card-interactive-after-highlight, border-radius),
+	bottom: map-get($card-interactive-after-highlight, bottom),
+	content: map-get($card-interactive-after-highlight, content),
+	height: map-get($card-interactive-after-highlight, height),
+	left: map-get($card-interactive-after-highlight, left),
+	position: map-get($card-interactive-after-highlight, position),
+	right: map-get($card-interactive-after-highlight, right),
+	transition: map-get($card-interactive-after-highlight, transition),
+	hover-bg: map-get($card-interactive-primary-after-highlight, hover-bg),
+	hover-height: map-get($card-interactive-after-highlight, hover-height),
+	focus-bg: map-get($card-interactive-primary-after-highlight, focus-bg),
+	focus-height: map-get($card-interactive-after-highlight, focus-height),
+	active-bg: map-get($card-interactive-primary-after-highlight, active-bg),
+	active-height: map-get($card-interactive-after-highlight, active-height),
+), $lfr-page-layouts-card-after-highlight);
+
+$lfr-page-layouts-card: () !default;
+$lfr-page-layouts-card: map-merge((
+	border-width: map-get($card-type-template, border-width),
+	box-shadow: map-get($card-type-template, box-shadow),
+	cursor: map-get($card-interactive, cursor),
+	outline: map-get($card-interactive, outline),
+	transition: map-get($card-interactive, transition),
+	hover-bg: map-get($card-interactive, hover-bg),
+	hover-box-shadow: map-get($card-interactive-primary, hover-box-shadow),
+	hover-text-decoration: map-get($card-interactive, hover-text-decoration),
+	focus-bg: map-get($card-interactive-primary, focus-bg),
+	focus-border-color: map-get($card-interactive, focus-border-color),
+	focus-box-shadow: map-get($card-interactive, focus-box-shadow),
+	active-bg: map-get($card-interactive-primary, active-bg),
+	after-highlight: $lfr-page-layouts-card-after-highlight,
+), $lfr-page-layouts-card);
+
+$lfr-page-layouts-card-checked-after-highlight: () !default;
+$lfr-page-layouts-card-checked-after-highlight: map-merge((
+	bg: map-get($card-interactive-primary-after-highlight, hover-bg),
+	border-radius: map-get($card-interactive-primary-after-highlight, border-radius),
+	bottom: map-get($card-interactive-after-highlight, bottom),
+	content: map-get($card-interactive-after-highlight, content),
+	height: map-get($card-interactive-after-highlight, active-height),
+	left: map-get($card-interactive-after-highlight, left),
+	position: map-get($card-interactive-after-highlight, position),
+	right: map-get($card-interactive-after-highlight, right),
+	transition: map-get($card-interactive-after-highlight, transition),
+), $lfr-page-layouts-card-checked-after-highlight);
+
+$lfr-page-layouts-card-checked: () !default;
+$lfr-page-layouts-card-checked: map-merge((
+	bg: map-get($card-interactive, hover-bg),
+	box-shadow: map-get($card-interactive-primary, hover-box-shadow),
+	cursor: default,
+	after-highlight: $lfr-page-layouts-card-checked-after-highlight,
+), $lfr-page-layouts-card-checked);
+
 /* ---------- Dialogs ---------- */
 
 $dialog-footer-bg: $white !default;

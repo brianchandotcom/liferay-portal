@@ -16,18 +16,30 @@
 
 <%@ include file="/init.jsp" %>
 
+<style type="text/css">
+	#impersonate-user-sticker {
+		bottom: -.4rem;
+		font-size: .6rem;
+		height: 1.2rem;
+		right: -0.4rem;
+		width: 1.2rem;
+	}
+</style>
+
 <li class="control-menu-nav-item">
 	<span class="user-avatar-link">
 		<liferay-util:buffer
 			var="userAvatar"
 		>
 			<span class="sticker">
-				<liferay-ui:user-portrait
-					user="<%= user %>"
-				/>
+				<span class="inline-item">
+					<liferay-ui:user-portrait
+						user="<%= user %>"
+					/>
+				</span>
 
 				<c:if test="<%= themeDisplay.isImpersonated() %>">
-					<span class="sticker sticker-bottom-right sticker-circle sticker-outside sticker-sm sticker-user-icon">
+					<span class="sticker sticker-bottom-right sticker-circle sticker-outside sticker-user-icon" id="impersonate-user-sticker">
 						<aui:icon image="user" markupView="lexicon" />
 					</span>
 				</c:if>

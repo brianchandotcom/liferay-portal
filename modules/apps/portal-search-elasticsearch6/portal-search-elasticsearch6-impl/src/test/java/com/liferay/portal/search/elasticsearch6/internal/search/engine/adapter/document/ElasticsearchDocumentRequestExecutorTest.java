@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document;
 
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -86,7 +87,7 @@ public class ElasticsearchDocumentRequestExecutorTest {
 	@Test
 	public void testExecuteIndexDocumentRequest() {
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			null, null);
+			null, (Document)null);
 
 		_elasticsearchDocumentRequestExecutor.executeDocumentRequest(
 			indexDocumentRequest);
@@ -116,7 +117,7 @@ public class ElasticsearchDocumentRequestExecutorTest {
 	@Test
 	public void testExecuteUpdateDocumentRequest() {
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
-			null, null, null);
+			null, null, (Document)null);
 
 		_elasticsearchDocumentRequestExecutor.executeDocumentRequest(
 			updateDocumentRequest);

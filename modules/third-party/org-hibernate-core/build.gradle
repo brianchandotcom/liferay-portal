@@ -36,6 +36,7 @@ patch {
 	}
 
 	fileNames "org/hibernate/cache/UpdateTimestampsCache.java"
+	fileNames "org/hibernate/cfg/Configuration.java"
 	fileNames "org/hibernate/engine/jdbc/BlobProxy.java"
 	fileNames "org/hibernate/engine/jdbc/ClobProxy.java"
 	fileNames "org/hibernate/engine/jdbc/NClobProxy.java"

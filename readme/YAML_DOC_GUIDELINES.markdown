@@ -7,8 +7,8 @@ YAML files, but the rules can be loosely applied to other YAML uses in Liferay
 Portal. Please follow these guidelines as you define YAML descriptions in
 Liferay Portal's `.yaml` files.
 
-YAML's `description` section should provided extended information about the API.
-It can be multiline and supports the [CommonMark](https://commonmark.org/help/)
+YAML's `description` section should provide extended information about the API.
+They should be written in the [CommonMark](https://commonmark.org/help/)
 dialect of Markdown for rich text representation. The most popular uses of
 CommonMark formatting for Liferay's YAML files are outlined below:
 
@@ -16,6 +16,10 @@ CommonMark formatting for Liferay's YAML files are outlined below:
 - Links: [Github]\(https://github.com)
 - Italics with single asterisks: \*Save\*
 - Bold with double asterisks: \*\*Parameter\*\*
+
+All descriptions should be on a single line. If you wish to display the
+description as multiple lines after it's generated, you must use HTML `<p>`
+tags.
 
 There are two types of styles a YAML description can follow:
 
@@ -29,9 +33,9 @@ The basic structure for an OpenAPI YAML file is outlined below:
 - Metadata
 - Servers
 - Paths ([example](#paths))
-- Request Bodies
-- Responses
-- Input/Output Models ([example](#input-output-models))
+    - Request Bodies
+    - Responses
+- Input/Output Schemas ([example](#input-output-schemas))
 - Authentication
 
 Descriptions assigned directly to one of these sections should follow the
@@ -107,7 +111,7 @@ paths:
             tags: ["SegmentUser"]
 ```
 
-### Input/Output Models
+### Input/Output Schemas
 
 ```yaml
 components:

@@ -1,0 +1,26 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+apply plugin: "nebula.optional-base"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
+dependencies {
+	compile group: "org.apache.aries.spifly", name: "org.apache.aries.spifly.dynamic.framework.extension", optional, version: "1.2"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/static")
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/aries/spifly/BaseActivator.java"
+	fileNames "org/apache/aries/spifly/ProviderBundleTrackerCustomizer.java"
+
+	originalLibModuleName = "org.apache.aries.spifly.dynamic.framework.extension"
+}

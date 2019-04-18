@@ -14,8 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
@@ -23,6 +22,8 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
@@ -49,20 +50,19 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
 		searchSearchRequest.setQuery(
-			new BooleanQueryImpl() {
-				{
-					setPreBooleanFilter(
-						new BooleanFilter() {
-							{
-								addRequiredTerm(
-									"companyId", contextCompany.getCompanyId());
-								addRequiredTerm("deleted", false);
-								addRequiredTerm("processId", processId);
-							}
-						});
-				}
-			});
+			booleanQuery.addMustQueryClauses(
+				_queries.term("companyId", contextCompany.getCompanyId()),
+				_queries.term("deleted", false),
+				_queries.term("processId", processId),
+				_queries.term(
+					"version",
+					_getLatestProcessVersion(
+						contextCompany.getCompanyId(), processId))));
+
 		searchSearchRequest.setSize(10000);
 
 		SearchSearchResponse searchSearchResponse =
@@ -84,6 +84,39 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 			));
 	}
 
+	private String _getLatestProcessVersion(long companyId, long processId) {
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames("workflow-metrics-processes");
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		searchSearchRequest.setQuery(
+			booleanQuery.addMustQueryClauses(
+				_queries.term("companyId", companyId),
+				_queries.term("processId", processId)));
+
+		searchSearchRequest.setSelectedFieldNames("version");
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		return Stream.of(
+			searchHits.getSearchHits()
+		).flatMap(
+			List::parallelStream
+		).map(
+			SearchHit::getDocument
+		).findFirst(
+		).map(
+			document -> document.getString("version")
+		).orElse(
+			StringPool.BLANK
+		);
+	}
+
 	private Node _toNode(Document document) {
 		return new Node() {
 			{
@@ -95,6 +128,9 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 			}
 		};
 	}
+
+	@Reference
+	private Queries _queries;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

@@ -60,7 +60,20 @@ public class ConfiguratorExtension implements Extension {
 				_configurationContents) {
 
 			try {
-				_createConfiguration(namedConfigurationContent);
+				for (ConfigurationDescriptionFactory
+						configurationDescriptionFactory :
+							_configurationDescriptionFactories) {
+
+					ConfigurationDescription configurationDescription =
+						configurationDescriptionFactory.create(
+							namedConfigurationContent);
+
+					if (configurationDescription == null) {
+						continue;
+					}
+
+					_process(configurationDescription);
+				}
 			}
 			catch (IOException ioe) {
 				_logger.log(Logger.LOG_WARNING, ioe.getMessage(), ioe);
@@ -79,25 +92,6 @@ public class ConfiguratorExtension implements Extension {
 		}
 
 		return false;
-	}
-
-	private void _createConfiguration(
-			NamedConfigurationContent namedConfigurationContent)
-		throws Exception {
-
-		for (ConfigurationDescriptionFactory configurationDescriptionFactory :
-				_configurationDescriptionFactories) {
-
-			ConfigurationDescription configurationDescription =
-				configurationDescriptionFactory.create(
-					namedConfigurationContent);
-
-			if (configurationDescription == null) {
-				continue;
-			}
-
-			_process(configurationDescription);
-		}
 	}
 
 	private void _process(ConfigurationDescription configurationDescription)

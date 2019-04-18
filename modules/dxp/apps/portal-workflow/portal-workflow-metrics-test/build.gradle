@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:portal-workflow:portal-workflow-kaleo-api")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":private:apps:portal-workflow:portal-workflow-metrics-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

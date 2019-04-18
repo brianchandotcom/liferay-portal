@@ -34,6 +34,7 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADConstants;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.ScopeDisplay;
+import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADInfoPanelDisplay;
 import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
@@ -114,6 +115,18 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 
 			if (Validator.isNull(applicationKey)) {
 				applicationKey = scopeDisplay.getApplicationKey();
+			}
+			else {
+				for (UADApplicationSummaryDisplay uadApplicationSummaryDisplay :
+						scopeDisplay.getUADApplicationSummaryDisplays()) {
+
+					if (applicationKey.equals(
+							uadApplicationSummaryDisplay.getApplicationKey()) &&
+						!uadApplicationSummaryDisplay.hasItems()) {
+
+						applicationKey = scopeDisplay.getApplicationKey();
+					}
+				}
 			}
 
 			ViewUADEntitiesDisplay viewUADEntitiesDisplay =

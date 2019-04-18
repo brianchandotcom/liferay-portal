@@ -28,15 +28,18 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  * @author Connor McKay
  */
+@Component(service = JournalFeedFinder.class)
 public class JournalFeedFinderImpl
 	extends JournalFeedFinderBaseImpl implements JournalFeedFinder {
 
@@ -243,7 +246,7 @@ public class JournalFeedFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

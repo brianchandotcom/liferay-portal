@@ -39,11 +39,10 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.sql.Timestamp;
 
@@ -52,11 +51,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Connor McKay
  */
+@Component(service = JournalArticleFinder.class)
 public class JournalArticleFinderImpl
 	extends JournalArticleFinderBaseImpl implements JournalArticleFinder {
 
@@ -650,7 +653,7 @@ public class JournalArticleFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(PortalUtil.getClassNameId(JournalArticle.class));
+			qPos.add(_portal.getClassNameId(JournalArticle.class));
 
 			return q.list(true);
 		}
@@ -2130,7 +2133,10 @@ public class JournalArticleFinderImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleFinderImpl.class);
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -33,20 +33,23 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Juan Fernández
  * @author Zsolt Berentey
  */
+@Component(service = JournalFolderFinder.class)
 public class JournalFolderFinderImpl
 	extends JournalFolderFinderBaseImpl implements JournalFolderFinder {
 
@@ -123,7 +126,7 @@ public class JournalFolderFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(PortalUtil.getClassNameId(JournalFolder.class));
+			qPos.add(_portal.getClassNameId(JournalFolder.class));
 
 			return q.list(true);
 		}
@@ -467,7 +470,10 @@ public class JournalFolderFinderImpl
 		return sql;
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private Portal _portal;
 
 }

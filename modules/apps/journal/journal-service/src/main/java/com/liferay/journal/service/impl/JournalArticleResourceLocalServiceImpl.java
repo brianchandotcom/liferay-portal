@@ -16,14 +16,21 @@ package com.liferay.journal.service.impl;
 
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.base.JournalArticleResourceLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.journal.model.JournalArticleResource",
+	service = AopService.class
+)
 public class JournalArticleResourceLocalServiceImpl
 	extends JournalArticleResourceLocalServiceBaseImpl {
 

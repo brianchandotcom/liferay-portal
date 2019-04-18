@@ -33,6 +33,7 @@ import com.liferay.journal.service.base.JournalFeedLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -41,18 +42,24 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.rss.util.RSSUtil;
 
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Raymond Augé
  */
+@Component(
+	property = "model.class.name=com.liferay.journal.model.JournalFeed",
+	service = AopService.class
+)
 public class JournalFeedLocalServiceImpl
 	extends JournalFeedLocalServiceBaseImpl {
 
@@ -457,7 +464,7 @@ public class JournalFeedLocalServiceImpl
 			throw new FeedNameException("Name is null");
 		}
 
-		long plid = PortalUtil.getPlidFromFriendlyURL(
+		long plid = _portal.getPlidFromFriendlyURL(
 			companyId, targetLayoutFriendlyUrl);
 
 		if (plid <= 0) {
@@ -496,10 +503,13 @@ public class JournalFeedLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = DDMStructureLinkLocalService.class)
+	@Reference
 	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 
-	@ServiceReference(type = DDMStructureLocalService.class)
+	@Reference
 	protected DDMStructureLocalService ddmStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

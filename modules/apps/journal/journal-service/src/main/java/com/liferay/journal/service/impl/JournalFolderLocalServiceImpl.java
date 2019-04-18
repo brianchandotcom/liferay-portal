@@ -30,6 +30,7 @@ import com.liferay.journal.service.base.JournalFolderLocalServiceBaseImpl;
 import com.liferay.journal.util.JournalValidator;
 import com.liferay.journal.util.comparator.FolderIdComparator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,7 +58,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.validation.ModelValidator;
 import com.liferay.portal.validation.ModelValidatorRegistryUtil;
@@ -75,9 +75,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Juan Fernández
  */
+@Component(
+	property = "model.class.name=com.liferay.journal.model.JournalFolder",
+	service = AopService.class
+)
 public class JournalFolderLocalServiceImpl
 	extends JournalFolderLocalServiceBaseImpl {
 
@@ -1484,22 +1491,20 @@ public class JournalFolderLocalServiceImpl
 			folderId, groupId, parentFolderId, name);
 	}
 
-	@ServiceReference(type = DDMStructureLinkLocalService.class)
+	@Reference
 	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 
-	@ServiceReference(type = DDMStructureLocalService.class)
+	@Reference
 	protected DDMStructureLocalService ddmStructureLocalService;
 
-	@ServiceReference(type = JournalValidator.class)
+	@Reference
 	protected JournalValidator journalValidator;
 
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.SubscriptionLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.SubscriptionLocalService
 		subscriptionLocalService;
 
@@ -1510,10 +1515,10 @@ public class JournalFolderLocalServiceImpl
 		return (JournalFolderModelValidator)modelValidator;
 	}
 
-	@ServiceReference(type = SubscriptionLocalService.class)
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
-	@ServiceReference(type = TrashHelper.class)
+	@Reference
 	private TrashHelper _trashHelper;
 
 }

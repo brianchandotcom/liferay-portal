@@ -18,12 +18,12 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.base.JournalFolderServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -36,9 +36,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Juan Fernández
  */
+@Component(
+	property = {
+		"json.web.service.context.name=journal",
+		"json.web.service.context.path=JournalFolder"
+	},
+	service = AopService.class
+)
 public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Override
@@ -454,15 +464,16 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		return ddmStructures;
 	}
 
-	private static volatile ModelResourcePermission<DDMStructure>
-		_ddmStructureModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				JournalFolderServiceImpl.class,
-				"_ddmStructureModelResourcePermission", DDMStructure.class);
-	private static volatile ModelResourcePermission<JournalFolder>
-		_journalFolderModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				JournalFolderServiceImpl.class,
-				"_journalFolderModelResourcePermission", JournalFolder.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
+	)
+	private volatile ModelResourcePermission<DDMStructure>
+		_ddmStructureModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
+	)
+	private volatile ModelResourcePermission<JournalFolder>
+		_journalFolderModelResourcePermission;
 
 }

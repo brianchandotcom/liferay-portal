@@ -19,6 +19,7 @@ import com.liferay.journal.service.base.JournalContentSearchLocalServiceBaseImpl
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,26 +39,24 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  */
+@Component(
+	property = "model.class.name=com.liferay.journal.model.JournalContentSearch",
+	service = AopService.class
+)
 public class JournalContentSearchLocalServiceImpl
 	extends JournalContentSearchLocalServiceBaseImpl {
 
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			JournalContentSearchLocalServiceImpl.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
+	@Activate
+	public void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, DisplayInformationProvider.class,
 			"javax.portlet.name");
@@ -149,6 +148,11 @@ public class JournalContentSearchLocalServiceImpl
 		}
 	}
 
+	@Deactivate
+	public void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	@Override
 	public void deleteArticleContentSearch(
 		long groupId, boolean privateLayout, long layoutId, String portletId) {
@@ -204,13 +208,6 @@ public class JournalContentSearchLocalServiceImpl
 		for (JournalContentSearch contentSearch : contentSearches) {
 			deleteJournalContentSearch(contentSearch);
 		}
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_serviceTrackerMap.close();
 	}
 
 	@Override

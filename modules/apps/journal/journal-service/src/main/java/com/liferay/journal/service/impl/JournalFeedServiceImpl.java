@@ -17,17 +17,26 @@ package com.liferay.journal.service.impl;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.base.JournalFeedServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  */
+@Component(
+	property = {
+		"json.web.service.context.name=journal",
+		"json.web.service.context.path=JournalFeed"
+	},
+	service = AopService.class
+)
 public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 
 	@Override
@@ -112,15 +121,15 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 			feedVersion, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<JournalFeed>
-		_journalFeedModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				JournalFeedServiceImpl.class,
-				"_journalFeedModelResourcePermission", JournalFeed.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				JournalFeedServiceImpl.class, "_portletResourcePermission",
-				JournalConstants.RESOURCE_NAME);
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFeed)"
+	)
+	private volatile ModelResourcePermission<JournalFeed>
+		_journalFeedModelResourcePermission;
+
+	@Reference(
+		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
+	)
+	private volatile PortletResourcePermission _portletResourcePermission;
 
 }

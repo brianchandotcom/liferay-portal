@@ -71,7 +71,7 @@ import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
@@ -136,7 +136,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -144,7 +144,7 @@ import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -160,7 +160,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.validation.ModelValidator;
 import com.liferay.portal.validation.ModelValidatorRegistryUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
@@ -191,6 +190,9 @@ import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * Provides the local service for accessing, adding, deleting, and updating web
  * content articles.
@@ -201,6 +203,10 @@ import javax.portlet.PortletPreferences;
  * @author Juan Fernández
  * @author Sergio González
  */
+@Component(
+	property = "model.class.name=com.liferay.journal.model.JournalArticle",
+	service = AopService.class
+)
 public class JournalArticleLocalServiceImpl
 	extends JournalArticleLocalServiceBaseImpl {
 
@@ -333,19 +339,19 @@ public class JournalArticleLocalServiceImpl
 		Date reviewDate = null;
 
 		if (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-			displayDate = PortalUtil.getDate(
+			displayDate = _portal.getDate(
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, user.getTimeZone(), null);
 
 			if (!neverExpire) {
-				expirationDate = PortalUtil.getDate(
+				expirationDate = _portal.getDate(
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute,
 					user.getTimeZone(), ArticleExpirationDateException.class);
 			}
 
 			if (!neverReview) {
-				reviewDate = PortalUtil.getDate(
+				reviewDate = _portal.getDate(
 					reviewDateMonth, reviewDateDay, reviewDateYear,
 					reviewDateHour, reviewDateMinute, user.getTimeZone(),
 					ArticleReviewDateException.class);
@@ -5657,19 +5663,19 @@ public class JournalArticleLocalServiceImpl
 		if (article.getClassNameId() ==
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 
-			displayDate = PortalUtil.getDate(
+			displayDate = _portal.getDate(
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, user.getTimeZone(), null);
 
 			if (!neverExpire) {
-				expirationDate = PortalUtil.getDate(
+				expirationDate = _portal.getDate(
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute,
 					user.getTimeZone(), ArticleExpirationDateException.class);
 			}
 
 			if (!neverReview) {
-				reviewDate = PortalUtil.getDate(
+				reviewDate = _portal.getDate(
 					reviewDateMonth, reviewDateDay, reviewDateYear,
 					reviewDateHour, reviewDateMinute, user.getTimeZone(),
 					ArticleReviewDateException.class);
@@ -6955,13 +6961,13 @@ public class JournalArticleLocalServiceImpl
 		String portletId = PortletProviderUtil.getPortletId(
 			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
 
-		String namespace = PortalUtil.getPortletNamespace(portletId);
+		String namespace = _portal.getPortletNamespace(portletId);
 
-		articleURL = HttpUtil.addParameter(
+		articleURL = _http.addParameter(
 			articleURL, namespace + "groupId", groupId);
-		articleURL = HttpUtil.addParameter(
+		articleURL = _http.addParameter(
 			articleURL, namespace + "folderId", folderId);
-		articleURL = HttpUtil.addParameter(
+		articleURL = _http.addParameter(
 			articleURL, namespace + "articleId", articleId);
 
 		return articleURL;
@@ -7083,7 +7089,7 @@ public class JournalArticleLocalServiceImpl
 					_log.debug("Publishing article " + article.getId());
 				}
 
-				long userId = PortalUtil.getValidUserId(
+				long userId = _portal.getValidUserId(
 					article.getCompanyId(), article.getUserId());
 
 				ServiceContext serviceContext = new ServiceContext();
@@ -7094,7 +7100,7 @@ public class JournalArticleLocalServiceImpl
 					JournalArticle.class.getName(),
 					PortletProvider.Action.EDIT);
 
-				String layoutFullURL = PortalUtil.getLayoutFullURL(
+				String layoutFullURL = _portal.getLayoutFullURL(
 					article.getGroupId(), portletId);
 
 				serviceContext.setLayoutFullURL(layoutFullURL);
@@ -7253,7 +7259,7 @@ public class JournalArticleLocalServiceImpl
 					JournalArticle.class.getName(),
 					PortletProvider.Action.EDIT);
 
-				String articleURL = PortalUtil.getControlPanelFullURL(
+				String articleURL = _portal.getControlPanelFullURL(
 					article.getGroupId(), portletId, null);
 
 				articleURL = buildArticleURL(
@@ -7731,7 +7737,7 @@ public class JournalArticleLocalServiceImpl
 			// one. If the default one does not exist, throw an exception.
 
 			DDMTemplate ddmTemplate = ddmTemplateLocalService.fetchTemplate(
-				PortalUtil.getSiteGroupId(article.getGroupId()),
+				_portal.getSiteGroupId(article.getGroupId()),
 				classNameLocalService.getClassNameId(DDMStructure.class),
 				ddmTemplateKey, true);
 
@@ -7844,7 +7850,7 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle.class);
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			PortalUtil.getSiteGroupId(article.getGroupId()), classNameId,
+			_portal.getSiteGroupId(article.getGroupId()), classNameId,
 			article.getDDMStructureKey(), true);
 
 		return ddmStructure.getStructureId();
@@ -7949,7 +7955,7 @@ public class JournalArticleLocalServiceImpl
 		String urlViewInContext = StringPool.BLANK;
 
 		try {
-			String defaultArticleURL = PortalUtil.getControlPanelFullURL(
+			String defaultArticleURL = _portal.getControlPanelFullURL(
 				article.getGroupId(), portletId, null);
 
 			AssetRendererFactory<JournalArticle> assetRendererFactory =
@@ -8216,7 +8222,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			PortalUtil.getSiteGroupId(article.getGroupId()),
+			_portal.getSiteGroupId(article.getGroupId()),
 			classNameLocalService.getClassNameId(JournalArticle.class),
 			article.getDDMStructureKey(), true);
 
@@ -8520,12 +8526,12 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException {
 
 		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			PortalUtil.getSiteGroupId(groupId),
+			_portal.getSiteGroupId(groupId),
 			classNameLocalService.getClassNameId(JournalArticle.class),
 			ddmStructureKey, true);
 
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.fetchTemplate(
-			PortalUtil.getSiteGroupId(groupId),
+			_portal.getSiteGroupId(groupId),
 			classNameLocalService.getClassNameId(DDMStructure.class),
 			ddmTemplateKey, true);
 
@@ -8810,34 +8816,32 @@ public class JournalArticleLocalServiceImpl
 			smallImageURL, smallImageBytes, 0, content);
 	}
 
-	@ServiceReference(type = ConfigurationProvider.class)
+	@Reference
 	protected ConfigurationProvider configurationProvider;
 
-	@ServiceReference(type = DDMStorageLinkLocalService.class)
+	@Reference
 	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;
 
-	@ServiceReference(type = DDMStructureLinkLocalService.class)
+	@Reference
 	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 
-	@ServiceReference(type = DDMStructureLocalService.class)
+	@Reference
 	protected DDMStructureLocalService ddmStructureLocalService;
 
-	@ServiceReference(type = DDMTemplateLinkLocalService.class)
+	@Reference
 	protected DDMTemplateLinkLocalService ddmTemplateLinkLocalService;
 
-	@ServiceReference(type = DDMTemplateLocalService.class)
+	@Reference
 	protected DDMTemplateLocalService ddmTemplateLocalService;
 
-	@ServiceReference(type = FriendlyURLEntryLocalService.class)
+	@Reference
 	protected FriendlyURLEntryLocalService friendlyURLEntryLocalService;
 
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.SubscriptionLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.SubscriptionLocalService
 		subscriptionLocalService;
 
@@ -9070,30 +9074,36 @@ public class JournalArticleLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleLocalServiceImpl.class);
 
-	@ServiceReference(type = AttachmentContentUpdater.class)
+	@Reference
 	private AttachmentContentUpdater _attachmentContentUpdater;
 
-	@ServiceReference(type = CommentManager.class)
+	@Reference
 	private CommentManager _commentManager;
 
-	@ServiceReference(type = DLURLHelper.class)
+	@Reference
 	private DLURLHelper _dlURLHelper;
 
-	@ServiceReference(type = JournalDefaultTemplateProvider.class)
+	@Reference
+	private Http _http;
+
+	@Reference
 	private JournalDefaultTemplateProvider _journalDefaultTemplateProvider;
 
-	@ServiceReference(type = JournalFileUploadsConfiguration.class)
+	@Reference
 	private JournalFileUploadsConfiguration _journalFileUploadsConfiguration;
 
-	@BeanReference(type = JournalHelper.class)
+	@Reference
 	private JournalHelper _journalHelper;
+
+	@Reference
+	private Portal _portal;
 
 	private Date _previousCheckDate;
 
-	@ServiceReference(type = SubscriptionLocalService.class)
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
-	@ServiceReference(type = TrashHelper.class)
+	@Reference
 	private TrashHelper _trashHelper;
 
 }

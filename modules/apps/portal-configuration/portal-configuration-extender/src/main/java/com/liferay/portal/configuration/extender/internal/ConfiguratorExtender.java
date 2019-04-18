@@ -17,6 +17,9 @@ package com.liferay.portal.configuration.extender.internal;
 import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.extender.internal.support.config.file.ConfigFileNamedConfigurationContent;
+
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -26,6 +29,7 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.BiFunction;
 
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
@@ -66,18 +70,6 @@ public class ConfiguratorExtender extends AbstractExtender {
 		_configurationDescriptionFactories.add(configurationDescriptionFactory);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addNamedConfigurationContentFactory(
-		NamedConfigurationContentFactory namedConfigurationContentFactory) {
-
-		_namedConfigurationContentFactories.add(
-			namedConfigurationContentFactory);
-	}
-
 	@Deactivate
 	protected void deactivate(BundleContext bundleContext) throws Exception {
 		stop(bundleContext);
@@ -103,14 +95,13 @@ public class ConfiguratorExtender extends AbstractExtender {
 		List<NamedConfigurationContent> namedConfigurationContents =
 			new ArrayList<>();
 
-		for (NamedConfigurationContentFactory namedConfigurationContentFactory :
-				_namedConfigurationContentFactories) {
+		_addNamedConfigurations(
+			bundle, configurationPath, namedConfigurationContents,
+			ConfigFileNamedConfigurationContent::new, "*.config");
 
-			_addNamedConfigurations(
-				bundle, configurationPath, namedConfigurationContents,
-				namedConfigurationContentFactory,
-				namedConfigurationContentFactory.getFilePattern());
-		}
+		_addNamedConfigurations(
+			bundle, configurationPath, namedConfigurationContents,
+			PropertiesFileNamedConfigurationContent::new, "*.properties");
 
 		if (namedConfigurationContents.isEmpty()) {
 			return null;
@@ -134,13 +125,6 @@ public class ConfiguratorExtender extends AbstractExtender {
 			configurationDescriptionFactory);
 	}
 
-	protected void removeNamedConfigurationContentFactory(
-		NamedConfigurationContentFactory namedConfigurationContentFactory) {
-
-		_namedConfigurationContentFactories.remove(
-			namedConfigurationContentFactory);
-	}
-
 	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {
@@ -157,7 +141,8 @@ public class ConfiguratorExtender extends AbstractExtender {
 	private void _addNamedConfigurations(
 		Bundle bundle, String configurationPath,
 		List<NamedConfigurationContent> namedConfigurationContents,
-		NamedConfigurationContentFactory namedConfigurationContentFactory,
+		BiFunction<String, InputStream, NamedConfigurationContent>
+			namedConfigurationContentBiFunction,
 		String filePattern) {
 
 		try {
@@ -172,7 +157,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 				URL url = entries.nextElement();
 
 				namedConfigurationContents.add(
-					namedConfigurationContentFactory.create(
+					namedConfigurationContentBiFunction.apply(
 						_getName(url, filePattern), url.openStream()));
 			}
 		}
@@ -201,7 +186,5 @@ public class ConfiguratorExtender extends AbstractExtender {
 	private final Collection<ConfigurationDescriptionFactory>
 		_configurationDescriptionFactories = new CopyOnWriteArrayList<>();
 	private Logger _logger;
-	private final Collection<NamedConfigurationContentFactory>
-		_namedConfigurationContentFactories = new CopyOnWriteArrayList<>();
 
 }

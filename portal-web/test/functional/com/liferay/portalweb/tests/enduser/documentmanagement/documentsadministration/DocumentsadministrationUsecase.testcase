@@ -736,7 +736,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Zero Document File");
 
 		DMDocument.viewCP(
-			dmDocumentSize = "0B",
+			dmDocumentSize = "0 B",
 			dmDocumentTitle = "Zero Document File"
 		);
 

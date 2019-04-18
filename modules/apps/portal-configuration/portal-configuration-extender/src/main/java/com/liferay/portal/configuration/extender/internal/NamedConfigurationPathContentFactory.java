@@ -41,11 +41,6 @@ public class NamedConfigurationPathContentFactory
 			name = name.substring(lastIndexOfSlash + 1);
 		}
 
-		if (!name.endsWith(".properties")) {
-			throw new IllegalArgumentException(
-				"File name does not end with .properties");
-		}
-
 		return new PropertiesFileNamedConfigurationContent(
 			name.substring(0, name.length() - 11), url.openStream());
 	}

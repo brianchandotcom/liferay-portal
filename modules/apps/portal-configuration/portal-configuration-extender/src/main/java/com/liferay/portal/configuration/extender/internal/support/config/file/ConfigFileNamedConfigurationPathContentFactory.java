@@ -44,11 +44,6 @@ public class ConfigFileNamedConfigurationPathContentFactory
 			name = name.substring(lastIndexOfSlash + 1);
 		}
 
-		if (!name.endsWith(".config")) {
-			throw new IllegalArgumentException(
-				"File name does not end with .config");
-		}
-
 		return new ConfigFileNamedConfigurationContent(
 			name.substring(0, name.length() - 7), url.openStream());
 	}

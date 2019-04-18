@@ -17,13 +17,23 @@ package com.liferay.marketplace.service.impl;
 import com.liferay.marketplace.internal.service.permission.MarketplacePermission;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.base.AppServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.File;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ryan Park
  */
+@Component(
+	property = {
+		"json.web.service.context.name=marketplace",
+		"json.web.service.context.path=App"
+	},
+	service = AopService.class
+)
 public class AppServiceImpl extends AppServiceBaseImpl {
 
 	@Override

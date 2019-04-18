@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.marketplace.service
 Bundle-Version: 5.0.0
 Liferay-Require-SchemaVersion: 2.0.2
 Liferay-Service: true
+-dsannotations-options: inherit

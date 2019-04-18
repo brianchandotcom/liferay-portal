@@ -18,15 +18,22 @@ import com.liferay.marketplace.exception.ModuleNamespaceException;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.base.ModuleLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ryan Park
  * @author Joan Kim
  */
+@Component(
+	property = "module.class.name=com.liferay.marketplace.model.Module",
+	service = AopService.class
+)
 public class ModuleLocalServiceImpl extends ModuleLocalServiceBaseImpl {
 
 	/**

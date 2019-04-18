@@ -37,6 +37,7 @@ public class JavaInternalPackageCheck extends BaseFileCheck {
 		throws IOException {
 
 		if (!absolutePath.contains("/modules/apps/") ||
+			!absolutePath.contains("-web/src/") ||
 			absolutePath.contains("/test/") ||
 			absolutePath.contains("/testIntegration/")) {
 

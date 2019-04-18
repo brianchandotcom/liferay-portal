@@ -48,11 +48,11 @@
 
 				<div class="autofit-padded-no-gutters-x autofit-row autofit-row-center mb-3">
 					<div class="autofit-col">
-						<img class="icon-monospaced" src="<%= connectedApp.getImageURL() %>" />
+						<img class="icon-monospaced" src="<%= HtmlUtil.escapeAttribute(connectedApp.getImageURL()) %>" />
 					</div>
 
 					<div class="autofit-col autofit-col-expand">
-						<%= connectedApp.getName(locale) %>
+						<%= HtmlUtil.escape(connectedApp.getName(locale)) %>
 					</div>
 
 					<div class="autofit-col">

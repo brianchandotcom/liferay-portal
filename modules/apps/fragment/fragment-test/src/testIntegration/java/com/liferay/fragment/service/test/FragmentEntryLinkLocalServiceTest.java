@@ -52,7 +52,7 @@ import org.junit.runner.RunWith;
  * @author Kyle Miho
  */
 @RunWith(Arquillian.class)
-public class FragmentEntryLinkServiceTest {
+public class FragmentEntryLinkLocalServiceTest {
 
 	@ClassRule
 	@Rule

@@ -97,6 +97,17 @@
 			<finder-column name="name" />
 			<finder-column name="processId" />
 		</finder>
+		<finder name="C_P_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="processId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_P_NotPV_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="processId" />
+			<finder-column comparator="!=" name="processVersion" />
+			<finder-column name="status" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>WorkflowMetricsSLADefinitionDuplicateName</exception>

@@ -24,11 +24,9 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiFunction;
 
 import org.apache.felix.utils.extender.Extension;
@@ -41,9 +39,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Carlos Sierra Andrés
@@ -57,17 +52,6 @@ public class ConfiguratorExtender extends AbstractExtender {
 		_logger = new Logger(bundleContext);
 
 		start(bundleContext);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addConfigurationDescriptionFactory(
-		ConfigurationDescriptionFactory configurationDescriptionFactory) {
-
-		_configurationDescriptionFactories.add(configurationDescriptionFactory);
 	}
 
 	@Deactivate
@@ -109,20 +93,12 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 		return new ConfiguratorExtension(
 			_configurationAdmin, new Logger(bundle.getBundleContext()),
-			bundle.getSymbolicName(), namedConfigurationContents,
-			_configurationDescriptionFactories);
+			bundle.getSymbolicName(), namedConfigurationContents);
 	}
 
 	@Override
 	protected void error(String s, Throwable throwable) {
 		_logger.log(Logger.LOG_ERROR, s, throwable);
-	}
-
-	protected void removeConfigurationDescriptionFactory(
-		ConfigurationDescriptionFactory configurationDescriptionFactory) {
-
-		_configurationDescriptionFactories.remove(
-			configurationDescriptionFactory);
 	}
 
 	@Reference(unbind = "-")
@@ -178,8 +154,6 @@ public class ConfiguratorExtender extends AbstractExtender {
 	}
 
 	private ConfigurationAdmin _configurationAdmin;
-	private final Collection<ConfigurationDescriptionFactory>
-		_configurationDescriptionFactories = new CopyOnWriteArrayList<>();
 	private Logger _logger;
 
 }

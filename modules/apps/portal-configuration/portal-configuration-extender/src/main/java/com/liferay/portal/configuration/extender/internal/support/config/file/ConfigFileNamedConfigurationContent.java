@@ -14,9 +14,18 @@
 
 package com.liferay.portal.configuration.extender.internal.support.config.file;
 
+import com.liferay.portal.configuration.extender.internal.ConfigurationDescription;
+import com.liferay.portal.configuration.extender.internal.FactoryConfigurationDescription;
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContent;
+import com.liferay.portal.configuration.extender.internal.SingleConfigurationDescription;
 
+import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.Dictionary;
+import java.util.function.Supplier;
+
+import org.apache.felix.cm.file.ConfigurationHandler;
 
 /**
  * @author Carlos Sierra Andrés
@@ -32,6 +41,28 @@ public final class ConfigFileNamedConfigurationContent
 	}
 
 	@Override
+	public ConfigurationDescription getConfigurationDescription() {
+		String pid = null;
+
+		String name = getName();
+
+		int index = name.lastIndexOf('-');
+
+		if (index > 0) {
+			String factoryPid = name.substring(0, index);
+			pid = name.substring(index + 1);
+
+			return new FactoryConfigurationDescription(
+				factoryPid, pid, new PropertiesSupplier(_inputStream));
+		}
+
+		pid = name;
+
+		return new SingleConfigurationDescription(
+			pid, new PropertiesSupplier(_inputStream));
+	}
+
+	@Override
 	public InputStream getInputStream() {
 		return _inputStream;
 	}
@@ -43,5 +74,35 @@ public final class ConfigFileNamedConfigurationContent
 
 	private final InputStream _inputStream;
 	private final String _name;
+
+	private class PropertiesSupplier
+		implements Supplier<Dictionary<String, Object>> {
+
+		public PropertiesSupplier(InputStream inputStream) {
+			_inputStream = inputStream;
+		}
+
+		@Override
+		public Dictionary<String, Object> get() {
+			try {
+				return _loadProperties();
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+		}
+
+		private Dictionary<String, Object> _loadProperties()
+			throws IOException {
+
+			Dictionary<?, ?> properties = ConfigurationHandler.read(
+				_inputStream);
+
+			return (Dictionary<String, Object>)properties;
+		}
+
+		private final InputStream _inputStream;
+
+	}
 
 }

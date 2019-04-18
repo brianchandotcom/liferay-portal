@@ -39,15 +39,12 @@ public class ConfiguratorExtension implements Extension {
 	public ConfiguratorExtension(
 		ConfigurationAdmin configurationAdmin, Logger logger,
 		String bundleSymbolicName,
-		Collection<NamedConfigurationContent> namedConfigurationContents,
-		Collection<ConfigurationDescriptionFactory>
-			configurationDescriptionFactories) {
+		Collection<NamedConfigurationContent> namedConfigurationContents) {
 
 		_configurationAdmin = configurationAdmin;
 		_logger = logger;
 		_bundleSymbolicName = bundleSymbolicName;
 		_configurationContents = namedConfigurationContents;
-		_configurationDescriptionFactories = configurationDescriptionFactories;
 	}
 
 	@Override
@@ -60,20 +57,8 @@ public class ConfiguratorExtension implements Extension {
 				_configurationContents) {
 
 			try {
-				for (ConfigurationDescriptionFactory
-						configurationDescriptionFactory :
-							_configurationDescriptionFactories) {
-
-					ConfigurationDescription configurationDescription =
-						configurationDescriptionFactory.create(
-							namedConfigurationContent);
-
-					if (configurationDescription == null) {
-						continue;
-					}
-
-					_process(configurationDescription);
-				}
+				_process(
+					namedConfigurationContent.getConfigurationDescription());
 			}
 			catch (IOException ioe) {
 				_logger.log(Logger.LOG_WARNING, ioe.getMessage(), ioe);
@@ -144,8 +129,6 @@ public class ConfiguratorExtension implements Extension {
 	private final String _bundleSymbolicName;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final Collection<NamedConfigurationContent> _configurationContents;
-	private final Collection<ConfigurationDescriptionFactory>
-		_configurationDescriptionFactories;
 	private final Logger _logger;
 
 }

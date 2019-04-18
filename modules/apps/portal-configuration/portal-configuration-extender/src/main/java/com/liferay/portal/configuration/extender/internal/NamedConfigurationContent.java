@@ -21,6 +21,8 @@ import java.io.InputStream;
  */
 public interface NamedConfigurationContent {
 
+	public ConfigurationDescription getConfigurationDescription();
+
 	public InputStream getInputStream();
 
 	public String getName();

@@ -698,7 +698,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 		String url = _getURL(request, false, false);
 
-		if (!Validator.isUrl(url) && !url.startsWith(StringPool.SLASH)) {
+		if (!Validator.isUrl(url, true)) {
 			return StringPool.SLASH + url;
 		}
 

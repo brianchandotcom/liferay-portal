@@ -70,16 +70,17 @@ AUI.add(
 						var instance = this;
 
 						if (!context) {
-							return {};
+							context = {};
 						}
 						else if (context.html) {
-							return A.merge(
+							context = A.merge(
 								context,
 								{
 									html: window.DDMCaptcha.render.Soy.toIncDom(context.html.content)
 								}
 							);
 						}
+
 						return context;
 					},
 

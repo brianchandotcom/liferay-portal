@@ -74,16 +74,17 @@ AUI.add(
 						var instance = this;
 
 						if (!context) {
-							return {};
+							context = {};
 						}
 						else if (context.text && Lang.isObject(context.text) && !Lang.isFunction(context.text)) {
-							return A.merge(
+							context = A.merge(
 								context,
 								{
 									text: window.DDMParagraph.render.Soy.toIncDom(context.text.content)
 								}
 							);
 						}
+
 						return context;
 					},
 

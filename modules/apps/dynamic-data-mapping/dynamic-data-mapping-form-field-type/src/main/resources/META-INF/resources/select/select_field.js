@@ -226,6 +226,8 @@ AUI.add(
 					hasFocus: function(node) {
 						var instance = this;
 
+						var hasFocus = SelectField.superclass.hasFocus.apply(instance, arguments);
+
 						if (node) {
 							var title = node.get('title');
 
@@ -234,15 +236,15 @@ AUI.add(
 							var dropChosen = container.one('.drop-chosen');
 
 							if (dropChosen && dropChosen.one('a[title="' + title + '"]')) {
-								return true;
+								hasFocus = true;
 							}
 
 							if (node.hasClass('trigger-label-item-close')) {
-								return true;
+								hasFocus = true;
 							}
 						}
 
-						return SelectField.superclass.hasFocus.apply(instance, arguments);
+						return hasFocus;
 					},
 
 					openList: function() {
@@ -374,13 +376,13 @@ AUI.add(
 							if ((selectedValue !== undefined) && (selectedValue.length > 0)) {
 								options = [];
 
-								options.push({
-									label: instance.get('selectedValue'),
-									value: instance.get('selectedValue')
-								});
+								options.push(
+									{
+										label: instance.get('selectedValue'),
+										value: instance.get('selectedValue')
+									}
+								);
 							}
-
-							return options;
 						}
 
 						return options || [];
@@ -505,50 +507,50 @@ AUI.add(
 						var instance = this;
 
 						var container = instance.get('container');
+						var outside = !container.contains(event.target);
 
 						var triggers = instance.get('triggers');
 
 						if (triggers.length) {
 							for (var i = 0; i < triggers.length; i++) {
 								if (triggers[i].contains(event.target)) {
-									return false;
+									outside = false;
+
+									break;
 								}
 							}
 						}
 
-						return !container.contains(event.target);
+						return outside;
 					},
 
 					_isErrorRequired: function() {
 						var instance = this;
 
+						var errorRequired = false;
 						var required = instance.get('required');
-
 						var valid = instance.get('valid');
-
 						var value = instance.getValue();
 
 						if (required && !valid && (value.length < 1)) {
-							return true;
+							errorRequired = true;
 						}
 
-						return false;
+						return errorRequired;
 					},
 
 					_isListOpen: function() {
 						var instance = this;
 
 						var container = instance.get('container');
-
 						var dropChosen = container.one('.' + CSS_DROP_CHOSEN);
+						var openList = false;
 
 						if (dropChosen) {
-							var openList = dropChosen.hasClass(CSS_HIDE);
-
-							return !openList;
+							openList = !dropChosen.hasClass(CSS_HIDE);
 						}
 
-						return false;
+						return openList;
 					},
 
 					_removeValue: function(value) {
@@ -592,16 +594,20 @@ AUI.add(
 
 					_showPlaceholderOption: function() {
 						var instance = this;
+						var showPlaceholderOption = false;
 
-						if (!instance.get('showPlaceholder')) {
-							return false;
+						if (
+							!instance.get('multiple') &&
+							!instance.get('showPlaceholder') &&
+							(
+								instance.get('fixedOptions') ||
+								instance.get('options')
+							)
+						) {
+							showPlaceholderOption = true;
 						}
 
-						if ((instance.get('fixedOptions') || instance.get('options')) && !instance.get('multiple')) {
-							return true;
-						}
-
-						return false;
+						return showPlaceholderOption;
 					},
 
 					_showSearch: function() {
@@ -624,27 +630,27 @@ AUI.add(
 
 					_validateValue: function(value) {
 						var instance = this;
-
-						if (value.length == 0) {
-							return true;
-						}
-
-						if (instance.get('readOnly')) {
-							instance.set('selectedValue', value);
-						}
-
-						var fixedOptions = instance.get('fixedOptions');
-
-						var options = instance.get('options');
-
-						var fieldOptions = options.concat(fixedOptions);
-
 						var valid = false;
 
-						for (var indexOption in fieldOptions) {
-							for (var indexValue in value) {
-								if (fieldOptions[indexOption].value == value[indexValue]) {
-									valid = true;
+						if (value.length == 0) {
+							valid = true;
+						}
+						else {
+							if (instance.get('readOnly')) {
+								instance.set('selectedValue', value);
+							}
+
+							var fixedOptions = instance.get('fixedOptions');
+
+							var options = instance.get('options');
+
+							var fieldOptions = options.concat(fixedOptions);
+
+							for (var indexOption in fieldOptions) {
+								for (var indexValue in value) {
+									if (fieldOptions[indexOption].value == value[indexValue]) {
+										valid = true;
+									}
 								}
 							}
 						}

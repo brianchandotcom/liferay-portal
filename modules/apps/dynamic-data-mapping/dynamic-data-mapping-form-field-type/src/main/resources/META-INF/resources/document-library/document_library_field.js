@@ -85,11 +85,11 @@ AUI.add(
 
 						var value = instance.get('value');
 
-						if (Lang.isString(value)) {
-							return value;
+						if (!Lang.isString(value)) {
+							value = JSON.stringify(value);
 						}
 
-						return JSON.stringify(value);
+						return value;
 					},
 
 					getTemplateContext: function() {
@@ -148,31 +148,27 @@ AUI.add(
 					_getClearButtonVisible: function() {
 						var instance = this;
 
+						var returnValue = false;
 						var value = instance.getValue();
 
 						if (value && value.title && value.uuid) {
-							return true;
+							returnValue = true;
 						}
 
-						return false;
+						return returnValue;
 					},
 
 					_getFileEntryTitle: function() {
 						var instance = this;
 
 						var fileEntryTitle = instance.get('fileEntryTitle');
-
-						if (fileEntryTitle) {
-							return fileEntryTitle;
-						}
-
 						var value = instance.getValue();
 
-						if (value) {
-							return value.title;
+						if (!fileEntryTitle && value) {
+							fileEntryTitle = value.title;
 						}
 
-						return '';
+						return fileEntryTitle;
 					},
 
 					_handleButtonsClick: function(event) {
@@ -246,7 +242,8 @@ AUI.add(
 
 		Liferay.namespace('DDM.Field').DocumentLibrary = DocumentLibraryField;
 	},
-	'', {
+	'',
+	{
 		requires: ['liferay-ddm-form-renderer-field', 'liferay-item-selector-dialog']
 	}
 );

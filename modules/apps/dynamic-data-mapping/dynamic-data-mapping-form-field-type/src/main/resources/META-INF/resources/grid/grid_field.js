@@ -110,7 +110,7 @@ AUI.add(
 					},
 
 					_getLabel: function(option) {
-						return option.label ? option.label: option.value;
+						return option.label ? option.label : option.value;
 					},
 
 					_mapItemsLabels: function(items) {

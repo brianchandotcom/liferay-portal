@@ -92,7 +92,14 @@ public class ConfiguratorExtender extends AbstractExtender {
 	}
 
 	@Override
-	protected Extension doCreateExtension(Bundle bundle) throws Exception {
+	protected Extension doCreateExtension(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		if (headers.get("Liferay-Configuration-Path") == null) {
+			return null;
+		}
+
 		Collection<NamedConfigurationContent> namedConfigurationContents =
 			new ArrayList<>();
 

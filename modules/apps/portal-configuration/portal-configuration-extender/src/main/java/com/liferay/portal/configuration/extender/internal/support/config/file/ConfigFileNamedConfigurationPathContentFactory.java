@@ -41,10 +41,6 @@ public class ConfigFileNamedConfigurationPathContentFactory
 
 		String configurationPath = headers.get("Liferay-Configuration-Path");
 
-		if (configurationPath == null) {
-			return null;
-		}
-
 		Enumeration<URL> enumeration = bundleStorage.findEntries(
 			configurationPath, "*.config", true);
 

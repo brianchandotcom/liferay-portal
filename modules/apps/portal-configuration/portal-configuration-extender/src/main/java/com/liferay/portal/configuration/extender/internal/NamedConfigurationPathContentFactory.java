@@ -38,10 +38,6 @@ public class NamedConfigurationPathContentFactory
 
 		String configurationPath = headers.get("Liferay-Configuration-Path");
 
-		if (configurationPath == null) {
-			return null;
-		}
-
 		final Enumeration<URL> entries = bundleStorage.findEntries(
 			configurationPath, "*.properties", true);
 

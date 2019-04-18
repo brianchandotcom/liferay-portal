@@ -1,6 +1,45 @@
 {
 	"csfConfig": {
-		"path:**/*.js": {
+		"path:**/src/main/resources/META-INF/resources/*/*.js": {
+			"js": {
+				"lint": {
+					"env": {
+						"browser": true
+					},
+					"extends": "liferay",
+					"globals": {
+						"AlloyEditor": true,
+						"DDMDate": true,
+						"DDMNumeric": true,
+						"DDMSelect": true,
+						"MODULE_PATH": true
+					},
+					"parser": "babel-eslint",
+					"parserOptions": {
+						"ecmaVersion": 5
+					}
+				}
+			}
+		},
+		"path:**/src/main/resources/META-INF/resources/config.js": {
+			"js": {
+				"lint": {
+					"env": {
+						"browser": true
+					},
+					"extends": "liferay",
+					"globals": {
+						"AlloyEditor": true,
+						"MODULE_PATH": true
+					},
+					"parser": "babel-eslint",
+					"parserOptions": {
+						"ecmaVersion": 5
+					}
+				}
+			}
+		},
+		"path:**/src/main/resources/META-INF/resources/metal/**/*.js": {
 			"js": {
 				"lint": {
 					"env": {

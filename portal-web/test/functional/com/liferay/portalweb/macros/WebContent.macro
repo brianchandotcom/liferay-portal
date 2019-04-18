@@ -255,6 +255,13 @@ definition {
 			);
 		}
 
+		if (isSet(templateName)) {
+			WebContent.selectTemplateCP(
+				structureName = "${structureName}",
+				templateName = "${templateName}"
+			);
+		}
+
 		Click(locator1 = "Button#PUBLISH");
 
 		SelectFrame(value1 = "relative=top");

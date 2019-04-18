@@ -89,6 +89,7 @@ definition {
 
 		WebContent.addStructuredPGViaWCD(
 			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
 			webContentTitle = "WC Title"
 		);
 
@@ -163,6 +164,7 @@ definition {
 
 		WebContent.addStructuredPGViaWCD(
 			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
 			webContentTitle = "WC Title"
 		);
 

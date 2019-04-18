@@ -577,6 +577,7 @@ definition {
 		WebContent.addStructuredPGViaWCD(
 			structureFieldName = "Text",
 			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
 			textBoxFieldName = "TextBox",
 			webContentText = "WC WebContent Text",
 			webContentTextBox = "WC WebContent TextBox",

@@ -42,8 +42,10 @@
 		</field>
 		<field name="duration" type="long" />
 		<field name="processId" type="long" />
+		<field name="processVersion" type="String" />
 		<field name="pauseNodeKeys" type="String" />
 		<field name="startNodeKeys" type="String" />
 		<field name="stopNodeKeys" type="String" />
+		<field name="status" type="int" />
 	</model>
 </model-hints>

@@ -79,6 +79,9 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition);
 
+	public int countWorkflowMetricsSLADefinitions(
+		long companyId, long processId, int status);
+
 	/**
 	 * Creates a new workflow metrics sla definition with the primary key. Does not add the workflow metrics sla definition to the database.
 	 *
@@ -269,8 +272,17 @@ public interface WorkflowMetricsSLADefinitionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, long processId, int status, int start, int end,
+		OrderByComparator<WorkflowMetricsSLADefinition> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
 		long companyId, long processId, int start, int end,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, long processId, String processVersion, int status);
 
 	/**
 	 * Returns all the workflow metrics sla definitions matching the UUID and company.
@@ -311,6 +323,10 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWorkflowMetricsSLADefinitionsCount(
 		long companyId, long processId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWorkflowMetricsSLADefinitionsCount(
+		long companyId, long processId, int status);
 
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 			long workflowMetricsSLADefinitiontId, String name,

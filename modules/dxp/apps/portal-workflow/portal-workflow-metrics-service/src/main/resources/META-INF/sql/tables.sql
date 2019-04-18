@@ -37,7 +37,9 @@ create table WorkflowMetricsSLADefinition (
 	description TEXT null,
 	duration LONG,
 	processId LONG,
+	processVersion VARCHAR(75) null,
 	pauseNodeKeys VARCHAR(75) null,
 	startNodeKeys VARCHAR(75) null,
-	stopNodeKeys VARCHAR(75) null
+	stopNodeKeys VARCHAR(75) null,
+	status INTEGER
 );

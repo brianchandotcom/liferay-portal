@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -77,8 +78,9 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"description", Types.CLOB},
 		{"duration", Types.BIGINT}, {"processId", Types.BIGINT},
-		{"pauseNodeKeys", Types.VARCHAR}, {"startNodeKeys", Types.VARCHAR},
-		{"stopNodeKeys", Types.VARCHAR}
+		{"processVersion", Types.VARCHAR}, {"pauseNodeKeys", Types.VARCHAR},
+		{"startNodeKeys", Types.VARCHAR}, {"stopNodeKeys", Types.VARCHAR},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,22 +100,24 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("processId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("processVersion", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pauseNodeKeys", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("startNodeKeys", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("stopNodeKeys", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,duration LONG,processId LONG,pauseNodeKeys VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null)";
+		"create table WorkflowMetricsSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,workflowMetricsSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,duration LONG,processId LONG,processVersion VARCHAR(75) null,pauseNodeKeys VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table WorkflowMetricsSLADefinition";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY workflowMetricsSLADefinition.workflowMetricsSLADefinitionId ASC";
+		" ORDER BY workflowMetricsSLADefinition.modifiedDate DESC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY WorkflowMetricsSLADefinition.workflowMetricsSLADefinitionId ASC";
+		" ORDER BY WorkflowMetricsSLADefinition.modifiedDate DESC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -144,10 +148,13 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	public static final long PROCESSID_COLUMN_BITMASK = 8L;
 
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long PROCESSVERSION_COLUMN_BITMASK = 16L;
 
-	public static final long WORKFLOWMETRICSSLADEFINITIONID_COLUMN_BITMASK =
-		32L;
+	public static final long STATUS_COLUMN_BITMASK = 32L;
+
+	public static final long UUID_COLUMN_BITMASK = 64L;
+
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 128L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
@@ -341,6 +348,12 @@ public class WorkflowMetricsSLADefinitionModelImpl
 			(BiConsumer<WorkflowMetricsSLADefinition, Long>)
 				WorkflowMetricsSLADefinition::setProcessId);
 		attributeGetterFunctions.put(
+			"processVersion", WorkflowMetricsSLADefinition::getProcessVersion);
+		attributeSetterBiConsumers.put(
+			"processVersion",
+			(BiConsumer<WorkflowMetricsSLADefinition, String>)
+				WorkflowMetricsSLADefinition::setProcessVersion);
+		attributeGetterFunctions.put(
 			"pauseNodeKeys", WorkflowMetricsSLADefinition::getPauseNodeKeys);
 		attributeSetterBiConsumers.put(
 			"pauseNodeKeys",
@@ -358,6 +371,12 @@ public class WorkflowMetricsSLADefinitionModelImpl
 			"stopNodeKeys",
 			(BiConsumer<WorkflowMetricsSLADefinition, String>)
 				WorkflowMetricsSLADefinition::setStopNodeKeys);
+		attributeGetterFunctions.put(
+			"status", WorkflowMetricsSLADefinition::getStatus);
+		attributeSetterBiConsumers.put(
+			"status",
+			(BiConsumer<WorkflowMetricsSLADefinition, Integer>)
+				WorkflowMetricsSLADefinition::setStatus);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -520,6 +539,8 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		_columnBitmask = -1L;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -596,6 +617,31 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	}
 
 	@Override
+	public String getProcessVersion() {
+		if (_processVersion == null) {
+			return "";
+		}
+		else {
+			return _processVersion;
+		}
+	}
+
+	@Override
+	public void setProcessVersion(String processVersion) {
+		_columnBitmask |= PROCESSVERSION_COLUMN_BITMASK;
+
+		if (_originalProcessVersion == null) {
+			_originalProcessVersion = _processVersion;
+		}
+
+		_processVersion = processVersion;
+	}
+
+	public String getOriginalProcessVersion() {
+		return GetterUtil.getString(_originalProcessVersion);
+	}
+
+	@Override
 	public String getPauseNodeKeys() {
 		if (_pauseNodeKeys == null) {
 			return "";
@@ -638,6 +684,28 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	@Override
 	public void setStopNodeKeys(String stopNodeKeys) {
 		_stopNodeKeys = stopNodeKeys;
+	}
+
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
+		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@Override
@@ -696,9 +764,11 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		workflowMetricsSLADefinitionImpl.setDescription(getDescription());
 		workflowMetricsSLADefinitionImpl.setDuration(getDuration());
 		workflowMetricsSLADefinitionImpl.setProcessId(getProcessId());
+		workflowMetricsSLADefinitionImpl.setProcessVersion(getProcessVersion());
 		workflowMetricsSLADefinitionImpl.setPauseNodeKeys(getPauseNodeKeys());
 		workflowMetricsSLADefinitionImpl.setStartNodeKeys(getStartNodeKeys());
 		workflowMetricsSLADefinitionImpl.setStopNodeKeys(getStopNodeKeys());
+		workflowMetricsSLADefinitionImpl.setStatus(getStatus());
 
 		workflowMetricsSLADefinitionImpl.resetOriginalValues();
 
@@ -709,17 +779,18 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	public int compareTo(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
-		long primaryKey = workflowMetricsSLADefinition.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = DateUtil.compareTo(
+			getModifiedDate(), workflowMetricsSLADefinition.getModifiedDate());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -787,6 +858,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 			workflowMetricsSLADefinitionModelImpl._processId;
 
 		workflowMetricsSLADefinitionModelImpl._setOriginalProcessId = false;
+
+		workflowMetricsSLADefinitionModelImpl._originalProcessVersion =
+			workflowMetricsSLADefinitionModelImpl._processVersion;
+
+		workflowMetricsSLADefinitionModelImpl._originalStatus =
+			workflowMetricsSLADefinitionModelImpl._status;
+
+		workflowMetricsSLADefinitionModelImpl._setOriginalStatus = false;
 
 		workflowMetricsSLADefinitionModelImpl._columnBitmask = 0;
 	}
@@ -865,6 +944,16 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 		workflowMetricsSLADefinitionCacheModel.processId = getProcessId();
 
+		workflowMetricsSLADefinitionCacheModel.processVersion =
+			getProcessVersion();
+
+		String processVersion =
+			workflowMetricsSLADefinitionCacheModel.processVersion;
+
+		if ((processVersion != null) && (processVersion.length() == 0)) {
+			workflowMetricsSLADefinitionCacheModel.processVersion = null;
+		}
+
 		workflowMetricsSLADefinitionCacheModel.pauseNodeKeys =
 			getPauseNodeKeys();
 
@@ -893,6 +982,8 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		if ((stopNodeKeys != null) && (stopNodeKeys.length() == 0)) {
 			workflowMetricsSLADefinitionCacheModel.stopNodeKeys = null;
 		}
+
+		workflowMetricsSLADefinitionCacheModel.status = getStatus();
 
 		return workflowMetricsSLADefinitionCacheModel;
 	}
@@ -992,9 +1083,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	private long _processId;
 	private long _originalProcessId;
 	private boolean _setOriginalProcessId;
+	private String _processVersion;
+	private String _originalProcessVersion;
 	private String _pauseNodeKeys;
 	private String _startNodeKeys;
 	private String _stopNodeKeys;
+	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _columnBitmask;
 	private WorkflowMetricsSLADefinition _escapedModel;
 

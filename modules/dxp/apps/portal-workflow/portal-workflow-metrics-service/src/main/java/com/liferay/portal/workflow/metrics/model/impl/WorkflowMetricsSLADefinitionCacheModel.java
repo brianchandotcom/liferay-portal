@@ -85,7 +85,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -113,12 +113,16 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		sb.append(duration);
 		sb.append(", processId=");
 		sb.append(processId);
+		sb.append(", processVersion=");
+		sb.append(processVersion);
 		sb.append(", pauseNodeKeys=");
 		sb.append(pauseNodeKeys);
 		sb.append(", startNodeKeys=");
 		sb.append(startNodeKeys);
 		sb.append(", stopNodeKeys=");
 		sb.append(stopNodeKeys);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -184,6 +188,13 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		workflowMetricsSLADefinitionImpl.setDuration(duration);
 		workflowMetricsSLADefinitionImpl.setProcessId(processId);
 
+		if (processVersion == null) {
+			workflowMetricsSLADefinitionImpl.setProcessVersion("");
+		}
+		else {
+			workflowMetricsSLADefinitionImpl.setProcessVersion(processVersion);
+		}
+
 		if (pauseNodeKeys == null) {
 			workflowMetricsSLADefinitionImpl.setPauseNodeKeys("");
 		}
@@ -204,6 +215,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		else {
 			workflowMetricsSLADefinitionImpl.setStopNodeKeys(stopNodeKeys);
 		}
+
+		workflowMetricsSLADefinitionImpl.setStatus(status);
 
 		workflowMetricsSLADefinitionImpl.resetOriginalValues();
 
@@ -231,9 +244,12 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		duration = objectInput.readLong();
 
 		processId = objectInput.readLong();
+		processVersion = objectInput.readUTF();
 		pauseNodeKeys = objectInput.readUTF();
 		startNodeKeys = objectInput.readUTF();
 		stopNodeKeys = objectInput.readUTF();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -283,6 +299,13 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 		objectOutput.writeLong(processId);
 
+		if (processVersion == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(processVersion);
+		}
+
 		if (pauseNodeKeys == null) {
 			objectOutput.writeUTF("");
 		}
@@ -303,6 +326,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		else {
 			objectOutput.writeUTF(stopNodeKeys);
 		}
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -318,8 +343,10 @@ public class WorkflowMetricsSLADefinitionCacheModel
 	public String description;
 	public long duration;
 	public long processId;
+	public String processVersion;
 	public String pauseNodeKeys;
 	public String startNodeKeys;
 	public String stopNodeKeys;
+	public int status;
 
 }

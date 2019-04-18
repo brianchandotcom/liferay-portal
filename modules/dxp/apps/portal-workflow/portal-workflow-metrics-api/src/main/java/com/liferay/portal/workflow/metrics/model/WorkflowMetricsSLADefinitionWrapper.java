@@ -64,9 +64,11 @@ public class WorkflowMetricsSLADefinitionWrapper
 		attributes.put("description", getDescription());
 		attributes.put("duration", getDuration());
 		attributes.put("processId", getProcessId());
+		attributes.put("processVersion", getProcessVersion());
 		attributes.put("pauseNodeKeys", getPauseNodeKeys());
 		attributes.put("startNodeKeys", getStartNodeKeys());
 		attributes.put("stopNodeKeys", getStopNodeKeys());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -152,6 +154,12 @@ public class WorkflowMetricsSLADefinitionWrapper
 			setProcessId(processId);
 		}
 
+		String processVersion = (String)attributes.get("processVersion");
+
+		if (processVersion != null) {
+			setProcessVersion(processVersion);
+		}
+
 		String pauseNodeKeys = (String)attributes.get("pauseNodeKeys");
 
 		if (pauseNodeKeys != null) {
@@ -168,6 +176,12 @@ public class WorkflowMetricsSLADefinitionWrapper
 
 		if (stopNodeKeys != null) {
 			setStopNodeKeys(stopNodeKeys);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -282,6 +296,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	/**
+	 * Returns the process version of this workflow metrics sla definition.
+	 *
+	 * @return the process version of this workflow metrics sla definition
+	 */
+	@Override
+	public String getProcessVersion() {
+		return model.getProcessVersion();
+	}
+
+	/**
 	 * Returns the start node keys of this workflow metrics sla definition.
 	 *
 	 * @return the start node keys of this workflow metrics sla definition
@@ -289,6 +313,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 	@Override
 	public String getStartNodeKeys() {
 		return model.getStartNodeKeys();
+	}
+
+	/**
+	 * Returns the status of this workflow metrics sla definition.
+	 *
+	 * @return the status of this workflow metrics sla definition
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -467,6 +501,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	/**
+	 * Sets the process version of this workflow metrics sla definition.
+	 *
+	 * @param processVersion the process version of this workflow metrics sla definition
+	 */
+	@Override
+	public void setProcessVersion(String processVersion) {
+		model.setProcessVersion(processVersion);
+	}
+
+	/**
 	 * Sets the start node keys of this workflow metrics sla definition.
 	 *
 	 * @param startNodeKeys the start node keys of this workflow metrics sla definition
@@ -474,6 +518,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 	@Override
 	public void setStartNodeKeys(String startNodeKeys) {
 		model.setStartNodeKeys(startNodeKeys);
+	}
+
+	/**
+	 * Sets the status of this workflow metrics sla definition.
+	 *
+	 * @param status the status of this workflow metrics sla definition
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

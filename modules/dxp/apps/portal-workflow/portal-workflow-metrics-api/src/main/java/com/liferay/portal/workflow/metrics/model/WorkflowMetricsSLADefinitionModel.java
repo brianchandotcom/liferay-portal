@@ -281,6 +281,21 @@ public interface WorkflowMetricsSLADefinitionModel
 	public void setProcessId(long processId);
 
 	/**
+	 * Returns the process version of this workflow metrics sla definition.
+	 *
+	 * @return the process version of this workflow metrics sla definition
+	 */
+	@AutoEscape
+	public String getProcessVersion();
+
+	/**
+	 * Sets the process version of this workflow metrics sla definition.
+	 *
+	 * @param processVersion the process version of this workflow metrics sla definition
+	 */
+	public void setProcessVersion(String processVersion);
+
+	/**
 	 * Returns the pause node keys of this workflow metrics sla definition.
 	 *
 	 * @return the pause node keys of this workflow metrics sla definition
@@ -324,5 +339,19 @@ public interface WorkflowMetricsSLADefinitionModel
 	 * @param stopNodeKeys the stop node keys of this workflow metrics sla definition
 	 */
 	public void setStopNodeKeys(String stopNodeKeys);
+
+	/**
+	 * Returns the status of this workflow metrics sla definition.
+	 *
+	 * @return the status of this workflow metrics sla definition
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this workflow metrics sla definition.
+	 *
+	 * @param status the status of this workflow metrics sla definition
+	 */
+	public void setStatus(int status);
 
 }

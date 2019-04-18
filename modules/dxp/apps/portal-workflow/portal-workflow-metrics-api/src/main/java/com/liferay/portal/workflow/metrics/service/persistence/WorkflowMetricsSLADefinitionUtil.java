@@ -831,6 +831,438 @@ public class WorkflowMetricsSLADefinitionUtil {
 	}
 
 	/**
+	 * Returns all the workflow metrics sla definitions where companyId = &#63; and processId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 * @return the matching workflow metrics sla definitions
+	 */
+	public static List<WorkflowMetricsSLADefinition> findByC_P_S(
+		long companyId, long processId, int status) {
+
+		return getPersistence().findByC_P_S(companyId, processId, status);
+	}
+
+	/**
+	 * Returns a range of all the workflow metrics sla definitions where companyId = &#63; and processId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 * @param start the lower bound of the range of workflow metrics sla definitions
+	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
+	 * @return the range of matching workflow metrics sla definitions
+	 */
+	public static List<WorkflowMetricsSLADefinition> findByC_P_S(
+		long companyId, long processId, int status, int start, int end) {
+
+		return getPersistence().findByC_P_S(
+			companyId, processId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the workflow metrics sla definitions where companyId = &#63; and processId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 * @param start the lower bound of the range of workflow metrics sla definitions
+	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching workflow metrics sla definitions
+	 */
+	public static List<WorkflowMetricsSLADefinition> findByC_P_S(
+		long companyId, long processId, int status, int start, int end,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
+
+		return getPersistence().findByC_P_S(
+			companyId, processId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the workflow metrics sla definitions where companyId = &#63; and processId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 * @param start the lower bound of the range of workflow metrics sla definitions
+	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching workflow metrics sla definitions
+	 */
+	public static List<WorkflowMetricsSLADefinition> findByC_P_S(
+		long companyId, long processId, int status, int start, int end,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByC_P_S(
+			companyId, processId, status, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching workflow metrics sla definition
+	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
+	 */
+	public static WorkflowMetricsSLADefinition findByC_P_S_First(
+			long companyId, long processId, int status,
+			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
+		throws com.liferay.portal.workflow.metrics.exception.
+			NoSuchSLADefinitionException {
+
+		return getPersistence().findByC_P_S_First(
+			companyId, processId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
+	 */
+	public static WorkflowMetricsSLADefinition fetchByC_P_S_First(
+		long companyId, long processId, int status,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
+
+		return getPersistence().fetchByC_P_S_First(
+			companyId, processId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching workflow metrics sla definition
+	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
+	 */
+	public static WorkflowMetricsSLADefinition findByC_P_S_Last(
+			long companyId, long processId, int status,
+			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
+		throws com.liferay.portal.workflow.metrics.exception.
+			NoSuchSLADefinitionException {
+
+		return getPersistence().findByC_P_S_Last(
+			companyId, processId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
+	 */
+	public static WorkflowMetricsSLADefinition fetchByC_P_S_Last(
+		long companyId, long processId, int status,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
+
+		return getPersistence().fetchByC_P_S_Last(
+			companyId, processId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the workflow metrics sla definitions before and after the current workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and status = &#63;.
+	 *
+	 * @param workflowMetricsSLADefinitionId the primary key of the current workflow metrics sla definition
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next workflow metrics sla definition
+	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
+	 */
+	public static WorkflowMetricsSLADefinition[] findByC_P_S_PrevAndNext(
+			long workflowMetricsSLADefinitionId, long companyId, long processId,
+			int status,
+			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
+		throws com.liferay.portal.workflow.metrics.exception.
+			NoSuchSLADefinitionException {
+
+		return getPersistence().findByC_P_S_PrevAndNext(
+			workflowMetricsSLADefinitionId, companyId, processId, status,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the workflow metrics sla definitions where companyId = &#63; and processId = &#63; and status = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 */
+	public static void removeByC_P_S(
+		long companyId, long processId, int status) {
+
+		getPersistence().removeByC_P_S(companyId, processId, status);
+	}
+
+	/**
+	 * Returns the number of workflow metrics sla definitions where companyId = &#63; and processId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param status the status
+	 * @return the number of matching workflow metrics sla definitions
+	 */
+	public static int countByC_P_S(long companyId, long processId, int status) {
+		return getPersistence().countByC_P_S(companyId, processId, status);
+	}
+
+	/**
+	 * Returns all the workflow metrics sla definitions where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 * @return the matching workflow metrics sla definitions
+	 */
+	public static List<WorkflowMetricsSLADefinition> findByC_P_NotPV_S(
+		long companyId, long processId, String processVersion, int status) {
+
+		return getPersistence().findByC_P_NotPV_S(
+			companyId, processId, processVersion, status);
+	}
+
+	/**
+	 * Returns a range of all the workflow metrics sla definitions where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 * @param start the lower bound of the range of workflow metrics sla definitions
+	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
+	 * @return the range of matching workflow metrics sla definitions
+	 */
+	public static List<WorkflowMetricsSLADefinition> findByC_P_NotPV_S(
+		long companyId, long processId, String processVersion, int status,
+		int start, int end) {
+
+		return getPersistence().findByC_P_NotPV_S(
+			companyId, processId, processVersion, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the workflow metrics sla definitions where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 * @param start the lower bound of the range of workflow metrics sla definitions
+	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching workflow metrics sla definitions
+	 */
+	public static List<WorkflowMetricsSLADefinition> findByC_P_NotPV_S(
+		long companyId, long processId, String processVersion, int status,
+		int start, int end,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
+
+		return getPersistence().findByC_P_NotPV_S(
+			companyId, processId, processVersion, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the workflow metrics sla definitions where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 * @param start the lower bound of the range of workflow metrics sla definitions
+	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching workflow metrics sla definitions
+	 */
+	public static List<WorkflowMetricsSLADefinition> findByC_P_NotPV_S(
+		long companyId, long processId, String processVersion, int status,
+		int start, int end,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
+		boolean retrieveFromCache) {
+
+		return getPersistence().findByC_P_NotPV_S(
+			companyId, processId, processVersion, status, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	 * Returns the first workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching workflow metrics sla definition
+	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
+	 */
+	public static WorkflowMetricsSLADefinition findByC_P_NotPV_S_First(
+			long companyId, long processId, String processVersion, int status,
+			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
+		throws com.liferay.portal.workflow.metrics.exception.
+			NoSuchSLADefinitionException {
+
+		return getPersistence().findByC_P_NotPV_S_First(
+			companyId, processId, processVersion, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
+	 */
+	public static WorkflowMetricsSLADefinition fetchByC_P_NotPV_S_First(
+		long companyId, long processId, String processVersion, int status,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
+
+		return getPersistence().fetchByC_P_NotPV_S_First(
+			companyId, processId, processVersion, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching workflow metrics sla definition
+	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
+	 */
+	public static WorkflowMetricsSLADefinition findByC_P_NotPV_S_Last(
+			long companyId, long processId, String processVersion, int status,
+			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
+		throws com.liferay.portal.workflow.metrics.exception.
+			NoSuchSLADefinitionException {
+
+		return getPersistence().findByC_P_NotPV_S_Last(
+			companyId, processId, processVersion, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
+	 */
+	public static WorkflowMetricsSLADefinition fetchByC_P_NotPV_S_Last(
+		long companyId, long processId, String processVersion, int status,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
+
+		return getPersistence().fetchByC_P_NotPV_S_Last(
+			companyId, processId, processVersion, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the workflow metrics sla definitions before and after the current workflow metrics sla definition in the ordered set where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
+	 *
+	 * @param workflowMetricsSLADefinitionId the primary key of the current workflow metrics sla definition
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next workflow metrics sla definition
+	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
+	 */
+	public static WorkflowMetricsSLADefinition[] findByC_P_NotPV_S_PrevAndNext(
+			long workflowMetricsSLADefinitionId, long companyId, long processId,
+			String processVersion, int status,
+			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
+		throws com.liferay.portal.workflow.metrics.exception.
+			NoSuchSLADefinitionException {
+
+		return getPersistence().findByC_P_NotPV_S_PrevAndNext(
+			workflowMetricsSLADefinitionId, companyId, processId,
+			processVersion, status, orderByComparator);
+	}
+
+	/**
+	 * Removes all the workflow metrics sla definitions where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 */
+	public static void removeByC_P_NotPV_S(
+		long companyId, long processId, String processVersion, int status) {
+
+		getPersistence().removeByC_P_NotPV_S(
+			companyId, processId, processVersion, status);
+	}
+
+	/**
+	 * Returns the number of workflow metrics sla definitions where companyId = &#63; and processId = &#63; and processVersion &ne; &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param processId the process ID
+	 * @param processVersion the process version
+	 * @param status the status
+	 * @return the number of matching workflow metrics sla definitions
+	 */
+	public static int countByC_P_NotPV_S(
+		long companyId, long processId, String processVersion, int status) {
+
+		return getPersistence().countByC_P_NotPV_S(
+			companyId, processId, processVersion, status);
+	}
+
+	/**
 	 * Caches the workflow metrics sla definition in the entity cache if it is enabled.
 	 *
 	 * @param workflowMetricsSLADefinition the workflow metrics sla definition

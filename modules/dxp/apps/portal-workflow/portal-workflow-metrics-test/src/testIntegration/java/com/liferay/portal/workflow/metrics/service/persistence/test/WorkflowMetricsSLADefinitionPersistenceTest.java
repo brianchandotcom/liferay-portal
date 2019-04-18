@@ -159,6 +159,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		newWorkflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 
+		newWorkflowMetricsSLADefinition.setProcessVersion(
+			RandomTestUtil.randomString());
+
 		newWorkflowMetricsSLADefinition.setPauseNodeKeys(
 			RandomTestUtil.randomString());
 
@@ -167,6 +170,8 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		newWorkflowMetricsSLADefinition.setStopNodeKeys(
 			RandomTestUtil.randomString());
+
+		newWorkflowMetricsSLADefinition.setStatus(RandomTestUtil.nextInt());
 
 		_workflowMetricsSLADefinitions.add(
 			_persistence.update(newWorkflowMetricsSLADefinition));
@@ -221,6 +226,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			existingWorkflowMetricsSLADefinition.getProcessId(),
 			newWorkflowMetricsSLADefinition.getProcessId());
 		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getProcessVersion(),
+			newWorkflowMetricsSLADefinition.getProcessVersion());
+		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinition.getPauseNodeKeys(),
 			newWorkflowMetricsSLADefinition.getPauseNodeKeys());
 		Assert.assertEquals(
@@ -229,6 +237,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinition.getStopNodeKeys(),
 			newWorkflowMetricsSLADefinition.getStopNodeKeys());
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getStatus(),
+			newWorkflowMetricsSLADefinition.getStatus());
 	}
 
 	@Test
@@ -277,6 +288,26 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_P_S() throws Exception {
+		_persistence.countByC_P_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_P_S(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByC_P_NotPV_S() throws Exception {
+		_persistence.countByC_P_NotPV_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_P_NotPV_S(0L, 0L, "null", 0);
+
+		_persistence.countByC_P_NotPV_S(0L, 0L, (String)null, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
 			addWorkflowMetricsSLADefinition();
@@ -311,8 +342,8 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			"workflowMetricsSLADefinitionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "duration", true,
-			"processId", true, "pauseNodeKeys", true, "startNodeKeys", true,
-			"stopNodeKeys", true);
+			"processId", true, "processVersion", true, "pauseNodeKeys", true,
+			"startNodeKeys", true, "stopNodeKeys", true, "status", true);
 	}
 
 	@Test
@@ -636,6 +667,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		workflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 
+		workflowMetricsSLADefinition.setProcessVersion(
+			RandomTestUtil.randomString());
+
 		workflowMetricsSLADefinition.setPauseNodeKeys(
 			RandomTestUtil.randomString());
 
@@ -644,6 +678,8 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		workflowMetricsSLADefinition.setStopNodeKeys(
 			RandomTestUtil.randomString());
+
+		workflowMetricsSLADefinition.setStatus(RandomTestUtil.nextInt());
 
 		_workflowMetricsSLADefinitions.add(
 			_persistence.update(workflowMetricsSLADefinition));

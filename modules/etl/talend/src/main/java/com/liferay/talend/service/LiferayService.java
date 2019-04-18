@@ -14,20 +14,21 @@
 
 package com.liferay.talend.service;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.PathItem;
-import io.swagger.v3.oas.models.Paths;
-import io.swagger.v3.oas.models.media.ArraySchema;
-import io.swagger.v3.oas.models.media.Content;
-import io.swagger.v3.oas.models.media.MediaType;
-import io.swagger.v3.oas.models.media.Schema;
-import io.swagger.v3.oas.models.responses.ApiResponse;
-import io.swagger.v3.oas.models.responses.ApiResponses;
-import io.swagger.v3.parser.OpenAPIV3Parser;
+import com.liferay.talend.data.store.GenericDataStore;
+import com.liferay.talend.dataset.InputDataSet;
+import com.liferay.talend.http.client.exception.MalformedURLException;
 
+import java.net.URL;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.json.JsonObject;
 
 import org.talend.sdk.component.api.service.Service;
 
@@ -38,56 +39,188 @@ import org.talend.sdk.component.api.service.Service;
 @Service
 public class LiferayService {
 
-	public Map<String, String> getEndpointsMap(String location) {
-		OpenAPI openAPI = new OpenAPIV3Parser().read(location);
+	public List<String> getPageableEndpoints(InputDataSet inputDataSet) {
+		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
 
-		Paths paths = openAPI.getPaths();
+		URL openAPISpecURL = genericDataStore.getOpenAPISpecURL();
 
-		return paths.entrySet(
-		).stream(
-		).filter(
-			this::_isArrayTypePredicate
-		).collect(
-			Collectors.toMap(Map.Entry::getKey, this::_mapToArrayItemReferences)
-		);
+		if (!isValidEndpointURL(openAPISpecURL.toString())) {
+			throw new MalformedURLException(
+				"Provided URL does not match pattern " +
+					_serverURLPattern.pattern());
+		}
+
+		inputDataSet.setEndpoint(_extractEndpoint(openAPISpecURL.toString()));
+
+		JsonObject responseJsonObject =
+			_connectionService.getResponseJsonObject(inputDataSet);
+
+		if (responseJsonObject == null) {
+			return Collections.emptyList();
+		}
+
+		return getPageableEndpoints(responseJsonObject);
 	}
 
-	private Schema _getSchema(Map.Entry<String, PathItem> pathItemEntry) {
-		PathItem pathItem = pathItemEntry.getValue();
+	public boolean isValidEndpointURL(String endpointURL) {
+		Matcher serverURLMatcher = _serverURLPattern.matcher(endpointURL);
 
-		Operation getOperation = pathItem.getGet();
-
-		ApiResponses apiResponses = getOperation.getResponses();
-
-		ApiResponse apiResponse200Ok = apiResponses.get("200");
-
-		Content content200OK = apiResponse200Ok.getContent();
-
-		MediaType mediaType = content200OK.get("application/json");
-
-		return mediaType.getSchema();
-	}
-
-	private boolean _isArrayTypePredicate(
-		Map.Entry<String, PathItem> pathItemEntry) {
-
-		Schema schema = _getSchema(pathItemEntry);
-
-		if ("array".equals(schema.getType())) {
+		if (serverURLMatcher.matches()) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private String _mapToArrayItemReferences(
-		Map.Entry<String, PathItem> stringPathItemEntry) {
+	protected List<String> getPageableEndpoints(JsonObject responseJsonObject) {
+		Map<String, String> pathResponseEntities = _mapKeysToPatternEvaluations(
+			_GET_METHOD_RESPONSE_PATTERN,
+			responseJsonObject.getJsonObject("paths"));
 
-		Schema schema = _getSchema(stringPathItemEntry);
-
-		Schema<?> items = ((ArraySchema)schema).getItems();
-
-		return items.get$ref();
+		return _filterPageableEndpoints(
+			pathResponseEntities, responseJsonObject);
 	}
+
+	/**
+	 * Gets string value of json node pointed by given <code>pattern</code>.
+	 *
+	 * Method recursively resolves value searched by given pattern.
+	 *
+	 * <code>pattern</code> must match key1>key2>...>keyN syntax where key is
+	 * expected key value in given json structure.
+	 *
+	 * @param  pattern
+	 * @param  jsonObject
+	 * @return keyN string value of (N-1)th <code>jsonObject</code> if keyN is
+	 *         reachable through given <code>pattern</code>, <code>null</code>
+	 *         otherwise
+	 */
+	private String _evaluatePattern(String pattern, JsonObject jsonObject) {
+		int delimiterIdx = pattern.indexOf(">");
+
+		if (delimiterIdx == -1) {
+			if (jsonObject.containsKey(pattern)) {
+				return jsonObject.getString(pattern);
+			}
+
+			return null;
+		}
+
+		String substring = pattern.substring(0, delimiterIdx);
+
+		if (!jsonObject.containsKey(substring)) {
+			return null;
+		}
+
+		return _evaluatePattern(
+			pattern.substring(delimiterIdx + 1),
+			jsonObject.getJsonObject(substring));
+	}
+
+	private String _extractEndpoint(String endpointURL) {
+		Matcher serverURLMatcher = _serverURLPattern.matcher(endpointURL);
+
+		if (!serverURLMatcher.matches()) {
+			throw new MalformedURLException(
+				"Unable to extract Open API endpoint from URL " + endpointURL);
+		}
+
+		String serverInstanceURL = serverURLMatcher.group(1);
+
+		String endpoint = endpointURL.substring(serverInstanceURL.length());
+
+		String endpointExtension = serverURLMatcher.group(6);
+
+		if (endpointExtension.equals("yaml")) {
+			endpoint = endpoint.replace(".yaml", ".json");
+		}
+
+		return endpoint;
+	}
+
+	private List<String> _filterPageableEndpoints(
+		Map<String, String> patternEvaluations, JsonObject openApiJsonObject) {
+
+		List<String> pageableEndpoints = new ArrayList<>();
+
+		patternEvaluations.forEach(
+			(enpoint, entity) -> {
+				String typeValue = _evaluatePattern(
+					String.format(_SCHEMA_PROPERTY_ITEMS_TYPE_PATTERN, entity),
+					openApiJsonObject);
+
+				if (!"array".equals(typeValue)) {
+					return;
+				}
+
+				typeValue = _evaluatePattern(
+					String.format(_SCHEMA_PROPERTY_PAGE_TYPE_PATTERN, entity),
+					openApiJsonObject);
+
+				if (!"integer".equals(typeValue)) {
+					return;
+				}
+
+				pageableEndpoints.add(enpoint);
+			});
+
+		Collections.sort(pageableEndpoints);
+
+		return pageableEndpoints;
+	}
+
+	/**
+	 * Gets key, value map where each key is contained in given
+	 * <code>jsonObject</code> and value is String value pointed by given
+	 * <code>pattern</code>
+	 *
+	 * <code>pattern</code> must match key1>key2>...>keyN syntax
+	 *
+	 * @param  pattern expression used to traverse underlying
+	 *         <code>jsonObject</code> hierarchy
+	 * @param  jsonObject source for key values
+	 * @return Map of key, values where keys point to resolvable values
+	 *         according given pattern
+	 */
+	private Map<String, String> _mapKeysToPatternEvaluations(
+		final String pattern, JsonObject jsonObject) {
+
+		final Map<String, String> evaluatedPatterns = new HashMap<>();
+
+		jsonObject.forEach(
+			(key, jsonValue) -> {
+				String evaluation = _evaluatePattern(
+					pattern, jsonValue.asJsonObject());
+
+				if (evaluation != null) {
+					evaluatedPatterns.put(key, _stripPath(evaluation));
+				}
+			});
+
+		return evaluatedPatterns;
+	}
+
+	private String _stripPath(String reference) {
+		if (reference.indexOf("/") == -1) {
+			return reference;
+		}
+
+		return reference.substring(reference.lastIndexOf("/") + 1);
+	}
+
+	private static final String _GET_METHOD_RESPONSE_PATTERN =
+		"get>responses>default>content>application/json>schema>$ref";
+
+	private static final String _SCHEMA_PROPERTY_ITEMS_TYPE_PATTERN =
+		"components>schemas>%s>properties>items>type";
+
+	private static final String _SCHEMA_PROPERTY_PAGE_TYPE_PATTERN =
+		"components>schemas>%s>properties>page>type";
+
+	private static final Pattern _serverURLPattern = Pattern.compile(
+		"(https?://.+(:\\d+)?)/o/(.+)/(v\\d+(.\\d+)*)/openapi\\.(yaml|json)");
+
+	@Service
+	private ConnectionService _connectionService;
 
 }

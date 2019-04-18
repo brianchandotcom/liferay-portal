@@ -15,10 +15,10 @@
 package com.liferay.talend.service;
 
 import com.liferay.talend.data.store.GenericDataStore;
+import com.liferay.talend.dataset.InputDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.service.Service;
@@ -45,14 +45,18 @@ public class UIActionService {
 	public SuggestionValues fetchEndpoints(
 		@Option("genericDataStore") final GenericDataStore genericDataStore) {
 
+		InputDataSet inputDataSet = new InputDataSet();
+
+		inputDataSet.setGenericDataStore(genericDataStore);
+
+		List<String> endpoints = _liferayService.getPageableEndpoints(
+			inputDataSet);
+
 		List<SuggestionValues.Item> items = new ArrayList<>();
 
-		Map<String, String> endpoints = _liferayService.getEndpointsMap(
-			"com/liferay/talend/resource/rest-openapi.yaml");
-
 		endpoints.forEach(
-			(path, returnSchemaType) -> {
-				items.add(new SuggestionValues.Item(path, returnSchemaType));
+			path -> {
+				items.add(new SuggestionValues.Item(path, path));
 			});
 
 		return new SuggestionValues(true, items);

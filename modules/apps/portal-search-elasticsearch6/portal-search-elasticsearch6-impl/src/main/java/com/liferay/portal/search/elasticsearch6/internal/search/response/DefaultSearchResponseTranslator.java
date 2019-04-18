@@ -138,9 +138,9 @@ public class DefaultSearchResponseTranslator
 			return;
 		}
 
-		for (String highlightFieldName : highlightFieldNames) {
-			addSnippets(document, highlightFields, highlightFieldName, locale);
-		}
+		highlightFields.forEach(
+			(fieldName, highlightField) -> addSnippets(
+				document, highlightFields, fieldName, locale));
 	}
 
 	protected FacetCollector getFacetCollector(

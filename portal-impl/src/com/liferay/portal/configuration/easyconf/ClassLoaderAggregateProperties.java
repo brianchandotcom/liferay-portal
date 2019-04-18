@@ -23,6 +23,7 @@ import com.germinus.easyconf.FileConfigurationChangedReloadingStrategy;
 import com.germinus.easyconf.JndiURL;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.reflect.Field;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -40,7 +42,10 @@ import java.util.Map;
 import org.apache.commons.configuration.AbstractFileConfiguration;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationUtils;
+import org.apache.commons.configuration.DefaultFileSystem;
 import org.apache.commons.configuration.FileConfiguration;
+import org.apache.commons.configuration.FileSystem;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.PropertiesConfigurationLayout;
 import org.apache.commons.configuration.SubsetConfiguration;
@@ -157,6 +162,12 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 			CompositeConfiguration loadedCompositeConfiguration)
 		throws ConfigurationException {
 
+		URL url = ConfigurationUtils.locate(_fileSystem, null, fileName);
+
+		if (url == null) {
+			return null;
+		}
+
 		try {
 			FileConfiguration newFileConfiguration =
 				new PropertiesConfiguration(fileName) {
@@ -167,8 +178,6 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 					}
 
 				};
-
-			URL url = newFileConfiguration.getURL();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Adding file " + url);
@@ -415,6 +424,25 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		ClassLoaderAggregateProperties.class);
 
 	private static final Field _commentField;
+
+	private static final FileSystem _fileSystem = new DefaultFileSystem() {
+
+		@Override
+		public URL locateFromURL(String basePath, String fileName) {
+			if (fileName.indexOf(CharPool.SEMICOLON) != -1) {
+				try {
+					return new URL(fileName);
+				}
+				catch (MalformedURLException murle) {
+					return null;
+				}
+			}
+
+			return null;
+		}
+
+	};
+
 	private static final Field _layoutDataField;
 
 	static {

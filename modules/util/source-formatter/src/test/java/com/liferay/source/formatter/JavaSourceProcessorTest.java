@@ -126,31 +126,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testIfClauseParentheses() throws Exception {
-		test(
-			"IfClauseParentheses.testjava",
-			new String[] {
-				"Missing parentheses around the left hand side argument of " +
-					"the '||' operator",
-				"Missing parentheses around the right hand side argument of " +
-					"the '||' operator",
-				"Missing parentheses around the right hand side argument of " +
-					"the '||' operator",
-				"Missing parentheses around the right hand side argument of " +
-					"the '||' operator",
-				"Missing parentheses around the left hand side argument of " +
-					"the '&&' operator",
-				"Missing parentheses around the left hand side argument of " +
-					"the '&&' operator",
-				"Unnecessary parentheses around expression.",
-				"Unnecessary parentheses around expression.",
-				"Missing parentheses between the '&&' operator and the '||' " +
-					"operator"
-			},
-			new Integer[] {25, 25, 29, 33, 39, 43, 43, 47, 55});
-	}
-
-	@Test
 	public void testIfClauseWhitespace() throws Exception {
 		test("IfClauseWhitespace.testjava");
 	}

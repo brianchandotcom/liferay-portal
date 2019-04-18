@@ -64,7 +64,23 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Test");
+		PageTemplatesAdmin.addPageTemplate(
+			pageTemplateName = "Test",
+			siteTemplate = "true"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = "Site Template Name"
+		);
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -78,7 +94,7 @@ definition {
 
 		PageTemplatesAdmin.addPageTemplate(
 			pageTemplateName = "Test",
-			pageTemplateType = "Widget Page Template"
+			siteTemplate = "true"
 		);
 
 		AssertTextEquals(

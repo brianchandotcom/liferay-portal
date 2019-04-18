@@ -5411,7 +5411,7 @@ version 2.0.9.
 - [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.63.
 
-## 5.3.290 - 2019-04-18
+## 5.5.291 - 2019-04-18
 
 ### Changed
 - [LPS-94158]: Update the [Find Security Bugs] dependency to version
@@ -5963,6 +5963,7 @@ version 2.0.9.
 [LPS-88909]: https://issues.liferay.com/browse/LPS-88909
 [LPS-89126]: https://issues.liferay.com/browse/LPS-89126
 [LPS-89228]: https://issues.liferay.com/browse/LPS-89228
+[LPS-94158]: https://issues.liferay.com/browse/LPS-94158
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

@@ -4800,6 +4800,8 @@ public class ServiceBuilder {
 	private String _getDeleteUADEntityMethodName(
 		JavaClass javaClass, String entityName) {
 
+		List<String> methodNames = new ArrayList<>();
+
 		for (JavaMethod javaMethod : javaClass.getMethods(false)) {
 			String javaMethodName = javaMethod.getName();
 
@@ -4812,13 +4814,21 @@ public class ServiceBuilder {
 					if (StringUtil.equals(
 							parameterType.getValue(), entityName)) {
 
-						return javaMethodName;
+						methodNames.add(javaMethodName);
 					}
 				}
 			}
 		}
 
-		return "delete" + entityName;
+		String deleteEntityName = "delete" + entityName;
+
+		if (methodNames.isEmpty() || methodNames.contains(deleteEntityName)) {
+			return deleteEntityName;
+		}
+
+		methodNames.sort(null);
+
+		return methodNames.get(0);
 	}
 
 	private Entity _getEntityByTableName(String tableName) {

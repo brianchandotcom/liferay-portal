@@ -14,17 +14,10 @@
 
 package com.liferay.portal.configuration.extender.internal.support.config.file;
 
-import com.liferay.portal.configuration.extender.internal.BundleStorage;
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContent;
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContentFactory;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MappingEnumeration;
 
 import java.net.URL;
-
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -36,26 +29,13 @@ public class ConfigFileNamedConfigurationPathContentFactory
 	implements NamedConfigurationContentFactory {
 
 	@Override
-	public List<NamedConfigurationContent> create(BundleStorage bundleStorage) {
-		Dictionary<String, String> headers = bundleStorage.getHeaders();
+	public NamedConfigurationContent create(URL url) {
+		return new ConfigFileNamedConfigurationContent(url);
+	}
 
-		String configurationPath = headers.get("Liferay-Configuration-Path");
-
-		Enumeration<URL> enumeration = bundleStorage.findEntries(
-			configurationPath, "*.config", true);
-
-		return ListUtil.fromEnumeration(
-			new MappingEnumeration<>(
-				enumeration,
-				new MappingEnumeration.Mapper
-					<URL, NamedConfigurationContent>() {
-
-					@Override
-					public NamedConfigurationContent map(URL url) {
-						return new ConfigFileNamedConfigurationContent(url);
-					}
-
-				}));
+	@Override
+	public String getFilePattern() {
+		return "*.config";
 	}
 
 }

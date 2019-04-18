@@ -14,13 +14,15 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
-import java.util.List;
+import java.net.URL;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public interface NamedConfigurationContentFactory {
 
-	public List<NamedConfigurationContent> create(BundleStorage bundleStorage);
+	public NamedConfigurationContent create(URL url);
+
+	public String getFilePattern();
 
 }

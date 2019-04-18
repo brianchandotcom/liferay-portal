@@ -22,14 +22,8 @@ import java.io.IOException;
 import java.io.Writer;
 
 import java.net.URI;
-import java.net.URL;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -71,21 +65,11 @@ public class NamedConfigurationPathContentFactoryTest {
 	public void testCreate() throws IOException {
 		URI uri = _file.toURI();
 
-		BundleStorage bundleStorage = new DummyBundleStorage(
-			100, "aLocation", _headers, Arrays.asList(uri.toURL()));
-
 		NamedConfigurationContentFactory namedConfigurationContentFactory =
 			new NamedConfigurationPathContentFactory();
 
-		List<NamedConfigurationContent> namedConfigurationContents =
-			namedConfigurationContentFactory.create(bundleStorage);
-
-		Assert.assertEquals(
-			namedConfigurationContents.toString(), 1,
-			namedConfigurationContents.size());
-
 		NamedConfigurationContent namedConfigurationContent =
-			namedConfigurationContents.get(0);
+			namedConfigurationContentFactory.create(uri.toURL());
 
 		Assert.assertEquals(
 			"com.liferay.test.aConfigFile",
@@ -106,22 +90,11 @@ public class NamedConfigurationPathContentFactoryTest {
 
 		URI uri2 = file.toURI();
 
-		BundleStorage bundleStorage = new DummyBundleStorage(
-			100, "aLocation", _headers,
-			Arrays.asList(uri1.toURL(), uri2.toURL()));
-
 		NamedConfigurationContentFactory namedConfigurationContentFactory =
 			new NamedConfigurationPathContentFactory();
 
-		List<NamedConfigurationContent> namedConfigurationContents =
-			namedConfigurationContentFactory.create(bundleStorage);
-
-		Assert.assertEquals(
-			namedConfigurationContents.toString(), 2,
-			namedConfigurationContents.size());
-
 		NamedConfigurationContent namedConfigurationContent =
-			namedConfigurationContents.get(0);
+			namedConfigurationContentFactory.create(uri1.toURL());
 
 		Assert.assertEquals(
 			"com.liferay.test.aConfigFile",
@@ -130,7 +103,8 @@ public class NamedConfigurationPathContentFactoryTest {
 			"key=value\nanotherKey=anotherValue",
 			StringUtil.read(namedConfigurationContent.getInputStream()));
 
-		namedConfigurationContent = namedConfigurationContents.get(1);
+		namedConfigurationContent = namedConfigurationContentFactory.create(
+			uri2.toURL());
 
 		Assert.assertEquals(
 			"com.liferay.test.anotherConfigFile",
@@ -153,22 +127,11 @@ public class NamedConfigurationPathContentFactoryTest {
 
 		URI uri2 = file.toURI();
 
-		BundleStorage bundleStorage = new DummyBundleStorage(
-			100, "aLocation", _headers,
-			Arrays.asList(uri1.toURL(), uri2.toURL()));
-
 		NamedConfigurationContentFactory namedConfigurationContentFactory =
 			new NamedConfigurationPathContentFactory();
 
-		List<NamedConfigurationContent> namedConfigurationContents =
-			namedConfigurationContentFactory.create(bundleStorage);
-
-		Assert.assertEquals(
-			namedConfigurationContents.toString(), 2,
-			namedConfigurationContents.size());
-
 		NamedConfigurationContent namedConfigurationContent =
-			namedConfigurationContents.get(0);
+			namedConfigurationContentFactory.create(uri1.toURL());
 
 		Assert.assertEquals(
 			"com.liferay.test.aConfigFile",
@@ -177,7 +140,8 @@ public class NamedConfigurationPathContentFactoryTest {
 			"key=value\nanotherKey=anotherValue",
 			StringUtil.read(namedConfigurationContent.getInputStream()));
 
-		namedConfigurationContent = namedConfigurationContents.get(1);
+		namedConfigurationContent = namedConfigurationContentFactory.create(
+			uri2.toURL());
 
 		Assert.assertEquals(
 			"com.liferay.test.anotherConfigFile",
@@ -205,71 +169,5 @@ public class NamedConfigurationPathContentFactoryTest {
 
 	private File _file;
 	private Hashtable<String, String> _headers;
-
-	private static class DummyBundleStorage implements BundleStorage {
-
-		public DummyBundleStorage(
-			long bundleId, String location, Dictionary<String, String> headers,
-			List<URL> entries) {
-
-			_bundleId = bundleId;
-			_location = location;
-			_headers = headers;
-			_entries = entries;
-		}
-
-		@Override
-		public Enumeration<URL> findEntries(
-			String root, String pattern, boolean recurse) {
-
-			return Collections.enumeration(_entries);
-		}
-
-		@Override
-		public long getBundleId() {
-			return _bundleId;
-		}
-
-		@Override
-		public URL getEntry(String name) {
-			return null;
-		}
-
-		@Override
-		public Enumeration<String> getEntryPaths(String name) {
-			return null;
-		}
-
-		@Override
-		public Dictionary<String, String> getHeaders() {
-			return _headers;
-		}
-
-		@Override
-		public String getLocation() {
-			return _location;
-		}
-
-		@Override
-		public URL getResource(String name) {
-			return null;
-		}
-
-		@Override
-		public Enumeration<URL> getResources(String name) {
-			return null;
-		}
-
-		@Override
-		public String getSymbolicName() {
-			return _headers.get("Bundle-SymbolicName");
-		}
-
-		private final long _bundleId;
-		private final List<URL> _entries;
-		private final Dictionary<String, String> _headers;
-		private final String _location;
-
-	}
 
 }

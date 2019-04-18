@@ -18,8 +18,6 @@ import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -96,23 +94,32 @@ public class ConfiguratorExtender extends AbstractExtender {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
-		if (headers.get("Liferay-Configuration-Path") == null) {
+		String configurationPath = headers.get("Liferay-Configuration-Path");
+
+		if (configurationPath == null) {
 			return null;
 		}
 
-		Collection<NamedConfigurationContent> namedConfigurationContents =
+		List<NamedConfigurationContent> namedConfigurationContents =
 			new ArrayList<>();
 
 		for (NamedConfigurationContentFactory namedConfigurationContentFactory :
 				_namedConfigurationContentFactories) {
 
 			try {
-				List<NamedConfigurationContent> contents =
-					namedConfigurationContentFactory.create(
-						new BundleStorageImpl(bundle));
+				Enumeration<URL> entries = bundle.findEntries(
+					configurationPath,
+					namedConfigurationContentFactory.getFilePattern(), true);
 
-				if (contents != null) {
-					namedConfigurationContents.addAll(contents);
+				if (entries == null) {
+					continue;
+				}
+
+				while (entries.hasMoreElements()) {
+					URL url = entries.nextElement();
+
+					namedConfigurationContents.add(
+						namedConfigurationContentFactory.create(url));
 				}
 			}
 			catch (Throwable t) {
@@ -168,62 +175,5 @@ public class ConfiguratorExtender extends AbstractExtender {
 	private Logger _logger;
 	private final Collection<NamedConfigurationContentFactory>
 		_namedConfigurationContentFactories = new CopyOnWriteArrayList<>();
-
-	private static class BundleStorageImpl implements BundleStorage {
-
-		public BundleStorageImpl(Bundle bundle) {
-			_bundle = bundle;
-		}
-
-		@Override
-		public Enumeration<URL> findEntries(
-			String root, String pattern, boolean recurse) {
-
-			return _bundle.findEntries(root, pattern, recurse);
-		}
-
-		@Override
-		public long getBundleId() {
-			return _bundle.getBundleId();
-		}
-
-		@Override
-		public URL getEntry(String name) {
-			return _bundle.getEntry(name);
-		}
-
-		@Override
-		public Enumeration<String> getEntryPaths(String name) {
-			return _bundle.getEntryPaths(name);
-		}
-
-		@Override
-		public Dictionary<String, String> getHeaders() {
-			return _bundle.getHeaders(StringPool.BLANK);
-		}
-
-		@Override
-		public String getLocation() {
-			return _bundle.getLocation();
-		}
-
-		@Override
-		public URL getResource(String name) {
-			return _bundle.getResource(name);
-		}
-
-		@Override
-		public Enumeration<URL> getResources(String name) throws IOException {
-			return _bundle.getResources(name);
-		}
-
-		@Override
-		public String getSymbolicName() {
-			return _bundle.getSymbolicName();
-		}
-
-		private final Bundle _bundle;
-
-	}
 
 }

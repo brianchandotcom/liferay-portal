@@ -14,14 +14,7 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MappingEnumeration;
-
 import java.net.URL;
-
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,26 +26,13 @@ public class NamedConfigurationPathContentFactory
 	implements NamedConfigurationContentFactory {
 
 	@Override
-	public List<NamedConfigurationContent> create(BundleStorage bundleStorage) {
-		Dictionary<String, String> headers = bundleStorage.getHeaders();
+	public NamedConfigurationContent create(URL url) {
+		return new PropertiesFileNamedConfigurationContent(url);
+	}
 
-		String configurationPath = headers.get("Liferay-Configuration-Path");
-
-		final Enumeration<URL> entries = bundleStorage.findEntries(
-			configurationPath, "*.properties", true);
-
-		return ListUtil.fromEnumeration(
-			new MappingEnumeration<>(
-				entries,
-				new MappingEnumeration.Mapper
-					<URL, NamedConfigurationContent>() {
-
-					@Override
-					public NamedConfigurationContent map(URL url) {
-						return new PropertiesFileNamedConfigurationContent(url);
-					}
-
-				}));
+	@Override
+	public String getFilePattern() {
+		return "*.properties";
 	}
 
 }

@@ -552,10 +552,7 @@ definition {
 			webContentTitle = "Web Content Title"
 		);
 
-		Portlet.gotoPortletOptions(
-			portletName = "Asset Publisher",
-			portletOption = "Configuration"
-		);
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Subscribe");
 
 		AssetPublisherPortlet.enableRSSSubscription();
 

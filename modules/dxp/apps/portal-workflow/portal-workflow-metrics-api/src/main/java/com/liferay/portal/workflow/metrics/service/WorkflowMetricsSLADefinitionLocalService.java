@@ -331,7 +331,7 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
 			long workflowMetricsSLADefinitionId, String name,
 			String description, long duration, String[] pauseNodeKeys,
-			String[] startNodeKeys, String[] stopNodeKeys,
+			String[] startNodeKeys, String[] stopNodeKeys, int status,
 			ServiceContext serviceContext)
 		throws PortalException;
 

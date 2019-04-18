@@ -445,14 +445,14 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 				updateWorkflowMetricsSLADefinition(
 					long workflowMetricsSLADefinitionId, String name,
 					String description, long duration, String[] pauseNodeKeys,
-					String[] startNodeKeys, String[] stopNodeKeys,
+					String[] startNodeKeys, String[] stopNodeKeys, int status,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateWorkflowMetricsSLADefinition(
 			workflowMetricsSLADefinitionId, name, description, duration,
-			pauseNodeKeys, startNodeKeys, stopNodeKeys, serviceContext);
+			pauseNodeKeys, startNodeKeys, stopNodeKeys, status, serviceContext);
 	}
 
 	/**

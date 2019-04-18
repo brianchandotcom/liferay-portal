@@ -209,7 +209,11 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 								continue;
 							}
 
-							A.all('input[data-master]:checked').each(
+							A.all('#<portlet:namespace />globalAccordion .panel[data-master]').filter(
+								function() {
+									return this.one('input:checked');
+								}
+							).each(
 								function() {
 									var array = this.attr("data-master").split(" ");
 

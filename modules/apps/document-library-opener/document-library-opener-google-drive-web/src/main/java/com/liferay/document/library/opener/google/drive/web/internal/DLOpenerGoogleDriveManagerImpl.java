@@ -38,6 +38,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.InetAddressUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -45,6 +48,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -285,6 +289,18 @@ public class DLOpenerGoogleDriveManagerImpl
 			Map<String, String> exportLinks = file.getExportLinks();
 
 			URL url = new URL(exportLinks.get(fileEntry.getMimeType()));
+
+			if (!StringUtil.startsWith(url.getProtocol(), Http.HTTP)) {
+				throw new SecurityException(
+					"Only HTTP(S) links are allowed: " + url);
+			}
+
+			if (InetAddressUtil.isLocalInetAddress(
+					InetAddress.getByName(url.getHost()))) {
+
+				throw new SecurityException(
+					"Local links are not allowed: " + url);
+			}
 
 			URLConnection urlConnection = url.openConnection();
 

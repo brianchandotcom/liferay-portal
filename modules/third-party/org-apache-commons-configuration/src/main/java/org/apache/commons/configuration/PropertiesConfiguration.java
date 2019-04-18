@@ -917,19 +917,16 @@ public class PropertiesConfiguration extends AbstractFileConfiguration
          */
         private static String[] doParseProperty(String line)
         {
-            Matcher matcher = PROPERTY_PATTERN.matcher(line);
+			int index = line.indexOf('=');
 
-            String[] result = {"", "", ""};
+			if (index == -1) {
+				return _emptyResult;
+			}
 
-            if (matcher.matches())
-            {
-                result[0] = matcher.group(IDX_KEY).trim();
-                result[1] = matcher.group(IDX_VALUE).trim();
-                result[2] = matcher.group(IDX_SEPARATOR);
-            }
-
-            return result;
+			return new String[] {line.substring(0, index).trim(), line.substring(index + 1), "="};
         }
+
+		private static final String[] _emptyResult = {"", "", ""};
     } // class PropertiesReader
 
     /**
@@ -1514,3 +1511,4 @@ public class PropertiesConfiguration extends AbstractFileConfiguration
         load(url);
     }
 }
+/* @generated */

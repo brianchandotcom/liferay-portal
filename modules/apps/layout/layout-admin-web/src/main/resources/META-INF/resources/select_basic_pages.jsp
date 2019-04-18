@@ -26,42 +26,38 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 			<liferay-ui:message key="main-types" />
 		</h6>
 
-		<div class="row">
+		<ul class="card-page card-page-equal-height">
 
 			<%
 			for (String primaryType : selectLayoutPageTemplateEntryDisplayContext.getPrimaryTypes()) {
 				SelectBasicPagesVerticalCard selectBasicPagesVerticalCard = new SelectBasicPagesVerticalCard(primaryType, renderRequest, renderResponse);
 			%>
 
-				<div class="col-md-4">
-					<div class="add-layout-action-option card card-interactive card-interactive-primary card-type-asset image-card " <%= AUIUtil.buildData(selectBasicPagesVerticalCard.getDataLink()) %>>
+				<li class="card-page-item col-md-4 col-sm-6">
+					<div class="add-layout-action-option card card-interactive card-interactive-primary card-type-template template-card " <%= AUIUtil.buildData(selectBasicPagesVerticalCard.getDataLink()) %> tabindex="0">
 						<div class="aspect-ratio">
-							<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid layout-type-img">
+							<div class="aspect-ratio-item-center-middle aspect-ratio-item-flush layout-type-img">
 								<img src="<%= selectBasicPagesVerticalCard.getImageSrc() %>" />
 							</div>
 						</div>
 
 						<div class="card-body">
-							<div class="card-row">
-								<div class="autofit-col autofit-col-expand">
-									<div class="card-title text-truncate">
-										<%= selectBasicPagesVerticalCard.getTitle() %>
-									</div>
+							<div class="card-title">
+								<%= selectBasicPagesVerticalCard.getTitle() %>
+							</div>
 
-									<div class="card-subtitle text-truncate-inline">
-										<%= selectBasicPagesVerticalCard.getSubtitle() %>
-									</div>
-								</div>
+							<div class="card-text">
+								<%= selectBasicPagesVerticalCard.getSubtitle() %>
 							</div>
 						</div>
 					</div>
-				</div>
+				</li>
 
 			<%
 			}
 			%>
 
-		</div>
+		</ul>
 	</c:if>
 
 	<c:if test="<%= selectLayoutPageTemplateEntryDisplayContext.getTypesCount() > 0 %>">
@@ -69,22 +65,22 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 			<liferay-ui:message key="other" />
 		</h6>
 
-		<div class="row">
+		<ul class="card-page card-page-equal-height">
 
 			<%
 			for (String type : selectLayoutPageTemplateEntryDisplayContext.getTypes()) {
 			%>
 
-				<div class="col-md-4">
+				<li class="card-page-item col-md-4 col-sm-6">
 					<clay:horizontal-card
 						horizontalCard="<%= new SelectBasicPagesHorizontalCard(type, renderRequest, renderResponse) %>"
 					/>
-				</div>
+				</li>
 
 			<%
 			}
 			%>
 
-		</div>
+		</ul>
 	</c:if>
 </div>

@@ -1858,10 +1858,6 @@ public class Configuration implements Serializable {
 			log.warn( "mapping metadata cache was not completely processed" );
 		}
 
-		enableLegacyHibernateValidator();
-		enableBeanValidation();
-		enableHibernateSearch();
-
 		validate();
 		Environment.verifyProperties( properties );
 		Properties copy = new Properties();
@@ -4146,3 +4142,4 @@ public class Configuration implements Serializable {
 		public boolean cacheLazy;
 	}
 }
+/* @generated */

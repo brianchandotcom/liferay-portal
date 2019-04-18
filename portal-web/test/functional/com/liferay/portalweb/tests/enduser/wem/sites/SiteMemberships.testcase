@@ -258,9 +258,9 @@ definition {
 
 		NavItem.gotoUserGroups();
 
-		Site.assignSiteRoleCP(
-			resourceName = "User Group Name",
-			roleTitle = "Site Content Reviewer"
+		Site.assignSiteRoleToUserGroup(
+			userGroupName = "User Group Name",
+			roleName = "Site Content Reviewer"
 		);
 
 		ProductMenu.gotoPortlet(

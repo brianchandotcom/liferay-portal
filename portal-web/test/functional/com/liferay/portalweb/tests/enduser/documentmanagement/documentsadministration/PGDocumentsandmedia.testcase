@@ -1763,9 +1763,9 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "User Groups");
 
-		Site.assignSiteRoleCP(
-			resourceName = "UG UserGroup Name",
-			roleTitle = "Site Administrator"
+		Site.assignSiteRoleToUserGroup(
+			userGroupName = "UG UserGroup Name",
+			roleName = "Site Administrator"
 		);
 
 		JSONUser.addUser(

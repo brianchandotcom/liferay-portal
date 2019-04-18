@@ -379,9 +379,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Segment> getSiteUserAccountSegmentsPage(
 			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("userAccountId") Long userAccountId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -390,7 +388,7 @@ public class Query {
 			segmentResource -> {
 				Page paginationPage =
 					segmentResource.getSiteUserAccountSegmentsPage(
-						siteId, userAccountId, Pagination.of(pageSize, page));
+						siteId, userAccountId);
 
 				return paginationPage.getItems();
 			});

@@ -80,7 +80,7 @@ public class WorkflowTaskAssignToUserSerDes {
 
 			sb.append("\"");
 
-			sb.append(workflowTaskAssignToUser.getComment());
+			sb.append(_escapeString(workflowTaskAssignToUser.getComment()));
 
 			sb.append("\"");
 		}
@@ -186,6 +186,10 @@ public class WorkflowTaskAssignToUserSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

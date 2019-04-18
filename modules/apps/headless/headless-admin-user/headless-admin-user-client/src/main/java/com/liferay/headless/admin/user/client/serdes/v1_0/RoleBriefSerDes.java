@@ -70,7 +70,7 @@ public class RoleBriefSerDes {
 
 			sb.append("\"");
 
-			sb.append(roleBrief.getName());
+			sb.append(_escapeString(roleBrief.getName()));
 
 			sb.append("\"");
 		}
@@ -137,6 +137,10 @@ public class RoleBriefSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

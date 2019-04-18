@@ -62,7 +62,7 @@ public class AdaptedImageSerDes {
 
 			sb.append("\"");
 
-			sb.append(adaptedImage.getContentUrl());
+			sb.append(_escapeString(adaptedImage.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -86,7 +86,7 @@ public class AdaptedImageSerDes {
 
 			sb.append("\"");
 
-			sb.append(adaptedImage.getResolutionName());
+			sb.append(_escapeString(adaptedImage.getResolutionName()));
 
 			sb.append("\"");
 		}
@@ -217,6 +217,10 @@ public class AdaptedImageSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -70,7 +70,7 @@ public class ColumnSerDes {
 
 			sb.append("\"");
 
-			sb.append(column.getLabel());
+			sb.append(_escapeString(column.getLabel()));
 
 			sb.append("\"");
 		}
@@ -84,7 +84,7 @@ public class ColumnSerDes {
 
 			sb.append("\"");
 
-			sb.append(column.getValue());
+			sb.append(_escapeString(column.getValue()));
 
 			sb.append("\"");
 		}
@@ -163,6 +163,10 @@ public class ColumnSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

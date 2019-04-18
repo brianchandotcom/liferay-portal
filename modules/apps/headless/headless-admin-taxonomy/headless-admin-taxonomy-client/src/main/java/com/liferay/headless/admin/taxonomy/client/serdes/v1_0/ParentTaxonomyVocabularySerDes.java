@@ -74,7 +74,7 @@ public class ParentTaxonomyVocabularySerDes {
 
 			sb.append("\"");
 
-			sb.append(parentTaxonomyVocabulary.getName());
+			sb.append(_escapeString(parentTaxonomyVocabulary.getName()));
 
 			sb.append("\"");
 		}
@@ -146,6 +146,10 @@ public class ParentTaxonomyVocabularySerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

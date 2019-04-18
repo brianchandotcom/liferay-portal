@@ -134,4 +134,8 @@ public class GeoSerDes {
 
 	}
 
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 }

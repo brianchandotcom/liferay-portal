@@ -110,7 +110,7 @@ public class DocumentFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(documentFolder.getDescription());
+			sb.append(_escapeString(documentFolder.getDescription()));
 
 			sb.append("\"");
 		}
@@ -134,7 +134,7 @@ public class DocumentFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(documentFolder.getName());
+			sb.append(_escapeString(documentFolder.getName()));
 
 			sb.append("\"");
 		}
@@ -357,6 +357,10 @@ public class DocumentFolderSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

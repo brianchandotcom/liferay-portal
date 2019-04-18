@@ -62,7 +62,7 @@ public class MessageBoardAttachmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardAttachment.getContentUrl());
+			sb.append(_escapeString(messageBoardAttachment.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -76,7 +76,8 @@ public class MessageBoardAttachmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardAttachment.getEncodingFormat());
+			sb.append(
+				_escapeString(messageBoardAttachment.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -90,7 +91,7 @@ public class MessageBoardAttachmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardAttachment.getFileExtension());
+			sb.append(_escapeString(messageBoardAttachment.getFileExtension()));
 
 			sb.append("\"");
 		}
@@ -124,7 +125,7 @@ public class MessageBoardAttachmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardAttachment.getTitle());
+			sb.append(_escapeString(messageBoardAttachment.getTitle()));
 
 			sb.append("\"");
 		}
@@ -256,6 +257,10 @@ public class MessageBoardAttachmentSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -164,7 +164,7 @@ public class ContentStructureSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentStructure.getDescription());
+			sb.append(_escapeString(contentStructure.getDescription()));
 
 			sb.append("\"");
 		}
@@ -188,7 +188,7 @@ public class ContentStructureSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentStructure.getName());
+			sb.append(_escapeString(contentStructure.getName()));
 
 			sb.append("\"");
 		}
@@ -371,6 +371,10 @@ public class ContentStructureSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

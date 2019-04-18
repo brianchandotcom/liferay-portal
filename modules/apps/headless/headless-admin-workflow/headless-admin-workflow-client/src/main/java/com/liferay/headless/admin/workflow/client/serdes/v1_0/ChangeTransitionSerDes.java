@@ -62,7 +62,7 @@ public class ChangeTransitionSerDes {
 
 			sb.append("\"");
 
-			sb.append(changeTransition.getTransition());
+			sb.append(_escapeString(changeTransition.getTransition()));
 
 			sb.append("\"");
 		}
@@ -120,6 +120,10 @@ public class ChangeTransitionSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -76,7 +76,7 @@ public class SegmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(segment.getCriteria());
+			sb.append(_escapeString(segment.getCriteria()));
 
 			sb.append("\"");
 		}
@@ -129,7 +129,7 @@ public class SegmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(segment.getName());
+			sb.append(_escapeString(segment.getName()));
 
 			sb.append("\"");
 		}
@@ -153,7 +153,7 @@ public class SegmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(segment.getSource());
+			sb.append(_escapeString(segment.getSource()));
 
 			sb.append("\"");
 		}
@@ -292,6 +292,10 @@ public class SegmentSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

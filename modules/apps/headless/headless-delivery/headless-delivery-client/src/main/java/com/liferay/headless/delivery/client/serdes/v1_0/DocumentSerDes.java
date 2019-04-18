@@ -101,7 +101,7 @@ public class DocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(document.getContentUrl());
+			sb.append(_escapeString(document.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -155,7 +155,7 @@ public class DocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(document.getDescription());
+			sb.append(_escapeString(document.getDescription()));
 
 			sb.append("\"");
 		}
@@ -179,7 +179,7 @@ public class DocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(document.getEncodingFormat());
+			sb.append(_escapeString(document.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -193,7 +193,7 @@ public class DocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(document.getFileExtension());
+			sb.append(_escapeString(document.getFileExtension()));
 
 			sb.append("\"");
 		}
@@ -303,7 +303,7 @@ public class DocumentSerDes {
 
 			sb.append("\"");
 
-			sb.append(document.getTitle());
+			sb.append(_escapeString(document.getTitle()));
 
 			sb.append("\"");
 		}
@@ -617,6 +617,10 @@ public class DocumentSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

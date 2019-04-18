@@ -125,7 +125,7 @@ public class CommentSerDes {
 
 			sb.append("\"");
 
-			sb.append(comment.getText());
+			sb.append(_escapeString(comment.getText()));
 
 			sb.append("\"");
 		}
@@ -243,6 +243,10 @@ public class CommentSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

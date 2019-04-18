@@ -76,19 +76,12 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 	@Override
 	@GET
 	@Operation(description = "Get segments of an user")
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
 	@Path("/sites/{siteId}/user-accounts/{userAccountId}/segments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Segment")})
 	public Page<Segment> getSiteUserAccountSegmentsPage(
 			@NotNull @PathParam("siteId") Long siteId,
-			@NotNull @PathParam("userAccountId") Long userAccountId,
-			@Context Pagination pagination)
+			@NotNull @PathParam("userAccountId") Long userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

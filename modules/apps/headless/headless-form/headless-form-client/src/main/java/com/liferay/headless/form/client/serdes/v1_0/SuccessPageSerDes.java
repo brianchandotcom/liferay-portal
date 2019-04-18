@@ -62,7 +62,7 @@ public class SuccessPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(successPage.getDescription());
+			sb.append(_escapeString(successPage.getDescription()));
 
 			sb.append("\"");
 		}
@@ -76,7 +76,7 @@ public class SuccessPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(successPage.getHeadline());
+			sb.append(_escapeString(successPage.getHeadline()));
 
 			sb.append("\"");
 		}
@@ -168,6 +168,10 @@ public class SuccessPageSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

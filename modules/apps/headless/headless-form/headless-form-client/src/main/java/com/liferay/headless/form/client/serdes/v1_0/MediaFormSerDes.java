@@ -60,7 +60,7 @@ public class MediaFormSerDes {
 
 			sb.append("\"");
 
-			sb.append(mediaForm.getDescription());
+			sb.append(_escapeString(mediaForm.getDescription()));
 
 			sb.append("\"");
 		}
@@ -84,7 +84,7 @@ public class MediaFormSerDes {
 
 			sb.append("\"");
 
-			sb.append(mediaForm.getName());
+			sb.append(_escapeString(mediaForm.getName()));
 
 			sb.append("\"");
 		}
@@ -98,7 +98,7 @@ public class MediaFormSerDes {
 
 			sb.append("\"");
 
-			sb.append(mediaForm.getTitle());
+			sb.append(_escapeString(mediaForm.getTitle()));
 
 			sb.append("\"");
 		}
@@ -190,6 +190,10 @@ public class MediaFormSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

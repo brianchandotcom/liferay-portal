@@ -62,7 +62,7 @@ public class SegmentUserSerDes {
 
 			sb.append("\"");
 
-			sb.append(segmentUser.getEmailAddress());
+			sb.append(_escapeString(segmentUser.getEmailAddress()));
 
 			sb.append("\"");
 		}
@@ -86,7 +86,7 @@ public class SegmentUserSerDes {
 
 			sb.append("\"");
 
-			sb.append(segmentUser.getName());
+			sb.append(_escapeString(segmentUser.getName()));
 
 			sb.append("\"");
 		}
@@ -168,6 +168,10 @@ public class SegmentUserSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

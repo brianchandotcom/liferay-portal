@@ -192,4 +192,8 @@ public class AggregateRatingSerDes {
 
 	}
 
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 }

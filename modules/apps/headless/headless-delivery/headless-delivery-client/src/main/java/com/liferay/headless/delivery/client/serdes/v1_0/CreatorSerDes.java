@@ -60,7 +60,7 @@ public class CreatorSerDes {
 
 			sb.append("\"");
 
-			sb.append(creator.getAdditionalName());
+			sb.append(_escapeString(creator.getAdditionalName()));
 
 			sb.append("\"");
 		}
@@ -74,7 +74,7 @@ public class CreatorSerDes {
 
 			sb.append("\"");
 
-			sb.append(creator.getFamilyName());
+			sb.append(_escapeString(creator.getFamilyName()));
 
 			sb.append("\"");
 		}
@@ -88,7 +88,7 @@ public class CreatorSerDes {
 
 			sb.append("\"");
 
-			sb.append(creator.getGivenName());
+			sb.append(_escapeString(creator.getGivenName()));
 
 			sb.append("\"");
 		}
@@ -112,7 +112,7 @@ public class CreatorSerDes {
 
 			sb.append("\"");
 
-			sb.append(creator.getImage());
+			sb.append(_escapeString(creator.getImage()));
 
 			sb.append("\"");
 		}
@@ -126,7 +126,7 @@ public class CreatorSerDes {
 
 			sb.append("\"");
 
-			sb.append(creator.getName());
+			sb.append(_escapeString(creator.getName()));
 
 			sb.append("\"");
 		}
@@ -140,7 +140,7 @@ public class CreatorSerDes {
 
 			sb.append("\"");
 
-			sb.append(creator.getProfileURL());
+			sb.append(_escapeString(creator.getProfileURL()));
 
 			sb.append("\"");
 		}
@@ -268,6 +268,10 @@ public class CreatorSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

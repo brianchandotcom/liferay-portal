@@ -82,7 +82,7 @@ public class FormPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(formPage.getHeadline());
+			sb.append(_escapeString(formPage.getHeadline()));
 
 			sb.append("\"");
 		}
@@ -106,7 +106,7 @@ public class FormPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(formPage.getText());
+			sb.append(_escapeString(formPage.getText()));
 
 			sb.append("\"");
 		}
@@ -204,6 +204,10 @@ public class FormPageSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

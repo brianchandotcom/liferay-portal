@@ -70,7 +70,7 @@ public class RowSerDes {
 
 			sb.append("\"");
 
-			sb.append(row.getLabel());
+			sb.append(_escapeString(row.getLabel()));
 
 			sb.append("\"");
 		}
@@ -84,7 +84,7 @@ public class RowSerDes {
 
 			sb.append("\"");
 
-			sb.append(row.getValue());
+			sb.append(_escapeString(row.getValue()));
 
 			sb.append("\"");
 		}
@@ -162,6 +162,10 @@ public class RowSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -258,4 +258,8 @@ public class RatingSerDes {
 
 	}
 
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 }

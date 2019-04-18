@@ -1,0 +1,10 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.document.library.opener.google.drive.web.internal.util.State" />
+		<Or>
+			<Method name="goToFailurePage" />
+			<Method name="goToSuccessPage" />
+		</Or>
+		<Bug pattern="UNVALIDATED_REDIRECT" />
+	</Match>
+</FindBugsFilter>

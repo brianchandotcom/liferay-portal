@@ -117,10 +117,10 @@ public class ConfiguratorExtension implements Extension {
 
 		Dictionary<String, Object> properties = null;
 
-		Supplier<Dictionary<String, Object>> propertiesSupplier =
-			configurationDescription.getPropertiesSupplier();
-
 		try {
+			Supplier<Dictionary<String, Object>> propertiesSupplier =
+				configurationDescription.getPropertiesSupplier();
+
 			properties = propertiesSupplier.get();
 		}
 		catch (Throwable t) {

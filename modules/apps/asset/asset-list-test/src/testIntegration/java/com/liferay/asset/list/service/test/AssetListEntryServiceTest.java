@@ -15,12 +15,9 @@
 package com.liferay.asset.list.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.list.exception.AssetListEntryAssetEntryRelPostionException;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.comparator.AssetListEntryCreateDateComparator;
 import com.liferay.asset.list.util.comparator.AssetListEntryTitleComparator;
@@ -32,13 +29,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portlet.asset.util.test.AssetTestUtil;
 
 import java.util.List;
 
@@ -76,30 +71,6 @@ public class AssetListEntryServiceTest {
 				assetListEntry.getAssetListEntryId()));
 
 		Assert.assertEquals("Asset List Title", assetListEntry.getTitle());
-	}
-
-	@Test(expected = AssetListEntryAssetEntryRelPostionException.class)
-	public void testAddAssetListEntryAssetEntryRelWrongPosition()
-		throws Exception {
-
-		AssetListEntry assetListEntry = _addAssetListEntry("Asset List Title");
-		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
-			_group.getGroupId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		long segmentsEntryId = RandomTestUtil.nextLong();
-
-		AssetListEntryAssetEntryRelLocalServiceUtil.
-			addAssetListEntryAssetEntryRel(
-				assetListEntry.getAssetListEntryId(), segmentsEntryId,
-				assetEntry.getEntryId(), 1, serviceContext);
-		AssetListEntryAssetEntryRelLocalServiceUtil.
-			addAssetListEntryAssetEntryRel(
-				assetListEntry.getAssetListEntryId(), segmentsEntryId,
-				assetEntry.getEntryId(), serviceContext);
 	}
 
 	@Test(expected = AssetListEntryTitleException.class)

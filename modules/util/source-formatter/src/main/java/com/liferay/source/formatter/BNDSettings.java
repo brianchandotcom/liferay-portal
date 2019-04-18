@@ -103,12 +103,6 @@ public class BNDSettings {
 		return exportPackageNames;
 	}
 
-	public String getFileLocation() {
-		int pos = _fileName.lastIndexOf(CharPool.SLASH);
-
-		return _fileName.substring(0, pos + 1);
-	}
-
 	public String getFileName() {
 		return _fileName;
 	}
@@ -136,8 +130,11 @@ public class BNDSettings {
 		Matcher matcher = _contentDirPattern.matcher(_content);
 
 		if (matcher.find()) {
+			int pos = _fileName.lastIndexOf(CharPool.SLASH);
+
 			File file = new File(
-				getFileLocation() + matcher.group(1) + "/Language.properties");
+				_fileName.substring(0, pos + 1) + matcher.group(1) +
+					"/Language.properties");
 
 			if (file.exists()) {
 				languageProperties.load(new FileInputStream(file));

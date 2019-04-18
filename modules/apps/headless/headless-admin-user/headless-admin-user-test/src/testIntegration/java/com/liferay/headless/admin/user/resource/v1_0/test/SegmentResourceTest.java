@@ -15,7 +15,6 @@
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.headless.admin.user.client.dto.v1_0.Segment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -44,11 +43,25 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 	}
 
 	@Override
+	protected Segment randomSegment() {
+		Segment segment = super.randomSegment();
+
+		segment.setActive(true);
+		segment.setCriteria(
+			"{\"criteria\": {\"user\":{\"conjunction\":\"and\"," +
+				"\"filterString\":\"(firstName eq '" + _user.getFirstName() +
+					"')\",\"typeValue\":\"model\"}}}");
+		segment.setSource(SegmentsConstants.SOURCE_DEFAULT);
+
+		return segment;
+	}
+
+	@Override
 	protected Segment testGetSiteSegmentsPage_addSegment(
 			Long siteId, Segment segment)
 		throws Exception {
 
-		return _addSegment(segment, siteId, null);
+		return _addSegment(siteId, _user.getUserId(), segment);
 	}
 
 	@Override
@@ -56,7 +69,7 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 			Long siteId, Long userAccountId, Segment segment)
 		throws Exception {
 
-		return _addSegment(segment, siteId, userAccountId);
+		return _addSegment(siteId, userAccountId, segment);
 	}
 
 	@Override
@@ -64,37 +77,20 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 		return _user.getUserId();
 	}
 
-	private Segment _addSegment(Segment segment, Long siteId, Long userAccountId)
+	private Segment _addSegment(
+			Long siteId, Long userAccountId, Segment segment)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(siteId);
-
-		if(userAccountId == null) {
-			serviceContext.setUserId(_user.getUserId());
-		} else {
-			serviceContext.setUserId(userAccountId);
-		}
+		serviceContext.setUserId(userAccountId);
 
 		return _toSegment(
 			SegmentsEntryLocalServiceUtil.addSegmentsEntry(
 				segment.getName(), null, null, segment.getActive(),
-				segment.getCriteria(), segment.getSource(), null,
-				serviceContext));
-	}
-
-	@Override
-	protected Segment randomSegment() {
-		Segment segment = super.randomSegment();
-
-		segment.setActive(true);
-
-		segment.setCriteria("{'user':{'conjunction':'and','filterString':'(firstName eq 'test')','typeValue':'model'}}");
-
-		segment.setSource(SegmentsConstants.SOURCE_DEFAULT);
-
-		return segment;
+				segment.getCriteria(), segment.getSource(),
+				User.class.getName(), serviceContext));
 	}
 
 	private Segment _toSegment(SegmentsEntry segmentsEntry) {

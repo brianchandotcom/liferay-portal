@@ -28,6 +28,9 @@ import java.net.SocketAddress;
 
 import java.nio.channels.ServerSocketChannel;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Matthew Tambara
  */
@@ -53,18 +56,39 @@ public class SocketUtil {
 		_socket.close();
 
 		_socket = null;
+
+		_connected = false;
 	}
 
-	public static void connect() throws IOException {
-		_socket = _serverSocket.accept();
+	public static void connect(long passCode) throws IOException {
+		if (!_connected) {
+			while (true) {
+				_socket = _serverSocket.accept();
 
-		_outputStream = _socket.getOutputStream();
+				_outputStream = _socket.getOutputStream();
 
-		_objectOutputStream = new ObjectOutputStream(_outputStream);
+				_objectOutputStream = new ObjectOutputStream(_outputStream);
 
-		_inputStream = _socket.getInputStream();
+				_inputStream = _socket.getInputStream();
 
-		_objectInputStream = new ObjectInputStream(_inputStream);
+				_objectInputStream = new ObjectInputStream(_inputStream);
+
+				if (passCode != readLong()) {
+					_logger.log(
+						Level.WARNING,
+						"Pass code mismatch, dropped connection from " +
+							getRemoteSocketAddress());
+
+					close();
+
+					continue;
+				}
+
+				_connected = true;
+
+				return;
+			}
+		}
 	}
 
 	public static InetAddress getInetAddress() {
@@ -104,8 +128,14 @@ public class SocketUtil {
 		return _objectInputStream.readLong();
 	}
 
-	public static <T> T readObject() throws Exception {
-		return (T)_objectInputStream.readObject();
+	public static Object readObject() throws Exception {
+		return _objectInputStream.readObject();
+	}
+
+	public static void writeObject(Object object) throws IOException {
+		_objectOutputStream.writeObject(object);
+
+		_objectOutputStream.flush();
 	}
 
 	public static void writeUTF(String string) throws IOException {
@@ -116,6 +146,10 @@ public class SocketUtil {
 
 	private static final int _START_PORT = 32764;
 
+	private static final Logger _logger = Logger.getLogger(
+		SocketUtil.class.getName());
+
+	private static boolean _connected;
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();
 	private static InputStream _inputStream;

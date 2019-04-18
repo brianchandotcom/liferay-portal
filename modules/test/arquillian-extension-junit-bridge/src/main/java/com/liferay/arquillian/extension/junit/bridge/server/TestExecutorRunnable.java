@@ -14,8 +14,10 @@
 
 package com.liferay.arquillian.extension.junit.bridge.server;
 
+import com.liferay.arquillian.extension.junit.bridge.command.KillCommand;
 import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -87,9 +89,17 @@ public class TestExecutorRunnable implements Runnable {
 
 			objectOutputStream.flush();
 
-			String testClass = objectInputStream.readUTF();
+			while (true) {
+				String testClass = objectInputStream.readUTF();
 
-			_execute(_createTestClass(testClass), objectOutputStream);
+				_execute(_createTestClass(testClass), objectOutputStream);
+
+				objectOutputStream.writeObject(KillCommand.INSTANCE);
+
+				objectOutputStream.flush();
+			}
+		}
+		catch (EOFException eofe) {
 		}
 		catch (Exception e) {
 			try {

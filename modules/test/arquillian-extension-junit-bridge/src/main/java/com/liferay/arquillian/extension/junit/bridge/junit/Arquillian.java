@@ -17,10 +17,10 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
 import com.liferay.arquillian.extension.junit.bridge.client.SocketUtil;
+import com.liferay.arquillian.extension.junit.bridge.command.KillCommand;
 import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 import com.liferay.petra.string.CharPool;
 
-import java.io.EOFException;
 import java.io.IOException;
 
 import java.lang.annotation.Annotation;
@@ -47,8 +47,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -74,10 +72,6 @@ public class Arquillian extends Runner implements Filterable {
 		_clazz = clazz;
 
 		_filteredSortedTestClass = new FilteredSortedTestClass(_clazz, null);
-
-		Random random = new SecureRandom();
-
-		_passCode = random.nextLong();
 	}
 
 	@Override
@@ -148,72 +142,71 @@ public class Arquillian extends Runner implements Filterable {
 		try {
 			serverSocket = SocketUtil.getServerSocket();
 
-			long bundleId = _installBundle(
-				frameworkMBean, serverSocket.getLocalPort());
+			if (_bundleId == 0) {
+				Random random = new SecureRandom();
+
+				long passCode = random.nextLong();
+
+				_bundleId = _installBundle(
+					frameworkMBean, serverSocket.getLocalPort(), passCode);
+
+				frameworkMBean.startBundle(_bundleId);
+
+				SocketUtil.connect(passCode);
+			}
 
 			try {
-				frameworkMBean.startBundle(bundleId);
-
 				while (true) {
-					try {
-						SocketUtil.connect();
+					SocketUtil.writeUTF(_clazz.getName());
 
-						if (_passCode != SocketUtil.readLong()) {
-							_logger.log(
-								Level.WARNING,
-								"Pass code mismatch, dropped connection from " +
-									SocketUtil.getRemoteSocketAddress());
+					while (true) {
+						Object object = SocketUtil.readObject();
 
-							continue;
+						if (object instanceof KillCommand) {
+							return;
 						}
 
-						SocketUtil.writeUTF(_clazz.getName());
+						RunNotifierCommand runNotifierCommand =
+							(RunNotifierCommand)object;
 
-						while (true) {
-							RunNotifierCommand runNotifierCommand =
-								(RunNotifierCommand)SocketUtil.readObject();
-
-							runNotifierCommand.execute(runNotifier);
-						}
-					}
-					catch (EOFException eofe) {
-						break;
-					}
-					finally {
-						SocketUtil.close();
+						runNotifierCommand.execute(runNotifier);
 					}
 				}
 			}
 			finally {
-				frameworkMBean.uninstallBundle(bundleId);
-
 				_classes.remove(_clazz);
+
+				if (_classes.isEmpty()) {
+					try {
+						frameworkMBean.uninstallBundle(_bundleId);
+
+						_bundleId = 0;
+
+						SocketUtil.close();
+
+						serverSocket.close();
+					}
+					catch (IOException ioe) {
+						runNotifier.fireTestFailure(
+							new Failure(getDescription(), ioe));
+					}
+				}
 			}
 		}
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(getDescription(), t));
 		}
-		finally {
-			if (_classes.isEmpty()) {
-				try {
-					serverSocket.close();
-				}
-				catch (IOException ioe) {
-					runNotifier.fireTestFailure(
-						new Failure(getDescription(), ioe));
-				}
-			}
-		}
 	}
 
-	private long _installBundle(FrameworkMBean frameworkMBean, int port)
+	private long _installBundle(
+			FrameworkMBean frameworkMBean, int port, long passCode)
 		throws Exception {
 
 		InetAddress inetAddress = SocketUtil.getInetAddress();
 
 		Path path = BndBundleUtil.createBundle(
 			_filteredSortedTestClass._filteredMethodNames,
-			inetAddress.getHostAddress(), port, _passCode);
+			inetAddress.getHostAddress(), port, passCode);
 
 		URI uri = path.toUri();
 
@@ -228,8 +221,7 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private static final Logger _logger = Logger.getLogger(
-		Arquillian.class.getName());
+	private static long _bundleId;
 
 	private static final Set<Class> _classes = new HashSet<Class>() {
 		{
@@ -281,7 +273,6 @@ public class Arquillian extends Runner implements Filterable {
 
 	private final Class<?> _clazz;
 	private FilteredSortedTestClass _filteredSortedTestClass;
-	private final long _passCode;
 
 	private class FilteredSortedTestClass extends TestClass {
 

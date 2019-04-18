@@ -90,7 +90,7 @@ public class FieldValueSerDes {
 
 			sb.append("\"");
 
-			sb.append(fieldValue.getName());
+			sb.append(_escapeString(fieldValue.getName()));
 
 			sb.append("\"");
 		}
@@ -104,7 +104,7 @@ public class FieldValueSerDes {
 
 			sb.append("\"");
 
-			sb.append(fieldValue.getValue());
+			sb.append(_escapeString(fieldValue.getValue()));
 
 			sb.append("\"");
 		}
@@ -213,6 +213,10 @@ public class FieldValueSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

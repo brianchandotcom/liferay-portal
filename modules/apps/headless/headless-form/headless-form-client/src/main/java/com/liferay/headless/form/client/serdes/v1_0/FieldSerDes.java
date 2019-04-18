@@ -72,7 +72,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getDataSourceType());
+			sb.append(_escapeString(field.getDataSourceType()));
 
 			sb.append("\"");
 		}
@@ -86,7 +86,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getDataType());
+			sb.append(_escapeString(field.getDataType()));
 
 			sb.append("\"");
 		}
@@ -100,7 +100,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getDisplayStyle());
+			sb.append(_escapeString(field.getDisplayStyle()));
 
 			sb.append("\"");
 		}
@@ -164,7 +164,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getInputControl());
+			sb.append(_escapeString(field.getInputControl()));
 
 			sb.append("\"");
 		}
@@ -178,7 +178,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getLabel());
+			sb.append(_escapeString(field.getLabel()));
 
 			sb.append("\"");
 		}
@@ -212,7 +212,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getName());
+			sb.append(_escapeString(field.getName()));
 
 			sb.append("\"");
 		}
@@ -246,7 +246,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getPlaceholder());
+			sb.append(_escapeString(field.getPlaceholder()));
 
 			sb.append("\"");
 		}
@@ -260,7 +260,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getPredefinedValue());
+			sb.append(_escapeString(field.getPredefinedValue()));
 
 			sb.append("\"");
 		}
@@ -324,7 +324,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getStyle());
+			sb.append(_escapeString(field.getStyle()));
 
 			sb.append("\"");
 		}
@@ -338,7 +338,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getText());
+			sb.append(_escapeString(field.getText()));
 
 			sb.append("\"");
 		}
@@ -352,7 +352,7 @@ public class FieldSerDes {
 
 			sb.append("\"");
 
-			sb.append(field.getTooltip());
+			sb.append(_escapeString(field.getTooltip()));
 
 			sb.append("\"");
 		}
@@ -730,6 +730,10 @@ public class FieldSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

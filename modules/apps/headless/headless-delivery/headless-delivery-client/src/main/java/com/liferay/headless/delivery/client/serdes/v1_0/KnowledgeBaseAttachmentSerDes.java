@@ -64,7 +64,7 @@ public class KnowledgeBaseAttachmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseAttachment.getContentUrl());
+			sb.append(_escapeString(knowledgeBaseAttachment.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -78,7 +78,8 @@ public class KnowledgeBaseAttachmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseAttachment.getEncodingFormat());
+			sb.append(
+				_escapeString(knowledgeBaseAttachment.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -92,7 +93,8 @@ public class KnowledgeBaseAttachmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseAttachment.getFileExtension());
+			sb.append(
+				_escapeString(knowledgeBaseAttachment.getFileExtension()));
 
 			sb.append("\"");
 		}
@@ -126,7 +128,7 @@ public class KnowledgeBaseAttachmentSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseAttachment.getTitle());
+			sb.append(_escapeString(knowledgeBaseAttachment.getTitle()));
 
 			sb.append("\"");
 		}
@@ -259,6 +261,10 @@ public class KnowledgeBaseAttachmentSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

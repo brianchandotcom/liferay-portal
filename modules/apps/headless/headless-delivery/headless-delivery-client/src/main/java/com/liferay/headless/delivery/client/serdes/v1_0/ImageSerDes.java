@@ -60,7 +60,7 @@ public class ImageSerDes {
 
 			sb.append("\"");
 
-			sb.append(image.getCaption());
+			sb.append(_escapeString(image.getCaption()));
 
 			sb.append("\"");
 		}
@@ -74,7 +74,7 @@ public class ImageSerDes {
 
 			sb.append("\"");
 
-			sb.append(image.getContentUrl());
+			sb.append(_escapeString(image.getContentUrl()));
 
 			sb.append("\"");
 		}
@@ -164,6 +164,10 @@ public class ImageSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

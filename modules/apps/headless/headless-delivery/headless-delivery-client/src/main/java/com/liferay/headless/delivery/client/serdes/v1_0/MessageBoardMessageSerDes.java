@@ -90,7 +90,7 @@ public class MessageBoardMessageSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardMessage.getArticleBody());
+			sb.append(_escapeString(messageBoardMessage.getArticleBody()));
 
 			sb.append("\"");
 		}
@@ -146,7 +146,7 @@ public class MessageBoardMessageSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardMessage.getEncodingFormat());
+			sb.append(_escapeString(messageBoardMessage.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -160,7 +160,7 @@ public class MessageBoardMessageSerDes {
 
 			sb.append("\"");
 
-			sb.append(messageBoardMessage.getHeadline());
+			sb.append(_escapeString(messageBoardMessage.getHeadline()));
 
 			sb.append("\"");
 		}
@@ -518,6 +518,10 @@ public class MessageBoardMessageSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

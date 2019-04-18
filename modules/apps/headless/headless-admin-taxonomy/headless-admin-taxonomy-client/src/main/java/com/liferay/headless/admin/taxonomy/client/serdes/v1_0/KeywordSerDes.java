@@ -125,7 +125,7 @@ public class KeywordSerDes {
 
 			sb.append("\"");
 
-			sb.append(keyword.getName());
+			sb.append(_escapeString(keyword.getName()));
 
 			sb.append("\"");
 		}
@@ -266,6 +266,10 @@ public class KeywordSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

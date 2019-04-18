@@ -81,7 +81,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(blogPosting.getAlternativeHeadline());
+			sb.append(_escapeString(blogPosting.getAlternativeHeadline()));
 
 			sb.append("\"");
 		}
@@ -95,7 +95,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(blogPosting.getArticleBody());
+			sb.append(_escapeString(blogPosting.getArticleBody()));
 
 			sb.append("\"");
 		}
@@ -164,7 +164,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(blogPosting.getDescription());
+			sb.append(_escapeString(blogPosting.getDescription()));
 
 			sb.append("\"");
 		}
@@ -178,7 +178,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(blogPosting.getEncodingFormat());
+			sb.append(_escapeString(blogPosting.getEncodingFormat()));
 
 			sb.append("\"");
 		}
@@ -192,7 +192,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(blogPosting.getFriendlyUrlPath());
+			sb.append(_escapeString(blogPosting.getFriendlyUrlPath()));
 
 			sb.append("\"");
 		}
@@ -206,7 +206,7 @@ public class BlogPostingSerDes {
 
 			sb.append("\"");
 
-			sb.append(blogPosting.getHeadline());
+			sb.append(_escapeString(blogPosting.getHeadline()));
 
 			sb.append("\"");
 		}
@@ -642,6 +642,10 @@ public class BlogPostingSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

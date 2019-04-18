@@ -70,7 +70,7 @@ public class OrganizationSerDes {
 
 			sb.append("\"");
 
-			sb.append(organization.getComment());
+			sb.append(_escapeString(organization.getComment()));
 
 			sb.append("\"");
 		}
@@ -136,7 +136,7 @@ public class OrganizationSerDes {
 
 			sb.append("\"");
 
-			sb.append(organization.getImage());
+			sb.append(_escapeString(organization.getImage()));
 
 			sb.append("\"");
 		}
@@ -184,7 +184,7 @@ public class OrganizationSerDes {
 
 			sb.append("\"");
 
-			sb.append(organization.getName());
+			sb.append(_escapeString(organization.getName()));
 
 			sb.append("\"");
 		}
@@ -442,6 +442,10 @@ public class OrganizationSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

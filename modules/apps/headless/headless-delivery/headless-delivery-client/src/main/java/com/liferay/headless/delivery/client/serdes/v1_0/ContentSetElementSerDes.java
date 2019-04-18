@@ -72,7 +72,7 @@ public class ContentSetElementSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentSetElement.getContentType());
+			sb.append(_escapeString(contentSetElement.getContentType()));
 
 			sb.append("\"");
 		}
@@ -96,7 +96,7 @@ public class ContentSetElementSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentSetElement.getTitle());
+			sb.append(_escapeString(contentSetElement.getTitle()));
 
 			sb.append("\"");
 		}
@@ -194,6 +194,10 @@ public class ContentSetElementSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

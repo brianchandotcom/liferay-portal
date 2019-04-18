@@ -136,7 +136,7 @@ public class TaxonomyCategorySerDes {
 
 			sb.append("\"");
 
-			sb.append(taxonomyCategory.getDescription());
+			sb.append(_escapeString(taxonomyCategory.getDescription()));
 
 			sb.append("\"");
 		}
@@ -160,7 +160,7 @@ public class TaxonomyCategorySerDes {
 
 			sb.append("\"");
 
-			sb.append(taxonomyCategory.getName());
+			sb.append(_escapeString(taxonomyCategory.getName()));
 
 			sb.append("\"");
 		}
@@ -415,6 +415,10 @@ public class TaxonomyCategorySerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

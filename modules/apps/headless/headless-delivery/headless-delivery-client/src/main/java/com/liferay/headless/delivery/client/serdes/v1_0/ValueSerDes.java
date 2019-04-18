@@ -60,7 +60,7 @@ public class ValueSerDes {
 
 			sb.append("\"");
 
-			sb.append(value.getData());
+			sb.append(_escapeString(value.getData()));
 
 			sb.append("\"");
 		}
@@ -104,7 +104,7 @@ public class ValueSerDes {
 
 			sb.append("\"");
 
-			sb.append(value.getLink());
+			sb.append(_escapeString(value.getLink()));
 
 			sb.append("\"");
 		}
@@ -243,6 +243,10 @@ public class ValueSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

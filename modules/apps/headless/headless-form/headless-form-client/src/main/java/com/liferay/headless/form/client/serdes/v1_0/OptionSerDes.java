@@ -70,7 +70,7 @@ public class OptionSerDes {
 
 			sb.append("\"");
 
-			sb.append(option.getLabel());
+			sb.append(_escapeString(option.getLabel()));
 
 			sb.append("\"");
 		}
@@ -84,7 +84,7 @@ public class OptionSerDes {
 
 			sb.append("\"");
 
-			sb.append(option.getValue());
+			sb.append(_escapeString(option.getValue()));
 
 			sb.append("\"");
 		}
@@ -163,6 +163,10 @@ public class OptionSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

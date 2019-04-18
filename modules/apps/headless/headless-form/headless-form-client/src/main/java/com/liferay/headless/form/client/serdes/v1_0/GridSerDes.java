@@ -194,4 +194,8 @@ public class GridSerDes {
 
 	}
 
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
+	}
+
 }

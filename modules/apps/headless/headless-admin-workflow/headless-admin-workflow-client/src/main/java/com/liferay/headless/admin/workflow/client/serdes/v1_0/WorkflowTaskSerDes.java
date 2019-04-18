@@ -109,7 +109,7 @@ public class WorkflowTaskSerDes {
 
 			sb.append("\"");
 
-			sb.append(workflowTask.getDefinitionName());
+			sb.append(_escapeString(workflowTask.getDefinitionName()));
 
 			sb.append("\"");
 		}
@@ -123,7 +123,7 @@ public class WorkflowTaskSerDes {
 
 			sb.append("\"");
 
-			sb.append(workflowTask.getDescription());
+			sb.append(_escapeString(workflowTask.getDescription()));
 
 			sb.append("\"");
 		}
@@ -162,7 +162,7 @@ public class WorkflowTaskSerDes {
 
 			sb.append("\"");
 
-			sb.append(workflowTask.getName());
+			sb.append(_escapeString(workflowTask.getName()));
 
 			sb.append("\"");
 		}
@@ -369,6 +369,10 @@ public class WorkflowTaskSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

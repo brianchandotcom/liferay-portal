@@ -72,7 +72,7 @@ public class ParentTaxonomyCategorySerDes {
 
 			sb.append("\"");
 
-			sb.append(parentTaxonomyCategory.getName());
+			sb.append(_escapeString(parentTaxonomyCategory.getName()));
 
 			sb.append("\"");
 		}
@@ -144,6 +144,10 @@ public class ParentTaxonomyCategorySerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

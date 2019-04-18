@@ -110,7 +110,7 @@ public class KnowledgeBaseFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseFolder.getDescription());
+			sb.append(_escapeString(knowledgeBaseFolder.getDescription()));
 
 			sb.append("\"");
 		}
@@ -134,7 +134,7 @@ public class KnowledgeBaseFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(knowledgeBaseFolder.getName());
+			sb.append(_escapeString(knowledgeBaseFolder.getName()));
 
 			sb.append("\"");
 		}
@@ -428,6 +428,10 @@ public class KnowledgeBaseFolderSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

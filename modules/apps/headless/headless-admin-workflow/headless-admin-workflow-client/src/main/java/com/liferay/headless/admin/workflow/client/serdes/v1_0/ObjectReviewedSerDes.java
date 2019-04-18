@@ -72,7 +72,7 @@ public class ObjectReviewedSerDes {
 
 			sb.append("\"");
 
-			sb.append(objectReviewed.getResourceType());
+			sb.append(_escapeString(objectReviewed.getResourceType()));
 
 			sb.append("\"");
 		}
@@ -144,6 +144,10 @@ public class ObjectReviewedSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -326,7 +326,7 @@ public abstract class BaseSegmentResourceTestCase {
 					randomIrrelevantSegment());
 
 			Page<Segment> page = invokeGetSiteUserAccountSegmentsPage(
-				irrelevantSiteId, irrelevantUserAccountId, Pagination.of(1, 2));
+				irrelevantSiteId, irrelevantUserAccountId);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -343,56 +343,13 @@ public abstract class BaseSegmentResourceTestCase {
 			siteId, userAccountId, randomSegment());
 
 		Page<Segment> page = invokeGetSiteUserAccountSegmentsPage(
-			siteId, userAccountId, Pagination.of(1, 2));
+			siteId, userAccountId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(segment1, segment2), (List<Segment>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetSiteUserAccountSegmentsPageWithPagination()
-		throws Exception {
-
-		Long siteId = testGetSiteUserAccountSegmentsPage_getSiteId();
-		Long userAccountId =
-			testGetSiteUserAccountSegmentsPage_getUserAccountId();
-
-		Segment segment1 = testGetSiteUserAccountSegmentsPage_addSegment(
-			siteId, userAccountId, randomSegment());
-
-		Segment segment2 = testGetSiteUserAccountSegmentsPage_addSegment(
-			siteId, userAccountId, randomSegment());
-
-		Segment segment3 = testGetSiteUserAccountSegmentsPage_addSegment(
-			siteId, userAccountId, randomSegment());
-
-		Page<Segment> page1 = invokeGetSiteUserAccountSegmentsPage(
-			siteId, userAccountId, Pagination.of(1, 2));
-
-		List<Segment> segments1 = (List<Segment>)page1.getItems();
-
-		Assert.assertEquals(segments1.toString(), 2, segments1.size());
-
-		Page<Segment> page2 = invokeGetSiteUserAccountSegmentsPage(
-			siteId, userAccountId, Pagination.of(2, 2));
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<Segment> segments2 = (List<Segment>)page2.getItems();
-
-		Assert.assertEquals(segments2.toString(), 1, segments2.size());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(segment1, segment2, segment3),
-			new ArrayList<Segment>() {
-				{
-					addAll(segments1);
-					addAll(segments2);
-				}
-			});
 	}
 
 	protected Segment testGetSiteUserAccountSegmentsPage_addSegment(
@@ -430,7 +387,7 @@ public abstract class BaseSegmentResourceTestCase {
 	}
 
 	protected Page<Segment> invokeGetSiteUserAccountSegmentsPage(
-			Long siteId, Long userAccountId, Pagination pagination)
+			Long siteId, Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -440,11 +397,6 @@ public abstract class BaseSegmentResourceTestCase {
 				_toPath(
 					"/sites/{siteId}/user-accounts/{userAccountId}/segments",
 					siteId, userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 
@@ -458,7 +410,7 @@ public abstract class BaseSegmentResourceTestCase {
 	}
 
 	protected Http.Response invokeGetSiteUserAccountSegmentsPageResponse(
-			Long siteId, Long userAccountId, Pagination pagination)
+			Long siteId, Long userAccountId)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -468,11 +420,6 @@ public abstract class BaseSegmentResourceTestCase {
 				_toPath(
 					"/sites/{siteId}/user-accounts/{userAccountId}/segments",
 					siteId, userAccountId);
-
-		location = HttpUtil.addParameter(
-			location, "page", pagination.getPage());
-		location = HttpUtil.addParameter(
-			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
 

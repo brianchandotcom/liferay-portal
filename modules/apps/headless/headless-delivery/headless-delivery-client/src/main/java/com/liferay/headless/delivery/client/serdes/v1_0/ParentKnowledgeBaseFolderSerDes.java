@@ -76,7 +76,7 @@ public class ParentKnowledgeBaseFolderSerDes {
 
 			sb.append("\"");
 
-			sb.append(parentKnowledgeBaseFolder.getFolderName());
+			sb.append(_escapeString(parentKnowledgeBaseFolder.getFolderName()));
 
 			sb.append("\"");
 		}
@@ -152,6 +152,10 @@ public class ParentKnowledgeBaseFolderSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

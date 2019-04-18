@@ -94,7 +94,7 @@ public class ServiceSerDes {
 
 			sb.append("\"");
 
-			sb.append(service.getServiceType());
+			sb.append(_escapeString(service.getServiceType()));
 
 			sb.append("\"");
 		}
@@ -181,6 +181,10 @@ public class ServiceSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -137,7 +137,7 @@ public class FormStructureSerDes {
 
 			sb.append("\"");
 
-			sb.append(formStructure.getDescription());
+			sb.append(_escapeString(formStructure.getDescription()));
 
 			sb.append("\"");
 		}
@@ -182,7 +182,7 @@ public class FormStructureSerDes {
 
 			sb.append("\"");
 
-			sb.append(formStructure.getName());
+			sb.append(_escapeString(formStructure.getName()));
 
 			sb.append("\"");
 		}
@@ -383,6 +383,10 @@ public class FormStructureSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

@@ -62,7 +62,7 @@ public class RenderedContentSerDes {
 
 			sb.append("\"");
 
-			sb.append(renderedContent.getRenderedContentURL());
+			sb.append(_escapeString(renderedContent.getRenderedContentURL()));
 
 			sb.append("\"");
 		}
@@ -76,7 +76,7 @@ public class RenderedContentSerDes {
 
 			sb.append("\"");
 
-			sb.append(renderedContent.getTemplateName());
+			sb.append(_escapeString(renderedContent.getTemplateName()));
 
 			sb.append("\"");
 		}
@@ -150,6 +150,10 @@ public class RenderedContentSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

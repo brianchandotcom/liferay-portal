@@ -60,7 +60,7 @@ public class ValidationSerDes {
 
 			sb.append("\"");
 
-			sb.append(validation.getErrorMessage());
+			sb.append(_escapeString(validation.getErrorMessage()));
 
 			sb.append("\"");
 		}
@@ -74,7 +74,7 @@ public class ValidationSerDes {
 
 			sb.append("\"");
 
-			sb.append(validation.getExpression());
+			sb.append(_escapeString(validation.getExpression()));
 
 			sb.append("\"");
 		}
@@ -166,6 +166,10 @@ public class ValidationSerDes {
 			}
 		}
 
+	}
+
+	private static String _escapeString(String string) {
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

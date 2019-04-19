@@ -15,7 +15,6 @@
 package com.liferay.portal.configuration.extender.internal;
 
 import java.util.Dictionary;
-import java.util.function.Supplier;
 
 /**
  * @author Carlos Sierra Andrés
@@ -26,6 +25,6 @@ public interface ConfigurationDescription {
 
 	public String getPid();
 
-	public Supplier<Dictionary<String, Object>> getPropertiesSupplier();
+	public Dictionary<String, Object> getProperties();
 
 }

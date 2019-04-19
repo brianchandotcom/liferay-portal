@@ -22,7 +22,6 @@ import java.io.IOException;
 
 import java.util.Collection;
 import java.util.Dictionary;
-import java.util.function.Supplier;
 
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
@@ -103,10 +102,7 @@ public class ConfiguratorExtension implements Extension {
 		Dictionary<String, Object> properties = null;
 
 		try {
-			Supplier<Dictionary<String, Object>> propertiesSupplier =
-				configurationDescription.getPropertiesSupplier();
-
-			properties = propertiesSupplier.get();
+			properties = configurationDescription.getProperties();
 		}
 		catch (Throwable t) {
 			_logger.log(

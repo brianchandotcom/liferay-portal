@@ -43,8 +43,8 @@ public final class SingleConfigurationDescription
 	}
 
 	@Override
-	public Supplier<Dictionary<String, Object>> getPropertiesSupplier() {
-		return _propertiesSupplier;
+	public Dictionary<String, Object> getProperties() {
+		return _propertiesSupplier.get();
 	}
 
 	@Override

@@ -84,11 +84,10 @@ public class DeleteDefinitionPortletConfigurationIcon
 	 * Returns a portlet URL, passing the workflow definition name and version
 	 * as parameters.
 	 *
-	 * @param  portletRequest The portlet request object used to construct the
-	 *         URL
-	 * @param  portletResponse The portlet response object required by the
-	 *         overridden method
-	 * @return the URL, in String format, for the delete action
+	 * @param  portletRequest the portlet request used to construct the URL
+	 * @param  portletResponse the portlet response required by the overridden
+	 *         method
+	 * @return the URL for the delete action
 	 */
 	@Override
 	public String getURL(

@@ -112,7 +112,7 @@ public class RevertWorkflowDefinitionMVCActionCommand
 	 * Returns a success message when the workflow definition is successfully
 	 * reverted to a previous version.
 	 *
-	 * @param  actionRequest The action request used to construct the message
+	 * @param  actionRequest the action request used to construct the message
 	 * @return the success message, including the date of the restored version
 	 */
 	@Override

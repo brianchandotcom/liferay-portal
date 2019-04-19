@@ -56,8 +56,7 @@ public class ConfiguratorExtension implements Extension {
 				_configurationContents) {
 
 			try {
-				_process(
-					namedConfigurationContent.getConfigurationDescription());
+				_process(namedConfigurationContent);
 			}
 			catch (IOException ioe) {
 				_logger.log(Logger.LOG_WARNING, ioe.getMessage(), ioe);
@@ -65,8 +64,11 @@ public class ConfiguratorExtension implements Extension {
 		}
 	}
 
-	private void _process(ConfigurationDescription configurationDescription)
+	private void _process(NamedConfigurationContent namedConfigurationContent)
 		throws InvalidSyntaxException, IOException {
+
+		ConfigurationDescription configurationDescription =
+			namedConfigurationContent.getConfigurationDescription();
 
 		Configuration configuration = null;
 		String configuratorURL = null;

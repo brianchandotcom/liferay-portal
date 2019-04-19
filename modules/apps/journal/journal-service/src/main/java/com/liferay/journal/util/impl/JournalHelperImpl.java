@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,9 +55,13 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tom Wang
  */
+@Component(immediate = true, service = JournalHelper.class)
 public class JournalHelperImpl implements JournalHelper {
 
 	@Override
@@ -233,13 +236,13 @@ public class JournalHelperImpl implements JournalHelper {
 		return script;
 	}
 
-	@ServiceReference(type = DDMTemplateLocalService.class)
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
-	@ServiceReference(type = LayoutLocalService.class)
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
 }

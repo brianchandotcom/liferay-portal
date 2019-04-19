@@ -25,9 +25,13 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tom Wang
  */
+@Component(immediate = true, service = {})
 public class JournalHelperUtil {
 
 	public static String getAbsolutePath(
@@ -60,6 +64,7 @@ public class JournalHelperUtil {
 			groupId, ddmTemplateKey, tokens, languageId);
 	}
 
+	@Reference(unbind = "-")
 	public void setJournalHelper(JournalHelper journalHelper) {
 		_journalHelper = journalHelper;
 	}

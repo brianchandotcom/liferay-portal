@@ -29,6 +29,14 @@ definition {
 			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
 		}
 
+		Alert.closeMessage(
+			messageType = "SUCCESS"
+		);
+
+		AssertElementNotPresent(
+			locator1 = "Message#SUCCESS"
+		);
+
 		Button.click(button = "Save");
 
 		WaitForSPARefresh();

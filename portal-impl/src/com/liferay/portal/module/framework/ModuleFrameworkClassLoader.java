@@ -16,16 +16,10 @@ package com.liferay.portal.module.framework;
 
 import com.liferay.petra.string.CharPool;
 
-import java.io.IOException;
-
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author Miguel Pastor
@@ -38,54 +32,6 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 		super(urls, parent);
 
 		_packageNames = packageNames;
-	}
-
-	@Override
-	public URL getResource(String name) {
-		URL url = findResource(name);
-
-		if (url == null) {
-			url = super.getResource(name);
-		}
-
-		return url;
-	}
-
-	@Override
-	public Enumeration<URL> getResources(String name) throws IOException {
-		final List<URL> urls = new ArrayList<>();
-
-		urls.addAll(_buildURLs(null));
-
-		Enumeration<URL> localURLs = findResources(name);
-
-		urls.addAll(_buildURLs(localURLs));
-
-		Enumeration<URL> parentURLs = null;
-
-		ClassLoader parentClassLoader = getParent();
-
-		if (parentClassLoader != null) {
-			parentURLs = parentClassLoader.getResources(name);
-		}
-
-		urls.addAll(_buildURLs(parentURLs));
-
-		return new Enumeration<URL>() {
-
-			@Override
-			public boolean hasMoreElements() {
-				return _iterator.hasNext();
-			}
-
-			@Override
-			public URL nextElement() {
-				return _iterator.next();
-			}
-
-			private final Iterator<URL> _iterator = urls.iterator();
-
-		};
 	}
 
 	@Override
@@ -122,20 +68,6 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 
 			return clazz;
 		}
-	}
-
-	private List<URL> _buildURLs(Enumeration<URL> url) {
-		if (url == null) {
-			return new ArrayList<>();
-		}
-
-		List<URL> urls = new ArrayList<>();
-
-		while (url.hasMoreElements()) {
-			urls.add(url.nextElement());
-		}
-
-		return urls;
 	}
 
 	private boolean _hasPackageName(String name) {

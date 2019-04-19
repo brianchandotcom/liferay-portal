@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_NOT_FOCUSABLE</td>
+	<td>//button[@data-title='Delete' or @title='Delete']//*[contains(@focusable,'false')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//div[contains(.,'Details')]/span/a/i[@class='icon-file-alt']</td>
 	<td></td>

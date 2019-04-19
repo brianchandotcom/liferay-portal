@@ -126,7 +126,7 @@
 <!--SELECT_IMAGE_PREVIEW-->
 <tr>
 	<td>SELECT_IMAGE_PREVIEW</td>
-	<td>//div[@class='card']//img</td>
+	<td>//div[@class='image-viewer-base-image-list-inner']//img</td>
 	<td></td>
 </tr>
 <tr>

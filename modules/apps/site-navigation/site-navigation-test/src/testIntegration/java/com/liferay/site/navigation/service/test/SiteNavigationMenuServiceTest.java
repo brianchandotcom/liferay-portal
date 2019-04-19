@@ -36,20 +36,22 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
-import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.util.SiteNavigationMenuTestUtil;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuCreateDateComparator;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuNameComparator;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 import java.util.List;
 
 import org.junit.Assert;
@@ -70,7 +72,7 @@ public class SiteNavigationMenuServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerTestRule.INSTANCE);
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -150,7 +152,9 @@ public class SiteNavigationMenuServiceTest {
 	public void testDeleteSiteNavigationMenuWithoutPermissions()
 		throws Exception {
 
-		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(_user);
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, _groupUser.getUserId());
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -160,7 +164,9 @@ public class SiteNavigationMenuServiceTest {
 
 	@Test
 	public void testDeleteSiteNavigationMenuWithPermissions() throws Exception {
-		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(_user);
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, _groupUser.getUserId());
 
 		_giveUserDeleteSiteNavigationMenuPermissions();
 
@@ -174,7 +180,9 @@ public class SiteNavigationMenuServiceTest {
 	public void testFetchSiteNavigationMenuWithoutPermissions()
 		throws Exception {
 
-		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(_user);
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, _groupUser.getUserId());
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -184,7 +192,9 @@ public class SiteNavigationMenuServiceTest {
 
 	@Test
 	public void testFetchSiteNavigationMenuWithPermissions() throws Exception {
-		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(_user);
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, _groupUser.getUserId());
 
 		_giveUserViewSiteNavigationMenuPermissions();
 
@@ -198,15 +208,21 @@ public class SiteNavigationMenuServiceTest {
 	public void testGetSiteNavigationMenuByCreateDateComparatorAndKeywordsAsc()
 		throws Exception {
 
+		LocalDateTime now = LocalDateTime.now();
+
 		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-				_group, _generateFutureDate(1), "CC Name");
+				_group, Timestamp.valueOf(now), "CC Name");
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, _generateFutureDate(0), "BB");
+			_group, Timestamp.valueOf(now), "BB");
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, _generateFutureDate(2), "AA Name");
+			_group, Timestamp.valueOf(now), "AA Name");
 
 		SiteNavigationMenuCreateDateComparator
 			ascSiteNavigationMenuCreateDateComparator =
@@ -226,15 +242,21 @@ public class SiteNavigationMenuServiceTest {
 	public void testGetSiteNavigationMenuByCreateDateComparatorAndKeywordsDesc()
 		throws Exception {
 
+		LocalDateTime now = LocalDateTime.now();
+
 		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-				_group, _generateFutureDate(1), "CC Name");
+				_group, Timestamp.valueOf(now), "CC Name");
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, _generateFutureDate(0), "BB");
+			_group, Timestamp.valueOf(now), "BB");
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, _generateFutureDate(2), "AA Name");
+			_group, Timestamp.valueOf(now), "AA Name");
 
 		SiteNavigationMenuCreateDateComparator
 			descSiteNavigationMenuCreateDateComparator =
@@ -275,15 +297,21 @@ public class SiteNavigationMenuServiceTest {
 	public void testGetSiteNavigationMenusByCreateDateComparatorAsc()
 		throws Exception {
 
+		LocalDateTime now = LocalDateTime.now();
+
 		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-				_group, _generateFutureDate(0), "CC Name");
+				_group, Timestamp.valueOf(now), "CC Name");
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, _generateFutureDate(1), "BB Name");
+			_group, Timestamp.valueOf(now), "BB Name");
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, _generateFutureDate(2), "AA Name");
+			_group, Timestamp.valueOf(now), "AA Name");
 
 		SiteNavigationMenuCreateDateComparator
 			ascSiteNavigationMenuCreateDateComparator =
@@ -303,15 +331,21 @@ public class SiteNavigationMenuServiceTest {
 	public void testGetSiteNavigationMenusByCreateDateComparatorDesc()
 		throws Exception {
 
+		LocalDateTime now = LocalDateTime.now();
+
 		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-				_group, _generateFutureDate(0), "CC Name");
+				_group, Timestamp.valueOf(now), "CC Name");
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, _generateFutureDate(1), "BB Name");
+			_group, Timestamp.valueOf(now), "BB Name");
+
+		now = now.plus(1, ChronoUnit.SECONDS);
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, _generateFutureDate(2), "AA Name");
+			_group, Timestamp.valueOf(now), "AA Name");
 
 		SiteNavigationMenuCreateDateComparator
 			descSiteNavigationMenuCreateDateComparator =
@@ -462,7 +496,9 @@ public class SiteNavigationMenuServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
 
-		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(_user);
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, _groupUser.getUserId());
 
 		ServiceTestUtil.setUser(_groupUser);
 
@@ -480,13 +516,15 @@ public class SiteNavigationMenuServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
 
-		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(_user);
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, _groupUser.getUserId());
 
 		ServiceTestUtil.setUser(_groupUser);
 
 		SiteNavigationMenuServiceUtil.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
-			siteNavigationMenu.getName(), serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Test
@@ -497,7 +535,9 @@ public class SiteNavigationMenuServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
 
-		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(_user);
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, _groupUser.getUserId());
 
 		_giveUserUpdateSiteNavigationMenuPermissions();
 
@@ -505,7 +545,7 @@ public class SiteNavigationMenuServiceTest {
 
 		SiteNavigationMenuServiceUtil.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
-			siteNavigationMenu.getType(), siteNavigationMenu.getAuto(),
+			siteNavigationMenu.getType(), siteNavigationMenu.isAuto(),
 			serviceContext);
 	}
 
@@ -517,7 +557,9 @@ public class SiteNavigationMenuServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
 
-		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(_user);
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, _groupUser.getUserId());
 
 		_giveUserUpdateSiteNavigationMenuPermissions();
 
@@ -526,23 +568,6 @@ public class SiteNavigationMenuServiceTest {
 		SiteNavigationMenuServiceUtil.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
 			RandomTestUtil.randomString(), serviceContext);
-	}
-
-	private SiteNavigationMenu _addSiteNavigationMenu(User user)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, user.getUserId());
-
-		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			user.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(), serviceContext);
-	}
-
-	private Date _generateFutureDate(int secondsInFuture) {
-		Date date = new Date();
-
-		return new Date(date.getTime() + Time.SECOND * secondsInFuture);
 	}
 
 	private void _giveSiteMemberAddSiteNavigationMenuPermissions()

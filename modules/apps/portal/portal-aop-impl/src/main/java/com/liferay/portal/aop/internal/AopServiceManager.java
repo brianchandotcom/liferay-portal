@@ -14,6 +14,7 @@
 
 package com.liferay.portal.aop.internal;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -169,7 +170,7 @@ public class AopServiceManager {
 
 			if (ArrayUtil.isEmpty(aopInterfaces)) {
 				return ArrayUtil.remove(
-					aopServiceClass.getInterfaces(), AopService.class);
+					ReflectionUtil.getInterfaces(aopService), AopService.class);
 			}
 
 			for (Class<?> aopInterface : aopInterfaces) {

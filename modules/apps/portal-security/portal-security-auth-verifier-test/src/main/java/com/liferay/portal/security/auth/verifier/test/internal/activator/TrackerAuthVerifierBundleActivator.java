@@ -43,16 +43,24 @@ public class TrackerAuthVerifierBundleActivator
 
 		properties.put("auth.verifier.guest.allowed", true);
 		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "filter-enabled");
+		properties.put(
+			"auth-verifier-tracker-test-servlet-context-helper", true);
 
 		registerServletContextHelper(
 			"auth-verifier-filter-tracker-enabled-test", properties);
 
 		properties = new HashMapDictionary<>();
 
+		properties.put(
+			"auth-verifier-tracker-test-servlet-context-helper", true);
+
 		registerServletContextHelper(
 			"auth-verifier-filter-tracker-disabled-test", properties);
 
 		properties = new HashMapDictionary<>();
+
+		properties.put(
+			"auth-verifier-tracker-test-servlet-context-helper", true);
 
 		registerServletContextHelper(
 			"auth-verifier-filter-tracker-default-test", properties);
@@ -74,6 +82,8 @@ public class TrackerAuthVerifierBundleActivator
 		properties = new HashMapDictionary<>();
 
 		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "filter-enabled");
+		properties.put(
+			"auth-verifier-tracker-test-servlet-context-helper", true);
 
 		registerServletContextHelper(
 			"auth-verifier-filter-tracker-remote-access-test", properties);
@@ -127,16 +137,6 @@ public class TrackerAuthVerifierBundleActivator
 			}
 		}
 
-	}
-
-	@Override
-	protected void registerServletContextHelper(
-		String servletContextName, Dictionary<String, Object> properties) {
-
-		properties.put(
-			"auth-verifier-tracker-test-servlet-context-helper", true);
-
-		super.registerServletContextHelper(servletContextName, properties);
 	}
 
 }

@@ -285,6 +285,10 @@ public class DataFactory {
 
 		models.add(UserPersonalSite.class.getName());
 
+		models.add(getCombineClassName(MBDiscussion.class, BlogsEntry.class));
+
+		models.add(getCombineClassName(MBDiscussion.class, WikiPage.class));
+
 		for (String model : models) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();
 
@@ -521,6 +525,15 @@ public class DataFactory {
 		return allAssetVocabularyModels;
 	}
 
+	public long getBlogsAssetEntryClassNameId() {
+		String className = getCombineClassName(
+			MBDiscussion.class, BlogsEntry.class);
+
+		ClassNameModel classNameModel = _classNameModels.get(className);
+
+		return classNameModel.getClassNameId();
+	}
+
 	public long getBlogsEntryClassNameId() {
 		return getClassNameId(BlogsEntry.class);
 	}
@@ -533,6 +546,18 @@ public class DataFactory {
 
 	public Collection<ClassNameModel> getClassNameModels() {
 		return _classNameModels.values();
+	}
+
+	public String getCombineClassName(
+		Class<?> firstClazz, Class<?> secondClazz) {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(firstClazz.getName());
+		sb.append("_");
+		sb.append(secondClazz.getName());
+
+		return sb.toString();
 	}
 
 	public CompanyModel getCompanyModel() {
@@ -771,6 +796,15 @@ public class DataFactory {
 
 	public VirtualHostModel getVirtualHostModel() {
 		return _virtualHostModel;
+	}
+
+	public long getWikiAssetEntryClassNameId() {
+		String className = getCombineClassName(
+			MBDiscussion.class, WikiPage.class);
+
+		ClassNameModel classNameModel = _classNameModels.get(className);
+
+		return classNameModel.getClassNameId();
 	}
 
 	public long getWikiPageClassNameId() {
@@ -1320,6 +1354,24 @@ public class DataFactory {
 			dLFolderModel.getModifiedDate(), getClassNameId(DLFolder.class),
 			dLFolderModel.getFolderId(), dLFolderModel.getUuid(), 0, true, true,
 			null, dLFolderModel.getName());
+	}
+
+	public AssetEntryModel newAssetEntryModel(
+		long classNameId, BlogsEntryModel blogsEntryModel) {
+
+		return newAssetEntryModel(
+			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
+			blogsEntryModel.getModifiedDate(), classNameId,
+			blogsEntryModel.getEntryId(), "", 0, true, false, "", "1");
+	}
+
+	public AssetEntryModel newAssetEntryModel(
+		long classNameId, WikiPageModel wikiPageModel) {
+
+		return newAssetEntryModel(
+			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
+			wikiPageModel.getModifiedDate(), classNameId,
+			wikiPageModel.getResourcePrimKey(), "", 0, true, false, "", "1");
 	}
 
 	public AssetEntryModel newAssetEntryModel(MBMessageModel mbMessageModel) {

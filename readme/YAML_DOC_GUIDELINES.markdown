@@ -7,6 +7,8 @@ YAML files, but the rules can be loosely applied to other YAML uses in Liferay
 Portal. Please follow these guidelines as you define YAML descriptions in
 Liferay Portal's `.yaml` files.
 
+## Description Format
+
 YAML's `description` section should provide extended information about the API.
 They should be written in the [CommonMark](https://commonmark.org/help/)
 dialect of Markdown for rich text representation. The most popular uses of
@@ -20,6 +22,8 @@ CommonMark formatting for Liferay's YAML files are outlined below:
 All descriptions should be on a single line. If you wish to display the
 description as multiple lines after it's generated, you must use HTML `<p>`
 tags.
+
+## Style
 
 There are two types of styles a YAML description can follow:
 
@@ -45,7 +49,7 @@ should follow the *Declarative* style.
 For more information on this basic structure, see
 [Swagger's Basic Structure specification](https://swagger.io/docs/specification/basic-structure/).
 
-## Action Style
+### Action Style
 
 An action style description should follow these rules:
 
@@ -58,7 +62,7 @@ An action style description should follow these rules:
     - Gets the segment's users.
     - Represents the user account who created/authored the content.
 
-## Declarative Style
+### Declarative Style
 
 A declarative style description should follow these rules:
 
@@ -70,6 +74,27 @@ A declarative style description should follow these rules:
 - Examples:
     - The user account's full name.
     - A generated URL for the page.
+
+## Generating Java Class Descriptions
+
+The descriptions provided in YAML files are often generated in Java classes. For
+example, input/output schema property descriptions are generated as `@Schema`
+annotations in Java classes.
+
+To generate the necessary logic provided in the YAML file, first install the
+REST Builder (if necessary) by executing the following command from the
+`liferay-portal/modules/util/portal-tools-rest-builder` folder:
+
+```bash
+./gradlew clean deploy
+```
+
+Then run the REST Builder. Navigate to the module where the updated YAML file
+resides and run
+
+```bash
+./gradlew buildREST
+```
 
 ## Examples
 

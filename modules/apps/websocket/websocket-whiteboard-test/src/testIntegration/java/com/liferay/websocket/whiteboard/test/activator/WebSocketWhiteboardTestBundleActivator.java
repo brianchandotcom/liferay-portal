@@ -17,6 +17,7 @@ package com.liferay.websocket.whiteboard.test.activator;
 import com.liferay.websocket.whiteboard.test.encode.data.ExampleDecoder;
 import com.liferay.websocket.whiteboard.test.encode.data.ExampleEncoder;
 import com.liferay.websocket.whiteboard.test.encode.endpoint.EncodeWebSocketEndpoint;
+import com.liferay.websocket.whiteboard.test.simple.endpoint.SimpleWebSocketEndpoint;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -37,7 +38,7 @@ import org.osgi.framework.ServiceRegistration;
 public class WebSocketWhiteboardTestBundleActivator implements BundleActivator {
 
 	@Override
-	public void start(BundleContext bundleContext) throws Exception {
+	public void start(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new Hashtable<>();
 
 		List<Class<? extends Decoder>> decoders = new ArrayList<>();
@@ -57,13 +58,24 @@ public class WebSocketWhiteboardTestBundleActivator implements BundleActivator {
 
 		_endpointServiceRegistration = bundleContext.registerService(
 			Endpoint.class, new EncodeWebSocketEndpoint(), properties);
+
+		properties = new Hashtable<>();
+
+		properties.put(
+			"org.osgi.http.websocket.endpoint.path", "/o/websocket/test");
+
+		_simpleEndpointServiceRegistration = bundleContext.registerService(
+			Endpoint.class, new SimpleWebSocketEndpoint(), properties);
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
+	public void stop(BundleContext bundleContext) {
 		_endpointServiceRegistration.unregister();
+
+		_simpleEndpointServiceRegistration.unregister();
 	}
 
 	private ServiceRegistration<Endpoint> _endpointServiceRegistration;
+	private ServiceRegistration<Endpoint> _simpleEndpointServiceRegistration;
 
 }

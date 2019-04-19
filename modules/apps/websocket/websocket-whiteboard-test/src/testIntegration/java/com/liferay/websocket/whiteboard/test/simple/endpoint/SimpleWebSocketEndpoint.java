@@ -24,16 +24,9 @@ import javax.websocket.MessageHandler;
 import javax.websocket.RemoteEndpoint;
 import javax.websocket.Session;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Cristina González
  */
-@Component(
-	immediate = true,
-	property = "org.osgi.http.websocket.endpoint.path=/o/websocket/test",
-	service = Endpoint.class
-)
 public class SimpleWebSocketEndpoint extends Endpoint {
 
 	@Override

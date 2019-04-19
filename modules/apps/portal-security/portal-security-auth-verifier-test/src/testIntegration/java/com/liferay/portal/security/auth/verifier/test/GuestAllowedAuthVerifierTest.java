@@ -24,7 +24,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,7 +40,8 @@ public class GuestAllowedAuthVerifierTest {
 	@Test
 	public void testAllowGuest() throws Exception {
 		URL url = new URL(
-			_url, "/o/auth-verifier-guest-allowed-false-test/guestAllowed");
+			"http://localhost:8080/o/auth-verifier-guest-allowed-false-test" +
+				"/guestAllowed");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.fail();
@@ -54,21 +54,20 @@ public class GuestAllowedAuthVerifierTest {
 		}
 
 		url = new URL(
-			_url, "/o/auth-verifier-guest-allowed-true-test/guestAllowed");
+			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
+				"/guestAllowed");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals("guest-allowed", StringUtil.read(inputStream));
 		}
 
 		url = new URL(
-			_url, "/o/auth-verifier-guest-allowed-default-test/guestAllowed");
+			"http://localhost:8080/o/auth-verifier-guest-allowed-default-test" +
+				"/guestAllowed");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals("guest-allowed", StringUtil.read(inputStream));
 		}
 	}
-
-	@ArquillianResource
-	private URL _url;
 
 }

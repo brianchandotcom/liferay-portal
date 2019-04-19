@@ -23,7 +23,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,8 +39,8 @@ public class TrackerAuthVerifierTest {
 	@Test
 	public void testRemoteAccess() throws Exception {
 		URL url = new URL(
-			_url,
-			"/o/auth-verifier-filter-tracker-remote-access-test/remoteAccess");
+			"http://localhost:8080/o/auth-verifier-filter-tracker-remote-" +
+				"access-test/remoteAccess");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals("true", StringUtil.read(inputStream));
@@ -51,7 +50,8 @@ public class TrackerAuthVerifierTest {
 	@Test
 	public void testRemoteUser() throws Exception {
 		URL url = new URL(
-			_url, "/o/auth-verifier-filter-tracker-enabled-test/remoteUser");
+			"http://localhost:8080/o/auth-verifier-filter-tracker-enabled-" +
+				"test/remoteUser");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals(
@@ -59,21 +59,20 @@ public class TrackerAuthVerifierTest {
 		}
 
 		url = new URL(
-			_url, "/o/auth-verifier-filter-tracker-disabled-test/remoteUser");
+			"http://localhost:8080/o/auth-verifier-filter-tracker-disabled-" +
+				"test/remoteUser");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));
 		}
 
 		url = new URL(
-			_url, "/o/auth-verifier-filter-tracker-default-test/remoteUser");
+			"http://localhost:8080/o/auth-verifier-filter-tracker-default-" +
+				"test/remoteUser");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));
 		}
 	}
-
-	@ArquillianResource
-	private URL _url;
 
 }

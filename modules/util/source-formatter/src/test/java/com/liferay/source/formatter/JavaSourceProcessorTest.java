@@ -289,6 +289,18 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMissingCurlyBraces() throws Exception {
+		test(
+			"MissingCurlyBraces.testjava",
+			new String[] {
+				"Missing curly braces for for-statement",
+				"Missing curly braces for if-statement",
+				"Missing curly braces for while-statement",
+			},
+			new Integer[] {25, 30, 33});
+	}
+
+	@Test
 	public void testMissingEmptyLines() throws Exception {
 		test("MissingEmptyLines.testjava");
 	}

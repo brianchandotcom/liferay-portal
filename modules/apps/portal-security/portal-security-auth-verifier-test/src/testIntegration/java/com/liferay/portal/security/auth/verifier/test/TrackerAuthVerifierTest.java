@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Marta Medio
  */
-@BndFile("bnd-tracker.bnd")
+@BndFile("test-bnd.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
 public class TrackerAuthVerifierTest {

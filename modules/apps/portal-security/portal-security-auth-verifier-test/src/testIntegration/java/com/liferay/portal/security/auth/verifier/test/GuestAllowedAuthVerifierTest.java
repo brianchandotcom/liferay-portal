@@ -32,7 +32,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Marta Medio
  */
-@BndFile("bnd-guest-allowed.bnd")
+@BndFile("test-bnd.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
 public class GuestAllowedAuthVerifierTest {

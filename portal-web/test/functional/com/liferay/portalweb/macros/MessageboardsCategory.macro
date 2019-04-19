@@ -109,8 +109,8 @@ definition {
 		var key_subCategoryName = "${subCategoryName}";
 
 		AssertClick(
-			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY",
-			value1 = "${subCategoryName}"
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+			value1 = "${categoryName}"
 		);
 
 		AssertClick(locator1 = "Button#ADD_CATEGORY", value1 = "Add Category");
@@ -262,7 +262,7 @@ definition {
 		);
 
 		AssertElementNotPresent(
-			locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC"
+			locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_GENERIC"
 		);
 
 		var key_subcategoriesNumber = "${subcategoriesNumber}";
@@ -290,10 +290,10 @@ definition {
 			value1 = "${categoryName}"
 		);
 
-		AssertElementNotPresent(locator1 = "MessageBoards#SUBCATEGORY_TABLE_PANEL");
+		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_PANEL");
 
 		AssertElementNotPresent(
-			locator1 = "MessageBoards#SUBCATEGORY_TABLE_CATEGORY_GENERIC"
+			locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_GENERIC"
 		);
 	}
 
@@ -436,16 +436,16 @@ definition {
 		);
 
 		AssertTextEquals(
-			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY",
-			value1 = "${subCategoryName}"
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+			value1 = "${categoryName}"
 		);
 
 		AssertTextEquals(
-			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY_DESCRIPTION",
-			value1 = "${subCategoryDescription}"
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_DESCRIPTION",
+			value1 = "${categoryDescription}"
 		);
 
-		Click(locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY");
+		Click(locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",

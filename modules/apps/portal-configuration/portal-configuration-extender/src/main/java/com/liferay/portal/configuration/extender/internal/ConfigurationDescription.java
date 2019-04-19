@@ -14,17 +14,54 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.Dictionary;
+import java.util.function.Supplier;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface ConfigurationDescription {
+public class ConfigurationDescription {
 
-	public String getFactoryPid();
+	public ConfigurationDescription(
+		String factoryPid, String pid,
+		Supplier<Dictionary<String, Object>> propertiesSupplier) {
 
-	public String getPid();
+		_factoryPid = factoryPid;
+		_pid = pid;
+		_propertiesSupplier = propertiesSupplier;
+	}
 
-	public Dictionary<String, Object> getProperties();
+	public String getFactoryPid() {
+		return _factoryPid;
+	}
+
+	public String getPid() {
+		return _pid;
+	}
+
+	public Dictionary<String, Object> getProperties() {
+		return _propertiesSupplier.get();
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{factoryPid=");
+		sb.append(_factoryPid);
+		sb.append(", pid=");
+		sb.append(_pid);
+		sb.append(", propertiesSupplier=");
+		sb.append(_propertiesSupplier);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private final String _factoryPid;
+	private final String _pid;
+	private final Supplier<Dictionary<String, Object>> _propertiesSupplier;
 
 }

@@ -410,7 +410,7 @@ public class ConfiguratorExtensionTest {
 				(StringFactoryNamedConfigurationContent)
 					namedConfigurationContent;
 
-			return new FactoryConfigurationDescription(
+			return new ConfigurationDescription(
 				sfncc._factoryPid, sfncc._pid,
 				new Supplier<Dictionary<String, Object>>() {
 

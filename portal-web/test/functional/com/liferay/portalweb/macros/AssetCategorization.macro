@@ -27,21 +27,6 @@ definition {
 			key_categoryName = "${categoryName}"
 		);
 
-		// Adding workaround. See LRQA-48131 for an explanation.
-
-		if (!(IsElementPresent(locator1 = "AssetCategorization#CATEGORY", key_categoryName = "${categoryName}"))) {
-			Type.sendKeys(
-				locator1 = "AssetCategorization#CATEGORIES_FIELD",
-				value1 = "${categoryName}",
-				key_vocabularyName = "${vocabularyName}"
-			);
-
-			Click(
-				locator1 = "AssetCategorization#CATEGORY_AUTOCOMPLETE_SPECIFIC",
-				key_categoryName = "${categoryName}"
-			);
-		}
-
 		AssertTextEquals(
 			locator1 = "AssetCategorization#CATEGORY",
 			value1 = "${categoryName}",

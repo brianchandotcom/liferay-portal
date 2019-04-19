@@ -886,6 +886,8 @@ definition {
 
 		SelectFrame(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
 
+		WaitForElementPresent(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
+
 		Check(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
 
 		PortletEntry.save();

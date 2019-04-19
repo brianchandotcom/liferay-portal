@@ -17,6 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <style type="text/css">
+	#impersonate-user-icon {
+		color: #272833;
+	}
+
 	#impersonate-user-sticker {
 		bottom: -.4rem;
 		font-size: .6rem;
@@ -40,7 +44,7 @@
 
 				<c:if test="<%= themeDisplay.isImpersonated() %>">
 					<span class="sticker sticker-bottom-right sticker-circle sticker-outside sticker-user-icon" id="impersonate-user-sticker">
-						<aui:icon image="user" markupView="lexicon" />
+						<aui:icon id="impersonate-user-icon" image="user" markupView="lexicon" />
 					</span>
 				</c:if>
 			</span>

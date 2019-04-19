@@ -23,16 +23,10 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1", tabs1);
-
-boolean inverted = false;
-
-if (layout.isTypeControlPanel()) {
-	inverted = true;
-}
 %>
 
 <clay:navigation-bar
-	inverted="<%= inverted %>"
+	inverted="<%= layout.isTypeControlPanel() %>"
 	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{

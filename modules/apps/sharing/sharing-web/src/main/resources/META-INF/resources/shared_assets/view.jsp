@@ -18,16 +18,10 @@
 
 <%
 SharedAssetsViewDisplayContext sharedAssetsViewDisplayContext = (SharedAssetsViewDisplayContext)renderRequest.getAttribute(SharedAssetsViewDisplayContext.class.getName());
-
-boolean inverted = false;
-
-if (layout.isTypeControlPanel()) {
-	inverted = true;
-}
 %>
 
 <clay:navigation-bar
-	inverted="<%= inverted %>"
+	inverted="<%= layout.isTypeControlPanel() %>"
 	navigationItems="<%= sharedAssetsViewDisplayContext.getNavigationItems() %>"
 />
 

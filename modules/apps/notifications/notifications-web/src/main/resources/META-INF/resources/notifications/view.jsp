@@ -42,16 +42,10 @@ NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navi
 PortletURL navigationURL = PortletURLUtil.clone(currentURLObj, renderResponse);
 
 navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
-
-boolean inverted = false;
-
-if (layout.isTypeControlPanel()) {
-	inverted = true;
-}
 %>
 
 <clay:navigation-bar
-	inverted="<%= inverted %>"
+	inverted="<%= layout.isTypeControlPanel() %>"
 	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{

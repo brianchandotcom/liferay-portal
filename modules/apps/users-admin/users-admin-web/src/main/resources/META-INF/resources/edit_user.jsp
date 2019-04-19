@@ -32,12 +32,6 @@ if (Validator.isNotNull(backURL)) {
 if (selUser != null) {
 	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 }
-
-boolean inverted = false;
-
-if (layout.isTypeControlPanel()) {
-	inverted = true;
-}
 %>
 
 <liferay-frontend:screen-navigation
@@ -45,7 +39,7 @@ if (layout.isTypeControlPanel()) {
 	containerWrapperCssClass="container-fluid container-fluid-max-xl container-form-lg"
 	context="<%= selUser %>"
 	headerContainerCssClass=""
-	inverted="<%= inverted %>"
+	inverted="<%= layout.isTypeControlPanel() %>"
 	key="<%= UserScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_USERS %>"
 	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 	navCssClass="col-lg-3"

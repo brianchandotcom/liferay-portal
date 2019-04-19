@@ -4107,12 +4107,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 												<arg value="${app.server.start.executable.arg.line}" />
 											</exec>
 										</then>
-										<elseif>
+										<else>
 											<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
 												<arg line="${app.server.start.executable.arg.line}" />
 												<env key="JAVA_HOME" path="${java.jdk.home}" />
 											</exec>
-										</elseif>
+										</else>
 									</if>
 								</daemons>
 							</parallel>

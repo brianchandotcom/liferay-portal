@@ -15,12 +15,20 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Hugo Huijser
  */
 public class JavaIllegalImportsCheck extends BaseFileCheck {
+
+	public void setEnforceJavaUtilFunctionImports(
+		String enforceJavaUtilFunctionImports) {
+
+		_enforceJavaUtilFunctionImports = GetterUtil.getBoolean(
+			enforceJavaUtilFunctionImports);
+	}
 
 	@Override
 	protected String doProcess(
@@ -31,16 +39,25 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 			new String[] {
 				"com.liferay.portal.PortalException",
 				"com.liferay.portal.SystemException",
-				"com.liferay.portal.kernel.util.Function",
-				"com.liferay.portal.kernel.util.Supplier",
 				"com.liferay.util.LocalizationUtil"
 			},
 			new String[] {
 				"com.liferay.portal.kernel.exception.PortalException",
 				"com.liferay.portal.kernel.exception.SystemException",
-				"java.util.function.Function", "java.util.function.Supplier",
 				"com.liferay.portal.kernel.util.LocalizationUtil"
 			});
+
+		if (_enforceJavaUtilFunctionImports) {
+			content = StringUtil.replace(
+				content,
+				new String[] {
+					"com.liferay.portal.kernel.util.Function",
+					"com.liferay.portal.kernel.util.Supplier"
+				},
+				new String[] {
+					"java.util.function.Function", "java.util.function.Supplier"
+				});
+		}
 
 		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
 			!isExcludedPath(_PROXY_EXCLUDES, absolutePath) &&
@@ -190,5 +207,7 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 
 	private static final String _SECURE_RANDOM_EXCLUDES =
 		"secure.random.excludes";
+
+	private boolean _enforceJavaUtilFunctionImports;
 
 }

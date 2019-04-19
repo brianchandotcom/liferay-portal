@@ -161,6 +161,7 @@
 		<check name="JavaHibernateSQLCheck" />
 		<check name="JavaIllegalImportsCheck">
 			<property name="enabled" value="false" />
+			<property name="enforceJavaUtilFunctionImports" value="false" />
 		</check>
 		<check name="JavaImportsCheck" />
 		<check name="JavaIndexableCheck" />

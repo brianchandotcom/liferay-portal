@@ -600,7 +600,7 @@
 </tr>
 <tr>
 	<td>TRANSFORM</td>
-	<td>//div[a/*[name()='svg'][@data-icon='transform']]</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-transform')]]</td>
 	<td></td>
 </tr>
 <tr>

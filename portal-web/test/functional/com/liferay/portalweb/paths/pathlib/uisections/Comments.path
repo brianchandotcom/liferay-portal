@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ENTRY_COUNT_PANEL</td>
-	<td>//h2[contains(.,'Comment')]</td>
+	<td>//div[contains(@class,'autofit-row')]/span[contains(.,'Comment')]</td>
 	<td></td>
 </tr>
 <tr>

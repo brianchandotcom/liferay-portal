@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>USER_NAVIGATION_BAR_BADGE_COUNT</td>
-	<td>//div[contains(@class,'user-personal-bar')]//span[@class='user-avatar-link']//span[contains(@class,'panel-notifications-count')]</td>
+	<td>//div[contains(@class,'user-personal-bar')]//span[contains(@class,'badge-item')]</td>
 	<td></td>
 </tr>
 <tr>

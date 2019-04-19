@@ -16,26 +16,16 @@ package com.liferay.portal.configuration.extender.internal.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.extender.internal.ConfigurationDescription;
-import com.liferay.portal.configuration.extender.internal.ConfigurationDescriptionFactory;
 import com.liferay.portal.configuration.extender.internal.ConfiguratorExtension;
-import com.liferay.portal.configuration.extender.internal.FactoryConfigurationDescription;
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContent;
-import com.liferay.portal.configuration.extender.internal.SingleConfigurationDescription;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.nio.charset.Charset;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.function.Supplier;
 
 import org.apache.felix.utils.log.Logger;
 
@@ -83,7 +73,7 @@ public class ConfiguratorExtensionTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		for (ConfiguratorExtension configurationExtension :
 				_configurationExtensions) {
 
@@ -97,31 +87,15 @@ public class ConfiguratorExtensionTest {
 	public void testExceptionInSupplierDoesNotStopExtension() throws Exception {
 		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
 			_configurationAdmin, new Logger(_bundleContext), "aBundle",
-			Arrays.<NamedConfigurationContent>asList(
-				new StringSingleNamedConfigurationContent(
-					"test.pid", "key=value")),
 			Arrays.asList(
-				new ConfigurationDescriptionFactory() {
-
-					@Override
-					public ConfigurationDescription create(
-						NamedConfigurationContent namedConfigurationContent) {
-
-						return new SingleConfigurationDescription(
-							"exception",
-							new Supplier<Dictionary<String, Object>>() {
-
-								@Override
-								public Dictionary<String, Object> get() {
-									throw new RuntimeException(
-										"This should be handled");
-								}
-
-							});
-					}
-
-				},
-				new StringConfigurationDescriptionFactory()));
+				new NamedConfigurationContent(
+					null, "test.pid",
+					() -> {
+						throw new RuntimeException("This should be handled");
+					}),
+				new NamedConfigurationContent(
+					null, "test.pid",
+					() -> new TestProperties<>("key", "value"))));
 
 		configuratorExtension.start();
 
@@ -138,8 +112,9 @@ public class ConfiguratorExtensionTest {
 	public void testFactoryConfiguration() throws Exception {
 		_startExtension(
 			"aBundle",
-			new StringFactoryNamedConfigurationContent(
-				"test.factory.pid", "default", "key=value"));
+			new NamedConfigurationContent(
+				"test.factory.pid", "default",
+				() -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -154,17 +129,13 @@ public class ConfiguratorExtensionTest {
 			_configurationAdmin.createFactoryConfiguration(
 				"test.factory.pid", StringPool.QUESTION);
 
-		configuration.update(
-			new Hashtable<String, Object>() {
-				{
-					put("key", "value");
-				}
-			});
+		configuration.update(new TestProperties<>("key", "value"));
 
 		_startExtension(
 			"aBundle",
-			new StringFactoryNamedConfigurationContent(
-				"test.factory.pid", "default", "key=value2"));
+			new NamedConfigurationContent(
+				"test.factory.pid", "default",
+				() -> new TestProperties<>("key", "value2")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -185,10 +156,12 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringFactoryNamedConfigurationContent(
-				"test.factory.pid", "default", "key=value"),
-			new StringFactoryNamedConfigurationContent(
-				"test.factory.pid", "default2", "key=value"));
+			new NamedConfigurationContent(
+				"test.factory.pid", "default",
+				() -> new TestProperties<>("key", "value")),
+			new NamedConfigurationContent(
+				"test.factory.pid", "default2",
+				() -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -203,10 +176,12 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringFactoryNamedConfigurationContent(
-				"test.factory.pid", "default", "key=value"),
-			new StringFactoryNamedConfigurationContent(
-				"test.factory.pid", "default", "key=value2"));
+			new NamedConfigurationContent(
+				"test.factory.pid", "default",
+				() -> new TestProperties<>("key", "value")),
+			new NamedConfigurationContent(
+				"test.factory.pid", "default",
+				() -> new TestProperties<>("key", "value2")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -226,13 +201,15 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringFactoryNamedConfigurationContent(
-				"test.factory.pid", "default", "key=value"));
+			new NamedConfigurationContent(
+				"test.factory.pid", "default",
+				() -> new TestProperties<>("key", "value")));
 
 		_startExtension(
 			"otherBundle",
-			new StringFactoryNamedConfigurationContent(
-				"test.factory.pid", "default", "key=value"));
+			new NamedConfigurationContent(
+				"test.factory.pid", "default",
+				() -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -245,7 +222,8 @@ public class ConfiguratorExtensionTest {
 	public void testSingleConfiguration() throws Exception {
 		_startExtension(
 			"aBundle",
-			new StringSingleNamedConfigurationContent("test.pid", "key=value"));
+			new NamedConfigurationContent(
+				null, "test.pid", () -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -261,17 +239,12 @@ public class ConfiguratorExtensionTest {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			"test.pid", StringPool.QUESTION);
 
-		configuration.update(
-			new Hashtable<String, Object>() {
-				{
-					put("key", "value");
-				}
-			});
+		configuration.update(new TestProperties<>("key", "value"));
 
 		_startExtension(
 			"aBundle",
-			new StringSingleNamedConfigurationContent(
-				"test.pid", "key=value2"));
+			new NamedConfigurationContent(
+				null, "test.pid", () -> new TestProperties<>("key", "value2")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -291,9 +264,10 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringSingleNamedConfigurationContent("test.pid", "key=value"),
-			new StringSingleNamedConfigurationContent(
-				"test.pid", "key=value2"));
+			new NamedConfigurationContent(
+				null, "test.pid", () -> new TestProperties<>("key", "value")),
+			new NamedConfigurationContent(
+				null, "test.pid", () -> new TestProperties<>("key", "value2")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -313,12 +287,13 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringSingleNamedConfigurationContent("test.pid", "key=value"));
+			new NamedConfigurationContent(
+				null, "test.pid", () -> new TestProperties<>("key", "value")));
 
 		_startExtension(
 			"otherBundle",
-			new StringSingleNamedConfigurationContent(
-				"test.pid", "key=value2"));
+			new NamedConfigurationContent(
+				null, "test.pid", () -> new TestProperties<>("key", "value2")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -336,9 +311,10 @@ public class ConfiguratorExtensionTest {
 	public void testSingleConfigurationWithMultipleContents() throws Exception {
 		_startExtension(
 			"aBundle",
-			new StringSingleNamedConfigurationContent("test.pid", "key=value"),
-			new StringSingleNamedConfigurationContent(
-				"test.pid2", "key=value"));
+			new NamedConfigurationContent(
+				null, "test.pid", () -> new TestProperties<>("key", "value")),
+			new NamedConfigurationContent(
+				null, "test.pid2", () -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -354,9 +330,7 @@ public class ConfiguratorExtensionTest {
 
 		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
 			_configurationAdmin, new Logger(_bundleContext), namespace,
-			Arrays.asList(namedConfigurationContents),
-			Arrays.<ConfigurationDescriptionFactory>asList(
-				new StringConfigurationDescriptionFactory()));
+			Arrays.asList(namedConfigurationContents));
 
 		configuratorExtension.start();
 
@@ -371,118 +345,11 @@ public class ConfiguratorExtensionTest {
 		new ArrayList<>();
 	private ServiceReference<ConfigurationAdmin> _serviceReference;
 
-	private static class StringConfigurationDescriptionFactory
-		implements ConfigurationDescriptionFactory {
+	private static class TestProperties<K, V> extends Hashtable<K, V> {
 
-		@Override
-		public ConfigurationDescription create(
-			NamedConfigurationContent namedConfigurationContent) {
-
-			if (namedConfigurationContent instanceof
-					StringSingleNamedConfigurationContent) {
-
-				final StringSingleNamedConfigurationContent ssncc =
-					(StringSingleNamedConfigurationContent)
-						namedConfigurationContent;
-
-				return new SingleConfigurationDescription(
-					ssncc._pid,
-					new Supplier<Dictionary<String, Object>>() {
-
-						@Override
-						public Dictionary<String, Object> get() {
-							try {
-								Dictionary<?, ?> properties =
-									PropertiesUtil.load(
-										ssncc.getInputStream(), "UTF-8");
-
-								return (Dictionary<String, Object>)properties;
-							}
-							catch (IOException ioe) {
-								throw new RuntimeException(ioe);
-							}
-						}
-
-					});
-			}
-
-			final StringFactoryNamedConfigurationContent sfncc =
-				(StringFactoryNamedConfigurationContent)
-					namedConfigurationContent;
-
-			return new ConfigurationDescription(
-				sfncc._factoryPid, sfncc._pid,
-				new Supplier<Dictionary<String, Object>>() {
-
-					@Override
-					public Dictionary<String, Object> get() {
-						try {
-							Dictionary<?, ?> properties = PropertiesUtil.load(
-								sfncc.getInputStream(), "UTF-8");
-
-							return (Dictionary<String, Object>)properties;
-						}
-						catch (IOException ioe) {
-							throw new RuntimeException(ioe);
-						}
-					}
-
-				});
+		private TestProperties(K key, V value) {
+			put(key, value);
 		}
-
-	}
-
-	private static class StringFactoryNamedConfigurationContent
-		implements NamedConfigurationContent {
-
-		public StringFactoryNamedConfigurationContent(
-			String factoryPid, String pid, String content) {
-
-			_factoryPid = factoryPid;
-			_pid = pid;
-			_content = content;
-		}
-
-		@Override
-		public InputStream getInputStream() {
-			return new ByteArrayInputStream(
-				_content.getBytes(Charset.forName("UTF-8")));
-		}
-
-		@Override
-		public String getName() {
-			return _pid;
-		}
-
-		private final String _content;
-		private final String _factoryPid;
-		private final String _pid;
-
-	}
-
-	private static class StringSingleNamedConfigurationContent
-		implements NamedConfigurationContent {
-
-		public StringSingleNamedConfigurationContent(
-			String pid, String content) {
-
-			_pid = pid;
-			_content = content;
-		}
-
-		@Override
-		public InputStream getInputStream() {
-			return new ByteArrayInputStream(
-				_content.getBytes(Charset.forName("UTF-8")));
-		}
-
-		@Override
-		public String getName() {
-			return _pid;
-		}
-
-		private final String _content;
-		private final String _pid;
 
 	}
 

@@ -148,6 +148,8 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
+		long userId = TestPropsValues.getUserId();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
@@ -155,11 +157,11 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					group.getGroupId(), "Test Collection", StringPool.BLANK,
-					serviceContext);
+					userId, group.getGroupId(), "Test Collection",
+					StringPool.BLANK, serviceContext);
 
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			group.getGroupId(),
+			userId, group.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			"Test Entry", LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);

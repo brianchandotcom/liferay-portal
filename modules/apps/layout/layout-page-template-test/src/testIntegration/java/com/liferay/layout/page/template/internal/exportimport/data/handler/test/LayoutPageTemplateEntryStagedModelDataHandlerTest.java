@@ -23,7 +23,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -158,16 +157,18 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 					group.getGroupId(), "Test Collection", StringPool.BLANK,
 					serviceContext);
 
-		return LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
-			group.getGroupId(),
-			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			"Test Entry", LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+		return LayoutPageTemplateEntryLocalServiceUtil.
+			addLayoutPageTemplateEntry(
+				group.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				"Test Entry", LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
-		return LayoutPageTemplateEntryServiceUtil.
+		return LayoutPageTemplateEntryLocalServiceUtil.
 			fetchLayoutPageTemplateEntryByUuidAndGroupId(
 				uuid, group.getGroupId());
 	}

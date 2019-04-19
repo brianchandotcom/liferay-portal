@@ -76,8 +76,7 @@ public class UpgradePortletDisplayTemplatePreferencesTest {
 			"DISPLAY_STYLE_PREFIX_6_2");
 
 		setPortletDisplayStyle(
-			"portlet1",
-			String.valueOf(field.get(null)) + ddmTemplate.getUuid());
+			"portlet1", field.get(null) + ddmTemplate.getUuid());
 
 		setPortletDisplayStyle("portlet2", "testDisplayStyle");
 

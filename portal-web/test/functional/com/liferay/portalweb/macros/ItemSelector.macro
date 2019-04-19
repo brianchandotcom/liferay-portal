@@ -235,8 +235,6 @@ definition {
 			key_tab = "Version"
 		);
 
-		Navigator.gotoNavTab(navTab = "File Info");
-
 		AssertTextEquals(
 			locator1 = "ItemSelector#SIDEBAR_FILE_INFO_FORMAT",
 			value1 = "${imageFormat}"

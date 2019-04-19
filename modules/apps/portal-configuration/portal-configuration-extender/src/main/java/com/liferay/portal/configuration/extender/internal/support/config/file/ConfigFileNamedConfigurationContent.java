@@ -17,7 +17,6 @@ package com.liferay.portal.configuration.extender.internal.support.config.file;
 import com.liferay.portal.configuration.extender.internal.ConfigurationDescription;
 import com.liferay.portal.configuration.extender.internal.FactoryConfigurationDescription;
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContent;
-import com.liferay.portal.configuration.extender.internal.SingleConfigurationDescription;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,8 +57,8 @@ public final class ConfigFileNamedConfigurationContent
 
 		pid = name;
 
-		return new SingleConfigurationDescription(
-			pid, new PropertiesSupplier(_inputStream));
+		return new FactoryConfigurationDescription(
+			null, pid, new PropertiesSupplier(_inputStream));
 	}
 
 	@Override

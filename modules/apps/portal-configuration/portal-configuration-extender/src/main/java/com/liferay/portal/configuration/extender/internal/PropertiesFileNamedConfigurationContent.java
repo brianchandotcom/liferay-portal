@@ -53,8 +53,8 @@ public final class PropertiesFileNamedConfigurationContent
 
 		pid = name;
 
-		return new SingleConfigurationDescription(
-			pid, new PropertiesSupplier(_inputStream));
+		return new FactoryConfigurationDescription(
+			null, pid, new PropertiesSupplier(_inputStream));
 	}
 
 	@Override

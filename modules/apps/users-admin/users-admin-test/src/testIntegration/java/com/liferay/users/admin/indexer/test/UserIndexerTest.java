@@ -272,6 +272,19 @@ public class UserIndexerTest {
 	}
 
 	@Test
+	public void testNoDefaultUser() throws Exception {
+		_expectedUser = UserTestUtil.addUser();
+
+		_expectedUser.setDefaultUser(true);
+
+		_userLocalService.updateUser(_expectedUser);
+
+		List<User> users = getUsers(search((String)null));
+
+		Assert.assertFalse(users.contains(_expectedUser));
+	}
+
+	@Test
 	public void testScreenName() throws Exception {
 		_expectedUser = UserTestUtil.addUser(
 			"Open4Life", new long[] {TestPropsValues.getGroupId()});

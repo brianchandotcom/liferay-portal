@@ -77,11 +77,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]/td//a[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORY_TABLE_CATEGORY_GENERIC</td>
 	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]/td[1]//a</td>
 	<td></td>
@@ -123,18 +118,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_LIST_SUBCATEGORY</td>
-	<td>//*[@data-qa-id='rowItemContent']/h4/a[contains(.,'${key_subCategoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORY_LIST_CATEGORY_DESCRIPTION</td>
 	<td>//*[@data-qa-id='rowItemContent']/h4/a[contains(.,'${key_categoryName}')]/../..//h5[contains(.,'${key_categoryDescription}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORY_LIST_SUBCATEGORY_DESCRIPTION</td>
-	<td>//*[@data-qa-id='rowItemContent']/h4/a[contains(.,'${key_subCategoryName}')]/../..//h5[contains(.,'${key_subCategoryDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -166,22 +151,6 @@
 <tr>
 	<td>QUESTION_CATEGORY_THREAD_TABLE_QUESTION</td>
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[2]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SUBCATEGORY_TABLE-->
-<tr>
-	<td>SUBCATEGORY_TABLE_PANEL</td>
-	<td>//div[@id='messageBoardsCategoriesPanel']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBCATEGORY_TABLE_CATEGORY_GENERIC</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]/td//a/span[@class='category-title']</td>
 	<td></td>
 </tr>
 <tr>

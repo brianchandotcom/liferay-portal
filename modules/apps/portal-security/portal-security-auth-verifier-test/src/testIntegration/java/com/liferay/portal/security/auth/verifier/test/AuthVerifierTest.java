@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 @BndFile("test-bnd.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class GuestAllowedAuthVerifierTest {
+public class AuthVerifierTest {
 
 	@Test
 	public void testAllowGuest() throws Exception {
@@ -67,6 +67,45 @@ public class GuestAllowedAuthVerifierTest {
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals("guest-allowed", StringUtil.read(inputStream));
+		}
+	}
+
+	@Test
+	public void testRemoteAccess() throws Exception {
+		URL url = new URL(
+			"http://localhost:8080/o/auth-verifier-filter-tracker-remote-" +
+				"access-test/remoteAccess");
+
+		try (InputStream inputStream = url.openStream()) {
+			Assert.assertEquals("true", StringUtil.read(inputStream));
+		}
+	}
+
+	@Test
+	public void testRemoteUser() throws Exception {
+		URL url = new URL(
+			"http://localhost:8080/o/auth-verifier-filter-tracker-enabled-" +
+				"test/remoteUser");
+
+		try (InputStream inputStream = url.openStream()) {
+			Assert.assertEquals(
+				"remote-user-set", StringUtil.read(inputStream));
+		}
+
+		url = new URL(
+			"http://localhost:8080/o/auth-verifier-filter-tracker-disabled-" +
+				"test/remoteUser");
+
+		try (InputStream inputStream = url.openStream()) {
+			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));
+		}
+
+		url = new URL(
+			"http://localhost:8080/o/auth-verifier-filter-tracker-default-" +
+				"test/remoteUser");
+
+		try (InputStream inputStream = url.openStream()) {
+			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));
 		}
 	}
 

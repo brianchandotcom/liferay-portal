@@ -34,22 +34,22 @@ public class NamedConfigurationContent {
 	}
 
 	public ConfigurationDescription getConfigurationDescription() {
-		String pid = null;
-
 		String name = getName();
+
+		String factoryPid = null;
+		String pid = null;
 
 		int index = name.lastIndexOf('-');
 
 		if (index > 0) {
-			String factoryPid = name.substring(0, index);
+			factoryPid = name.substring(0, index);
 			pid = name.substring(index + 1);
-
-			return new ConfigurationDescription(factoryPid, pid);
+		}
+		else {
+			pid = name;
 		}
 
-		pid = name;
-
-		return new ConfigurationDescription(null, pid);
+		return new ConfigurationDescription(factoryPid, pid);
 	}
 
 	public String getName() {

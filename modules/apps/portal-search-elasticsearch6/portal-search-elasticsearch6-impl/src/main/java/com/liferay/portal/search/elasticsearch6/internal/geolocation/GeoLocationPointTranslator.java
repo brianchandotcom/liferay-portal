@@ -29,7 +29,7 @@ public class GeoLocationPointTranslator {
 		}
 
 		if (geoLocationPoint.getGeoHash() != null) {
-			return GeoPoint.fromGeohash(geoLocationPoint.getGeoHash());
+			return new GeoPoint(geoLocationPoint.getGeoHash());
 		}
 
 		return new GeoPoint(

@@ -67,7 +67,6 @@ definition {
 		Click(locator1 = "Icon#EDIT_TAGS");
 
 		DMDocument.editTags(
-			dmDocumentTitle = "Document_1.jpeg",
 			tagName = "newtag"
 		);
 
@@ -159,7 +158,6 @@ definition {
 		Click(locator1 = "Icon#EDIT_TAGS");
 
 		DMDocument.editTags(
-			dmDocumentTitle = "Document_1.doc",
 			tagName = "one"
 		);
 
@@ -172,7 +170,6 @@ definition {
 		Click(locator1 = "Icon#EDIT_TAGS");
 
 		DMDocument.editTags(
-			dmDocumentTitle = "Document_3.xls",
 			tagName = "two"
 		);
 

@@ -63,6 +63,6 @@ public class PoshiStylingCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _multiLineStringPattern = Pattern.compile(
-		"[ \t]*.+ = '''.*?'''", Pattern.DOTALL);
+		"'''.*?'''", Pattern.DOTALL);
 
 }

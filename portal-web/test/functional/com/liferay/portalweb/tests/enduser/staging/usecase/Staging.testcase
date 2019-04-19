@@ -128,7 +128,10 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Site Name", uncheckContent = "Widget Templates");
 
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

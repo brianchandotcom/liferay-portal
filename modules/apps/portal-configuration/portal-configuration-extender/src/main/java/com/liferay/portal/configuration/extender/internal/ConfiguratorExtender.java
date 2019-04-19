@@ -141,20 +141,20 @@ public class ConfiguratorExtender extends AbstractExtender {
 					lastIndexOfSlash = 0;
 				}
 
-				name = name.substring(
-					lastIndexOfSlash, name.length() + 1 - filePattern.length());
-
 				String factoryPid = null;
 				String pid = null;
 
 				int index = name.lastIndexOf('-');
 
-				if (index > 0) {
-					factoryPid = name.substring(0, index);
-					pid = name.substring(index + 1);
+				if (index > lastIndexOfSlash) {
+					factoryPid = name.substring(lastIndexOfSlash, index);
+					pid = name.substring(
+						index + 1, name.length() + 1 - filePattern.length());
 				}
 				else {
-					pid = name;
+					pid = name.substring(
+						lastIndexOfSlash,
+						name.length() + 1 - filePattern.length());
 				}
 
 				namedConfigurationContents.add(

@@ -99,6 +99,11 @@ definition {
 			navTab = "URL"
 		);
 
+		WebContent.selectTemplateCP(
+			structureName = "Basic Web Content",
+			templateName = "Basic Web Content"
+		);
+
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Title");

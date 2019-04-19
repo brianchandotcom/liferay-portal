@@ -17,16 +17,20 @@ package com.liferay.portal.test.rule;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Jar;
 
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.rule.ClassTestRule;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 
 import java.io.File;
 import java.io.InputStream;
 
+import java.lang.reflect.Method;
+
 import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.util.Properties;
 
@@ -58,17 +62,43 @@ public class SyntheticBundleClassTestRule extends ClassTestRule<Long> {
 	public Long beforeClass(Description description) throws Exception {
 		Class<?> testClass = description.getTestClass();
 
-		InputStream inputStream = createBundle(testClass);
+		byte[] data = _createBundleData(testClass, _bundlePackageName);
 
 		Long bundleId = ModuleFrameworkUtilAdapter.addBundle(
-			testClass.getName(), inputStream);
+			testClass.getName(), new UnsyncByteArrayInputStream(data));
 
 		ModuleFrameworkUtilAdapter.startBundle(bundleId);
 
 		return bundleId;
 	}
 
-	protected InputStream createBundle(Class<?> clazz) throws Exception {
+	private static byte[] _createBundleData(
+			Class<?> clazz, String bundlePackageName)
+		throws Exception {
+
+		File bndFile = new File("lib/development/biz.aQute.bnd.jar");
+
+		ClassLoader classLoader = new URLClassLoader(
+			ClassPathUtil.getClassPathURLs(
+				ClassPathUtil.getJVMClassPath(false) + File.pathSeparator +
+					bndFile.getAbsolutePath()),
+			null);
+
+		Class<?> reloadedClass = classLoader.loadClass(
+			SyntheticBundleClassTestRule.class.getName());
+
+		Method method = reloadedClass.getDeclaredMethod(
+			"_doCreateBundleData", Class.class, String.class);
+
+		method.setAccessible(true);
+
+		return (byte[])method.invoke(null, clazz, bundlePackageName);
+	}
+
+	private static byte[] _doCreateBundleData(
+			Class<?> clazz, String bundlePackageName)
+		throws Exception {
+
 		URL url = clazz.getResource("");
 
 		String protocol = url.getProtocol();
@@ -92,13 +122,13 @@ public class SyntheticBundleClassTestRule extends ClassTestRule<Long> {
 
 		try (Builder builder = new Builder();
 			InputStream inputStream = clazz.getResourceAsStream(
-				_bundlePackageName.replace('.', '/') + "/bnd.bnd")) {
+				bundlePackageName.replace('.', '/') + "/bnd.bnd")) {
 
 			builder.setBundleSymbolicName(clazz.getName());
 			builder.setBase(baseDir);
 			builder.setClasspath(new File[] {baseDir});
 			builder.setProperty(
-				"bundle.package", packageName + "." + _bundlePackageName);
+				"bundle.package", packageName + "." + bundlePackageName);
 
 			Properties properties = builder.getProperties();
 
@@ -110,8 +140,7 @@ public class SyntheticBundleClassTestRule extends ClassTestRule<Long> {
 
 				jar.write(outputStream);
 
-				return new UnsyncByteArrayInputStream(
-					outputStream.unsafeGetByteArray(), 0, outputStream.size());
+				return outputStream.toByteArray();
 			}
 		}
 	}

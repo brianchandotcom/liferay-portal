@@ -63,6 +63,7 @@
 		<suppress checks="SubnameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />
 		<suppress checks="SubnameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/PackagingUtil\.java" />
 		<suppress checks="SubnameCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/ListUtilTest\.java" />
+		<suppress checks="UnusedMethodCheck" files="portal-test-integration/src/com/liferay/portal/test/rule/SyntheticBundleClassTestRule\.java" />
 		<suppress checks="ValidatorIsNullCheck" files="portal-impl/src/com/liferay/portal/service/persistence/impl/UserFinderImpl\.java" />
 		<suppress checks="VariableDeclarationAsUsedCheck" files="portal-impl/src/com/liferay/portal/action/UpdateLayoutAction\.java" />
 

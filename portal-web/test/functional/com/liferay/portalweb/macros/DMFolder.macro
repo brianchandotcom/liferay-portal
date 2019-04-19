@@ -522,7 +522,7 @@ definition {
 		var key_dmFolderName = "${dmFolder}";
 		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
-		Check(locator1 = "DocumentsAndMedia#ICON_FOLDER_CHECKBOX");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 

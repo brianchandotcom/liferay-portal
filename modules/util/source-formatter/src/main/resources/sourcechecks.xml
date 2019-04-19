@@ -404,6 +404,9 @@
 		<check name="PoshiAnnotationsOrderCheck">
 			<property name="enabled" value="false" />
 		</check>
+		<check name="PoshiCommandsOrderCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="PoshiIndentationCheck" />
 		<check name="PoshiParametersOrderCheck">
 			<property name="enabled" value="false" />

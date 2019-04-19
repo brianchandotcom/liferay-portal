@@ -16,21 +16,14 @@ package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.petra.string.StringBundler;
 
-import java.util.Dictionary;
-import java.util.function.Supplier;
-
 /**
  * @author Carlos Sierra Andrés
  */
 public class ConfigurationDescription {
 
-	public ConfigurationDescription(
-		String factoryPid, String pid,
-		Supplier<Dictionary<String, Object>> propertiesSupplier) {
-
+	public ConfigurationDescription(String factoryPid, String pid) {
 		_factoryPid = factoryPid;
 		_pid = pid;
-		_propertiesSupplier = propertiesSupplier;
 	}
 
 	public String getFactoryPid() {
@@ -41,20 +34,14 @@ public class ConfigurationDescription {
 		return _pid;
 	}
 
-	public Dictionary<String, Object> getProperties() {
-		return _propertiesSupplier.get();
-	}
-
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("{factoryPid=");
 		sb.append(_factoryPid);
 		sb.append(", pid=");
 		sb.append(_pid);
-		sb.append(", propertiesSupplier=");
-		sb.append(_propertiesSupplier);
 		sb.append("}");
 
 		return sb.toString();
@@ -62,6 +49,5 @@ public class ConfigurationDescription {
 
 	private final String _factoryPid;
 	private final String _pid;
-	private final Supplier<Dictionary<String, Object>> _propertiesSupplier;
 
 }

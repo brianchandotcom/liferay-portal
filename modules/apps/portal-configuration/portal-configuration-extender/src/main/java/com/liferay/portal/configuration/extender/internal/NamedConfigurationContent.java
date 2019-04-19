@@ -14,7 +14,10 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
+import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.Dictionary;
 
 /**
  * @author Carlos Sierra Andrés
@@ -26,5 +29,7 @@ public interface NamedConfigurationContent {
 	public InputStream getInputStream();
 
 	public String getName();
+
+	public Dictionary<String, Object> getProperties() throws IOException;
 
 }

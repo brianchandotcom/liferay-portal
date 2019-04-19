@@ -104,7 +104,7 @@ public class ConfiguratorExtension implements Extension {
 		Dictionary<String, Object> properties = null;
 
 		try {
-			properties = configurationDescription.getProperties();
+			properties = namedConfigurationContent.getProperties();
 		}
 		catch (Throwable t) {
 			_logger.log(

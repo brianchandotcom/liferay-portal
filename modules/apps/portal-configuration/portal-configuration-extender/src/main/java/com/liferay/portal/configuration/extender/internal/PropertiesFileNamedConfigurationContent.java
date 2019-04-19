@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Dictionary;
-import java.util.function.Supplier;
 
 /**
  * @author Carlos Sierra Andrés
@@ -47,14 +46,12 @@ public final class PropertiesFileNamedConfigurationContent
 			String factoryPid = name.substring(0, index);
 			pid = name.substring(index + 1);
 
-			return new ConfigurationDescription(
-				factoryPid, pid, new PropertiesSupplier(_inputStream));
+			return new ConfigurationDescription(factoryPid, pid);
 		}
 
 		pid = name;
 
-		return new ConfigurationDescription(
-			null, pid, new PropertiesSupplier(_inputStream));
+		return new ConfigurationDescription(null, pid);
 	}
 
 	@Override
@@ -67,37 +64,16 @@ public final class PropertiesFileNamedConfigurationContent
 		return _name;
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public Dictionary<String, Object> getProperties() throws IOException {
+		Dictionary<?, ?> properties = PropertiesUtil.load(
+			_inputStream, "UTF-8");
+
+		return (Dictionary<String, Object>)properties;
+	}
+
 	private final InputStream _inputStream;
 	private final String _name;
-
-	private class PropertiesSupplier
-		implements Supplier<Dictionary<String, Object>> {
-
-		public PropertiesSupplier(InputStream inputStream) {
-			_inputStream = inputStream;
-		}
-
-		@Override
-		public Dictionary<String, Object> get() {
-			try {
-				return _loadProperties();
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
-		}
-
-		private Dictionary<String, Object> _loadProperties()
-			throws IOException {
-
-			Dictionary<?, ?> properties = PropertiesUtil.load(
-				_inputStream, "UTF-8");
-
-			return (Dictionary<String, Object>)properties;
-		}
-
-		private final InputStream _inputStream;
-
-	}
 
 }

@@ -67,14 +67,11 @@ public class ConfiguratorExtension implements Extension {
 	private void _process(NamedConfigurationContent namedConfigurationContent)
 		throws InvalidSyntaxException, IOException {
 
-		ConfigurationDescription configurationDescription =
-			namedConfigurationContent.getConfigurationDescription();
-
 		Configuration configuration = null;
 		String configuratorURL = null;
 
-		if (configurationDescription.getFactoryPid() == null) {
-			String pid = configurationDescription.getPid();
+		if (namedConfigurationContent.getFactoryPid() == null) {
+			String pid = namedConfigurationContent.getPid();
 
 			if (ArrayUtil.isNotEmpty(
 					_configurationAdmin.listConfigurations(
@@ -88,7 +85,7 @@ public class ConfiguratorExtension implements Extension {
 		}
 		else {
 			configuratorURL =
-				_bundleSymbolicName + "#" + configurationDescription.getPid();
+				_bundleSymbolicName + "#" + namedConfigurationContent.getPid();
 
 			if (ArrayUtil.isNotEmpty(
 					_configurationAdmin.listConfigurations(
@@ -98,7 +95,7 @@ public class ConfiguratorExtension implements Extension {
 			}
 
 			configuration = _configurationAdmin.createFactoryConfiguration(
-				configurationDescription.getFactoryPid(), StringPool.QUESTION);
+				namedConfigurationContent.getFactoryPid(), StringPool.QUESTION);
 		}
 
 		Dictionary<String, Object> properties = null;
@@ -110,7 +107,7 @@ public class ConfiguratorExtension implements Extension {
 			_logger.log(
 				Logger.LOG_WARNING,
 				StringBundler.concat(
-					"Supplier from description ", configurationDescription,
+					"Supplier from description ", namedConfigurationContent,
 					" threw an exception: "),
 				t);
 

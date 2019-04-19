@@ -15,6 +15,7 @@
 package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
 
 import java.io.IOException;
 
@@ -29,13 +30,6 @@ public class NamedConfigurationContent {
 		String name,
 		UnsafeSupplier<Dictionary<?, ?>, IOException> propertySupplier) {
 
-		_name = name;
-		_propertySupplier = propertySupplier;
-	}
-
-	public ConfigurationDescription getConfigurationDescription() {
-		String name = getName();
-
 		String factoryPid = null;
 		String pid = null;
 
@@ -49,11 +43,17 @@ public class NamedConfigurationContent {
 			pid = name;
 		}
 
-		return new ConfigurationDescription(factoryPid, pid);
+		_factoryPid = factoryPid;
+		_pid = pid;
+		_propertySupplier = propertySupplier;
 	}
 
-	public String getName() {
-		return _name;
+	public String getFactoryPid() {
+		return _factoryPid;
+	}
+
+	public String getPid() {
+		return _pid;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -63,7 +63,21 @@ public class NamedConfigurationContent {
 		return (Dictionary<String, Object>)properties;
 	}
 
-	private final String _name;
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{factoryPid=");
+		sb.append(_factoryPid);
+		sb.append(", pid=");
+		sb.append(_pid);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private final String _factoryPid;
+	private final String _pid;
 	private final UnsafeSupplier<Dictionary<?, ?>, IOException>
 		_propertySupplier;
 

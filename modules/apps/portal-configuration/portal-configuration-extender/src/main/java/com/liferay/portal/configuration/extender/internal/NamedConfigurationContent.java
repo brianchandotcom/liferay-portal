@@ -27,21 +27,8 @@ import java.util.Dictionary;
 public class NamedConfigurationContent {
 
 	public NamedConfigurationContent(
-		String name,
+		String factoryPid, String pid,
 		UnsafeSupplier<Dictionary<?, ?>, IOException> propertySupplier) {
-
-		String factoryPid = null;
-		String pid = null;
-
-		int index = name.lastIndexOf('-');
-
-		if (index > 0) {
-			factoryPid = name.substring(0, index);
-			pid = name.substring(index + 1);
-		}
-		else {
-			pid = name;
-		}
 
 		_factoryPid = factoryPid;
 		_pid = pid;

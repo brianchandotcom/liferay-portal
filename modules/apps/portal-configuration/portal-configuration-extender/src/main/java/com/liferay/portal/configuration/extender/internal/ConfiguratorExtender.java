@@ -144,9 +144,22 @@ public class ConfiguratorExtender extends AbstractExtender {
 				name = name.substring(
 					lastIndexOfSlash, name.length() + 1 - filePattern.length());
 
+				String factoryPid = null;
+				String pid = null;
+
+				int index = name.lastIndexOf('-');
+
+				if (index > 0) {
+					factoryPid = name.substring(0, index);
+					pid = name.substring(index + 1);
+				}
+				else {
+					pid = name;
+				}
+
 				namedConfigurationContents.add(
 					new NamedConfigurationContent(
-						name, () -> propertyFunction.apply(url)));
+						factoryPid, pid, () -> propertyFunction.apply(url)));
 			}
 		}
 		catch (Throwable t) {

@@ -38,6 +38,12 @@ public class PortalTestSuiteUpstreamControllerBuildData
 	}
 
 	public String getTestrayBuildName() {
+		String testrayProjectName = getTestrayProjectName();
+
+		if (testrayProjectName == null) {
+			return null;
+		}
+
 		return JenkinsResultsParserUtil.combine(
 			getTestrayBuildType(), " - ", String.valueOf(getBuildNumber()),
 			" - ",
@@ -47,6 +53,12 @@ public class PortalTestSuiteUpstreamControllerBuildData
 	}
 
 	public String getTestrayBuildType() {
+		String testrayProjectName = getTestrayProjectName();
+
+		if (testrayProjectName == null) {
+			return null;
+		}
+
 		return JenkinsResultsParserUtil.combine(
 			"[", getPortalUpstreamBranchName(), "] ci:test:",
 			getTestSuiteName());
@@ -59,7 +71,7 @@ public class PortalTestSuiteUpstreamControllerBuildData
 			return testrayProjectName;
 		}
 
-		throw new RuntimeException("Please set 'TESTRAY_PROJECT_NAME'");
+		return null;
 	}
 
 	public String getTestSuiteName() {

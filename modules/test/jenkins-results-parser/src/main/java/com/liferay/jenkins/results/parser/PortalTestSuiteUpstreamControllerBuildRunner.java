@@ -248,12 +248,17 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 		sb.append("&PORTAL_GITHUB_URL=");
 		sb.append(buildData.getPortalGitHubURL());
-		sb.append("&TESTRAY_BUILD_NAME=");
-		sb.append(buildData.getTestrayBuildName());
-		sb.append("&TESTRAY_BUILD_TYPE=");
-		sb.append(buildData.getTestrayBuildType());
-		sb.append("&TESTRAY_PROJECT_NAME=");
-		sb.append(buildData.getTestrayProjectName());
+
+		String testrayProjectName = buildData.getTestrayProjectName();
+
+		if (testrayProjectName != null) {
+			sb.append("&TESTRAY_BUILD_NAME=");
+			sb.append(buildData.getTestrayBuildName());
+			sb.append("&TESTRAY_BUILD_TYPE=");
+			sb.append(buildData.getTestrayBuildType());
+			sb.append("&TESTRAY_PROJECT_NAME=");
+			sb.append(testrayProjectName);
+		}
 
 		try {
 			JenkinsResultsParserUtil.toString(sb.toString());

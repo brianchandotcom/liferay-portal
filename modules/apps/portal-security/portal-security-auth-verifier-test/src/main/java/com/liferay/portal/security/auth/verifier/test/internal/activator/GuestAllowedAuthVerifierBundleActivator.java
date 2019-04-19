@@ -42,6 +42,8 @@ public class GuestAllowedAuthVerifierBundleActivator
 		properties.put(
 			JaxrsWhiteboardConstants.JAX_RS_NAME, "guest-no-allowed");
 		properties.put("auth.verifier.guest.allowed", false);
+		properties.put(
+			"auth-verifier-guest-allowed-test-servlet-context-helper", true);
 
 		registerServletContextHelper(
 			"auth-verifier-guest-allowed-false-test", properties);
@@ -50,6 +52,8 @@ public class GuestAllowedAuthVerifierBundleActivator
 
 		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "guest-allowed");
 		properties.put("auth.verifier.guest.allowed", true);
+		properties.put(
+			"auth-verifier-guest-allowed-test-servlet-context-helper", true);
 
 		registerServletContextHelper(
 			"auth-verifier-guest-allowed-true-test", properties);
@@ -57,6 +61,8 @@ public class GuestAllowedAuthVerifierBundleActivator
 		properties = new HashMapDictionary<>();
 
 		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "guest-default");
+		properties.put(
+			"auth-verifier-guest-allowed-test-servlet-context-helper", true);
 
 		registerServletContextHelper(
 			"auth-verifier-guest-allowed-default-test", properties);
@@ -88,16 +94,6 @@ public class GuestAllowedAuthVerifierBundleActivator
 			printWriter.write("guest-allowed");
 		}
 
-	}
-
-	@Override
-	protected void registerServletContextHelper(
-		String servletContextName, Dictionary<String, Object> properties) {
-
-		properties.put(
-			"auth-verifier-guest-allowed-test-servlet-context-helper", true);
-
-		super.registerServletContextHelper(servletContextName, properties);
 	}
 
 }

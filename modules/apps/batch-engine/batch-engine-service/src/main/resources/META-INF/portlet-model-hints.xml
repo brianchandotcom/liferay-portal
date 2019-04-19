@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.batch.engine.model.BatchFileImport">
+		<field name="uuid" type="String" />
+		<field name="batchFileImportId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="fileEntryId" type="long" />
+		<field name="batchJobExecutionId" type="long" />
+		<field name="domainName" type="String" />
+		<field name="version" type="String" />
+		<field name="operation" type="String" />
+		<field name="callbackURL" type="String" />
+		<field name="columnNames" type="String" />
+		<field name="status" type="String" />
+	</model>
+	<model name="com.liferay.batch.engine.model.BatchJobExecution">
+		<field name="uuid" type="String" />
+		<field name="batchJobExecutionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="batchJobInstanceId" type="long" />
+		<field name="status" type="String" />
+		<field name="startTime" type="Date" />
+		<field name="endTime" type="Date" />
+		<field name="jobSettings" type="String" />
+		<field name="error" type="String" />
+	</model>
+	<model name="com.liferay.batch.engine.model.BatchJobInstance">
+		<field name="uuid" type="String" />
+		<field name="batchJobInstanceId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="jobName" type="String" />
+		<field name="jobKey" type="String" />
+	</model>
+</model-hints>

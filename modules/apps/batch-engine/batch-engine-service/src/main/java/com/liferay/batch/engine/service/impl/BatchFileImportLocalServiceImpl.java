@@ -20,8 +20,6 @@ import com.liferay.batch.engine.exception.NoSuchFileImportException;
 import com.liferay.batch.engine.internal.order.comparator.BatchFileImportIdComparator;
 import com.liferay.batch.engine.model.BatchFileImport;
 import com.liferay.batch.engine.service.base.BatchFileImportLocalServiceBaseImpl;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
@@ -64,25 +62,6 @@ public class BatchFileImportLocalServiceImpl
 	}
 
 	@Override
-	public BatchFileImport fetchFirstBatchFileImport(BatchStatus batchStatus) {
-		BatchFileImport batchFileImport = null;
-
-		try {
-			batchFileImport = batchFileImportPersistence.findByStatus_First(
-				batchStatus.toString(), new BatchFileImportIdComparator(true));
-
-			return batchFileImport;
-		}
-		catch (NoSuchFileImportException nsfie) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsfie.getMessage());
-			}
-		}
-
-		return null;
-	}
-
-	@Override
 	public List<BatchFileImport> getBatchFileImports(BatchStatus batchStatus) {
 		return batchFileImportPersistence.findByStatus(batchStatus.toString());
 	}
@@ -93,6 +72,15 @@ public class BatchFileImportLocalServiceImpl
 
 		return batchFileImportPersistence.findByBatchJobExecutionId(
 			batchJobExecutionId);
+	}
+
+	@Override
+	public List<BatchFileImport> getFirstBatchFileImports(
+		BatchStatus batchStatus, int size) {
+
+		return batchFileImportPersistence.findByStatus(
+			batchStatus.toString(), 0, size,
+			new BatchFileImportIdComparator(true));
 	}
 
 	private long _getCompanyId() {
@@ -110,8 +98,5 @@ public class BatchFileImportLocalServiceImpl
 		Objects.requireNonNull(version);
 		Objects.requireNonNull(batchFileImportOperation);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BatchFileImportLocalServiceImpl.class);
 
 }

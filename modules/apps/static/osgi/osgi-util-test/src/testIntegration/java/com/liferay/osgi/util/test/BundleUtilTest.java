@@ -14,8 +14,10 @@
 
 package com.liferay.osgi.util.test;
 
-import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.util.BundleUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.IOException;
 
@@ -23,21 +25,31 @@ import java.net.URL;
 
 import java.util.Properties;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@BndFile("src/testIntegration/resources/bnd.bnd")
 @RunWith(Arquillian.class)
 public class BundleUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() {
+		_bundle = FrameworkUtil.getBundle(BundleUtilTest.class);
+	}
 
 	@Test
 	public void testGetResourceInBundleOrFragments() throws IOException {
@@ -52,7 +64,7 @@ public class BundleUtilTest {
 	}
 
 	@Test
-	public void testGetResourceInBundleOrFragmentsWhenDir() throws IOException {
+	public void testGetResourceInBundleOrFragmentsWhenDir() {
 		URL url = BundleUtil.getResourceInBundleOrFragments(
 			_bundle, "/bundle-util");
 
@@ -74,9 +86,7 @@ public class BundleUtilTest {
 	}
 
 	@Test
-	public void testGetResourceInBundleOrFragmentsWhenMissing()
-		throws IOException {
-
+	public void testGetResourceInBundleOrFragmentsWhenMissing() {
 		URL url = BundleUtil.getResourceInBundleOrFragments(
 			_bundle, "/fileMissing.properties");
 
@@ -84,15 +94,12 @@ public class BundleUtilTest {
 	}
 
 	@Test
-	public void testGetResourceInBundleOrFragmentsWhenRoot()
-		throws IOException {
-
+	public void testGetResourceInBundleOrFragmentsWhenRoot() {
 		URL url = BundleUtil.getResourceInBundleOrFragments(_bundle, "/");
 
 		Assert.assertNotNull(url);
 	}
 
-	@ArquillianResource
 	private Bundle _bundle;
 
 }

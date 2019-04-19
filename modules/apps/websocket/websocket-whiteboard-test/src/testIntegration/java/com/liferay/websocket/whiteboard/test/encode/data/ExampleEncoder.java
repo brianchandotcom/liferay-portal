@@ -14,14 +14,11 @@
 
 package com.liferay.websocket.whiteboard.test.encode.data;
 
-import java.io.StringWriter;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
-import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 
 /**
  * @author Cristina González
@@ -33,21 +30,9 @@ public class ExampleEncoder implements Encoder.Text<Example> {
 	}
 
 	@Override
-	public String encode(Example example) throws EncodeException {
-		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(Example.class);
-
-			Marshaller marshaller = jaxbContext.createMarshaller();
-
-			StringWriter stringWriter = new StringWriter();
-
-			marshaller.marshal(example, stringWriter);
-
-			return stringWriter.toString();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+	public String encode(Example example) {
+		return StringBundler.concat(
+			example.getNumber(), StringPool.SPACE, example.getData());
 	}
 
 	@Override

@@ -15,7 +15,6 @@
 package com.liferay.portal.cache.multiple.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.io.Deserializer;
@@ -142,21 +141,25 @@ public class PortalCacheClusterEvent implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(13);
 
+		sb.append("{portalCacheManagerName=");
 		sb.append(_portalCacheManagerName);
-		sb.append(StringPool.COLON);
+		sb.append(", portalCacheName=");
 		sb.append(_portalCacheName);
-		sb.append(StringPool.COLON);
+		sb.append(", elementKey=");
 		sb.append(_elementKey);
-		sb.append(StringPool.COLON);
 
 		if (_elementValueBytes != null) {
-			sb.append(_elementValueBytes.toString());
-			sb.append(StringPool.COLON);
+			sb.append(", elementValueBytes.length=");
+			sb.append(_elementValueBytes.length);
 		}
 
-		sb.append(_portalCacheClusterEventType.toString());
+		sb.append(", timeToLive=");
+		sb.append(_timeToLive);
+		sb.append(", portalCacheClusterEventType=");
+		sb.append(_portalCacheClusterEventType);
+		sb.append("}");
 
 		return sb.toString();
 	}

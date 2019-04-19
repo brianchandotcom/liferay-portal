@@ -731,8 +731,8 @@ definition {
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		Category.deletePartialCategoryCP(
-			categoryName = "Category Name",
+		Category.deleteCategoryNoPermissionCP(
+			rowEntry = "Category Name",
 			vocabularyName = "Vocabulary Name"
 		);
 

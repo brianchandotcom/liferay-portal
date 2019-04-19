@@ -647,7 +647,7 @@ definition {
 			value1 = "${dmDocumentTitle}"
 		);
 
-		AssertClick(locator1 = "Button#DOWNLOAD", value1 = "Download");
+		AssertClick.assertPartialTextClickAt(locator1 = "Button#DOWNLOAD", value1 = "Download");
 	}
 
 	macro editCmd {

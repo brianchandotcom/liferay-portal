@@ -246,6 +246,20 @@ AUI.add(
 							uri = Liferay.Util.addParams(A.guid() + '=' + Date.now(), uri);
 						}
 
+						var iframeURL = new A.Url(uri);
+
+						var namespace = iframeURL.getParameter('p_p_id');
+
+						var bodyCssClass = ['dialog-iframe-popup'];
+
+						if (config.dialogIframe && config.dialogIframe.bodyCssClass) {
+							bodyCssClass.push(config.dialogIframe.bodyCssClass);
+						}
+
+						iframeURL.addParameter('_' + namespace + '_bodyCssClass', bodyCssClass.join(' '));
+
+						uri = iframeURL.toString();
+
 						var defaultDialogIframeConfig = {
 							bodyCssClass: ''
 						};
@@ -523,6 +537,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-dialog-iframe-deprecated', 'aui-modal', 'event-resize', 'liferay-widget-zindex']
+		requires: ['aui-dialog-iframe-deprecated', 'aui-modal', 'aui-url', 'event-resize', 'liferay-widget-zindex']
 	}
 );

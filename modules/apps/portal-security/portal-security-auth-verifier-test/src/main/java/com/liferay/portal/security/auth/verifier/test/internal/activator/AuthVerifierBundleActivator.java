@@ -49,13 +49,118 @@ public class AuthVerifierBundleActivator implements BundleActivator {
 	public void start(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		doStart(bundleContext);
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			JaxrsWhiteboardConstants.JAX_RS_NAME, "guest-no-allowed");
+		properties.put("auth.verifier.guest.allowed", false);
+		properties.put(
+			"auth-verifier-guest-allowed-test-servlet-context-helper", true);
+
+		_registerServletContextHelper(
+			"auth-verifier-guest-allowed-false-test", properties);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "guest-allowed");
+		properties.put("auth.verifier.guest.allowed", true);
+		properties.put(
+			"auth-verifier-guest-allowed-test-servlet-context-helper", true);
+
+		_registerServletContextHelper(
+			"auth-verifier-guest-allowed-true-test", properties);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "guest-default");
+		properties.put(
+			"auth-verifier-guest-allowed-test-servlet-context-helper", true);
+
+		_registerServletContextHelper(
+			"auth-verifier-guest-allowed-default-test", properties);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+			"cxf-servlet");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+			"/guestAllowed");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			"(auth-verifier-guest-allowed-test-servlet-context-helper=true)");
+
+		_registerServlet(properties, GuestAllowedHttpServlet::new);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "filter-enabled");
+		properties.put("auth.verifier.guest.allowed", true);
+		properties.put(
+			"auth-verifier-tracker-test-servlet-context-helper", true);
+
+		_registerServletContextHelper(
+			"auth-verifier-filter-tracker-enabled-test", properties);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(
+			"auth-verifier-tracker-test-servlet-context-helper", true);
+
+		_registerServletContextHelper(
+			"auth-verifier-filter-tracker-disabled-test", properties);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(
+			"auth-verifier-tracker-test-servlet-context-helper", true);
+
+		_registerServletContextHelper(
+			"auth-verifier-filter-tracker-default-test", properties);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			"(auth-verifier-tracker-test-servlet-context-helper=true)");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+			"cxf-servlet");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+			"/remoteUser");
+
+		_registerServlet(properties, RemoteUserHttpServlet::new);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "filter-enabled");
+		properties.put(
+			"auth-verifier-tracker-test-servlet-context-helper", true);
+
+		_registerServletContextHelper(
+			"auth-verifier-filter-tracker-remote-access-test", properties);
+
+		properties = new HashMapDictionary<>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+			"cxf-servlet");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+			"/remoteAccess");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			"auth-verifier-filter-tracker-remote-access-test");
+
+		_registerServlet(properties, RemoteAccessHttpServlet::new);
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) {
 		for (ServiceRegistration<?> serviceRegistration :
-				serviceRegistrations) {
+				_serviceRegistrations) {
 
 			try {
 				serviceRegistration.unregister();
@@ -116,119 +221,10 @@ public class AuthVerifierBundleActivator implements BundleActivator {
 
 	}
 
-	protected void doStart(BundleContext bundleContext) {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			JaxrsWhiteboardConstants.JAX_RS_NAME, "guest-no-allowed");
-		properties.put("auth.verifier.guest.allowed", false);
-		properties.put(
-			"auth-verifier-guest-allowed-test-servlet-context-helper", true);
-
-		registerServletContextHelper(
-			"auth-verifier-guest-allowed-false-test", properties);
-
-		properties = new HashMapDictionary<>();
-
-		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "guest-allowed");
-		properties.put("auth.verifier.guest.allowed", true);
-		properties.put(
-			"auth-verifier-guest-allowed-test-servlet-context-helper", true);
-
-		registerServletContextHelper(
-			"auth-verifier-guest-allowed-true-test", properties);
-
-		properties = new HashMapDictionary<>();
-
-		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "guest-default");
-		properties.put(
-			"auth-verifier-guest-allowed-test-servlet-context-helper", true);
-
-		registerServletContextHelper(
-			"auth-verifier-guest-allowed-default-test", properties);
-
-		properties = new HashMapDictionary<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
-			"cxf-servlet");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
-			"/guestAllowed");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			"(auth-verifier-guest-allowed-test-servlet-context-helper=true)");
-
-		registerServlet(properties, GuestAllowedHttpServlet::new);
-
-		properties = new HashMapDictionary<>();
-
-		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "filter-enabled");
-		properties.put("auth.verifier.guest.allowed", true);
-		properties.put(
-			"auth-verifier-tracker-test-servlet-context-helper", true);
-
-		registerServletContextHelper(
-			"auth-verifier-filter-tracker-enabled-test", properties);
-
-		properties = new HashMapDictionary<>();
-
-		properties.put(
-			"auth-verifier-tracker-test-servlet-context-helper", true);
-
-		registerServletContextHelper(
-			"auth-verifier-filter-tracker-disabled-test", properties);
-
-		properties = new HashMapDictionary<>();
-
-		properties.put(
-			"auth-verifier-tracker-test-servlet-context-helper", true);
-
-		registerServletContextHelper(
-			"auth-verifier-filter-tracker-default-test", properties);
-
-		properties = new HashMapDictionary<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			"(auth-verifier-tracker-test-servlet-context-helper=true)");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
-			"cxf-servlet");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
-			"/remoteUser");
-
-		registerServlet(properties, RemoteUserHttpServlet::new);
-
-		properties = new HashMapDictionary<>();
-
-		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "filter-enabled");
-		properties.put(
-			"auth-verifier-tracker-test-servlet-context-helper", true);
-
-		registerServletContextHelper(
-			"auth-verifier-filter-tracker-remote-access-test", properties);
-
-		properties = new HashMapDictionary<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
-			"cxf-servlet");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
-			"/remoteAccess");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			"auth-verifier-filter-tracker-remote-access-test");
-
-		registerServlet(properties, RemoteAccessHttpServlet::new);
-	}
-
-	protected void registerServlet(
+	private void _registerServlet(
 		Dictionary<String, Object> properties, Supplier<Servlet> supplier) {
 
-		serviceRegistrations.add(
+		_serviceRegistrations.add(
 			_bundleContext.registerService(
 				Servlet.class,
 				new PrototypeServiceFactory<Servlet>() {
@@ -252,7 +248,7 @@ public class AuthVerifierBundleActivator implements BundleActivator {
 				properties));
 	}
 
-	protected void registerServletContextHelper(
+	private void _registerServletContextHelper(
 		String servletContextName, Dictionary<String, Object> properties) {
 
 		properties.put(
@@ -262,7 +258,7 @@ public class AuthVerifierBundleActivator implements BundleActivator {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
 			"/" + servletContextName);
 
-		serviceRegistrations.add(
+		_serviceRegistrations.add(
 			_bundleContext.registerService(
 				ServletContextHelper.class,
 				new ServletContextHelper(_bundleContext.getBundle()) {
@@ -270,9 +266,8 @@ public class AuthVerifierBundleActivator implements BundleActivator {
 				properties));
 	}
 
-	protected final List<ServiceRegistration<?>> serviceRegistrations =
-		new ArrayList<>();
-
 	private BundleContext _bundleContext;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

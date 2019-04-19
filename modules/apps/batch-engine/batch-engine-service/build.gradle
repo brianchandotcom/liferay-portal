@@ -1,0 +1,14 @@
+buildService {
+	apiDir = "../batch-engine-api/src/main/java"
+}
+
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.osgi", name: "org.osgi.annotation", version: "6.0.0"
+	compileOnly project(":apps:batch-engine:batch-engine-api")
+	compileOnly project(":apps:batch-engine:batch-engine-core-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
+}

@@ -18,7 +18,6 @@ import com.liferay.websocket.whiteboard.test.encode.client.EncodeWebSocketClient
 import com.liferay.websocket.whiteboard.test.encode.data.Example;
 
 import java.net.URI;
-import java.net.URL;
 
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
@@ -28,7 +27,6 @@ import javax.websocket.WebSocketContainer;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -51,15 +49,7 @@ public class EncodeWebsocketEndpointTest {
 		EncodeWebSocketClient encodeWebSocketClient = new EncodeWebSocketClient(
 			synchronousQueue);
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("ws://");
-		sb.append(_url.getHost());
-		sb.append(":");
-		sb.append(_url.getPort());
-		sb.append("/o/websocket/decoder");
-
-		URI uri = new URI(sb.toString());
+		URI uri = new URI("ws://localhost:8080/o/websocket/decoder");
 
 		webSocketContainer.connectToServer(encodeWebSocketClient, uri);
 
@@ -70,8 +60,5 @@ public class EncodeWebsocketEndpointTest {
 		Assert.assertEquals("echo", example.getData());
 		Assert.assertEquals(2, example.getNumber());
 	}
-
-	@ArquillianResource
-	private URL _url;
 
 }

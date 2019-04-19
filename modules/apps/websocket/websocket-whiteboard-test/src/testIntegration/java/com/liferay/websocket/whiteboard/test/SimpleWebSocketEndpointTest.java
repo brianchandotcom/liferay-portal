@@ -18,7 +18,6 @@ import com.liferay.websocket.whiteboard.test.simple.client.BinaryWebSocketClient
 import com.liferay.websocket.whiteboard.test.simple.client.TextWebSocketClient;
 
 import java.net.URI;
-import java.net.URL;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -31,7 +30,6 @@ import javax.websocket.WebSocketContainer;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -55,15 +53,7 @@ public class SimpleWebSocketEndpointTest {
 		BinaryWebSocketClient binaryWebSocketClient = new BinaryWebSocketClient(
 			synchronousQueue);
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("ws://");
-		sb.append(_url.getHost());
-		sb.append(":");
-		sb.append(_url.getPort());
-		sb.append("/o/websocket/test");
-
-		URI uri = new URI(sb.toString());
+		URI uri = new URI("ws://localhost:8080/o/websocket/test");
 
 		webSocketContainer.connectToServer(binaryWebSocketClient, uri);
 
@@ -86,15 +76,7 @@ public class SimpleWebSocketEndpointTest {
 		TextWebSocketClient textWebSocketClient = new TextWebSocketClient(
 			synchronousQueue);
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("ws://");
-		sb.append(_url.getHost());
-		sb.append(":");
-		sb.append(_url.getPort());
-		sb.append("/o/websocket/test");
-
-		URI uri = new URI(sb.toString());
+		URI uri = new URI("ws://localhost:8080/o/websocket/test");
 
 		webSocketContainer.connectToServer(textWebSocketClient, uri);
 
@@ -102,8 +84,5 @@ public class SimpleWebSocketEndpointTest {
 
 		Assert.assertEquals("echo", synchronousQueue.poll(1, TimeUnit.HOURS));
 	}
-
-	@ArquillianResource
-	private URL _url;
 
 }

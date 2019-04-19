@@ -15,11 +15,12 @@
 package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.extender.internal.support.config.file.ConfigFileNamedConfigurationContent;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 
-import java.io.InputStream;
+import java.io.IOException;
 
 import java.net.URL;
 
@@ -27,8 +28,8 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.function.BiFunction;
 
+import org.apache.felix.cm.file.ConfigurationHandler;
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
 
@@ -81,11 +82,12 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 		_addNamedConfigurations(
 			bundle, configurationPath, namedConfigurationContents,
-			ConfigFileNamedConfigurationContent::new, "*.config");
+			url -> ConfigurationHandler.read(url.openStream()), "*.config");
 
 		_addNamedConfigurations(
 			bundle, configurationPath, namedConfigurationContents,
-			PropertiesFileNamedConfigurationContent::new, "*.properties");
+			url -> PropertiesUtil.load(url.openStream(), "UTF-8"),
+			"*.properties");
 
 		if (namedConfigurationContents.isEmpty()) {
 			return null;
@@ -117,8 +119,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 	private void _addNamedConfigurations(
 		Bundle bundle, String configurationPath,
 		List<NamedConfigurationContent> namedConfigurationContents,
-		BiFunction<String, InputStream, NamedConfigurationContent>
-			namedConfigurationContentBiFunction,
+		UnsafeFunction<URL, Dictionary<?, ?>, IOException> propertyFunction,
 		String filePattern) {
 
 		try {
@@ -144,8 +145,8 @@ public class ConfiguratorExtender extends AbstractExtender {
 					lastIndexOfSlash, name.length() + 1 - filePattern.length());
 
 				namedConfigurationContents.add(
-					namedConfigurationContentBiFunction.apply(
-						name, url.openStream()));
+					new NamedConfigurationContent(
+						name, () -> propertyFunction.apply(url)));
 			}
 		}
 		catch (Throwable t) {

@@ -14,19 +14,23 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
+import com.liferay.petra.function.UnsafeSupplier;
+
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.Dictionary;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public abstract class NamedConfigurationContent {
+public class NamedConfigurationContent {
 
-	public NamedConfigurationContent(String name, InputStream inputStream) {
+	public NamedConfigurationContent(
+		String name,
+		UnsafeSupplier<Dictionary<?, ?>, IOException> propertySupplier) {
+
 		_name = name;
-		_inputStream = inputStream;
+		_propertySupplier = propertySupplier;
 	}
 
 	public ConfigurationDescription getConfigurationDescription() {
@@ -48,18 +52,19 @@ public abstract class NamedConfigurationContent {
 		return new ConfigurationDescription(null, pid);
 	}
 
-	public InputStream getInputStream() {
-		return _inputStream;
-	}
-
 	public String getName() {
 		return _name;
 	}
 
-	public abstract Dictionary<String, Object> getProperties()
-		throws IOException;
+	@SuppressWarnings("unchecked")
+	public Dictionary<String, Object> getProperties() throws IOException {
+		Dictionary<?, ?> properties = _propertySupplier.get();
 
-	private final InputStream _inputStream;
+		return (Dictionary<String, Object>)properties;
+	}
+
 	private final String _name;
+	private final UnsafeSupplier<Dictionary<?, ?>, IOException>
+		_propertySupplier;
 
 }

@@ -324,7 +324,7 @@ definition {
 				value1 = "Suggestion Received Email"
 			);
 
-			SelectFrame(
+			SelectFrame.selectFrameNoLoading(
 				locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RECEIVED_EMAIL_EDITOR_IFRAME"
 			);
 
@@ -346,7 +346,7 @@ definition {
 				value1 = "Suggestion in Progress Email"
 			);
 
-			SelectFrame(
+			SelectFrame.selectFrameNoLoading(
 				locator1 = "KnowledgeBaseConfiguration#SUGGESTION_IN_PROGRESS_EMAIL_EDITOR_IFRAME"
 			);
 
@@ -368,7 +368,7 @@ definition {
 				value1 = "Suggestion Resolved Email"
 			);
 
-			SelectFrame(
+			SelectFrame.selectFrameNoLoading(
 				locator1 = "KnowledgeBaseConfiguration#SUGGESTION_RESOLVED_EMAIL_EDITOR_IFRAME"
 			);
 

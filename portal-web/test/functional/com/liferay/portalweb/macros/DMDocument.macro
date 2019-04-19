@@ -850,7 +850,7 @@ definition {
 		if ("${multipleDocuments}" == "true") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Modal#BODY",
-				value1 = "These changes will be applied to ${itemNumber} items. Select append or replace current tags."
+				value1 = "You are editing the common tags for ${itemNumber} items. Select edit or replace current tags."
 			);
 
 			Click(locator1 = "Modal#BODY");
@@ -866,7 +866,7 @@ definition {
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Modal#BODY",
-				value1 = "These changes will be applied to &quot;${dmDocumentTitle}&quot;."
+				value1 = "You're editing the tags for the selected item."
 			);
 		}
 

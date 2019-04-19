@@ -226,12 +226,12 @@ definition {
 		Click(locator1 = "ItemSelector#FILE_INFO_ICON");
 
 		AssertElementPresent(
-			locator1 = "NavTab#TAB_LINK",
+			locator1 = "NavTab#NAV_TABS",
 			key_tab = "File Info"
 		);
 
 		AssertElementPresent(
-			locator1 = "NavTab#TAB_LINK",
+			locator1 = "NavTab#NAV_TABS",
 			key_tab = "Version"
 		);
 
@@ -260,7 +260,7 @@ definition {
 		var key_tab = "Version";
 
 		AssertClick(
-			locator1 = "NavTab#TAB_LINK",
+			locator1 = "NavTab#NAV_TABS",
 			value1 = "Version");
 
 		AssertTextEquals(

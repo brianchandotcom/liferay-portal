@@ -20,6 +20,14 @@
 	.personal-menu-dropdown .btn .sticker .inline-item {
 		font-size: unset;
 	}
+
+	.personal-menu-dropdown .sticker-lg .lexicon-icon {
+		margin-top: -.25rem;
+	}
+
+	.personal-menu-dropdown .sticker-sm .lexicon-icon {
+		margin-top: -.125rem;
+	}
 </style>
 
 <c:choose>

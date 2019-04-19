@@ -16,8 +16,13 @@ package com.liferay.websocket.whiteboard.test;
 
 import com.liferay.websocket.whiteboard.test.encode.client.EncodeWebSocketClient;
 import com.liferay.websocket.whiteboard.test.encode.data.Example;
+import com.liferay.websocket.whiteboard.test.simple.client.BinaryWebSocketClient;
+import com.liferay.websocket.whiteboard.test.simple.client.TextWebSocketClient;
 
 import java.net.URI;
+
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +41,51 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class EncodeWebsocketEndpointTest {
+public class WebSocketEndpointTest {
+
+	@RunAsClient
+	@Test
+	public void testSendBinaryMessageAndReceiveTheSame() throws Exception {
+		WebSocketContainer webSocketContainer =
+			ContainerProvider.getWebSocketContainer();
+
+		SynchronousQueue<ByteBuffer> synchronousQueue =
+			new SynchronousQueue<>();
+
+		BinaryWebSocketClient binaryWebSocketClient = new BinaryWebSocketClient(
+			synchronousQueue);
+
+		URI uri = new URI("ws://localhost:8080/o/websocket/test");
+
+		webSocketContainer.connectToServer(binaryWebSocketClient, uri);
+
+		binaryWebSocketClient.sendMessage(ByteBuffer.wrap("echo".getBytes()));
+
+		ByteBuffer byteBuffer = synchronousQueue.poll(1, TimeUnit.HOURS);
+
+		Assert.assertEquals(
+			"echo", new String(byteBuffer.array(), Charset.forName("UTF-8")));
+	}
+
+	@RunAsClient
+	@Test
+	public void testSendMessageAndReceiveTheSame() throws Exception {
+		WebSocketContainer webSocketContainer =
+			ContainerProvider.getWebSocketContainer();
+
+		SynchronousQueue<String> synchronousQueue = new SynchronousQueue<>();
+
+		TextWebSocketClient textWebSocketClient = new TextWebSocketClient(
+			synchronousQueue);
+
+		URI uri = new URI("ws://localhost:8080/o/websocket/test");
+
+		webSocketContainer.connectToServer(textWebSocketClient, uri);
+
+		textWebSocketClient.sendMessage("echo");
+
+		Assert.assertEquals("echo", synchronousQueue.poll(1, TimeUnit.HOURS));
+	}
 
 	@RunAsClient
 	@Test

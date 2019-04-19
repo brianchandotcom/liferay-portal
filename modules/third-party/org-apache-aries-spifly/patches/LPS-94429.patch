@@ -1,0 +1,74 @@
+diff --git a/org/apache/aries/spifly/BaseActivator.java b/org/apache/aries/spifly/BaseActivator.java
+index ae84b86..7e4a95c 100644
+--- a/org/apache/aries/spifly/BaseActivator.java
++++ b/org/apache/aries/spifly/BaseActivator.java
+@@ -130,7 +130,7 @@ public abstract class BaseActivator implements BundleActivator {
+ 
+         List<String> l = new ArrayList<String>();
+         for (Bundle bf : bundlesFragments) {
+-            String header = bf.getHeaders().get(headerName);
++            String header = bf.getHeaders("").get(headerName);
+             if (header != null) {
+                 l.add(header);
+             }
+@@ -324,3 +324,4 @@ public abstract class BaseActivator implements BundleActivator {
+     }
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/aries/spifly/ProviderBundleTrackerCustomizer.java b/org/apache/aries/spifly/ProviderBundleTrackerCustomizer.java
+index 250e878..b1f61e7 100644
+--- a/org/apache/aries/spifly/ProviderBundleTrackerCustomizer.java
++++ b/org/apache/aries/spifly/ProviderBundleTrackerCustomizer.java
+@@ -74,7 +74,7 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer
+ 
+         List<String> providedServices = null;
+         Map<String, Object> customAttributes = new HashMap<String, Object>();
+-        if (bundle.getHeaders().get(SpiFlyConstants.REQUIRE_CAPABILITY) != null) {
++        if (bundle.getHeaders("").get(SpiFlyConstants.REQUIRE_CAPABILITY) != null) {
+             try {
+                 providedServices = readServiceLoaderMediatorCapabilityMetadata(bundle, customAttributes);
+             } catch (InvalidSyntaxException e) {
+@@ -117,7 +117,7 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer
+             serviceFileURLs.addAll(Collections.list(entries));
+         }
+ 
+-        Object bcp = bundle.getHeaders().get(Constants.BUNDLE_CLASSPATH);
++        Object bcp = bundle.getHeaders("").get(Constants.BUNDLE_CLASSPATH);
+         if (bcp instanceof String) {
+             for (String entry : ((String) bcp).split(",")) {
+                 entry = entry.trim();
+@@ -166,7 +166,7 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer
+                         if (fromSPIProviderHeader)
+                             properties = new Hashtable<String, Object>();
+                         else
+-                            properties = findServiceRegistrationProperties(bundle.getHeaders(), registrationClassName, className);
++                            properties = findServiceRegistrationProperties(bundle.getHeaders(""), registrationClassName, className);
+ 
+                         if (properties != null) {
+                             properties.put(SpiFlyConstants.SERVICELOADER_MEDIATOR_PROPERTY, spiBundle.getBundleId());
+@@ -216,7 +216,7 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer
+     }
+ 
+     private String getHeaderFromBundleOrFragment(Bundle bundle, String headerName, String matchString) {
+-        String val = bundle.getHeaders().get(headerName);
++        String val = bundle.getHeaders("").get(headerName);
+         if (matches(val, matchString))
+             return val;
+ 
+@@ -226,7 +226,7 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer
+             if (wiring != null) {
+                 for (BundleWire wire : wiring.getProvidedWires("osgi.wiring.host")) {
+                     Bundle fragment = wire.getRequirement().getRevision().getBundle();
+-                    val = fragment.getHeaders().get(headerName);
++                    val = fragment.getHeaders("").get(headerName);
+                     if (matches(val, matchString)) {
+                         return val;
+                     }
+@@ -373,3 +373,4 @@ public class ProviderBundleTrackerCustomizer implements BundleTrackerCustomizer
+         activator.log(level, message, th);
+     }
+ }
++/* @generated */
+\ No newline at end of file

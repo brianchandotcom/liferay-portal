@@ -31,7 +31,7 @@ ScreenNavigationEntry selectedScreenNavigationEntry = (ScreenNavigationEntry)req
 List<ScreenNavigationCategory> screenNavigationCategories = (List<ScreenNavigationCategory>)request.getAttribute("liferay-frontend:screen-navigation:screenNavigationCategories");
 List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntry>)request.getAttribute("liferay-frontend:screen-navigation:screenNavigationEntries");
 
-LiferayPortletResponse liferayPortletResponseCopy = liferayPortletResponse;
+LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 %>
 
 <c:if test="<%= screenNavigationCategories.size() > 1 %>">
@@ -43,7 +43,7 @@ LiferayPortletResponse liferayPortletResponseCopy = liferayPortletResponse;
 					new JSPNavigationItemList(pageContext) {
 						{
 							for (ScreenNavigationCategory screenNavigationCategory : screenNavigationCategories) {
-								PortletURL screenNavigationCategoryURL = PortletURLUtil.clone(portletURL, liferayPortletResponseCopy);
+								PortletURL screenNavigationCategoryURL = PortletURLUtil.clone(portletURL, finalLiferayPortletResponse);
 
 								add(
 									navigationItem -> {

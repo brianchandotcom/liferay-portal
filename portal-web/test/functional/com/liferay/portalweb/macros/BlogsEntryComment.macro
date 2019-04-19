@@ -109,7 +109,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Comments#ENTRY_COUNT_PANEL",
-			value1 = "${commentCount} Comment"
+			value1 = "${commentCount} COMMENT"
 		);
 
 		var key_userFullName = "${userFullName}";

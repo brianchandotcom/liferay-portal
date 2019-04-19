@@ -1189,7 +1189,7 @@ definition {
 
 		AssertTextEquals(locator1 = "BlogsEntry#CONTENT", value1 = "${entryContent}");
 
-		AssertTextEquals(locator1 = "Comments#ENTRY_COUNT_PANEL", value1 = "1 Comment");
+		AssertTextEquals(locator1 = "Comments#ENTRY_COUNT_PANEL", value1 = "1 COMMENT");
 
 		AssertTextEquals(
 			locator1 = "Comments#COMMENT_BODY",

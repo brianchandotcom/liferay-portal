@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.batch.engine">
+	<author>Ivica Cardic</author>
+	<namespace>Batch</namespace>
+	<entity local-service="true" name="BatchFileImport" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="batchFileImportId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="fileEntryId" type="long" />
+		<column name="batchJobExecutionId" type="long" />
+		<column name="domainName" type="String" />
+		<column name="version" type="String" />
+		<column name="operation" type="String" />
+		<column name="callbackURL" type="String" />
+		<column name="columnNames" type="String" />
+		<column name="status" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="BatchJobExecutionId" return-type="BatchFileImport">
+			<finder-column name="batchJobExecutionId" />
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="BatchJobExecution" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="batchJobExecutionId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="batchJobInstanceId" type="long" />
+		<column name="status" type="String" />
+		<column name="startTime" type="Date" />
+		<column name="endTime" type="Date" />
+		<column name="jobSettings" type="String" />
+		<column name="error" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="batchJobInstanceId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="batchJobInstanceId" return-type="Collection">
+			<finder-column name="batchJobInstanceId" />
+		</finder>
+		<finder name="status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="BatchJobInstance" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="batchJobInstanceId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="jobName" type="String" />
+		<column name="jobKey" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="JN_JK" return-type="BatchJobInstance">
+			<finder-column name="jobName" />
+			<finder-column name="jobKey" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>JobExecutionAlreadyRunning</exception>
+		<exception>JobInstanceAlreadyComplete</exception>
+		<exception>JobRestart</exception>
+	</exceptions>
+</service-builder>

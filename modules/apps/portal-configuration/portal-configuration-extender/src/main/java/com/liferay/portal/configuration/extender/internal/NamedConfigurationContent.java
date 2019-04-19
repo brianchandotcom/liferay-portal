@@ -22,14 +22,44 @@ import java.util.Dictionary;
 /**
  * @author Carlos Sierra Andrés
  */
-public interface NamedConfigurationContent {
+public abstract class NamedConfigurationContent {
 
-	public ConfigurationDescription getConfigurationDescription();
+	public NamedConfigurationContent(String name, InputStream inputStream) {
+		_name = name;
+		_inputStream = inputStream;
+	}
 
-	public InputStream getInputStream();
+	public ConfigurationDescription getConfigurationDescription() {
+		String pid = null;
 
-	public String getName();
+		String name = getName();
 
-	public Dictionary<String, Object> getProperties() throws IOException;
+		int index = name.lastIndexOf('-');
+
+		if (index > 0) {
+			String factoryPid = name.substring(0, index);
+			pid = name.substring(index + 1);
+
+			return new ConfigurationDescription(factoryPid, pid);
+		}
+
+		pid = name;
+
+		return new ConfigurationDescription(null, pid);
+	}
+
+	public InputStream getInputStream() {
+		return _inputStream;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public abstract Dictionary<String, Object> getProperties()
+		throws IOException;
+
+	private final InputStream _inputStream;
+	private final String _name;
 
 }

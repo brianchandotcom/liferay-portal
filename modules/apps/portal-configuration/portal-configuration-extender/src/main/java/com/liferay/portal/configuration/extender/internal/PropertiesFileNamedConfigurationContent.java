@@ -25,55 +25,21 @@ import java.util.Dictionary;
  * @author Carlos Sierra Andrés
  */
 public final class PropertiesFileNamedConfigurationContent
-	implements NamedConfigurationContent {
+	extends NamedConfigurationContent {
 
 	public PropertiesFileNamedConfigurationContent(
 		String name, InputStream inputStream) {
 
-		_name = name;
-		_inputStream = inputStream;
-	}
-
-	@Override
-	public ConfigurationDescription getConfigurationDescription() {
-		String pid = null;
-
-		String name = getName();
-
-		int index = name.lastIndexOf('-');
-
-		if (index > 0) {
-			String factoryPid = name.substring(0, index);
-			pid = name.substring(index + 1);
-
-			return new ConfigurationDescription(factoryPid, pid);
-		}
-
-		pid = name;
-
-		return new ConfigurationDescription(null, pid);
-	}
-
-	@Override
-	public InputStream getInputStream() {
-		return _inputStream;
-	}
-
-	@Override
-	public String getName() {
-		return _name;
+		super(name, inputStream);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public Dictionary<String, Object> getProperties() throws IOException {
 		Dictionary<?, ?> properties = PropertiesUtil.load(
-			_inputStream, "UTF-8");
+			getInputStream(), "UTF-8");
 
 		return (Dictionary<String, Object>)properties;
 	}
-
-	private final InputStream _inputStream;
-	private final String _name;
 
 }

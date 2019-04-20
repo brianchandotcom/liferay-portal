@@ -36,6 +36,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Pavel Savinov
@@ -267,6 +268,10 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
 			siteNavigationMenuId);
+
+		if (Objects.equals(siteNavigationMenu.getName(), name)) {
+			return siteNavigationMenu;
+		}
 
 		validate(siteNavigationMenu.getGroupId(), name);
 

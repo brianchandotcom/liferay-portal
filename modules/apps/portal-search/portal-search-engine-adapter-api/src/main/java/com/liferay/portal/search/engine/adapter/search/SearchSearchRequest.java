@@ -220,7 +220,7 @@ public class SearchSearchRequest
 		_selectedFieldNames = selectedFieldNames;
 	}
 
-	public void setSize(int size) {
+	public void setSize(Integer size) {
 		_size = size;
 	}
 
@@ -236,7 +236,7 @@ public class SearchSearchRequest
 		_legacySorts = sorts;
 	}
 
-	public void setStart(int start) {
+	public void setStart(Integer start) {
 		_start = start;
 	}
 

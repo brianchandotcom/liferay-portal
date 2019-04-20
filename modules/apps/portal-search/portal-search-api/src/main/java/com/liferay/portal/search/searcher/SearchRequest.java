@@ -45,6 +45,8 @@ public interface SearchRequest {
 
 	public List<SearchRequest> getFederatedSearchRequests();
 
+	public Integer getFrom();
+
 	public List<String> getIndexes();
 
 	public List<Class<?>> getModelIndexerClasses();
@@ -63,6 +65,8 @@ public interface SearchRequest {
 	 * @return the rescore query
 	 */
 	public Query getRescoreQuery();
+
+	public Integer getSize();
 
 	public List<Sort> getSorts();
 

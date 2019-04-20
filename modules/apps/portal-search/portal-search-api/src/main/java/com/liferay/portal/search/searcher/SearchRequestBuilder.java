@@ -83,6 +83,8 @@ public interface SearchRequestBuilder {
 
 	public SearchRequestBuilder fields(String... fields);
 
+	public SearchRequestBuilder from(Integer from);
+
 	public SearchRequestBuilder getFederatedSearchRequestBuilder(
 		String federatedSearchKey);
 
@@ -117,6 +119,8 @@ public interface SearchRequestBuilder {
 	 * @return the search request builder
 	 */
 	public SearchRequestBuilder rescoreQuery(Query rescoreQuery);
+
+	public SearchRequestBuilder size(Integer size);
 
 	public SearchRequestBuilder sorts(Sort... sorts);
 

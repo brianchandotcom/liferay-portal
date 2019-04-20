@@ -45,6 +45,8 @@ public interface SearchResponseBuilder {
 	 */
 	public SearchResponse build();
 
+	public SearchResponseBuilder count(long count);
+
 	public SearchResponseBuilder federatedSearchKey(String key);
 
 	public SearchResponseBuilder hits(Hits hits);

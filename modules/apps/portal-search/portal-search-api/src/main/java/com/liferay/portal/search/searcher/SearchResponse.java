@@ -43,6 +43,8 @@ public interface SearchResponse {
 
 	public Map<String, AggregationResult> getAggregationResultsMap();
 
+	public long getCount();
+
 	public List<com.liferay.portal.kernel.search.Document> getDocuments71();
 
 	public Stream<Document> getDocumentsStream();

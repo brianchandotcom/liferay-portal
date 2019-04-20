@@ -15,10 +15,10 @@
 package com.liferay.portal.cache.multiple.internal.bootstrap;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.cache.multiple.internal.PortalCacheManagerUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
@@ -138,7 +138,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 		}
 
 		PortalCacheManager<? extends Serializable, ?> portalCacheManager =
-			PortalCacheManagerProvider.getPortalCacheManager(
+			PortalCacheManagerUtil.getPortalCacheManager(
 				portalCacheManagerName);
 
 		if (!portalCacheManager.isClusterAware()) {
@@ -392,7 +392,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 
 					PortalCacheManager<? extends Serializable, ?>
 						portalCacheManager =
-							PortalCacheManagerProvider.getPortalCacheManager(
+							PortalCacheManagerUtil.getPortalCacheManager(
 								_portalCacheManagerName);
 
 					for (String portalCacheName : _portalCacheNames) {

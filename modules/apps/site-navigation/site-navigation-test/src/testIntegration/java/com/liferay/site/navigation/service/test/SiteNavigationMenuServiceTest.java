@@ -37,12 +37,13 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
-import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
+import com.liferay.site.navigation.service.SiteNavigationMenuService;
 import com.liferay.site.navigation.util.SiteNavigationMenuTestUtil;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuCreateDateComparator;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuNameComparator;
@@ -100,7 +101,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.addSiteNavigationMenu(
+		_siteNavigationMenuService.addSiteNavigationMenu(
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			SiteNavigationConstants.TYPE_DEFAULT, serviceContext);
 	}
@@ -115,7 +116,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.addSiteNavigationMenu(
+		_siteNavigationMenuService.addSiteNavigationMenu(
 			_group.getGroupId(), RandomTestUtil.randomString(), serviceContext);
 	}
 
@@ -129,7 +130,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.addSiteNavigationMenu(
+		_siteNavigationMenuService.addSiteNavigationMenu(
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			SiteNavigationConstants.TYPE_DEFAULT, serviceContext);
 	}
@@ -144,7 +145,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.addSiteNavigationMenu(
+		_siteNavigationMenuService.addSiteNavigationMenu(
 			_group.getGroupId(), RandomTestUtil.randomString(), serviceContext);
 	}
 
@@ -158,7 +159,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.deleteSiteNavigationMenu(
+		_siteNavigationMenuService.deleteSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId());
 	}
 
@@ -172,7 +173,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.deleteSiteNavigationMenu(
+		_siteNavigationMenuService.deleteSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId());
 	}
 
@@ -186,7 +187,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.fetchSiteNavigationMenu(
+		_siteNavigationMenuService.fetchSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId());
 	}
 
@@ -200,7 +201,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.fetchSiteNavigationMenu(
+		_siteNavigationMenuService.fetchSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId());
 	}
 
@@ -229,7 +230,7 @@ public class SiteNavigationMenuServiceTest {
 				new SiteNavigationMenuCreateDateComparator(true);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), "Name", QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, ascSiteNavigationMenuCreateDateComparator);
 
@@ -263,7 +264,7 @@ public class SiteNavigationMenuServiceTest {
 				new SiteNavigationMenuCreateDateComparator(false);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), "Name", QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, descSiteNavigationMenuCreateDateComparator);
 
@@ -276,7 +277,7 @@ public class SiteNavigationMenuServiceTest {
 	@Test
 	public void testGetSiteNavigationMenus() throws Exception {
 		List<SiteNavigationMenu> siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId());
 
 		int startingCount = siteNavigationMenus.size();
@@ -284,9 +285,8 @@ public class SiteNavigationMenuServiceTest {
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 
-		siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
-				_group.getGroupId());
+		siteNavigationMenus = _siteNavigationMenuService.getSiteNavigationMenus(
+			_group.getGroupId());
 
 		int endingCount = siteNavigationMenus.size();
 
@@ -318,7 +318,7 @@ public class SiteNavigationMenuServiceTest {
 				new SiteNavigationMenuCreateDateComparator(true);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				ascSiteNavigationMenuCreateDateComparator);
 
@@ -352,7 +352,7 @@ public class SiteNavigationMenuServiceTest {
 				new SiteNavigationMenuCreateDateComparator(false);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				descSiteNavigationMenuCreateDateComparator);
 
@@ -376,7 +376,7 @@ public class SiteNavigationMenuServiceTest {
 			new SiteNavigationMenuNameComparator(true);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), "Name", QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, ascSiteNavigationMenuNameComparator);
 
@@ -399,7 +399,7 @@ public class SiteNavigationMenuServiceTest {
 			new SiteNavigationMenuNameComparator(false);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), "Name", QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, descSiteNavigationMenuNameComparator);
 
@@ -423,7 +423,7 @@ public class SiteNavigationMenuServiceTest {
 			new SiteNavigationMenuNameComparator(true);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				ascSiteNavigationMenuNameComparator);
 
@@ -447,7 +447,7 @@ public class SiteNavigationMenuServiceTest {
 			new SiteNavigationMenuNameComparator(false);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				descSiteNavigationMenuNameComparator);
 
@@ -459,14 +459,14 @@ public class SiteNavigationMenuServiceTest {
 	@Test
 	public void testGetSiteNavigationMenusCount() throws Exception {
 		int startingCount =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
+			_siteNavigationMenuService.getSiteNavigationMenusCount(
 				_group.getGroupId());
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 
 		int endingCount =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
+			_siteNavigationMenuService.getSiteNavigationMenusCount(
 				_group.getGroupId());
 
 		Assert.assertEquals(startingCount + 2, endingCount);
@@ -475,14 +475,14 @@ public class SiteNavigationMenuServiceTest {
 	@Test
 	public void testGetSiteNavigationMenusCountByKeywords() throws Exception {
 		int startingCount =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
+			_siteNavigationMenuService.getSiteNavigationMenusCount(
 				_group.getGroupId());
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 
 		int endingCount =
-			SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
+			_siteNavigationMenuService.getSiteNavigationMenusCount(
 				_group.getGroupId());
 
 		Assert.assertEquals(startingCount + 2, endingCount);
@@ -502,7 +502,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.updateSiteNavigationMenu(
+		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
 			siteNavigationMenu.getType(), siteNavigationMenu.getAuto(),
 			serviceContext);
@@ -522,7 +522,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.updateSiteNavigationMenu(
+		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
@@ -543,7 +543,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.updateSiteNavigationMenu(
+		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
 			siteNavigationMenu.getType(), siteNavigationMenu.isAuto(),
 			serviceContext);
@@ -565,7 +565,7 @@ public class SiteNavigationMenuServiceTest {
 
 		ServiceTestUtil.setUser(_groupUser);
 
-		SiteNavigationMenuServiceUtil.updateSiteNavigationMenu(
+		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
@@ -625,6 +625,10 @@ public class SiteNavigationMenuServiceTest {
 
 	private Group _group;
 	private User _groupUser;
+
+	@Inject
+	private SiteNavigationMenuService _siteNavigationMenuService;
+
 	private User _user;
 
 }

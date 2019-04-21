@@ -65,20 +65,24 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/sites/{siteId}/structured-content-folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public Page<StructuredContentFolder> getSiteStructuredContentFoldersPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("flatten") Boolean flatten,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -87,11 +91,12 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/structured-content-folders")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder postSiteStructuredContentFolder(
-			@NotNull @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
@@ -102,10 +107,14 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "parentStructuredContentFolderId"
+			),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path(
@@ -115,10 +124,12 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public Page<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
-				@NotNull @PathParam("parentStructuredContentFolderId") Long
+				@NotNull @Parameter(hidden = true)
+				@PathParam("parentStructuredContentFolderId") Long
 					parentStructuredContentFolderId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
+				@Parameter(hidden = true) @QueryParam("search") String search,
+				@Context Filter filter, @Context Pagination pagination,
+				@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -127,6 +138,13 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "parentStructuredContentFolderId"
+			)
+		}
+	)
 	@Path(
 		"/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders"
 	)
@@ -134,7 +152,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder
 			postStructuredContentFolderStructuredContentFolder(
-				@NotNull @PathParam("parentStructuredContentFolderId") Long
+				@NotNull @Parameter(hidden = true)
+				@PathParam("parentStructuredContentFolderId") Long
 					parentStructuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
 		throws Exception {
@@ -144,22 +163,38 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "structuredContentFolderId"
+			)
+		}
+	)
 	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public void deleteStructuredContentFolder(
-			@NotNull @PathParam("structuredContentFolderId") Long
+			@NotNull @Parameter(hidden = true)
+			@PathParam("structuredContentFolderId") Long
 				structuredContentFolderId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "structuredContentFolderId"
+			)
+		}
+	)
 	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces("application/json")
 	@Tags(value = {})
 	public StructuredContentFolder getStructuredContentFolder(
-			@NotNull @PathParam("structuredContentFolderId") Long
+			@NotNull @Parameter(hidden = true)
+			@PathParam("structuredContentFolderId") Long
 				structuredContentFolderId)
 		throws Exception {
 
@@ -169,11 +204,19 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PATCH
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "structuredContentFolderId"
+			)
+		}
+	)
 	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder patchStructuredContentFolder(
-			@NotNull @PathParam("structuredContentFolderId") Long
+			@NotNull @Parameter(hidden = true)
+			@PathParam("structuredContentFolderId") Long
 				structuredContentFolderId,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
@@ -232,11 +275,19 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "structuredContentFolderId"
+			)
+		}
+	)
 	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder putStructuredContentFolder(
-			@NotNull @PathParam("structuredContentFolderId") Long
+			@NotNull @Parameter(hidden = true)
+			@PathParam("structuredContentFolderId") Long
 				structuredContentFolderId,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {

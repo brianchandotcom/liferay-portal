@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "FieldValue")
 public class FieldValue {
 
+	@Schema
 	public FormDocument getDocument() {
 		return document;
 	}
@@ -67,6 +70,7 @@ public class FieldValue {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected FormDocument document;
 
+	@Schema
 	public Long getDocumentId() {
 		return documentId;
 	}
@@ -94,6 +98,7 @@ public class FieldValue {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long documentId;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -119,6 +124,7 @@ public class FieldValue {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -144,6 +150,7 @@ public class FieldValue {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public String getValue() {
 		return value;
 	}

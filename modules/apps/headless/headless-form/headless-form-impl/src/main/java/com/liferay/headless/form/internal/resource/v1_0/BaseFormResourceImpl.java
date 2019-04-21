@@ -58,10 +58,12 @@ public abstract class BaseFormResourceImpl implements FormResource {
 
 	@Override
 	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
 	@Path("/forms/{formId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
-	public Form getForm(@NotNull @PathParam("formId") Long formId)
+	public Form getForm(
+			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId)
 		throws Exception {
 
 		return new Form();
@@ -70,11 +72,13 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
 	@Path("/forms/{formId}/evaluate-context")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
 	public Form postFormEvaluateContext(
-			@NotNull @PathParam("formId") Long formId, Form form)
+			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId,
+			Form form)
 		throws Exception {
 
 		return new Form();
@@ -83,11 +87,12 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
 	@Path("/forms/{formId}/upload-file")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
 	public FormDocument postFormUploadFile(
-			@NotNull @PathParam("formId") Long formId,
+			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -98,6 +103,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -106,7 +112,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Form")})
 	public Page<Form> getSiteFormsPage(
-			@NotNull @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Context Pagination pagination)
 		throws Exception {
 

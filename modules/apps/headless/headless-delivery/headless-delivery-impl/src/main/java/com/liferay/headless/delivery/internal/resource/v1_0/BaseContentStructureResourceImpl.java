@@ -58,11 +58,15 @@ public abstract class BaseContentStructureResourceImpl
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "contentStructureId")}
+	)
 	@Path("/content-structures/{contentStructureId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ContentStructure")})
 	public ContentStructure getContentStructure(
-			@NotNull @PathParam("contentStructureId") Long contentStructureId)
+			@NotNull @Parameter(hidden = true) @PathParam("contentStructureId")
+				Long contentStructureId)
 		throws Exception {
 
 		return new ContentStructure();
@@ -72,19 +76,22 @@ public abstract class BaseContentStructureResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/sites/{siteId}/content-structures")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ContentStructure")})
 	public Page<ContentStructure> getSiteContentStructuresPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

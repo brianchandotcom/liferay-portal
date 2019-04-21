@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "FormDocument")
 public class FormDocument {
 
+	@Schema
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -67,6 +70,7 @@ public class FormDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
+	@Schema
 	public String getEncodingFormat() {
 		return encodingFormat;
 	}
@@ -94,6 +98,7 @@ public class FormDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String encodingFormat;
 
+	@Schema
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -121,6 +126,7 @@ public class FormDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileExtension;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -146,6 +152,7 @@ public class FormDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public Long getSizeInBytes() {
 		return sizeInBytes;
 	}
@@ -173,6 +180,7 @@ public class FormDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long sizeInBytes;
 
+	@Schema
 	public String getTitle() {
 		return title;
 	}

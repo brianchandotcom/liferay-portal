@@ -66,19 +66,23 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "documentFolderId"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/document-folders/{documentFolderId}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getDocumentFolderDocumentsPage(
-			@NotNull @PathParam("documentFolderId") Long documentFolderId,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
+				Long documentFolderId,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -87,11 +91,15 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentFolderId")}
+	)
 	@Path("/document-folders/{documentFolderId}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document postDocumentFolderDocument(
-			@NotNull @PathParam("documentFolderId") Long documentFolderId,
+			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
+				Long documentFolderId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -100,21 +108,29 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
+	)
 	@Path("/documents/{documentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public void deleteDocument(
-			@NotNull @PathParam("documentId") Long documentId)
+			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+				documentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
+	)
 	@Path("/documents/{documentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document getDocument(
-			@NotNull @PathParam("documentId") Long documentId)
+			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+				documentId)
 		throws Exception {
 
 		return new Document();
@@ -123,11 +139,15 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@PATCH
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
+	)
 	@Path("/documents/{documentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document patchDocument(
-			@NotNull @PathParam("documentId") Long documentId,
+			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+				documentId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -137,11 +157,15 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
+	)
 	@Path("/documents/{documentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document putDocument(
-			@NotNull @PathParam("documentId") Long documentId,
+			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+				documentId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -150,21 +174,29 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
+	)
 	@Path("/documents/{documentId}/my-rating")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public void deleteDocumentMyRating(
-			@NotNull @PathParam("documentId") Long documentId)
+			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+				documentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
+	)
 	@Path("/documents/{documentId}/my-rating")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Rating getDocumentMyRating(
-			@NotNull @PathParam("documentId") Long documentId)
+			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+				documentId)
 		throws Exception {
 
 		return new Rating();
@@ -173,11 +205,16 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
+	)
 	@Path("/documents/{documentId}/my-rating")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Rating postDocumentMyRating(
-			@NotNull @PathParam("documentId") Long documentId, Rating rating)
+			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+				documentId,
+			Rating rating)
 		throws Exception {
 
 		return new Rating();
@@ -186,11 +223,16 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("application/json")
 	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
+	)
 	@Path("/documents/{documentId}/my-rating")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Rating putDocumentMyRating(
-			@NotNull @PathParam("documentId") Long documentId, Rating rating)
+			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+				documentId,
+			Rating rating)
 		throws Exception {
 
 		return new Rating();
@@ -200,20 +242,24 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/sites/{siteId}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getSiteDocumentsPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("flatten") Boolean flatten,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -222,11 +268,12 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/documents")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Document")})
 	public Document postSiteDocument(
-			@NotNull @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MultipartBody multipartBody)
 		throws Exception {
 

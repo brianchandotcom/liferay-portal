@@ -22,6 +22,9 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -50,11 +53,15 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
+	)
 	@Path("/organizations/{organizationId}/web-urls")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getOrganizationWebUrlsPage(
-			@NotNull @PathParam("organizationId") Long organizationId)
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
+				organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -62,11 +69,15 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
+	)
 	@Path("/user-accounts/{userAccountId}/web-urls")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getUserAccountWebUrlsPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -74,10 +85,13 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 
 	@Override
 	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "webUrlId")})
 	@Path("/web-urls/{webUrlId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WebUrl")})
-	public WebUrl getWebUrl(@NotNull @PathParam("webUrlId") Long webUrlId)
+	public WebUrl getWebUrl(
+			@NotNull @Parameter(hidden = true) @PathParam("webUrlId") Long
+				webUrlId)
 		throws Exception {
 
 		return new WebUrl();

@@ -23,6 +23,9 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -55,22 +58,34 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardAttachmentId")
+		}
+	)
 	@Path("/message-board-attachments/{messageBoardAttachmentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public void deleteMessageBoardAttachment(
-			@NotNull @PathParam("messageBoardAttachmentId") Long
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardAttachmentId") Long
 				messageBoardAttachmentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardAttachmentId")
+		}
+	)
 	@Path("/message-board-attachments/{messageBoardAttachmentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment getMessageBoardAttachment(
-			@NotNull @PathParam("messageBoardAttachmentId") Long
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardAttachmentId") Long
 				messageBoardAttachmentId)
 		throws Exception {
 
@@ -79,6 +94,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	@Override
 	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardMessageId")
+		}
+	)
 	@Path(
 		"/message-board-messages/{messageBoardMessageId}/message-board-attachments"
 	)
@@ -86,8 +106,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public Page<MessageBoardAttachment>
 			getMessageBoardMessageMessageBoardAttachmentsPage(
-				@NotNull @PathParam("messageBoardMessageId") Long
-					messageBoardMessageId)
+				@NotNull @Parameter(hidden = true)
+				@PathParam("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -96,14 +116,19 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardMessageId")
+		}
+	)
 	@Path(
 		"/message-board-messages/{messageBoardMessageId}/message-board-attachments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
-			@NotNull @PathParam("messageBoardMessageId") Long
-				messageBoardMessageId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardMessageId") Long messageBoardMessageId,
 			MultipartBody multipartBody)
 		throws Exception {
 
@@ -112,6 +137,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	@Override
 	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
 	@Path(
 		"/message-board-threads/{messageBoardThreadId}/message-board-attachments"
 	)
@@ -119,8 +149,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public Page<MessageBoardAttachment>
 			getMessageBoardThreadMessageBoardAttachmentsPage(
-				@NotNull @PathParam("messageBoardThreadId") Long
-					messageBoardThreadId)
+				@NotNull @Parameter(hidden = true)
+				@PathParam("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -129,14 +159,19 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
 	@Path(
 		"/message-board-threads/{messageBoardThreadId}/message-board-attachments"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
-			@NotNull @PathParam("messageBoardThreadId") Long
-				messageBoardThreadId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
 			MultipartBody multipartBody)
 		throws Exception {
 

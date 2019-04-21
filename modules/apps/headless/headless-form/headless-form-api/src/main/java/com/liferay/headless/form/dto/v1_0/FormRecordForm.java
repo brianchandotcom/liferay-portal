@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "FormRecordForm")
 public class FormRecordForm {
 
+	@Schema
 	public Boolean getDraft() {
 		return draft;
 	}
@@ -67,6 +70,7 @@ public class FormRecordForm {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean draft;
 
+	@Schema
 	public String getFieldValues() {
 		return fieldValues;
 	}

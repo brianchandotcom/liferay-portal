@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "MediaForm")
 public class MediaForm {
 
+	@Schema
 	public String getDescription() {
 		return description;
 	}
@@ -67,6 +70,7 @@ public class MediaForm {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema
 	public Long getFolderId() {
 		return folderId;
 	}
@@ -94,6 +98,7 @@ public class MediaForm {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long folderId;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -119,6 +124,7 @@ public class MediaForm {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public String getTitle() {
 		return title;
 	}

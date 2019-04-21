@@ -70,6 +70,7 @@ public class FormPage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Field[] fields;
 
+	@Schema
 	public String getHeadline() {
 		return headline;
 	}
@@ -97,6 +98,7 @@ public class FormPage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String headline;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -122,6 +124,7 @@ public class FormPage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public String getText() {
 		return text;
 	}

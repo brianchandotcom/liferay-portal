@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -50,21 +53,29 @@ public abstract class BaseFormDocumentResourceImpl
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "formDocumentId")}
+	)
 	@Path("/form-documents/{formDocumentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormDocument")})
 	public void deleteFormDocument(
-			@NotNull @PathParam("formDocumentId") Long formDocumentId)
+			@NotNull @Parameter(hidden = true) @PathParam("formDocumentId") Long
+				formDocumentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "formDocumentId")}
+	)
 	@Path("/form-documents/{formDocumentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "FormDocument")})
 	public FormDocument getFormDocument(
-			@NotNull @PathParam("formDocumentId") Long formDocumentId)
+			@NotNull @Parameter(hidden = true) @PathParam("formDocumentId") Long
+				formDocumentId)
 		throws Exception {
 
 		return new FormDocument();

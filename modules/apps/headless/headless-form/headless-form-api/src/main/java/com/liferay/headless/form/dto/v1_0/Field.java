@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Field")
 public class Field {
 
+	@Schema
 	public Boolean getAutocomplete() {
 		return autocomplete;
 	}
@@ -69,6 +70,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean autocomplete;
 
+	@Schema
 	public String getDataSourceType() {
 		return dataSourceType;
 	}
@@ -96,6 +98,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataSourceType;
 
+	@Schema
 	public String getDataType() {
 		return dataType;
 	}
@@ -123,6 +126,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataType;
 
+	@Schema
 	public String getDisplayStyle() {
 		return displayStyle;
 	}
@@ -176,6 +180,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Grid grid;
 
+	@Schema
 	public Boolean getHasFormRules() {
 		return hasFormRules;
 	}
@@ -203,6 +208,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hasFormRules;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -228,6 +234,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public Boolean getImmutable() {
 		return immutable;
 	}
@@ -255,6 +262,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean immutable;
 
+	@Schema
 	public Boolean getInline() {
 		return inline;
 	}
@@ -282,6 +290,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean inline;
 
+	@Schema
 	public String getInputControl() {
 		return inputControl;
 	}
@@ -309,6 +318,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String inputControl;
 
+	@Schema
 	public String getLabel() {
 		return label;
 	}
@@ -336,6 +346,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@Schema
 	public Boolean getLocalizable() {
 		return localizable;
 	}
@@ -363,6 +374,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean localizable;
 
+	@Schema
 	public Boolean getMultiple() {
 		return multiple;
 	}
@@ -390,6 +402,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean multiple;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -443,6 +456,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Option[] options;
 
+	@Schema
 	public String getPlaceholder() {
 		return placeholder;
 	}
@@ -470,6 +484,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String placeholder;
 
+	@Schema
 	public String getPredefinedValue() {
 		return predefinedValue;
 	}
@@ -497,6 +512,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String predefinedValue;
 
+	@Schema
 	public Boolean getReadOnly() {
 		return readOnly;
 	}
@@ -524,6 +540,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
+	@Schema
 	public Boolean getRepeatable() {
 		return repeatable;
 	}
@@ -551,6 +568,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean repeatable;
 
+	@Schema
 	public Boolean getRequired() {
 		return required;
 	}
@@ -578,6 +596,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@Schema
 	public Boolean getShowAsSwitcher() {
 		return showAsSwitcher;
 	}
@@ -605,6 +624,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showAsSwitcher;
 
+	@Schema
 	public Boolean getShowLabel() {
 		return showLabel;
 	}
@@ -632,6 +652,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showLabel;
 
+	@Schema
 	public String getStyle() {
 		return style;
 	}
@@ -659,6 +680,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String style;
 
+	@Schema
 	public String getText() {
 		return text;
 	}
@@ -684,6 +706,7 @@ public class Field {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String text;
 
+	@Schema
 	public String getTooltip() {
 		return tooltip;
 	}

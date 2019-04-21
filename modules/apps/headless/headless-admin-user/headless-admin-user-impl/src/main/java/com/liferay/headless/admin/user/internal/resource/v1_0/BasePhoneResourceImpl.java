@@ -22,6 +22,9 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -50,11 +53,15 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
+	)
 	@Path("/organizations/{organizationId}/phones")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getOrganizationPhonesPage(
-			@NotNull @PathParam("organizationId") Long organizationId)
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
+				organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -62,10 +69,13 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
 	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "phoneId")})
 	@Path("/phones/{phoneId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
-	public Phone getPhone(@NotNull @PathParam("phoneId") Long phoneId)
+	public Phone getPhone(
+			@NotNull @Parameter(hidden = true) @PathParam("phoneId") Long
+				phoneId)
 		throws Exception {
 
 		return new Phone();
@@ -73,11 +83,15 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
+	)
 	@Path("/user-accounts/{userAccountId}/phones")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getUserAccountPhonesPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

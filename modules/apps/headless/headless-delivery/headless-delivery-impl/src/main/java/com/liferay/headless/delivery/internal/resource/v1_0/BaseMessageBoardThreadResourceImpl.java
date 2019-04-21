@@ -66,10 +66,12 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path(
@@ -79,10 +81,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public Page<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
-				@NotNull @PathParam("messageBoardSectionId") Long
-					messageBoardSectionId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
+				@NotNull @Parameter(hidden = true)
+				@PathParam("messageBoardSectionId") Long messageBoardSectionId,
+				@Parameter(hidden = true) @QueryParam("search") String search,
+				@Context Filter filter, @Context Pagination pagination,
+				@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -91,14 +94,19 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
+		}
+	)
 	@Path(
 		"/message-board-sections/{messageBoardSectionId}/message-board-threads"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public MessageBoardThread postMessageBoardSectionMessageBoardThread(
-			@NotNull @PathParam("messageBoardSectionId") Long
-				messageBoardSectionId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardSectionId") Long messageBoardSectionId,
 			MessageBoardThread messageBoardThread)
 		throws Exception {
 
@@ -107,23 +115,33 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
 	@Path("/message-board-threads/{messageBoardThreadId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public void deleteMessageBoardThread(
-			@NotNull @PathParam("messageBoardThreadId") Long
-				messageBoardThreadId)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
 	@Path("/message-board-threads/{messageBoardThreadId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public MessageBoardThread getMessageBoardThread(
-			@NotNull @PathParam("messageBoardThreadId") Long
-				messageBoardThreadId)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
 		return new MessageBoardThread();
@@ -132,12 +150,17 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PATCH
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
 	@Path("/message-board-threads/{messageBoardThreadId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public MessageBoardThread patchMessageBoardThread(
-			@NotNull @PathParam("messageBoardThreadId") Long
-				messageBoardThreadId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
 			MessageBoardThread messageBoardThread)
 		throws Exception {
 
@@ -213,12 +236,17 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
 	@Path("/message-board-threads/{messageBoardThreadId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public MessageBoardThread putMessageBoardThread(
-			@NotNull @PathParam("messageBoardThreadId") Long
-				messageBoardThreadId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
 			MessageBoardThread messageBoardThread)
 		throws Exception {
 
@@ -227,23 +255,33 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
 	@Path("/message-board-threads/{messageBoardThreadId}/my-rating")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public void deleteMessageBoardThreadMyRating(
-			@NotNull @PathParam("messageBoardThreadId") Long
-				messageBoardThreadId)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
 	@Path("/message-board-threads/{messageBoardThreadId}/my-rating")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public Rating getMessageBoardThreadMyRating(
-			@NotNull @PathParam("messageBoardThreadId") Long
-				messageBoardThreadId)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 
 		return new Rating();
@@ -252,12 +290,17 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
 	@Path("/message-board-threads/{messageBoardThreadId}/my-rating")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public Rating postMessageBoardThreadMyRating(
-			@NotNull @PathParam("messageBoardThreadId") Long
-				messageBoardThreadId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
 			Rating rating)
 		throws Exception {
 
@@ -267,12 +310,17 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
 	@Path("/message-board-threads/{messageBoardThreadId}/my-rating")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public Rating putMessageBoardThreadMyRating(
-			@NotNull @PathParam("messageBoardThreadId") Long
-				messageBoardThreadId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
 			Rating rating)
 		throws Exception {
 
@@ -283,20 +331,24 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/sites/{siteId}/message-board-threads")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("flatten") Boolean flatten,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -305,11 +357,12 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/message-board-threads")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public MessageBoardThread postSiteMessageBoardThread(
-			@NotNull @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MessageBoardThread messageBoardThread)
 		throws Exception {
 

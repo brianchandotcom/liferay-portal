@@ -62,21 +62,29 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingImageId")}
+	)
 	@Path("/blog-posting-images/{blogPostingImageId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public void deleteBlogPostingImage(
-			@NotNull @PathParam("blogPostingImageId") Long blogPostingImageId)
+			@NotNull @Parameter(hidden = true) @PathParam("blogPostingImageId")
+				Long blogPostingImageId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingImageId")}
+	)
 	@Path("/blog-posting-images/{blogPostingImageId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage getBlogPostingImage(
-			@NotNull @PathParam("blogPostingImageId") Long blogPostingImageId)
+			@NotNull @Parameter(hidden = true) @PathParam("blogPostingImageId")
+				Long blogPostingImageId)
 		throws Exception {
 
 		return new BlogPostingImage();
@@ -86,19 +94,22 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/sites/{siteId}/blog-posting-images")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -107,11 +118,12 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/blog-posting-images")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage postSiteBlogPostingImage(
-			@NotNull @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MultipartBody multipartBody)
 		throws Exception {
 

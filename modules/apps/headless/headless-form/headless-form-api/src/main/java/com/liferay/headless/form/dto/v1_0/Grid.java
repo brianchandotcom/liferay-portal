@@ -70,6 +70,7 @@ public class Grid {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Column[] columns;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}

@@ -22,6 +22,9 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -51,11 +54,15 @@ public abstract class BaseEmailAddressResourceImpl
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "emailAddressId")}
+	)
 	@Path("/email-addresses/{emailAddressId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "EmailAddress")})
 	public EmailAddress getEmailAddress(
-			@NotNull @PathParam("emailAddressId") Long emailAddressId)
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddressId") Long
+				emailAddressId)
 		throws Exception {
 
 		return new EmailAddress();
@@ -63,11 +70,15 @@ public abstract class BaseEmailAddressResourceImpl
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
+	)
 	@Path("/organizations/{organizationId}/email-addresses")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "EmailAddress")})
 	public Page<EmailAddress> getOrganizationEmailAddressesPage(
-			@NotNull @PathParam("organizationId") Long organizationId)
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
+				organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -75,11 +86,15 @@ public abstract class BaseEmailAddressResourceImpl
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
+	)
 	@Path("/user-accounts/{userAccountId}/email-addresses")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "EmailAddress")})
 	public Page<EmailAddress> getUserAccountEmailAddressesPage(
-			@NotNull @PathParam("userAccountId") Long userAccountId)
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

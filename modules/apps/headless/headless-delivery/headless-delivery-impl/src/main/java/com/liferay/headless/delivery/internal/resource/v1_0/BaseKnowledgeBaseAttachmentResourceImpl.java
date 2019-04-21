@@ -23,6 +23,9 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -55,6 +58,11 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	@Override
 	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
+		}
+	)
 	@Path(
 		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
 	)
@@ -62,7 +70,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public Page<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-				@NotNull @PathParam("knowledgeBaseArticleId") Long
+				@NotNull @Parameter(hidden = true)
+				@PathParam("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId)
 		throws Exception {
 
@@ -72,6 +81,11 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Override
 	@Consumes("multipart/form-data")
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
+		}
+	)
 	@Path(
 		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
 	)
@@ -79,7 +93,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				@NotNull @PathParam("knowledgeBaseArticleId") Long
+				@NotNull @Parameter(hidden = true)
+				@PathParam("knowledgeBaseArticleId") Long
 					knowledgeBaseArticleId,
 				MultipartBody multipartBody)
 		throws Exception {
@@ -89,22 +104,38 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "knowledgeBaseAttachmentId"
+			)
+		}
+	)
 	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public void deleteKnowledgeBaseAttachment(
-			@NotNull @PathParam("knowledgeBaseAttachmentId") Long
+			@NotNull @Parameter(hidden = true)
+			@PathParam("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "knowledgeBaseAttachmentId"
+			)
+		}
+	)
 	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
-			@NotNull @PathParam("knowledgeBaseAttachmentId") Long
+			@NotNull @Parameter(hidden = true)
+			@PathParam("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
 

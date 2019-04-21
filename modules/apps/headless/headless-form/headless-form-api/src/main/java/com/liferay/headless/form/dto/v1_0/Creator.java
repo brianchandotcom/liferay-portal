@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Creator")
 public class Creator {
 
+	@Schema
 	public String getAdditionalName() {
 		return additionalName;
 	}
@@ -67,6 +70,7 @@ public class Creator {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String additionalName;
 
+	@Schema
 	public String getFamilyName() {
 		return familyName;
 	}
@@ -94,6 +98,7 @@ public class Creator {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String familyName;
 
+	@Schema
 	public String getGivenName() {
 		return givenName;
 	}
@@ -121,6 +126,7 @@ public class Creator {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String givenName;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -146,6 +152,7 @@ public class Creator {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public String getImage() {
 		return image;
 	}
@@ -173,6 +180,7 @@ public class Creator {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String image;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -198,6 +206,7 @@ public class Creator {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public String getProfileURL() {
 		return profileURL;
 	}

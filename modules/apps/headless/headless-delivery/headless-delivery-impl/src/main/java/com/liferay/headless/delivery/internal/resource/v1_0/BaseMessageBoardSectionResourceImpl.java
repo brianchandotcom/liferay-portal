@@ -63,23 +63,33 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
+		}
+	)
 	@Path("/message-board-sections/{messageBoardSectionId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public void deleteMessageBoardSection(
-			@NotNull @PathParam("messageBoardSectionId") Long
-				messageBoardSectionId)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardSectionId") Long messageBoardSectionId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
+		}
+	)
 	@Path("/message-board-sections/{messageBoardSectionId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection getMessageBoardSection(
-			@NotNull @PathParam("messageBoardSectionId") Long
-				messageBoardSectionId)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardSectionId") Long messageBoardSectionId)
 		throws Exception {
 
 		return new MessageBoardSection();
@@ -88,12 +98,17 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PATCH
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
+		}
+	)
 	@Path("/message-board-sections/{messageBoardSectionId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection patchMessageBoardSection(
-			@NotNull @PathParam("messageBoardSectionId") Long
-				messageBoardSectionId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardSectionId") Long messageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 
@@ -149,12 +164,17 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
+		}
+	)
 	@Path("/message-board-sections/{messageBoardSectionId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection putMessageBoardSection(
-			@NotNull @PathParam("messageBoardSectionId") Long
-				messageBoardSectionId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardSectionId") Long messageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 
@@ -165,10 +185,14 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "parentMessageBoardSectionId"
+			),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path(
@@ -178,10 +202,12 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
-				@NotNull @PathParam("parentMessageBoardSectionId") Long
+				@NotNull @Parameter(hidden = true)
+				@PathParam("parentMessageBoardSectionId") Long
 					parentMessageBoardSectionId,
-				@QueryParam("search") String search, @Context Filter filter,
-				@Context Pagination pagination, @Context Sort[] sorts)
+				@Parameter(hidden = true) @QueryParam("search") String search,
+				@Context Filter filter, @Context Pagination pagination,
+				@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -190,13 +216,21 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "parentMessageBoardSectionId"
+			)
+		}
+	)
 	@Path(
 		"/message-board-sections/{parentMessageBoardSectionId}/message-board-sections"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
-			@NotNull @PathParam("parentMessageBoardSectionId") Long
+			@NotNull @Parameter(hidden = true)
+			@PathParam("parentMessageBoardSectionId") Long
 				parentMessageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {
@@ -208,20 +242,24 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/sites/{siteId}/message-board-sections")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("flatten") Boolean flatten,
-			@QueryParam("search") String search, @Context Filter filter,
-			@Context Pagination pagination, @Context Sort[] sorts)
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -230,11 +268,12 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Override
 	@Consumes("application/json")
 	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/message-board-sections")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection postSiteMessageBoardSection(
-			@NotNull @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 

@@ -57,6 +57,7 @@ public abstract class BaseContentSetElementResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "contentSetId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -65,7 +66,8 @@ public abstract class BaseContentSetElementResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ContentSetElement")})
 	public Page<ContentSetElement> getContentSetContentSetElementsPage(
-			@NotNull @PathParam("contentSetId") Long contentSetId,
+			@NotNull @Parameter(hidden = true) @PathParam("contentSetId") Long
+				contentSetId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -76,6 +78,8 @@ public abstract class BaseContentSetElementResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "key"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -84,8 +88,8 @@ public abstract class BaseContentSetElementResourceImpl
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ContentSetElement")})
 	public Page<ContentSetElement> getSiteContentSetByKeyContentSetElementsPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@NotNull @PathParam("key") String key,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("key") String key,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -96,6 +100,8 @@ public abstract class BaseContentSetElementResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "uuid"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -105,8 +111,10 @@ public abstract class BaseContentSetElementResourceImpl
 	@Tags(value = {@Tag(name = "ContentSetElement")})
 	public Page<ContentSetElement>
 			getSiteContentSetByUuidContentSetElementsPage(
-				@NotNull @PathParam("siteId") Long siteId,
-				@NotNull @PathParam("uuid") String uuid,
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@NotNull @Parameter(hidden = true) @PathParam("uuid") String
+					uuid,
 				@Context Pagination pagination)
 		throws Exception {
 

@@ -58,6 +58,7 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 	@Operation(description = "Get segments of a site")
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -66,7 +67,7 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Segment")})
 	public Page<Segment> getSiteSegmentsPage(
-			@NotNull @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -76,12 +77,19 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 	@Override
 	@GET
 	@Operation(description = "Get segments of an user")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "userAccountId")
+		}
+	)
 	@Path("/sites/{siteId}/user-accounts/{userAccountId}/segments")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Segment")})
 	public Page<Segment> getSiteUserAccountSegmentsPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@NotNull @PathParam("userAccountId") Long userAccountId)
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Validation")
 public class Validation {
 
+	@Schema
 	public String getErrorMessage() {
 		return errorMessage;
 	}
@@ -67,6 +70,7 @@ public class Validation {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessage;
 
+	@Schema
 	public String getExpression() {
 		return expression;
 	}
@@ -94,6 +98,7 @@ public class Validation {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String expression;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}

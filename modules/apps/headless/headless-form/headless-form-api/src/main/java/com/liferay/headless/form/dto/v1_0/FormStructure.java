@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "FormStructure")
 public class FormStructure {
 
+	@Schema
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}
@@ -73,6 +74,7 @@ public class FormStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguages;
 
+	@Schema
 	public Creator getCreator() {
 		return creator;
 	}
@@ -100,6 +102,7 @@ public class FormStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
+	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -127,6 +130,7 @@ public class FormStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@Schema
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -154,6 +158,7 @@ public class FormStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@Schema
 	public String getDescription() {
 		return description;
 	}
@@ -209,6 +214,7 @@ public class FormStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormPage[] formPages;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -234,6 +240,7 @@ public class FormStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -259,6 +266,7 @@ public class FormStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public Long getSiteId() {
 		return siteId;
 	}

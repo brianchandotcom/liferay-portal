@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "SuccessPage")
 public class SuccessPage {
 
+	@Schema
 	public String getDescription() {
 		return description;
 	}
@@ -67,6 +70,7 @@ public class SuccessPage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema
 	public String getHeadline() {
 		return headline;
 	}
@@ -94,6 +98,7 @@ public class SuccessPage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String headline;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}

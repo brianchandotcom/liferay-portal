@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -44,6 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Form")
 public class Form {
 
+	@Schema
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
 	}
@@ -71,6 +74,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguages;
 
+	@Schema
 	public Creator getCreator() {
 		return creator;
 	}
@@ -98,6 +102,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
+	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -125,6 +130,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@Schema
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -152,6 +158,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@Schema
 	public Date getDatePublished() {
 		return datePublished;
 	}
@@ -179,6 +186,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
+	@Schema
 	public String getDefaultLanguage() {
 		return defaultLanguage;
 	}
@@ -206,6 +214,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String defaultLanguage;
 
+	@Schema
 	public String getDescription() {
 		return description;
 	}
@@ -233,6 +242,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema
 	public FormRecord[] getFormRecords() {
 		return formRecords;
 	}
@@ -260,6 +270,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected FormRecord[] formRecords;
 
+	@Schema
 	public Long[] getFormRecordsIds() {
 		return formRecordsIds;
 	}
@@ -287,6 +298,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] formRecordsIds;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -312,6 +324,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -337,6 +350,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -364,6 +378,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@Schema
 	public FormStructure getStructure() {
 		return structure;
 	}
@@ -391,6 +406,7 @@ public class Form {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected FormStructure structure;
 
+	@Schema
 	public Long getStructureId() {
 		return structureId;
 	}

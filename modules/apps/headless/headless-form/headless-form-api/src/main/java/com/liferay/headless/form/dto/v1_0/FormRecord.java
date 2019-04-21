@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "FormRecord")
 public class FormRecord {
 
+	@Schema
 	public Creator getCreator() {
 		return creator;
 	}
@@ -73,6 +74,7 @@ public class FormRecord {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
+	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -100,6 +102,7 @@ public class FormRecord {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@Schema
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -127,6 +130,7 @@ public class FormRecord {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@Schema
 	public Date getDatePublished() {
 		return datePublished;
 	}
@@ -154,6 +158,7 @@ public class FormRecord {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
+	@Schema
 	public Boolean getDraft() {
 		return draft;
 	}
@@ -209,6 +214,7 @@ public class FormRecord {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FieldValue[] fieldValues;
 
+	@Schema
 	public Form getForm() {
 		return form;
 	}
@@ -234,6 +240,7 @@ public class FormRecord {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Form form;
 
+	@Schema
 	public Long getFormId() {
 		return formId;
 	}
@@ -261,6 +268,7 @@ public class FormRecord {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long formId;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}

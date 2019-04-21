@@ -144,18 +144,16 @@ public class ResourceOpenAPIParser {
 		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
 			String parameterName = javaMethodParameter.getParameterName();
 
-			if (parameterName.equals("filter") ||
-				parameterName.equals("sorts")) {
-
-				sb.append(
-					"@Parameter(in = ParameterIn.QUERY, name = \"" +
-						parameterName + "\"),");
+			if (parameterName.equals("pagination")) {
+				sb.append(_addParameter(_findParameter(operation, "page")));
+				sb.append(_addParameter(_findParameter(operation, "pageSize")));
 			}
-			else if (parameterName.equals("pagination")) {
+			else if (parameterName.equals("sorts")) {
+				sb.append(_addParameter(_findParameter(operation, "sort")));
+			}
+			else {
 				sb.append(
-					"@Parameter(in = ParameterIn.QUERY, name = \"page\"),");
-				sb.append(
-					"@Parameter(in = ParameterIn.QUERY, name = \"pageSize\"),");
+					_addParameter(_findParameter(operation, parameterName)));
 			}
 		}
 
@@ -212,6 +210,41 @@ public class ResourceOpenAPIParser {
 		}
 
 		return sb.toString();
+	}
+
+	private static String _addParameter(Parameter parameter) {
+		if (parameter == null) {
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+			String.format(
+				"@Parameter(in = ParameterIn.%s, name = \"%s\"",
+				StringUtil.toUpperCase(parameter.getIn()),
+				parameter.getName()));
+
+		if (parameter.getExample() != null) {
+			sb.append(
+				String.format(", example = \"%s\"", parameter.getExample()));
+		}
+
+		sb.append("),");
+
+		return sb.toString();
+	}
+
+	private static Parameter _findParameter(
+		Operation operation, String parameterName) {
+
+		for (Parameter parameter : operation.getParameters()) {
+			if (parameterName.equals(parameter.getName())) {
+				return parameter;
+			}
+		}
+
+		return null;
 	}
 
 	private static List<JavaMethodParameter> _getJavaMethodParameters(
@@ -536,6 +569,7 @@ public class ResourceOpenAPIParser {
 					sb.append("@NotNull ");
 				}
 
+				sb.append("@Parameter(hidden=true)");
 				sb.append("@");
 				sb.append(StringUtil.upperCaseFirstLetter(parameter.getIn()));
 				sb.append("Param(\"");

@@ -808,11 +808,12 @@ definition {
 	}
 
 	macro viewAnswerPG {
+		var key_answerCount = "${answerCount}";
 		var key_threadSubject = "${threadSubject}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_ANSWER",
-			value1 = "Answer"
+			value1 = "${answerCount} Answer"
 		);
 
 		AssertClick(

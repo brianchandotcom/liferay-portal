@@ -161,7 +161,7 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_ANSWER</td>
-	<td>//li[contains(.,'${key_threadSubject}')]/div/span[3]</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[4][contains(.,'${key_answerCount}')] | /div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[5][contains(.,'${key_answerCount}')]</td>
 	<td></td>
 </tr>
 <tr>

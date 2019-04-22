@@ -1845,6 +1845,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsThread.viewAnswerPG(threadSubject = "Thread Subject");
+		MessageboardsThread.viewAnswerPG(
+			answerCount = "1",
+			threadSubject = "Thread Subject"
+		);
 	}
 }

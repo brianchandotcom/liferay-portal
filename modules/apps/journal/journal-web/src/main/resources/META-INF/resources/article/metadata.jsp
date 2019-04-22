@@ -24,7 +24,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"
-	value="categorization"
+	value="properties"
 />
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />

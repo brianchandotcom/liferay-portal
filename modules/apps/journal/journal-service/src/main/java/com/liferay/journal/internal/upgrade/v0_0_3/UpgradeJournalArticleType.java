@@ -14,6 +14,7 @@
 
 package com.liferay.journal.internal.upgrade.v0_0_3;
 
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -53,12 +54,16 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 
 	public UpgradeJournalArticleType(
 		AssetCategoryLocalService assetCategoryLocalService,
+		AssetEntryAssetCategoryRelLocalService
+			assetEntryAssetCategoryRelLocalService,
 		AssetEntryLocalService assetEntryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		CompanyLocalService companyLocalService,
 		UserLocalService userLocalService) {
 
 		_assetCategoryLocalService = assetCategoryLocalService;
+		_assetEntryAssetCategoryRelLocalService =
+			assetEntryAssetCategoryRelLocalService;
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_companyLocalService = companyLocalService;
@@ -189,8 +194,9 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 					long assetCategoryId =
 						journalArticleTypesToAssetCategoryIds.get(type);
 
-					_assetEntryLocalService.addAssetCategoryAssetEntry(
-						assetCategoryId, assetEntry);
+					_assetEntryAssetCategoryRelLocalService.
+						addAssetEntryAssetCategoryRel(
+							assetEntry.getEntryId(), assetCategoryId);
 				}
 			}
 		}
@@ -257,6 +263,8 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 	}
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;
+	private final AssetEntryAssetCategoryRelLocalService
+		_assetEntryAssetCategoryRelLocalService;
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final CompanyLocalService _companyLocalService;

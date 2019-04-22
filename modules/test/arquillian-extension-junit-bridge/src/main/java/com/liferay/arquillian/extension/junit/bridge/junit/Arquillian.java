@@ -85,7 +85,7 @@ public class Arquillian extends Runner implements Filterable {
 			throw new NoTestsRemainException();
 		}
 
-		Iterator<Class> iterator = _classes.iterator();
+		Iterator<Class<?>> iterator = _classes.iterator();
 
 		while (iterator.hasNext()) {
 			Class<?> clazz = iterator.next();
@@ -223,7 +223,7 @@ public class Arquillian extends Runner implements Filterable {
 
 	private static long _bundleId;
 
-	private static final Set<Class> _classes = new HashSet<Class>() {
+	private static final Set<Class<?>> _classes = new HashSet<Class<?>>() {
 		{
 			try {
 				Path srcDir = Paths.get(

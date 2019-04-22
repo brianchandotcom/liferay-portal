@@ -90,14 +90,14 @@ public class TaskResourceImpl
 		Map<String, List<String>> instanceIdsMap = _getInstanceIdsMap(
 			fieldSort, pagination, processId);
 
-		Map<String, Task> taskMap = _getTaskMap(
+		Map<String, Task> tasksMap = _getTasksMap(
 			processId, instanceIdsMap.keySet());
 
-		long count = taskMap.size();
+		long count = tasksMap.size();
 
 		if (count > 0) {
 			return Page.of(
-				_getTasks(fieldSort, instanceIdsMap, pagination, taskMap),
+				_getTasks(fieldSort, instanceIdsMap, pagination, tasksMap),
 				pagination, count);
 		}
 
@@ -330,7 +330,7 @@ public class TaskResourceImpl
 		return (TermsAggregationResult)aggregationResultsMap.get("taskName");
 	}
 
-	private Map<String, Task> _getTaskMap(
+	private Map<String, Task> _getTasksMap(
 		long processId, Set<String> taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -369,18 +369,18 @@ public class TaskResourceImpl
 
 	private Collection<Task> _getTasks(
 		FieldSort fieldSort, Map<String, List<String>> instanceIdsMap,
-		Pagination pagination, Map<String, Task> taskMap) {
+		Pagination pagination, Map<String, Task> tasksMap) {
 
 		List<Task> tasks = new LinkedList<>();
 
 		TermsAggregationResult slaTermsAggregationResult =
 			_getSLATermsAggregationResult(
-				fieldSort, pagination, taskMap.keySet());
+				fieldSort, pagination, tasksMap.keySet());
 
 		if (_isOrderByInstanceCount(fieldSort.getField())) {
 			instanceIdsMap.forEach(
 				(taskName, instanceIds) -> {
-					Task task = taskMap.remove(taskName);
+					Task task = tasksMap.remove(taskName);
 
 					_populateTaskWithSLAMetrics(
 						slaTermsAggregationResult.getBucket(taskName), task);
@@ -391,7 +391,7 @@ public class TaskResourceImpl
 		}
 		else {
 			for (Bucket bucket : slaTermsAggregationResult.getBuckets()) {
-				Task task = taskMap.remove(bucket.getKey());
+				Task task = tasksMap.remove(bucket.getKey());
 
 				_populateTaskWithSLAMetrics(bucket, task);
 				_setInstanceCount(instanceIdsMap.get(bucket.getKey()), task);

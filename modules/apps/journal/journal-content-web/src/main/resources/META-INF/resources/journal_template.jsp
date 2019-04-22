@@ -61,6 +61,8 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 		</div>
 
 		<aui:button id='<%= refererPortletName + "selectDDMTemplateButton" %>' useNamespace="<%= false %>" value="select" />
+
+		<aui:button id='<%= refererPortletName + "clearddmTemplateButton" %>' useNamespace="<%= false %>" value="clear" />
 	</div>
 </div>
 
@@ -160,6 +162,15 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 		'click',
 		function(event) {
 			templateKeyInput.setAttribute('value', '');
+		}
+	);
+
+	A.one('#<%= refererPortletName + "clearddmTemplateButton" %>').on(
+		'click',
+		function(event) {
+			templateKeyInput.setAttribute('value', '');
+
+			templatePreview.html('<p class="text-default"><liferay-ui:message key="none" /></p>');
 		}
 	);
 

@@ -23,7 +23,12 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.taglib.internal.info.display.contributor.InfoDisplayContributorTrackerUtil;
 import com.liferay.asset.taglib.internal.item.selector.ItemSelectorUtil;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -192,17 +197,17 @@ public class SelectAssetDisplayPageDisplayContext {
 		return _eventName;
 	}
 
-	public String getLayoutUuid() throws PortalException {
+	public String getLayoutUuid() {
 		if (_classPK == 0) {
 			return null;
 		}
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(_classNameId);
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			_classNameId, _classPK);
 
-		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-			PortalUtil.getClassName(_classNameId), _classPK);
+		if (assetEntry == null) {
+			return null;
+		}
 
 		return assetEntry.getLayoutUuid();
 	}
@@ -296,16 +301,27 @@ public class SelectAssetDisplayPageDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(_classNameId);
-
 		try {
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-				PortalUtil.getClassName(_classNameId), _classPK);
+			InfoDisplayContributorTracker infoDisplayContributorTracker =
+				InfoDisplayContributorTrackerUtil.
+					getInfoDisplayContributorTracker();
+
+			InfoDisplayContributor infoDisplayContributor =
+				infoDisplayContributorTracker.getInfoDisplayContributor(
+					PortalUtil.getClassName(_classNameId));
+
+			if (infoDisplayContributor == null) {
+				return false;
+			}
+
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(_classPK);
 
 			if (!AssetDisplayPageHelper.hasAssetDisplayPage(
-					themeDisplay.getScopeGroupId(), assetEntry)) {
+					themeDisplay.getScopeGroupId(),
+					infoDisplayObjectProvider.getClassNameId(),
+					infoDisplayObjectProvider.getClassPK(),
+					infoDisplayObjectProvider.getClassTypeId())) {
 
 				return false;
 			}

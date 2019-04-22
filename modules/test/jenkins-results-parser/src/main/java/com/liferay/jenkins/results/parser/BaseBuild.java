@@ -2654,13 +2654,32 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected StopWatchRecordsGroup getStopWatchRecordsGroup() {
-		String consoleText = getConsoleText();
+		String consoleText = null;
+		int consoleTextLength = 0;
+		int retries = 0;
 
-		int consoleTextLength = consoleText.length();
+		while (true) {
+			try {
+				consoleText = getConsoleText();
 
-		if (stopWatchRecordConsoleReadCursor > 0) {
-			consoleText = consoleText.substring(
-				stopWatchRecordConsoleReadCursor);
+				consoleTextLength = consoleText.length();
+
+				if (stopWatchRecordConsoleReadCursor > 0) {
+					consoleText = consoleText.substring(
+						stopWatchRecordConsoleReadCursor);
+				}
+			}
+			catch (StringIndexOutOfBoundsException sioobe) {
+				if (retries == 2) {
+					throw sioobe;
+				}
+
+				retries++;
+
+				JenkinsResultsParserUtil.sleep(1000 * 5);
+			}
+
+			break;
 		}
 
 		for (String line : consoleText.split("\n")) {

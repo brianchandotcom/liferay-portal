@@ -36,34 +36,38 @@
 			>
 				<h4><liferay-ui:message key="layout-template" /></h4>
 
-				<%
-				String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
+				<div class="row">
 
-				for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
-				%>
+					<%
+					String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
 
-					<div class="entry-card lfr-asset-item">
-						<div class="radio radio-card radio-top-left">
-							<label>
-								<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
+					for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
+					%>
 
-								<div class="card">
-									<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image:url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>')">
-									</div>
+						<div class="col-6 col-md-3 col-sm-4">
+							<div class="radio radio-card radio-top-left">
+								<label>
+									<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
 
-									<div class="card-row card-row-padded">
-										<div class="card-col-field">
-											<%= layoutTemplate.getName(locale) %>
+									<div class="card">
+										<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image:url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>')">
+										</div>
+
+										<div class="card-row card-row-padded">
+											<div class="card-col-field">
+												<%= layoutTemplate.getName(locale) %>
+											</div>
 										</div>
 									</div>
-								</div>
-							</label>
+								</label>
+							</div>
 						</div>
-					</div>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
+
+				</div>
 
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>

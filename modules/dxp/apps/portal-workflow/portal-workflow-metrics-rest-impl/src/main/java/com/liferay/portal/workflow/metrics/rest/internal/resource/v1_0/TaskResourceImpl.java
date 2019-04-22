@@ -331,43 +331,6 @@ public class TaskResourceImpl
 		return (TermsAggregationResult)aggregationResultsMap.get("taskName");
 	}
 
-	private Map<String, Task> _getTasksMap(
-		long processId, Set<String> taskNames) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		TermsAggregation termsAggregation = _aggregations.terms("name", "name");
-
-		termsAggregation.setSize(10000);
-
-		searchSearchRequest.addAggregation(termsAggregation);
-
-		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
-		searchSearchRequest.setQuery(_createBooleanQuery(processId, taskNames));
-
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		Map<String, AggregationResult> aggregationResultsMap =
-			searchSearchResponse.getAggregationResultsMap();
-
-		TermsAggregationResult termsAggregationResult =
-			(TermsAggregationResult)aggregationResultsMap.get("name");
-
-		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
-
-		Stream<Bucket> stream = buckets.stream();
-
-		return stream.map(
-			Bucket::getKey
-		).map(
-			this::_createTask
-		).collect(
-			LinkedHashMap::new, (map, task) -> map.put(task.getName(), task),
-			Map::putAll
-		);
-	}
-
 	private Collection<Task> _getTasks(
 		FieldSort fieldSort, Map<String, List<String>> instanceIdsMap,
 		Pagination pagination, Map<String, Task> tasksMap) {
@@ -406,6 +369,43 @@ public class TaskResourceImpl
 		}
 
 		return tasks;
+	}
+
+	private Map<String, Task> _getTasksMap(
+		long processId, Set<String> taskNames) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		TermsAggregation termsAggregation = _aggregations.terms("name", "name");
+
+		termsAggregation.setSize(10000);
+
+		searchSearchRequest.addAggregation(termsAggregation);
+
+		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
+		searchSearchRequest.setQuery(_createBooleanQuery(processId, taskNames));
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		Map<String, AggregationResult> aggregationResultsMap =
+			searchSearchResponse.getAggregationResultsMap();
+
+		TermsAggregationResult termsAggregationResult =
+			(TermsAggregationResult)aggregationResultsMap.get("name");
+
+		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
+
+		Stream<Bucket> stream = buckets.stream();
+
+		return stream.map(
+			Bucket::getKey
+		).map(
+			this::_createTask
+		).collect(
+			LinkedHashMap::new, (map, task) -> map.put(task.getName(), task),
+			Map::putAll
+		);
 	}
 
 	private boolean _isOrderByInstanceCount(String fieldName) {

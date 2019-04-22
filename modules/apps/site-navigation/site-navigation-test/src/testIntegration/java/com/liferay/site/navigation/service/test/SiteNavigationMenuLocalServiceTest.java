@@ -336,36 +336,33 @@ public class SiteNavigationMenuLocalServiceTest {
 	public void testGetSiteNavigationMenusWithOrderByComparatorAndKeywordAsc()
 		throws Exception {
 
-		SiteNavigationMenu bbSiteNavigationMenu =
+		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 				_group, "bb Menu Name");
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 			_group, "cc Menu Name");
-
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "aa");
-
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "dd");
 
-		OrderByComparator ascendingComparator =
+		OrderByComparator orderByComparator =
 			new SiteNavigationMenuNameComparator(true);
 
-		List<SiteNavigationMenu> ascSiteNavigationMenus =
+		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuLocalService.getSiteNavigationMenus(
 				_group.getGroupId(), "Menu Name", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, ascendingComparator);
+				QueryUtil.ALL_POS, orderByComparator);
 
-		SiteNavigationMenu topSiteNavigationMenu = ascSiteNavigationMenus.get(
-			0);
+		SiteNavigationMenu topSiteNavigationMenu = siteNavigationMenus.get(0);
 
-		Assert.assertEquals(topSiteNavigationMenu, bbSiteNavigationMenu);
+		Assert.assertEquals(topSiteNavigationMenu, siteNavigationMenu);
 	}
 
 	@Test
 	public void testGetSiteNavigationMenusWithOrderByComparatorAndKeywordDesc()
 		throws Exception {
 
-		SiteNavigationMenu bbSiteNavigationMenu =
+		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 				_group, "bb Menu Name");
 
@@ -376,68 +373,67 @@ public class SiteNavigationMenuLocalServiceTest {
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "dd");
 
-		OrderByComparator descendingComparator =
+		OrderByComparator orderByComparator =
 			new SiteNavigationMenuNameComparator(false);
 
-		List<SiteNavigationMenu> descSiteNavigationMenus =
+		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuLocalService.getSiteNavigationMenus(
 				_group.getGroupId(), "Menu Name", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, descendingComparator);
+				QueryUtil.ALL_POS, orderByComparator);
 
-		SiteNavigationMenu bottomSiteNavigationMenu =
-			descSiteNavigationMenus.get(descSiteNavigationMenus.size() - 1);
+		SiteNavigationMenu bottomSiteNavigationMenu = siteNavigationMenus.get(
+			siteNavigationMenus.size() - 1);
 
-		Assert.assertEquals(bottomSiteNavigationMenu, bbSiteNavigationMenu);
+		Assert.assertEquals(bottomSiteNavigationMenu, siteNavigationMenu);
 	}
 
 	@Test
 	public void testGetSiteNavigationMenusWithOrderByComparatorAsc()
 		throws Exception {
 
-		SiteNavigationMenu aaSiteNavigationMenu =
+		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 				_group, "aa Menu Name");
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 			_group, "bb Menu Name");
 
-		OrderByComparator ascendingComparator =
+		OrderByComparator orderByComparator =
 			new SiteNavigationMenuNameComparator(true);
 
-		List<SiteNavigationMenu> ascSiteNavigationMenus =
+		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuLocalService.getSiteNavigationMenus(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				ascendingComparator);
+				orderByComparator);
 
-		SiteNavigationMenu topSiteNavigationMenu = ascSiteNavigationMenus.get(
-			0);
+		SiteNavigationMenu topSiteNavigationMenu = siteNavigationMenus.get(0);
 
-		Assert.assertEquals(topSiteNavigationMenu, aaSiteNavigationMenu);
+		Assert.assertEquals(topSiteNavigationMenu, siteNavigationMenu);
 	}
 
 	@Test
 	public void testGetSiteNavigationMenusWithOrderByComparatorDesc()
 		throws Exception {
 
-		SiteNavigationMenu aasiteNavigationMenu =
+		SiteNavigationMenu siteNavigationMenu =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 				_group, "aa Menu Name");
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 			_group, "bb Menu Name");
 
-		OrderByComparator descendingComparator =
+		OrderByComparator orderByComparator =
 			new SiteNavigationMenuNameComparator(false);
 
 		List<SiteNavigationMenu> descSiteNavigationMenus =
 			_siteNavigationMenuLocalService.getSiteNavigationMenus(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				descendingComparator);
+				orderByComparator);
 
 		SiteNavigationMenu bottomSiteNavigationMenu =
 			descSiteNavigationMenus.get(descSiteNavigationMenus.size() - 1);
 
-		Assert.assertEquals(bottomSiteNavigationMenu, aasiteNavigationMenu);
+		Assert.assertEquals(bottomSiteNavigationMenu, siteNavigationMenu);
 	}
 
 	@Test
@@ -491,11 +487,11 @@ public class SiteNavigationMenuLocalServiceTest {
 			originalSiteNavigationMenu.getName(),
 			originalSiteNavigationMenu.getType(), true);
 
-		SiteNavigationMenu updatedSiteNavigationMenu =
+		SiteNavigationMenu persistedSiteNavigationMenu =
 			SiteNavigationMenuUtil.fetchByPrimaryKey(
 				originalSiteNavigationMenu.getSiteNavigationMenuId());
 
-		Assert.assertTrue(updatedSiteNavigationMenu.isAuto());
+		Assert.assertTrue(persistedSiteNavigationMenu.isAuto());
 	}
 
 	@Test
@@ -513,12 +509,12 @@ public class SiteNavigationMenuLocalServiceTest {
 			originalSiteNavigationMenu.getSiteNavigationMenuId(),
 			"Updated Name", serviceContext);
 
-		SiteNavigationMenu updatedSiteNavigationMenu =
+		SiteNavigationMenu persistedSiteNavigationMenu =
 			SiteNavigationMenuUtil.fetchByPrimaryKey(
 				originalSiteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(
-			"Updated Name", updatedSiteNavigationMenu.getName());
+			"Updated Name", persistedSiteNavigationMenu.getName());
 	}
 
 	@Test
@@ -535,13 +531,13 @@ public class SiteNavigationMenuLocalServiceTest {
 			SiteNavigationConstants.TYPE_SECONDARY,
 			originalSiteNavigationMenu.isAuto());
 
-		SiteNavigationMenu updatedSiteNavigationMenu =
+		SiteNavigationMenu persistedSiteNavigationMenu =
 			SiteNavigationMenuUtil.fetchByPrimaryKey(
 				originalSiteNavigationMenu.getSiteNavigationMenuId());
 
 		Assert.assertEquals(
 			SiteNavigationConstants.TYPE_SECONDARY,
-			updatedSiteNavigationMenu.getType());
+			persistedSiteNavigationMenu.getType());
 	}
 
 	@DeleteAfterTestRun

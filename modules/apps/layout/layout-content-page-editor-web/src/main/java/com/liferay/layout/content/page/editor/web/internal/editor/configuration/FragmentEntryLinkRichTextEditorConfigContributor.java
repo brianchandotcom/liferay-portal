@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -151,10 +152,19 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		Class<?> clazz = getClass();
+
+		ResourceBundleLoader resourceBundleLoader =
+			new AggregateResourceBundleLoader(
+				ResourceBundleUtil.getResourceBundleLoader(
+					"content.Language", clazz.getClassLoader()),
+				_resourceBundleLoader,
+				LanguageUtil.getPortalResourceBundleLoader());
+
 		ResourceBundle resourceBundle = null;
 
 		try {
-			resourceBundle = _resourceBundleLoader.loadResourceBundle(locale);
+			resourceBundle = resourceBundleLoader.loadResourceBundle(locale);
 		}
 		catch (MissingResourceException mre) {
 			resourceBundle = ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE;

@@ -269,11 +269,6 @@ definition {
 		var key_threadsNumber = "${threadsNumber}";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORIES",
-			value1 = "0"
-		);
-
-		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_COUNT",
 			value1 = "0 Categories"
 		);

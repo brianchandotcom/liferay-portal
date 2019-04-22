@@ -291,11 +291,11 @@ public class TaskResourceImpl
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"taskName", "taskName");
 
-		CardinalityAggregation cardinalityAggregation =
-			_aggregations.cardinality("instanceCount", "instanceId");
-
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _queries.term("onTime", true));
+
+		CardinalityAggregation cardinalityAggregation =
+			_aggregations.cardinality("instanceCount", "instanceId");
 
 		onTimeFilterAggregation.addChildAggregation(cardinalityAggregation);
 

@@ -358,11 +358,11 @@ public class ProcessResourceImpl
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"processId", "processId");
 
-		CardinalityAggregation cardinalityAggregation =
-			_aggregations.cardinality("instanceCount", "instanceId");
-
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _queries.term("onTime", true));
+
+		CardinalityAggregation cardinalityAggregation =
+			_aggregations.cardinality("instanceCount", "instanceId");
 
 		onTimeFilterAggregation.addChildAggregation(cardinalityAggregation);
 

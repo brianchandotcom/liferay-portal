@@ -100,32 +100,6 @@ public class HoursAvailable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dayOfWeek;
 
-	@Schema(description = "The identifier of the resource.")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
-
 	@Schema(
 		description = "An hour in HH:MM format that marks when the Organization opens."
 	)
@@ -209,16 +183,6 @@ public class HoursAvailable {
 			sb.append(_escape(dayOfWeek));
 
 			sb.append("\"");
-		}
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
 		}
 
 		if (opens != null) {

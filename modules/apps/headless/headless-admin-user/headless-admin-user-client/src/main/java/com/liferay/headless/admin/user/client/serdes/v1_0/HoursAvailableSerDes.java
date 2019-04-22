@@ -81,16 +81,6 @@ public class HoursAvailableSerDes {
 			sb.append("\"");
 		}
 
-		if (hoursAvailable.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(hoursAvailable.getId());
-		}
-
 		if (hoursAvailable.getOpens() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -129,13 +119,6 @@ public class HoursAvailableSerDes {
 		}
 		else {
 			map.put("dayOfWeek", String.valueOf(hoursAvailable.getDayOfWeek()));
-		}
-
-		if (hoursAvailable.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(hoursAvailable.getId()));
 		}
 
 		if (hoursAvailable.getOpens() == null) {
@@ -180,12 +163,6 @@ public class HoursAvailableSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dayOfWeek")) {
 				if (jsonParserFieldValue != null) {
 					hoursAvailable.setDayOfWeek((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					hoursAvailable.setId(
-						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "opens")) {

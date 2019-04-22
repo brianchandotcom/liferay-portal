@@ -73,16 +73,6 @@ public class ServiceSerDes {
 			sb.append("]");
 		}
 
-		if (service.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(service.getId());
-		}
-
 		if (service.getServiceType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -115,13 +105,6 @@ public class ServiceSerDes {
 		else {
 			map.put(
 				"hoursAvailable", String.valueOf(service.getHoursAvailable()));
-		}
-
-		if (service.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(service.getId()));
 		}
 
 		if (service.getServiceType() == null) {
@@ -167,11 +150,6 @@ public class ServiceSerDes {
 						).toArray(
 							size -> new HoursAvailable[size]
 						));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					service.setId(Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "serviceType")) {

@@ -59,7 +59,7 @@ public abstract class BaseFormStructureResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "formStructureId")}
 	)
 	@Path("/form-structures/{formStructureId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormStructure")})
 	public FormStructure getFormStructure(
 			@NotNull @Parameter(hidden = true) @PathParam("formStructureId")
@@ -79,7 +79,7 @@ public abstract class BaseFormStructureResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/form-structures")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormStructure")})
 	public Page<FormStructure> getSiteFormStructuresPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,

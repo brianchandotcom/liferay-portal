@@ -60,7 +60,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@GET
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
 	@Path("/forms/{formId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Form")})
 	public Form getForm(
 			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId)
@@ -70,11 +70,11 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
 	@Path("/forms/{formId}/evaluate-context")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Form")})
 	public Form postFormEvaluateContext(
 			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId,
@@ -89,7 +89,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
 	@Path("/forms/{formId}/upload-file")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Form")})
 	public FormDocument postFormUploadFile(
 			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId,
@@ -109,7 +109,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		}
 	)
 	@Path("/sites/{siteId}/forms")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Form")})
 	public Page<Form> getSiteFormsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,

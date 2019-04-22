@@ -47,7 +47,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	implements TaxonomyCategoryResource {
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PATCH
 	@Path("/taxonomy-categories/batch")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
@@ -57,7 +57,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/taxonomy-categories/batch")
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})

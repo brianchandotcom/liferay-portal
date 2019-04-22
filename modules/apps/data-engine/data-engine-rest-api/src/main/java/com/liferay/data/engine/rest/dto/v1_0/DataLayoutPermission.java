@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataLayoutPermission")
 public class DataLayoutPermission {
 
+	@Schema
 	public Boolean getAddDataLayout() {
 		return addDataLayout;
 	}
@@ -67,6 +70,7 @@ public class DataLayoutPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean addDataLayout;
 
+	@Schema
 	public Boolean getDefinePermissions() {
 		return definePermissions;
 	}
@@ -94,6 +98,7 @@ public class DataLayoutPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean definePermissions;
 
+	@Schema
 	public Boolean getDelete() {
 		return delete;
 	}
@@ -121,6 +126,7 @@ public class DataLayoutPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean delete;
 
+	@Schema
 	public String[] getRoleNames() {
 		return roleNames;
 	}
@@ -148,6 +154,7 @@ public class DataLayoutPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] roleNames;
 
+	@Schema
 	public Boolean getUpdate() {
 		return update;
 	}
@@ -175,6 +182,7 @@ public class DataLayoutPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean update;
 
+	@Schema
 	public Boolean getView() {
 		return view;
 	}

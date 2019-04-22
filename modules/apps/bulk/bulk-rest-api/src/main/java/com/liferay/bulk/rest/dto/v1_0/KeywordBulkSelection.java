@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "KeywordBulkSelection")
 public class KeywordBulkSelection {
 
+	@Schema
 	public DocumentBulkSelection getDocumentBulkSelection() {
 		return documentBulkSelection;
 	}
@@ -70,6 +73,7 @@ public class KeywordBulkSelection {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DocumentBulkSelection documentBulkSelection;
 
+	@Schema
 	public String[] getKeywordsToAdd() {
 		return keywordsToAdd;
 	}
@@ -97,6 +101,7 @@ public class KeywordBulkSelection {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywordsToAdd;
 
+	@Schema
 	public String[] getKeywordsToRemove() {
 		return keywordsToRemove;
 	}

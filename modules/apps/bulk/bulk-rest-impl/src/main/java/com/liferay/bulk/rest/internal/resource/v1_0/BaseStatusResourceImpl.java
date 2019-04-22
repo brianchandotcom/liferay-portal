@@ -46,7 +46,7 @@ public abstract class BaseStatusResourceImpl implements StatusResource {
 	@Override
 	@GET
 	@Path("/status")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Status")})
 	public Status getStatus() throws Exception {
 		return new Status();

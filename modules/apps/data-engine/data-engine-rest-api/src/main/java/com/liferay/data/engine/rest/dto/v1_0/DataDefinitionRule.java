@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataDefinitionRule")
 public class DataDefinitionRule {
 
+	@Schema
 	public String[] getDataDefinitionFieldNames() {
 		return dataDefinitionFieldNames;
 	}
@@ -69,6 +72,7 @@ public class DataDefinitionRule {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] dataDefinitionFieldNames;
 
+	@Schema
 	public DataDefinitionRuleParameter[] getDataDefinitionRuleParameters() {
 		return dataDefinitionRuleParameters;
 	}
@@ -100,6 +104,7 @@ public class DataDefinitionRule {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataDefinitionRuleParameter[] dataDefinitionRuleParameters;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -125,6 +130,7 @@ public class DataDefinitionRule {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public String getRuleType() {
 		return ruleType;
 	}

@@ -46,10 +46,10 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseSelectionResourceImpl implements SelectionResource {
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/bulk-selection")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Selection")})
 	public Selection postBulkSelection(
 			DocumentBulkSelection documentBulkSelection)

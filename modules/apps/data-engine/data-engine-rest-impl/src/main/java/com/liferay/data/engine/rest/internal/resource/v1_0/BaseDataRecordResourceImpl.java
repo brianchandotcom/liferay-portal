@@ -61,16 +61,17 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
 	@Path("/data-record-collections/{dataRecordCollectionId}/data-records")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
-			@NotNull @PathParam("dataRecordCollectionId") Long
-				dataRecordCollectionId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -78,14 +79,19 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
+		}
+	)
 	@Path("/data-record-collections/{dataRecordCollectionId}/data-records")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public DataRecord postDataRecordCollectionDataRecord(
-			@NotNull @PathParam("dataRecordCollectionId") Long
-				dataRecordCollectionId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
 			DataRecord dataRecord)
 		throws Exception {
 
@@ -94,14 +100,19 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 
 	@Override
 	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
+		}
+	)
 	@Path(
 		"/data-record-collections/{dataRecordCollectionId}/data-records/export"
 	)
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public String getDataRecordCollectionDataRecordExport(
-			@NotNull @PathParam("dataRecordCollectionId") Long
-				dataRecordCollectionId)
+			@NotNull @Parameter(hidden = true)
+			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId)
 		throws Exception {
 
 		return StringPool.BLANK;
@@ -109,34 +120,46 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataRecordId")}
+	)
 	@Path("/data-records/{dataRecordId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public void deleteDataRecord(
-			@NotNull @PathParam("dataRecordId") Long dataRecordId)
+			@NotNull @Parameter(hidden = true) @PathParam("dataRecordId") Long
+				dataRecordId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataRecordId")}
+	)
 	@Path("/data-records/{dataRecordId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public DataRecord getDataRecord(
-			@NotNull @PathParam("dataRecordId") Long dataRecordId)
+			@NotNull @Parameter(hidden = true) @PathParam("dataRecordId") Long
+				dataRecordId)
 		throws Exception {
 
 		return new DataRecord();
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataRecordId")}
+	)
 	@Path("/data-records/{dataRecordId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public DataRecord putDataRecord(
-			@NotNull @PathParam("dataRecordId") Long dataRecordId,
+			@NotNull @Parameter(hidden = true) @PathParam("dataRecordId") Long
+				dataRecordId,
 			DataRecord dataRecord)
 		throws Exception {
 

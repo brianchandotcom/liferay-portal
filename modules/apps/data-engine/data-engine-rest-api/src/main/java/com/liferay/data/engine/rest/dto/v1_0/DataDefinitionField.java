@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataDefinitionField")
 public class DataDefinitionField {
 
+	@Schema
 	public CustomProperty[] getCustomProperties() {
 		return customProperties;
 	}
@@ -68,6 +71,7 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomProperty[] customProperties;
 
+	@Schema
 	public LocalizedValue[] getDefaultValue() {
 		return defaultValue;
 	}
@@ -96,6 +100,7 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected LocalizedValue[] defaultValue;
 
+	@Schema
 	public String getFieldType() {
 		return fieldType;
 	}
@@ -123,6 +128,7 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fieldType;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -148,6 +154,7 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public Boolean getIndexable() {
 		return indexable;
 	}
@@ -175,6 +182,7 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexable;
 
+	@Schema
 	public LocalizedValue[] getLabel() {
 		return label;
 	}
@@ -202,6 +210,7 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected LocalizedValue[] label;
 
+	@Schema
 	public Boolean getLocalizable() {
 		return localizable;
 	}
@@ -229,6 +238,7 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean localizable;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -254,6 +264,7 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public Boolean getRepeatable() {
 		return repeatable;
 	}
@@ -281,6 +292,7 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean repeatable;
 
+	@Schema
 	public LocalizedValue[] getTip() {
 		return tip;
 	}

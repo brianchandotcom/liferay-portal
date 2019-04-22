@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataRecord")
 public class DataRecord {
 
+	@Schema
 	public Long getDataRecordCollectionId() {
 		return dataRecordCollectionId;
 	}
@@ -67,6 +70,7 @@ public class DataRecord {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataRecordCollectionId;
 
+	@Schema
 	public DataRecordValue[] getDataRecordValues() {
 		return dataRecordValues;
 	}
@@ -95,6 +99,7 @@ public class DataRecord {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataRecordValue[] dataRecordValues;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}

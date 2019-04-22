@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -44,6 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataLayout")
 public class DataLayout {
 
+	@Schema
 	public Long getDataDefinitionId() {
 		return dataDefinitionId;
 	}
@@ -71,6 +74,7 @@ public class DataLayout {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataDefinitionId;
 
+	@Schema
 	public DataLayoutPage[] getDataLayoutPages() {
 		return dataLayoutPages;
 	}
@@ -99,6 +103,7 @@ public class DataLayout {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataLayoutPage[] dataLayoutPages;
 
+	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -126,6 +131,7 @@ public class DataLayout {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@Schema
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -153,6 +159,7 @@ public class DataLayout {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@Schema
 	public String getDefaultLanguageId() {
 		return defaultLanguageId;
 	}
@@ -180,6 +187,7 @@ public class DataLayout {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String defaultLanguageId;
 
+	@Schema
 	public LocalizedValue[] getDescription() {
 		return description;
 	}
@@ -207,6 +215,7 @@ public class DataLayout {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected LocalizedValue[] description;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -232,6 +241,7 @@ public class DataLayout {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public LocalizedValue[] getName() {
 		return name;
 	}
@@ -259,6 +269,7 @@ public class DataLayout {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected LocalizedValue[] name;
 
+	@Schema
 	public String getPaginationMode() {
 		return paginationMode;
 	}
@@ -286,6 +297,7 @@ public class DataLayout {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paginationMode;
 
+	@Schema
 	public Long getUserId() {
 		return userId;
 	}

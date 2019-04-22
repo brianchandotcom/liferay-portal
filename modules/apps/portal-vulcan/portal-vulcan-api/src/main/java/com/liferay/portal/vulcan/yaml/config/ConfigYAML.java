@@ -47,6 +47,10 @@ public class ConfigYAML {
 		return _testDir;
 	}
 
+	public boolean isForcePredictableContentApplicationXML() {
+		return _forcePredictableContentApplicationXML;
+	}
+
 	public boolean isForcePredictableOperationId() {
 		return _forcePredictableOperationId;
 	}
@@ -75,6 +79,13 @@ public class ConfigYAML {
 		_clientDir = clientDir;
 	}
 
+	public void setForcePredictableContentApplicationXML(
+		boolean forcePredictableContentApplicationXML) {
+
+		_forcePredictableContentApplicationXML =
+			forcePredictableContentApplicationXML;
+	}
+
 	public void setForcePredictableOperationId(
 		boolean forcePredictableOperationId) {
 
@@ -98,6 +109,7 @@ public class ConfigYAML {
 	private Application _application;
 	private String _author;
 	private String _clientDir;
+	private boolean _forcePredictableContentApplicationXML = true;
 	private boolean _forcePredictableOperationId = true;
 	private String _implDir = "src/main/java";
 	private String _testDir;

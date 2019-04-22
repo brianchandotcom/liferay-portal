@@ -56,6 +56,8 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
+import java.io.InputStream;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -63,6 +65,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -151,8 +155,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		ServletContext servletContext = hotDeployEvent.getServletContext();
 
-		String servletContextName = servletContext.getServletContextName();
-
 		List<String> beanFilterNames =
 			(List<String>)servletContext.getAttribute(
 				WebKeys.BEAN_FILTER_NAMES);
@@ -160,24 +162,39 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			WebKeys.BEAN_PORTLET_IDS);
 
 		if ((beanFilterNames != null) || (beanPortletIds != null)) {
-			if ((beanFilterNames != null) && _log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						String.valueOf(beanFilterNames.size()),
-						" bean filters for ", servletContextName,
-						" are available for use"));
-			}
-
-			if ((beanPortletIds != null) && _log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						String.valueOf(beanPortletIds.size()),
-						" bean portlets for ", servletContextName,
-						" are available for use"));
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Detected bean portlet from ServletContext attributes");
 			}
 
 			return;
 		}
+
+		try (InputStream inputStream = servletContext.getResourceAsStream(
+				"/META-INF/MANIFEST.MF")) {
+
+			if (inputStream != null) {
+				Manifest manifest = new Manifest(inputStream);
+
+				Attributes mainAttributes = manifest.getMainAttributes();
+
+				String value = mainAttributes.getValue("Require-Capability");
+
+				if ((value != null) && value.contains("osgi.cdi.extension")) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Detected bean portlet from /META-INF/MANIFEST.MF");
+					}
+
+					return;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		String servletContextName = servletContext.getServletContextName();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + servletContextName);

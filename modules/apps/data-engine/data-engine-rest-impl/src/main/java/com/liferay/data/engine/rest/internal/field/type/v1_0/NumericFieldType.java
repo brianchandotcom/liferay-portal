@@ -21,6 +21,8 @@ import com.liferay.data.engine.rest.internal.field.type.v1_0.util.NumericFieldUt
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.data.SoyDataFactory;
 
 import java.text.DecimalFormat;
@@ -142,7 +144,8 @@ public class NumericFieldType extends BaseFieldType {
 	}
 
 	protected String getFormattedValue(Object value, Locale locale) {
-		if ((value == null) || Objects.equals(value, "NaN")) {
+
+		if (Validator.isNull(value)||StringUtil.equals((String)value, "NaN")) {
 			return StringPool.BLANK;
 		}
 

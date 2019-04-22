@@ -36,9 +36,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectJournalDDMTemplateVerticalCard implements VerticalCard {
+public class JournalSelectDDMTemplateVerticalCard implements VerticalCard {
 
-	public SelectJournalDDMTemplateVerticalCard(
+	public JournalSelectDDMTemplateVerticalCard(
 		BaseModel<?> baseModel, RenderRequest renderRequest,
 		JournalSelectDDMTemplateDisplayContext
 			journalSelectDDMTemplateDisplayContext) {

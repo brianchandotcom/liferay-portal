@@ -265,7 +265,7 @@ definition {
 			locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_GENERIC"
 		);
 
-		var key_subcategoriesNumber = "${subcategoriesNumber}";
+		var key_categoryCount = "${categoryCount}";
 		var key_threadsNumber = "${threadsNumber}";
 
 		AssertTextEquals.assertPartialText(
@@ -274,8 +274,8 @@ definition {
 		);
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-			value1 = "0"
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_COUNT",
+			value1 = "0 Categories"
 		);
 
 		AssertTextEquals.assertPartialText(
@@ -307,11 +307,11 @@ definition {
 			value1 = "${categoryName}"
 		);
 
-		var key_subcategoriesNumber = "${subcategoriesNumber}";
+		var key_categoryCount = "${categoryCount}";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORIES",
-			value1 = "${subcategoriesNumber}"
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_COUNT",
+			value1 = "${categoryCount}"
 		);
 
 		var key_threadsNumber = "${threadsNumber}";

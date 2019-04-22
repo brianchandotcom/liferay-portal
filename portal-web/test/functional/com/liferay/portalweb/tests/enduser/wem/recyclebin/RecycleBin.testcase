@@ -1044,6 +1044,7 @@ definition {
 		);
 
 		MessageboardsCategory.viewCP(
+			categoryCount = "0",
 			categoryName = "MB Category Name",
 			replyCount = "1",
 			subcategoriesNumber = "0",

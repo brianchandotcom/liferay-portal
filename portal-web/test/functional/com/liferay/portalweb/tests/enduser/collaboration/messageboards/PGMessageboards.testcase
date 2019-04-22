@@ -141,6 +141,7 @@ definition {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.viewCategoryDefaultPG(
+			categoryCount = "0 Categories",
 			categoryName = "MB Category Name",
 			subcategoriesNumber = "0",
 			threadsNumber = "0"

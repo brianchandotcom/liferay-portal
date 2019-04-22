@@ -118,6 +118,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_LIST_CATEGORY_COUNT</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_categoryName}')]//div[2][contains(.,'${key_categoryCount}')] | //div[@data-qa-id='rowItemContent'][contains(.,'${key_categoryName}')]//span[1][contains(.,'${key_categoryCount}')] </td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_LIST_CATEGORY_DESCRIPTION</td>
 	<td>//*[@data-qa-id='rowItemContent']/h4/a[contains(.,'${key_categoryName}')]/../..//h5[contains(.,'${key_categoryDescription}')]</td>
 	<td></td>
@@ -125,11 +130,6 @@
 <tr>
 	<td>CATEGORY_LIST_CHECKBOX</td>
 	<td>//li[contains(.,'${key_categoryName}')]//div[contains(@class,'checkbox')]/label/input[contains(@type,'checkbox')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORY_LIST_SUBCATEGORIES</td>
-	<td>//li[contains(.,'${key_categoryName}')]/div/span[2][contains(.,'${key_subcategoriesNumber}')]</td>
 	<td></td>
 </tr>
 <tr>

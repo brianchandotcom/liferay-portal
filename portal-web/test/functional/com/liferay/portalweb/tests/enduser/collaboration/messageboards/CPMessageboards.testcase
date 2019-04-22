@@ -38,6 +38,7 @@ definition {
 		MessageboardsCategory.addCP(categoryName = "MB Category Name");
 
 		MessageboardsCategory.viewCP(
+			categoryCount = "0 Categories",
 			categoryName = "MB Category Name",
 			subcategoriesNumber = "0",
 			threadsNumber = "0"

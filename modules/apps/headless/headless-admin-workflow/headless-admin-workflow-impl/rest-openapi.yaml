@@ -226,6 +226,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/WorkflowTask"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowTask"
+                                type: array
                     description: ""
             tags: ["WorkflowTask"]
     "/workflow-logs/{workflowLogId}":
@@ -242,6 +247,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowLog"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/WorkflowLog"
                     description: ""
@@ -262,6 +270,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowTask"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/WorkflowTask"
@@ -288,6 +301,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/WorkflowTask"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowTask"
+                                type: array
                     description: ""
             tags: ["WorkflowTask"]
     "/workflow-tasks/{workflowTaskId}":
@@ -304,6 +322,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowTask"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/WorkflowTask"
                     description: ""
@@ -323,10 +344,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/WorkflowTaskAssignToMe"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowTaskAssignToMe"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowTask"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/WorkflowTask"
                     description: ""
@@ -346,10 +373,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/WorkflowTaskAssignToUser"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowTaskAssignToUser"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowTask"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/WorkflowTask"
                     description: ""
@@ -369,10 +402,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/ChangeTransition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ChangeTransition"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowTask"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/WorkflowTask"
                     description: ""
@@ -392,10 +431,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/WorkflowTaskAssignToMe"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowTaskAssignToMe"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowTask"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/WorkflowTask"
                     description: ""
@@ -422,6 +467,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowLog"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/WorkflowLog"

@@ -355,6 +355,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/FormDocument"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/FormDocument"
                     description: ""
             tags: ["FormDocument"]
     "/form-records/{formRecordId}":
@@ -371,6 +374,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/FormRecord"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/FormRecord"
                     description: ""
@@ -393,10 +399,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/FormRecordForm"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/FormRecordForm"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/FormRecord"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/FormRecord"
                     description: ""
@@ -417,6 +429,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/FormStructure"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/FormStructure"
                     description: ""
             tags: ["FormStructure"]
     "/forms/{formId}":
@@ -433,6 +448,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Form"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Form"
                     description: ""
@@ -456,10 +474,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Form"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Form"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Form"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Form"
                     description: ""
@@ -490,6 +514,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/FormRecord"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/FormRecord"
+                                type: array
                     description: ""
             tags: ["FormRecord"]
         post:
@@ -510,10 +539,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/FormRecordForm"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/FormRecordForm"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/FormRecord"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/FormRecord"
                     description: ""
@@ -532,6 +567,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/FormRecord"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/FormRecord"
                     description: ""
@@ -563,6 +601,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/FormDocument"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/FormDocument"
                     description: ""
             tags: ["Form"]
     "/sites/{siteId}/form-structures":
@@ -591,6 +632,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/FormStructure"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/FormStructure"
+                                type: array
                     description: ""
             tags: ["FormStructure"]
     "/sites/{siteId}/forms":
@@ -615,6 +661,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Form"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Form"

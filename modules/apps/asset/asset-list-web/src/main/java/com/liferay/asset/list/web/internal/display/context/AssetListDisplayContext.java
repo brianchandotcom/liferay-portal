@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -201,7 +200,7 @@ public class AssetListDisplayContext {
 		AssetListEntry assetListEntry = getAssetListEntry();
 
 		if (assetListEntry != null) {
-			return HtmlUtil.escape(assetListEntry.getTitle());
+			return assetListEntry.getTitle();
 		}
 
 		String title = StringPool.BLANK;

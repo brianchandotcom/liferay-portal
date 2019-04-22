@@ -100,6 +100,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		assertValid(getUserAccount);
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testGetUserAccountsPage() throws Exception {

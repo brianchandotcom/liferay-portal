@@ -85,7 +85,9 @@ public class Arquillian extends Runner implements Filterable {
 			throw new NoTestsRemainException();
 		}
 
-		Iterator<Class<?>> iterator = _classes.iterator();
+		Set<Class<?>> testClasses = _getTestClasses();
+
+		Iterator<Class<?>> iterator = testClasses.iterator();
 
 		while (iterator.hasNext()) {
 			Class<?> clazz = iterator.next();
@@ -174,9 +176,11 @@ public class Arquillian extends Runner implements Filterable {
 				}
 			}
 			finally {
-				_classes.remove(_clazz);
+				Set<Class<?>> testClasses = _getTestClasses();
 
-				if (_classes.isEmpty()) {
+				testClasses.remove(_clazz);
+
+				if (testClasses.isEmpty()) {
 					try {
 						frameworkMBean.uninstallBundle(_bundleId);
 
@@ -198,33 +202,10 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private long _installBundle(
-			FrameworkMBean frameworkMBean, int port, long passCode)
-		throws Exception {
+	private static Set<Class<?>> _getTestClasses() {
+		if (_testClasses == null) {
+			Set<Class<?>> testClasses = new HashSet<>();
 
-		InetAddress inetAddress = SocketUtil.getInetAddress();
-
-		Path path = BndBundleUtil.createBundle(
-			_filteredSortedTestClass._filteredMethodNames,
-			inetAddress.getHostAddress(), port, passCode);
-
-		URI uri = path.toUri();
-
-		URL url = uri.toURL();
-
-		try {
-			return frameworkMBean.installBundleFromURL(
-				url.getPath(), url.toExternalForm());
-		}
-		finally {
-			Files.delete(path);
-		}
-	}
-
-	private static long _bundleId;
-
-	private static final Set<Class<?>> _classes = new HashSet<Class<?>>() {
-		{
 			try {
 				Path srcDir = Paths.get(
 					System.getProperty("user.dir"), "src", "testIntegration",
@@ -253,7 +234,8 @@ public class Arquillian extends Runner implements Filterable {
 									CharPool.SLASH, CharPool.PERIOD);
 
 								try {
-									add(Class.forName(relativePathString));
+									testClasses.add(
+										Class.forName(relativePathString));
 								}
 								catch (ClassNotFoundException cnfe) {
 									throw new RuntimeException(cnfe);
@@ -265,11 +247,41 @@ public class Arquillian extends Runner implements Filterable {
 
 					});
 			}
-			catch (Exception e) {
-				throw new ExceptionInInitializerError(e);
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
 			}
+
+			_testClasses = testClasses;
 		}
-	};
+
+		return _testClasses;
+	}
+
+	private long _installBundle(
+			FrameworkMBean frameworkMBean, int port, long passCode)
+		throws Exception {
+
+		InetAddress inetAddress = SocketUtil.getInetAddress();
+
+		Path path = BndBundleUtil.createBundle(
+			_filteredSortedTestClass._filteredMethodNames,
+			inetAddress.getHostAddress(), port, passCode);
+
+		URI uri = path.toUri();
+
+		URL url = uri.toURL();
+
+		try {
+			return frameworkMBean.installBundleFromURL(
+				url.getPath(), url.toExternalForm());
+		}
+		finally {
+			Files.delete(path);
+		}
+	}
+
+	private static long _bundleId;
+	private static Set<Class<?>> _testClasses;
 
 	private final Class<?> _clazz;
 	private FilteredSortedTestClass _filteredSortedTestClass;

@@ -670,27 +670,6 @@ definition {
 		);
 	}
 
-	@priority = "3"
-	test ViewDuplicateTagWarningMessage {
-		property testray.component.names = "Tags";
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content"
-		);
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(webContentContent = "WC Content", webContentTitle = "WC Title");
-
-		Panel.expandPanel(panel = "Metadata");
-
-		AssetCategorization.addTag(tagName = "tagname");
-
-		AssetCategorization.addDuplicateTag(tagName = "tagname");
-	}
-
 	@priority = "5"
 	test ViewTagCloudDisplayConfiguration {
 		property testray.component.names = "Tags";

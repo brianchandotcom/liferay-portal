@@ -87,36 +87,41 @@ class AssetTagsSelector extends Component {
 	 * @param  {!Event} event
 	 */
 	_handleInputBlur(event) {
-		event.preventDefault();
+		const filteredItems = event.target.filteredItems;
 
-		const inputValue = event.target.inputValue;
+		if (
+			!filteredItems ||
+			(filteredItems && filteredItems.length === 0)
+		) {
+			const inputValue = event.target.inputValue;
 
-		if (inputValue) {
-			const existingTag = this.selectedItems.find(tag => tag.value === inputValue);
+			if (inputValue) {
+				const existingTag = this.selectedItems.find(tag => tag.value === inputValue);
 
-			if (existingTag) {
-				return;
-			}
-
-			const item = {
-				label: inputValue,
-				value: inputValue
-			};
-
-			this.selectedItems = this.selectedItems.concat(item);
-			this.tagNames = this._getTagNames();
-
-			if (this.addCallback) {
-				window[this.addCallback](item);
-			}
-
-			this.emit(
-				'itemAdded',
-				{
-					item: item,
-					selectedItems: this.selectedItems
+				if (existingTag) {
+					return;
 				}
-			);
+
+				const item = {
+					label: inputValue,
+					value: inputValue
+				};
+
+				this.selectedItems = this.selectedItems.concat(item);
+				this.tagNames = this._getTagNames();
+
+				if (this.addCallback) {
+					window[this.addCallback](item);
+				}
+
+				this.emit(
+					'itemAdded',
+					{
+						item: item,
+						selectedItems: this.selectedItems
+					}
+				);
+			}
 		}
 	}
 

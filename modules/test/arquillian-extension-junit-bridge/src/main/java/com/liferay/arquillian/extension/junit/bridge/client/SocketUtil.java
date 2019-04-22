@@ -22,7 +22,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
 
 import java.nio.channels.ServerSocketChannel;
 
@@ -58,11 +57,11 @@ public class SocketUtil {
 			_objectInputStream = new ObjectInputStream(
 				_socket.getInputStream());
 
-			if (passCode != readLong()) {
+			if (passCode != _objectInputStream.readLong()) {
 				_logger.log(
 					Level.WARNING,
 					"Pass code mismatch, dropped connection from " +
-						getRemoteSocketAddress());
+						_socket.getRemoteSocketAddress());
 
 				close();
 
@@ -71,10 +70,6 @@ public class SocketUtil {
 
 			return;
 		}
-	}
-
-	public static SocketAddress getRemoteSocketAddress() {
-		return _socket.getRemoteSocketAddress();
 	}
 
 	public static ServerSocket getServerSocket() throws IOException {
@@ -100,10 +95,6 @@ public class SocketUtil {
 				port++;
 			}
 		}
-	}
-
-	public static long readLong() throws IOException {
-		return _objectInputStream.readLong();
 	}
 
 	public static Object readObject() throws Exception {

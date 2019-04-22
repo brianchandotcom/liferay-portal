@@ -32,10 +32,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "assets", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	description = "google-cloud-natural-language-asset-auto-tag-provider-description",
+	description = "google-cloud-natural-language-asset-auto-tag-configuration-description",
 	id = "com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration",
 	localization = "content/Language",
-	name = "google-cloud-natural-language-asset-auto-tag-provider-configuration-name"
+	name = "google-cloud-natural-language-asset-auto-tag-configuration-name"
 )
 public interface GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration {
 

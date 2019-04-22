@@ -107,18 +107,6 @@ public class SiteNavigationMenuTestUtil {
 			serviceContext);
 	}
 
-	public static SiteNavigationMenu addSiteNavigationMenu(
-			Group group, String name, int type, boolean auto)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		return SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
-			TestPropsValues.getUserId(), group.getGroupId(), name, type, auto,
-			serviceContext);
-	}
-
 	public static SiteNavigationMenuItem addSiteNavigationMenuItem(
 			int position, SiteNavigationMenu siteNavigationMenu)
 		throws PortalException {

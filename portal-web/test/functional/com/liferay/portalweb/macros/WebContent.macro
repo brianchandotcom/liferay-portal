@@ -399,6 +399,13 @@ definition {
 				value1 = "${webContentContent}"
 			);
 		}
+
+		if (isSet(templateName)) {
+			WebContent.selectTemplateCP(
+				structureName = "${structureName}",
+				templateName = "${templateName}"
+			);
+		}
 	}
 
 	macro addWithMultipleCategories {

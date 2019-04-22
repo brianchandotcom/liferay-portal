@@ -225,30 +225,29 @@ public class Arquillian extends Runner implements Filterable {
 
 						@Override
 						public FileVisitResult visitFile(
-								Path filePath,
-								BasicFileAttributes basicFileAttributes)
-							throws IOException {
+							Path filePath,
+							BasicFileAttributes basicFileAttributes) {
 
 							Path relativePath = startPath.relativize(filePath);
 
 							String relativePathString = relativePath.toString();
 
-							if (relativePathString.endsWith("Test.class")) {
-								relativePathString =
-									relativePathString.substring(
-										0, relativePathString.length() - 6);
+							if (!relativePathString.endsWith("Test.class")) {
+								return FileVisitResult.CONTINUE;
+							}
 
-								relativePathString = relativePathString.replace(
-									CharPool.SLASH, CharPool.PERIOD);
+							relativePathString = relativePathString.substring(
+								0, relativePathString.length() - 6);
 
-								try {
-									testClasses.add(
-										classLoader.loadClass(
-											relativePathString));
-								}
-								catch (ClassNotFoundException cnfe) {
-									throw new RuntimeException(cnfe);
-								}
+							relativePathString = relativePathString.replace(
+								CharPool.SLASH, CharPool.PERIOD);
+
+							try {
+								testClasses.add(
+									classLoader.loadClass(relativePathString));
+							}
+							catch (ClassNotFoundException cnfe) {
+								throw new RuntimeException(cnfe);
 							}
 
 							return FileVisitResult.CONTINUE;

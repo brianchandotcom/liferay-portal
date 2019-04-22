@@ -22,7 +22,7 @@
 		<filter-class>com.liferay.portal.servlet.filters.aggregate.AggregateFilter</filter-class>
 		<init-param>
 			<param-name>url-regex-pattern</param-name>
-			<param-value>.+/(aui_lang|barebone|css|everything|main)\.jsp</param-value>
+			<param-value>.+/(aui_lang|available_languages|barebone|css|everything|main)\.jsp</param-value>
 		</init-param>
 	</filter>
 	<filter>

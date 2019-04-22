@@ -47,9 +47,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 </div>
 
 <c:if test="<%= article != null %>">
-	<c:if test="<%= journalContentDisplayContext.getDefaultDDMTemplate() != null %>">
-		<liferay-util:include page="/journal_template.jsp" servletContext="<%= application %>" />
-	</c:if>
+	<liferay-util:include page="/journal_template.jsp" servletContext="<%= application %>" />
 
 	<div class="sheet-section">
 		<div class="sheet-subtitle">

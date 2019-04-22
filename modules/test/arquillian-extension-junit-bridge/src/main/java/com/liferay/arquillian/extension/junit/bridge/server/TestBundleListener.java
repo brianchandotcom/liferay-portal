@@ -28,12 +28,12 @@ public class TestBundleListener implements BundleListener {
 
 	public TestBundleListener(
 		BundleContext systemBundleContext, Bundle testBundle,
-		List<String> filterMethodNames, String reportServerHostName,
+		List<String> filteredMethodNames, String reportServerHostName,
 		int reportServerPort, long passCode) {
 
 		_systemBundleContext = systemBundleContext;
 		_testBundle = testBundle;
-		_filterMethodNames = filterMethodNames;
+		_filteredMethodNames = filteredMethodNames;
 		_reportServerHostName = reportServerHostName;
 		_reportServerPort = reportServerPort;
 		_passCode = passCode;
@@ -54,7 +54,7 @@ public class TestBundleListener implements BundleListener {
 		if (bundle.getState() == Bundle.ACTIVE) {
 			_testExecutorThread = new Thread(
 				new TestExecutorRunnable(
-					_testBundle, _filterMethodNames, _reportServerHostName,
+					_testBundle, _filteredMethodNames, _reportServerHostName,
 					_reportServerPort, _passCode),
 				_testBundle.getSymbolicName() + "-executor-thread");
 
@@ -74,7 +74,7 @@ public class TestBundleListener implements BundleListener {
 		}
 	}
 
-	private final List<String> _filterMethodNames;
+	private final List<String> _filteredMethodNames;
 	private final long _passCode;
 	private final String _reportServerHostName;
 	private final int _reportServerPort;

@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.notifications.internal.notifications;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -51,6 +52,16 @@ public class SharingUserNotificationHandler
 		JSONObject userNotificationEventPayloadJSONObject =
 			JSONFactoryUtil.createJSONObject(
 				userNotificationEvent.getPayload());
+
+		AssetRenderer<?> assetRenderer = getAssetRenderer(
+			userNotificationEventPayloadJSONObject);
+
+		if (assetRenderer == null) {
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent.getUserNotificationEventId());
+
+			return null;
+		}
 
 		String message = userNotificationEventPayloadJSONObject.getString(
 			"message");

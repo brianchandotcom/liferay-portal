@@ -32,8 +32,6 @@
 					<aui:option label="publish-date" selected='<%= Objects.equals(orderByColumn1, "publishDate") %>' value="publishDate" />
 					<aui:option label="expiration-date" selected='<%= Objects.equals(orderByColumn1, "expirationDate") %>' value="expirationDate" />
 					<aui:option label="priority" selected='<%= Objects.equals(orderByColumn1, "priority") %>' value="priority" />
-					<aui:option label="view-count" selected='<%= Objects.equals(orderByColumn1, "viewCount") %>' value="viewCount" />
-					<aui:option label="ratings" selected='<%= Objects.equals(orderByColumn1, "ratings") %>' value="ratings" />
 				</aui:select>
 
 				<%
@@ -76,8 +74,6 @@
 					<aui:option label="publish-date" selected='<%= Objects.equals(orderByColumn2, "publishDate") %>' value="publishDate" />
 					<aui:option label="expiration-date" selected='<%= Objects.equals(orderByColumn2, "expirationDate") %>' value="expirationDate" />
 					<aui:option label="priority" selected='<%= Objects.equals(orderByColumn2, "priority") %>' value="priority" />
-					<aui:option label="view-count" selected='<%= Objects.equals(orderByColumn2, "viewCount") %>' value="viewCount" />
-					<aui:option label="ratings" selected='<%= Objects.equals(orderByColumn2, "ratings") %>' value="ratings" />
 				</aui:select>
 
 				<%

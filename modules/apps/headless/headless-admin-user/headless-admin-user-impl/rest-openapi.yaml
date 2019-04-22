@@ -168,11 +168,6 @@ components:
                                             description: The day of the week.
                                             readOnly: true
                                             type: string
-                                        id:
-                                            description: The identifier of the resource.
-                                            format: int64
-                                            readOnly: true
-                                            type: integer
                                         opens:
                                             description: An hour in HH:MM format that marks when the Organization opens.
                                             readOnly: true
@@ -180,11 +175,6 @@ components:
                                     type: object
                                 readOnly: true
                                 type: array
-                            id:
-                                description: The identifier of the resource.
-                                format: int64
-                                readOnly: true
-                                type: integer
                             serviceType:
                                 description: The type of the service provided.
                                 readOnly: true

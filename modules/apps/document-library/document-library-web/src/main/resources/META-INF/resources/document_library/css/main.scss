@@ -608,6 +608,10 @@
 	padding: 0.3em;
 }
 
+.autocomplete-dropdown-menu {
+	z-index: 2000;
+}
+
 .firefox {
 	.portlet-document-library, .portlet-document-library-display {
 		.audio-node {

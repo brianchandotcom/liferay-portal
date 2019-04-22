@@ -1,6 +1,6 @@
 import {CLEAR_DROP_TARGET, MOVE_ROW, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
 import {DEFAULT_COMPONENT_ROW_CONFIG, DEFAULT_SECTION_ROW_CONFIG} from './rowConstants';
-import {FRAGMENTS_EDITOR_ROW_TYPES} from './constants';
+import {FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ROW_TYPES} from './constants';
 import {getTargetBorder, getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
 
 /**
@@ -187,6 +187,27 @@ function removeItem(store, removeItemAction, removeItemPayload) {
 }
 
 /**
+ * Set dragging item's position to mouse coordinates
+ * @param {MouseEvent} event
+ */
+function setDraggingItemPosition(event) {
+	const draggingElement = document.body.querySelector(
+		`.${FRAGMENTS_EDITOR_DRAGGING_CLASS}`
+	);
+
+	if (draggingElement) {
+		const newXPos = event.clientX - draggingElement.offsetWidth / 2;
+		const newYPos = event.clientY - draggingElement.offsetHeight / 2;
+
+		requestAnimationFrame(
+			() => {
+				setElementPosition(draggingElement, newXPos, newYPos);
+			}
+		);
+	}
+}
+
+/**
  * Set an element's position to new x and y coordinates
  * @param {object} element
  * @param {number} xPos
@@ -337,6 +358,7 @@ export {
 	moveRow,
 	remove,
 	removeItem,
+	setDraggingItemPosition,
 	setIn,
 	updateIn,
 	updateRow,

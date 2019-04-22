@@ -277,36 +277,7 @@ public class DLFileEntryAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Group group = GroupLocalServiceUtil.fetchGroup(_fileEntry.getGroupId());
-
-		if (group.isCompany()) {
-			group = themeDisplay.getScopeGroup();
-		}
-
-		if (PortletPermissionUtil.hasControlPanelAccessPermission(
-				themeDisplay.getPermissionChecker(), group.getGroupId(),
-				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, group,
-				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/edit_file_entry");
-			portletURL.setParameter(
-				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
-
-			return portletURL;
-		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = _getPortletURL(liferayPortletRequest);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_entry");
@@ -515,6 +486,35 @@ public class DLFileEntryAssetRenderer
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
+	}
+
+	private PortletURL _getPortletURL(
+			LiferayPortletRequest liferayPortletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = GroupLocalServiceUtil.fetchGroup(_fileEntry.getGroupId());
+
+		if (group.isCompany()) {
+			group = themeDisplay.getScopeGroup();
+		}
+
+		if (PortletPermissionUtil.hasControlPanelAccessPermission(
+				themeDisplay.getPermissionChecker(), group.getGroupId(),
+				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+
+			return PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, group,
+				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE);
+		}
+
+		return PortletURLFactoryUtil.create(
+			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY,
+			PortletRequest.RENDER_PHASE);
 	}
 
 	private boolean _hasViewInContextGroupLayout(

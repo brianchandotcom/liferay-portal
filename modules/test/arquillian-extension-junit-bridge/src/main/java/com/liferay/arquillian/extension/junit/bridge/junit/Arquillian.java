@@ -17,7 +17,6 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
 import com.liferay.arquillian.extension.junit.bridge.client.SocketUtil;
-import com.liferay.arquillian.extension.junit.bridge.command.KillCommand;
 import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 import com.liferay.petra.string.CharPool;
 
@@ -167,13 +166,9 @@ public class Arquillian extends Runner implements Filterable {
 			try {
 				SocketUtil.writeUTF(_clazz.getName());
 
-				while (true) {
-					Object object = SocketUtil.readObject();
+				Object object = null;
 
-					if (object instanceof KillCommand) {
-						return;
-					}
-
+				while ((object = SocketUtil.readObject()) != null) {
 					RunNotifierCommand runNotifierCommand =
 						(RunNotifierCommand)object;
 

@@ -126,6 +126,10 @@ public class Arquillian extends Runner implements Filterable {
 			});
 
 		if (frameworkMethods.isEmpty()) {
+			Set<Class<?>> testClasses = _getTestClasses(_clazz);
+
+			testClasses.remove(_clazz);
+
 			return;
 		}
 

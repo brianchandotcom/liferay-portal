@@ -1,6 +1,13 @@
 import {UPDATE_LAST_SAVE_DATE} from '../actions/actions.es';
 
 /**
+ * @private
+ * @review
+ * @type {null|{detach: Function}}
+ */
+let _widgetConfigurationChangeHandler = null;
+
+/**
  * Possible types that can be returned by the image selector
  */
 const IMAGE_SELECTOR_RETURN_TYPES = {
@@ -120,34 +127,48 @@ function openImageSelector(
  * @review
  */
 function startListeningWidgetConfigurationChange(store) {
-	Liferay.after(
-		'popupReady',
-		event => {
-			const popupDocument = event.win.document;
+	if (!_widgetConfigurationChangeHandler) {
+		_widgetConfigurationChangeHandler = Liferay.after(
+			'popupReady',
+			event => {
+				const popupDocument = event.win.document;
 
-			const form = popupDocument.querySelector(
-				'.portlet-configuration-setup > form'
-			);
-
-			if (form) {
-				form.addEventListener(
-					'submit',
-					() => {
-						store.dispatchAction(
-							UPDATE_LAST_SAVE_DATE,
-							{
-								lastSaveDate: new Date()
-							}
-						);
-					}
+				const form = popupDocument.querySelector(
+					'.portlet-configuration-setup > form'
 				);
+
+				if (form) {
+					form.addEventListener(
+						'submit',
+						() => {
+							store.dispatchAction(
+								UPDATE_LAST_SAVE_DATE,
+								{
+									lastSaveDate: new Date()
+								}
+							);
+						}
+					);
+				}
 			}
-		}
-	);
+		);
+	}
+}
+
+/**
+ * @review
+ */
+function stopListeningWidgetConfigurationChange() {
+	if (_widgetConfigurationChangeHandler) {
+		_widgetConfigurationChangeHandler.detach();
+
+		_widgetConfigurationChangeHandler = null;
+	}
 }
 
 export {
 	openAssetBrowser,
 	openImageSelector,
-	startListeningWidgetConfigurationChange
+	startListeningWidgetConfigurationChange,
+	stopListeningWidgetConfigurationChange
 };

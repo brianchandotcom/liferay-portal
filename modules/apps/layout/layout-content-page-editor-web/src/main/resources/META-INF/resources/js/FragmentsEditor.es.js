@@ -10,7 +10,7 @@ import './components/sidebar/FragmentsEditorSidebar.es';
 import './components/toolbar/FragmentsEditorToolbar.es';
 import {CLEAR_ACTIVE_ITEM, CLEAR_HOVERED_ITEM, UPDATE_ACTIVE_ITEM, UPDATE_HOVERED_ITEM} from './actions/actions.es';
 import {INITIAL_STATE} from './store/state.es';
-import {startListeningWidgetConfigurationChange} from './utils/FragmentsEditorDialogUtils';
+import {startListeningWidgetConfigurationChange, stopListeningWidgetConfigurationChange} from './utils/FragmentsEditorDialogUtils';
 import {Store} from './store/store.es';
 import templates from './FragmentsEditor.soy';
 
@@ -68,6 +68,8 @@ class FragmentsEditor extends Component {
 		document.removeEventListener('click', this._handleDocumentClick, true);
 		document.removeEventListener('keyup', this._handleDocumentKeyUp);
 		document.removeEventListener('mouseover', this._handleDocumentMouseOver);
+
+		stopListeningWidgetConfigurationChange();
 	}
 
 	/**

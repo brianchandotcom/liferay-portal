@@ -382,7 +382,7 @@ definition {
 			userLoginFullName = "userfnpu userlnpu"
 		);
 
-		ProductMenu.gotoSite(site = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		Navigator.gotoStagedView();
 

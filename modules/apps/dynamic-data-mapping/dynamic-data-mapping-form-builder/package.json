@@ -151,7 +151,7 @@
 	"name": "dynamic-data-mapping-form-builder",
 	"scripts": {
 		"build": "npm run build-soy && babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && npm run clean",
-		"build-soy": "metalsoy --externalMsgFormat \"Liferay.Language.get('\\$2')\" --soyDeps \"../../../node_modules/+(clay-*|frontend-js-web)/src/**/*.soy\"",
+		"build-soy": "metalsoy --soyDeps \"../../../node_modules/+(clay-*|frontend-js-web)/src/**/*.soy\"",
 		"build-soy-tests": "npm run build-soy && metalsoy -s \"test/**/*.soy\" -d \"test\"",
 		"checkFormat": "liferay-npm-scripts lint",
 		"clean": "npm run clean-soy",

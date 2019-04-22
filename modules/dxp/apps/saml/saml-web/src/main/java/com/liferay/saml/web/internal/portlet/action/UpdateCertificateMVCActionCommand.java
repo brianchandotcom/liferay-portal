@@ -199,7 +199,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		X509Certificate x509Certificate = _certificateTool.generateCertificate(
 			keyPair, subjectCertificateEntityId, subjectCertificateEntityId,
 			startDate.getTime(), endDate.getTime(),
-			_SHA1_PREFIX + keyAlgorithm);
+			_SHA256_PREFIX + keyAlgorithm);
 
 		_localEntityManager.storeLocalEntityCertificate(
 			keyPair.getPrivate(), keystoreCredentialPassword, x509Certificate,
@@ -211,7 +211,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 			SamlWebKeys.SAML_X509_CERTIFICATE, x509Certificate);
 	}
 
-	private static final String _SHA1_PREFIX = "SHA1with";
+	private static final String _SHA256_PREFIX = "SHA256with";
 
 	@Reference
 	private CertificateTool _certificateTool;

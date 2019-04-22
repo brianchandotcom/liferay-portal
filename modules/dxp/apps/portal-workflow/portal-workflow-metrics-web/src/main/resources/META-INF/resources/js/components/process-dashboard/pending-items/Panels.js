@@ -7,22 +7,23 @@ const PANELS = [
 		totalField: 'instanceCount'
 	},
 	{
-		addressedToField: 'dueInInstanceCount',
-		iconColor: 'warning',
-		iconName: 'warning',
-		title: Liferay.Language.get('due-in-7-days'),
+		addressedToField: 'onTimeInstanceCount',
+		iconColor: 'success',
+		iconName: 'check-circle',
+		title: Liferay.Language.get('on-time'),
 		totalField: 'instanceCount'
 	},
 	{
-		addressedToField: 'dueAfterInstanceCount',
-		iconColor: 'success',
-		iconName: 'check-circle',
-		title: Liferay.Language.get('due-after-7-days'),
+		addressedToField: 'untrackedInstanceCount',
+		iconColor: 'info',
+		iconName: 'hr',
+		title: Liferay.Language.get('untracked'),
 		totalField: 'instanceCount'
 	},
 	{
 		addressedToField: 'instanceCount',
-		title: Liferay.Language.get('total-pending')
+		title: Liferay.Language.get('total-pending'),
+		totalField: 'instanceCount'
 	}
 ];
 

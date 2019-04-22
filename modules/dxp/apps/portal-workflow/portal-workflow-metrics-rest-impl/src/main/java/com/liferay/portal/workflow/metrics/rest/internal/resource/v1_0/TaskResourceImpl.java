@@ -318,6 +318,7 @@ public class TaskResourceImpl
 		termsAggregation.setSize(taskNames.size());
 
 		searchSearchRequest.addAggregation(termsAggregation);
+
 		searchSearchRequest.setIndexNames("workflow-metrics-sla-task-result");
 		searchSearchRequest.setQuery(_createBooleanQuery(taskNames));
 

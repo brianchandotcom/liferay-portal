@@ -162,7 +162,8 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 
 		jsonArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "normal"), "p", "text-default", 1));
+				LanguageUtil.get(resourceBundle, "normal"), "p", "text-default",
+				1));
 		jsonArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "small"), "p", "small", 1));

@@ -72,7 +72,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		}
 	)
 	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
 			@NotNull @PathParam("parentTaxonomyCategoryId") Long
@@ -85,10 +85,10 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/taxonomy-categories/{parentTaxonomyCategoryId}/taxonomy-categories")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
 			@NotNull @PathParam("parentTaxonomyCategoryId") Long
@@ -112,7 +112,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	@Override
 	@GET
 	@Path("/taxonomy-categories/{taxonomyCategoryId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory getTaxonomyCategory(
 			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId)
@@ -122,10 +122,10 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PATCH
 	@Path("/taxonomy-categories/{taxonomyCategoryId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory patchTaxonomyCategory(
 			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
@@ -176,10 +176,10 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/taxonomy-categories/{taxonomyCategoryId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory putTaxonomyCategory(
 			@NotNull @PathParam("taxonomyCategoryId") Long taxonomyCategoryId,
@@ -200,7 +200,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		}
 	)
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
 			@NotNull @PathParam("taxonomyVocabularyId") Long
@@ -213,10 +213,10 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(
 			@NotNull @PathParam("taxonomyVocabularyId") Long

@@ -67,7 +67,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Override
 	@GET
 	@Path("/message-board-attachments/{messageBoardAttachmentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment getMessageBoardAttachment(
 			@NotNull @PathParam("messageBoardAttachmentId") Long
@@ -82,7 +82,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Path(
 		"/message-board-messages/{messageBoardMessageId}/message-board-attachments"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public Page<MessageBoardAttachment>
 			getMessageBoardMessageMessageBoardAttachmentsPage(
@@ -99,7 +99,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Path(
 		"/message-board-messages/{messageBoardMessageId}/message-board-attachments"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment postMessageBoardMessageMessageBoardAttachment(
 			@NotNull @PathParam("messageBoardMessageId") Long
@@ -115,7 +115,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Path(
 		"/message-board-threads/{messageBoardThreadId}/message-board-attachments"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public Page<MessageBoardAttachment>
 			getMessageBoardThreadMessageBoardAttachmentsPage(
@@ -132,7 +132,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	@Path(
 		"/message-board-threads/{messageBoardThreadId}/message-board-attachments"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
 			@NotNull @PathParam("messageBoardThreadId") Long

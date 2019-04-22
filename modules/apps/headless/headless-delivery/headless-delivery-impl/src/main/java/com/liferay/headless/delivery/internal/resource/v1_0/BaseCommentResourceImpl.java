@@ -70,7 +70,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		}
 	)
 	@Path("/blog-postings/{blogPostingId}/comments")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getBlogPostingCommentsPage(
 			@NotNull @PathParam("blogPostingId") Long blogPostingId,
@@ -82,10 +82,10 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/blog-postings/{blogPostingId}/comments")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postBlogPostingComment(
 			@NotNull @PathParam("blogPostingId") Long blogPostingId,
@@ -107,7 +107,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	@Override
 	@GET
 	@Path("/comments/{commentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment getComment(@NotNull @PathParam("commentId") Long commentId)
 		throws Exception {
@@ -116,10 +116,10 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/comments/{commentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment putComment(
 			@NotNull @PathParam("commentId") Long commentId, Comment comment)
@@ -139,7 +139,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		}
 	)
 	@Path("/comments/{parentCommentId}/comments")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getCommentCommentsPage(
 			@NotNull @PathParam("parentCommentId") Long parentCommentId,
@@ -151,10 +151,10 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/comments/{parentCommentId}/comments")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postCommentComment(
 			@NotNull @PathParam("parentCommentId") Long parentCommentId,
@@ -175,7 +175,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		}
 	)
 	@Path("/documents/{documentId}/comments")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getDocumentCommentsPage(
 			@NotNull @PathParam("documentId") Long documentId,
@@ -187,10 +187,10 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/documents/{documentId}/comments")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postDocumentComment(
 			@NotNull @PathParam("documentId") Long documentId, Comment comment)
@@ -210,7 +210,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 		}
 	)
 	@Path("/structured-contents/{structuredContentId}/comments")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Page<Comment> getStructuredContentCommentsPage(
 			@NotNull @PathParam("structuredContentId") Long structuredContentId,
@@ -222,10 +222,10 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/structured-contents/{structuredContentId}/comments")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public Comment postStructuredContentComment(
 			@NotNull @PathParam("structuredContentId") Long structuredContentId,

@@ -58,7 +58,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Path(
 		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public Page<KnowledgeBaseAttachment>
 			getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
@@ -75,7 +75,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Path(
 		"/knowledge-base-articles/{knowledgeBaseArticleId}/knowledge-base-attachments"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
@@ -101,7 +101,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Override
 	@GET
 	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(
 			@NotNull @PathParam("knowledgeBaseAttachmentId") Long

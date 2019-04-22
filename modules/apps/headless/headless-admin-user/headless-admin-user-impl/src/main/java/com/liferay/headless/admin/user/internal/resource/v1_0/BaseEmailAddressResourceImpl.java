@@ -52,7 +52,7 @@ public abstract class BaseEmailAddressResourceImpl
 	@Override
 	@GET
 	@Path("/email-addresses/{emailAddressId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "EmailAddress")})
 	public EmailAddress getEmailAddress(
 			@NotNull @PathParam("emailAddressId") Long emailAddressId)
@@ -64,7 +64,7 @@ public abstract class BaseEmailAddressResourceImpl
 	@Override
 	@GET
 	@Path("/organizations/{organizationId}/email-addresses")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "EmailAddress")})
 	public Page<EmailAddress> getOrganizationEmailAddressesPage(
 			@NotNull @PathParam("organizationId") Long organizationId)
@@ -76,7 +76,7 @@ public abstract class BaseEmailAddressResourceImpl
 	@Override
 	@GET
 	@Path("/user-accounts/{userAccountId}/email-addresses")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "EmailAddress")})
 	public Page<EmailAddress> getUserAccountEmailAddressesPage(
 			@NotNull @PathParam("userAccountId") Long userAccountId)

@@ -73,7 +73,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Override
 	@GET
 	@Path("/blog-posting-images/{blogPostingImageId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage getBlogPostingImage(
 			@NotNull @PathParam("blogPostingImageId") Long blogPostingImageId)
@@ -93,7 +93,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/blog-posting-images")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -108,7 +108,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Consumes("multipart/form-data")
 	@POST
 	@Path("/sites/{siteId}/blog-posting-images")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public BlogPostingImage postSiteBlogPostingImage(
 			@NotNull @PathParam("siteId") Long siteId,

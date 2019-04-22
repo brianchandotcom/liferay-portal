@@ -52,7 +52,7 @@ public abstract class BasePostalAddressResourceImpl
 	@Override
 	@GET
 	@Path("/organizations/{organizationId}/postal-addresses")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PostalAddress")})
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
 			@NotNull @PathParam("organizationId") Long organizationId)
@@ -64,7 +64,7 @@ public abstract class BasePostalAddressResourceImpl
 	@Override
 	@GET
 	@Path("/postal-addresses/{postalAddressId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PostalAddress")})
 	public PostalAddress getPostalAddress(
 			@NotNull @PathParam("postalAddressId") Long postalAddressId)
@@ -76,7 +76,7 @@ public abstract class BasePostalAddressResourceImpl
 	@Override
 	@GET
 	@Path("/user-accounts/{userAccountId}/postal-addresses")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PostalAddress")})
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(
 			@NotNull @PathParam("userAccountId") Long userAccountId)

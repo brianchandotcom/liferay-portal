@@ -73,7 +73,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		}
 	)
 	@Path("/document-folders/{documentFolderId}/documents")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getDocumentFolderDocumentsPage(
 			@NotNull @PathParam("documentFolderId") Long documentFolderId,
@@ -88,7 +88,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Consumes("multipart/form-data")
 	@POST
 	@Path("/document-folders/{documentFolderId}/documents")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public Document postDocumentFolderDocument(
 			@NotNull @PathParam("documentFolderId") Long documentFolderId,
@@ -111,7 +111,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@GET
 	@Path("/documents/{documentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public Document getDocument(
 			@NotNull @PathParam("documentId") Long documentId)
@@ -124,7 +124,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Consumes("multipart/form-data")
 	@PATCH
 	@Path("/documents/{documentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public Document patchDocument(
 			@NotNull @PathParam("documentId") Long documentId,
@@ -138,7 +138,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Consumes("multipart/form-data")
 	@PUT
 	@Path("/documents/{documentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public Document putDocument(
 			@NotNull @PathParam("documentId") Long documentId,
@@ -161,7 +161,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Override
 	@GET
 	@Path("/documents/{documentId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public Rating getDocumentMyRating(
 			@NotNull @PathParam("documentId") Long documentId)
@@ -171,10 +171,10 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/documents/{documentId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public Rating postDocumentMyRating(
 			@NotNull @PathParam("documentId") Long documentId, Rating rating)
@@ -184,10 +184,10 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/documents/{documentId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public Rating putDocumentMyRating(
 			@NotNull @PathParam("documentId") Long documentId, Rating rating)
@@ -207,7 +207,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		}
 	)
 	@Path("/sites/{siteId}/documents")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public Page<Document> getSiteDocumentsPage(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -223,7 +223,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Consumes("multipart/form-data")
 	@POST
 	@Path("/sites/{siteId}/documents")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public Document postSiteDocument(
 			@NotNull @PathParam("siteId") Long siteId,

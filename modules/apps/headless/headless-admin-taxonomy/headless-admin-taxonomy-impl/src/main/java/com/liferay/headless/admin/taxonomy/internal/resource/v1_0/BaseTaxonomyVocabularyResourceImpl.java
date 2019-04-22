@@ -72,7 +72,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/taxonomy-vocabularies")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -84,10 +84,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/sites/{siteId}/taxonomy-vocabularies")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -111,7 +111,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Override
 	@GET
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary getTaxonomyVocabulary(
 			@NotNull @PathParam("taxonomyVocabularyId") Long
@@ -122,10 +122,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PATCH
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary patchTaxonomyVocabulary(
 			@NotNull @PathParam("taxonomyVocabularyId") Long
@@ -182,10 +182,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public TaxonomyVocabulary putTaxonomyVocabulary(
 			@NotNull @PathParam("taxonomyVocabularyId") Long

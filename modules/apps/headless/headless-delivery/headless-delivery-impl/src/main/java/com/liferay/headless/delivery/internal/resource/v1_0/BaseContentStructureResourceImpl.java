@@ -59,7 +59,7 @@ public abstract class BaseContentStructureResourceImpl
 	@Override
 	@GET
 	@Path("/content-structures/{contentStructureId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ContentStructure")})
 	public ContentStructure getContentStructure(
 			@NotNull @PathParam("contentStructureId") Long contentStructureId)
@@ -79,7 +79,7 @@ public abstract class BaseContentStructureResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/content-structures")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ContentStructure")})
 	public Page<ContentStructure> getSiteContentStructuresPage(
 			@NotNull @PathParam("siteId") Long siteId,

@@ -71,7 +71,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Override
 	@GET
 	@Path("/keywords/{keywordId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Keyword getKeyword(@NotNull @PathParam("keywordId") Long keywordId)
 		throws Exception {
@@ -80,10 +80,10 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/keywords/{keywordId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Keyword putKeyword(
 			@NotNull @PathParam("keywordId") Long keywordId, Keyword keyword)
@@ -103,7 +103,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 		}
 	)
 	@Path("/sites/{siteId}/keywords")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<Keyword> getSiteKeywordsPage(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -115,10 +115,10 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/sites/{siteId}/keywords")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Keyword postSiteKeyword(
 			@NotNull @PathParam("siteId") Long siteId, Keyword keyword)

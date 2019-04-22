@@ -75,7 +75,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Override
 	@GET
 	@Path("/message-board-sections/{messageBoardSectionId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection getMessageBoardSection(
 			@NotNull @PathParam("messageBoardSectionId") Long
@@ -86,10 +86,10 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PATCH
 	@Path("/message-board-sections/{messageBoardSectionId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection patchMessageBoardSection(
 			@NotNull @PathParam("messageBoardSectionId") Long
@@ -147,10 +147,10 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/message-board-sections/{messageBoardSectionId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection putMessageBoardSection(
 			@NotNull @PathParam("messageBoardSectionId") Long
@@ -174,7 +174,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Path(
 		"/message-board-sections/{parentMessageBoardSectionId}/message-board-sections"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
@@ -188,12 +188,12 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path(
 		"/message-board-sections/{parentMessageBoardSectionId}/message-board-sections"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
 			@NotNull @PathParam("parentMessageBoardSectionId") Long
@@ -215,7 +215,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/message-board-sections")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Page<MessageBoardSection> getSiteMessageBoardSectionsPage(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -228,10 +228,10 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/sites/{siteId}/message-board-sections")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection postSiteMessageBoardSection(
 			@NotNull @PathParam("siteId") Long siteId,

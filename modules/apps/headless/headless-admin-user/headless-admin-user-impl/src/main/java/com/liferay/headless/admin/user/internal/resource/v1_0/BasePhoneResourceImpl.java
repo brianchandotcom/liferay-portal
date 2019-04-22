@@ -51,7 +51,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 	@Override
 	@GET
 	@Path("/organizations/{organizationId}/phones")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getOrganizationPhonesPage(
 			@NotNull @PathParam("organizationId") Long organizationId)
@@ -63,7 +63,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 	@Override
 	@GET
 	@Path("/phones/{phoneId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Phone")})
 	public Phone getPhone(@NotNull @PathParam("phoneId") Long phoneId)
 		throws Exception {
@@ -74,7 +74,7 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 	@Override
 	@GET
 	@Path("/user-accounts/{userAccountId}/phones")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getUserAccountPhonesPage(
 			@NotNull @PathParam("userAccountId") Long userAccountId)

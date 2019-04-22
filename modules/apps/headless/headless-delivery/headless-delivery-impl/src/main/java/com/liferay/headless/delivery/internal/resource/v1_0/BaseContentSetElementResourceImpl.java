@@ -62,7 +62,7 @@ public abstract class BaseContentSetElementResourceImpl
 		}
 	)
 	@Path("/content-sets/{contentSetId}/content-set-elements")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ContentSetElement")})
 	public Page<ContentSetElement> getContentSetContentSetElementsPage(
 			@NotNull @PathParam("contentSetId") Long contentSetId,
@@ -81,7 +81,7 @@ public abstract class BaseContentSetElementResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/content-sets/by-key/{key}/content-set-elements")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ContentSetElement")})
 	public Page<ContentSetElement> getSiteContentSetByKeyContentSetElementsPage(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -101,7 +101,7 @@ public abstract class BaseContentSetElementResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/content-sets/by-uuid/{uuid}/content-set-elements")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ContentSetElement")})
 	public Page<ContentSetElement>
 			getSiteContentSetByUuidContentSetElementsPage(

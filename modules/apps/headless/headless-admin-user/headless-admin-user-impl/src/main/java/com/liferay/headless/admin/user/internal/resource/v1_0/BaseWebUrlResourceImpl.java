@@ -51,7 +51,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 	@Override
 	@GET
 	@Path("/organizations/{organizationId}/web-urls")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getOrganizationWebUrlsPage(
 			@NotNull @PathParam("organizationId") Long organizationId)
@@ -63,7 +63,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 	@Override
 	@GET
 	@Path("/user-accounts/{userAccountId}/web-urls")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public Page<WebUrl> getUserAccountWebUrlsPage(
 			@NotNull @PathParam("userAccountId") Long userAccountId)
@@ -75,7 +75,7 @@ public abstract class BaseWebUrlResourceImpl implements WebUrlResource {
 	@Override
 	@GET
 	@Path("/web-urls/{webUrlId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WebUrl")})
 	public WebUrl getWebUrl(@NotNull @PathParam("webUrlId") Long webUrlId)
 		throws Exception {

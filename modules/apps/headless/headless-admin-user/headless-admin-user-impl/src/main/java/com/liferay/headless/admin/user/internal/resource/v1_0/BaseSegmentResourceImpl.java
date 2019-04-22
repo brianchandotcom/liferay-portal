@@ -63,7 +63,7 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 		}
 	)
 	@Path("/sites/{siteId}/segments")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Segment")})
 	public Page<Segment> getSiteSegmentsPage(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -77,7 +77,7 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 	@GET
 	@Operation(description = "Get segments of an user")
 	@Path("/sites/{siteId}/user-accounts/{userAccountId}/segments")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Segment")})
 	public Page<Segment> getSiteUserAccountSegmentsPage(
 			@NotNull @PathParam("siteId") Long siteId,

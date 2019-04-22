@@ -76,7 +76,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Override
 	@GET
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
 			@NotNull @PathParam("knowledgeBaseArticleId") Long
@@ -87,10 +87,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PATCH
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
 			@NotNull @PathParam("knowledgeBaseArticleId") Long
@@ -178,10 +178,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
 			@NotNull @PathParam("knowledgeBaseArticleId") Long
@@ -206,7 +206,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Override
 	@GET
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Rating getKnowledgeBaseArticleMyRating(
 			@NotNull @PathParam("knowledgeBaseArticleId") Long
@@ -217,10 +217,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Rating postKnowledgeBaseArticleMyRating(
 			@NotNull @PathParam("knowledgeBaseArticleId") Long
@@ -232,10 +232,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Rating putKnowledgeBaseArticleMyRating(
 			@NotNull @PathParam("knowledgeBaseArticleId") Long
@@ -259,7 +259,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Path(
 		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
@@ -273,12 +273,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path(
 		"/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
 			@NotNull @PathParam("parentKnowledgeBaseArticleId") Long
@@ -302,7 +302,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Path(
 		"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
@@ -317,12 +317,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path(
 		"/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postKnowledgeBaseFolderKnowledgeBaseArticle(
 			@NotNull @PathParam("knowledgeBaseFolderId") Long
@@ -344,7 +344,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/knowledge-base-articles")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -357,10 +357,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/sites/{siteId}/knowledge-base-articles")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
 			@NotNull @PathParam("siteId") Long siteId,

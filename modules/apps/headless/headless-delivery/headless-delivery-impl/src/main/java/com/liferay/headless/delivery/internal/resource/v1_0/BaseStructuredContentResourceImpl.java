@@ -74,7 +74,7 @@ public abstract class BaseStructuredContentResourceImpl
 		}
 	)
 	@Path("/content-structures/{contentStructureId}/structured-contents")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getContentStructureStructuredContentsPage(
 			@NotNull @PathParam("contentStructureId") Long contentStructureId,
@@ -96,7 +96,7 @@ public abstract class BaseStructuredContentResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/structured-contents")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent> getSiteStructuredContentsPage(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -109,10 +109,10 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/sites/{siteId}/structured-contents")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent postSiteStructuredContent(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -125,7 +125,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@Override
 	@GET
 	@Path("/sites/{siteId}/structured-contents/by-key/{key}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent getSiteStructuredContentByKey(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -138,7 +138,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@Override
 	@GET
 	@Path("/sites/{siteId}/structured-contents/by-uuid/{uuid}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent getSiteStructuredContentByUuid(
 			@NotNull @PathParam("siteId") Long siteId,
@@ -161,7 +161,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@Path(
 		"/structured-content-folders/{structuredContentFolderId}/structured-contents"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
@@ -175,12 +175,12 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path(
 		"/structured-content-folders/{structuredContentFolderId}/structured-contents"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent postStructuredContentFolderStructuredContent(
 			@NotNull @PathParam("structuredContentFolderId") Long
@@ -204,7 +204,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@Override
 	@GET
 	@Path("/structured-contents/{structuredContentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent getStructuredContent(
 			@NotNull @PathParam("structuredContentId") Long structuredContentId)
@@ -214,10 +214,10 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PATCH
 	@Path("/structured-contents/{structuredContentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent patchStructuredContent(
 			@NotNull @PathParam("structuredContentId") Long structuredContentId,
@@ -305,10 +305,10 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/structured-contents/{structuredContentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public StructuredContent putStructuredContent(
 			@NotNull @PathParam("structuredContentId") Long structuredContentId,
@@ -331,7 +331,7 @@ public abstract class BaseStructuredContentResourceImpl
 	@Override
 	@GET
 	@Path("/structured-contents/{structuredContentId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Rating getStructuredContentMyRating(
 			@NotNull @PathParam("structuredContentId") Long structuredContentId)
@@ -341,10 +341,10 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/structured-contents/{structuredContentId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Rating postStructuredContentMyRating(
 			@NotNull @PathParam("structuredContentId") Long structuredContentId,
@@ -355,10 +355,10 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/structured-contents/{structuredContentId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public Rating putStructuredContentMyRating(
 			@NotNull @PathParam("structuredContentId") Long structuredContentId,

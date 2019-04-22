@@ -16,34 +16,26 @@ package com.liferay.journal.web.internal.portlet.configuration.icon;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,7 +66,11 @@ public class ViewJournalSourcePortletConfigurationIcon
 
 		JournalArticle article = null;
 
-		article = getArticle(portletRequest);
+		try {
+			article = ActionUtil.getArticle(portletRequest);
+		}
+		catch (Exception e) {
+		}
 
 		if (article == null) {
 			return StringPool.BLANK;
@@ -108,7 +104,9 @@ public class ViewJournalSourcePortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			if (getArticle(portletRequest) != null) {
+			JournalArticle article = ActionUtil.getArticle(portletRequest);
+
+			if (article != null) {
 				return true;
 			}
 		}
@@ -121,57 +119,6 @@ public class ViewJournalSourcePortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
-	}
-
-	protected JournalArticle getArticle(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long groupId = ParamUtil.getLong(
-			request, "groupId", themeDisplay.getScopeGroupId());
-
-		long classNameId = ParamUtil.getLong(request, "classNameId");
-		long classPK = ParamUtil.getLong(request, "classPK");
-		String articleId = ParamUtil.getString(request, "articleId");
-
-		JournalArticle article = null;
-
-		if (Validator.isNotNull(articleId)) {
-			int status = ParamUtil.getInteger(
-				request, "status", WorkflowConstants.STATUS_ANY);
-
-			article = _journalArticleLocalService.fetchLatestArticle(
-				groupId, articleId, status);
-		}
-		else if ((classNameId > 0) &&
-				 (classPK > JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {
-
-			String className = _portal.getClassName(classNameId);
-
-			try {
-				article = _journalArticleLocalService.getLatestArticle(
-					groupId, className, classPK);
-			}
-			catch (PortalException pe) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-
-				return null;
-			}
-		}
-
-		return article;
-	}
-
-	protected JournalArticle getArticle(PortletRequest request) {
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			request);
-
-		return getArticle(httpServletRequest);
 	}
 
 	protected String getDialogJS(JournalArticle article) {
@@ -225,9 +172,6 @@ public class ViewJournalSourcePortletConfigurationIcon
 
 		_journalArticleLocalService = journalArticleLocalService;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewJournalSourcePortletConfigurationIcon.class);
 
 	private JournalArticleLocalService _journalArticleLocalService;
 

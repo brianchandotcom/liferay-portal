@@ -166,13 +166,7 @@ public class ViewJournalSourcePortletConfigurationIcon
 		return sb.toString();
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference

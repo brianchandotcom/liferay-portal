@@ -264,14 +264,14 @@ public class SiteNavigationMenuLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
-
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
 			siteNavigationMenuId);
 
 		if (Objects.equals(siteNavigationMenu.getName(), name)) {
 			return siteNavigationMenu;
 		}
+
+		User user = userLocalService.getUser(userId);
 
 		validate(siteNavigationMenu.getGroupId(), name);
 

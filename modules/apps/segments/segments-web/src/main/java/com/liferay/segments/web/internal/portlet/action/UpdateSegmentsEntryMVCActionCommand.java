@@ -76,10 +76,8 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 
-		String name = nameMap.get(_portal.getLocale(actionRequest));
-
 		String segmentsEntryKey = ParamUtil.getString(
-			actionRequest, "segmentsEntryKey", name);
+			actionRequest, "segmentsEntryKey");
 
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");

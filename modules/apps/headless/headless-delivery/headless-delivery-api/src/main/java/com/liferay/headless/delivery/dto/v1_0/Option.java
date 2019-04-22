@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Option")
 public class Option {
 
-	@Schema(description = "The label.")
+	@Schema(description = "The label of the Option.")
 	public String getLabel() {
 		return label;
 	}

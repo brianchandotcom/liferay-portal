@@ -70,7 +70,7 @@ public class Image {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String caption;
 
-	@Schema(description = "An absolute URL to the image.")
+	@Schema(description = "A relative URL to the image.")
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -99,7 +99,7 @@ public class Image {
 	protected String contentUrl;
 
 	@Schema(
-		description = "An identifier of the image, can be used to retrieve more information in a Document API."
+		description = "An identifier of the image, can be used to retrieve more information in the Document API."
 	)
 	public Long getImageId() {
 		return imageId;

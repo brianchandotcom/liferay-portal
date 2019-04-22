@@ -224,7 +224,7 @@ public class KnowledgeBaseFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema(description = "The main title/name of this resource.")
+	@Schema(description = "The name of the KnowledgeBaseFolder.")
 	public String getName() {
 		return name;
 	}
@@ -252,7 +252,7 @@ public class KnowledgeBaseFolder {
 	protected String name;
 
 	@Schema(
-		description = "The number of child KnowledgeBaseArticles asociated with this resource."
+		description = "The number of KnowledgeBaseArticles stored in this KnowledgeBaseFolder."
 	)
 	public Integer getNumberOfKnowledgeBaseArticles() {
 		return numberOfKnowledgeBaseArticles;
@@ -286,7 +286,7 @@ public class KnowledgeBaseFolder {
 	protected Integer numberOfKnowledgeBaseArticles;
 
 	@Schema(
-		description = "The number of child KnowledgeBaseFolders asociated with this resource."
+		description = "The number of child KnowledgeBaseFolders associated with this resource."
 	)
 	public Integer getNumberOfKnowledgeBaseFolders() {
 		return numberOfKnowledgeBaseFolders;
@@ -388,7 +388,7 @@ public class KnowledgeBaseFolder {
 	protected Long parentKnowledgeBaseFolderId;
 
 	@Schema(
-		description = "The site identificator where this KnowledgeBaseFolder is scoped."
+		description = "The site identifier where this KnowledgeBaseFolder is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;

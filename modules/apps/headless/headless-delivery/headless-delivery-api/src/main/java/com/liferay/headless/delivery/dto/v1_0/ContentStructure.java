@@ -47,7 +47,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ContentStructure {
 
 	@Schema(
-		description = "A list of languages the content has a translation for."
+		description = "A list of languages the structure has a translation for."
 	)
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -249,7 +249,7 @@ public class ContentStructure {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema(description = "The name.")
+	@Schema(description = "The name of the ContentStructure.")
 	public String getName() {
 		return name;
 	}
@@ -276,7 +276,7 @@ public class ContentStructure {
 	protected String name;
 
 	@Schema(
-		description = "The site identificator where this ContentStructure is scoped."
+		description = "The site identifier where this ContentStructure is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;

@@ -187,7 +187,7 @@ public class ContentField {
 	protected ContentField[] nestedFields;
 
 	@Schema(
-		description = "A flag indicating if this field can be rendered multiple times."
+		description = "A flag indicating if this field can be filled multiple times."
 	)
 	public Boolean getRepeatable() {
 		return repeatable;

@@ -85,7 +85,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@Schema(
-		description = "The information of the ratings (average, number) associated to this resource."
+		description = "The information of the ratings (average, number) associated with this resource."
 	)
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
@@ -371,7 +371,7 @@ public class KnowledgeBaseArticle {
 	protected String[] keywords;
 
 	@Schema(
-		description = "The number of KnowledgeBaseAttachments that are stored in this article."
+		description = "The number of KnowledgeBaseAttachments that are associated with this article."
 	)
 	public Integer getNumberOfAttachments() {
 		return numberOfAttachments;
@@ -401,7 +401,7 @@ public class KnowledgeBaseArticle {
 	protected Integer numberOfAttachments;
 
 	@Schema(
-		description = "The number of child KBArticle that are asociated with this resouce."
+		description = "The number of child KnowledgeBaseArticles that are associated with this resouce."
 	)
 	public Integer getNumberOfKnowledgeBaseArticles() {
 		return numberOfKnowledgeBaseArticles;
@@ -503,7 +503,7 @@ public class KnowledgeBaseArticle {
 	protected Long parentKnowledgeBaseFolderId;
 
 	@Schema(
-		description = "The site identificator where this TaxonomyVocabulary is scoped."
+		description = "The site identifier where this KnowledgeBaseArticle is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;
@@ -533,7 +533,7 @@ public class KnowledgeBaseArticle {
 	protected Long siteId;
 
 	@Schema(
-		description = "The categories asociated with this KnowledgeBaseArticle."
+		description = "The categories associated with this KnowledgeBaseArticle."
 	)
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;

@@ -112,7 +112,7 @@ public class Document {
 	protected AdaptedImage[] adaptedImages;
 
 	@Schema(
-		description = "The information of the ratings (average, number) associated to this resource."
+		description = "The information of the ratings (average, number) associated with this resource."
 	)
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
@@ -142,7 +142,7 @@ public class Document {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
-	@Schema(description = "An absolute URL to the binary Document.")
+	@Schema(description = "A relative URL to the binary Document.")
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -254,7 +254,7 @@ public class Document {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
-	@Schema(description = "The description of the Document")
+	@Schema(description = "The description of the Document.")
 	public String getDescription() {
 		return description;
 	}
@@ -422,7 +422,7 @@ public class Document {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
-	@Schema(description = "A list of child comments of this content.")
+	@Schema(description = "A list of comments this Document has received.")
 	public Integer getNumberOfComments() {
 		return numberOfComments;
 	}
@@ -450,7 +450,7 @@ public class Document {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
-	@Schema(description = "The size in bytes of the binary files.")
+	@Schema(description = "The size in bytes of the binary file.")
 	public Long getSizeInBytes() {
 		return sizeInBytes;
 	}
@@ -537,7 +537,7 @@ public class Document {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
-	@Schema(description = "The main title/name of the Document.")
+	@Schema(description = "The title of the Document.")
 	public String getTitle() {
 		return title;
 	}

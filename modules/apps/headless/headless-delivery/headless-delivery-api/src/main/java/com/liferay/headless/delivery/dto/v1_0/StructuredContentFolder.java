@@ -287,7 +287,7 @@ public class StructuredContentFolder {
 	protected Integer numberOfStructuredContentFolders;
 
 	@Schema(
-		description = "The number of child StructuredContents that belong to this resource."
+		description = "The number of StructuredContents that are stored in this StructuredContentFolder."
 	)
 	public Integer getNumberOfStructuredContents() {
 		return numberOfStructuredContents;
@@ -321,7 +321,7 @@ public class StructuredContentFolder {
 	protected Integer numberOfStructuredContents;
 
 	@Schema(
-		description = "The site identificator where this StructuredContentFolder is scoped."
+		description = "The site identifier where this StructuredContentFolder is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;

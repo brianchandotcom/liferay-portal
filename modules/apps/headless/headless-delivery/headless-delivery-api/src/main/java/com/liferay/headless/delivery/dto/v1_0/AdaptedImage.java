@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "AdaptedImage")
 public class AdaptedImage {
 
-	@Schema(description = "An absolute URL to the image.")
+	@Schema(description = "A relative URL to the image.")
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -70,7 +70,7 @@ public class AdaptedImage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentUrl;
 
-	@Schema(description = "The height of the image.")
+	@Schema(description = "The height of the image in pixels.")
 	public Integer getHeight() {
 		return height;
 	}
@@ -154,7 +154,7 @@ public class AdaptedImage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long sizeInBytes;
 
-	@Schema(description = "The width of the image.")
+	@Schema(description = "The width of the image in pixels.")
 	public Integer getWidth() {
 		return width;
 	}

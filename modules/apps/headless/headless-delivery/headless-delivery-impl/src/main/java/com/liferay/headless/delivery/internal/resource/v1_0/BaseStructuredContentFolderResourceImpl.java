@@ -157,7 +157,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@GET
 	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces("application/json")
-	@Tags(value = {})
+	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder getStructuredContentFolder(
 			@NotNull @PathParam("structuredContentFolderId") Long
 				structuredContentFolderId)

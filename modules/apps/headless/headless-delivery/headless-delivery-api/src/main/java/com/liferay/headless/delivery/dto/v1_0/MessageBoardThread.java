@@ -85,7 +85,7 @@ public class MessageBoardThread {
 	}
 
 	@Schema(
-		description = "The information of the ratings (average, number) associated to this resource."
+		description = "The information of the ratings (average, number) associated with this resource."
 	)
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
@@ -259,7 +259,7 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
-	@Schema(description = "The main title of the thread.")
+	@Schema(description = "The title of the thread.")
 	public String getHeadline() {
 		return headline;
 	}
@@ -345,7 +345,7 @@ public class MessageBoardThread {
 	protected String[] keywords;
 
 	@Schema(
-		description = "The number of child attachments asociated with the MessageBoardThread."
+		description = "The number of attachments associated with the MessageBoardThread."
 	)
 	public Integer getNumberOfMessageBoardAttachments() {
 		return numberOfMessageBoardAttachments;
@@ -379,7 +379,7 @@ public class MessageBoardThread {
 	protected Integer numberOfMessageBoardAttachments;
 
 	@Schema(
-		description = "The number of child attachments asociated with the MessageBoardMessages."
+		description = "The number of MessageBoardMessages associated with the MessageBoardThread."
 	)
 	public Integer getNumberOfMessageBoardMessages() {
 		return numberOfMessageBoardMessages;
@@ -413,7 +413,7 @@ public class MessageBoardThread {
 	protected Integer numberOfMessageBoardMessages;
 
 	@Schema(
-		description = "A flag indicating that this thread is posting a question that can receives aproved answers."
+		description = "A flag indicating that this thread is posting a question that can receive approved answers."
 	)
 	public Boolean getShowAsQuestion() {
 		return showAsQuestion;
@@ -443,7 +443,7 @@ public class MessageBoardThread {
 	protected Boolean showAsQuestion;
 
 	@Schema(
-		description = "The site identificator where this MessageBoardThread is scoped."
+		description = "The site identifier where this MessageBoardThread is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;

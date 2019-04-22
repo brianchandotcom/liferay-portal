@@ -224,7 +224,7 @@ public class DocumentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema(description = "The main title/name of the DocumentFolder")
+	@Schema(description = "The name of the DocumentFolder")
 	public String getName() {
 		return name;
 	}
@@ -284,7 +284,7 @@ public class DocumentFolder {
 	protected Integer numberOfDocumentFolders;
 
 	@Schema(
-		description = "The number of child Documents that depend on this resources."
+		description = "The number of Documents stored in this DocumentFolder."
 	)
 	public Integer getNumberOfDocuments() {
 		return numberOfDocuments;
@@ -314,7 +314,7 @@ public class DocumentFolder {
 	protected Integer numberOfDocuments;
 
 	@Schema(
-		description = "The site identificator where this DocumentFolder is scoped."
+		description = "The site identifier where this DocumentFolder is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;

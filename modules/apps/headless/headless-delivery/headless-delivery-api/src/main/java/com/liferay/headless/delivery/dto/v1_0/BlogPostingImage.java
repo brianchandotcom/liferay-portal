@@ -77,7 +77,7 @@ public class BlogPostingImage {
 
 	}
 
-	@Schema(description = "An absolute URL to the binary image.")
+	@Schema(description = "A relative URL to the binary image.")
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -217,7 +217,7 @@ public class BlogPostingImage {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sizeInBytes;
 
-	@Schema(description = "The text describing the image.")
+	@Schema(description = "The title of the image.")
 	public String getTitle() {
 		return title;
 	}

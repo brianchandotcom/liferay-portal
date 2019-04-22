@@ -72,7 +72,7 @@ public class TaxonomyCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long taxonomyCategoryId;
 
-	@Schema(description = "The name of the TaxonomyCategory.")
+	@Schema(description = "The name of the category.")
 	public String getTaxonomyCategoryName() {
 		return taxonomyCategoryName;
 	}

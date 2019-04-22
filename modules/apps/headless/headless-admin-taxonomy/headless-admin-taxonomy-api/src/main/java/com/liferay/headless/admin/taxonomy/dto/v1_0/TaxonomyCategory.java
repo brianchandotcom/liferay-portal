@@ -85,7 +85,7 @@ public class TaxonomyCategory {
 	}
 
 	@Schema(
-		description = "A list of languages the content has a translation for."
+		description = "A list of languages the TaxonomyCategory has a translation for."
 	)
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -142,7 +142,7 @@ public class TaxonomyCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema(description = "The creation date of the Organization.")
+	@Schema(description = "The creation date of the TaxonomyCategory.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -170,7 +170,9 @@ public class TaxonomyCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
-	@Schema(description = "The creation date of the Organization.")
+	@Schema(
+		description = "The last time a field of the TaxonomyCategory changed."
+	)
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -280,7 +282,7 @@ public class TaxonomyCategory {
 	protected String name;
 
 	@Schema(
-		description = "The number of times this TaxonomyCategory has been used in other Assets."
+		description = "The number of child TaxonomyCategories associated with this TaxonomyCategory."
 	)
 	public Integer getNumberOfTaxonomyCategories() {
 		return numberOfTaxonomyCategories;

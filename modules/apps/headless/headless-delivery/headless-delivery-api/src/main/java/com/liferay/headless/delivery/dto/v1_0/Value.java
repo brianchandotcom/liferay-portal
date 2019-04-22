@@ -176,7 +176,7 @@ public class Value {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String link;
 
-	@Schema(description = "A link to a JournalArticle stored in the server.")
+	@Schema(description = "A link to a StructuredContent stored in the server.")
 	public StructuredContentLink getStructuredContentLink() {
 		return structuredContentLink;
 	}

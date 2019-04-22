@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ContentDocument")
 public class ContentDocument {
 
-	@Schema(description = "An absolute URL to the binary file.")
+	@Schema(description = "A relative URL to the binary file.")
 	public String getContentUrl() {
 		return contentUrl;
 	}
@@ -210,7 +210,7 @@ public class ContentDocument {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sizeInBytes;
 
-	@Schema(description = "The text describing the ContentDocument.")
+	@Schema(description = "The title of the ContentDocument.")
 	public String getTitle() {
 		return title;
 	}

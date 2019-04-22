@@ -82,7 +82,7 @@ public class MessageBoardMessage {
 	}
 
 	@Schema(
-		description = "The information of the ratings (average, number) associated to this resource."
+		description = "The information of the ratings (average, number) associated with this resource."
 	)
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
@@ -369,7 +369,7 @@ public class MessageBoardMessage {
 	protected String[] keywords;
 
 	@Schema(
-		description = "The number of child attachments associated with this resource."
+		description = "The number of attachments associated with this resource."
 	)
 	public Integer getNumberOfMessageBoardAttachments() {
 		return numberOfMessageBoardAttachments;
@@ -437,7 +437,7 @@ public class MessageBoardMessage {
 	protected Integer numberOfMessageBoardMessages;
 
 	@Schema(
-		description = "A flag to indicate if this MessageBoardMessage is answering a question."
+		description = "A flag to indicate if this MessageBoardMessage is marked as an answer."
 	)
 	public Boolean getShowAsAnswer() {
 		return showAsAnswer;
@@ -467,7 +467,7 @@ public class MessageBoardMessage {
 	protected Boolean showAsAnswer;
 
 	@Schema(
-		description = "The site identificator where this MessageBoardMessage is scoped."
+		description = "The site identifier where this MessageBoardMessage is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;

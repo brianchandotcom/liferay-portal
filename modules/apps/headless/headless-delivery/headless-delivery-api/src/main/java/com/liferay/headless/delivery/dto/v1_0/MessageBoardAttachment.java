@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "MessageBoardAttachment")
 public class MessageBoardAttachment {
 
-	@Schema(description = "An absolute URL to the binary image.")
+	@Schema(description = "A relative URL to the binary file.")
 	public String getContentUrl() {
 		return contentUrl;
 	}

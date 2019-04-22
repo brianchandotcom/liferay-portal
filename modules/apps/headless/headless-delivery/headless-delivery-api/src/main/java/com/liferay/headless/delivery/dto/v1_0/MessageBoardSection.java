@@ -259,7 +259,7 @@ public class MessageBoardSection {
 	protected Integer numberOfMessageBoardSections;
 
 	@Schema(
-		description = "The number of child MessageBoardThreads that belong to this MessageBoardSection."
+		description = "The number of MessageBoardThreads that belong to this MessageBoardSection."
 	)
 	public Integer getNumberOfMessageBoardThreads() {
 		return numberOfMessageBoardThreads;
@@ -293,7 +293,7 @@ public class MessageBoardSection {
 	protected Integer numberOfMessageBoardThreads;
 
 	@Schema(
-		description = "The site identificator where this MessageBoardSection is scoped."
+		description = "The site identifier where this MessageBoardSection is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;
@@ -322,7 +322,7 @@ public class MessageBoardSection {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
-	@Schema(description = "The main title of the resource.")
+	@Schema(description = "The title of the resource.")
 	public String getTitle() {
 		return title;
 	}

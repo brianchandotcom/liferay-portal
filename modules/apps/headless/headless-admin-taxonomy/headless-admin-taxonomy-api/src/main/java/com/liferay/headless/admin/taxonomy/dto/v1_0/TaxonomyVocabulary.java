@@ -115,7 +115,7 @@ public class TaxonomyVocabulary {
 	protected AssetType[] assetTypes;
 
 	@Schema(
-		description = "A list of languages the content has a translation for."
+		description = "A list of languages the TaxonomyVocabulary has a translation for."
 	)
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -172,7 +172,7 @@ public class TaxonomyVocabulary {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema(description = "The creation date of the Organization.")
+	@Schema(description = "The creation date of the TaxonomyVocabulary.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -200,7 +200,9 @@ public class TaxonomyVocabulary {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
-	@Schema(description = "The creation date of the Organization.")
+	@Schema(
+		description = "The last time a field of the TaxonomyVocabulary changed."
+	)
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -346,7 +348,7 @@ public class TaxonomyVocabulary {
 	protected Integer numberOfTaxonomyCategories;
 
 	@Schema(
-		description = "The site identificator where this TaxonomyVocabulary is scoped."
+		description = "The site identifier where this TaxonomyVocabulary is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;

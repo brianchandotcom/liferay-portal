@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "KnowledgeBaseAttachment")
 public class KnowledgeBaseAttachment {
 
-	@Schema(description = "An absolute URL to the binary file.")
+	@Schema(description = "A relative URL to the binary file.")
 	public String getContentUrl() {
 		return contentUrl;
 	}

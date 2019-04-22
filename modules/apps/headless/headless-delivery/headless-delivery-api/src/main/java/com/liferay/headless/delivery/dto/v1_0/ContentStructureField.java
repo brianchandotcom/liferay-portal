@@ -129,7 +129,7 @@ public class ContentStructureField {
 	protected String label;
 
 	@Schema(
-		description = "A flag indicating if the content can be accesible in different languages."
+		description = "A flag indicating if the field can be accesible in different languages."
 	)
 	public Boolean getLocalizable() {
 		return localizable;
@@ -159,7 +159,7 @@ public class ContentStructureField {
 	protected Boolean localizable;
 
 	@Schema(
-		description = "A flag indicating that this form field can have several answers."
+		description = "A flag indicating that this form field can have several values."
 	)
 	public Boolean getMultiple() {
 		return multiple;
@@ -188,7 +188,7 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean multiple;
 
-	@Schema(description = "The name.")
+	@Schema(description = "The name of the form field.")
 	public String getName() {
 		return name;
 	}
@@ -215,7 +215,7 @@ public class ContentStructureField {
 	protected String name;
 
 	@Schema(
-		description = "The child ContentStructureFields that depends in this resource."
+		description = "The child ContentStructureFields that depends on this resource."
 	)
 	public ContentStructureField[] getNestedContentStructureFields() {
 		return nestedContentStructureFields;
@@ -248,7 +248,7 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentStructureField[] nestedContentStructureFields;
 
-	@Schema(description = "A list of several predefined answers.")
+	@Schema(description = "The list of the different possible values.")
 	public Option[] getOptions() {
 		return options;
 	}
@@ -305,7 +305,7 @@ public class ContentStructureField {
 	protected String predefinedValue;
 
 	@Schema(
-		description = "A flag indicating in this content can be rendered (and answered) several times."
+		description = "A flag indicating if this form field can be rendered (and answered) several times."
 	)
 	public Boolean getRepeatable() {
 		return repeatable;

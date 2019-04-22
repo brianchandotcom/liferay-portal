@@ -85,7 +85,7 @@ public class BlogPosting {
 	}
 
 	@Schema(
-		description = "The information of the ratings (average, number) associated to this resource."
+		description = "The information of the ratings (average, number) associated with this resource."
 	)
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
@@ -256,7 +256,7 @@ public class BlogPosting {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
-	@Schema(description = "The last date when the BlogPosting was published.")
+	@Schema(description = "The date when the BlogPosting was published.")
 	public Date getDatePublished() {
 		return datePublished;
 	}
@@ -510,7 +510,7 @@ public class BlogPosting {
 	protected Integer numberOfComments;
 
 	@Schema(
-		description = "The site identificator where this BlogPosting is scoped."
+		description = "The site identifier where this BlogPosting is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;

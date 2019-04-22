@@ -85,7 +85,7 @@ public class StructuredContent {
 	}
 
 	@Schema(
-		description = "The information of the ratings (average, number) associated to this resource."
+		description = "The information of the ratings (average, number) associated with this resource."
 	)
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
@@ -291,7 +291,7 @@ public class StructuredContent {
 	protected Date dateModified;
 
 	@Schema(
-		description = "The last date when the StructuredContent was published."
+		description = "The date when this version of the StructuredContent was published."
 	)
 	public Date getDatePublished() {
 		return datePublished;
@@ -463,7 +463,7 @@ public class StructuredContent {
 	protected String[] keywords;
 
 	@Schema(
-		description = "The number of child comments this StructuredContent has received."
+		description = "The number of comments this StructuredContent has received."
 	)
 	public Integer getNumberOfComments() {
 		return numberOfComments;
@@ -524,7 +524,7 @@ public class StructuredContent {
 	protected RenderedContent[] renderedContents;
 
 	@Schema(
-		description = "The site identificator where this StructuredContent is scoped."
+		description = "The site identifier where this StructuredContent is scoped."
 	)
 	public Long getSiteId() {
 		return siteId;
@@ -554,7 +554,7 @@ public class StructuredContent {
 	protected Long siteId;
 
 	@Schema(
-		description = "The categories asociated with this StructuredContent."
+		description = "The categories associated with this StructuredContent."
 	)
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
@@ -614,7 +614,7 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
-	@Schema(description = "The main title of the StructuredContent.")
+	@Schema(description = "The title of the StructuredContent.")
 	public String getTitle() {
 		return title;
 	}

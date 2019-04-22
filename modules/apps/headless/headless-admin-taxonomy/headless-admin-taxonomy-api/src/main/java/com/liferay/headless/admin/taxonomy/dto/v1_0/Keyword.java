@@ -105,7 +105,7 @@ public class Keyword {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
-	@Schema(description = "The creation date of the Keyword.")
+	@Schema(description = "The last time a field of the Keyword changed.")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -216,9 +216,7 @@ public class Keyword {
 	@NotEmpty
 	protected String name;
 
-	@Schema(
-		description = "The site identificator where this Keyword is scoped."
-	)
+	@Schema(description = "The site identifier where this Keyword is scoped.")
 	public Long getSiteId() {
 		return siteId;
 	}

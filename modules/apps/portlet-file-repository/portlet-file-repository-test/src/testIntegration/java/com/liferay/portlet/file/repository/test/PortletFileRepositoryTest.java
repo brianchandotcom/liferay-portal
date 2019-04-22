@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.exception.DuplicateFileEntryException
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -219,6 +221,30 @@ public class PortletFileRepositoryTest {
 		PortletFileRepositoryUtil.deletePortletFolder(_folder.getFolderId());
 
 		PortletFileRepositoryUtil.getPortletFolder(_folder.getFolderId());
+	}
+
+	@Test
+	public void testGetPortletFileEntryURLWithAmpersand() throws Exception {
+		FileEntry fileEntry = _addPortletFileEntry(
+			RandomTestUtil.randomString());
+
+		String queryString = "param=value";
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("/documents/portlet_file_entry/");
+		sb.append(_group.getGroupId());
+		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getTitle());
+		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getUuid());
+		sb.append(StringPool.QUESTION);
+		sb.append(queryString);
+
+		Assert.assertEquals(
+			sb.toString(),
+			PortletFileRepositoryUtil.getPortletFileEntryURL(
+				null, fileEntry, StringPool.AMPERSAND + queryString));
 	}
 
 	private FileEntry _addPortletFileEntry(String name) throws Exception {

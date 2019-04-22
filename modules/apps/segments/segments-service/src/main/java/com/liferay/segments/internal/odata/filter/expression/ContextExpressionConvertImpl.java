@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "result.class.name=java.util.function.Predicate<Context>",
 	service = ExpressionConvert.class
 )
-public class ExpressionConvertImpl
+public class ContextExpressionConvertImpl
 	implements ExpressionConvert<Predicate<Context>> {
 
 	@Override
@@ -42,7 +42,7 @@ public class ExpressionConvertImpl
 		throws ExpressionVisitException {
 
 		return (Predicate<Context>)expression.accept(
-			new ExpressionVisitorImpl(entityModel));
+			new ContextExpressionVisitorImpl(entityModel));
 	}
 
 }

@@ -50,14 +50,14 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * @author Eduardo García
  */
-public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
+public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
-	public ExpressionVisitorImpl(EntityModel entityModel) {
+	public ContextExpressionVisitorImpl(EntityModel entityModel) {
 		_entityModel = entityModel;
 		_lambdaCollectionEntityField = null;
 	}
 
-	public ExpressionVisitorImpl(
+	public ContextExpressionVisitorImpl(
 		EntityModel entityModel,
 		CollectionEntityField lambdaCollectionEntityField) {
 
@@ -101,7 +101,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 				collectionPropertyExpression.getName());
 
 		return lambdaFunctionExpression.accept(
-			new ExpressionVisitorImpl(
+			new ContextExpressionVisitorImpl(
 				_getLambdaEntityModel(
 					lambdaFunctionExpression.getVariableName(),
 					collectionEntityField),

@@ -95,6 +95,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 				{
 					dialog: {
 						constrain: true,
+						destroyOnHide: true,
 						modal: true
 					},
 					eventName: '<%= PortalUtil.getPortletNamespace(portletId) + "selectTemplate" %>',

@@ -2,7 +2,7 @@ import position from 'metal-position';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import State from 'metal-state';
 
-import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../../../../utils/constants';
+import {FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS} from '../../../../utils/constants';
 import {initializeDragDrop} from '../../../../utils/FragmentsEditorDragDrop.es';
 
 /**
@@ -99,6 +99,7 @@ class SidebarLayoutsDragDrop extends State {
 		this._dragDrop = initializeDragDrop(
 			{
 				autoScroll: true,
+				draggingClass: FRAGMENTS_EDITOR_DRAGGING_CLASS,
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				sources: '.fragments-editor__drag-source--sidebar-layout',
 				targets: '.fragments-editor__drop-target--sidebar-layout'

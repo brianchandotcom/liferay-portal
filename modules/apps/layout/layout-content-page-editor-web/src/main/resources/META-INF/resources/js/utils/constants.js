@@ -159,6 +159,13 @@ export const FRAGMENT_ENTRY_LINK_TYPES = {
 };
 
 /**
+ * Fragments Editor dragging class
+ * @review
+ * @type {string}
+ */
+export const FRAGMENTS_EDITOR_DRAGGING_CLASS = 'dragging';
+
+/**
  * Fragments Editor item borders
  * @review
  * @type {!object}

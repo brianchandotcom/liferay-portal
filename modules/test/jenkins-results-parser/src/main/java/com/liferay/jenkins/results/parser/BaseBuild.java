@@ -2674,6 +2674,14 @@ public abstract class BaseBuild implements Build {
 					throw sioobe;
 				}
 
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Retrying. Console log length (",
+						String.valueOf(consoleTextLength),
+						") is shorter than previous (",
+						String.valueOf(stopWatchRecordConsoleReadCursor),
+						")."));
+
 				retries++;
 
 				JenkinsResultsParserUtil.sleep(1000 * 5);

@@ -760,7 +760,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateExt() throws Exception {
+	public void testBuildTemplateModuleExt() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"modules-ext", "loginExt", "--original-module-name",
 			"com.liferay.login.web", "--original-module-version", "1.0.0");
@@ -790,7 +790,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateExtInWorkspace() throws Exception {
+	public void testBuildTemplateModuleExtInWorkspace() throws Exception {
 		File workspaceDir = _buildWorkspace();
 
 		File workspaceProjectDir = _buildTemplateWithGradle(

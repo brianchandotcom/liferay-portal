@@ -37,6 +37,7 @@ page import="com.liferay.journal.constants.JournalContentPortletKeys" %><%@
 page import="com.liferay.journal.content.web.internal.constants.JournalContentWebKeys" %><%@
 page import="com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext" %><%@
 page import="com.liferay.journal.content.web.internal.servlet.taglib.clay.JournalArticleVerticalCard" %><%@
+page import="com.liferay.journal.content.web.internal.servlet.taglib.clay.JournalDDMTemplateVerticalCard" %><%@
 page import="com.liferay.journal.exception.NoSuchArticleException" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.journal.model.JournalArticleDisplay" %><%@

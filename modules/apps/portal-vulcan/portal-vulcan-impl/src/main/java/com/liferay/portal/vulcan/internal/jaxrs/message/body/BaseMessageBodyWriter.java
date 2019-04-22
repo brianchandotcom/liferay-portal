@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.jaxrs.message.body;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -73,7 +74,13 @@ public abstract class BaseMessageBodyWriter
 
 		ObjectMapper objectMapper = _getObjectMapper(clazz);
 
-		objectMapper.writeValue(outputStream, object);
+		ObjectWriter writer = objectMapper.writer();
+
+		if (MediaType.APPLICATION_XML_TYPE.equals(mediaType)) {
+			writer = writer.withRootName(clazz.getSimpleName());
+		}
+
+		writer.writeValue(outputStream, object);
 
 		outputStream.flush();
 	}

@@ -1,19 +1,23 @@
-import { ALERT_MESSAGE, DAYS, DURATION, HOURS, NAME } from './Constants';
+import {
+	ALERT_MESSAGE,
+	DAYS,
+	DURATION,
+	HOURS,
+	NAME,
+	START_NODE_KEYS,
+	STOP_NODE_KEYS
+} from './Constants';
 import { AppContext, AppStatus } from '../AppContext';
 import {
 	BackLink,
 	BackRedirect
 } from '../../shared/components/router/routerWrapper';
 import {
-	durationAsMilliseconds,
-	formatHours,
-	getDurationValues
-} from '../../shared/util/duration';
-import {
 	hasErrors,
 	validateDuration,
 	validateHours,
-	validateName
+	validateName,
+	validateNodeKeys
 } from './util/slaFormUtil';
 import autobind from 'autobind-decorator';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
@@ -22,8 +26,11 @@ import FieldLabel from './form/fieldLabel';
 import Icon from '../../shared/components/Icon';
 import LoadingState from '../../shared/components/loading/LoadingState';
 import MaskedInput from 'react-text-mask';
+import MultiSelect from '../../shared/components/MultiSelect';
+import nodeStore from './store/nodeStore';
 import { openErrorToast } from '../../shared/util/toast';
 import React from 'react';
+import slaStore from './store/slaStore';
 
 /**
  * SLA form component.
@@ -34,23 +41,35 @@ class SLAForm extends React.Component {
 		super(props);
 
 		this.state = {
-			days: null,
-			description: '',
 			errors: {},
-			hours: '',
 			loading: false,
-			name: '',
 			redirectToSlaList: false
 		};
 	}
 
 	componentWillMount() {
-		if (this.props.id) {
-			return this.loadData();
+		const { id, processId } = this.props;
+		const promises = [];
+
+		slaStore.reset();
+
+		if (processId) {
+			promises.push(nodeStore.fetchNodes(processId));
+		}
+
+		if (id) {
+			promises.push(slaStore.fetchData(id));
 		}
 		else {
 			this.context.setTitle(Liferay.Language.get('new-sla'));
 		}
+
+		Promise.all(promises).then(() => {
+			this.setState({
+				loading: false
+			});
+			this.context.setTitle(slaStore.getState().name);
+		});
 	}
 
 	@autobind
@@ -60,17 +79,50 @@ class SLAForm extends React.Component {
 		},
 		callback
 	) {
-		this.setState({ [name]: value }, callback);
+		slaStore.setState({ [name]: value });
+		this.setState({}, callback);
+	}
+
+	@autobind
+	handlePauseNodesChange(pauseNodeKeys) {
+		slaStore.setState({ pauseNodeKeys });
+		this.setState({});
+	}
+
+	@autobind
+	handleStartNodes(startNodeKeys) {
+		const { errors } = this.state;
+
+		errors[START_NODE_KEYS] = validateNodeKeys(startNodeKeys);
+		slaStore.setState({ startNodeKeys });
+		this.setState({ errors });
+	}
+
+	@autobind
+	handleStopNodesChange(stopNodeKeys) {
+		const { errors } = this.state;
+
+		errors[STOP_NODE_KEYS] = validateNodeKeys(stopNodeKeys);
+		slaStore.setState({ stopNodeKeys });
+		this.setState({ errors });
 	}
 
 	@autobind
 	handleSubmit() {
-		const { days, description, hours, name } = this.state;
+		const {
+			days,
+			hours,
+			name,
+			startNodeKeys,
+			stopNodeKeys
+		} = slaStore.getState();
 		const { errors } = this.state;
 
 		errors[DURATION] = validateDuration(days, hours);
 		errors[HOURS] = validateHours(hours);
 		errors[NAME] = validateName(name);
+		errors[START_NODE_KEYS] = validateNodeKeys(startNodeKeys);
+		errors[STOP_NODE_KEYS] = validateNodeKeys(stopNodeKeys);
 
 		if (hasErrors(errors)) {
 			errors[ALERT_MESSAGE] = Liferay.Language.get(
@@ -80,27 +132,12 @@ class SLAForm extends React.Component {
 			this.setState({ errors });
 		}
 		else {
-			const { client } = this.context;
 			const { id, processId } = this.props;
-			const duration = durationAsMilliseconds(days, hours);
-
-			let submit;
-
-			if (id) {
-				submit = body => client.put(`/slas/${id}`, body);
-			}
-			else {
-				submit = body => client.post(`/processes/${processId}/slas`, body);
-			}
 
 			errors[ALERT_MESSAGE] = '';
 
-			return submit({
-				description,
-				duration,
-				name,
-				processId
-			})
+			return slaStore
+				.saveSLA(processId, id)
 				.then(() => {
 					const status = id ? AppStatus.slaUpdated : AppStatus.slaSaved;
 
@@ -126,37 +163,28 @@ class SLAForm extends React.Component {
 		}
 	}
 
+	@autobind
+	hideDropLists() {
+		document.dispatchEvent(new Event('mousedown', { bubbles: true }));
+	}
+
 	loadData() {
-		const { client } = this.context;
 		const { id } = this.props;
 
 		this.setState({ loading: true });
 
-		return client
-			.get(`/slas/${id}`)
-			.then(result => {
-				const { description = '', duration, name } = result.data;
-
-				const { days, hours, minutes } = getDurationValues(duration);
-
-				const formattedHours = formatHours(hours, minutes);
-
+		return slaStore
+			.fetchData(id)
+			.then(({ name }) => {
 				this.context.setTitle(name);
-
-				this.setState({
-					days,
-					description,
-					hours: formattedHours,
-					loading: false,
-					name
-				});
 			})
 			.catch(openErrorToast);
 	}
 
 	@autobind
 	onDurationChanged() {
-		const { days, errors, hours } = this.state;
+		const { errors } = this.state;
+		const { days, hours } = slaStore.getState();
 
 		errors[ALERT_MESSAGE] = errors[HOURS] = '';
 		errors[DURATION] = validateDuration(days, hours);
@@ -166,7 +194,8 @@ class SLAForm extends React.Component {
 
 	@autobind
 	onHoursBlurred() {
-		const { errors, hours } = this.state;
+		const { errors } = this.state;
+		const { hours } = slaStore.getState();
 
 		errors[ALERT_MESSAGE] = '';
 		errors[HOURS] = validateHours(hours);
@@ -176,7 +205,8 @@ class SLAForm extends React.Component {
 
 	@autobind
 	onNameChanged() {
-		const { errors, name } = this.state;
+		const { errors } = this.state;
+		const { name } = slaStore.getState();
 
 		errors[ALERT_MESSAGE] = '';
 		errors[NAME] = validateName(name);
@@ -185,12 +215,20 @@ class SLAForm extends React.Component {
 	}
 
 	render() {
+		const {
+			days,
+			description,
+			hours,
+			name,
+			pauseNodeKeys,
+			startNodeKeys,
+			stopNodeKeys
+		} = slaStore.getState();
 		const daysMask = createNumberMask({
 			includeThousandsSeparator: false,
 			prefix: ''
 		});
-		const { id } = this.props;
-		const { errors, loading, redirectToSlaList } = this.state;
+		const { errors, id, loading, redirectToSlaList } = this.state;
 		const onChangeHandler = validationFunc => evt => {
 			this.handleChange(evt, validationFunc);
 		};
@@ -246,7 +284,7 @@ class SLAForm extends React.Component {
 									name="name"
 									onChange={onChangeHandler(this.onNameChanged)}
 									type="text"
-									value={this.state.name}
+									value={name}
 								/>
 
 								{errors[NAME] && <FieldError error={errors[NAME]} />}
@@ -263,9 +301,98 @@ class SLAForm extends React.Component {
 									id="sla_description"
 									name="description"
 									onChange={onChangeHandler()}
+									onFocus={this.hideDropLists}
 									type="text"
-									value={this.state.description}
+									value={description}
 								/>
+							</div>
+						</div>
+
+						<h3 className="sheet-subtitle">
+							<FieldLabel
+								fieldId="sla_time_frame"
+								text={Liferay.Language.get('time-frame').toUpperCase()}
+							/>
+						</h3>
+
+						<div className="sheet-text">
+							{Liferay.Language.get(
+								'define-when-time-should-be-tracked-based-on-workflow-steps'
+							)}
+						</div>
+
+						<div className="row">
+							<div
+								className={`col col-sm-12 form-group ${
+									errors[START_NODE_KEYS] ? 'has-error' : ''
+								}`}
+							>
+								<FieldLabel
+									fieldId="sla_time_start"
+									required
+									text={Liferay.Language.get('start')}
+								/>
+
+								<div className="form-text">
+									{Liferay.Language.get('time-will-begin-counting-when')}
+								</div>
+
+								<MultiSelect
+									data={nodeStore.getStartNodes()}
+									onChangeTags={this.handleStartNodes}
+									selectedTagsId={startNodeKeys}
+								/>
+
+								{errors[START_NODE_KEYS] && (
+									<FieldError error={errors[START_NODE_KEYS]} />
+								)}
+							</div>
+						</div>
+
+						<div className="row">
+							<div className="col col-sm-12 form-group">
+								<FieldLabel
+									fieldId="sla_time_pause"
+									text={Liferay.Language.get('pause')}
+								/>
+
+								<div className="form-text">
+									{Liferay.Language.get('time-wont-be-considered-when')}
+								</div>
+
+								<MultiSelect
+									data={nodeStore.getPauseNodes()}
+									onChangeTags={this.handlePauseNodesChange}
+									selectedTagsId={pauseNodeKeys}
+								/>
+							</div>
+						</div>
+
+						<div className="row">
+							<div
+								className={`col col-sm-12 form-group ${
+									errors[STOP_NODE_KEYS] ? 'has-error' : ''
+								}`}
+							>
+								<FieldLabel
+									fieldId="sla_time_stop"
+									required
+									text={Liferay.Language.get('stop')}
+								/>
+
+								<div className="form-text">
+									{Liferay.Language.get('time-will-stop-counting-when')}
+								</div>
+
+								<MultiSelect
+									data={nodeStore.getStopNodes()}
+									onChangeTags={this.handleStopNodesChange}
+									selectedTagsId={stopNodeKeys}
+								/>
+
+								{errors[STOP_NODE_KEYS] && (
+									<FieldError error={errors[STOP_NODE_KEYS]} />
+								)}
 							</div>
 						</div>
 
@@ -303,7 +430,8 @@ class SLAForm extends React.Component {
 									maxLength={4}
 									name={DAYS}
 									onChange={onChangeHandler(this.onDurationChanged)}
-									value={this.state.days}
+									onFocus={this.hideDropLists}
+									value={days}
 								/>
 
 								{errors[DURATION] && <FieldError error={errors[DURATION]} />}
@@ -331,7 +459,7 @@ class SLAForm extends React.Component {
 									onBlur={this.onHoursBlurred}
 									onChange={onChangeHandler(this.onDurationChanged)}
 									placeholder="00:00"
-									value={this.state.hours}
+									value={hours}
 								/>
 
 								{errors[DURATION] && <FieldError error={errors[DURATION]} />}

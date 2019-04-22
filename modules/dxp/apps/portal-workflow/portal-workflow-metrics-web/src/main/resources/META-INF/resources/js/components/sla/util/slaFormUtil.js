@@ -22,4 +22,10 @@ const validateName = name => {
 	}
 };
 
-export { hasErrors, validateDuration, validateHours, validateName };
+const validateNodeKeys = nodeKeys => {
+	if (!nodeKeys || nodeKeys.length === 0) {
+		return Liferay.Language.get('at-least-one-parameter-is-required');
+	}
+};
+
+export { hasErrors, validateDuration, validateHours, validateName, validateNodeKeys };

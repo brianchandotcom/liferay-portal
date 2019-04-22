@@ -1100,7 +1100,9 @@ definition {
 
 		PortletEntry.selectAll();
 
-		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+		ClickNoError(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+
+		Confirm();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}

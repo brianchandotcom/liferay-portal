@@ -358,7 +358,7 @@ class Sidebar extends Component {
 						}
 
 						{!editMode && (activeTab == 1) &&
-							this._renderFieldSets()
+							this._renderElementSets()
 						}
 
 						{editMode && (
@@ -771,10 +771,36 @@ class Sidebar extends Component {
 		return open;
 	}
 
-	_renderFieldSets() {
-		const {fieldSets, spritemap} = this.props;
+	_renderElementSets() {
+		const {fieldSets} = this.props;
 		const group = Object.keys(fieldSets);
 
+		let elementSetsArea = '';
+
+		if (group.length > 0) {
+			elementSetsArea = this._renderElementSetsGroups(group);
+		}
+		else {
+			elementSetsArea = this._renderElementSetsEmpty();
+		}
+
+		return elementSetsArea;
+	}
+
+	_renderElementSetsEmpty() {
+		return (
+			<div class="list-group-body  list-group">
+				<div class="main-content-body">
+					<div class="text-center text-muted">
+						<p class="text-default">{Liferay.Language.get('there-are-no-element-sets-yet')}</p>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	_renderElementSetsGroups(group) {
+		const {fieldSets, spritemap} = this.props;
 		return (
 			<div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
 				{group.map(
@@ -786,7 +812,6 @@ class Sidebar extends Component {
 							key={key}
 							role="tabpanel"
 						>
-
 							<div class="panel-body p-0 m-0 list-group">
 								<div
 									class="ddm-drag-item list-group-item list-group-item-flex"

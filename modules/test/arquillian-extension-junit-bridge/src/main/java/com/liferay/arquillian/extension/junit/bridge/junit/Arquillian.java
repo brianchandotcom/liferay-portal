@@ -216,6 +216,8 @@ public class Arquillian extends Runner implements Filterable {
 
 			Path startPath = Paths.get(locationURL.getPath());
 
+			ClassLoader classLoader = testClass.getClassLoader();
+
 			try {
 				Files.walkFileTree(
 					startPath,
@@ -241,7 +243,8 @@ public class Arquillian extends Runner implements Filterable {
 
 								try {
 									testClasses.add(
-										Class.forName(relativePathString));
+										classLoader.loadClass(
+											relativePathString));
 								}
 								catch (ClassNotFoundException cnfe) {
 									throw new RuntimeException(cnfe);

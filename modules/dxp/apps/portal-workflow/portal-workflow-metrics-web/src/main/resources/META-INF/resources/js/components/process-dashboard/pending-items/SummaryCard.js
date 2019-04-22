@@ -1,53 +1,75 @@
 import { AppContext } from '../../AppContext';
 import autobind from 'autobind-decorator';
 import { ChildLink } from '../../../shared/components/router/routerWrapper';
-import getCN from 'classnames';
+import { formatNumber } from '../../../shared/util/numeral';
+import { getPercentage } from '../../../shared/util/util';
 import Icon from '../../../shared/components/Icon';
 import React from 'react';
-
-const CLASS_NAME = 'process-dashboard-summary-card';
 
 class SummaryCard extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			inOver: false
+			hovered: false
 		};
 	}
 
-	@autobind
-	handleMouseOver() {
-		this.setState({ inOver: !this.state.inOver });
+	get formattedPercentage() {
+		const { total, totalValue, value } = this.props;
+
+		if (!total) {
+			const percentage = getPercentage(value, totalValue);
+
+			return formatNumber(percentage, '0[.]00%');
+		}
+
+		return null;
+	}
+
+	get formattedValue() {
+		const { value } = this.props;
+		const formatThreshold = 9999;
+
+		if (value > formatThreshold) {
+			return formatNumber(value, '0[.]0a');
+		}
+
+		return formatNumber(value, '0[,]0');
 	}
 
 	@autobind
-	handleMouseOut() {
-		this.setState({ inOver: !this.state.inOver });
+	handleMouseOver(evt, callback) {
+		this.setState({ hovered: true }, callback);
+	}
+
+	@autobind
+	handleMouseOut(evt, callback) {
+		this.setState({ hovered: false }, callback);
 	}
 
 	render() {
-		const {
-			elementClasses,
-			iconColor,
-			iconName,
-			percentage,
-			processId,
-			title,
-			total
-		} = this.props;
-
-		const className = getCN(CLASS_NAME, elementClasses);
-
 		const { defaultDelta } = this.context;
+		const { hovered } = this.state;
+		const { iconColor, iconName, processId, title, total, value } = this.props;
 
 		const dashboardItemsPath = `/instances/${processId}/${defaultDelta}/1`;
 
-		const { inOver } = this.state;
+		const disabled = !total && !value;
+
+		const disabledClassName = disabled ? 'disabled' : '';
+		const disableRender = Component => !disabled && Component;
+
+		const hoveredClassName = hovered ? 'highlight-hover' : '';
+		const hoverRender = (Component, HoveredComponent) => (
+			<span className={`${hoveredClassName} xsmall`}>
+				{(hovered && HoveredComponent) || Component}
+			</span>
+		);
 
 		return (
 			<ChildLink
-				className={className}
+				className={`${disabledClassName} process-dashboard-summary-card`}
 				onMouseOut={this.handleMouseOut}
 				onMouseOver={this.handleMouseOver}
 				to={dashboardItemsPath}
@@ -70,17 +92,20 @@ class SummaryCard extends React.Component {
 						<span>{title}</span>
 					</div>
 
-					<div className={'body'}>{total}</div>
+					{disableRender(
+						<div className="body" title={value}>
+							{this.formattedValue}
+						</div>
+					)}
 
-					<div className={'footer'}>
-						{!inOver && percentage}
-
-						{inOver && (
-							<span className={'highlight-hover'}>
-								{Liferay.Language.get('see-items')}
-							</span>
-						)}
-					</div>
+					{disableRender(
+						<div className="footer">
+							{hoverRender(
+								this.formattedPercentage,
+								Liferay.Language.get('see-items')
+							)}
+						</div>
+					)}
 				</div>
 			</ChildLink>
 		);

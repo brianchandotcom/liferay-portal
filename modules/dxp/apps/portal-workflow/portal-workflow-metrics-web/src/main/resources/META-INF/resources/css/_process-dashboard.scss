@@ -21,19 +21,19 @@ $c: ".workflow-process-dashboard";
 
 	.process-dashboard-summary-card {
 		border: 1px solid #E7E7ED;
-		border-radius: 4px;
+		border-radius: 0.25rem;
 		box-sizing: border-box;
 		color: #30313F !important;
 		display: inline-flex;
-		font-size: 14px;
-		margin-right: 24px;
+		font-size: 0.875rem;
+		margin-right: 1.5rem;
 		min-height: 136px;
 		padding: 16px;
 		text-decoration: none;
-		width: 276px;
+		width: 25%;
 
 		.body {
-			font-size: 40px;
+			font-size: 2.5rem;
 			line-height: 1;
 			margin: 8px 0;
 		}
@@ -44,6 +44,19 @@ $c: ".workflow-process-dashboard";
 
 			.highlight-hover {
 				color: #0B5FFF;
+			}
+		}
+
+		&.disabled {
+			cursor: not-allowed;
+			pointer-events: none;
+
+			.header {
+				color: #A7A9BC;
+
+				.sticker {
+					opacity: 0.4;
+				}
 			}
 		}
 

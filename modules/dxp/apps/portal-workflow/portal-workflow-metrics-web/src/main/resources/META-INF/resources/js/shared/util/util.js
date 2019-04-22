@@ -6,7 +6,7 @@
  * @returns {number}
  */
 const getPercentage = (number1, number2) => {
-	const result = (number1 / number2) * 100;
+	const result = number1 / number2;
 
 	return isValidNumber(result) ? result : 0;
 };

@@ -24,11 +24,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 long classNameId = ParamUtil.getLong(request, "classNameId");
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="content"
-/>
-
 <aui:model-context bean="<%= article %>" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>" model="<%= JournalArticle.class %>" />
 
 <liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />

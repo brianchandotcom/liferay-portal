@@ -9,7 +9,7 @@
 			visibility: hidden;
 		}
 
-		:target::before {
+		:not(.portlet):target::before {
 			content: '';
 			display: block;
 			height: $has-control-menu-margin-top-mobile;
@@ -23,7 +23,7 @@
 				top: -$has-control-menu-margin-top-desktop;
 			}
 
-			:target::before {
+			:not(.portlet):target::before {
 				height: $has-control-menu-margin-top-desktop;
 				margin-top: -$has-control-menu-margin-top-desktop;
 			}

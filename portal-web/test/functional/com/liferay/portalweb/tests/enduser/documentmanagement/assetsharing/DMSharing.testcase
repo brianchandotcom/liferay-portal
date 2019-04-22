@@ -217,11 +217,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Shared Content"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
 		var key_dmDocumentTitle = "DM Document Title";
 
@@ -337,11 +333,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Shared Content"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
 
@@ -622,11 +614,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Shared Content"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
 		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
 
@@ -676,11 +664,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Shared Content"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
 		DMNavigator.gotoShareViaSharedAssets(dmDocumentTitle = "DM Document Title");
 
@@ -743,11 +727,7 @@ definition {
 
 		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "Shared Content"
-		);
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
 		var key_dmDocumentTitle = "DM Document Title";
 

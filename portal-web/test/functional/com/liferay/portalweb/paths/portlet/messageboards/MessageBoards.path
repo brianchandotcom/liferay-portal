@@ -138,11 +138,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_LIST_POSTS</td>
-	<td>//li[contains(.,'${key_categoryName}')]//span[contains(.,'${key_threadsNumber}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -475,11 +475,6 @@ definition {
 			value1 = "${threadCount}"
 		);
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_POSTS",
-			value1 = "${threadsNumber}"
-		);
-
 		AssertElementPresent(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
 
 		Click(locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY");

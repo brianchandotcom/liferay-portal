@@ -91,10 +91,6 @@ public class SocketUtil {
 		}
 	}
 
-	public static InetAddress getInetAddress() {
-		return _inetAddress;
-	}
-
 	public static SocketAddress getRemoteSocketAddress() {
 		return _socket.getRemoteSocketAddress();
 	}

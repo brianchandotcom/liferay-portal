@@ -156,7 +156,8 @@ public class Arquillian extends Runner implements Filterable {
 				long passCode = random.nextLong();
 
 				_bundleId = _installBundle(
-					frameworkMBean, serverSocket.getLocalPort(), passCode);
+					frameworkMBean, serverSocket.getInetAddress(),
+					serverSocket.getLocalPort(), passCode);
 
 				frameworkMBean.startBundle(_bundleId);
 
@@ -277,10 +278,9 @@ public class Arquillian extends Runner implements Filterable {
 	}
 
 	private long _installBundle(
-			FrameworkMBean frameworkMBean, int port, long passCode)
+			FrameworkMBean frameworkMBean, InetAddress inetAddress, int port,
+			long passCode)
 		throws Exception {
-
-		InetAddress inetAddress = SocketUtil.getInetAddress();
 
 		Path path = BndBundleUtil.createBundle(
 			_filteredSortedTestClass._filteredMethodNames,

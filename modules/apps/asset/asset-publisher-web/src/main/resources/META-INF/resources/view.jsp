@@ -107,7 +107,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 
 			<div class="alert alert-info text-center">
 				<c:choose>
-					<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleAssetList() && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
+					<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleAssetList() && (assetPublisherDisplayContext.fetchAssetListEntry() == null) && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
 						<div>
 							<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
 						</div>

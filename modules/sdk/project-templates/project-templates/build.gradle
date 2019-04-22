@@ -97,6 +97,7 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.template.context.contributor", version: "1.0.30"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.theme", version: "1.0.31"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.theme.contributor", version: "1.0.29"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.war.core.ext", version: "1.0.0"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.war.hook", version: "1.0.26"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.war.mvc.portlet", version: "1.0.26"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.workspace", version: "1.0.33"

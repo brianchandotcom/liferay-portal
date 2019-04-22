@@ -80,6 +80,16 @@ public class JournalSelectDDMTemplateManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDefaultDisplayStyle() {
+		return "icon";
+	}
+
+	@Override
+	protected String[] getDisplayViews() {
+		return new String[] {"list", "icon"};
+	}
+
+	@Override
 	protected String[] getNavigationKeys() {
 		return new String[] {"all"};
 	}

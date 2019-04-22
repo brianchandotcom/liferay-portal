@@ -72,6 +72,16 @@ public class JournalSelectDDMTemplateDisplayContext {
 		return _ddmTemplateId;
 	}
 
+	public String getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
+		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
+
+		return _displayStyle;
+	}
+
 	public String getEventName() {
 		if (_eventName != null) {
 			return _eventName;
@@ -230,6 +240,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 
 	private Long _ddmStructureId;
 	private Long _ddmTemplateId;
+	private String _displayStyle;
 	private String _eventName;
 	private String _keywords;
 	private String _orderByCol;

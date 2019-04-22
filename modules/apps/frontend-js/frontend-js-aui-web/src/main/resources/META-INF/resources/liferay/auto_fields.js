@@ -95,8 +95,6 @@ AUI.add(
 					deleteRow: function(node) {
 						var instance = this;
 
-						console.log('deleteRow');
-
 						var contentBox = instance._contentBox;
 
 						var visibleRows = contentBox.all('.lfr-form-row:visible');

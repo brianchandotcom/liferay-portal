@@ -53,6 +53,7 @@ import java.util.Set;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.Description;
+import org.junit.runner.RunWith;
 import org.junit.runner.Runner;
 import org.junit.runner.manipulation.Filter;
 import org.junit.runner.manipulation.Filterable;
@@ -243,8 +244,19 @@ public class Arquillian extends Runner implements Filterable {
 								CharPool.SLASH, CharPool.PERIOD);
 
 							try {
-								testClasses.add(
-									classLoader.loadClass(relativePathString));
+								Class<?> clazz = classLoader.loadClass(
+									relativePathString);
+
+								RunWith runWith = clazz.getAnnotation(
+									RunWith.class);
+
+								if ((runWith == null) ||
+									(runWith.value() != Arquillian.class)) {
+
+									return FileVisitResult.CONTINUE;
+								}
+
+								testClasses.add(clazz);
 							}
 							catch (ClassNotFoundException cnfe) {
 								throw new RuntimeException(cnfe);

@@ -63,7 +63,7 @@ public class DLValidatorTest {
 		for (String blacklistFileName : PropsValues.DL_NAME_BLACKLIST) {
 			String fixedName =
 				blacklistFileName + StringPool.UNDERLINE +
-				StringUtil.toLowerCase(name);
+					StringUtil.toLowerCase(name);
 
 			Assert.assertEquals(
 				fixedName, _dlValidator.fixName(blacklistFileName + name));

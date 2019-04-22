@@ -311,10 +311,9 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	protected String replaceDLWebDAVSubstitutionChar(String title) {
-
-		return StringUtil.replace(title,
-			PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR, StringPool.UNDERLINE);
-
+		return StringUtil.replace(
+			title, PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR,
+			StringPool.UNDERLINE);
 	}
 
 	private volatile DLConfiguration _dlConfiguration;

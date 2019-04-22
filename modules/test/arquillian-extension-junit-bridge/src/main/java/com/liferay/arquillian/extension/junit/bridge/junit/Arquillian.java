@@ -14,31 +14,14 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
-import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
 import com.liferay.arquillian.extension.junit.bridge.client.ClientState;
-import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
-import com.liferay.arquillian.extension.junit.bridge.client.SocketUtil;
-import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
-
-import java.io.IOException;
 
 import java.lang.annotation.Annotation;
-
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.URI;
-import java.net.URL;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import java.security.SecureRandom;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -52,8 +35,6 @@ import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.TestClass;
-
-import org.osgi.jmx.framework.FrameworkMBean;
 
 /**
  * @author Shuyang Zhou
@@ -121,84 +102,18 @@ public class Arquillian extends Runner implements Filterable {
 			return;
 		}
 
-		FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
+		try (ClientState.Connection connection = _clientState.open(
+				_clazz, _filteredSortedTestClass._filteredMethodNames)) {
 
-		try {
-			ServerSocket serverSocket = SocketUtil.getServerSocket();
-
-			if (_bundleId == 0) {
-				Random random = new SecureRandom();
-
-				long passCode = random.nextLong();
-
-				_bundleId = _installBundle(
-					frameworkMBean,
-					_filteredSortedTestClass._filteredMethodNames,
-					serverSocket.getInetAddress(), serverSocket.getLocalPort(),
-					passCode);
-
-				frameworkMBean.startBundle(_bundleId);
-
-				SocketUtil.connect(passCode);
-			}
-
-			try {
-				SocketUtil.writeUTF(_clazz.getName());
-
-				Object object = null;
-
-				while ((object = SocketUtil.readObject()) != null) {
-					RunNotifierCommand runNotifierCommand =
-						(RunNotifierCommand)object;
-
-					runNotifierCommand.execute(runNotifier);
-				}
-			}
-			finally {
-				_clientState.removeTestClass(_clazz);
-
-				if (_clientState.isEmpty()) {
-					try {
-						frameworkMBean.uninstallBundle(_bundleId);
-
-						_bundleId = 0;
-
-						SocketUtil.close();
-					}
-					catch (IOException ioe) {
-						runNotifier.fireTestFailure(
-							new Failure(getDescription(), ioe));
-					}
-				}
-			}
+			connection.execute(
+				_clazz.getName(),
+				runNotifierCommand -> runNotifierCommand.execute(runNotifier));
 		}
-		catch (Throwable t) {
-			runNotifier.fireTestFailure(new Failure(getDescription(), t));
+		catch (Exception e) {
+			runNotifier.fireTestFailure(new Failure(getDescription(), e));
 		}
 	}
 
-	private long _installBundle(
-			FrameworkMBean frameworkMBean, List<String> filteredMethodNames,
-			InetAddress inetAddress, int port, long passCode)
-		throws Exception {
-
-		Path path = BndBundleUtil.createBundle(
-			filteredMethodNames, inetAddress.getHostAddress(), port, passCode);
-
-		URI uri = path.toUri();
-
-		URL url = uri.toURL();
-
-		try {
-			return frameworkMBean.installBundleFromURL(
-				url.getPath(), url.toExternalForm());
-		}
-		finally {
-			Files.delete(path);
-		}
-	}
-
-	private static long _bundleId;
 	private static final ClientState _clientState = new ClientState();
 
 	private final Class<?> _clazz;

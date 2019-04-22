@@ -25,6 +25,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -201,8 +203,15 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		AssetEntry assetEntry = null;
 
 		if (assetRendererFactory != null) {
-			assetEntry = assetRendererFactory.getAssetEntry(
-				_portal.getClassName(classNameId), classPK);
+			try {
+				assetEntry = assetRendererFactory.getAssetEntry(
+					_portal.getClassName(classNameId), classPK);
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(pe, pe);
+				}
+			}
 		}
 		else {
 			assetEntry = _assetEntryLocalService.fetchEntry(
@@ -242,6 +251,9 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		return LayoutConstants.DEFAULT_PLID;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetDisplayPageEntryLocalServiceImpl.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

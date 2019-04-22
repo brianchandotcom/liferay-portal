@@ -31,7 +31,7 @@ components:
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
-                    description: The information of the ratings (average, number) associated to this resource.
+                    description: The information of the ratings (average, number) associated with this resource.
                     readOnly: true
                 alternativeHeadline:
                     description: The subtitle of this BlogPosting.
@@ -55,7 +55,7 @@ components:
                     readOnly: true
                     type: string
                 datePublished:
-                    description: The last date when the BlogPosting was published.
+                    description: The date when the BlogPosting was published.
                     format: date-time
                     type: string
                 description:
@@ -83,12 +83,12 @@ components:
                             description: A text describing the BlogPosting image.
                             type: string
                         contentUrl:
-                            description: An absolute URL to the image.
+                            description: A relative URL to the image.
                             format: uri
                             readOnly: true
                             type: string
                         imageId:
-                            description: An identifier of the image, can be used to retrieve more information in a Document API.
+                            description: An identifier of the image, can be used to retrieve more information in the Document API.
                             format: int64
                             type: integer
                     type: object
@@ -102,7 +102,7 @@ components:
                     readOnly: true
                     type: integer
                 siteId:
-                    description: The site identificator where this BlogPosting is scoped.
+                    description: The site identifier where this BlogPosting is scoped.
                     format: int64
                     readOnly: true
                     type: integer
@@ -115,7 +115,7 @@ components:
                                 format: int64
                                 type: integer
                             taxonomyCategoryName:
-                                description: The name of the TaxonomyCategory.
+                                description: The name of the category.
                                 type: string
                         type: object
                     readOnly: true
@@ -141,7 +141,7 @@ components:
             description: An image of a BlogPosting item. Properties follow https://schema.org/image specification
             properties:
                 contentUrl:
-                    description: An absolute URL to the binary image.
+                    description: A relative URL to the binary image.
                     readOnly: true
                     type: string
                 encodingFormat:
@@ -163,7 +163,7 @@ components:
                     readOnly: true
                     type: integer
                 title:
-                    description: The text describing the image.
+                    description: The title of the image.
                     type: string
                 viewableBy:
                     description: Write only property to specify the default permissions.
@@ -208,7 +208,7 @@ components:
             description: A document (binary data and metadata) associated with a StructuredContent. Properties follow https://schema.org/MediaObject specification.
             properties:
                 contentUrl:
-                    description: An absolute URL to the binary file.
+                    description: A relative URL to the binary file.
                     format: uri
                     readOnly: true
                     type: string
@@ -233,12 +233,12 @@ components:
                     readOnly: true
                     type: integer
                 title:
-                    description: The text describing the ContentDocument.
+                    description: The title of the ContentDocument.
                     type: string
             type: object
         ContentField:
             #@review
-            description: Represents each field value of a StructuredContent and can contain different types of information: geolocalization position, a ContentDocument...
+            description: Represents each field value of a StructuredContent and can contain different types of information, geolocalization position, a ContentDocument...
             properties:
                 dataType:
                     description: The type of field (image, text).
@@ -261,7 +261,7 @@ components:
                         $ref: "#/components/schemas/ContentField"
                     type: array
                 repeatable:
-                    description: A flag indicating if this field can be rendered multiple times.
+                    description: A flag indicating if this field can be filled multiple times.
                     readOnly: true
                     type: boolean
                 value:
@@ -294,7 +294,7 @@ components:
                             format: uri
                             type: string
                         structuredContentLink:
-                            description: A link to a JournalArticle stored in the server.
+                            description: A link to a StructuredContent stored in the server.
                             properties:
                                 id:
                                     description: The identifier of the resource.
@@ -310,7 +310,7 @@ components:
             description: Represents each member of a ContentSet and can contain different types of assets.
             properties:
                 content:
-                    description: The main content.
+                    description: All the fields of the content.
                     readOnly: true
                     type: object
                 contentType:
@@ -323,7 +323,7 @@ components:
                     readOnly: true
                     type: integer
                 title:
-                    description: The title of the ContentSetElement.
+                    description: The title of the content.
                     readOnly: true
                     type: string
         ContentStructure:
@@ -331,7 +331,7 @@ components:
             description: The ContentStructure backing a StructuredContent. Defines which form fields are available and the possible types and values.
             properties:
                 availableLanguages:
-                    description: A list of languages the content has a translation for.
+                    description: A list of languages the structure has a translation for.
                     items:
                         type: string
                     readOnly: true
@@ -367,11 +367,11 @@ components:
                     readOnly: true
                     type: integer
                 name:
-                    description: The name.
+                    description: The name of the ContentStructure.
                     readOnly: true
                     type: string
                 siteId:
-                    description: The site identificator where this ContentStructure is scoped.
+                    description: The site identifier where this ContentStructure is scoped.
                     format: int64
                     readOnly: true
                     type: integer
@@ -393,29 +393,29 @@ components:
                     readOnly: true
                     type: string
                 localizable:
-                    description: A flag indicating if the content can be accesible in different languages.
+                    description: A flag indicating if the field can be accesible in different languages.
                     readOnly: true
                     type: boolean
                 multiple:
-                    description: A flag indicating that this form field can have several answers.
+                    description: A flag indicating that this form field can have several values.
                     readOnly: true
                     type: boolean
                 name:
-                    description: The name.
+                    description: The name of the form field.
                     readOnly: true
                     type: string
                 nestedContentStructureFields:
-                    description: The child ContentStructureFields that depends in this resource.
+                    description: The child ContentStructureFields that depends on this resource.
                     items:
                         $ref: "#/components/schemas/ContentStructureField"
                     readOnly: true
                     type: array
                 options:
-                    description: A list of several predefined answers.
+                    description: The list of the different possible values.
                     items:
                         properties:
                             label:
-                                description: The label.
+                                description: The label of the Option.
                                 type: string
                             value:
                                 description: The internal value of the Option.
@@ -428,7 +428,7 @@ components:
                     readOnly: true
                     type: string
                 repeatable:
-                    description: A flag indicating in this content can be rendered (and answered) several times.
+                    description: A flag indicating if this form field can be rendered (and answered) several times.
                     readOnly: true
                     type: boolean
                 required:
@@ -478,18 +478,18 @@ components:
             type: object
         Document:
             #@review
-            description: A DLFile, storing binary and metadata information. Properties follow https://schema.org/MediaObject specification.
+            description: A document, storing binary and metadata information. Properties follow https://schema.org/MediaObject specification.
             properties:
                 adaptedImages:
                     description: An array of images in several resolutions and sizes, created by the adaptive media framework.
                     items:
                         properties:
                             contentUrl:
-                                description: An absolute URL to the image.
+                                description: A relative URL to the image.
                                 format: uri
                                 type: string
                             height:
-                                description: The height of the image.
+                                description: The height of the image in pixels.
                                 type: integer
                             resolutionName:
                                 description: A descriptive name of this version.
@@ -499,7 +499,7 @@ components:
                                 format: int64
                                 type: integer
                             width:
-                                description: The width of the image.
+                                description: The width of the image in pixels.
                                 type: integer
                         type: object
                     readOnly: true
@@ -507,10 +507,10 @@ components:
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
-                    description: The information of the ratings (average, number) associated to this resource.
+                    description: The information of the ratings (average, number) associated with this resource.
                     readOnly: true
                 contentUrl:
-                    description: An absolute URL to the binary Document.
+                    description: A relative URL to the binary Document.
                     format: binary
                     readOnly: true
                     type: string
@@ -530,7 +530,7 @@ components:
                     readOnly: true
                     type: string
                 description:
-                    description: The description of the Document
+                    description: The description of the Document.
                     type: string
                 documentFolderId:
                     description: The id of the DocumentFolder where this Document is stored.
@@ -556,11 +556,11 @@ components:
                         type: string
                     type: array
                 numberOfComments:
-                    description: A list of child comments of this content.
+                    description: A list of comments this Document has received.
                     readOnly: true
                     type: integer
                 sizeInBytes:
-                    description: The size in bytes of the binary files.
+                    description: The size in bytes of the binary file.
                     format: int64
                     readOnly: true
                     type: integer
@@ -573,7 +573,7 @@ components:
                                 format: int64
                                 type: integer
                             taxonomyCategoryName:
-                                description: The name of the TaxonomyCategory.
+                                description: The name of the category.
                                 type: string
                         type: object
                     readOnly: true
@@ -586,7 +586,7 @@ components:
                     type: array
                     writeOnly: true
                 title:
-                    description: The main title/name of the Document.
+                    description: The title of the Document.
                     type: string
                 viewableBy:
                     description: Write only property to specify the default permissions.
@@ -596,7 +596,7 @@ components:
             type: object
         DocumentFolder:
             #@review
-            description: A DocumentFolder containing other DocumentFolder or several Documents.
+            description: A DocumentFolder containing other DocumentFolders or several Documents.
             properties:
                 creator:
                     allOf:
@@ -622,18 +622,18 @@ components:
                     readOnly: true
                     type: integer
                 name:
-                    description: The main title/name of the DocumentFolder
+                    description: The name of the DocumentFolder
                     type: string
                 numberOfDocumentFolders:
                     description: The number of child DocumentFolders that depend on this resources.
                     readOnly: true
                     type: integer
                 numberOfDocuments:
-                    description: The number of child Documents that depend on this resources.
+                    description: The number of Documents stored in this DocumentFolder.
                     readOnly: true
                     type: integer
                 siteId:
-                    description: The site identificator where this DocumentFolder is scoped.
+                    description: The site identifier where this DocumentFolder is scoped.
                     format: int64
                     readOnly: true
                     type: integer
@@ -647,12 +647,12 @@ components:
             type: object
         KnowledgeBaseArticle:
             #@review
-            description: A KBArticle, the main entity in the knowledge base API, modeling an article in a FAQ section.
+            description: A KnowledgeBase article, the main entity in the knowledge base API, modeling for example, an article in a FAQ section.
             properties:
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
-                    description: The information of the ratings (average, number) associated to this resource.
+                    description: The information of the ratings (average, number) associated with this resource.
                     readOnly: true
                 articleBody:
                     description: The main content of this resouce.
@@ -693,11 +693,11 @@ components:
                         type: string
                     type: array
                 numberOfAttachments:
-                    description: The number of KnowledgeBaseAttachments that are stored in this article.
+                    description: The number of KnowledgeBaseAttachments that are associated with this article.
                     readOnly: true
                     type: integer
                 numberOfKnowledgeBaseArticles:
-                    description: The number of child KBArticle that are asociated with this resouce.
+                    description: The number of child KnowledgeBaseArticles that are associated with this resouce.
                     readOnly: true
                     type: integer
                 parentKnowledgeBaseFolder:
@@ -718,12 +718,12 @@ components:
                     type: integer
                     writeOnly: true
                 siteId:
-                    description: The site identificator where this TaxonomyVocabulary is scoped.
+                    description: The site identifier where this KnowledgeBaseArticle is scoped.
                     format: int64
                     readOnly: true
                     type: integer
                 taxonomyCategories:
-                    description: The categories asociated with this KnowledgeBaseArticle.
+                    description: The categories associated with this KnowledgeBaseArticle.
                     items:
                         properties:
                             taxonomyCategoryId:
@@ -731,7 +731,7 @@ components:
                                 format: int64
                                 type: integer
                             taxonomyCategoryName:
-                                description: The name of the TaxonomyCategory.
+                                description: The name of the category.
                                 type: string
                         type: object
                     readOnly: true
@@ -760,7 +760,7 @@ components:
             description: A binary file asociated with a KnowledgeBaseArticle.
             properties:
                 contentUrl:
-                    description: An absolute URL to the binary file.
+                    description: A relative URL to the binary file.
                     readOnly: true
                     type: string
                 encodingFormat:
@@ -787,7 +787,7 @@ components:
             type: object
         KnowledgeBaseFolder:
             #@review
-            description: A folder to clasify KnowledgeBaseArticles.
+            description: A folder to classify KnowledgeBaseArticles.
             properties:
                 creator:
                     allOf:
@@ -813,14 +813,14 @@ components:
                     readOnly: true
                     type: integer
                 name:
-                    description: The main title/name of this resource.
+                    description: The name of the KnowledgeBaseFolder.
                     type: string
                 numberOfKnowledgeBaseArticles:
-                    description: The number of child KnowledgeBaseArticles asociated with this resource.
+                    description: The number of KnowledgeBaseArticles stored in this KnowledgeBaseFolder.
                     readOnly: true
                     type: integer
                 numberOfKnowledgeBaseFolders:
-                    description: The number of child KnowledgeBaseFolders asociated with this resource.
+                    description: The number of child KnowledgeBaseFolders associated with this resource.
                     readOnly: true
                     type: integer
                 parentKnowledgeBaseFolder:
@@ -841,7 +841,7 @@ components:
                     type: integer
                     writeOnly: true
                 siteId:
-                    description: The site identificator where this KnowledgeBaseFolder is scoped.
+                    description: The site identifier where this KnowledgeBaseFolder is scoped.
                     format: int64
                     readOnly: true
                     type: integer
@@ -858,7 +858,7 @@ components:
             description: A binary file linked to a MessageBoardMessage.
             properties:
                 contentUrl:
-                    description: An absolute URL to the binary image.
+                    description: A relative URL to the binary file.
                     readOnly: true
                     type: string
                 encodingFormat:
@@ -885,12 +885,12 @@ components:
             type: object
         MessageBoardMessage:
             #@review
-            description: A MBMessage, a message inside a forum. Properties follow https://schema.org/DiscussionForumPosting specification.
+            description: A message answering a thread in a forum. Properties follow https://schema.org/DiscussionForumPosting specification.
             properties:
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
-                    description: The information of the ratings (average, number) associated to this resource.
+                    description: The information of the ratings (average, number) associated with this resource.
                     readOnly: true
                 anonymous:
                     description: A flag to indicate that this message is not going to return the creator information.
@@ -931,7 +931,7 @@ components:
                         type: string
                     type: array
                 numberOfMessageBoardAttachments:
-                    description: The number of child attachments associated with this resource.
+                    description: The number of attachments associated with this resource.
                     readOnly: true
                     type: integer
                 numberOfMessageBoardMessages:
@@ -939,10 +939,10 @@ components:
                     readOnly: true
                     type: integer
                 showAsAnswer:
-                    description: A flag to indicate if this MessageBoardMessage is answering a question.
+                    description: A flag to indicate if this MessageBoardMessage is marked as an answer.
                     type: boolean
                 siteId:
-                    description: The site identificator where this MessageBoardMessage is scoped.
+                    description: The site identifier where this MessageBoardMessage is scoped.
                     format: int64
                     readOnly: true
                     type: integer
@@ -954,7 +954,7 @@ components:
             type: object
         MessageBoardSection:
             #@review
-            description: Represents a folder inside a forum, clasifying several MessageBoardMessages.
+            description: Represents a folder inside a forum, classifying several MessageBoardThreads.
             properties:
                 creator:
                     allOf:
@@ -984,16 +984,16 @@ components:
                     readOnly: true
                     type: integer
                 numberOfMessageBoardThreads:
-                    description: The number of child MessageBoardThreads that belong to this MessageBoardSection.
+                    description: The number of MessageBoardThreads that belong to this MessageBoardSection.
                     readOnly: true
                     type: integer
                 siteId:
-                    description: The site identificator where this MessageBoardSection is scoped.
+                    description: The site identifier where this MessageBoardSection is scoped.
                     format: int64
                     readOnly: true
                     type: integer
                 title:
-                    description: The main title of the resource.
+                    description: The title of the resource.
                     type: string
                 viewableBy:
                     description: Write only property to specify the default permissions.
@@ -1010,7 +1010,7 @@ components:
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
-                    description: The information of the ratings (average, number) associated to this resource.
+                    description: The information of the ratings (average, number) associated with this resource.
                     readOnly: true
                 articleBody:
                     description: The main content of the thread, the message written as description of the thread.
@@ -1035,7 +1035,7 @@ components:
                     readOnly: true
                     type: string
                 headline:
-                    description: The main title of the thread.
+                    description: The title of the thread.
                     type: string
                 id:
                     description: The identifier of the resource.
@@ -1048,18 +1048,18 @@ components:
                         type: string
                     type: array
                 numberOfMessageBoardAttachments:
-                    description: The number of child attachments asociated with the MessageBoardThread.
+                    description: The number of attachments associated with the MessageBoardThread.
                     readOnly: true
                     type: integer
                 numberOfMessageBoardMessages:
-                    description: The number of child attachments asociated with the MessageBoardMessages.
+                    description: The number of MessageBoardMessages associated with the MessageBoardThread.
                     readOnly: true
                     type: integer
                 showAsQuestion:
-                    description: A flag indicating that this thread is posting a question that can receives aproved answers.
+                    description: A flag indicating that this thread is posting a question that can receive approved answers.
                     type: boolean
                 siteId:
-                    description: The site identificator where this MessageBoardThread is scoped.
+                    description: The site identifier where this MessageBoardThread is scoped.
                     format: int64
                     readOnly: true
                     type: integer
@@ -1120,7 +1120,7 @@ components:
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
-                    description: The information of the ratings (average, number) associated to this resource.
+                    description: The information of the ratings (average, number) associated with this resource.
                     readOnly: true
                 availableLanguages:
                     description: A list of languages the content has a translation for.
@@ -1153,7 +1153,7 @@ components:
                     readOnly: true
                     type: string
                 datePublished:
-                    description: The last date when the StructuredContent was published.
+                    description: The date when this version of the StructuredContent was published.
                     format: date-time
                     type: string
                 description:
@@ -1177,7 +1177,7 @@ components:
                         type: string
                     type: array
                 numberOfComments:
-                    description: The number of child comments this StructuredContent has received.
+                    description: The number of comments this StructuredContent has received.
                     readOnly: true
                     type: integer
                 renderedContents:
@@ -1195,12 +1195,12 @@ components:
                     readOnly: true
                     type: array
                 siteId:
-                    description: The site identificator where this StructuredContent is scoped.
+                    description: The site identifier where this StructuredContent is scoped.
                     format: int64
                     readOnly: true
                     type: integer
                 taxonomyCategories:
-                    description: The categories asociated with this StructuredContent.
+                    description: The categories associated with this StructuredContent.
                     items:
                         properties:
                             taxonomyCategoryId:
@@ -1208,7 +1208,7 @@ components:
                                 format: int64
                                 type: integer
                             taxonomyCategoryName:
-                                description: The name of the TaxonomyCategory.
+                                description: The name of the category.
                                 type: string
                         type: object
                     readOnly: true
@@ -1221,7 +1221,7 @@ components:
                     type: array
                     writeOnly: true
                 title:
-                    description: The main title of the StructuredContent.
+                    description: The title of the StructuredContent.
                     type: string
                 uuid:
                     description: A valid external identifier to reference this content.
@@ -1236,7 +1236,7 @@ components:
                 - contentStructureId
         StructuredContentFolder:
             #@review
-            description: A folder to organize StructuredContents.
+            description: https://www.schema.org/StructuredContentFolder
             properties:
                 creator:
                     allOf:
@@ -1269,11 +1269,11 @@ components:
                     readOnly: true
                     type: integer
                 numberOfStructuredContents:
-                    description: The number of child StructuredContents that belong to this resource.
+                    description: The number of StructuredContents that are stored in this StructuredContentFolder.
                     readOnly: true
                     type: integer
                 siteId:
-                    description: The site identificator where this StructuredContentFolder is scoped.
+                    description: The site identifier where this StructuredContentFolder is scoped.
                     format: int64
                     readOnly: true
                     type: integer
@@ -4344,6 +4344,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
+            tags: ["StructuredContentFolder"]
         patch:
             operationId: patchStructuredContentFolder
             parameters:

@@ -65,7 +65,7 @@ components:
                     readOnly: true
                     type: string
                 dateModified:
-                    description: The creation date of the Keyword.
+                    description: The last time a field of the Keyword changed.
                     format: date-time
                     readOnly: true
                     type: string
@@ -82,7 +82,7 @@ components:
                     description: The name of the Keyword.
                     type: string
                 siteId:
-                    description: The site identificator where this Keyword is scoped.
+                    description: The site identifier where this Keyword is scoped.
                     format: int64
                     readOnly: true
                     type: integer
@@ -91,10 +91,10 @@ components:
             type: object
         TaxonomyCategory:
             #@review
-            description: Represents a category, a hierarchical clasification that can be asociated to particular types of assets. Properties follow https://schema.org/category.
+            description: Represents a category, a hierarchical classification that can be associated with particular types of assets. Properties follow https://schema.org/category.
             properties:
                 availableLanguages:
-                    description: A list of languages the content has a translation for.
+                    description: A list of languages the TaxonomyCategory has a translation for.
                     items:
                         type: string
                     readOnly: true
@@ -105,12 +105,12 @@ components:
                     description: The creator of this TaxonomyCategory.
                     readOnly: true
                 dateCreated:
-                    description: The creation date of the Organization.
+                    description: The creation date of the TaxonomyCategory.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
-                    description: The creation date of the Organization.
+                    description: The last time a field of the TaxonomyCategory changed.
                     format: date-time
                     readOnly: true
                     type: string
@@ -126,7 +126,7 @@ components:
                     description: The name of the TaxonomyCategory.
                     type: string
                 numberOfTaxonomyCategories:
-                    description: The number of times this TaxonomyCategory has been used in other Assets.
+                    description: The number of child TaxonomyCategories associated with this TaxonomyCategory.
                     readOnly: true
                     type: integer
                 parentTaxonomyCategory:
@@ -159,7 +159,7 @@ components:
             type: object
         TaxonomyVocabulary:
             #@review
-            description: Represents an agroupation of TaxonomyCategories for a specific purpose, clasification, sorting...
+            description: Represents an agroupation of TaxonomyCategories for a specific purpose, classification, sorting...
             properties:
                 assetTypes:
                     description: A list of assets that can be asociated with this TaxonomyVocabulary.
@@ -167,7 +167,7 @@ components:
                         $ref: "#/components/schemas/AssetType"
                     type: array
                 availableLanguages:
-                    description: A list of languages the content has a translation for.
+                    description: A list of languages the TaxonomyVocabulary has a translation for.
                     items:
                         type: string
                     readOnly: true
@@ -178,12 +178,12 @@ components:
                     description: The creator of this TaxonomyVocabulary.
                     readOnly: true
                 dateCreated:
-                    description: The creation date of the Organization.
+                    description: The creation date of the TaxonomyVocabulary.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
-                    description: The creation date of the Organization.
+                    description: The last time a field of the TaxonomyVocabulary changed.
                     format: date-time
                     readOnly: true
                     type: string
@@ -203,7 +203,7 @@ components:
                     readOnly: true
                     type: integer
                 siteId:
-                    description: The site identificator where this TaxonomyVocabulary is scoped.
+                    description: The site identifier where this TaxonomyVocabulary is scoped.
                     format: int64
                     readOnly: true
                     type: integer

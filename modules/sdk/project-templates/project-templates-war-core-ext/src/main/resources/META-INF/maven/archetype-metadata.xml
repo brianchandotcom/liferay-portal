@@ -2,20 +2,8 @@
 
 <archetype-descriptor name="liferay-module-war-mvc-portlet">
 	<fileSets>
-		<fileSet filtered="true" packaged="true">
-			<directory>src/main/java</directory>
-			<includes>
-				<include>**/*.java</include>
-			</includes>
-		</fileSet>
 		<fileSet filtered="true">
-			<directory>src/main/resources</directory>
-			<includes>
-				<include>**/*</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="true">
-			<directory>src/main/webapp</directory>
+			<directory>src</directory>
 			<includes>
 				<include>**/*</include>
 			</includes>

@@ -124,6 +124,11 @@ public class InvokerPortletImpl
 		if (ClassUtil.isSubclass(portletClass, PortletDeployer.JSF_STANDARD)) {
 			facesPortlet = true;
 		}
+		else if (portlet instanceof InvokerPortlet) {
+			InvokerPortlet invokerPortlet = (InvokerPortlet)portlet;
+
+			facesPortlet = invokerPortlet.isFacesPortlet();
+		}
 
 		boolean headerPortlet = PortletTypeUtil.isHeaderPortlet(portlet);
 

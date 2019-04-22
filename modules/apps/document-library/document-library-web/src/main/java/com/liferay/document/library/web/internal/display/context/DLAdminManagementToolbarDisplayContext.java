@@ -19,11 +19,13 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -52,6 +55,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -256,7 +260,8 @@ public class DLAdminManagementToolbarDisplayContext {
 			}
 
 			if (!RepositoryUtil.isExternalRepository(
-					fileEntry.getRepositoryId())) {
+					fileEntry.getRepositoryId()) &&
+				!_hasWorkflowDefinitionLink(fileEntry)) {
 
 				if (_hasValidAssetVocabularies) {
 					availableActionDropdownItems.add("editCategories");
@@ -273,6 +278,47 @@ public class DLAdminManagementToolbarDisplayContext {
 		}
 
 		return availableActionDropdownItems;
+	}
+
+	private boolean _hasWorkflowDefinitionLink(FileEntry fileEntry)
+		throws PortalException {
+
+		if (!(fileEntry.getModel() instanceof WorkflowedModel)) {
+			return false;
+		}
+
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+				fileEntry.getCompanyId(), fileEntry.getGroupId(),
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId())) {
+
+			return true;
+		}
+
+		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
+			return false;
+		}
+
+		if (_hasWorkflowDefinitionLink((DLFileEntry)fileEntry.getModel())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasWorkflowDefinitionLink(DLFileEntry dlFileEntry)
+		throws PortalException {
+		try {
+			return DLUtil.hasWorkflowDefinitionLink(
+				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
+				dlFileEntry.getFolderId(), dlFileEntry.getFileEntryTypeId());
+		}
+		catch (PortalException | RuntimeException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
 	}
 
 	public List<String> getAvailableActionDropdownItems(Folder folder)

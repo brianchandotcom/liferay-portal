@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataLayoutPage")
 public class DataLayoutPage {
 
+	@Schema
 	public DataLayoutRow[] getDataLayoutRows() {
 		return dataLayoutRows;
 	}
@@ -68,6 +71,7 @@ public class DataLayoutPage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataLayoutRow[] dataLayoutRows;
 
+	@Schema
 	public LocalizedValue[] getDescription() {
 		return description;
 	}
@@ -95,6 +99,7 @@ public class DataLayoutPage {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected LocalizedValue[] description;
 
+	@Schema
 	public LocalizedValue[] getTitle() {
 		return title;
 	}

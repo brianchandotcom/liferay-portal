@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -44,6 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataDefinition")
 public class DataDefinition {
 
+	@Schema
 	public DataDefinitionField[] getDataDefinitionFields() {
 		return dataDefinitionFields;
 	}
@@ -74,6 +77,7 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataDefinitionField[] dataDefinitionFields;
 
+	@Schema
 	public DataDefinitionRule[] getDataDefinitionRules() {
 		return dataDefinitionRules;
 	}
@@ -104,6 +108,7 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataDefinitionRule[] dataDefinitionRules;
 
+	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -131,6 +136,7 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@Schema
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -158,6 +164,7 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@Schema
 	public LocalizedValue[] getDescription() {
 		return description;
 	}
@@ -185,6 +192,7 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected LocalizedValue[] description;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -210,6 +218,7 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public LocalizedValue[] getName() {
 		return name;
 	}
@@ -237,6 +246,7 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected LocalizedValue[] name;
 
+	@Schema
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -264,6 +274,7 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@Schema
 	public String getStorageType() {
 		return storageType;
 	}
@@ -291,6 +302,7 @@ public class DataDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String storageType;
 
+	@Schema
 	public Long getUserId() {
 		return userId;
 	}

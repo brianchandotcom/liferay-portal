@@ -59,7 +59,7 @@ public abstract class BaseWorkflowLogResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "workflowLogId")}
 	)
 	@Path("/workflow-logs/{workflowLogId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowLog")})
 	public WorkflowLog getWorkflowLog(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowLogId") Long
@@ -79,7 +79,7 @@ public abstract class BaseWorkflowLogResourceImpl
 		}
 	)
 	@Path("/workflow-tasks/{workflowTaskId}/workflow-logs")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowLog")})
 	public Page<WorkflowLog> getWorkflowTaskWorkflowLogsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long

@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "TaxonomyVocabulary")
 public class TaxonomyVocabulary {
 
+	@Schema
 	public Boolean getMultiValued() {
 		return multiValued;
 	}
@@ -67,6 +70,7 @@ public class TaxonomyVocabulary {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean multiValued;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -92,6 +96,7 @@ public class TaxonomyVocabulary {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public Boolean getRequired() {
 		return required;
 	}
@@ -119,6 +124,7 @@ public class TaxonomyVocabulary {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
+	@Schema
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
@@ -147,6 +153,7 @@ public class TaxonomyVocabulary {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TaxonomyCategory[] taxonomyCategories;
 
+	@Schema
 	public Long getTaxonomyVocabularyId() {
 		return taxonomyVocabularyId;
 	}

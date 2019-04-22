@@ -51,7 +51,7 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseKeywordResourceImpl implements KeywordResource {
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PATCH
 	@Path("/keywords/batch")
 	@Tags(value = {@Tag(name = "Keyword")})
@@ -60,7 +60,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Path("/keywords/batch")
 	@Tags(value = {@Tag(name = "Keyword")})
@@ -69,10 +69,10 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Path("/keywords/common")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<Keyword> postKeywordsCommonPage(
 			DocumentBulkSelection documentBulkSelection)

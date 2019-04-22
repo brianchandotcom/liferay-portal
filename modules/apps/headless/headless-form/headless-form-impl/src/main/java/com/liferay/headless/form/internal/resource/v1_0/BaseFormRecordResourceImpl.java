@@ -58,7 +58,7 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "formRecordId")}
 	)
 	@Path("/form-records/{formRecordId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public FormRecord getFormRecord(
 			@NotNull @Parameter(hidden = true) @PathParam("formRecordId") Long
@@ -78,7 +78,7 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		}
 	)
 	@Path("/forms/{formId}/form-records")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public Page<FormRecord> getFormFormRecordsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId,
@@ -92,7 +92,7 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	@GET
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
 	@Path("/forms/{formId}/form-records/by-latest-draft")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormRecord")})
 	public FormRecord getFormFormRecordByLatestDraft(
 			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId)

@@ -61,34 +61,46 @@ public abstract class BaseDataDefinitionResourceImpl
 
 	@Override
 	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
+	)
 	@Path("/data-definitions/{dataDefinitionId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void deleteDataDefinition(
-			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId)
+			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
+				Long dataDefinitionId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
+	)
 	@Path("/data-definitions/{dataDefinitionId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public DataDefinition getDataDefinition(
-			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId)
+			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
+				Long dataDefinitionId)
 		throws Exception {
 
 		return new DataDefinition();
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
+	)
 	@Path("/data-definitions/{dataDefinitionId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public DataDefinition putDataDefinition(
-			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId,
+			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
+				Long dataDefinitionId,
 			DataDefinition dataDefinition)
 		throws Exception {
 
@@ -96,27 +108,42 @@ public abstract class BaseDataDefinitionResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "operation")
+		}
+	)
 	@Path("/data-definitions/{dataDefinitionId}/data-definition-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void postDataDefinitionDataDefinitionPermission(
-			@NotNull @PathParam("dataDefinitionId") Long dataDefinitionId,
-			@NotNull @QueryParam("operation") String operation,
+			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
+				Long dataDefinitionId,
+			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
+				operation,
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "operation")
+		}
+	)
 	@Path("/sites/{siteId}/data-definition-permissions")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void postSiteDataDefinitionPermission(
-			@NotNull @PathParam("siteId") Long siteId,
-			@NotNull @QueryParam("operation") String operation,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
+				operation,
 			DataDefinitionPermission dataDefinitionPermission)
 		throws Exception {
 	}
@@ -125,16 +152,18 @@ public abstract class BaseDataDefinitionResourceImpl
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
 	@Path("/sites/{siteId}/data-definitions")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public Page<DataDefinition> getSiteDataDefinitionsPage(
-			@NotNull @PathParam("siteId") Long siteId,
-			@QueryParam("keywords") String keywords,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -142,13 +171,14 @@ public abstract class BaseDataDefinitionResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/data-definitions")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public DataDefinition postSiteDataDefinition(
-			@NotNull @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			DataDefinition dataDefinition)
 		throws Exception {
 

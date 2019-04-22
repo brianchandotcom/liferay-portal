@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DataRecordCollectionPermission")
 public class DataRecordCollectionPermission {
 
+	@Schema
 	public Boolean getAddDataRecord() {
 		return addDataRecord;
 	}
@@ -67,6 +70,7 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean addDataRecord;
 
+	@Schema
 	public Boolean getAddDataRecordCollection() {
 		return addDataRecordCollection;
 	}
@@ -96,6 +100,7 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean addDataRecordCollection;
 
+	@Schema
 	public Boolean getDefinePermissions() {
 		return definePermissions;
 	}
@@ -123,6 +128,7 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean definePermissions;
 
+	@Schema
 	public Boolean getDelete() {
 		return delete;
 	}
@@ -150,6 +156,7 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean delete;
 
+	@Schema
 	public Boolean getDeleteDataRecord() {
 		return deleteDataRecord;
 	}
@@ -177,6 +184,7 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean deleteDataRecord;
 
+	@Schema
 	public Boolean getExportDataRecord() {
 		return exportDataRecord;
 	}
@@ -204,6 +212,7 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean exportDataRecord;
 
+	@Schema
 	public String[] getRoleNames() {
 		return roleNames;
 	}
@@ -231,6 +240,7 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] roleNames;
 
+	@Schema
 	public Boolean getUpdate() {
 		return update;
 	}
@@ -258,6 +268,7 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean update;
 
+	@Schema
 	public Boolean getUpdateDataRecord() {
 		return updateDataRecord;
 	}
@@ -285,6 +296,7 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean updateDataRecord;
 
+	@Schema
 	public Boolean getView() {
 		return view;
 	}
@@ -310,6 +322,7 @@ public class DataRecordCollectionPermission {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean view;
 
+	@Schema
 	public Boolean getViewDataRecord() {
 		return viewDataRecord;
 	}

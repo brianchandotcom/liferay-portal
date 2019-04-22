@@ -54,13 +54,13 @@ public abstract class BaseFormRecordFormResourceImpl
 	implements FormRecordFormResource {
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "formRecordId")}
 	)
 	@Path("/form-records/{formRecordId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormRecordForm")})
 	public FormRecord putFormRecord(
 			@NotNull @Parameter(hidden = true) @PathParam("formRecordId") Long
@@ -72,11 +72,11 @@ public abstract class BaseFormRecordFormResourceImpl
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
 	@Path("/forms/{formId}/form-records")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormRecordForm")})
 	public FormRecord postFormFormRecord(
 			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId,

@@ -71,7 +71,7 @@ public abstract class BaseFormDocumentResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "formDocumentId")}
 	)
 	@Path("/form-documents/{formDocumentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "FormDocument")})
 	public FormDocument getFormDocument(
 			@NotNull @Parameter(hidden = true) @PathParam("formDocumentId") Long

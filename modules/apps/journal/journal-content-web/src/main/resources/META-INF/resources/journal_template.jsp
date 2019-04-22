@@ -83,7 +83,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 	PortletURL selectDDMTemplateURL = PortletProviderUtil.getPortletURL(renderRequest, className, PortletProvider.Action.BROWSE);
 
 	selectDDMTemplateURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
-	selectDDMTemplateURL.setParameter("eventName", PortalUtil.getPortletNamespace(portletId) + "selectTemplate");
+	selectDDMTemplateURL.setParameter("eventName", PortalUtil.getPortletNamespace(portletId) + "selectDDMTemplate");
 	selectDDMTemplateURL.setWindowState(LiferayWindowState.POP_UP);
 	%>
 
@@ -99,8 +99,8 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 						destroyOnHide: true,
 						modal: true
 					},
-					eventName: '<%= PortalUtil.getPortletNamespace(portletId) + "selectTemplate" %>',
-					id: '<%= PortalUtil.getPortletNamespace(portletId) + "selectTemplate" %>',
+					eventName: '<%= PortalUtil.getPortletNamespace(portletId) + "selectDDMTemplate" %>',
+					id: '<%= PortalUtil.getPortletNamespace(portletId) + "selectDDMTemplate" %>',
 					title: '<liferay-ui:message key="templates" />',
 					uri: '<%= selectDDMTemplateURL %>'
 				},

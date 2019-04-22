@@ -80,6 +80,10 @@ public class BlockingPortalCache<K extends Serializable, V>
 		return value;
 	}
 
+	public boolean isBlocking() {
+		return true;
+	}
+
 	@Override
 	public void put(K key, V value) {
 		put(key, value, DEFAULT_TIME_TO_LIVE);

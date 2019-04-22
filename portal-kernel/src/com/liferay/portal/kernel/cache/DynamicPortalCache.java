@@ -73,6 +73,16 @@ public class DynamicPortalCache<K extends Serializable, V>
 	}
 
 	@Override
+	public boolean isBlocking() {
+		return _blocking;
+	}
+
+	@Override
+	public boolean isMVCC() {
+		return _mvcc;
+	}
+
+	@Override
 	public void put(K key, V value) {
 		_portalCache.put(key, value);
 	}
@@ -128,14 +138,6 @@ public class DynamicPortalCache<K extends Serializable, V>
 		_portalCache.unregisterPortalCacheListeners();
 
 		_portalCacheListeners.clear();
-	}
-
-	protected boolean isBlocking() {
-		return _blocking;
-	}
-
-	protected boolean isMVCC() {
-		return _mvcc;
 	}
 
 	protected void setPortalCache(PortalCache<K, V> portalCache) {

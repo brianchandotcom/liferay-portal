@@ -57,6 +57,14 @@ public class PortalCacheWrapper<K extends Serializable, V>
 		return portalCache;
 	}
 
+	public boolean isBlocking() {
+		return portalCache.isBlocking();
+	}
+
+	public boolean isMVCC() {
+		return portalCache.isMVCC();
+	}
+
 	@Override
 	public void put(K key, V value) {
 		portalCache.put(key, value);

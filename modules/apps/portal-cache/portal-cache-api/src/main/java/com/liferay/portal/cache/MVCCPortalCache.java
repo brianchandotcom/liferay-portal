@@ -30,6 +30,10 @@ public class MVCCPortalCache<K extends Serializable, V extends MVCCModel>
 		_lowLevelCache = lowLevelCache;
 	}
 
+	public boolean isMVCC() {
+		return true;
+	}
+
 	@Override
 	public void put(K key, V value) {
 		put(key, value, DEFAULT_TIME_TO_LIVE);

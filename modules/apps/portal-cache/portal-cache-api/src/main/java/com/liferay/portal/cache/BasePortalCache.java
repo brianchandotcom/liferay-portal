@@ -44,6 +44,14 @@ public abstract class BasePortalCache<K extends Serializable, V>
 		return _portalCacheManager;
 	}
 
+	public boolean isBlocking() {
+		return false;
+	}
+
+	public boolean isMVCC() {
+		return false;
+	}
+
 	@Override
 	public void put(K key, V value) {
 		put(key, value, DEFAULT_TIME_TO_LIVE);

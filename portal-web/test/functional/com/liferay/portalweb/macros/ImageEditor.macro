@@ -22,6 +22,8 @@ definition {
 
 		MenuItem.click(menuItem = "Edit With Image Editor");
 
+		Pause(locator1 = "5000");
+
 		SelectFrame(locator1 = "ImageEditor#IMAGE_EDITOR_IFRAME");
 	}
 

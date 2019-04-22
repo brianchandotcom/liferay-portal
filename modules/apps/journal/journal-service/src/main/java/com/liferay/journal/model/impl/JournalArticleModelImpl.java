@@ -154,21 +154,6 @@ public class JournalArticleModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.journal.model.JournalArticle"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.journal.model.JournalArticle"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalArticle"),
-		true);
-
 	public static final long DDMSTRUCTUREKEY_COLUMN_BITMASK = 1L;
 
 	public static final long DDMTEMPLATEKEY_COLUMN_BITMASK = 2L;
@@ -206,6 +191,14 @@ public class JournalArticleModelImpl
 	public static final long UUID_COLUMN_BITMASK = 131072L;
 
 	public static final long VERSION_COLUMN_BITMASK = 262144L;
+
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -279,10 +272,6 @@ public class JournalArticleModelImpl
 
 		return models;
 	}
-
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.journal.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.journal.model.JournalArticle"));
 
 	public JournalArticleModelImpl() {
 	}
@@ -1626,12 +1615,12 @@ public class JournalArticleModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -1989,6 +1978,8 @@ public class JournalArticleModelImpl
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 		JournalArticle.class, ModelWrapper.class
 	};
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private String _uuid;
 	private String _originalUuid;

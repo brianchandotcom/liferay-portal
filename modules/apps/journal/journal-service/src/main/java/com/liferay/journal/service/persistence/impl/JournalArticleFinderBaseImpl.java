@@ -16,7 +16,9 @@ package com.liferay.journal.service.persistence.impl;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.persistence.JournalArticlePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class JournalArticleFinderBaseImpl
+public abstract class JournalArticleFinderBaseImpl
 	extends BasePersistenceImpl<JournalArticle> {
 
 	public JournalArticleFinderBaseImpl() {
@@ -45,30 +51,37 @@ public class JournalArticleFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getJournalArticlePersistence().getBadColumnNames();
+		return journalArticlePersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the journal article persistence.
-	 *
-	 * @return the journal article persistence
-	 */
-	public JournalArticlePersistence getJournalArticlePersistence() {
-		return journalArticlePersistence;
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the journal article persistence.
-	 *
-	 * @param journalArticlePersistence the journal article persistence
-	 */
-	public void setJournalArticlePersistence(
-		JournalArticlePersistence journalArticlePersistence) {
-
-		this.journalArticlePersistence = journalArticlePersistence;
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = JournalArticlePersistence.class)
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected JournalArticlePersistence journalArticlePersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

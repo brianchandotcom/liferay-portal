@@ -21,7 +21,9 @@ import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.model.impl.JournalArticleLocalizationImpl;
 import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.service.persistence.JournalArticleLocalizationPersistence;
+import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,14 +31,15 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -46,6 +49,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the journal article localization service.
@@ -57,6 +67,7 @@ import java.util.Objects;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = JournalArticleLocalizationPersistence.class)
 @ProviderType
 public class JournalArticleLocalizationPersistenceImpl
 	extends BasePersistenceImpl<JournalArticleLocalization>
@@ -862,8 +873,6 @@ public class JournalArticleLocalizationPersistenceImpl
 
 		setModelImplClass(JournalArticleLocalizationImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -876,8 +885,7 @@ public class JournalArticleLocalizationPersistenceImpl
 		JournalArticleLocalization journalArticleLocalization) {
 
 		entityCache.putResult(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationImpl.class,
+			entityCacheEnabled, JournalArticleLocalizationImpl.class,
 			journalArticleLocalization.getPrimaryKey(),
 			journalArticleLocalization);
 
@@ -905,8 +913,7 @@ public class JournalArticleLocalizationPersistenceImpl
 				journalArticleLocalizations) {
 
 			if (entityCache.getResult(
-					JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleLocalizationImpl.class,
+					entityCacheEnabled, JournalArticleLocalizationImpl.class,
 					journalArticleLocalization.getPrimaryKey()) == null) {
 
 				cacheResult(journalArticleLocalization);
@@ -945,8 +952,7 @@ public class JournalArticleLocalizationPersistenceImpl
 		JournalArticleLocalization journalArticleLocalization) {
 
 		entityCache.removeResult(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationImpl.class,
+			entityCacheEnabled, JournalArticleLocalizationImpl.class,
 			journalArticleLocalization.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -968,8 +974,7 @@ public class JournalArticleLocalizationPersistenceImpl
 				journalArticleLocalizations) {
 
 			entityCache.removeResult(
-				JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-				JournalArticleLocalizationImpl.class,
+				entityCacheEnabled, JournalArticleLocalizationImpl.class,
 				journalArticleLocalization.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -1184,7 +1189,7 @@ public class JournalArticleLocalizationPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!JournalArticleLocalizationModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -1224,8 +1229,7 @@ public class JournalArticleLocalizationPersistenceImpl
 		}
 
 		entityCache.putResult(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationImpl.class,
+			entityCacheEnabled, JournalArticleLocalizationImpl.class,
 			journalArticleLocalization.getPrimaryKey(),
 			journalArticleLocalization, false);
 
@@ -1514,29 +1518,31 @@ public class JournalArticleLocalizationPersistenceImpl
 	/**
 	 * Initializes the journal article localization persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		JournalArticleLocalizationModelImpl.setEntityCacheEnabled(
+			entityCacheEnabled);
+		JournalArticleLocalizationModelImpl.setFinderCacheEnabled(
+			finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByArticlePK = new FinderPath(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByArticlePK",
 			new String[] {
@@ -1545,22 +1551,19 @@ public class JournalArticleLocalizationPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByArticlePK = new FinderPath(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByArticlePK",
 			new String[] {Long.class.getName()},
 			JournalArticleLocalizationModelImpl.ARTICLEPK_COLUMN_BITMASK);
 
 		_finderPathCountByArticlePK = new FinderPath(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByArticlePK", new String[] {Long.class.getName()});
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByArticlePK",
+			new String[] {Long.class.getName()});
 
 		_finderPathFetchByA_L = new FinderPath(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleLocalizationImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByA_L",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -1568,26 +1571,60 @@ public class JournalArticleLocalizationPersistenceImpl
 			JournalArticleLocalizationModelImpl.LANGUAGEID_COLUMN_BITMASK);
 
 		_finderPathCountByA_L = new FinderPath(
-			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleLocalizationModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_L",
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_L",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(JournalArticleLocalizationImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalArticleLocalization"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_JOURNALARTICLELOCALIZATION =

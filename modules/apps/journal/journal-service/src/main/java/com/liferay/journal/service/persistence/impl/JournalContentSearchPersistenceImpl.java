@@ -21,7 +21,9 @@ import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.model.impl.JournalContentSearchImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
+import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,14 +31,15 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -46,6 +49,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the journal content search service.
@@ -57,6 +67,7 @@ import java.util.Objects;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = JournalContentSearchPersistence.class)
 @ProviderType
 public class JournalContentSearchPersistenceImpl
 	extends BasePersistenceImpl<JournalContentSearch>
@@ -5164,8 +5175,6 @@ public class JournalContentSearchPersistenceImpl
 
 		setModelImplClass(JournalContentSearchImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -5176,8 +5185,7 @@ public class JournalContentSearchPersistenceImpl
 	@Override
 	public void cacheResult(JournalContentSearch journalContentSearch) {
 		entityCache.putResult(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchImpl.class,
+			entityCacheEnabled, JournalContentSearchImpl.class,
 			journalContentSearch.getPrimaryKey(), journalContentSearch);
 
 		finderCache.putResult(
@@ -5205,8 +5213,7 @@ public class JournalContentSearchPersistenceImpl
 				journalContentSearchs) {
 
 			if (entityCache.getResult(
-					JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-					JournalContentSearchImpl.class,
+					entityCacheEnabled, JournalContentSearchImpl.class,
 					journalContentSearch.getPrimaryKey()) == null) {
 
 				cacheResult(journalContentSearch);
@@ -5243,8 +5250,7 @@ public class JournalContentSearchPersistenceImpl
 	@Override
 	public void clearCache(JournalContentSearch journalContentSearch) {
 		entityCache.removeResult(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchImpl.class,
+			entityCacheEnabled, JournalContentSearchImpl.class,
 			journalContentSearch.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -5263,8 +5269,7 @@ public class JournalContentSearchPersistenceImpl
 				journalContentSearchs) {
 
 			entityCache.removeResult(
-				JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-				JournalContentSearchImpl.class,
+				entityCacheEnabled, JournalContentSearchImpl.class,
 				journalContentSearch.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -5481,7 +5486,7 @@ public class JournalContentSearchPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!JournalContentSearchModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -5747,8 +5752,7 @@ public class JournalContentSearchPersistenceImpl
 		}
 
 		entityCache.putResult(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchImpl.class,
+			entityCacheEnabled, JournalContentSearchImpl.class,
 			journalContentSearch.getPrimaryKey(), journalContentSearch, false);
 
 		clearUniqueFindersCache(journalContentSearchModelImpl, false);
@@ -6030,29 +6034,29 @@ public class JournalContentSearchPersistenceImpl
 	/**
 	 * Initializes the journal content search persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		JournalContentSearchModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		JournalContentSearchModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -6061,22 +6065,19 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
 			JournalContentSearchModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByPortletId = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortletId",
 			new String[] {
@@ -6085,22 +6086,19 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByPortletId = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPortletId",
 			new String[] {String.class.getName()},
 			JournalContentSearchModelImpl.PORTLETID_COLUMN_BITMASK);
 
 		_finderPathCountByPortletId = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortletId",
 			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByArticleId = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByArticleId",
 			new String[] {
@@ -6109,22 +6107,19 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByArticleId = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByArticleId",
 			new String[] {String.class.getName()},
 			JournalContentSearchModelImpl.ARTICLEID_COLUMN_BITMASK);
 
 		_finderPathCountByArticleId = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByArticleId",
 			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByG_P = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
 			new String[] {
@@ -6134,8 +6129,7 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_P = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
@@ -6143,14 +6137,12 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.PRIVATELAYOUT_COLUMN_BITMASK);
 
 		_finderPathCountByG_P = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		_finderPathWithPaginationFindByG_A = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
 			new String[] {
@@ -6160,8 +6152,7 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_A = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -6169,14 +6160,12 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.ARTICLEID_COLUMN_BITMASK);
 
 		_finderPathCountByG_A = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByG_P_L = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L",
 			new String[] {
@@ -6186,8 +6175,7 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_P_L = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L",
 			new String[] {
@@ -6199,8 +6187,7 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.LAYOUTID_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_L = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -6208,8 +6195,7 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithPaginationFindByG_P_A = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_A",
 			new String[] {
@@ -6219,8 +6205,7 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_P_A = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_A",
 			new String[] {
@@ -6232,8 +6217,7 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.ARTICLEID_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_A = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -6241,8 +6225,7 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithPaginationFindByG_P_L_P = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_P",
 			new String[] {
@@ -6253,8 +6236,7 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_P_L_P = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L_P",
 			new String[] {
@@ -6267,8 +6249,7 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.PORTLETID_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_L_P = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L_P",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -6276,8 +6257,7 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathFetchByG_P_L_P_A = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByG_P_L_P_A",
 			new String[] {
@@ -6292,8 +6272,7 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.ARTICLEID_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_L_P_A = new FinderPath(
-			JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L_P_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -6302,20 +6281,55 @@ public class JournalContentSearchPersistenceImpl
 			});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(JournalContentSearchImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalContentSearch"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_JOURNALCONTENTSEARCH =

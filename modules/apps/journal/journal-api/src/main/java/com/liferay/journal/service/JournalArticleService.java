@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -50,13 +49,6 @@ import java.util.Map;
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(
-	property = {
-		"json.web.service.context.name=journal",
-		"json.web.service.context.path=JournalArticle"
-	},
-	service = JournalArticleService.class
-)
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,

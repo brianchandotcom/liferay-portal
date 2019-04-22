@@ -21,7 +21,9 @@ import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.impl.JournalArticleResourceImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
+import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,17 +31,18 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -52,6 +55,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * The persistence implementation for the journal article resource service.
  *
@@ -62,6 +72,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = JournalArticleResourcePersistence.class)
 @ProviderType
 public class JournalArticleResourcePersistenceImpl
 	extends BasePersistenceImpl<JournalArticleResource>
@@ -2257,8 +2268,6 @@ public class JournalArticleResourcePersistenceImpl
 
 		setModelImplClass(JournalArticleResourceImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2275,8 +2284,7 @@ public class JournalArticleResourcePersistenceImpl
 	@Override
 	public void cacheResult(JournalArticleResource journalArticleResource) {
 		entityCache.putResult(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceImpl.class,
+			entityCacheEnabled, JournalArticleResourceImpl.class,
 			journalArticleResource.getPrimaryKey(), journalArticleResource);
 
 		finderCache.putResult(
@@ -2311,8 +2319,7 @@ public class JournalArticleResourcePersistenceImpl
 				journalArticleResources) {
 
 			if (entityCache.getResult(
-					JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleResourceImpl.class,
+					entityCacheEnabled, JournalArticleResourceImpl.class,
 					journalArticleResource.getPrimaryKey()) == null) {
 
 				cacheResult(journalArticleResource);
@@ -2349,8 +2356,7 @@ public class JournalArticleResourcePersistenceImpl
 	@Override
 	public void clearCache(JournalArticleResource journalArticleResource) {
 		entityCache.removeResult(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceImpl.class,
+			entityCacheEnabled, JournalArticleResourceImpl.class,
 			journalArticleResource.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2371,8 +2377,7 @@ public class JournalArticleResourcePersistenceImpl
 				journalArticleResources) {
 
 			entityCache.removeResult(
-				JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-				JournalArticleResourceImpl.class,
+				entityCacheEnabled, JournalArticleResourceImpl.class,
 				journalArticleResource.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -2625,7 +2630,7 @@ public class JournalArticleResourcePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!JournalArticleResourceModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -2722,8 +2727,7 @@ public class JournalArticleResourcePersistenceImpl
 		}
 
 		entityCache.putResult(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceImpl.class,
+			entityCacheEnabled, JournalArticleResourceImpl.class,
 			journalArticleResource.getPrimaryKey(), journalArticleResource,
 			false);
 
@@ -3012,29 +3016,31 @@ public class JournalArticleResourcePersistenceImpl
 	/**
 	 * Initializes the journal article resource persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		JournalArticleResourceModelImpl.setEntityCacheEnabled(
+			entityCacheEnabled);
+		JournalArticleResourceModelImpl.setFinderCacheEnabled(
+			finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3043,22 +3049,19 @@ public class JournalArticleResourcePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			JournalArticleResourceModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleResourceImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3066,14 +3069,12 @@ public class JournalArticleResourcePersistenceImpl
 			JournalArticleResourceModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -3083,8 +3084,7 @@ public class JournalArticleResourcePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3092,14 +3092,12 @@ public class JournalArticleResourcePersistenceImpl
 			JournalArticleResourceModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -3108,22 +3106,19 @@ public class JournalArticleResourcePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
 			JournalArticleResourceModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByG_A = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			JournalArticleResourceImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByG_A",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -3131,26 +3126,60 @@ public class JournalArticleResourcePersistenceImpl
 			JournalArticleResourceModelImpl.ARTICLEID_COLUMN_BITMASK);
 
 		_finderPathCountByG_A = new FinderPath(
-			JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
-			JournalArticleResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(JournalArticleResourceImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalArticleResource"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference(service = CompanyProviderWrapper.class)
 	protected CompanyProvider companyProvider;
 
-	@ServiceReference(type = EntityCache.class)
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_JOURNALARTICLERESOURCE =

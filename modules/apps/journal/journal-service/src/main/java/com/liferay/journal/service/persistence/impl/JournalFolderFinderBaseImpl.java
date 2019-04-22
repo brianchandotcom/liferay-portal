@@ -16,7 +16,9 @@ package com.liferay.journal.service.persistence.impl;
 
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class JournalFolderFinderBaseImpl
+public abstract class JournalFolderFinderBaseImpl
 	extends BasePersistenceImpl<JournalFolder> {
 
 	public JournalFolderFinderBaseImpl() {
@@ -44,30 +50,37 @@ public class JournalFolderFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getJournalFolderPersistence().getBadColumnNames();
+		return journalFolderPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the journal folder persistence.
-	 *
-	 * @return the journal folder persistence
-	 */
-	public JournalFolderPersistence getJournalFolderPersistence() {
-		return journalFolderPersistence;
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the journal folder persistence.
-	 *
-	 * @param journalFolderPersistence the journal folder persistence
-	 */
-	public void setJournalFolderPersistence(
-		JournalFolderPersistence journalFolderPersistence) {
-
-		this.journalFolderPersistence = journalFolderPersistence;
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = JournalFolderPersistence.class)
+	@Override
+	@Reference(
+		target = JournalPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected JournalFolderPersistence journalFolderPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

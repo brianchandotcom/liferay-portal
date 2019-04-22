@@ -26,12 +26,6 @@ components:
         Process:
             description: https://www.schema.org/Process
             properties:
-                dueAfterInstanceCount:
-                    format: int64
-                    type: integer
-                dueInInstanceCount:
-                    format: int64
-                    type: integer
                 id:
                     format: int64
                     type: integer
@@ -46,6 +40,9 @@ components:
                     type: integer
                 title:
                     type: string
+                untrackedInstanceCount:
+                    format: int64
+                    type: integer
             type: object
         SLA:
             description: https://www.schema.org/SLA

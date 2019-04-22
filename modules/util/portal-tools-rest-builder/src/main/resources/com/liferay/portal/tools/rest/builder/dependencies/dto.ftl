@@ -131,15 +131,17 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		/>
 
 		@Schema(
-		<#if propertySchema.description??>
-			description = "${propertySchema.description}"
-		</#if>
-		<#if propertySchema.example??>
 			<#if propertySchema.description??>
-				,
+				description = "${propertySchema.description}"
 			</#if>
-			example = "${propertySchema.example}"
-		</#if>
+
+			<#if propertySchema.example??>
+				<#if propertySchema.description??>
+					,
+				</#if>
+
+				example = "${propertySchema.example}"
+			</#if>
 		)
 		public ${propertyType} get${propertyName?cap_first}() {
 			return ${propertyName};

@@ -15,6 +15,7 @@
 package com.liferay.portal.cache;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
@@ -77,6 +78,8 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
 
 		if (portalCache != null) {
+			_verifyPortalCache(portalCache, blocking, mvcc);
+
 			return portalCache;
 		}
 
@@ -116,6 +119,8 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			portalCacheName, portalCache);
 
 		if (previousPortalCache != null) {
+			_verifyPortalCache(portalCache, blocking, mvcc);
+
 			portalCache = previousPortalCache;
 		}
 		else if (portalCacheConfiguration != null) {
@@ -354,6 +359,59 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			portalCache.registerPortalCacheListener(
 				portalCacheListener, portalCacheListenerScope);
 		}
+	}
+
+	private void _verifyPortalCache(
+		PortalCache<K, V> portalCache, boolean blocking, boolean mvcc) {
+
+		if ((mvcc == portalCache.isMVCC()) &&
+			(!isBlockingPortalCacheAllowed() ||
+			 (blocking == portalCache.isBlocking()))) {
+
+			return;
+		}
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append("Unable to get portal cache ");
+		sb.append(portalCache.getPortalCacheName());
+		sb.append(" from portal cache manager ");
+		sb.append(_portalCacheManagerName);
+		sb.append(" as a ");
+
+		if (isBlockingPortalCacheAllowed() && blocking) {
+			sb.append("blocking ");
+		}
+		else {
+			sb.append("non-blocking ");
+		}
+
+		if (mvcc) {
+			sb.append("mvcc ");
+		}
+		else {
+			sb.append("non-mvcc ");
+		}
+
+		sb.append("portal cache, cause a ");
+
+		if (isBlockingPortalCacheAllowed() && portalCache.isBlocking()) {
+			sb.append("blocking ");
+		}
+		else {
+			sb.append("non-blocking ");
+		}
+
+		if (portalCache.isMVCC()) {
+			sb.append("mvcc ");
+		}
+		else {
+			sb.append("non-mvcc ");
+		}
+
+		sb.append("portal cache with same name exists.");
+
+		throw new IllegalStateException(sb.toString());
 	}
 
 	private boolean _blockingPortalCacheAllowed;

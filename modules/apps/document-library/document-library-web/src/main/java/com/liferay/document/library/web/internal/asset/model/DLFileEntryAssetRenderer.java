@@ -77,27 +77,6 @@ import javax.servlet.http.HttpServletResponse;
 public class DLFileEntryAssetRenderer
 	extends BaseJSPAssetRenderer<FileEntry> implements TrashRenderer {
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public DLFileEntryAssetRenderer(
-		FileEntry fileEntry, FileVersion fileVersion) {
-
-		this(fileEntry, fileVersion, DLFileEntryLocalServiceUtil.getService());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	public DLFileEntryAssetRenderer(
-		FileEntry fileEntry, FileVersion fileVersion,
-		DLFileEntryLocalService dlFileEntryLocalService) {
-
-		this(fileEntry, fileVersion, dlFileEntryLocalService, null, null);
-	}
-
 	public DLFileEntryAssetRenderer(
 		FileEntry fileEntry, FileVersion fileVersion,
 		DLFileEntryLocalService dlFileEntryLocalService,
@@ -146,15 +125,6 @@ public class DLFileEntryAssetRenderer
 		}
 
 		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Date getDisplayDate() {
-		return _fileEntry.getModifiedDate();
 	}
 
 	@Override
@@ -388,13 +358,6 @@ public class DLFileEntryAssetRenderer
 	@Override
 	public String getUuid() {
 		return _fileEntry.getUuid();
-	}
-
-	public boolean hasDeletePermission(PermissionChecker permissionChecker)
-		throws PortalException {
-
-		return DLFileEntryPermission.contains(
-			permissionChecker, _fileEntry.getFileEntryId(), ActionKeys.DELETE);
 	}
 
 	@Override

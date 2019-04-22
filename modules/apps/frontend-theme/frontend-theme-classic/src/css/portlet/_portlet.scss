@@ -18,29 +18,37 @@
 	}
 }
 
-.portlet > .portlet-topper {
-	padding: 0 4px 0 8px;
+.portlet {
+	> .portlet-topper {
+		padding: 0 4px 0 8px;
 
-	@include sm {
-		right: auto;
+		@include sm {
+			right: auto;
+		}
+
+		.portlet-title-default {
+			line-height: 1.5rem;
+		}
+
+		.portlet-name-text {
+			margin-right: 0.75rem;
+		}
+
+		.portlet-topper-toolbar, .icon-monospaced {
+			height: 1.5rem;
+			line-height: 1.5rem;
+			width: 1.5rem;
+		}
+
+		.lexicon-icon {
+			height: 0.875rem;
+			width: 0.875rem;
+		}
 	}
 
-	.portlet-title-default {
-		line-height: 1.5rem;
-	}
-
-	.portlet-name-text {
-		margin-right: 0.75rem;
-	}
-
-	.portlet-topper-toolbar, .icon-monospaced {
-		height: 1.5rem;
-		line-height: 1.5rem;
-		width: 1.5rem;
-	}
-
-	.lexicon-icon {
-		height: 0.875rem;
-		width: 0.875rem;
+	&:hover, &.open {
+		> .portlet-topper {
+			z-index: 1050;
+		}
 	}
 }

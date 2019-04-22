@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.resources.importer.internal.portlet.configuration.icon;
+package com.liferay.journal.web.internal.portlet.configuration.icon;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;

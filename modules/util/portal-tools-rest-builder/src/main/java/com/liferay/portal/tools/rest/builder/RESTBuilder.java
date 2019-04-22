@@ -33,11 +33,15 @@ import com.liferay.portal.vulcan.yaml.YAMLUtil;
 import com.liferay.portal.vulcan.yaml.config.Application;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
+import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Info;
+import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
 import com.liferay.portal.vulcan.yaml.openapi.PathItem;
+import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
+import com.liferay.portal.vulcan.yaml.openapi.Response;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.io.File;
@@ -258,6 +262,10 @@ public class RESTBuilder {
 
 		if (_configYAML.isForcePredictableOperationId()) {
 			content = _fixOpenAPIOperationIds(freeMarkerTool, content);
+		}
+
+		if (_configYAML.isForcePredictableContentApplicationXML()) {
+			content = _fixOpenAPIContentApplicationXML(content);
 		}
 
 		if (_configYAML.isWarningsEnabled()) {
@@ -774,6 +782,113 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFile, "resource_test", context));
+	}
+
+	private String _fixOpenAPIContentApplicationXML(
+		Map<String, Content> contents, int index, String s) {
+
+		if (contents == null) {
+			return s;
+		}
+
+		Set<String> mediaTypes = contents.keySet();
+
+		if (!mediaTypes.contains("application/json") ||
+			mediaTypes.contains("application/xml")) {
+
+			return s;
+		}
+
+		Content content = contents.get("application/json");
+
+		String reference = null;
+
+		if (content.getSchema() != null) {
+			Schema schema = content.getSchema();
+
+			reference = schema.getReference();
+
+			if (schema.getItems() != null) {
+				Items items = schema.getItems();
+
+				reference = items.getReference();
+			}
+		}
+
+		if (reference == null) {
+			return s;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		int x = s.lastIndexOf("\n", s.indexOf("application/json", index)) + 1;
+
+		String line = s.substring(x, s.indexOf("\n", x));
+
+		String leadingWhitespace = line.replaceAll("^(\\s+).+", "$1");
+
+		while (line.startsWith(leadingWhitespace)) {
+			sb.append(line);
+			sb.append("\n");
+
+			x = s.indexOf("\n", x) + 1;
+
+			line = s.substring(x, s.indexOf("\n", x));
+		}
+
+		String oldSub = sb.toString();
+
+		String newSub =
+			oldSub + oldSub.replace("application/json", "application/xml");
+
+		return StringUtil.replaceFirst(s, oldSub, newSub, index);
+	}
+
+	private String _fixOpenAPIContentApplicationXML(String s) {
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
+
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		for (Map.Entry<String, PathItem> entry1 : pathItems.entrySet()) {
+			String path = entry1.getKey();
+
+			int x = s.indexOf(StringUtil.quote(path, '"') + ":");
+
+			if (x == -1) {
+				x = s.indexOf(path + ":");
+			}
+
+			for (Operation operation : _getOperations(entry1.getValue())) {
+				RequestBody requestBody = operation.getRequestBody();
+
+				String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
+
+				int y = s.indexOf(httpMethod + ":", x);
+
+				if (requestBody != null) {
+					Map<String, Content> contents = requestBody.getContent();
+					int index = s.indexOf("requestBody:", y);
+
+					s = _fixOpenAPIContentApplicationXML(contents, index, s);
+				}
+
+				Map<Integer, Response> responses = operation.getResponses();
+
+				for (Map.Entry<Integer, Response> entry2 :
+						responses.entrySet()) {
+
+					Response response = entry2.getValue();
+
+					Map<String, Content> contents = response.getContent();
+
+					int index = s.indexOf(entry2.getKey() + ":", y);
+
+					s = _fixOpenAPIContentApplicationXML(contents, index, s);
+				}
+			}
+		}
+
+		return s;
 	}
 
 	private String _fixOpenAPIOperationIds(

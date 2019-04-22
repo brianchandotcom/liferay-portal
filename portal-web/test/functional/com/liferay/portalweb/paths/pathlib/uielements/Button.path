@@ -160,7 +160,7 @@
 </tr>
 <tr>
 	<td>COLOR_EFFECT</td>
-	<td>//a[contains(@class, 'btn')][*[name()='svg'][@data-icon='effects']]</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-effects')]]</td>
 	<td></td>
 </tr>
 <tr>

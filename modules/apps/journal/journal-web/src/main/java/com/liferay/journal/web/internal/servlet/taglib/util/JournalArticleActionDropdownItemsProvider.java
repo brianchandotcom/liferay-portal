@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -714,19 +711,13 @@ public class JournalArticleActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getViewUsagesArticleActionUnsafeConsumer()
-		throws Exception {
-
-		PortletURL viewUsagesURL = PortletProviderUtil.getPortletURL(
-			_request, AssetEntryUsage.class.getName(),
-			PortletProvider.Action.VIEW);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			JournalArticle.class.getName(), _article.getResourcePrimKey());
+		_getViewUsagesArticleActionUnsafeConsumer() {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				viewUsagesURL, "assetEntryId", assetEntry.getEntryId());
+				_liferayPortletResponse.createRenderURL(), "mvcPath",
+				"/view_usages.jsp", "redirect", _getRedirect(), "groupId",
+				_article.getGroupId(), "articleId", _article.getArticleId());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "view-usages"));
 		};
 	}

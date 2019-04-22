@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -45,7 +44,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -55,7 +53,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -116,7 +113,7 @@ public class DLAdminManagementToolbarDisplayContext {
 			_themeDisplay.getScopeGroupId());
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
+	public List<DropdownItem> getActionDropdownItems() throws PortalException {
 		if (!_dlPortletInstanceSettingsHelper.isShowActions()) {
 			return null;
 		}
@@ -158,11 +155,18 @@ public class DLAdminManagementToolbarDisplayContext {
 								LanguageUtil.get(_request, "move"));
 							dropdownItem.setQuickAction(true);
 						});
+
+					boolean enableOnBulk = _isEnableOnBulk();
+
 					add(
 						dropdownItem -> {
 							dropdownItem.putData("action", "editTags");
-							dropdownItem.putData(
-								"enableOnBulk", Boolean.TRUE.toString());
+
+							if (enableOnBulk) {
+								dropdownItem.putData(
+									"enableOnBulk", Boolean.TRUE.toString());
+							}
+
 							dropdownItem.setIcon("tag");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "edit-tags"));
@@ -174,8 +178,13 @@ public class DLAdminManagementToolbarDisplayContext {
 							dropdownItem -> {
 								dropdownItem.putData(
 									"action", "editCategories");
-								dropdownItem.putData(
-									"enableOnBulk", Boolean.TRUE.toString());
+
+								if (enableOnBulk) {
+									dropdownItem.putData(
+										"enableOnBulk",
+										Boolean.TRUE.toString());
+								}
+
 								dropdownItem.setIcon("categories");
 								dropdownItem.setLabel(
 									LanguageUtil.get(
@@ -278,47 +287,6 @@ public class DLAdminManagementToolbarDisplayContext {
 		}
 
 		return availableActionDropdownItems;
-	}
-
-	private boolean _hasWorkflowDefinitionLink(FileEntry fileEntry)
-		throws PortalException {
-
-		if (!(fileEntry.getModel() instanceof WorkflowedModel)) {
-			return false;
-		}
-
-		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
-				fileEntry.getCompanyId(), fileEntry.getGroupId(),
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId())) {
-
-			return true;
-		}
-
-		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
-			return false;
-		}
-
-		if (_hasWorkflowDefinitionLink((DLFileEntry)fileEntry.getModel())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _hasWorkflowDefinitionLink(DLFileEntry dlFileEntry)
-		throws PortalException {
-		try {
-			return DLUtil.hasWorkflowDefinitionLink(
-				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
-				dlFileEntry.getFolderId(), dlFileEntry.getFileEntryTypeId());
-		}
-		catch (PortalException | RuntimeException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
 	}
 
 	public List<String> getAvailableActionDropdownItems(Folder folder)
@@ -880,6 +848,53 @@ public class DLAdminManagementToolbarDisplayContext {
 
 				return false;
 			});
+	}
+
+	private boolean _hasWorkflowDefinitionLink(FileEntry fileEntry)
+		throws PortalException {
+
+		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
+			return false;
+		}
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		if (_hasWorkflowDefinitionLink(
+				dlFileEntry.getFolderId(), dlFileEntry.getFileEntryTypeId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasWorkflowDefinitionLink(
+			long folderId, long fileEntryTypeId)
+		throws PortalException {
+
+		try {
+			return DLUtil.hasWorkflowDefinitionLink(
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+				folderId, fileEntryTypeId);
+		}
+		catch (PortalException | RuntimeException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
+	}
+
+	private boolean _isEnableOnBulk() throws PortalException {
+		long folderId = ParamUtil.getLong(_request, "folderId");
+
+		if (_hasWorkflowDefinitionLink(
+				folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isSearch() {

@@ -1,4 +1,4 @@
-# YAML Description Guidelines
+# REST Builder YAML Description Guidelines
 
 We welcome you to contribute descriptions for Liferay Portal's YAML files. These
 guidelines are based on the

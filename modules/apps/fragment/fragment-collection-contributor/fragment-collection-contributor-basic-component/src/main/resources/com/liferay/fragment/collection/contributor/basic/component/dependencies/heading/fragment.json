@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "heading",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Heading",
+	"name": "Text",
 	"thumbnail": "heading.png",
 	"type": "component"
 }

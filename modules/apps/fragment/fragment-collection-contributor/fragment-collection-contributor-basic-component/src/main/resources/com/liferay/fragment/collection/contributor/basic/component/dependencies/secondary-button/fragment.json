@@ -3,7 +3,7 @@
 	"fragmentEntryKey": "secondary-button",
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
-	"name": "Secondary Button",
+	"name": "Link",
 	"thumbnail": "secondary_button.png",
 	"type": "component"
 }

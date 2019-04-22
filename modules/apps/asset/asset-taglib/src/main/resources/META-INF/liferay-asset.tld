@@ -521,6 +521,21 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>asset-usages</name>
+		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetUsagesTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>className</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>classPK</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>asset-view-usages</name>
 		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetViewUsagesTag</tag-class>
 		<body-content>JSP</body-content>

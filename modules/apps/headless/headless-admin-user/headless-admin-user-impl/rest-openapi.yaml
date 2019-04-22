@@ -603,6 +603,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/EmailAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/EmailAddress"
                     description: ""
             tags: ["EmailAddress"]
     "/my-user-account":
@@ -612,6 +615,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
                     description: ""
@@ -648,6 +654,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Organization"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
                     description: ""
             tags: ["Organization"]
     "/organizations/{organizationId}":
@@ -666,6 +677,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Organization"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Organization"
                     description: ""
             tags: ["Organization"]
     "/organizations/{organizationId}/email-addresses":
@@ -682,6 +696,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmailAddress"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/EmailAddress"
@@ -706,6 +725,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Phone"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
                     description: ""
             tags: ["Phone"]
     "/organizations/{organizationId}/postal-addresses":
@@ -722,6 +746,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/PostalAddress"
@@ -766,6 +795,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
                     description: ""
             tags: ["UserAccount"]
     "/organizations/{organizationId}/web-urls":
@@ -782,6 +816,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/WebUrl"
@@ -826,6 +865,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Organization"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Organization"
+                                type: array
                     description: ""
             tags: ["Organization"]
     "/phones/{phoneId}":
@@ -844,6 +888,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Phone"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Phone"
                     description: ""
             tags: ["Phone"]
     "/postal-addresses/{postalAddressId}":
@@ -860,6 +907,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/PostalAddress"
                     description: ""
@@ -884,6 +934,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Role"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Role"
+                                type: array
                     description: ""
             tags: ["Role"]
     "/roles/{roleId}":
@@ -900,6 +955,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Role"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Role"
                     description: ""
@@ -928,6 +986,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SegmentUser"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/SegmentUser"
@@ -962,6 +1025,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Segment"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Segment"
+                                type: array
                     description: ""
             tags: ["Segment"]
     "/sites/{siteId}/user-accounts/{userAccountId}/segments":
@@ -986,6 +1054,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Segment"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Segment"
@@ -1024,6 +1097,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
                     description: ""
             tags: ["UserAccount"]
     "/user-accounts/{userAccountId}":
@@ -1042,6 +1120,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
                     description: ""
             tags: ["UserAccount"]
     "/user-accounts/{userAccountId}/email-addresses":
@@ -1058,6 +1139,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmailAddress"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/EmailAddress"
@@ -1082,6 +1168,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Phone"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
                     description: ""
             tags: ["Phone"]
     "/user-accounts/{userAccountId}/postal-addresses":
@@ -1102,6 +1193,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/PostalAddress"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PostalAddress"
+                                type: array
                     description: ""
             tags: ["PostalAddress"]
     "/user-accounts/{userAccountId}/web-urls":
@@ -1118,6 +1214,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/WebUrl"
@@ -1162,6 +1263,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/UserAccount"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
                     description: ""
             tags: ["UserAccount"]
     "/web-urls/{webUrlId}":
@@ -1178,6 +1284,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/WebUrl"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/WebUrl"
                     description: ""

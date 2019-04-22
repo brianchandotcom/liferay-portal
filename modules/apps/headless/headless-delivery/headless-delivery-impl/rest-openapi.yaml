@@ -1322,6 +1322,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/BlogPostingImage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BlogPostingImage"
                     description: ""
             tags: ["BlogPostingImage"]
     "/blog-postings/{blogPostingId}":
@@ -1355,6 +1358,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/BlogPosting"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
         patch:
@@ -1371,10 +1377,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/BlogPosting"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BlogPosting"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/BlogPosting"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
@@ -1393,10 +1405,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/BlogPosting"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BlogPosting"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/BlogPosting"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
@@ -1439,6 +1457,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Comment"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Comment"
+                                type: array
                     description: ""
             tags: ["Comment"]
         post:
@@ -1455,10 +1478,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
@@ -1494,6 +1523,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Rating"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["BlogPosting"]
         post:
@@ -1510,10 +1542,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -1532,10 +1570,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -1571,6 +1615,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Comment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
                     description: ""
             tags: ["Comment"]
         put:
@@ -1587,10 +1634,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
@@ -1633,6 +1686,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Comment"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Comment"
+                                type: array
                     description: ""
             tags: ["Comment"]
         post:
@@ -1649,10 +1707,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
@@ -1683,6 +1747,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ContentSetElement"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentSetElement"
+                                type: array
                     description: ""
             tags: ["ContentSetElement"]
     "/content-structures/{contentStructureId}":
@@ -1699,6 +1768,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/ContentStructure"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/ContentStructure"
                     description: ""
@@ -1745,6 +1817,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/StructuredContent"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContent"
+                                type: array
                     description: ""
             tags: ["StructuredContent"]
     "/document-folders/{documentFolderId}":
@@ -1778,6 +1855,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DocumentFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
                     description: ""
             tags: ["DocumentFolder"]
         patch:
@@ -1794,10 +1874,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DocumentFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DocumentFolder"
                     description: ""
@@ -1816,10 +1902,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DocumentFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DocumentFolder"
                     description: ""
@@ -1862,6 +1954,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Document"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Document"
+                                type: array
                     description: ""
             tags: ["Document"]
         post:
@@ -1888,6 +1985,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Document"
                     description: ""
@@ -1930,6 +2030,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DocumentFolder"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentFolder"
+                                type: array
                     description: ""
             tags: ["DocumentFolder"]
         post:
@@ -1946,10 +2051,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DocumentFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DocumentFolder"
                     description: ""
@@ -1985,6 +2096,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Document"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
         patch:
@@ -2013,6 +2127,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Document"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
         put:
@@ -2039,6 +2156,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Document"
                     description: ""
@@ -2081,6 +2201,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Comment"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Comment"
+                                type: array
                     description: ""
             tags: ["Comment"]
         post:
@@ -2097,10 +2222,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
@@ -2136,6 +2267,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Rating"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["Document"]
         post:
@@ -2152,10 +2286,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -2174,10 +2314,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -2213,6 +2359,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         patch:
@@ -2229,10 +2378,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
@@ -2251,10 +2406,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
@@ -2273,6 +2434,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/KnowledgeBaseAttachment"
@@ -2303,6 +2469,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseAttachment"
                     description: ""
@@ -2338,6 +2507,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Rating"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
@@ -2354,10 +2526,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -2376,10 +2554,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -2422,6 +2606,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/KnowledgeBaseArticle"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                type: array
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
@@ -2438,10 +2627,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
@@ -2477,6 +2672,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseAttachment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseAttachment"
                     description: ""
             tags: ["KnowledgeBaseAttachment"]
     "/knowledge-base-folders/{knowledgeBaseFolderId}":
@@ -2510,6 +2708,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         patch:
@@ -2526,10 +2727,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
@@ -2548,10 +2755,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
@@ -2598,6 +2811,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/KnowledgeBaseArticle"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                type: array
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
@@ -2614,10 +2832,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
@@ -2648,6 +2872,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/KnowledgeBaseFolder"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseFolder"
+                                type: array
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         post:
@@ -2664,10 +2893,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
@@ -2703,6 +2938,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardAttachment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
             tags: ["MessageBoardAttachment"]
     "/message-board-messages/{messageBoardMessageId}":
@@ -2736,6 +2974,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
             tags: ["MessageBoardMessage"]
         patch:
@@ -2752,10 +2993,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardMessage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
@@ -2774,10 +3021,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardMessage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
@@ -2796,6 +3049,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardAttachment"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardAttachment"
@@ -2826,6 +3084,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardAttachment"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
@@ -2861,6 +3122,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Rating"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["MessageBoardMessage"]
         post:
@@ -2877,10 +3141,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -2899,10 +3169,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -2945,6 +3221,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardMessage"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardMessage"
+                                type: array
                     description: ""
             tags: ["MessageBoardMessage"]
         post:
@@ -2961,10 +3242,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardMessage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
@@ -3000,6 +3287,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardSection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
             tags: ["MessageBoardSection"]
         patch:
@@ -3016,10 +3306,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardSection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardSection"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardSection"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
@@ -3038,10 +3334,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardSection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardSection"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardSection"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
@@ -3084,6 +3386,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardThread"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardThread"
+                                type: array
                     description: ""
             tags: ["MessageBoardThread"]
         post:
@@ -3100,10 +3407,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardThread"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardThread"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardThread"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
@@ -3146,6 +3459,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardSection"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSection"
+                                type: array
                     description: ""
             tags: ["MessageBoardSection"]
         post:
@@ -3162,10 +3480,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardSection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardSection"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardSection"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
@@ -3201,6 +3525,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardThread"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
             tags: ["MessageBoardThread"]
         patch:
@@ -3217,10 +3544,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardThread"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardThread"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardThread"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
@@ -3239,10 +3572,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardThread"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardThread"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardThread"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
@@ -3261,6 +3600,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardAttachment"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardAttachment"
@@ -3291,6 +3635,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardAttachment"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardAttachment"
                     description: ""
@@ -3333,6 +3680,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardMessage"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardMessage"
+                                type: array
                     description: ""
             tags: ["MessageBoardMessage"]
         post:
@@ -3349,10 +3701,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardMessage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardMessage"
                     description: ""
@@ -3388,6 +3746,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Rating"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["MessageBoardThread"]
         post:
@@ -3404,10 +3765,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -3426,10 +3793,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -3472,6 +3845,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/BlogPostingImage"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/BlogPostingImage"
+                                type: array
                     description: ""
             tags: ["BlogPostingImage"]
         post:
@@ -3498,6 +3876,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/BlogPostingImage"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/BlogPostingImage"
                     description: ""
@@ -3540,6 +3921,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/BlogPosting"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/BlogPosting"
+                                type: array
                     description: ""
             tags: ["BlogPosting"]
         post:
@@ -3556,10 +3942,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/BlogPosting"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BlogPosting"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/BlogPosting"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
@@ -3595,6 +3987,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ContentSetElement"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentSetElement"
+                                type: array
                     description: ""
             tags: ["ContentSetElement"]
     "/sites/{siteId}/content-sets/by-uuid/{uuid}/content-set-elements":
@@ -3624,6 +4021,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentSetElement"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/ContentSetElement"
@@ -3664,6 +4066,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentStructure"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/ContentStructure"
@@ -3712,6 +4119,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DocumentFolder"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DocumentFolder"
+                                type: array
                     description: ""
             tags: ["DocumentFolder"]
         post:
@@ -3728,10 +4140,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DocumentFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DocumentFolder"
                     description: ""
@@ -3778,6 +4196,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Document"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Document"
+                                type: array
                     description: ""
             tags: ["Document"]
         post:
@@ -3804,6 +4227,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Document"
                     description: ""
@@ -3850,6 +4276,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/KnowledgeBaseArticle"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseArticle"
+                                type: array
                     description: ""
             tags: ["KnowledgeBaseArticle"]
         post:
@@ -3866,10 +4297,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
                     description: ""
@@ -3900,6 +4337,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/KnowledgeBaseFolder"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/KnowledgeBaseFolder"
+                                type: array
                     description: ""
             tags: ["KnowledgeBaseFolder"]
         post:
@@ -3916,10 +4358,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseFolder"
                     description: ""
@@ -3966,6 +4414,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardSection"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardSection"
+                                type: array
                     description: ""
             tags: ["MessageBoardSection"]
         post:
@@ -3982,10 +4435,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardSection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardSection"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardSection"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardSection"
                     description: ""
@@ -4032,6 +4491,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/MessageBoardThread"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MessageBoardThread"
+                                type: array
                     description: ""
             tags: ["MessageBoardThread"]
         post:
@@ -4048,10 +4512,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/MessageBoardThread"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardThread"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardThread"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
@@ -4098,6 +4568,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/StructuredContentFolder"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContentFolder"
+                                type: array
                     description: ""
             tags: ["StructuredContentFolder"]
         post:
@@ -4114,10 +4589,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/StructuredContentFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
@@ -4168,6 +4649,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/StructuredContent"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContent"
+                                type: array
                     description: ""
             tags: ["StructuredContent"]
         post:
@@ -4188,10 +4674,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/StructuredContent"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContent"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
@@ -4221,6 +4713,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
                     description: ""
             tags: ["StructuredContent"]
     "/sites/{siteId}/structured-contents/by-uuid/{uuid}":
@@ -4246,6 +4741,9 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
@@ -4288,6 +4786,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/StructuredContentFolder"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContentFolder"
+                                type: array
                     description: ""
             tags: ["StructuredContentFolder"]
         post:
@@ -4304,10 +4807,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/StructuredContentFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
@@ -4343,6 +4852,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/StructuredContentFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
         patch:
             operationId: patchStructuredContentFolder
@@ -4358,10 +4870,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/StructuredContentFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
@@ -4380,10 +4898,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/StructuredContentFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContentFolder"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContentFolder"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/StructuredContentFolder"
                     description: ""
@@ -4430,6 +4954,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/StructuredContent"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContent"
+                                type: array
                     description: ""
             tags: ["StructuredContent"]
         post:
@@ -4450,10 +4979,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/StructuredContent"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContent"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
@@ -4493,6 +5028,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
                     description: ""
             tags: ["StructuredContent"]
         patch:
@@ -4513,10 +5051,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/StructuredContent"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContent"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
@@ -4539,10 +5083,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/StructuredContent"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContent"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
@@ -4585,6 +5135,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Comment"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Comment"
+                                type: array
                     description: ""
             tags: ["Comment"]
         post:
@@ -4601,10 +5156,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Comment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Comment"
                     description: ""
@@ -4640,6 +5201,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Rating"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["StructuredContent"]
         post:
@@ -4656,10 +5220,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
@@ -4678,10 +5248,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/Rating"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Rating"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Rating"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
                     description: ""

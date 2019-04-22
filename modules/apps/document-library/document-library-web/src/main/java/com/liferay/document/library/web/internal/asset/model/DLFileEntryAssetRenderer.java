@@ -23,7 +23,6 @@ import com.liferay.document.library.kernel.document.conversion.DocumentConversio
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.petra.string.CharPool;
@@ -56,7 +55,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 import com.liferay.trash.TrashHelper;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -510,7 +508,7 @@ public class DLFileEntryAssetRenderer
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
-	private DLURLHelper _dlURLHelper;
+	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private FileVersion _fileVersion;
 	private final TrashHelper _trashHelper;

@@ -23,10 +23,8 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
-import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
-import com.liferay.portal.search.aggregation.bucket.RangeAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
@@ -140,6 +138,19 @@ public class ProcessResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	private BucketSortPipelineAggregation _createBucketSortPipelineAggregation(
+		FieldSort fieldSort, Pagination pagination) {
+
+		BucketSortPipelineAggregation bucketSortPipelineAggregation =
+			_aggregations.bucketSort("sort");
+
+		bucketSortPipelineAggregation.addSortFields(fieldSort);
+		bucketSortPipelineAggregation.setFrom(pagination.getStartPosition());
+		bucketSortPipelineAggregation.setSize(pagination.getPageSize() + 1);
+
+		return bucketSortPipelineAggregation;
+	}
+
 	private BooleanQuery _createInstanceBooleanQuery(Set<Long> processIds) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -217,16 +228,8 @@ public class ProcessResourceImpl
 		if ((fieldSort != null) &&
 			_isOrderByInstanceCount(fieldSort.getField())) {
 
-			BucketSortPipelineAggregation bucketSortPipelineAggregation =
-				_aggregations.bucketSort("sort");
-
-			bucketSortPipelineAggregation.addSortFields(fieldSort);
-			bucketSortPipelineAggregation.setFrom(
-				pagination.getStartPosition());
-			bucketSortPipelineAggregation.setSize(pagination.getPageSize() + 1);
-
 			termsAggregation.addPipelineAggregation(
-				bucketSortPipelineAggregation);
+				_createBucketSortPipelineAggregation(fieldSort, pagination));
 		}
 
 		termsAggregation.setSize(processIds.size());
@@ -280,6 +283,7 @@ public class ProcessResourceImpl
 					slaTermsAggregationResult.getBucket(bucket.getKey()),
 					process);
 				_setInstanceCount(bucket, process);
+				_setUntrackedInstanceCount(process);
 
 				processes.add(process);
 			}
@@ -294,6 +298,7 @@ public class ProcessResourceImpl
 					instanceTermsAggregationResult.getBucket(
 						String.valueOf(process.getId())),
 					process);
+				_setUntrackedInstanceCount(process);
 
 				processes.add(process);
 			}
@@ -307,6 +312,7 @@ public class ProcessResourceImpl
 				_setInstanceCount(
 					instanceTermsAggregationResult.getBucket(bucket.getKey()),
 					process);
+				_setUntrackedInstanceCount(process);
 
 				processes.add(process);
 			}
@@ -352,16 +358,8 @@ public class ProcessResourceImpl
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"processId", "processId");
 
-		DateRangeAggregation dateRangeAggregation = _aggregations.dateRange(
-			"overdueDate", "overdueDate");
-
-		dateRangeAggregation.addRange("dueAfter", "now+7d", null);
-		dateRangeAggregation.addRange("dueIn", null, "now+7d");
-
 		CardinalityAggregation cardinalityAggregation =
 			_aggregations.cardinality("instanceCount", "instanceId");
-
-		dateRangeAggregation.addChildAggregation(cardinalityAggregation);
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _queries.term("onTime", true));
@@ -374,23 +372,15 @@ public class ProcessResourceImpl
 		overdueFilterAggregation.addChildAggregation(cardinalityAggregation);
 
 		termsAggregation.addChildrenAggregations(
-			cardinalityAggregation, dateRangeAggregation,
-			onTimeFilterAggregation, overdueFilterAggregation);
+			cardinalityAggregation, onTimeFilterAggregation,
+			overdueFilterAggregation);
 
 		if ((fieldSort != null) &&
 			!_isOrderByInstanceCount(fieldSort.getField()) &&
 			!_isOrderByTitle(fieldSort.getField())) {
 
-			BucketSortPipelineAggregation bucketSortPipelineAggregation =
-				_aggregations.bucketSort("sort");
-
-			bucketSortPipelineAggregation.addSortFields(fieldSort);
-			bucketSortPipelineAggregation.setFrom(
-				pagination.getStartPosition());
-			bucketSortPipelineAggregation.setSize(pagination.getPageSize() + 1);
-
 			termsAggregation.addPipelineAggregation(
-				bucketSortPipelineAggregation);
+				_createBucketSortPipelineAggregation(fieldSort, pagination));
 		}
 
 		termsAggregation.setSize(processIds.size());
@@ -434,53 +424,8 @@ public class ProcessResourceImpl
 			return;
 		}
 
-		_setDueAfterInstanceCount(bucket, process);
-		_setDueInInstanceCount(bucket, process);
 		_setOnTimeInstanceCount(bucket, process);
 		_setOverdueInstanceCount(bucket, process);
-	}
-
-	private void _setDueAfterInstanceCount(Bucket bucket, Process process) {
-		if (bucket == null) {
-			return;
-		}
-
-		RangeAggregationResult rangeAggregationResult =
-			(RangeAggregationResult)bucket.getChildAggregationResult(
-				"overdueDate");
-
-		Bucket dueAfterBucket = rangeAggregationResult.getBucket("dueAfter");
-
-		if (dueAfterBucket != null) {
-			CardinalityAggregationResult cardinalityAggregationResult =
-				(CardinalityAggregationResult)
-					dueAfterBucket.getChildAggregationResult("instanceCount");
-
-			process.setDueAfterInstanceCount(
-				cardinalityAggregationResult.getValue());
-		}
-	}
-
-	private void _setDueInInstanceCount(Bucket bucket, Process process) {
-		if (bucket == null) {
-			return;
-		}
-
-		RangeAggregationResult rangeAggregationResult =
-			(RangeAggregationResult)bucket.getChildAggregationResult(
-				"overdueDate");
-
-		Bucket dueInBucket = rangeAggregationResult.getBucket("dueIn");
-
-		if (dueInBucket == null) {
-			return;
-		}
-
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)dueInBucket.getChildAggregationResult(
-				"instanceCount");
-
-		process.setDueInInstanceCount(cardinalityAggregationResult.getValue());
 	}
 
 	private void _setInstanceCount(Bucket bucket, Process process) {
@@ -527,6 +472,12 @@ public class ProcessResourceImpl
 
 		process.setOverdueInstanceCount(
 			cardinalityAggregationResult.getValue());
+	}
+
+	private void _setUntrackedInstanceCount(Process process) {
+		process.setUntrackedInstanceCount(
+			process.getInstanceCount() - process.getOnTimeInstanceCount() -
+				process.getOverdueInstanceCount());
 	}
 
 	private FieldSort _toFieldSort(Sort[] sorts) {

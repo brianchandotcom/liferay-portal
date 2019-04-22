@@ -51,7 +51,7 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 			<c:choose>
 				<c:when test="<%= journalContentDisplayContext.isDefaultTemplate() %>">
 					<p class="text-default">
-						<liferay-ui:message key="none" />
+						<liferay-ui:message key="no-template" />
 					</p>
 				</c:when>
 				<c:otherwise>
@@ -170,7 +170,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 		function(event) {
 			templateKeyInput.setAttribute('value', '');
 
-			templatePreview.html('<p class="text-default"><liferay-ui:message key="none" /></p>');
+			templatePreview.html('<p class="text-default"><liferay-ui:message key="no-template" /></p>');
 		}
 	);
 

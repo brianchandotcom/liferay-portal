@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should test mouse over 1`] = `
+exports[`Should render component 1`] = `
 <MockRouter>
   <MemoryRouter
     initialEntries={
@@ -83,22 +83,23 @@ exports[`Should test mouse over 1`] = `
       }
     >
       <SummaryCard
-        elementClasses="test"
-        iconColor="black"
-        iconName="test"
-        percentage={10}
-        title="test"
-        total={10}
+        iconColor="success"
+        iconName="check-circle"
+        processId={12345}
+        title="On Time"
+        total={false}
+        totalValue={55}
+        value={31}
       >
         <withRouter()
-          className="process-dashboard-summary-card test"
+          className=" process-dashboard-summary-card"
           onMouseOut={[Function]}
           onMouseOver={[Function]}
-          to="/instances/undefined/20/1"
+          to="/instances/12345/20/1"
         >
           <Route>
             <Component
-              className="process-dashboard-summary-card test"
+              className=" process-dashboard-summary-card"
               history={
                 Object {
                   "action": "POP",
@@ -175,11 +176,11 @@ exports[`Should test mouse over 1`] = `
               }
               onMouseOut={[Function]}
               onMouseOver={[Function]}
-              to="/instances/undefined/20/1"
+              to="/instances/12345/20/1"
             >
               <ChildLinkWrapper
                 backPath="/"
-                className="process-dashboard-summary-card test"
+                className=" process-dashboard-summary-card"
                 currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
                 history={
                   Object {
@@ -235,23 +236,23 @@ exports[`Should test mouse over 1`] = `
                 }
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
-                to="/instances/undefined/20/1"
+                to="/instances/12345/20/1"
               >
                 <Link
-                  className="process-dashboard-summary-card test"
+                  className=" process-dashboard-summary-card"
                   onMouseOut={[Function]}
                   onMouseOver={[Function]}
                   replace={false}
                   to={
                     Object {
-                      "pathname": "/instances/undefined/20/1",
+                      "pathname": "/instances/12345/20/1",
                       "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
                     }
                   }
                 >
                   <a
-                    className="process-dashboard-summary-card test"
-                    href="/instances/undefined/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                    className=" process-dashboard-summary-card"
+                    href="/instances/12345/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
                     onClick={[Function]}
                     onMouseOut={[Function]}
                     onMouseOver={[Function]}
@@ -261,40 +262,45 @@ exports[`Should test mouse over 1`] = `
                         className="header"
                       >
                         <span
-                          className="bg-black-light mr-3 sticker sticker-circle"
+                          className="bg-success-light mr-3 sticker sticker-circle"
                         >
                           <span
                             className="inline-item"
                           >
                             <Icon
-                              elementClasses="text-black"
-                              iconName="test"
+                              elementClasses="text-success"
+                              iconName="check-circle"
                             >
                               <svg
-                                className="lexicon-icon lexicon-icon-test text-black"
+                                className="lexicon-icon lexicon-icon-check-circle text-success"
                                 focusable="false"
                                 role="presentation"
                               >
                                 <use
-                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#test"
+                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle"
                                 />
                               </svg>
                             </Icon>
                           </span>
                         </span>
                         <span>
-                          test
+                          On Time
                         </span>
                       </div>
                       <div
                         className="body"
+                        title={31}
                       >
-                        10
+                        31
                       </div>
                       <div
                         className="footer"
                       >
-                        10
+                        <span
+                          className=" xsmall"
+                        >
+                          56.36%
+                        </span>
                       </div>
                     </div>
                   </a>

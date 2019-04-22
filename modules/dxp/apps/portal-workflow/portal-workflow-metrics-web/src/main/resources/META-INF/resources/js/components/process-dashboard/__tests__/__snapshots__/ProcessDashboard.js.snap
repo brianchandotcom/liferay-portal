@@ -4,10 +4,58 @@ exports[`Should render component 1`] = `
 <div
   className="workflow-process-dashboard"
 >
-  <span
-    aria-hidden="true"
-    className="loading-animation"
-  />
+  <div
+    className="container-fluid-1280 mt-4"
+  >
+    <div
+      className="panel panel-secondary"
+    >
+      <div
+        className="panel-header dashboard-panel-header"
+      >
+        <div>
+          <div>
+            <span
+              className="mr-3"
+            >
+              Pending Items
+            </span>
+            <span
+              className="workflow-tooltip"
+              onMouseLeave={[Function]}
+            >
+              <span
+                className="tooltip-trigger"
+                onMouseOver={[Function]}
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-question-circle-full"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                  />
+                </svg>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="panel-body"
+      >
+        <div
+          className="pb-6 pt-5"
+        >
+          <span
+            aria-hidden="true"
+            className="loading-animation"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
   <div
     className="container-fluid-1280 mt-4"
   >
@@ -74,10 +122,58 @@ exports[`Should render component with failure state 1`] = `
 <div
   className="workflow-process-dashboard"
 >
-  <span
-    aria-hidden="true"
-    className="loading-animation"
-  />
+  <div
+    className="container-fluid-1280 mt-4"
+  >
+    <div
+      className="panel panel-secondary"
+    >
+      <div
+        className="panel-header dashboard-panel-header"
+      >
+        <div>
+          <div>
+            <span
+              className="mr-3"
+            >
+              Pending Items
+            </span>
+            <span
+              className="workflow-tooltip"
+              onMouseLeave={[Function]}
+            >
+              <span
+                className="tooltip-trigger"
+                onMouseOver={[Function]}
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-question-circle-full"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                  />
+                </svg>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="panel-body"
+      >
+        <div
+          className="pb-6 pt-5"
+        >
+          <span
+            aria-hidden="true"
+            className="loading-animation"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
   <div
     className="container-fluid-1280 mt-4"
   >

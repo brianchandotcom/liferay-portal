@@ -45,6 +45,10 @@ public class SocketUtil {
 		_socket.close();
 
 		_socket = null;
+
+		_serverSocket.close();
+
+		_serverSocket = null;
 	}
 
 	public static void connect(long passCode) throws IOException {
@@ -66,7 +70,11 @@ public class SocketUtil {
 				"Pass code mismatch, dropped connection from " +
 					_socket.getRemoteSocketAddress());
 
-			close();
+			_objectInputStream.close();
+
+			_objectOutputStream.close();
+
+			_socket.close();
 		}
 	}
 

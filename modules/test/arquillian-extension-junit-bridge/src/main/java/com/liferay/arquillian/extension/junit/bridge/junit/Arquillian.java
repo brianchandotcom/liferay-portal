@@ -145,10 +145,8 @@ public class Arquillian extends Runner implements Filterable {
 
 		FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
 
-		ServerSocket serverSocket = null;
-
 		try {
-			serverSocket = SocketUtil.getServerSocket();
+			ServerSocket serverSocket = SocketUtil.getServerSocket();
 
 			if (_bundleId == 0) {
 				Random random = new SecureRandom();
@@ -190,8 +188,6 @@ public class Arquillian extends Runner implements Filterable {
 						_bundleId = 0;
 
 						SocketUtil.close();
-
-						serverSocket.close();
 					}
 					catch (IOException ioe) {
 						runNotifier.fireTestFailure(

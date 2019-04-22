@@ -2025,14 +2025,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected MBSubscriptionSender getSubscriptionSender(
-		long userId, MBCategory category, MBMessage message, String messageURL,
-		String entryTitle, boolean htmlFormat, String messageBody,
-		String messageSubject, String messageSubjectPrefix, String inReplyTo,
-		String fromName, String fromAddress, String replyToAddress,
-		String emailAddress, String fullName,
-		LocalizedValuesMap subjectLocalizedValuesMap,
-		LocalizedValuesMap bodyLocalizedValuesMap,
-		ServiceContext serviceContext) {
+			long userId, MBCategory category, MBMessage message,
+			String messageURL, String entryTitle, boolean htmlFormat,
+			String messageBody, String messageSubject,
+			String messageSubjectPrefix, String inReplyTo, String fromName,
+			String fromAddress, String replyToAddress, String emailAddress,
+			String fullName, LocalizedValuesMap subjectLocalizedValuesMap,
+			LocalizedValuesMap bodyLocalizedValuesMap,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		MBSubscriptionSender subscriptionSender = new MBSubscriptionSender(
 			MBConstants.RESOURCE_NAME);
@@ -2047,6 +2048,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long groupId = message.getGroupId();
 
+		Group group = groupLocalService.getGroup(groupId);
+
 		if (category.getCategoryId() !=
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
@@ -2055,8 +2058,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 		else {
 			try {
-				Group group = groupLocalService.getGroup(groupId);
-
 				subscriptionSender.setLocalizedContextAttribute(
 					"[$CATEGORY_NAME$]",
 					new EscapableLocalizableFunction(
@@ -2081,6 +2082,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setFullName(fullName);
 		subscriptionSender.setHtmlFormat(htmlFormat);
 		subscriptionSender.setInReplyTo(inReplyTo);
+
+		subscriptionSender.setLocalizedContextAttribute(
+			"[$SITE_NAME$]",
+			new EscapableLocalizableFunction(
+				locale -> _getGroupDescriptiveName(group, locale)));
 
 		if (bodyLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedBodyMap(
@@ -2655,6 +2661,20 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			fileEntry.getFolderId());
 
 		return GetterUtil.getLong(folder.getName());
+	}
+
+	private String _getGroupDescriptiveName(Group group, Locale locale) {
+		try {
+			return group.getDescriptiveName(locale);
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to get descriptive name for group " +
+					group.getGroupId(),
+				pe);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private long _getRootDiscussionMessageId(String className, long classPK)

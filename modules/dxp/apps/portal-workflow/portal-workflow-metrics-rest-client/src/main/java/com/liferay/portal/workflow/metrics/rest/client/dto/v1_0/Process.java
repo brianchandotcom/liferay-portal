@@ -15,6 +15,9 @@
 package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.ProcessSerDes;
+
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -24,48 +27,6 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public class Process {
-
-	public Long getDueAfterInstanceCount() {
-		return dueAfterInstanceCount;
-	}
-
-	public void setDueAfterInstanceCount(Long dueAfterInstanceCount) {
-		this.dueAfterInstanceCount = dueAfterInstanceCount;
-	}
-
-	public void setDueAfterInstanceCount(
-		UnsafeSupplier<Long, Exception> dueAfterInstanceCountUnsafeSupplier) {
-
-		try {
-			dueAfterInstanceCount = dueAfterInstanceCountUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long dueAfterInstanceCount;
-
-	public Long getDueInInstanceCount() {
-		return dueInInstanceCount;
-	}
-
-	public void setDueInInstanceCount(Long dueInInstanceCount) {
-		this.dueInInstanceCount = dueInInstanceCount;
-	}
-
-	public void setDueInInstanceCount(
-		UnsafeSupplier<Long, Exception> dueInInstanceCountUnsafeSupplier) {
-
-		try {
-			dueInInstanceCount = dueInInstanceCountUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long dueInInstanceCount;
 
 	public Long getId() {
 		return id;
@@ -169,5 +130,52 @@ public class Process {
 	}
 
 	protected String title;
+
+	public Long getUntrackedInstanceCount() {
+		return untrackedInstanceCount;
+	}
+
+	public void setUntrackedInstanceCount(Long untrackedInstanceCount) {
+		this.untrackedInstanceCount = untrackedInstanceCount;
+	}
+
+	public void setUntrackedInstanceCount(
+		UnsafeSupplier<Long, Exception> untrackedInstanceCountUnsafeSupplier) {
+
+		try {
+			untrackedInstanceCount = untrackedInstanceCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long untrackedInstanceCount;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Process)) {
+			return false;
+		}
+
+		Process process = (Process)object;
+
+		return Objects.equals(toString(), process.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		return ProcessSerDes.toJSON(this);
+	}
 
 }

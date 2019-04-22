@@ -51,78 +51,68 @@ public class ProcessSerDes {
 
 		sb.append("{");
 
-		if (process.getDueAfterInstanceCount() != null) {
-			if (sb.length() > 1) {
-				sb.append(",");
-			}
-
-			sb.append("\"dueAfterInstanceCount\":");
-
-			sb.append(process.getDueAfterInstanceCount());
-		}
-
-		if (process.getDueInInstanceCount() != null) {
-			if (sb.length() > 1) {
-				sb.append(",");
-			}
-
-			sb.append("\"dueInInstanceCount\":");
-
-			sb.append(process.getDueInInstanceCount());
-		}
-
 		if (process.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"id\":");
+			sb.append("\"id\": ");
 
 			sb.append(process.getId());
 		}
 
 		if (process.getInstanceCount() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"instanceCount\":");
+			sb.append("\"instanceCount\": ");
 
 			sb.append(process.getInstanceCount());
 		}
 
 		if (process.getOnTimeInstanceCount() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"onTimeInstanceCount\":");
+			sb.append("\"onTimeInstanceCount\": ");
 
 			sb.append(process.getOnTimeInstanceCount());
 		}
 
 		if (process.getOverdueInstanceCount() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"overdueInstanceCount\":");
+			sb.append("\"overdueInstanceCount\": ");
 
 			sb.append(process.getOverdueInstanceCount());
 		}
 
 		if (process.getTitle() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"title\":");
+			sb.append("\"title\": ");
 
 			sb.append("\"");
 
-			sb.append(process.getTitle());
+			sb.append(_escape(process.getTitle()));
 
 			sb.append("\"");
+		}
+
+		if (process.getUntrackedInstanceCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"untrackedInstanceCount\": ");
+
+			sb.append(process.getUntrackedInstanceCount());
 		}
 
 		sb.append("}");
@@ -136,24 +126,6 @@ public class ProcessSerDes {
 		}
 
 		Map<String, String> map = new HashMap<>();
-
-		if (process.getDueAfterInstanceCount() == null) {
-			map.put("dueAfterInstanceCount", null);
-		}
-		else {
-			map.put(
-				"dueAfterInstanceCount",
-				String.valueOf(process.getDueAfterInstanceCount()));
-		}
-
-		if (process.getDueInInstanceCount() == null) {
-			map.put("dueInInstanceCount", null);
-		}
-		else {
-			map.put(
-				"dueInInstanceCount",
-				String.valueOf(process.getDueInInstanceCount()));
-		}
 
 		if (process.getId() == null) {
 			map.put("id", null);
@@ -195,7 +167,22 @@ public class ProcessSerDes {
 			map.put("title", String.valueOf(process.getTitle()));
 		}
 
+		if (process.getUntrackedInstanceCount() == null) {
+			map.put("untrackedInstanceCount", null);
+		}
+		else {
+			map.put(
+				"untrackedInstanceCount",
+				String.valueOf(process.getUntrackedInstanceCount()));
+		}
+
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class ProcessJSONParser extends BaseJSONParser<Process> {
@@ -215,21 +202,7 @@ public class ProcessSerDes {
 			Process process, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dueAfterInstanceCount")) {
-				if (jsonParserFieldValue != null) {
-					process.setDueAfterInstanceCount(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "dueInInstanceCount")) {
-
-				if (jsonParserFieldValue != null) {
-					process.setDueInInstanceCount(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					process.setId(Long.valueOf((String)jsonParserFieldValue));
 				}
@@ -259,6 +232,14 @@ public class ProcessSerDes {
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					process.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "untrackedInstanceCount")) {
+
+				if (jsonParserFieldValue != null) {
+					process.setUntrackedInstanceCount(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

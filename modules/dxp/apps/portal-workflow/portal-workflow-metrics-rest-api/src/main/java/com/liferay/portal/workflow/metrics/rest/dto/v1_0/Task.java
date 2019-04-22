@@ -173,53 +173,59 @@ public class Task {
 
 		sb.append("{");
 
-		sb.append("\"instanceCount\": ");
+		if (instanceCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		if (instanceCount == null) {
-			sb.append("null");
-		}
-		else {
+			sb.append("\"instanceCount\": ");
+
 			sb.append(instanceCount);
 		}
 
-		sb.append(", ");
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\": ");
 
-		if (name == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
-			sb.append(name);
+
+			sb.append(_escape(name));
+
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (onTimeInstanceCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"onTimeInstanceCount\": ");
+			sb.append("\"onTimeInstanceCount\": ");
 
-		if (onTimeInstanceCount == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(onTimeInstanceCount);
 		}
 
-		sb.append(", ");
+		if (overdueInstanceCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"overdueInstanceCount\": ");
+			sb.append("\"overdueInstanceCount\": ");
 
-		if (overdueInstanceCount == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(overdueInstanceCount);
 		}
 
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

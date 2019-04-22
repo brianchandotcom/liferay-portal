@@ -168,7 +168,8 @@ public abstract class BaseProcessResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(process);
 		String json2 = ProcessSerDes.toJSON(process);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test
@@ -466,26 +467,6 @@ public abstract class BaseProcessResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals(
-					"dueAfterInstanceCount", additionalAssertFieldName)) {
-
-				if (process.getDueAfterInstanceCount() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"dueInInstanceCount", additionalAssertFieldName)) {
-
-				if (process.getDueInInstanceCount() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("instanceCount", additionalAssertFieldName)) {
 				if (process.getInstanceCount() == null) {
 					valid = false;
@@ -516,6 +497,16 @@ public abstract class BaseProcessResourceTestCase {
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (process.getTitle() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"untrackedInstanceCount", additionalAssertFieldName)) {
+
+				if (process.getUntrackedInstanceCount() == null) {
 					valid = false;
 				}
 
@@ -558,32 +549,6 @@ public abstract class BaseProcessResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals(
-					"dueAfterInstanceCount", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						process1.getDueAfterInstanceCount(),
-						process2.getDueAfterInstanceCount())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"dueInInstanceCount", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						process1.getDueInInstanceCount(),
-						process2.getDueInInstanceCount())) {
-
-					return false;
-				}
-
-				continue;
-			}
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(process1.getId(), process2.getId())) {
@@ -633,6 +598,19 @@ public abstract class BaseProcessResourceTestCase {
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						process1.getTitle(), process2.getTitle())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"untrackedInstanceCount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						process1.getUntrackedInstanceCount(),
+						process2.getUntrackedInstanceCount())) {
 
 					return false;
 				}
@@ -693,16 +671,6 @@ public abstract class BaseProcessResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("dueAfterInstanceCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("dueInInstanceCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -731,6 +699,11 @@ public abstract class BaseProcessResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("untrackedInstanceCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -738,13 +711,12 @@ public abstract class BaseProcessResourceTestCase {
 	protected Process randomProcess() {
 		return new Process() {
 			{
-				dueAfterInstanceCount = RandomTestUtil.randomLong();
-				dueInInstanceCount = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				instanceCount = RandomTestUtil.randomLong();
 				onTimeInstanceCount = RandomTestUtil.randomLong();
 				overdueInstanceCount = RandomTestUtil.randomLong();
 				title = RandomTestUtil.randomString();
+				untrackedInstanceCount = RandomTestUtil.randomLong();
 			}
 		};
 	}

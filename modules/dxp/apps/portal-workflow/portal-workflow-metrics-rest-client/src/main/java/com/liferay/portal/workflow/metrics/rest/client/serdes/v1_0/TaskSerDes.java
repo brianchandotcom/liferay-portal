@@ -53,44 +53,44 @@ public class TaskSerDes {
 
 		if (task.getInstanceCount() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"instanceCount\":");
+			sb.append("\"instanceCount\": ");
 
 			sb.append(task.getInstanceCount());
 		}
 
 		if (task.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"name\":");
+			sb.append("\"name\": ");
 
 			sb.append("\"");
 
-			sb.append(task.getName());
+			sb.append(_escape(task.getName()));
 
 			sb.append("\"");
 		}
 
 		if (task.getOnTimeInstanceCount() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"onTimeInstanceCount\":");
+			sb.append("\"onTimeInstanceCount\": ");
 
 			sb.append(task.getOnTimeInstanceCount());
 		}
 
 		if (task.getOverdueInstanceCount() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"overdueInstanceCount\":");
+			sb.append("\"overdueInstanceCount\": ");
 
 			sb.append(task.getOverdueInstanceCount());
 		}
@@ -140,6 +140,12 @@ public class TaskSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class TaskJSONParser extends BaseJSONParser<Task> {

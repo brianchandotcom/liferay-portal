@@ -15,8 +15,10 @@
 package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.SLASerDes;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -232,5 +234,31 @@ public class SLA {
 	}
 
 	protected String[] stopNodeKeys;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof SLA)) {
+			return false;
+		}
+
+		SLA sla = (SLA)object;
+
+		return Objects.equals(toString(), sla.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		return SLASerDes.toJSON(this);
+	}
 
 }

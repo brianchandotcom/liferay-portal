@@ -168,7 +168,8 @@ public abstract class BaseTaskResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(task);
 		String json2 = TaskSerDes.toJSON(task);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

@@ -59,10 +59,10 @@ public class SLASerDes {
 
 		if (sla.getDateModified() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"dateModified\":");
+			sb.append("\"dateModified\": ");
 
 			sb.append("\"");
 
@@ -73,65 +73,65 @@ public class SLASerDes {
 
 		if (sla.getDescription() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"description\":");
+			sb.append("\"description\": ");
 
 			sb.append("\"");
 
-			sb.append(sla.getDescription());
+			sb.append(_escape(sla.getDescription()));
 
 			sb.append("\"");
 		}
 
 		if (sla.getDuration() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"duration\":");
+			sb.append("\"duration\": ");
 
 			sb.append(sla.getDuration());
 		}
 
 		if (sla.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"id\":");
+			sb.append("\"id\": ");
 
 			sb.append(sla.getId());
 		}
 
 		if (sla.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"name\":");
+			sb.append("\"name\": ");
 
 			sb.append("\"");
 
-			sb.append(sla.getName());
+			sb.append(_escape(sla.getName()));
 
 			sb.append("\"");
 		}
 
 		if (sla.getPauseNodeKeys() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"pauseNodeKeys\":");
+			sb.append("\"pauseNodeKeys\": ");
 
 			sb.append("[");
 
 			for (int i = 0; i < sla.getPauseNodeKeys().length; i++) {
 				sb.append("\"");
 
-				sb.append(sla.getPauseNodeKeys()[i]);
+				sb.append(_escape(sla.getPauseNodeKeys()[i]));
 
 				sb.append("\"");
 
@@ -145,27 +145,27 @@ public class SLASerDes {
 
 		if (sla.getProcessId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"processId\":");
+			sb.append("\"processId\": ");
 
 			sb.append(sla.getProcessId());
 		}
 
 		if (sla.getStartNodeKeys() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"startNodeKeys\":");
+			sb.append("\"startNodeKeys\": ");
 
 			sb.append("[");
 
 			for (int i = 0; i < sla.getStartNodeKeys().length; i++) {
 				sb.append("\"");
 
-				sb.append(sla.getStartNodeKeys()[i]);
+				sb.append(_escape(sla.getStartNodeKeys()[i]));
 
 				sb.append("\"");
 
@@ -179,27 +179,27 @@ public class SLASerDes {
 
 		if (sla.getStatus() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"status\":");
+			sb.append("\"status\": ");
 
 			sb.append(sla.getStatus());
 		}
 
 		if (sla.getStopNodeKeys() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"stopNodeKeys\":");
+			sb.append("\"stopNodeKeys\": ");
 
 			sb.append("[");
 
 			for (int i = 0; i < sla.getStopNodeKeys().length; i++) {
 				sb.append("\"");
 
-				sb.append(sla.getStopNodeKeys()[i]);
+				sb.append(_escape(sla.getStopNodeKeys()[i]));
 
 				sb.append("\"");
 
@@ -294,6 +294,12 @@ public class SLASerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class SLAJSONParser extends BaseJSONParser<SLA> {

@@ -53,58 +53,58 @@ public class NodeSerDes {
 
 		if (node.getId() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"id\":");
+			sb.append("\"id\": ");
 
 			sb.append(node.getId());
 		}
 
 		if (node.getInitial() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"initial\":");
+			sb.append("\"initial\": ");
 
 			sb.append(node.getInitial());
 		}
 
 		if (node.getName() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"name\":");
+			sb.append("\"name\": ");
 
 			sb.append("\"");
 
-			sb.append(node.getName());
+			sb.append(_escape(node.getName()));
 
 			sb.append("\"");
 		}
 
 		if (node.getTerminal() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"terminal\":");
+			sb.append("\"terminal\": ");
 
 			sb.append(node.getTerminal());
 		}
 
 		if (node.getType() != null) {
 			if (sb.length() > 1) {
-				sb.append(",");
+				sb.append(", ");
 			}
 
-			sb.append("\"type\":");
+			sb.append("\"type\": ");
 
 			sb.append("\"");
 
-			sb.append(node.getType());
+			sb.append(_escape(node.getType()));
 
 			sb.append("\"");
 		}
@@ -157,6 +157,12 @@ public class NodeSerDes {
 		}
 
 		return map;
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 	private static class NodeJSONParser extends BaseJSONParser<Node> {

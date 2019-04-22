@@ -163,7 +163,8 @@ public abstract class BaseNodeResourceTestCase {
 		String json1 = objectMapper.writeValueAsString(node);
 		String json2 = NodeSerDes.toJSON(node);
 
-		Assert.assertEquals(json1, json2);
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test

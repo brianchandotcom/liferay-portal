@@ -40,60 +40,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Process")
 public class Process {
 
-	public Long getDueAfterInstanceCount() {
-		return dueAfterInstanceCount;
-	}
-
-	public void setDueAfterInstanceCount(Long dueAfterInstanceCount) {
-		this.dueAfterInstanceCount = dueAfterInstanceCount;
-	}
-
-	@JsonIgnore
-	public void setDueAfterInstanceCount(
-		UnsafeSupplier<Long, Exception> dueAfterInstanceCountUnsafeSupplier) {
-
-		try {
-			dueAfterInstanceCount = dueAfterInstanceCountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long dueAfterInstanceCount;
-
-	public Long getDueInInstanceCount() {
-		return dueInInstanceCount;
-	}
-
-	public void setDueInInstanceCount(Long dueInInstanceCount) {
-		this.dueInInstanceCount = dueInInstanceCount;
-	}
-
-	@JsonIgnore
-	public void setDueInInstanceCount(
-		UnsafeSupplier<Long, Exception> dueInInstanceCountUnsafeSupplier) {
-
-		try {
-			dueInInstanceCount = dueInInstanceCountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long dueInInstanceCount;
-
 	public Long getId() {
 		return id;
 	}
@@ -227,6 +173,33 @@ public class Process {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	public Long getUntrackedInstanceCount() {
+		return untrackedInstanceCount;
+	}
+
+	public void setUntrackedInstanceCount(Long untrackedInstanceCount) {
+		this.untrackedInstanceCount = untrackedInstanceCount;
+	}
+
+	@JsonIgnore
+	public void setUntrackedInstanceCount(
+		UnsafeSupplier<Long, Exception> untrackedInstanceCountUnsafeSupplier) {
+
+		try {
+			untrackedInstanceCount = untrackedInstanceCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long untrackedInstanceCount;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -254,86 +227,79 @@ public class Process {
 
 		sb.append("{");
 
-		sb.append("\"dueAfterInstanceCount\": ");
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		if (dueAfterInstanceCount == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(dueAfterInstanceCount);
-		}
+			sb.append("\"id\": ");
 
-		sb.append(", ");
-
-		sb.append("\"dueInInstanceCount\": ");
-
-		if (dueInInstanceCount == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append(dueInInstanceCount);
-		}
-
-		sb.append(", ");
-
-		sb.append("\"id\": ");
-
-		if (id == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(id);
 		}
 
-		sb.append(", ");
+		if (instanceCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"instanceCount\": ");
+			sb.append("\"instanceCount\": ");
 
-		if (instanceCount == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(instanceCount);
 		}
 
-		sb.append(", ");
+		if (onTimeInstanceCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"onTimeInstanceCount\": ");
+			sb.append("\"onTimeInstanceCount\": ");
 
-		if (onTimeInstanceCount == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(onTimeInstanceCount);
 		}
 
-		sb.append(", ");
+		if (overdueInstanceCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"overdueInstanceCount\": ");
+			sb.append("\"overdueInstanceCount\": ");
 
-		if (overdueInstanceCount == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(overdueInstanceCount);
 		}
 
-		sb.append(", ");
+		if (title != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"title\": ");
+			sb.append("\"title\": ");
 
-		if (title == null) {
-			sb.append("null");
+			sb.append("\"");
+
+			sb.append(_escape(title));
+
+			sb.append("\"");
 		}
-		else {
-			sb.append("\"");
-			sb.append(title);
-			sb.append("\"");
+
+		if (untrackedInstanceCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"untrackedInstanceCount\": ");
+
+			sb.append(untrackedInstanceCount);
 		}
 
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

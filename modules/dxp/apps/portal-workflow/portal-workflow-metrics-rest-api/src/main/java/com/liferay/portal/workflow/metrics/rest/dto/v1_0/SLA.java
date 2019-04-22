@@ -24,6 +24,9 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -334,78 +337,85 @@ public class SLA {
 
 		sb.append("{");
 
-		sb.append("\"dateModified\": ");
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (dateModified == null) {
-			sb.append("null");
-		}
-		else {
+		if (dateModified != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
 			sb.append("\"");
-			sb.append(dateModified);
-			sb.append("\"");
-		}
 
-		sb.append(", ");
+			sb.append(liferayToJSONDateFormat.format(dateModified));
 
-		sb.append("\"description\": ");
-
-		if (description == null) {
-			sb.append("null");
-		}
-		else {
-			sb.append("\"");
-			sb.append(description);
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (description != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"duration\": ");
+			sb.append("\"description\": ");
 
-		if (duration == null) {
-			sb.append("null");
+			sb.append("\"");
+
+			sb.append(_escape(description));
+
+			sb.append("\"");
 		}
-		else {
+
+		if (duration != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"duration\": ");
+
 			sb.append(duration);
 		}
 
-		sb.append(", ");
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"id\": ");
+			sb.append("\"id\": ");
 
-		if (id == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(id);
 		}
 
-		sb.append(", ");
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"name\": ");
+			sb.append("\"name\": ");
 
-		if (name == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("\"");
-			sb.append(name);
+
+			sb.append(_escape(name));
+
 			sb.append("\"");
 		}
 
-		sb.append(", ");
+		if (pauseNodeKeys != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"pauseNodeKeys\": ");
+			sb.append("\"pauseNodeKeys\": ");
 
-		if (pauseNodeKeys == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < pauseNodeKeys.length; i++) {
 				sb.append("\"");
-				sb.append(pauseNodeKeys[i]);
+
+				sb.append(_escape(pauseNodeKeys[i]));
+
 				sb.append("\"");
 
 				if ((i + 1) < pauseNodeKeys.length) {
@@ -416,30 +426,30 @@ public class SLA {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (processId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"processId\": ");
+			sb.append("\"processId\": ");
 
-		if (processId == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(processId);
 		}
 
-		sb.append(", ");
+		if (startNodeKeys != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"startNodeKeys\": ");
+			sb.append("\"startNodeKeys\": ");
 
-		if (startNodeKeys == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < startNodeKeys.length; i++) {
 				sb.append("\"");
-				sb.append(startNodeKeys[i]);
+
+				sb.append(_escape(startNodeKeys[i]));
+
 				sb.append("\"");
 
 				if ((i + 1) < startNodeKeys.length) {
@@ -450,30 +460,30 @@ public class SLA {
 			sb.append("]");
 		}
 
-		sb.append(", ");
+		if (status != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"status\": ");
+			sb.append("\"status\": ");
 
-		if (status == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append(status);
 		}
 
-		sb.append(", ");
+		if (stopNodeKeys != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-		sb.append("\"stopNodeKeys\": ");
+			sb.append("\"stopNodeKeys\": ");
 
-		if (stopNodeKeys == null) {
-			sb.append("null");
-		}
-		else {
 			sb.append("[");
 
 			for (int i = 0; i < stopNodeKeys.length; i++) {
 				sb.append("\"");
-				sb.append(stopNodeKeys[i]);
+
+				sb.append(_escape(stopNodeKeys[i]));
+
 				sb.append("\"");
 
 				if ((i + 1) < stopNodeKeys.length) {
@@ -487,6 +497,12 @@ public class SLA {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _escape(Object object) {
+		String string = String.valueOf(object);
+
+		return string.replaceAll("\"", "\\\\\"");
 	}
 
 }

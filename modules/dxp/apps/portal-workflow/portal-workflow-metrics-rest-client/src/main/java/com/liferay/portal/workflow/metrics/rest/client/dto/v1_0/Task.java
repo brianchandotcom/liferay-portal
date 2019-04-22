@@ -15,6 +15,9 @@
 package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.TaskSerDes;
+
+import java.util.Objects;
 
 import javax.annotation.Generated;
 
@@ -106,5 +109,31 @@ public class Task {
 	}
 
 	protected Long overdueInstanceCount;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Task)) {
+			return false;
+		}
+
+		Task task = (Task)object;
+
+		return Objects.equals(toString(), task.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		return TaskSerDes.toJSON(this);
+	}
 
 }

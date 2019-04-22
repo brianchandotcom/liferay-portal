@@ -29,7 +29,6 @@ import com.liferay.wiki.item.selector.constants.WikiItemSelectorViewConstants;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.item.selector.criterion.WikiPageItemSelectorCriterion;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -93,8 +92,8 @@ public abstract class BaseWikiLinksCKEditorConfigContributor
 
 	protected abstract ItemSelectorReturnType getItemSelectorReturnType();
 
-	protected ItemSelectorCriterion
-		getWikiAttachmentItemSelectorCriterion(long wikiPageResourcePrimKey) {
+	protected ItemSelectorCriterion getWikiAttachmentItemSelectorCriterion(
+		long wikiPageResourcePrimKey) {
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new WikiAttachmentItemSelectorCriterion(wikiPageResourcePrimKey);

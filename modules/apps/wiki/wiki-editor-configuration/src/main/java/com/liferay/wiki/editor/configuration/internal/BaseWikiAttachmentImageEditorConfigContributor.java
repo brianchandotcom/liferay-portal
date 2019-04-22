@@ -32,7 +32,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -154,7 +153,7 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 			new URLItemSelectorCriterion();
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			 new URLItemSelectorReturnType());
+			new URLItemSelectorReturnType());
 
 		return itemSelectorCriterion;
 	}

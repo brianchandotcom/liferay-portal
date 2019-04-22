@@ -205,6 +205,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_LIST_WORKFLOW_STATUS</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//span[contains(.,'${key_threadStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

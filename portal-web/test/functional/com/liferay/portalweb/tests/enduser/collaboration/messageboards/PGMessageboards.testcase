@@ -846,7 +846,7 @@ definition {
 		);
 
 		AssertTextEquals(
-			locator1 = "MessageBoards#THREAD_LIST_STATUS",
+			locator1 = "MessageBoards#THREAD_LIST_WORKFLOW_STATUS",
 			value1 = "Draft"
 		);
 
@@ -858,7 +858,7 @@ definition {
 		);
 
 		AssertTextEquals(
-			locator1 = "MessageBoards#THREAD_LIST_STATUS",
+			locator1 = "MessageBoards#THREAD_LIST_WORKFLOW_STATUS",
 			value1 = "Draft"
 		);
 	}

@@ -1593,7 +1593,7 @@ definition {
 		var key_threadStatus = "Pending (${workflowTask})";
 
 		AssertTextEquals(
-			locator1 = "MessageBoards#THREAD_LIST_STATUS",
+			locator1 = "MessageBoards#THREAD_LIST_WORKFLOW_STATUS",
 			value1 = "Pending (${workflowTask})"
 		);
 

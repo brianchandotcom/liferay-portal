@@ -45,7 +45,6 @@ import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -2055,16 +2054,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				"[$CATEGORY_NAME$]", category.getName(), true);
 		}
 		else {
-			try {
-				subscriptionSender.setLocalizedContextAttribute(
-					"[$CATEGORY_NAME$]",
-					new EscapableLocalizableFunction(
-						locale -> _getLocalizedRootCategoryName(
-							group, locale)));
-			}
-			catch (PortalException pe) {
-				ReflectionUtil.throwException(pe);
-			}
+			subscriptionSender.setLocalizedContextAttribute(
+				"[$CATEGORY_NAME$]",
+				new EscapableLocalizableFunction(
+					locale -> _getLocalizedRootCategoryName(group, locale)));
 		}
 
 		subscriptionSender.setContextAttributes(

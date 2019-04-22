@@ -399,6 +399,13 @@ definition {
 				value1 = "${webContentContent}"
 			);
 		}
+
+		if (isSet(templateName)) {
+			WebContent.selectTemplateCP(
+				structureName = "${structureName}",
+				templateName = "${templateName}"
+			);
+		}
 	}
 
 	macro addWithMultipleCategories {
@@ -437,6 +444,10 @@ definition {
 	}
 
 	macro addWithStructureCP {
+		AssertVisible(
+			locator1 = "WCEditWebContent#SIDEBAR"
+		);
+
 		Click(locator1 = "TextInput#TITLE");
 
 		PortletEntry.inputTitle(title = "${webContentTitle}");

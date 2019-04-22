@@ -65,8 +65,56 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
+		<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
+
+<script>
+	function <portlet:namespace />saveSelectBoxes() {
+		var form = document.<portlet:namespace />fm;
+
+		<%
+		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
+
+		for (AssetRendererFactory<?> assetRendererFactory : assetRendererFactories) {
+			ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
+
+			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(editAssetListDisplayContext.getReferencedModelsGroupIds(), locale);
+
+			if (classTypes.isEmpty()) {
+				continue;
+			}
+
+			String className = assetListDisplayContext.getClassName(assetRendererFactory);
+		%>
+
+			Liferay.Util.setFormValues(
+				form,
+				{
+					classTypeIds<%= className %>: Liferay.Util.listSelect(Liferay.Util.getFormElement(form, '<%= className %>currentClassTypeIds'))
+				}
+			);
+
+		<%
+		}
+		%>
+
+		var currentClassNameIdsSelect = Liferay.Util.getFormElement(form, 'currentClassNameIds');
+
+		if (currentClassNameIdsSelect) {
+			Liferay.Util.postForm(
+				form,
+				{
+					data: {
+						classNameIds: Liferay.Util.listSelect(currentClassNameIdsSelect)
+					}
+				}
+			);
+		}
+		else {
+			submitForm(form);
+		}
+	}
+</script>

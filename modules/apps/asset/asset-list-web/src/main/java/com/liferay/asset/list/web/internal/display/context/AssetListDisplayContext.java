@@ -15,6 +15,7 @@
 package com.liferay.asset.list.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.list.constants.AssetListActionKeys;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
@@ -237,6 +238,16 @@ public class AssetListDisplayContext {
 		_assetListEntryType = assetListEntryType;
 
 		return _assetListEntryType;
+	}
+
+	public String getClassName(AssetRendererFactory<?> assetRendererFactory) {
+		Class<?> clazz = assetRendererFactory.getClass();
+
+		String className = clazz.getName();
+
+		int pos = className.lastIndexOf(StringPool.PERIOD);
+
+		return className.substring(pos + 1);
 	}
 
 	public String getEmptyResultMessageDescription() {

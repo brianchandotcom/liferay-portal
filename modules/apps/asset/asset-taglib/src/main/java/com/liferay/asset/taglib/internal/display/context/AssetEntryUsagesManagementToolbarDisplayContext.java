@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.web.internal.display.context;
+package com.liferay.asset.taglib.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.portal.kernel.dao.search.SearchContainer;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.web.internal.display.context;
+package com.liferay.asset.taglib.internal.display.context;
 
 import com.liferay.asset.constants.AssetEntryUsageConstants;
 import com.liferay.asset.kernel.model.AssetEntry;

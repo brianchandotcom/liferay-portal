@@ -1,18 +1,16 @@
 # REST Builder YAML Description Guidelines
 
-We welcome you to contribute descriptions for Liferay Portal's YAML files. These
-guidelines are based on the
+Please follow these guidelines as you define descriptions in REST Builder's
+`.yaml` files. These guidelines are based on the
 [OpenAPI](https://swagger.io/docs/specification/about/) specification's use of
-YAML files, but the rules can be loosely applied to other YAML uses in Liferay
-Portal. Please follow these guidelines as you define YAML descriptions in
-Liferay Portal's `.yaml` files.
+YAML files.
 
 ## Description Format
 
 YAML's `description` section should provide extended information about the API.
 They should be written in the [CommonMark](https://commonmark.org/help/)
 dialect of Markdown for rich text representation. The most popular uses of
-CommonMark formatting for Liferay's YAML files are outlined below:
+CommonMark formatting for REST Builder's YAML files are outlined below:
 
 - Inline code with backticks: \`null\`
 - Links: [Github]\(https://github.com)
@@ -25,7 +23,7 @@ tags.
 
 ## Style
 
-There are two types of styles a YAML description can follow:
+There are two types of styles a description can follow:
 
 - [Action style](#action-style)
 - [Declarative style](#declarative-style)
@@ -81,16 +79,8 @@ The descriptions provided in YAML files are often generated in Java classes. For
 example, input/output schema property descriptions are generated as `@Schema`
 annotations in Java classes.
 
-To generate the necessary logic provided in the YAML file, first install the
-REST Builder (if necessary) by executing the following command from the
-`liferay-portal/modules/util/portal-tools-rest-builder` folder:
-
-```bash
-./gradlew clean deploy
-```
-
-Then run the REST Builder. Navigate to the module where the updated YAML file
-resides and run
+To generate the necessary logic provided in the YAML file, run the REST Builder.
+Navigate to the module where the updated YAML file resides and run
 
 ```bash
 ./gradlew buildREST

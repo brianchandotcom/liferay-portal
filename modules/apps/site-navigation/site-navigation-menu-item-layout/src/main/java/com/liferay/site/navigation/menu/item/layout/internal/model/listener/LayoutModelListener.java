@@ -88,12 +88,12 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterUpdate(Layout layout) throws ModelListenerException {
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
 		if (!_isVisible(layout)) {
 			return;
 		}
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
 
 		boolean published = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("published"));

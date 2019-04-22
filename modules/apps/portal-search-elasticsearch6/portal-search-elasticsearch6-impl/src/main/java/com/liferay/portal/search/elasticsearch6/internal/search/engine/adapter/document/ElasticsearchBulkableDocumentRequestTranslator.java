@@ -24,7 +24,6 @@ import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.delete.DeleteAction;
 import org.elasticsearch.action.delete.DeleteRequestBuilder;
 import org.elasticsearch.action.index.IndexAction;
@@ -47,14 +46,11 @@ import org.osgi.service.component.annotations.Reference;
 	service = BulkableDocumentRequestTranslator.class
 )
 public class ElasticsearchBulkableDocumentRequestTranslator
-	implements BulkableDocumentRequestTranslator
-		<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
-		 BulkRequestBuilder> {
+	implements BulkableDocumentRequestTranslator {
 
 	@Override
 	public DeleteRequestBuilder translate(
-		DeleteDocumentRequest deleteDocumentRequest,
-		BulkRequestBuilder searchEngineAdapterRequest) {
+		DeleteDocumentRequest deleteDocumentRequest) {
 
 		Client client = _elasticsearchClientResolver.getClient();
 
@@ -71,17 +67,12 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 
 		deleteRequestBuilder.setType(deleteDocumentRequest.getType());
 
-		if (searchEngineAdapterRequest != null) {
-			searchEngineAdapterRequest.add(deleteRequestBuilder);
-		}
-
 		return deleteRequestBuilder;
 	}
 
 	@Override
 	public IndexRequestBuilder translate(
-		IndexDocumentRequest indexDocumentRequest,
-		BulkRequestBuilder searchEngineAdapterRequest) {
+		IndexDocumentRequest indexDocumentRequest) {
 
 		Client client = _elasticsearchClientResolver.getClient();
 
@@ -101,17 +92,12 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 
 		setSource(indexDocumentRequest, indexRequestBuilder);
 
-		if (searchEngineAdapterRequest != null) {
-			searchEngineAdapterRequest.add(indexRequestBuilder);
-		}
-
 		return indexRequestBuilder;
 	}
 
 	@Override
 	public UpdateRequestBuilder translate(
-		UpdateDocumentRequest updateDocumentRequest,
-		BulkRequestBuilder searchEngineAdapterRequest) {
+		UpdateDocumentRequest updateDocumentRequest) {
 
 		Client client = _elasticsearchClientResolver.getClient();
 
@@ -130,10 +116,6 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 		updateRequestBuilder.setType(updateDocumentRequest.getType());
 
 		setDoc(updateDocumentRequest, updateRequestBuilder);
-
-		if (searchEngineAdapterRequest != null) {
-			searchEngineAdapterRequest.add(updateRequestBuilder);
-		}
 
 		return updateRequestBuilder;
 	}

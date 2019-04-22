@@ -119,16 +119,25 @@ public class BulkDocumentRequestExecutorImpl
 			bulkableDocumentRequest.accept(
 				request -> {
 					if (request instanceof DeleteDocumentRequest) {
-						_bulkableDocumentRequestTranslator.translate(
-							(DeleteDocumentRequest)request, bulkRequestBuilder);
+						DeleteRequestBuilder deleteRequestBuilder =
+							_bulkableDocumentRequestTranslator.translate(
+								(DeleteDocumentRequest)request);
+
+						bulkRequestBuilder.add(deleteRequestBuilder);
 					}
 					else if (request instanceof IndexDocumentRequest) {
-						_bulkableDocumentRequestTranslator.translate(
-							(IndexDocumentRequest)request, bulkRequestBuilder);
+						IndexRequestBuilder indexRequestBuilder =
+							_bulkableDocumentRequestTranslator.translate(
+								(IndexDocumentRequest)request);
+
+						bulkRequestBuilder.add(indexRequestBuilder);
 					}
 					else if (request instanceof UpdateDocumentRequest) {
-						_bulkableDocumentRequestTranslator.translate(
-							(UpdateDocumentRequest)request, bulkRequestBuilder);
+						UpdateRequestBuilder updateRequestBuilder =
+							_bulkableDocumentRequestTranslator.translate(
+								(UpdateDocumentRequest)request);
+
+						bulkRequestBuilder.add(updateRequestBuilder);
 					}
 					else {
 						throw new IllegalArgumentException(
@@ -142,9 +151,7 @@ public class BulkDocumentRequestExecutorImpl
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	protected void setBulkableDocumentRequestTranslator(
-		BulkableDocumentRequestTranslator
-			<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
-			 BulkRequestBuilder> bulkableDocumentRequestTranslator) {
+		BulkableDocumentRequestTranslator bulkableDocumentRequestTranslator) {
 
 		_bulkableDocumentRequestTranslator = bulkableDocumentRequestTranslator;
 	}
@@ -160,8 +167,7 @@ public class BulkDocumentRequestExecutorImpl
 		BulkDocumentRequestExecutorImpl.class);
 
 	private BulkableDocumentRequestTranslator
-		<DeleteRequestBuilder, IndexRequestBuilder, UpdateRequestBuilder,
-		 BulkRequestBuilder> _bulkableDocumentRequestTranslator;
+		_bulkableDocumentRequestTranslator;
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

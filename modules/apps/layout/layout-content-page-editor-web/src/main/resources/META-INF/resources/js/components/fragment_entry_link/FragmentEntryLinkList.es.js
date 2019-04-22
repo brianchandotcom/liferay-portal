@@ -9,7 +9,7 @@ import './FragmentEntryLinkListRow.es';
 import {CLEAR_DROP_TARGET, MOVE_FRAGMENT_ENTRY_LINK, MOVE_ROW, UPDATE_DROP_TARGET} from '../../actions/actions.es';
 import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {initializeDragDrop} from '../../utils/FragmentsEditorDragDrop.es';
-import {moveItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {moveItem, setDraggingItemPosition, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentEntryLinkList.soy';
@@ -214,6 +214,8 @@ class FragmentEntryLinkList extends Component {
 	 * @review
 	 */
 	_handleDrag(eventData) {
+		setDraggingItemPosition(eventData.originalEvent);
+
 		if (FragmentEntryLinkList._dropValid(eventData)) {
 			const mouseY = eventData.originalEvent.clientY;
 			const targetItem = eventData.target;

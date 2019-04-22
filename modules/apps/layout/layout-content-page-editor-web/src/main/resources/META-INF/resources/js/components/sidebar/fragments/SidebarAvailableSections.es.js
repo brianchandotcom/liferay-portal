@@ -9,6 +9,7 @@ import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_DROP_TARGET, UPDATE_DROP_TARGET, UPDATE_L
 import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
+import {setDraggingItemPosition} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './SidebarAvailableSections.soy';
 
 /**
@@ -46,7 +47,7 @@ class SidebarAvailableSections extends Component {
 	/**
 	 * Callback that is executed when an item is being dragged.
 	 * @param {object} eventData
-	 * @param {MouseEvent} data.originalEvent
+	 * @param {MouseEvent} eventData.originalEvent
 	 * @private
 	 * @review
 	 */
@@ -56,6 +57,8 @@ class SidebarAvailableSections extends Component {
 		const data = targetItem ? targetItem.dataset : null;
 		const targetIsFragment = targetItem && ('fragmentEntryLinkId' in data);
 		const targetIsRow = targetItem && ('layoutRowId' in data);
+
+		setDraggingItemPosition(eventData.originalEvent);
 
 		if (targetIsFragment || targetIsRow) {
 			const mouseY = eventData.originalEvent.clientY;

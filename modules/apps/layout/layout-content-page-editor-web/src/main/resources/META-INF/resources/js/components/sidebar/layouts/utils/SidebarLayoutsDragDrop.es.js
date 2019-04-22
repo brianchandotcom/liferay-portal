@@ -4,6 +4,7 @@ import State from 'metal-state';
 
 import {FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS} from '../../../../utils/constants';
 import {initializeDragDrop} from '../../../../utils/FragmentsEditorDragDrop.es';
+import {setDraggingItemPosition} from '../../../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * SidebarLayoutsDragDrop
@@ -37,6 +38,8 @@ class SidebarLayoutsDragDrop extends State {
 	 */
 	_handleDrag(data) {
 		const targetItem = data.target;
+
+		setDraggingItemPosition(data.originalEvent);
 
 		if (targetItem && 'layoutRowId' in targetItem.dataset) {
 			const mouseY = data.originalEvent.clientY;

@@ -8,7 +8,7 @@ import {ADD_PORTLET, CLEAR_DROP_TARGET, UPDATE_DROP_TARGET, UPDATE_LAST_SAVE_DAT
 import {FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
-import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {setDraggingItemPosition, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties} from '../../../utils/FragmentsEditorComponentUtils.es';
 import templates from './SidebarWidgetsPanel.soy';
 
@@ -176,6 +176,8 @@ class SidebarWidgetsPanel extends Component {
 		const targetIsColumn = targetItem && ('columnId' in data);
 		const targetIsFragment = targetItem && ('fragmentEntryLinkId' in data);
 		const targetIsRow = targetItem && ('layoutRowId' in data);
+
+		setDraggingItemPosition(eventData.originalEvent);
 
 		if (targetIsColumn || targetIsFragment || targetIsRow) {
 			const mouseY = eventData.originalEvent.clientY;

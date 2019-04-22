@@ -871,20 +871,20 @@ public interface PropsKeys {
 		"discussion.comments.format";
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED =
 		"discussion.email.comments.added.enabled";
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String DISCUSSION_EMAIL_SUBJECT =

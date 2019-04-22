@@ -14,16 +14,64 @@
 
 package com.liferay.asset.taglib.servlet.taglib;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.asset.util.AssetEntryUsageRecorder;
+import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
  */
 public class AssetUsagesTag extends IncludeTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			_className, _classPK);
+
+		try {
+			Map<String, AssetEntryUsageRecorder> assetEntryUsageRecorders =
+				ServletContextUtil.getAssetEntryUsageRecorders();
+
+			AssetEntryUsageRecorder assetEntryUsageRecorder =
+				assetEntryUsageRecorders.get(assetEntry.getClassName());
+
+			if (assetEntryUsageRecorder != null) {
+				assetEntryUsageRecorder.record(assetEntry);
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to check asset entry usages for ", _className,
+						", ", String.valueOf(_classPK)),
+					pe);
+			}
+		}
+
+		request.setAttribute(
+			ContentPageEditorWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
+			ServletContextUtil.getFragmentCollectionContributorTracker());
+		request.setAttribute(
+			FragmentActionKeys.FRAGMENT_RENDERER_TRACKER,
+			ServletContextUtil.getFragmentRendererTracker());
+
+		return super.doStartTag();
+	}
 
 	public String getClassName() {
 		return _className;
@@ -70,6 +118,8 @@ public class AssetUsagesTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/asset_usages/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(AssetUsagesTag.class);
 
 	private String _className;
 	private long _classPK;

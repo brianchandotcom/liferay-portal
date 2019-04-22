@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>ACTIVE_NAV_UNDERLINE_LINK</td>
-	<td>//ul[contains(@class,'nav-underline')]//a[contains(@class,'active') and normalize-space()='${key_navUnderline}']</td>
+	<td>//ul[contains(@class,'navbar-nav')]//a[contains(@class,'active') and normalize-space()='${key_navUnderline}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAV_UNDERLINE_LINK</td>
-	<td>//ul[contains(@class,'nav-underline')]//a[normalize-space()='${key_navUnderline}']</td>
+	<td>//ul[contains(@class,'navbar-nav')]//a[normalize-space()='${key_navUnderline}']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -19,6 +19,8 @@ definition {
 	}
 
 	macro gotoGeneral {
+		var key_navUnderline = "General";
+
 		if (IsElementNotPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK")) {
 			Navigator.gotoNavUnderline(navUnderline = "General");
 		}

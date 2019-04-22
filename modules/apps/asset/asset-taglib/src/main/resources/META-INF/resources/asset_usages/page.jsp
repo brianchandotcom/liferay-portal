@@ -17,18 +17,10 @@
 <%@ include file="/asset_usages/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNull(redirect)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
-
-	redirect = portletURL.toString();
-}
-
 AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUsagesDisplayContext(renderRequest, renderResponse);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(assetEntryUsagesDisplayContext.getRedirect());
 
 renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 %>
@@ -117,12 +109,8 @@ renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 					</c:choose>
 				</h3>
 
-				<%
-				AssetEntryUsagesManagementToolbarDisplayContext assetEntryUsagesManagementToolbarDisplayContext = new AssetEntryUsagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetEntryUsagesDisplayContext.getSearchContainer());
-				%>
-
 				<clay:management-toolbar
-					displayContext="<%= assetEntryUsagesManagementToolbarDisplayContext %>"
+					displayContext="<%= new AssetEntryUsagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetEntryUsagesDisplayContext.getSearchContainer()) %>"
 				/>
 
 				<liferay-ui:search-container

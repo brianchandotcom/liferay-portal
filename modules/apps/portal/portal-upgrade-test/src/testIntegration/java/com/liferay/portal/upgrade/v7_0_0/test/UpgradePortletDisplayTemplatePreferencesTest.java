@@ -34,8 +34,6 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradePortletDisplayTemplatePreference
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
-import java.lang.reflect.Field;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,12 +69,11 @@ public class UpgradePortletDisplayTemplatePreferencesTest {
 
 		_layout = LayoutTestUtil.addLayout(_group);
 
-		Field field = ReflectionTestUtil.getField(
-			UpgradePortletDisplayTemplatePreferences.class,
-			"DISPLAY_STYLE_PREFIX_6_2");
-
 		setPortletDisplayStyle(
-			"portlet1", field.get(null) + ddmTemplate.getUuid());
+			"portlet1",
+			ReflectionTestUtil.getFieldValue(
+				UpgradePortletDisplayTemplatePreferences.class,
+				"DISPLAY_STYLE_PREFIX_6_2") + ddmTemplate.getUuid());
 
 		setPortletDisplayStyle("portlet2", "testDisplayStyle");
 

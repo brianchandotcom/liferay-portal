@@ -132,12 +132,6 @@ public class SocketUtil {
 		return _objectInputStream.readObject();
 	}
 
-	public static void writeObject(Object object) throws IOException {
-		_objectOutputStream.writeObject(object);
-
-		_objectOutputStream.flush();
-	}
-
 	public static void writeUTF(String string) throws IOException {
 		_objectOutputStream.writeUTF(string);
 

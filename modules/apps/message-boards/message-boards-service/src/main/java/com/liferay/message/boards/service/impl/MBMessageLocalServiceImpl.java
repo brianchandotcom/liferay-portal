@@ -2147,10 +2147,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.getUserId(), StringPool.BLANK);
 		}
 
-		String emailFromName = commentGroupServiceConfiguration.emailFromName();
-		String emailFromAddress =
-			commentGroupServiceConfiguration.emailFromAddress();
-
 		SubscriptionSender subscriptionSender =
 			new MBDiscussionSubcriptionSender(commentGroupServiceConfiguration);
 
@@ -2166,18 +2162,20 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(message.getBody());
 		subscriptionSender.setEntryURL(contentURL);
-		subscriptionSender.setFrom(emailFromAddress, emailFromName);
+		subscriptionSender.setFrom(
+			commentGroupServiceConfiguration.emailFromAddress(),
+			commentGroupServiceConfiguration.emailFromName());
 		subscriptionSender.setHtmlFormat(true);
 
 		Map<Locale, String> localizedBodyMap = LocalizationUtil.getMap(
 			commentGroupServiceConfiguration.discussionEmailBody());
 
-		Map<Locale, String> localizedSubjectMap = LocalizationUtil.getMap(
-			commentGroupServiceConfiguration.discussionEmailSubject());
-
 		if (localizedBodyMap != null) {
 			subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
 		}
+
+		Map<Locale, String> localizedSubjectMap = LocalizationUtil.getMap(
+			commentGroupServiceConfiguration.discussionEmailSubject());
 
 		if (localizedSubjectMap != null) {
 			subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);

@@ -1382,7 +1382,7 @@ definition {
 		);
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#THREAD_TABLE_REPLIES",
+			locator1 = "MessageBoards#THREAD_LIST_REPLIES",
 			value1 = "1 Reply"
 		);
 

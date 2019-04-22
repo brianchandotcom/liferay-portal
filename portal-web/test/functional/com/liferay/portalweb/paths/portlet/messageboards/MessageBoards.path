@@ -171,7 +171,7 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_REPLIES</td>
-	<td>//li[contains(.,'${key_threadSubject}')]//span[contains(.,'${key_repliesCount}')]</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[2][contains(.,'${key_repliesCount}')] | //div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[3][contains(.,'${key_repliesCount}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -181,12 +181,12 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_QUESTION_MARK_ICON</td>
-	<td>//li[contains(.,'${key_threadSubject}')]/div/h4/span/*[name()='svg'][contains(@class,'icon-question-circle')]</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//span/*[name()='svg'][contains(@class,'icon-question-circle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_LIST_STATUS</td>
-	<td>//li[contains(.,'${key_threadSubject}')]//span[contains(.,'${key_threadStatus}')]</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[contains(.,'${key_threadStatus}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -196,12 +196,12 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_THREAD_UNREAD</td>
-	<td>//*[@data-qa-id='rowItemContent']/h4/a/strong[contains(.,'${key_threadSubject}')]</td>
+	<td>//*[@data-qa-id='rowItemContent']/h2/a/strong[contains(.,'${key_threadSubject}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_LIST_VIEWS</td>
-	<td>//li[contains(.,'${key_threadSubject}')]/div/span[2]</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[contains(.,'View')]</td>
 	<td></td>
 </tr>
 <tr>

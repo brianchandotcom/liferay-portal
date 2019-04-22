@@ -57,18 +57,16 @@ public class SocketUtil {
 			_objectInputStream = new ObjectInputStream(
 				_socket.getInputStream());
 
-			if (passCode != _objectInputStream.readLong()) {
-				_logger.log(
-					Level.WARNING,
-					"Pass code mismatch, dropped connection from " +
-						_socket.getRemoteSocketAddress());
-
-				close();
-
-				continue;
+			if (passCode == _objectInputStream.readLong()) {
+				break;
 			}
 
-			return;
+			_logger.log(
+				Level.WARNING,
+				"Pass code mismatch, dropped connection from " +
+					_socket.getRemoteSocketAddress());
+
+			close();
 		}
 	}
 

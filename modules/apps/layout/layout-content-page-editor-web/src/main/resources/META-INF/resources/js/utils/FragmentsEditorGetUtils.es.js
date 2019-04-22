@@ -25,9 +25,13 @@ function deepClone(objectToClone) {
 		else {
 			cloned = Object.assign({}, cloned);
 
-			for (let clonedKey in cloned) {
-				cloned[clonedKey] = deepClone(cloned[clonedKey]);
-			}
+			Object
+				.keys(cloned)
+				.forEach(
+					clonedKey => {
+						cloned[clonedKey] = deepClone(cloned[clonedKey]);
+					}
+				);
 		}
 	}
 
@@ -123,8 +127,8 @@ function getFragmentRowIndex(structure, fragmentEntryLinkId) {
 }
 
 /**
- * @param {string} keycode
- * @return {MOVE_ITEM_DIRECTIONS}
+ * @param {number} keycode
+ * @return {number}
  * @review
  */
 function getItemMoveDirection(keycode) {
@@ -216,7 +220,7 @@ function getItemPath(itemId, itemType, structure) {
 
 /**
  * Get the fragmentEntryLinkIds of the fragments inside the given row
- * @param {array} row
+ * @param {{columns: Array<{fragmentEntryLinkIds: Array<string>}>}} row
  * @return {string[]}
  * @review
  */
@@ -248,8 +252,8 @@ function getRowIndex(structure, rowId) {
 
 /**
  * Get target item border from the direction the item is moving in
- * @param {!string} direction
- * @return {FRAGMENTS_EDITOR_ITEM_BORDERS}
+ * @param {number} direction
+ * @return {string}
  * @review
  */
 function getTargetBorder(direction) {
@@ -294,8 +298,8 @@ function getWidget(widgets, portletId) {
 
 /**
  * Get widget path from the widgets tree by portletId
- * @param {!array} widgets
- * @param {!string} portletId
+ * @param {Array<{categories: [], portlets: []}>} widgets
+ * @param {string} portletId
  * @param {string[]} [_path=['widgets']]
  * @return {object}
  * @review
@@ -315,7 +319,7 @@ function getWidgetPath(widgets, portletId, _path = ['widgets']) {
 			portletId,
 			[
 				..._path,
-				categoryIndex,
+				categoryIndex.toString(),
 				'categories'
 			]
 		);

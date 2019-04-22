@@ -70,7 +70,7 @@ public class SiteValidatorContainerRequestFilterTest {
 
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("liferay.auth.verifier", false);
+		properties.put("liferay.auth.verifier", true);
 		properties.put("liferay.oauth2", false);
 		properties.put("osgi.jaxrs.application.base", "/test-vulcan");
 		properties.put(

@@ -247,6 +247,15 @@ definition {
 			SelectFrameTop(value1 = "relative=top");
 
 			Button.clickSave();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit"
+			);
+
+			Button.clickPublish();
 		}
 
 		task ("View the web content through the display page") {

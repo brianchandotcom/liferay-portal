@@ -389,6 +389,10 @@ public class ToolDependencies {
 			_portalCaches.clear();
 		}
 
+		public PortalCache<K, V> fetchPortalCache(String portalCacheName) {
+			return _portalCaches.get(portalCacheName);
+		}
+
 		@Override
 		public PortalCache<K, V> getPortalCache(String portalCacheName)
 			throws PortalCacheException {

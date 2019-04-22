@@ -41,6 +41,10 @@ public abstract class BaseIntrabandPortalCacheManager
 		_portalCaches.clear();
 	}
 
+	public PortalCache<K, V> fetchPortalCache(String portalCacheName) {
+		return _portalCaches.get(portalCacheName);
+	}
+
 	@Override
 	public PortalCache<K, V> getPortalCache(String portalCacheName) {
 		return getPortalCache(portalCacheName, false);

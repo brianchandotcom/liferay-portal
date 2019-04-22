@@ -311,6 +311,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataDefinition"
                     description: ""
             tags: ["DataDefinition"]
         put:
@@ -327,10 +330,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DataDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataDefinition"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataDefinition"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
                     description: ""
@@ -353,6 +362,9 @@ paths:
             requestBody:
                 content:
                     application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataDefinitionPermission"
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/DataDefinitionPermission"
                 description: ""
@@ -390,6 +402,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataLayout"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataLayout"
+                                type: array
                     description: ""
             tags: ["DataLayout"]
         post:
@@ -406,10 +423,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DataLayout"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataLayout"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataLayout"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataLayout"
                     description: ""
@@ -446,6 +469,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataRecordCollection"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataRecordCollection"
+                                type: array
                     description: ""
             tags: ["DataRecordCollection"]
         post:
@@ -462,10 +490,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DataRecordCollection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataRecordCollection"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecordCollection"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecordCollection"
                     description: ""
@@ -488,6 +522,9 @@ paths:
             requestBody:
                 content:
                     application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataLayoutPermission"
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/DataLayoutPermission"
                 description: ""
@@ -528,6 +565,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DataLayout"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataLayout"
                     description: ""
             tags: ["DataLayout"]
         put:
@@ -544,10 +584,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DataLayout"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataLayout"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataLayout"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataLayout"
                     description: ""
@@ -583,6 +629,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DataRecordCollection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataRecordCollection"
                     description: ""
             tags: ["DataRecordCollection"]
         put:
@@ -599,10 +648,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DataRecordCollection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataRecordCollection"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecordCollection"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecordCollection"
                     description: ""
@@ -625,6 +680,9 @@ paths:
             requestBody:
                 content:
                     application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataRecordCollectionPermission"
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/DataRecordCollectionPermission"
                 description: ""
@@ -662,6 +720,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataRecord"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataRecord"
+                                type: array
                     description: ""
             tags: ["DataRecord"]
         post:
@@ -678,10 +741,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DataRecord"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataRecord"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecord"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecord"
                     description: ""
@@ -735,6 +804,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/DataRecord"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataRecord"
                     description: ""
             tags: ["DataRecord"]
         put:
@@ -751,10 +823,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DataRecord"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataRecord"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecord"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataRecord"
                     description: ""
@@ -777,6 +855,9 @@ paths:
             requestBody:
                 content:
                     application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataDefinitionPermission"
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/DataDefinitionPermission"
             responses:
@@ -817,6 +898,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataDefinition"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataDefinition"
+                                type: array
                     description: ""
             tags: ["DataDefinition"]
         post:
@@ -833,10 +919,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DataDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataDefinition"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataDefinition"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
                     description: ""
@@ -869,6 +961,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/DataLayout"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataLayout"
+                                type: array
                     description: ""
             tags: ["DataLayout"]
     "/sites/{siteId}/data-layout-permissions":
@@ -889,6 +986,9 @@ paths:
             requestBody:
                 content:
                     application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataLayoutPermission"
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/DataLayoutPermission"
             responses:
@@ -915,6 +1015,9 @@ paths:
             requestBody:
                 content:
                     application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataRecordCollectionPermission"
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/DataRecordCollectionPermission"
             responses:
@@ -951,6 +1054,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DataRecordCollection"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/DataRecordCollection"

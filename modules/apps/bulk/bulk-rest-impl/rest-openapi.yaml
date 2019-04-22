@@ -99,10 +99,16 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DocumentBulkSelection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentBulkSelection"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/Selection"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/Selection"
                     description: ""
@@ -113,6 +119,9 @@ paths:
             requestBody:
                 content:
                     application/json:
+                        schema:
+                            $ref: "#/components/schemas/KeywordBulkSelection"
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/KeywordBulkSelection"
             responses:
@@ -126,6 +135,9 @@ paths:
             requestBody:
                 content:
                     application/json:
+                        schema:
+                            $ref: "#/components/schemas/KeywordBulkSelection"
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/KeywordBulkSelection"
             responses:
@@ -142,10 +154,18 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DocumentBulkSelection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentBulkSelection"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Keyword"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Keyword"
@@ -167,10 +187,18 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/DocumentBulkSelection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentBulkSelection"
             responses:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaxonomyVocabulary"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/TaxonomyVocabulary"
@@ -186,6 +214,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Status"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Status"
                     description: ""
             tags: ["Status"]
     "/taxonomy-categories/batch":
@@ -194,6 +225,9 @@ paths:
             requestBody:
                 content:
                     application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategoryBulkSelection"
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/TaxonomyCategoryBulkSelection"
             responses:
@@ -207,6 +241,9 @@ paths:
             requestBody:
                 content:
                     application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyCategoryBulkSelection"
+                    application/xml:
                         schema:
                             $ref: "#/components/schemas/TaxonomyCategoryBulkSelection"
             responses:

@@ -46,36 +46,30 @@ public class SocketUtil {
 		_socket.close();
 
 		_socket = null;
-
-		_connected = false;
 	}
 
 	public static void connect(long passCode) throws IOException {
-		if (!_connected) {
-			while (true) {
-				_socket = _serverSocket.accept();
+		while (true) {
+			_socket = _serverSocket.accept();
 
-				_objectOutputStream = new ObjectOutputStream(
-					_socket.getOutputStream());
+			_objectOutputStream = new ObjectOutputStream(
+				_socket.getOutputStream());
 
-				_objectInputStream = new ObjectInputStream(
-					_socket.getInputStream());
+			_objectInputStream = new ObjectInputStream(
+				_socket.getInputStream());
 
-				if (passCode != readLong()) {
-					_logger.log(
-						Level.WARNING,
-						"Pass code mismatch, dropped connection from " +
-							getRemoteSocketAddress());
+			if (passCode != readLong()) {
+				_logger.log(
+					Level.WARNING,
+					"Pass code mismatch, dropped connection from " +
+						getRemoteSocketAddress());
 
-					close();
+				close();
 
-					continue;
-				}
-
-				_connected = true;
-
-				return;
+				continue;
 			}
+
+			return;
 		}
 	}
 
@@ -127,7 +121,6 @@ public class SocketUtil {
 	private static final Logger _logger = Logger.getLogger(
 		SocketUtil.class.getName());
 
-	private static boolean _connected;
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();
 	private static ObjectInputStream _objectInputStream;

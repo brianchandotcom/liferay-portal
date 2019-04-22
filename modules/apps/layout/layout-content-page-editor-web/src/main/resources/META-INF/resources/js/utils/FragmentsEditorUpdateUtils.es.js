@@ -187,6 +187,17 @@ function removeItem(store, removeItemAction, removeItemPayload) {
 }
 
 /**
+ * Set an element's position to new x and y coordinates
+ * @param {object} element
+ * @param {number} xPos
+ * @param {number} yPos
+ */
+function setElementPosition(element, xPos, yPos) {
+	element.style.left = `${xPos}px`;
+	element.style.top = `${yPos}px`;
+}
+
+/**
  * Recursively inserts a value inside an object creating
  * a copy of the original target. It the object (or any in the path),
  * it's an Array, it will generate new Arrays, preserving the same structure.

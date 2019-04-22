@@ -37,6 +37,8 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
 import java.security.SecureRandom;
 
 import java.util.ArrayList;
@@ -85,7 +87,7 @@ public class Arquillian extends Runner implements Filterable {
 			throw new NoTestsRemainException();
 		}
 
-		Set<Class<?>> testClasses = _getTestClasses();
+		Set<Class<?>> testClasses = _getTestClasses(_clazz);
 
 		Iterator<Class<?>> iterator = testClasses.iterator();
 
@@ -176,7 +178,7 @@ public class Arquillian extends Runner implements Filterable {
 				}
 			}
 			finally {
-				Set<Class<?>> testClasses = _getTestClasses();
+				Set<Class<?>> testClasses = _getTestClasses(_clazz);
 
 				testClasses.remove(_clazz);
 
@@ -202,33 +204,37 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
-	private static Set<Class<?>> _getTestClasses() {
+	private static Set<Class<?>> _getTestClasses(Class<?> testClass) {
 		if (_testClasses == null) {
 			Set<Class<?>> testClasses = new HashSet<>();
 
-			try {
-				Path srcDir = Paths.get(
-					System.getProperty("user.dir"), "src", "testIntegration",
-					"java");
+			ProtectionDomain protectionDomain = testClass.getProtectionDomain();
 
+			CodeSource codeSource = protectionDomain.getCodeSource();
+
+			URL locationURL = codeSource.getLocation();
+
+			Path startPath = Paths.get(locationURL.getPath());
+
+			try {
 				Files.walkFileTree(
-					srcDir,
+					startPath,
 					new SimpleFileVisitor<Path>() {
 
 						@Override
 						public FileVisitResult visitFile(
-								Path path,
+								Path filePath,
 								BasicFileAttributes basicFileAttributes)
 							throws IOException {
 
-							Path relativePath = srcDir.relativize(path);
+							Path relativePath = startPath.relativize(filePath);
 
 							String relativePathString = relativePath.toString();
 
-							if (relativePathString.endsWith("Test.java")) {
+							if (relativePathString.endsWith("Test.class")) {
 								relativePathString =
 									relativePathString.substring(
-										0, relativePathString.length() - 5);
+										0, relativePathString.length() - 6);
 
 								relativePathString = relativePathString.replace(
 									CharPool.SLASH, CharPool.PERIOD);

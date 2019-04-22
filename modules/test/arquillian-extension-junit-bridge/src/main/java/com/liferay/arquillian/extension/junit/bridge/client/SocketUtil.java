@@ -15,10 +15,8 @@
 package com.liferay.arquillian.extension.junit.bridge.client;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -41,17 +39,9 @@ public class SocketUtil {
 
 		_objectInputStream = null;
 
-		_inputStream.close();
-
-		_inputStream = null;
-
 		_objectOutputStream.close();
 
 		_objectOutputStream = null;
-
-		_outputStream.close();
-
-		_outputStream = null;
 
 		_socket.close();
 
@@ -65,13 +55,11 @@ public class SocketUtil {
 			while (true) {
 				_socket = _serverSocket.accept();
 
-				_outputStream = _socket.getOutputStream();
+				_objectOutputStream = new ObjectOutputStream(
+					_socket.getOutputStream());
 
-				_objectOutputStream = new ObjectOutputStream(_outputStream);
-
-				_inputStream = _socket.getInputStream();
-
-				_objectInputStream = new ObjectInputStream(_inputStream);
+				_objectInputStream = new ObjectInputStream(
+					_socket.getInputStream());
 
 				if (passCode != readLong()) {
 					_logger.log(
@@ -142,10 +130,8 @@ public class SocketUtil {
 	private static boolean _connected;
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();
-	private static InputStream _inputStream;
 	private static ObjectInputStream _objectInputStream;
 	private static ObjectOutputStream _objectOutputStream;
-	private static OutputStream _outputStream;
 	private static ServerSocket _serverSocket;
 	private static Socket _socket;
 

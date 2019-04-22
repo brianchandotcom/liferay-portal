@@ -15,10 +15,10 @@
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.client.BndBundleUtil;
+import com.liferay.arquillian.extension.junit.bridge.client.ClientState;
 import com.liferay.arquillian.extension.junit.bridge.client.MBeans;
 import com.liferay.arquillian.extension.junit.bridge.client.SocketUtil;
 import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
-import com.liferay.petra.string.CharPool;
 
 import java.io.IOException;
 
@@ -29,30 +29,20 @@ import java.net.ServerSocket;
 import java.net.URI;
 import java.net.URL;
 
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
 import java.security.SecureRandom;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.Description;
-import org.junit.runner.RunWith;
 import org.junit.runner.Runner;
 import org.junit.runner.manipulation.Filter;
 import org.junit.runner.manipulation.Filterable;
@@ -87,17 +77,7 @@ public class Arquillian extends Runner implements Filterable {
 			throw new NoTestsRemainException();
 		}
 
-		Set<Class<?>> testClasses = _getTestClasses(_clazz);
-
-		Iterator<Class<?>> iterator = testClasses.iterator();
-
-		while (iterator.hasNext()) {
-			Class<?> clazz = iterator.next();
-
-			if (!filter.shouldRun(Description.createSuiteDescription(clazz))) {
-				iterator.remove();
-			}
-		}
+		_clientState.filterTestClasses(filter, _clazz);
 	}
 
 	@Override
@@ -125,9 +105,7 @@ public class Arquillian extends Runner implements Filterable {
 			});
 
 		if (frameworkMethods.isEmpty()) {
-			Set<Class<?>> testClasses = _getTestClasses(_clazz);
-
-			testClasses.remove(_clazz);
+			_clientState.removeTestClass(_clazz);
 
 			return;
 		}
@@ -177,11 +155,9 @@ public class Arquillian extends Runner implements Filterable {
 				}
 			}
 			finally {
-				Set<Class<?>> testClasses = _getTestClasses(_clazz);
+				_clientState.removeTestClass(_clazz);
 
-				testClasses.remove(_clazz);
-
-				if (testClasses.isEmpty()) {
+				if (_clientState.isEmpty()) {
 					try {
 						frameworkMBean.uninstallBundle(_bundleId);
 
@@ -199,80 +175,6 @@ public class Arquillian extends Runner implements Filterable {
 		catch (Throwable t) {
 			runNotifier.fireTestFailure(new Failure(getDescription(), t));
 		}
-	}
-
-	private static Set<Class<?>> _getTestClasses(Class<?> testClass) {
-		if (_testClasses == null) {
-			Set<Class<?>> testClasses = new HashSet<>();
-
-			ProtectionDomain protectionDomain = testClass.getProtectionDomain();
-
-			CodeSource codeSource = protectionDomain.getCodeSource();
-
-			URL locationURL = codeSource.getLocation();
-
-			Path startPath = Paths.get(locationURL.getPath());
-
-			ClassLoader classLoader = testClass.getClassLoader();
-
-			try {
-				Files.walkFileTree(
-					startPath,
-					new SimpleFileVisitor<Path>() {
-
-						@Override
-						public FileVisitResult visitFile(
-							Path filePath,
-							BasicFileAttributes basicFileAttributes) {
-
-							Path relativePath = startPath.relativize(filePath);
-
-							String relativePathString = relativePath.toString();
-
-							if (!relativePathString.endsWith("Test.class")) {
-								return FileVisitResult.CONTINUE;
-							}
-
-							relativePathString = relativePathString.substring(
-								0, relativePathString.length() - 6);
-
-							relativePathString = relativePathString.replace(
-								CharPool.SLASH, CharPool.PERIOD);
-
-							try {
-								Class<?> clazz = classLoader.loadClass(
-									relativePathString);
-
-								RunWith runWith = clazz.getAnnotation(
-									RunWith.class);
-
-								if ((runWith == null) ||
-									(runWith.value() != Arquillian.class)) {
-
-									return FileVisitResult.CONTINUE;
-								}
-
-								if (clazz.getAnnotation(Ignore.class) == null) {
-									testClasses.add(clazz);
-								}
-							}
-							catch (ClassNotFoundException cnfe) {
-								throw new RuntimeException(cnfe);
-							}
-
-							return FileVisitResult.CONTINUE;
-						}
-
-					});
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
-
-			_testClasses = testClasses;
-		}
-
-		return _testClasses;
 	}
 
 	private long _installBundle(
@@ -297,7 +199,7 @@ public class Arquillian extends Runner implements Filterable {
 	}
 
 	private static long _bundleId;
-	private static Set<Class<?>> _testClasses;
+	private static final ClientState _clientState = new ClientState();
 
 	private final Class<?> _clazz;
 	private FilteredSortedTestClass _filteredSortedTestClass;

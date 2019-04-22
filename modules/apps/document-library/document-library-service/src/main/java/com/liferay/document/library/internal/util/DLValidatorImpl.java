@@ -67,6 +67,8 @@ public final class DLValidatorImpl implements DLValidator {
 
 		name = replaceDLCharLastBlacklist(name);
 
+		name = replaceDLWebDAVSubstitutionChar(name);
+
 		return replaceDLNameBlacklist(name);
 	}
 
@@ -306,6 +308,13 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 
 		return title;
+	}
+
+	protected String replaceDLWebDAVSubstitutionChar(String title) {
+
+		return StringUtil.replace(title,
+			PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR, StringPool.UNDERLINE);
+
 	}
 
 	private volatile DLConfiguration _dlConfiguration;

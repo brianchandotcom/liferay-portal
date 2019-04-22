@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Node")
 public class Node {
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -65,6 +68,7 @@ public class Node {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public Boolean getInitial() {
 		return initial;
 	}
@@ -92,6 +96,7 @@ public class Node {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean initial;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -117,6 +122,7 @@ public class Node {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public Boolean getTerminal() {
 		return terminal;
 	}
@@ -144,6 +150,7 @@ public class Node {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean terminal;
 
+	@Schema
 	public String getType() {
 		return type;
 	}

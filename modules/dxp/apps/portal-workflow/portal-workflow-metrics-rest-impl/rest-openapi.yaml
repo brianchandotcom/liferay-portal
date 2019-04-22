@@ -129,6 +129,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Process"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Process"
+                                type: array
                     description: ""
             tags: ["Process"]
     "/processes/{processId}":
@@ -147,6 +152,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Process"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Process"
                     description: ""
             tags: ["Process"]
     "/processes/{processId}/nodes":
@@ -163,6 +171,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Node"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Node"
@@ -202,6 +215,11 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/SLA"
                                 type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SLA"
+                                type: array
                     description: ""
             tags: ["SLA"]
         post:
@@ -218,16 +236,25 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/SLA"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SLA"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/SLA"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
                     description: ""
                 400:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/GenericError"
                     description: ""
@@ -260,6 +287,11 @@ paths:
                 200:
                     content:
                         application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Task"
+                                type: array
+                        application/xml:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/Task"
@@ -297,6 +329,9 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/SLA"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
                     description: ""
             tags: ["SLA"]
         put:
@@ -313,16 +348,25 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/SLA"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SLA"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/SLA"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
                     description: ""
                 400:
                     content:
                         application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
                             schema:
                                 $ref: "#/components/schemas/GenericError"
                     description: ""

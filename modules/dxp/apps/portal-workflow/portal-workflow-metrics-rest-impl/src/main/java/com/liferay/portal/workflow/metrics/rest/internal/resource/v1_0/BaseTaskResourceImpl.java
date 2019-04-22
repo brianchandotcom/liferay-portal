@@ -57,16 +57,18 @@ public abstract class BaseTaskResourceImpl implements TaskResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "processId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/processes/{processId}/tasks")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Task")})
 	public Page<Task> getProcessTasksPage(
-			@NotNull @PathParam("processId") Long processId,
+			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
+				processId,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

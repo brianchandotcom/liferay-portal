@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Task")
 public class Task {
 
+	@Schema
 	public Long getInstanceCount() {
 		return instanceCount;
 	}
@@ -67,6 +70,7 @@ public class Task {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long instanceCount;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -92,6 +96,7 @@ public class Task {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public Long getOnTimeInstanceCount() {
 		return onTimeInstanceCount;
 	}
@@ -119,6 +124,7 @@ public class Task {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long onTimeInstanceCount;
 
+	@Schema
 	public Long getOverdueInstanceCount() {
 		return overdueInstanceCount;
 	}

@@ -61,16 +61,19 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.QUERY, name = "status"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
 	@Path("/processes/{processId}/slas")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "SLA")})
 	public Page<SLA> getProcessSLAsPage(
-			@NotNull @PathParam("processId") Long processId,
-			@QueryParam("status") Integer status,
+			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
+				processId,
+			@Parameter(hidden = true) @QueryParam("status") Integer status,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -78,13 +81,16 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}/slas")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "SLA")})
 	public SLA postProcessSLA(
-			@NotNull @PathParam("processId") Long processId, SLA sla)
+			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
+				processId,
+			SLA sla)
 		throws Exception {
 
 		return new SLA();
@@ -92,31 +98,38 @@ public abstract class BaseSLAResourceImpl implements SLAResource {
 
 	@Override
 	@DELETE
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "slaId")})
 	@Path("/slas/{slaId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "SLA")})
-	public void deleteSLA(@NotNull @PathParam("slaId") Long slaId)
+	public void deleteSLA(
+			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId)
 		throws Exception {
 	}
 
 	@Override
 	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "slaId")})
 	@Path("/slas/{slaId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA getSLA(@NotNull @PathParam("slaId") Long slaId)
+	public SLA getSLA(
+			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId)
 		throws Exception {
 
 		return new SLA();
 	}
 
 	@Override
-	@Consumes("application/json")
+	@Consumes({"application/json", "application/xml"})
 	@PUT
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "slaId")})
 	@Path("/slas/{slaId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "SLA")})
-	public SLA putSLA(@NotNull @PathParam("slaId") Long slaId, SLA sla)
+	public SLA putSLA(
+			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId,
+			SLA sla)
 		throws Exception {
 
 		return new SLA();

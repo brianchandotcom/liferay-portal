@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -44,6 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "SLA")
 public class SLA {
 
+	@Schema
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -71,6 +74,7 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@Schema
 	public String getDescription() {
 		return description;
 	}
@@ -98,6 +102,7 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema
 	public Long getDuration() {
 		return duration;
 	}
@@ -125,6 +130,7 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long duration;
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -150,6 +156,7 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -175,6 +182,7 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
 	public String[] getPauseNodeKeys() {
 		return pauseNodeKeys;
 	}
@@ -202,6 +210,7 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] pauseNodeKeys;
 
+	@Schema
 	public Long getProcessId() {
 		return processId;
 	}
@@ -229,6 +238,7 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long processId;
 
+	@Schema
 	public String[] getStartNodeKeys() {
 		return startNodeKeys;
 	}
@@ -256,6 +266,7 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] startNodeKeys;
 
+	@Schema
 	public Integer getStatus() {
 		return status;
 	}
@@ -283,6 +294,7 @@ public class SLA {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
 
+	@Schema
 	public String[] getStopNodeKeys() {
 		return stopNodeKeys;
 	}

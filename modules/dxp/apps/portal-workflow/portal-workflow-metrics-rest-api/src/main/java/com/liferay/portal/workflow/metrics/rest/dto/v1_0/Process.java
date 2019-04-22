@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Process")
 public class Process {
 
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -65,6 +68,7 @@ public class Process {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@Schema
 	public Long getInstanceCount() {
 		return instanceCount;
 	}
@@ -92,6 +96,7 @@ public class Process {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long instanceCount;
 
+	@Schema
 	public Long getOnTimeInstanceCount() {
 		return onTimeInstanceCount;
 	}
@@ -119,6 +124,7 @@ public class Process {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long onTimeInstanceCount;
 
+	@Schema
 	public Long getOverdueInstanceCount() {
 		return overdueInstanceCount;
 	}
@@ -146,6 +152,7 @@ public class Process {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long overdueInstanceCount;
 
+	@Schema
 	public String getTitle() {
 		return title;
 	}
@@ -173,6 +180,7 @@ public class Process {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@Schema
 	public Long getUntrackedInstanceCount() {
 		return untrackedInstanceCount;
 	}

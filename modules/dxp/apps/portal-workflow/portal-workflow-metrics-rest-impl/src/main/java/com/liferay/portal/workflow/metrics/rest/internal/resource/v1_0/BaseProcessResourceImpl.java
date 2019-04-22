@@ -58,17 +58,18 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 	@GET
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "title"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sorts")
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/processes")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Process")})
 	public Page<Process> getProcessesPage(
-			@QueryParam("title") String title, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@Parameter(hidden = true) @QueryParam("title") String title,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -76,10 +77,13 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 
 	@Override
 	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Process")})
-	public Process getProcess(@NotNull @PathParam("processId") Long processId)
+	public Process getProcess(
+			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
+				processId)
 		throws Exception {
 
 		return new Process();

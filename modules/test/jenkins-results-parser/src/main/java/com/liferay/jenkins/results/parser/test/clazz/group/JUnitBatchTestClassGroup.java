@@ -622,7 +622,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return propertyValue;
 		}
 
-		if (propertyValue.isEmpty()) {
+		if ((propertyValue == null) || propertyValue.isEmpty()) {
 			return _GLOB_MODULES_PRIVATE;
 		}
 

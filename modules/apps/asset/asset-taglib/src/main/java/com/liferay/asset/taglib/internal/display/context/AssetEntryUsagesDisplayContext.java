@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -74,6 +75,15 @@ public class AssetEntryUsagesDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
+		long classPK = GetterUtil.getLong(
+			(String)_renderRequest.getAttribute(
+				"liferay-asset:asset-usages:classPK"));
+		String className = GetterUtil.getString(
+			_renderRequest.getAttribute(
+				"liferay-asset:asset-usages:className"));
+
+		_assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
+
 		_fragmentCollectionContributorTracker =
 			(FragmentCollectionContributorTracker)renderRequest.getAttribute(
 				ContentPageEditorWebKeys.
@@ -87,32 +97,11 @@ public class AssetEntryUsagesDisplayContext {
 
 	public int getAllUsageCount() {
 		return AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
-			getAssetEntryId());
-	}
-
-	public long getAssetEntryId() {
-		if (_assetEntryId != null) {
-			return _assetEntryId;
-		}
-
-		_assetEntryId = ParamUtil.getLong(_renderRequest, "assetEntryId");
-
-		return _assetEntryId;
+			_assetEntry.getEntryId());
 	}
 
 	public String getAssetEntryTitle() {
-		if (Validator.isNotNull(_assetEntryTitle)) {
-			return _assetEntryTitle;
-		}
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			getAssetEntryId());
-
-		if (assetEntry != null) {
-			_assetEntryTitle = assetEntry.getTitle(_themeDisplay.getLocale());
-		}
-
-		return _assetEntryTitle;
+		return _assetEntry.getTitle(_themeDisplay.getLocale());
 	}
 
 	public List<DropdownItem> getAssetEntryUsageActionDropdownItems(
@@ -124,18 +113,11 @@ public class AssetEntryUsagesDisplayContext {
 			return Collections.emptyList();
 		}
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			getAssetEntryId());
-
-		if (assetEntry == null) {
-			return Collections.emptyList();
-		}
-
 		AssetEntryUsageActionMenuContributor
 			assetEntryUsageActionMenuContributor =
 				AssetEntryUsageActionMenuContributorRegistryUtil.
 					getAssetEntryUsageActionMenuContributor(
-						assetEntry.getClassName());
+						_assetEntry.getClassName());
 
 		if (assetEntryUsageActionMenuContributor == null) {
 			return Collections.emptyList();
@@ -253,7 +235,7 @@ public class AssetEntryUsagesDisplayContext {
 
 	public int getDisplayPagesUsageCount() {
 		return AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
-			getAssetEntryId(),
+			_assetEntry.getEntryId(),
 			AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE);
 	}
 
@@ -269,24 +251,17 @@ public class AssetEntryUsagesDisplayContext {
 
 	public int getPagesUsageCount() {
 		return AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
-			getAssetEntryId(), AssetEntryUsageConstants.TYPE_LAYOUT);
+			_assetEntry.getEntryId(), AssetEntryUsageConstants.TYPE_LAYOUT);
 	}
 
 	public int getPageTemplatesUsageCount() {
 		return AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
-			getAssetEntryId(), AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE);
+			_assetEntry.getEntryId(),
+			AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE);
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_asset_entry_usages.jsp");
-		portletURL.setParameter("redirect", getRedirect());
-		portletURL.setParameter(
-			"assetEntryId", String.valueOf(getAssetEntryId()));
-		portletURL.setParameter("navigation", getNavigation());
-
-		return portletURL;
+		return PortletURLUtil.getCurrent(_renderRequest, _renderResponse);
 	}
 
 	public String getRedirect() {
@@ -330,7 +305,8 @@ public class AssetEntryUsagesDisplayContext {
 		if (Objects.equals(getNavigation(), "pages")) {
 			assetEntryUsages =
 				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
-					getAssetEntryId(), AssetEntryUsageConstants.TYPE_LAYOUT,
+					_assetEntry.getEntryId(),
+					AssetEntryUsageConstants.TYPE_LAYOUT,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
 					orderByComparator);
@@ -340,7 +316,7 @@ public class AssetEntryUsagesDisplayContext {
 		else if (Objects.equals(getNavigation(), "page-templates")) {
 			assetEntryUsages =
 				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
-					getAssetEntryId(),
+					_assetEntry.getEntryId(),
 					AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
@@ -351,7 +327,7 @@ public class AssetEntryUsagesDisplayContext {
 		else if (Objects.equals(getNavigation(), "display-page-templates")) {
 			assetEntryUsages =
 				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
-					getAssetEntryId(),
+					_assetEntry.getEntryId(),
 					AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE,
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
@@ -362,7 +338,7 @@ public class AssetEntryUsagesDisplayContext {
 		else {
 			assetEntryUsages =
 				AssetEntryUsageLocalServiceUtil.getAssetEntryUsages(
-					getAssetEntryId(),
+					_assetEntry.getEntryId(),
 					assetEntryUsagesSearchContainer.getStart(),
 					assetEntryUsagesSearchContainer.getEnd(),
 					orderByComparator);
@@ -489,8 +465,7 @@ public class AssetEntryUsagesDisplayContext {
 		return true;
 	}
 
-	private Long _assetEntryId;
-	private String _assetEntryTitle;
+	private final AssetEntry _assetEntry;
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
 	private final FragmentRendererTracker _fragmentRendererTracker;

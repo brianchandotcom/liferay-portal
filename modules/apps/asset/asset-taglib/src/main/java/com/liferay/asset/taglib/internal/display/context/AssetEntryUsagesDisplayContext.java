@@ -100,10 +100,6 @@ public class AssetEntryUsagesDisplayContext {
 			_assetEntry.getEntryId());
 	}
 
-	public String getAssetEntryTitle() {
-		return _assetEntry.getTitle(_themeDisplay.getLocale());
-	}
-
 	public List<DropdownItem> getAssetEntryUsageActionDropdownItems(
 		AssetEntryUsage assetEntryUsage) {
 

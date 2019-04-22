@@ -18,11 +18,6 @@
 
 <%
 AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUsagesDisplayContext(renderRequest, renderResponse);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(assetEntryUsagesDisplayContext.getRedirect());
-
-renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">

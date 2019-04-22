@@ -30,7 +30,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(article.getTitle(themeDisplay.getLocale()));
 %>
 
-<liferay-asset:asset-usages
+<liferay-asset:asset-entry-usages
 	className="<%= JournalArticle.class.getName() %>"
 	classPK="<%= JournalArticleAssetRenderer.getClassPK(article) %>"
 />

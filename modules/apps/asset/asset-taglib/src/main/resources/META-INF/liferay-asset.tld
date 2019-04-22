@@ -286,6 +286,21 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>asset-entry-usages</name>
+		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetEntryUsagesTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>className</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>classPK</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>asset-links</name>
 		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetLinksTag</tag-class>
 		<body-content>JSP</body-content>
@@ -517,21 +532,6 @@
 			<description>The URL of a portlet to display the tags.</description>
 			<name>portletURL</name>
 			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<name>asset-usages</name>
-		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetUsagesTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>className</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>classPK</name>
-			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

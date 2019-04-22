@@ -77,10 +77,10 @@ public class AssetEntryUsagesDisplayContext {
 
 		long classPK = GetterUtil.getLong(
 			(String)_renderRequest.getAttribute(
-				"liferay-asset:asset-usages:classPK"));
+				"liferay-asset:asset-entry-usages:classPK"));
 		String className = GetterUtil.getString(
 			_renderRequest.getAttribute(
-				"liferay-asset:asset-usages:className"));
+				"liferay-asset:asset-entry-usages:className"));
 
 		_assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
 

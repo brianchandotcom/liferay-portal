@@ -35,7 +35,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Eudaldo Alonso
  */
-public class AssetUsagesTag extends IncludeTag {
+public class AssetEntryUsagesTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -58,8 +58,7 @@ public class AssetUsagesTag extends IncludeTag {
 				_log.debug(
 					StringBundler.concat(
 						"Unable to check asset entry usages for class name ",
-						_className, " and class PK ",
-						String.valueOf(_classPK)),
+						_className, " and class PK ", String.valueOf(_classPK)),
 					pe);
 			}
 		}
@@ -113,14 +112,16 @@ public class AssetUsagesTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-asset:asset-usages:className", _className);
+			"liferay-asset:asset-entry-usages:className", _className);
 		request.setAttribute(
-			"liferay-asset:asset-usages:classPK", String.valueOf(_classPK));
+			"liferay-asset:asset-entry-usages:classPK",
+			String.valueOf(_classPK));
 	}
 
-	private static final String _PAGE = "/asset_usages/page.jsp";
+	private static final String _PAGE = "/asset_entry_usages/page.jsp";
 
-	private static final Log _log = LogFactoryUtil.getLog(AssetUsagesTag.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetEntryUsagesTag.class);
 
 	private String _className;
 	private long _classPK;

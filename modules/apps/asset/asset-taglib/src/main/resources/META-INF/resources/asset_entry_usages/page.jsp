@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/asset_usages/init.jsp" %>
+<%@ include file="/asset_entry_usages/init.jsp" %>
 
 <%
 AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUsagesDisplayContext(renderRequest, renderResponse);

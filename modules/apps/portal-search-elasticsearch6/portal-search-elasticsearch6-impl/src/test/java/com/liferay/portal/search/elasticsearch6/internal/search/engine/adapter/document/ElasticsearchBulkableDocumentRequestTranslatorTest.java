@@ -190,7 +190,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 		DeleteRequestBuilder deleteRequestBuilder =
 			_elasticsearchBulkableDocumentRequestTranslator.translate(
-				deleteDocumentRequest, null);
+				deleteDocumentRequest);
 
 		DeleteRequest deleteRequest = deleteRequestBuilder.request();
 
@@ -205,8 +205,9 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		BulkRequestBuilder bulkRequestBuilder =
 			BulkAction.INSTANCE.newRequestBuilder(client);
 
-		_elasticsearchBulkableDocumentRequestTranslator.translate(
-			deleteDocumentRequest, bulkRequestBuilder);
+		bulkRequestBuilder.add(
+			_elasticsearchBulkableDocumentRequestTranslator.translate(
+				deleteDocumentRequest));
 
 		Assert.assertEquals(1, bulkRequestBuilder.numberOfActions());
 	}
@@ -228,7 +229,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 		IndexRequestBuilder indexRequestBuilder =
 			_elasticsearchBulkableDocumentRequestTranslator.translate(
-				indexDocumentRequest, null);
+				indexDocumentRequest);
 
 		IndexRequest indexRequest = indexRequestBuilder.request();
 
@@ -250,8 +251,9 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		BulkRequestBuilder bulkRequestBuilder =
 			BulkAction.INSTANCE.newRequestBuilder(client);
 
-		_elasticsearchBulkableDocumentRequestTranslator.translate(
-			indexDocumentRequest, bulkRequestBuilder);
+		bulkRequestBuilder.add(
+			_elasticsearchBulkableDocumentRequestTranslator.translate(
+				indexDocumentRequest));
 
 		Assert.assertEquals(1, bulkRequestBuilder.numberOfActions());
 	}
@@ -273,7 +275,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 		UpdateRequestBuilder updateRequestBuilder =
 			_elasticsearchBulkableDocumentRequestTranslator.translate(
-				updateDocumentRequest, null);
+				updateDocumentRequest);
 
 		UpdateRequest updateRequest = updateRequestBuilder.request();
 
@@ -296,8 +298,9 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		BulkRequestBuilder bulkRequestBuilder =
 			BulkAction.INSTANCE.newRequestBuilder(client);
 
-		_elasticsearchBulkableDocumentRequestTranslator.translate(
-			updateDocumentRequest, bulkRequestBuilder);
+		bulkRequestBuilder.add(
+			_elasticsearchBulkableDocumentRequestTranslator.translate(
+				updateDocumentRequest));
 
 		Assert.assertEquals(1, bulkRequestBuilder.numberOfActions());
 	}

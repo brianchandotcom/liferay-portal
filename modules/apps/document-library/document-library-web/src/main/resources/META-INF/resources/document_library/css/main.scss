@@ -2,13 +2,10 @@
 @import "mixins";
 
 @mixin file-icon($colorIndex, $color) {
-	[data-file-icon-color="#{$colorIndex}"] .dropdown-item-indicator {
+	[data-file-icon-color="#{$colorIndex}"] .lexicon-icon {
 		color: $color;
-
-		.lexicon-icon {
-			height: 1.25em;
-			width: auto;
-		}
+		height: 1.25em;
+		width: auto;
 	}
 }
 

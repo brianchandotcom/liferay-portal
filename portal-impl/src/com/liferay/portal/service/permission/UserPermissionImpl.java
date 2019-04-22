@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -35,6 +34,7 @@ import com.liferay.portal.kernel.service.permission.UserPermission;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -146,6 +146,15 @@ public class UserPermissionImpl
 					OrganizationLocalServiceUtil.getOrganization(
 						organizationId);
 
+				List<Organization> listParentOrganizations =
+					OrganizationLocalServiceUtil.getParentOrganizations(
+						organizationId);
+				List<Long> list = new ArrayList<>();
+
+				for (Organization orgParent : listParentOrganizations) {
+					list.add(orgParent.getOrganizationId());
+				}
+
 				if (OrganizationPermissionUtil.contains(
 						permissionChecker, organization,
 						ActionKeys.MANAGE_USERS)) {
@@ -154,31 +163,44 @@ public class UserPermissionImpl
 						return true;
 					}
 
-					Group organizationGroup = organization.getGroup();
+					User userLogged = permissionChecker.getUser();
 
-					// Organization administrators can only manage normal users.
-					// Owners can only manage normal users and administrators.
+					List<Organization> listUserloggedOrganizations =
+						userLogged.getOrganizations();
 
-					if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-							user.getUserId(), organizationGroup.getGroupId(),
-							RoleConstants.ORGANIZATION_OWNER, true)) {
+					for (Organization organizationOfUser :
+							listUserloggedOrganizations) {
 
-						continue;
+						if (list.contains(
+								organizationOfUser.getOrganizationId()) ||
+							(organizationOfUser.getOrganizationId() ==
+								organization.getOrganizationId())) {
+
+							if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+									userLogged.getUserId(),
+									organizationOfUser.getGroupId(),
+									RoleConstants.ORGANIZATION_OWNER, false)) {
+
+								return true;
+							}
+
+							if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+									userLogged.getUserId(),
+									organizationOfUser.getGroupId(),
+									RoleConstants.ORGANIZATION_ADMINISTRATOR,
+									false) &&
+								!UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+									user.getUserId(), organization.getGroupId(),
+									RoleConstants.ORGANIZATION_ADMINISTRATOR,
+									false) &&
+								!UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+									user.getUserId(), organization.getGroupId(),
+									RoleConstants.ORGANIZATION_OWNER, false)) {
+
+								return true;
+							}
+						}
 					}
-					else if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-								user.getUserId(),
-								organizationGroup.getGroupId(),
-								RoleConstants.ORGANIZATION_ADMINISTRATOR,
-								true) &&
-							 !UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-								 permissionChecker.getUserId(),
-								 organizationGroup.getGroupId(),
-								 RoleConstants.ORGANIZATION_OWNER, true)) {
-
-						continue;
-					}
-
-					return true;
 				}
 			}
 		}

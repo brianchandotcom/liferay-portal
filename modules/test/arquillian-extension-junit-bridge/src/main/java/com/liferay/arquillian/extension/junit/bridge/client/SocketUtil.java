@@ -79,10 +79,6 @@ public class SocketUtil {
 	}
 
 	public static ServerSocket getServerSocket() throws IOException {
-		if (_serverSocket != null) {
-			return _serverSocket;
-		}
-
 		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 
 		int port = _START_PORT;

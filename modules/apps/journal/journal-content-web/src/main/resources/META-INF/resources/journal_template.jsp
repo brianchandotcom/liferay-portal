@@ -78,12 +78,13 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 	<%
 	String className = DDMTemplate.class.getName() + "_" + JournalArticle.class.getName();
 
+	String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.BROWSE);
+
 	PortletURL selectDDMTemplateURL = PortletProviderUtil.getPortletURL(renderRequest, className, PortletProvider.Action.BROWSE);
 
 	selectDDMTemplateURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
+	selectDDMTemplateURL.setParameter("eventName", PortalUtil.getPortletNamespace(portletId) + "selectTemplate");
 	selectDDMTemplateURL.setWindowState(LiferayWindowState.POP_UP);
-
-	String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.BROWSE);
 	%>
 
 	A.one('#<%= refererPortletName + "selectDDMTemplateButton" %>').on(

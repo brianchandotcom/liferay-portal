@@ -73,7 +73,15 @@ public class JournalSelectDDMTemplateDisplayContext {
 	}
 
 	public String getEventName() {
-		return _renderResponse.getNamespace() + "selectDDMTemplate";
+		if (_eventName != null) {
+			return _eventName;
+		}
+
+		_eventName = ParamUtil.getString(
+			_request, "eventName",
+			_renderResponse.getNamespace() + "selectDDMTemplate");
+
+		return _eventName;
 	}
 
 	public String getOrderByCol() {
@@ -222,6 +230,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 
 	private Long _ddmStructureId;
 	private Long _ddmTemplateId;
+	private String _eventName;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;

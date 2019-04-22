@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.preferences.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionStatusAdapter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -51,6 +53,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -58,6 +61,7 @@ import org.springframework.transaction.PlatformTransactionManager;
  * @author Matthew Tambara
  * @author Shuyang Zhou
  */
+@RunWith(Arquillian.class)
 public class PortalPreferencesImplTest {
 
 	@ClassRule

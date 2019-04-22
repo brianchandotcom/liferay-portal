@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service.util.test;
+package com.liferay.portlet.preferences.test;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;

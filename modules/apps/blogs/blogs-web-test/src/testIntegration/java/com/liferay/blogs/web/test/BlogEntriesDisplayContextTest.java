@@ -63,6 +63,7 @@ import java.io.Writer;
 
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -162,14 +163,21 @@ public class BlogEntriesDisplayContextTest {
 
 	@Test
 	public void testGetSearchContainer() throws Exception {
-		for (int i = 0; i < 25; i++) {
+		for (int i = 0; i <= SearchContainer.DEFAULT_DELTA; i++) {
 			_addBlogEntry("alpha_" + i);
 		}
 
 		SearchContainer searchContainer = _getSearchContainer(
 			_getMockHttpServletRequest());
 
-		Assert.assertEquals(25, searchContainer.getTotal());
+		Assert.assertEquals(
+			SearchContainer.DEFAULT_DELTA + 1, searchContainer.getTotal());
+
+		List<BlogsEntry> blogsEntries = searchContainer.getResults();
+
+		Assert.assertEquals(
+			blogsEntries.toString(), SearchContainer.DEFAULT_DELTA,
+			blogsEntries.size());
 	}
 
 	@Test
@@ -188,18 +196,29 @@ public class BlogEntriesDisplayContextTest {
 			_getMockHttpServletRequestWithSearch(commentBody));
 
 		Assert.assertEquals(1, searchContainer.getTotal());
+
+		List<BlogsEntry> blogsEntries = searchContainer.getResults();
+
+		Assert.assertEquals(blogsEntries.toString(), 1, blogsEntries.size());
 	}
 
 	@Test
 	public void testGetSearchContainerWithSearch() throws Exception {
-		for (int i = 0; i < 25; i++) {
+		for (int i = 0; i <= SearchContainer.DEFAULT_DELTA; i++) {
 			_addBlogEntry("alpha_" + i);
 		}
 
 		SearchContainer searchContainer = _getSearchContainer(
 			_getMockHttpServletRequestWithSearch("alpha"));
 
-		Assert.assertEquals(25, searchContainer.getTotal());
+		Assert.assertEquals(
+			SearchContainer.DEFAULT_DELTA + 1, searchContainer.getTotal());
+
+		List<BlogsEntry> blogsEntries = searchContainer.getResults();
+
+		Assert.assertEquals(
+			blogsEntries.toString(), SearchContainer.DEFAULT_DELTA,
+			blogsEntries.size());
 	}
 
 	private BlogsEntry _addBlogEntry(String title) throws Exception {

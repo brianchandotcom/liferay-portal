@@ -34,7 +34,7 @@ import org.junit.Before;
 /**
  * @author Cristina González
  */
-public abstract class PortletPreferencesTestUtil {
+public abstract class BasePortletPreferencesTestCase {
 
 	@Before
 	public void setUp() throws Exception {

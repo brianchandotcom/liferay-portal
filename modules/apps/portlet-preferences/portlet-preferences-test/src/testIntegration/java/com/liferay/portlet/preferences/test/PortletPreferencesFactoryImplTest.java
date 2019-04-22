@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class PortletPreferencesFactoryImplTest
-	extends PortletPreferencesTestUtil {
+	extends BasePortletPreferencesTestCase {
 
 	@ClassRule
 	@Rule

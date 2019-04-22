@@ -1,11 +1,10 @@
-import React, { Fragment } from 'react';
 import { AppContext } from '../../AppContext';
-import { getPercentage } from '../../../shared/util/util';
 import Icon from '../../../shared/components/Icon';
 import LoadingState from '../../../shared/components/loading/LoadingState';
-import { openErrorToast } from '../../../shared/util/toast';
 import Panel from '../../../shared/components/Panel';
 import PANELS from './Panels';
+import React from 'react';
+import ReloadButton from '../../../shared/components/list/ReloadButton';
 import SummaryCard from './SummaryCard';
 import Tooltip from '../../../shared/components/Tooltip';
 
@@ -14,6 +13,7 @@ class PendingItemsCard extends React.Component {
 		super(props);
 
 		this.state = {
+			error: null,
 			loading: false,
 			process: {
 				dueAfterInstanceCount: 0,
@@ -31,16 +31,18 @@ class PendingItemsCard extends React.Component {
 				this.context.setTitle(data.title);
 
 				this.setState({
+					error: null,
 					loading: false,
 					process: data
 				});
 			})
-			.catch(error => {
+			.catch(() => {
 				this.setState({
+					error: Liferay.Language.get(
+						'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+					),
 					loading: false
 				});
-
-				openErrorToast(error);
 			});
 	}
 
@@ -57,12 +59,25 @@ class PendingItemsCard extends React.Component {
 	}
 
 	render() {
-		const { loading, process } = this.state;
+		const { error, loading, process } = this.state;
 		const { processId } = this.props;
 
-		if (loading) {
-			return <LoadingState />;
-		}
+		const errorRender = Component =>
+			(error && (
+				<div className="pb-6 pt-5 text-center">
+					<p className="small">{error}</p>
+					<ReloadButton />
+				</div>
+			)) ||
+			Component;
+
+		const loadingRender = Component =>
+			(loading && (
+				<div className="pb-6 pt-5">
+					<LoadingState />
+				</div>
+			)) ||
+			Component;
 
 		return (
 			<Panel>
@@ -71,47 +86,34 @@ class PendingItemsCard extends React.Component {
 						<span className={'mr-3'}>
 							{Liferay.Language.get('pending-items')}
 						</span>
+
 						<Tooltip
-							message={[
-								<Fragment key="tooltip">
-									{Liferay.Language.get(
-										'pending-items-shows-the-status-from-all-pending-items-according-to-sla-duration-time-targets'
-									)}
-								</Fragment>
-							]}
-							position={'right'}
-							width={'288'}
+							message={Liferay.Language.get('pending-items-description')}
+							position="right"
+							width="288"
 						>
 							<Icon iconName={'question-circle-full'} />
 						</Tooltip>
 					</div>
 				</Panel.Header>
+
 				<Panel.Body>
-					<div className={'pt-1 pb-4 d-flex'}>
-						{PANELS.map(
-							(
-								{ addressedToField, iconColor, iconName, title, totalField },
-								index
-							) => (
-								<SummaryCard
-									iconColor={iconColor}
-									iconName={iconName}
-									key={`${index}_${addressedToField}`}
-									percentage={
-										totalField
-											? `${getPercentage(
-												process[addressedToField],
-												process[totalField]
-											  )}%`
-											: false
-									}
-									processId={processId}
-									title={title}
-									total={process[addressedToField]}
-								/>
-							)
-						)}
-					</div>
+					{errorRender(
+						loadingRender(
+							<div className={'pt-1 pb-4 d-flex'}>
+								{PANELS.map((panel, index) => (
+									<SummaryCard
+										{...panel}
+										key={index}
+										processId={processId}
+										total={panel.addressedToField === panel.totalField}
+										totalValue={process[panel.totalField]}
+										value={process[panel.addressedToField]}
+									/>
+								))}
+							</div>
+						)
+					)}
 				</Panel.Body>
 			</Panel>
 		);

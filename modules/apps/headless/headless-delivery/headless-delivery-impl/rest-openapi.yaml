@@ -138,7 +138,7 @@ components:
             type: object
         BlogPostingImage:
             #@review
-            description: https://www.schema.org/BlogPostingImage
+            description: An image of a BlogPosting item. Properties follow https://schema.org/image specification
             properties:
                 contentUrl:
                     description: An absolute URL to the binary image.
@@ -205,7 +205,7 @@ components:
             type: object
         ContentDocument:
             #@review
-            description: https://www.schema.org/ContentDocument
+            description: A document (binary data and metadata) associated with a StructuredContent. Properties follow https://schema.org/MediaObject specification.
             properties:
                 contentUrl:
                     description: An absolute URL to the binary file.
@@ -238,7 +238,7 @@ components:
             type: object
         ContentField:
             #@review
-            description: https://www.schema.org/ContentField
+            description: Represents each field value of a StructuredContent and can contain different types of information: geolocalization position, a ContentDocument...
             properties:
                 dataType:
                     description: The type of field (image, text).
@@ -307,7 +307,7 @@ components:
                     type: object
         ContentSetElement:
             #@review
-            description: https://www.schema.org/ContentSetElement
+            description: Represents each member of a ContentSet and can contain different types of assets.
             properties:
                 content:
                     description: The main content.
@@ -378,7 +378,7 @@ components:
             type: object
         ContentStructureField:
             #@review
-            description: https://www.schema.org/ContentStructureField
+            description: Represents each field of a ContentStructure, backed by a ContentField.
             properties:
                 dataType:
                     description: The type of the form field (date, geo, text...).
@@ -442,7 +442,7 @@ components:
             type: object
         Creator:
             #@review
-            description: https://www.schema.org/Creator
+            description: Represents the UserAccount who created/authored the content. Properties follow https://schema.org/creator specification.
             properties:
                 additionalName:
                     description: An additional name, can be used for a middle name.
@@ -1236,7 +1236,7 @@ components:
                 - contentStructureId
         StructuredContentFolder:
             #@review
-            description: https://www.schema.org/StructuredContentFolder
+            description: A folder to organize StructuredContents.
             properties:
                 creator:
                     allOf:

@@ -165,21 +165,19 @@ public class Arquillian extends Runner implements Filterable {
 			}
 
 			try {
+				SocketUtil.writeUTF(_clazz.getName());
+
 				while (true) {
-					SocketUtil.writeUTF(_clazz.getName());
+					Object object = SocketUtil.readObject();
 
-					while (true) {
-						Object object = SocketUtil.readObject();
-
-						if (object instanceof KillCommand) {
-							return;
-						}
-
-						RunNotifierCommand runNotifierCommand =
-							(RunNotifierCommand)object;
-
-						runNotifierCommand.execute(runNotifier);
+					if (object instanceof KillCommand) {
+						return;
 					}
+
+					RunNotifierCommand runNotifierCommand =
+						(RunNotifierCommand)object;
+
+					runNotifierCommand.execute(runNotifier);
 				}
 			}
 			finally {

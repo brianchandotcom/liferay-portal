@@ -1,3 +1,5 @@
+import {UPDATE_LAST_SAVE_DATE} from '../actions/actions.es';
+
 /**
  * Possible types that can be returned by the image selector
  */
@@ -113,4 +115,39 @@ function openImageSelector(
 	);
 }
 
-export {openAssetBrowser, openImageSelector};
+/**
+ * @param {{dispatchAction: Function}} store
+ * @review
+ */
+function startListeningWidgetConfigurationChange(store) {
+	Liferay.after(
+		'popupReady',
+		event => {
+			const popupDocument = event.win.document;
+
+			const form = popupDocument.querySelector(
+				'.portlet-configuration-setup > form'
+			);
+
+			if (form) {
+				form.addEventListener(
+					'submit',
+					() => {
+						store.dispatchAction(
+							UPDATE_LAST_SAVE_DATE,
+							{
+								lastSaveDate: new Date()
+							}
+						);
+					}
+				);
+			}
+		}
+	);
+}
+
+export {
+	openAssetBrowser,
+	openImageSelector,
+	startListeningWidgetConfigurationChange
+};

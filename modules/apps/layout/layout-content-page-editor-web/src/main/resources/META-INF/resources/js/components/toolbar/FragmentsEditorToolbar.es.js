@@ -5,11 +5,7 @@ import './TranslationStatus.es';
 import './SegmentsExperienceSelector.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentsEditorToolbar.soy';
-import {
-	TOGGLE_SIDEBAR,
-	UPDATE_LAST_SAVE_DATE,
-	UPDATE_TRANSLATION_STATUS
-} from '../../actions/actions.es';
+import {TOGGLE_SIDEBAR, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 
 /**
  * FragmentsEditorToolbar
@@ -27,29 +23,6 @@ class FragmentsEditorToolbar extends Component {
 				this.store.dispatchAction(
 					UPDATE_TRANSLATION_STATUS
 				);
-			}
-		);
-
-		const instance = this;
-
-		Liferay.after(
-			'popupReady',
-			event => {
-				const popupDocument = event.win.document;
-
-				const form = popupDocument.querySelector('.portlet-configuration-setup > form');
-
-				if (form) {
-					form.addEventListener(
-						'submit',
-						() => instance.store.dispatchAction(
-							UPDATE_LAST_SAVE_DATE,
-							{
-								lastSaveDate: new Date()
-							}
-						)
-					);
-				}
 			}
 		);
 	}

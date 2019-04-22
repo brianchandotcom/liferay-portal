@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Gabriel Albuquerque
  */
-public class NumericUtil {
+public class NumericFieldUtil {
 
 	public static DecimalFormat getNumberFormat(Locale locale) {
 		DecimalFormat formatter = _decimalFormattersMap.get(locale);

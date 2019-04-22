@@ -201,7 +201,7 @@ public class AssetListDisplayContext {
 		AssetListEntry assetListEntry = getAssetListEntry();
 
 		if (assetListEntry != null) {
-			return HtmlUtil.escape(assetListEntry.getTitle());
+			return assetListEntry.getTitle();
 		}
 
 		String title = StringPool.BLANK;

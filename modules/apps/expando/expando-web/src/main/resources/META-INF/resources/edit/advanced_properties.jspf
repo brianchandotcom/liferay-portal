@@ -65,7 +65,7 @@
 	</c:if>
 
 	<%
-	boolean textInputTypeSearch = (propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_ARRAY) || (type == ExpandoColumnConstants.STRING_LOCALIZED));
+	boolean textInputTypeSearch = (propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_CHECKBOX) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_INPUT_FIELD) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_RADIO) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST) || propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX)) && ((type == ExpandoColumnConstants.STRING) || (type == ExpandoColumnConstants.STRING_ARRAY) || (type == ExpandoColumnConstants.STRING_LOCALIZED));
 	%>
 
 	<aui:field-wrapper>

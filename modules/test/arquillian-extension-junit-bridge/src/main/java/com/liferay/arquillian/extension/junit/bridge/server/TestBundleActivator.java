@@ -23,7 +23,9 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -59,9 +61,22 @@ public class TestBundleActivator implements BundleActivator {
 		int reportServerPort = Integer.parseInt(
 			attributes.getValue(Headers.TEST_BRIDGE_REPORT_SERVER_PORT));
 
-		List<String> filterMethodNames = StringUtil.split(
-			attributes.getValue(Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES),
-			CharPool.COMMA);
+		Map<String, List<String>> filteredMethodNamesMap = new HashMap<>();
+
+		for (String filteredMethodNamesEntry :
+				StringUtil.split(
+					attributes.getValue(
+						Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES),
+					CharPool.SEMICOLON)) {
+
+			int index = filteredMethodNamesEntry.indexOf(CharPool.COLON);
+
+			filteredMethodNamesMap.put(
+				filteredMethodNamesEntry.substring(0, index),
+				StringUtil.split(
+					filteredMethodNamesEntry.substring(index + 1),
+					CharPool.COMMA));
+		}
 
 		long passCode = Long.parseLong(
 			attributes.getValue(Headers.TEST_BRIDGE_PASS_CODE));
@@ -72,7 +87,7 @@ public class TestBundleActivator implements BundleActivator {
 
 		systemBundleContext.addBundleListener(
 			new TestBundleListener(
-				systemBundleContext, testBundle, filterMethodNames,
+				systemBundleContext, testBundle, filteredMethodNamesMap,
 				reportServerHostName, reportServerPort, passCode));
 	}
 

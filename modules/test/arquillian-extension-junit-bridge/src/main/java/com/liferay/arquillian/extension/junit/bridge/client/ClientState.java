@@ -38,16 +38,15 @@ import java.security.ProtectionDomain;
 import java.security.SecureRandom;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import org.junit.Ignore;
-import org.junit.runner.Description;
 import org.junit.runner.RunWith;
-import org.junit.runner.manipulation.Filter;
 
 import org.osgi.jmx.framework.FrameworkMBean;
 
@@ -56,21 +55,17 @@ import org.osgi.jmx.framework.FrameworkMBean;
  */
 public class ClientState {
 
-	public void filterTestClasses(Filter filter, Class<?> testClass) {
+	public void filterTestClasses(
+		Class<?> testClass, Predicate<Class<?>> predicate) {
+
 		Set<Class<?>> testClasses = _getTestClasses(testClass);
 
-		Iterator<Class<?>> iterator = testClasses.iterator();
-
-		while (iterator.hasNext()) {
-			Class<?> clazz = iterator.next();
-
-			if (!filter.shouldRun(Description.createSuiteDescription(clazz))) {
-				iterator.remove();
-			}
-		}
+		testClasses.removeIf(predicate);
 	}
 
-	public Connection open(Class<?> testClass, List<String> filteredMethodNames)
+	public Connection open(
+			Class<?> testClass,
+			Map<String, List<String>> filteredMethodNamesMap)
 		throws Exception {
 
 		if (_bundleId == 0) {
@@ -83,7 +78,7 @@ public class ClientState {
 			long passCode = random.nextLong();
 
 			_bundleId = _installBundle(
-				frameworkMBean, filteredMethodNames,
+				frameworkMBean, filteredMethodNamesMap,
 				serverSocket.getInetAddress(), serverSocket.getLocalPort(),
 				passCode);
 
@@ -220,12 +215,14 @@ public class ClientState {
 	}
 
 	private static long _installBundle(
-			FrameworkMBean frameworkMBean, List<String> filteredMethodNames,
+			FrameworkMBean frameworkMBean,
+			Map<String, List<String>> filteredMethodNamesMap,
 			InetAddress inetAddress, int port, long passCode)
 		throws Exception {
 
 		Path path = BndBundleUtil.createBundle(
-			filteredMethodNames, inetAddress.getHostAddress(), port, passCode);
+			filteredMethodNamesMap, inetAddress.getHostAddress(), port,
+			passCode);
 
 		URI uri = path.toUri();
 

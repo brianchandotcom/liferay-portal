@@ -20,6 +20,7 @@ import java.lang.annotation.Annotation;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +59,33 @@ public class Arquillian extends Runner implements Filterable {
 			throw new NoTestsRemainException();
 		}
 
-		_clientState.filterTestClasses(filter, _clazz);
+		_clientState.filterTestClasses(
+			_clazz,
+			testClass -> {
+				FilteredSortedTestClass filteredSortedTestClass =
+					new FilteredSortedTestClass(testClass, filter);
+
+				List<FrameworkMethod> curFrameworkMethods =
+					filteredSortedTestClass.getAnnotatedMethods(Test.class);
+
+				if (curFrameworkMethods.isEmpty()) {
+					return true;
+				}
+
+				List<String> filteredMethodNames =
+					filteredSortedTestClass._filteredMethodNames;
+
+				if (!filteredMethodNames.isEmpty()) {
+					if (_filteredMethodNamesMap == null) {
+						_filteredMethodNamesMap = new HashMap<>();
+					}
+
+					_filteredMethodNamesMap.put(
+						testClass.getName(), filteredMethodNames);
+				}
+
+				return false;
+			});
 	}
 
 	@Override
@@ -103,7 +130,7 @@ public class Arquillian extends Runner implements Filterable {
 		}
 
 		try (ClientState.Connection connection = _clientState.open(
-				_clazz, _filteredSortedTestClass._filteredMethodNames)) {
+				_clazz, _filteredMethodNamesMap)) {
 
 			connection.execute(
 				_clazz.getName(),
@@ -117,6 +144,7 @@ public class Arquillian extends Runner implements Filterable {
 	private static final ClientState _clientState = new ClientState();
 
 	private final Class<?> _clazz;
+	private Map<String, List<String>> _filteredMethodNamesMap;
 	private FilteredSortedTestClass _filteredSortedTestClass;
 
 	private class FilteredSortedTestClass extends TestClass {

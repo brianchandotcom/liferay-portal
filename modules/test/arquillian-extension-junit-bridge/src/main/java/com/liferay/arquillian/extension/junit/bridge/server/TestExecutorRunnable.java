@@ -65,11 +65,11 @@ import org.osgi.framework.BundleException;
 public class TestExecutorRunnable implements Runnable {
 
 	public TestExecutorRunnable(
-		Bundle bundle, List<String> filteredMethodNames,
+		Bundle bundle, Map<String, List<String>> filteredMethodNamesMap,
 		String reportServerHostName, int reportServerPort, long passCode) {
 
 		_bundle = bundle;
-		_filteredMethodNames = filteredMethodNames;
+		_filteredMethodNamesMap = filteredMethodNamesMap;
 		_reportServerHostName = reportServerHostName;
 		_reportServerPort = reportServerPort;
 		_passCode = passCode;
@@ -391,9 +391,14 @@ public class TestExecutorRunnable implements Runnable {
 					testFrameworkMethods.removeAll(ignoreFrameworkMethods);
 				}
 
-				testFrameworkMethods.removeIf(
-					frameworkMethod -> _filteredMethodNames.contains(
-						frameworkMethod.getName()));
+				List<String> filteredMethodNames = _filteredMethodNamesMap.get(
+					getName());
+
+				if (filteredMethodNames != null) {
+					testFrameworkMethods.removeIf(
+						frameworkMethod -> filteredMethodNames.contains(
+							frameworkMethod.getName()));
+				}
 
 				testFrameworkMethods.sort(
 					Comparator.comparing(FrameworkMethod::getName));
@@ -406,7 +411,7 @@ public class TestExecutorRunnable implements Runnable {
 		TestExecutorRunnable.class.getName());
 
 	private final Bundle _bundle;
-	private final List<String> _filteredMethodNames;
+	private final Map<String, List<String>> _filteredMethodNamesMap;
 	private final long _passCode;
 	private final String _reportServerHostName;
 	private final int _reportServerPort;

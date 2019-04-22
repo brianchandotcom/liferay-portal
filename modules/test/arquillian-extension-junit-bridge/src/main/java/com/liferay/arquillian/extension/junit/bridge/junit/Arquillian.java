@@ -256,7 +256,9 @@ public class Arquillian extends Runner implements Filterable {
 									return FileVisitResult.CONTINUE;
 								}
 
-								testClasses.add(clazz);
+								if (clazz.getAnnotation(Ignore.class) == null) {
+									testClasses.add(clazz);
+								}
 							}
 							catch (ClassNotFoundException cnfe) {
 								throw new RuntimeException(cnfe);

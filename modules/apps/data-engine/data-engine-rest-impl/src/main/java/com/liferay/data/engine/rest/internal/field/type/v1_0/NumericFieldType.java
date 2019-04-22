@@ -17,7 +17,7 @@ package com.liferay.data.engine.rest.internal.field.type.v1_0;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
-import com.liferay.data.engine.rest.internal.field.type.v1_0.util.NumericUtil;
+import com.liferay.data.engine.rest.internal.field.type.v1_0.util.NumericFieldUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -146,13 +146,13 @@ public class NumericFieldType extends BaseFieldType {
 			return StringPool.BLANK;
 		}
 
-		DecimalFormat numberFormat = NumericUtil.getNumberFormat(locale);
+		DecimalFormat numberFormat = NumericFieldUtil.getNumberFormat(locale);
 
 		return numberFormat.format(GetterUtil.getNumber(value));
 	}
 
 	protected Map<String, String> getSymbolsMap(Locale locale) {
-		DecimalFormat formatter = NumericUtil.getNumberFormat(locale);
+		DecimalFormat formatter = NumericFieldUtil.getNumberFormat(locale);
 
 		DecimalFormatSymbols decimalFormatSymbols =
 			formatter.getDecimalFormatSymbols();

@@ -47,7 +47,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		Class<?> targetClass, Method method,
 		Map<Class<? extends Annotation>, Annotation> annotations) {
 
-		return nullResult;
+		return new MethodSignature(method);
 	}
 
 	@Override
@@ -61,7 +61,8 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 
 		Class<?> declaringClass = method.getDeclaringClass();
 
-		MethodSignature methodSignature = new MethodSignature(method);
+		MethodSignature methodSignature =
+			aopMethodInvocation.getAdviceMethodContext();
 
 		Set<String> serviceClasses =
 			_serviceMonitoringControl.getServiceClasses();

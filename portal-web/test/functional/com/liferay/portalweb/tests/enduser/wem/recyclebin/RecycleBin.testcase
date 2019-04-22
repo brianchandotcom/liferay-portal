@@ -1047,8 +1047,7 @@ definition {
 			categoryCount = "0",
 			categoryName = "MB Category Name",
 			replyCount = "1",
-			subcategoriesNumber = "0",
-			threadsNumber = "1"
+			threadCount = "1"
 		);
 
 		MessageboardsThread.viewCP(

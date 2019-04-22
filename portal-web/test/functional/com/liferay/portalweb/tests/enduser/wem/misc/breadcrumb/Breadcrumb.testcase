@@ -172,7 +172,7 @@ definition {
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name",
-			threadsNumber = "0"
+			threadCount = "0"
 		);
 
 		MessageboardsCategory.viewSubcategoryFromSubcategoryPG(
@@ -204,7 +204,7 @@ definition {
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name",
-			threadsNumber = "0"
+			threadCount = "0"
 		);
 
 		MessageboardsCategory.viewSubcategoryFromSubcategoryPG(
@@ -235,7 +235,7 @@ definition {
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name",
-			threadsNumber = "0"
+			threadCount = "0"
 		);
 
 		MessageboardsCategory.viewSubcategoryFromSubcategoryPG(

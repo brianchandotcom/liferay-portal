@@ -120,7 +120,7 @@ definition {
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name",
-			threadsNumber = "0"
+			threadCount = "0"
 		);
 	}
 
@@ -143,8 +143,7 @@ definition {
 		MessageboardsCategory.viewCategoryDefaultPG(
 			categoryCount = "0 Categories",
 			categoryName = "MB Category Name",
-			subcategoriesNumber = "0",
-			threadsNumber = "0"
+			threadCount = "0"
 		);
 	}
 
@@ -1028,7 +1027,7 @@ definition {
 			categoryName = "MB Category Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name",
-			threadsNumber = "0"
+			threadCount = "0"
 		);
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -1039,7 +1038,7 @@ definition {
 			categoryName = "MB Subcategory Name",
 			subCategoryDescription = "MB Subcategory Description",
 			subCategoryName = "MB Subcategory Name 2",
-			threadsNumber = "0"
+			threadCount = "0"
 		);
 
 		Navigator.gotoPage(pageName = "Message Boards Page");

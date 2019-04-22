@@ -266,7 +266,7 @@ definition {
 		);
 
 		var key_categoryCount = "${categoryCount}";
-		var key_threadsNumber = "${threadsNumber}";
+		var key_threadCount = "${threadCount}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_COUNT",
@@ -274,8 +274,8 @@ definition {
 		);
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_POSTS",
-			value1 = "0"
+			locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
+			value1 = "0 Threads"
 		);
 
 		Click(locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY");
@@ -309,11 +309,11 @@ definition {
 			value1 = "${categoryCount}"
 		);
 
-		var key_threadsNumber = "${threadsNumber}";
+		var key_threadCount = "${threadCount}";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-			value1 = "${threadsNumber}"
+			locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
+			value1 = "${threadCount}"
 		);
 
 		AssertElementPresent(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
@@ -377,24 +377,24 @@ definition {
 
 	macro viewPG {
 		var key_categoryName = "${categoryName}";
-		var key_threadsNumber = "${threadsNumber}";
+		var key_threadCount = "${threadCount}";
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
 			value1 = "${categoryName}"
 		);
 
-		if (isSet(threadsNumber)) {
-			var key_threadsNumber = "${threadsNumber}";
+		if (isSet(threadCount)) {
+			var key_threadCount = "${threadCount}";
 
 			AssertTextEquals(
-				locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-				value1 = "${threadsNumber} Threads"
+				locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
+				value1 = "${threadCount} Threads"
 			);
 		}
 		else if ("${threadPostCount}" == "1") {
 			AssertTextEquals(
-				locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
+				locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
 				value1 = "1 Thread"
 			);
 		}
@@ -458,7 +458,7 @@ definition {
 
 		var key_categoryDescription = "${subCategoryDescription}";
 		var key_categoryName = "${subCategoryName}";
-		var key_threadsNumber = "${threadsNumber}";
+		var key_threadCount = "${threadCount}";
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
@@ -471,8 +471,8 @@ definition {
 		);
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-			value1 = "${threadsNumber}"
+			locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
+			value1 = "${threadCount}"
 		);
 
 		AssertTextEquals.assertPartialText(

@@ -133,8 +133,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORY_LIST_THREADS</td>
-	<td>//li[contains(.,'${key_categoryName}')]//span[2][contains(.,'${key_threadsNumber}')]</td>
+	<td>CATEGORY_LIST_THREAD_COUNT</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_categoryName}')]//div[2][contains(.,'${key_threadCount}')] | //div[@data-qa-id='rowItemContent'][contains(.,'${key_categoryName}')]//span[2][contains(.,'${key_threadCount}')]</td>
 	<td></td>
 </tr>
 <tr>

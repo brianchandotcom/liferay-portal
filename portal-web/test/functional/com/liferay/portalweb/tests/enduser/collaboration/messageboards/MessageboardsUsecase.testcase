@@ -731,7 +731,7 @@ definition {
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Root Thread2 Message Body",
-			threadsNumber = "0",
+			threadCount = "0",
 			threadSubject = "MB Root Thread2 Message Subject"
 		);
 
@@ -741,7 +741,7 @@ definition {
 			categoryDescription = "MB Category3 Description",
 			categoryDescriptionEnabled = "true",
 			categoryName = "MB Category3 Name",
-			threadsNumber = "0"
+			threadCount = "0"
 		);
 
 		Navigator.gotoPage(pageName = "Message Boards Page 3");
@@ -750,7 +750,7 @@ definition {
 			categoryDescription = "MB Category4 Description",
 			categoryDescriptionEnabled = "true",
 			categoryName = "MB Category4 Name",
-			threadsNumber = "0"
+			threadCount = "0"
 		);
 
 		Navigator.gotoPage(pageName = "Message Boards Page 3");

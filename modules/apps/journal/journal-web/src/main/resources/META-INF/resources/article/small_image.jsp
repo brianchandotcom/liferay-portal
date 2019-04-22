@@ -26,7 +26,7 @@ String smallImageSource = journalEditArticleDisplayContext.getSmallImageSource()
 
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"
-	value="small_image"
+	value="featuredImage"
 />
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />

@@ -65,7 +65,7 @@ public class ModuleFrameworkAdapterHelper {
 			}
 
 			URL[] urls = new URL[files.length];
-			String[] packageNames = new String[files.length + 2];
+			String[] packageNames = new String[files.length + 4];
 
 			for (int i = 0; i < urls.length; i++) {
 				File file = files[i];
@@ -94,7 +94,9 @@ public class ModuleFrameworkAdapterHelper {
 			}
 
 			packageNames[files.length] = "org.apache.felix.resolver.";
-			packageNames[files.length + 1] = "org.osgi.";
+			packageNames[files.length + 1] = "org.eclipse.equinox.";
+			packageNames[files.length + 2] = "org.eclipse.core.";
+			packageNames[files.length + 3] = "org.osgi.";
 
 			Arrays.sort(packageNames);
 

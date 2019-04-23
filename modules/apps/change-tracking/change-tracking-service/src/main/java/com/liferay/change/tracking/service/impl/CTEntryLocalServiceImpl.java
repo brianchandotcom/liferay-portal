@@ -23,16 +23,10 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -235,7 +229,10 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			collision, queryDefinition.getStatus(),
 			queryDefinition.isExcludeStatus());
 
-		return _searchCount(ctCollection.getCompanyId(), query);
+		SearchResponse searchResponse = _search(
+			ctCollection.getCompanyId(), query, queryDefinition);
+
+		return searchResponse.getTotalHits();
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -467,29 +464,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		return _searcher.search(searchRequest);
 	}
 
-	private long _searchCount(long companyId, Query query) {
-		Indexer<CTEntry> indexer = _indexerRegistry.getIndexer(CTEntry.class);
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setAttribute("search.request.query", query);
-		searchContext.setCompanyId(companyId);
-		searchContext.setEntryClassNames(
-			new String[] {CTEntry.class.getName()});
-		searchContext.setSorts();
-
-		try {
-			return indexer.searchCount(searchContext);
-		}
-		catch (SearchException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to execute change entries count search", se);
-			}
-
-			return 0L;
-		}
-	}
-
 	private CTEntry _updateCTEntry(
 		CTEntry ctEntry, User user, int changeType,
 		ServiceContext serviceContext) {
@@ -520,12 +494,6 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 			throw new IllegalArgumentException("Change type value is invalid");
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTEntryLocalServiceImpl.class);
-
-	@Reference
-	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private Portal _portal;

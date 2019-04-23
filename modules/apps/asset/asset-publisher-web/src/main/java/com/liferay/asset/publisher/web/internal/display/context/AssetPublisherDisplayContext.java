@@ -1337,16 +1337,7 @@ public class AssetPublisherDisplayContext {
 		return false;
 	}
 
-	public boolean isSelectionStyleDynamic() throws PortalException {
-		AssetListEntry assetListEntry = fetchAssetListEntry();
-
-		if (isSelectionStyleAssetList() && (assetListEntry != null) &&
-			(assetListEntry.getType() ==
-				AssetListEntryTypeConstants.TYPE_DYNAMIC)) {
-
-			return true;
-		}
-
+	public boolean isSelectionStyleDynamic() {
 		if (Objects.equals(getSelectionStyle(), "dynamic")) {
 			return true;
 		}

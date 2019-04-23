@@ -129,28 +129,28 @@ function openImageSelector(
 function startListeningWidgetConfigurationChange(store) {
 	stopListeningWidgetConfigurationChange();
 
+	let submitFormHandler = null;
+
 	_widgetConfigurationChangeHandler = Liferay.after(
 		'popupReady',
 		event => {
-			const popupDocument = event.win.document;
+			if (submitFormHandler) {
+				submitFormHandler.detach();
 
-			const form = popupDocument.querySelector(
-				'.portlet-configuration-setup > form'
-			);
-
-			if (form) {
-				form.addEventListener(
-					'submit',
-					() => {
-						store.dispatchAction(
-							UPDATE_LAST_SAVE_DATE,
-							{
-								lastSaveDate: new Date()
-							}
-						);
-					}
-				);
+				submitFormHandler = null;
 			}
+
+			submitFormHandler = event.win.Liferay.on(
+				'submitForm',
+				() => {
+					store.dispatchAction(
+						UPDATE_LAST_SAVE_DATE,
+						{
+							lastSaveDate: new Date()
+						}
+					);
+				}
+			);
 		}
 	);
 }

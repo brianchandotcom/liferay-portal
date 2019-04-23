@@ -32,8 +32,9 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 		padding-right: 0.5rem;
 	}
 
-	div.personal-menu-dropdown .btn:focus {
-		box-shadow: none;
+	div.personal-menu-dropdown .btn {
+		border-radius: 5000px;
+		border-width: medium;
 	}
 
 	div.personal-menu-dropdown .dropdown-item {
@@ -42,9 +43,9 @@ String label = (String)request.getAttribute("liferay-product-navigation:personal
 </style>
 
 <div class="personal-menu-dropdown" id="<%= namespace + "personal_menu_dropdown" %>">
-	<div id="<%= namespace + "personal_menu_dropdown_toggle" %>" style="cursor: pointer;">
+	<button aria-expanded="true" aria-haspopup="true" class="btn btn-unstyled dropdown-toggle" id="<%= namespace + "personal_menu_dropdown_toggle" %>" ref="triggerButton" type="button">
 		<%= label %>
-	</div>
+	</button>
 </div>
 
 <%
@@ -83,6 +84,10 @@ resourceURL.setResourceID("/get_personal_menu_items");
 										if (<%= expanded %>) {
 											this.expanded = true;
 										}
+
+										var toggleButton = this.element.querySelector('button');
+
+										toggleButton.focus();
 
 										var dropdown = this;
 

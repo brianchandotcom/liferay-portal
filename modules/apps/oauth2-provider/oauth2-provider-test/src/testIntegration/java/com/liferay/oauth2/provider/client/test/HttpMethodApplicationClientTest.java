@@ -63,41 +63,7 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 
 		Assert.assertEquals("get", builder.get(String.class));
 
-		builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationAfter"));
-
-		Response response = builder.head();
-
-		Assert.assertEquals(200, response.getStatus());
-
-		webTarget = getWebTarget("/methods-with-head");
-
-		builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationAfter"));
-
-		response = builder.head();
-
-		Assert.assertEquals(403, response.getStatus());
-
-		webTarget = getWebTarget("/methods-with-head");
-
-		builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationAfterWithHead"));
-
-		response = builder.method("CUSTOM");
-
-		Assert.assertEquals(403, response.getStatus());
-
-		webTarget = getWebTarget("/methods-with-head");
-
-		builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationAfterWithHead"));
-
-		response = builder.head();
-
-		Assert.assertEquals(200, response.getStatus());
-
-		response = builder.post(
+		Response response = builder.post(
 			Entity.entity("post", MediaType.TEXT_PLAIN_TYPE));
 
 		Assert.assertEquals("post", response.readEntity(String.class));
@@ -113,6 +79,41 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 			webTarget.request(), getToken("oauthTestApplicationWrong"));
 
 		response = builder.get();
+
+		Assert.assertEquals(403, response.getStatus());
+	}
+
+	@Test
+	public void testIgnoredMethods() throws Exception {
+		WebTarget webTarget = getWebTarget("/methods");
+
+		Invocation.Builder builder = authorize(
+			webTarget.request(), getToken("oauthTestApplicationAfter"));
+
+		Response response = builder.head();
+
+		Assert.assertEquals(200, response.getStatus());
+
+		webTarget = getWebTarget("/methods-with-head");
+
+		builder = authorize(
+			webTarget.request(), getToken("oauthTestApplicationAfter"));
+
+		response = builder.head();
+
+		Assert.assertEquals(403, response.getStatus());
+
+		builder = authorize(
+			webTarget.request(), getToken("oauthTestApplicationWithHead"));
+
+		response = builder.head();
+
+		Assert.assertEquals(200, response.getStatus());
+
+		builder = authorize(
+			webTarget.request(), getToken("oauthTestApplicationWithHead"));
+
+		response = builder.method("CUSTOM");
 
 		Assert.assertEquals(403, response.getStatus());
 	}
@@ -145,7 +146,7 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 				Arrays.asList("GET", "POST"));
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfterWithHead",
+				defaultCompanyId, user, "oauthTestApplicationWithHead",
 				Arrays.asList("GET", "HEAD", "POST"));
 
 			createOAuth2Application(

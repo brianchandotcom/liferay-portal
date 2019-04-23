@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.document.library.opener.service.persistence.DLOpenerFileEntryReferencePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -37,17 +37,18 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the dl opener file entry reference local service.
@@ -63,7 +64,8 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DLOpenerFileEntryReferenceLocalService, IdentifiableOSGiService {
+	implements DLOpenerFileEntryReferenceLocalService, AopService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -358,86 +360,18 @@ public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 			dlOpenerFileEntryReference);
 	}
 
-	/**
-	 * Returns the dl opener file entry reference local service.
-	 *
-	 * @return the dl opener file entry reference local service
-	 */
-	public DLOpenerFileEntryReferenceLocalService
-		getDLOpenerFileEntryReferenceLocalService() {
-
-		return dlOpenerFileEntryReferenceLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DLOpenerFileEntryReferenceLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the dl opener file entry reference local service.
-	 *
-	 * @param dlOpenerFileEntryReferenceLocalService the dl opener file entry reference local service
-	 */
-	public void setDLOpenerFileEntryReferenceLocalService(
-		DLOpenerFileEntryReferenceLocalService
-			dlOpenerFileEntryReferenceLocalService) {
-
-		this.dlOpenerFileEntryReferenceLocalService =
-			dlOpenerFileEntryReferenceLocalService;
-	}
-
-	/**
-	 * Returns the dl opener file entry reference persistence.
-	 *
-	 * @return the dl opener file entry reference persistence
-	 */
-	public DLOpenerFileEntryReferencePersistence
-		getDLOpenerFileEntryReferencePersistence() {
-
-		return dlOpenerFileEntryReferencePersistence;
-	}
-
-	/**
-	 * Sets the dl opener file entry reference persistence.
-	 *
-	 * @param dlOpenerFileEntryReferencePersistence the dl opener file entry reference persistence
-	 */
-	public void setDLOpenerFileEntryReferencePersistence(
-		DLOpenerFileEntryReferencePersistence
-			dlOpenerFileEntryReferencePersistence) {
-
-		this.dlOpenerFileEntryReferencePersistence =
-			dlOpenerFileEntryReferencePersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.document.library.opener.model.DLOpenerFileEntryReference",
-			dlOpenerFileEntryReferenceLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.document.library.opener.model.DLOpenerFileEntryReference");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		dlOpenerFileEntryReferenceLocalService =
+			(DLOpenerFileEntryReferenceLocalService)aopProxy;
 	}
 
 	/**
@@ -483,22 +417,15 @@ public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DLOpenerFileEntryReferenceLocalService.class)
 	protected DLOpenerFileEntryReferenceLocalService
 		dlOpenerFileEntryReferenceLocalService;
 
-	@BeanReference(type = DLOpenerFileEntryReferencePersistence.class)
+	@Reference
 	protected DLOpenerFileEntryReferencePersistence
 		dlOpenerFileEntryReferencePersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

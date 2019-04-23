@@ -26,7 +26,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.Query;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
@@ -130,11 +129,14 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	@Reference
 	protected Queries queries;
 
-	private void _deleteDocuments(Query query) {
+	private void _deleteDocuments(BooleanQuery booleanQuery) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(getIndexName());
-		searchSearchRequest.setQuery(query);
+		searchSearchRequest.setQuery(
+			booleanQuery.addMustNotQueryClauses(
+				queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
+				queries.term("status", WorkfowMetricsSLAStatus.STOPPED)));
 		searchSearchRequest.setSelectedFieldNames(Field.UID);
 
 		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(

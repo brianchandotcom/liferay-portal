@@ -76,9 +76,6 @@ public class SegmentsEntryLocalServiceTest {
 	@Test
 	public void testAddSegmentsEntry() throws PortalException {
 		String segmentsEntryKey = RandomTestUtil.randomString();
-
-		segmentsEntryKey = StringUtil.toUpperCase(segmentsEntryKey.trim());
-
 		String name = RandomTestUtil.randomString();
 		String description = RandomTestUtil.randomString();
 		String criteria = RandomTestUtil.randomString();
@@ -89,7 +86,8 @@ public class SegmentsEntryLocalServiceTest {
 			type);
 
 		Assert.assertEquals(
-			segmentsEntryKey, segmentsEntry.getSegmentsEntryKey());
+			StringUtil.toUpperCase(segmentsEntryKey.trim()),
+			segmentsEntry.getSegmentsEntryKey());
 		Assert.assertEquals(
 			name, segmentsEntry.getName(LocaleUtil.getDefault()));
 		Assert.assertEquals(

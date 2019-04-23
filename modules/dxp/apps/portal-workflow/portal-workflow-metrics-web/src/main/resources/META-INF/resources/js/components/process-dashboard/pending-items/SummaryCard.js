@@ -32,7 +32,7 @@ class SummaryCard extends React.Component {
 		const formatThreshold = 9999;
 
 		if (value > formatThreshold) {
-			return formatNumber(value, '0[.]0a');
+			return formatNumber(value, '0[,0][.]0a');
 		}
 
 		return formatNumber(value, '0[,]0');

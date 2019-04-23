@@ -30,6 +30,7 @@ import com.liferay.registry.RegistryUtil;
 
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -68,31 +69,39 @@ public class AssetAutoTaggerOSGiCommandsTest
 	public void testCommitAutoTagsRemovesAllTheAutoTaggerEntries()
 		throws Exception {
 
-		AssetEntry assetEntry = addFileEntryAssetEntry();
+		List<AssetEntry> assetEntries = new ArrayList<>();
+
+		for (int i = 0; i < 10; i++) {
+			assetEntries.add(addFileEntryAssetEntry());
+		}
 
 		_tagAllUntagged(DLFileEntryConstants.getClassName());
 
-		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+		for (AssetEntry assetEntry : assetEntries) {
+			assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
 
-		List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
-			_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
-				assetEntry);
+			List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
+				_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+					assetEntry);
 
-		Assert.assertEquals(
-			assetAutoTaggerEntries.toString(), 1,
-			assetAutoTaggerEntries.size());
+			Assert.assertEquals(
+				assetAutoTaggerEntries.toString(), 1,
+				assetAutoTaggerEntries.size());
+		}
 
 		_commitAutoTags(DLFileEntryConstants.getClassName());
 
-		assetAutoTaggerEntries =
-			_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
-				assetEntry);
+		for (AssetEntry assetEntry : assetEntries) {
+			List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
+				_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+					assetEntry);
 
-		Assert.assertEquals(
-			assetAutoTaggerEntries.toString(), 0,
-			assetAutoTaggerEntries.size());
+			Assert.assertEquals(
+				assetAutoTaggerEntries.toString(), 0,
+				assetAutoTaggerEntries.size());
 
-		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+			assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+		}
 	}
 
 	@Test

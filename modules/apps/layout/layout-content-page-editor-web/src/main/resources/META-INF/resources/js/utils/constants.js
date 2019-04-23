@@ -32,7 +32,8 @@ export const COMPATIBLE_TYPES = {
 		'ddm-number',
 		'ddm-text-html',
 		'text',
-		'textarea'
+		'textarea',
+		'url'
 	],
 
 	'image': [
@@ -47,7 +48,8 @@ export const COMPATIBLE_TYPES = {
 		'ddm-number',
 		'ddm-text-html',
 		'text',
-		'textarea'
+		'textarea',
+		'url'
 	],
 
 	'text': [
@@ -56,7 +58,8 @@ export const COMPATIBLE_TYPES = {
 		'ddm-integer',
 		'ddm-number',
 		'text',
-		'textarea'
+		'textarea',
+		'url'
 	]
 };
 

@@ -194,7 +194,11 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 			Object infoDisplayFieldValue = infoDisplayContributorField.getValue(
 				assetEntry, locale);
 
-			if (infoDisplayFieldValue instanceof String) {
+			String type = infoDisplayContributorField.getType();
+
+			if (!type.equals("url") &&
+				(infoDisplayFieldValue instanceof String)) {
+
 				infoDisplayFieldValue = SanitizerUtil.sanitize(
 					assetEntry.getCompanyId(), assetEntry.getGroupId(),
 					assetEntry.getUserId(), AssetEntry.class.getName(),
@@ -251,7 +255,11 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 			Object infoDisplayFieldValue = infoDisplayContributorField.getValue(
 				assetObject, locale);
 
-			if (infoDisplayFieldValue instanceof String) {
+			String type = infoDisplayContributorField.getType();
+
+			if (!type.equals("url") &&
+				(infoDisplayFieldValue instanceof String)) {
+
 				infoDisplayFieldValue = SanitizerUtil.sanitize(
 					assetEntry.getCompanyId(), assetEntry.getGroupId(),
 					assetEntry.getUserId(), AssetEntry.class.getName(),

@@ -11,8 +11,8 @@
 		}
 	},
 	"dependencies": {
-		"clay-dropdown": "2.14.0",
-		"clay-label": "2.14.0",
+		"clay-dropdown": "2.14.2",
+		"clay-label": "2.14.2",
 		"metal": "2.16.7",
 		"metal-dom": "2.16.7",
 		"metal-soy": "2.16.7",

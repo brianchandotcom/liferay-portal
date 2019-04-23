@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"clay-button": "2.14.0",
-		"clay-multi-select": "2.14.0",
-		"clay-radio": "2.14.0",
+		"clay-button": "2.14.2",
+		"clay-multi-select": "2.14.2",
+		"clay-radio": "2.14.2",
 		"metal-component": "2.16.7",
 		"metal-soy": "2.16.7",
 		"metal-state": "2.16.7"

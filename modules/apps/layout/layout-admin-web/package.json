@@ -15,9 +15,9 @@
 		}
 	},
 	"dependencies": {
-		"clay-badge": "2.14.0",
-		"clay-checkbox": "2.14.0",
-		"clay-dropdown": "2.14.0",
+		"clay-badge": "2.14.2",
+		"clay-checkbox": "2.14.2",
+		"clay-dropdown": "2.14.2",
 		"metal": "2.16.7",
 		"metal-component": "2.16.7",
 		"metal-debounce": "2.0.1",

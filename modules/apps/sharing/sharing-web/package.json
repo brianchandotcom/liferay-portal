@@ -1,10 +1,10 @@
 {
 	"dependencies": {
-		"clay-alert": "2.14.0",
-		"clay-button": "2.14.0",
-		"clay-multi-select": "2.14.0",
-		"clay-select": "2.14.0",
-		"clay-sticker": "2.14.0",
+		"clay-alert": "2.14.2",
+		"clay-button": "2.14.2",
+		"clay-multi-select": "2.14.2",
+		"clay-select": "2.14.2",
+		"clay-sticker": "2.14.2",
 		"metal-component": "2.16.7",
 		"metal-soy": "2.16.7"
 	},

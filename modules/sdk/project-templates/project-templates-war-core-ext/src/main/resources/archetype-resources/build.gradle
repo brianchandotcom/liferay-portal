@@ -12,6 +12,13 @@
 
 apply plugin: "com.liferay.ext.plugin"
 #end
+apply plugin: "eclipse"
+
+eclipse {
+	classpath {
+		plusConfigurations += [configurations.portal]
+	}
+}
 #if (${projectType} != "workspace")
 
 repositories {

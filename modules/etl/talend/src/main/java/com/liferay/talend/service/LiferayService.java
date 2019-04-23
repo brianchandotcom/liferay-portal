@@ -182,7 +182,7 @@ public class LiferayService {
 		List<String> pageableEndpoints = new ArrayList<>();
 
 		patternEvaluations.forEach(
-			(enpoint, entity) -> {
+			(endpoint, entity) -> {
 				String typeValue = _evaluatePattern(
 					String.format(_SCHEMA_PROPERTY_ITEMS_TYPE_PATTERN, entity),
 					openAPISpecJsonObject);
@@ -199,7 +199,7 @@ public class LiferayService {
 					return;
 				}
 
-				pageableEndpoints.add(enpoint);
+				pageableEndpoints.add(endpoint);
 			});
 
 		Collections.sort(pageableEndpoints);

@@ -257,7 +257,6 @@ public class TaskResourceImpl
 		searchSearchRequest.addAggregation(taskIdTermsAggregation);
 
 		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
-
 		searchSearchRequest.setQuery(
 			_createTokensBooleanQuery(processId, version));
 

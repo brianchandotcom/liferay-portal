@@ -51,8 +51,9 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
-					"Abc", StringPool.BLANK, 1, 0, new String[0], new String[0],
-					new String[0], ServiceContextTestUtil.getServiceContext()));
+					"Abc", StringPool.BLANK, 1, 0, new String[0],
+					new String[] {""}, new String[] {""},
+					ServiceContextTestUtil.getServiceContext()));
 	}
 
 	@Test(expected = WorkflowMetricsSLADefinitionDuplicateNameException.class)
@@ -60,14 +61,16 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
-					"Abc", StringPool.BLANK, 1, 0, new String[0], new String[0],
-					new String[0], ServiceContextTestUtil.getServiceContext()));
+					"Abc", StringPool.BLANK, 1, 0, new String[0],
+					new String[] {""}, new String[] {""},
+					ServiceContextTestUtil.getServiceContext()));
 
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
-					"Abc", StringPool.BLANK, 1, 0, new String[0], new String[0],
-					new String[0], ServiceContextTestUtil.getServiceContext()));
+					"Abc", StringPool.BLANK, 1, 0, new String[0],
+					new String[] {""}, new String[] {""},
+					ServiceContextTestUtil.getServiceContext()));
 	}
 
 	@Test(expected = WorkflowMetricsSLADefinitionDurationException.class)
@@ -75,8 +78,9 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
-					"Abc", StringPool.BLANK, 0, 0, new String[0], new String[0],
-					new String[0], ServiceContextTestUtil.getServiceContext()));
+					"Abc", StringPool.BLANK, 0, 0, new String[0],
+					new String[] {""}, new String[] {""},
+					ServiceContextTestUtil.getServiceContext()));
 	}
 
 	@Test(expected = WorkflowMetricsSLADefinitionDurationException.class)
@@ -85,7 +89,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
 					"Abc", StringPool.BLANK, -1, 0, new String[0],
-					new String[0], new String[0],
+					new String[] {""}, new String[] {""},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -95,7 +99,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
 					StringPool.BLANK, StringPool.BLANK, 1, 0, new String[0],
-					new String[0], new String[0],
+					new String[] {""}, new String[] {""},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -104,8 +108,9 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
-					"Abc", StringPool.BLANK, 1, 0, new String[0], new String[0],
-					new String[0], ServiceContextTestUtil.getServiceContext());
+					"Abc", StringPool.BLANK, 1, 0, new String[0],
+					new String[] {""}, new String[] {""},
+					ServiceContextTestUtil.getServiceContext());
 
 		_workflowMetricsSLADefinition.add(workflowMetricsSLADefinition);
 
@@ -115,8 +120,9 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				updateWorkflowMetricsSLADefinition(
 					workflowMetricsSLADefinition.getPrimaryKey(), "Abc",
-					StringPool.BLANK, 1, new String[0], new String[0],
-					new String[0], ServiceContextTestUtil.getServiceContext());
+					StringPool.BLANK, 1, new String[0], new String[] {""},
+					new String[] {""},
+					ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertNotNull(workflowMetricsSLADefinition);
 	}
@@ -126,22 +132,24 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
-					"Abc", StringPool.BLANK, 1, 0, new String[0], new String[0],
-					new String[0], ServiceContextTestUtil.getServiceContext());
+					"Abc", StringPool.BLANK, 1, 0, new String[0],
+					new String[] {""}, new String[] {""},
+					ServiceContextTestUtil.getServiceContext());
 
 		_workflowMetricsSLADefinition.add(workflowMetricsSLADefinition);
 
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
-					"Def", StringPool.BLANK, 1, 0, new String[0], new String[0],
-					new String[0], ServiceContextTestUtil.getServiceContext()));
+					"Def", StringPool.BLANK, 1, 0, new String[0],
+					new String[] {""}, new String[] {""},
+					ServiceContextTestUtil.getServiceContext()));
 
 		WorkflowMetricsSLADefinitionLocalServiceUtil.
 			updateWorkflowMetricsSLADefinition(
 				workflowMetricsSLADefinition.getPrimaryKey(), "Def",
-				StringPool.BLANK, 1, new String[0], new String[0],
-				new String[0], ServiceContextTestUtil.getServiceContext());
+				StringPool.BLANK, 1, new String[0], new String[] {""},
+				new String[] {""}, ServiceContextTestUtil.getServiceContext());
 	}
 
 	@DeleteAfterTestRun

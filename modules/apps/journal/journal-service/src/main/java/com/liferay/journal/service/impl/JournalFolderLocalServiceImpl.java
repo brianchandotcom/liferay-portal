@@ -21,18 +21,18 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.exception.NoSuchFolderException;
+import com.liferay.journal.internal.util.JournalTreePathUtil;
 import com.liferay.journal.internal.validation.JournalFolderModelValidator;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.base.JournalFolderLocalServiceBaseImpl;
 import com.liferay.journal.util.JournalValidator;
-import com.liferay.journal.util.comparator.FolderIdComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
-import com.liferay.portal.kernel.tree.TreePathUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -178,7 +176,7 @@ public class JournalFolderLocalServiceImpl
 
 		// Entries
 
-		journalArticleLocalService.deleteArticles(
+		_journalArticleLocalService.deleteArticles(
 			folder.getGroupId(), folder.getFolderId(), includeTrashedEntries);
 
 		// Asset
@@ -723,31 +721,9 @@ public class JournalFolderLocalServiceImpl
 			final boolean reindex)
 		throws PortalException {
 
-		TreePathUtil.rebuildTree(
-			companyId, parentFolderId, parentTreePath,
-			new TreeModelTasksAdapter<JournalFolder>() {
-
-				@Override
-				public List<JournalFolder> findTreeModels(
-					long previousId, long companyId, long parentPrimaryKey,
-					int size) {
-
-					return journalFolderPersistence.findByF_C_P_NotS(
-						previousId, companyId, parentPrimaryKey,
-						WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
-						size, new FolderIdComparator(true));
-				}
-
-				@Override
-				public void rebuildDependentModelsTreePaths(
-						long parentPrimaryKey, String treePath)
-					throws PortalException {
-
-					journalArticleLocalService.setTreePaths(
-						parentPrimaryKey, treePath, false);
-				}
-
-			});
+		JournalTreePathUtil.rebuildTree(
+			companyId, parentFolderId, parentTreePath, journalFolderPersistence,
+			_journalArticleLocalService);
 	}
 
 	@Override
@@ -1514,6 +1490,9 @@ public class JournalFolderLocalServiceImpl
 
 		return (JournalFolderModelValidator)modelValidator;
 	}
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

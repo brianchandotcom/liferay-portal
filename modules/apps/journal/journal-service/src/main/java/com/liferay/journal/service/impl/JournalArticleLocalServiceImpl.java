@@ -54,6 +54,7 @@ import com.liferay.journal.exception.ArticleVersionException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.exception.RequiredArticleLocalizationException;
+import com.liferay.journal.internal.util.JournalTreePathUtil;
 import com.liferay.journal.internal.validation.JournalArticleModelValidator;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -61,6 +62,7 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
@@ -4220,7 +4222,9 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
-		journalFolderLocalService.rebuildTree(companyId);
+		JournalTreePathUtil.rebuildTree(
+			companyId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringPool.SLASH, journalFolderPersistence, this);
 	}
 
 	/**

@@ -56,8 +56,6 @@ class FragmentsEditor extends Component {
 		document.addEventListener('click', this._handleDocumentClick, true);
 		document.addEventListener('keyup', this._handleDocumentKeyUp);
 		document.addEventListener('mouseover', this._handleDocumentMouseOver);
-
-		startListeningWidgetConfigurationChange(this.store);
 	}
 
 	/**
@@ -70,6 +68,16 @@ class FragmentsEditor extends Component {
 		document.removeEventListener('mouseover', this._handleDocumentMouseOver);
 
 		stopListeningWidgetConfigurationChange();
+	}
+
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	syncStore() {
+		if (this.store) {
+			startListeningWidgetConfigurationChange(this.store);
+		}
 	}
 
 	/**

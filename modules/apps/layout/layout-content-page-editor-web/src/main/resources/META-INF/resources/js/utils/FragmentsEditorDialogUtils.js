@@ -127,32 +127,32 @@ function openImageSelector(
  * @review
  */
 function startListeningWidgetConfigurationChange(store) {
-	if (!_widgetConfigurationChangeHandler) {
-		_widgetConfigurationChangeHandler = Liferay.after(
-			'popupReady',
-			event => {
-				const popupDocument = event.win.document;
+	stopListeningWidgetConfigurationChange();
 
-				const form = popupDocument.querySelector(
-					'.portlet-configuration-setup > form'
+	_widgetConfigurationChangeHandler = Liferay.after(
+		'popupReady',
+		event => {
+			const popupDocument = event.win.document;
+
+			const form = popupDocument.querySelector(
+				'.portlet-configuration-setup > form'
+			);
+
+			if (form) {
+				form.addEventListener(
+					'submit',
+					() => {
+						store.dispatchAction(
+							UPDATE_LAST_SAVE_DATE,
+							{
+								lastSaveDate: new Date()
+							}
+						);
+					}
 				);
-
-				if (form) {
-					form.addEventListener(
-						'submit',
-						() => {
-							store.dispatchAction(
-								UPDATE_LAST_SAVE_DATE,
-								{
-									lastSaveDate: new Date()
-								}
-							);
-						}
-					);
-				}
 			}
-		);
-	}
+		}
+	);
 }
 
 /**

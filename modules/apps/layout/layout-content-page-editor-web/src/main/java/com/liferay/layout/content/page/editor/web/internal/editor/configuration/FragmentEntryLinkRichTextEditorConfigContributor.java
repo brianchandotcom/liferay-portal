@@ -165,6 +165,9 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "lead"), "p", "lead", 1),
 			getStyleFormatJSONObject(
+				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
+				null, 1),
+			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2",
 				null, 1),
 			getStyleFormatJSONObject(

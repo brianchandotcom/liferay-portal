@@ -104,8 +104,11 @@ class AssetVocabularyCategoriesSelector extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleErrorAddinglabelItem() {
-		this._unexistingCategoryError = true;
+	_handleErrorAddinglabelItem(event) {
+		if (event.data.itemDoesNotExists) {
+			this._typedCategory = event.target.inputValue;
+			this._unexistingCategoryError = true;
+		}
 	}
 
 	/**

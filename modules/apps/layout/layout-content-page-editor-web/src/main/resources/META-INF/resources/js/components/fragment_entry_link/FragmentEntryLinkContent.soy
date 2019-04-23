@@ -5,12 +5,16 @@
  */
 {template .render}
 	{@param? _handleFragmentEntryLinkContentClick: any}
+	{@param? _languageDirection: string}
 	{@param? fragmentEntryLinkId: string}
+	{@param? languageId: string}
 
 	<div
 		class="fragment-entry-link-content"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
 		data-onclick="{$_handleFragmentEntryLinkContentClick}"
+		dir="{$_languageDirection}"
+		lang="{$languageId}"
 		ref="content"
 	>
 		<div class="loading-animation"></div>

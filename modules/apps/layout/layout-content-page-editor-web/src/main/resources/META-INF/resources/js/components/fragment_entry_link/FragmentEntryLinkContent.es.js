@@ -40,11 +40,23 @@ class FragmentEntryLinkContent extends Component {
 	 * @inheritDoc
 	 */
 	prepareStateForRender(state) {
-		return setIn(
-			state,
+		let nextState = state;
+
+		if (state.languageId && Liferay.Language.direction) {
+			nextState = setIn(
+				nextState,
+				['_languageDirection'],
+				Liferay.Language.direction[state.languageId] || 'ltr'
+			);
+		}
+
+		nextState = setIn(
+			nextState,
 			['content'],
 			this.content ? Soy.toIncDom(this.content) : null
 		);
+
+		return nextState;
 	}
 
 	/**

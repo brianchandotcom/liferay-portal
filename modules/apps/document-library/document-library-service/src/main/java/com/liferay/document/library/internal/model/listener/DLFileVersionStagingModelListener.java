@@ -77,7 +77,9 @@ public class DLFileVersionStagingModelListener
 	public void onAfterUpdate(DLFileVersion dlFileVersion)
 		throws ModelListenerException {
 
-		if (dlFileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+		if ((dlFileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
+			(dlFileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH)) {
+
 			return;
 		}
 

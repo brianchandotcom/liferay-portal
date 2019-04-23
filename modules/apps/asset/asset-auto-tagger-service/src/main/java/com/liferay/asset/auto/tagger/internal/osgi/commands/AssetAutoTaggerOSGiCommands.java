@@ -18,6 +18,8 @@ import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.AssetAutoTagger;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
+import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
+import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -57,6 +59,23 @@ import org.osgi.service.component.annotations.Reference;
 	service = AssetAutoTaggerOSGiCommands.class
 )
 public class AssetAutoTaggerOSGiCommands {
+
+	public void commitAutoTags(String companyId, String... classNames) {
+		_forEachAssetEntry(
+			companyId, classNames,
+			assetEntry -> {
+				List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
+					_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+						assetEntry);
+
+				for (AssetAutoTaggerEntry assetAutoTaggerEntry :
+						assetAutoTaggerEntries) {
+
+					_assetAutoTaggerEntryLocalService.
+						deleteAssetAutoTaggerEntry(assetAutoTaggerEntry);
+				}
+			});
+	}
 
 	public void tagAllUntagged(String companyId, String... classNames) {
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
@@ -187,6 +206,9 @@ public class AssetAutoTaggerOSGiCommands {
 	@Reference
 	private AssetAutoTaggerConfigurationFactory
 		_assetAutoTaggerConfigurationFactory;
+
+	@Reference
+	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

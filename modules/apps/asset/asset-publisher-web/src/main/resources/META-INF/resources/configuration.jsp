@@ -98,6 +98,16 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 				}
 			);
 		}
+		else if (currentMetadataFieldsInput) {
+			Liferay.Util.postForm(
+				form,
+				{
+					data: {
+						metadataFields: Liferay.Util.listSelect(currentMetadataFieldsInput)
+					}
+				}
+			);
+		}
 		else {
 			submitForm(form);
 		}

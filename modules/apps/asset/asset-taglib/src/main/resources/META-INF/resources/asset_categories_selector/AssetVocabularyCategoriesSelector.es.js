@@ -119,6 +119,27 @@ class AssetVocabularyCategoriesSelector extends Component {
 	 */
 	_handleInputOnBlur(event) {
 		event.preventDefault();
+
+		const filteredItems = event.target.filteredItems;
+		const inputValue = event.target.inputValue;
+
+		if (filteredItems && filteredItems.length > 0 && filteredItems[0].data.label === inputValue) {
+			const existingCategory = this.selectedItems.find(category => category.label === inputValue);
+
+			if (!existingCategory) {
+				const item = {
+					label: filteredItems[0].data.label,
+					value: filteredItems[0].data.value
+				};
+
+				this.selectedItems = this.selectedItems.concat(item);
+				event.target.inputValue = '';
+			}
+		}
+		else if (inputValue) {
+			this._typedCategory = inputValue;
+			this._unexistingCategoryError = true;
+		}
 	}
 
 	/**

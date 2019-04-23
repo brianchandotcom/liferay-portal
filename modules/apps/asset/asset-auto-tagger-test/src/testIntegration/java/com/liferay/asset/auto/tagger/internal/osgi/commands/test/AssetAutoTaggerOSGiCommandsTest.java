@@ -15,18 +15,24 @@
 package com.liferay.asset.auto.tagger.internal.osgi.commands.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
+import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.auto.tagger.test.BaseAssetAutoTaggerTestCase;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.lang.reflect.Method;
 
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,6 +62,37 @@ public class AssetAutoTaggerOSGiCommandsTest
 		_assetAutoTaggerOSGiCommands = registry.getService(
 			"com.liferay.asset.auto.tagger.internal.osgi.commands." +
 				"AssetAutoTaggerOSGiCommands");
+	}
+
+	@Test
+	public void testCommitAutoTagsRemovesAllTheAutoTaggerEntries()
+		throws Exception {
+
+		AssetEntry assetEntry = addFileEntryAssetEntry();
+
+		_tagAllUntagged(DLFileEntryConstants.getClassName());
+
+		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+
+		List<AssetAutoTaggerEntry> assetAutoTaggerEntries =
+			_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+				assetEntry);
+
+		Assert.assertEquals(
+			assetAutoTaggerEntries.toString(), 1,
+			assetAutoTaggerEntries.size());
+
+		_commitAutoTags(DLFileEntryConstants.getClassName());
+
+		assetAutoTaggerEntries =
+			_assetAutoTaggerEntryLocalService.getAssetAutoTaggerEntries(
+				assetEntry);
+
+		Assert.assertEquals(
+			assetAutoTaggerEntries.toString(), 0,
+			assetAutoTaggerEntries.size());
+
+		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
 	}
 
 	@Test
@@ -108,6 +145,17 @@ public class AssetAutoTaggerOSGiCommandsTest
 		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_MANUAL);
 	}
 
+	private void _commitAutoTags(String... classNames) throws Exception {
+		Class<?> clazz = _assetAutoTaggerOSGiCommands.getClass();
+
+		Method method = clazz.getMethod(
+			"commitAutoTags", String.class, String[].class);
+
+		method.invoke(
+			_assetAutoTaggerOSGiCommands, String.valueOf(group.getCompanyId()),
+			classNames);
+	}
+
 	private void _tagAllUntagged(String... classNames) throws Exception {
 		Class<?> clazz = _assetAutoTaggerOSGiCommands.getClass();
 
@@ -129,6 +177,9 @@ public class AssetAutoTaggerOSGiCommandsTest
 			_assetAutoTaggerOSGiCommands, String.valueOf(group.getCompanyId()),
 			classNames);
 	}
+
+	@Inject
+	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 	private Object _assetAutoTaggerOSGiCommands;
 

@@ -534,13 +534,15 @@ definition {
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-			Type(
-				locator1 = "TextInput#SITE_SEARCH_KEYWORDS",
-				value1 = "${siteName}");
+			if (!("${siteScopeType}" == "Parent Site")) {
+				Type(
+					locator1 = "TextInput#SITE_SEARCH_KEYWORDS",
+					value1 = "${siteName}");
 
-			KeyPress(
-				locator1 = "TextInput#SEARCH",
-				value1 = "\RETURN");
+				KeyPress(
+					locator1 = "TextInput#SEARCH",
+					value1 = "\RETURN");
+			}
 
 			AssertTextEquals(
 				locator1 = "APConfigurationSites#SITES_TABLE_NAME",

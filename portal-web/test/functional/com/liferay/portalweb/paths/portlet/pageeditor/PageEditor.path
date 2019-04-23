@@ -40,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_LOADED</td>
+	<td>//div[@class='fragments-editor-sidebar-sections-buttons']/button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
 	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[contains(@href,'fragment-collection')][normalize-space()='${key_collectionName}']</td>
 	<td></td>

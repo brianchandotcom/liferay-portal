@@ -37,6 +37,8 @@ definition {
 		Button.clickAdd();
 
 		SelectFrame.selectFrameTop();
+
+		PageEditor.assertFragmentSidebarLoaded();
 	}
 
 	macro clickPencil {

@@ -32,6 +32,10 @@ definition {
 			value1 = "${portletName}");
 	}
 
+	macro assertFragmentSidebarLoaded {
+		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_LOADED");
+	}
+
 	macro clickBack {
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 	}

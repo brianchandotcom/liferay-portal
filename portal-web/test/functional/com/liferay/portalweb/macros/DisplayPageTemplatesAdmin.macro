@@ -5,6 +5,8 @@ definition {
 		PortletEntry.inputName(name = "${displayPageName}");
 
 		Button.clickSave();
+
+		PageEditor.assertFragmentSidebarLoaded();
 	}
 
 	macro deleteDisplayPage {

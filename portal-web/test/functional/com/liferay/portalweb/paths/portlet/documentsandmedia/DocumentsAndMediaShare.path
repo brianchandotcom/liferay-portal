@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>MANAGE_COLLABORATORS_REMOVE_BUTTON</td>
-	<td>//li/div[contains(.,'${key_userName}')]//div[4]/button[//*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
+	<td>//li/div[contains(.,'${key_userName}')]//div[5]/button[//*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
 	<td></td>
 </tr>
 <tr>

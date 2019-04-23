@@ -171,28 +171,23 @@ class EditTags extends Component {
 
 		let instance = this;
 
-		if ((addedTags.length > 0) || (removedTags.length > 0)) {
-			this._fetchTagsRequest(
-				this.urlUpdateTags,
-				this.append ? 'PATCH' : 'PUT',
-				{
-					documentBulkSelection: this._getSelection(),
-					keywordsToAdd: addedTags,
-					keywordsToRemove: removedTags
-				}
-			).then(
-				response => {
-					instance.close();
+		this._fetchTagsRequest(
+			this.urlUpdateTags,
+			this.append ? 'PATCH' : 'PUT',
+			{
+				documentBulkSelection: this._getSelection(),
+				keywordsToAdd: addedTags,
+				keywordsToRemove: removedTags
+			}
+		).then(
+			response => {
+				instance.close();
 
-					if (instance._bulkStatusComponent) {
-						instance._bulkStatusComponent.startWatch();
-					}
+				if (instance._bulkStatusComponent) {
+					instance._bulkStatusComponent.startWatch();
 				}
-			);
-		}
-		else {
-			instance.close();
-		}
+			}
+		);
 	}
 
 	/**

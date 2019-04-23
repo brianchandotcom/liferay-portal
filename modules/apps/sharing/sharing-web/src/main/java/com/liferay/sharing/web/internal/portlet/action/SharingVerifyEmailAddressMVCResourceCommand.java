@@ -80,7 +80,6 @@ public class SharingVerifyEmailAddressMVCResourceCommand
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("userEmailAddress", emailAddress);
 		jsonObject.put("userExists", user != null);
 
 		JSONPortletResponseUtil.writeJSON(

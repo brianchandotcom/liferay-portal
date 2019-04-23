@@ -130,18 +130,18 @@ class Sharing extends PortletBase {
 				response => response.json()
 			).then(
 				result => {
-					let {userEmailAddress, userExists} = result;
+					let {userExists} = result;
 
 					if (!userExists) {
-						this.emailAddressErrorMessage = Liferay.Util.sub(Liferay.Language.get('user-x-does-not-exist'), userEmailAddress);
+						this.emailAddressErrorMessage = Liferay.Util.sub(Liferay.Language.get('user-x-does-not-exist'), itemAdded);
 
 						this._userEmailAddresses = this._userEmailAddresses.filter(
-							item => item.value != userEmailAddress
+							item => item.value != itemAdded
 						);
 
 						setTimeout(
 							() => {
-								this._inputValue = userEmailAddress;
+								this._inputValue = itemAdded;
 							},
 							0
 						);

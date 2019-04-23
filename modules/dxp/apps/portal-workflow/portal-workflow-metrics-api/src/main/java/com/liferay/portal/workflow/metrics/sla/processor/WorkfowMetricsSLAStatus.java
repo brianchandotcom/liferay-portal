@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.sla;
+package com.liferay.portal.workflow.metrics.sla.processor;
 
 /**
  * @author Rafael Praxedes

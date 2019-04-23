@@ -19,8 +19,8 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
 import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.workflow.metrics.internal.sla.WorkfowMetricsSLAStatus;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

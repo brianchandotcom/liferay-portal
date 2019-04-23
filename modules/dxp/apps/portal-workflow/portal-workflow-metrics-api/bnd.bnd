@@ -5,4 +5,5 @@ Export-Package:\
 	com.liferay.portal.workflow.metrics.exception,\
 	com.liferay.portal.workflow.metrics.model,\
 	com.liferay.portal.workflow.metrics.service,\
-	com.liferay.portal.workflow.metrics.service.persistence
+	com.liferay.portal.workflow.metrics.service.persistence,\
+	com.liferay.portal.workflow.metrics.sla.processor

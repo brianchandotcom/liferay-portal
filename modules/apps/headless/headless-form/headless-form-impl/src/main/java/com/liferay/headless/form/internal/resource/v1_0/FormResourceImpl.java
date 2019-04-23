@@ -17,14 +17,19 @@ package com.liferay.headless.form.internal.resource.v1_0;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.headless.form.dto.v1_0.Form;
+import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.form.internal.dto.v1_0.util.StructureUtil;
+import com.liferay.headless.form.internal.helper.UploadFileHelper;
 import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import javax.validation.constraints.NotNull;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,6 +63,17 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 			pagination,
 			_ddmFormInstanceService.getFormInstancesCount(
 				contextCompany.getCompanyId(), siteId));
+	}
+
+	@Override
+	public FormDocument postFormUploadFile(
+			@NotNull Long formId, MultipartBody multipartBody)
+		throws Exception {
+
+		return _uploadFileHelper.toDocument(
+			_uploadFileHelper.uploadFile(
+				_ddmFormInstanceService.getFormInstance(formId),
+				multipartBody));
 	}
 
 	private Form _toForm(DDMFormInstance ddmFormInstance) throws Exception {
@@ -94,6 +110,9 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UploadFileHelper _uploadFileHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionServ
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.internal.dto.v1_0.util.FormRecordUtil;
+import com.liferay.headless.form.internal.helper.UploadFileHelper;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -62,7 +63,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 		return FormRecordUtil.toFormRecord(
 			ddmFormInstanceRecordVersion.getFormInstanceRecord(),
 			contextAcceptLanguage.getPreferredLocale(), _portal,
-			_userLocalService);
+			_uploadFileHelper, _userLocalService);
 	}
 
 	@Override
@@ -78,7 +79,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 					null),
 				formRecord -> FormRecordUtil.toFormRecord(
 					formRecord, contextAcceptLanguage.getPreferredLocale(),
-					_portal, _userLocalService)),
+					_portal, _uploadFileHelper, _userLocalService)),
 			pagination,
 			_ddmFormInstanceRecordService.getFormInstanceRecordsCount(formId));
 	}
@@ -88,7 +89,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 		return FormRecordUtil.toFormRecord(
 			_ddmFormInstanceRecordService.getFormInstanceRecord(formRecordId),
 			contextAcceptLanguage.getPreferredLocale(), _portal,
-			_userLocalService);
+			_uploadFileHelper, _userLocalService);
 	}
 
 	@Reference
@@ -103,6 +104,9 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UploadFileHelper _uploadFileHelper;
 
 	@Context
 	private User _user;

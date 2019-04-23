@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.dto.v1_0.FormRecordForm;
 import com.liferay.headless.form.internal.dto.v1_0.util.FormRecordUtil;
+import com.liferay.headless.form.internal.helper.UploadFileHelper;
 import com.liferay.headless.form.resource.v1_0.FormRecordFormResource;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -54,6 +55,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
+ * @author Victor Oliveira
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/form-record-form.properties",
@@ -69,16 +71,22 @@ public class FormRecordFormResourceImpl extends BaseFormRecordFormResourceImpl {
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceService.getFormInstance(formId);
 
+		DDMForm ddmForm = ddmFormInstance.getDDMForm();
+
+		DDMFormValues ddmFormValues = _createDDMFormValues(
+			ddmFormInstance, formRecordForm.getFieldValues(),
+			contextAcceptLanguage.getPreferredLocale());
+
+		_uploadFileHelper.linkFiles(
+			ddmForm.getDDMFormFields(), ddmFormValues.getDDMFormFieldValues());
+
 		return FormRecordUtil.toFormRecord(
 			_ddmFormInstanceRecordService.addFormInstanceRecord(
 				ddmFormInstance.getGroupId(),
-				ddmFormInstance.getFormInstanceId(),
-				_createDDMFormValues(
-					ddmFormInstance, formRecordForm.getFieldValues(),
-					contextAcceptLanguage.getPreferredLocale()),
+				ddmFormInstance.getFormInstanceId(), ddmFormValues,
 				_createServiceContext(formRecordForm.getDraft())),
 			contextAcceptLanguage.getPreferredLocale(), _portal,
-			_userLocalService);
+			_uploadFileHelper, _userLocalService);
 	}
 
 	@Override
@@ -89,16 +97,24 @@ public class FormRecordFormResourceImpl extends BaseFormRecordFormResourceImpl {
 		DDMFormInstanceRecord ddmFormInstanceRecord =
 			_ddmFormInstanceRecordService.getFormInstanceRecord(formRecordId);
 
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstanceRecord.getFormInstance();
+
+		DDMForm ddmForm = ddmFormInstance.getDDMForm();
+
+		DDMFormValues ddmFormValues = _createDDMFormValues(
+			ddmFormInstance, formRecordForm.getFieldValues(),
+			contextAcceptLanguage.getPreferredLocale());
+
+		_uploadFileHelper.linkFiles(
+			ddmForm.getDDMFormFields(), ddmFormValues.getDDMFormFieldValues());
+
 		return FormRecordUtil.toFormRecord(
 			_ddmFormInstanceRecordService.updateFormInstanceRecord(
-				formRecordId, false,
-				_createDDMFormValues(
-					ddmFormInstanceRecord.getFormInstance(),
-					formRecordForm.getFieldValues(),
-					contextAcceptLanguage.getPreferredLocale()),
+				formRecordId, false, ddmFormValues,
 				_createServiceContext(formRecordForm.getDraft())),
 			contextAcceptLanguage.getPreferredLocale(), _portal,
-			_userLocalService);
+			_uploadFileHelper, _userLocalService);
 	}
 
 	private DDMFormValues _createDDMFormValues(
@@ -200,6 +216,9 @@ public class FormRecordFormResourceImpl extends BaseFormRecordFormResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UploadFileHelper _uploadFileHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

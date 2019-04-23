@@ -14,17 +14,40 @@
 
 package com.liferay.headless.form.internal.resource.v1_0;
 
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.headless.form.dto.v1_0.FormDocument;
+import com.liferay.headless.form.internal.helper.UploadFileHelper;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
+ * @author Victor Oliveira
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/form-document.properties",
 	scope = ServiceScope.PROTOTYPE, service = FormDocumentResource.class
 )
 public class FormDocumentResourceImpl extends BaseFormDocumentResourceImpl {
+
+	@Override
+	public void deleteFormDocument(Long formDocumentId) throws Exception {
+		_dlAppService.deleteFileEntry(formDocumentId);
+	}
+
+	@Override
+	public FormDocument getFormDocument(Long formDocumentId) throws Exception {
+		return _uploadFileHelper.toDocument(
+			_dlAppService.getFileEntry(formDocumentId));
+	}
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private UploadFileHelper _uploadFileHelper;
+
 }

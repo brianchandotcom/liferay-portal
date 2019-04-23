@@ -19,7 +19,9 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.headless.form.dto.v1_0.FieldValue;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
+import com.liferay.headless.form.internal.helper.UploadFileHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -34,7 +36,8 @@ public class FormRecordUtil {
 
 	public static FormRecord toFormRecord(
 			DDMFormInstanceRecord ddmFormInstanceRecord, Locale locale,
-			Portal portal, UserLocalService userLocalService)
+			Portal portal, UploadFileHelper uploadFileHelper,
+			UserLocalService userLocalService)
 		throws PortalException {
 
 		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
@@ -60,8 +63,17 @@ public class FormRecordUtil {
 							return null;
 						}
 
+						FileEntry fileEntry = uploadFileHelper.getFileEntry(
+							localizedValue.getString(locale));
+
 						return new FieldValue() {
 							{
+								if (fileEntry != null) {
+									document = uploadFileHelper.toDocument(
+										fileEntry);
+									documentId = fileEntry.getFileEntryId();
+								}
+
 								name = ddmFormFieldValue.getName();
 								value = localizedValue.getString(locale);
 							}

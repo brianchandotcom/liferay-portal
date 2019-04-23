@@ -56,18 +56,6 @@ public class DLValidatorTest {
 	}
 
 	@Test
-	public void testFixNameBlacklistName() {
-		String name = StringPool.PERIOD + StringUtil.randomString(3);
-
-		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
-			Assert.assertEquals(
-				blacklistName + StringPool.UNDERLINE +
-					StringUtil.toLowerCase(name),
-				_dlValidator.fixName(blacklistName + name));
-		}
-	}
-
-	@Test
 	public void testFixNameBlacklistLastChar() {
 		String name = StringUtil.randomString(20);
 
@@ -80,10 +68,15 @@ public class DLValidatorTest {
 	}
 
 	@Test
-	public void testFixNameWithNoBlacklistedChars() {
-		String name = StringUtil.randomString(20);
+	public void testFixNameBlacklistName() {
+		String name = StringPool.PERIOD + StringUtil.randomString(3);
 
-		Assert.assertEquals(name, _dlValidator.fixName(name));
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+			Assert.assertEquals(
+				blacklistName + StringPool.UNDERLINE +
+					StringUtil.toLowerCase(name),
+				_dlValidator.fixName(blacklistName + name));
+		}
 	}
 
 	@Test
@@ -94,6 +87,13 @@ public class DLValidatorTest {
 			name + StringPool.UNDERLINE + name,
 			_dlValidator.fixName(
 				name + PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR + name));
+	}
+
+	@Test
+	public void testFixNameWithNoBlacklistedChars() {
+		String name = StringUtil.randomString(20);
+
+		Assert.assertEquals(name, _dlValidator.fixName(name));
 	}
 
 	@Inject

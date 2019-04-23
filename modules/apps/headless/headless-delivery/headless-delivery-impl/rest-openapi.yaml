@@ -1234,6 +1234,7 @@ components:
                     writeOnly: true
             required:
                 - contentStructureId
+                - title
         StructuredContentFolder:
             #@review
             description: https://www.schema.org/StructuredContentFolder

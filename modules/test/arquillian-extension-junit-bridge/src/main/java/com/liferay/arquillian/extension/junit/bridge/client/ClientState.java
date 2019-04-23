@@ -106,6 +106,9 @@ public class ClientState {
 					frameworkMBean.uninstallBundle(_bundleId);
 
 					SocketUtil.close();
+
+					_testClasses = null;
+					_bundleId = 0;
 				}
 			}
 
@@ -206,6 +209,12 @@ public class ClientState {
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
+			}
+
+			if (!testClasses.contains(testClass)) {
+				testClasses.clear();
+
+				testClasses.add(testClass);
 			}
 
 			_testClasses = testClasses;

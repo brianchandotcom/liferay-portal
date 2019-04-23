@@ -17,8 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.transaction;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionHandler;
@@ -41,6 +40,7 @@ import javax.ws.rs.ext.Provider;
  * @author Javier Gamarra
  */
 @Provider
+@Transactional(rollbackFor = Exception.class)
 public class TransactionContainerFilter
 	implements ContainerRequestFilter, ContainerResponseFilter {
 
@@ -49,11 +49,8 @@ public class TransactionContainerFilter
 		throws IOException {
 
 		if (_transactionVerbs.contains(containerRequestContext.getMethod())) {
-			TransactionAttributeAdapter transactionAttributeAdapter =
-				_getTransactionAttributeAdapter();
-
 			TransactionStatusThreadLocal.setTransactionStatusAdapter(
-				_transactionHandler.start(transactionAttributeAdapter));
+				_transactionHandler.start(_transactionAttributeAdapter));
 		}
 	}
 
@@ -68,20 +65,18 @@ public class TransactionContainerFilter
 				TransactionStatusThreadLocal.getTransactionStatusAdapter();
 
 			if (transactionStatusAdapter != null) {
-				TransactionAttributeAdapter transactionAttributeAdapter =
-					_getTransactionAttributeAdapter();
-
 				if (Response.Status.Family.familyOf(
 						containerResponseContext.getStatus()).equals(
 							Response.Status.Family.SUCCESSFUL)) {
 
 					_transactionHandler.commit(
-						transactionAttributeAdapter, transactionStatusAdapter);
+						_transactionAttributeAdapter, transactionStatusAdapter);
 				}
 				else {
 					try {
 						_transactionHandler.rollback(
-							new RuntimeException(), transactionAttributeAdapter,
+							new RuntimeException(),
+							_transactionAttributeAdapter,
 							transactionStatusAdapter);
 					}
 					catch (Throwable throwable) {
@@ -95,24 +90,14 @@ public class TransactionContainerFilter
 		}
 	}
 
-	private TransactionAttributeAdapter _getTransactionAttributeAdapter() {
-		TransactionConfig transactionConfig = TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-		return new TransactionAttributeAdapter(
-			TransactionAttributeBuilder.build(
-				true, transactionConfig.getIsolation(),
-				transactionConfig.getPropagation(),
-				transactionConfig.isReadOnly(), transactionConfig.getTimeout(),
-				transactionConfig.getRollbackForClasses(),
-				transactionConfig.getRollbackForClassNames(),
-				transactionConfig.getNoRollbackForClasses(),
-				transactionConfig.getNoRollbackForClassNames()));
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		TransactionContainerFilter.class);
 
+	private static final TransactionAttributeAdapter
+		_transactionAttributeAdapter = new TransactionAttributeAdapter(
+			TransactionAttributeBuilder.build(
+				TransactionContainerFilter.class.getAnnotation(
+					Transactional.class)));
 	private static final TransactionHandler _transactionHandler =
 		(TransactionHandler)PortalBeanLocatorUtil.locate("transactionExecutor");
 	private static final Set<String> _transactionVerbs = new HashSet<>(

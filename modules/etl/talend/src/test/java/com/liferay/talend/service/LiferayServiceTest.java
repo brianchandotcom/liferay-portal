@@ -48,27 +48,27 @@ public class LiferayServiceTest {
 		LiferayService liferayService = new LiferayService();
 
 		Assert.assertTrue(
-			liferayService.isValidEndpointURL(
+			liferayService.isValidOpenAPISpecURL(
 				"http://localhost:8080/o/test-endpoint/v1.0/openapi.yaml"));
 
 		Assert.assertTrue(
-			liferayService.isValidEndpointURL(
+			liferayService.isValidOpenAPISpecURL(
 				"https://localhost:8080/o/test-endpoint/v1.0/openapi.yaml"));
 
 		Assert.assertTrue(
-			liferayService.isValidEndpointURL(
+			liferayService.isValidOpenAPISpecURL(
 				"https://localhost.com/o/test-endpoint/v1.0/openapi.yaml"));
 
 		Assert.assertTrue(
-			liferayService.isValidEndpointURL(
+			liferayService.isValidOpenAPISpecURL(
 				"https://test.com/o/test-endpoint/v1/openapi.yaml"));
 
 		Assert.assertTrue(
-			liferayService.isValidEndpointURL(
+			liferayService.isValidOpenAPISpecURL(
 				"https://test.com/o/test-endpoint/v1.0.23/openapi.yaml"));
 
 		Assert.assertTrue(
-			liferayService.isValidEndpointURL(
+			liferayService.isValidOpenAPISpecURL(
 				"http://test.com:8080/o/test-endpoint/v1.0/openapi.json"));
 	}
 

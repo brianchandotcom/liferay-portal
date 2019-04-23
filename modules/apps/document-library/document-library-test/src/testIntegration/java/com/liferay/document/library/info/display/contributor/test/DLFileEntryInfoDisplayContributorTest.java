@@ -33,6 +33,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -158,9 +159,13 @@ public class DLFileEntryInfoDisplayContributorTest {
 					infoDisplayFieldsValues.get("version"));
 				Assert.assertEquals(
 					StringPool.BLANK, infoDisplayFieldsValues.get("tagNames"));
-				Assert.assertEquals(
-					StringPool.BLANK,
-					infoDisplayFieldsValues.get("authorProfileImage"));
+
+				JSONObject authorProfileImageJSONObject =
+					(JSONObject)infoDisplayFieldsValues.get(
+						"authorProfileImage");
+
+				Assert.assertEquals(0, authorProfileImageJSONObject.length());
+
 				Assert.assertEquals(
 					TextFormatter.formatStorageSize(
 						fileEntry.getSize(), LocaleUtil.getDefault()),
@@ -171,9 +176,11 @@ public class DLFileEntryInfoDisplayContributorTest {
 				Assert.assertEquals(
 					StringPool.BLANK,
 					infoDisplayFieldsValues.get("categories"));
-				Assert.assertEquals(
-					StringPool.BLANK,
-					infoDisplayFieldsValues.get("previewImage"));
+
+				JSONObject previewImageJSONObject =
+					(JSONObject)infoDisplayFieldsValues.get("previewImage");
+
+				Assert.assertEquals(0, previewImageJSONObject.length());
 			});
 	}
 

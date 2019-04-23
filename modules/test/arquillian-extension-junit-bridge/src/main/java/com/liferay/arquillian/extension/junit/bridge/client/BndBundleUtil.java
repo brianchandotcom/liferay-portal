@@ -22,9 +22,7 @@ import aQute.bnd.osgi.Jar;
 
 import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
 import com.liferay.arquillian.extension.junit.bridge.server.TestBundleActivator;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
+import com.liferay.arquillian.extension.junit.bridge.string.StringUtil;
 
 import java.io.File;
 
@@ -80,24 +78,24 @@ public class BndBundleUtil {
 		throws Exception {
 
 		if (filteredMethodNamesMap != null) {
-			StringBundler sb = new StringBundler();
+			StringBuilder sb = new StringBuilder();
 
 			for (Map.Entry<String, List<String>> entry :
 					filteredMethodNamesMap.entrySet()) {
 
 				sb.append(entry.getKey());
-				sb.append(StringPool.COLON);
+				sb.append(":");
 
 				for (String methodName : entry.getValue()) {
 					sb.append(methodName);
-					sb.append(StringPool.COMMA);
+					sb.append(",");
 				}
 
-				sb.setIndex(sb.index() - 1);
-				sb.append(StringPool.SEMICOLON);
+				sb.setLength(sb.length() - 1);
+				sb.append(";");
 			}
 
-			sb.setIndex(sb.index() - 1);
+			sb.setLength(sb.length() - 1);
 
 			project.setProperty(
 				Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES, sb.toString());
@@ -125,8 +123,7 @@ public class BndBundleUtil {
 		}
 
 		project.setProperty(
-			"Import-Package",
-			StringUtil.merge(importPackages, StringPool.COMMA));
+			"Import-Package", StringUtil.merge(importPackages, ","));
 
 		Set<String> includeResources = new LinkedHashSet<>();
 
@@ -150,8 +147,7 @@ public class BndBundleUtil {
 		}
 
 		project.setProperty(
-			"-includeresource",
-			StringUtil.merge(includeResources, StringPool.COMMA));
+			"-includeresource", StringUtil.merge(includeResources, ","));
 
 		ProjectBuilder projectBuilder = new ProjectBuilder(project);
 

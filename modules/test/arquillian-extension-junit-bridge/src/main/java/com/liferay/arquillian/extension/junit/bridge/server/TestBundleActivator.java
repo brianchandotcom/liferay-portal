@@ -15,8 +15,7 @@
 package com.liferay.arquillian.extension.junit.bridge.server;
 
 import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringUtil;
+import com.liferay.arquillian.extension.junit.bridge.string.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,15 +66,14 @@ public class TestBundleActivator implements BundleActivator {
 				StringUtil.split(
 					attributes.getValue(
 						Headers.TEST_BRIDGE_FILTERED_METHOD_NAMES),
-					CharPool.SEMICOLON)) {
+					';')) {
 
-			int index = filteredMethodNamesEntry.indexOf(CharPool.COLON);
+			int index = filteredMethodNamesEntry.indexOf(':');
 
 			filteredMethodNamesMap.put(
 				filteredMethodNamesEntry.substring(0, index),
 				StringUtil.split(
-					filteredMethodNamesEntry.substring(index + 1),
-					CharPool.COMMA));
+					filteredMethodNamesEntry.substring(index + 1), ','));
 		}
 
 		long passCode = Long.parseLong(

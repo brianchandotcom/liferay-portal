@@ -16,7 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.client;
 
 import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.CharPool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -179,7 +178,7 @@ public class ClientState {
 								0, relativePathString.length() - 6);
 
 							relativePathString = relativePathString.replace(
-								CharPool.SLASH, CharPool.PERIOD);
+								'/', '.');
 
 							try {
 								Class<?> clazz = classLoader.loadClass(

@@ -558,7 +558,6 @@ public class CTEngineManagerTest {
 		Assert.assertEquals(ctEntry, ctEntries.get(0));
 	}
 
-	@Ignore
 	@Test
 	public void testGetCTEntriesWithIndexing() throws Exception {
 		_ctEngineManager.enableChangeTracking(

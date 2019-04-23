@@ -57,10 +57,10 @@ definition {
 	}
 
 	macro viewRequestFailedToComplete {
-		AssertElementPresent(locator1 = "Message#ERROR_DISMISSIBLE");
+		AssertElementPresent(locator1 = "Message#ERROR_REQUEST_FAILED");
 
-		if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE")) {
-			Click(locator1 = "Button#CLOSE_MESSAGE");
+		if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE_FLOAT")) {
+			Click(locator1 = "Button#CLOSE_MESSAGE_FLOAT");
 		}
 	}
 

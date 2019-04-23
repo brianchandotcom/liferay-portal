@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_MESSAGE_FLOAT</td>
+	<td>//div[contains(@class,'alert-dismissible')][contains(@class,'show')]//button[@aria-label='Close']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLOR_EFFECT</td>
 	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-effects')]]</td>
 	<td></td>

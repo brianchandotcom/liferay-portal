@@ -94,6 +94,15 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 
 		Assert.assertEquals(200, response.getStatus());
 
+		webTarget = getWebTarget("/methods-with-ignore-missing-scopes-empty");
+
+		builder = authorize(
+			webTarget.request(), getToken("oauthTestApplicationAfter"));
+
+		response = builder.head();
+
+		Assert.assertEquals(403, response.getStatus());
+
 		webTarget = getWebTarget("/methods-with-head");
 
 		builder = authorize(
@@ -140,6 +149,14 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 
 			registerJaxRsApplication(
 				new TestApplicationWithHead(), "methods-with-head", properties);
+
+			properties = new HashMapDictionary<>();
+
+			properties.put("ignore.missing.scopes", "");
+
+			registerJaxRsApplication(
+				new TestApplication(),
+				"methods-with-ignore-missing-scopes-empty", properties);
 
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationAfter",

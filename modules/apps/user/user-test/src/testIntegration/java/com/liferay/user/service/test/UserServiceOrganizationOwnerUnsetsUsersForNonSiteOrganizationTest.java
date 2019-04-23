@@ -17,12 +17,10 @@ package com.liferay.user.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -38,7 +36,8 @@ import org.junit.runner.RunWith;
  * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
-public class UserServiceOrganizationOwnerUnsetsUsersForNonSiteOrganizationTest {
+public class UserServiceOrganizationOwnerUnsetsUsersForNonSiteOrganizationTest
+	extends BaseUserServiceTestCase {
 
 	@ClassRule
 	@Rule
@@ -59,17 +58,17 @@ public class UserServiceOrganizationOwnerUnsetsUsersForNonSiteOrganizationTest {
 			_organization);
 
 		try {
-			UserServiceTestUtil.unsetOrganizationUsers(
+			unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationOwnerUser,
 				organizationAdminUser);
 
 			Assert.assertFalse(
-				_userLocalService.hasOrganizationUser(
+				userLocalService.hasOrganizationUser(
 					_organization.getOrganizationId(),
 					organizationAdminUser.getUserId()));
 		}
 		finally {
-			_userLocalService.deleteUser(organizationAdminUser);
+			userLocalService.deleteUser(organizationAdminUser);
 		}
 	}
 
@@ -79,17 +78,17 @@ public class UserServiceOrganizationOwnerUnsetsUsersForNonSiteOrganizationTest {
 			_organization);
 
 		try {
-			UserServiceTestUtil.unsetOrganizationUsers(
+			unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationOwnerUser,
 				otherOrganizationOwnerUser);
 
 			Assert.assertFalse(
-				_userLocalService.hasOrganizationUser(
+				userLocalService.hasOrganizationUser(
 					_organization.getOrganizationId(),
 					otherOrganizationOwnerUser.getUserId()));
 		}
 		finally {
-			_userLocalService.deleteUser(otherOrganizationOwnerUser);
+			userLocalService.deleteUser(otherOrganizationOwnerUser);
 		}
 	}
 
@@ -98,8 +97,5 @@ public class UserServiceOrganizationOwnerUnsetsUsersForNonSiteOrganizationTest {
 
 	@DeleteAfterTestRun
 	private User _organizationOwnerUser;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

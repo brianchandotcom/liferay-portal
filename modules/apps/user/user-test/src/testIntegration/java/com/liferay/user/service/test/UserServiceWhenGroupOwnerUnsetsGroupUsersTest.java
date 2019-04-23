@@ -18,13 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -40,7 +38,8 @@ import org.junit.runner.RunWith;
  * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
-public class UserServiceWhenGroupOwnerUnsetsGroupUsersTest {
+public class UserServiceWhenGroupOwnerUnsetsGroupUsersTest
+	extends BaseUserServiceTestCase {
 
 	@ClassRule
 	@Rule
@@ -64,15 +63,15 @@ public class UserServiceWhenGroupOwnerUnsetsGroupUsersTest {
 		User groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
 
 		try {
-			UserServiceTestUtil.unsetGroupUsers(
+			unsetGroupUsers(
 				_group.getGroupId(), _groupOwnerUser, groupAdminUser);
 
 			Assert.assertFalse(
-				_userLocalService.hasGroupUser(
+				userLocalService.hasGroupUser(
 					_group.getGroupId(), groupAdminUser.getUserId()));
 		}
 		finally {
-			_userLocalService.deleteUser(groupAdminUser);
+			userLocalService.deleteUser(groupAdminUser);
 		}
 	}
 
@@ -81,15 +80,15 @@ public class UserServiceWhenGroupOwnerUnsetsGroupUsersTest {
 		User groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
 
 		try {
-			UserServiceTestUtil.unsetGroupUsers(
+			unsetGroupUsers(
 				_group.getGroupId(), _groupOwnerUser, groupOwnerUser);
 
 			Assert.assertFalse(
-				_userLocalService.hasGroupUser(
+				userLocalService.hasGroupUser(
 					_group.getGroupId(), groupOwnerUser.getUserId()));
 		}
 		finally {
-			_userLocalService.deleteUser(groupOwnerUser);
+			userLocalService.deleteUser(groupOwnerUser);
 		}
 	}
 
@@ -99,17 +98,17 @@ public class UserServiceWhenGroupOwnerUnsetsGroupUsersTest {
 			_organization);
 
 		try {
-			UserServiceTestUtil.unsetOrganizationUsers(
+			unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationGroupUser,
 				organizationAdminUser);
 
 			Assert.assertTrue(
-				_userLocalService.hasOrganizationUser(
+				userLocalService.hasOrganizationUser(
 					_organization.getOrganizationId(),
 					organizationAdminUser.getUserId()));
 		}
 		finally {
-			_userLocalService.deleteUser(organizationAdminUser);
+			userLocalService.deleteUser(organizationAdminUser);
 		}
 	}
 
@@ -119,17 +118,17 @@ public class UserServiceWhenGroupOwnerUnsetsGroupUsersTest {
 			_organization);
 
 		try {
-			UserServiceTestUtil.unsetOrganizationUsers(
+			unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationGroupUser,
 				organizationOwnerUser);
 
 			Assert.assertTrue(
-				_userLocalService.hasOrganizationUser(
+				userLocalService.hasOrganizationUser(
 					_organization.getOrganizationId(),
 					organizationOwnerUser.getUserId()));
 		}
 		finally {
-			_userLocalService.deleteUser(organizationOwnerUser);
+			userLocalService.deleteUser(organizationOwnerUser);
 		}
 	}
 
@@ -144,8 +143,5 @@ public class UserServiceWhenGroupOwnerUnsetsGroupUsersTest {
 
 	@DeleteAfterTestRun
 	private User _organizationGroupUser;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

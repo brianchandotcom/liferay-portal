@@ -26,7 +26,10 @@ definition {
 
 	@priority = "3"
 	test PreviewCustomHeightWidth {
-		MobileDevice.previewPG(deviceType = "custom", height = "500", width = "500");
+		MobileDevice.previewPG(
+			deviceType = "custom",
+			height = "500",
+			width = "500");
 	}
 
 	@priority = "3"

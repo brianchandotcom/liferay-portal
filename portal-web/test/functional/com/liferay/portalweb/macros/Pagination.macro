@@ -8,11 +8,12 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = "${itemsPerPage} Entries"
-		);
+			value1 = "${itemsPerPage} Entries");
 	}
 
 	macro viewResults {
-		AssertTextEquals(locator1 = "Pagination#RESULTS", value1 = "${results}");
+		AssertTextEquals(
+			locator1 = "Pagination#RESULTS",
+			value1 = "${results}");
 	}
 }

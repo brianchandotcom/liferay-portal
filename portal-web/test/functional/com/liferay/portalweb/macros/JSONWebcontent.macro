@@ -137,14 +137,12 @@ definition {
 		JSONWebcontent._exclusiveOrCheck(
 			A = "${title}",
 			B = "${titleMap}",
-			failMessage = "Please only set &apos;title&apos; or only &apos;titleMap&apos; but not both or none."
-		);
+			failMessage = "Please only set &apos;title&apos; or only &apos;titleMap&apos; but not both or none.");
 
 		JSONWebcontent._exclusiveOrCheck(
 			A = "${content}",
 			B = "${contentMap}",
-			failMessage = "Please only set &apos;content&apos; or only &apos;contentMap&apos; but not both or none."
-		);
+			failMessage = "Please only set &apos;content&apos; or only &apos;contentMap&apos; but not both or none.");
 
 		if (isSet(groupName)) {
 			var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
@@ -161,8 +159,7 @@ definition {
 			groupId = "${groupId}",
 			serviceContext = "${serviceContext}",
 			title = "${title}",
-			titleMap = "${titleMap}"
-		);
+			titleMap = "${titleMap}");
 	}
 
 	@summary = "Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON"
@@ -188,7 +185,6 @@ definition {
 			folderId = "${folderId}",
 			groupId = "${groupId}",
 			serviceContext = "${serviceContext}",
-			title = "${title}"
-		);
+			title = "${title}");
 	}
 }

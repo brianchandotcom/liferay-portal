@@ -6,8 +6,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "Your request completed successfully."
-		);
+			value1 = "Your request completed successfully.");
 
 		AssertElementPresent(locator1 = "Comments#WORKFLOW_STATUS");
 
@@ -16,20 +15,25 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${commentBody}"
-		);
+			value1 = "${commentBody}");
 
-		AssertTextEquals(locator1 = "Comments#USER_NAME", value1 = "${commentAuthor}");
+		AssertTextEquals(
+			locator1 = "Comments#USER_NAME",
+			value1 = "${commentAuthor}");
 	}
 
 	macro editCommentField {
-		Type.typeEditor(locator1 = "Comments#COMMENT_FIELD", value1 = "${commentBody}");
+		Type.typeEditor(
+			locator1 = "Comments#COMMENT_FIELD",
+			value1 = "${commentBody}");
 	}
 
 	macro reply {
 		PageComment.editCommentField(commentBody = "${commentBody}");
 
-		AssertClick(locator1 = "Button#REPLY", value1 = "Reply");
+		AssertClick(
+			locator1 = "Button#REPLY",
+			value1 = "Reply");
 	}
 
 	macro tearDownPG {
@@ -40,14 +44,11 @@ definition {
 
 			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
 
-			AssertConfirm(
-				value1 = "Are you sure you want to delete this? It will be deleted immediately."
-			);
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#SUCCESS",
-				value1 = "Your request completed successfully."
-			);
+				value1 = "Your request completed successfully.");
 		}
 	}
 
@@ -58,8 +59,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Comments#COMMENT_BODY_ASSET",
-			value1 = "${commentBody}"
-		);
+			value1 = "${commentBody}");
 	}
 
 	macro viewPG {
@@ -72,10 +72,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${commentBody}"
-		);
+			value1 = "${commentBody}");
 
-		AssertTextEquals(locator1 = "Comments#USER_NAME", value1 = "${commentAuthor}");
+		AssertTextEquals(
+			locator1 = "Comments#USER_NAME",
+			value1 = "${commentAuthor}");
 	}
 
 	macro viewWithWorkflowPG {
@@ -83,17 +84,17 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Comments#WORKFLOW_STATUS",
-			value1 = "${commentStatus}"
-		);
+			value1 = "${commentStatus}");
 
 		var key_entryComment = "${commentBody}";
 		var key_userFullName = "${commentAuthor}";
 
 		AssertTextEquals(
 			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${commentBody}"
-		);
+			value1 = "${commentBody}");
 
-		AssertTextEquals(locator1 = "Comments#USER_NAME", value1 = "${commentAuthor}");
+		AssertTextEquals(
+			locator1 = "Comments#USER_NAME",
+			value1 = "${commentAuthor}");
 	}
 }

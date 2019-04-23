@@ -8,9 +8,7 @@ definition {
 			echo("PASSED");
 		}
 		else {
-			TestUtils.fail(
-				message = "FAILED: expected &apos;${expected}&apos;, actual was &apos;${actual}&apos;"
-			);
+			TestUtils.fail(message = "FAILED: expected &apos;${expected}&apos;, actual was &apos;${actual}&apos;");
 		}
 	}
 
@@ -38,8 +36,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page Name");
 	}

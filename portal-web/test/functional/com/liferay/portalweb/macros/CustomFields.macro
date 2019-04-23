@@ -4,8 +4,7 @@ definition {
 
 		AssertClick(
 			locator1 = "CustomFields#RESOURCE_TABLE_RESOURCE_LINK",
-			value1 = "${resourceName}"
-		);
+			value1 = "${resourceName}");
 
 		LexiconEntry.gotoAdd();
 
@@ -21,24 +20,26 @@ definition {
 			if ("${customFieldType}" == "Text Field") {
 				PortletEntry.inputText(
 					fieldLabel = "Starting Value",
-					text = "${startingValue}"
-				);
+					text = "${startingValue}");
 			}
 		}
 
 		if (("${customFieldType}" == "Dropdown") || ("${customFieldType}" == "Checkbox") || ("${customFieldType}" == "Radio")) {
-			PortletEntry.inputTextArea(fieldId = "Value", text = "${customFieldType}");
+			PortletEntry.inputTextArea(
+				fieldId = "Value",
+				text = "${customFieldType}");
 		}
 
 		if ("${localization}" == "true") {
-			Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Make Field Localizable");
+			Check(
+				checkboxName = "Make Field Localizable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
 		if ("${searchable}" == "true") {
 			Check.checkToggleSwitch(
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
-				key_toggleSwitchLabel = "Searchable"
-			);
+				key_toggleSwitchLabel = "Searchable",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
 		Button.clickSave();
@@ -47,8 +48,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_NAME",
-			value1 = "${customFieldName}"
-		);
+			value1 = "${customFieldName}");
 	}
 
 	macro editCP {
@@ -56,8 +56,7 @@ definition {
 
 		AssertClick(
 			locator1 = "CustomFields#RESOURCE_TABLE_RESOURCE_LINK",
-			value1 = "${resourceName}"
-		);
+			value1 = "${resourceName}");
 
 		var key_customFieldName = "${customFieldName}";
 
@@ -73,8 +72,7 @@ definition {
 			if ("${customFieldType}" == "Text Field") {
 				PortletEntry.inputText(
 					fieldLabel = "Starting Value",
-					text = "${startingValue}"
-				);
+					text = "${startingValue}");
 			}
 		}
 
@@ -86,14 +84,12 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
-				portlet = "Custom Fields"
-			);
+				portlet = "Custom Fields");
 
 			AssertClick(
+				key_resourceName = "${resourceName}",
 				locator1 = "CustomFields#RESOURCE_TABLE_RESOURCE_LINK",
-				value1 = "${resourceName}",
-				key_resourceName = "${resourceName}"
-			);
+				value1 = "${resourceName}");
 
 			if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 				PortletEntry.selectAll();

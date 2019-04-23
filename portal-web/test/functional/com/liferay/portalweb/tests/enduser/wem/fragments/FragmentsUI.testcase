@@ -34,22 +34,19 @@ definition {
 
 			Type.typeAceEditorNoError(
 				locator1 = "FragmentEditor#HTML_EDITOR",
-				value1 = "${htmlSnippet}"
-			);
+				value1 = "${htmlSnippet}");
 
 			var cssSnippet = TestCase.getFileContent(fileName = "fragment_button.css");
 
 			Type.typeAceEditorNoError(
 				locator1 = "FragmentEditor#CSS_EDITOR",
-				value1 = "${cssSnippet}"
-			);
+				value1 = "${cssSnippet}");
 
 			var javascriptSnippet = TestCase.getFileContent(fileName = "fragment_button.js");
 
 			Type.typeAceEditorNoError(
 				locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
-				value1 = "${javascriptSnippet}"
-			);
+				value1 = "${javascriptSnippet}");
 		}
 	}
 
@@ -87,8 +84,7 @@ definition {
 		task ("Add the section fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Fragment Name"
-			);
+				fragmentName = "Fragment Name");
 		}
 
 		task ("Publish the content page") {
@@ -96,25 +92,21 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(
-				urlAppend = "web/test-site-name/test-content-page-name"
-			);
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 		}
 
 		task ("Assert the section fragment is present by asserting the elements from the Button fragment") {
 			AssertVisible(
-				locator1 = "Fragment#FRAGMENT",
 				key_content = "Submit",
 				key_fragmentClass = "footer",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
 
 			AssertVisible(
-				locator1 = "Fragment#FRAGMENT",
 				key_content = "Cancel",
 				key_fragmentClass = "footer",
-				key_position = "1"
-			);
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
 
 			AssertElementPresent(locator1 = "Button#SUBMIT");
 
@@ -133,35 +125,29 @@ definition {
 		}
 
 		task ("Edit the section fragment to have the Title fragment code") {
-			FragmentsAdmin.gotoEntry(
-				entry = "Fragment Name"
-			);
+			FragmentsAdmin.gotoEntry(entry = "Fragment Name");
 
 			var htmlSnippet = TestCase.getFileContent(fileName = "fragment_title.html");
 
 			Type.typeAceEditorNoError(
 				locator1 = "FragmentEditor#HTML_EDITOR",
-				value1 = "${htmlSnippet}"
-			);
+				value1 = "${htmlSnippet}");
 
 			var cssSnippet = TestCase.getFileContent(fileName = "fragment_title.css");
 
 			Type.typeAceEditorNoError(
 				locator1 = "FragmentEditor#CSS_EDITOR",
-				value1 = "${cssSnippet}"
-			);
+				value1 = "${cssSnippet}");
 
 			Type.typeAceEditorNoError(
 				locator1 = "FragmentEditor#JAVASCRIPT_EDITOR",
-				value1 = ""
-			);
+				value1 = "");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
 			AssertTextEquals(
 				locator1 = "//div[@class='fragment-header']/h1[@class='title']",
-				value1 = "LOREM IPSUM DOLOR SIT AMET"
-			);
+				value1 = "LOREM IPSUM DOLOR SIT AMET");
 
 			SelectFrameTop();
 
@@ -169,9 +155,7 @@ definition {
 		}
 
 		task ("Navigate to the section fragment") {
-			FragmentsAdmin.gotoEntry(
-				entry = "Fragment Name"
-			);
+			FragmentsAdmin.gotoEntry(entry = "Fragment Name");
 		}
 
 		task ("Assert the edits to the section fragment persist by asserting that the preview displays the Title fragment") {
@@ -179,8 +163,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "//div[@class='fragment-header']/h1[@class='title']",
-				value1 = "LOREM IPSUM DOLOR SIT AMET"
-			);
+				value1 = "LOREM IPSUM DOLOR SIT AMET");
 
 			SelectFrameTop();
 		}
@@ -206,19 +189,13 @@ definition {
 	@priority = "4"
 	test ViewReferenceToFragmentsToolkit {
 		task ("Click on the Fragments Toolkit link") {
-			Click(
-				locator1 = "FragmentEditor#FRAGMENTS_TOOLKIT_LINK"
-			);
+			Click(locator1 = "FragmentEditor#FRAGMENTS_TOOLKIT_LINK");
 		}
 
 		task ("Assert user is taken to the the Liferay Fragments Toolkit documentation page") {
-			SelectWindow.selectPopUp(
-				locator1 = "null"
-			);
+			SelectWindow.selectPopUp(locator1 = "null");
 
-			AssertLocation(
-				value1 = "https://github.com/liferay/generator-liferay-fragments#liferay-fragments-cli"
-			);
+			AssertLocation(value1 = "https://github.com/liferay/generator-liferay-fragments#liferay-fragments-cli");
 		}
 	}
 }

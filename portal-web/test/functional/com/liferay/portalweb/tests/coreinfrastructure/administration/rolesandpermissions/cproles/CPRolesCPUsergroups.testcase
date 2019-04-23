@@ -19,8 +19,7 @@ definition {
 		else {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test"
-			);
+				userLoginFullName = "Test Test");
 
 			UserGroup.tearDownCP();
 
@@ -41,81 +40,68 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		AssertElementNotPresent(locator1 = "NavBar#ADD");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_USER_GROUP",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.UserGroup",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_USER_GROUP",
 			resourceName = "90",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.portal.kernel.model.UserGroup",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		AssertElementNotPresent(locator1 = "NavBar#ADD");
 	}

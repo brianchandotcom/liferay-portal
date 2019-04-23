@@ -4,7 +4,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE",
-			value1 = "Widgets"
-		);
+			value1 = "Widgets");
 	}
 }

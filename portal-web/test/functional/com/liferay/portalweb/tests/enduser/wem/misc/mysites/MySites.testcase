@@ -11,7 +11,9 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Home Site");
 
-		JSONLayout.addPublicLayout(groupName = "Home Site", layoutName = "Site Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Home Site",
+			layoutName = "Site Page");
 	}
 
 	tearDown {
@@ -40,11 +42,15 @@ definition {
 
 		// Add MySites Widget to page
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
 		Portlet.addPG(portletName = "My Sites");
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
 		// View pagination
 
@@ -70,21 +76,21 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		// Login with the new user and join the open site
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
@@ -94,7 +100,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@description = "Assert a default user cannot join a normal private site"
@@ -107,7 +115,9 @@ definition {
 
 		Site.openSitesAdmin();
 
-		Site.addBlankCP(membershipType = "Private", siteName = "Site Name");
+		Site.addBlankCP(
+			membershipType = "Private",
+			siteName = "Site Name");
 
 		// Create a user and set its password
 
@@ -115,31 +125,35 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		// Login with the new user and attempt to join the private site
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		Site.joinViaMySitesPG(membershipType = "Private", siteName = "Site Name");
+		Site.joinViaMySitesPG(
+			membershipType = "Private",
+			siteName = "Site Name");
 
 		// Relog in to superadmin
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@description = "Assert joining a restricted site requires admin approval"
@@ -151,7 +165,9 @@ definition {
 
 		Site.openSitesAdmin();
 
-		Site.addBlankCP(membershipType = "Restricted", siteName = "Site Name");
+		Site.addBlankCP(
+			membershipType = "Restricted",
+			siteName = "Site Name");
 
 		// Create a user and set its password
 
@@ -159,25 +175,27 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		// Login with the new user and request to join the restricted site
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		Site.joinViaMySitesPG(membershipType = "Restricted", siteName = "Site Name");
+		Site.joinViaMySitesPG(
+			membershipType = "Restricted",
+			siteName = "Site Name");
 
 		// View that the user's membership request is sent
 
@@ -191,7 +209,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
@@ -199,24 +219,29 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		// View that the user's membership request is approved
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		Site.viewMySitesViaMySitesPG(memberCount = "2", siteName = "Site Name");
+		Site.viewMySitesViaMySitesPG(
+			memberCount = "2",
+			siteName = "Site Name");
 
 		// Relog in to superadmin
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@description = "Assert a default user can leave a site"
@@ -235,21 +260,21 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		// Log in with new user and join site
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
@@ -265,7 +290,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@description = "Search for a site using MySites widget"
@@ -279,17 +306,25 @@ definition {
 
 		// Add MySites widget
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
 		Portlet.addPG(portletName = "My Sites");
 
 		// Search for new site in MySites widget
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
-		Search.searchPG(portletName = "My Sites", searchTerm = "Site Name");
+		Search.searchPG(
+			portletName = "My Sites",
+			searchTerm = "Site Name");
 
-		Site.viewMySitesViaMySitesPG(memberCount = "1", siteName = "Site Name");
+		Site.viewMySitesViaMySitesPG(
+			memberCount = "1",
+			siteName = "Site Name");
 	}
 
 	@description = "Asssign site membership to a user in multiple ways via CP"
@@ -303,15 +338,13 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		// Make user a member of home site via Site Settings CP
 
@@ -320,15 +353,13 @@ definition {
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		// Assign user Power User role
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Power User",
-			userEmailAddress = "userea@liferay.com"
-		);
+			userEmailAddress = "userea@liferay.com");
 
 		// Create another new site
 
@@ -338,23 +369,33 @@ definition {
 
 		User.openUsersAdmin();
 
-		Site.assignUserSitesCP(siteName = "Site Name", userScreenName = "usersn");
+		Site.assignUserSitesCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
 
 		// Add MySites widget
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
 		Portlet.addPG(portletName = "My Sites");
 
 		// Relog into portal as user
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		// Assert user is a member of both sites
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
-		Site.viewMySitesViaMySitesPG(memberCount = "2", siteName = "Site Name");
+		Site.viewMySitesViaMySitesPG(
+			memberCount = "2",
+			siteName = "Site Name");
 	}
 
 	@description = "Assert inactive sites are not searchable"
@@ -374,7 +415,9 @@ definition {
 
 		// Create a MySites widget
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
 		Portlet.addPG(portletName = "My Sites");
 
@@ -382,7 +425,9 @@ definition {
 
 		Search.searchCP(searchTerm = "Site Name");
 
-		Site.viewNoMySitesViaMySitesPG(memberCount = "1", siteName = "Site Name");
+		Site.viewNoMySitesViaMySitesPG(
+			memberCount = "1",
+			siteName = "Site Name");
 	}
 
 	@description = "Assert a user cannot join a site with manual membership management disabled"
@@ -396,15 +441,13 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		// Give user administrative role for home site
 
@@ -413,13 +456,11 @@ definition {
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com"
-		);
+			userEmailAddress = "userea@liferay.com");
 
 		// Add new site with manual membership disabled
 
@@ -431,17 +472,25 @@ definition {
 
 		// Add MySites widget
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
 		Portlet.addPG(portletName = "My Sites");
 
 		// Assert user cannot join a site with disabled membership maanagement
 
-		User.firstLoginPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
-		MySites.viewNoOptions(navItem = "Available Sites", siteName = "Site Name");
+		MySites.viewNoOptions(
+			navItem = "Available Sites",
+			siteName = "Site Name");
 	}
 
 	@description = "Assert a user cannot leave a site with manual membership management disabled"
@@ -459,15 +508,21 @@ definition {
 
 		// Add MySites widget
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
 		Portlet.addPG(portletName = "My Sites");
 
 		// Assert superadmin cannot leave site
 
-		Search.searchPG(portletName = "My Sites", searchTerm = "Site Name");
+		Search.searchPG(
+			portletName = "My Sites",
+			searchTerm = "Site Name");
 
-		MySites.viewNoOptions(navItem = "Available Sites", siteName = "Site Name");
+		MySites.viewNoOptions(
+			navItem = "Available Sites",
+			siteName = "Site Name");
 	}
 
 	@description = "Assert a user can navigate to a Site's public or private pages via MySites widget"
@@ -479,16 +534,19 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(groupName = "Site Name", layoutName = "Public Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Public Page");
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Site Name",
-			layoutName = "Private Page"
-		);
+			layoutName = "Private Page");
 
 		// Add MySites widget
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
 		Portlet.addPG(portletName = "My Sites");
 
@@ -497,16 +555,16 @@ definition {
 		MySites.gotoPagesPG(
 			item = "Go to Public Pages",
 			pageName = "Public Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
 		MySites.gotoPagesPG(
 			item = "Go to Private Pages",
 			pageName = "Private Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 	}
 
 	@description = "Assert that site tags appear in MySites widget"
@@ -526,13 +584,17 @@ definition {
 
 		// Add MySites widget
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Home Site");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Home Site");
 
 		Portlet.addPG(portletName = "My Sites");
 
 		// View Site tags via MySites widget
 
-		Site.viewMySitesViaMySitesPG(memberCount = "1", siteName = "Site Name");
+		Site.viewMySitesViaMySitesPG(
+			memberCount = "1",
+			siteName = "Site Name");
 
 		for (var tagName : list "apple,banana,mango") {
 			MySites.viewTags(tagName = "${tagName}");

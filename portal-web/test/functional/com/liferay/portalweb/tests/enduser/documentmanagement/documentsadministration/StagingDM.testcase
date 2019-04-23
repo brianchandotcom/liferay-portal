@@ -12,37 +12,32 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Staging DM Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 	}
 
 	@description = "This is a use case for LPS-79925."
@@ -53,58 +48,49 @@ definition {
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name"
-		);
+			dmDocumentTypeName = "DM Document Type Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMFolder.configureWorkflowCP(
 			dmDocumentTypeName = "DM Document Type Name",
 			dmFolderName = "DM Folder Name",
 			workflowDefinition = "No Workflow",
-			workflowRestriction = "Specific Restrictions"
-		);
+			workflowRestriction = "Specific Restrictions");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name"
-		);
+			dmDocumentTypeName = "DM Document Type Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.edit(
 			dmDocumentTypeFieldRequiredEdit = "Text",
-			dmDocumentTypeName = "DM Document Type Name"
-		);
+			dmDocumentTypeName = "DM Document Type Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 
@@ -120,62 +106,53 @@ definition {
 	test PublishFolderWithWorkflow {
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 1"
-		);
+			dmFolderName = "DM Folder 1");
 
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder 1",
 			workflowDefinition = "Single Approver",
-			workflowRestriction = "Default Workflow"
-		);
+			workflowRestriction = "Default Workflow");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 1");
 
 		DMDocument.addWithWorkflowCP(
 			dmDocumentDescription = "DM Document in Folder 1",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document in Folder 1"
-		);
+			dmDocumentTitle = "DM Document in Folder 1");
 
 		AssertTextEquals(
+			key_dmDocumentTitle = "DM Document in Folder 1",
 			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS",
-			value1 = "Pending",
-			key_dmDocumentTitle = "DM Document in Folder 1"
-		);
+			value1 = "Pending");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		Staging.publishViaSAP(
-			entry = "DM Folder 1",
-			confirmMessage = "Are you sure you want to publish the selected folder?"
-		);
+			confirmMessage = "Are you sure you want to publish the selected folder?",
+			entry = "DM Folder 1");
 
 		ProductMenu.gotoLiveSite();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertTextEquals(
+			key_dmFolderName = "DM Folder 1",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
-			value1 = "DM Folder 1",
-			key_dmFolderName = "DM Folder 1"
-		);
+			value1 = "DM Folder 1");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 1");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder."
-		);
+			value1 = "There are no documents or media files in this folder.");
 	}
 
 	@description = "This test covers LPS-82532. It ensures documents inside the subfolder that's being published to live are also published."
@@ -185,80 +162,77 @@ definition {
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 1"
-		);
+			dmFolderName = "DM Folder 1");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 1");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document in Folder 1",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document in Folder 1"
-		);
+			dmDocumentTitle = "DM Document in Folder 1");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
-		DMFolder.viewCP(dmFolderName = "DM Folder 1", specificNameFolder = "true");
+		DMFolder.viewCP(
+			dmFolderName = "DM Folder 1",
+			specificNameFolder = "true");
 
 		DMFolder.addCP(dmFolderName = "DM Folder 2");
 
-		DMFolder.viewCP(dmFolderName = "DM Folder 2", specificNameFolder = "true");
+		DMFolder.viewCP(
+			dmFolderName = "DM Folder 2",
+			specificNameFolder = "true");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document in Folder 2",
 			dmDocumentFile = "Document_2.txt",
-			dmDocumentTitle = "DM Document in Folder 2"
-		);
+			dmDocumentTitle = "DM Document in Folder 2");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 1");
 
-		DMFolder.viewCP(dmFolderName = "DM Folder 2", specificNameFolder = "true");
+		DMFolder.viewCP(
+			dmFolderName = "DM Folder 2",
+			specificNameFolder = "true");
 
 		DMFolder.addCP(dmFolderName = "DM Folder 3");
 
-		DMFolder.viewCP(dmFolderName = "DM Folder 3", specificNameFolder = "true");
+		DMFolder.viewCP(
+			dmFolderName = "DM Folder 3",
+			specificNameFolder = "true");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document in Folder 3",
 			dmDocumentFile = "Document_3.txt",
-			dmDocumentTitle = "DM Document in Folder 3"
-		);
+			dmDocumentTitle = "DM Document in Folder 3");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		Staging.publishViaSAP(
-			entry = "DM Folder 1",
-			confirmMessage = "Are you sure you want to publish the selected folder?"
-		);
+			confirmMessage = "Are you sure you want to publish the selected folder?",
+			entry = "DM Folder 1");
 
 		ProductMenu.gotoLiveSite();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		for (var folderCount : list "1,2,3") {
 			DMFolder.viewCP(dmFolderName = "DM Folder ${folderCount}");
 
-			DMNavigator.gotoDocumentCP(
-				dmDocumentTitle = "DM Document in Folder ${folderCount}"
-			);
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document in Folder ${folderCount}");
 
 			DMDocument.viewCP(dmDocumentTitle = "DM Document in Folder ${folderCount}");
 

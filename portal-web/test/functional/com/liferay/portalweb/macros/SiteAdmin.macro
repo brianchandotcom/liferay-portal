@@ -13,7 +13,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#SITE_ADMINISTRATION_PORTLET_TITLE",
-			value1 = "${portletTitle}"
-		);
+			value1 = "${portletTitle}");
 	}
 }

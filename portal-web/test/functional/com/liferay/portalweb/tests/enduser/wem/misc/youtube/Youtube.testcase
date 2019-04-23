@@ -13,8 +13,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page Name");
 	}
@@ -38,8 +37,7 @@ definition {
 
 		Portlet.gotoPortletOptions(
 			portletName = "YouTube",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		YoutubePortlet.addVideoId(videoId = "PiObSymqSdo");
 
@@ -47,14 +45,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page Name");
 
-		YoutubePortlet.assertVideoTitle(
-			videoTitle = "The Gospel in 6 Minutes - John Piper"
-		);
+		YoutubePortlet.assertVideoTitle(videoTitle = "The Gospel in 6 Minutes - John Piper");
 
 		Portlet.gotoPortletOptions(
 			portletName = "YouTube",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		YoutubePortlet.viewPortletConfiguration(videoId = "PiObSymqSdo");
 
@@ -69,7 +64,6 @@ definition {
 
 		Portlet.viewPG(
 			portletBody = "Please configure this portlet to make it visible to all users.",
-			portletName = "YouTube"
-		);
+			portletName = "YouTube");
 	}
 }

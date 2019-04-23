@@ -2,34 +2,29 @@ definition {
 	macro configureSetupPG {
 		Portlet.gotoPortletOptions(
 			portletName = "Wiki Display",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		Select(
 			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_NODE_ID",
-			value1 = "${wikiNodeName}"
-		);
+			value1 = "${wikiNodeName}");
 
 		PortletEntry.save();
 
 		AssertSelectedLabel(
 			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_NODE_ID",
-			value1 = "${wikiNodeName}"
-		);
+			value1 = "${wikiNodeName}");
 
 		Select(
 			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_TITLE",
-			value1 = "${wikiPageName}"
-		);
+			value1 = "${wikiPageName}");
 
 		Button.clickSave();
 
 		AssertSelectedLabel(
 			locator1 = "WikiConfiguration#COMMUNICATION_SELECT_TITLE",
-			value1 = "${wikiPageName}"
-		);
+			value1 = "${wikiPageName}");
 
 		Alert.viewSuccessMessage();
 

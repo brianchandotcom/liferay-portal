@@ -13,20 +13,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Microblogs Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Microblogs Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Microblogs Page");
 
@@ -36,8 +33,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
-			value1 = "Microblogs"
-		);
+			value1 = "Microblogs");
 	}
 
 	tearDown {
@@ -56,8 +52,7 @@ definition {
 
 		Microblogs.viewEntry(
 			entryContent = "Microblog Entry Content",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 
 	@priority = "5"
@@ -74,8 +69,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "There are no microblog entries."
-		);
+			value1 = "There are no microblog entries.");
 	}
 
 	@priority = "5"
@@ -88,14 +82,12 @@ definition {
 
 		Microblogs.editStatus(
 			entryContent = "Microblog Entry Content",
-			entryContentEdit = "Edited Microblogs Content"
-		);
+			entryContentEdit = "Edited Microblogs Content");
 
 		Microblogs.gotoTimelineTab();
 
 		Microblogs.viewEntry(
 			entryContent = "Edited Microblogs Content",
-			userName = "Test Test"
-		);
+			userName = "Test Test");
 	}
 }

@@ -43,36 +43,31 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.openURL();
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.message.boards",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_message_boards_web_portlet_MBAdminPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsPortlet.viewNoPermissionCP();
 	}
@@ -90,39 +85,36 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
 			resourceName = "com.liferay.message.boards",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_SITE_ADMINISTRATION",
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_message_boards_web_portlet_MBAdminPortlet",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsPortlet.viewNoPermissionCP();
 	}

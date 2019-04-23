@@ -16,20 +16,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -68,158 +65,136 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc"
-		);
+			dmDocumentTitle = "Document_1.doc");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.doc",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.docx",
-			dmDocumentTitle = "Document_1.docx"
-		);
+			dmDocumentTitle = "Document_1.docx");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.docx",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpeg",
-			dmDocumentTitle = "Document_1.jpeg"
-		);
+			dmDocumentTitle = "Document_1.jpeg");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFileType = "Image",
 			dmDocumentTitle = "Document_1.jpeg",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg"
-		);
+			dmDocumentTitle = "Document_1.jpg");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFileType = "Image",
 			dmDocumentTitle = "Document_1.jpg",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Generated_by_adobe.jpg",
-			dmDocumentTitle = "Generated_by_adobe.jpg"
-		);
+			dmDocumentTitle = "Generated_by_adobe.jpg");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFileType = "Image",
 			dmDocumentTitle = "Generated_by_adobe.jpg",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_2.mp3",
-			dmDocumentTitle = "Document_2.mp3"
-		);
+			dmDocumentTitle = "Document_2.mp3");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.mp3",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.odt",
-			dmDocumentTitle = "Document_1.odt"
-		);
+			dmDocumentTitle = "Document_1.odt");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.odt",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.pdf",
-			dmDocumentTitle = "Document_1.pdf"
-		);
+			dmDocumentTitle = "Document_1.pdf");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.pdf",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.png",
-			dmDocumentTitle = "Document_1.png"
-		);
+			dmDocumentTitle = "Document_1.png");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFileType = "Image",
 			dmDocumentTitle = "Document_1.png",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.xls",
-			dmDocumentTitle = "Document_1.xls"
-		);
+			dmDocumentTitle = "Document_1.xls");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.xls",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.xlsx",
-			dmDocumentTitle = "Document_1.xlsx"
-		);
+			dmDocumentTitle = "Document_1.xlsx");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.xlsx",
-			dmDocumentType = "Basic Document"
-		);
+			dmDocumentType = "Basic Document");
 	}
 
 	@priority = "4"
@@ -227,74 +202,59 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type 1 Description",
 			dmDocumentTypeFieldNames = "Text Box",
-			dmDocumentTypeName = "DM Document Type 1 Name"
-		);
+			dmDocumentTypeName = "DM Document Type 1 Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
-		DMDocumentType.viewMenulistOption(
-			dmDocumentTypeName = "DM Document Type 1 Name"
-		);
+		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 1 Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type 2 Description",
 			dmDocumentTypeFieldNames = "Text Box",
-			dmDocumentTypeName = "DM Document Type 2 Name"
-		);
+			dmDocumentTypeName = "DM Document Type 2 Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
-		DMDocumentType.viewMenulistOption(
-			dmDocumentTypeName = "DM Document Type 2 Name"
-		);
+		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 2 Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type 3 Description",
 			dmDocumentTypeFieldNames = "Text Box",
-			dmDocumentTypeName = "DM Document Type 3 Name"
-		);
+			dmDocumentTypeName = "DM Document Type 3 Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
-		DMDocumentType.viewMenulistOption(
-			dmDocumentTypeName = "DM Document Type 3 Name"
-		);
+		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 3 Name");
 	}
 
 	@priority = "4"
@@ -303,23 +263,20 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.addPG(
 			dmDocument = "Duplicate",
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 	}
 
 	@priority = "5"
@@ -330,8 +287,7 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -339,22 +295,19 @@ definition {
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc"
-		);
+			dmDocumentTitle = "Document_1.doc");
 
 		Refresh();
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_2.doc",
-			dmDocumentTitle = "Document_2.doc"
-		);
+			dmDocumentTitle = "Document_2.doc");
 
 		Refresh();
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_3.doc",
-			dmDocumentTitle = "Document_3.doc"
-		);
+			dmDocumentTitle = "Document_3.doc");
 
 		DMDocument.viewPG(dmDocumentTitle = "Document_1.doc");
 
@@ -377,21 +330,18 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title"
-		);
+			dmDocumentTitle = "DM Image Title");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Image Description",
-			dmDocumentTitle = "DM Image Title"
-		);
+			dmDocumentTitle = "DM Image Title");
 	}
 
 	@priority = "4"
@@ -400,23 +350,20 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title"
-		);
+			dmDocumentTitle = "DM Image Title");
 
 		DMDocument.addPG(
 			dmDocument = "Duplicate",
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title"
-		);
+			dmDocumentTitle = "DM Image Title");
 	}
 
 	@priority = "4"
@@ -425,8 +372,7 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -435,25 +381,21 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Image Description 1",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image 1 Title"
-		);
+			dmDocumentTitle = "DM Image 1 Title");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Image Description 2",
 			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "DM Image 2 Title"
-		);
+			dmDocumentTitle = "DM Image 2 Title");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Image Description 3",
 			dmDocumentFile = "Document_3.jpg",
-			dmDocumentTitle = "DM Image 3 Title"
-		);
+			dmDocumentTitle = "DM Image 3 Title");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Image Description 1",
-			dmDocumentTitle = "DM Image 1 Title"
-		);
+			dmDocumentTitle = "DM Image 1 Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -461,8 +403,7 @@ definition {
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Image Description 2",
-			dmDocumentTitle = "DM Image 2 Title"
-		);
+			dmDocumentTitle = "DM Image 2 Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -470,8 +411,7 @@ definition {
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Image Description 3",
-			dmDocumentTitle = "DM Image 3 Title"
-		);
+			dmDocumentTitle = "DM Image 3 Title");
 	}
 
 	@priority = "4"
@@ -481,8 +421,7 @@ definition {
 		DMFolder.addPG(
 			dmFolder = "Invalid",
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name?"
-		);
+			dmFolderName = "DM Folder Name?");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -495,28 +434,24 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM SubFolder Description",
-			dmFolderName = "DM SubFolder Name"
-		);
+			dmFolderName = "DM SubFolder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title"
-		);
+			dmDocumentTitle = "DM Image Title");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Image Description",
-			dmDocumentTitle = "DM Image Title"
-		);
+			dmDocumentTitle = "DM Image Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -527,13 +462,11 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 	}
 
 	@priority = "4"
@@ -542,16 +475,14 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -560,8 +491,7 @@ definition {
 		DMFolder.addPG(
 			dmFolder = "Duplicate",
 			dmFolderDescription = "DM Document Description",
-			dmFolderName = "DM Document Title"
-		);
+			dmFolderName = "DM Document Title");
 	}
 
 	@priority = "4"
@@ -570,15 +500,13 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "Folder Name"
-		);
+			dmFolderName = "Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "Folder Name");
 
 		DMFolder.viewPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "Folder Name"
-		);
+			dmFolderName = "Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -586,8 +514,7 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Subfolder1 Description",
-			dmFolderName = "Subfolder1 Name"
-		);
+			dmFolderName = "Subfolder1 Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "Subfolder1 Name");
 
@@ -599,8 +526,7 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Subfolder2 Description",
-			dmFolderName = "Subfolder2 Name"
-		);
+			dmFolderName = "Subfolder2 Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "Subfolder2 Name");
 
@@ -612,8 +538,7 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Subfolder3 Description",
-			dmFolderName = "Subfolder3 Name"
-		);
+			dmFolderName = "Subfolder3 Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "Subfolder3 Name");
 
@@ -627,8 +552,7 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -647,16 +571,14 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.deletePG(dmDocumentTitle = "DM Document Title");
 	}
@@ -666,30 +588,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Text Box",
-			dmDocumentTypeName = "DM Document Type Name"
-		);
+			dmDocumentTypeName = "DM Document Type Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
@@ -703,13 +621,11 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "/D/M/Document Title"
-		);
+			dmDocumentTitle = "/D/M/Document Title");
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "/D/M/Document Title"
-		);
+			dmDocumentTitle = "/D/M/Document Title");
 
 		Navigator.openURL();
 
@@ -722,8 +638,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();
 
@@ -738,8 +653,7 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -748,8 +662,7 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description 1",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title 1"
-		);
+			dmDocumentTitle = "DM Document Title 1");
 
 		Navigator.openURL();
 
@@ -764,15 +677,13 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Subfolder Description",
-			dmFolderName = "DM Subfolder Name"
-		);
+			dmFolderName = "DM Subfolder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -789,23 +700,20 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM SubFolder Description",
-			dmFolderName = "DM SubFolder Name"
-		);
+			dmFolderName = "DM SubFolder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title"
-		);
+			dmDocumentTitle = "DM Image Title");
 
 		DMDocument.deleteViaActionsPG(dmDocumentTitle = "DM Image Title");
 	}
@@ -817,8 +725,7 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "/D/M/Document Title"
-		);
+			dmDocumentTitle = "/D/M/Document Title");
 
 		DMDocument.downloadPG(dmDocumentTitle = "/D/M/Document Title");
 	}
@@ -831,8 +738,7 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Documents and Media",
 			configurationName = "Google Drive",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		var googlePropertiesSet = MathUtil.randomNumber("3");
 		var googleAppsAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");
@@ -840,8 +746,7 @@ definition {
 
 		PortalSettings.configureGoogleApps(
 			googleAppsAPIKey = "${googleAppsAPIKey}",
-			googleClientID = "${googleClientID}"
-		);
+			googleClientID = "${googleClientID}");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -852,8 +757,7 @@ definition {
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.3"),
 			userPassword = PropsUtil.get("email.password.3"),
-			windowTitle = "Documents and Media Page - Liferay"
-		);
+			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDrive.selectDocument(googleDocName = "taco.jpg");
 
@@ -873,13 +777,11 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.editPG(
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit"
-		);
+			dmDocumentTitleEdit = "DM Document Title Edit");
 	}
 
 	@priority = "5"
@@ -890,48 +792,40 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Text Box",
-			dmDocumentTypeName = "DM Document Type Name"
-		);
+			dmDocumentTypeName = "DM Document Type Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.edit(
 			dmDocumentTypeDescriptionEdit = "DM Document Type Description Edit",
 			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeNameEdit = "DM Document Type Name Edit"
-		);
+			dmDocumentTypeNameEdit = "DM Document Type Name Edit");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
-		DMDocumentType.viewMenulistOption(
-			dmDocumentTypeName = "DM Document Type Name Edit"
-		);
+		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name Edit");
 	}
 
 	@priority = "5"
@@ -940,21 +834,18 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.editPG(
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit"
-		);
+			dmDocumentTitleEdit = "DM Document Title Edit");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -963,8 +854,7 @@ definition {
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title Edit",
-			dmDocumentVersionNumber = "1.1"
-		);
+			dmDocumentVersionNumber = "1.1");
 	}
 
 	@description = "This test edits a document inside a folder. It also asserts a major version increment since the change involved changing the actual file."
@@ -974,21 +864,18 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.editPG(
 			dmDocumentFileEdit = "Document_2.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -997,8 +884,7 @@ definition {
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "2.0"
-		);
+			dmDocumentVersionNumber = "2.0");
 	}
 
 	@priority = "5"
@@ -1009,21 +895,18 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM SubFolder Description",
-			dmFolderName = "DM SubFolder Name"
-		);
+			dmFolderName = "DM SubFolder Name");
 
 		DMFolder.editPG(
 			dmFolderDescriptionEdit = "DM SubFolder Description Edit",
 			dmFolderName = "DM SubFolder Name",
-			dmFolderNameEdit = "DM SubFolder Name Edit"
-		);
+			dmFolderNameEdit = "DM SubFolder Name Edit");
 	}
 
 	@priority = "4"
@@ -1032,28 +915,24 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM SubFolder Description",
-			dmFolderName = "DM SubFolder Name"
-		);
+			dmFolderName = "DM SubFolder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title"
-		);
+			dmDocumentTitle = "DM Image Title");
 
 		DMDocument.editPG(
 			dmDocumentTitle = "DM Image Title",
-			dmDocumentTitleEdit = "DM Image Title Edit"
-		);
+			dmDocumentTitleEdit = "DM Image Title Edit");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1064,8 +943,7 @@ definition {
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentTitle = "DM Image Title Edit",
-			dmDocumentVersionNumber = "1.1"
-		);
+			dmDocumentVersionNumber = "1.1");
 	}
 
 	@priority = "4"
@@ -1075,25 +953,21 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "/D/M/Document Title"
-		);
+			dmDocumentTitle = "/D/M/Document Title");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "/D/M/Document Title",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "/D/M/Document Title"
-		);
+			dmDocumentTitle = "/D/M/Document Title");
 	}
 
 	@priority = "4"
@@ -1102,21 +976,18 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder1 Description",
-			dmFolderName = "DM Folder1 Name"
-		);
+			dmFolderName = "DM Folder1 Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder2 Description",
-			dmFolderName = "DM Folder2 Name"
-		);
+			dmFolderName = "DM Folder2 Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder1 Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1125,8 +996,7 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.navigateHomeViaDocumentViewPG();
 
@@ -1135,8 +1005,7 @@ definition {
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "DM Document Title",
 			dmDuplicateDocument = "true",
-			dmFolderName = "DM Folder2 Name"
-		);
+			dmFolderName = "DM Folder2 Name");
 	}
 
 	@priority = "4"
@@ -1145,26 +1014,22 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder1 Description",
-			dmFolderName = "DM Folder1 Name"
-		);
+			dmFolderName = "DM Folder1 Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder2 Description",
-			dmFolderName = "DM Folder2 Name"
-		);
+			dmFolderName = "DM Folder2 Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder1 Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "DM Folder2 Name"
-		);
+			dmFolderName = "DM Folder2 Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1172,8 +1037,7 @@ definition {
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 	}
 
 	@priority = "5"
@@ -1184,8 +1048,7 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Documents and Media",
 			configurationName = "Google Drive",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		var googlePropertiesSet = MathUtil.randomNumber("3");
 		var googleAppsAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");
@@ -1193,8 +1056,7 @@ definition {
 
 		PortalSettings.configureGoogleApps(
 			googleAppsAPIKey = "${googleAppsAPIKey}",
-			googleClientID = "${googleClientID}"
-		);
+			googleClientID = "${googleClientID}");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1205,8 +1067,7 @@ definition {
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.3"),
 			userPassword = PropsUtil.get("email.password.3"),
-			windowTitle = "Documents and Media Page - Liferay"
-		);
+			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDrive.selectDocument(googleDocName = "taco.jpg");
 
@@ -1216,13 +1077,11 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "taco.jpg",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -1244,8 +1103,7 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1254,13 +1112,11 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.editPG(
 			dmDocumentFileEdit = "Document_2.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1269,8 +1125,7 @@ definition {
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "2.0"
-		);
+			dmDocumentVersionNumber = "2.0");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1278,13 +1133,11 @@ definition {
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.revertPG(
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "1.0"
-		);
+			dmDocumentVersionNumber = "1.0");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1293,8 +1146,7 @@ definition {
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "3.0"
-		);
+			dmDocumentVersionNumber = "3.0");
 	}
 
 	@priority = "4"
@@ -1304,16 +1156,14 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		SearchPortlets.searchEmbedded(searchTerm = "This is a *.doc file.");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "This is a *.doc file.",
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 	}
 
 	@priority = "4"
@@ -1323,15 +1173,13 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 	}
 
 	@priority = "4"
@@ -1340,23 +1188,20 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 	}
 
 	@priority = "4"
@@ -1365,23 +1210,20 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Image Title"
-		);
+			dmDocumentTitle = "DM Image Title");
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM Image Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Image Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 	}
 
 	@priority = "4"
@@ -1390,30 +1232,26 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM SubFolder Description",
-			dmFolderName = "DM SubFolder Name"
-		);
+			dmFolderName = "DM SubFolder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 	}
 
 	@description = "This is a use case for LPS-51280"
@@ -1425,39 +1263,33 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1471,8 +1303,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test"
-		);
+			userLoginFullName = "test test");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1480,16 +1311,14 @@ definition {
 
 		DMDocumentComment.addPG(
 			commentBody = "DM Document Comment Body",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		MockMock.viewMail(
 			asset = "New Comments by Test Test",
 			content = "DM Document Comment Body",
 			recipient = "userfn userln",
 			sender = "Joe Bloggs",
-			subject = "New Comments by Test Test"
-		);
+			subject = "New Comments by Test Test");
 	}
 
 	@priority = "5"
@@ -1502,39 +1331,35 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1550,12 +1375,13 @@ definition {
 
 		Click(locator1 = "Icon#INFO");
 
-		AssertTextEquals(locator1 = "Link#UNSUBSCRIBE", value1 = "Unsubscribe");
+		AssertTextEquals(
+			locator1 = "Link#UNSUBSCRIBE",
+			value1 = "Unsubscribe");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1564,8 +1390,7 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		MockMock.viewMail(
 			asset = "New Basic Document: ${dmDocumentTitle}",
@@ -1574,8 +1399,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			recipient = "userfn userln",
 			sender = "Joe Bloggs",
-			subject = "New Basic Document: ${dmDocumentTitle}"
-		);
+			subject = "New Basic Document: ${dmDocumentTitle}");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1585,8 +1409,7 @@ definition {
 
 		DMDocument.editPG(
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit"
-		);
+			dmDocumentTitleEdit = "DM Document Title Edit");
 
 		MockMock.viewMail(
 			asset = "Basic Document Updated for ${dmDocumentTitle}",
@@ -1595,8 +1418,7 @@ definition {
 			dmFolderName = "DM Folder Name",
 			recipient = "userfn userln",
 			sender = "Joe Bloggs",
-			subject = "Basic Document Updated for ${dmDocumentTitle}"
-		);
+			subject = "Basic Document Updated for ${dmDocumentTitle}");
 	}
 
 	@priority = "4"
@@ -1605,16 +1427,14 @@ definition {
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.checkoutPG(dmDocumentTitle = "DM Document Title");
 
@@ -1624,8 +1444,7 @@ definition {
 
 		DMDocument.viewCheckedoutPG(
 			dmDocumentTitle = "DM Document Title",
-			status = "Draft"
-		);
+			status = "Draft");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1640,8 +1459,7 @@ definition {
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "2.0"
-		);
+			dmDocumentVersionNumber = "2.0");
 	}
 
 	@priority = "4"
@@ -1651,35 +1469,30 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.editPG(
 			dmDocumentDescriptionEdit = "DM Document Description Edited",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description Edited",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewOlderVersionPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "1.0"
-		);
+			dmDocumentVersionNumber = "1.0");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description Edited",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.1");
 	}
@@ -1694,36 +1507,30 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
 		Pause(locator1 = "5000");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
 
@@ -1732,143 +1539,121 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		ProductMenu.gotoSite(site = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Teams"
-		);
+			portlet = "Teams");
 
 		Team.assignUserGroups(
 			teamName = "Site Team Name",
-			userGroupName = "UG UserGroup Name"
-		);
+			userGroupName = "UG UserGroup Name");
 
 		ProductMenu.gotoSite(site = "Site Name 1");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Navigator.gotoNavItem(navItem = "User Groups");
 
 		Site.assignSiteRoleToUserGroup(
-			userGroupName = "UG UserGroup Name",
-			roleName = "Site Administrator"
-		);
+			roleName = "Site Administrator",
+			userGroupName = "UG UserGroup Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups"
-		);
+			portlet = "User Groups");
 
 		UserGroup.assignMemberCP(
 			userGroupName = "UG UserGroup Name",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name 2");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name 2"
-		);
+			siteName = "Site Name 2");
 
 		Portlet.addPG(portletName = "Documents and Media");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name 2"
-		);
+			siteName = "Site Name 2");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM SubFolder Description",
-			dmFolderName = "DM SubFolder Name"
-		);
+			dmFolderName = "DM SubFolder Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Folder Name");
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "Remove",
-			roleList = "Guest"
-		);
+			roleList = "Guest");
 
 		IFrame.closeFrame();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -1876,15 +1661,13 @@ definition {
 
 		PermissionsInline.viewPermissionsChecked(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest"
-		);
+			roleTitle = "Guest");
 
 		IFrame.closeFrame();
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name 2"
-		);
+			siteName = "Site Name 2");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -1893,14 +1676,12 @@ definition {
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -1910,8 +1691,7 @@ definition {
 
 		PermissionsInline.viewPermissionsChecked(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest"
-		);
+			roleTitle = "Guest");
 
 		IFrame.closeFrame();
 
@@ -1922,26 +1702,29 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Search Page", sitePageType = "Widget Page");
+		SitePages.addPublicPage(
+			pageName = "Search Page",
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Search Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
-		Navigator.gotoSitePage(pageName = "Search Page", siteName = "Site Name 1");
+		Navigator.gotoSitePage(
+			pageName = "Search Page",
+			siteName = "Site Name 1");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Search Page", siteName = "Site Name 1");
+		Navigator.gotoSitePage(
+			pageName = "Search Page",
+			siteName = "Site Name 1");
 
 		ClassicSearch.search(searchTerm = "DM Document Title");
 
@@ -1949,7 +1732,6 @@ definition {
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document",
 			searchNoResults = "true",
-			searchTerm = "DM Document Title"
-		);
+			searchTerm = "DM Document Title");
 	}
 }

@@ -15,24 +15,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -40,8 +39,7 @@ definition {
 			calendarName = "${siteName}",
 			calendarType = "Current Site Calendars",
 			site = "${siteName}",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 	}
@@ -81,8 +79,7 @@ definition {
 			eventType = "All Day",
 			pageName = "Calendar Page",
 			site = "${siteName}",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -92,8 +89,7 @@ definition {
 			eventTitle = "Calendar Event All Day Title",
 			eventType = "All Day",
 			site = "${siteName}",
-			user = "Test Test"
-		);
+			user = "Test Test");
 	}
 
 	@priority = "4"
@@ -110,8 +106,7 @@ definition {
 			eventType = "Regular",
 			pageName = "Calendar Page",
 			site = "${siteName}",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -121,8 +116,7 @@ definition {
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
 			site = "${siteName}",
-			user = "Test Test"
-		);
+			user = "Test Test");
 	}
 
 	@priority = "3"
@@ -141,8 +135,7 @@ definition {
 			numberOfOccurrences = "1",
 			pageName = "Calendar Page",
 			site = "${siteName}",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -152,7 +145,6 @@ definition {
 			eventTitle = "Calendar Event Repeating Title",
 			eventType = "Repeating",
 			site = "${siteName}",
-			user = "Test Test"
-		);
+			user = "Test Test");
 	}
 }

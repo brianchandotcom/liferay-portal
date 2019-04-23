@@ -16,10 +16,11 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-sharepoint.xml",
-			value1 = "clean-sharepoint-repository -Dssh.host=${sharepointVMHostName}"
-		);
+			value1 = "clean-sharepoint-repository -Dssh.host=${sharepointVMHostName}");
 
-		User.loginPG(authenticationMethod = "By Screen Name", userScreenName = "test");
+		User.loginPG(
+			authenticationMethod = "By Screen Name",
+			userScreenName = "test");
 
 		Navigator.openURL();
 
@@ -33,24 +34,21 @@ definition {
 
 		User.editPasswordViaMyAccount(
 			currentPassword = "test",
-			newPassword = "password"
-		);
+			newPassword = "password");
 
 		User.logoutPG();
 
 		User.loginPG(
 			authenticationMethod = "By Screen Name",
 			password = "password",
-			userScreenName = "administrator"
-		);
+			userScreenName = "administrator");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -61,8 +59,7 @@ definition {
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryName = "Documents",
 			dmRepositoryName = "Sharepoint",
-			dmRepositorySiteURL = "http://${sharepointVMHostName}"
-		);
+			dmRepositorySiteURL = "http://${sharepointVMHostName}");
 
 		PortletEntry.save();
 	}
@@ -83,8 +80,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "My Account",
 				panel = "User",
-				portlet = "Account Settings"
-			);
+				portlet = "Account Settings");
 
 			User.editDetailsViaMyAccount(userScreenNameEdit = "test");
 
@@ -93,21 +89,18 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "My Account",
 				panel = "User",
-				portlet = "Account Settings"
-			);
+				portlet = "Account Settings");
 
 			User.editPasswordViaMyAccount(
 				currentPassword = "password",
-				newPassword = "test"
-			);
+				newPassword = "test");
 
 			User.logoutPG();
 
 			User.loginPG(
 				authenticationMethod = "By Screen Name",
 				password = "test",
-				userScreenName = "test"
-			);
+				userScreenName = "test");
 		}
 	}
 
@@ -119,23 +112,20 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.txt",
-			dmDocumentTitle = "Document_3.txt"
-		);
+			dmDocumentTitle = "Document_3.txt");
 
 		Pause(locator1 = "5000");
 
 		DMDocument.checkoutCP(
 			dmDocumentTitle = "Document_3.txt",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -154,23 +144,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
 		var key_dmDocumentTitle = "Document_3.txt";
 
-		AssertElementNotPresent(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_NOT_LOCKED"
-		);
+		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_NOT_LOCKED");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
 
 		DMDocument.viewCheckedinCP(
 			dmDocumentVersionNumber = "2.0",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 	}
 
 	@priority = "4"
@@ -183,16 +169,14 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_2.doc",
-			dmDocumentTitle = "Document_2.doc"
-		);
+			dmDocumentTitle = "Document_2.doc");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -207,8 +191,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -216,16 +199,14 @@ definition {
 
 		DMDocument.deleteCP(
 			dmDocumentTitle = "Document_2.doc",
-			recycleBinDisabled = "true"
-		);
+			recycleBinDisabled = "true");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -244,15 +225,16 @@ definition {
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
 
-		DMFolder.deleteCP(dmFolderName = "DM Folder Name", recycleBinDisabled = "true");
+		DMFolder.deleteCP(
+			dmFolderName = "DM Folder Name",
+			recycleBinDisabled = "true");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -269,51 +251,49 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.doc",
-			dmDocumentTitle = "Document_3.doc"
-		);
+			dmDocumentTitle = "Document_3.doc");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
 
-		DMDocument.viewCP(dmDocumentSize = "32 KB", dmDocumentTitle = "Document_3.doc");
+		DMDocument.viewCP(
+			dmDocumentSize = "32 KB",
+			dmDocumentTitle = "Document_3.doc");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_2.jpg",
-			dmDocumentTitle = "Document_3.doc"
-		);
+			dmDocumentTitle = "Document_3.doc");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
 
-		DMDocument.viewCP(dmDocumentSize = "30 KB", dmDocumentTitle = "Document_3.doc");
+		DMDocument.viewCP(
+			dmDocumentSize = "30 KB",
+			dmDocumentTitle = "Document_3.doc");
 
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = "image/jpeg",
-			metadataLabel = "Content Type"
-		);
+			metadataLabel = "Content Type");
 
 		DMDocument.cannotViewDocumentMetadataCP(
 			metadataData = "ISO-8859-1",
-			metadataLabel = "Content Encoding"
-		);
+			metadataLabel = "Content Encoding");
 	}
 
 	@priority = "4"
@@ -325,8 +305,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -339,28 +318,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Document_1.txt"
-		);
+			dmDocumentTitle = "Document_1.txt");
 
 		DMDocument.checkoutCP(
 			dmDocumentTitle = "Document_1.txt",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -375,8 +350,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -385,13 +359,11 @@ definition {
 		DMDocument.moveToSubFolderCP(
 			dmDocumentTitle = "Document_1.txt",
 			dmFolderName = "Sharepoint Repository Name",
-			dmSubFolderName = "Sharepoint Subfolder"
-		);
+			dmSubFolderName = "Sharepoint Subfolder");
 
 		DMDocument.viewMovedToFolderCP(
 			dmDocumentTitle = "Document_1.txt",
-			dmFolderName = "Sharepoint Subfolder"
-		);
+			dmFolderName = "Sharepoint Subfolder");
 
 		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
 
@@ -409,21 +381,18 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.odt",
-			dmDocumentTitle = "Document_1.odt"
-		);
+			dmDocumentTitle = "Document_1.odt");
 
 		DMDocument.moveToFolderCP(
 			dmDocumentTitle = "Document_1.odt",
-			dmFolderName = "Home"
-		);
+			dmFolderName = "Home");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.odt");
 
@@ -434,8 +403,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -450,23 +418,20 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.odt",
-			dmDocumentTitle = "Document_3.odt"
-		);
+			dmDocumentTitle = "Document_3.odt");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		Search.searchCP(searchTerm = "Document_3.odt");
 
 		DMDocument.viewSearchResultsCP(
 			dmDocumentTitle = "Document_3.odt",
-			dmRepositoryName = "Sharepoint Repository Name"
-		);
+			dmRepositoryName = "Sharepoint Repository Name");
 	}
 
 	@priority = "4"
@@ -477,29 +442,30 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.xls",
-			dmDocumentTitle = "Document_1.xls"
-		);
+			dmDocumentTitle = "Document_1.xls");
 
 		DMDocument.checkoutCP(
 			dmDocumentTitle = "Document_1.xls",
-			dmRepositoryName = "true"
-		);
+			dmRepositoryName = "true");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Document_1.xls");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_1.xls");
 
 		DMDocument.editCmd(dmDocumentTitleEdit = "Document_1_Edit.xls");
 
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		Alert.viewSuccessMessage();
 
@@ -508,8 +474,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -529,10 +494,11 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.docx",
-			dmDocumentTitle = "Document_1.docx"
-		);
+			dmDocumentTitle = "Document_1.docx");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Document_1.docx");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_1.docx");
 
 		DMDocument.editCmd(dmDocumentTitleEdit = "Document_1.jpg");
 
@@ -542,16 +508,14 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_PUBLISH_UNSUCCESSFUL_EXTENSION",
-			value1 = "The source file does not have the same extension as the original file."
-		);
+			value1 = "The source file does not have the same extension as the original file.");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -569,10 +533,11 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.docx",
-			dmDocumentTitle = "Document_3.docx"
-		);
+			dmDocumentTitle = "Document_3.docx");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Document_3.docx");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_3.docx");
 
 		DMDocument.editCmd(dmDocumentTitleEdit = "Document_3");
 
@@ -582,16 +547,14 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_PUBLISH_UNSUCCESSFUL_EXTENSION",
-			value1 = "The source file does not have the same extension as the original file."
-		);
+			value1 = "The source file does not have the same extension as the original file.");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -609,8 +572,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 

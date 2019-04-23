@@ -1,10 +1,14 @@
 definition {
 	macro addContent {
-		AlloyEditor.typeEditor(content = "${content}", editor = "content");
+		AlloyEditor.typeEditor(
+			content = "${content}",
+			editor = "content");
 	}
 
 	macro addDescription {
-		AlloyEditor.typeEditor(content = "${description}", editor = "description");
+		AlloyEditor.typeEditor(
+			content = "${description}",
+			editor = "description");
 	}
 
 	macro addSourceContent {
@@ -12,11 +16,15 @@ definition {
 
 		Click(locator1 = "Button#EDITOR_SWITCH");
 
-		Type.typeAceEditor(locator1 = "TextArea#ACE_EDITOR", value1 = "${content}");
+		Type.typeAceEditor(
+			locator1 = "TextArea#ACE_EDITOR",
+			value1 = "${content}");
 	}
 
 	macro addTitle {
-		AlloyEditor.typeEditor(content = "${title}", editor = "title");
+		AlloyEditor.typeEditor(
+			content = "${title}",
+			editor = "title");
 	}
 
 	macro addTitleAndContent {
@@ -26,11 +34,15 @@ definition {
 	}
 
 	macro clickContentField {
-		Click(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
+		Click(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
 	}
 
 	macro toggleStylingInAlloyEditor {
-		SelectFieldText(locator1 = "AlloyEditor#EDITOR", key_editor = "content");
+		SelectFieldText(
+			key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
 
 		if (isSet(boldContent)) {
 			Click(locator1 = "AlloyEditor#TEXT_FORMATTING_BOLD");
@@ -47,10 +59,9 @@ definition {
 
 	macro typeEditor {
 		Type.typeEditor(
+			key_editor = "${editor}",
 			locator1 = "AlloyEditor#EDITOR",
-			value1 = "${content}",
-			key_editor = "${editor}"
-		);
+			value1 = "${content}");
 	}
 
 	macro viewNoStylingInAlloyEditor {
@@ -58,23 +69,20 @@ definition {
 
 		if (isSet(boldContent)) {
 			AssertElementNotPresent(
-				locator1 = "AlloyEditor#CONTENT_FIELD_BOLD",
-				key_boldContent = "${boldContent}"
-			);
+				key_boldContent = "${boldContent}",
+				locator1 = "AlloyEditor#CONTENT_FIELD_BOLD");
 		}
 
 		if (isSet(italicContent)) {
 			AssertElementNotPresent(
-				locator1 = "AlloyEditor#CONTENT_FIELD_ITALIC",
-				key_italicContent = "${italicContent}"
-			);
+				key_italicContent = "${italicContent}",
+				locator1 = "AlloyEditor#CONTENT_FIELD_ITALIC");
 		}
 
 		if (isSet(underlineContent)) {
 			AssertElementNotPresent(
-				locator1 = "AlloyEditor#CONTENT_FIELD_UNDERLINE",
-				key_underlineContent = "${underlineContent}"
-			);
+				key_underlineContent = "${underlineContent}",
+				locator1 = "AlloyEditor#CONTENT_FIELD_UNDERLINE");
 		}
 	}
 
@@ -83,23 +91,20 @@ definition {
 
 		if (isSet(boldContent)) {
 			AssertElementPresent(
-				locator1 = "AlloyEditor#CONTENT_FIELD_BOLD",
-				key_boldContent = "${boldContent}"
-			);
+				key_boldContent = "${boldContent}",
+				locator1 = "AlloyEditor#CONTENT_FIELD_BOLD");
 		}
 
 		if (isSet(italicContent)) {
 			AssertElementPresent(
-				locator1 = "AlloyEditor#CONTENT_FIELD_ITALIC",
-				key_italicContent = "${italicContent}"
-			);
+				key_italicContent = "${italicContent}",
+				locator1 = "AlloyEditor#CONTENT_FIELD_ITALIC");
 		}
 
 		if (isSet(underlineContent)) {
 			AssertElementPresent(
-				locator1 = "AlloyEditor#CONTENT_FIELD_UNDERLINE",
-				key_underlineContent = "${underlineContent}"
-			);
+				key_underlineContent = "${underlineContent}",
+				locator1 = "AlloyEditor#CONTENT_FIELD_UNDERLINE");
 		}
 	}
 }

@@ -9,9 +9,7 @@ definition {
 
 		User.firstLoginPG();
 
-		AutoTagging.enableAutoTagging(
-			enableAutoTaggingFor = "System Settings"
-		);
+		AutoTagging.enableAutoTagging(enableAutoTaggingFor = "System Settings");
 
 		AutoTagging.enableTensorFlow();
 	}
@@ -39,33 +37,28 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Documents and Media");
 
@@ -74,31 +67,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "Document Description",
 			dmDocumentFile = "Document_4.jpg",
-			dmDocumentTitle = "Document Title"
-		);
+			dmDocumentTitle = "Document Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "Document Description",
-			dmDocumentTitle = "Document Title"
-		);
+			dmDocumentTitle = "Document Title");
 
 		AutoTagging.assertAutoTagPresent(tagName = "carton");
 
@@ -110,13 +98,11 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "Document Description",
-			dmDocumentTitle = "Document Title"
-		);
+			dmDocumentTitle = "Document Title");
 
 		AutoTagging.assertAutoTagPresent(tagName = "carton");
 	}
@@ -129,32 +115,28 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site AutoTag Enabled");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "AutoTag Enabled Site Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site AutoTag Disabled");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "AutoTag Disabled Site Page");
 
@@ -165,20 +147,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_4.jpg",
-			dmDocumentTitle = "DM Document JPG"
-		);
+			dmDocumentTitle = "DM Document JPG");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
@@ -191,20 +170,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_4.jpg",
-			dmDocumentTitle = "DM Document JPG"
-		);
+			dmDocumentTitle = "DM Document JPG");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
@@ -221,20 +197,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -250,16 +223,14 @@ definition {
 			dmDocumentDescription = "Document Description",
 			dmDocumentFile = "Document_4.jpg",
 			dmDocumentTitle = "Document Title",
-			tagNameList = "ManualTag,NotAutoTagged"
-		);
+			tagNameList = "ManualTag,NotAutoTagged");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "Document Description",
 			dmDocumentTitle = "Document Title",
-			tagNameList = "manualtag,notautotagged"
-		);
+			tagNameList = "manualtag,notautotagged");
 
 		AutoTagging.assertNoAutoTag(tagName = "carton");
 	}
@@ -272,20 +243,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -298,16 +266,14 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.addPG(
-			dmDocumentFile = "Document_4.jpg",
 			dmDocumentDescription = "Auto Tagged Image Description",
-			dmDocumentTitle = "Auto Tagged Image"
-		);
+			dmDocumentFile = "Document_4.jpg",
+			dmDocumentTitle = "Auto Tagged Image");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "Auto Tagged Image Description",
 			dmDocumentTitle = "Auto Tagged Image",
-			tagNameList = "carton"
-		);
+			tagNameList = "carton");
 
 		DMDocument.removeTag(removeTag = "carton");
 
@@ -317,8 +283,7 @@ definition {
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "Auto Tagged Image Description",
-			dmDocumentTitle = "Auto Tagged Image"
-		);
+			dmDocumentTitle = "Auto Tagged Image");
 
 		AutoTagging.assertNoAutoTag();
 	}
@@ -332,27 +297,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_4.jpg",
-			dmDocumentTitle = "DM Document JPG"
-		);
+			dmDocumentTitle = "DM Document JPG");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertAutoTagPresent(
-			tagName = "carton"
-		);
+		AutoTagging.assertAutoTagPresent(tagName = "carton");
 	}
 }

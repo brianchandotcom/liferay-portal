@@ -4,8 +4,7 @@ definition {
 
 		AssertClick(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
-			value1 = "Select"
-		);
+			value1 = "Select");
 
 		var assetTypeLocator = StringUtil.replace("${assetType}", " ", "_");
 		var assetTypeLocator = StringUtil.upperCase("${assetTypeLocator}");
@@ -22,15 +21,13 @@ definition {
 
 		AssertClick(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
-			value1 = "Select"
-		);
+			value1 = "Select");
 
 		var key_assetType = "${assetType}";
 
 		AssertClick(
 			locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET",
-			value1 = "${assetType}"
-		);
+			value1 = "${assetType}");
 	}
 
 	macro selectAsset {
@@ -51,9 +48,8 @@ definition {
 		var key_assetTitle = "${assetTitle}";
 
 		Click(
-			locator1 = "AssetRelatedAssets#ASSET_TABLE_CHECKBOX",
-			key_assetTitle = "${assetTitle}"
-		);
+			key_assetTitle = "${assetTitle}",
+			locator1 = "AssetRelatedAssets#ASSET_TABLE_CHECKBOX");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -65,14 +61,12 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#TITLE",
-			value1 = "Related Assets"
-		);
+			value1 = "Related Assets");
 
 		AssertTextEquals(
+			key_widgetName = "Related Assets",
 			locator1 = "Message#INFO_SPECIFIC_WIDGET",
-			value1 = "There are no related assets available. This application will show all assets related to the main asset of the current page.",
-			key_widgetName = "Related Assets"
-		);
+			value1 = "There are no related assets available. This application will show all assets related to the main asset of the current page.");
 	}
 
 	macro viewNoPG {
@@ -90,7 +84,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Relatedassets#ASSET_TITLE_1",
-			value1 = "${assetTitle}"
-		);
+			value1 = "${assetTitle}");
 	}
 }

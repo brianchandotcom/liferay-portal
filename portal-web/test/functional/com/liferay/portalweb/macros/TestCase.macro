@@ -72,8 +72,7 @@ definition {
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Forms",
 			configurationName = "Forms",
-			configurationScope = "Site Scope"
-		);
+			configurationScope = "Site Scope");
 
 		SystemSettings.saveConfiguration();
 

@@ -3,7 +3,9 @@ definition {
 		var key_navItem = "${navItem}";
 
 		if (IsElementNotPresent(locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK")) {
-			AssertClick(locator1 = "NavBar#NAV_ITEM_LINK", value1 = "${navItem}");
+			AssertClick(
+				locator1 = "NavBar#NAV_ITEM_LINK",
+				value1 = "${navItem}");
 		}
 
 		NavItem.viewActive(navItem = "${navItem}");
@@ -51,8 +53,7 @@ definition {
 
 	macro viewActive {
 		AssertElementPresent(
-			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK",
-			key_navItem = "${navItem}"
-		);
+			key_navItem = "${navItem}",
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 	}
 }

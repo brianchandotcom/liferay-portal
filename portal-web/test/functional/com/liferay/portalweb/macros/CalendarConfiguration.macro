@@ -1,8 +1,6 @@
 definition {
 	macro disableGlobalTimeZone {
-		Uncheck(
-			locator1 = "CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX"
-		);
+		Uncheck(locator1 = "CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX");
 	}
 
 	macro editNumberOfEventsDisplayed {
@@ -10,8 +8,7 @@ definition {
 
 		Select(
 			locator1 = "CalendarConfiguration#EVENTS_DISPLAYED_MAX_DAYS",
-			value1 = "${maxNumberOfEvents}"
-		);
+			value1 = "${maxNumberOfEvents}");
 	}
 
 	macro editTimeZonePacific {
@@ -20,14 +17,12 @@ definition {
 		if (IsTextNotEqual(locator1 = "Select#LOS_ANGELES_TIME_ZONE", value1 = "(UTC -07:00) Pacific Daylight Time")) {
 			Select(
 				locator1 = "Select#TIME_ZONE",
-				value1 = "(UTC -08:00) Pacific Standard Time"
-			);
+				value1 = "(UTC -08:00) Pacific Standard Time");
 		}
 		else {
 			Select(
 				locator1 = "Select#TIME_ZONE",
-				value1 = "(UTC -07:00) Pacific Daylight Time"
-			);
+				value1 = "(UTC -07:00) Pacific Daylight Time");
 		}
 	}
 
@@ -36,14 +31,11 @@ definition {
 
 		Select(
 			locator1 = "Select#TIME_ZONE",
-			value1 = "(UTC) Coordinated Universal Time"
-		);
+			value1 = "(UTC) Coordinated Universal Time");
 	}
 
 	macro enableGlobalTimeZone {
-		Check(
-			locator1 = "CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX"
-		);
+		Check(locator1 = "CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX");
 	}
 
 	macro enableRSS {
@@ -55,15 +47,13 @@ definition {
 	macro gotoDisplaySettings {
 		AssertClick(
 			locator1 = "CalendarConfiguration#NAVIGATION_DISPLAY_SETTINGS",
-			value1 = "Display Settings"
-		);
+			value1 = "Display Settings");
 	}
 
 	macro gotoRSS {
 		AssertClick(
 			locator1 = "CalendarConfiguration#NAVIGATION_USER_RSS",
-			value1 = "RSS"
-		);
+			value1 = "RSS");
 	}
 
 	macro save {
@@ -73,29 +63,25 @@ definition {
 	macro selectDefaultDuration {
 		Select(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_DEFAULT_DURATION_SELECT",
-			value1 = "${defaultDuration}"
-		);
+			value1 = "${defaultDuration}");
 	}
 
 	macro selectDefaultView {
 		Select(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_DEFAULT_VIEW_SELECT",
-			value1 = "${defaultView}"
-		);
+			value1 = "${defaultView}");
 	}
 
 	macro selectTimeFormat {
 		Select(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_TIME_FORMAT_SELECT",
-			value1 = "${timeFormat}"
-		);
+			value1 = "${timeFormat}");
 	}
 
 	macro selectWeekStartsOn {
 		Select(
 			locator1 = "CalendarConfiguration#USER_SETTINGS_WEEK_STARTS_ON_SELECT",
-			value1 = "${weekStartDay}"
-		);
+			value1 = "${weekStartDay}");
 	}
 
 	macro tearDown {

@@ -8,13 +8,11 @@ definition {
 
 		Select(
 			locator1 = "ReportsAdminEditReportDefinition#DATA_SOURCE_NAME_SELECT",
-			value1 = "${dataSource}"
-		);
+			value1 = "${dataSource}");
 
 		UploadCommonFile(
 			locator1 = "ReportsAdminEditReportDefinition#TEMPLATE_FILE_UPLOAD",
-			value1 = "${templateFile}"
-		);
+			value1 = "${templateFile}");
 
 		PortletEntry.save();
 	}
@@ -26,29 +24,27 @@ definition {
 
 		MenuItem.click(menuItem = "Add Report");
 
-		Select(locator1 = "Select#REPORT_FORMAT", value1 = "${reportFormat}");
+		Select(
+			locator1 = "Select#REPORT_FORMAT",
+			value1 = "${reportFormat}");
 
 		if (isSet(reportName)) {
 			Type(
 				locator1 = "ReportsAdminEditReportEntry#REPORT_NAME_FIELD",
-				value1 = "${reportName}"
-			);
+				value1 = "${reportName}");
 		}
 
 		Type(
 			locator1 = "TextInput#EMAIL_NOTIFICATIONS",
-			value1 = "${emailNotificationsAddress}"
-		);
+			value1 = "${emailNotificationsAddress}");
 
 		Type(
 			locator1 = "TextInput#EMAIL_RECIPIENT",
-			value1 = "${emailRecipientAddress}"
-		);
+			value1 = "${emailRecipientAddress}");
 
 		AssertClick(
 			locator1 = "ReportsAdminEditReportEntry#GENERATE_BUTTON",
-			value1 = "Generate"
-		);
+			value1 = "Generate");
 
 		Alert.viewSuccessMessage();
 
@@ -62,9 +58,7 @@ definition {
 
 		MenuItem.click(menuItem = "Add Schedule");
 
-		AssertElementPresent(
-			locator1 = "ReportsAdminEditScheduleEntry#START_DATE_TIME_FIELD"
-		);
+		AssertElementPresent(locator1 = "ReportsAdminEditScheduleEntry#START_DATE_TIME_FIELD");
 
 		var time = selenium.getElementValue("//span[contains(@class,'lfr-input-time')]/input");
 		var ampm = RegexUtil.replace("${time}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
@@ -91,25 +85,23 @@ definition {
 
 		Type(
 			locator1 = "ReportsAdminEditScheduleEntry#START_DATE_TIME_FIELD",
-			value1 = "${hours}:${minutesIncremented2} ${ampm}"
-		);
+			value1 = "${hours}:${minutesIncremented2} ${ampm}");
 
-		Select(locator1 = "Select#REPORT_FORMAT", value1 = "${reportFormat}");
+		Select(
+			locator1 = "Select#REPORT_FORMAT",
+			value1 = "${reportFormat}");
 
 		Type(
 			locator1 = "TextInput#EMAIL_NOTIFICATIONS",
-			value1 = "${emailNotificationsAddress}"
-		);
+			value1 = "${emailNotificationsAddress}");
 
 		Type(
 			locator1 = "TextInput#EMAIL_RECIPIENT",
-			value1 = "${emailRecipientAddress}"
-		);
+			value1 = "${emailRecipientAddress}");
 
 		AssertClick(
 			locator1 = "ReportsAdminEditScheduleEntry#SCHEDULE_BUTTON",
-			value1 = "Schedule"
-		);
+			value1 = "Schedule");
 
 		Alert.viewSuccessMessage();
 
@@ -121,43 +113,41 @@ definition {
 
 		Type(
 			locator1 = "ReportsAdminEditSource#DATA_SOURCE_NAME_FIELD",
-			value1 = "${reportsDataSourceName}"
-		);
+			value1 = "${reportsDataSourceName}");
 
 		Type(
 			locator1 = "ReportsAdminEditSource#JDBC_DRIVER_CLASS_NAME_FIELD",
-			value1 = "${reportsDataSourceClass}"
-		);
+			value1 = "${reportsDataSourceClass}");
 
 		Type(
 			locator1 = "ReportsAdminEditSource#JDBC_URL_FIELD",
-			value1 = "${reportsDataSourceURL}"
-		);
+			value1 = "${reportsDataSourceURL}");
 
 		Type(
 			locator1 = "ReportsAdminEditSource#JDBC_USER_NAME_FIELD",
-			value1 = "${reportsDataSourceUser}"
-		);
+			value1 = "${reportsDataSourceUser}");
 
 		if (isSet(reportsDataSourcePassword)) {
 			Type(
 				locator1 = "ReportsAdminEditSource#JDBC_PASSWORD_FIELD",
-				value1 = "${reportsDataSourcePassword}"
-			);
+				value1 = "${reportsDataSourcePassword}");
 		}
 	}
 
 	macro configureDeliveryEmail {
 		AssertClick(
 			locator1 = "ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL",
-			value1 = "Delivery Email"
-		);
+			value1 = "Delivery Email");
 
-		Type(locator1 = "TextInput#SUBJECT", value1 = "${deliverySubject}");
+		Type(
+			locator1 = "TextInput#SUBJECT",
+			value1 = "${deliverySubject}");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-		Type(locator1 = "CKEditor#BODY_FIELD_SOURCE_ON", value1 = "${deliveryBody}");
+		Type(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+			value1 = "${deliveryBody}");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
@@ -167,9 +157,13 @@ definition {
 	macro configureEmailFrom {
 		Navigator.gotoNavTab(navTab = "Email From");
 
-		Type(locator1 = "TextInput#EMAIL_FROM_NAME", value1 = "${emailFromName}");
+		Type(
+			locator1 = "TextInput#EMAIL_FROM_NAME",
+			value1 = "${emailFromName}");
 
-		Type(locator1 = "TextInput#EMAIL_FROM_ADDRESS", value1 = "${emailFromAddress}");
+		Type(
+			locator1 = "TextInput#EMAIL_FROM_ADDRESS",
+			value1 = "${emailFromAddress}");
 
 		PortletEntry.save();
 	}
@@ -177,20 +171,17 @@ definition {
 	macro configureNotificationsEmail {
 		AssertClick(
 			locator1 = "ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL",
-			value1 = "Notifications Email"
-		);
+			value1 = "Notifications Email");
 
 		Type(
 			locator1 = "ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_SUBJECT_FIELD",
-			value1 = "${notificationSubject}"
-		);
+			value1 = "${notificationSubject}");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON_2");
 
 		Type(
 			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON_2",
-			value1 = "${notificationBody}"
-		);
+			value1 = "${notificationBody}");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON_2");
 
@@ -202,22 +193,17 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE",
-			value1 = "${reportsFileName}"
-		);
+			value1 = "${reportsFileName}");
 
 		LexiconEntry.openEntryMenu(rowEntry = "${reportsFileName}");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 
-		AssertElementNotPresent(
-			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE"
-		);
+		AssertElementNotPresent(locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE");
 	}
 
 	macro deliverReportEntryFile {
@@ -225,30 +211,25 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE",
-			value1 = "${reportsFileName}"
-		);
+			value1 = "${reportsFileName}");
 
 		LexiconEntry.openEntryMenu(rowEntry = "${reportsFileName}");
 
 		AssertClick(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DELIVER_REPORT",
-			value1 = "Deliver Report"
-		);
+			value1 = "Deliver Report");
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminDeliverReport#REPORT_NAME",
-			value1 = "Report Name ${reportsFileName}"
-		);
+			value1 = "Report Name ${reportsFileName}");
 
 		Type(
 			locator1 = "ReportsAdminDeliverReport#EMAIL_RECIPIENT_FIELD",
-			value1 = "${emailRecipientAddress}"
-		);
+			value1 = "${emailRecipientAddress}");
 
 		AssertClick(
 			locator1 = "ReportsAdminDeliverReport#DELIVER_BUTTON",
-			value1 = "Deliver"
-		);
+			value1 = "Deliver");
 
 		Alert.viewSuccessMessage();
 	}
@@ -256,21 +237,17 @@ definition {
 	macro downloadReportEntryFile {
 		var key_reportsFileName = "${reportsFileName}";
 
-		AssertElementPresent(
-			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE"
-		);
+		AssertElementPresent(locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE");
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE",
-			value1 = "${reportsFileName}"
-		);
+			value1 = "${reportsFileName}");
 
 		LexiconEntry.openEntryMenu(rowEntry = "${reportsFileName}");
 
 		AssertClick(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DOWNLOAD",
-			value1 = "Download"
-		);
+			value1 = "Download");
 
 		Pause(locator1 = "2000");
 
@@ -295,12 +272,13 @@ definition {
 	macro gotoDefinitions {
 		AssertClick(
 			locator1 = "ReportsAdmin#NAVIGATION_DEFINITIONS",
-			value1 = "Definitions"
-		);
+			value1 = "Definitions");
 	}
 
 	macro gotoSources {
-		AssertClick(locator1 = "ReportsAdmin#NAVIGATION_SOURCES", value1 = "Sources");
+		AssertClick(
+			locator1 = "ReportsAdmin#NAVIGATION_SOURCES",
+			value1 = "Sources");
 	}
 
 	macro tearDownConfiguration {
@@ -308,9 +286,13 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Email From");
 
-		Type(locator1 = "TextInput#EMAIL_FROM_NAME", value1 = "Joe Bloggs");
+		Type(
+			locator1 = "TextInput#EMAIL_FROM_NAME",
+			value1 = "Joe Bloggs");
 
-		Type(locator1 = "TextInput#EMAIL_FROM_ADDRESS", value1 = "test@liferay.com");
+		Type(
+			locator1 = "TextInput#EMAIL_FROM_ADDRESS",
+			value1 = "test@liferay.com");
 
 		PortletEntry.save();
 
@@ -320,12 +302,13 @@ definition {
 
 		AssertClick(
 			locator1 = "ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL",
-			value1 = "Delivery Email"
-		);
+			value1 = "Delivery Email");
 
 		var deliverySubject = '''New Report: [$REPORT_NAME$]''';
 
-		Type(locator1 = "TextInput#SUBJECT", value1 = "${deliverySubject}");
+		Type(
+			locator1 = "TextInput#SUBJECT",
+			value1 = "${deliverySubject}");
 
 		var deliveryBody = '''
 Dear [$TO_NAME$],<br /><br />
@@ -338,7 +321,9 @@ Sincerely,<br />
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-		Type(locator1 = "CKEditor#BODY_FIELD_SOURCE_ON", value1 = "${deliveryBody}");
+		Type(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+			value1 = "${deliveryBody}");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
@@ -350,15 +335,13 @@ Sincerely,<br />
 
 		AssertClick(
 			locator1 = "ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL",
-			value1 = "Notifications Email"
-		);
+			value1 = "Notifications Email");
 
 		var notificationSubject = '''New Report: [$REPORT_NAME$]''';
 
 		Type(
 			locator1 = "ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_SUBJECT_FIELD",
-			value1 = "${notificationSubject}"
-		);
+			value1 = "${notificationSubject}");
 
 		var notificationBody = '''
 Dear [$TO_NAME$],<br /><br />
@@ -373,8 +356,7 @@ Sincerely,<br />
 
 		Type(
 			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON_2",
-			value1 = "${notificationBody}"
-		);
+			value1 = "${notificationBody}");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON_2");
 
@@ -387,8 +369,7 @@ Sincerely,<br />
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
 
@@ -397,17 +378,14 @@ Sincerely,<br />
 
 			MenuItem.clickNoError(menuItem = "Delete");
 
-			AssertConfirm(
-				value1 = "Are you sure you want to delete this? It will be deleted immediately."
-			);
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 			Alert.viewSuccessMessage();
 		}
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "There are no definitions."
-		);
+			value1 = "There are no definitions.");
 	}
 
 	macro tearDownReports {
@@ -416,26 +394,24 @@ Sincerely,<br />
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		while (IsElementPresent(locator1 = "ReportsAdmin#REPORTS_ENTRY_TABLE_ACTIONS_1")) {
 			Click(locator1 = "ReportsAdmin#REPORTS_ENTRY_TABLE_ACTIONS_1");
 
 			AssertClickNoError(
+				key_menuItem = "Delete",
 				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "Delete",
-				key_menuItem = "Delete"
-			);
+				value1 = "Delete");
 
-			AssertConfirm(
-				value1 = "Are you sure you want to delete this? It will be deleted immediately."
-			);
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 			Alert.viewSuccessMessage();
 		}
 
-		AssertTextEquals(locator1 = "Message#INFO", value1 = "There are no entries.");
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "There are no entries.");
 	}
 
 	macro tearDownSources {
@@ -444,8 +420,7 @@ Sincerely,<br />
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Reports Admin"
-		);
+			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoSources();
 
@@ -454,50 +429,42 @@ Sincerely,<br />
 
 			MenuItem.clickNoError(menuItem = "Delete");
 
-			AssertConfirm(
-				value1 = "Are you sure you want to delete this? It will be deleted immediately."
-			);
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 			Alert.viewSuccessMessage();
 		}
 
-		AssertTextEquals(locator1 = "Message#INFO", value1 = "There are no sources.");
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "There are no sources.");
 	}
 
 	macro testDatabaseConnection {
 		AssertClick(
 			locator1 = "ReportsAdminEditSource#TEST_DATABASE_CONNECTION_BUTTON",
-			value1 = "Test Database Connection"
-		);
+			value1 = "Test Database Connection");
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminEditSource#TEST_DATABASE_CONNECTION_SUCCESS_MESSAGE",
-			value1 = "You have successfully connected to the database."
-		);
+			value1 = "You have successfully connected to the database.");
 
-		AssertClick(locator1 = "Button#CLOSE", value1 = "Close");
+		AssertClick(
+			locator1 = "Button#CLOSE",
+			value1 = "Close");
 	}
 
 	macro viewDefinitionParameterFields {
-		AssertElementPresent(
-			locator1 = "ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_KEY"
-		);
+		AssertElementPresent(locator1 = "ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_KEY");
 
-		AssertElementPresent(
-			locator1 = "ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_VALUE"
-		);
+		AssertElementPresent(locator1 = "ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_VALUE");
 
-		AssertElementPresent(
-			locator1 = "ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_TYPE"
-		);
+		AssertElementPresent(locator1 = "ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_TYPE");
 	}
 
 	macro viewNoReportEntryFile {
 		var key_reportsFileName = "${reportsFileName}";
 
-		AssertElementNotPresent(
-			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE"
-		);
+		AssertElementNotPresent(locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE");
 	}
 
 	macro viewReportEntry {
@@ -505,8 +472,7 @@ Sincerely,<br />
 
 		AssertClick(
 			locator1 = "ReportsAdmin#REPORTS_ENTRY_TABLE_DEFINITION_NAME",
-			value1 = "${reportsDefinitionName}"
-		);
+			value1 = "${reportsDefinitionName}");
 	}
 
 	macro viewReportEntryFields {
@@ -514,56 +480,48 @@ Sincerely,<br />
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#DEFINITION_NAME_FIELD",
-			value1 = "Definition Name ${reportsDefinitionName}"
-		);
+			value1 = "Definition Name ${reportsDefinitionName}");
 
 		var key_reportsDefinitionDescription = "${reportsDefinitionDescription}";
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#DESCRIPTION_FIELD",
-			value1 = "Description ${reportsDefinitionDescription}"
-		);
+			value1 = "Description ${reportsDefinitionDescription}");
 
 		var key_dataSource = "${dataSource}";
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#DATA_SOURCE_NAME_FIELD",
-			value1 = "Data Source Name ${dataSource}"
-		);
+			value1 = "Data Source Name ${dataSource}");
 
 		if (isSet(reportParameters)) {
 			AssertTextEquals(
 				locator1 = "ReportsAdminViewReportEntry#REPORT_PARAMETERS_FIELD",
-				value1 = "Report Parameters [${reportParameterse}]"
-			);
+				value1 = "Report Parameters [${reportParameterse}]");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "Panel#ENTRY_REPORT_PARAMETERS",
-				value1 = "Report Parameters"
-			);
+				value1 = "Report Parameters");
 		}
 
 		var key_userName = "${userName}";
 
 		AssertTextEquals(
 			locator1 = "ReportsAdminViewReportEntry#REQUESTED_BY_FIELD",
-			value1 = "Requested By ${userName}"
-		);
+			value1 = "Requested By ${userName}");
 
 		var key_reportsFileName = "${reportsFileName}";
 
 		if ("${scheduled}" == "true") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE",
-				value1 = "${reportsFileName}"
-			);
+				value1 = "${reportsFileName}");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE",
-				value1 = "${reportsFileName}"
-			);
+				value1 = "${reportsFileName}");
 		}
 	}
 }

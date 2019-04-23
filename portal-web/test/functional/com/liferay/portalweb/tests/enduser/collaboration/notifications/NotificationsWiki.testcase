@@ -16,20 +16,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Wiki Test Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Wiki Test Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -39,28 +36,26 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
 	}
 
 	tearDown {
@@ -89,8 +84,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiPortlet.subscribeToNodeCP(wikiNodeName = "Main");
 
@@ -98,7 +92,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -106,14 +102,15 @@ definition {
 
 		WikiPage.addPG(
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title"
-		);
+			wikiPageTitle = "Wiki Page Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -122,15 +119,13 @@ definition {
 		Notifications.viewNewContent(
 			assetType = "wiki page",
 			contentBody = "Wiki Page Title",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Wiki Page Title");
 
 		WikiPage.viewPG(
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title"
-		);
+			wikiPageTitle = "Wiki Page Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}
@@ -143,16 +138,14 @@ definition {
 
 		WikiPage.addPG(
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title"
-		);
+			wikiPageTitle = "Wiki Page Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		WikiPortlet.subscribeToNodeCP(wikiNodeName = "Main");
 
@@ -160,7 +153,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -169,14 +164,15 @@ definition {
 		WikiPage.editPagePG(
 			wikiPageContent = "Wiki Page Content",
 			wikiPageContentEdit = "Wiki Page Content Edit",
-			wikiPageTitle = "Wiki Page Title"
-		);
+			wikiPageTitle = "Wiki Page Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -185,15 +181,13 @@ definition {
 		Notifications.viewUpdatedContent(
 			assetType = "wiki page",
 			contentBody = "Wiki Page Title",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Wiki Page Title");
 
 		WikiPage.viewPG(
 			wikiPageContent = "Wiki Page Content Edit",
-			wikiPageTitle = "Wiki Page Title"
-		);
+			wikiPageTitle = "Wiki Page Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}

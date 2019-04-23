@@ -4,8 +4,7 @@ definition {
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
-			text = "${assetListTitle}"
-		);
+			text = "${assetListTitle}");
 
 		Button.clickSave();
 
@@ -17,8 +16,7 @@ definition {
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
-			text = "${assetListTitle}"
-		);
+			text = "${assetListTitle}");
 
 		Button.clickSave();
 
@@ -26,9 +24,7 @@ definition {
 	}
 
 	macro deleteEntry {
-		LexiconList.delete(
-			listEntry = "${assetListTitle}"
-		);
+		LexiconList.delete(listEntry = "${assetListTitle}");
 
 		Alert.viewSuccessMessage();
 	}
@@ -36,26 +32,21 @@ definition {
 	macro gotoEntryMenuItem {
 		LexiconList.clickEllipsisItem(
 			item = "${item}",
-			listEntry = "${assetListTitle}"
-		);
+			listEntry = "${assetListTitle}");
 	}
 
 	macro openAssetListsAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet");
 	}
 
 	macro renameAssetList {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = "${oldAssetListTitle}",
-			item = "Rename"
-		);
+			item = "Rename");
 
 		PortletEntry.inputText(
 			fieldLabel = "Title",
-			text = "${newAssetListTitle}"
-		);
+			text = "${newAssetListTitle}");
 
 		Button.clickSave();
 	}
@@ -87,32 +78,27 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
-			value1 = "${assetListTitle}"
-		);
+			value1 = "${assetListTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE",
-			value1 = "${type}"
-		);
+			value1 = "${type}");
 	}
 
 	macro viewContent {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = "${assetListTitle}",
-			item = "View Content"
-		);
+			item = "View Content");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertTextEquals(
 			locator1 = "AssetLists#ASSET_TITLE_ROW",
-			value1 = "${assetTitle}"
-		);
+			value1 = "${assetTitle}");
 
 		AssertTextEquals(
 			locator1 = "AssetLists#ASSET_TYPE_ROW",
-			value1 = "${assetType}"
-		);
+			value1 = "${assetType}");
 
 		SelectFrameTop();
 
@@ -122,14 +108,11 @@ definition {
 	macro viewUsages {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = "${assetListTitle}",
-			item = "View Usages"
-		);
+			item = "View Usages");
 
 		var usageAmount = "${usageAmount}";
 		var usageType = "${usageType}";
 
-		AssertElementPresent(
-			locator1 = "AssetLists#ASSET_LIST_USAGES"
-		);
+		AssertElementPresent(locator1 = "AssetLists#ASSET_LIST_USAGES");
 	}
 }

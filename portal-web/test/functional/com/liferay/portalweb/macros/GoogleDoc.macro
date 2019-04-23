@@ -4,7 +4,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#ANY");
 
-		AssertClick(locator1 = "Button#ANY", value1="Discard Changes");
+		AssertClick(
+			locator1 = "Button#ANY",
+			value1 = "Discard Changes");
 	}
 
 	macro editTitleInGoogleDoc {
@@ -12,7 +14,9 @@ definition {
 
 		Click(locator1 = "GoogleDoc#TITLE");
 
-		Type(locator1 = "GoogleDoc#TITLE", value1 = "${dmDocumentTitle}");
+		Type(
+			locator1 = "GoogleDoc#TITLE",
+			value1 = "${dmDocumentTitle}");
 
 		SelectFrameTop();
 	}
@@ -20,16 +24,13 @@ definition {
 	macro gotoEdit {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		Click(
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS"
-		);
+		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit in ${dmGoogleApp}");
 
 		AssertElementPresent(
-			locator1 = "Button#ANY",
-			key_text = "Save and Return to Liferay"
-		);
+			key_text = "Save and Return to Liferay",
+			locator1 = "Button#ANY");
 	}
 
 	macro saveAndExit {
@@ -37,7 +38,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#ANY");
 
-		AssertClick(locator1 = "Button#ANY", value1="Save and Return to Liferay");
+		AssertClick(
+			locator1 = "Button#ANY",
+			value1 = "Save and Return to Liferay");
 
 		Navigator.openURL();
 	}

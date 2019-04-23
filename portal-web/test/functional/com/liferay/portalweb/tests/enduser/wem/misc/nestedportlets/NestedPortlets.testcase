@@ -26,8 +26,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Nested Portlets Page");
 
@@ -38,30 +37,25 @@ definition {
 		Portlet.dragAndDropPortletToColumnPG(
 			columnNumberFrom = "1",
 			columnNumberTo = "2",
-			portletName = "Web Content Display"
-		);
+			portletName = "Web Content Display");
 
 		Navigator.gotoPage(pageName = "Nested Portlets Page");
 
 		Portlet.addPG(portletName = "Nested Applications");
 
-		NestedPortlets.viewConfigurationDefaultLayoutTemplate(
-			portletName = "Nested Applications"
-		);
+		NestedPortlets.viewConfigurationDefaultLayoutTemplate(portletName = "Nested Applications");
 
 		Navigator.gotoPage(pageName = "Nested Portlets Page");
 
 		NestedPortlets.dragAndDropPortletToPortletColumnPG(
 			columnNumberFrom = "2",
 			portletColumnNumberTo = "1",
-			portletName = "Web Content Display"
-		);
+			portletName = "Web Content Display");
 
 		Navigator.gotoPage(pageName = "Nested Portlets Page");
 
 		NestedPortlets.viewPG(
 			portletColumnNumberTo = "1",
-			portletName = "Web Content Display"
-		);
+			portletName = "Web Content Display");
 	}
 }

@@ -1,33 +1,24 @@
 definition {
 	macro addBasicWebContent {
-		ManagementBar.clickAddMenuItem(
-			menuItem = "Basic Web Content"
-		);
+		ManagementBar.clickAddMenuItem(menuItem = "Basic Web Content");
 	}
 
 	macro addFolder {
-		ManagementBar.clickAddMenuItem(
-			menuItem = "Folder"
-		);
+		ManagementBar.clickAddMenuItem(menuItem = "Folder");
 	}
 
 	macro changeDisplayStyle {
-		ManagementBar.changeDisplayStyle(
-			displayStyle = "${displayStyle}"
-		);
+		ManagementBar.changeDisplayStyle(displayStyle = "${displayStyle}");
 	}
 
 	macro clickEntryEllipsis {
-		LexiconList.clickEllipsis(
-			listEntry = "${entry}"
-		);
+		LexiconList.clickEllipsis(listEntry = "${entry}");
 	}
 
 	macro clickEntryEllipsisItem {
 		LexiconList.clickEllipsisItem(
 			item = "${item}",
-			listEntry = "${entry}"
-		);
+			listEntry = "${entry}");
 	}
 
 	macro clickSelectAllCheckbox {
@@ -35,42 +26,32 @@ definition {
 	}
 
 	macro gotoEntry {
-		LexiconList.clickListEntryTitle(
-			listEntry = "${entry}"
-		);
+		LexiconList.clickListEntryTitle(listEntry = "${entry}");
 	}
 
 	macro moveEntryToRecycleBin {
 		WebContentAdmin.clickEntryEllipsisItem(
 			entry = "${entry}",
-			item = "Move to Recycle Bin"
-		);
+			item = "Move to Recycle Bin");
 
 		Confirm();
 	}
 
 	macro openWebContentAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
 	}
 
 	macro viewEntryNotPresent {
-		LexiconList.viewListEntryNotPresent(
-			listEntry = "${entry}"
-		);
+		LexiconList.viewListEntryNotPresent(listEntry = "${entry}");
 	}
 
 	macro viewEntryTitle {
-		LexiconList.viewListEntryTitle(
-			listEntry = "${entry}"
-		);
+		LexiconList.viewListEntryTitle(listEntry = "${entry}");
 	}
 
 	macro viewEntryWorkflowStatus {
 		LexiconList.viewListEntryLabel(
 			listEntry = "${entry}",
-			listEntryLabel = "${workflowStatus}"
-		);
+			listEntryLabel = "${workflowStatus}");
 	}
 }

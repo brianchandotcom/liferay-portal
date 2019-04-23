@@ -12,7 +12,9 @@ definition {
 	}
 
 	macro gotoAllPagesPG {
-		AssertClick(locator1 = "WikiTable#NAVIGATION_ALL_PAGES", value1 = "All Pages");
+		AssertClick(
+			locator1 = "WikiTable#NAVIGATION_ALL_PAGES",
+			value1 = "All Pages");
 
 		var key_tabName = "All Pages";
 
@@ -20,19 +22,27 @@ definition {
 
 		AssertElementPresent(locator1 = "Portlet#H3_HEADER");
 
-		AssertTextEquals(locator1 = "Portlet#H3_HEADER", value1 = "All Pages");
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "All Pages");
 	}
 
 	macro gotoAllPagesPGViaWD {
-		AssertClick(locator1 = "WikiTable#NAVIGATION_ALL_PAGES", value1 = "All Pages");
+		AssertClick(
+			locator1 = "WikiTable#NAVIGATION_ALL_PAGES",
+			value1 = "All Pages");
 	}
 
 	macro gotoBodyLinkPG {
-		AssertClick(locator1 = "WikiEntry#BODY_LINK", value1 = "${wikiPageContent}");
+		AssertClick(
+			locator1 = "WikiEntry#BODY_LINK",
+			value1 = "${wikiPageContent}");
 	}
 
 	macro gotoChangeParent {
-		AssertClick(locator1 = "Wiki#PAGE_TABS_CHANGE_PARENT", value1 = "Change Parent");
+		AssertClick(
+			locator1 = "Wiki#PAGE_TABS_CHANGE_PARENT",
+			value1 = "Change Parent");
 	}
 
 	macro gotoChildPagePG {
@@ -40,13 +50,11 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Wiki#CHILD_PAGE_HEADER",
-			value1 = "Child Page"
-		);
+			value1 = "Child Page");
 
 		AssertClick(
 			locator1 = "Wiki#CHILD_PAGE_TITLE",
-			value1 = "${wikiChildPageTitle}"
-		);
+			value1 = "${wikiChildPageTitle}");
 	}
 
 	macro gotoCP {
@@ -61,20 +69,19 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		LexiconList.clickListEntryTitle(
-			listEntry = "${wikiPageTitle}"
-		);
+		LexiconList.clickListEntryTitle(listEntry = "${wikiPageTitle}");
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 
-		AssertVisible(locator1 = "Portlet#HEADER", value1 = "${wikiPageTitle}");
+		AssertVisible(
+			locator1 = "Portlet#HEADER",
+			value1 = "${wikiPageTitle}");
 	}
 
 	macro gotoDraftPagesPG {
 		AssertClick(
 			locator1 = "WikiTable#NAVIGATION_DRAFT_PAGES",
-			value1 = "Draft Pages"
-		);
+			value1 = "Draft Pages");
 	}
 
 	macro gotoEntryCopyViaPGTable {
@@ -108,12 +115,13 @@ definition {
 
 		AssertClick(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-			value1 = "${wikiPageTitle}"
-		);
+			value1 = "${wikiPageTitle}");
 	}
 
 	macro gotoFrontPagePG {
-		AssertClick(locator1 = "WikiTable#NAVIGATION_FRONTPAGE", value1 = "FrontPage");
+		AssertClick(
+			locator1 = "WikiTable#NAVIGATION_FRONTPAGE",
+			value1 = "FrontPage");
 	}
 
 	macro gotoNode {
@@ -123,10 +131,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
-			value1 = "${wikiNodeName}"
-		);
+			value1 = "${wikiNodeName}");
 
-		AssertClick(locator1 = "Wiki#NODE_TABLE_WIKI_NAME", value1 = "${wikiNodeName}");
+		AssertClick(
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
+			value1 = "${wikiNodeName}");
 
 		AssertElementPresent(locator1 = "Dropdown#FILTER_AND_ORDER");
 	}
@@ -135,8 +144,7 @@ definition {
 		if ("${isOrphanPage}" == "true") {
 			AssertClick(
 				locator1 = "WikiTable#NAVIGATION_ORPHAN_PAGES",
-				value1 = "Orphan Pages"
-			);
+				value1 = "Orphan Pages");
 		}
 		else {
 			WikiNavigator.gotoAllPagesPG();
@@ -146,18 +154,18 @@ definition {
 
 		AssertClick.assertTextClickAt(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-			value1 = "${wikiPageTitle}"
-		);
+			value1 = "${wikiPageTitle}");
 	}
 
 	macro gotoPGViaWD {
-		AssertClick(locator1 = "WikiTable#NAVIGATION_ALL_PAGES", value1 = "All Pages");
+		AssertClick(
+			locator1 = "WikiTable#NAVIGATION_ALL_PAGES",
+			value1 = "All Pages");
 
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
 		AssertClick(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-			value1 = "${wikiPageTitle}"
-		);
+			value1 = "${wikiPageTitle}");
 	}
 }

@@ -2,12 +2,13 @@ definition {
 	macro configureDisplayCountPG {
 		Portlet.gotoPortletOptions(
 			portletName = "Announcements",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Select(locator1 = "Select#PAGE_DELTA", value1 = "5");
+		Select(
+			locator1 = "Select#PAGE_DELTA",
+			value1 = "5");
 
 		PortletEntry.save();
 

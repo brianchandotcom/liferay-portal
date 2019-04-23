@@ -2,35 +2,30 @@ definition {
 	macro clickEllipsisItem {
 		LexiconTable.clickEllipsisItem(
 			item = "${item}",
-			tableEntry = "${page}"
-		);
+			tableEntry = "${page}");
 	}
 
 	macro previewDraftInPage {
 		WebContentViewUsages.clickEllipsisItem(
 			item = "Preview Draft in Page",
-			page = "${page}"
-		);
+			page = "${page}");
 	}
 
 	macro previewPendingInPage {
 		WebContentViewUsages.clickEllipsisItem(
 			item = "Preview Pending in Page",
-			page = "${page}"
-		);
+			page = "${page}");
 	}
 
 	macro previewScheduledInPage {
 		WebContentViewUsages.clickEllipsisItem(
 			item = "Preview Scheduled in Page",
-			page = "${page}"
-		);
+			page = "${page}");
 	}
 
 	macro viewInPage {
 		WebContentViewUsages.clickEllipsisItem(
 			item = "View in Page",
-			page = "${page}"
-		);
+			page = "${page}");
 	}
 }

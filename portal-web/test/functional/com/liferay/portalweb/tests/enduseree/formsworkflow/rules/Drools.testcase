@@ -38,38 +38,33 @@ definition {
 			userAddressPostalCode = "91765",
 			userAddressRegion = "California",
 			userAddressStreet1 = "1400 Montefino Ave",
-			userAddressType = "Personal"
-		);
+			userAddressType = "Personal");
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			panel = "Site Administration",
-			portlet = "Tags"
-		);
+			portlet = "Tags");
 
 		Tag.addCP(tagName = "americas");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithTagCP(
 			tagNameList = "americas",
 			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Drools Page");
 
@@ -79,7 +74,6 @@ definition {
 
 		Drools.viewContentPG(
 			droolsContent = "Web Content Title",
-			welcomeMessage = "Welcome Test Test!"
-		);
+			welcomeMessage = "Welcome Test Test!");
 	}
 }

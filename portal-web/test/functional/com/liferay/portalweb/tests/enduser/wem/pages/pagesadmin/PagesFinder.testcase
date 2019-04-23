@@ -19,50 +19,42 @@ definition {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Portlet Page",
-				type ="portlet"
-			);
+				type = "portlet");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Content Page",
-				type ="content"
-			);
+				type = "content");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Embedded Page",
-				type ="embedded"
-			);
+				type = "embedded");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Link to Layout",
-				type ="link_to_layout"
-			);
+				type = "link_to_layout");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Full Page Application",
-				type ="full_page_application"
-			);
+				type = "full_page_application");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Panel Page",
-				type ="panel"
-			);
+				type = "panel");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test URL",
-				type ="url"
-			);
+				type = "url");
 
 			for (var i : list "1,2,3,4") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
-					layoutName = "Test Default Page ${i}"
-				);
+					layoutName = "Test Default Page ${i}");
 			}
 		}
 
@@ -96,8 +88,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "11 Results for Test"
-			);
+				value1 = "11 Results for Test");
 		}
 	}
 }

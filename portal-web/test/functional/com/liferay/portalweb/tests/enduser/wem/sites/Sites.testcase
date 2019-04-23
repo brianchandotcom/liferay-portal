@@ -29,14 +29,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Infrastructure",
 			configurationName = "Inactive Request Handler",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		FormFields.enableCheckbox(fieldName = "show.inactive.request.message");
 
@@ -44,7 +42,9 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(groupName = "Site Name", layoutName = "Site Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
@@ -54,7 +54,9 @@ definition {
 
 		Page.viewInactiveRequestMessage(resource = "site");
 
-		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Site.openSitesAdmin();
 
@@ -62,9 +64,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		AssertTextNotPresent(
-			value1 = "This site is inactive. Please contact the administrator."
-		);
+		AssertTextNotPresent(value1 = "This site is inactive. Please contact the administrator.");
 	}
 
 	@priority = "4"
@@ -73,44 +73,43 @@ definition {
 
 		JSONGroup.addChildSite(
 			groupName = "Child SiteName",
-			parentGroupName = "Site Name"
-		);
+			parentGroupName = "Site Name");
 
 		JSONGroup.addChildSite(
 			groupName = "Child Child SiteName",
-			parentGroupName = "Child SiteName"
-		);
+			parentGroupName = "Child SiteName");
 
 		Site.openSitesAdmin();
 
-		Site.viewChildCP(childSiteName = "Child SiteName", siteName = "Site Name");
+		Site.viewChildCP(
+			childSiteName = "Child SiteName",
+			siteName = "Site Name");
 
 		Site.viewChildCP(
 			childSiteName = "Child Child SiteName",
-			siteName = "Child SiteName"
-		);
+			siteName = "Child SiteName");
 	}
 
 	@priority = "3"
 	test AddPublicVirtualHostsSiteURL {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(groupName = "Site Name", layoutName = "Site Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.addVirtualHostsURLCP(
 			publicPageVirtualHostURL = "www.able.com",
-			publicVirtualHosts = "true"
-		);
+			publicVirtualHosts = "true");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080/site-page");
 
 		Site.viewVirtualHostsURLPG(
 			pageName = "Site Page",
 			siteName = "Site Name",
-			sitePageURL = "http://www.able.com:8080/site-page"
-		);
+			sitePageURL = "http://www.able.com:8080/site-page");
 	}
 
 	@priority = "3"
@@ -128,7 +127,9 @@ definition {
 
 		Site.openSitesAdmin();
 
-		Site.viewCannotAdd(siteName = "Site Name", siteNameInvalid = "Duplicate");
+		Site.viewCannotAdd(
+			siteName = "Site Name",
+			siteNameInvalid = "Duplicate");
 	}
 
 	@priority = "3"
@@ -136,7 +137,9 @@ definition {
 		for (var siteName : list " ,Site Name*,22222") {
 			Site.openSitesAdmin();
 
-			Site.viewCannotAdd(siteName = "${siteName}", siteNameInvalid = "Invalid");
+			Site.viewCannotAdd(
+				siteName = "${siteName}",
+				siteNameInvalid = "Invalid");
 		}
 	}
 
@@ -146,7 +149,9 @@ definition {
 
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-		Site.editCP(siteName = "Site Name", siteNameEdit = "Site Name Edit");
+		Site.editCP(
+			siteName = "Site Name",
+			siteNameEdit = "Site Name Edit");
 
 		Site.openSitesAdmin();
 
@@ -161,9 +166,13 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(groupName = "Site Name", layoutName = "Site Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page");
 
-		JSONLayout.addPrivateLayout(groupName = "Site Name", layoutName = "Site Page");
+		JSONLayout.addPrivateLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
@@ -174,16 +183,14 @@ definition {
 		Site.viewSiteFriendlyURLPG(
 			pageName = "Public Page",
 			siteName = "Site Name",
-			sitePageURL = "${portalURL}/web/alpha"
-		);
+			sitePageURL = "${portalURL}/web/alpha");
 
 		Navigator.openPrivateSiteURL(siteName = "alpha");
 
 		Site.viewSiteFriendlyURLPG(
 			pageName = "Private Page",
 			siteName = "Site Name",
-			sitePageURL = "${portalURL}/group/alpha"
-		);
+			sitePageURL = "${portalURL}/group/alpha");
 	}
 
 	@priority = "3"
@@ -193,24 +200,26 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(groupName = "Site Name", layoutName = "Site Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.editFriendlyURLCP(
 			friendlyURLInvalid = "true",
 			siteFriendlyURL = "/site-name",
-			siteFriendlyURLEdit = "/alpha/alpha"
-		);
+			siteFriendlyURLEdit = "/alpha/alpha");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Site Page");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Site Page");
 
 		Page.viewFriendlyURL(
 			pageName = "Site Page",
-			siteFriendlyURL = "${portalURL}/web/site-name"
-		);
+			siteFriendlyURL = "${portalURL}/web/site-name");
 	}
 
 	@priority = "5"
@@ -230,21 +239,24 @@ definition {
 
 		Site.selectParentSite(
 			chooseButtonAvailable = "false",
-			parentSiteName = "Site Name"
-		);
+			parentSiteName = "Site Name");
 	}
 
 	@priority = "3"
 	test SiteCannotBeItsOwnParentStaging {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(groupName = "Site Name", layoutName = "Site Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
-		Navigator.gotoStagedSitePage(pageName = "Site Page", siteName = "Site Name");
+		Navigator.gotoStagedSitePage(
+			pageName = "Site Page",
+			siteName = "Site Name");
 
 		Staging.viewStagingLocalLivePG();
 
@@ -252,8 +264,7 @@ definition {
 
 		Site.selectParentSite(
 			chooseButtonAvailable = "false",
-			parentSiteName = "Site Name"
-		);
+			parentSiteName = "Site Name");
 	}
 
 	@priority = "4"
@@ -263,8 +274,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -273,10 +283,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
-		Site.viewGlobalLandingDefault(portletName = "Web Content", siteName = "Global");
+		Site.viewGlobalLandingDefault(
+			portletName = "Web Content",
+			siteName = "Global");
 	}
 
 	@priority = "4"
@@ -285,44 +296,47 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(groupName = "Site Name", layoutName = "Site Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page");
 
 		JSONGroup.addChildSite(
 			groupName = "Child SiteName",
-			parentGroupName = "Site Name"
-		);
+			parentGroupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Child SiteName",
-			layoutName = "Site Page"
-		);
+			layoutName = "Site Page");
 
 		JSONGroup.addChildSite(
 			groupName = "Child ChildSiteName",
-			parentGroupName = "Child SiteName"
-		);
+			parentGroupName = "Child SiteName");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Child ChildSiteName",
-			layoutName = "Site Page"
-		);
+			layoutName = "Site Page");
 
 		Site.openSitesAdmin();
 
-		Site.viewChildCP(childSiteName = "Child SiteName", siteName = "Site Name");
+		Site.viewChildCP(
+			childSiteName = "Child SiteName",
+			siteName = "Site Name");
 
 		Site.viewChildCP(
 			childSiteName = "Child ChildSiteName",
-			siteName = "Child SiteName"
-		);
+			siteName = "Child SiteName");
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Child SiteName");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Child SiteName");
 
 		Portlet.addPG(portletName = "Sites Directory");
 
 		SitesDirectory.configureSetupPG(directorySites = "Parent Level");
 
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Child SiteName");
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Child SiteName");
 
 		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
 	}
@@ -333,84 +347,45 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		JSONLayout.addPublicLayout(groupName = "Site Name", layoutName = "Site Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page");
 
 		JSONGroup.addChildSite(
 			groupName = "Child Site1Name",
-			parentGroupName = "Site Name"
-		);
+			parentGroupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Child Site1Name",
-			layoutName = "Site Page"
-		);
+			layoutName = "Site Page");
 
 		JSONGroup.addChildSite(
 			groupName = "Child ChildSite1Name",
-			parentGroupName = "Child Site1Name"
-		);
+			parentGroupName = "Child Site1Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Child ChildSite1Name",
-			layoutName = "Site Page"
-		);
+			layoutName = "Site Page");
 
 		JSONGroup.addChildSite(
 			groupName = "Child ChildSite2Name",
-			parentGroupName = "Child Site1Name"
-		);
+			parentGroupName = "Child Site1Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Child ChildSite2Name",
-			layoutName = "Site Page"
-		);
+			layoutName = "Site Page");
 
 		JSONGroup.addChildSite(
 			groupName = "Child Site2Name",
-			parentGroupName = "Site Name"
-		);
+			parentGroupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Child Site2Name",
-			layoutName = "Site Page"
-		);
-
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Child Site1Name");
-
-		Portlet.addPG(portletName = "Sites Directory");
-
-		SitesDirectory.configureSetupPG(directorySites = "Top Level");
-
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Child Site1Name");
-
-		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
-
-		SitesDirectory.configureSetupPG(directorySites = "Parent Level");
-
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Child Site1Name");
-
-		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
-
-		SitesDirectory.configureSetupPG(directorySites = "Siblings");
-
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Child Site1Name");
-
-		SitesDirectory.viewDescriptivePG(siteName = "Child Site1Name");
-
-		SitesDirectory.viewDescriptivePG(siteName = "Child Site2Name");
-
-		SitesDirectory.configureSetupPG(directorySites = "Children");
-
-		Navigator.gotoSitePage(pageName = "Site Page", siteName = "Child Site1Name");
-
-		SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite1Name");
-
-		SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite2Name");
+			layoutName = "Site Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
-			siteName = "Child ChildSite1Name"
-		);
+			siteName = "Child Site1Name");
 
 		Portlet.addPG(portletName = "Sites Directory");
 
@@ -418,8 +393,7 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
-			siteName = "Child ChildSite1Name"
-		);
+			siteName = "Child Site1Name");
 
 		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
 
@@ -427,8 +401,49 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
-			siteName = "Child ChildSite1Name"
-		);
+			siteName = "Child Site1Name");
+
+		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+
+		SitesDirectory.configureSetupPG(directorySites = "Siblings");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Child Site1Name");
+
+		SitesDirectory.viewDescriptivePG(siteName = "Child Site1Name");
+
+		SitesDirectory.viewDescriptivePG(siteName = "Child Site2Name");
+
+		SitesDirectory.configureSetupPG(directorySites = "Children");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Child Site1Name");
+
+		SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite1Name");
+
+		SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite2Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Child ChildSite1Name");
+
+		Portlet.addPG(portletName = "Sites Directory");
+
+		SitesDirectory.configureSetupPG(directorySites = "Top Level");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Child ChildSite1Name");
+
+		SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+
+		SitesDirectory.configureSetupPG(directorySites = "Parent Level");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Child ChildSite1Name");
 
 		SitesDirectory.viewDescriptivePG(siteName = "Child Site1Name");
 
@@ -438,8 +453,7 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
-			siteName = "Child ChildSite1Name"
-		);
+			siteName = "Child ChildSite1Name");
 
 		SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite1Name");
 
@@ -449,12 +463,10 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
-			siteName = "Child ChildSite1Name"
-		);
+			siteName = "Child ChildSite1Name");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No sites were found."
-		);
+			value1 = "No sites were found.");
 	}
 }

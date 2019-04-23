@@ -15,17 +15,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "${pageName}", sitePageType = "Widget Page");
+		SitePages.addPublicPage(
+			pageName = "${pageName}",
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "${pageName}",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "${pageName}");
 
@@ -52,40 +52,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Knowledge Base"
-		);
+			portlet = "Knowledge Base");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title"
-		);
+			kbArticleTitle = "Knowledge Base Article Title");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
 
 		KBArticle.selectPGViaKBArticle(
 			kbArticleTitle = "Knowledge Base Article Title",
-			pageName = "Knowledge Base Article Page"
-		);
+			pageName = "Knowledge Base Article Page");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Article Page");
 
 		KBArticle.viewPG(
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title"
-		);
+			kbArticleTitle = "Knowledge Base Article Title");
 
 		KBArticle.deletePG(
 			deleteViaKBArticle = "true",
-			kbArticleTitle = "Knowledge Base Article Title"
-		);
+			kbArticleTitle = "Knowledge Base Article Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Knowledge Base"
-		);
+			portlet = "Knowledge Base");
 
 		KBArticle.viewDefaultCP();
 	}

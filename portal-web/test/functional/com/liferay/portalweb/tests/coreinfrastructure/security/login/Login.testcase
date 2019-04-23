@@ -17,18 +17,14 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
 			configurationName = "General",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.editDefaultLandingPageCP(
-			defaultLandingPage = "/web/guest/landing"
-		);
+		PortalSettings.editDefaultLandingPageCP(defaultLandingPage = "/web/guest/landing");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -37,14 +33,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "landing");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -62,14 +59,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "landing");
 
 		User.logoutPG();
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -93,29 +91,25 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "Facebook Connect",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.editConfigurationAuthenticationFacebook(
 			facebookApplicationID = "${facebookApplicationID}",
-			facebookApplicationSecret = "${facebookApplicationSecret}"
-		);
+			facebookApplicationSecret = "${facebookApplicationSecret}");
 
 		User.logoutPG();
 
 		User.loginUserWithFacebookSSOEnabledPG(
 			facebookEmail = "${facebookEmail}",
 			facebookPassword = "${facebookPassword}",
-			siteName = "${siteName}"
-		);
+			siteName = "${siteName}");
 
 		User.logoutUserPG();
 
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 	}
 
 	@ignore = "true"
@@ -134,24 +128,23 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "Google Authorization",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.enableGoogleSSOCP(
 			googleClientID = "${googleClientID}",
-			googleClientSecret = "${googleClientSecret}"
-		);
+			googleClientSecret = "${googleClientSecret}");
 
 		User.logoutPG();
 
 		User.loginUserWithGoogleSSOEnabledPG(
 			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}"
-		);
+			userPassword = "${userPassword}");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@description = "This is a use case for LPS-72398."
@@ -167,12 +160,9 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
 			configurationName = "Languiage",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.configureCurrentLanguagesCP(
-			currentPortalLanguages = "Spanish (Spain)"
-		);
+		PortalSettings.configureCurrentLanguagesCP(currentPortalLanguages = "Spanish (Spain)");
 
 		User.logoutPG();
 
@@ -185,8 +175,7 @@ definition {
 		User.loginPG(
 			localization = "ES",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"
@@ -209,27 +198,26 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "OpenID Connect",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.enableOpenIDConnectCP();
 
 		OpenIDConnect.addProviderInSystemSettings(
 			openIDConnectClientID = "${openIDConnectClientID}",
-			openIDConnectClientSecret = "${openIDConnectClientSecret}"
-		);
+			openIDConnectClientSecret = "${openIDConnectClientSecret}");
 
 		User.logoutPG();
 
 		User.loginUserWithOpenIDConnectEnabledPG(
 			siteName = "${siteName}",
 			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}"
-		);
+			userPassword = "${userPassword}");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@ignore = "true"
@@ -247,8 +235,7 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "OpenID",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.enableOpenIDCP();
 
@@ -261,28 +248,26 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		User.logoutPG();
 
 		User.loginUserWithOpenIDEnabledPG(
 			openIDURL = "https://me.yahoo.com/liferayqa",
-			userFirstName = "userfn"
-		);
+			userFirstName = "userfn");
 	}
 
 	@ignore = "true"
@@ -298,8 +283,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-authentication.xml",
-			value1 = "run-openam-tools"
-		);
+			value1 = "run-openam-tools");
 
 		var pauseCount = "0";
 
@@ -324,20 +308,17 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "OpenSSO",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.configureOpenSSO(
 			OpenSSOLoginURL = "http://test.able.com:8080/openam/UI/Login?goto=http://www.able.com:8080/c/portal/login",
 			OpenSSOLogoutURL = "http://test.able.com:8080/openam/UI/Logout?goto=http://www.able.com:8080/web/guest/home",
-			OpenSSOServiceURL = "http://test.able.com:8080/openam"
-		);
+			OpenSSOServiceURL = "http://test.able.com:8080/openam");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "OpenSSO",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.testOpenSSOConnection();
 
@@ -346,8 +327,7 @@ definition {
 		User.loginUserWithOpenSSOEnabledPG(
 			hostsURL = "http://www.able.com:8080",
 			password = "password",
-			userScreenName = "test"
-		);
+			userScreenName = "test");
 	}
 
 	@priority = "5"
@@ -359,14 +339,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "Token Based SSO",
-			configurationScope = "Virtual Instance Scope"
-		);
+			configurationScope = "Virtual Instance Scope");
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 
@@ -376,8 +354,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-authentication.xml",
-			value1 = "verify-token-based-login"
-		);
+			value1 = "verify-token-based-login");
 	}
 
 	@priority = "3"

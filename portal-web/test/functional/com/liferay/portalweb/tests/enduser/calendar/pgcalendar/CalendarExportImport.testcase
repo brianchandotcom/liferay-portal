@@ -15,24 +15,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 	}
 
 	tearDown {
@@ -65,8 +64,7 @@ definition {
 			calendarName = "Test Test",
 			eventTitle = "Event For Export",
 			eventType = "Regular",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -87,8 +85,7 @@ definition {
 			calendarName = "${siteName}",
 			calendarType = "Current Site Calendars",
 			site = "${siteName}",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -102,8 +99,7 @@ definition {
 			eventType = "Regular",
 			pageName = "Calendar Page",
 			site = "${siteName}",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -113,15 +109,13 @@ definition {
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
 			site = "${siteName}",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		LAR.exportPortlet(
 			larFileName = "calendar_calendar_with_comments.portlet.lar",
-			portletName = "Calendar"
-		);
+			portletName = "Calendar");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -133,8 +127,7 @@ definition {
 
 		LAR.importPortlet(
 			larFileName = "calendar_calendar_with_comments.portlet.lar",
-			portletName = "Calendar"
-		);
+			portletName = "Calendar");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -145,8 +138,7 @@ definition {
 			eventComment = "Calendar Event Regular Comment",
 			eventTitle = "Calendar Event Regular Title",
 			eventType = "Regular",
-			user = "Test Test"
-		);
+			user = "Test Test");
 	}
 
 	@description = "This is a use case for LPS-53072."
@@ -158,7 +150,6 @@ definition {
 
 		Calendar.importCalendarFile(
 			calendarFile = "calendar_microsoft_outlook_calendar.ics",
-			calendarName = "${siteName}"
-		);
+			calendarName = "${siteName}");
 	}
 }

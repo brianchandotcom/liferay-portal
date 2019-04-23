@@ -6,35 +6,36 @@ definition {
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER")) {
 			AssertClick(
 				locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER",
-				value1 = "${key_userEmail}"
-			);
+				value1 = "${key_userEmail}");
 
-			AssertClick(locator1 = "MicrosoftLogin#LOGIN_NEXT_BUTTON", value1 = "Next");
+			AssertClick(
+				locator1 = "MicrosoftLogin#LOGIN_NEXT_BUTTON",
+				value1 = "Next");
 
 			Type(
 				locator1 = "MicrosoftLogin#LOGIN_PASSWORD_FIELD",
-				value1 = "${key_userPassword}"
-			);
+				value1 = "${key_userPassword}");
 
 			AssertClick(
 				locator1 = "MicrosoftLogin#LOGIN_SIGN_IN_BUTTON",
-				value1 = "Sign in"
-			);
+				value1 = "Sign in");
 		}
 		else if (IsElementPresent.pauseIsElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD")) {
-			Type(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD", value1 = "${key_userEmail}");
+			Type(
+				locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD",
+				value1 = "${key_userEmail}");
 
-			AssertClick(locator1 = "MicrosoftLogin#LOGIN_NEXT_BUTTON", value1 = "Next");
+			AssertClick(
+				locator1 = "MicrosoftLogin#LOGIN_NEXT_BUTTON",
+				value1 = "Next");
 
 			Type(
 				locator1 = "MicrosoftLogin#LOGIN_PASSWORD_FIELD",
-				value1 = "${key_userPassword}"
-			);
+				value1 = "${key_userPassword}");
 
 			AssertClick(
 				locator1 = "MicrosoftLogin#LOGIN_SIGN_IN_BUTTON",
-				value1 = "Sign in"
-			);
+				value1 = "Sign in");
 		}
 	}
 
@@ -46,18 +47,18 @@ definition {
 		if (IsElementPresent(locator1 = "MicrosoftLogin#SHAREPOINT_NOTIFICATION")) {
 			AssertClick(
 				locator1 = "MicrosoftLogin#SHAREPOINT_TRUST_IT_BUTTON",
-				value1 = "Trust It"
-			);
+				value1 = "Trust It");
 		}
 
 		if (IsElementPresent(locator1 = "Portlet#HEADER")) {
-			AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "${dmRepositoryName}");
+			AssertTextEquals(
+				locator1 = "Portlet#HEADER",
+				value1 = "${dmRepositoryName}");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "MicrosoftLogin#SHAREPOINT_SITE_TITLE",
-				value1 = "Sitio de grupo de Liferay"
-			);
+				value1 = "Sitio de grupo de Liferay");
 		}
 	}
 }

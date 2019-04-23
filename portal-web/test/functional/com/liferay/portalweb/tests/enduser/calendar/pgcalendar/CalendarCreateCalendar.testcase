@@ -15,24 +15,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Calendar Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Portlet.addPG(pageName = "Calendar Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 	}
 
 	tearDown {
@@ -63,16 +62,14 @@ definition {
 		Calendar.add(
 			calendarName = "Site Calendar Name",
 			calendarType = "Current Site Calendars",
-			site = "${siteName}"
-		);
+			site = "${siteName}");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		Calendar.view(
 			calendarName = "Site Calendar Name",
 			calendarType = "Current Site Calendars",
-			site = "${siteName}"
-		);
+			site = "${siteName}");
 	}
 
 	@priority = "4"
@@ -80,16 +77,14 @@ definition {
 		Calendar.add(
 			calendarName = "My Calendar Name",
 			calendarType = "My Calendars",
-			user = "Test Test"
-		);
+			user = "Test Test");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		Calendar.view(
 			calendarName = "My Calendar Name",
 			calendarType = "My Calendars",
-			user = "Test Test"
-		);
+			user = "Test Test");
 	}
 
 	@priority = "4"
@@ -97,29 +92,30 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Calendar.add(calendarName = "userfn userln", calendarType = "Other Calendars");
+		Calendar.add(
+			calendarName = "userfn userln",
+			calendarType = "Other Calendars");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		Calendar.view(calendarName = "userfn userln", calendarType = "Other Calendars");
+		Calendar.view(
+			calendarName = "userfn userln",
+			calendarType = "Other Calendars");
 
 		Calendar.viewOtherCalendarMenulist(
 			calendarName = "userfn userln",
 			color = "668CD9",
-			pageName = "Calendar Page"
-		);
+			pageName = "Calendar Page");
 	}
 
 	@description = "This is a use case for LPS-45062."
@@ -133,8 +129,7 @@ definition {
 
 		CalendarEvent.addViaDayView(
 			eventBlock = "true",
-			eventTitle = "Calendar Event Title1"
-		);
+			eventTitle = "Calendar Event Title1");
 
 		Alert.viewSuccessMessage();
 
@@ -152,7 +147,9 @@ definition {
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title2");
 
-		CalendarEvent.setTimes(endDateTime = "06:00 AM", startDateTime = "03:00 AM");
+		CalendarEvent.setTimes(
+			endDateTime = "06:00 AM",
+			startDateTime = "03:00 AM");
 
 		CalendarEvent.publish();
 
@@ -171,8 +168,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		RoleNavigator.gotoRoleType(roleType = "Site");
 
@@ -181,69 +177,61 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_CALENDAR_MANAGE_EVENTS_CHECKBOX",
 			permissionDefinitionValue = "Manage Events",
 			roleTitle = "Calendar Site Role Name",
-			roleType = "Site"
-		);
+			roleType = "Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Roles"
-		);
+			portlet = "Roles");
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_UPDATE_CHECKBOX",
 			permissionDefinitionValue = "Update",
 			roleTitle = "Authenticated",
-			roleUser = "User"
-		);
+			roleUser = "User");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.addCP(
 			userEmailAddress = "usersn@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			userEmailAddress = "usersn@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		for (var siteName : list "Site A,Site B,Site C") {
 			ProductMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",
-				portlet = "Sites"
-			);
+				portlet = "Sites");
 
 			Site.addBlankCP(siteName = "${siteName}");
 
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
-				portlet = "Users and Organizations"
-			);
+				portlet = "Users and Organizations");
 
-			User.editUserSiteCP(siteName = "${siteName}", userScreenName = "usersn");
+			User.editUserSiteCP(
+				siteName = "${siteName}",
+				userScreenName = "usersn");
 		}
 
 		ProductMenu.gotoSite(site = "Site A");
@@ -251,13 +239,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignSiteRoleCP(
 			resourceName = "userfn userln",
-			roleTitle = "Calendar Site Role Name"
-		);
+			roleTitle = "Calendar Site Role Name");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -266,20 +252,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships"
-		);
+			portlet = "Memberships");
 
 		Site.assignSiteRoleCP(
 			resourceName = "userfn userln",
-			roleTitle = "Calendar Site Role Name"
-		);
+			roleTitle = "Calendar Site Role Name");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "usersn@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
@@ -287,8 +270,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "usersn@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
@@ -300,12 +282,8 @@ definition {
 
 		CalendarNavigator.gotoAddEvent();
 
-		CalendarEvent.viewAvailableCalendars(
-			availableCalendarList = "userfn userln,Site A,Site C"
-		);
+		CalendarEvent.viewAvailableCalendars(availableCalendarList = "userfn userln,Site A,Site C");
 
-		CalendarEvent.viewUnavailableCalendarsNotPresent(
-			unavailableCalendarList = "Site B,Liferay"
-		);
+		CalendarEvent.viewUnavailableCalendarsNotPresent(unavailableCalendarList = "Site B,Liferay");
 	}
 }

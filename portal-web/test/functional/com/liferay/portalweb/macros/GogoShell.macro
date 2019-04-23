@@ -1,8 +1,12 @@
 definition {
 	macro executeCommand {
-		Type(locator1 = "GogoShell#COMMAND_FIELD", value1 = "${commandName}");
+		Type(
+			locator1 = "GogoShell#COMMAND_FIELD",
+			value1 = "${commandName}");
 
-		AssertClick(locator1 = "GogoShell#EXECUTE_BUTTON", value1 = "Execute");
+		AssertClick(
+			locator1 = "GogoShell#EXECUTE_BUTTON",
+			value1 = "Execute");
 	}
 
 	macro getModuleID {
@@ -19,27 +23,37 @@ definition {
 	}
 
 	macro listModuleStatus {
-		Type(locator1 = "GogoShell#COMMAND_FIELD", value1 = "lb ${moduleName}");
+		Type(
+			locator1 = "GogoShell#COMMAND_FIELD",
+			value1 = "lb ${moduleName}");
 
-		AssertClick(locator1 = "GogoShell#EXECUTE_BUTTON", value1 = "Execute");
+		AssertClick(
+			locator1 = "GogoShell#EXECUTE_BUTTON",
+			value1 = "Execute");
 	}
 
 	macro openGogoShellAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_gogo_shell_web_internal_portlet_GogoShellPortlet"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_gogo_shell_web_internal_portlet_GogoShellPortlet");
 	}
 
 	macro startModule {
-		Type(locator1 = "GogoShell#COMMAND_FIELD", value1 = "start ${moduleID}");
+		Type(
+			locator1 = "GogoShell#COMMAND_FIELD",
+			value1 = "start ${moduleID}");
 
-		AssertClick(locator1 = "GogoShell#EXECUTE_BUTTON", value1 = "Execute");
+		AssertClick(
+			locator1 = "GogoShell#EXECUTE_BUTTON",
+			value1 = "Execute");
 	}
 
 	macro stopModule {
-		Type(locator1 = "GogoShell#COMMAND_FIELD", value1 = "stop ${moduleID}");
+		Type(
+			locator1 = "GogoShell#COMMAND_FIELD",
+			value1 = "stop ${moduleID}");
 
-		AssertClick(locator1 = "GogoShell#EXECUTE_BUTTON", value1 = "Execute");
+		AssertClick(
+			locator1 = "GogoShell#EXECUTE_BUTTON",
+			value1 = "Execute");
 	}
 
 	macro viewModuleStatus {
@@ -47,14 +61,12 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "GogoShell#OUTPUT_FIELD",
-			value1 = "${moduleStatus}"
-		);
+			value1 = "${moduleStatus}");
 	}
 
 	macro viewOutput {
 		AssertTextEquals.assertPartialText(
 			locator1 = "GogoShell#OUTPUT_FIELD",
-			value1 = "${outputContent}"
-		);
+			value1 = "${outputContent}");
 	}
 }

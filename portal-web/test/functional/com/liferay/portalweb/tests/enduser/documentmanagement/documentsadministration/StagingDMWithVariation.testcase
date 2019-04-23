@@ -16,8 +16,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Staging DM Page");
 	}
@@ -43,26 +42,25 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Documents and Media",
 			configurationName = "Service",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		Type(
+			key_fieldLabel = "Maximum File Size",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "30000000",
-			key_fieldLabel = "Maximum File Size"
-		);
+			value1 = "30000000");
 
 		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
 		PortletEntry.save();
 
-		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Documents and Media");
 
@@ -70,40 +68,39 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name"
-		);
+			dmFolderName = "DM Folder Name");
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name Empty"
-		);
+			dmFolderName = "DM Folder Name Empty");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoMetadataSets();
 
 		DMMetadataSet.add(
 			dmMetadataSetFieldNames = "Text,Number",
-			metadataSetName = "DM Metadata Set Name"
-		);
+			metadataSetName = "DM Metadata Set Name");
 
 		DDLDataDefinition.save();
 
-		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
@@ -111,30 +108,28 @@ definition {
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Boolean",
 			dmDocumentTypeName = "DM Document Type Name",
-			metadataSetName = "DM Metadata Set Name"
-		);
+			metadataSetName = "DM Metadata Set Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(
 			pageVersioningEnabled = "true",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
-		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name Empty");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -145,23 +140,25 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTypeName = "DM Document Type Name",
 			numberField = "1234",
-			textField = "Text"
-		);
+			textField = "Text");
 
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title"
-		);
+			dmDocumentTitle = "DM Document Title");
 
-		Navigator.gotoSitePage(pageName = "Staging DM Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 

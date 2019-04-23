@@ -2,14 +2,13 @@ definition {
 
 	macro smoke {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-		
+
 		ProductMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Blogs Test Page");
 
@@ -19,8 +18,7 @@ definition {
 			pageName = "Blogs Test Page",
 			portletName = "Blogs",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Blogs Test Page");
 
@@ -28,8 +26,7 @@ definition {
 			entryContent = "Blogs Entry 1 Content",
 			entryTitle = "Blogs Entry 1 Title",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		BlogsEntry.viewPG(
 			entryAuthorFirstName = "Test",
@@ -37,8 +34,7 @@ definition {
 			entryContent = "Blogs Entry 1 Content",
 			entryTitle = "Blogs Entry 1 Title",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Blogs Test Page");
 
@@ -46,14 +42,12 @@ definition {
 			entryContent = "Blogs Entry 1 Content",
 			entryTitle = "Blogs Entry 1 Title",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		BlogsEntryComment.add(
 			entryComment = "Blogs Entry 1 Comment",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Blogs Test Page");
 
@@ -62,8 +56,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Documents and Media Test Page");
 
@@ -73,8 +66,7 @@ definition {
 			pageName = "Documents and Media Test Page",
 			portletName = "Documents and Media",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Documents and Media Test Page");
 
@@ -84,45 +76,39 @@ definition {
 			dmDocumentSize = "0.3k",
 			dmDocumentTitle = "DM Document Title",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Documents and Media Test Page");
 
 		DMFolder.addPG(
 			dmFolderName = "DM Folder 1 Name",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		DMNavigator.gotoFolder(
 			dmFolderName = "DM Folder 1 Name",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Folder Image 1 Description",
 			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Folder Image 1 Title",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Folder Image 1 Description",
 			dmDocumentTitle = "DM Folder Image 1 Title",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Documents and Media Test Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Wiki Test Page");
 
@@ -132,15 +118,13 @@ definition {
 			pageName = "Wiki Test Page",
 			portletName = "Wiki",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		WikiPage.addFrontPagePG(
 			siteName = "${siteName}",
 			siteURL = "${siteURL}",
 			wikiPageContent = "Wiki FrontPage Content",
-			wikiPageTitle = "FrontPage"
-		);
+			wikiPageTitle = "FrontPage");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -150,8 +134,7 @@ definition {
 			wikiChildPageContent = "Wiki Front Page Child Page Content 1",
 			wikiChildPageTitle = "Wiki Front Page Child Page Title 1",
 			wikiPageContent = "Wiki FrontPage Content",
-			wikiPageTitle = "FrontPage"
-		);
+			wikiPageTitle = "FrontPage");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -160,8 +143,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Calendar Test Page");
 
@@ -171,8 +153,7 @@ definition {
 			pageName = "Calendar Test Page",
 			portletName = "Calendar",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Calendar Test Page");
 
@@ -184,16 +165,14 @@ definition {
 			frequency = "Weekly",
 			pageName = "Calendar Test Page",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Calendar Test Page");
 
 		CalendarEvent.view(
 			eventTitle = "Calendar Event Title",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Calendar Test Page");
 
@@ -202,8 +181,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Bookmarks Test Page");
 
@@ -213,8 +191,7 @@ definition {
 			pageName = "Bookmarks Test Page",
 			portletName = "Bookmarks",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Bookmarks Test Page");
 
@@ -222,39 +199,34 @@ definition {
 			folderDescription = "Test Folder Description",
 			folderName = "Test Folder",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Bookmarks Test Page");
 
 		BookmarksFolder.gotoPG(
 			folderName = "Test Folder",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Bookmark.addPG(
 			bookmarkDescription = "Test Folder Entry 1 Description",
 			bookmarkName = "Test Folder Entry 1",
 			bookmarkURL = "https://www.liferay.com",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Bookmarks Test Page");
 
 		BookmarksFolder.gotoPG(
 			folderName = "Test Folder",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Bookmark.viewBookmark(
 			bookmarkName = "Test Folder Entry 1",
 			bookmarkURL = "https://www.liferay.com",
 			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+			siteURL = "${siteURL}");
 
 		Navigator.gotoPage(pageName = "Bookmarks Test Page");
 

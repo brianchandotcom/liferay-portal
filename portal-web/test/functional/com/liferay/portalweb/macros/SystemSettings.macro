@@ -3,15 +3,13 @@ definition {
 		Click(locator1 = "Dropdown#TRIGGER");
 
 		AssertClick(
+			key_option = "${displayStyle}",
 			locator1 = "Dropdown#RESULT",
-			value1 = "${displayStyle}",
-			key_option = "${displayStyle}"
-		);
+			value1 = "${displayStyle}");
 
 		AssertTextEquals(
 			locator1 = "Dropdown#SELECTED_VALUE",
-			value1 = "${displayStyle}"
-		);
+			value1 = "${displayStyle}");
 
 		SystemSettings.saveConfiguration();
 	}
@@ -22,12 +20,12 @@ definition {
 
 			SystemSettings.saveConfiguration();
 
-			AssertChecked.assertCheckedNotVisible(
-				locator1 = "SystemSettings#ASSETS_DYNAMIC_EXPORT_CHECKBOX"
-			);
+			AssertChecked.assertCheckedNotVisible(locator1 = "SystemSettings#ASSETS_DYNAMIC_EXPORT_CHECKBOX");
 
 			if ("${exportLimit}" == "true") {
-				Type(locator1 = "SystemSettings#ASSETS_DYNAMIC_EXPORT_LIMIT", value1 = "${exportLimitNumber}");
+				Type(
+					locator1 = "SystemSettings#ASSETS_DYNAMIC_EXPORT_LIMIT",
+					value1 = "${exportLimitNumber}");
 
 				SystemSettings.saveConfiguration();
 			}
@@ -37,9 +35,7 @@ definition {
 
 			SystemSettings.saveConfiguration();
 
-			AssertNotChecked.assertNotCheckedNotVisible(
-				locator1 = "SystemSettings#ASSETS_DYNAMIC_EXPORT_CHECKBOX"
-			);
+			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "SystemSettings#ASSETS_DYNAMIC_EXPORT_CHECKBOX");
 		}
 	}
 
@@ -49,18 +45,14 @@ definition {
 
 			SystemSettings.saveConfiguration();
 
-			AssertChecked.assertCheckedNotVisible(
-				locator1 = "SystemSettings#ASSETS_MANUAL_EXPORT_CHECKBOX"
-			);
+			AssertChecked.assertCheckedNotVisible(locator1 = "SystemSettings#ASSETS_MANUAL_EXPORT_CHECKBOX");
 		}
 		else if ("${enableManualExport}" == "false") {
 			Uncheck.uncheckToggleSwitch(locator1 = "SystemSettings#ASSETS_MANUAL_EXPORT_CHECKBOX");
 
 			SystemSettings.saveConfiguration();
 
-			AssertNotChecked.assertNotCheckedNotVisible(
-				locator1 = "SystemSettings#ASSETS_MANUAL_EXPORT_CHECKBOX"
-			);
+			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "SystemSettings#ASSETS_MANUAL_EXPORT_CHECKBOX");
 		}
 	}
 
@@ -75,34 +67,31 @@ definition {
 	macro editSecurityCredential {
 		Type(
 			locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD",
-			value1 = "${securityCredential}"
-		);
+			value1 = "${securityCredential}");
 
 		var key_fieldName = "securityPrincipal";
 
-		Type(locator1 = "FormFields#TEXT_MULTILINE_FIELD", value1 = "test");
+		Type(
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+			value1 = "test");
 
 		AssertElementPresent(locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD");
 
-		SikuliAssertElementPresent(
-			locator1 = "SystemSettings#SECURITY_CREDENTIAL_HIDDEN_IMAGE"
-		);
+		SikuliAssertElementPresent(locator1 = "SystemSettings#SECURITY_CREDENTIAL_HIDDEN_IMAGE");
 	}
 
 	macro editTextAreaSetting {
 		Type(
+			key_label = "${settingName}",
 			locator1 = "TextArea#ANY_LABELED",
-			value1 = "${settingValue}",
-			key_label = "${settingName}"
-		);
+			value1 = "${settingValue}");
 	}
 
 	macro editTextSetting {
 		Type(
+			key_fieldLabel = "${settingName}",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${settingValue}",
-			key_fieldLabel = "${settingName}"
-		);
+			value1 = "${settingValue}");
 	}
 
 	macro exitEditConfiguration {
@@ -111,9 +100,8 @@ definition {
 
 	macro gotoConfiguration {
 		Click(
-			locator1 = "ListGroupItem#ITEM_TEXT",
-			key_itemName = "${configurationCategory}"
-		);
+			key_itemName = "${configurationCategory}",
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		var browserType = PropsUtil.get("browser.type");
 
@@ -122,28 +110,23 @@ definition {
 		}
 
 		Click(
-			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME",
 			key_configurationName = "${configurationName}",
-			key_configurationScope = "${configurationScope}"
-		);
+			key_configurationScope = "${configurationScope}",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 
 		AssertElementPresent(
-			locator1 = "Header#H2_TITLE",
-			key_title = "${configurationName}"
-		);
+			key_title = "${configurationName}",
+			locator1 = "Header#H2_TITLE");
 	}
 
 	macro gotoConfigurationEntry {
 		Click(
-			locator1 = "SystemSettings#CONFIGURATION_ENTRY",
-			key_configurationEntry = "${configurationEntry}"
-		);
+			key_configurationEntry = "${configurationEntry}",
+			locator1 = "SystemSettings#CONFIGURATION_ENTRY");
 	}
 
 	macro openSystemSettingsAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet");
 	}
 
 	macro resetConfiguration {
@@ -167,13 +150,11 @@ definition {
 
 	macro selectOptionSetting {
 		Click(
-			locator1 = "SystemSettings#DROPDOWN_MENU",
-			key_fieldLabel = "${fieldName}"
-		);
+			key_fieldLabel = "${fieldName}",
+			locator1 = "SystemSettings#DROPDOWN_MENU");
 
 		Click(
-			locator1 = "SystemSettings#DROPDOWN_MENU_OPTION",
-			key_selectOption = "${selectOption}"
-		);
+			key_selectOption = "${selectOption}",
+			locator1 = "SystemSettings#DROPDOWN_MENU_OPTION");
 	}
 }

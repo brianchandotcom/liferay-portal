@@ -2,32 +2,26 @@ definition {
 	macro dragAndDropPortletToPortletColumnPG {
 		var key_portletTitleName = "${portletName}";
 
-		MouseOver.mouseOverNotVisible(
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER"
-		);
+		MouseOver.mouseOverNotVisible(locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER");
 
 		AssertTextEquals(
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER",
-			value1 = "${portletName}"
-		);
+			value1 = "${portletName}");
 
 		DragAndDrop.dragAndDropPortletToObject(
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_HEADER",
 			locator2 = "Home#PORTLET_COLUMN_${portletColumnNumberTo}",
-			value1 = "${portletName}"
-		);
+			value1 = "${portletName}");
 
 		AssertTextEquals(
 			locator1 = "Home#PORTLET_COLUMN_${portletColumnNumberTo}_NESTED_PORTLET_TITLE",
-			value1 = "${portletName}"
-		);
+			value1 = "${portletName}");
 	}
 
 	macro viewConfigurationDefaultLayoutTemplate {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -41,7 +35,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#PORTLET_COLUMN_${portletColumnNumberTo}_NESTED_PORTLET_TITLE",
-			value1 = "${portletName}"
-		);
+			value1 = "${portletName}");
 	}
 }

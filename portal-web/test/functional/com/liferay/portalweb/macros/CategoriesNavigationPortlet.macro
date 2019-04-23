@@ -3,10 +3,9 @@ definition {
 		Portlet.expandTree();
 
 		AssertClick(
+			key_categoryName = "${categoryName}",
 			locator1 = "CategoriesNavigation#CATEGORY_NAME",
-			value1 = "${categoryName}",
-			key_categoryName = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 	}
 
 	macro viewCustomADTMultiColumnPG {
@@ -18,28 +17,23 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_1_VOCABULARY_NAME",
-			value1 = "Topic"
-		);
+			value1 = "Topic");
 
 		AssertTextEquals(
 			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_2_VOCABULARY_NAME",
-			value1 = "${vocabularyName1}"
-		);
+			value1 = "${vocabularyName1}");
 
 		AssertTextEquals(
 			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_2_CATEGORY_NAME",
-			value1 = "${categoryName1}"
-		);
+			value1 = "${categoryName1}");
 
 		AssertTextEquals(
 			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_3_VOCABULARY_NAME",
-			value1 = "${vocabularyName2}"
-		);
+			value1 = "${vocabularyName2}");
 
 		AssertTextEquals(
 			locator1 = "CategoriesNavigation#ADT_MULTI_COLUMN_3_CATEGORY_NAME",
-			value1 = "${categoryName2}"
-		);
+			value1 = "${categoryName2}");
 	}
 
 	macro viewDefaultPG {
@@ -47,14 +41,12 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CategoriesNavigation#VOCABULARY_NAME",
-			value1 = "${vocabularyName}"
-		);
+			value1 = "${vocabularyName}");
 
 		var key_categoryName = "${categoryName}";
 
 		AssertTextEquals(
 			locator1 = "CategoriesNavigation#CATEGORY_NAME",
-			value1 = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 	}
 }

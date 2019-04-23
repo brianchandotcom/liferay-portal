@@ -1,7 +1,9 @@
 definition {
 	macro _openComments {
 		if (IsElementNotPresent.isNotVisible(locator1 = "Comments#COMMENT_FIELD")) {
-			AssertClick(locator1 = "MyWorkflowTasksTask#COMMENTS", value1 = "Comments");
+			AssertClick(
+				locator1 = "MyWorkflowTasksTask#COMMENTS",
+				value1 = "Comments");
 		}
 	}
 
@@ -10,8 +12,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${workflowComment}"
-		);
+			value1 = "${workflowComment}");
 	}
 
 	macro add {

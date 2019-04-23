@@ -2,7 +2,9 @@ definition {
 	macro gotoManageFieldSets {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Manage Field Sets");
 
-		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "Field Sets");
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Field Sets");
 	}
 
 	macro gotoManageForms {
@@ -11,9 +13,8 @@ definition {
 		Search.searchCP(searchTerm = "${kfFieldSetName}");
 
 		Click.waitForMenuToggleJSClick(
-			locator1 = "KaleoFormsAdminSelectStructure#KALEO_FORMS_STRUCTURE_ELLIPSIS",
-			key_kfFieldSetName = "${kfFieldSetName}"
-		);
+			key_kfFieldSetName = "${kfFieldSetName}",
+			locator1 = "KaleoFormsAdminSelectStructure#KALEO_FORMS_STRUCTURE_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Manage Forms");
 	}

@@ -34,14 +34,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -53,8 +51,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -64,8 +61,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name",
-			templateScript = '''${Text.getData()}'''
-		);
+			templateScript = '''${Text.getData()}''');
 	}
 
 	@priority = "5"
@@ -80,8 +76,7 @@ definition {
 			templateDescription = "WC Template Description",
 			templateFile = "xsl_template.xsl",
 			templateLanguage = "xsl",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -91,7 +86,6 @@ definition {
 			templateDescription = "WC Template Description",
 			templateLanguage = "xsl",
 			templateName = "WC Template Name",
-			templateScript = '''"/root/dynamic-element[@name='Text']"'''
-		);
+			templateScript = '''"/root/dynamic-element[@name='Text']"''');
 	}
 }

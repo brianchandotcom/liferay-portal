@@ -36,63 +36,51 @@ definition {
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.runGroovyScript(
 			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-put-modules.groovy"
-		);
+			scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Unable to deserialize object",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.runGroovyScript(
 			nodePort = "9080",
-			scriptFile = "groovy-script-portal-cache-get.groovy"
-		);
+			scriptFile = "groovy-script-portal-cache-get.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "test.key=test.value"
-		);
+			value1 = "test.key=test.value");
 	}
 
 	@ignore = "true"
@@ -105,103 +93,83 @@ definition {
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.runGroovyScript(
 			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-put-modules.groovy"
-		);
+			scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Unable to deserialize object",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.runGroovyScript(
 			nodePort = "9080",
-			scriptFile = "groovy-script-portal-cache-get.groovy"
-		);
+			scriptFile = "groovy-script-portal-cache-get.groovy");
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "test.cache is empty"
-		);
+			value1 = "test.cache is empty");
 
 		Clustering.runGroovyScript(
 			nodePort = "9080",
-			scriptFile = "groovy-script-portal-cache-remove.groovy"
-		);
+			scriptFile = "groovy-script-portal-cache-remove.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Removed test.key from test.cache",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Removed test.key from test.cache",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.runGroovyScript(
 			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-put-modules.groovy"
-		);
+			scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Unable to deserialize object",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Could not resolve module: com.liferay.cluster.test.module",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.runGroovyScript(
 			nodePort = "9080",
-			scriptFile = "groovy-script-portal-cache-get.groovy"
-		);
+			scriptFile = "groovy-script-portal-cache-get.groovy");
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "test.key=null"
-		);
+			value1 = "test.key=null");
 
 		Clustering.runGroovyScript(
 			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-put-modules.groovy"
-		);
+			scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 	}
 
 	@priority = "4"
@@ -212,86 +180,71 @@ definition {
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.cluster.test.module.internel",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.runGroovyScript(
 			nodePort = "8080",
-			scriptFile = "groovy-script-master-slave.groovy"
-		);
+			scriptFile = "groovy-script-master-slave.groovy");
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is master node"
-		);
+			value1 = "This node is master node");
 
 		Clustering.runGroovyScript(
 			nodePort = "9080",
-			scriptFile = "groovy-script-master-slave.groovy"
-		);
+			scriptFile = "groovy-script-master-slave.groovy");
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is slave node"
-		);
+			value1 = "This node is slave node");
 
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.cluster.test.module.internel",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Pause(locator1 = "10000");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Memory clustered job from modules is triggered",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Memory clustered job from modules is triggered",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.cluster.test.module.internel",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Pause(locator1 = "10000");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Memory clustered job from modules is triggered",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
 		Clustering.runGroovyScript(
 			nodePort = "9080",
-			scriptFile = "groovy-script-master-slave.groovy"
-		);
+			scriptFile = "groovy-script-master-slave.groovy");
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is master node"
-		);
+			value1 = "This node is master node");
 
 		Pause(locator1 = "10000");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Memory clustered job from modules is triggered",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 	}
 
 	@priority = "4"
@@ -302,63 +255,52 @@ definition {
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.cluster.test.module.internel",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.cluster.test.module.internel",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Pause(locator1 = "10000");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Memory clustered job from modules is triggered",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
 		Clustering.runGroovyScript(
 			nodePort = "9080",
-			scriptFile = "groovy-script-master-slave.groovy"
-		);
+			scriptFile = "groovy-script-master-slave.groovy");
 
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is master node"
-		);
+			value1 = "This node is master node");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Memory clustered job from modules is triggered",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.deployJarOnSpecificServer(
 			liferayDependencyJars = "com.liferay.cluster.test.module.7.2.jar",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.enableDebugging(
 			categoryName = "com.liferay.cluster.test.module.internel",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Pause(locator1 = "10000");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Scheduler job com.liferay.cluster.test.module.internel.SchedulerTestMessageListener.com.liferay.cluster.test.module.internel.SchedulerTestMessageListener already exists",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Memory clustered job from modules is triggered",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 	}
 }

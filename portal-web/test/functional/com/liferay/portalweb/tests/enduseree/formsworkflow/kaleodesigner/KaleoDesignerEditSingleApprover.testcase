@@ -17,8 +17,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 	}
@@ -44,33 +43,30 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Process Builder"
-		);
+			portlet = "Process Builder");
 
 		Workflow.viewDefinitionPublished(
 			workflowDefinitionName = "Single Approver",
 			workflowDefinitionTitle = "Edited Workflow Definition",
-			workflowDefinitionVersionNumber = "2"
-		);
+			workflowDefinitionVersionNumber = "2");
 
-		Workflow.gotoEditWorkflowDefinition(
-			workflowDefinitionTitle = "Edited Workflow Definition"
-		);
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
 
 		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = "update");
 	}
 
 	@priority = "4"
 	test ViewInvalidSourceXMLNotRemainsAfterTabSwitch {
-		KaleoDesigner.editSourceXML(kdSourceXML = "INVALID", line = "6");
+		KaleoDesigner.editSourceXML(
+			kdSourceXML = "INVALID",
+			line = "6");
 
 		KaleoDesigner.viewViewTab();
 
 		KaleoDesigner.viewSourceXMLLine(
 			invalid = "true",
 			kdSourceXML = "INVALID",
-			line = "6"
-		);
+			line = "6");
 	}
 
 	@description = "This is a use case for LPS-46657."
@@ -85,8 +81,7 @@ definition {
 			nodeNotificationsName = "Review Notification",
 			nodeNotificationsRecipientType = "Role Type",
 			roleTitle = "Administrator",
-			roleType = "Regular"
-		);
+			roleType = "Regular");
 
 		KaleoDesigner.viewSourceXMLTab();
 
@@ -98,8 +93,7 @@ definition {
 			nodeNotificationsName = "Review Notification",
 			nodeNotificationsRecipientType = "Role Type",
 			roleTitle = "Administrator",
-			roleType = "Regular"
-		);
+			roleType = "Regular");
 	}
 
 	@description = "This is a use case for LPS-46605."
@@ -109,7 +103,6 @@ definition {
 
 		KaleoDesigner.viewNodeNotifications(
 			nodeNotificationsName = "Review Notification",
-			nodeNotificationsType = "User Notification"
-		);
+			nodeNotificationsType = "User Notification");
 	}
 }

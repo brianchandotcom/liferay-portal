@@ -13,8 +13,7 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page Name"
-		);
+			layoutName = "Test Page Name");
 	}
 
 	tearDown {
@@ -35,89 +34,93 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page Name"
-		);
+			layoutName = "Test Page Name");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		WebContentNavigator.gotoAddPGViaWCD();
 
 		WebContent.addCP(webContentTitle = "Basic S.P.A.C.E. Banner");
 
-		AlloyEditor.addSourceContent(
-			content = '''
+		AlloyEditor.addSourceContent(content = '''
 <h2 class="text-center">Space Program Academy of Continuing Education</h2>
 
 <p class="text-center">Dare to Dream out of this world</p>
-'''
-		);
+''');
 
 		Button.clickPublish();
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
-		WebContent.viewPGViaWCD(
-			webContentContent = "Space Program Academy of Continuing Education Dare to Dream out of this world"
-		);
+		WebContent.viewPGViaWCD(webContentContent = "Space Program Academy of Continuing Education Dare to Dream out of this world");
 
 		WebContentNavigator.gotoEditPGViaWCD(
 			menuItem = "Edit Web Content",
-			webContentTitle = "Basic S.P.A.C.E. Banner"
-		);
+			webContentTitle = "Basic S.P.A.C.E. Banner");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "ja-JP");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "ja-JP");
 
-		WebContent.addCP(
-			webContentTitle = "Basic S.P.A.C.E. Banner (Japanese Translation)"
-		);
+		WebContent.addCP(webContentTitle = "Basic S.P.A.C.E. Banner (Japanese Translation)");
 
-		AlloyEditor.addDescription(
-			description = "A Japanese translation of the basic front page banner"
-		);
+		AlloyEditor.addDescription(description = "A Japanese translation of the basic front page banner");
 
-		AlloyEditor.addSourceContent(
-			content = '''
+		AlloyEditor.addSourceContent(content = '''
 <h2 class="text-center">Space Program 大学生涯教育</h2>
 
 <p class="text-center">地球から、宇宙の果てへ</p>
-'''
-		);
+''');
 
 		Button.clickPublish();
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Language Selector");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
-		LanguagePortlet.selectLanguagePG(locale = "ja_JP", textIcon = "日本語-日本");
+		LanguagePortlet.selectLanguagePG(
+			locale = "ja_JP",
+			textIcon = "日本語-日本");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "Space Program 大学生涯教育 地球から、宇宙の果てへ");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States"
-		);
+			textIcon = "English-United States");
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
-		WebContent.viewPGViaWCD(
-			webContentContent = "Space Program Academy of Continuing Education Dare to Dream out of this world"
-		);
+		WebContent.viewPGViaWCD(webContentContent = "Space Program Academy of Continuing Education Dare to Dream out of this world");
 
 		AssertTextNotPresent(
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
-			value1 = "Space Program 大学生涯教育 地球から、宇宙の果てへ"
-		);
+			value1 = "Space Program 大学生涯教育 地球から、宇宙の果てへ");
 	}
 
 	@priority = "5"
@@ -130,38 +133,45 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(webContentContent = "WC Content", webContentTitle = "WC Title");
+		WebContent.addCP(
+			webContentContent = "WC Content",
+			webContentTitle = "WC Title");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "es-ES");
 
 		WebContent.addCP(
 			webContentContent = "WC Contenido",
-			webContentTitle = "WC Titulo"
-		);
+			webContentTitle = "WC Titulo");
 
 		PortletEntry.publish();
 
-		Navigator.gotoSitePage(pageName = "Test Page Name", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		Content.addPG(assetTitle = "WC Title");
 
 		Portlet.addPG(portletName = "Language Selector");
 
-		LanguagePortlet.selectLanguagePG(locale = "es_ES", textIcon = "español-España");
+		LanguagePortlet.selectLanguagePG(
+			locale = "es_ES",
+			textIcon = "español-España");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC Contenido");
 
 		WebContentNavigator.gotoEditPGViaWCD(
 			menuItem = "Editar contenido web",
-			webContentTitle = "WC Titulo"
-		);
+			webContentTitle = "WC Titulo");
 
-		PortletEntry.changeLocale(fieldName = "Título", locale = "es-ES");
+		PortletEntry.changeLocale(
+			fieldName = "Título",
+			locale = "es-ES");
 
 		WebContent.viewCP(
 			webContentContent = "WC Contenido",
-			webContentTitle = "WC Titulo"
-		);
+			webContentTitle = "WC Titulo");
 	}
 
 	@priority = "4"
@@ -171,20 +181,17 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page"
-		);
+			layoutName = "Web Content Display Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Language Selector");
 
@@ -202,14 +209,12 @@ definition {
 			locale = "fr_FR",
 			locale2 = "zh_CN",
 			localization1Name = "nom de la structure de wc",
-			localization2Name = "wc 结构名称"
-		);
+			localization2Name = "wc 结构名称");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -221,16 +226,14 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContentTemplates.localizeTemplateName(
 			locale = "fr_FR",
 			locale2 = "zh_CN",
 			localization1Name = "nom de la template de wc",
 			localization2Name = "wc 模板名称",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		DDLDataDefinition.save();
 
@@ -242,8 +245,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -251,80 +253,78 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "fr-FR");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "fr-FR");
 
 		WebContent.addCP(webContentTitle = "WC WebContent Titre");
 
-		FormFields.editText(fieldName = "Text", fieldValue = "WC contenu WebContent");
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "WC contenu WebContent");
 
 		PortletEntry.publish();
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
-		WebContentDisplayPortlet.selectWebContent(
-			webContentTitle = "WC WebContent Title"
-		);
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Text");
 
-		LanguagePortlet.selectLanguagePG(locale = "fr_FR", textIcon = "français-France");
+		LanguagePortlet.selectLanguagePG(
+			locale = "fr_FR",
+			textIcon = "français-France");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC contenu WebContent");
 
 		WebContentNavigator.gotoEditPGViaWCD(
 			menuItem = "Modifier le contenu de Web",
-			webContentTitle = "WC WebContent Titre"
-		);
+			webContentTitle = "WC WebContent Titre");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "fr-FR");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "fr-FR");
 
 		WebContent.viewCP(
 			webContentText = "WC contenu WebContent",
-			webContentTitle = "WC WebContent Titre"
-		);
+			webContentTitle = "WC WebContent Titre");
 
 		WebContent.viewStructureAndTemplateLocalization(
 			panel = "Modèle par défaut",
 			structureLocalizationName = "nom de la structure de wc",
-			templateLocalizationName = "nom de la template de wc"
-		);
+			templateLocalizationName = "nom de la template de wc");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
-		LanguagePortlet.selectLanguagePG(locale = "zh-CN", textIcon = "中文-中国");
+		LanguagePortlet.selectLanguagePG(
+			locale = "zh-CN",
+			textIcon = "中文-中国");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Text");
 
 		WebContentNavigator.gotoEditPGViaWCD(
 			menuItem = "编辑 Web 内容",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewStructureAndTemplateLocalization(
 			panel = "默认模板",
 			structureLocalizationName = "wc 结构名称",
-			templateLocalizationName = "wc 模板名称"
-		);
+			templateLocalizationName = "wc 模板名称");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
-			textIcon = "English-United States"
-		);
+			textIcon = "English-United States");
 	}
 }

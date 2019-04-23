@@ -30,26 +30,25 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Home");
 
-		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Home");
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Home");
 
 		Page.addPageTranslations(
 			page = "Home",
 			pageTranslation = "es_ES",
-			pageTranslationName = "Casa"
-		);
+			pageTranslationName = "Casa");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -58,8 +57,7 @@ definition {
 			pageName = "Casa",
 			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
 			sitePageURL = "${portalURL}/es/web/site-name/home",
-			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain)."
-		);
+			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -68,25 +66,21 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicChildPage(
 			childPageName = "Blog Page",
-			parentPageName = "Home"
-		);
+			parentPageName = "Home");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
 			pageName = "Blog Page",
-			parentPagesHierarchy = "Home"
-		);
+			parentPagesHierarchy = "Home");
 
 		Page.addPageTranslations(
 			page = "Blog Page",
 			pageTranslation = "es_ES",
-			pageTranslationName = "Blog Página"
-		);
+			pageTranslationName = "Blog Página");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -95,7 +89,6 @@ definition {
 			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
 			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
 			sitePageURL = "${portalURL}/es/web/site-name/blog-page",
-			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain)."
-		);
+			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
 	}
 }

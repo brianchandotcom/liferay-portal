@@ -2,7 +2,9 @@ definition {
 	macro gotoDrive {
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 
-		AssertClick(locator1 = "Button#SELECT_FILE", value1 = "Select File");
+		AssertClick(
+			locator1 = "Button#SELECT_FILE",
+			value1 = "Select File");
 
 		Pause(locator1 = "3000");
 
@@ -12,17 +14,20 @@ definition {
 			if (IsElementPresent(locator1 = "GoogleLogin#HEADER")) {
 				AssertClick(
 					locator1 = "GoogleLogin#ACCOUNT_MENULIST_USE_ANOTHER_ACCOUNT",
-					value1 = "Use another account"
-				);
+					value1 = "Use another account");
 			}
 
-			Type(locator1 = "GoogleLogin#LOGIN_EMAIL_FIELD", value1 = "${userEmailAddress}");
+			Type(
+				locator1 = "GoogleLogin#LOGIN_EMAIL_FIELD",
+				value1 = "${userEmailAddress}");
 
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 
 			AssertElementPresent(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 
-			Type(locator1 = "GoogleLogin#LOGIN_PASSWORD_FIELD", value1 = "${userPassword}");
+			Type(
+				locator1 = "GoogleLogin#LOGIN_PASSWORD_FIELD",
+				value1 = "${userPassword}");
 
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 
@@ -43,10 +48,11 @@ definition {
 
 		Click.clickAt(
 			locator1 = "GoogleDrive#LIST_VIEW_DOCUMENT",
-			value1 = "${googleDocName}"
-		);
+			value1 = "${googleDocName}");
 
-		Click.clickAt(locator1 = "GoogleDrive#SELECT_BUTTON", value1 = "Select");
+		Click.clickAt(
+			locator1 = "GoogleDrive#SELECT_BUTTON",
+			value1 = "Select");
 
 		SelectFrameTop();
 
@@ -54,7 +60,6 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DocumentsAndMediaEntry#SELECTED_DOCUMENT_TITLE",
-			value1 = "${googleDocName}"
-		);
+			value1 = "${googleDocName}");
 	}
 }

@@ -1,6 +1,8 @@
 definition {
 	macro gotoSelectForm {
-		AssertClick(locator1 = "FormPortlet#SELECT_FORM", value1 = "Select Form");
+		AssertClick(
+			locator1 = "FormPortlet#SELECT_FORM",
+			value1 = "Select Form");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}

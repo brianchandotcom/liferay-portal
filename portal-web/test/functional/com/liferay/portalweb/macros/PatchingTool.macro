@@ -3,8 +3,7 @@ definition {
 	macro installPatch {
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipURL}"
-		);
+			value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipURL}");
 	}
 
 	@summary = "Install the following patch onto Liferay Portal server with port ${nodePort}: ${patchFileZipURL}"
@@ -14,13 +13,14 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipURL} -Dinstall.patch.cluster.node.index=${bundleIndex}"
-		);
+			value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipURL} -Dinstall.patch.cluster.node.index=${bundleIndex}");
 	}
 
 	@summary = "Uninstall all patches from Liferay Portal."
 	macro uninstallPatches {
-		AntCommand(locator1 = "build-test.xml", value1 = "uninstall-patches");
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "uninstall-patches");
 	}
 
 	@summary = "Uninstall the following patch onto Liferay Portal server with port ${nodePort}"
@@ -30,8 +30,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "uninstall-patches -Duninstall.patch.cluster.node.index=${bundleIndex}"
-		);
+			value1 = "uninstall-patches -Duninstall.patch.cluster.node.index=${bundleIndex}");
 	}
 
 	@summary = "Update the following osgi configuration onto Liferay Portal server with port ${nodePort}: ${updateConfiguration}"
@@ -41,7 +40,6 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "update-osgi-module-configuration -Dupdate.configuration=&quot;${updateConfiguration}&quot; -Dinstall.patch.cluster.node.index=${bundleIndex}"
-		);
+			value1 = "update-osgi-module-configuration -Dupdate.configuration=&quot;${updateConfiguration}&quot; -Dinstall.patch.cluster.node.index=${bundleIndex}");
 	}
 }

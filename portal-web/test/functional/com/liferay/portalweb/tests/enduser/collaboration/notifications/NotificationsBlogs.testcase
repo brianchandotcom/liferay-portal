@@ -16,17 +16,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Blogs Page", sitePageType = "Widget Page");
+		SitePages.addPublicPage(
+			pageName = "Blogs Page",
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Blogs Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -36,28 +36,26 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
-		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
 	}
 
 	tearDown {
@@ -87,39 +85,39 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		for (var entryCount : list "1,2") {
 			Blogs.addEntry(
 				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title"
-			);
+				entryTitle = "Blogs Entry${entryCount} Title");
 		}
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "2"
-		);
+			notificationCount = "2");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewContent(
 			assetType = "Blogs Entry",
 			contentBody = "Blogs Entry1 Title",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.viewNewContent(
 			assetType = "Blogs Entry",
 			contentBody = "Blogs Entry2 Title",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.deleteNotification(contentBody = "Blogs Entry1 Title");
 
@@ -140,27 +138,29 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		for (var entryCount : list "1,2,3") {
 			Blogs.addEntry(
 				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title"
-			);
+				entryTitle = "Blogs Entry${entryCount} Title");
 		}
 
 		Notifications.viewNoNotifications(activePanel = "Profile");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "3"
-		);
+			notificationCount = "3");
 
 		Notifications.gotoNotifications();
 
@@ -179,87 +179,80 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		for (var entryCount : list "1,2,3") {
 			Blogs.addEntry(
 				entryContent = "Blogs Entry${entryCount} Content",
-				entryTitle = "Blogs Entry${entryCount} Title"
-			);
+				entryTitle = "Blogs Entry${entryCount} Title");
 		}
 
 		Notifications.viewNoNotifications(activePanel = "Profile");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "3"
-		);
+			notificationCount = "3");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewContent(
 			assetType = "Blogs Entry",
 			contentBody = "Blogs Entry1 Title",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Blogs Entry1 Title");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry1 Title"
-		);
+			entryTitle = "Blogs Entry1 Title");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "2"
-		);
+			notificationCount = "2");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewContent(
 			assetType = "Blogs Entry",
 			contentBody = "Blogs Entry2 Title",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Blogs Entry2 Title");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry2 Content",
-			entryTitle = "Blogs Entry2 Title"
-		);
+			entryTitle = "Blogs Entry2 Title");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "1"
-		);
+			notificationCount = "1");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewContent(
 			assetType = "Blogs Entry",
 			contentBody = "Blogs Entry3 Title",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Blogs Entry3 Title");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry3 Content",
-			entryTitle = "Blogs Entry3 Title"
-		);
+			entryTitle = "Blogs Entry3 Title");
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "0"
-		);
+			notificationCount = "0");
 	}
 
 	@priority = "4"
@@ -273,8 +266,7 @@ definition {
 		NotificationsPortlet.disableUserDeliveries(
 			actionType = "Add",
 			contentType = "Blogs",
-			notificationType = "Website"
-		);
+			notificationType = "Website");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -284,20 +276,23 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}
@@ -310,14 +305,15 @@ definition {
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -325,14 +321,15 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryContentEdit = "Blogs Entry Content Edit",
 			entryTitle = "Blogs Entry Title",
-			entryTitleEdit = "Blogs Entry Title Edit"
-		);
+			entryTitleEdit = "Blogs Entry Title Edit");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
@@ -340,8 +337,7 @@ definition {
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title Edit"
-		);
+			entryTitle = "Blogs Entry Title Edit");
 	}
 
 	@priority = "4"
@@ -354,20 +350,23 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -376,15 +375,13 @@ definition {
 		Notifications.viewNewContent(
 			assetType = "blogs entry",
 			contentBody = "Blogs Entry Title",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Blogs Entry Title");
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}
@@ -395,13 +392,11 @@ definition {
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Comments.subscribePG();
 
@@ -409,14 +404,15 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntryComment.add(entryComment = "Blogs Entry Comment");
 
@@ -424,7 +420,9 @@ definition {
 
 		User.logoutPG();
 
-		User.loginUserPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -434,21 +432,18 @@ definition {
 			assetType = "comment",
 			content = "Blogs Entry Title",
 			contentBody = "Blogs Entry Comment",
-			user = "userfn userln"
-		);
+			user = "userfn userln");
 
 		Notifications.navigateToContent(contentBody = "Blogs Entry Comment");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntryComment.viewPG(
 			commentCount = "1",
 			entryComment = "Blogs Entry Comment",
-			userFullName = "userfn userln"
-		);
+			userFullName = "userfn userln");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}

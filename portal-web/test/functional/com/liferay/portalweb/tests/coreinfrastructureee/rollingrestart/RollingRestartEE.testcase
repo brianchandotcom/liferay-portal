@@ -24,42 +24,39 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
@@ -71,69 +68,60 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "8080",
-			patchFileZipURL = "${testBuildFixPackZipURL}"
-		);
+			patchFileZipURL = "${testBuildFixPackZipURL}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
-		AssertConsoleTextNotPresent(
-			value1 = "java.lang.ClassNotFoundException: Unable to load class com.liferay.portal.scheduler.quartz.internal.QuartzTrigger"
-		);
+		AssertConsoleTextNotPresent(value1 = "java.lang.ClassNotFoundException: Unable to load class com.liferay.portal.scheduler.quartz.internal.QuartzTrigger");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "8080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "8080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		Clustering.shutdownSpecificServer(nodePort = "9080");
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "9080",
-			patchFileZipURL = "${testBuildFixPackZipURL}"
-		);
+			patchFileZipURL = "${testBuildFixPackZipURL}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		Navigator.openURL();
 
@@ -142,38 +130,35 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		WebContent.viewCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "5"
@@ -186,13 +171,14 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "8080");
 
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
@@ -201,8 +187,7 @@ definition {
 		User.loginPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
 
@@ -212,37 +197,32 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "9080",
-			patchFileZipURL = "${testBuildFixPackZipURL}"
-		);
+			patchFileZipURL = "${testBuildFixPackZipURL}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		User.logoutPG(specificURL = "http://localhost:10080");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content Cluster2",
-			webContentTitle = "WC WebContent Title Cluster2"
-		);
+			webContentTitle = "WC WebContent Title Cluster2");
 
 		PortletEntry.publish();
 
@@ -251,36 +231,36 @@ definition {
 		User.logoutPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "8080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster2");
 
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster2");
 
@@ -288,121 +268,108 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "8080",
-			patchFileZipURL = "${testBuildFixPackZipURL}"
-		);
+			patchFileZipURL = "${testBuildFixPackZipURL}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
-		AssertConsoleTextNotPresent(
-			value1 = "java.lang.ClassNotFoundException: Unable to load class com.liferay.portal.scheduler.quartz.internal.QuartzTrigger"
-		);
+		AssertConsoleTextNotPresent(value1 = "java.lang.ClassNotFoundException: Unable to load class com.liferay.portal.scheduler.quartz.internal.QuartzTrigger");
 
 		User.logoutPG(specificURL = "http://localhost:10080");
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "8080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content Cluster1",
-			webContentTitle = "WC WebContent Title Cluster1"
-		);
+			webContentTitle = "WC WebContent Title Cluster1");
 
 		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
 
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
 
 		User.logoutPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
 
 		User.logoutPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Clustering.shutdownSpecificServer(nodePort = "10080");
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "10080",
-			patchFileZipURL = "${testBuildFixPackZipURL}"
-		);
+			patchFileZipURL = "${testBuildFixPackZipURL}");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "10080"
-		);
+			nodePort = "10080");
 
 		User.loginPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content Cluster3",
-			webContentTitle = "WC WebContent Title Cluster3"
-		);
+			webContentTitle = "WC WebContent Title Cluster3");
 
 		PortletEntry.publish();
 
@@ -411,36 +378,36 @@ definition {
 		User.logoutPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "8080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster3");
 
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster3");
 	}
@@ -462,159 +429,142 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Infrastructure",
 			configurationName = "Frontend SPA Infrastructure",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		AssertTextEquals(
 			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
-			value1 = "30000"
-		);
+			value1 = "30000");
 
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Infrastructure",
 			configurationName = "Frontend SPA Infrastructure",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		AssertTextEquals(
 			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
-			value1 = "30000"
-		);
+			value1 = "30000");
 
 		User.logoutPG(specificURL = "http://localhost:9080");
 
 		User.loginPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Infrastructure",
 			configurationName = "Frontend SPA Infrastructure",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		AssertTextEquals(
 			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
-			value1 = "30000"
-		);
+			value1 = "30000");
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
 		PatchingTool.updateConfigurationOnSpecificServer(
 			nodePort = "8080",
-			updateConfiguration = "userNotificationTimeout=25000"
-		);
+			updateConfiguration = "userNotificationTimeout=25000");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "false",
 			keepCachedAppServerData = "true",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		User.logoutPG(specificURL = "http://localhost:10080");
 
-		User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "8080");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Infrastructure",
 			configurationName = "Frontend SPA Infrastructure",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		AssertTextEquals(
 			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
-			value1 = "25000"
-		);
+			value1 = "25000");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content Cluster1",
-			webContentTitle = "WC WebContent Title Cluster1"
-		);
+			webContentTitle = "WC WebContent Title Cluster1");
 
 		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
 
-		User.logoutPG(password = "test", userEmailAddress = "test@liferay.com");
+		User.logoutPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Infrastructure",
 			configurationName = "Frontend SPA Infrastructure",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		AssertTextEquals(
 			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
-			value1 = "30000"
-		);
+			value1 = "30000");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
 
@@ -623,33 +573,28 @@ definition {
 		User.loginPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Infrastructure",
 			configurationName = "Frontend SPA Infrastructure",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		AssertTextEquals(
 			locator1 = "FormFields#USER_NOTIFICATION_TIMEOUT",
-			value1 = "30000"
-		);
+			value1 = "30000");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
 	}
@@ -668,36 +613,31 @@ definition {
 		User.logoutPG(
 			nodePort = "8080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		User.logoutPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		User.loginPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
 
 		User.logoutPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		// Install the latest FP on all 3 servers
 
@@ -708,28 +648,24 @@ definition {
 
 			PatchingTool.installPatchOnSpecificServer(
 				nodePort = "${nodePort}",
-				patchFileZipURL = "${testBuildFixPackZipURL}"
-			);
+				patchFileZipURL = "${testBuildFixPackZipURL}");
 
 			Clustering.startSpecificServer(
 				deleteLiferayHome = "true",
 				keepCachedAppServerData = "true",
-				nodePort = "${nodePort}"
-			);
+				nodePort = "${nodePort}");
 
 			User.loginPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 
 			Page.assertNodePortPG(nodePort = "${nodePort}");
 
 			User.logoutPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 		}
 
 		// Take down cluster2, revert the latest FP and install FP5
@@ -740,49 +676,42 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "9080",
-			patchFileZipURL = "https://files.liferay.com/private/ee/fix-packs/7.1.10/dxp/liferay-fix-pack-dxp-5-7110.zip"
-		);
+			patchFileZipURL = "https://files.liferay.com/private/ee/fix-packs/7.1.10/dxp/liferay-fix-pack-dxp-5-7110.zip");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		for (var nodePort : list "8080,9080,10080") {
 			User.loginPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 
 			Page.assertNodePortPG(nodePort = "${nodePort}");
 
 			User.logoutPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 		}
 
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content Cluster2",
-			webContentTitle = "WC WebContent Title Cluster2"
-		);
+			webContentTitle = "WC WebContent Title Cluster2");
 
 		PortletEntry.publish();
 
@@ -791,29 +720,25 @@ definition {
 		User.logoutPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		for (var nodePort : list "8080,10080") {
 			User.loginPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "Web Content"
-			);
+				portlet = "Web Content");
 
 			WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster2");
 
 			User.logoutPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 		}
 
 		// Take down cluster1, revert the latest FP and install FP5
@@ -824,54 +749,46 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "8080",
-			patchFileZipURL = "https://files.liferay.com/private/ee/fix-packs/7.1.10/dxp/liferay-fix-pack-dxp-5-7110.zip"
-		);
+			patchFileZipURL = "https://files.liferay.com/private/ee/fix-packs/7.1.10/dxp/liferay-fix-pack-dxp-5-7110.zip");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		for (var nodePort : list "8080,9080,10080") {
 			User.loginPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 
 			Page.assertNodePortPG(nodePort = "${nodePort}");
 
 			User.logoutPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 		}
 
 		User.loginPG(
 			nodePort = "8080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -880,28 +797,24 @@ definition {
 		User.logoutPG(
 			nodePort = "8080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		for (var nodePort : list "9080,10080") {
 			User.loginPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 
 			Navigator.gotoSpecificURLPage(
 				pageName = "Documents and Media Page",
-				url = "http://localhost:${nodePort}"
-			);
+				url = "http://localhost:${nodePort}");
 
 			Portlet.viewPG(portletName = "Documents and Media");
 
 			User.logoutPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 		}
 
 		// Take down cluster3, revert the latest FP and install FP5
@@ -912,75 +825,64 @@ definition {
 
 		PatchingTool.installPatchOnSpecificServer(
 			nodePort = "10080",
-			patchFileZipURL = "https://files.liferay.com/private/ee/fix-packs/7.1.10/dxp/liferay-fix-pack-dxp-5-7110.zip"
-		);
+			patchFileZipURL = "https://files.liferay.com/private/ee/fix-packs/7.1.10/dxp/liferay-fix-pack-dxp-5-7110.zip");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "true",
-			nodePort = "10080"
-		);
+			nodePort = "10080");
 
 		for (var nodePort : list "8080,9080,10080") {
 			User.loginPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 
 			Page.assertNodePortPG(nodePort = "${nodePort}");
 
 			User.logoutPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 		}
 
 		User.loginPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Documents and Media Page",
-			url = "http://localhost:10080"
-		);
+			url = "http://localhost:10080");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title Cluster3"
-		);
+			dmDocumentTitle = "DM Document Title Cluster3");
 
 		DMDocument.viewPG(dmDocumentTitle = "DM Document Title Cluster3");
 
 		User.logoutPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		for (var nodePort : list "8080,9080") {
 			User.loginPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 
 			Navigator.gotoSpecificURLPage(
 				pageName = "Documents and Media Page",
-				url = "http://localhost:${nodePort}"
-			);
+				url = "http://localhost:${nodePort}");
 
 			DMDocument.viewPG(dmDocumentTitle = "DM Document Title Cluster3");
 
 			User.logoutPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 		}
 	}
 
@@ -1001,8 +903,7 @@ definition {
 		User.loginPG(
 			nodePort = "9080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
@@ -1011,8 +912,7 @@ definition {
 		User.loginPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
 
@@ -1025,35 +925,30 @@ definition {
 		Clustering.updatePortalPropertiesOnSpecificServer(
 			nodePort = "9080",
 			propertiesOriginal = "company.security.auth.type=emailAddress",
-			propertiesUpdate = "company.security.auth.type=screenName"
-		);
+			propertiesUpdate = "company.security.auth.type=screenName");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "false",
-			nodePort = "9080"
-		);
+			nodePort = "9080");
 
 		User.loginPG(
 			authenticationMethod = "By Screen Name",
 			nodePort = "9080",
 			password = "test",
-			userScreenName = "test"
-		);
+			userScreenName = "test");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content Cluster2",
-			webContentTitle = "WC WebContent Title Cluster2"
-		);
+			webContentTitle = "WC WebContent Title Cluster2");
 
 		PortletEntry.publish();
 
@@ -1065,16 +960,14 @@ definition {
 			User.loginPG(
 				nodePort = "${nodePort}",
 				password = "test",
-				userEmailAddress = "test@liferay.com"
-			);
+				userEmailAddress = "test@liferay.com");
 
 			Page.assertNodePortPG(nodePort = "${nodePort}");
 
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "Web Content"
-			);
+				portlet = "Web Content");
 
 			WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster2");
 
@@ -1088,40 +981,34 @@ definition {
 		Clustering.updatePortalPropertiesOnSpecificServer(
 			nodePort = "8080",
 			propertiesOriginal = "company.security.auth.type=emailAddress",
-			propertiesUpdate = "company.security.auth.type=screenName"
-		);
+			propertiesUpdate = "company.security.auth.type=screenName");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "false",
-			nodePort = "8080"
-		);
+			nodePort = "8080");
 
 		User.loginPG(
 			authenticationMethod = "By Screen Name",
 			nodePort = "8080",
 			password = "test",
-			userScreenName = "test"
-		);
+			userScreenName = "test");
 
 		Page.assertNodePortPG(nodePort = "8080");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Documents and Media Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1133,15 +1020,13 @@ definition {
 			authenticationMethod = "By Screen Name",
 			nodePort = "9080",
 			password = "test",
-			userScreenName = "test"
-		);
+			userScreenName = "test");
 
 		Page.assertNodePortPG(nodePort = "9080");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Documents and Media Page",
-			url = "http://localhost:9080"
-		);
+			url = "http://localhost:9080");
 
 		Portlet.viewPG(portletName = "Documents and Media");
 
@@ -1150,15 +1035,13 @@ definition {
 		User.loginPG(
 			nodePort = "10080",
 			password = "test",
-			userEmailAddress = "test@liferay.com"
-		);
+			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = "10080");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Documents and Media Page",
-			url = "http://localhost:10080"
-		);
+			url = "http://localhost:10080");
 
 		Portlet.viewPG(portletName = "Documents and Media");
 
@@ -1171,33 +1054,28 @@ definition {
 		Clustering.updatePortalPropertiesOnSpecificServer(
 			nodePort = "10080",
 			propertiesOriginal = "company.security.auth.type=emailAddress",
-			propertiesUpdate = "company.security.auth.type=screenName"
-		);
+			propertiesUpdate = "company.security.auth.type=screenName");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "false",
-			nodePort = "10080"
-		);
+			nodePort = "10080");
 
 		User.loginPG(
 			authenticationMethod = "By Screen Name",
 			nodePort = "10080",
 			password = "test",
-			userScreenName = "test"
-		);
+			userScreenName = "test");
 
 		Page.assertNodePortPG(nodePort = "10080");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Documents and Media Page",
-			url = "http://localhost:10080"
-		);
+			url = "http://localhost:10080");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title Cluster3"
-		);
+			dmDocumentTitle = "DM Document Title Cluster3");
 
 		DMDocument.viewPG(dmDocumentTitle = "DM Document Title Cluster3");
 
@@ -1208,15 +1086,13 @@ definition {
 				authenticationMethod = "By Screen Name",
 				nodePort = "${nodePort}",
 				password = "test",
-				userScreenName = "test"
-			);
+				userScreenName = "test");
 
 			Page.assertNodePortPG(nodePort = "${nodePort}");
 
 			Navigator.gotoSpecificURLPage(
 				pageName = "Documents and Media Page",
-				url = "http://localhost:${nodePort}"
-			);
+				url = "http://localhost:${nodePort}");
 
 			DMDocument.viewPG(dmDocumentTitle = "DM Document Title Cluster3");
 

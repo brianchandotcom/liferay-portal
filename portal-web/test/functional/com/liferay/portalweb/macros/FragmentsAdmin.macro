@@ -15,8 +15,7 @@ definition {
 
 		Collection.editCollection(
 			collectionDescription = "${collectionDescription}",
-			collectionName = "${collectionName}"
-		);
+			collectionName = "${collectionName}");
 
 		Button.clickSave();
 	}
@@ -26,17 +25,23 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(locator1 = "TextInput#FILE", value1 = "${resourceFile}");
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "${resourceFile}");
 
 		IFrame.selectTopFrame();
 
-		AssertClick(locator1 = "Button#OK", value1 = "OK");
+		AssertClick(
+			locator1 = "Button#OK",
+			value1 = "OK");
 	}
 
 	macro addSection {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Section");
 
-		AssertTextEquals(locator1 = "Modal#HEADER", value1 = "Add Section");
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Add Section");
 
 		PortletEntry.inputName(name = "${fragmentName}");
 
@@ -44,9 +49,7 @@ definition {
 	}
 
 	macro deleteEntry {
-		LexiconCard.delete(
-			card = "${entry}"
-		);
+		LexiconCard.delete(card = "${entry}");
 	}
 
 	@summary = "Type HTML into the fragment HTML editor using the auto complete feature."
@@ -56,18 +59,15 @@ definition {
 
 		Type.typeAceEditorNoError(
 			locator1 = "FragmentEditor#HTML_EDITOR",
-			value1 = "${htmlSnippet}"
-		);
+			value1 = "${htmlSnippet}");
 
 		Click(
-			locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD",
-			autocompleteField = "${autocompleteField}"
-		);
+			autocompleteField = "${autocompleteField}",
+			locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-			value1 = "${fragmentHTML}"
-		);
+			value1 = "${fragmentHTML}");
 	}
 
 	macro exportCollection {
@@ -77,16 +77,13 @@ definition {
 	}
 
 	macro gotoEntry {
-		LexiconCard.clickCardTitle(
-			card = "${entry}"
-		);
+		LexiconCard.clickCardTitle(card = "${entry}");
 	}
 
 	macro gotoEntryEllipsisItem {
 		LexiconCard.clickEllipsisItem(
 			card = "${entry}",
-			item = "${item}"
-		);
+			item = "${item}");
 	}
 
 	macro gotoImportCollection {
@@ -105,7 +102,9 @@ definition {
 	macro importCollectionFromDependenciesFolder {
 		FragmentsAdmin.gotoImportCollection();
 
-		UploadCommonFile(locator1 = "TextInput#FILE", value1 = "${collectionZipFile}");
+		UploadCommonFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${collectionZipFile}");
 
 		Button.click(button = "Import");
 
@@ -121,8 +120,7 @@ definition {
 
 		UploadTempFile(
 			locator1 = "TextInput#FILE",
-			value1 = "${collectionsZipFileName}"
-		);
+			value1 = "${collectionsZipFileName}");
 
 		Button.click(button = "Import");
 
@@ -132,27 +130,20 @@ definition {
 	}
 
 	macro openFragmentsAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
 	}
 
 	macro viewEntryNotPresent {
-		LexiconCard.viewCardNotPresent(
-			card = "${entry}"
-		);
+		LexiconCard.viewCardNotPresent(card = "${entry}");
 	}
 
 	macro viewEntryPresent {
-		LexiconCard.viewCardPresent(
-			card = "${entry}"
-		);
+		LexiconCard.viewCardPresent(card = "${entry}");
 	}
 
 	macro viewEntryWorkflowStatus {
 		LexiconCard.viewCardLabel(
 			card = "${entry}",
-			cardLabel = "${workflowStatus}"
-		);
+			cardLabel = "${workflowStatus}");
 	}
 }

@@ -49,13 +49,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Service Access Policy"
-		);
+			portlet = "Service Access Policy");
 
 		ServiceAccessPolicy.editServiceAccessPolicy(
 			allowedServiceSignature = "com.liferay.portal.kernel.service.UserService#getUserByEmailAddress",
-			policyName = "SYSTEM_DEFAULT"
-		);
+			policyName = "SYSTEM_DEFAULT");
 
 		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "test@liferay.com ");
 
@@ -90,13 +88,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Service Access Policy"
-		);
+			portlet = "Service Access Policy");
 
 		ServiceAccessPolicy.editServiceAccessPolicy(
 			allowedServiceSignature = " ",
-			policyName = "SYSTEM_USER_PASSWORD"
-		);
+			policyName = "SYSTEM_USER_PASSWORD");
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-current-user \

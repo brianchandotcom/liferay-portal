@@ -14,8 +14,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Export"
-		);
+			portlet = "Export");
 	}
 
 	tearDown {
@@ -33,36 +32,29 @@ definition {
 	test DeleteExportTemplate {
 		LAR.addExportTemplateCP(
 			exportTemplateDescription = "Export Template Description",
-			exportTemplateName = "Export Template Name"
-		);
+			exportTemplateName = "Export Template Name");
 
 		LAR.saveExportTemplateCP(
 			exportTemplateDescription = "Export Template Description",
-			exportTemplateName = "Export Template Name"
-		);
+			exportTemplateName = "Export Template Name");
 
 		LAR.viewExportTemplateCP(
 			exportTemplateDescription = "Export Template Description",
-			exportTemplateName = "Export Template Name"
-		);
+			exportTemplateName = "Export Template Name");
 
-		LAR.moveToTheRecycleBinExportTemplate(
-			exportTemplateName = "Export Template Name"
-		);
+		LAR.moveToTheRecycleBinExportTemplate(exportTemplateName = "Export Template Name");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
 			panel = "Site Administration",
-			portlet = "Recycle Bin"
-		);
+			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
 			assetName = "Export Template Name",
 			assetType = "Export Import Template",
-			deleteUser = "Test Test"
-		);
+			deleteUser = "Test Test");
 
 		RecycleBin.restoreCP(assetName = "Export Template Name");
 
@@ -71,15 +63,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Export"
-		);
+			portlet = "Export");
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Export Templates");
 
 		LAR.viewExportTemplateCP(
 			exportTemplateDescription = "Export Template Description",
-			exportTemplateName = "Export Template Name"
-		);
+			exportTemplateName = "Export Template Name");
 	}
 
 	@priority = "3"
@@ -90,8 +80,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
-			value1 = "Successful"
-		);
+			value1 = "Successful");
 
 		var valueName = selenium.getText("//ul/li/div/h2");
 
@@ -103,40 +92,34 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Relaunch",
-			rowEntry = "${larFileName}"
-		);
+			rowEntry = "${larFileName}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
-			value1 = "Successful"
-		);
+			value1 = "Successful");
 	}
 
 	@priority = "4"
 	test SearchExportTemplate {
 		LAR.addExportTemplateCP(
 			exportTemplateDescription = "Export Template Description",
-			exportTemplateName = "Export Template Name"
-		);
+			exportTemplateName = "Export Template Name");
 
 		LAR.saveExportTemplateCP(
 			exportTemplateDescription = "Export Template Description",
-			exportTemplateName = "Export Template Name"
-		);
+			exportTemplateName = "Export Template Name");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Export"
-		);
+			portlet = "Export");
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Export Templates");
 
 		LAR.searchTemplate(
 			exportTemplateDescription = "Export Template Description",
-			exportTemplateName = "Export Template Name"
-		);
+			exportTemplateName = "Export Template Name");
 	}
 }

@@ -25,12 +25,10 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_MONTH_YEAR",
-			value1 = "${month} ${year}"
-		);
+			value1 = "${month} ${year}");
 
 		AssertClick(
 			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY",
-			value1 = "${day}"
-		);
+			value1 = "${day}");
 	}
 }

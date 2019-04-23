@@ -3,16 +3,14 @@ definition {
 		Navigator.gotoNavTab(navTab = "${tabName}");
 
 		UploadCommonFile(
+			key_tab = "${tabName}",
 			locator1 = "MockLDAP#BROWSE_BUTTON",
-			value1 = "${fileName}",
-			key_tab = "${tabName}"
-		);
+			value1 = "${fileName}");
 
 		AssertClick(
+			key_tab = "${tabName}",
 			locator1 = "Button#TAB_SUBMIT_BTN",
-			value1 = "Add ${tabName}",
-			key_tab = "${tabName}"
-		);
+			value1 = "Add ${tabName}");
 
 		Alert.viewSuccessMessage();
 	}

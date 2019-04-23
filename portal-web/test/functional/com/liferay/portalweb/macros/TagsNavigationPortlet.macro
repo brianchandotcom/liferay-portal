@@ -5,26 +5,25 @@ definition {
 		if (isSet(tagAssetCount)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "TagsNavigation#TAG_NAME",
-				value1 = "${tagAssetCount}"
-			);
+				value1 = "${tagAssetCount}");
 		}
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "TagsNavigation#TAG_NAME",
-			value1 = "${tagName}"
-		);
+			value1 = "${tagName}");
 	}
 
 	macro configureDisplayStylePG {
 		Portlet.gotoPortletOptions(
 			portletName = "Tags Navigation",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "TagsNavigationConfiguration#TAGS_NAVIGATION_IFRAME");
 
 		if (isSet(displayTemplate)) {
-			Select(locator1 = "Select#DISPLAY_TEMPLATE", value1 = "${displayTemplate}");
+			Select(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "${displayTemplate}");
 		}
 
 		PortletEntry.save();
@@ -33,23 +32,20 @@ definition {
 	macro configureFlaggableSettingsPG {
 		Portlet.gotoPortletOptions(
 			portletName = "Tags Navigation",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "TagsNavigationConfiguration#TAGS_NAVIGATION_IFRAME");
 
 		if ("${showUnusedTags}" == "true") {
 			Check.checkToggleSwitch(
 				locator1 = "TagsNavigationConfiguration#SHOW_UNUSED_TAGS_CHECKBOX",
-				value1 = "Show Unused Tags"
-			);
+				value1 = "Show Unused Tags");
 		}
 
 		if ("${showAssetCount}" == "true") {
 			Check.checkToggleSwitch(
 				locator1 = "TagsNavigationConfiguration#SHOW_ASSET_COUNT_CHECKBOX",
-				value1 = "Show Asset Count"
-			);
+				value1 = "Show Asset Count");
 		}
 
 		PortletEntry.save();
@@ -61,15 +57,16 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TagsNavigation#ADT_COLOR_BY_POPULARITY_TAG",
-			value1 = "${tagName}"
-		);
+			value1 = "${tagName}");
 	}
 
 	macro viewDefaultPG {
 		for (var tagName : list "${tagNameList}") {
 			var key_tagName = "${tagName}";
 
-			AssertTextEquals(locator1 = "TagsNavigation#TAG_NAME", value1 = "${tagName}");
+			AssertTextEquals(
+				locator1 = "TagsNavigation#TAG_NAME",
+				value1 = "${tagName}");
 		}
 	}
 
@@ -78,37 +75,32 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TagsNavigation#TAG_CLOUD_POPULARITY",
-			value1 = "${tagName}"
-		);
+			value1 = "${tagName}");
 	}
 
 	macro viewTagCloudConfiguration {
 		Portlet.gotoPortletOptions(
 			portletName = "Tag Cloud",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "TagsNavigationConfiguration#TAG_CLOUD_IFRAME");
 
 		if (isSet(displayTemplate)) {
 			AssertSelectedLabel(
 				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = "${displayTemplate}"
-			);
+				value1 = "${displayTemplate}");
 		}
 
 		if ("${showUnusedTags}" == "true") {
 			AssertChecked(
 				locator1 = "TagsNavigationConfiguration#SHOW_UNUSED_TAGS_CHECKBOX",
-				value1 = "Show Unused Tags"
-			);
+				value1 = "Show Unused Tags");
 		}
 
 		if ("${showAssetCount}" == "true") {
 			AssertChecked(
 				locator1 = "TagsNavigationConfiguration#SHOW_ASSET_COUNT_CHECKBOX",
-				value1 = "Show Asset Count"
-			);
+				value1 = "Show Asset Count");
 		}
 	}
 }

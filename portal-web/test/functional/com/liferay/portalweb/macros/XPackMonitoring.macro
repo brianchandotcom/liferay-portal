@@ -1,18 +1,14 @@
 definition {
 	macro viewAsGuestPG {
-		Navigator.openSpecificURL(
-			url = "http://localhost:8080/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy/app/monitoring"
-		);
+		Navigator.openSpecificURL(url = "http://localhost:8080/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy/app/monitoring");
 
 		AssertTextPresent(
 			locator1 = "//body",
-			value1 = "X-Pack Monitoring is temporarily unavailable."
-		);
+			value1 = "X-Pack Monitoring is temporarily unavailable.");
 
 		AssertTextPresent(
 			locator1 = "//body",
-			value1 = "Please sign in to access this application."
-		);
+			value1 = "Please sign in to access this application.");
 	}
 
 	macro viewPG {
@@ -20,19 +16,16 @@ definition {
 
 		AssertTextPresent(
 			locator1 = "XPackMonitoring#CLUSTER_NAME",
-			value1 = "LiferayElasticsearchCluster"
-		);
+			value1 = "LiferayElasticsearchCluster");
 
 		AssertElementPresent(locator1 = "XPackMonitoring#MONITORING_CLUSTER_OVERVIEW");
 
 		AssertElementPresent(
-			locator1 = "Header#H2_TITLE",
-			key_title = "Elasticsearch"
-		);
+			key_title = "Elasticsearch",
+			locator1 = "Header#H2_TITLE");
 
 		AssertElementPresent(
-			locator1 = "Header#H2_TITLE",
-			key_title = "Kibana"
-		);
+			key_title = "Kibana",
+			locator1 = "Header#H2_TITLE");
 	}
 }

@@ -2,7 +2,9 @@ definition {
 	macro addPollChoice {
 		var key_choiceField = "${choiceField}";
 
-		Type(locator1 = "Polls#CHOICE_FIELD", value1 = "${pollsQuestionChoice}");
+		Type(
+			locator1 = "Polls#CHOICE_FIELD",
+			value1 = "${pollsQuestionChoice}");
 	}
 
 	macro addPollCP {
@@ -12,35 +14,59 @@ definition {
 
 		PortletEntry.inputDescription(description = "${pollsQuestion}");
 
-		Type(locator1 = "TextInput#POLL_CHOICE_A", value1 = "${pollsQuestionChoiceA}");
+		Type(
+			locator1 = "TextInput#POLL_CHOICE_A",
+			value1 = "${pollsQuestionChoiceA}");
 
-		Type(locator1 = "TextInput#POLL_CHOICE_B", value1 = "${pollsQuestionChoiceB}");
+		Type(
+			locator1 = "TextInput#POLL_CHOICE_B",
+			value1 = "${pollsQuestionChoiceB}");
 
-		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
 		if (isSet(pollsQuestionChoiceC)) {
-			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
+			AssertClick(
+				locator1 = "Polls#ADD_CHOICE_BUTTON",
+				value1 = "Add Choice");
 
-			Type(locator1 = "Polls#CHOICE_C_FIELD", value1 = "${pollsQuestionChoiceC}");
+			Type(
+				locator1 = "Polls#CHOICE_C_FIELD",
+				value1 = "${pollsQuestionChoiceC}");
 		}
 
-		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
 		if (isSet(pollsQuestionChoiceD)) {
-			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
+			AssertClick(
+				locator1 = "Polls#ADD_CHOICE_BUTTON",
+				value1 = "Add Choice");
 
-			Type(locator1 = "Polls#CHOICE_D_FIELD", value1 = "${pollsQuestionChoiceD}");
+			Type(
+				locator1 = "Polls#CHOICE_D_FIELD",
+				value1 = "${pollsQuestionChoiceD}");
 		}
 
-		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
 		if (isSet(pollsQuestionChoiceE)) {
-			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
+			AssertClick(
+				locator1 = "Polls#ADD_CHOICE_BUTTON",
+				value1 = "Add Choice");
 
-			Type(locator1 = "Polls#CHOICE_E_FIELD", value1 = "${pollsQuestionChoiceE}");
+			Type(
+				locator1 = "Polls#CHOICE_E_FIELD",
+				value1 = "${pollsQuestionChoiceE}");
 		}
 
-		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
 		if (isSet(permissions)) {
 			Panel.expandPanel(panel = "Permissions");
@@ -49,11 +75,12 @@ definition {
 
 			Select(
 				locator1 = "Select#PERMISSIONS_VIEW_ROLE",
-				value1 = "${permissionsViewRole}"
-			);
+				value1 = "${permissionsViewRole}");
 		}
 
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 	}
 
 	macro addPollCPWithExpirationDate {
@@ -63,54 +90,79 @@ definition {
 
 		PortletEntry.inputDescription(description = "${pollsQuestion}");
 
-		Type(locator1 = "TextInput#POLL_CHOICE_A", value1 = "${pollsQuestionChoiceA}");
+		Type(
+			locator1 = "TextInput#POLL_CHOICE_A",
+			value1 = "${pollsQuestionChoiceA}");
 
-		Type(locator1 = "TextInput#POLL_CHOICE_B", value1 = "${pollsQuestionChoiceB}");
+		Type(
+			locator1 = "TextInput#POLL_CHOICE_B",
+			value1 = "${pollsQuestionChoiceB}");
 
-		AssertChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
-		Uncheck(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		Uncheck(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
-		Type(locator1 = "TextInput#EXPIRATION_DATE", value1 = "${expirationDate}");
+		Type(
+			locator1 = "TextInput#EXPIRATION_DATE",
+			value1 = "${expirationDate}");
 
 		if (isSet(pollsQuestionChoiceC)) {
-			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
+			AssertClick(
+				locator1 = "Polls#ADD_CHOICE_BUTTON",
+				value1 = "Add Choice");
 
-			Type(locator1 = "Polls#CHOICE_C_FIELD", value1 = "${pollsQuestionChoiceC}");
+			Type(
+				locator1 = "Polls#CHOICE_C_FIELD",
+				value1 = "${pollsQuestionChoiceC}");
 		}
 
-		AssertNotChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertNotChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
 		AssertTextEquals(
 			locator1 = "TextInput#EXPIRATION_DATE",
-			value1 = "${expirationDate}"
-		);
+			value1 = "${expirationDate}");
 
 		if (isSet(pollsQuestionChoiceD)) {
-			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
+			AssertClick(
+				locator1 = "Polls#ADD_CHOICE_BUTTON",
+				value1 = "Add Choice");
 
-			Type(locator1 = "Polls#CHOICE_D_FIELD", value1 = "${pollsQuestionChoiceD}");
+			Type(
+				locator1 = "Polls#CHOICE_D_FIELD",
+				value1 = "${pollsQuestionChoiceD}");
 		}
 
-		AssertNotChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertNotChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
 		AssertTextEquals(
 			locator1 = "TextInput#EXPIRATION_DATE",
-			value1 = "${expirationDate}"
-		);
+			value1 = "${expirationDate}");
 
 		if (isSet(pollsQuestionChoiceE)) {
-			AssertClick(locator1 = "Polls#ADD_CHOICE_BUTTON", value1 = "Add Choice");
+			AssertClick(
+				locator1 = "Polls#ADD_CHOICE_BUTTON",
+				value1 = "Add Choice");
 
-			Type(locator1 = "Polls#CHOICE_E_FIELD", value1 = "${pollsQuestionChoiceE}");
+			Type(
+				locator1 = "Polls#CHOICE_E_FIELD",
+				value1 = "${pollsQuestionChoiceE}");
 		}
 
-		AssertNotChecked(locator1 = "Checkbox#NEVER_EXPIRE", value1 = "Never Expire");
+		AssertNotChecked(
+			locator1 = "Checkbox#NEVER_EXPIRE",
+			value1 = "Never Expire");
 
 		AssertTextEquals(
 			locator1 = "TextInput#EXPIRATION_DATE",
-			value1 = "${expirationDate}"
-		);
+			value1 = "${expirationDate}");
 
 		if (isSet(permissions)) {
 			Panel.expandPanel(panel = "Permissions");
@@ -119,11 +171,12 @@ definition {
 
 			Select(
 				locator1 = "Select#PERMISSIONS_VIEW_ROLE",
-				value1 = "${permissionsViewRole}"
-			);
+				value1 = "${permissionsViewRole}");
 		}
 
-		AssertClick(locator1 = "Button#SAVE", value1 = "Save");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 	}
 
 	macro addPollPG {
@@ -137,9 +190,13 @@ definition {
 
 		PortletEntry.inputDescription(description = "${pollsQuestion}");
 
-		Type(locator1 = "TextInput#POLL_CHOICE_A", value1 = "${pollsQuestionChoiceA}");
+		Type(
+			locator1 = "TextInput#POLL_CHOICE_A",
+			value1 = "${pollsQuestionChoiceA}");
 
-		Type(locator1 = "TextInput#POLL_CHOICE_B", value1 = "${pollsQuestionChoiceB}");
+		Type(
+			locator1 = "TextInput#POLL_CHOICE_B",
+			value1 = "${pollsQuestionChoiceB}");
 
 		Button.clickSave();
 
@@ -150,24 +207,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Polls"
-		);
+			portlet = "Polls");
 
 		Click(
-			locator1 = "Polls#POLLS_TABLE_ACTION",
-			key_pollsQuestionTitle = "${pollsQuestionTitle}"
-		);
+			key_pollsQuestionTitle = "${pollsQuestionTitle}",
+			locator1 = "Polls#POLLS_TABLE_ACTION");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm.waitForConfirmation(
-			value1 = "Are you sure you want to delete this? It will be deleted immediately."
-		);
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "Your request completed successfully."
-		);
+			value1 = "Your request completed successfully.");
 	}
 
 	macro selectPollPG {
@@ -179,15 +231,13 @@ definition {
 
 		Select(
 			locator1 = "Polls#TITLE_DROPDOWN_SELECT",
-			value1 = "${pollsQuestionTitle}"
-		);
+			value1 = "${pollsQuestionTitle}");
 
 		PortletEntry.save();
 
 		AssertSelectedLabel(
 			locator1 = "Polls#TITLE_DROPDOWN_SELECT",
-			value1 = "${pollsQuestionTitle}"
-		);
+			value1 = "${pollsQuestionTitle}");
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -198,22 +248,18 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Polls"
-		);
+			portlet = "Polls");
 
 		while (IsElementPresent(locator1 = "Polls#POLLS_TABLE_ACTIONS_GENERIC")) {
 			Click(locator1 = "Polls#POLLS_TABLE_ACTIONS_GENERIC");
 
 			MenuItem.clickNoError(menuItem = "Delete");
 
-			AssertConfirm.waitForConfirmation(
-				value1 = "Are you sure you want to delete this? It will be deleted immediately."
-			);
+			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#SUCCESS",
-				value1 = "Your request completed successfully."
-			);
+				value1 = "Your request completed successfully.");
 		}
 	}
 
@@ -222,8 +268,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Polls#POLL_QUESTION",
-			value1 = "What is your favorite Liferay portlet?"
-		);
+			value1 = "What is your favorite Liferay portlet?");
 
 		for (var questionChoiceList : list "${pollsQuestionChoiceList}") {
 			var key_pollsQuestionChoice = "${questionChoiceList}";
@@ -233,7 +278,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Button#VOTE");
 
-		AssertTextEquals(locator1 = "Message#INFO", value1 = "Please sign in to vote.");
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Please sign in to vote.");
 	}
 
 	macro viewPollChartArea {
@@ -255,8 +302,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Polls#POLL_QUESTION",
-			value1 = "${pollsQuestion}"
-		);
+			value1 = "${pollsQuestion}");
 
 		for (var pollsQuestionChoice : list "${pollsQuestionChoiceList}") {
 			var key_pollsQuestionChoice = "${pollsQuestionChoice}";
@@ -267,8 +313,7 @@ definition {
 				pollsQuestionChoice = "${pollsQuestionChoice}",
 				pollsQuestionTotalVotes = "${pollsQuestionTotalVotes}",
 				pollsQuestionVoteCount = "${pollsQuestionVoteCount}",
-				pollsQuestionVotePercent = "${pollsQuestionVotePercent}"
-			);
+				pollsQuestionVotePercent = "${pollsQuestionVotePercent}");
 		}
 
 	}
@@ -278,19 +323,19 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Polls#POLL_QUESTION",
-			value1 = "${pollsQuestion}"
-		);
+			value1 = "${pollsQuestion}");
 
 		for (var questionChoiceList : list "${pollsQuestionChoiceList}") {
 			var key_pollsQuestionChoice = "${questionChoiceList}";
 
 			AssertTextPresent(
 				locator1 = "Polls#POLL_QUESTION_CHOICE",
-				value1 = "${questionChoiceList}"
-			);
+				value1 = "${questionChoiceList}");
 		}
 
-		AssertTextEquals(locator1 = "Button#VOTE", value1 = "Vote");
+		AssertTextEquals(
+			locator1 = "Button#VOTE",
+			value1 = "Vote");
 	}
 
 	macro viewVotedPollPG {
@@ -298,20 +343,17 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Polls#VOTES_PERCENTAGE",
-			value1 = "${pollsQuestionVotePercent}"
-		);
+			value1 = "${pollsQuestionVotePercent}");
 
 		AssertTextEquals(
 			locator1 = "Polls#VOTES_NUMBER",
-			value1 = "${pollsQuestionVoteCount}"
-		);
+			value1 = "${pollsQuestionVoteCount}");
 
 		var key_pollsQuestionTotalVotes = "${pollsQuestionTotalVotes}";
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Polls#VOTES_TOTAL",
-			value1 = "Total Votes: ${pollsQuestionTotalVotes}"
-		);
+			value1 = "Total Votes: ${pollsQuestionTotalVotes}");
 	}
 
 	macro votePollPG {
@@ -319,11 +361,12 @@ definition {
 
 		Click(locator1 = "Polls#POLL_QUESTION_CHOICE");
 
-		AssertClick(locator1 = "Button#VOTE", value1 = "Vote");
+		AssertClick(
+			locator1 = "Button#VOTE",
+			value1 = "Vote");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
-			value1 = "Thank you for your vote."
-		);
+			value1 = "Thank you for your vote.");
 	}
 }

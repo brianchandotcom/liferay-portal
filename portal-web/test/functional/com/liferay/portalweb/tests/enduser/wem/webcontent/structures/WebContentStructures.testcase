@@ -33,15 +33,13 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 1"
-		);
+			structureName = "WC Structure Name 1");
 
 		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media") {
 			DynamicDataMapping.addField(
 				field = "${structureFieldName}",
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
-			);
+				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 1");
@@ -52,15 +50,13 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 2"
-		);
+			structureName = "WC Structure Name 2");
 
 		for (var structureFieldName : list "HTML,Image,Integer,Link to Page") {
 			DynamicDataMapping.addField(
 				field = "${structureFieldName}",
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
-			);
+				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 2");
@@ -71,15 +67,13 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 3"
-		);
+			structureName = "WC Structure Name 3");
 
 		for (var structureFieldName : list "Number,Radio,Select,Separator,Text,Text Box") {
 			DynamicDataMapping.addField(
 				field = "${structureFieldName}",
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
-			);
+				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 3");
@@ -90,16 +84,14 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 1"
-		);
+			structureName = "WC Structure Name 1");
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 1");
 
 		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media") {
 			DynamicDataMapping.viewField(
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
-			);
+				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -108,16 +100,14 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 2"
-		);
+			structureName = "WC Structure Name 2");
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 2");
 
 		for (var structureFieldName : list "HTML,Image,Integer,Link to Page") {
 			DynamicDataMapping.viewField(
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
-			);
+				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -126,16 +116,14 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 3"
-		);
+			structureName = "WC Structure Name 3");
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 3");
 
 		for (var structureFieldName : list "Number,Radio,Select,Separator,Text,Text Box") {
 			DynamicDataMapping.viewField(
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
-			);
+				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 	}
 
@@ -166,8 +154,7 @@ definition {
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -176,9 +163,8 @@ definition {
 		NavItem.gotoStructures();
 
 		AssertElementNotPresent(
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2",
-			key_ddlDataDefinitionName = "WC Structure Name"
-		);
+			key_ddlDataDefinitionName = "WC Structure Name",
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2");
 	}
 
 	@priority = "4"
@@ -191,15 +177,13 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name1"
-		);
+			structureName = "WC Structure Name1");
 
 		for (var structureFieldName : list "Text,Text Box,Image,Documents and Media") {
 			DynamicDataMapping.addField(
 				field = "${structureFieldName}",
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
-			);
+				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name1");
@@ -216,14 +200,12 @@ definition {
 
 		WebContentStructures.addSubstructure(
 			parentStructureName = "WC Structure Name1",
-			structureName = "2"
-		);
+			structureName = "2");
 
 		DynamicDataMapping.addField(
 			field = "Integer",
 			fieldFieldLabel = "Integer",
-			fieldName = "Integer"
-		);
+			fieldName = "Integer");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name1");
 
@@ -233,8 +215,7 @@ definition {
 
 		WebContentStructures.editSubstructureDefaultValuesCP(
 			editSubstructureFieldNames = "Text",
-			substructureName = "2"
-		);
+			substructureName = "2");
 	}
 
 	@priority = "4"
@@ -245,32 +226,27 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentNavigator.gotoManageTemplatesViaStructures(
-			structureName = "Basic Web Content"
-		);
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "Basic Web Content");
 
 		WebContentTemplates.addCP(
 			templateDescription = "Test WC Template Description",
-			templateName = "Test WC Template"
-		);
+			templateName = "Test WC Template");
 
-		LexiconEntry.gotoEntryMenuItem(menuItem = "Edit", rowEntry = "Test WC Template");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Test WC Template");
 
 		Navigator.gotoBack();
 
-		SiteAdmin.viewPortletTitle(
-			portletTitle = "Templates for Structure: Basic Web Content"
-		);
+		SiteAdmin.viewPortletTitle(portletTitle = "Templates for Structure: Basic Web Content");
 
 		WebContentTemplates.viewTableEntryCP(
 			templateDescription = "Test WC Template Description",
-			templateName = "Test WC Template"
-		);
+			templateName = "Test WC Template");
 
 		WebContentTemplates.viewTableEntryCP(
 			templateDescription = "",
-			templateName = "Basic Web Content"
-		);
+			templateName = "Basic Web Content");
 
 		NavItem.gotoStructures();
 
@@ -278,8 +254,7 @@ definition {
 
 		WebContentStructures.viewTableEntryCP(
 			structureDescription = "Basic Web Content",
-			structureName = "Basic Web Content"
-		);
+			structureName = "Basic Web Content");
 	}
 
 	@priority = "4"
@@ -295,14 +270,12 @@ definition {
 		while (!("${n}" == "15")) {
 			WebContentStructures.addCP(
 				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name ${n}"
-			);
+				structureName = "WC Structure Name ${n}");
 
 			DynamicDataMapping.addField(
 				field = "HTML",
 				fieldFieldLabel = "HTML",
-				fieldName = "HTML"
-			);
+				fieldName = "HTML");
 
 			WebContentStructures.saveCP(structureName = "${structureName}");
 
@@ -314,9 +287,7 @@ definition {
 		WebContentNavigator.gotoMoreStructuresViaPlusButton(pageMod = "8 of 17");
 
 		for (var structureName : list "Basic Web Content,WC Structure Name 0,WC Structure Name 1,WC Structure Name 2,WC Structure Name 3,WC Structure Name 4,WC Structure Name 5,WC Structure Name 6,WC Structure Name 7,WC Structure Name 8,WC Structure Name 9,WC Structure Name 10,WC Structure Name 11,WC Structure Name 12,WC Structure Name 13,WC Structure Name 14") {
-			WebContentStructures.viewStructuresViaMoreIFrame(
-				structureName = "${structureName}"
-			);
+			WebContentStructures.viewStructuresViaMoreIFrame(structureName = "${structureName}");
 		}
 
 		WebContentStructures.viewNoFavoriteStructure();
@@ -325,13 +296,10 @@ definition {
 
 		WebContentStructures.viewFavoriteStructureViaIFrame(
 			indexNumber = "1",
-			structureName = "WC Structure Name 9"
-		);
+			structureName = "WC Structure Name 9");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentStructures.viewFavoriteStructureViaPlusButton(
-			structureName = "WC Structure Name 9"
-		);
+		WebContentStructures.viewFavoriteStructureViaPlusButton(structureName = "WC Structure Name 9");
 	}
 }

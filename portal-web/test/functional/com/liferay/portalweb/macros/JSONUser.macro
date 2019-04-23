@@ -115,8 +115,7 @@ definition {
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
-			userScreenName = "${userScreenName}"
-		);
+			userScreenName = "${userScreenName}");
 	}
 
 	macro deleteUserByEmailAddress {

@@ -22,29 +22,39 @@ definition {
 	macro _addItemURL {
 		PortletEntry.inputName(name = "${urlName}");
 
-		Type(locator1 = "TextInput#URL", value1 = "${url}");
+		Type(
+			locator1 = "TextInput#URL",
+			value1 = "${url}");
 	}
 
 	macro _editItemPage {
 		Check.checkToggleSwitch(locator1 = "SiteNavigationMenu#SET_CUSTOM_NAME_CHECKBOX");
 
 		if (isSet(name)) {
-			Type(locator1 = "TextInput#NAME", value1 = "${name}");
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "${name}");
 		}
 	}
 
 	macro _editItemSubmenu {
 		if (isSet(name)) {
-			Type(locator1 = "TextInput#NAME", value1 = "${name}");
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "${name}");
 		}
 	}
 
 	macro _editItemURL {
 		if (isSet(name)) {
-			Type(locator1 = "TextInput#NAME", value1 = "${name}");
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "${name}");
 		}
 		else if (isSet(url)) {
-			Type(locator1 = "TextInput#URL", value1 = "${URL}");
+			Type(
+				locator1 = "TextInput#URL",
+				value1 = "${URL}");
 		}
 	}
 
@@ -56,14 +66,15 @@ definition {
 		if ("${item}" == "Page") {
 			NavigationMenusAdmin._addItemPage(
 				pageNames = "${pageNames}",
-				privacy = "${privacy}"
-			);
+				privacy = "${privacy}");
 		}
 		else if ("${item}" == "Submenu") {
 			NavigationMenusAdmin._addItemSubmenu(submenuName = "${submenuName}");
 		}
 		else if ("${item}" == "URL") {
-			NavigationMenusAdmin._addItemURL(url = "${url}", urlName = "${urlName}");
+			NavigationMenusAdmin._addItemURL(
+				url = "${url}",
+				urlName = "${urlName}");
 		}
 
 		MouseOver(locator1 = "Button#ADD");
@@ -85,34 +96,28 @@ definition {
 		if ("${menuType}" == "Primary Navigation") {
 			LexiconEntry.gotoEntryMenuItemNoError(
 				menuItem = "${menuType}",
-				rowEntry = "${navigationMenu}"
-			);
+				rowEntry = "${navigationMenu}");
 
 			if (isSet(oldPrimaryNavigationMenu)) {
-				AssertConfirm(
-					value1 = "Do you want to replace ${navigationMenu} for ${oldPrimaryNavigationMenu} as primary navigation? This action will affect all the pages using primary navigation."
-				);
+				AssertConfirm(value1 = "Do you want to replace ${navigationMenu} for ${oldPrimaryNavigationMenu} as primary navigation? This action will affect all the pages using primary navigation.");
 			}
 		}
 		else {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "${menuType}",
-				rowEntry = "${navigationMenu}"
-			);
+				rowEntry = "${navigationMenu}");
 		}
 
 		AssertVisible(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_TEXT",
 			key_rowEntry = "${navigationMenu}",
-			key_rowText = "${menuType}"
-		);
+			key_rowText = "${menuType}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_TEXT");
 	}
 
 	macro deleteItem {
 		Click(
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE",
-			key_itemName = "${itemName}"
-		);
+			key_itemName = "${itemName}",
+			locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
 	}
 
 	macro editItem {
@@ -125,7 +130,9 @@ definition {
 			NavigationMenusAdmin._editItemSubmenu(submenuName = "${submenuName}");
 		}
 		else if ("${item}" == "URL") {
-			NavigationMenusAdmin._editItemURL(name = "${name}", url = "${url");
+			NavigationMenusAdmin._editItemURL(
+				name = "${name}",
+				url = "${url");
 		}
 
 		PortletEntry.save();
@@ -134,42 +141,42 @@ definition {
 	macro markAsPrimaryNavigation {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Primary Navigation",
-			rowEntry = "${newMenuName}"
-		);
+			rowEntry = "${newMenuName}");
 
-		AssertConfirm(
-			value1 = "Do you want to replace ${newMenuName} for ${oldMenuName} as primary navigation? This action will affect all the pages using primary navigation."
-		);
+		AssertConfirm(value1 = "Do you want to replace ${newMenuName} for ${oldMenuName} as primary navigation? This action will affect all the pages using primary navigation.");
 	}
 
 	macro openItemSidebar {
 		Refresh();
 
-		Click(locator1 = "SiteNavigationMenu#ITEM_LINK", key_itemName = "${itemName}");
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "SiteNavigationMenu#ITEM_LINK");
 
 		AssertTextEquals(
+			key_itemName = "${itemName}",
 			locator1 = "SiteNavigationMenu#SIDEBAR_ITEM_NAME",
-			value1 = "${itemName}",
-			key_itemName = "${itemName}"
-		);
+			value1 = "${itemName}");
 
 		AssertElementPresent(locator1 = "SiteNavigationMenu#SIDEBAR");
 	}
 
 	macro openNavigationMenusAdmin {
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet"
-		);
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet");
 	}
 
 	macro toggleAutomaticallyAddNewPagesToMenu {
 		Click(locator1 = "SiteNavigationMenu#SIDEBAR_COG");
 
 		if ("${toggleValue}" == "enable") {
-			Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Offer New Pages");
+			Check(
+				checkboxName = "Offer New Pages",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 		else if ("${toggleValue}" == "disable") {
-			Uncheck(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Offer New Pages");
+			Uncheck(
+				checkboxName = "Offer New Pages",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 		else {
 			fail("Set ${toggleValue} to enable or disable");
@@ -180,50 +187,44 @@ definition {
 
 	macro viewItem {
 		AssertElementPresent(
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY",
-			key_itemName = "${itemName}"
-		);
+			key_itemName = "${itemName}",
+			locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 	}
 
 	macro viewItemNested {
 		AssertNotAttributeValue(
+			key_itemName = "${itemName}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY",
 			locator2 = "data-parent-site-navigation-menu-item-id",
-			value1 = "0",
-			key_itemName = "${itemName}"
-		);
+			value1 = "0");
 	}
 
 	macro viewItemNotNested {
 		AssertAttributeValue(
+			key_itemName = "${itemName}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY",
 			locator2 = "data-parent-site-navigation-menu-item-id",
-			value1 = "0",
-			key_itemName = "${itemName}"
-		);
+			value1 = "0");
 	}
 
 	macro viewItemOrder {
 		AssertTextEquals.assertPartialText(
+			key_index = "${index}",
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_N",
-			value1 = "${itemName}",
-			key_index = "${index}"
-		);
+			value1 = "${itemName}");
 	}
 
 	macro viewMenuType {
 		AssertTextEquals(
-			locator1 = "SiteNavigationMenu#MENU_MARKED_AS",
-			value1 = "${menuType}",
 			key_markedAs = "${menuType}",
-			key_rowEntry = "${rowEntry}"
-		);
+			key_rowEntry = "${rowEntry}",
+			locator1 = "SiteNavigationMenu#MENU_MARKED_AS",
+			value1 = "${menuType}");
 	}
 
 	macro viewNoItem {
 		AssertElementNotPresent(
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY",
-			key_itemName = "${itemName}"
-		);
+			key_itemName = "${itemName}",
+			locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 	}
 }

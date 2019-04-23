@@ -33,8 +33,7 @@ definition {
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page Name"
-			);
+				layoutName = "Test Page Name");
 		}
 
 		task ("Add a navigation menu") {
@@ -47,8 +46,7 @@ definition {
 			NavigationMenusAdmin.addItem(
 				item = "URL",
 				url = "https://www.liferay.com/",
-				urlName = "Liferay"
-			);
+				urlName = "Liferay");
 		}
 
 		task ("Assert the URL item was added to the navigation menu") {
@@ -69,10 +67,9 @@ definition {
 
 		task ("Assert the Navigation Menu widget has the URL item and the link works properly") {
 			AssertClick(
+				key_pageName = "Liferay",
 				locator1 = "Home#PAGE",
-				value1 = "Liferay",
-				key_pageName = "Liferay"
-			);
+				value1 = "Liferay");
 
 			AssertLocation(value1 = "https://www.liferay.com/");
 		}
@@ -87,8 +84,7 @@ definition {
 			for (var index : list "1,2") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
-					layoutName = "Test Page Name ${index}"
-				);
+					layoutName = "Test Page Name ${index}");
 			}
 		}
 
@@ -101,8 +97,7 @@ definition {
 		task ("Add the first page and second page to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "Page",
-				pageNames = "Test Page Name 1,Test Page Name 2"
-			);
+				pageNames = "Test Page Name 1,Test Page Name 2");
 		}
 
 		task ("Navigate to navigation menus admin") {
@@ -112,8 +107,7 @@ definition {
 		task ("Mark the navigation menu as Primary Navigation") {
 			NavigationMenusAdmin.configureMenuType(
 				menuType = "Primary Navigation",
-				navigationMenu = "Test Navigation Menu Name"
-			);
+				navigationMenu = "Test Navigation Menu Name");
 		}
 
 		task ("Navigate to edit the navigation menu") {
@@ -124,8 +118,7 @@ definition {
 			NavigationMenusAdmin.editItem(
 				item = "Page",
 				itemName = "Test Page Name 2",
-				name = "Test Page Name 3"
-			);
+				name = "Test Page Name 3");
 		}
 
 		task ("Assert the name of the second page was successfully changed") {
@@ -135,8 +128,7 @@ definition {
 		task ("Navigate to the Navigation Menu widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name 1",
-				siteName = "Test Site Name"
-			);
+				siteName = "Test Site Name");
 		}
 
 		task ("Configure the Navigation Menu widget to use Primary Navigation") {
@@ -150,8 +142,7 @@ definition {
 		task ("Assert the name of the second page was changed and clicking on the new page name navigates to the second page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name 3",
-				siteName = "Test Site Name"
-			);
+				siteName = "Test Site Name");
 
 			var portalURL = PropsUtil.get("portal.url");
 

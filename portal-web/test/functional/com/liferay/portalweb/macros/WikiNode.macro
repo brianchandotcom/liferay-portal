@@ -19,8 +19,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		if (IsElementNotPresent(locator1 = "Wiki#NODE_TABLE")) {
 			WikiNode.addCP(wikiNodeName = "Main");
@@ -34,8 +33,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
-			value1 = "${wikiNodeName}"
-		);
+			value1 = "${wikiNodeName}");
 
 		Click(locator1 = "Wiki#NODE_TABLE_ACTIONS_DROPDOWN");
 
@@ -53,8 +51,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
-			value1 = "${wikiNodeName}"
-		);
+			value1 = "${wikiNodeName}");
 
 		Click(locator1 = "Wiki#NODE_TABLE_ACTIONS_DROPDOWN");
 
@@ -77,8 +74,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Wiki"
-		);
+			portlet = "Wiki");
 
 		while (IsElementPresent(locator1 = "Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2")) {
 			Click(locator1 = "Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2");
@@ -100,15 +96,15 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
-			value1 = "${wikiNodeName}"
-		);
+			value1 = "${wikiNodeName}");
 
 		AssertTextEquals(
 			locator1 = "Wiki#NODE_TABLE_NUMBER_OF_PAGES",
-			value1 = "${numberOfWikiPages}"
-		);
+			value1 = "${numberOfWikiPages}");
 
-		AssertClick(locator1 = "Wiki#NODE_TABLE_WIKI_NAME", value1 = "${wikiNodeName}");
+		AssertClick(
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
+			value1 = "${wikiNodeName}");
 
 		SiteAdmin.viewPortletTitle(portletTitle = "${wikiNodeName}");
 	}
@@ -118,8 +114,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
-			value1 = "${wikiNodeName}"
-		);
+			value1 = "${wikiNodeName}");
 
 		AssertElementNotPresent(locator1 = "Wiki#NODE_TABLE_WIKI_GENERIC_2");
 	}

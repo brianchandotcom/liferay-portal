@@ -28,8 +28,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "AntiSamy Test Page");
 
@@ -47,10 +46,11 @@ definition {
 
 		WikiPage.addFrontPagePG(
 			htmlSource = "true",
-			wikiPageContent = "${wikiPageContent}"
-		);
+			wikiPageContent = "${wikiPageContent}");
 
-		WikiPage.viewPG(wikiPageContent = "PASS", wikiPageTitle = "FrontPage");
+		WikiPage.viewPG(
+			wikiPageContent = "PASS",
+			wikiPageTitle = "FrontPage");
 	}
 
 	@priority = "4"
@@ -58,8 +58,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Web Content Display Page");
 
@@ -77,12 +76,10 @@ definition {
 
 		WebContent.addPGViaWCD(
 			webContentContent = "${webContentContent}",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewPGViaWCD(
 			webContentContent = "PASS",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 	}
 }

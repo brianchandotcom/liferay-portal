@@ -3,48 +3,49 @@ definition {
 		if (IsElementNotPresent(locator1 = "Tasks#TASK_DESCRIPTION")) {
 			AssertTextEquals(
 				locator1 = "Tasks#INFO_MESSAGE",
-				value1 = "No tasks were found."
-			);
+				value1 = "No tasks were found.");
 		}
 
 		Click(locator1 = "Tasks#ADD_TASK_BUTTON");
 
 		SelectFrame(locator1 = "AddTask#ADD_TASK_IFRAME");
 
-		Type(locator1 = "AddTask#TASK_DESCRIPTION_FIELD", value1 = "${taskDescription}");
+		Type(
+			locator1 = "AddTask#TASK_DESCRIPTION_FIELD",
+			value1 = "${taskDescription}");
 
 		Select(
 			locator1 = "AddTask#TASK_ASSIGNEE_SELECT_MENU",
-			value1 = "${taskAssignee}"
-		);
+			value1 = "${taskAssignee}");
 
 		if (isSet(taskPriority)) {
 			Select(
 				locator1 = "AddTask#TASK_PRIORITY_SELECT_MENU",
-				value1 = "${taskPriority}"
-			);
+				value1 = "${taskPriority}");
 		}
 		else {
-			Select(locator1 = "AddTask#TASK_PRIORITY_SELECT_MENU", value1 = "Normal");
+			Select(
+				locator1 = "AddTask#TASK_PRIORITY_SELECT_MENU",
+				value1 = "Normal");
 		}
 
 		if ("${dueDate}" == "true") {
 			if (IsTextEqual(locator1 = "AddTask#TASK_ADD_DUE_DATE_LINK", value1 = "Add Due Date")) {
 				AssertClick(
 					locator1 = "AddTask#TASK_ADD_DUE_DATE_LINK",
-					value1 = "Add Due Date"
-				);
+					value1 = "Add Due Date");
 			}
 
-			Type(locator1 = "AddTask#DUE_DATE_FIELD", value1 = "3/16/2016");
+			Type(
+				locator1 = "AddTask#DUE_DATE_FIELD",
+				value1 = "3/16/2016");
 		}
 
 		if ("${dueTime}" == "true") {
 			if (IsElementNotPresent(locator1 = "AddTask#DUE_DATE_FIELD")) {
 				AssertClick(
 					locator1 = "AddTask#TASK_ADD_DUE_DATE_LINK",
-					value1 = "Add Due Date"
-				);
+					value1 = "Add Due Date");
 			}
 
 			var displayDateHour = selenium.getElementValue("AddTask#DUE_DATE_HOUR");
@@ -67,7 +68,9 @@ definition {
 			var displayDateMeridian = StringUtil.replace("${displayDateMeridian}", "1", "PM");
 			var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}";
 
-			Type(locator1 = "AddTask#DUE_DATE_TIME_FIELD", value1 = "${displayDate}");
+			Type(
+				locator1 = "AddTask#DUE_DATE_TIME_FIELD",
+				value1 = "${displayDate}");
 		}
 
 		if (isSet(numberOfTags)) {
@@ -76,24 +79,32 @@ definition {
 			while (!("${tagNumber}" == "${numberOfTags}")) {
 				var tagNumber = MathUtil.sum("${tagNumber}", "1");
 
-				Type(locator1 = "AddTask#TASK_TAG_FIELD", value1 = "tag${tagNumber}");
+				Type(
+					locator1 = "AddTask#TASK_TAG_FIELD",
+					value1 = "tag${tagNumber}");
 
 				Click(locator1 = "Button#ADD_TAGS");
 
 				var key_tagNumber = "${tagNumber}";
 
-				AssertTextEquals(locator1 = "AddTask#TASK_TAG", value1 = "tag${tagNumber}");
+				AssertTextEquals(
+					locator1 = "AddTask#TASK_TAG",
+					value1 = "tag${tagNumber}");
 			}
 		}
 
 		if (isSet(tagNumber)) {
 			var key_tagNumber = "${tagNumber}";
 
-			Type(locator1 = "AddTask#TASK_TAG_FIELD", value1 = "tag${tagNumber}");
+			Type(
+				locator1 = "AddTask#TASK_TAG_FIELD",
+				value1 = "tag${tagNumber}");
 
 			Click(locator1 = "Button#ADD_TAGS");
 
-			AssertTextEquals(locator1 = "AddTask#TASK_TAG", value1 = "tag${tagNumber}");
+			AssertTextEquals(
+				locator1 = "AddTask#TASK_TAG",
+				value1 = "tag${tagNumber}");
 		}
 
 		Button.clickSave();
@@ -102,23 +113,22 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TasksTask#TASK_DESCRIPTION",
-			value1 = "${taskDescription}"
-		);
+			value1 = "${taskDescription}");
 
 		if ("${taskAssignee}" == "Unassigned") {
-			AssertTextEquals(locator1 = "TasksTask#TASK_ASSIGNEE", value1 = "Unassigned");
+			AssertTextEquals(
+				locator1 = "TasksTask#TASK_ASSIGNEE",
+				value1 = "Unassigned");
 		}
 		else {
 			AssertTextEquals(
 				locator1 = "TasksTask#TASK_ASSIGNEE",
-				value1 = "Assigned to ${taskAssignee}"
-			);
+				value1 = "Assigned to ${taskAssignee}");
 		}
 
 		AssertTextEquals(
 			locator1 = "TasksTask#TASK_REPORTER",
-			value1 = "Created by ${taskReporter}"
-		);
+			value1 = "Created by ${taskReporter}");
 
 		SelectFrame(value1 = "relative=top");
 

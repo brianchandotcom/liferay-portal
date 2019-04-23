@@ -1,67 +1,56 @@
 definition {
 	macro clickEllipsis {
 		Click(
-			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS",
-			key_listEntry = "${listEntry}"
-		);
+			key_listEntry = "${listEntry}",
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 	}
 
 	macro clickEllipsisItem {
-		LexiconList.clickEllipsis(
-			listEntry = "${listEntry}"
-		);
+		LexiconList.clickEllipsis(listEntry = "${listEntry}");
 
-		MenuItem.clickNoError(
-			menuItem = "${item}"
-		);
+		MenuItem.clickNoError(menuItem = "${item}");
 	}
 
 	macro clickListEntryTitle {
 		Click(
-			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
-			key_listEntry = "${listEntry}"
-		);
+			key_listEntry = "${listEntry}",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK");
 	}
 
 	macro delete {
 		LexiconList.clickEllipsisItem(
 			item = "Delete",
-			listEntry = "${listEntry}"
-		);
+			listEntry = "${listEntry}");
 
 		Confirm();
 	}
 
 	macro viewListEntryLabel {
 		AssertTextEquals(
-			locator1 = "LexiconList#LIST_ENTRY_LABEL",
-			value1 = "${listEntryLabel}",
 			key_listEntry = "${listEntry}",
-			key_listEntrySubtitle = "${listEntryLabel}"
-		);
+			key_listEntrySubtitle = "${listEntryLabel}",
+			locator1 = "LexiconList#LIST_ENTRY_LABEL",
+			value1 = "${listEntryLabel}");
 	}
 
 	macro viewListEntryNotPresent {
 		AssertElementNotPresent(
-			locator1 = "LexiconList#LIST_ENTRY",
-			key_listEntry = "${listEntry}"
-		);
+			key_listEntry = "${listEntry}",
+			locator1 = "LexiconList#LIST_ENTRY");
 	}
 
 	macro viewListEntrySubtitle {
 		AssertTextEquals(
-			locator1 = "LexiconList#LIST_ENTRY_SUBTITLE",
-			value1 = "${listEntrySubtitle}",
 			key_listEntry = "${listEntry}",
-			key_listEntrySubtitle = "${listEntrySubtitle}"
-		);
+			key_listEntrySubtitle = "${listEntrySubtitle}",
+			locator1 = "LexiconList#LIST_ENTRY_SUBTITLE",
+			value1 = "${listEntrySubtitle}");
 	}
 
 	macro viewListEntryTitle {
 		AssertTextEquals(
+			key_listEntry = "${listEntry}",
 			locator1 = "LexiconList#LIST_ENTRY_TITLE",
-			value1 = "${listEntry}",
-			key_listEntry = "${listEntry}"
-		);
+			value1 = "${listEntry}");
 	}
 }

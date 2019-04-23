@@ -13,8 +13,7 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Staging Test Page"
-		);
+			layoutName = "Staging Test Page");
 
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
@@ -40,7 +39,9 @@ definition {
 
 			ProductMenuHelper.expandCategory(category = "Content &amp; Data");
 
-			AssertVisible(locator1 = "ProductMenu#PORTLET", key_portlet = "Content Sets");
+			AssertVisible(
+				key_portlet = "Content Sets",
+				locator1 = "ProductMenu#PORTLET");
 		}
 
 		task("Assert we cannot navigate to asset list administration in the live site.") {
@@ -51,9 +52,8 @@ definition {
 			ProductMenuHelper.expandCategory(category = "Content &amp; Data");
 
 			AssertElementNotPresent(
-				locator1 = "ProductMenu#PORTLET",
-				key_portlet = "Content Sets"
-			);
+				key_portlet = "Content Sets",
+				locator1 = "ProductMenu#PORTLET");
 		}
 	}
 }

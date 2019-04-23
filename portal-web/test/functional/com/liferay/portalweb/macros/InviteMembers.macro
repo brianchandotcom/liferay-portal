@@ -4,18 +4,21 @@ definition {
 
 		AssertClick(
 			locator1 = "InviteMembers#INVITE_USER_FULL_NAME",
-			value1 = "${inviteUserFullName}"
-		);
+			value1 = "${inviteUserFullName}");
 	}
 
 	macro inviteMembers {
-		AssertClick(locator1 = "Button#INVITE_MEMBERS", value1 = "Invite members.");
+		AssertClick(
+			locator1 = "Button#INVITE_MEMBERS",
+			value1 = "Invite members.");
 
 		SelectFrame(locator1 = "IFrame#INVITE_MEMBERS");
 
 		InviteMembers._selectUser(inviteUserFullName = "${inviteUserFullName}");
 
-		AssertClick(locator1 = "Button#SEND_INVITATIONS", value1 = "Send Invitations");
+		AssertClick(
+			locator1 = "Button#SEND_INVITATIONS",
+			value1 = "Send Invitations");
 
 		Alert.viewSuccessMessage();
 	}

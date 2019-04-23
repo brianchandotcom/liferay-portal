@@ -2,7 +2,9 @@ definition {
 	macro addVideoId {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Type(locator1 = "TextInput#URL", value1 = "${videoId}");
+		Type(
+			locator1 = "TextInput#URL",
+			value1 = "${videoId}");
 	}
 
 	macro assertVideoTitle {
@@ -10,8 +12,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "YoutubePortlet#VIDEO_TITLE",
-			value1 = "${videoTitle}"
-		);
+			value1 = "${videoTitle}");
 
 		SelectFrameTop();
 	}
@@ -19,6 +20,8 @@ definition {
 	macro viewPortletConfiguration {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		AssertTextEquals(locator1 = "TextInput#URL", value1 = "${videoId}");
+		AssertTextEquals(
+			locator1 = "TextInput#URL",
+			value1 = "${videoId}");
 	}
 }

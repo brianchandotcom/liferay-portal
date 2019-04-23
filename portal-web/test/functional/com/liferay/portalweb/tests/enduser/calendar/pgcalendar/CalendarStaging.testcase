@@ -15,32 +15,32 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Staging Test Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Staging Test Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
-		Portlet.addPG(pageName = "Staging Test Page", portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Staging Test Page",
+			portletName = "Calendar");
 	}
 
 	tearDown {
@@ -71,22 +71,22 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoSite(page = "Staging Test Page", site = "Site Name");
+		ProductMenu.gotoSite(
+			page = "Staging Test Page",
+			site = "Site Name");
 
 		CalendarEvent.view(eventTitle = "Calendar Event Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 
@@ -100,25 +100,23 @@ definition {
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		CalendarEvent.view(eventTitle = "Calendar Event Title - Staged Edit");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
-		CalendarScheduler.selectSpecificEvent(
-			eventTitle = "Calendar Event Title - Staged Edit"
-		);
+		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title - Staged Edit");
 
 		CalendarEvent.assertEventNotEditable();
 
@@ -126,9 +124,7 @@ definition {
 
 		CalendarNavigator.gotoAddEvent();
 
-		CalendarEvent.viewUnavailableCalendarsNotPresent(
-			unavailableCalendarList = "Site Name"
-		);
+		CalendarEvent.viewUnavailableCalendarsNotPresent(unavailableCalendarList = "Site Name");
 
 		CalendarEvent.viewAvailableCalendars(availableCalendarList = "Test Test");
 
@@ -140,9 +136,7 @@ definition {
 
 		CalendarScheduler.gotoAddViaDayView();
 
-		CalendarEvent.viewUnavailableCalendarsNotPresent(
-			unavailableCalendarList = "Site Name"
-		);
+		CalendarEvent.viewUnavailableCalendarsNotPresent(unavailableCalendarList = "Site Name");
 
 		CalendarEvent.viewAvailableCalendars(availableCalendarList = "Test Test");
 	}
@@ -157,15 +151,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging"
-		);
+			portlet = "Staging");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -176,8 +168,7 @@ definition {
 			pageName = "Staging Test Page",
 			pageStaging = "true",
 			siteName = "Site Name",
-			siteURL = "true"
-		);
+			siteURL = "true");
 
 		CalendarEvent.view(eventTitle = "Site Name Staged Event");
 
@@ -190,56 +181,49 @@ definition {
 			pageName = "Staging Test Page",
 			pageStaging = "true",
 			siteName = "Site Name",
-			siteURL = "true"
-		);
+			siteURL = "true");
 
 		CalendarEvent.view(eventTitle = "Test Test Live Event");
 
 		CalendarResource.add(
 			calendarResourceName = "Calendar Resource Name",
-			calendarType = "Other Calendars"
-		);
+			calendarType = "Other Calendars");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Calendar.add(
 			calendarName = "Calendar Resource Name",
-			calendarType = "Other Calendars"
-		);
+			calendarType = "Other Calendars");
 
 		Calendar.view(
 			calendarName = "Calendar Resource Name",
-			calendarType = "Other Calendars"
-		);
+			calendarType = "Other Calendars");
 
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
-		CalendarScheduler.viewSpecificEventNotPresent(
-			eventTitle = "Site Name Staged Event"
-		);
+		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "Site Name Staged Event");
 
-		CalendarResource.viewResourceNameNotPresent(
-			calendarResourceName = "Calendar Resource Name"
-		);
+		CalendarResource.viewResourceNameNotPresent(calendarResourceName = "Calendar Resource Name");
 
 		CalendarEvent.view(eventTitle = "Test Test Live Event");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
-			siteName = "Site Name"
-		);
+			siteName = "Site Name");
 
 		Staging.schedulePublishToLivePG(
 			checkContentNameList = "Calendar",
-			scheduleTitleName = "Staging Schedule Title"
-		);
+			scheduleTitleName = "Staging Schedule Title");
 
 		Pause(locator1 = "180000");
 
-		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
 		CalendarEvent.view(eventTitle = "Site Name Staged Event");
 
@@ -247,7 +231,6 @@ definition {
 
 		Calendar.view(
 			calendarName = "Calendar Resource Name",
-			calendarType = "Other Calendars"
-		);
+			calendarType = "Other Calendars");
 	}
 }

@@ -4,33 +4,39 @@ definition {
 	macro changeLocale {
 		Click(locator1 = "FormPortlet#LOCALIZATION_BUTTON");
 
-		Click(locator1 = "FormPortlet#LOCALIZATION_OPTION", key_locale = "${locale}");
+		Click(
+			key_locale = "${locale}",
+			locator1 = "FormPortlet#LOCALIZATION_OPTION");
 	}
 
 	macro clickNextPage {
-		AssertClick(locator1 = "Button#NEXT", value1 = "Next");
+		AssertClick(
+			locator1 = "Button#NEXT",
+			value1 = "Next");
 	}
 
 	macro clickSubmit {
-		AssertClick(locator1 = "Button#MAIN_CONTENT_SUBMIT", value1 = "Submit");
+		AssertClick(
+			locator1 = "Button#MAIN_CONTENT_SUBMIT",
+			value1 = "Submit");
 	}
 
 	macro nextPage {
-		AssertClick(locator1 = "Button#NEXT", value1 = "Next");
+		AssertClick(
+			locator1 = "Button#NEXT",
+			value1 = "Next");
 
 		var key_formPageName = "${formPageCurrent}";
 
 		AssertTextEquals(
 			locator1 = "FormPortlet#FORM_PAGE_INACTIVE",
-			value1 = "${formPageCurrent}"
-		);
+			value1 = "${formPageCurrent}");
 
 		var key_formPageName = "${formPageNext}";
 
 		AssertTextEquals(
 			locator1 = "FormPortlet#FORM_PAGE_ACTIVE",
-			value1 = "${formPageNext}"
-		);
+			value1 = "${formPageNext}");
 	}
 
 	macro previousPage {
@@ -51,7 +57,9 @@ definition {
 	}
 
 	macro submitLocalizedSuccessfully {
-		AssertClick(locator1 = "Button#MAIN_CONTENT_SUBMIT", value1 = "${buttonName}");
+		AssertClick(
+			locator1 = "Button#MAIN_CONTENT_SUBMIT",
+			value1 = "${buttonName}");
 
 		Alert.viewSuccessMessage();
 	}
@@ -73,8 +81,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
-			value1 = "${validationErrorMessage}"
-		);
+			value1 = "${validationErrorMessage}");
 	}
 
 	macro viewSuccessPage {
@@ -82,14 +89,12 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "FormPortlet#SUCCESS_PAGE_TITLE",
-			value1 = "${successPageTitle}"
-		);
+			value1 = "${successPageTitle}");
 
 		var key_successPageDescription = "${successPageDescription}";
 
 		AssertTextEquals(
 			locator1 = "FormPortlet#SUCCESS_PAGE_DESCRIPTION",
-			value1 = "${successPageDescription}"
-		);
+			value1 = "${successPageDescription}");
 	}
 }

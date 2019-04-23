@@ -12,8 +12,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Templates Page");
 	}
@@ -37,7 +36,9 @@ definition {
 
 		Portlet.addPG(portletName = "Samplemvc");
 
-		Portlet.viewPG(portletBody = "Hello from Samplemvc!", portletName = "Samplemvc");
+		Portlet.viewPG(
+			portletBody = "Hello from Samplemvc!",
+			portletName = "Samplemvc");
 	}
 
 	@priority = "5"
@@ -47,7 +48,9 @@ definition {
 		property test.name.skip.portal.instance = "SampleProjectTemplates#ThemeTemplateSmoke";
 		var themeName = "sampletheme";
 
-		Page.changeCurrentTheme(pageName = "Templates Page", themeName = "${themeName}");
+		Page.changeCurrentTheme(
+			pageName = "Templates Page",
+			themeName = "${themeName}");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/templates-page");
 

@@ -14,8 +14,7 @@ definition {
 
 		Select(
 			locator1 = "CampaignContentDisplay#RULE_PANEL_CAMPAIGN_SELECT",
-			value1 = "${campaignName}"
-		);
+			value1 = "${campaignName}");
 
 		Click(locator1 = "UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT");
 
@@ -37,9 +36,7 @@ definition {
 
 		ClickNoError(locator1 = "ContentTargeting#OTHERWISE_PANEL");
 
-		ScrollWebElementIntoView(
-			locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO"
-		);
+		ScrollWebElementIntoView(locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO");
 
 		Click(locator1 = "ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO");
 
@@ -73,8 +70,7 @@ definition {
 	macro viewContentNoLongerExistsAfterDeletion {
 		AssertTextEquals(
 			locator1 = "CampaignContentDisplay#ENTRY_CONTENT",
-			value1 = "The selected content no longer exists"
-		);
+			value1 = "The selected content no longer exists");
 	}
 
 	macro viewPG {
@@ -95,15 +91,13 @@ definition {
 				if ((isSet(entryContentText)) && (!("${previewEntry}" == "default"))) {
 					AssertTextEquals(
 						locator1 = "CampaignContentDisplay#ENTRY_CONTENT",
-						value1 = "${entryContentText}"
-					);
+						value1 = "${entryContentText}");
 				}
 
 				if (("viewDontDisplay" == "true") && ("${previewEntry}" == "default")) {
 					AssertTextEquals(
 						locator1 = "CampaignContentDisplay#ENTRY_CONTENT",
-						value1 = "There are no matching rules"
-					);
+						value1 = "There are no matching rules");
 				}
 			}
 		}

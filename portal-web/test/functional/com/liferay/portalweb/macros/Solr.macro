@@ -16,9 +16,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Waiting for client to connect to ZooKeeper");
 
-		AssertConsoleTextPresent(
-			value1 = "Watcher org.apache.solr.common.cloud.ConnectionManager"
-		);
+		AssertConsoleTextPresent(value1 = "Watcher org.apache.solr.common.cloud.ConnectionManager");
 
 		AssertConsoleTextPresent(value1 = "ZooKeeperConnection Watcher:localhost:9983");
 

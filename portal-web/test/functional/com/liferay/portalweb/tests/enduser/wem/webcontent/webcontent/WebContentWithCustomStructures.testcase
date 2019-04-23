@@ -32,8 +32,7 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page"
-		);
+			layoutName = "Web Content Display Page");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -41,14 +40,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -61,15 +58,13 @@ definition {
 		WebContentTemplates.inputTemplateAddScreenFields(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		var templateScript = '''<@liferay_portlet["runtime"] portletName="com_liferay_hello_world_web_portlet_HelloWorldPortlet" />''';
 
 		Type.typeAceEditor(
 			locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
-			value1 = "${templateScript}"
-		);
+			value1 = "${templateScript}");
 
 		PortletEntry.save();
 
@@ -77,26 +72,22 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		WebContent.addStructuredPGViaWCD(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentTitle = "WC Title"
-		);
+			webContentTitle = "WC Title");
 
 		Portlet.viewBody(
 			portletBody = "Welcome to Liferay",
-			portletName = "Hello World"
-		);
+			portletName = "Hello World");
 	}
 
 	@priority = "3"
@@ -106,8 +97,7 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page"
-		);
+			layoutName = "Web Content Display Page");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -115,14 +105,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -136,15 +124,13 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateLanguage = "vm",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		var templateScript = '''$theme.runtime("com_liferay_hello_world_web_portlet_HelloWorldPortlet")''';
 
 		Type.typeAceEditor(
 			locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA",
-			value1 = "${templateScript}"
-		);
+			value1 = "${templateScript}");
 
 		PortletEntry.save();
 
@@ -152,26 +138,22 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		WebContent.addStructuredPGViaWCD(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentTitle = "WC Title"
-		);
+			webContentTitle = "WC Title");
 
 		Portlet.viewBody(
 			portletBody = "Welcome to Liferay",
-			portletName = "Hello World"
-		);
+			portletName = "Hello World");
 	}
 
 	@description = "This is a use case for LPS-52248."
@@ -183,14 +165,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Separator",
 			fieldFieldLabel = "Separator",
-			fieldName = "Separator"
-		);
+			fieldName = "Separator");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -201,8 +181,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -211,16 +190,13 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		AssertConsoleTextNotPresent(
-			value1 = "Expression Separator is instead a com.liferay.portal.freemarker.LiferayTemplateModel"
-		);
+		AssertConsoleTextNotPresent(value1 = "Expression Separator is instead a com.liferay.portal.freemarker.LiferayTemplateModel");
 
 		AssertConsoleTextNotPresent(value1 = "freemarker.core.NonStringException");
 	}
@@ -235,20 +211,17 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		DynamicDataMapping.addFieldNested(
 			field = "Integer",
 			fieldFieldLabel = "Integer",
-			fieldName = "Integer"
-		);
+			fieldName = "Integer");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -259,8 +232,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -271,8 +243,7 @@ definition {
 			templateName = "WC Template Name",
 			webContentInteger = "123",
 			webContentText = "Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -280,14 +251,12 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentText = "Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewNestedField(
 			fieldName = "Text",
 			nestedField = "Integer",
-			nestedFieldData = "123"
-		);
+			nestedFieldData = "123");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -295,16 +264,14 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name");
 
 		for (var structureFieldName : list "Text,Integer") {
 			DynamicDataMapping.viewField(
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = "${structureFieldName}"
-			);
+				fieldName = "${structureFieldName}");
 		}
 	}
 
@@ -318,15 +285,13 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		for (var structureFieldName : list "Text,Text Box") {
 			DynamicDataMapping.addField(
 				field = "${structureFieldName}",
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
-			);
+				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
@@ -338,9 +303,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		for (var structureFieldName : list "Text Box") {
-			DynamicDataMapping.editFieldLocalizable(
-				fieldFieldLabel = "${structureFieldName}"
-			);
+			DynamicDataMapping.editFieldLocalizable(fieldFieldLabel = "${structureFieldName}");
 		}
 
 		WebContentStructures.saveCP();
@@ -353,8 +316,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text,Text Box",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -365,8 +327,7 @@ definition {
 			templateName = "WC Template Name",
 			webContentText = "Text",
 			webContentTextBox = "Text Box",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -374,16 +335,19 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "es-ES");
 
 		WebContent.addCP(webContentTitle = "Title Spanish");
 
-		FormFields.editText(fieldName = "Text", fieldValue = "Text Spanish");
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Text Spanish");
 
 		FormFields.editTextMultiline(
 			fieldName = "TextBox",
-			fieldValue = "Text Box Spanish"
-		);
+			fieldValue = "Text Box Spanish");
 
 		PortletEntry.publish();
 
@@ -395,8 +359,7 @@ definition {
 			localizedTextBox = "Text Box",
 			localizedTitle = "Title Spanish",
 			webContentTextBox = "Text Box",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@description = "This is a use case for LPS-69560."
@@ -407,8 +370,7 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent 1 Content",
 			groupName = "Test Site Name",
-			title = "WC WebContent 1 Title"
-		);
+			title = "WC WebContent 1 Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -416,20 +378,17 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Web Content",
 			fieldFieldLabel = "Web Content",
-			fieldName = "WebContent"
-		);
+			fieldName = "WebContent");
 
 		DynamicDataMapping.addField(
 			field = "Geolocation",
 			fieldFieldLabel = "Geolocation",
-			fieldName = "Geolocation"
-		);
+			fieldName = "Geolocation");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -440,8 +399,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -450,8 +408,7 @@ definition {
 		WebContent.addWithStructureCP(
 			fieldName = "WebContent",
 			webContentSelectWCFile = "WC WebContent 1 Title",
-			webContentTitle = "WC WebContent 2 Title"
-		);
+			webContentTitle = "WC WebContent 2 Title");
 
 		PortletEntry.publish();
 
@@ -464,15 +421,13 @@ definition {
 			fieldData = "WC WebContent 1 Title",
 			fieldFieldLabel = "Web Content",
 			fieldName = "WebContent",
-			webContentTitle = "WC WebContent 2 Title"
-		);
+			webContentTitle = "WC WebContent 2 Title");
 
 		WebContent.viewCPWithoutContentField(
 			field = "Geolocation",
 			fieldFieldLabel = "Geolocation",
 			fieldName = "Geolocation",
-			webContentTitle = "WC WebContent 2 Title"
-		);
+			webContentTitle = "WC WebContent 2 Title");
 	}
 
 	@priority = "4"
@@ -485,14 +440,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "Global WC Structure Description",
-			structureName = "Global WC Structure Name"
-		);
+			structureName = "Global WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
 
@@ -504,33 +457,28 @@ definition {
 			structureName = "Global WC Structure Name",
 			templateDescription = "Local WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "Local WC Template Name"
-		);
+			templateName = "Local WC Template Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page"
-		);
+			layoutName = "Web Content Display Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		WebContent.addWithGlobalStructurePGViaWCD(
 			fieldName = "Text",
 			structureName = "Global WC Structure Name",
 			templateName = "Local WC Template Name",
 			webContentContent = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "3"
@@ -543,14 +491,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Color",
 			fieldFieldLabel = "Color",
-			fieldName = "Color"
-		);
+			fieldName = "Color");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -562,8 +508,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Color",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -573,8 +518,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentColor = "FFFFFF",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -582,10 +526,11 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page"
-		);
+			layoutName = "Test Page");
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
 
 		Content.addPG(assetTitle = "WC WebContent Title");
 
@@ -602,19 +547,16 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "Structure Description",
-			structureName = "Global Structure"
-		);
+			structureName = "Global Structure");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(
 			addRoleViewPermissions = "Power User",
-			structureName = "Global Structure"
-		);
+			structureName = "Global Structure");
 
 		WebContent.openWebContentAdmin(siteURLKey = "global");
 
@@ -623,13 +565,11 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "Global Structure",
 			templateDescription = "Template Description",
-			templateName = "Template Name"
-		);
+			templateName = "Template Name");
 
 		WebContentTemplates.addRoleViewPermissions(
 			roles = "Power User",
-			templateName = "Template Name"
-		);
+			templateName = "Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "global");
 
@@ -637,8 +577,7 @@ definition {
 
 		WebContentStructures.editSubstructureDefaultValuesCP(
 			editSubstructureFieldNames = "Text",
-			substructureName = "Global Structure"
-		);
+			substructureName = "Global Structure");
 
 		User.openUsersAdmin();
 
@@ -646,35 +585,30 @@ definition {
 			userEmailAddress = "test1@liferay.com",
 			userFirstName = "test1",
 			userLastName = "test1",
-			userScreenName = "test1test"
-		);
+			userScreenName = "test1test");
 
 		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "test1@liferay.com",
-			userScreenName = "test1test"
-		);
+			userScreenName = "test1test");
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "test1",
 			userLastName = "test1",
-			userScreenName = "test1test"
-		);
+			userScreenName = "test1test");
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
 
 		Site.assignSiteRoleCP(
 			resourceName = "test1 test1",
-			roleTitle = "Site Administrator"
-		);
+			roleTitle = "Site Administrator");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test1@liferay.com",
-			userLoginFullName = "test1 test1"
-		);
+			userLoginFullName = "test1 test1");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -684,8 +618,7 @@ definition {
 			saveAsDraft = "true",
 			structureName = "Global Structure",
 			webContentText = "Web Content Text",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
@@ -703,14 +636,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Image",
 			fieldFieldLabel = "Image",
-			fieldName = "Image"
-		);
+			fieldName = "Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -722,8 +653,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Image",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -733,8 +663,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentImage = "Document_2.jpeg",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -742,18 +671,19 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page"
-		);
+			layoutName = "Test Page");
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(
-			webContentTitle = "WC WebContent Title"
-		);
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
 
 		WebContentDisplayPortlet.viewImageFieldViaWCD();
 	}
@@ -770,14 +700,12 @@ definition {
 
 			WebContentStructures.addCP(
 				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name"
-			);
+				structureName = "WC Structure Name");
 
 			DynamicDataMapping.addField(
 				field = "Text",
 				fieldFieldLabel = "Text",
-				fieldName = "Text"
-			);
+				fieldName = "Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -789,8 +717,7 @@ definition {
 
 			WebContent.addWithStructureCP(
 				webContentText = "WC WebContent Text",
-				webContentTitle = "WC WebContent Title"
-			);
+				webContentTitle = "WC WebContent Title");
 
 			PortletEntry.publish();
 		}
@@ -802,35 +729,33 @@ definition {
 
 			WebContent.viewCP(
 				webContentText = "WC WebContent Text",
-				webContentTitle = "WC WebContent Title"
-			);
+				webContentTitle = "WC WebContent Title");
 		}
 
 		task ("Assert an automatic template is used when the web content article is displayed in a web content display widget") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page"
-			);
+				layoutName = "Test Page");
 
-			Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Test Page",
+				siteName = "Test Site Name");
 
 			Portlet.addPG(portletName = "Web Content Display");
 
-			WebContentDisplayPortlet.selectWebContent(
-				webContentTitle = "WC WebContent Title"
-			);
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-			Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Test Page",
+				siteName = "Test Site Name");
 
 			AssertTextEquals(
 				locator1 = "//div[@data-analytics-asset-title='WC WebContent Title']//dt",
-				value1 = "Text:"
-			);
+				value1 = "Text:");
 
 			AssertTextEquals(
 				locator1 = "//div[@data-analytics-asset-title='WC WebContent Title']//dd",
-				value1 = "WC WebContent Text"
-			);
+				value1 = "WC WebContent Text");
 		}
 	}
 
@@ -844,14 +769,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -863,8 +786,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -874,8 +796,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -892,14 +813,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -913,8 +832,7 @@ definition {
 			templateFieldNames = "Text",
 			templateFile = "xsl_template.xsl",
 			templateLanguage = "xsl",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -924,8 +842,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -933,13 +850,11 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.previewviatemplate(
 			fieldName = "Text",
-			webContentText = "WC WebContent Text"
-		);
+			webContentText = "WC WebContent Text");
 	}
 
 	@priority = "4"
@@ -952,14 +867,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -971,8 +884,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -982,8 +894,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -993,8 +904,7 @@ definition {
 
 		WebContentStructures.deleteCP(
 			structureName = "WC Structure Name",
-			webContentHasReference = "true"
-		);
+			webContentHasReference = "true");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1002,15 +912,13 @@ definition {
 
 		WebContentTemplates.deleteCP(
 			templateName = "WC Template Name",
-			webContentHasReference = "true"
-		);
+			webContentHasReference = "true");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentStructures.deleteCP(
 			structureName = "WC Structure Name",
-			webContentHasReference = "true"
-		);
+			webContentHasReference = "true");
 	}
 
 	@priority = "4"
@@ -1023,14 +931,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "Global WC Structure Description",
-			structureName = "Global WC Structure Name"
-		);
+			structureName = "Global WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
 
@@ -1042,51 +948,43 @@ definition {
 			structureName = "Global WC Structure Name",
 			templateDescription = "Global WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "Global WC Template Name"
-		);
+			templateName = "Global WC Template Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page"
-		);
+			layoutName = "Web Content Display Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		WebContent.addWithGlobalStructurePGViaWCD(
 			fieldName = "Text",
 			structureName = "Global WC Structure Name",
 			templateName = "Global WC Template Name",
 			webContentContent = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		WebContentNavigator.gotoEditPGViaWCD(
 			menuItem = "Edit Web Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.editPGViaWCD(
 			structureName = "Global WC Structure Name",
 			templateName = "WC Template2 Name",
 			webContentContentEdit = "WC WebContent Text Edit",
 			webContentText = "WC WebContent Text Edit",
-			webContentTitleEdit = "WC WebContent Title Edit"
-		);
+			webContentTitleEdit = "WC WebContent Title Edit");
 	}
 
 	@priority = "5"
@@ -1099,15 +997,13 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		for (var structureFieldName : list "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box") {
 			DynamicDataMapping.addField(
 				field = "${structureFieldName}",
 				fieldFieldLabel = "${structureFieldName}",
-				fieldName = StringUtil.replace("${structureFieldName}", " ", "")
-			);
+				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
@@ -1120,8 +1016,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1130,8 +1025,7 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publishAndWait();
 
@@ -1143,8 +1037,7 @@ definition {
 
 		WebContent.editCP(
 			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title Edit"
-		);
+			webContentTitleEdit = "WC WebContent Title Edit");
 	}
 
 	@priority = "4"
@@ -1157,14 +1050,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "Global WC Structure Description",
-			structureName = "Global WC Structure Name"
-		);
+			structureName = "Global WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "Global WC Structure Name");
 
@@ -1176,46 +1067,39 @@ definition {
 			structureName = "Global WC Structure Name",
 			templateDescription = "Global WC Template Description",
 			templateFieldNames = "Text",
-			templateName = "Global WC Template Name"
-		);
+			templateName = "Global WC Template Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page"
-		);
+			layoutName = "Web Content Display Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		WebContent.addWithGlobalStructurePGViaWCD(
 			fieldName = "Text",
 			structureName = "Global WC Structure Name",
 			templateName = "Global WC Template Name",
 			webContentContent = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
-			siteName = "Test Site Name"
-		);
+			siteName = "Test Site Name");
 
 		WebContentDisplayPortlet.editTemplate(
 			editTemplateButton = "true",
 			structureName = "Global WC Structure Name",
 			templateName = "Template Edit",
 			webContentContent = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1223,8 +1107,7 @@ definition {
 
 		WebContent.viewSelectedTemplateCP(
 			templateName = "Template Edit",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "4"
@@ -1237,14 +1120,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1256,8 +1137,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template1 Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template1 Name"
-		);
+			templateName = "WC Template1 Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1267,8 +1147,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template2 Description",
 			templateFieldNames = "Text",
-			templateName = "WC Template2 Name"
-		);
+			templateName = "WC Template2 Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1276,8 +1155,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -1289,8 +1167,7 @@ definition {
 
 		WebContent.selectTemplateCP(
 			structureName = "WC Structure Name",
-			templateName = "WC Template1 Name"
-		);
+			templateName = "WC Template1 Name");
 
 		PortletEntry.publish();
 
@@ -1300,8 +1177,7 @@ definition {
 
 		WebContent.viewSelectedTemplateCP(
 			templateName = "WC Template1 Name",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "4"
@@ -1314,8 +1190,7 @@ definition {
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Web Content",
 			configurationName = "Administration",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		FormFields.enableCheckbox(fieldName = "showAncestorScopesByDefault");
 
@@ -1323,8 +1198,7 @@ definition {
 
 		JSONGroup.addChildSite(
 			groupName = "Child SiteName",
-			parentGroupName = "Test Site Name"
-		);
+			parentGroupName = "Test Site Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1332,15 +1206,13 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "HTML",
 			fieldFieldLabel = "HTML",
 			fieldName = "HTML",
-			structureFieldName = "HTML"
-		);
+			structureFieldName = "HTML");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1352,8 +1224,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "HTML",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "child-sitename");
 
@@ -1361,8 +1232,7 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "child-sitename");
 
@@ -1372,8 +1242,7 @@ definition {
 
 		WebContentTemplates.viewTableEntryCP(
 			templateDescription = "WC Template Description",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1383,7 +1252,9 @@ definition {
 
 		PortletEntry.inputTitle(title = "WC WebContent Title");
 
-		AlloyEditor.typeEditor(content = "WC WebContent Content", editor = "HTML");
+		AlloyEditor.typeEditor(
+			content = "WC WebContent Content",
+			editor = "HTML");
 
 		PortletEntry.publish();
 
@@ -1400,14 +1271,12 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1426,20 +1295,17 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DynamicDataMapping.addField(
 			field = "Text",
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		DynamicDataMapping.addField(
 			field = "Image",
 			fieldFieldLabel = "Image",
-			fieldName = "image"
-		);
+			fieldName = "image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1451,8 +1317,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Text,Image",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1462,8 +1327,7 @@ definition {
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -1473,61 +1337,59 @@ definition {
 
 		FormFields.editText(
 			fieldName = "title",
-			fieldValue = "English (United States) Title"
-		);
+			fieldValue = "English (United States) Title");
 
 		Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
 
 		ItemSelector.uploadFile(
 			navTab = "Web Content Images",
-			uploadFileName = "Document_3.png"
-		);
+			uploadFileName = "Document_3.png");
 
 		FormFields.editTextAlt(
 			fieldName = "image",
-			fieldValue = "English (United States) Image Description"
-		);
+			fieldValue = "English (United States) Image Description");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "es-ES");
 
-		FormFields.editText(fieldName = "title", fieldValue = "Spanish (Spain) Title");
+		FormFields.editText(
+			fieldName = "title",
+			fieldValue = "Spanish (Spain) Title");
 
 		FormFields.editTextAlt(
 			fieldName = "image",
-			fieldValue = "Spanish (Spain) Image Description"
-		);
+			fieldValue = "Spanish (Spain) Image Description");
 
-		PortletEntry.changeLocale(fieldName = "Title", locale = "en-US");
-
-		FormFields.viewTextValue(
-			fieldName = "title",
-			fieldValue = "English (United States) Title"
-		);
-
-		FormFields.viewTextValueAlt(
-			fieldName = "image",
-			fieldValue = "English (United States) Image Description"
-		);
-
-		PortletEntry.changeLocale(fieldName = "Title", locale = "es-ES");
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "en-US");
 
 		FormFields.viewTextValue(
 			fieldName = "title",
-			fieldValue = "Spanish (Spain) Title"
-		);
+			fieldValue = "English (United States) Title");
 
 		FormFields.viewTextValueAlt(
 			fieldName = "image",
-			fieldValue = "Spanish (Spain) Image Description"
-		);
+			fieldValue = "English (United States) Image Description");
+
+		PortletEntry.changeLocale(
+			fieldName = "Title",
+			locale = "es-ES");
+
+		FormFields.viewTextValue(
+			fieldName = "title",
+			fieldValue = "Spanish (Spain) Title");
+
+		FormFields.viewTextValueAlt(
+			fieldName = "image",
+			fieldValue = "Spanish (Spain) Image Description");
 
 		PortletEntry.publish();
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoEditCP(
-			webContentTitle = "English (United States) Title"
-		);
+		WebContentNavigator.gotoEditCP(webContentTitle = "English (United States) Title");
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "View Source");
 
@@ -1550,8 +1412,7 @@ definition {
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
 
@@ -1564,8 +1425,7 @@ definition {
 		WebContent.editNullCP(
 			webContentContent = "WC WebContent Content",
 			webContentContentEdit = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1574,8 +1434,7 @@ definition {
 		WebContent.editCP(
 			webContentContentEdit = "WC WebContent Content Edit",
 			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title Edit"
-		);
+			webContentTitleEdit = "WC WebContent Title Edit");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 

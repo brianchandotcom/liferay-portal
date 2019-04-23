@@ -1,15 +1,18 @@
 definition {
 	macro search {
-		Type(locator1 = "TextInput#SEARCH_2", value1 = "${webContentSearchTerm}");
+		Type(
+			locator1 = "TextInput#SEARCH_2",
+			value1 = "${webContentSearchTerm}");
 
-		AssertClick(locator1 = "Button#SEARCH", value1 = "Search");
+		AssertClick(
+			locator1 = "Button#SEARCH",
+			value1 = "Search");
 	}
 
 	macro viewNoResults {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "No pages were found that matched the keywords: ${webContentSearchTerm}."
-		);
+			value1 = "No pages were found that matched the keywords: ${webContentSearchTerm}.");
 	}
 
 	macro viewResultsEntry {
@@ -17,12 +20,10 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WebContentSearchResults#TITLE",
-			value1 = "${webContentTitle}"
-		);
+			value1 = "${webContentTitle}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WebContentSearchResults#CONTENT",
-			value1 = "${webContentContent}"
-		);
+			value1 = "${webContentContent}");
 	}
 }

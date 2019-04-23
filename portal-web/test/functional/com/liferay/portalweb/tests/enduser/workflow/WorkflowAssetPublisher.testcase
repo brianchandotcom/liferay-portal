@@ -16,34 +16,29 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow"
-		);
+			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry"
-		);
+			workflowResourceValue = "Blogs Entry");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Message Boards Message"
-		);
+			workflowResourceValue = "Message Boards Message");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Asset Publisher Page");
 
@@ -79,16 +74,14 @@ definition {
 
 		Blogs.addWithWorkflowViaAP(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -99,32 +92,26 @@ definition {
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		BlogsEntry.viewPGViaAP(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "My Account",
 			panel = "User",
-			portlet = "My Submissions"
-		);
+			portlet = "My Submissions");
 
-		Workflow.gotoViewCompletedAssetViaMySubmissions(
-			workflowAssetTitle = "Blogs Entry Title"
-		);
+		Workflow.gotoViewCompletedAssetViaMySubmissions(workflowAssetTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryAsWorkflowAsset(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This is a use case for LPS-72846."
@@ -135,13 +122,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
 		MessageboardsThread.addWithWorkflowCP(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -149,35 +134,29 @@ definition {
 
 		Workflow.viewNoDuplicateTaskAssignedToMyRoles(
 			workflowAssetTitle = "MB Thread Message Subject",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "MB Thread Message Subject",
 			workflowAssetType = "Message Boards Message",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
-		MessageboardsThread.viewWithWorkflowPGViaAP(
-			threadSubject = "MB Thread Message Subject"
-		);
+		MessageboardsThread.viewWithWorkflowPGViaAP(threadSubject = "MB Thread Message Subject");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "MB Thread Message Subject",
 			workflowAssetType = "Message Boards Message",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		MessageboardsThread.viewPGViaAP(
 			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject"
-		);
+			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "4"
@@ -186,16 +165,14 @@ definition {
 
 		WebContent.addWithWorkflowPGViaAP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -206,15 +183,13 @@ definition {
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
 			workflowAssetType = "Web Content Article",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		WebContent.viewPGViaAP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 	}
 
 	@priority = "4"
@@ -223,16 +198,14 @@ definition {
 
 		Blogs.addWithWorkflowViaAP(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -243,21 +216,18 @@ definition {
 		Workflow.rejectTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review"
-		);
+			workflowTask = "Review");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.viewRejectedTask(
 			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry"
-		);
+			workflowAssetType = "Blogs Entry");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		BlogsEntry.viewWithWorkflowPGViaAP(
 			entryTitle = "Blogs Entry Title",
-			webContentTitle = "Blogs Entry Title"
-		);
+			webContentTitle = "Blogs Entry Title");
 	}
 }

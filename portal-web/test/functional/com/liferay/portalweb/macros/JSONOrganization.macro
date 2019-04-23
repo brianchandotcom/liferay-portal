@@ -96,8 +96,7 @@ definition {
 
 		JSONOrganization._addOrganization(
 			organizationName = "${organizationName}",
-			organizationSite = "${organizationSite}"
-		);
+			organizationSite = "${organizationSite}");
 	}
 
 	macro assignUserToOrganization {
@@ -117,8 +116,7 @@ definition {
 
 		JSONOrganization._assignUserToOrganization(
 			organizationId = "${organizationId}",
-			userId = "${userId}"
-		);
+			userId = "${userId}");
 	}
 
 	macro deleteOrganizationByName {

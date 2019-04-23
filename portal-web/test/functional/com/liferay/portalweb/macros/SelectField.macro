@@ -1,9 +1,8 @@
 definition {
 	macro select {
 		Select(
+			key_selectFieldLabel = "${selectFieldLabel}",
 			locator1 = "Select#ANY",
-			value1 = "${selectFieldValue}",
-			key_selectFieldLabel = "${selectFieldLabel}"
-		);
+			value1 = "${selectFieldValue}");
 	}
 }

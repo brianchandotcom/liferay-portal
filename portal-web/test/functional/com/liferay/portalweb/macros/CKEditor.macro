@@ -2,7 +2,9 @@ definition {
 	macro addContent {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		KeyPress(locator1 = "CKEditor#BODY", value1 = "${content}");
+		KeyPress(
+			locator1 = "CKEditor#BODY",
+			value1 = "${content}");
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -12,6 +14,8 @@ definition {
 	}
 
 	macro viewEntryContent {
-		AssertTextEquals(locator1 = "CKEditor#BODY", value1 = "${content}");
+		AssertTextEquals(
+			locator1 = "CKEditor#BODY",
+			value1 = "${content}");
 	}
 }

@@ -13,8 +13,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
-			portlet = "App Manager"
-		);
+			portlet = "App Manager");
 
 		AppManager.viewAppCP(appName = "${appName}");
 	}

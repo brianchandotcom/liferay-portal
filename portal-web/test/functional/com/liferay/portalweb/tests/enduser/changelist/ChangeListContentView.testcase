@@ -12,8 +12,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Settings"
-		);
+			portlet = "Settings");
 
 		ChangeList.enableChangeList();
 	}
@@ -28,8 +27,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Change Lists",
 				panel = "Control Panel",
-				portlet = "Settings"
-			);
+				portlet = "Settings");
 
 			ChangeList.disableChangeList();
 		}
@@ -40,74 +38,63 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "First Web Content"
-		);
+			webContentTitle = "First Web Content");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertElementNotPresent(
-			locator1 = "ChangeList#CHECK_CIRCLE",
-			key_contentTitle = "First Web Content"
-		);
+			key_contentTitle = "First Web Content",
+			locator1 = "ChangeList#CHECK_CIRCLE");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Change List Name"
-		);
+			changeListName = "Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "Second Web Content"
-		);
+			webContentTitle = "Second Web Content");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertElementPresent(
-			locator1 = "ChangeList#CHECK_CIRCLE",
-			key_contentTitle = "Second Web Content"
-		);
+			key_contentTitle = "Second Web Content",
+			locator1 = "ChangeList#CHECK_CIRCLE");
 
 		AssertElementNotPresent(
-			locator1 = "ChangeList#CHECK_CIRCLE",
-			key_contentTitle = "First Web Content"
-		);
+			key_contentTitle = "First Web Content",
+			locator1 = "ChangeList#CHECK_CIRCLE");
 	}
 
 	@priority = "5"
@@ -115,61 +102,50 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Change List Name"
-		);
+			changeListName = "Change List Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
 			webContentContent = "WC WebContent Content",
-			webContentTitle = "Web Content Title"
-		);
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "Web Content Title",
-			menuItem = "View History"
-		);
+			menuItem = "View History");
 
 		ChangeList.viewSpecificChangeListHistory(
 			changeListName = "Change List Name",
-			contentTitle = "Web Content Title"
-		);
+			contentTitle = "Web Content Title");
 
 		LexiconTable.clickEllipsisItem(
 			item = "Delete",
-			tableEntry = "Web Content Title"
-		);
+			tableEntry = "Web Content Title");
 
-		AssertConfirm(
-			value1 = "Are you sure you want to move this to the Recycle Bin?"
-		);
+		AssertConfirm(value1 = "Are you sure you want to move this to the Recycle Bin?");
 
 		Alert.viewSuccessMessage();
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.viewDeletedItemCounter(nbrOfDeletedItems = "1");
 	}

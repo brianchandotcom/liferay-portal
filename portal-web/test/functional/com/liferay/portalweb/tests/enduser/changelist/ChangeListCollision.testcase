@@ -12,8 +12,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Settings"
-		);
+			portlet = "Settings");
 
 		ChangeList.enableChangeList();
 	}
@@ -28,8 +27,7 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Change Lists",
 				panel = "Control Panel",
-				portlet = "Settings"
-			);
+				portlet = "Settings");
 
 			ChangeList.disableChangeList();
 		}
@@ -40,46 +38,36 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoTemplates();
 
 		WebContentTemplates.addCP(
 			structureName = "Basic Web Content",
 			templateDescription = "WC Template Description",
-			templateName = "WC Template Name"
-		);
+			templateName = "WC Template Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "First Change List Name"
-		);
+			changeListName = "First Change List Name");
 
-		ChangeList.selectChangeList(
-			changeListName = "Select Change List"
-		);
+		ChangeList.selectChangeList(changeListName = "Select Change List");
 
 		ChangeList.addNewChangeList(
 			changeListDescription = "Change List Description",
-			changeListName = "Second Change List Name"
-		);
+			changeListName = "Second Change List Name");
 
-		ChangeList.selectChangeList(
-			changeListName = "First Change List"
-		);
+		ChangeList.selectChangeList(changeListName = "First Change List");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoTemplates();
 
@@ -87,45 +75,34 @@ definition {
 			structureName = "Basic Web Content",
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name Modified in The First Change List",
-			templatePreviousName = "WC Template Name"
-		);
+			templatePreviousName = "WC Template Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
-		AssertHTMLSourceTextNotPresent(
-			value1 = "ChangeList#COLLISTION_DETECTED"
-		);
+		AssertHTMLSourceTextNotPresent(value1 = "ChangeList#COLLISTION_DETECTED");
 
-		ChangeList.selectChangeList(
-			changeListName = "Second Change List"
-		);
+		ChangeList.selectChangeList(changeListName = "Second Change List");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoTemplates();
 
 		WebContentTemplates.modifyTemplate(
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name Modified in The Second Change List",
-			templatePreviousName = "WC Template Name"
-		);
+			templatePreviousName = "WC Template Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
-			portlet = "Change Lists"
-		);
+			portlet = "Change Lists");
 
-		AssertHTMLSourceTextPresent(
-			value1 = "ChangeList#COLLISTION_DETECTED"
-		);
+		AssertHTMLSourceTextPresent(value1 = "ChangeList#COLLISTION_DETECTED");
 	}
 }

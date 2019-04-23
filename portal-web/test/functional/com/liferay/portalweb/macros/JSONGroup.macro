@@ -282,8 +282,7 @@ definition {
 		JSONGroup._addGroup(
 			groupDescription = "${groupDescription}",
 			groupName = "${groupName}",
-			parentGroupName = "${parentGroupName}"
-		);
+			parentGroupName = "${parentGroupName}");
 	}
 
 	@summary = "Add a basic site"
@@ -294,8 +293,7 @@ definition {
 
 		JSONGroup._addGroup(
 			groupDescription = "${groupDescription}",
-			groupName = "${groupName}"
-		);
+			groupName = "${groupName}");
 	}
 
 	macro assignGroupRoleToUser {
@@ -320,8 +318,7 @@ definition {
 		JSONGroup._assignGroupRoleToUser(
 			groupId = "${groupId}",
 			roleId = "${roleId}",
-			userId = "${userId}"
-		);
+			userId = "${userId}");
 	}
 
 	macro assignUserToGroup {
@@ -337,7 +334,9 @@ definition {
 
 		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
-		JSONGroup._assignUserToGroup(groupId = "${groupId}", userId = "${userId}");
+		JSONGroup._assignUserToGroup(
+			groupId = "${groupId}",
+			userId = "${userId}");
 	}
 
 	@summary = "Delete a valid group using its groupName"

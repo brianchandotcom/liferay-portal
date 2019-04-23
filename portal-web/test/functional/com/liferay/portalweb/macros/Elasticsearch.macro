@@ -1,27 +1,24 @@
 definition {
 	macro viewClusterStatus {
-		AssertTextPresent(locator1 = "//pre", value1 = "${clusterStatus}");
+		AssertTextPresent(
+			locator1 = "//pre",
+			value1 = "${clusterStatus}");
 	}
 
 	@description = "Elasticsearch provides a Cluster Health API (http://localhost:9200/_cluster/health?pretty=true) to easily view the current status of the cluster."
 	macro viewClusterStatusViaClusterHealthAPI {
-		Navigator.openSpecificURL(
-			url = "http://localhost:9200/_cluster/health?level=indices&amp;pretty"
-		);
+		Navigator.openSpecificURL(url = "http://localhost:9200/_cluster/health?level=indices&amp;pretty");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",
-			value1 = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster&quot;"
-		);
+			value1 = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster&quot;");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",
-			value1 = "&quot;number_of_nodes&quot; : ${numberOfNodes}"
-		);
+			value1 = "&quot;number_of_nodes&quot; : ${numberOfNodes}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",
-			value1 = "&quot;number_of_data_nodes&quot; : ${numberOfNodes}"
-		);
+			value1 = "&quot;number_of_data_nodes&quot; : ${numberOfNodes}");
 	}
 }

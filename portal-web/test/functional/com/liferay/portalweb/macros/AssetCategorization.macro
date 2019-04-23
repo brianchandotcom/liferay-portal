@@ -1,37 +1,37 @@
 definition {
 	macro _addTag {
-		Type(locator1 = "AssetCategorization#TAGS_FIELD", value1 = "${tagName}");
+		Type(
+			locator1 = "AssetCategorization#TAGS_FIELD",
+			value1 = "${tagName}");
 
 		ScrollWebElementIntoView(locator1 = "AssetCategorization#TAGS_FIELD");
 
 		if (IsElementPresent(locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER")) {
 			Click(
-				locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
-				key_tagName = "${tagName}"
-			);
+				key_tagName = "${tagName}",
+				locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC");
 		}
 		else {
-			KeyPress(locator1 = "AssetCategorization#TAGS_FIELD", value1 = ",");
+			KeyPress(
+				locator1 = "AssetCategorization#TAGS_FIELD",
+				value1 = ",");
 		}
 	}
 
 	macro addCategory {
 		Type.sendKeys(
+			key_vocabularyName = "${vocabularyName}",
 			locator1 = "AssetCategorization#CATEGORIES_FIELD",
-			value1 = "${categoryName}",
-			key_vocabularyName = "${vocabularyName}"
-		);
+			value1 = "${categoryName}");
 
 		Click(
-			locator1 = "AssetCategorization#CATEGORY_AUTOCOMPLETE_SPECIFIC",
-			key_categoryName = "${categoryName}"
-		);
+			key_categoryName = "${categoryName}",
+			locator1 = "AssetCategorization#CATEGORY_AUTOCOMPLETE_SPECIFIC");
 
 		AssertTextEquals(
+			key_categoryName = "${categoryName}",
 			locator1 = "AssetCategorization#CATEGORY",
-			value1 = "${categoryName}",
-			key_categoryName = "${categoryName}"
-		);
+			value1 = "${categoryName}");
 	}
 
 	macro addDuplicateTag {
@@ -39,16 +39,14 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'help-block')]",
-			value1 = "Duplicate Tag: ${tagName}"
-		);
+			value1 = "Duplicate Tag: ${tagName}");
 	}
 
 	macro addMultipleCategories {
 		for (var categoryName : list "${categoryNameList}") {
 			AssetCategorization.addCategory(
 				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}"
-			);
+				vocabularyName = "${vocabularyName}");
 		}
 	}
 
@@ -56,10 +54,9 @@ definition {
 		AssetCategorization._addTag(tagName = "${tagName}");
 
 		AssertTextEquals(
+			key_tagName = "${tagName}",
 			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}",
-			key_tagName = "${tagName}"
-		);
+			value1 = "${tagName}");
 	}
 
 	macro gotoSelectCategory {
@@ -75,7 +72,9 @@ definition {
 	macro removeTag {
 		var key_tagName = "${tagName}";
 
-		AssertTextEquals(locator1 = "AssetCategorization#TAG", value1 = "${tagName}");
+		AssertTextEquals(
+			locator1 = "AssetCategorization#TAG",
+			value1 = "${tagName}");
 
 		Click(locator1 = "AssetCategorization#TAG_REMOVE");
 
@@ -90,10 +89,14 @@ definition {
 		SelectFrameTop();
 
 		if (IsElementPresent(locator1 = "Button#ADD")) {
-			AssertClick(locator1 = "Button#ADD", value1 = "Add");
+			AssertClick(
+				locator1 = "Button#ADD",
+				value1 = "Add");
 		}
 		else if (IsElementPresent(locator1 = "Button#DONE")) {
-			AssertClick(locator1 = "Button#DONE", value1 = "Done");
+			AssertClick(
+				locator1 = "Button#DONE",
+				value1 = "Done");
 		}
 		else {
 			Click(locator1 = "Icon#CLOSE");
@@ -117,15 +120,16 @@ definition {
 
 		for (var tagName : list "${tagNameList}") {
 			Check(
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX",
-				key_rowEntry = "${tagName}"
-			);
+				key_rowEntry = "${tagName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
 		}
 
 		SelectFrameTop();
 
 		if (IsElementPresent(locator1 = "Button#DONE")) {
-			AssertClick(locator1 = "Button#DONE", value1 = "Done");
+			AssertClick(
+				locator1 = "Button#DONE",
+				value1 = "Done");
 		}
 		else {
 			Click(locator1 = "Icon#CLOSE");
@@ -136,9 +140,8 @@ definition {
 		}
 
 		AssertTextEquals(
+			key_tagName = "${tagName}",
 			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}",
-			key_tagName = "${tagName}"
-		);
+			value1 = "${tagName}");
 	}
 }

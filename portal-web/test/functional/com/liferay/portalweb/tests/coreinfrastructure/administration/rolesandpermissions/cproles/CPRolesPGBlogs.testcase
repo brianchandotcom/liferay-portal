@@ -41,14 +41,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Blogs Page");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		Portlet.addPG(pageName = "Blogs Page", portletName = "Blogs");
+		Portlet.addPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs");
 
 		User.logoutPG();
 
@@ -74,10 +75,11 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsEntry.viewNoAddPermissions();
 
@@ -87,15 +89,15 @@ definition {
 			roleTitle = "Roles Orgrole Name",
 			roleType = "Organization",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Permissions.removePermissionLoginUserCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
@@ -103,17 +105,17 @@ definition {
 			roleTitle = "Roles Orgrole Name",
 			roleType = "Organization",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsEntry.viewNoAddPermissions();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -133,78 +135,77 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsEntry.viewNoAddPermissions();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
-			roleTitle = "Roles Orgrole Name"
-		);
+			roleTitle = "Roles Orgrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
-			roleTitle = "Roles Orgrole Name"
-		);
+			roleTitle = "Roles Orgrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsEntry.viewNoAddPermissions();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "5"
@@ -220,8 +221,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -232,23 +232,20 @@ definition {
 			permissionDefinitionValue = "Add Entry",
 			roleTitle = "Regrole Name",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Permissions.removePermissionLoginUserCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
 			permissionDefinitionValue = "Add Entry",
 			roleTitle = "Regrole Name",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -256,8 +253,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -271,8 +267,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -280,56 +275,47 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -337,8 +323,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "5"
@@ -356,10 +341,11 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.viewNoAddPermissions();
 
@@ -369,15 +355,15 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "Site",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Permissions.removePermissionLoginUserCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
@@ -385,17 +371,17 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "Site",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.viewNoAddPermissions();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -413,78 +399,73 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.viewNoAddPermissions();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
-			roleTitle = "Roles Siterole Name"
-		);
+			roleTitle = "Roles Siterole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX",
-			roleTitle = "Roles Siterole Name"
-		);
+			roleTitle = "Roles Siterole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.viewNoAddPermissions();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -501,78 +482,77 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.viewNoAddPermissions();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Team.definePermissionPG(
 			permissionDefinitionKey = "_ACTION_ADD_ENTRY",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Team.removePermissionPG(
 			permissionDefinitionKey = "_ACTION_ADD_ENTRY",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.viewNoAddPermissions();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -580,19 +560,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Blogs Page");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		Portlet.addPG(pageName = "Blogs Page", portletName = "Blogs");
+		Portlet.addPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutPG();
 
@@ -620,8 +600,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -630,17 +609,17 @@ definition {
 			siteName = "Organization Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "5"
@@ -662,8 +641,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -672,28 +650,26 @@ definition {
 			siteName = "Organization Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "DELETE",
 			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Roles Orgrole Name"
-		);
+			roleTitle = "Roles Orgrole Name");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "DELETE",
 			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Roles Orgrole Name"
-		);
+			roleTitle = "Roles Orgrole Name");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -702,17 +678,17 @@ definition {
 			siteName = "Organization Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -732,8 +708,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -742,39 +717,40 @@ definition {
 			siteName = "Organization Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
-			roleTitle = "Roles Orgrole Name"
-		);
+			roleTitle = "Roles Orgrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -783,36 +759,35 @@ definition {
 			siteName = "Organization Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
-			roleTitle = "Roles Orgrole Name"
-		);
+			roleTitle = "Roles Orgrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Organization Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Organization Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -826,31 +801,26 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ENTRY",
 			resourceName = "com.liferay.blogs",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -858,13 +828,11 @@ definition {
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
-			roleTitle = "Owner"
-		);
+			roleTitle = "Owner");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -872,8 +840,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -881,21 +848,18 @@ definition {
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
-			roleTitle = "Owner"
-		);
+			roleTitle = "Owner");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@priority = "4"
@@ -909,16 +873,14 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -927,40 +889,34 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "DELETE",
 			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "DELETE",
 			resourceName = "com.liferay.blogs.model.BlogsEntry",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -968,8 +924,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -983,16 +938,14 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1000,8 +953,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1009,29 +961,25 @@ definition {
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			pageName = "Blogs Page",
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1039,13 +987,11 @@ definition {
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1053,8 +999,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -1072,8 +1017,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -1082,10 +1026,11 @@ definition {
 			siteName = "Site Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 
@@ -1093,33 +1038,30 @@ definition {
 			resourceAction = "DELETE",
 			resourceName = "com.liferay.blogs.model.BlogsEntry",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "DELETE",
 			resourceName = "com.liferay.blogs.model.BlogsEntry",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -1128,17 +1070,17 @@ definition {
 			siteName = "Site Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -1156,8 +1098,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -1166,39 +1107,40 @@ definition {
 			siteName = "Site Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
-			roleTitle = "Roles Siterole Name"
-		);
+			roleTitle = "Roles Siterole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -1207,31 +1149,31 @@ definition {
 			siteName = "Site Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_DELETE_CHECKBOX",
-			roleTitle = "Roles Siterole Name"
-		);
+			roleTitle = "Roles Siterole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -1248,8 +1190,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -1258,39 +1199,40 @@ definition {
 			siteName = "Site Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Team.definePermissionPG(
 			permissionDefinitionKey = "_ACTION_DELETE",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinPG(
 			assetType = "Blogs Entry",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		Permissions.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",
@@ -1299,31 +1241,31 @@ definition {
 			siteName = "Site Name",
 			siteURLTemp = "true",
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoBlogsEntryPermissionsPG(entryTitle = "Blogs Entry Title");
 
 		Team.removePermissionPG(
 			permissionDefinitionKey = "_ACTION_DELETE",
-			teamName = "Site Team Name"
-		);
+			teamName = "Site Team Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsEntry.moveToRecycleBinNoPermissionPG(entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -1337,31 +1279,26 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ENTRY",
 			resourceName = "com.liferay.blogs",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1369,25 +1306,21 @@ definition {
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_UPDATE_CHECKBOX",
-			roleTitle = "Owner"
-		);
+			roleTitle = "Owner");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsEntry.editNoPermissionPG(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1395,13 +1328,11 @@ definition {
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_UPDATE_CHECKBOX",
-			roleTitle = "Owner"
-		);
+			roleTitle = "Owner");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1409,18 +1340,15 @@ definition {
 
 		BlogsEntry.editTitle(
 			entryTitle = "Blogs Entry Title",
-			entryTitleEdit = "Blogs Entry Title Edit"
-		);
+			entryTitleEdit = "Blogs Entry Title Edit");
 
 		BlogsEntry.editContent(
 			entryContent = "Blogs Entry Content",
-			entryContentEdit = "Blogs Entry Content Edit"
-		);
+			entryContentEdit = "Blogs Entry Content Edit");
 
 		BlogsEntry.viewEntry(
 			entryContent = "Blogs Entry Content Edit",
-			entryTitle = "Blogs Entry Title Edit"
-		);
+			entryTitle = "Blogs Entry Title Edit");
 	}
 
 	@priority = "5"
@@ -1436,8 +1364,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1446,13 +1373,11 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "SUBSCRIBE",
 			resourceName = "com.liferay.blogs",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1461,13 +1386,11 @@ definition {
 		Permissions.removePermissionViaAPI(
 			resourceAction = "SUBSCRIBE",
 			resourceName = "com.liferay.blogs",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1475,8 +1398,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -1490,8 +1412,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1499,26 +1420,22 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1526,26 +1443,22 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1553,8 +1466,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -1571,55 +1483,56 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsConfiguration.viewSubscribePG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		Blogs.subscribePG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs"
-		);
+			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntriesPermissionsCP();
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX",
-			roleTitle = "Site Member"
-		);
+			roleTitle = "Site Member");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsConfiguration.viewNoSubscribePG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "5"
@@ -1633,31 +1546,26 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ENTRY",
 			resourceName = "com.liferay.blogs",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title"
-		);
+			entryTitle = "Blogs Entry Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1665,13 +1573,11 @@ definition {
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX",
-			roleTitle = "Owner"
-		);
+			roleTitle = "Owner");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1679,8 +1585,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1688,13 +1593,11 @@ definition {
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX",
-			roleTitle = "Owner"
-		);
+			roleTitle = "Owner");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1715,8 +1618,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1725,19 +1627,16 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "CONFIGURATION",
 			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "PERMISSIONS",
 			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1746,19 +1645,16 @@ definition {
 		Permissions.removePermissionViaAPI(
 			resourceAction = "CONFIGURATION",
 			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "PERMISSIONS",
 			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1766,8 +1662,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -1781,8 +1676,7 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1790,8 +1684,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1799,8 +1692,7 @@ definition {
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1808,13 +1700,11 @@ definition {
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1822,8 +1712,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1831,13 +1720,11 @@ definition {
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1845,8 +1732,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1854,13 +1740,11 @@ definition {
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX",
-			roleTitle = "Regrole Name"
-		);
+			roleTitle = "Regrole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1868,8 +1752,7 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -1887,10 +1770,11 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsConfiguration.viewAsSiteMemberPG();
 
@@ -1898,22 +1782,21 @@ definition {
 			resourceAction = "CONFIGURATION",
 			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "PERMISSIONS",
 			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsConfiguration.viewPermissionsPG();
 
@@ -1921,15 +1804,15 @@ definition {
 			resourceAction = "PERMISSIONS",
 			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsConfiguration.viewAsSiteMemberPG();
 
@@ -1937,22 +1820,21 @@ definition {
 			resourceAction = "CONFIGURATION",
 			resourceName = "com_liferay_blogs_web_portlet_BlogsPortlet",
 			roleTitle = "Roles Siterole Name",
-			roleType = "site"
-		);
+			roleType = "site");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsConfiguration.viewAsSiteMemberPG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -1970,95 +1852,99 @@ definition {
 			userLastName = "userln",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
-			userScreenName = "usersn"
-		);
+			userScreenName = "usersn");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsConfiguration.viewAsSiteMemberPG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX",
-			roleTitle = "Roles Siterole Name"
-		);
+			roleTitle = "Roles Siterole Name");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX",
-			roleTitle = "Roles Siterole Name"
-		);
+			roleTitle = "Roles Siterole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsConfiguration.viewPermissionsPG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX",
-			roleTitle = "Roles Siterole Name"
-		);
+			roleTitle = "Roles Siterole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsConfiguration.viewAsSiteMemberPG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Blogs");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX",
-			roleTitle = "Roles Siterole Name"
-		);
+			roleTitle = "Roles Siterole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln"
-		);
+			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(pageName = "Blogs Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsConfiguration.viewAsSiteMemberPG();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test"
-		);
+			userLoginFullName = "Test Test");
 	}
 
 	@priority = "4"
@@ -2066,14 +1952,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Blogs Page");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		Portlet.addPG(pageName = "Blogs Page", portletName = "Blogs");
+		Portlet.addPG(
+			pageName = "Blogs Page",
+			portletName = "Blogs");
 
 		User.logoutPG();
 

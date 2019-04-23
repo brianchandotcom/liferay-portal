@@ -6,8 +6,7 @@ definition {
 
 		Click(
 			locator1 = "WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS",
-			value1 = "${wikiPageTitle}"
-		);
+			value1 = "${wikiPageTitle}");
 
 		PortletEntry.clickMoveToRecycleBin();
 	}
@@ -17,13 +16,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
-			value1 = "${wikiPageTitle}"
-		);
+			value1 = "${wikiPageTitle}");
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_STATUS",
-			value1 = "${draftStatus}"
-		);
+			value1 = "${draftStatus}");
 	}
 
 	macro viewNoEntry {

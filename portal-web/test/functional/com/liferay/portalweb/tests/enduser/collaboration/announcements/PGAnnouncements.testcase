@@ -15,20 +15,17 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Announcements Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Announcements Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -60,8 +57,7 @@ definition {
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com"
-		);
+			entryURL = "http://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -69,8 +65,7 @@ definition {
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com"
-		);
+			entryURL = "http://www.liferay.com");
 	}
 
 	@priority = "4"
@@ -81,15 +76,13 @@ definition {
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com"
-		);
+			entryURL = "http://www.liferay.com");
 
 		Pause(locator1 = "10000");
 
 		AssertClick(
 			locator1 = "Announcements#NAVIGATION_ENTRIES_UNREAD",
-			value1 = "Unread"
-		);
+			value1 = "Unread");
 
 		AssertTextNotPresent(value1 = "Announcements Entry Title");
 
@@ -101,8 +94,7 @@ definition {
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com"
-		);
+			entryURL = "http://www.liferay.com");
 	}
 
 	@priority = "3"
@@ -115,8 +107,7 @@ definition {
 			entryTitle = "Announcements Entry Title",
 			entryURL = "http://www.liferay.com",
 			expirationDate = "12/31/2013",
-			pastDate = "true"
-		);
+			pastDate = "true");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -125,13 +116,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Announcements and Alerts"
-		);
+			portlet = "Announcements and Alerts");
 
 		AssertTextEquals(
 			locator1 = "Message#NO_ENTRIES",
-			value1 = "No entries were found."
-		);
+			value1 = "No entries were found.");
 	}
 
 	@priority = "4"
@@ -143,16 +132,14 @@ definition {
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
 			entryURL = "http://www.liferay.com",
-			priority = "Important"
-		);
+			priority = "Important");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title"
-		);
+			entryTitle = "Announcements Entry Title");
 	}
 
 	@priority = "3"
@@ -160,30 +147,28 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(
 			pageName = "Announcements Page",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
 			pageName = "Announcements Page",
 			privacy = "Public Pages",
-			sitePageType = "Widget Page"
-		);
+			sitePageType = "Widget Page");
 
-		Navigator.gotoSitePage(pageName = "Announcements Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Announcements Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Announcements");
 
@@ -191,16 +176,16 @@ definition {
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com"
-		);
+			entryURL = "http://www.liferay.com");
 
-		Navigator.gotoSitePage(pageName = "Announcements Page", siteName = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Announcements Page",
+			siteName = "Site Name");
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title"
-		);
+			entryTitle = "Announcements Entry Title");
 	}
 
 	@priority = "5"
@@ -214,21 +199,18 @@ definition {
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com"
-		);
+			entryURL = "http://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.deletePG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title"
-		);
+			entryTitle = "Announcements Entry Title");
 
 		AnnouncementsEntry.viewDeletePG(
 			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title"
-		);
+			entryTitle = "Announcements Entry Title");
 	}
 
 	@priority = "5"
@@ -242,8 +224,7 @@ definition {
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com"
-		);
+			entryURL = "http://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -253,16 +234,14 @@ definition {
 			entryContentEdit = "Announcements Entry Content Edit",
 			entryTitle = "Announcements Entry Title",
 			entryTitleEdit = "Announcements Entry Title Edit",
-			entryURLEdit = "http://www.alloyui.com"
-		);
+			entryURLEdit = "http://www.alloyui.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content Edit",
-			entryTitle = "Announcements Entry Title Edit"
-		);
+			entryTitle = "Announcements Entry Title Edit");
 	}
 
 	@priority = "5"
@@ -276,26 +255,22 @@ definition {
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
-			entryURL = "http://www.liferay.com"
-		);
+			entryURL = "http://www.liferay.com");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.markAsReadPG(
 			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title"
-		);
+			entryTitle = "Announcements Entry Title");
 
 		AnnouncementsEntry.viewReadPG(
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
-			entryTitle = "Announcements Entry Title"
-		);
+			entryTitle = "Announcements Entry Title");
 
 		AssertClick(
 			locator1 = "Announcements#NAVIGATION_ENTRIES_UNREAD",
-			value1 = "Unread"
-		);
+			value1 = "Unread");
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry Title");
 	}

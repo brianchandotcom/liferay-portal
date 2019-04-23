@@ -1,15 +1,23 @@
 definition {
 	macro configureAdministratorUserPG {
-		Type(locator1 = "TextInput#FIRST_NAME", value1 = "${administratorFirstName}");
+		Type(
+			locator1 = "TextInput#FIRST_NAME",
+			value1 = "${administratorFirstName}");
 
-		Type(locator1 = "TextInput#LAST_NAME", value1 = "${administratorLastName}");
+		Type(
+			locator1 = "TextInput#LAST_NAME",
+			value1 = "${administratorLastName}");
 
-		Type(locator1 = "TextInput#EMAIL", value1 = "${administratorEmail}");
+		Type(
+			locator1 = "TextInput#EMAIL",
+			value1 = "${administratorEmail}");
 	}
 
 	macro configureDatabasePG {
 		if (IsElementNotPresent(locator1 = "SetupWizard#DATABASE_CHANGE_USE_CONFIGURED_DATABASE_LINK")) {
-			AssertClick(locator1 = "SetupWizard#DATABASE_CHANGE_LINK", value1 = "(Change)");
+			AssertClick(
+				locator1 = "SetupWizard#DATABASE_CHANGE_LINK",
+				value1 = "(Change)");
 		}
 
 		if (isSet(databaseName)) {
@@ -18,28 +26,23 @@ definition {
 
 		Select(
 			locator1 = "SetupWizard#DATABASE_CHANGE_DATABASE_TYPE_SELECT",
-			value1 = "${databaseType}"
-		);
+			value1 = "${databaseType}");
 
 		Type(
 			locator1 = "SetupWizard#DATABASE_CHANGE_JDBC_URL_FIELD",
-			value1 = "${jdbcURL}"
-		);
+			value1 = "${jdbcURL}");
 
 		Type(
 			locator1 = "SetupWizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD",
-			value1 = "${jdbcDriverClassName}"
-		);
+			value1 = "${jdbcDriverClassName}");
 
 		Type(
 			locator1 = "SetupWizard#DATABASE_CHANGE_USER_NAME_FIELD",
-			value1 = "${databaseUserName}"
-		);
+			value1 = "${databaseUserName}");
 
 		Type(
 			locator1 = "SetupWizard#DATABASE_CHANGE_PASSWORD_FIELD",
-			value1 = "${databasePassword}"
-		);
+			value1 = "${databasePassword}");
 	}
 
 	macro configureDefaultPG {
@@ -55,7 +58,9 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(base_branch = "${base_branch}", deleteLiferayHome = "false");
+		Portlet.startServer(
+			base_branch = "${base_branch}",
+			deleteLiferayHome = "false");
 
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}");
@@ -69,8 +74,7 @@ definition {
 		User.resetPassword(
 			resetPassword = "${resetPassword}",
 			setupWizardEnabled = "${setupWizardEnabled}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}"
-		);
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}");
 
 		User.answerPasswordReminder();
 
@@ -91,8 +95,7 @@ definition {
 		SetupWizard.configureAdministratorUserPG(
 			administratorEmail = "${administratorEmail}",
 			administratorFirstName = "${administratorFirstName}",
-			administratorLastName = "${administratorLastName}"
-		);
+			administratorLastName = "${administratorLastName}");
 
 		SetupWizard.configureDatabasePG(
 			databaseName = "${databaseName}",
@@ -100,8 +103,7 @@ definition {
 			databaseType = "${databaseType}",
 			databaseUserName = "${databaseUserName}",
 			jdbcDriverClassName = "${jdbcDriverClassName}",
-			jdbcURL = "${jdbcURL}"
-		);
+			jdbcURL = "${jdbcURL}");
 
 		SetupWizard.configureSampleDataPG(addSampleData = "${addSampleData}");
 
@@ -111,7 +113,9 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(base_branch = "${base_branch}", deleteLiferayHome = "false");
+		Portlet.startServer(
+			base_branch = "${base_branch}",
+			deleteLiferayHome = "false");
 
 		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
 
@@ -127,8 +131,7 @@ definition {
 		User.resetPassword(
 			resetPassword = "${resetPassword}",
 			setupWizardEnabled = "${setupWizardEnabled}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}"
-		);
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}");
 
 		User.answerPasswordReminder();
 
@@ -138,15 +141,16 @@ definition {
 	}
 
 	macro configurePortalNamePG {
-		Type(locator1 = "TextInput#PORTAL_NAME", value1 = "${portalName}");
+		Type(
+			locator1 = "TextInput#PORTAL_NAME",
+			value1 = "${portalName}");
 	}
 
 	macro configureSampleDataPG {
 		if (IsElementNotPresent(locator1 = "SetupWizard#DATABASE_CHANGE_USE_CONFIGURED_DATABASE_LINK")) {
 			AssertClick(
 				locator1 = "SetupWizard#DATABASE_CHANGE_LINK",
-				value1 ="(Change)"
-			);
+				value1 = "(Change)");
 		}
 
 		if ("${addSampleData}" == "true") {
@@ -161,8 +165,7 @@ definition {
 	macro finishConfigurationPG {
 		AssertClick(
 			locator1 = "Button#FINISH_CONFIGURATION",
-			value1 = "Finish Configuration"
-		);
+			value1 = "Finish Configuration");
 	}
 
 	macro viewConfigurationSavedPG {
@@ -170,123 +173,101 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SetupWizard#CONFIGURATION_SAVE_MESSAGE",
-			value1 = "The configuration was saved in"
-		);
+			value1 = "The configuration was saved in");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SetupWizard#CONFIGURATION_SAVE_LOCATION",
-			value1 = "portal-setup-wizard.properties"
-		);
+			value1 = "portal-setup-wizard.properties");
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "Changes will take effect once the portal is restarted. Please restart the portal now."
-		);
+			value1 = "Changes will take effect once the portal is restarted. Please restart the portal now.");
 	}
 
 	macro viewConfiguredDatabaseInConsole {
 		if ("${databaseType}" == "DB2") {
-			AssertConsoleTextPresent(
-				value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.DB2Dialect for DB2"
-			);
+			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.DB2Dialect for DB2");
 		}
 		else if ("${databaseType}" == "HSQL") {
-			AssertConsoleTextPresent(
-				value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.HSQLDialect for HSQL Database Engine"
-			);
+			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.HSQLDialect for HSQL Database Engine");
 		}
 		else if ("${databaseType}" == "MariaDB") {
-			AssertConsoleTextPresent(
-				value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.MariaDBDialect for MySQL"
-			);
+			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.MariaDBDialect for MySQL");
 		}
 		else if ("${databaseType}" == "MySQL") {
-			AssertConsoleTextPresent(
-				value1 = "Using dialect org.hibernate.dialect.MySQLDialect for MySQL"
-			);
+			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.MySQLDialect for MySQL");
 		}
 		else if ("${databaseType}" == "Oracle") {
-			AssertConsoleTextPresent(
-				value1 = "Using dialect org.hibernate.dialect.Oracle10gDialect for Oracle"
-			);
+			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.Oracle10gDialect for Oracle");
 		}
 		else if ("${databaseType}" == "PostgreSQL") {
-			AssertConsoleTextPresent(
-				value1 = "Using dialect org.hibernate.dialect.PostgreSQLDialect for PostgreSQL"
-			);
+			AssertConsoleTextPresent(value1 = "Using dialect org.hibernate.dialect.PostgreSQLDialect for PostgreSQL");
 		}
 		else if ("${databaseType}" == "Sybase") {
-			AssertConsoleTextPresent(
-				value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.SybaseASE157Dialect for Adaptive Server Enterprise"
-			);
+			AssertConsoleTextPresent(value1 = "Using dialect com.liferay.portal.dao.orm.hibernate.SybaseASE157Dialect for Adaptive Server Enterprise");
 		}
 	}
 
 	macro viewDefaultAdministratorUserPG {
 		AssertSelectedLabel(
 			locator1 = "SetupWizard#DEFAULT_LANGUAGE",
-			value1 = "English (United States)"
-		);
+			value1 = "English (United States)");
 
-		AssertTextEquals.assertValue(locator1 = "TextInput#FIRST_NAME", value1 = "Test");
+		AssertTextEquals.assertValue(
+			locator1 = "TextInput#FIRST_NAME",
+			value1 = "Test");
 
-		AssertTextEquals.assertValue(locator1 = "TextInput#LAST_NAME", value1 = "Test");
+		AssertTextEquals.assertValue(
+			locator1 = "TextInput#LAST_NAME",
+			value1 = "Test");
 
 		AssertTextEquals.assertValue(
 			locator1 = "TextInput#EMAIL",
-			value1 = "test@liferay.com"
-		);
+			value1 = "test@liferay.com");
 	}
 
 	macro viewDefaultDatabasePG {
 		if (IsElementPresent(locator1 = "SetupWizard#DATABASE_DEFAULT_LABEL")) {
 			AssertTextEquals.assertText(
 				locator1 = "SetupWizard#DATABASE_DEFAULT_LABEL",
-				value1 = "Default Database (Hypersonic)"
-			);
+				value1 = "Default Database (Hypersonic)");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "SetupWizard#DATABASE_DEFAULT_DESCRIPTION",
-				value1 = "This database is useful for development and demo'ing purposes, but it is not recommended for production use."
-			);
+				value1 = "This database is useful for development and demo'ing purposes, but it is not recommended for production use.");
 
 			AssertTextEquals.assertText(
 				locator1 = "SetupWizard#DATABASE_CHANGE_LINK",
-				value1 = "(Change)"
-			);
+				value1 = "(Change)");
 		}
 		else {
 			AssertTextEquals.assertText(
 				locator1 = "SetupWizard#DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL",
-				value1 = "Configured Database"
-			);
+				value1 = "Configured Database");
 
-			AssertClick(locator1 = "SetupWizard#DATABASE_CHANGE_LINK", value1 = "(Change)");
+			AssertClick(
+				locator1 = "SetupWizard#DATABASE_CHANGE_LINK",
+				value1 = "(Change)");
 
 			AssertTextEquals.assertText(
 				locator1 = "SetupWizard#DATABASE_CHANGE_DATABASE_TYPE_LABEL",
-				value1 = "Database Type"
-			);
+				value1 = "Database Type");
 
 			AssertTextEquals.assertText(
 				locator1 = "SetupWizard#DATABASE_CHANGE_JDBC_URL_LABEL",
-				value1 = "JDBC URL Required"
-			);
+				value1 = "JDBC URL Required");
 
 			AssertTextEquals.assertText(
 				locator1 = "SetupWizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_LABEL",
-				value1 = "JDBC Driver Class Name Required"
-			);
+				value1 = "JDBC Driver Class Name Required");
 
 			AssertTextEquals.assertText(
 				locator1 = "SetupWizard#DATABASE_CHANGE_USER_NAME_LABEL",
-				value1 = "User Name"
-			);
+				value1 = "User Name");
 
 			AssertTextEquals.assertText(
 				locator1 = "SetupWizard#DATABASE_CHANGE_PASSWORD_LABEL",
-				value1 = "Password"
-			);
+				value1 = "Password");
 		}
 	}
 
@@ -296,14 +277,12 @@ definition {
 		if ("${testRunEnvironment}" == "EE") {
 			AssertTextEquals.assertValue(
 				locator1 = "TextInput#PORTAL_NAME",
-				value1 = "Liferay DXP"
-			);
+				value1 = "Liferay DXP");
 		}
 		else {
 			AssertTextEquals.assertValue(
 				locator1 = "TextInput#PORTAL_NAME",
-				value1 = "Liferay"
-			);
+				value1 = "Liferay");
 		}
 	}
 
@@ -313,18 +292,14 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search"
-		);
+			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(
-			actionsDescription = "Reindex all search indexes."
-		);
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations"
-		);
+			portlet = "Users and Organizations");
 
 		Pagination.viewResults(results = "Showing 1 to 20 of 101 entries.");
 
@@ -332,24 +307,25 @@ definition {
 			userEmailAddress = "default.dlc.1@liferay.com",
 			userFirstName = "Test",
 			userLastName = "DLC 1",
-			userScreenName = "default.dlc.1"
-		);
+			userScreenName = "default.dlc.1");
 
 		Navigator.gotoBack();
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.viewCP(orgName = "Liferay, Inc.", orgType = "Organization");
+		Organization.viewCP(
+			orgName = "Liferay, Inc.",
+			orgType = "Organization");
 
 		Navigator.gotoBack();
 
-		Organization.gotoCP(orgName = "Liferay, Inc.", searchToken = "Liferay, Inc.");
+		Organization.gotoCP(
+			orgName = "Liferay, Inc.",
+			searchToken = "Liferay, Inc.");
 
 		User.searchCP(searchTerm = "Test DLC 1");
 
-		Organization.viewAssignMemberCP(
-			userName = "Test DLC 1"
-		);
+		Organization.viewAssignMemberCP(userName = "Test DLC 1");
 
 		Search.searchCP(searchTerm = "LiferayChicago");
 
@@ -357,25 +333,21 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_NAME",
-			value1 = "LiferayChicago"
-		);
+			value1 = "LiferayChicago");
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_TYPE",
-			value1 = "Organization"
-		);
+			value1 = "Organization");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites"
-		);
+			portlet = "Sites");
 
 		AssertTextEquals.assertPartialText(
+			key_siteName = "Liferay, Inc.",
 			locator1 = "Sites#SITE_TABLE_NAME",
-			value1 = "Liferay, Inc.",
-			key_siteName = "Liferay, Inc."
-		);
+			value1 = "Liferay, Inc.");
 	}
 
 	macro viewSampleDataEnabledInPropertiesFile {

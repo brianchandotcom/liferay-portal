@@ -13,8 +13,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages"
-		);
+			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Currency Converter Page");
 
@@ -40,7 +39,6 @@ definition {
 			currencyDataTo = "EUR",
 			currencyFrom = "USD",
 			currencyTo = "EUR",
-			currencyValue = "4"
-		);
+			currencyValue = "4");
 	}
 }

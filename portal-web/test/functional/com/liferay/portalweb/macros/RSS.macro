@@ -14,12 +14,13 @@ definition {
 	macro viewFeed {
 		RSS.gotoFeed(rssURL = "${rssURL}");
 
-		RSS.viewFeedTitle(feedSubtitle = "${feedSubtitle}", feedTitle = "${feedTitle}");
+		RSS.viewFeedTitle(
+			feedSubtitle = "${feedSubtitle}",
+			feedTitle = "${feedTitle}");
 
 		RSS.viewFeedEntry(
 			entryContent = "${entryContent}",
-			entryTitle = "${entryTitle}"
-		);
+			entryTitle = "${entryTitle}");
 
 		Close.closeWindow(locator1 = "null");
 	}
@@ -27,24 +28,26 @@ definition {
 	macro viewFeedEntry {
 		for (var entryTitle : list "${entryTitle}") {
 			AssertTextEquals(
+				key_entryTitle = "${entryTitle}",
 				locator1 = "RSS#ENTRY_TITLE",
-				value1 = "${entryTitle}",
-				key_entryTitle = "${entryTitle}"
-			);
+				value1 = "${entryTitle}");
 		}
 
 		for (var entryContent : list "${entryContent}") {
 			AssertTextEquals(
+				key_entryContent = "${entryContent}",
 				locator1 = "RSS#ENTRY_CONTENT",
-				value1 = "${entryContent}",
-				key_entryContent = "${entryContent}"
-			);
+				value1 = "${entryContent}");
 		}
 	}
 
 	macro viewFeedTitle {
-		AssertTextEquals(locator1 = "RSS#FEED_TITLE", value1 = "${feedTitle}");
+		AssertTextEquals(
+			locator1 = "RSS#FEED_TITLE",
+			value1 = "${feedTitle}");
 
-		AssertTextEquals(locator1 = "RSS#FEED_SUBTITLE", value1 = "${feedSubtitle}");
+		AssertTextEquals(
+			locator1 = "RSS#FEED_SUBTITLE",
+			value1 = "${feedSubtitle}");
 	}
 }

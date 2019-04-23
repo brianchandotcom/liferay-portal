@@ -4,14 +4,15 @@ definition {
 	macro configureScopePG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "Configuration"
-		);
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Navigator.gotoNavItem(navItem = "Scope");
 
-		Select(locator1 = "Select#SCOPE", value1 = "${scopeSelection}");
+		Select(
+			locator1 = "Select#SCOPE",
+			value1 = "${scopeSelection}");
 
 		PortletEntry.save();
 	}
@@ -20,14 +21,12 @@ definition {
 		Navigator.gotoNavItem(navItem = "Setup");
 
 		AssertClick(
+			key_formName = "${formName}",
 			locator1 = "FormPortletConfiguration#FORMS_TABLE_NAME",
-			value1 = "${formName}",
-			key_formName = "${formName}"
-		);
+			value1 = "${formName}");
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",
-			value1 = "Displaying Form: ${formName} (Modified)"
-		);
+			value1 = "Displaying Form: ${formName} (Modified)");
 	}
 }

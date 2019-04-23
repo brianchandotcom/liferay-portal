@@ -36,27 +36,22 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings"
-		);
+			portlet = "System Settings");
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Search",
 			configurationName = "Elasticsearch 6",
-			configurationScope = "System Scope"
-		);
+			configurationScope = "System Scope");
 
 		SystemSettings.editTextAreaSetting(
 			settingName = "Cluster Name",
-			settingValue = "LiferayElasticsearchCluster1"
-		);
+			settingValue = "LiferayElasticsearchCluster1");
 
 		SystemSettings.saveConfiguration();
 
 		Navigator.openSpecificURL(url = "http://localhost:9200");
 
-		Elasticsearch.viewClusterStatus(
-			clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;"
-		);
+		Elasticsearch.viewClusterStatus(clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;");
 	}
 
 	@priority = "5"
@@ -74,24 +69,23 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Message Boards"
-		);
+			portlet = "Message Boards");
 
-		MessageboardsThread.addCP(threadBody = "Orange", threadSubject = "Apple");
+		MessageboardsThread.addCP(
+			threadBody = "Orange",
+			threadSubject = "Apple");
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media"
-		);
+			portlet = "Documents and Media");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "Orange",
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Apple"
-		);
+			dmDocumentTitle = "Apple");
 
 		Navigator.openURL();
 
@@ -99,13 +93,11 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Message Boards Message"
-		);
+			searchAssetType = "Message Boards Message");
 
 		Navigator.openURL();
 
@@ -113,13 +105,11 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Document"
-		);
+			searchAssetType = "Document");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
-			searchAssetType = "Message Boards Message"
-		);
+			searchAssetType = "Message Boards Message");
 	}
 
 	@priority = "5"
@@ -130,8 +120,6 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://localhost:9200");
 
-		Elasticsearch.viewClusterStatus(
-			clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;"
-		);
+		Elasticsearch.viewClusterStatus(clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;");
 	}
 }

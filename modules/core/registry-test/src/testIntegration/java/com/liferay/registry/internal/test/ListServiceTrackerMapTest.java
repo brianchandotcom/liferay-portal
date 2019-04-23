@@ -182,11 +182,16 @@ public class ListServiceTrackerMapTest {
 		try (ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 				createServiceTrackerMap()) {
 
-			registerService(new TrackedOne(), "aTarget");
-			registerService(new TrackedOne(), "anotherTarget");
-			registerService(new TrackedOne(), "aTarget");
-			registerService(new TrackedOne(), "anotherTarget");
-			registerService(new TrackedOne(), "anotherTarget");
+			_serviceRegistrations.add(
+				registerService(new TrackedOne(), "aTarget"));
+			_serviceRegistrations.add(
+				registerService(new TrackedOne(), "anotherTarget"));
+			_serviceRegistrations.add(
+				registerService(new TrackedOne(), "aTarget"));
+			_serviceRegistrations.add(
+				registerService(new TrackedOne(), "anotherTarget"));
+			_serviceRegistrations.add(
+				registerService(new TrackedOne(), "anotherTarget"));
 
 			List<TrackedOne> aTargetList = serviceTrackerMap.getService(
 				"aTarget");

@@ -16,14 +16,21 @@ package com.liferay.document.library.service.impl;
 
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.document.library.service.base.DLFileVersionPreviewLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz
  * @author Adolfo Pérez
  */
+@Component(
+	property = "model.class.name=com.liferay.document.library.model.DLFileVersionPreview",
+	service = AopService.class
+)
 public class DLFileVersionPreviewLocalServiceImpl
 	extends DLFileVersionPreviewLocalServiceBaseImpl {
 

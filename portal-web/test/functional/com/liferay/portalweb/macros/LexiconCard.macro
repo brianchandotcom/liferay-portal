@@ -15,6 +15,14 @@ definition {
 			locator1 = "LexiconCard#CARD");
 	}
 
+	macro clickCardWithConfirmation {
+		ClickNoError(
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD");
+
+		Confirm();
+	}
+
 	macro clickCardTitle {
 		Click(
 			key_card = "${card}",

@@ -1179,11 +1179,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		LexiconCard.clickCard(
-			card = "${templateName}"
-		);
-
-		AssertConfirm.assertConfirmationNoWait(value1 = "Editing the current template deletes all unsaved content.");
+		LexiconCard.clickCardWithConfirmation(
+			card = "${templateName}");
 
 		IFrame.selectTopFrame();
 

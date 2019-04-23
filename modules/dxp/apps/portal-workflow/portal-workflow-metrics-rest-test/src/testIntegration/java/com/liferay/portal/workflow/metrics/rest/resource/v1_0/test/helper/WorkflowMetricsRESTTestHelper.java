@@ -487,7 +487,6 @@ public class WorkflowMetricsRESTTestHelper {
 					new CountSearchRequest();
 
 				countSearchRequest.setIndexNames(indexName);
-
 				countSearchRequest.setQuery(_queries.term(field, value));
 
 				CountSearchResponse countSearchResponse =

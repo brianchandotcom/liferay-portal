@@ -18,9 +18,9 @@ class HeaderMenuBackItem extends React.Component {
 		return (
 			<PortalComponent container={container}>
 				{!isFirstPage && query.backPath && (
-					<li className="control-menu-nav-item metric-control-menu-heading">
+					<li className="control-menu-nav-item">
 						<Link
-							className="btn btn-link back-url-link control-menu-icon"
+							className="control-menu-icon lfr-icon-item"
 							to={query.backPath}
 						>
 							<span className="icon-monospaced">

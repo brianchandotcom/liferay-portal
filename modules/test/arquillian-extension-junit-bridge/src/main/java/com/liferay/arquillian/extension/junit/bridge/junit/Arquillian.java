@@ -174,7 +174,7 @@ public class Arquillian extends Runner implements Filterable {
 
 						if (filter.shouldRun(
 								Description.createTestDescription(
-									_clazz, methodName))) {
+									clazz, methodName))) {
 
 							return false;
 						}

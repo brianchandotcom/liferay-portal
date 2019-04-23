@@ -45,54 +45,49 @@ public class DLValidatorTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testFixNameBlackListLastChar() {
+	public void testFixNameBlacklistChar() {
 		String name = StringUtil.randomString(20);
-
-		String fixedName = name + StringPool.UNDERLINE;
 
 		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
 			Assert.assertEquals(
-				fixedName, _dlValidator.fixName(name + blacklistChar));
+				name + StringPool.UNDERLINE,
+				_dlValidator.fixName(name + blacklistChar));
 		}
 	}
 
 	@Test
-	public void testFixNameBlacklistNameChar() {
+	public void testFixNameBlacklistName() {
 		String name = StringPool.PERIOD + StringUtil.randomString(3);
 
-		for (String blacklistFileName : PropsValues.DL_NAME_BLACKLIST) {
-			String fixedName =
-				blacklistFileName + StringPool.UNDERLINE +
-					StringUtil.toLowerCase(name);
-
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
 			Assert.assertEquals(
-				fixedName, _dlValidator.fixName(blacklistFileName + name));
+				blacklistName + StringPool.UNDERLINE +
+					StringUtil.toLowerCase(name),
+				_dlValidator.fixName(blacklistName + name));
 		}
 	}
 
 	@Test
-	public void testFixNameInvalidLastChar() {
+	public void testFixNameBlacklistLastChar() {
 		String name = StringUtil.randomString(20);
 
-		String fixedName = name + StringPool.BLANK;
-
-		for (String charLastBlacklist : PropsValues.DL_CHAR_LAST_BLACKLIST) {
+		for (String blacklistLastChar : PropsValues.DL_CHAR_LAST_BLACKLIST) {
 			Assert.assertEquals(
-				fixedName,
+				name + StringPool.BLANK,
 				_dlValidator.fixName(
-					name + UnicodeFormatter.parseString(charLastBlacklist)));
+					name + UnicodeFormatter.parseString(blacklistLastChar)));
 		}
 	}
 
 	@Test
-	public void testFixNameNoBlacklistedChar() {
+	public void testFixNameWithNoBlacklistedChars() {
 		String name = StringUtil.randomString(20);
 
 		Assert.assertEquals(name, _dlValidator.fixName(name));
 	}
 
 	@Test
-	public void testFixNameWebDAVBlackListChar() {
+	public void testFixNameCharSubstitutionWebDAV() {
 		String name = StringUtil.randomString(20);
 
 		Assert.assertEquals(

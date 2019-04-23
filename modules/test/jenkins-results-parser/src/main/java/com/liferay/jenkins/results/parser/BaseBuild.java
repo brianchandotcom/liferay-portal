@@ -2751,7 +2751,7 @@ public abstract class BaseBuild implements Build {
 		String tempMapURL = getTempMapURL(tempMapName);
 
 		if (tempMapURL == null) {
-			return Collections.emptyMap();
+			return getTempMapFromBuildDatabase(tempMapName);
 		}
 
 		JSONObject tempMapJSONObject = null;
@@ -2767,7 +2767,7 @@ public abstract class BaseBuild implements Build {
 		if ((tempMapJSONObject == null) ||
 			!tempMapJSONObject.has("properties")) {
 
-			return Collections.emptyMap();
+			return getTempMapFromBuildDatabase(tempMapName);
 		}
 
 		JSONArray propertiesJSONArray = tempMapJSONObject.getJSONArray(
@@ -2786,6 +2786,22 @@ public abstract class BaseBuild implements Build {
 			if ((value != null) && !value.isEmpty()) {
 				tempMap.put(key, value);
 			}
+		}
+
+		return tempMap;
+	}
+
+	protected Map<String, String> getTempMapFromBuildDatabase(
+		String tempMapName) {
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		Properties properties = buildDatabase.getProperties(tempMapName);
+
+		Map<String, String> tempMap = new HashMap<>();
+
+		for (String propertyName : properties.stringPropertyNames()) {
+			tempMap.put(propertyName, properties.getProperty(propertyName));
 		}
 
 		return tempMap;

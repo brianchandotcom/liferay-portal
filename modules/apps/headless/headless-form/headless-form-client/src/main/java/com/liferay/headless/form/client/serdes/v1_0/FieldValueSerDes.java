@@ -53,16 +53,6 @@ public class FieldValueSerDes {
 
 		sb.append("{");
 
-		if (fieldValue.getDocument() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"document\": ");
-
-			sb.append(String.valueOf(fieldValue.getDocument()));
-		}
-
 		if (fieldValue.getDocumentId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -71,6 +61,16 @@ public class FieldValueSerDes {
 			sb.append("\"documentId\": ");
 
 			sb.append(fieldValue.getDocumentId());
+		}
+
+		if (fieldValue.getFormDocument() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"formDocument\": ");
+
+			sb.append(String.valueOf(fieldValue.getFormDocument()));
 		}
 
 		if (fieldValue.getId() != null) {
@@ -129,18 +129,19 @@ public class FieldValueSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		if (fieldValue.getDocument() == null) {
-			map.put("document", null);
-		}
-		else {
-			map.put("document", String.valueOf(fieldValue.getDocument()));
-		}
-
 		if (fieldValue.getDocumentId() == null) {
 			map.put("documentId", null);
 		}
 		else {
 			map.put("documentId", String.valueOf(fieldValue.getDocumentId()));
+		}
+
+		if (fieldValue.getFormDocument() == null) {
+			map.put("formDocument", null);
+		}
+		else {
+			map.put(
+				"formDocument", String.valueOf(fieldValue.getFormDocument()));
 		}
 
 		if (fieldValue.getId() == null) {
@@ -220,16 +221,16 @@ public class FieldValueSerDes {
 			FieldValue fieldValue, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "document")) {
-				if (jsonParserFieldValue != null) {
-					fieldValue.setDocument(
-						FormDocumentSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "documentId")) {
+			if (Objects.equals(jsonParserFieldName, "documentId")) {
 				if (jsonParserFieldValue != null) {
 					fieldValue.setDocumentId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "formDocument")) {
+				if (jsonParserFieldValue != null) {
+					fieldValue.setFormDocument(
+						FormDocumentSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

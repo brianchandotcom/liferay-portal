@@ -342,6 +342,10 @@ public abstract class BaseFormDocumentResourceTestCase {
 			valid = false;
 		}
 
+		if (!Objects.equals(formDocument.getSiteId(), testGroup.getGroupId())) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -419,6 +423,12 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 		if (formDocument1 == formDocument2) {
 			return true;
+		}
+
+		if (!Objects.equals(
+				formDocument1.getSiteId(), formDocument2.getSiteId())) {
+
+			return false;
 		}
 
 		for (String additionalAssertFieldName :
@@ -570,6 +580,11 @@ public abstract class BaseFormDocumentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("siteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("sizeInBytes")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -594,6 +609,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 				encodingFormat = RandomTestUtil.randomString();
 				fileExtension = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				siteId = testGroup.getGroupId();
 				sizeInBytes = RandomTestUtil.randomLong();
 				title = RandomTestUtil.randomString();
 			}
@@ -602,6 +618,8 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 	protected FormDocument randomIrrelevantFormDocument() {
 		FormDocument randomIrrelevantFormDocument = randomFormDocument();
+
+		randomIrrelevantFormDocument.setSiteId(irrelevantGroup.getGroupId());
 
 		return randomIrrelevantFormDocument;
 	}

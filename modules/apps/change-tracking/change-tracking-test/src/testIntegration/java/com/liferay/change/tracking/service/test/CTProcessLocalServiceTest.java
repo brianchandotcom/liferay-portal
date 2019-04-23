@@ -143,7 +143,7 @@ public class CTProcessLocalServiceTest {
 
 		CTProcess ctProcess = _ctProcessLocalService.addCTProcess(
 			TestPropsValues.getUserId(), _ctCollection.getCtCollectionId(),
-			new ServiceContext());
+			true, new ServiceContext());
 
 		Assert.assertNotNull(ctProcess);
 		Assert.assertEquals(

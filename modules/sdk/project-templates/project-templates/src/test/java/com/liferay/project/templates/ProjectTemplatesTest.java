@@ -762,16 +762,33 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWarCoreExt() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-core-ext", "warCoreExt");
+			"war-core-ext", "test-war-core-ext");
 
 		_testContains(
 			gradleProjectDir, "build.gradle", "buildscript {", "repositories {",
 			"group: \"com.liferay\", name: \"com.liferay.gradle.plugins\"",
 			"apply plugin: \"com.liferay.ext.plugin\"",
-			"apply plugin: \"war\"");
+			"apply plugin: \"eclipse\"");
 
-		if (_isBuildProjects()) {
-		}
+		_testContains(
+			gradleProjectDir, "src/extImpl/resources/META-INF/ext-spring.xml");
+	}
+
+	@Test
+	public void testBuildTemplateWarCoreExtInWorkspace() throws Exception {
+		File workspaceDir = _buildWorkspace();
+
+		File modulesDir = new File(workspaceDir, "modules");
+
+		File projectDir =
+			_buildTemplateWithGradle(
+				modulesDir, "war-core-ext", "test-war-core-ext");
+
+		_testNotContains(
+			projectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_testNotContains(
+			projectDir, "build.gradle", "buildscript", "com.liferay.ext.plugin");
 	}
 
 	@Test

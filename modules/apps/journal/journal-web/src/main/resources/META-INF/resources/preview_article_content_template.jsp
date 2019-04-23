@@ -67,10 +67,10 @@ JournalArticleDisplay articleDisplay = journalPreviewArticleContentTemplateDispl
 	</c:if>
 </div>
 
-<aui:script>
+<script>
 	function previewArticleContentTemplate() {
 		var ddmTemplateKey = document.getElementById('<portlet:namespace />ddmTemplateKey');
 
 		location.href = Liferay.Util.addParams('<portlet:namespace />ddmTemplateKey=' + ddmTemplateKey.value, '<%= journalPreviewArticleContentTemplateDisplayContext.getPortletURL() %>');
 	}
-</aui:script>
+</script>

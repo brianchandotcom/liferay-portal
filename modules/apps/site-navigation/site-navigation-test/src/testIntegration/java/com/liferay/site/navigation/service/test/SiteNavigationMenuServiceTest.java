@@ -517,7 +517,7 @@ public class SiteNavigationMenuServiceTest {
 
 		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
-			siteNavigationMenu.getType(), siteNavigationMenu.getAuto(),
+			siteNavigationMenu.getType(), siteNavigationMenu.isAuto(),
 			serviceContext);
 	}
 

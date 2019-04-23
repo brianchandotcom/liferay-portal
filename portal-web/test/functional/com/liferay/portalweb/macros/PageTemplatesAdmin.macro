@@ -36,6 +36,8 @@ definition {
 		PortletEntry.inputName(name = "${pageTemplateName}");
 
 		Button.clickSave();
+
+		PageEditor.assertFragmentSidebarLoaded();
 	}
 
 	macro configureWidgetPageTemplateLayout {

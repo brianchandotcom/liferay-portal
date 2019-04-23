@@ -15,14 +15,96 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
-import org.junit.Ignore;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 /**
  * @author Rafael Praxedes
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class NodeResourceTest extends BaseNodeResourceTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseTaskResourceTestCase.setUpClass();
+
+		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
+			_queries, _searchEngineAdapter);
+
+		_singleApproverDocument =
+			_workflowMetricsRESTTestHelper.getSingleApproverDocument();
+
+		_workflowMetricsRESTTestHelper.deleteProcess(_singleApproverDocument);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_workflowMetricsRESTTestHelper.addProcess(_singleApproverDocument);
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		if (_process == null) {
+			return;
+		}
+
+		_workflowMetricsRESTTestHelper.deleteProcess(
+			testGroup.getCompanyId(), _process.getId());
+
+		for (Node node : _nodes) {
+			_workflowMetricsRESTTestHelper.deleteNode(
+				testGroup.getCompanyId(), _process.getId(), node.getName());
+		}
+
+		_nodes = new ArrayList<>();
+	}
+
+	@Override
+	protected Node testGetProcessNodesPage_addNode(Long processId, Node node)
+		throws Exception {
+
+		node = _workflowMetricsRESTTestHelper.addNode(
+			testGroup.getCompanyId(), processId, node);
+
+		_nodes.add(node);
+
+		return node;
+	}
+
+	@Override
+	protected Long testGetProcessNodesPage_getProcessId() throws Exception {
+		_process = _workflowMetricsRESTTestHelper.addProcess(
+			testGroup.getCompanyId());
+
+		return _process.getId();
+	}
+
+	@Inject
+	private static Queries _queries;
+
+	@Inject
+	private static SearchEngineAdapter _searchEngineAdapter;
+
+	private static Document _singleApproverDocument;
+	private static WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
+
+	private List<Node> _nodes = new ArrayList<>();
+	private Process _process;
+
 }

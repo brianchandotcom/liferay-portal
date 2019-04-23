@@ -26,7 +26,7 @@ import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunction
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunctionFactory;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunctionResult;
 import com.liferay.data.engine.rest.internal.storage.DataRecordExporter;
-import com.liferay.data.engine.rest.internal.storage.DataStorage;
+import com.liferay.data.engine.rest.internal.storage.JSONDataStorage;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -78,7 +78,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 	public void activate() {
 		_dataRecordExporter = new DataRecordExporter(_ddlRecordSetLocalService);
 
-		_dataStorage = new DataStorage(
+		_dataStorage = new JSONDataStorage(
 			_ddlRecordSetLocalService, _ddmContentLocalService,
 			_ddmStructureLocalService);
 	}
@@ -164,7 +164,10 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		return _toDataRecord(
 			_ddlRecordLocalService.addRecord(
 				PrincipalThreadLocal.getUserId(), ddlRecordSet.getGroupId(),
-				_dataStorage.save(ddlRecordSet.getGroupId(), dataRecord),
+				_dataStorage.save(
+					ddlRecordSet.getRecordSetId(),
+					DataRecordValueUtil.toMap(dataRecord.getDataRecordValues()),
+					ddlRecordSet.getGroupId()),
 				dataRecord.getDataRecordCollectionId(), new ServiceContext()));
 	}
 
@@ -188,7 +191,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			DataDefinitionUtil.toDataDefinition(ddmStructure), dataRecord);
 
 		long ddmStorageId = _dataStorage.save(
-			ddlRecord.getGroupId(), dataRecord);
+			ddlRecordSet.getRecordSetId(),
+			DataRecordValueUtil.toMap(dataRecord.getDataRecordValues()),
+			ddlRecord.getGroupId());
 
 		_ddlRecordLocalService.updateRecord(
 			PrincipalThreadLocal.getUserId(), dataRecordId, ddmStorageId,
@@ -226,8 +231,10 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		return new DataRecord() {
 			{
 				dataRecordCollectionId = ddlRecordSet.getRecordSetId();
-				dataRecordValues = _dataStorage.get(
-					ddmStructure.getStructureId(), ddlRecord.getDDMStorageId());
+				dataRecordValues = DataRecordValueUtil.toDataRecordValues(
+					_dataStorage.get(
+						ddmStructure.getStructureId(),
+						ddlRecord.getDDMStorageId()));
 				id = ddlRecord.getRecordId();
 			}
 		};
@@ -329,7 +336,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 	}
 
 	private DataRecordExporter _dataRecordExporter;
-	private DataStorage _dataStorage;
+	private JSONDataStorage _dataStorage;
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;

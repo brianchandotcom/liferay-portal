@@ -136,21 +136,16 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 
 			User user = UserTestUtil.getAdminUser(defaultCompanyId);
 
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put("oauth2.test.application", true);
-
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationBefore",
 				Arrays.asList("GET", "POST"));
 
-			registerJaxRsApplication(
-				new TestApplication(), "methods", properties);
+			registerJaxRsApplication(new TestApplication(), "methods", null);
 
 			registerJaxRsApplication(
-				new TestApplicationWithHead(), "methods-with-head", properties);
+				new TestApplicationWithHead(), "methods-with-head", null);
 
-			properties = new HashMapDictionary<>();
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 			properties.put("ignore.missing.scopes", "");
 
@@ -164,7 +159,7 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationWithHead",
-				Arrays.asList("GET", "HEAD", "POST"));
+				Arrays.asList("HEAD"));
 
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationWrong",

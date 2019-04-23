@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.exception.mapper;
 
-import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStartNodeKeysException;
+import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStopNodeKeysException;
 
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -27,22 +27,22 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST.WorkflowMetricsSLADefinitionStartNodeKeysExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST.SLAStopNodeKeysExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class WorkflowMetricsSLADefinitionStartNodeKeysExceptionMapper
-	extends BaseWorkflowMetricsSLAExceptionMapper
-		<WorkflowMetricsSLADefinitionStartNodeKeysException> {
+public class SLAStopNodeKeysExceptionMapper
+	extends BaseSLAExceptionMapper
+		<WorkflowMetricsSLADefinitionStopNodeKeysException> {
 
 	@Override
 	public String getFieldName() {
-		return "startNodeKeys";
+		return "stopNodeKeys";
 	}
 
 	@Override
 	public String getKey() {
-		return "the-start-node-field-cannot-be-empty";
+		return "the-stop-node-field-cannot-be-empty";
 	}
 
 }

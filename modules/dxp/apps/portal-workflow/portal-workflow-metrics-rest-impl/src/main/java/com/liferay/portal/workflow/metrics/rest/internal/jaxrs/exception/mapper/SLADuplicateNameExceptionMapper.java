@@ -27,12 +27,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST.WorkflowMetricsSLADefinitionDuplicateNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Portal.Workflow.Metrics.REST.SLADuplicateNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class WorkflowMetricsSLADefinitionDuplicateNameExceptionMapper
-	extends BaseWorkflowMetricsSLAExceptionMapper
+public class SLADuplicateNameExceptionMapper
+	extends BaseSLAExceptionMapper
 		<WorkflowMetricsSLADefinitionDuplicateNameException> {
 
 	@Override

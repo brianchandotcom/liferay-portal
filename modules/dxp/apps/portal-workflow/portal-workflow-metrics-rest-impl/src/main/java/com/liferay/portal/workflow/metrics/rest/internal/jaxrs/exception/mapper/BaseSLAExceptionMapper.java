@@ -30,9 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-public abstract class BaseWorkflowMetricsSLAExceptionMapper
-	<T extends PortalException>
-		implements ExceptionMapper<T> {
+public abstract class BaseSLAExceptionMapper<T extends PortalException>
+	implements ExceptionMapper<T> {
 
 	public String getFieldName() {
 		return StringPool.BLANK;
@@ -47,11 +46,8 @@ public abstract class BaseWorkflowMetricsSLAExceptionMapper
 		).entity(
 			new GenericError() {
 				{
-					fieldName =
-						BaseWorkflowMetricsSLAExceptionMapper.this.
-							getFieldName();
-					message =
-						BaseWorkflowMetricsSLAExceptionMapper.this.getMessage();
+					fieldName = BaseSLAExceptionMapper.this.getFieldName();
+					message = BaseSLAExceptionMapper.this.getMessage();
 				}
 			}
 		).build();
@@ -61,7 +57,7 @@ public abstract class BaseWorkflowMetricsSLAExceptionMapper
 		return language.get(
 			ResourceBundleUtil.getBundle(
 				_acceptLanguage.getPreferredLocale(),
-				BaseWorkflowMetricsSLAExceptionMapper.class),
+				BaseSLAExceptionMapper.class),
 			getKey());
 	}
 

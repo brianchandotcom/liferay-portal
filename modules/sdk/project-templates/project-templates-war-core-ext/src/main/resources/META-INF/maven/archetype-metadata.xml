@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<archetype-descriptor name="liferay-module-war-mvc-portlet">
+<archetype-descriptor name="liferay-module-war-core-ext">
 	<fileSets>
 		<fileSet filtered="true">
 			<directory>src</directory>

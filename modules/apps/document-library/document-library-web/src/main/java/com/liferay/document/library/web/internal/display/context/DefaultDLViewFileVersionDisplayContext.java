@@ -393,10 +393,10 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			_uiItemsBuilder.addMoveMenuItem(menuItems);
 
-			if (!menuItems.isEmpty()) {
-				MenuItem menuItem = menuItems.get(menuItems.size() - 1);
+			MenuItem menuItem = null;
 
-				menuItem.setSeparator(true);
+			if (!menuItems.isEmpty()) {
+				menuItem = menuItems.get(menuItems.size() - 1);
 			}
 
 			_uiItemsBuilder.addPermissionsMenuItem(menuItems);
@@ -404,6 +404,12 @@ public class DefaultDLViewFileVersionDisplayContext
 			_uiItemsBuilder.addDeleteMenuItem(menuItems);
 
 			_uiItemsBuilder.addPublishMenuItem(menuItems, true);
+
+			if ((menuItem != null) &&
+				(menuItem != menuItems.get(menuItems.size() - 1))) {
+
+				menuItem.setSeparator(true);
+			}
 		}
 
 		return menuItems;

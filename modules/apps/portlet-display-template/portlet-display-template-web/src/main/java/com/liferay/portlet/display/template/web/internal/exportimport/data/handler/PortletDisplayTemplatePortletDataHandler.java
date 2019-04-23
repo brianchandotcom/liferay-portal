@@ -241,9 +241,6 @@ public class PortletDisplayTemplatePortletDataHandler
 	}
 
 	private PortletDataHandlerControl[] _getPortletDataHandlerControls() {
-		List<TemplateHandler> templateHandlers =
-			TemplateHandlerRegistryUtil.getTemplateHandlers();
-
 		ArrayList<PortletDataHandlerControl> portletDataHandlerControls =
 			new ArrayList<>();
 
@@ -251,7 +248,9 @@ public class PortletDisplayTemplatePortletDataHandler
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "application-display-templates", true, true));
 
-		for (TemplateHandler templateHandler : templateHandlers) {
+		for (TemplateHandler templateHandler :
+				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
+
 			ClassName className = _classNameLocalService.fetchClassName(
 				templateHandler.getClassName());
 

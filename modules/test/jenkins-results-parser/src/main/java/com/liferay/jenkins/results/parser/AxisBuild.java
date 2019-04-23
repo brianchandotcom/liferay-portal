@@ -463,8 +463,7 @@ public class AxisBuild extends BaseBuild {
 			topLevelBuild.getJenkinsMaster();
 
 		return JenkinsResultsParserUtil.combine(
-			"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/",
-			topLevelBuildJenkinsMaster.getName(), "/",
+			URL_BASE_TEMP_MAP, topLevelBuildJenkinsMaster.getName(), "/",
 			topLevelBuild.getJobName(), "/",
 			String.valueOf(topLevelBuild.getBuildNumber()), "/", getJobName(),
 			"/", getAxisVariable(), "/", getParameterValue("JOB_VARIANT"), "/",

@@ -26,16 +26,16 @@ ServiceContext#deriveDefaultPermissions(long, String).
 		<thead>
 			<tr>
 				<th>
-					<liferay-ui:message key="role" />
+					<liferay-ui:message key="action" />
 				</th>
 
 				<%
-				for (int i = 0; i < supportedActions.size(); i++) {
-					String action = (String)supportedActions.get(i);
+				for (String roleName : roleNames) {
+					Role role = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), roleName);
 				%>
 
 					<th class="table-column-text-center">
-						<%= ResourceActionsUtil.getAction(request, action) %>
+						<%= role.getTitle(themeDisplay.getLocale()) %>
 					</th>
 
 				<%
@@ -46,18 +46,18 @@ ServiceContext#deriveDefaultPermissions(long, String).
 		</thead>
 
 		<%
-		for (String roleName : roleNames) {
-			Role role = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), roleName);
+		for (int i = 0; i < supportedActions.size(); i++) {
+			String action = (String)supportedActions.get(i);
 		%>
 
 			<tr>
 				<td class="table-title">
-					<%= role.getTitle(themeDisplay.getLocale()) %>
+					<%= ResourceActionsUtil.getAction(request, action) %>
 				</td>
 
 				<%
-				for (int i = 0; i < supportedActions.size(); i++) {
-					String action = (String)supportedActions.get(i);
+				for (String roleName : roleNames) {
+					Role role = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), roleName);
 
 					boolean checked = false;
 					boolean disabled = false;

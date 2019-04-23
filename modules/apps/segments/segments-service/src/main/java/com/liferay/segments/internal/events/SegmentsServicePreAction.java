@@ -102,10 +102,11 @@ public class SegmentsServicePreAction extends Action {
 				themeDisplay.getUserId());
 		}
 
+		segmentsEntryIds = ArrayUtil.append(
+			segmentsEntryIds, SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
+
 		request.setAttribute(
-			SegmentsWebKeys.SEGMENTS_ENTRY_IDS,
-			ArrayUtil.append(
-				segmentsEntryIds, SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT));
+			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
 
 		long[] segmentsExperienceIds = _getSegmentsExperienceIds(
 			layout.getGroupId(), segmentsEntryIds,

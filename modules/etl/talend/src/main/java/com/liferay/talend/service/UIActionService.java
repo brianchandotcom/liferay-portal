@@ -21,15 +21,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.talend.sdk.component.api.configuration.Option;
+import org.talend.sdk.component.api.record.Schema;
 import org.talend.sdk.component.api.service.Service;
 import org.talend.sdk.component.api.service.completion.SuggestionValues;
 import org.talend.sdk.component.api.service.completion.Suggestions;
 import org.talend.sdk.component.api.service.healthcheck.HealthCheck;
 import org.talend.sdk.component.api.service.healthcheck.HealthCheckStatus;
+import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
+import org.talend.sdk.component.api.service.schema.DiscoverSchema;
 
 /**
  * @author Igor Beslic
  * @author Zoltán Takács
+ * @author Matija Petanjek
  */
 @Service
 public class UIActionService {
@@ -60,6 +64,14 @@ public class UIActionService {
 			});
 
 		return new SuggestionValues(true, items);
+	}
+
+	@DiscoverSchema("guessInputSchema")
+	public Schema guessInputSchema(
+		final InputDataSet inputDataSet,
+		final RecordBuilderFactory recordBuilderFactory) {
+
+		return null;
 	}
 
 	@Service

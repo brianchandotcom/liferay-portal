@@ -66,7 +66,7 @@ public class UIActionService {
 		return new SuggestionValues(true, items);
 	}
 
-	@DiscoverSchema("guessInputSchema")
+	@DiscoverSchema(family = "Liferay", value = "guessInputSchema")
 	public Schema guessInputSchema(
 		final InputDataSet inputDataSet,
 		final RecordBuilderFactory recordBuilderFactory) {

@@ -92,32 +92,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				workflowMetricsSLADefinition.getCompanyId(),
 				workflowMetricsSLADefinition.getProcessId());
 
-		createLocalDateTimes.forEach(
-			(instanceId, createLocalDateTime) -> {
-				Optional<WorkflowMetricsSLAProcessResult> optional =
-					_workflowMetricsSLAProcessor.process(
-						workflowMetricsSLADefinition.getCompanyId(),
-						createLocalDateTime, instanceId, LocalDateTime.now(),
-						startNodeId, workflowMetricsSLADefinition);
+		_processRunningInstances(
+			createLocalDateTimes, startNodeId, workflowMetricsSLADefinition);
 
-				optional.ifPresent(
-					workflowMetricsSLAProcessResult -> {
-						_slaProcessResultWorkflowMetricsIndexer.addDocument(
-							_slaProcessResultWorkflowMetricsIndexer.
-								createDocument(
-									workflowMetricsSLAProcessResult));
-
-						Map<Long, String> taskNames = _getTaskNames(
-							workflowMetricsSLADefinition.getCompanyId(),
-							instanceId,
-							workflowMetricsSLADefinition.getProcessId());
-
-						taskNames.forEach(
-							(taskId, taskName) -> _addDocument(
-								taskId, taskName,
-								workflowMetricsSLAProcessResult));
-					});
-			});
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -254,6 +231,39 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				document -> document.getLong("taskId"),
 				document -> document.getString("taskName"))
 		);
+	}
+
+	private void _indexWorkflowMetricsSLAProcessResult(
+		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+
+		_slaProcessResultWorkflowMetricsIndexer.addDocument(
+			_slaProcessResultWorkflowMetricsIndexer.createDocument(
+				workflowMetricsSLAProcessResult));
+
+		Map<Long, String> taskNames = _getTaskNames(
+			workflowMetricsSLAProcessResult.getCompanyId(),
+			workflowMetricsSLAProcessResult.getInstanceId(),
+			workflowMetricsSLAProcessResult.getProcessId());
+
+		taskNames.forEach(
+			(taskId, taskName) -> _addDocument(
+				taskId, taskName, workflowMetricsSLAProcessResult));
+	}
+
+	private void _processRunningInstances(
+		Map<Long, LocalDateTime> createLocalDateTimes, long startNodeId,
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+
+		createLocalDateTimes.forEach(
+			(instanceId, createLocalDateTime) -> {
+				Optional<WorkflowMetricsSLAProcessResult> optional =
+					_workflowMetricsSLAProcessor.process(
+						workflowMetricsSLADefinition.getCompanyId(),
+						createLocalDateTime, instanceId, LocalDateTime.now(),
+						startNodeId, workflowMetricsSLADefinition);
+
+				optional.ifPresent(this::_indexWorkflowMetricsSLAProcessResult);
+			});
 	}
 
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(

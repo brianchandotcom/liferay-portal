@@ -16,15 +16,22 @@ package com.liferay.document.library.opener.service.impl;
 
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.base.DLOpenerFileEntryReferenceLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	property = "model.class.name=com.liferay.document.library.opener.model.DLOpenerFileEntryReference",
+	service = AopService.class
+)
 public class DLOpenerFileEntryReferenceLocalServiceImpl
 	extends DLOpenerFileEntryReferenceLocalServiceBaseImpl {
 
@@ -88,14 +95,11 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 			dlOpenerFileEntryReference);
 	}
 
-	@ServiceReference(type = UserLocalService.class)
-	protected UserLocalService userLocalService;
-
 	private DLOpenerFileEntryReference _addDLOpenerFileEntryReference(
 			long userId, String referenceKey, FileEntry fileEntry, int type)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		long dlOpenerFileEntryReferenceId = counterLocalService.increment();
 
@@ -114,5 +118,8 @@ public class DLOpenerFileEntryReferenceLocalServiceImpl
 		return dlOpenerFileEntryReferencePersistence.update(
 			dlOpenerFileEntryReference);
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

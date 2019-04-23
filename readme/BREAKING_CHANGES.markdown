@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `85a738099b8f`.*
+*This document has been reviewed through commit `644c86603b1b`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -435,9 +435,9 @@ the chance of package version lock down.
 
 #### What changed?
 
-NTLM modules have been moved from the `portal-security-sso` project to a
-new project named `portal-security-sso-ntlm`.
-This new project is deprecated and available to download from Liferay Marketplace.
+NTLM modules have been moved from the `portal-security-sso` project to a new
+project named `portal-security-sso-ntlm`. This new project is deprecated and
+available to download from Liferay Marketplace.
 
 #### Who is affected?
 
@@ -464,8 +464,9 @@ authentication compared to NTLM.
 
 #### What changed?
 
-OpenID modules have been moved to a new project named `portal-security-sso-openid`.
-This new project is deprecated and available to download from Liferay Marketplace.
+OpenID modules have been moved to a new project named
+`portal-security-sso-openid`. This new project is deprecated and available to
+download from Liferay Marketplace.
 
 #### Who is affected?
 
@@ -491,9 +492,9 @@ since it runs on top of OAuth.
 
 #### What changed?
 
-Google SSO modules have been moved from the `portal-security-sso` project
-to a new project named `portal-security-sso-google`.
-This new projects is deprecated and available to download from Liferay Marketplace.
+Google SSO modules have been moved from the `portal-security-sso` project to a
+new project named `portal-security-sso-google`. This new project is deprecated
+and available to download from Liferay Marketplace.
 
 #### Who is affected?
 
@@ -519,13 +520,14 @@ implementation for authentication.
 
 #### What changed?
 
-The `dl.tabs.visible` property let users toggle the visibility of the navigation
-tabs in Documents & Media when put on a widget page.  This configuration option
-has been removed, so that the navigation tab will never be shown in widget pages.
+The `dl.tabs.visible` property let users toggle the visibility of a Documents
+and Media widget's navigation tabs when placed on a widget page. This
+configuration option has been removed, so the navigation tab will never appear
+on widget pages.
 
 #### Who is affected?
 
-This affects anyone with a value for `dl.tabs.visible` different than `false`.
+This affects anyone who set the `dl.tabs.visible` property to `true`.
 
 #### How should I update my code?
 
@@ -533,5 +535,5 @@ No code changes are necessary.
 
 #### Why was this change made?
 
-Documents & Media has been reviewed from an UX perspective, and removing the
+Documents & Media has been reviewed from a UX perspective, and removing the
 navigation tabs in widget pages was part of a UI clean up process.

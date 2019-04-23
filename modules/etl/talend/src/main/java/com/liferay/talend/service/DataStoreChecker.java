@@ -73,10 +73,21 @@ public class DataStoreChecker {
 	public HealthCheckStatus checkGenericDataStore(
 		GenericDataStore genericDataStore) {
 
-		if (genericDataStore.getOpenAPISpecURL() == null) {
+		URL openAPISpecURL = genericDataStore.getOpenAPISpecURL();
+
+		if (openAPISpecURL == null) {
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO,
 				"OpenAPI Specification URL is required");
+		}
+
+		try {
+			_liferayService.validateOpenAPISpecURL(
+				openAPISpecURL.toExternalForm());
+		}
+		catch (MalformedURLException murle) {
+			return new HealthCheckStatus(
+				HealthCheckStatus.Status.KO, murle.getMessage());
 		}
 
 		if (genericDataStore.getAuthenticationMethod() ==
@@ -115,5 +126,8 @@ public class DataStoreChecker {
 
 	@Service
 	private ConnectionService _connectionService;
+
+	@Service
+	private LiferayService _liferayService;
 
 }

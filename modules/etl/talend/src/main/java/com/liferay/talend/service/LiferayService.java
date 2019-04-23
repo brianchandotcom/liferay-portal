@@ -17,6 +17,7 @@ package com.liferay.talend.service;
 import com.liferay.talend.data.store.GenericDataStore;
 import com.liferay.talend.dataset.InputDataSet;
 import com.liferay.talend.http.client.exception.MalformedURLException;
+import com.liferay.talend.util.StringUtils;
 
 import java.net.URL;
 
@@ -75,7 +76,7 @@ public class LiferayService {
 
 		String ref = itemsJsonObject.getString("$ref");
 
-		ref = _stripPath(ref);
+		ref = StringUtils.stripPath(ref);
 
 		schemaJsonObject = schemasJsonObject.getJsonObject(ref);
 
@@ -94,14 +95,22 @@ public class LiferayService {
 		return getPageableEndpoints(openAPISpecJsonObject);
 	}
 
-	public boolean isValidEndpointURL(String endpointURL) {
-		Matcher serverURLMatcher = _serverURLPattern.matcher(endpointURL);
+	public boolean isValidOpenAPISpecURL(String endpointURL) {
+		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(endpointURL);
 
 		if (serverURLMatcher.matches()) {
 			return true;
 		}
 
 		return false;
+	}
+
+	public void validateOpenAPISpecURL(String openAPISpecURL) {
+		if (!isValidOpenAPISpecURL(openAPISpecURL)) {
+			throw new MalformedURLException(
+				"Provided Open API Specification URL does not match pattern: " +
+					_openAPISpecURLPattern.pattern());
+		}
 	}
 
 	protected List<String> getPageableEndpoints(
@@ -152,7 +161,7 @@ public class LiferayService {
 	}
 
 	private String _extractEndpoint(String endpointURL) {
-		Matcher serverURLMatcher = _serverURLPattern.matcher(endpointURL);
+		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(endpointURL);
 
 		if (!serverURLMatcher.matches()) {
 			throw new MalformedURLException(
@@ -209,11 +218,7 @@ public class LiferayService {
 
 		URL openAPISpecURL = genericDataStore.getOpenAPISpecURL();
 
-		if (!isValidEndpointURL(openAPISpecURL.toString())) {
-			throw new MalformedURLException(
-				"Provided URL does not match pattern " +
-					_serverURLPattern.pattern());
-		}
+		validateOpenAPISpecURL(openAPISpecURL.toExternalForm());
 
 		inputDataSet.setEndpoint(_extractEndpoint(openAPISpecURL.toString()));
 
@@ -244,19 +249,12 @@ public class LiferayService {
 					pattern, jsonValue.asJsonObject());
 
 				if (evaluation != null) {
-					evaluatedPatterns.put(key, _stripPath(evaluation));
+					evaluatedPatterns.put(
+						key, StringUtils.stripPath(evaluation));
 				}
 			});
 
 		return evaluatedPatterns;
-	}
-
-	private String _stripPath(String reference) {
-		if (reference.indexOf("/") == -1) {
-			return reference;
-		}
-
-		return reference.substring(reference.lastIndexOf("/") + 1);
 	}
 
 	private static final String _GET_METHOD_RESPONSE_PATTERN =
@@ -268,7 +266,7 @@ public class LiferayService {
 	private static final String _SCHEMA_PROPERTY_PAGE_TYPE_PATTERN =
 		"components>schemas>%s>properties>page>type";
 
-	private static final Pattern _serverURLPattern = Pattern.compile(
+	private static final Pattern _openAPISpecURLPattern = Pattern.compile(
 		"(https?://.+(:\\d+)?)/o/(.+)/(v\\d+(.\\d+)*)/openapi\\.(yaml|json)");
 
 	@Service

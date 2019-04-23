@@ -16,6 +16,7 @@ package com.liferay.talend.service;
 
 import com.liferay.talend.data.store.GenericDataStore;
 import com.liferay.talend.dataset.InputDataSet;
+import com.liferay.talend.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,8 @@ import java.util.List;
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.record.Schema;
 import org.talend.sdk.component.api.service.Service;
+import org.talend.sdk.component.api.service.asyncvalidation.AsyncValidation;
+import org.talend.sdk.component.api.service.asyncvalidation.ValidationResult;
 import org.talend.sdk.component.api.service.completion.SuggestionValues;
 import org.talend.sdk.component.api.service.completion.Suggestions;
 import org.talend.sdk.component.api.service.healthcheck.HealthCheck;
@@ -73,6 +76,16 @@ public class UIActionService {
 
 		return _liferayService.getEndpointTalendSchema(
 			inputDataSet, recordBuilderFactory);
+	}
+
+	@AsyncValidation("validateEndpoint")
+	public ValidationResult validateEndpoint(final String endpoint) {
+		if (StringUtils.isNull(endpoint)) {
+			return new ValidationResult(
+				ValidationResult.Status.KO, "Please select an endpoint.");
+		}
+
+		return new ValidationResult(ValidationResult.Status.OK, null);
 	}
 
 	@Service

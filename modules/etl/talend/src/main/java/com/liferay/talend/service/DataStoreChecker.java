@@ -20,7 +20,11 @@ import com.liferay.talend.data.store.GenericDataStore;
 import com.liferay.talend.data.store.OAuth2DataStore;
 import com.liferay.talend.dataset.InputDataSet;
 import com.liferay.talend.http.client.exception.ConnectionException;
+import com.liferay.talend.http.client.exception.MalformedURLException;
 import com.liferay.talend.http.client.exception.OAuth2Exception;
+import com.liferay.talend.util.StringUtils;
+
+import java.net.URL;
 
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.service.Service;
@@ -39,8 +43,8 @@ public class DataStoreChecker {
 			genericDataStore.getBasicAuthDataStore();
 
 		if (!basicAuthDataStore.isAnonymous() &&
-			(isNull(basicAuthDataStore.getUser()) ||
-			 isNull(basicAuthDataStore.getPassword()))) {
+			(StringUtils.isNull(basicAuthDataStore.getUser()) ||
+			 StringUtils.isNull(basicAuthDataStore.getPassword()))) {
 
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO,
@@ -89,8 +93,8 @@ public class DataStoreChecker {
 
 		OAuth2DataStore oAuth2DataStore = genericDataStore.getoAuth2DataStore();
 
-		if (isNull(oAuth2DataStore.getConsumerKey()) ||
-			isNull(oAuth2DataStore.getConsumerSecret())) {
+		if (StringUtils.isNull(oAuth2DataStore.getConsumerKey()) ||
+			StringUtils.isNull(oAuth2DataStore.getConsumerSecret())) {
 
 			return new HealthCheckStatus(
 				HealthCheckStatus.Status.KO,
@@ -107,20 +111,6 @@ public class DataStoreChecker {
 
 		return new HealthCheckStatus(
 			HealthCheckStatus.Status.OK, "Connection succeeded!");
-	}
-
-	protected boolean isNull(String value) {
-		if ((value == null) || value.isEmpty()) {
-			return true;
-		}
-
-		value = value.trim();
-
-		if (value.isEmpty()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Service

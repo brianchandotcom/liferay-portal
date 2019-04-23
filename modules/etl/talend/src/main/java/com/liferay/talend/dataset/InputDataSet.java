@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.talend.sdk.component.api.configuration.Option;
 import org.talend.sdk.component.api.configuration.action.Suggestable;
+import org.talend.sdk.component.api.configuration.action.Validable;
 import org.talend.sdk.component.api.configuration.constraint.Required;
 import org.talend.sdk.component.api.configuration.type.DataSet;
 import org.talend.sdk.component.api.configuration.ui.DefaultValue;
@@ -105,6 +106,7 @@ public class InputDataSet implements Serializable {
 	@Option
 	@Required
 	@Suggestable(parameters = "_genericDataStore", value = "fetchEndpoints")
+	@Validable("validateEndpoint")
 	protected String endpoint;
 
 	@DefaultValue("\"\"")

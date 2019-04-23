@@ -27,6 +27,7 @@
 
 		<div class="lfr-portal-tooltip" data-title="<%= LanguageUtil.format(resourceBundle, "x-is-the-owner", owner.getFullName()) %>">
 			<liferay-ui:user-portrait
+				cssClass="sticker-lg"
 				user="<%= owner %>"
 			/>
 		</div>
@@ -44,6 +45,7 @@
 				<div class="autofit-col">
 					<div class="lfr-portal-tooltip" data-title="<%= sharingEntryToUser.getFullName() %>">
 						<liferay-ui:user-portrait
+							cssClass="sticker-lg"
 							user="<%= sharingEntryToUser %>"
 						/>
 					</div>
@@ -61,8 +63,15 @@
 				int moreCollaboratorsCount = sharingEntriesCount - 4;
 				%>
 
-				<div class="lfr-portal-tooltip rounded-circle sticker sticker-lg sticker-secondary" data-title="<%= LanguageUtil.format(resourceBundle, (moreCollaboratorsCount == 1) ? "x-more-collaborator" : "x-more-collaborators", moreCollaboratorsCount) %>">
-					+<%= moreCollaboratorsCount %>
+				<div class="autofit-col">
+					<div class="lfr-portal-tooltip" data-title="<%= LanguageUtil.format(resourceBundle, (moreCollaboratorsCount == 1) ? "x-more-collaborator" : "x-more-collaborators", moreCollaboratorsCount) %>">
+						<clay:sticker
+							elementClasses="user-icon-color-0"
+							icon="users"
+							shape="circle"
+							size="lg"
+						/>
+					</div>
 				</div>
 			</c:if>
 		</div>

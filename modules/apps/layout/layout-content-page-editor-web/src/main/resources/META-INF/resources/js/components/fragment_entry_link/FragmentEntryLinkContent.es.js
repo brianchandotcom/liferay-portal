@@ -6,12 +6,12 @@ import Soy from 'metal-soy';
 
 import FragmentEditableField from './FragmentEditableField.es';
 import FragmentStyleEditor from './FragmentStyleEditor.es';
-import MetalStore from '../../store/store.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import templates from './FragmentEntryLinkContent.soy';
 import {UPDATE_EDITABLE_VALUE} from '../../actions/actions.es';
+import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 
 const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
 
@@ -421,33 +421,6 @@ FragmentEntryLinkContent.STATE = {
 		.value(''),
 
 	/**
-	 * Default configurations for AlloyEditor instances.
-	 * @default {}
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @type {object}
-	 */
-	defaultEditorConfigurations: Config.object().value({}),
-
-	/**
-	 * Default language ID for the editor.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @type {!string}
-	 */
-	defaultLanguageId: Config.string().required(),
-
-	/**
-	 * Default segment ID for the editor.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @type {!string}
-	 */
-	defaultSegmentsExperienceId: Config.string(),
-
-	/**
 	 * Editable values that should be used instead of the default ones inside
 	 * editable fields.
 	 * @default undefined
@@ -467,97 +440,36 @@ FragmentEntryLinkContent.STATE = {
 	fragmentEntryLinkId: Config.string().required(),
 
 	/**
-	 * URL for the image selector.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @type {!string}
-	 */
-	imageSelectorURL: Config.string().required(),
-
-	/**
-	 * Currently selected language ID.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @type {!string}
-	 */
-	languageId: Config.string().required(),
-
-	/**
-	 * Currently selected segment ID.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @type {!string}
-	 */
-	segmentsExperienceId: Config.string(),
-
-	/**
-	 * Currently selected mapping type label.
-	 * @default {}
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {{
-	 *   subtype: {
-	 *   	id: !string,
-	 *   	label: !string
-	 *   },
-	 *   type: {
-	 *   	id: !string,
-	 *   	label: !string
-	 *   }
-	 * }}
-	 */
-	selectedMappingTypes: Config
-		.shapeOf(
-			{
-				subtype: Config.shapeOf(
-					{
-						id: Config.string().required(),
-						label: Config.string().required()
-					}
-				),
-				type: Config.shapeOf(
-					{
-						id: Config.string().required(),
-						label: Config.string().required()
-					}
-				)
-			}
-		)
-		.value({}),
-
-	/**
 	 * If <code>true</code>, the asset mapping is enabled.
 	 * @default false
 	 * @instance
 	 * @memberOf FragmentEntryLink
-	 * @type {bool}
+	 * @type {boolean}
 	 */
-	showMapping: Config.bool().value(false),
-
-	/**
-	 * Store instance.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @type {MetalStore}
-	 */
-	store: Config.instanceOf(MetalStore),
-
-	/**
-	 * Portlet namespace required for prefixing AlloyEditor instances.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @type {!string}
-	 */
-	portletNamespace: Config.string().required()
+	showMapping: Config.bool().value(false)
 };
 
-Soy.register(FragmentEntryLinkContent, templates);
+const ConnectedFragmentEntryLinkContent = getConnectedComponent(
+	FragmentEntryLinkContent,
+	[
+		'defaultEditorConfigurations',
+		'defaultLanguageId',
+		'defaultSegmentsExperienceId',
+		'imageSelectorURL',
+		'languageId',
+		'portletNamespace',
+		'selectedMappingTypes',
+		'segmentsExperienceId',
+		'spritemap'
+	]
+);
 
-export {EDITABLE_FRAGMENT_ENTRY_PROCESSOR};
-export default FragmentEntryLinkContent;
+Soy.register(ConnectedFragmentEntryLinkContent, templates);
+
+export {
+	ConnectedFragmentEntryLinkContent,
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+	FragmentEntryLinkContent
+};
+
+export default ConnectedFragmentEntryLinkContent;

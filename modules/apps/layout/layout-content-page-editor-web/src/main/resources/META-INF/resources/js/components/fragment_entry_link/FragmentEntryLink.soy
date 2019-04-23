@@ -14,20 +14,13 @@
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
 	{@param? content: ?}
-	{@param? defaultEditorConfigurations: ?}
-	{@param? defaultLanguageId: ?}
-	{@param? defaultSegmentsExperienceId: string}
 	{@param? dropTargetBorder: ?}
 	{@param? dropTargetItemId: ?}
 	{@param? dropTargetItemType: ?}
 	{@param? editableValues: ?}
 	{@param? error: bool}
-	{@param? imageSelectorURL: ?}
-	{@param? languageId: string}
 	{@param? name: string}
-	{@param? portletNamespace: ?}
 	{@param? rowType: ?}
-	{@param? selectedMappingTypes: ?}
 	{@param? showControlBar: bool}
 	{@param? showMapping: bool}
 	{@param? spritemap: string}
@@ -95,17 +88,9 @@
 
 		{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkContent.render}
 			{param content: $content /}
-			{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-			{param defaultLanguageId: $defaultLanguageId /}
-			{param defaultSegmentsExperienceId: $defaultSegmentsExperienceId /}
 			{param editableValues: $editableValues /}
 			{param fragmentEntryLinkId: $fragmentEntryLinkId /}
-			{param imageSelectorURL: $imageSelectorURL /}
-			{param languageId: $languageId /}
-			{param portletNamespace: $portletNamespace /}
-			{param selectedMappingTypes: $selectedMappingTypes /}
 			{param showMapping: $showMapping /}
-			{param spritemap: $spritemap /}
 			{param store: $store /}
 		{/call}
 	</div>

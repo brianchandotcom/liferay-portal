@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.security.audit.storage.internal.upgrade.v2_0_0.util.AuditEventTable;
 
- /**
+/**
  * @author Peter Petrekanics
  */
 public class UpgradeSchema extends UpgradeProcess {
 
- 	@Override
+	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			alter(
@@ -31,4 +31,5 @@ public class UpgradeSchema extends UpgradeProcess {
 				new AlterColumnType("clientIP", "VARCHAR(255) null"));
 		}
 	}
+
 }

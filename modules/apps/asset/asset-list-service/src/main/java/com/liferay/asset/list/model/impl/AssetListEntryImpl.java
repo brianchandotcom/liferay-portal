@@ -34,7 +34,6 @@ import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Hits;
@@ -66,9 +65,6 @@ import org.osgi.util.tracker.ServiceTracker;
 @ProviderType
 public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
-	public AssetListEntryImpl() {
-	}
-
 	@Override
 	public List<AssetEntry> getAssetEntries(long segmentsEntryId) {
 		return getAssetEntries(
@@ -89,16 +85,13 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 	}
 
 	@Override
-	public List<AssetEntry> getAssetEntries(long[] segmentsEntryIds)
-		throws PortalException {
-
+	public List<AssetEntry> getAssetEntries(long[] segmentsEntryIds) {
 		return getAssetEntries(_getFirstSegmentsEntryId(segmentsEntryIds));
 	}
 
 	@Override
 	public List<AssetEntry> getAssetEntries(
-			long[] segmentsEntryIds, int start, int end)
-		throws PortalException {
+		long[] segmentsEntryIds, int start, int end) {
 
 		return getAssetEntries(
 			_getFirstSegmentsEntryId(segmentsEntryIds), start, end);
@@ -119,9 +112,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 	}
 
 	@Override
-	public int getAssetEntriesCount(long[] segmentsEntryIds)
-		throws PortalException {
-
+	public int getAssetEntriesCount(long[] segmentsEntryIds) {
 		return getAssetEntriesCount(_getFirstSegmentsEntryId(segmentsEntryIds));
 	}
 
@@ -198,9 +189,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 	}
 
 	@Override
-	public AssetEntryQuery getAssetEntryQuery(long[] segmentsEntryIds)
-		throws PortalException {
-
+	public AssetEntryQuery getAssetEntryQuery(long[] segmentsEntryIds) {
 		return getAssetEntryQuery(_getFirstSegmentsEntryId(segmentsEntryIds));
 	}
 

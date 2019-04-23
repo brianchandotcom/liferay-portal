@@ -48,10 +48,10 @@
 		"clay-sticker": "2.14.2",
 		"clay-table": "2.14.2",
 		"clay-tooltip": "2.14.2",
-		"metal-component": "2.16.7",
-		"metal-events": "2.16.7",
-		"metal-soy": "2.16.7",
-		"metal-state": "2.16.7"
+		"metal-component": "2.16.8",
+		"metal-events": "2.16.8",
+		"metal-soy": "2.16.8",
+		"metal-state": "2.16.8"
 	},
 	"jest": {
 		"moduleNameMapper": {

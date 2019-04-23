@@ -114,10 +114,10 @@
 		"clay-icon": "2.14.2",
 		"clay-label": "2.14.2",
 		"clay-radio": "2.14.2",
-		"metal-component": "2.16.7",
+		"metal-component": "2.16.8",
 		"metal-drag-drop": "3.3.0",
 		"metal-position": "2.1.2",
-		"metal-soy": "2.16.7",
+		"metal-soy": "2.16.8",
 		"moment": "^2.22.2",
 		"text-mask-addons": "^3.7.1",
 		"vanilla-text-mask": "^5.0.1"

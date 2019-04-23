@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"metal-dom": "2.16.7",
-		"metal-state": "2.16.7"
+		"metal-dom": "2.16.8",
+		"metal-state": "2.16.8"
 	},
 	"name": "map-google-maps",
 	"private": true,

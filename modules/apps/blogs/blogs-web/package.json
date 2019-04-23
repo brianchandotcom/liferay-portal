@@ -11,7 +11,7 @@
 		}
 	},
 	"dependencies": {
-		"metal-state": "2.16.7"
+		"metal-state": "2.16.8"
 	},
 	"name": "blogs-web",
 	"scripts": {

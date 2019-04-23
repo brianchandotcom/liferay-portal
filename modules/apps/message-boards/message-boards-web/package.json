@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"metal": "2.16.7",
-		"metal-events": "2.16.7"
+		"metal": "2.16.8",
+		"metal-events": "2.16.8"
 	},
 	"name": "message-boards-web",
 	"scripts": {

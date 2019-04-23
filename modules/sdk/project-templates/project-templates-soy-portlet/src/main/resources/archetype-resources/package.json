@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"metal-component": "2.16.7",
-		"metal-soy": "2.16.7"
+		"metal-component": "2.16.8",
+		"metal-soy": "2.16.8"
 	},
 	"devDependencies": {
 		"gulp": "^3.9.0",

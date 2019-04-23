@@ -49,6 +49,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.ProcessEntityModel;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -208,6 +209,10 @@ public class ProcessResourceImpl
 
 	private BooleanQuery _createSLABooleanQuery(Set<Long> processIds) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(
+			_queries.term("status", WorkfowMetricsSLAStatus.NEW),
+			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),

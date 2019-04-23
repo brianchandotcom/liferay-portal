@@ -74,6 +74,14 @@ public class AssetAutoTaggerOSGiCommands {
 					_assetAutoTaggerEntryLocalService.
 						deleteAssetAutoTaggerEntry(assetAutoTaggerEntry);
 				}
+
+				if (!assetAutoTaggerEntries.isEmpty()) {
+					System.out.println(
+						String.format(
+							"Commited %d auto tags for asset entry %s",
+							assetAutoTaggerEntries.size(),
+							assetEntry.getTitle()));
+				}
 			});
 	}
 

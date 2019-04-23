@@ -71,7 +71,7 @@ public class ClientState {
 		if (_bundleId == 0) {
 			FrameworkMBean frameworkMBean = MBeans.getFrameworkMBean();
 
-			ServerSocket serverSocket = SocketUtil.getServerSocket();
+			ServerSocket serverSocket = _socketState.getServerSocket();
 
 			Random random = new SecureRandom();
 
@@ -85,7 +85,7 @@ public class ClientState {
 			try {
 				frameworkMBean.startBundle(_bundleId);
 
-				SocketUtil.connect(passCode);
+				_socketState.connect(passCode);
 			}
 			catch (Throwable t) {
 				frameworkMBean.uninstallBundle(_bundleId);
@@ -105,7 +105,7 @@ public class ClientState {
 
 					frameworkMBean.uninstallBundle(_bundleId);
 
-					SocketUtil.close();
+					_socketState.close();
 
 					_testClasses = null;
 					_bundleId = 0;
@@ -117,11 +117,11 @@ public class ClientState {
 					String testClassName, Consumer<RunNotifierCommand> consumer)
 				throws Exception {
 
-				SocketUtil.writeUTF(testClassName);
+				_socketState.writeUTF(testClassName);
 
 				Object object = null;
 
-				while ((object = SocketUtil.readObject()) != null) {
+				while ((object = _socketState.readObject()) != null) {
 					consumer.accept((RunNotifierCommand)object);
 				}
 			}
@@ -247,6 +247,7 @@ public class ClientState {
 	}
 
 	private static long _bundleId;
+	private static final SocketState _socketState = new SocketState();
 	private static Set<Class<?>> _testClasses;
 
 }

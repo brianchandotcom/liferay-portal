@@ -31,9 +31,9 @@ import java.util.logging.Logger;
 /**
  * @author Matthew Tambara
  */
-public class SocketUtil {
+public class SocketState {
 
-	public static void close() throws IOException {
+	public void close() throws IOException {
 		_objectInputStream.close();
 
 		_objectInputStream = null;
@@ -51,7 +51,7 @@ public class SocketUtil {
 		_serverSocket = null;
 	}
 
-	public static void connect(long passCode) throws IOException {
+	public void connect(long passCode) throws IOException {
 		while (true) {
 			_socket = _serverSocket.accept();
 
@@ -78,7 +78,7 @@ public class SocketUtil {
 		}
 	}
 
-	public static ServerSocket getServerSocket() throws IOException {
+	public ServerSocket getServerSocket() throws IOException {
 		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 
 		int port = _START_PORT;
@@ -99,11 +99,11 @@ public class SocketUtil {
 		}
 	}
 
-	public static Object readObject() throws Exception {
+	public Object readObject() throws Exception {
 		return _objectInputStream.readObject();
 	}
 
-	public static void writeUTF(String string) throws IOException {
+	public void writeUTF(String string) throws IOException {
 		_objectOutputStream.writeUTF(string);
 
 		_objectOutputStream.flush();
@@ -112,13 +112,14 @@ public class SocketUtil {
 	private static final int _START_PORT = 32764;
 
 	private static final Logger _logger = Logger.getLogger(
-		SocketUtil.class.getName());
+		SocketState.class.getName());
 
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();
-	private static ObjectInputStream _objectInputStream;
-	private static ObjectOutputStream _objectOutputStream;
-	private static ServerSocket _serverSocket;
-	private static Socket _socket;
+
+	private ObjectInputStream _objectInputStream;
+	private ObjectOutputStream _objectOutputStream;
+	private ServerSocket _serverSocket;
+	private Socket _socket;
 
 }

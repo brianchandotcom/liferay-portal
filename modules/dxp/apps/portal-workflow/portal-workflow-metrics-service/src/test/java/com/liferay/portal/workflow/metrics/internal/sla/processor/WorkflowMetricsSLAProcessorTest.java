@@ -65,8 +65,8 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 1);
 						put("createDate", _format(createDateLocalDateTime));
+						put("taskId", 1);
 					}
 				}));
 	}
@@ -84,22 +84,22 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 1);
 						put(
 							"completionDate",
 							_format(
 								localDateTime.minus(4, ChronoUnit.SECONDS)));
 						put("createDate", _format(createDateLocalDateTime));
+						put("taskId", 1);
 					}
 				}),
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 2);
 						put(
 							"createDate",
 							_format(
 								localDateTime.minus(5, ChronoUnit.SECONDS)));
+						put("taskId", 2);
 					}
 				}));
 	}
@@ -126,8 +126,8 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 1);
 						put("createDate", _format(createDateLocalDateTime));
+						put("taskId", 1);
 					}
 				}));
 	}
@@ -166,22 +166,22 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 1);
 						put(
 							"completionDate",
 							_format(
 								localDateTime.minus(5, ChronoUnit.SECONDS)));
 						put("createDate", _format(createDateLocalDateTime));
+						put("taskId", 1);
 					}
 				}),
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 2);
 						put(
 							"createDate",
 							_format(
 								localDateTime.minus(5, ChronoUnit.SECONDS)));
+						put("taskId", 2);
 					}
 				}));
 	}
@@ -226,23 +226,23 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 1);
 						put(
 							"completionDate",
 							_format(
 								localDateTime.minus(5, ChronoUnit.SECONDS)));
 						put("createDate", _format(createDateLocalDateTime));
+						put("taskId", 1);
 					}
 				}),
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 2);
 						put("completionDate", _format(localDateTime));
 						put(
 							"createDate",
 							_format(
 								localDateTime.minus(5, ChronoUnit.SECONDS)));
+						put("taskId", 2);
 					}
 				}));
 	}
@@ -260,8 +260,8 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 1);
 						put("createDate", _format(createDateLocalDateTime));
+						put("taskId", 1);
 					}
 				}));
 	}
@@ -279,19 +279,19 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 1);
 						put(
 							"completionDate",
 							_format(
 								localDateTime.minus(4, ChronoUnit.SECONDS)));
 						put("createDate", _format(createDateLocalDateTime));
+						put("taskId", 1);
 					}
 				}),
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
-						put("taskId", 2);
 						put("createDate", _format(createDateLocalDateTime));
+						put("taskId", 2);
 					}
 				}));
 	}

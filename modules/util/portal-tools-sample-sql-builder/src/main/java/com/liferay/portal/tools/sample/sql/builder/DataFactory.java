@@ -526,10 +526,8 @@ public class DataFactory {
 	}
 
 	public long getBlogsAssetEntryClassNameId() {
-		String className = getCombineClassName(
-			MBDiscussion.class, BlogsEntry.class);
-
-		ClassNameModel classNameModel = _classNameModels.get(className);
+		ClassNameModel classNameModel = _classNameModels.get(
+			getCombineClassName(MBDiscussion.class, BlogsEntry.class));
 
 		return classNameModel.getClassNameId();
 	}
@@ -799,10 +797,8 @@ public class DataFactory {
 	}
 
 	public long getWikiAssetEntryClassNameId() {
-		String className = getCombineClassName(
-			MBDiscussion.class, WikiPage.class);
-
-		ClassNameModel classNameModel = _classNameModels.get(className);
+		ClassNameModel classNameModel = _classNameModels.get(
+			getCombineClassName(MBDiscussion.class, WikiPage.class));
 
 		return classNameModel.getClassNameId();
 	}

@@ -25,6 +25,7 @@ class PublishChangeList extends Component {
 
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		let body = {
 			credentials: 'include',
@@ -45,6 +46,7 @@ class PublishChangeList extends Component {
 	_publishChangeList() {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		let init = {
 			credentials: 'include',

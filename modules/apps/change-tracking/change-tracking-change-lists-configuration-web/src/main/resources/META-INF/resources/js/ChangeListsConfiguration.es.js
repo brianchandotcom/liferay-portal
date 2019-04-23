@@ -97,6 +97,7 @@ class ChangeListsConfiguration extends PortletBase {
 	_getDataRequest(url, callback) {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		const request = {
 			credentials: 'include',
@@ -129,6 +130,7 @@ class ChangeListsConfiguration extends PortletBase {
 
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		const request = {
 			body,

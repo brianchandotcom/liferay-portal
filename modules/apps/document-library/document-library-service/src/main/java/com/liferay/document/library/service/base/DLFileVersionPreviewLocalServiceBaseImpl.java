@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.service.persistence.DLFileVersionPreviewPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -37,17 +37,18 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the dl file version preview local service.
@@ -63,7 +64,8 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class DLFileVersionPreviewLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DLFileVersionPreviewLocalService, IdentifiableOSGiService {
+	implements DLFileVersionPreviewLocalService, AopService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -351,83 +353,18 @@ public abstract class DLFileVersionPreviewLocalServiceBaseImpl
 		return dlFileVersionPreviewPersistence.update(dlFileVersionPreview);
 	}
 
-	/**
-	 * Returns the dl file version preview local service.
-	 *
-	 * @return the dl file version preview local service
-	 */
-	public DLFileVersionPreviewLocalService
-		getDLFileVersionPreviewLocalService() {
-
-		return dlFileVersionPreviewLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DLFileVersionPreviewLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the dl file version preview local service.
-	 *
-	 * @param dlFileVersionPreviewLocalService the dl file version preview local service
-	 */
-	public void setDLFileVersionPreviewLocalService(
-		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService) {
-
-		this.dlFileVersionPreviewLocalService =
-			dlFileVersionPreviewLocalService;
-	}
-
-	/**
-	 * Returns the dl file version preview persistence.
-	 *
-	 * @return the dl file version preview persistence
-	 */
-	public DLFileVersionPreviewPersistence
-		getDLFileVersionPreviewPersistence() {
-
-		return dlFileVersionPreviewPersistence;
-	}
-
-	/**
-	 * Sets the dl file version preview persistence.
-	 *
-	 * @param dlFileVersionPreviewPersistence the dl file version preview persistence
-	 */
-	public void setDLFileVersionPreviewPersistence(
-		DLFileVersionPreviewPersistence dlFileVersionPreviewPersistence) {
-
-		this.dlFileVersionPreviewPersistence = dlFileVersionPreviewPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.document.library.model.DLFileVersionPreview",
-			dlFileVersionPreviewLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.document.library.model.DLFileVersionPreview");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		dlFileVersionPreviewLocalService =
+			(DLFileVersionPreviewLocalService)aopProxy;
 	}
 
 	/**
@@ -473,20 +410,13 @@ public abstract class DLFileVersionPreviewLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DLFileVersionPreviewLocalService.class)
 	protected DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService;
 
-	@BeanReference(type = DLFileVersionPreviewPersistence.class)
+	@Reference
 	protected DLFileVersionPreviewPersistence dlFileVersionPreviewPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

@@ -21,7 +21,9 @@ import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.document.library.model.impl.DLFileVersionPreviewImpl;
 import com.liferay.document.library.model.impl.DLFileVersionPreviewModelImpl;
 import com.liferay.document.library.service.persistence.DLFileVersionPreviewPersistence;
+import com.liferay.document.library.service.persistence.impl.constants.DLPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,12 +31,13 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -43,6 +46,13 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The persistence implementation for the dl file version preview service.
@@ -54,6 +64,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@Component(service = DLFileVersionPreviewPersistence.class)
 @ProviderType
 public class DLFileVersionPreviewPersistenceImpl
 	extends BasePersistenceImpl<DLFileVersionPreview>
@@ -1598,8 +1609,6 @@ public class DLFileVersionPreviewPersistenceImpl
 
 		setModelImplClass(DLFileVersionPreviewImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -1610,8 +1619,7 @@ public class DLFileVersionPreviewPersistenceImpl
 	@Override
 	public void cacheResult(DLFileVersionPreview dlFileVersionPreview) {
 		entityCache.putResult(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewImpl.class,
+			entityCacheEnabled, DLFileVersionPreviewImpl.class,
 			dlFileVersionPreview.getPrimaryKey(), dlFileVersionPreview);
 
 		finderCache.putResult(
@@ -1645,8 +1653,7 @@ public class DLFileVersionPreviewPersistenceImpl
 				dlFileVersionPreviews) {
 
 			if (entityCache.getResult(
-					DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileVersionPreviewImpl.class,
+					entityCacheEnabled, DLFileVersionPreviewImpl.class,
 					dlFileVersionPreview.getPrimaryKey()) == null) {
 
 				cacheResult(dlFileVersionPreview);
@@ -1683,8 +1690,7 @@ public class DLFileVersionPreviewPersistenceImpl
 	@Override
 	public void clearCache(DLFileVersionPreview dlFileVersionPreview) {
 		entityCache.removeResult(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewImpl.class,
+			entityCacheEnabled, DLFileVersionPreviewImpl.class,
 			dlFileVersionPreview.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1703,8 +1709,7 @@ public class DLFileVersionPreviewPersistenceImpl
 				dlFileVersionPreviews) {
 
 			entityCache.removeResult(
-				DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-				DLFileVersionPreviewImpl.class,
+				entityCacheEnabled, DLFileVersionPreviewImpl.class,
 				dlFileVersionPreview.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -1945,7 +1950,7 @@ public class DLFileVersionPreviewPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!DLFileVersionPreviewModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!_columnBitmaskEnabled) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
@@ -2014,8 +2019,7 @@ public class DLFileVersionPreviewPersistenceImpl
 		}
 
 		entityCache.putResult(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewImpl.class,
+			entityCacheEnabled, DLFileVersionPreviewImpl.class,
 			dlFileVersionPreview.getPrimaryKey(), dlFileVersionPreview, false);
 
 		clearUniqueFindersCache(dlFileVersionPreviewModelImpl, false);
@@ -2297,29 +2301,29 @@ public class DLFileVersionPreviewPersistenceImpl
 	/**
 	 * Initializes the dl file version preview persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
+		DLFileVersionPreviewModelImpl.setEntityCacheEnabled(entityCacheEnabled);
+		DLFileVersionPreviewModelImpl.setFinderCacheEnabled(finderCacheEnabled);
+
 		_finderPathWithPaginationFindAll = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			DLFileVersionPreviewImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			DLFileVersionPreviewImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByFileEntryId = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			DLFileVersionPreviewImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
 			new String[] {
@@ -2328,22 +2332,19 @@ public class DLFileVersionPreviewPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByFileEntryId = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			DLFileVersionPreviewImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileEntryId",
 			new String[] {Long.class.getName()},
 			DLFileVersionPreviewModelImpl.FILEENTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByFileEntryId = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileEntryId",
 			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByFileVersionId = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			DLFileVersionPreviewImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileVersionId",
 			new String[] {
@@ -2352,22 +2353,19 @@ public class DLFileVersionPreviewPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByFileVersionId = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			DLFileVersionPreviewImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileVersionId",
 			new String[] {Long.class.getName()},
 			DLFileVersionPreviewModelImpl.FILEVERSIONID_COLUMN_BITMASK);
 
 		_finderPathCountByFileVersionId = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileVersionId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByF_F = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			DLFileVersionPreviewImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByF_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -2375,14 +2373,12 @@ public class DLFileVersionPreviewPersistenceImpl
 			DLFileVersionPreviewModelImpl.FILEVERSIONID_COLUMN_BITMASK);
 
 		_finderPathCountByF_F = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_F",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByF_F_P = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED,
+			entityCacheEnabled, finderCacheEnabled,
 			DLFileVersionPreviewImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByF_F_P",
 			new String[] {
@@ -2394,8 +2390,7 @@ public class DLFileVersionPreviewPersistenceImpl
 			DLFileVersionPreviewModelImpl.PREVIEWSTATUS_COLUMN_BITMASK);
 
 		_finderPathCountByF_F_P = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_F_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2403,17 +2398,52 @@ public class DLFileVersionPreviewPersistenceImpl
 			});
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		entityCache.removeCache(DLFileVersionPreviewImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = DLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
+
+		_columnBitmaskEnabled = GetterUtil.getBoolean(
+			configuration.get(
+				"value.object.column.bitmask.enabled.com.liferay.document.library.model.DLFileVersionPreview"),
+			true);
+	}
+
+	@Override
+	@Reference(
+		target = DLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = DLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	private boolean _columnBitmaskEnabled;
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_DLFILEVERSIONPREVIEW =

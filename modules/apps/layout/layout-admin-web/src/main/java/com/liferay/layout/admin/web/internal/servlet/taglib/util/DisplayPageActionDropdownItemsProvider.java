@@ -244,7 +244,7 @@ public class DisplayPageActionDropdownItemsProvider {
 				message = LanguageUtil.format(
 					_request,
 					"do-you-want-to-replace-x-for-x-as-the-default-display-" +
-						"page",
+						"page-template",
 					new String[] {
 						_layoutPageTemplateEntry.getName(),
 						defaultLayoutPageTemplateEntry.getName()

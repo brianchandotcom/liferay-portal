@@ -317,7 +317,7 @@ class FormBuilder extends Component {
 			}
 		}
 
-		if (openSidebar) {
+		if (openSidebar || this._fieldWasDuplicated(changes.focusedField)) {
 			this.openSidebar();
 		}
 	}
@@ -342,6 +342,10 @@ class FormBuilder extends Component {
 				throw new Error(error);
 			}
 		);
+	}
+
+	_fieldWasDuplicated(field) {
+		return field.newVal.openSidebar && !field.prevVal.openSidebar;
 	}
 
 	_handleAddFieldButtonClicked() {

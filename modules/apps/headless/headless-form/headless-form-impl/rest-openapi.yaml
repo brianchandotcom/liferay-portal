@@ -84,6 +84,9 @@ components:
                 id:
                     format: int64
                     type: integer
+                siteId:
+                    format: int64
+                    type: integer
                 sizeInBytes:
                     format: int64
                     type: integer

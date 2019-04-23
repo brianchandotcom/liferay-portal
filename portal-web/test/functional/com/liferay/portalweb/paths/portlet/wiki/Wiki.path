@@ -161,7 +161,7 @@
 </tr>
 <tr>
 	<td>HISTORY_VERSIONS_TAB</td>
-	<td>//li[@class='tab']//a[contains(.,'Versions')]</td>
+	<td>//li[@class='nav-item']//a[contains(.,'Versions')]</td>
 	<td></td>
 </tr>
 <tr>

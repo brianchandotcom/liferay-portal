@@ -124,12 +124,12 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalFeed)"
 	)
-	private volatile ModelResourcePermission<JournalFeed>
+	private ModelResourcePermission<JournalFeed>
 		_journalFeedModelResourcePermission;
 
 	@Reference(
 		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
 	)
-	private volatile PortletResourcePermission _portletResourcePermission;
+	private PortletResourcePermission _portletResourcePermission;
 
 }

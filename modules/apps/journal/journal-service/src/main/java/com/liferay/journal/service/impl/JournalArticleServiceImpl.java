@@ -2891,13 +2891,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
-	private volatile ModelResourcePermission<JournalArticle>
+	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
 	)
-	private volatile ModelResourcePermission<JournalFolder>
+	private ModelResourcePermission<JournalFolder>
 		_journalFolderModelResourcePermission;
 
 	@Reference
@@ -2906,6 +2906,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	@Reference(
 		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
 	)
-	private volatile PortletResourcePermission _portletResourcePermission;
+	private PortletResourcePermission _portletResourcePermission;
 
 }

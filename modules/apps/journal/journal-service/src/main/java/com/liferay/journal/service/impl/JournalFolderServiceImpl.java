@@ -467,13 +467,13 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
 	)
-	private volatile ModelResourcePermission<DDMStructure>
+	private ModelResourcePermission<DDMStructure>
 		_ddmStructureModelResourcePermission;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
 	)
-	private volatile ModelResourcePermission<JournalFolder>
+	private ModelResourcePermission<JournalFolder>
 		_journalFolderModelResourcePermission;
 
 }

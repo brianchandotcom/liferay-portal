@@ -19,6 +19,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.service.base.JournalArticleServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -1388,7 +1389,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		List<Long> folderIds = new ArrayList<>();
 
 		if (rootFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			folderIds = journalFolderService.getFolderIds(
+			folderIds = _journalFolderService.getFolderIds(
 				groupId, rootFolderId);
 		}
 
@@ -1433,7 +1434,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		List<Long> folderIds = new ArrayList<>();
 
 		if (rootFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			folderIds = journalFolderService.getFolderIds(
+			folderIds = _journalFolderService.getFolderIds(
 				groupId, rootFolderId);
 		}
 
@@ -1594,7 +1595,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		List<Long> folderIds = new ArrayList<>();
 
 		if (rootFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			folderIds = journalFolderService.getFolderIds(
+			folderIds = _journalFolderService.getFolderIds(
 				groupId, rootFolderId);
 		}
 
@@ -2898,6 +2899,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	)
 	private volatile ModelResourcePermission<JournalFolder>
 		_journalFolderModelResourcePermission;
+
+	@Reference
+	private JournalFolderService _journalFolderService;
 
 	@Reference(
 		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"

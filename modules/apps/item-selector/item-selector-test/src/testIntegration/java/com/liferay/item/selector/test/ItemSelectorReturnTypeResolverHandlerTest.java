@@ -22,7 +22,6 @@ import com.liferay.item.selector.ItemSelectorViewReturnTypeProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;

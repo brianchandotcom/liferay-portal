@@ -16,7 +16,6 @@ package com.liferay.product.navigation.site.administration.internal.menu;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,7 +33,6 @@ import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.util.RecentGroupManager;
 import com.liferay.taglib.aui.AUIUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 

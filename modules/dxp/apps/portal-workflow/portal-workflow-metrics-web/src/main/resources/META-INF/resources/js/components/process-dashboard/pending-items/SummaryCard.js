@@ -55,7 +55,7 @@ class SummaryCard extends React.Component {
 
 		const dashboardItemsPath = `/instances/${processId}/${defaultDelta}/1`;
 
-		const disabled = !total && !value;
+		const disabled = !total && value === undefined;
 
 		const disabledClassName = disabled ? 'disabled' : '';
 		const disableRender = Component => !disabled && Component;

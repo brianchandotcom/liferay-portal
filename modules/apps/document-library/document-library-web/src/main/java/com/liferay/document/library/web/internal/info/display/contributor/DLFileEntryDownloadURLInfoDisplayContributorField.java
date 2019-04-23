@@ -49,7 +49,7 @@ public class DLFileEntryDownloadURLInfoDisplayContributorField
 
 	@Override
 	public String getType() {
-		return "text";
+		return "url";
 	}
 
 	@Override

@@ -79,9 +79,12 @@ components:
                     type: string
                 encodingFormat:
                     type: string
+                fileEntryId:
+                    format: int64
+                    type: integer
                 fileExtension:
                     type: string
-                id:
+                siteId:
                     format: int64
                     type: integer
                 sizeInBytes:

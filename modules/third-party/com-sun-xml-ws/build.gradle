@@ -1,14 +1,30 @@
 apply plugin: "nebula.optional-base"
 
+dependencies {
+	compileOnly group: "com.sun.xml.ws", name: "jaxws-rt", transitive: false, version: "2.1.7"
+}
+
+task jarPatched(type: Zip)
+
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
-dependencies {
-	compile group: "com.sun.xml.ws", name: "jaxws-rt", optional, version: "2.1.7"
+jar {
+	deleteAllActions()
+
+	dependsOn jarPatched
 }
 
-task jar(type: Jar, overwrite: true)
+jarPatched {
+	archiveName = jar.archiveName
+	destinationDir = jar.destinationDir
+	duplicatesStrategy = "exclude"
 
-jar {
 	exclude "META-INF/services/javax.xml.ws.spi.Provider"
+
+	from sourceSets.main.output
+
+	from {
+		zipTree(configurations.compileOnly.singleFile)
+	}
 }

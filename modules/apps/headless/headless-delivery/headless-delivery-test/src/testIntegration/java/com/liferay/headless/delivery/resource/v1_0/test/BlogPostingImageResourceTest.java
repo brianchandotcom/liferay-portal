@@ -15,8 +15,11 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.client.serdes.v1_0.BlogPostingImageSerDes;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -31,6 +34,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -39,6 +44,32 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class BlogPostingImageResourceTest
 	extends BaseBlogPostingImageResourceTestCase {
+
+	@Test
+	public void testPostSiteBlogPostingImageUsesTransation() throws Exception {
+		Folder folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
+			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			testGroup.getGroupId());
+
+		Assert.assertNull(folder);
+
+		BlogPostingImage blogPostingImage = randomBlogPostingImage();
+
+		blogPostingImage.setTitle("*,?");
+
+		try {
+			testPostSiteBlogPostingImage_addBlogPostingImage(blogPostingImage);
+		}
+		catch (Throwable e) {
+			Assert.assertTrue(e instanceof IllegalArgumentException);
+		}
+
+		folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
+			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			testGroup.getGroupId());
+
+		Assert.assertNull(folder);
+	}
 
 	@Override
 	protected List<EntityField> getEntityFields(EntityField.Type type)

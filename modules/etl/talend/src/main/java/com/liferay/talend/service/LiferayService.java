@@ -79,11 +79,8 @@ public class LiferayService {
 
 		schemaJsonObject = schemasJsonObject.getJsonObject(ref);
 
-		propertiesJsonObject = schemaJsonObject.getJsonObject("properties");
-
 		return _talendService.getTalendSchema(
-			propertiesJsonObject, schemaJsonObject.getJsonArray("required"),
-			recordBuilderFactory);
+			schemaJsonObject, recordBuilderFactory);
 	}
 
 	public List<String> getPageableEndpoints(InputDataSet inputDataSet) {

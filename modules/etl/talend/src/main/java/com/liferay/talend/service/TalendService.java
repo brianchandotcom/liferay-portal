@@ -32,11 +32,15 @@ import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 public class TalendService {
 
 	public Schema getTalendSchema(
-		JsonObject propertiesJsonObject, JsonArray requiredJsonArray,
+		JsonObject schemaJsonObject,
 		RecordBuilderFactory recordBuilderFactory) {
 
 		Schema.Builder schemaBuilder = recordBuilderFactory.newSchemaBuilder(
 			Schema.Type.RECORD);
+
+		JsonArray requiredJsonArray = schemaJsonObject.getJsonArray("required");
+		JsonObject propertiesJsonObject = schemaJsonObject.getJsonObject(
+			"properties");
 
 		String requiredJsonArrayRaw = requiredJsonArray.toString();
 

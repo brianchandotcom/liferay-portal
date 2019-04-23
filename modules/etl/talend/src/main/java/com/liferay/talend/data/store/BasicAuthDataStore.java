@@ -71,12 +71,12 @@ public class BasicAuthDataStore implements Serializable {
 
 	@ActiveIf(target = "anonymous", value = "false")
 	@Credential
-	@DefaultValue("test")
+	@DefaultValue("\"test\"")
 	@Option
 	protected String password;
 
 	@ActiveIf(target = "anonymous", value = "false")
-	@DefaultValue("test@liferay.com")
+	@DefaultValue("\"test@liferay.com\"")
 	@Option
 	protected String user;
 

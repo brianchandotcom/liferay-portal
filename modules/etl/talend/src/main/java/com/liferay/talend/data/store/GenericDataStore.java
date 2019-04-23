@@ -100,7 +100,7 @@ public class GenericDataStore {
 	private OAuth2DataStore _oAuth2DataStore;
 
 	@DefaultValue(
-		"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.yaml"
+		"\"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.yaml\""
 	)
 	@Option
 	@Required

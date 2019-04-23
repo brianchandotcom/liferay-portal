@@ -101,20 +101,21 @@ public class InputDataSet implements Serializable {
 	 * DataStore parameter now is not needed, just an example how we can use it
 	 * in UIActionService if needed.
 	 */
+	@DefaultValue("\"\"")
 	@Option
 	@Required
 	@Suggestable(parameters = "_genericDataStore", value = "fetchEndpoints")
 	protected String endpoint;
 
-	@DefaultValue("")
+	@DefaultValue("\"\"")
 	@Option
 	protected String firstPathParam;
 
-	@DefaultValue("")
+	@DefaultValue("\"\"")
 	@Option
 	protected String secondPathParam;
 
-	@DefaultValue("")
+	@DefaultValue("\"\"")
 	@Option
 	protected String thirdPathParam;
 

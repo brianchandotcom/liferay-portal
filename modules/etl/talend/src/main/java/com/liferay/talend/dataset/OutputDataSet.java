@@ -100,15 +100,15 @@ public class OutputDataSet implements Serializable {
 	@Suggestable(parameters = "_genericDataStore", value = "fetchEndpoints")
 	protected String endpoint;
 
-	@DefaultValue("")
+	@DefaultValue("\"\"")
 	@Option
 	protected String firstPathParam;
 
-	@DefaultValue("")
+	@DefaultValue("\"\"")
 	@Option
 	protected String secondPathParam;
 
-	@DefaultValue("")
+	@DefaultValue("\"\"")
 	@Option
 	protected String thirdPathParam;
 

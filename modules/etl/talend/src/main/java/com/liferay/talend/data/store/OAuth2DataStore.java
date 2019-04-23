@@ -52,12 +52,12 @@ public class OAuth2DataStore implements Serializable {
 		return this;
 	}
 
-	@DefaultValue("")
+	@DefaultValue("\"\"")
 	@Option
 	protected String consumerKey;
 
 	@Credential
-	@DefaultValue("")
+	@DefaultValue("\"\"")
 	@Option
 	protected String consumerSecret;
 

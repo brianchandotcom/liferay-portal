@@ -69,10 +69,8 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 
 </aui:select>
 
-<c:if test="<%= !assetPublisherDisplayContext.isSearchWithIndex() %>">
-	<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
-		<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
-	</c:if>
+<c:if test="<%= !assetPublisherDisplayContext.isSearchWithIndex() && assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
+	<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
 </c:if>
 
 <aui:script require="metal-dom/src/dom as dom">

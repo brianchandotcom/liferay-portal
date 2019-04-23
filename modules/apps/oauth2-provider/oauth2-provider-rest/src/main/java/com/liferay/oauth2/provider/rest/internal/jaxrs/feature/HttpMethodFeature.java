@@ -22,7 +22,7 @@ import com.liferay.petra.reflect.AnnotationLocator;
 
 import java.lang.annotation.Annotation;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -86,13 +86,10 @@ public class HttpMethodFeature implements Feature {
 
 		context.register((DynamicFeature)this::_collectHttpMethods);
 
-		Map<Class<?>, Integer> contracts = new HashMap<>();
-
-		contracts.put(
-			ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8);
-
 		context.register(
-			new HttpScopeCheckerContainerRequestFilter(), contracts);
+			new HttpScopeCheckerContainerRequestFilter(),
+			Collections.singletonMap(
+				ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8));
 
 		_serviceRegistration = _bundleContext.registerService(
 			ScopeFinder.class, new CollectionScopeFinder(_scopes),

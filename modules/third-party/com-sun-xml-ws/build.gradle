@@ -1,0 +1,14 @@
+apply plugin: "nebula.optional-base"
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+dependencies {
+	compile group: "com.sun.xml.ws", name: "jaxws-rt", optional, version: "2.1.7"
+}
+
+task jar(type: Jar, overwrite: true)
+
+jar {
+	exclude "META-INF/services/javax.xml.ws.spi.Provider"
+}

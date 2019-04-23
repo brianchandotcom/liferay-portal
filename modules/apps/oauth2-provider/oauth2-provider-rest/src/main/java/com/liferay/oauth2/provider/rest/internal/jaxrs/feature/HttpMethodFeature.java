@@ -70,15 +70,6 @@ public class HttpMethodFeature implements Feature {
 
 	@Override
 	public boolean configure(FeatureContext context) {
-		Map<Class<?>, Integer> contracts = new HashMap<>();
-
-		contracts.put(
-			ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8);
-
-		context.register((DynamicFeature)this::_collectHttpMethods);
-		context.register(
-			new HttpScopeCheckerContainerRequestFilter(), contracts);
-
 		Configuration configuration = context.getConfiguration();
 
 		Map<String, Object> applicationProperties =
@@ -92,6 +83,16 @@ public class HttpMethodFeature implements Feature {
 			_ignoreMissingScopes = new HashSet<>(
 				StringPlus.asList(ignoreScopesObject));
 		}
+
+		context.register((DynamicFeature)this::_collectHttpMethods);
+
+		Map<Class<?>, Integer> contracts = new HashMap<>();
+
+		contracts.put(
+			ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8);
+
+		context.register(
+			new HttpScopeCheckerContainerRequestFilter(), contracts);
 
 		_serviceRegistration = _bundleContext.registerService(
 			ScopeFinder.class, new CollectionScopeFinder(_scopes),

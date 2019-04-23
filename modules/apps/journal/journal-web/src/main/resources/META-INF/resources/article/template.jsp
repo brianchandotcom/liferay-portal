@@ -75,8 +75,6 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 		</portlet:renderURL>
 
-		var ddmTemplateKey = document.getElementById('<portlet:namespace />ddmTemplateKey');
-
 		var previewWithTemplate = document.getElementById('<portlet:namespace />previewWithTemplate');
 
 		if (previewWithTemplate) {
@@ -85,7 +83,26 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 				function(event) {
 					var uri = '<%= previewArticleContentTemplateURL %>';
 
-					uri = Liferay.Util.addParams('<portlet:namespace />ddmTemplateKey=' + ddmTemplateKey.value, uri)
+					<%
+					long ddmTemplateId = 0;
+
+					if (ddmTemplate != null) {
+					    if (ddmTemplate.getTemplateId() == 0) {
+							ddmTemplateId = -1;
+						}
+						else {
+					        ddmTemplateId = ddmTemplate.getTemplateId();
+						}
+					}
+					%>
+
+					var ddmTemplateId = '<%= ddmTemplateId %>';
+
+					if (document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value != '') {
+						ddmTemplateId = document.<portlet:namespace />fm1.<portlet:namespace />ddmTemplateId.value;
+					}
+
+					uri = Liferay.Util.addParams('<portlet:namespace />ddmTemplateId=' + ddmTemplateId, uri)
 
 					Liferay.Util.openWindow(
 						{

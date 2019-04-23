@@ -23,14 +23,14 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 <nav class="component-tbar subnav-tbar-light tbar tbar-article">
 	<ul class="tbar-nav">
 		<li class="tbar-item">
-			<aui:select label="" name="ddmTemplateKey" wrapperCssClass="mb-0 ml-4" onChange="previewArticleContentTemplate()">
-				<aui:option label="no-template" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateKey(), StringPool.BLANK) %>" value="<%= StringPool.BLANK %>" />
+			<aui:select label="" name="ddmTemplateId" onChange="previewArticleContentTemplate()" wrapperCssClass="mb-0 ml-4">
+				<aui:option label="no-template" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), -1) %>" value="<%= -1 %>" />
 
 				<%
 				for (DDMTemplate ddTemplate : journalPreviewArticleContentTemplateDisplayContext.getDDMTemplates()) {
 				%>
 
-					<aui:option label="<%= HtmlUtil.escape(ddTemplate.getName(locale)) %>" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateKey(), ddTemplate.getTemplateKey()) %>" value="<%= ddTemplate.getTemplateKey() %>" />
+					<aui:option label="<%= HtmlUtil.escape(ddTemplate.getName(locale)) %>" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), ddTemplate.getTemplateId()) %>" value="<%= ddTemplate.getTemplateId() %>" />
 
 				<%
 				}
@@ -69,8 +69,8 @@ JournalArticleDisplay articleDisplay = journalPreviewArticleContentTemplateDispl
 
 <script>
 	function previewArticleContentTemplate() {
-		var ddmTemplateKey = document.getElementById('<portlet:namespace />ddmTemplateKey');
+		var ddmTemplateId = document.getElementById('<portlet:namespace />ddmTemplateId');
 
-		location.href = Liferay.Util.addParams('<portlet:namespace />ddmTemplateKey=' + ddmTemplateKey.value, '<%= journalPreviewArticleContentTemplateDisplayContext.getPortletURL() %>');
+		location.href = Liferay.Util.addParams('<portlet:namespace />ddmTemplateId=' + ddmTemplateId.value, '<%= journalPreviewArticleContentTemplateDisplayContext.getPortletURL() %>');
 	}
 </script>

@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -64,9 +65,17 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 
 		int page = ParamUtil.getInteger(_renderRequest, "page");
 
+		String ddmTemplateKey = StringPool.BLANK;
+
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		if (ddmTemplate != null) {
+			ddmTemplateKey = ddmTemplate.getTemplateKey();
+		}
+
 		_articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(
-			article, getDDMTemplateKey(), null, _themeDisplay.getLanguageId(),
-			page, new PortletRequestModel(_renderRequest, _renderResponse),
+			article, ddmTemplateKey, null, _themeDisplay.getLanguageId(), page,
+			new PortletRequestModel(_renderRequest, _renderResponse),
 			_themeDisplay);
 
 		return _articleDisplay;
@@ -82,14 +91,25 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 		return _articleId;
 	}
 
-	public String getDDMTemplateKey() {
-		if (_ddmTemplateKey != null) {
-			return _ddmTemplateKey;
+	public DDMTemplate getDDMTemplate() {
+		if (_ddmTemplate != null) {
+			return _ddmTemplate;
 		}
 
-		_ddmTemplateKey = ParamUtil.getString(_renderRequest, "ddmTemplateKey");
+		_ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(
+			getDDMTemplateId());
 
-		return _ddmTemplateKey;
+		return _ddmTemplate;
+	}
+
+	public long getDDMTemplateId() {
+		if (_ddmTemplateId != null) {
+			return _ddmTemplateId;
+		}
+
+		_ddmTemplateId = ParamUtil.getLong(_renderRequest, "ddmTemplateId");
+
+		return _ddmTemplateId;
 	}
 
 	public List<DDMTemplate> getDDMTemplates() throws PortalException {
@@ -129,7 +149,8 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
 		portletURL.setParameter("articleId", getArticleId());
 		portletURL.setParameter("version", String.valueOf(getVersion()));
-		portletURL.setParameter("ddmTemplateKey", getDDMTemplateKey());
+		portletURL.setParameter(
+			"ddmTemplateId", String.valueOf(getDDMTemplateId()));
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL;
@@ -160,7 +181,8 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 
 	private JournalArticleDisplay _articleDisplay;
 	private String _articleId;
-	private String _ddmTemplateKey;
+	private DDMTemplate _ddmTemplate;
+	private Long _ddmTemplateId;
 	private Long _groupId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

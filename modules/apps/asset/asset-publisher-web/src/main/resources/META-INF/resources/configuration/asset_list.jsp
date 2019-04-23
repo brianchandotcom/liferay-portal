@@ -20,28 +20,24 @@
 AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry();
 %>
 
-<div class="form-group input-text-wrapper text-default">
-	<div class="d-inline-block">
-		<span id="<portlet:namespace />assetListTitle">
-			<c:choose>
-				<c:when test="<%= assetListEntry != null %>">
-					<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
-				</c:when>
-				<c:otherwise>
-					<span class="text-muted"><liferay-ui:message key="none" /></span>
-				</c:otherwise>
-			</c:choose>
-		</span>
+<aui:input id="assetListEntryId" name="preferences--assetListEntryId--" type="hidden" value="<%= (assetListEntry != null) ? assetListEntry.getAssetListEntryId() : StringPool.BLANK %>" />
 
-		<div class="d-inline-block <%= (assetListEntry == null) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />assetListRemove" role="button">
-			<aui:icon cssClass="icon-monospaced" image="times-circle" markupView="lexicon" />
-		</div>
-	</div>
-
-	<aui:input id="assetListEntryId" name="preferences--assetListEntryId--" type="hidden" value="<%= (assetListEntry != null) ? assetListEntry.getAssetListEntryId() : StringPool.BLANK %>" />
+<div class="form-group input-text-wrapper text-default" id="<portlet:namespace />assetListTitle">
+	<c:choose>
+		<c:when test="<%= assetListEntry != null %>">
+			<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
+		</c:when>
+		<c:otherwise>
+			<span class="text-muted"><liferay-ui:message key="none" /></span>
+		</c:otherwise>
+	</c:choose>
 </div>
 
-<aui:button name="selectAssetListButton" value="select" />
+<div class="button-row">
+	<aui:button cssClass="mr-2" name="selectAssetListButton" value="select" />
+
+	<aui:button name="clearAssetListButton" value="clear" />
+</div>
 
 <script>
 	var assetListEntryId = document.getElementById('<portlet:namespace />assetListEntryId');
@@ -68,25 +64,21 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 						assetListEntryId.value = event.assetlistentryid;
 
 						assetListTitle.innerHTML = event.assetlistentrytitle;
-
-						assetListRemove.classList.remove('hide');
 					}
 				);
 			}
 		);
 	}
 
-	var assetListRemove = document.getElementById('<portlet:namespace />assetListRemove');
+	var clearAssetListButton = document.getElementById('<portlet:namespace />clearAssetListButton');
 
-	if (assetListRemove) {
-		assetListRemove.addEventListener(
+	if (clearAssetListButton) {
+		clearAssetListButton.addEventListener(
 			'click',
 			function(event) {
 				assetListTitle.innerHTML = '<liferay-ui:message key="none" />';
 
 				assetListEntryId.value = '';
-
-				assetListRemove.classList.add('hide');
 			}
 		);
 	}

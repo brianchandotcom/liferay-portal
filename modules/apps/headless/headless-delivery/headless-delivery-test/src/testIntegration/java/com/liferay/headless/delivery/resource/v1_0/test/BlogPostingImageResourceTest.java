@@ -59,6 +59,8 @@ public class BlogPostingImageResourceTest
 
 		try {
 			testPostSiteBlogPostingImage_addBlogPostingImage(blogPostingImage);
+
+			Assert.fail();
 		}
 		catch (Throwable e) {
 			Assert.assertTrue(e instanceof IllegalArgumentException);

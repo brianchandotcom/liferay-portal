@@ -68,12 +68,11 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 
 		boolean facesPortlet = false;
 
+		beanMethods:
 		for (Map.Entry<MethodType, List<BeanMethod>> entry :
 				beanMethods.entrySet()) {
 
-			List<BeanMethod> beanMethodList = entry.getValue();
-
-			for (BeanMethod beanMethod : beanMethodList) {
+			for (BeanMethod beanMethod : entry.getValue()) {
 				Method method = beanMethod.getMethod();
 
 				Class<?> declaringClass = method.getDeclaringClass();
@@ -84,12 +83,8 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 
 					facesPortlet = true;
 
-					break;
+					break beanMethods;
 				}
-			}
-
-			if (facesPortlet) {
-				break;
 			}
 		}
 

@@ -551,13 +551,13 @@ public class DataFactory {
 	public String getCombineClassName(
 		Class<?> firstClazz, Class<?> secondClazz) {
 
-		StringBundler sb = new StringBundler(3);
+		String className = firstClazz.getName();
 
-		sb.append(firstClazz.getName());
-		sb.append("_");
-		sb.append(secondClazz.getName());
-
-		return sb.toString();
+		return className.concat(
+			StringPool.UNDERLINE
+		).concat(
+			secondClazz.getName()
+		);
 	}
 
 	public CompanyModel getCompanyModel() {

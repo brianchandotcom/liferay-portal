@@ -71,7 +71,8 @@ public class UIActionService {
 		final InputDataSet inputDataSet,
 		final RecordBuilderFactory recordBuilderFactory) {
 
-		return null;
+		return _liferayService.getEndpointTalendSchema(
+			inputDataSet, recordBuilderFactory);
 	}
 
 	@Service

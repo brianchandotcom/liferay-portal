@@ -30,36 +30,66 @@ import java.util.regex.Pattern;
 
 import javax.json.JsonObject;
 
+import org.talend.sdk.component.api.record.Schema;
 import org.talend.sdk.component.api.service.Service;
+import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 
 /**
  * @author Igor Beslic
  * @author Zoltán Takács
+ * @author Matija Petanjek
  */
 @Service
 public class LiferayService {
 
+	public Schema getEndpointTalendSchema(
+		InputDataSet inputDataSet, RecordBuilderFactory recordBuilderFactory) {
+
+		String endpoint = inputDataSet.getEndpoint();
+
+		JsonObject openAPISpecification = _getOpenAPISpecification(
+			inputDataSet);
+
+		Map<String, String> pathResponseEntities = _mapKeysToPatternEvaluations(
+			_GET_METHOD_RESPONSE_PATTERN,
+			openAPISpecification.getJsonObject("paths"));
+
+		String entityName = pathResponseEntities.get(endpoint);
+
+		JsonObject components = openAPISpecification.getJsonObject(
+			"components");
+
+		JsonObject schemas = components.getJsonObject("schemas");
+
+		JsonObject schema = schemas.getJsonObject(entityName);
+
+		JsonObject properties = schema.getJsonObject("properties");
+
+		JsonObject items = properties.getJsonObject("items");
+
+		items = items.getJsonObject("items");
+
+		String ref = items.getString("$ref");
+
+		ref = _stripPath(ref);
+
+		schema = schemas.getJsonObject(ref);
+
+		properties = schema.getJsonObject("properties");
+
+		return _talendService.getTalendSchema(
+			properties, schema.getJsonArray("required"), recordBuilderFactory);
+	}
+
 	public List<String> getPageableEndpoints(InputDataSet inputDataSet) {
-		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
+		JsonObject openAPISpecification = _getOpenAPISpecification(
+			inputDataSet);
 
-		URL openAPISpecURL = genericDataStore.getOpenAPISpecURL();
-
-		if (!isValidEndpointURL(openAPISpecURL.toString())) {
-			throw new MalformedURLException(
-				"Provided URL does not match pattern " +
-					_serverURLPattern.pattern());
-		}
-
-		inputDataSet.setEndpoint(_extractEndpoint(openAPISpecURL.toString()));
-
-		JsonObject responseJsonObject =
-			_connectionService.getResponseJsonObject(inputDataSet);
-
-		if (responseJsonObject == null) {
+		if (openAPISpecification == null) {
 			return Collections.emptyList();
 		}
 
-		return getPageableEndpoints(responseJsonObject);
+		return getPageableEndpoints(openAPISpecification);
 	}
 
 	public boolean isValidEndpointURL(String endpointURL) {
@@ -169,6 +199,22 @@ public class LiferayService {
 		return pageableEndpoints;
 	}
 
+	private JsonObject _getOpenAPISpecification(InputDataSet inputDataSet) {
+		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
+
+		URL openAPISpecURL = genericDataStore.getOpenAPISpecURL();
+
+		if (!isValidEndpointURL(openAPISpecURL.toString())) {
+			throw new MalformedURLException(
+				"Provided URL does not match pattern " +
+					_serverURLPattern.pattern());
+		}
+
+		inputDataSet.setEndpoint(_extractEndpoint(openAPISpecURL.toString()));
+
+		return _connectionService.getResponseJsonObject(inputDataSet);
+	}
+
 	/**
 	 * Gets key, value map where each key is contained in given
 	 * <code>jsonObject</code> and value is String value pointed by given
@@ -222,5 +268,8 @@ public class LiferayService {
 
 	@Service
 	private ConnectionService _connectionService;
+
+	@Service
+	private TalendService _talendService;
 
 }

@@ -210,6 +210,7 @@ public class LangBuilder {
 		_createProperties(content, "sl"); // Slovene
 		_createProperties(content, "es"); // Spanish
 		_createProperties(content, "sv"); // Swedish
+		_createProperties(content, "ta_IN"); //Tamil (south of India)
 		_createProperties(content, "th"); // Thai
 		_createProperties(content, "tr"); // Turkish
 		_createProperties(content, "uk"); // Ukrainian

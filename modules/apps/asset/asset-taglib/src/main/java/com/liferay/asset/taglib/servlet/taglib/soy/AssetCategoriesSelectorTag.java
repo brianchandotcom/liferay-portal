@@ -145,6 +145,7 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 		_groupIds = null;
 		_hiddenInput = "assetCategoryIds";
 		_ignoreRequestValue = false;
+		_namespace = null;
 		_showRequiredLabel = true;
 		_singleSelect = false;
 	}

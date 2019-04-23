@@ -25,7 +25,7 @@ export default class WorkloadByStepTable extends React.Component {
 
 							<th className="table-head-title text-right">
 								<ListHeadItem
-									iconColor="red"
+									iconColor="danger"
 									iconName="exclamation-circle"
 									name="overdueInstanceCount"
 									title={overdueTitle}
@@ -34,7 +34,7 @@ export default class WorkloadByStepTable extends React.Component {
 
 							<th className="table-head-title text-right">
 								<ListHeadItem
-									iconColor="green"
+									iconColor="success"
 									iconName="check-circle"
 									name="onTimeInstanceCount"
 									title={onTimeTitle}

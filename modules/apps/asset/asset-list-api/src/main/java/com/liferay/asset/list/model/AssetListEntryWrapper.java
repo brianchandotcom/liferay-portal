@@ -153,16 +153,14 @@ public class AssetListEntryWrapper
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-			getAssetEntries(long[] segmentsEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		getAssetEntries(long[] segmentsEntryIds) {
 
 		return model.getAssetEntries(segmentsEntryIds);
 	}
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
-			getAssetEntries(long[] segmentsEntryIds, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		getAssetEntries(long[] segmentsEntryIds, int start, int end) {
 
 		return model.getAssetEntries(segmentsEntryIds, start, end);
 	}
@@ -173,9 +171,7 @@ public class AssetListEntryWrapper
 	}
 
 	@Override
-	public int getAssetEntriesCount(long[] segmentsEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public int getAssetEntriesCount(long[] segmentsEntryIds) {
 		return model.getAssetEntriesCount(segmentsEntryIds);
 	}
 
@@ -188,8 +184,7 @@ public class AssetListEntryWrapper
 
 	@Override
 	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery
-			getAssetEntryQuery(long[] segmentsEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		getAssetEntryQuery(long[] segmentsEntryIds) {
 
 		return model.getAssetEntryQuery(segmentsEntryIds);
 	}

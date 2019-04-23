@@ -15,6 +15,7 @@
 package com.liferay.journal.web.internal.info.display.contributor;
 
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -52,8 +53,8 @@ public class JournalArticleLastEditorNameInfoDisplayContributorField
 	}
 
 	@Override
-	public String getType() {
-		return "text";
+	public InfoDisplayContributorFieldType getType() {
+		return InfoDisplayContributorFieldType.TEXT;
 	}
 
 	@Override

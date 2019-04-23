@@ -16,6 +16,7 @@ package com.liferay.journal.web.internal.info.display.contributor;
 
 import com.liferay.info.display.contributor.BaseInfoDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,8 +52,8 @@ public class JournalArticleSmallImageAssetDisplayContributorField
 	}
 
 	@Override
-	public String getType() {
-		return "image";
+	public InfoDisplayContributorFieldType getType() {
+		return InfoDisplayContributorFieldType.IMAGE;
 	}
 
 	@Override

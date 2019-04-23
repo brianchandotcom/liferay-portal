@@ -18,6 +18,7 @@ import com.liferay.adaptive.media.content.transformer.ContentTransformerHandler;
 import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
@@ -49,8 +50,8 @@ public class AMBlogsEntryContentInfoDisplayContributorField
 	}
 
 	@Override
-	public String getType() {
-		return "text";
+	public InfoDisplayContributorFieldType getType() {
+		return InfoDisplayContributorFieldType.TEXT;
 	}
 
 	@Override

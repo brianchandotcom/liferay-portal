@@ -25,7 +25,7 @@ public interface InfoDisplayContributorField<T> {
 
 	public String getLabel(Locale locale);
 
-	public String getType();
+	public InfoDisplayContributorFieldType getType();
 
 	public Object getValue(T model, Locale locale);
 

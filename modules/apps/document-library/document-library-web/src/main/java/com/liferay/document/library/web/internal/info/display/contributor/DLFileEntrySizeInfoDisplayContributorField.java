@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.info.display.contributor;
 
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -46,8 +47,8 @@ public class DLFileEntrySizeInfoDisplayContributorField
 	}
 
 	@Override
-	public String getType() {
-		return "text";
+	public InfoDisplayContributorFieldType getType() {
+		return InfoDisplayContributorFieldType.TEXT;
 	}
 
 	@Override

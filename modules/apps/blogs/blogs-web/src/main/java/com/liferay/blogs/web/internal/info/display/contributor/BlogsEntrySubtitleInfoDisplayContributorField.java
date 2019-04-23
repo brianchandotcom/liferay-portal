@@ -16,6 +16,7 @@ package com.liferay.blogs.web.internal.info.display.contributor;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
@@ -43,8 +44,8 @@ public class BlogsEntrySubtitleInfoDisplayContributorField
 	}
 
 	@Override
-	public String getType() {
-		return "text";
+	public InfoDisplayContributorFieldType getType() {
+		return InfoDisplayContributorFieldType.TEXT;
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +39,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -217,11 +219,14 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 		for (InfoDisplayContributorField infoDisplayContributorField :
 				_getInfoDisplayContributorFields(className)) {
 
+			InfoDisplayContributorFieldType infoDisplayContributorFieldType =
+				infoDisplayContributorField.getType();
+
 			infoDisplayFields.add(
 				new InfoDisplayField(
 					infoDisplayContributorField.getKey(),
 					infoDisplayContributorField.getLabel(locale),
-					infoDisplayContributorField.getType()));
+					infoDisplayContributorFieldType.getValue()));
 		}
 
 		return infoDisplayFields;
@@ -233,10 +238,15 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 			Locale locale)
 		throws SanitizerException {
 
-		String type = infoDisplayContributorField.getType();
+		InfoDisplayContributorFieldType infoDisplayContributorFieldType =
+			infoDisplayContributorField.getType();
 		Object value = infoDisplayContributorField.getValue(model, locale);
 
-		if (!type.equals("url") && (value instanceof String)) {
+		if (!Objects.equals(
+				InfoDisplayContributorFieldType.URL,
+				infoDisplayContributorFieldType) &&
+			(value instanceof String)) {
+
 			return SanitizerUtil.sanitize(
 				assetEntry.getCompanyId(), assetEntry.getGroupId(),
 				assetEntry.getUserId(), AssetEntry.class.getName(),

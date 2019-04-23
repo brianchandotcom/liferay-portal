@@ -17,6 +17,7 @@ package com.liferay.blogs.web.internal.info.display.contributor;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.display.contributor.BaseInfoDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -54,8 +55,8 @@ public class BlogsEntrySmallImageAssetDisplayContributorField
 	}
 
 	@Override
-	public String getType() {
-		return "image";
+	public InfoDisplayContributorFieldType getType() {
+		return InfoDisplayContributorFieldType.IMAGE;
 	}
 
 	@Override

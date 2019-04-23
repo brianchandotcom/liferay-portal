@@ -16,6 +16,7 @@ package com.liferay.asset.display.internal.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 
 import java.util.Locale;
 
@@ -42,8 +43,9 @@ public class AssetInfoDisplayContributorFieldAdapter
 	}
 
 	@Override
-	public String getType() {
-		return _assetDisplayContributorField.getType();
+	public InfoDisplayContributorFieldType getType() {
+		return InfoDisplayContributorFieldType.parse(
+			_assetDisplayContributorField.getType());
 	}
 
 	@Override

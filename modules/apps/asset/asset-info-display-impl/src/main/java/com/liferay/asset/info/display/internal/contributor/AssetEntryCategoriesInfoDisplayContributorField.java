@@ -17,6 +17,7 @@ package com.liferay.asset.info.display.internal.contributor;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -52,8 +53,8 @@ public class AssetEntryCategoriesInfoDisplayContributorField
 	}
 
 	@Override
-	public String getType() {
-		return "text";
+	public InfoDisplayContributorFieldType getType() {
+		return InfoDisplayContributorFieldType.TEXT;
 	}
 
 	@Override

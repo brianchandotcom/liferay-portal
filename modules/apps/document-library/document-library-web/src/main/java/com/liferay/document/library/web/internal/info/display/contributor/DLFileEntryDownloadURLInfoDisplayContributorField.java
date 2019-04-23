@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.info.display.contributor;
 
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
+import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -48,8 +49,8 @@ public class DLFileEntryDownloadURLInfoDisplayContributorField
 	}
 
 	@Override
-	public String getType() {
-		return "url";
+	public InfoDisplayContributorFieldType getType() {
+		return InfoDisplayContributorFieldType.URL;
 	}
 
 	@Override

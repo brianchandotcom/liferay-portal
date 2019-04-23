@@ -124,11 +124,11 @@ public class JournalFeedLocalServiceImpl
 
 		// DDM Structure Link
 
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			groupId, classNameLocalService.getClassNameId(JournalArticle.class),
 			ddmStructureKey, true);
 
-		ddmStructureLinkLocalService.addStructureLink(
+		_ddmStructureLinkLocalService.addStructureLink(
 			classNameLocalService.getClassNameId(JournalFeed.class),
 			feed.getPrimaryKey(), ddmStructure.getStructureId());
 
@@ -223,12 +223,12 @@ public class JournalFeedLocalServiceImpl
 
 		// DDM Structure Link
 
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			feed.getGroupId(),
 			classNameLocalService.getClassNameId(JournalArticle.class),
 			feed.getDDMStructureKey(), true);
 
-		ddmStructureLinkLocalService.deleteStructureLink(
+		_ddmStructureLinkLocalService.deleteStructureLink(
 			classNameLocalService.getClassNameId(JournalFeed.class),
 			feed.getPrimaryKey(), ddmStructure.getStructureId());
 
@@ -378,14 +378,14 @@ public class JournalFeedLocalServiceImpl
 			JournalFeed.class);
 
 		DDMStructureLink ddmStructureLink =
-			ddmStructureLinkLocalService.getUniqueStructureLink(
+			_ddmStructureLinkLocalService.getUniqueStructureLink(
 				classNameId, feed.getPrimaryKey());
 
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			groupId, classNameLocalService.getClassNameId(JournalArticle.class),
 			ddmStructureKey, true);
 
-		ddmStructureLinkLocalService.updateStructureLink(
+		_ddmStructureLinkLocalService.updateStructureLink(
 			ddmStructureLink.getStructureLinkId(), classNameId,
 			feed.getPrimaryKey(), ddmStructure.getStructureId());
 
@@ -484,7 +484,7 @@ public class JournalFeedLocalServiceImpl
 			return;
 		}
 
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			groupId, classNameLocalService.getClassNameId(JournalArticle.class),
 			ddmStructureKey, true);
 
@@ -504,10 +504,10 @@ public class JournalFeedLocalServiceImpl
 	}
 
 	@Reference
-	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
+	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private Portal _portal;

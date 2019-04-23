@@ -18,6 +18,6 @@ import java.nio.file.Paths
 
 Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 
-Path buildGradlePath = projectPath.resolve("build.gradle")
+Path pomPath = projectPath.resolve("pom.xml")
 
-Files.deleteIfExists buildGradlePath
+Files.deleteIfExists pomPath

@@ -106,8 +106,9 @@ public class SelectAssetListDisplayContext {
 				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
 				searchContainer.getEnd(),
 				searchContainer.getOrderByComparator());
-			AssetListEntryServiceUtil.getAssetListEntriesCount(
-				themeDisplay.getScopeGroupId());
+			assetListEntriesCount =
+				AssetListEntryServiceUtil.getAssetListEntriesCount(
+					themeDisplay.getScopeGroupId());
 		}
 
 		searchContainer.setResults(assetListEntries);

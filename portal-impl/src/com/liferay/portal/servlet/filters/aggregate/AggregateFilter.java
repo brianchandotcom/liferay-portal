@@ -503,6 +503,9 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				return content;
 			}
 
+			response.setHeader(
+				HttpHeaders.CACHE_CONTROL, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
+
 			String finalContent = content;
 			String finalResourcePath = resourcePath;
 

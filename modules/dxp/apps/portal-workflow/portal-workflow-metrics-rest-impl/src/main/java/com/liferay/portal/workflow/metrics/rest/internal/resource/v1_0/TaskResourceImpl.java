@@ -88,11 +88,13 @@ public class TaskResourceImpl
 
 		FieldSort fieldSort = _toFieldSort(sorts);
 
+		String latestProcessVersion = _getLatestProcessVersion(processId);
+
 		Map<String, List<String>> instanceIdsMap = _getInstanceIdsMap(
-			fieldSort, pagination, processId);
+			fieldSort, pagination, processId, latestProcessVersion);
 
 		Map<String, Task> tasksMap = _getTasksMap(
-			processId, instanceIdsMap.keySet());
+			processId, instanceIdsMap.keySet(), latestProcessVersion);
 
 		long count = tasksMap.size();
 
@@ -105,37 +107,12 @@ public class TaskResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	private BooleanQuery _createBooleanQuery(long processId) {
+	private BooleanQuery _createBooleanQuery(long processId, String version) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("processId", processId),
-			_queries.term("version", _getProcessVersion(processId)));
-	}
-
-	private BooleanQuery _createBooleanQuery(
-		long processId, Set<String> taskNames) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addFilterQueryClauses(
-			_createFilterBooleanQuery(processId, taskNames));
-
-		return booleanQuery.addMustQueryClauses(
-			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", false), _queries.term("type", "TASK"));
-	}
-
-	private BooleanQuery _createBooleanQuery(Set<String> taskNames) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		TermsQuery termsQuery = _queries.terms("taskName");
-
-		termsQuery.addValues(taskNames.toArray(new String[taskNames.size()]));
-
-		return booleanQuery.addMustQueryClauses(
-			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", false), termsQuery);
+			_queries.term("version", version));
 	}
 
 	private BucketSortPipelineAggregation _createBucketSortPipelineAggregation(
@@ -152,7 +129,7 @@ public class TaskResourceImpl
 	}
 
 	private BooleanQuery _createFilterBooleanQuery(
-		long processId, Set<String> taskNames) {
+		long processId, Set<String> taskNames, String version) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -166,7 +143,51 @@ public class TaskResourceImpl
 		}
 
 		return booleanQuery.addShouldQueryClauses(
-			_createBooleanQuery(processId));
+			_createBooleanQuery(processId, version));
+	}
+
+	private BooleanQuery _createFilterBooleanQuery(
+		long processId, String version) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addShouldQueryClauses(_createMustNotBooleanQuery());
+
+		return booleanQuery.addShouldQueryClauses(
+			_createBooleanQuery(processId, version));
+	}
+
+	private BooleanQuery _createMustNotBooleanQuery() {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		return booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
+	}
+
+	private BooleanQuery _createNodesBooleanQuery(
+		long processId, Set<String> taskNames, String version) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addFilterQueryClauses(
+			_createFilterBooleanQuery(processId, taskNames, version));
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", contextCompany.getCompanyId()),
+			_queries.term("deleted", false), _queries.term("type", "TASK"));
+	}
+
+	private BooleanQuery _createSLATaskResultBooleanQuery(
+		Set<String> taskNames) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		TermsQuery termsQuery = _queries.terms("taskName");
+
+		termsQuery.addValues(taskNames.toArray(new String[taskNames.size()]));
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", contextCompany.getCompanyId()),
+			_queries.term("deleted", false), termsQuery);
 	}
 
 	private Task _createTask(String taskName) {
@@ -176,6 +197,19 @@ public class TaskResourceImpl
 				name = taskName;
 			}
 		};
+	}
+
+	private BooleanQuery _createTokensBooleanQuery(
+		long processId, String version) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addFilterQueryClauses(
+			_createFilterBooleanQuery(processId, version));
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", contextCompany.getCompanyId()),
+			_queries.term("completed", false), _queries.term("deleted", false));
 	}
 
 	private List<String> _getBucketKeys(Bucket bucket, String name) {
@@ -194,7 +228,8 @@ public class TaskResourceImpl
 	}
 
 	private Map<String, List<String>> _getInstanceIdsMap(
-		FieldSort fieldSort, Pagination pagination, long processId) {
+		FieldSort fieldSort, Pagination pagination, long processId,
+		String version) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -223,14 +258,8 @@ public class TaskResourceImpl
 
 		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
 		searchSearchRequest.setQuery(
-			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", contextCompany.getCompanyId()),
-				_queries.term("completed", false),
-				_queries.term("deleted", false),
-				_queries.term("processId", processId)));
+			_createTokensBooleanQuery(processId, version));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -252,7 +281,7 @@ public class TaskResourceImpl
 			Map::putAll);
 	}
 
-	private String _getProcessVersion(long processId) {
+	private String _getLatestProcessVersion(long processId) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames("workflow-metrics-processes");
@@ -261,6 +290,7 @@ public class TaskResourceImpl
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
+				_queries.term("companyId", contextCompany.getCompanyId()),
 				_queries.term("processId", processId)));
 
 		searchSearchRequest.setSelectedFieldNames("version");
@@ -273,12 +303,12 @@ public class TaskResourceImpl
 		return Stream.of(
 			searchHits.getSearchHits()
 		).flatMap(
-			List::stream
+			List::parallelStream
 		).map(
 			SearchHit::getDocument
+		).findFirst(
 		).map(
 			document -> document.getString("version")
-		).findFirst(
 		).orElse(
 			StringPool.BLANK
 		);
@@ -321,7 +351,8 @@ public class TaskResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames("workflow-metrics-sla-task-result");
-		searchSearchRequest.setQuery(_createBooleanQuery(taskNames));
+		searchSearchRequest.setQuery(
+			_createSLATaskResultBooleanQuery(taskNames));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -375,7 +406,7 @@ public class TaskResourceImpl
 	}
 
 	private Map<String, Task> _getTasksMap(
-		long processId, Set<String> taskNames) {
+		long processId, Set<String> taskNames, String version) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -386,7 +417,8 @@ public class TaskResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
-		searchSearchRequest.setQuery(_createBooleanQuery(processId, taskNames));
+		searchSearchRequest.setQuery(
+			_createNodesBooleanQuery(processId, taskNames, version));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor;
 
@@ -56,15 +55,6 @@ public class FileEntrySharingEntryMenuItemContributor
 		SharingEntry sharingEntry, ThemeDisplay themeDisplay) {
 
 		try {
-			if (!_sharingPermission.contains(
-					themeDisplay.getPermissionChecker(),
-					sharingEntry.getClassNameId(), sharingEntry.getClassPK(),
-					sharingEntry.getGroupId(),
-					Collections.singleton(SharingEntryAction.VIEW))) {
-
-				return Collections.emptyList();
-			}
-
 			if (!_isVisible(sharingEntry)) {
 				return Collections.emptyList();
 			}

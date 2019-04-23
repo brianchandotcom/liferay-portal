@@ -1,4 +1,4 @@
-buildscript {
+#if (${projectType} != "workspace")buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "@com.liferay.gradle.plugins.version@"
 	}
@@ -11,6 +11,7 @@ buildscript {
 }
 
 apply plugin: "com.liferay.ext.plugin"
+#end
 #if (${projectType} != "workspace")
 
 repositories {

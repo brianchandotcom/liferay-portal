@@ -27,6 +27,7 @@ import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -191,23 +192,11 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 		for (InfoDisplayContributorField infoDisplayContributorField :
 				_getInfoDisplayContributorFields(AssetEntry.class.getName())) {
 
-			Object infoDisplayFieldValue = infoDisplayContributorField.getValue(
-				assetEntry, locale);
-
-			String type = infoDisplayContributorField.getType();
-
-			if (!type.equals("url") &&
-				(infoDisplayFieldValue instanceof String)) {
-
-				infoDisplayFieldValue = SanitizerUtil.sanitize(
-					assetEntry.getCompanyId(), assetEntry.getGroupId(),
-					assetEntry.getUserId(), AssetEntry.class.getName(),
-					assetEntry.getEntryId(), ContentTypes.TEXT_HTML,
-					Sanitizer.MODE_ALL, (String)infoDisplayFieldValue, null);
-			}
-
 			infoDisplayFieldsValues.putIfAbsent(
-				infoDisplayContributorField.getKey(), infoDisplayFieldValue);
+				infoDisplayContributorField.getKey(),
+				_getInfoDisplayFieldValue(
+					assetEntry, assetEntry, infoDisplayContributorField,
+					locale));
 		}
 
 		return infoDisplayFieldsValues;
@@ -238,6 +227,26 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 		return infoDisplayFields;
 	}
 
+	private <T> Object _getInfoDisplayFieldValue(
+			T model, AssetEntry assetEntry,
+			InfoDisplayContributorField infoDisplayContributorField,
+			Locale locale)
+		throws SanitizerException {
+
+		String type = infoDisplayContributorField.getType();
+		Object value = infoDisplayContributorField.getValue(model, locale);
+
+		if (!type.equals("url") && (value instanceof String)) {
+			return SanitizerUtil.sanitize(
+				assetEntry.getCompanyId(), assetEntry.getGroupId(),
+				assetEntry.getUserId(), AssetEntry.class.getName(),
+				assetEntry.getEntryId(), ContentTypes.TEXT_HTML,
+				Sanitizer.MODE_ALL, (String)value, null);
+		}
+
+		return value;
+	}
+
 	private Map<String, Object> _getParameterMap(
 			AssetEntry assetEntry, T assetObject, Locale locale)
 		throws PortalException {
@@ -252,23 +261,11 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 		for (InfoDisplayContributorField infoDisplayContributorField :
 				infoDisplayContributorFields) {
 
-			Object infoDisplayFieldValue = infoDisplayContributorField.getValue(
-				assetObject, locale);
-
-			String type = infoDisplayContributorField.getType();
-
-			if (!type.equals("url") &&
-				(infoDisplayFieldValue instanceof String)) {
-
-				infoDisplayFieldValue = SanitizerUtil.sanitize(
-					assetEntry.getCompanyId(), assetEntry.getGroupId(),
-					assetEntry.getUserId(), AssetEntry.class.getName(),
-					assetEntry.getEntryId(), ContentTypes.TEXT_HTML,
-					Sanitizer.MODE_ALL, (String)infoDisplayFieldValue, null);
-			}
-
 			parameterMap.putIfAbsent(
-				infoDisplayContributorField.getKey(), infoDisplayFieldValue);
+				infoDisplayContributorField.getKey(),
+				_getInfoDisplayFieldValue(
+					assetObject, assetEntry, infoDisplayContributorField,
+					locale));
 		}
 
 		Map<String, Object> classTypeValues = getClassTypeValues(

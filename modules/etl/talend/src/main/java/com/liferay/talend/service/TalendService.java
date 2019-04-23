@@ -32,30 +32,31 @@ import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 public class TalendService {
 
 	public Schema getTalendSchema(
-		JsonObject properties, JsonArray required,
+		JsonObject propertiesJsonObject, JsonArray requiredJsonArray,
 		RecordBuilderFactory recordBuilderFactory) {
 
 		Schema.Builder schemaBuilder = recordBuilderFactory.newSchemaBuilder(
 			Schema.Type.RECORD);
 
-		String requiredString = required.toString();
+		String requiredJsonArrayRaw = requiredJsonArray.toString();
 
-		for (String propertyName : properties.keySet()) {
+		for (String propertyName : propertiesJsonObject.keySet()) {
 			Schema.Entry.Builder entryBuilder =
 				recordBuilderFactory.newEntryBuilder();
 
 			entryBuilder.withName(propertyName);
 
-			if (requiredString.contains("\"" + propertyName + "\"")) {
+			if (requiredJsonArrayRaw.contains("\"" + propertyName + "\"")) {
 				entryBuilder.withNullable(false);
 			}
 			else {
 				entryBuilder.withNullable(true);
 			}
 
-			JsonObject property = properties.getJsonObject(propertyName);
+			JsonObject propertyJsonObject = propertiesJsonObject.getJsonObject(
+				propertyName);
 
-			String type = property.getString("type");
+			String type = propertyJsonObject.getString("type");
 
 			if (type.equals("array")) {
 				schemaBuilder.withEntry(
@@ -70,7 +71,8 @@ public class TalendService {
 					).build());
 			}
 			else {
-				_addJavaTypeRecordEntry(property, schemaBuilder, entryBuilder);
+				_addJavaTypeRecordEntry(
+					propertyJsonObject, schemaBuilder, entryBuilder);
 			}
 		}
 
@@ -78,14 +80,14 @@ public class TalendService {
 	}
 
 	private Schema.Builder _addJavaTypeRecordEntry(
-		JsonObject property, Schema.Builder schemaBuilder,
+		JsonObject propertyJsonObject, Schema.Builder schemaBuilder,
 		Schema.Entry.Builder entryBuilder) {
 
 		OpenApiType openApiType = OpenApiType.fromDefinition(
-			property.getString("type"));
+			propertyJsonObject.getString("type"));
 
 		OpenApiFormat openApiFormat = OpenApiFormat.fromOpenApiTypeAndFormat(
-			openApiType, property.getString("format", null));
+			openApiType, propertyJsonObject.getString("format", null));
 
 		if (openApiFormat == OpenApiFormat.BOOLEAN) {
 			entryBuilder.withType(Schema.Type.BOOLEAN);

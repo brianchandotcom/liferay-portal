@@ -47,49 +47,54 @@ public class LiferayService {
 
 		String endpoint = inputDataSet.getEndpoint();
 
-		JsonObject openAPISpecification = _getOpenAPISpecification(
+		JsonObject openAPISpecJsonObject = _getOpenAPISpecJsonObject(
 			inputDataSet);
 
 		Map<String, String> pathResponseEntities = _mapKeysToPatternEvaluations(
 			_GET_METHOD_RESPONSE_PATTERN,
-			openAPISpecification.getJsonObject("paths"));
+			openAPISpecJsonObject.getJsonObject("paths"));
 
 		String entityName = pathResponseEntities.get(endpoint);
 
-		JsonObject components = openAPISpecification.getJsonObject(
+		JsonObject componentsJsonObject = openAPISpecJsonObject.getJsonObject(
 			"components");
 
-		JsonObject schemas = components.getJsonObject("schemas");
+		JsonObject schemasJsonObject = componentsJsonObject.getJsonObject(
+			"schemas");
 
-		JsonObject schema = schemas.getJsonObject(entityName);
+		JsonObject schemaJsonObject = schemasJsonObject.getJsonObject(
+			entityName);
 
-		JsonObject properties = schema.getJsonObject("properties");
+		JsonObject propertiesJsonObject = schemaJsonObject.getJsonObject(
+			"properties");
 
-		JsonObject items = properties.getJsonObject("items");
+		JsonObject itemsJsonObject = propertiesJsonObject.getJsonObject(
+			"items");
 
-		items = items.getJsonObject("items");
+		itemsJsonObject = itemsJsonObject.getJsonObject("items");
 
-		String ref = items.getString("$ref");
+		String ref = itemsJsonObject.getString("$ref");
 
 		ref = _stripPath(ref);
 
-		schema = schemas.getJsonObject(ref);
+		schemaJsonObject = schemasJsonObject.getJsonObject(ref);
 
-		properties = schema.getJsonObject("properties");
+		propertiesJsonObject = schemaJsonObject.getJsonObject("properties");
 
 		return _talendService.getTalendSchema(
-			properties, schema.getJsonArray("required"), recordBuilderFactory);
+			propertiesJsonObject, schemaJsonObject.getJsonArray("required"),
+			recordBuilderFactory);
 	}
 
 	public List<String> getPageableEndpoints(InputDataSet inputDataSet) {
-		JsonObject openAPISpecification = _getOpenAPISpecification(
+		JsonObject openAPISpecJsonObject = _getOpenAPISpecJsonObject(
 			inputDataSet);
 
-		if (openAPISpecification == null) {
+		if (openAPISpecJsonObject == null) {
 			return Collections.emptyList();
 		}
 
-		return getPageableEndpoints(openAPISpecification);
+		return getPageableEndpoints(openAPISpecJsonObject);
 	}
 
 	public boolean isValidEndpointURL(String endpointURL) {
@@ -102,13 +107,15 @@ public class LiferayService {
 		return false;
 	}
 
-	protected List<String> getPageableEndpoints(JsonObject responseJsonObject) {
+	protected List<String> getPageableEndpoints(
+		JsonObject openAPISpecJsonObject) {
+
 		Map<String, String> pathResponseEntities = _mapKeysToPatternEvaluations(
 			_GET_METHOD_RESPONSE_PATTERN,
-			responseJsonObject.getJsonObject("paths"));
+			openAPISpecJsonObject.getJsonObject("paths"));
 
 		return _filterPageableEndpoints(
-			pathResponseEntities, responseJsonObject);
+			pathResponseEntities, openAPISpecJsonObject);
 	}
 
 	/**
@@ -169,7 +176,8 @@ public class LiferayService {
 	}
 
 	private List<String> _filterPageableEndpoints(
-		Map<String, String> patternEvaluations, JsonObject openApiJsonObject) {
+		Map<String, String> patternEvaluations,
+		JsonObject openAPISpecJsonObject) {
 
 		List<String> pageableEndpoints = new ArrayList<>();
 
@@ -177,7 +185,7 @@ public class LiferayService {
 			(enpoint, entity) -> {
 				String typeValue = _evaluatePattern(
 					String.format(_SCHEMA_PROPERTY_ITEMS_TYPE_PATTERN, entity),
-					openApiJsonObject);
+					openAPISpecJsonObject);
 
 				if (!"array".equals(typeValue)) {
 					return;
@@ -185,7 +193,7 @@ public class LiferayService {
 
 				typeValue = _evaluatePattern(
 					String.format(_SCHEMA_PROPERTY_PAGE_TYPE_PATTERN, entity),
-					openApiJsonObject);
+					openAPISpecJsonObject);
 
 				if (!"integer".equals(typeValue)) {
 					return;
@@ -199,7 +207,7 @@ public class LiferayService {
 		return pageableEndpoints;
 	}
 
-	private JsonObject _getOpenAPISpecification(InputDataSet inputDataSet) {
+	private JsonObject _getOpenAPISpecJsonObject(InputDataSet inputDataSet) {
 		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
 
 		URL openAPISpecURL = genericDataStore.getOpenAPISpecURL();

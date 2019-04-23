@@ -14,17 +14,29 @@
 
 package com.liferay.headless.form.internal.resource.v1_0;
 
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.headless.form.dto.v1_0.Form;
+import com.liferay.headless.form.dto.v1_0.FormDocument;
+import com.liferay.headless.form.dto.v1_0.MediaForm;
 import com.liferay.headless.form.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.form.internal.dto.v1_0.util.FormDocumentUtil;
 import com.liferay.headless.form.internal.dto.v1_0.util.StructureUtil;
 import com.liferay.headless.form.resource.v1_0.FormResource;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.Optional;
+
+import javax.validation.constraints.NotNull;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,6 +72,35 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 				contextCompany.getCompanyId(), siteId));
 	}
 
+	@Override
+	public FormDocument postFormUploadFile(
+			@NotNull Long formId, MultipartBody multipartBody)
+		throws Exception {
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceService.getFormInstance(formId);
+
+		MediaForm mediaForm = multipartBody.getValueAsInstance(
+			"mediaForm", MediaForm.class);
+
+		long folderId = Optional.ofNullable(
+			mediaForm.getFolderId()
+		).orElse(
+			0L
+		);
+
+		return FormDocumentUtil.toDocument(
+			_dlurlHelper,
+			_dlAppService.addFileEntry(
+				ddmFormInstance.getGroupId(), folderId,
+				binaryFile.getFileName(), binaryFile.getContentType(),
+				mediaForm.getTitle(), mediaForm.getDescription(), null,
+				binaryFile.getInputStream(), binaryFile.getSize(),
+				new ServiceContext()));
+	}
+
 	private Form _toForm(DDMFormInstance ddmFormInstance) throws Exception {
 		if (ddmFormInstance == null) {
 			return null;
@@ -91,6 +132,12 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private Portal _portal;

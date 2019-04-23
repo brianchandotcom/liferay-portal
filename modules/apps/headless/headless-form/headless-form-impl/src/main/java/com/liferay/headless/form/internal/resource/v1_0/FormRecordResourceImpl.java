@@ -14,6 +14,8 @@
 
 package com.liferay.headless.form.internal.resource.v1_0;
 
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
@@ -60,8 +62,8 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 					WorkflowConstants.STATUS_DRAFT);
 
 		return FormRecordUtil.toFormRecord(
-			ddmFormInstanceRecordVersion.getFormInstanceRecord(),
-			contextAcceptLanguage.getPreferredLocale(), _portal,
+			ddmFormInstanceRecordVersion.getFormInstanceRecord(), _dlAppService,
+			_dlurlHelper, contextAcceptLanguage.getPreferredLocale(), _portal,
 			_userLocalService);
 	}
 
@@ -77,8 +79,9 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				formRecord -> FormRecordUtil.toFormRecord(
-					formRecord, contextAcceptLanguage.getPreferredLocale(),
-					_portal, _userLocalService)),
+					formRecord, _dlAppService, _dlurlHelper,
+					contextAcceptLanguage.getPreferredLocale(), _portal,
+					_userLocalService)),
 			pagination,
 			_ddmFormInstanceRecordService.getFormInstanceRecordsCount(formId));
 	}
@@ -87,6 +90,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 	public FormRecord getFormRecord(Long formRecordId) throws Exception {
 		return FormRecordUtil.toFormRecord(
 			_ddmFormInstanceRecordService.getFormInstanceRecord(formRecordId),
+			_dlAppService, _dlurlHelper,
 			contextAcceptLanguage.getPreferredLocale(), _portal,
 			_userLocalService);
 	}
@@ -100,6 +104,12 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 	@Reference
 	private Portal _portal;

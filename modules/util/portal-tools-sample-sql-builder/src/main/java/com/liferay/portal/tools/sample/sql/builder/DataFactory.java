@@ -285,9 +285,9 @@ public class DataFactory {
 
 		models.add(UserPersonalSite.class.getName());
 
-		models.add(getCombineClassName(MBDiscussion.class, BlogsEntry.class));
+		models.add(getCombinedClassName(MBDiscussion.class, BlogsEntry.class));
 
-		models.add(getCombineClassName(MBDiscussion.class, WikiPage.class));
+		models.add(getCombinedClassName(MBDiscussion.class, WikiPage.class));
 
 		for (String model : models) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();
@@ -527,7 +527,7 @@ public class DataFactory {
 
 	public long getBlogsAssetEntryClassNameId() {
 		ClassNameModel classNameModel = _classNameModels.get(
-			getCombineClassName(MBDiscussion.class, BlogsEntry.class));
+			getCombinedClassName(MBDiscussion.class, BlogsEntry.class));
 
 		return classNameModel.getClassNameId();
 	}
@@ -546,7 +546,7 @@ public class DataFactory {
 		return _classNameModels.values();
 	}
 
-	public String getCombineClassName(
+	public String getCombinedClassName(
 		Class<?> firstClazz, Class<?> secondClazz) {
 
 		String className = firstClazz.getName();
@@ -798,7 +798,7 @@ public class DataFactory {
 
 	public long getWikiAssetEntryClassNameId() {
 		ClassNameModel classNameModel = _classNameModels.get(
-			getCombineClassName(MBDiscussion.class, WikiPage.class));
+			getCombinedClassName(MBDiscussion.class, WikiPage.class));
 
 		return classNameModel.getClassNameId();
 	}

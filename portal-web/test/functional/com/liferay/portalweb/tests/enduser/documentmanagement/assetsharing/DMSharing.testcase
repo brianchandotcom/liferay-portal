@@ -686,8 +686,9 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+			userEmailAddress = "userea1@liferay.com",
+			userScreenName = "usersn1"
+		);
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

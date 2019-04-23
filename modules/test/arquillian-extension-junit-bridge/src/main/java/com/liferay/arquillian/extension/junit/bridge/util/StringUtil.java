@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.junit.bridge.string;
+package com.liferay.arquillian.extension.junit.bridge.util;
 
 import java.util.ArrayList;
 import java.util.Collection;

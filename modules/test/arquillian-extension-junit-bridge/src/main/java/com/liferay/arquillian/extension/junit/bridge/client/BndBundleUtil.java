@@ -22,7 +22,7 @@ import aQute.bnd.osgi.Jar;
 
 import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
 import com.liferay.arquillian.extension.junit.bridge.server.TestBundleActivator;
-import com.liferay.arquillian.extension.junit.bridge.string.StringUtil;
+import com.liferay.arquillian.extension.junit.bridge.util.StringUtil;
 
 import java.io.File;
 

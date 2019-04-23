@@ -30,7 +30,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -141,7 +142,7 @@ public class TransactionContainerFilter
 	private static final Log _log = LogFactoryUtil.getLog(
 		TransactionContainerFilter.class);
 
-	private static final List<String> _transactionVerbs = Arrays.asList(
-		"DELETE", "PATCH", "POST", "PUT");
+	private static final Set<String> _transactionVerbs = new HashSet<>(
+		Arrays.asList("DELETE", "PATCH", "POST", "PUT"));
 
 }

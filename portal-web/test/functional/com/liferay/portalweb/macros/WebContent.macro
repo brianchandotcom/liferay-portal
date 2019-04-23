@@ -1179,10 +1179,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		AssertClickNoError(
-			key_rowEntry = "${templateName}",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${templateName}");
+		LexiconCard.clickCard(
+			card = "${templateName}"
+		);
 
 		AssertConfirm.assertConfirmationNoWait(value1 = "Editing the current template deletes all unsaved content.");
 

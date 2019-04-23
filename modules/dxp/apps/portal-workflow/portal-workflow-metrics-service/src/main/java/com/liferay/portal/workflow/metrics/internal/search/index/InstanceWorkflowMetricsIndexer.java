@@ -84,13 +84,10 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		}
 
 		document.addKeyword("userId", kaleoInstance.getUserId());
-
-		if (kaleoDefinition != null) {
-			document.addKeyword(
-				"version",
-				StringBundler.concat(
-					kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
-		}
+		document.addKeyword(
+			"version",
+			StringBundler.concat(
+				kaleoInstance.getKaleoDefinitionVersion(), CharPool.PERIOD, 0));
 
 		return document;
 	}

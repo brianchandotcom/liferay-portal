@@ -14,8 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -27,6 +25,7 @@ import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
@@ -75,7 +74,8 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 						GetterUtil.getLong(document.get("companyId")),
 						GetterUtil.getLong(document.get("processId")),
 						GetterUtil.getLong(document.get("nodeId")),
-						GetterUtil.getString(document.get("name")))) {
+						GetterUtil.getString(document.get("name")),
+						GetterUtil.getString(document.get("version")))) {
 
 					{
 						setType(_tokenWorkflowMetricsIndexer.getIndexType());
@@ -155,18 +155,19 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		document.addKeyword("terminal", terminal);
 		document.addKeyword("type", type);
 
-		if (kaleoDefinition != null) {
-			document.addKeyword(
-				"version",
-				StringBundler.concat(
-					kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			getKaleoDefinitionVersion(kaleoDefinitionVersionId);
+
+		if (kaleoDefinitionVersion != null) {
+			document.addKeyword("version", kaleoDefinitionVersion.getVersion());
 		}
 
 		return document;
 	}
 
 	private Document _createWorkflowMetricsTokenDocument(
-		long companyId, long processId, long taskId, String taskName) {
+		long companyId, long processId, long taskId, String taskName,
+		String version) {
 
 		Document document = new DocumentImpl();
 
@@ -180,6 +181,7 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		document.addKeyword("taskId", taskId);
 		document.addKeyword("taskName", taskName);
 		document.addKeyword("tokenId", 0);
+		document.addKeyword("version", version);
 
 		return document;
 	}

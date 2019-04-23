@@ -14,13 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
@@ -94,11 +93,12 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			"tokenId", kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 		document.addKeyword("userId", kaleoTaskInstanceToken.getUserId());
 
-		if (kaleoDefinition != null) {
-			document.addKeyword(
-				"version",
-				StringBundler.concat(
-					kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			getKaleoDefinitionVersion(
+				kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
+
+		if (kaleoDefinitionVersion != null) {
+			document.addKeyword("version", kaleoDefinitionVersion.getVersion());
 		}
 
 		return document;

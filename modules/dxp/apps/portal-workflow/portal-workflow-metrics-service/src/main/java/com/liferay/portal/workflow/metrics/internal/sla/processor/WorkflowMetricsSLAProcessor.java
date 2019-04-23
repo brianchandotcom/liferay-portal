@@ -386,9 +386,7 @@ public class WorkflowMetricsSLAProcessor {
 
 		Iterator<Document> iterator = documents.iterator();
 
-		while (iterator.hasNext() &&
-			   !workflowMetricsSLAStopwatch.isCompleted()) {
-
+		while (iterator.hasNext() && !workflowMetricsSLAStopwatch.isStopped()) {
 			Document document = iterator.next();
 
 			long taskId = document.getLong("taskId");
@@ -424,13 +422,13 @@ public class WorkflowMetricsSLAProcessor {
 			}
 			else if (stopTimeMarkers.containsKey(taskId)) {
 				if (Objects.equals(stopTimeMarkers.get(taskId), "enter")) {
-					workflowMetricsSLAStopwatch.complete(
+					workflowMetricsSLAStopwatch.stop(
 						taskInterval._startLocalDateTime);
 				}
 				else if (Objects.equals(stopTimeMarkers.get(taskId), "leave") &&
 						 (taskInterval._endLocalDateTime != null)) {
 
-					workflowMetricsSLAStopwatch.complete(
+					workflowMetricsSLAStopwatch.stop(
 						taskInterval._endLocalDateTime);
 				}
 			}

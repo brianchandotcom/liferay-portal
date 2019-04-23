@@ -33,34 +33,12 @@ public class WorkflowMetricsSLAStopwatch {
 		_workfowMetricsSLAStatus = workfowMetricsSLAStatus;
 	}
 
-	public void complete(LocalDateTime endLocalDateTime) {
-		if (isCompleted()) {
-			throw new IllegalStateException("Stopwatch is already completed");
-		}
-
-		if (!isEmpty()) {
-			TaskInterval taskInterval = _taskIntervals.peek();
-
-			taskInterval.setEndLocalDateTime(endLocalDateTime);
-		}
-
-		_workfowMetricsSLAStatus = WorkfowMetricsSLAStatus.COMPLETED;
-	}
-
 	public List<TaskInterval> getTaskIntervals() {
 		return _taskIntervals;
 	}
 
 	public WorkfowMetricsSLAStatus getWorkfowMetricsSLAStatus() {
 		return _workfowMetricsSLAStatus;
-	}
-
-	public boolean isCompleted() {
-		if (_workfowMetricsSLAStatus == WorkfowMetricsSLAStatus.COMPLETED) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isEmpty() {
@@ -75,9 +53,17 @@ public class WorkflowMetricsSLAStopwatch {
 		return false;
 	}
 
+	public boolean isStopped() {
+		if (_workfowMetricsSLAStatus == WorkfowMetricsSLAStatus.STOPPED) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public void pause(LocalDateTime endLocalDateTime) {
-		if (isCompleted()) {
-			throw new IllegalStateException("Stopwatch is completed");
+		if (isStopped()) {
+			throw new IllegalStateException("Stopwatch is stopped");
 		}
 
 		if (!isEmpty()) {
@@ -90,8 +76,8 @@ public class WorkflowMetricsSLAStopwatch {
 	}
 
 	public void run(LocalDateTime startLocalDateTime) {
-		if (isCompleted()) {
-			throw new IllegalStateException("Stopwatch is completed");
+		if (isStopped()) {
+			throw new IllegalStateException("Stopwatch is stopped");
 		}
 
 		if (isRunning() && !isEmpty()) {
@@ -106,6 +92,20 @@ public class WorkflowMetricsSLAStopwatch {
 		_taskIntervals.push(taskInterval);
 
 		_workfowMetricsSLAStatus = WorkfowMetricsSLAStatus.RUNNING;
+	}
+
+	public void stop(LocalDateTime endLocalDateTime) {
+		if (isStopped()) {
+			throw new IllegalStateException("Stopwatch is already stop");
+		}
+
+		if (!isEmpty()) {
+			TaskInterval taskInterval = _taskIntervals.peek();
+
+			taskInterval.setEndLocalDateTime(endLocalDateTime);
+		}
+
+		_workfowMetricsSLAStatus = WorkfowMetricsSLAStatus.STOPPED;
 	}
 
 	private final Stack<TaskInterval> _taskIntervals = new Stack<>();

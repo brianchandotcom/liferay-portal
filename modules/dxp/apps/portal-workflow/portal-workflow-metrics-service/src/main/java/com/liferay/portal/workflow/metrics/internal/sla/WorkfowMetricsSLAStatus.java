@@ -19,6 +19,6 @@ package com.liferay.portal.workflow.metrics.internal.sla;
  */
 public enum WorkfowMetricsSLAStatus {
 
-	COMPLETED, NEW, PAUSED, RUNNING
+	COMPLETED, NEW, PAUSED, RUNNING, STOPPED
 
 }

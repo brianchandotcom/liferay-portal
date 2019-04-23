@@ -70,6 +70,27 @@ public class FormDocument {
 
 	protected String encodingFormat;
 
+	public Long getFileEntryId() {
+		return fileEntryId;
+	}
+
+	public void setFileEntryId(Long fileEntryId) {
+		this.fileEntryId = fileEntryId;
+	}
+
+	public void setFileEntryId(
+		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
+
+		try {
+			fileEntryId = fileEntryIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long fileEntryId;
+
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -91,24 +112,26 @@ public class FormDocument {
 
 	protected String fileExtension;
 
-	public Long getId() {
-		return id;
+	public Long getSiteId() {
+		return siteId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
 	}
 
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			siteId = siteIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long id;
+	protected Long siteId;
 
 	public Long getSizeInBytes() {
 		return sizeInBytes;

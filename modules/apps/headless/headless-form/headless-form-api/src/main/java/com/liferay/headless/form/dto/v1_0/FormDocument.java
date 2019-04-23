@@ -99,6 +99,34 @@ public class FormDocument {
 	protected String encodingFormat;
 
 	@Schema
+	public Long getFileEntryId() {
+		return fileEntryId;
+	}
+
+	public void setFileEntryId(Long fileEntryId) {
+		this.fileEntryId = fileEntryId;
+	}
+
+	@JsonIgnore
+	public void setFileEntryId(
+		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
+
+		try {
+			fileEntryId = fileEntryIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long fileEntryId;
+
+	@Schema
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -127,18 +155,20 @@ public class FormDocument {
 	protected String fileExtension;
 
 	@Schema
-	public Long getId() {
-		return id;
+	public Long getSiteId() {
+		return siteId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			siteId = siteIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -150,7 +180,7 @@ public class FormDocument {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
+	protected Long siteId;
 
 	@Schema
 	public Long getSizeInBytes() {
@@ -263,6 +293,16 @@ public class FormDocument {
 			sb.append("\"");
 		}
 
+		if (fileEntryId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryId\": ");
+
+			sb.append(fileEntryId);
+		}
+
 		if (fileExtension != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -277,14 +317,14 @@ public class FormDocument {
 			sb.append("\"");
 		}
 
-		if (id != null) {
+		if (siteId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"siteId\": ");
 
-			sb.append(id);
+			sb.append(siteId);
 		}
 
 		if (sizeInBytes != null) {

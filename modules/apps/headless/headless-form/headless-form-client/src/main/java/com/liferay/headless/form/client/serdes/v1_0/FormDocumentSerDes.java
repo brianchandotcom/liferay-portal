@@ -81,6 +81,16 @@ public class FormDocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (formDocument.getFileEntryId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryId\": ");
+
+			sb.append(formDocument.getFileEntryId());
+		}
+
 		if (formDocument.getFileExtension() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -95,14 +105,14 @@ public class FormDocumentSerDes {
 			sb.append("\"");
 		}
 
-		if (formDocument.getId() != null) {
+		if (formDocument.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"siteId\": ");
 
-			sb.append(formDocument.getId());
+			sb.append(formDocument.getSiteId());
 		}
 
 		if (formDocument.getSizeInBytes() != null) {
@@ -157,6 +167,14 @@ public class FormDocumentSerDes {
 				String.valueOf(formDocument.getEncodingFormat()));
 		}
 
+		if (formDocument.getFileEntryId() == null) {
+			map.put("fileEntryId", null);
+		}
+		else {
+			map.put(
+				"fileEntryId", String.valueOf(formDocument.getFileEntryId()));
+		}
+
 		if (formDocument.getFileExtension() == null) {
 			map.put("fileExtension", null);
 		}
@@ -166,11 +184,11 @@ public class FormDocumentSerDes {
 				String.valueOf(formDocument.getFileExtension()));
 		}
 
-		if (formDocument.getId() == null) {
-			map.put("id", null);
+		if (formDocument.getSiteId() == null) {
+			map.put("siteId", null);
 		}
 		else {
-			map.put("id", String.valueOf(formDocument.getId()));
+			map.put("siteId", String.valueOf(formDocument.getSiteId()));
 		}
 
 		if (formDocument.getSizeInBytes() == null) {
@@ -226,14 +244,20 @@ public class FormDocumentSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "fileEntryId")) {
+				if (jsonParserFieldValue != null) {
+					formDocument.setFileEntryId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
 				if (jsonParserFieldValue != null) {
 					formDocument.setFileExtension((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
 				if (jsonParserFieldValue != null) {
-					formDocument.setId(
+					formDocument.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

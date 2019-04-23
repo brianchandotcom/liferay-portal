@@ -158,6 +158,10 @@
 
 					<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.EXCLUSIVE) || windowState.equals(WindowState.MAXIMIZED) %>" cssClass="clearable" label="<%= loginLabel %>" name="login" showRequiredLabel="<%= false %>" type="text" value="<%= login %>">
 						<aui:validator name="required" />
+
+						<c:if test="<%= authType.equals(CompanyConstants.AUTH_TYPE_EA) %>">
+							<aui:validator name="email" />
+						</c:if>
 					</aui:input>
 
 					<aui:input name="password" showRequiredLabel="<%= false %>" type="password" value="<%= password %>">

@@ -29,6 +29,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
@@ -45,6 +46,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -95,6 +97,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		_processRunningInstances(
 			createLocalDateTimes, startNodeId, workflowMetricsSLADefinition);
 
+		_processCompletedInstances(
+			createLocalDateTimes.keySet(), startNodeId,
+			workflowMetricsSLADefinition);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -126,6 +131,39 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_queries.term("companyId", companyId),
 			_queries.term("completed", false), _queries.term("deleted", false),
 			_queries.term("processId", processId));
+	}
+
+	private BooleanQuery _createSLAProcessResultBooleanQuery(
+		long companyId, Set<Long> instanceIds, long processId,
+		long slaDefinitionId) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		if (!instanceIds.isEmpty()) {
+			TermsQuery termsQuery = _queries.terms("instanceId");
+
+			Stream<Long> stream = instanceIds.stream();
+
+			termsQuery.addValues(
+				stream.map(
+					String::valueOf
+				).toArray(
+					String[]::new
+				));
+
+			booleanQuery.addMustNotQueryClauses(termsQuery);
+		}
+
+		booleanQuery.addMustNotQueryClauses(
+			_queries.term("slaDefinitionId", "0"),
+			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
+			_queries.term("status", WorkfowMetricsSLAStatus.STOPPED));
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("companyId", companyId),
+			_queries.term("deleted", false),
+			_queries.term("processId", processId),
+			_queries.term("slaDefinitionId", slaDefinitionId));
 	}
 
 	private Map<Long, LocalDateTime> _getCreateLocalDateTimes(
@@ -248,6 +286,53 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		taskNames.forEach(
 			(taskId, taskName) -> _addDocument(
 				taskId, taskName, workflowMetricsSLAProcessResult));
+	}
+
+	private void _processCompletedInstances(
+		Set<Long> instanceIds, long startNodeId,
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(
+			"workflow-metrics-sla-process-result");
+		searchSearchRequest.setQuery(
+			_createSLAProcessResultBooleanQuery(
+				workflowMetricsSLADefinition.getCompanyId(), instanceIds,
+				workflowMetricsSLADefinition.getProcessId(),
+				workflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId()));
+		searchSearchRequest.setSize(10000);
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		Stream.of(
+			searchHits.getSearchHits()
+		).flatMap(
+			List::parallelStream
+		).map(
+			SearchHit::getDocument
+		).map(
+			document -> _workflowMetricsSLAProcessor.process(
+				workflowMetricsSLADefinition.getCompanyId(), null,
+				document.getLong("instanceId"), LocalDateTime.now(),
+				startNodeId, workflowMetricsSLADefinition)
+		).map(
+			optional -> {
+				WorkflowMetricsSLAProcessResult
+					workflowMetricsSLAProcessResult = optional.get();
+
+				workflowMetricsSLAProcessResult.setWorkfowMetricsSLAStatus(
+					WorkfowMetricsSLAStatus.COMPLETED);
+
+				return workflowMetricsSLAProcessResult;
+			}
+		).forEach(
+			this::_indexWorkflowMetricsSLAProcessResult
+		);
 	}
 
 	private void _processRunningInstances(

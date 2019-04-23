@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -349,6 +350,7 @@ public class TaskResourceImpl
 					_populateTaskWithSLAMetrics(
 						slaTermsAggregationResult.getBucket(taskName), task);
 					_setInstanceCount(instanceIds, task);
+					_updateTaskName(task);
 
 					tasks.add(task);
 				});
@@ -359,6 +361,7 @@ public class TaskResourceImpl
 
 				_populateTaskWithSLAMetrics(bucket, task);
 				_setInstanceCount(instanceIdsMap.get(bucket.getKey()), task);
+				_updateTaskName(task);
 
 				tasks.add(task);
 			}
@@ -491,6 +494,14 @@ public class TaskResourceImpl
 			sort.isReverse() ? SortOrder.DESC : SortOrder.ASC);
 
 		return fieldSort;
+	}
+
+	private void _updateTaskName(Task task) {
+		String taskName = task.getName();
+
+		task.setName(
+			LanguageUtil.get(
+				contextAcceptLanguage.getPreferredLocale(), taskName));
 	}
 
 	private static final EntityModel _entityModel = new TaskEntityModel();

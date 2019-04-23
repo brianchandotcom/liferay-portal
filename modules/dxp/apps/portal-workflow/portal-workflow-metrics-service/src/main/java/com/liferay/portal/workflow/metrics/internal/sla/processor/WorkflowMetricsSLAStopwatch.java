@@ -96,7 +96,7 @@ public class WorkflowMetricsSLAStopwatch {
 
 	public void stop(LocalDateTime endLocalDateTime) {
 		if (isStopped()) {
-			throw new IllegalStateException("Stopwatch is already stop");
+			throw new IllegalStateException("Stopwatch is already stopped");
 		}
 
 		if (!isEmpty()) {

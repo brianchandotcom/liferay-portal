@@ -49,7 +49,7 @@ public class SLATaskResultWorkflowMetricsIndexer
 
 	@Override
 	protected String getIndexName() {
-		return "workflow-metrics-sla-task-result";
+		return "workflow-metrics-sla-task-results";
 	}
 
 	@Override

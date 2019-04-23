@@ -176,7 +176,7 @@ public class TaskResourceImpl
 			_queries.term("deleted", false), _queries.term("type", "TASK"));
 	}
 
-	private BooleanQuery _createSLATaskResultBooleanQuery(
+	private BooleanQuery _createSLATaskResultsBooleanQuery(
 		Set<String> taskNames) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
@@ -349,9 +349,9 @@ public class TaskResourceImpl
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
-		searchSearchRequest.setIndexNames("workflow-metrics-sla-task-result");
+		searchSearchRequest.setIndexNames("workflow-metrics-sla-task-results");
 		searchSearchRequest.setQuery(
-			_createSLATaskResultBooleanQuery(taskNames));
+			_createSLATaskResultsBooleanQuery(taskNames));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

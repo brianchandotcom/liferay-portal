@@ -211,8 +211,8 @@ public class ProcessResourceImpl
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.NEW),
-			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
+			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
+			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),

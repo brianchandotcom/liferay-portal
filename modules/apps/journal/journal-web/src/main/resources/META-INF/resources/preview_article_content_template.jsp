@@ -23,7 +23,7 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 <nav class="component-tbar subnav-tbar-light tbar tbar-article">
 	<ul class="tbar-nav">
 		<li class="tbar-item">
-			<aui:select label="" name="ddmTemplateKey" wrapperCssClass="mb-0 ml-4">
+			<aui:select label="" name="ddmTemplateKey" wrapperCssClass="mb-0 ml-4" onChange="previewArticleContentTemplate()">
 				<aui:option label="no-template" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateKey(), StringPool.BLANK) %>" value="<%= StringPool.BLANK %>" />
 
 				<%
@@ -40,7 +40,7 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 		</li>
 		<li class="tbar-item">
 			<div class="journal-article-button-row tbar-section text-right">
-				<aui:button name="applyButton" onClick="previewArticleContentTemplate()" value="apply" />
+				<aui:button name="applyButton" value="apply" />
 			</div>
 		</li>
 	</ul>

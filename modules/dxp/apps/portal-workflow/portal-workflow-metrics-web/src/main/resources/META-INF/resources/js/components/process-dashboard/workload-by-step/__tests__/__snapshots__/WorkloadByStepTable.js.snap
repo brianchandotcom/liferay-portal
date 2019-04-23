@@ -32,7 +32,7 @@ exports[`Should display hyphen when the task has no count 1`] = `
                   className="inline-item"
                 >
                   <svg
-                    className="lexicon-icon lexicon-icon-exclamation-circle text-red"
+                    className="lexicon-icon lexicon-icon-exclamation-circle text-danger"
                     focusable="false"
                     role="presentation"
                   >
@@ -83,7 +83,7 @@ exports[`Should display hyphen when the task has no count 1`] = `
                   className="inline-item"
                 >
                   <svg
-                    className="lexicon-icon lexicon-icon-check-circle text-green"
+                    className="lexicon-icon lexicon-icon-check-circle text-success"
                     focusable="false"
                     role="presentation"
                   >
@@ -208,7 +208,7 @@ exports[`Should render component 1`] = `
                   className="inline-item"
                 >
                   <svg
-                    className="lexicon-icon lexicon-icon-exclamation-circle text-red"
+                    className="lexicon-icon lexicon-icon-exclamation-circle text-danger"
                     focusable="false"
                     role="presentation"
                   >
@@ -259,7 +259,7 @@ exports[`Should render component 1`] = `
                   className="inline-item"
                 >
                   <svg
-                    className="lexicon-icon lexicon-icon-check-circle text-green"
+                    className="lexicon-icon lexicon-icon-check-circle text-success"
                     focusable="false"
                     role="presentation"
                   >

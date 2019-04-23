@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component on container 1`] = `
+<li
+  className="control-menu-nav-item"
+>
+  <a
+    className="control-menu-icon lfr-icon-item"
+    href="/"
+    onClick={[Function]}
+  >
+    <span
+      className="icon-monospaced"
+    >
+      <svg
+        className="lexicon-icon lexicon-icon-angle-left"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+        />
+      </svg>
+    </span>
+  </a>
+</li>
+`;

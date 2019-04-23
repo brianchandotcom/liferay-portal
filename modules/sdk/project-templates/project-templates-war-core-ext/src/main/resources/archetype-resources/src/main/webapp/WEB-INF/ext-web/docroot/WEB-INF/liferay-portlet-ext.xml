@@ -1,5 +1,12 @@
 <?xml version="1.0"?>
-<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_0_0.dtd">
+
+#if (${liferayVersion.startsWith("7.0")})
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.0.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_0_0.dtd">
+#elseif (${liferayVersion.startsWith("7.1")})
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.1.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_1_0.dtd">
+#elseif (${liferayVersion.startsWith("7.2")})
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.1.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_2_0.dtd">
+#end
 
 <liferay-portlet-app>
 </liferay-portlet-app>

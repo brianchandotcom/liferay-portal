@@ -207,7 +207,9 @@ public class ProcessResourceImpl
 		return termsQuery;
 	}
 
-	private BooleanQuery _createSLABooleanQuery(Set<Long> processIds) {
+	private BooleanQuery _createSLAProcessResultsBooleanQuery(
+		Set<Long> processIds) {
+
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
@@ -394,8 +396,9 @@ public class ProcessResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-sla-process-result");
-		searchSearchRequest.setQuery(_createSLABooleanQuery(processIds));
+			"workflow-metrics-sla-process-results");
+		searchSearchRequest.setQuery(
+			_createSLAProcessResultsBooleanQuery(processIds));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

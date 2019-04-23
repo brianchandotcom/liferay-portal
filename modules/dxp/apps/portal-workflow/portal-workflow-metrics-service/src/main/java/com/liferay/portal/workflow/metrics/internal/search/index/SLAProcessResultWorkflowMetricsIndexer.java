@@ -114,7 +114,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 
 	@Override
 	protected String getIndexName() {
-		return "workflow-metrics-sla-process-result";
+		return "workflow-metrics-sla-process-results";
 	}
 
 	@Override

@@ -135,7 +135,7 @@ public class WorkflowMetricsSLAProcessor {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-sla-process-result");
+			"workflow-metrics-sla-process-results");
 		searchSearchRequest.setQuery(
 			new BooleanQueryImpl() {
 				{

@@ -133,7 +133,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_queries.term("processId", processId));
 	}
 
-	private BooleanQuery _createSLAProcessResultBooleanQuery(
+	private BooleanQuery _createSLAProcessResultsBooleanQuery(
 		long companyId, Set<Long> instanceIds, long processId,
 		long slaDefinitionId) {
 
@@ -295,9 +295,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-sla-process-result");
+			"workflow-metrics-sla-process-results");
 		searchSearchRequest.setQuery(
-			_createSLAProcessResultBooleanQuery(
+			_createSLAProcessResultsBooleanQuery(
 				workflowMetricsSLADefinition.getCompanyId(), instanceIds,
 				workflowMetricsSLADefinition.getProcessId(),
 				workflowMetricsSLADefinition.

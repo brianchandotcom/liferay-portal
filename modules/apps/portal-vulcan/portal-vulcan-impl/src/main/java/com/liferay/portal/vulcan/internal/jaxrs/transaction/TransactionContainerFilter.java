@@ -14,26 +14,22 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.transaction;
 
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
-import com.liferay.portal.spring.transaction.TransactionExecutor;
-import com.liferay.portal.spring.transaction.TransactionInvokerImpl;
+import com.liferay.portal.spring.transaction.TransactionHandler;
 import com.liferay.portal.spring.transaction.TransactionStatusAdapter;
 
 import java.io.IOException;
-
-import java.lang.reflect.Field;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -53,14 +49,11 @@ public class TransactionContainerFilter
 		throws IOException {
 
 		if (_transactionVerbs.contains(containerRequestContext.getMethod())) {
-			DefaultTransactionExecutor defaultTransactionExecutor =
-				_getDefaultTransactionExecutor();
-
 			TransactionAttributeAdapter transactionAttributeAdapter =
 				_getTransactionAttributeAdapter();
 
 			TransactionStatusThreadLocal.setTransactionStatusAdapter(
-				defaultTransactionExecutor.start(transactionAttributeAdapter));
+				_transactionHandler.start(transactionAttributeAdapter));
 		}
 	}
 
@@ -71,9 +64,6 @@ public class TransactionContainerFilter
 		throws IOException {
 
 		if (_transactionVerbs.contains(containerRequestContext.getMethod())) {
-			DefaultTransactionExecutor defaultTransactionExecutor =
-				_getDefaultTransactionExecutor();
-
 			TransactionStatusAdapter transactionStatusAdapter =
 				TransactionStatusThreadLocal.getTransactionStatusAdapter();
 
@@ -85,12 +75,12 @@ public class TransactionContainerFilter
 						containerResponseContext.getStatus()).equals(
 							Response.Status.Family.SUCCESSFUL)) {
 
-					defaultTransactionExecutor.commit(
+					_transactionHandler.commit(
 						transactionAttributeAdapter, transactionStatusAdapter);
 				}
 				else {
 					try {
-						defaultTransactionExecutor.rollback(
+						_transactionHandler.rollback(
 							new RuntimeException(), transactionAttributeAdapter,
 							transactionStatusAdapter);
 					}
@@ -102,25 +92,6 @@ public class TransactionContainerFilter
 					}
 				}
 			}
-		}
-	}
-
-	private DefaultTransactionExecutor _getDefaultTransactionExecutor() {
-		try {
-			Field field = TransactionInvokerImpl.class.getDeclaredField(
-				"_transactionExecutor");
-
-			field.setAccessible(true);
-
-			TransactionExecutor transactionExecutor =
-				(TransactionExecutor)field.get(null);
-
-			return new DefaultTransactionExecutor(
-				transactionExecutor.getPlatformTransactionManager());
-		}
-		catch (IllegalAccessException | NoSuchFieldException e) {
-			throw new ServerErrorException(
-				Response.Status.INTERNAL_SERVER_ERROR, e);
 		}
 	}
 
@@ -142,6 +113,8 @@ public class TransactionContainerFilter
 	private static final Log _log = LogFactoryUtil.getLog(
 		TransactionContainerFilter.class);
 
+	private static final TransactionHandler _transactionHandler =
+		(TransactionHandler)PortalBeanLocatorUtil.locate("transactionExecutor");
 	private static final Set<String> _transactionVerbs = new HashSet<>(
 		Arrays.asList("DELETE", "PATCH", "POST", "PUT"));
 

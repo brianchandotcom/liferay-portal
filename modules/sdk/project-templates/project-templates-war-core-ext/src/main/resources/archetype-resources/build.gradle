@@ -12,10 +12,6 @@ buildscript {
 
 apply plugin: "com.liferay.ext.plugin"
 #if (${projectType} != "workspace")
-apply plugin: "war"
-#end
-
-#if (${projectType} != "workspace")
 
 repositories {
 	maven {

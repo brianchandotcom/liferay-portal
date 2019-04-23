@@ -67,9 +67,9 @@ public final class DLValidatorImpl implements DLValidator {
 
 		name = replaceDLCharLastBlacklist(name);
 
-		name = replaceDLWebDAVSubstitutionChar(name);
+		name = replaceDLNameBlacklist(name);
 
-		return replaceDLNameBlacklist(name);
+		return replaceDLWebDAVSubstitutionChar(name);
 	}
 
 	@Override

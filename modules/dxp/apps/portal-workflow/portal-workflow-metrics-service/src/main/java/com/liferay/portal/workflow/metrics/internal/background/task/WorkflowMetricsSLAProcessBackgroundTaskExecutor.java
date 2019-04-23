@@ -208,7 +208,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
 				_queries.term("companyId", companyId),
-				_queries.term("completed", false),
 				_queries.term("deleted", false), _queries.term("initial", true),
 				_queries.term("processId", processId),
 				_queries.term("version", version)));

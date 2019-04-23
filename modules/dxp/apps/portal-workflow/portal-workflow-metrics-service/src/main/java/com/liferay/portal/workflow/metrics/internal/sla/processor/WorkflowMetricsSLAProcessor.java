@@ -373,8 +373,7 @@ public class WorkflowMetricsSLAProcessor {
 		}
 		else if (Objects.equals(
 					workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.NEW) &&
-				 (startTimeMarkers.isEmpty() ||
-				  startTimeMarkers.containsKey(startNodeId))) {
+				 startTimeMarkers.containsKey(startNodeId)) {
 
 			workflowMetricsSLAStopwatch.run(createDateLocalDateTime);
 		}

@@ -17,6 +17,7 @@ class ChangeListsHistory extends PortletBase {
 	created() {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		let init = {
 			credentials: 'include',

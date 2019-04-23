@@ -22,6 +22,7 @@ class Overview extends PortletBase {
 	_fetchProductionCollection() {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		let init = {
 			credentials: 'include',
@@ -68,6 +69,7 @@ class Overview extends PortletBase {
 	_fetchChangeEntries(url, type) {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		let init = {
 			credentials: 'include',
@@ -100,6 +102,7 @@ class Overview extends PortletBase {
 
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		let init = {
 			credentials: 'include',
@@ -130,6 +133,7 @@ class Overview extends PortletBase {
 	_fetchRecentCollections(url, type) {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		let init = {
 			credentials: 'include',
@@ -175,6 +179,7 @@ class Overview extends PortletBase {
 
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		let body = {
 			credentials: 'include',
@@ -402,6 +407,7 @@ class Overview extends PortletBase {
 
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json');
+		headers.append('X-CSRF-Token', Liferay.authToken);
 
 		let init = {
 			credentials: 'include',

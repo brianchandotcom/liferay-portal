@@ -84,7 +84,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		long startNodeId = _getStartNodeId(
 			workflowMetricsSLADefinition.getCompanyId(),
-			workflowMetricsSLADefinition.getProcessId());
+			workflowMetricsSLADefinition.getProcessId(),
+			workflowMetricsSLADefinition.getProcessVersion());
 
 		Map<Long, LocalDateTime> createLocalDateTimes =
 			_getCreateLocalDateTimes(
@@ -180,7 +181,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		);
 	}
 
-	private long _getStartNodeId(long companyId, long processId) {
+	private long _getStartNodeId(
+		long companyId, long processId, String version) {
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
@@ -191,8 +194,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			booleanQuery.addMustQueryClauses(
 				_queries.term("companyId", companyId),
 				_queries.term("completed", false),
-				_queries.term("deleted", false),
-				_queries.term("processId", processId)));
+				_queries.term("deleted", false), _queries.term("initial", true),
+				_queries.term("processId", processId),
+				_queries.term("version", version)));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

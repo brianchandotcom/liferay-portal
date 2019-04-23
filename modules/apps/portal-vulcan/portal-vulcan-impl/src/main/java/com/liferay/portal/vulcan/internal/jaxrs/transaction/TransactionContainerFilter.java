@@ -72,7 +72,7 @@ public class TransactionContainerFilter
 		Response.Status.Family family = Response.Status.Family.familyOf(
 			containerResponseContext.getStatus());
 
-		if (family.equals(Response.Status.Family.SUCCESSFUL)) {
+		if (family == Response.Status.Family.SUCCESSFUL) {
 			_transactionHandler.commit(
 				_transactionAttributeAdapter, transactionStatusAdapter);
 		}

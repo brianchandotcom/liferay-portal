@@ -16,10 +16,10 @@ package com.liferay.data.engine.rest.internal.storage;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
-import com.liferay.data.engine.rest.dto.v1_0.DataRecordValue;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordCollectionUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordValueUtil;
+import com.liferay.data.engine.spi.storage.DataStorage;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
@@ -27,12 +27,14 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.Map;
+
 /**
  * @author Jeyvison Nascimento
  */
-public class DataStorage {
+public class JSONDataStorage implements DataStorage {
 
-	public DataStorage(
+	public JSONDataStorage(
 		DDLRecordSetLocalService ddlRecordSetLocalService,
 		DDMContentLocalService ddmContentLocalService,
 		DDMStructureLocalService ddmStructureLocalService) {
@@ -42,6 +44,7 @@ public class DataStorage {
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
+	@Override
 	public long delete(long dataStorageId) throws Exception {
 		DDMContent ddmContent = _ddmContentLocalService.fetchDDMContent(
 			dataStorageId);
@@ -53,23 +56,29 @@ public class DataStorage {
 		return dataStorageId;
 	}
 
-	public DataRecordValue[] get(long dataDefinitionId, long dataStorageId)
+	@Override
+	public Map<String, Object> get(long dataDefinitionId, long dataStorageId)
 		throws Exception {
 
 		DDMContent ddmContent = _ddmContentLocalService.getContent(
 			dataStorageId);
 
-		return DataRecordValueUtil.toDataRecordValues(
-			DataDefinitionUtil.toDataDefinition(
-				_ddmStructureLocalService.getStructure(dataDefinitionId)),
-			ddmContent.getData());
+		return DataRecordValueUtil.toMap(
+			DataRecordValueUtil.toDataRecordValues(
+				DataDefinitionUtil.toDataDefinition(
+					_ddmStructureLocalService.getStructure(dataDefinitionId)),
+				ddmContent.getData()));
 	}
 
-	public long save(long siteId, DataRecord dataRecord) throws Exception {
+	@Override
+	public long save(
+			long dataRecordCollectionId, Map<String, Object> dataRecordValues,
+			long siteId)
+		throws Exception {
+
 		DataRecordCollection dataRecordCollection =
 			DataRecordCollectionUtil.toDataRecordCollection(
-				_ddlRecordSetLocalService.getRecordSet(
-					dataRecord.getDataRecordCollectionId()));
+				_ddlRecordSetLocalService.getRecordSet(dataRecordCollectionId));
 
 		DDMContent ddmContent = _ddmContentLocalService.addContent(
 			PrincipalThreadLocal.getUserId(), siteId,
@@ -78,7 +87,7 @@ public class DataStorage {
 				DataDefinitionUtil.toDataDefinition(
 					_ddmStructureLocalService.getStructure(
 						dataRecordCollection.getDataDefinitionId())),
-				dataRecord.getDataRecordValues()),
+				dataRecordValues),
 			new ServiceContext() {
 				{
 					setScopeGroupId(siteId);

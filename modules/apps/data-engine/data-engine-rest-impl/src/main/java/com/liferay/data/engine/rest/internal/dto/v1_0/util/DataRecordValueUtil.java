@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -77,13 +79,31 @@ public class DataRecordValueUtil {
 			DataRecordValue.class);
 	}
 
+	public static DataRecordValue[] toDataRecordValues(
+		Map<String, Object> dataRecordValuesMap) {
+
+		List<DataRecordValue> dataRecordValues = new ArrayList<>();
+
+		for (Map.Entry<String, Object> entry : dataRecordValuesMap.entrySet()) {
+			DataRecordValue dataRecordValue = new DataRecordValue() {
+				{
+					key = entry.getKey();
+					value = entry.getValue();
+				}
+			};
+
+			dataRecordValues.add(dataRecordValue);
+		}
+
+		return dataRecordValues.toArray(
+			new DataRecordValue[dataRecordValues.size()]);
+	}
+
 	public static String toJSON(
-			DataDefinition dataDefinition, DataRecordValue[] dataRecordValues)
+			DataDefinition dataDefinition, Map<String, Object> dataRecordValues)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		Map<String, Object> map = toMap(dataRecordValues);
 
 		Map<String, DataDefinitionField> dataDefinitionFields = Stream.of(
 			dataDefinition.getDataDefinitionFields()
@@ -96,7 +116,7 @@ public class DataRecordValueUtil {
 		for (Map.Entry<String, DataDefinitionField> entry :
 				dataDefinitionFields.entrySet()) {
 
-			if (!map.containsKey(entry.getKey())) {
+			if (!dataRecordValues.containsKey(entry.getKey())) {
 				continue;
 			}
 
@@ -106,17 +126,18 @@ public class DataRecordValueUtil {
 				jsonObject.put(
 					entry.getKey(),
 					_toJSONObject(
-						(Map<String, Object>)map.get(
+						(Map<String, Object>)dataRecordValues.get(
 							dataDefinitionField.getName())));
 			}
 			else if (dataDefinitionField.getRepeatable()) {
 				jsonObject.put(
 					entry.getKey(),
 					JSONFactoryUtil.createJSONArray(
-						(Object[])map.get(entry.getKey())));
+						(Object[])dataRecordValues.get(entry.getKey())));
 			}
 			else {
-				jsonObject.put(entry.getKey(), map.get(entry.getKey()));
+				jsonObject.put(
+					entry.getKey(), dataRecordValues.get(entry.getKey()));
 			}
 		}
 

@@ -13,7 +13,7 @@
 		padding: 8px;
 	}
 
-	.btn-monospaced > .icon-monospaced {
+	.btn-monospaced > .icon-monospaced:not(.lexicon-icon) {
 		padding: 0;
 	}
 

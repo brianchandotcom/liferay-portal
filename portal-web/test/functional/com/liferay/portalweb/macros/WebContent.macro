@@ -578,6 +578,12 @@ definition {
 			AlloyEditor.addDescription(description = "${description}");
 		}
 
+		if (isSet(templateName)) {
+			WebContent.selectTemplateCP(
+				structureName = "${structureName}",
+				templateName = "${templateName}");
+		}
+
 		if ("${saveAsDraft}" == "true") {
 			PortletEntry.saveAsDraft();
 

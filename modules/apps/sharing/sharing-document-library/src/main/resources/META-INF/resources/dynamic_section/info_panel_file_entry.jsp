@@ -16,10 +16,6 @@
 
 <%@ include file="/dynamic_section/init.jsp" %>
 
-<%
-JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
-%>
-
 <div class="autofit-row widget-metadata">
 	<div class="autofit-col inline-item-before">
 
@@ -43,13 +39,6 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 			List<User> sharingEntryToUsers = (List<User>)request.getAttribute("info_panel_file_entry.jsp-sharingEntryToUsers");
 
 			for (User sharingEntryToUser : sharingEntryToUsers) {
-				JSONObject collaboratorJSONObject = JSONFactoryUtil.createJSONObject();
-
-				collaboratorJSONObject.put("id", sharingEntryToUser.getUserId());
-				collaboratorJSONObject.put("imageSrc", sharingEntryToUser.getPortraitURL(themeDisplay));
-				collaboratorJSONObject.put("name", sharingEntryToUser.getFullName());
-
-				collaboratorsJSONArray.put(collaboratorJSONObject);
 			%>
 
 				<div class="autofit-col">

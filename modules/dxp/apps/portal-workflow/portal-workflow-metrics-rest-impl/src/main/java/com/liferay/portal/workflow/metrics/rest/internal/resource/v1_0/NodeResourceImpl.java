@@ -58,10 +58,7 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 				_queries.term("companyId", contextCompany.getCompanyId()),
 				_queries.term("deleted", false),
 				_queries.term("processId", processId),
-				_queries.term(
-					"version",
-					_getLatestProcessVersion(
-						contextCompany.getCompanyId(), processId))));
+				_queries.term("version", _getLatestProcessVersion(processId))));
 
 		searchSearchRequest.setSize(10000);
 
@@ -84,7 +81,7 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 			));
 	}
 
-	private String _getLatestProcessVersion(long companyId, long processId) {
+	private String _getLatestProcessVersion(long processId) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames("workflow-metrics-processes");
@@ -93,7 +90,7 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", companyId),
+				_queries.term("companyId", contextCompany.getCompanyId()),
 				_queries.term("processId", processId)));
 
 		searchSearchRequest.setSelectedFieldNames("version");

@@ -168,7 +168,13 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 				return;
 			}
 
-			indexer.reindex(assetRenderer.getAssetObject());
+			Object assetObject = assetRenderer.getAssetObject();
+
+			if (assetObject == null) {
+				return;
+			}
+
+			indexer.reindex(assetObject);
 		}
 		catch (SearchException se) {
 			_log.error("Unable to reindex asset entry", se);

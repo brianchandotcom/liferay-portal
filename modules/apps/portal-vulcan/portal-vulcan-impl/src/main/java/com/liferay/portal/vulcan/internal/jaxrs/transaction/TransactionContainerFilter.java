@@ -49,7 +49,8 @@ public class TransactionContainerFilter
 		throws IOException {
 
 		if (_transactionVerbs.contains(containerRequestContext.getMethod())) {
-			TransactionStatusThreadLocal.setTransactionStatusAdapter(
+			containerRequestContext.setProperty(
+				_TRANSACTION_STATUS_ADAPTER,
 				_transactionHandler.start(_transactionAttributeAdapter));
 		}
 	}
@@ -60,35 +61,38 @@ public class TransactionContainerFilter
 			ContainerResponseContext containerResponseContext)
 		throws IOException {
 
-		if (_transactionVerbs.contains(containerRequestContext.getMethod())) {
-			TransactionStatusAdapter transactionStatusAdapter =
-				TransactionStatusThreadLocal.getTransactionStatusAdapter();
+		TransactionStatusAdapter transactionStatusAdapter =
+			(TransactionStatusAdapter)containerRequestContext.getProperty(
+				_TRANSACTION_STATUS_ADAPTER);
 
-			if (transactionStatusAdapter != null) {
-				if (Response.Status.Family.familyOf(
-						containerResponseContext.getStatus()).equals(
-							Response.Status.Family.SUCCESSFUL)) {
+		if (transactionStatusAdapter == null) {
+			return;
+		}
 
-					_transactionHandler.commit(
-						_transactionAttributeAdapter, transactionStatusAdapter);
-				}
-				else {
-					try {
-						_transactionHandler.rollback(
-							new RuntimeException(),
-							_transactionAttributeAdapter,
-							transactionStatusAdapter);
-					}
-					catch (Throwable throwable) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Could not rollback the transation", throwable);
-						}
-					}
+		Response.Status.Family family = Response.Status.Family.familyOf(
+			containerResponseContext.getStatus());
+
+		if (family.equals(Response.Status.Family.SUCCESSFUL)) {
+			_transactionHandler.commit(
+				_transactionAttributeAdapter, transactionStatusAdapter);
+		}
+		else {
+			try {
+				_transactionHandler.rollback(
+					new RuntimeException(), _transactionAttributeAdapter,
+					transactionStatusAdapter);
+			}
+			catch (Throwable throwable) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Could not rollback the transation", throwable);
 				}
 			}
 		}
 	}
+
+	private static final String _TRANSACTION_STATUS_ADAPTER =
+		TransactionContainerFilter.class.getName() +
+			".TRANSACTION_STATUS_ADAPTER";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TransactionContainerFilter.class);

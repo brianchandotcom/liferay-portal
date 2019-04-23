@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.UserServiceUtil;
  * @author José Manuel Navarro
  * @author Drew Brokke
  */
-public class UserServiceTestUtil {
+public class BaseUserServiceTestCase {
 
 	protected static void unsetGroupUsers(
 			long groupId, User subjectUser, User objectUser)

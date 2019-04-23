@@ -29,7 +29,6 @@ import com.liferay.journal.service.persistence.JournalArticleFinder;
 import com.liferay.journal.service.persistence.JournalArticleLocalizationPersistence;
 import com.liferay.journal.service.persistence.JournalArticlePersistence;
 import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
-import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
 import com.liferay.journal.service.persistence.JournalFolderFinder;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
 import com.liferay.portal.aop.AopService;
@@ -717,9 +716,6 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	@Reference
 	protected JournalArticleResourcePersistence
 		journalArticleResourcePersistence;
-
-	@Reference
-	protected JournalContentSearchPersistence journalContentSearchPersistence;
 
 	@Reference
 	protected JournalFolderPersistence journalFolderPersistence;

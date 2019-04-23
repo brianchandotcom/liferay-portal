@@ -25,4 +25,5 @@
 
 <liferay-ui:input-permissions
 	modelName="<%= JournalArticle.class.getName() %>"
+	reverse="<%= true %>"
 />

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
 
-<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.document.library.opener">
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" package-path="com.liferay.document.library.opener">
 	<namespace>DLOpener</namespace>
 	<entity local-service="true" name="DLOpenerFileEntryReference" remote-service="false" trash-enabled="false" uuid="false">
 

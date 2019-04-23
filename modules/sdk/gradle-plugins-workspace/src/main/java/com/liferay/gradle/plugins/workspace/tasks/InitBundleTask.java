@@ -24,7 +24,10 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.file.Path;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.gradle.api.file.FileCollection;
@@ -129,7 +132,32 @@ public class InitBundleTask extends JavaExec {
 
 		if (!providedModules.isEmpty()) {
 			args.add("--provided-modules");
-			args.add(providedModules.getAsPath());
+
+			StringBuilder stringBuilder = new StringBuilder();
+
+			Iterator<File> iterator = providedModules.iterator();
+
+			while (iterator.hasNext()) {
+				File file = iterator.next();
+
+				Path path = file.toPath();
+
+				path = path.toAbsolutePath();
+
+				path = path.normalize();
+
+				String pathString = path.toString();
+
+				stringBuilder.append(pathString);
+
+				if (iterator.hasNext()) {
+					stringBuilder.append(',');
+				}
+			}
+
+			String fileString = stringBuilder.toString();
+
+			args.add(fileString);
 		}
 
 		args.add("--strip-components");

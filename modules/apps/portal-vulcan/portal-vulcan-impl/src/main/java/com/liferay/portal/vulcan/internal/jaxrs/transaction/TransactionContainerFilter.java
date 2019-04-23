@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.transaction;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -79,8 +80,11 @@ public class TransactionContainerFilter
 		else {
 			try {
 				_transactionHandler.rollback(
-					new RuntimeException(), _transactionAttributeAdapter,
-					transactionStatusAdapter);
+					new Exception(
+						StringBundler.concat(
+							"Rollback due to ", family, ": ",
+							containerResponseContext.getStatus())),
+					_transactionAttributeAdapter, transactionStatusAdapter);
 			}
 			catch (Throwable throwable) {
 				if (_log.isDebugEnabled()) {

@@ -32,6 +32,7 @@ if (!uniqueNamespace.endsWith(StringPool.UNDERLINE)) {
 
 String formName = namespace + request.getAttribute("liferay-ui:input-permissions:formName");
 String modelName = (String)request.getAttribute("liferay-ui:input-permissions:modelName");
+boolean reverse = GetterUtil.getBoolean(request.getAttribute("liferay-ui:input-permissions:reverse"));
 %>
 
 <c:choose>
@@ -128,7 +129,14 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 			</p>
 		</c:if>
 
-		<%@ include file="/html/taglib/ui/input_permissions/horizontal.jspf" %>
+		<c:choose>
+			<c:when test="<%= reverse %>">
+				<%@ include file="/html/taglib/ui/input_permissions/vertical.jspf" %>
+			</c:when>
+			<c:otherwise>
+				<%@ include file="/html/taglib/ui/input_permissions/horizontal.jspf" %>
+			</c:otherwise>
+		</c:choose>
 
 		<script>
 			function <%= uniqueNamespace %>inputPermissionsHideOptions() {

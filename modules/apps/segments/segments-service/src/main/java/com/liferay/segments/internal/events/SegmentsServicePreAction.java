@@ -97,17 +97,16 @@ public class SegmentsServicePreAction extends Action {
 		if (_segmentsServiceConfiguration.segmentationEnabled() &&
 			!layout.isTypeControlPanel()) {
 
-			segmentsEntryIds = ArrayUtil.append(
-				_getSegmentsEntryIds(
-					request, themeDisplay.getScopeGroupId(),
-					themeDisplay.getUserId()),
-				SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
+			segmentsEntryIds = _getSegmentsEntryIds(
+				request, themeDisplay.getScopeGroupId(),
+				themeDisplay.getUserId());
 		}
 
+		segmentsEntryIds = ArrayUtil.append(
+			segmentsEntryIds, SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT);
+
 		request.setAttribute(
-			SegmentsWebKeys.SEGMENTS_ENTRY_IDS,
-			ArrayUtil.append(
-				segmentsEntryIds, SegmentsConstants.SEGMENTS_ENTRY_ID_DEFAULT));
+			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
 
 		long[] segmentsExperienceIds = _getSegmentsExperienceIds(
 			layout.getGroupId(), segmentsEntryIds,

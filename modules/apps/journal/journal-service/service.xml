@@ -213,7 +213,6 @@
 
 		<reference entity="JournalArticleLocalization" package-path="com.liferay.journal" />
 		<reference entity="JournalArticleResource" package-path="com.liferay.journal" />
-		<reference entity="JournalContentSearch" package-path="com.liferay.journal" />
 		<reference entity="JournalFolder" package-path="com.liferay.journal" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Company" package-path="com.liferay.portal" />

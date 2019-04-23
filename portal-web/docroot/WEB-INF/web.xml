@@ -831,6 +831,18 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/ta/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/ta-IN/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/ta_IN/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
 		<url-pattern>/th/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
@@ -1202,6 +1214,9 @@
 			<url-pattern>/sv/c/portal/protected</url-pattern>
 			<url-pattern>/sv-SE/c/portal/protected</url-pattern>
 			<url-pattern>/sv_SE/c/portal/protected</url-pattern>
+			<url-pattern>/ta/c/portal/protected</url-pattern>
+			<url-pattern>/ta-IN/c/portal/protected</url-pattern>
+			<url-pattern>/ta_IN/c/portal/protected</url-pattern>
 			<url-pattern>/th/c/portal/protected</url-pattern>
 			<url-pattern>/th-TH/c/portal/protected</url-pattern>
 			<url-pattern>/th_TH/c/portal/protected</url-pattern>

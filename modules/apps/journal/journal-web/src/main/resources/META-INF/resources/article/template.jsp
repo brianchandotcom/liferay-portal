@@ -87,11 +87,11 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 					long ddmTemplateId = 0;
 
 					if (ddmTemplate != null) {
-					    if (ddmTemplate.getTemplateId() == 0) {
+						if (ddmTemplate.getTemplateId() == 0) {
 							ddmTemplateId = -1;
 						}
 						else {
-					        ddmTemplateId = ddmTemplate.getTemplateId();
+							ddmTemplateId = ddmTemplate.getTemplateId();
 						}
 					}
 					%>
@@ -104,13 +104,18 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 					uri = Liferay.Util.addParams('<portlet:namespace />ddmTemplateId=' + ddmTemplateId, uri)
 
-					Liferay.Util.openWindow(
+					Liferay.Util.selectEntity(
 						{
 							dialog: {
 								destroyOnHide: true
 							},
+							eventName: '<portlet:namespace />preview',
+							id: '<portlet:namespace />preview',
 							title: '<liferay-ui:message key="preview" />',
 							uri: uri
+						},
+						function(event) {
+							changeDDMTemplate(event.ddmtemplateid);
 						}
 					);
 				}

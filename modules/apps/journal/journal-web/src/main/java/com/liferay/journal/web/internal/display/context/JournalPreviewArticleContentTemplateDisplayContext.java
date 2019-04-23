@@ -131,6 +131,18 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 			ddmStructure.getStructureId(), true);
 	}
 
+	public String getEventName() {
+		if (_eventName != null) {
+			return _eventName;
+		}
+
+		_eventName = ParamUtil.getString(
+			_renderRequest, "eventName",
+			_renderResponse.getNamespace() + "preview");
+
+		return _eventName;
+	}
+
 	public long getGroupId() {
 		if (_groupId != null) {
 			return _groupId;
@@ -151,6 +163,7 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 		portletURL.setParameter("version", String.valueOf(getVersion()));
 		portletURL.setParameter(
 			"ddmTemplateId", String.valueOf(getDDMTemplateId()));
+		portletURL.setParameter("eventName", getEventName());
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL;
@@ -164,6 +177,7 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
 		portletURL.setParameter("articleId", getArticleId());
 		portletURL.setParameter("version", String.valueOf(getVersion()));
+		portletURL.setParameter("eventName", getEventName());
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL;
@@ -183,6 +197,7 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 	private String _articleId;
 	private DDMTemplate _ddmTemplate;
 	private Long _ddmTemplateId;
+	private String _eventName;
 	private Long _groupId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

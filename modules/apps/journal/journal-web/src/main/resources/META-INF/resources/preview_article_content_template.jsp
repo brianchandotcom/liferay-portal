@@ -20,31 +20,40 @@
 JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentTemplateDisplayContext = new JournalPreviewArticleContentTemplateDisplayContext(renderRequest, renderResponse);
 %>
 
-<nav class="component-tbar subnav-tbar-light tbar tbar-article">
-	<ul class="tbar-nav">
-		<li class="tbar-item">
-			<aui:select label="" name="ddmTemplateId" onChange="previewArticleContentTemplate()" wrapperCssClass="form-group-sm mb-0 ml-4">
-				<aui:option label="no-template" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), -1) %>" value="<%= -1 %>" />
+<aui:form name="previewFm">
+	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
+		<ul class="tbar-nav">
+			<li class="tbar-item">
+				<aui:select label="" name="ddmTemplateId" onChange="previewArticleContentTemplate()" wrapperCssClass="form-group-sm mb-0 ml-4">
+					<aui:option label="no-template" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), -1) %>" value="<%= -1 %>" />
 
-				<%
-				for (DDMTemplate ddTemplate : journalPreviewArticleContentTemplateDisplayContext.getDDMTemplates()) {
-				%>
+					<%
+					for (DDMTemplate ddTemplate : journalPreviewArticleContentTemplateDisplayContext.getDDMTemplates()) {
+					%>
 
-					<aui:option label="<%= HtmlUtil.escape(ddTemplate.getName(locale)) %>" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), ddTemplate.getTemplateId()) %>" value="<%= ddTemplate.getTemplateId() %>" />
+						<aui:option label="<%= HtmlUtil.escape(ddTemplate.getName(locale)) %>" selected="<%= Objects.equals(journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId(), ddTemplate.getTemplateId()) %>" value="<%= ddTemplate.getTemplateId() %>" />
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:select>
-		</li>
-		<li class="tbar-item">
-			<div class="journal-article-button-row tbar-section text-right">
-				<aui:button cssClass="btn-sm" name="applyButton" value="apply" />
-			</div>
-		</li>
-	</ul>
-</nav>
+				</aui:select>
+			</li>
+			<li class="tbar-item">
+				<div class="journal-article-button-row tbar-section text-right">
+
+					<%
+					Map<String, Object> data = new HashMap<>();
+
+					data.put("ddmtemplateid", journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId());
+					%>
+
+					<aui:button cssClass="btn-sm selector-button" data="<%= data %>" value="apply" />
+				</div>
+			</li>
+		</ul>
+	</nav>
+</aui:form>
 
 <%
 JournalArticleDisplay articleDisplay = journalPreviewArticleContentTemplateDisplayContext.getArticleDisplay();
@@ -73,4 +82,6 @@ JournalArticleDisplay articleDisplay = journalPreviewArticleContentTemplateDispl
 
 		location.href = Liferay.Util.addParams('<portlet:namespace />ddmTemplateId=' + ddmTemplateId.value, '<%= journalPreviewArticleContentTemplateDisplayContext.getPortletURL() %>');
 	}
+
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />previewFm', '<%= HtmlUtil.escapeJS(journalPreviewArticleContentTemplateDisplayContext.getEventName()) %>');
 </script>

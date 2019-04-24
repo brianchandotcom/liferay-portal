@@ -760,92 +760,6 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateWarCoreExt() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-core-ext", "test-war-core-ext");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", "buildscript {", "repositories {",
-			"group: \"com.liferay\", name: \"com.liferay.gradle.plugins\"",
-			"apply plugin: \"com.liferay.ext.plugin\"",
-			"apply plugin: \"eclipse\"");
-
-		_testContains(
-			gradleProjectDir, "src/extImpl/resources/META-INF/ext-spring.xml");
-	}
-
-	@Test
-	public void testBuildTemplateWarCoreExtInWorkspace() throws Exception {
-		File workspaceDir = _buildWorkspace();
-
-		File modulesDir = new File(workspaceDir, "modules");
-
-		File projectDir =
-			_buildTemplateWithGradle(
-				modulesDir, "war-core-ext", "test-war-core-ext");
-
-		_testNotContains(
-			projectDir, "build.gradle", true, "^repositories \\{.*");
-
-		_testNotContains(
-			projectDir, "build.gradle", "buildscript", "com.liferay.ext.plugin");
-	}
-
-	@Test
-	public void testBuildTemplateModuleExt() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"modules-ext", "loginExt", "--original-module-name",
-			"com.liferay.login.web", "--original-module-version", "1.0.0");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", "buildscript {", "repositories {",
-			"originalModule group: \"com.liferay\", name: " +
-				"\"com.liferay.login.web\", version: \"1.0.0\"",
-			"apply plugin: \"com.liferay.osgi.ext.plugin\"");
-
-		if (_isBuildProjects()) {
-			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
-
-			File jarFile = _testExists(
-				gradleProjectDir,
-				"build/libs/com.liferay.login.web-1.0.0.ext.jar");
-
-			Domain domain = Domain.domain(jarFile);
-
-			Map.Entry<String, Attrs> bundleSymbolicName =
-				domain.getBundleSymbolicName();
-
-			Assert.assertEquals(
-				bundleSymbolicName.toString(), "com.liferay.login.web",
-				bundleSymbolicName.getKey());
-		}
-	}
-
-	@Test
-	public void testBuildTemplateModuleExtInWorkspace() throws Exception {
-		File workspaceDir = _buildWorkspace();
-
-		File workspaceProjectDir = _buildTemplateWithGradle(
-			new File(workspaceDir, "ext"), "modules-ext", "loginExt",
-			"--original-module-name", "com.liferay.login.web",
-			"--original-module-version", "1.0.0");
-
-		_testContains(
-			workspaceProjectDir, "build.gradle",
-			"originalModule group: \"com.liferay\", name: " +
-				"\"com.liferay.login.web\", version: \"1.0.0\"");
-
-		_testNotContains(
-			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
-
-		_executeGradle(workspaceDir, ":ext:loginExt:build");
-
-		_testExists(
-			workspaceProjectDir,
-			"build/libs/com.liferay.login.web-1.0.0.ext.jar");
-	}
-
-	@Test
 	public void testBuildTemplateFMPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"freemarker-portlet", "freemarker-dependency-management",
@@ -1261,6 +1175,60 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateLiferayVersionValid712() throws Exception {
 		_buildTemplateWithGradle(
 			"mvc-portlet", "test", "--liferayVersion", "7.1.2");
+	}
+
+	@Test
+	public void testBuildTemplateModuleExt() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"modules-ext", "loginExt", "--original-module-name",
+			"com.liferay.login.web", "--original-module-version", "1.0.0");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", "buildscript {", "repositories {",
+			"originalModule group: \"com.liferay\", name: " +
+				"\"com.liferay.login.web\", version: \"1.0.0\"",
+			"apply plugin: \"com.liferay.osgi.ext.plugin\"");
+
+		if (_isBuildProjects()) {
+			_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+			File jarFile = _testExists(
+				gradleProjectDir,
+				"build/libs/com.liferay.login.web-1.0.0.ext.jar");
+
+			Domain domain = Domain.domain(jarFile);
+
+			Map.Entry<String, Attrs> bundleSymbolicName =
+				domain.getBundleSymbolicName();
+
+			Assert.assertEquals(
+				bundleSymbolicName.toString(), "com.liferay.login.web",
+				bundleSymbolicName.getKey());
+		}
+	}
+
+	@Test
+	public void testBuildTemplateModuleExtInWorkspace() throws Exception {
+		File workspaceDir = _buildWorkspace();
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			new File(workspaceDir, "ext"), "modules-ext", "loginExt",
+			"--original-module-name", "com.liferay.login.web",
+			"--original-module-version", "1.0.0");
+
+		_testContains(
+			workspaceProjectDir, "build.gradle",
+			"originalModule group: \"com.liferay\", name: " +
+				"\"com.liferay.login.web\", version: \"1.0.0\"");
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_executeGradle(workspaceDir, ":ext:loginExt:build");
+
+		_testExists(
+			workspaceProjectDir,
+			"build/libs/com.liferay.login.web-1.0.0.ext.jar");
 	}
 
 	@Test
@@ -3195,6 +3163,38 @@ public class ProjectTemplatesTest {
 
 			_testWarsDiff(gradleWarFile, workspaceWarFile);
 		}
+	}
+
+	@Test
+	public void testBuildTemplateWarCoreExt() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"war-core-ext", "test-war-core-ext");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", "buildscript {", "repositories {",
+			"group: \"com.liferay\", name: \"com.liferay.gradle.plugins\"",
+			"apply plugin: \"com.liferay.ext.plugin\"",
+			"apply plugin: \"eclipse\"");
+
+		_testContains(
+			gradleProjectDir, "src/extImpl/resources/META-INF/ext-spring.xml");
+	}
+
+	@Test
+	public void testBuildTemplateWarCoreExtInWorkspace() throws Exception {
+		File workspaceDir = _buildWorkspace();
+
+		File modulesDir = new File(workspaceDir, "modules");
+
+		File projectDir = _buildTemplateWithGradle(
+			modulesDir, "war-core-ext", "test-war-core-ext");
+
+		_testNotContains(
+			projectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_testNotContains(
+			projectDir, "build.gradle", "buildscript",
+			"com.liferay.ext.plugin");
 	}
 
 	@Test

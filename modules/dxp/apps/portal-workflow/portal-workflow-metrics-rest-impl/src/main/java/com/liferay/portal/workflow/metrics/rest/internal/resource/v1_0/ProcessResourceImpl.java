@@ -110,6 +110,8 @@ public class ProcessResourceImpl
 				_populateProcessWithSLAMetrics(bucket, process);
 			}
 
+			_setUntrackedInstanceCount(process);
+
 			return process;
 		}
 
@@ -484,6 +486,12 @@ public class ProcessResourceImpl
 	}
 
 	private void _setUntrackedInstanceCount(Process process) {
+		if ((process.getOnTimeInstanceCount() == null) ||
+			(process.getOverdueInstanceCount() == null)) {
+
+			return;
+		}
+
 		process.setUntrackedInstanceCount(
 			GetterUtil.getLong(process.getInstanceCount()) -
 				GetterUtil.getLong(process.getOnTimeInstanceCount()) -

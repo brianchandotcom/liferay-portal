@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -45,7 +43,7 @@ import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
-import com.liferay.portal.odata.normalizer.Normalizer;
+import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
 import com.liferay.segments.internal.odata.entity.UserEntityModel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
@@ -143,13 +141,6 @@ public class UserExpandoColumnModelListener
 		onAfterCreate(expandoColumn);
 	}
 
-	private String _encodeName(ExpandoColumn expandoColumn) {
-		return StringBundler.concat(
-			StringPool.UNDERLINE, expandoColumn.getColumnId(),
-			StringPool.UNDERLINE,
-			Normalizer.normalizeIdentifier(expandoColumn.getName()));
-	}
-
 	private DynamicQuery _getTableDynamicQuery(long classNameId, String name) {
 		DynamicQuery dynamicQuery = _expandoTableLocalService.dynamicQuery();
 
@@ -180,7 +171,9 @@ public class UserExpandoColumnModelListener
 			return Optional.empty();
 		}
 
-		String encodedName = _encodeName(expandoColumn);
+		String encodedName =
+			_entityModelFieldMapper.getExpandoColumnEntityFieldName(
+				expandoColumn);
 
 		String encodedIndexedFieldName =
 			ExpandoBridgeIndexerUtil.encodeFieldName(
@@ -310,6 +303,9 @@ public class UserExpandoColumnModelListener
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private EntityModelFieldMapper _entityModelFieldMapper;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

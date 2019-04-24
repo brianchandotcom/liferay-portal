@@ -17,6 +17,7 @@ package com.liferay.segments.internal.odata.entity;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.normalizer.Normalizer;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizerRegistry;
@@ -50,6 +52,54 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = EntityModelFieldMapper.class)
 public class EntityModelFieldMapper {
+
+	public Map<String, EntityField> getCustomFieldEntityFields(
+		EntityModel entityModel) {
+
+		Map<String, EntityField> entityFieldsMap =
+			entityModel.getEntityFieldsMap();
+
+		ComplexEntityField customFieldEntityField =
+			(ComplexEntityField)entityFieldsMap.get("customField");
+
+		if (customFieldEntityField == null) {
+			return Collections.emptyMap();
+		}
+
+		return customFieldEntityField.getEntityFieldsMap();
+	}
+
+	public ExpandoColumn getExpandoColumn(String entityFieldName) {
+		long expandoColumnId = getExpandoColumnId(entityFieldName);
+
+		try {
+			return _expandoColumnLocalService.getColumn(expandoColumnId);
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to find Expando Column with id " + expandoColumnId, pe);
+
+			return null;
+		}
+	}
+
+	public String getExpandoColumnEntityFieldName(ExpandoColumn expandoColumn) {
+		return StringBundler.concat(
+			StringPool.UNDERLINE, expandoColumn.getColumnId(),
+			StringPool.UNDERLINE,
+			Normalizer.normalizeIdentifier(expandoColumn.getName()));
+	}
+
+	public long getExpandoColumnId(String entityFieldName) {
+		String[] split = StringUtil.split(
+			entityFieldName, StringPool.UNDERLINE);
+
+		if (split.length < 2) {
+			return 0;
+		}
+
+		return Long.valueOf(split[1]);
+	}
 
 	public List<Field> getFields(
 		EntityModel entityModel, PortletRequest portletRequest) {
@@ -141,26 +191,6 @@ public class EntityModelFieldMapper {
 		return "string";
 	}
 
-	private ExpandoColumn _decodeName(String entityFieldName) {
-		String[] split = StringUtil.split(
-			entityFieldName, StringPool.UNDERLINE);
-
-		if (split.length < 2) {
-			return null;
-		}
-
-		long columnId = Long.valueOf(split[1]);
-
-		try {
-			return _expandoColumnLocalService.getColumn(columnId);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to find Expando Column with id " + columnId, pe);
-
-			return null;
-		}
-	}
-
 	private List<Field> _getComplexFields(
 		String name, Map<String, EntityField> entityFieldsMap,
 		ResourceBundle resourceBundle) {
@@ -173,7 +203,7 @@ public class EntityModelFieldMapper {
 
 		entityFieldsMap.forEach(
 			(entityFieldName, entityField) -> {
-				ExpandoColumn expandoColumn = _decodeName(entityFieldName);
+				ExpandoColumn expandoColumn = getExpandoColumn(entityFieldName);
 
 				if (expandoColumn == null) {
 					return;

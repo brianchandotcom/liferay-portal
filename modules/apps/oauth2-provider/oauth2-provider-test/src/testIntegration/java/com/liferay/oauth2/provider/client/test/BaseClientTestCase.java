@@ -29,8 +29,6 @@ import com.liferay.portal.util.HttpImpl;
 import java.lang.reflect.Field;
 
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -56,7 +54,6 @@ import org.apache.cxf.jaxrs.provider.json.JSONProvider;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.After;
@@ -444,7 +441,7 @@ public abstract class BaseClientTestCase {
 	protected WebTarget getJsonWebTarget(String... paths) {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_getPortalURL());
+		WebTarget webTarget = client.target("http://localhost:8080");
 
 		webTarget = webTarget.path("api");
 		webTarget = webTarget.path("jsonws");
@@ -459,7 +456,7 @@ public abstract class BaseClientTestCase {
 	protected WebTarget getLoginWebTarget() {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_getPortalURL());
+		WebTarget webTarget = client.target("http://localhost:8080");
 
 		webTarget = webTarget.path("c");
 		webTarget = webTarget.path("portal");
@@ -471,7 +468,7 @@ public abstract class BaseClientTestCase {
 	protected WebTarget getOAuth2WebTarget() {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_getPortalURL());
+		WebTarget webTarget = client.target("http://localhost:8080");
 
 		webTarget = webTarget.path("o");
 		webTarget = webTarget.path("oauth2");
@@ -482,7 +479,7 @@ public abstract class BaseClientTestCase {
 	protected WebTarget getPortalWebTarget() {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_getPortalURL());
+		WebTarget webTarget = client.target("http://localhost:8080");
 
 		webTarget = webTarget.path("web");
 		webTarget = webTarget.path("guest");
@@ -559,7 +556,7 @@ public abstract class BaseClientTestCase {
 	protected WebTarget getWebTarget(String... paths) {
 		Client client = getClient();
 
-		WebTarget target = client.target(_getPortalURL());
+		WebTarget target = client.target("http://localhost:8080");
 
 		target = target.path("o");
 		target = target.path("oauth2-test");
@@ -655,23 +652,11 @@ public abstract class BaseClientTestCase {
 		return parseJsonField(response, "access_token");
 	}
 
-	private URI _getPortalURL() {
-		try {
-			return _url.toURI();
-		}
-		catch (URISyntaxException urise) {
-			throw new RuntimeException(urise);
-		}
-	}
-
 	private static Set<String> _originalRestrictedHeaderSet;
 	private static final Pattern _pAuthTokenPattern = Pattern.compile(
 		"Liferay.authToken\\s*=\\s*(['\"])(((?!\\1).)*)\\1;");
 	private static Set<String> _restrictedHeaderSet;
 
 	private BundleActivator _bundleActivator;
-
-	@ArquillianResource
-	private URL _url;
 
 }

@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.net.URISyntaxException;
-import java.net.URL;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -41,7 +38,6 @@ import javax.ws.rs.core.Response;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.Assert;
@@ -157,15 +153,12 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 
 	}
 
-	private WebTarget _getRootWebTarget(String path) throws URISyntaxException {
+	private WebTarget _getRootWebTarget(String path) {
 		Client client = getClient();
 
-		return client.target(_url.toURI() + path);
+		return client.target("http://localhost:8080" + path);
 	}
 
 	private static final String _TEST_FILE_CONTENT = "Test File Content";
-
-	@ArquillianResource
-	private URL _url;
 
 }

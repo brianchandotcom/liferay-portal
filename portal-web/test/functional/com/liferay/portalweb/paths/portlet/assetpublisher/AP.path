@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ASSET_ELLIPSIS_ICON</td>
-	<td>//div[@class='asset-abstract '][//a[normalize-space(./text())='${key_assetTitle}']]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//div[contains(@class,'asset-abstract')]//div[contains(.,'${key_assetTitle}')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

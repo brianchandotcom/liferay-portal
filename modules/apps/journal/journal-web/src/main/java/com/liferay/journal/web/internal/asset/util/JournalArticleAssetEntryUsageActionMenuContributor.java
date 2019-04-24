@@ -94,8 +94,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								_getURL(
-									approvedArticle, assetEntryUsage, request));
+								_getURL(null, assetEntryUsage, request));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle, "view-in-page"));
@@ -150,7 +149,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 			request, assetEntryUsage.getContainerKey(),
 			assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE);
 
-		if (!article.isApproved()) {
+		if ((article != null) && !article.isApproved()) {
 			portletURL.setParameter(
 				"previewAssetId", String.valueOf(article.getId()));
 		}

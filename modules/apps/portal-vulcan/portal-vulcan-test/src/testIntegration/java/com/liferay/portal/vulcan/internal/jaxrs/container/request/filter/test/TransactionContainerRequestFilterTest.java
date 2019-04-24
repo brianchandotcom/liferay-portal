@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
+package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
@@ -49,7 +49,7 @@ import org.junit.runner.RunWith;
  * @author Javier Gamarra
  */
 @RunWith(Arquillian.class)
-public class TransactionContainerFilterTest {
+public class TransactionContainerRequestFilterTest {
 
 	@ClassRule
 	@Rule
@@ -70,7 +70,8 @@ public class TransactionContainerFilterTest {
 
 		_serviceRegistration = registry.registerService(
 			Application.class,
-			new TransactionContainerFilterTest.TestApplication(), properties);
+			new TransactionContainerRequestFilterTest.TestApplication(),
+			properties);
 	}
 
 	@After

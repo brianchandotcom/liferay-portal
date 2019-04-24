@@ -89,6 +89,8 @@ public class ClientState {
 			}
 			catch (Throwable t) {
 				frameworkMBean.uninstallBundle(_bundleId);
+
+				throw t;
 			}
 		}
 

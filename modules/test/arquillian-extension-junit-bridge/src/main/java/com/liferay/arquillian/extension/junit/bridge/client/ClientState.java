@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.nio.file.FileVisitResult;
@@ -152,11 +153,13 @@ public class ClientState {
 
 			URL locationURL = codeSource.getLocation();
 
-			Path startPath = Paths.get(locationURL.getPath());
-
 			ClassLoader classLoader = testClass.getClassLoader();
 
 			try {
+				URI locationURI = locationURL.toURI();
+
+				Path startPath = Paths.get(locationURI.getPath());
+
 				Files.walkFileTree(
 					startPath,
 					new SimpleFileVisitor<Path>() {
@@ -208,6 +211,9 @@ public class ClientState {
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
+			}
+			catch (URISyntaxException urise) {
+				throw new RuntimeException(urise);
 			}
 
 			if (!testClasses.contains(testClass)) {

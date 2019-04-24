@@ -60,3 +60,7 @@
 		outline: 0;
 	}
 }
+
+.tooltip.lfr-editable-field-tooltip {
+	z-index: $floatingToolbarZIndex;
+}

@@ -27,7 +27,6 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -381,12 +380,7 @@ public class AssetEntryUsagesDisplayContext {
 				fragmentEntryLink.getRendererKey());
 
 		if (fragmentRenderer != null) {
-			DefaultFragmentRendererContext fragmentRendererContext =
-				new DefaultFragmentRendererContext(fragmentEntryLink);
-
-			fragmentRendererContext.setLocale(_themeDisplay.getLocale());
-
-			return fragmentRenderer.getLabel(fragmentRendererContext);
+			return fragmentRenderer.getLabel(_themeDisplay.getLocale());
 		}
 
 		return StringPool.BLANK;

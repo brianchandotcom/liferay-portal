@@ -930,15 +930,10 @@ public class ContentPageEditorDisplayContext {
 				fragmentEntryLink.getRendererKey());
 
 		if (fragmentRenderer != null) {
-			DefaultFragmentRendererContext fragmentRendererContext =
-				new DefaultFragmentRendererContext(fragmentEntryLink);
-
-			fragmentRendererContext.setLocale(themeDisplay.getLocale());
-
 			soyContext.put(
 				"fragmentEntryId", 0
 			).put(
-				"name", fragmentRenderer.getLabel(fragmentRendererContext)
+				"name", fragmentRenderer.getLabel(themeDisplay.getLocale())
 			);
 		}
 

@@ -19,6 +19,8 @@ import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,7 +45,7 @@ public interface FragmentRenderer {
 		return clazz.getName();
 	}
 
-	public String getLabel(FragmentRendererContext fragmentRendererContext);
+	public String getLabel(Locale locale);
 
 	public default int getType() {
 		return FragmentConstants.TYPE_COMPONENT;

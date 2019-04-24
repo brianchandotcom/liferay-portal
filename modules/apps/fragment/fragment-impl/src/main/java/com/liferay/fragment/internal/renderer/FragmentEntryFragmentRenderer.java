@@ -42,6 +42,7 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -103,16 +104,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public String getLabel(FragmentRendererContext fragmentRendererContext) {
-		try {
-			FragmentEntry fragmentEntry = _getFragmentEntry(
-				fragmentRendererContext);
-
-			return fragmentEntry.getName();
-		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
-		}
+	public String getLabel(Locale locale) {
+		return "Fragment Entry";
 	}
 
 	@Override

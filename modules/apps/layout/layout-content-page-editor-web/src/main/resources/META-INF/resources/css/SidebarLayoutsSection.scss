@@ -6,6 +6,7 @@ $layoutPreviewBorderRadius: 2px;
 $layoutPreviewColumnColor: #DDD;
 $layoutPreviewHeight: 2.5em;
 $layoutPreviewSpacing: 2px;
+$layoutPreviewRowHeight: 40px;
 
 .sidebar-layouts-section {
 	display: flex;
@@ -15,7 +16,6 @@ $layoutPreviewSpacing: 2px;
 	&__layout-preview {
 		background: $layoutPreviewBackgroundColor;
 		border-radius: $layoutPreviewBorderRadius;
-		flex-basis: calc(50% - #{$layoutPreviewSpacing});
 		height: $layoutPreviewHeight;
 		margin: $layoutPreviewSpacing 0;
 		padding: 0;
@@ -24,7 +24,7 @@ $layoutPreviewSpacing: 2px;
 			border: solid 2px $layoutPreviewBorderColor;
 			border-radius: $layoutPreviewBorderRadius;
 			flex-wrap: nowrap;
-			height: 100%;
+			height: $layoutPreviewRowHeight;
 			margin: 0;
 			padding: $layoutPreviewSpacing;
 		}

@@ -108,6 +108,16 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	@Override
 	public WorkflowMetricsSLADefinition deleteWorkflowMetricsSLADefinition(
+			long workflowMetricsSLADefinitionId)
+		throws PortalException {
+
+		return deleteWorkflowMetricsSLADefinition(
+			workflowMetricsSLADefinitionPersistence.findByPrimaryKey(
+				workflowMetricsSLADefinitionId));
+	}
+
+	@Override
+	public WorkflowMetricsSLADefinition deleteWorkflowMetricsSLADefinition(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
 		_workflowMetricsPortalExecutor.execute(
@@ -177,7 +187,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	@Override
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
-			long workflowMetricsSLADefinitiontId, String name,
+			long workflowMetricsSLADefinitionId, String name,
 			String description, long duration, String[] pauseNodeKeys,
 			String[] startNodeKeys, String[] stopNodeKeys,
 			ServiceContext serviceContext)
@@ -185,7 +195,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
 			workflowMetricsSLADefinitionPersistence.findByPrimaryKey(
-				workflowMetricsSLADefinitiontId);
+				workflowMetricsSLADefinitionId);
 
 		validate(
 			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId(),

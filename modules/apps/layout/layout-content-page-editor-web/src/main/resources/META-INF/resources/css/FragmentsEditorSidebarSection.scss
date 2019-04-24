@@ -53,7 +53,7 @@
 
 	&__elements-panel {
 		.card {
-			flex-basis: $sidebarElementCardWidth;
+			width: $sidebarElementCardWidth;
 
 			.card-body {
 				text-align: center;

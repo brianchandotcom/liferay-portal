@@ -40,7 +40,7 @@ class NodeStore {
 				const splitedNode = id.split(':');
 
 				return (
-					splitedNode.length && ['ENTER', 'LEAVE'].includes(splitedNode[1])
+					splitedNode.length && ['enter', 'leave'].includes(splitedNode[1])
 				);
 			})
 			.map(id => id.split(':')[0]);
@@ -105,12 +105,12 @@ class NodeStore {
 				nodeEnters.push({
 					...node,
 					desc: `${entersTaskString} ${node.name}`,
-					id: `${node.id}:ENTER`
+					id: `${node.id}:enter`
 				});
 				nodeLeaves.push({
 					...node,
 					desc: `${leavesTaskString} ${node.name}`,
-					id: `${node.id}:LEAVE`
+					id: `${node.id}:leave`
 				});
 			});
 

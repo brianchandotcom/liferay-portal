@@ -45,7 +45,7 @@ test('Should test fetch', () => {
 	slaStore.setState({
 		pauseNodeKeys: [],
 		startNodeKeys: [],
-		stopNodeKeys: ['26625:LEAVE']
+		stopNodeKeys: ['26625:leave']
 	});
 
 	const nodeStore = new NodeStore(client(defaultData), slaStore);
@@ -66,17 +66,17 @@ test('Should test fetch', () => {
 
 		expect(nodeStore.getStartNodes().map(({ id }) => id)).toMatchObject([
 			26605,
-			'26610:ENTER',
-			'26625:ENTER',
-			'26610:LEAVE'
+			'26610:enter',
+			'26625:enter',
+			'26610:leave'
 		]);
 
 		expect(nodeStore.getStopNodes().map(({ id }) => id)).toMatchObject([
 			26603,
-			'26610:ENTER',
-			'26625:ENTER',
-			'26610:LEAVE',
-			'26625:LEAVE'
+			'26610:enter',
+			'26625:enter',
+			'26610:leave',
+			'26625:leave'
 		]);
 
 		nodeStore.setState({ nodes: [] });

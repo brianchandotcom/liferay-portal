@@ -30,7 +30,6 @@ task buildObjectEntries(type: Copy)
 task buildObjectValues(type: Copy)
 task buildPromise(type: Copy)
 task buildStringEndsWith(type: Copy)
-task buildUint16ArrayPolyfill(type: Copy)
 task buildUrlSearchParams(type: Copy)
 
 buildArrayFill {
@@ -237,12 +236,6 @@ buildStringEndsWith{
 	}
 }
 
-buildUint16ArrayPolyfill {
-	from new File("src/main/resources/META-INF/resources/uint-16-array-polyfill.js")
-	includeEmptyDirs = false
-	into "classes/META-INF/resources"
-}
-
 buildUrlSearchParams {
 	eachFile new StripPathSegmentsAction(6)
 
@@ -273,7 +266,6 @@ classes {
 	dependsOn buildObjectValues
 	dependsOn buildPromise
 	dependsOn buildStringEndsWith
-	dependsOn buildUint16ArrayPolyfill
 	dependsOn buildUrlSearchParams
 }
 

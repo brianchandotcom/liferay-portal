@@ -14,35 +14,15 @@
 
 package com.liferay.petra.json.web.service.client;
 
-import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
-import com.liferay.petra.json.web.service.client.internal.OAuthJSONWebServiceClientImpl;
-
 import java.util.Map;
 
 /**
  * @author Ivica Cardic
  */
-public class JSONWebServiceClientFactory {
+public interface JSONWebServiceClientFactory {
 
-	public static JSONWebServiceClient getInstance(
+	public JSONWebServiceClient getInstance(
 			Map<String, Object> properties, boolean oAuthEnabled)
-		throws Exception {
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl = null;
-
-		if (oAuthEnabled) {
-			jsonWebServiceClientImpl = new OAuthJSONWebServiceClientImpl();
-		}
-		else {
-			jsonWebServiceClientImpl = new JSONWebServiceClientImpl();
-		}
-
-		jsonWebServiceClientImpl.activate(properties);
-
-		return jsonWebServiceClientImpl;
-	}
-
-	private JSONWebServiceClientFactory() {
-	}
+		throws Exception;
 
 }

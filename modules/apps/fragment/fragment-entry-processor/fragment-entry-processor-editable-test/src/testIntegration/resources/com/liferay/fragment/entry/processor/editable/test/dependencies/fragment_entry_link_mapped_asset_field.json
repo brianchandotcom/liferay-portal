@@ -1,0 +1,11 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_text": {
+			"classNameId": "CLASS_NAME_ID",
+			"classPK": "CLASS_PK",
+			"defaultValue": "test",
+			"fieldId": "title",
+			"segments-experience-id-0" : {}
+		}
+	}
+}

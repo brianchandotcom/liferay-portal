@@ -121,16 +121,25 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		_getConfigureLayoutPageTemplateEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-				PortalUtil.getClassNameId(Layout.class),
-				_layoutPageTemplateEntry.getPlid());
+			Layout layout = null;
+
+			if (_layoutPageTemplateEntry.getType() ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) {
+
+				layout = LayoutLocalServiceUtil.fetchLayout(
+					_layoutPageTemplateEntry.getPlid());
+			}
+			else {
+				layout = LayoutLocalServiceUtil.fetchLayout(
+					PortalUtil.getClassNameId(Layout.class),
+					_layoutPageTemplateEntry.getPlid());
+			}
 
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
 				"/layout/edit_layout", "redirect",
 				_themeDisplay.getURLCurrent(), "backURL",
-				_themeDisplay.getURLCurrent(), "selPlid",
-				draftLayout.getPlid());
+				_themeDisplay.getURLCurrent(), "selPlid", layout.getPlid());
 
 			dropdownItem.setLabel(LanguageUtil.get(_request, "configure"));
 		};

@@ -14,8 +14,8 @@
 
 package com.liferay.talend.service;
 
-import com.liferay.commerce.openapi.util.OpenApiFormat;
-import com.liferay.commerce.openapi.util.OpenApiType;
+import com.liferay.talend.openapi.OpenApiFormat;
+import com.liferay.talend.openapi.OpenApiType;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -39,10 +39,11 @@ public class TalendService {
 			Schema.Type.RECORD);
 
 		JsonArray requiredJsonArray = schemaJsonObject.getJsonArray("required");
-		JsonObject propertiesJsonObject = schemaJsonObject.getJsonObject(
-			"properties");
 
 		String requiredJsonArrayRaw = requiredJsonArray.toString();
+
+		JsonObject propertiesJsonObject = schemaJsonObject.getJsonObject(
+			"properties");
 
 		for (String propertyName : propertiesJsonObject.keySet()) {
 			Schema.Entry.Builder entryBuilder =
@@ -50,42 +51,42 @@ public class TalendService {
 
 			entryBuilder.withName(propertyName);
 
-			if (requiredJsonArrayRaw.contains("\"" + propertyName + "\"")) {
-				entryBuilder.withNullable(false);
-			}
-			else {
-				entryBuilder.withNullable(true);
-			}
+			_addNullable(entryBuilder, propertyName, requiredJsonArrayRaw);
 
-			JsonObject propertyJsonObject = propertiesJsonObject.getJsonObject(
-				propertyName);
+			_addEntryType(
+				entryBuilder, propertiesJsonObject.getJsonObject(propertyName));
 
-			String type = propertyJsonObject.getString("type");
-
-			if (type.equals("array")) {
-				schemaBuilder.withEntry(
-					entryBuilder.withType(
-						Schema.Type.ARRAY
-					).build());
-			}
-			else if (type.equals("object")) {
-				schemaBuilder.withEntry(
-					entryBuilder.withType(
-						Schema.Type.RECORD
-					).build());
-			}
-			else {
-				_addJavaTypeRecordEntry(
-					propertyJsonObject, schemaBuilder, entryBuilder);
-			}
+			schemaBuilder.withEntry(entryBuilder.build());
 		}
 
 		return schemaBuilder.build();
 	}
 
-	private Schema.Builder _addJavaTypeRecordEntry(
-		JsonObject propertyJsonObject, Schema.Builder schemaBuilder,
-		Schema.Entry.Builder entryBuilder) {
+	private Schema.Entry.Builder _addEntryType(
+		Schema.Entry.Builder entryBuilder, JsonObject propertyJsonObject) {
+
+		String type = propertyJsonObject.getString("type", null);
+
+		if (type == null) {
+			if (propertyJsonObject.containsKey("$ref")) {
+				entryBuilder.withType(Schema.Type.RECORD);
+			}
+		}
+		else if (type.equals("array")) {
+			entryBuilder.withType(Schema.Type.ARRAY);
+		}
+		else if (type.equals("object")) {
+			entryBuilder.withType(Schema.Type.RECORD);
+		}
+		else {
+			_addJavaTypeRecordEntry(entryBuilder, propertyJsonObject);
+		}
+
+		return entryBuilder;
+	}
+
+	private Schema.Entry.Builder _addJavaTypeRecordEntry(
+		Schema.Entry.Builder entryBuilder, JsonObject propertyJsonObject) {
 
 		OpenApiType openApiType = OpenApiType.fromDefinition(
 			propertyJsonObject.getString("type"));
@@ -121,7 +122,21 @@ public class TalendService {
 			entryBuilder.withType(Schema.Type.DATETIME);
 		}
 
-		return schemaBuilder.withEntry(entryBuilder.build());
+		return entryBuilder;
+	}
+
+	private Schema.Entry.Builder _addNullable(
+		Schema.Entry.Builder entryBuilder, String propertyName,
+		String requiredFields) {
+
+		if (requiredFields.contains("\"" + propertyName + "\"")) {
+			entryBuilder.withNullable(false);
+		}
+		else {
+			entryBuilder.withNullable(true);
+		}
+
+		return entryBuilder;
 	}
 
 }

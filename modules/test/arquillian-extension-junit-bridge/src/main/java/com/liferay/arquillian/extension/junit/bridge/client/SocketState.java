@@ -17,6 +17,7 @@ package com.liferay.arquillian.extension.junit.bridge.client;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.WriteAbortedException;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -100,7 +101,12 @@ public class SocketState {
 	}
 
 	public Object readObject() throws Exception {
-		return _objectInputStream.readObject();
+		try {
+			return _objectInputStream.readObject();
+		}
+		catch (WriteAbortedException wae) {
+			return _objectInputStream.readObject();
+		}
 	}
 
 	public void writeUTF(String string) throws IOException {

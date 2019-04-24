@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -294,16 +295,40 @@ public class TestExecutorRunnable implements Runnable {
 			MultipleFailureException mfe = (MultipleFailureException)throwable;
 
 			for (Throwable t : mfe.getFailures()) {
-				objectOutputStream.writeObject(
-					RunNotifierCommand.testFailure(description, t));
+				_processThrowable(objectOutputStream, description, t);
 			}
 		}
 		else {
-			objectOutputStream.writeObject(
-				RunNotifierCommand.testFailure(description, throwable));
+			_processThrowable(objectOutputStream, description, throwable);
 		}
 
 		objectOutputStream.flush();
+	}
+
+	private static void _processThrowable(
+			ObjectOutputStream objectOutputStream, Description description,
+			Throwable t)
+		throws IOException {
+
+		try {
+			objectOutputStream.writeObject(
+				RunNotifierCommand.testFailure(description, t));
+		}
+		catch (NotSerializableException nse) {
+			objectOutputStream.reset();
+
+			Class<? extends Throwable> clazz = t.getClass();
+
+			Exception serializableException = new Exception(
+				clazz.getName() + ": " + t.getMessage());
+
+			serializableException.setStackTrace(t.getStackTrace());
+
+			nse.initCause(serializableException);
+
+			objectOutputStream.writeObject(
+				RunNotifierCommand.testFailure(description, nse));
+		}
 	}
 
 	private static Statement _withAfters(

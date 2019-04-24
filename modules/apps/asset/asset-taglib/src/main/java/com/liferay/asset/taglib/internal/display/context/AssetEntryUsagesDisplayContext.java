@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -56,12 +57,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pavel Savinov
@@ -92,6 +92,9 @@ public class AssetEntryUsagesDisplayContext {
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
 		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", _themeDisplay.getLocale(), getClass());
 	}
 
 	public int getAllUsageCount() {
@@ -197,9 +200,6 @@ public class AssetEntryUsagesDisplayContext {
 	public String getAssetEntryUsageWhereLabel(AssetEntryUsage assetEntryUsage)
 		throws PortalException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_renderRequest);
-
 		if (assetEntryUsage.getContainerType() != PortalUtil.getClassNameId(
 				FragmentEntryLink.class)) {
 
@@ -208,7 +208,8 @@ public class AssetEntryUsagesDisplayContext {
 					assetEntryUsage.getContainerKey()),
 				_themeDisplay.getLocale());
 
-			return LanguageUtil.format(request, "x-widget", portletTitle);
+			return LanguageUtil.format(
+				_resourceBundle, "x-widget", portletTitle);
 		}
 
 		FragmentEntryLink fragmentEntryLink =
@@ -222,10 +223,10 @@ public class AssetEntryUsagesDisplayContext {
 		}
 
 		if (_getType(fragmentEntryLink) == FragmentConstants.TYPE_COMPONENT) {
-			return LanguageUtil.format(request, "x-element", name);
+			return LanguageUtil.format(_resourceBundle, "x-element", name);
 		}
 
-		return LanguageUtil.format(request, "x-section", name);
+		return LanguageUtil.format(_resourceBundle, "x-section", name);
 	}
 
 	public int getDisplayPagesUsageCount() {
@@ -465,6 +466,7 @@ public class AssetEntryUsagesDisplayContext {
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final ResourceBundle _resourceBundle;
 	private SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 

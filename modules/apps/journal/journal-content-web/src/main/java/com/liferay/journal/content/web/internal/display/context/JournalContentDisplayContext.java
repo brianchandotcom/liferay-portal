@@ -141,12 +141,12 @@ public class JournalContentDisplayContext {
 			return _article;
 		}
 
-		long previewArticleId = ParamUtil.getLong(
-			_portletRequest, "previewArticleId");
+		long previewAssetId = ParamUtil.getLong(
+			_portletRequest, "previewAssetId");
 
-		if (previewArticleId > 0) {
+		if (previewAssetId > 0) {
 			_article = JournalArticleLocalServiceUtil.fetchArticle(
-				previewArticleId);
+				previewAssetId);
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
@@ -800,17 +800,17 @@ public class JournalContentDisplayContext {
 			return _preview;
 		}
 
-		long previewArticleId = ParamUtil.getLong(
-			_portletRequest, "previewArticleId");
+		long previewAssetId = ParamUtil.getLong(
+			_portletRequest, "previewAssetId");
 
-		if (previewArticleId <= 0) {
+		if (previewAssetId <= 0) {
 			_preview = false;
 
 			return _preview;
 		}
 
 		JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(
-			previewArticleId);
+			previewAssetId);
 
 		if (article == null) {
 			_preview = false;

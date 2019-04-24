@@ -163,7 +163,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 
 		if (!article.isApproved()) {
 			portletURL.setParameter(
-				"previewArticleId", String.valueOf(article.getId()));
+				"previewAssetId", String.valueOf(article.getId()));
 		}
 
 		String portletURLString = _http.setParameter(

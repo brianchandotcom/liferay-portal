@@ -47,6 +47,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.TaskEntityModel;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
+import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -180,6 +181,10 @@ public class TaskResourceImpl
 		Set<String> taskNames) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(
+			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
+			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
 
 		TermsQuery termsQuery = _queries.terms("taskName");
 

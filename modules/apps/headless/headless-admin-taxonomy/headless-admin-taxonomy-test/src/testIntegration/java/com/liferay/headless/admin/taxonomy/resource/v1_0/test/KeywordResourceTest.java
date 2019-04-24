@@ -16,10 +16,11 @@ package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Keyword;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.headless.admin.taxonomy.client.http.HttpInvoker;
-import org.junit.runner.RunWith;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
@@ -35,14 +36,20 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 		httpInvoker.parameter("page", "1");
 		httpInvoker.parameter("pageSize", "2");
-		httpInvoker.path("http://localhost:8080/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords", testGroup.getGroupId());
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-admin-taxonomy/v1.0/sites" +
+				"/{siteId}/keywords",
+			testGroup.getGroupId());
 		httpInvoker.userNameAndPassword("test@liferay.com", "test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		System.out.println("## HTTP Response content: " + httpResponse.getContent());
-		System.out.println("## HTTP Response message: " + httpResponse.getMessage());
-		System.out.println("## HTTP Response status: " + httpResponse.getStatus());
+		System.out.println(
+			"## HTTP Response content: " + httpResponse.getContent());
+		System.out.println(
+			"## HTTP Response message: " + httpResponse.getMessage());
+		System.out.println(
+			"## HTTP Response status: " + httpResponse.getStatus());
 	}
 
 	@Override

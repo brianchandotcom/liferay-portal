@@ -2,6 +2,8 @@ definition {
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
+		AssertVisible(locator1 = "DDMEditStructure#FORM_BUILDER");
+
 		WebContentStructures.addName(structureName = "${structureName}");
 
 		if (isSet(structureDescription)) {

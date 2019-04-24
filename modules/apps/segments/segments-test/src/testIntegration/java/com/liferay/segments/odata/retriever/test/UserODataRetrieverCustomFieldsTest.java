@@ -21,10 +21,9 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.odata.normalizer.Normalizer;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -48,10 +48,8 @@ import com.liferay.segments.odata.retriever.ODataRetriever;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -426,25 +424,11 @@ public class UserODataRetrieverCustomFieldsTest {
 			serviceContext);
 	}
 
-	private String _encodeName(ExpandoColumn expandoColumn) throws Exception {
-		return ReflectionTestUtil.invoke(
-			_getExpandoColumnModelListener(), "_encodeName",
-			new Class<?>[] {ExpandoColumn.class}, expandoColumn);
-	}
-
-	private ModelListener<ExpandoColumn> _getExpandoColumnModelListener()
-		throws Exception {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Collection<ModelListener> collection = registry.getServices(
-			ModelListener.class,
-			"(component.name=com.liferay.segments.internal.model.listener." +
-				"UserExpandoColumnModelListener)");
-
-		Iterator<ModelListener> iterator = collection.iterator();
-
-		return (ModelListener<ExpandoColumn>)iterator.next();
+	private String _encodeName(ExpandoColumn expandoColumn) {
+		return com.liferay.petra.string.StringBundler.concat(
+			StringPool.UNDERLINE, expandoColumn.getColumnId(),
+			StringPool.UNDERLINE,
+			Normalizer.normalizeIdentifier(expandoColumn.getName()));
 	}
 
 	private ODataRetriever<User> _getODataRetriever() {

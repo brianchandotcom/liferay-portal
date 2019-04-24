@@ -220,9 +220,9 @@ public class LiferayService {
 
 		validateOpenAPISpecURL(openAPISpecURL.toExternalForm());
 
-		inputDataSet.setEndpoint(_extractEndpoint(openAPISpecURL.toString()));
+		String endpoint = extractEndpointPathSegment(openAPISpecURL);
 
-		return _connectionService.getResponseJsonObject(inputDataSet);
+		return _connectionService.getResponseJsonObject(inputDataSet, endpoint);
 	}
 
 	/**

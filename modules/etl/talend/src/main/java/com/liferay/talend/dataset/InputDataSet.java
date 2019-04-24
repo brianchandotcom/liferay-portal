@@ -68,12 +68,6 @@ public class InputDataSet implements Serializable {
 		return thirdPathParam;
 	}
 
-	public InputDataSet setEndpoint(String endpoint) {
-		this.endpoint = endpoint;
-
-		return this;
-	}
-
 	public InputDataSet setFirstPathParam(String firstPathParam) {
 		this.firstPathParam = firstPathParam;
 

@@ -28,27 +28,31 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
+			portlet = "OAuth 2 Administration"
+		);
 
 		OAuth2.addApplication(
 			applicationName = "OAuth Application",
 			callbackURI = "http://www.liferay.com",
 			clientProfile = "Web Application",
-			websiteURL = "http://www.liferay.com");
+			websiteURL = "http://www.liferay.com"
+		);
 
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
 		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
 
 		OAuth2.inputApplicationValues(
 			description = "Registering a new application",
-			privacyPolicyURL = "http://www.liferay.com");
+			privacyPolicyURL = "http://www.liferay.com"
+		);
 
 		Navigator.gotoBack();
 
 		OAuth2.viewApplicationInTable(
 			applicationName = "OAuth Application",
 			clientId = "${generatedClientId}",
-			description = "Registering a new application");
+			description = "Registering a new application"
+		);
 
 		OAuth2.viewApplication(
 			applicationName = "OAuth Application",
@@ -59,7 +63,8 @@ definition {
 			clientSecret = "${generatedClientSecret}",
 			description = "Registering a new application",
 			privacyPolicyURL = "http://www.liferay.com",
-			websiteURL = "http://www.liferay.com");
+			websiteURL = "http://www.liferay.com"
+		);
 
 		OAuth2.editApplication(
 			applicationName = "OAuth Application",
@@ -72,14 +77,16 @@ definition {
 			description = "Editing a new application",
 			newApplicationName = "OAuth Application Edited",
 			privacyPolicyURL = "http://www.google.com",
-			websiteURL = "http://www.google.com");
+			websiteURL = "http://www.google.com"
+		);
 
 		Navigator.gotoBack();
 
 		OAuth2.viewApplicationInTable(
 			applicationName = "OAuth Application Edited",
 			clientId = "abcd1234",
-			description = "Editing a new application");
+			description = "Editing a new application"
+		);
 
 		OAuth2.viewApplication(
 			applicationName = "OAuth Application Edited",
@@ -90,7 +97,8 @@ definition {
 			clientSecret = "abcd1234",
 			description = "Editing a new application",
 			privacyPolicyURL = "http://www.google.com",
-			websiteURL = "http://www.google.com");
+			websiteURL = "http://www.google.com"
+		);
 
 		var newGeneratedClientSecret = OAuth2.editApplication(
 			applicationName = "OAuth Application Edited",
@@ -101,7 +109,8 @@ definition {
 
 		OAuth2.viewApplication(
 			applicationName = "OAuth Application Edited",
-			clientSecret = "${newGeneratedClientSecret}");
+			clientSecret = "${newGeneratedClientSecret}"
+		);
 
 		OAuth2.deleteApplication(applicationName = "OAuth Application Edited");
 	}
@@ -116,29 +125,34 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
+			portlet = "OAuth 2 Administration"
+		);
 
 		OAuth2.addApplication(
 			applicationName = "Third-party Application",
 			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
-			clientProfile = "Web Application");
+			clientProfile = "Web Application"
+		);
 
 		OAuth2.inputApplicationValues(
 			clientId = "${clientId}",
-			clientSecret = "${clientSecret}");
+			clientSecret = "${clientSecret}"
+		);
 
 		Navigator.gotoBack();
 
 		OAuth2.editScopes(
 			applicationName = "Third-party Application",
 			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
-			resourcePanels = "Portal Services");
+			resourcePanels = "Portal Services"
+		);
 
 		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId}");
+			value1 = "${clientId}"
+		);
 
 		Button.click(button = "Authorize My Application");
 
@@ -146,7 +160,8 @@ definition {
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret}");
+			value1 = "${clientSecret}"
+		);
 
 		Button.click(button = "Obtain OAuth2 Access");
 
@@ -154,7 +169,8 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+			value1 = "test@liferay.com"
+		);
 	}
 
 	test EditApplicationScopes {
@@ -163,61 +179,73 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings");
+			portlet = "System Settings"
+		);
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "OAuth 2",
 			configurationName = "Bundle PrefixHandlerFactory",
-			configurationScope = "System Scope");
+			configurationScope = "System Scope"
+		);
 
-		SystemSettings.gotoConfigurationEntry(configurationEntry = "Default");
+		SystemSettings.gotoConfigurationEntry(
+			configurationEntry = "Default"
+		);
 
 		SystemSettings.deleteConfiguration();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
+			portlet = "OAuth 2 Administration"
+		);
 
 		OAuth2.addApplication(
 			applicationName = "OAuth Application",
-			checkboxUncheckList = "Authorization Code");
+			checkboxUncheckList = "Authorization Code"
+		);
 
 		Navigator.gotoBack();
 
 		OAuth2.editScopes(
 			applicationName = "OAuth Application",
 			resourceCheckList = "everything.read.userprofile",
-			resourcePanels = "Portal Services");
+			resourcePanels = "Portal Services"
+		);
 
 		AssertTextEquals.assertPartialText(
-			key_tableName = "OAuth Application",
 			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
-			value1 = "1");
+			value1 = "1",
+			key_tableName = "OAuth Application"
+		);
 
 		OAuth2.viewScopes(
 			applicationName = "OAuth Application",
 			resourceCheckedList = "everything.read.userprofile",
-			resourcePanels = "Portal Services");
+			resourcePanels = "Portal Services"
+		);
 
 		OAuth2.editScopes(
 			applicationName = "OAuth Application",
-			checkGlobalScope = "Everything");
+			checkGlobalScope = "Everything"
+		);
 
 		/*
 
 		Workaround for OAUTH2-243
 
 		AssertTextEquals.assertPartialText(
-			key_tableName = "OAuth Application",
 			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
-			value1 = "7");
+			value1 = "7",
+			key_tableName = "OAuth Application"
+		);
 
 		OAuth2.viewScopes(
 			applicationName = "OAuth Application",
 			checkedGlobalScope = "Everything",
 			resourceCheckedList = "example-scope-1,example-scope-2,everything.read,everything.write,everything.read.userprofile",
-			resourcePanels = "Portal Services,Sample QA app");
+			resourcePanels = "Portal Services,Sample QA app"
+		);
 
 		*/
 
@@ -225,18 +253,21 @@ definition {
 			applicationName = "OAuth Application",
 			resourcePanels = "Portal Services,Sample QA app",
 			uncheckAllResourceScopes = "true",
-			uncheckGlobalScope = "Everything");
+			uncheckGlobalScope = "Everything"
+		);
 
 		AssertTextEquals.assertPartialText(
-			key_tableName = "OAuth Application",
 			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
-			value1 = "0");
+			value1 = "0",
+			key_tableName = "OAuth Application"
+		);
 
 		OAuth2.viewScopes(
 			allResourceScopesUnchecked = "true",
 			applicationName = "OAuth Application",
 			resourcePanels = "Portal Services,Sample QA app",
-			uncheckedGlobalScope = "Everything");
+			uncheckedGlobalScope = "Everything"
+		);
 	}
 
 	test ViewAndRevokeGrantedAuthorizations {
@@ -247,11 +278,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
+			portlet = "OAuth 2 Administration"
+		);
 
 		OAuth2.addApplication(
 			applicationName = "OAuth Application",
-			checkboxUncheckList = "Authorization Code");
+			checkboxUncheckList = "Authorization Code"
+		);
 
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
 		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
@@ -268,15 +301,18 @@ definition {
 
 		OAuth2.viewGrantedAuthViaAdmin(
 			applicationName = "OAuth Application",
-			userName = "Test Test");
+			userName = "Test Test"
+		);
 
 		OAuth2.revokeGrantedAuthViaAdmin(
 			applicationName = "OAuth Application",
-			userName = "Test Test");
+			userName = "Test Test"
+		);
 
 		OAuth2.viewGrantedAuthViaAdmin(
 			applicationName = "OAuth Application",
-			noAuthorizations = "true");
+			noAuthorizations = "true"
+		);
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 

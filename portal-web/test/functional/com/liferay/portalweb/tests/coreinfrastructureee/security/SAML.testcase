@@ -25,29 +25,34 @@ definition {
 		SAML.configureLiferaySAMLAsSP(
 			attributes = "siteRoles",
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/");
+			spURL = "http://www.able.com:9080/"
+		);
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration");
+			portlet = "Server Administration"
+		);
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryName = "com.liferay.saml.opensaml.integration",
-			categoryPriority = "DEBUG");
+			categoryPriority = "DEBUG"
+		);
 
 		JSONRole.addSiteRole(
 			roleKey = "TestSiteRole",
-			roleTitle = "TestSiteRole");
+			roleTitle = "TestSiteRole"
+		);
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
-			portlet = "Sites");
+			portlet = "Sites"
+		);
 
 		Site.addBlankCP(siteName = "Site Name");
 
@@ -56,7 +61,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups");
+			portlet = "User Groups"
+		);
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
@@ -67,11 +73,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships");
+			portlet = "Memberships"
+		);
 
 		Site.assignUserGroupAsMemberCP(
 			siteName = "Site Name",
-			userGroupName = "UG UserGroup Name");
+			userGroupName = "UG UserGroup Name"
+		);
 
 		Navigator.openURL();
 
@@ -80,35 +88,41 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships");
+			portlet = "Memberships"
+		);
 
 		Site.assignSiteRoleToUserGroup(
 			roleName = "TestSiteRole",
-			userGroupName = "UG UserGroup Name");
+			userGroupName = "UG UserGroup Name"
+		);
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "User Groups");
+			portlet = "User Groups"
+		);
 
 		UserGroup.assignMemberCP(
 			userGroupName = "UG UserGroup Name",
-			userScreenName = "test");
+			userScreenName = "test"
+		);
 
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations");
+			portlet = "Users and Organizations"
+		);
 
 		User.gotoEditCP(userScreenName = "test");
 
 		User.viewUserInfomationRolesCP(
 			roleTitle = "TestSiteRole",
-			roleType = "Inherited Site Roles");
+			roleType = "Inherited Site Roles"
+		);
 
 		User.logoutPG();
 
@@ -121,7 +135,8 @@ definition {
 		SAML.executeSPInitiatedSSO(
 			password = "test",
 			specificURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com"
+		);
 
 		User.viewLoggedInPG();
 
@@ -143,7 +158,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin");
+			portlet = "SAML Admin"
+		);
 
 		SAMLNavigation.gotoIdentityProvider();
 
@@ -162,11 +178,13 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(
 			idpSessionIdleTimeout = "480",
 			idpSessionMaximumAge = "0",
-			samlEntityID = "samlidp");
+			samlEntityID = "samlidp"
+		);
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/");
+			spURL = "http://www.able.com:9080/"
+		);
 
 		User.logoutPG();
 
@@ -179,7 +197,8 @@ definition {
 			password = "test",
 			samlEnabled = "true",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com"
+		);
 
 		Navigator.openURL();
 
@@ -187,7 +206,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
 		Refresh();
 
@@ -196,13 +216,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin");
+			portlet = "SAML Admin"
+		);
 
 		SAMLNavigation.gotoIdentityProvider();
 
 		SAMLRole.configureIdentityProvider(
 			idpSessionIdleTimeout = "60",
-			idpSessionMaximumAge = "0");
+			idpSessionMaximumAge = "0"
+		);
 
 		User.logoutPG();
 
@@ -213,7 +235,8 @@ definition {
 			password = "test",
 			samlEnabled = "true",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com"
+		);
 
 		Navigator.openURL();
 
@@ -221,7 +244,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
 		Refresh();
 
@@ -237,7 +261,8 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/");
+			spURL = "http://www.able.com:9080/"
+		);
 
 		User.logoutPG();
 
@@ -249,7 +274,8 @@ definition {
 			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
 			password = "test",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com"
+		);
 
 		User.viewLoggedInPG();
 
@@ -257,13 +283,12 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
 		Refresh();
 
-		AssertClick(
-			locator1 = "UserBar#USER_SIGN_IN",
-			value1 = "Sign In");
+		AssertClick(locator1 = "UserBar#USER_SIGN_IN", value1 = "Sign In");
 
 		User.viewLoggedInPG();
 	}
@@ -276,11 +301,13 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(
 			idpSessionIdleTimeout = "0",
 			idpSessionMaximumAge = "180",
-			samlEntityID = "samlidp");
+			samlEntityID = "samlidp"
+		);
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/");
+			spURL = "http://www.able.com:9080/"
+		);
 
 		User.logoutPG();
 
@@ -293,7 +320,8 @@ definition {
 			password = "test",
 			samlEnabled = "true",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com"
+		);
 
 		Navigator.openURL();
 
@@ -301,7 +329,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
 		Refresh();
 
@@ -311,7 +340,8 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page."
+		);
 
 		Refresh();
 
@@ -323,18 +353,22 @@ definition {
 	test AssertSSOWithEncryptionAndDecryption {
 		property test.name.skip.portal.instance = "SAML#AssertSSOWithEncryptionAndDecryption";
 
-		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+		SAML.configureLiferaySAMLAsIdP(
+			samlEntityID = "samlidp"
+		);
 
 		SAML.configureLiferaySAMLAsSP(
 			encryptionCertificate = "true",
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/");
+			spURL = "http://www.able.com:9080/"
+		);
 
 		SAMLNavigation.gotoServiceProviderConnection();
 
 		SAMLPortlet.configureServiceProviderConnection(
 			forceEncryption = "enable",
-			samlEntityID = "samlsp");
+			samlEntityID = "samlsp"
+		);
 
 		User.logoutPG();
 
@@ -344,7 +378,8 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com"
+		);
 
 		User.viewLoggedInPG();
 
@@ -361,7 +396,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin");
+			portlet = "SAML Admin"
+		);
 
 		SAMLRole.deleteCertificate();
 
@@ -373,27 +409,33 @@ definition {
 
 		User._login(
 			password = "test",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com"
+		);
 
 		AssertTextEquals(
 			locator1 = "Portlet#PORTLET_CONTENT",
-			value1 = "Unable to process SAML request.");
+			value1 = "Unable to process SAML request."
+		);
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Data encryption key was null",
-			nodePort = "9080");
+			nodePort = "9080"
+		);
 	}
 
 	@priority = "4"
 	test AssertSSOWithSignAuthnRequests {
 		property test.name.skip.portal.instance = "SAML#AssertSSOWithSignAuthnRequests";
 
-		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+		SAML.configureLiferaySAMLAsIdP(
+			samlEntityID = "samlidp"
+		);
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin");
+			portlet = "SAML Admin"
+		);
 
 		SAMLNavigation.gotoIdentityProvider();
 
@@ -401,7 +443,8 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/");
+			spURL = "http://www.able.com:9080/"
+		);
 
 		User.logoutPG();
 
@@ -413,7 +456,8 @@ definition {
 			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
 			password = "test",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com"
+		);
 
 		User.viewLoggedInPG();
 
@@ -424,7 +468,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin");
+			portlet = "SAML Admin"
+		);
 
 		SAMLNavigation.gotoIdentityProvider();
 
@@ -438,7 +483,8 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com"
+		);
 
 		User.viewLoggedInPG();
 
@@ -449,7 +495,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin");
+			portlet = "SAML Admin"
+		);
 
 		SAMLNavigation.gotoIdentityProvider();
 
@@ -460,7 +507,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin");
+			portlet = "SAML Admin"
+		);
 
 		SAMLNavigation.gotoServiceProvider();
 
@@ -474,7 +522,8 @@ definition {
 			password = "test",
 			specificURL = "http://www.able.com:9080",
 			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@liferay.com"
+		);
 
 		User.viewLoggedInPG();
 
@@ -487,16 +536,19 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "System Settings");
+			portlet = "System Settings"
+		);
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "SAML Configuration",
-			configurationScope = "System Scope");
+			configurationScope = "System Scope"
+		);
 
 		SystemSettings.editTextSetting(
 			settingName = "Runtime Metadata Refresh Interval",
-			settingValue = "9999");
+			settingValue = "9999"
+		);
 
 		SystemSettings.saveConfiguration();
 
@@ -505,7 +557,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin");
+			portlet = "SAML Admin"
+		);
 
 		SAMLNavigation.gotoIdentityProvider();
 
@@ -533,12 +586,14 @@ definition {
 
 		SAML.configureLiferaySAMLAsSP(
 			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080");
+			spURL = "http://www.able.com:9080"
+		);
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Instance Settings");
+			portlet = "Instance Settings"
+		);
 
 		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
@@ -553,7 +608,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Instance Settings");
+			portlet = "Instance Settings"
+		);
 
 		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
@@ -567,7 +623,9 @@ definition {
 
 		PortalSettings.configureLDAPSetting(enableSettingList = "${enableSettingList}");
 
-		PortalSettings.viewEnabledLDAPSetting(enableSettingList = "${enableSettingList}");
+		PortalSettings.viewEnabledLDAPSetting(
+			enableSettingList = "${enableSettingList}"
+		);
 
 		Portlet.shutdownServer();
 
@@ -576,26 +634,32 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Search");
+			portlet = "Search"
+		);
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
-			portlet = "Users and Organizations");
+			portlet = "Users and Organizations"
+		);
 
 		User.viewCP(
 			userEmailAddress = "ldapuseremail@liferay.com",
 			userFirstName = "ldapusergivenname",
 			userLastName = "ldapusersn",
-			userScreenName = "ldapusercn");
+			userScreenName = "ldapusercn"
+		);
 
 		Navigator.gotoBack();
 
 		User.editPasswordCP(
 			userEmailAddress = "ldapuseremail@liferay.com",
-			userScreenName = "ldapusercn");
+			userScreenName = "ldapusercn"
+		);
 
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
@@ -606,561 +670,613 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "SAML Admin");
+			portlet = "SAML Admin"
+		);
 
 		SAMLNavigation.gotoServiceProvider();
 
-		SAMLPortlet.configureServiceProvider(enbleLDAPImport = "true");
+		SAMLPortlet.configureServiceProvider(
+			enbleLDAPImport = "true"
+		);
 
 		User.logoutPG(specificURL = "http://www.able.com:9080");
 
 		// Workaround for LPS-94445
 
 		/*User.loginPG(
-		password = "test",
-		specificURL = "http://www.able.com:9080",
-		userEmailAddress = "ldapuseremail@liferay.com"
-	);
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			userEmailAddress = "ldapuseremail@liferay.com"
+		);
 
-	User.logoutPG(specificURL = "http://www.able.com:9080");
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-	User.loginPG(
-		password = "test",
-		specificURL = "http://www.able.com:9080",
-		userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	ProductMenu.gotoPortlet(
-		category = "Users",
-		panel = "Control Panel",
-		portlet = "Users and Organizations");
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
 
-	User.viewCP(
-		instance = "SAML#SPInitiatedSSOWithScreenNameIdentifier",
-		priority = "4",
-		samlEntityID = "samlidp",
-		userEmailAddress = "ldapuseremail@liferay.com",
-		userFirstName = "ldapusergivenname",
-		userLastName = "ldapusersn",
-		userScreenName = "ldapusercn");
+		User.viewCP(
+			userEmailAddress = "ldapuseremail@liferay.com",
+			userFirstName = "ldapusergivenname",
+			userLastName = "ldapusersn",
+			userScreenName = "ldapusercn"
+		);*/
+	}
 
-	SAML.configureLiferaySAMLAsSP(
-		nameIdentifierAttributeName = "screenName",
-		nameIdentifierFormat = "Unspecified",
-		samlEntityID = "samlsp",
-		spURL = "http://www.able.com:9080");
+	@priority = "4"
+	test SPInitiatedSSOWithScreenNameIdentifier {
+		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOWithScreenNameIdentifier";
 
-	ProductMenu.gotoPortlet(
-		category = "Configuration",
-		panel = "Control Panel",
-		portlet = "Server Administration");
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-	ServerAdministration.addCategoryLogLevels(
-		categoryName = "com.liferay.saml.opensaml.integration",
-		categoryPriority = "DEBUG");
+		SAML.configureLiferaySAMLAsSP(
+			nameIdentifierAttributeName = "screenName",
+			nameIdentifierFormat = "Unspecified",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080"
+		);
 
-	User.logoutPG();
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
 
-	User.viewLoggedOutPG();
+		ServerAdministration.addCategoryLogLevels(
+			categoryName = "com.liferay.saml.opensaml.integration",
+			categoryPriority = "DEBUG"
+		);
 
-	SAML.executeSPInitiatedSSO(
-		password = "test",
-		specificURL = "http://www.able.com:9080",
-		spURL = "http://www.able.com:9080/",
-		userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
-	User.viewLoggedInPG();
+		User.viewLoggedOutPG();
 
-	AssertConsoleTextPresent(value1 = "nameid-format:unspecified");
-}
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-@description = "This is a use case for LPS-50747."
-@priority = "5"
-test ValidateVulnerabilitiesXMLAttacks {
-	property test.name.skip.portal.instance = "SAML#ValidateVulnerabilitiesXMLAttacks";
+		User.viewLoggedInPG();
 
-	SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+		AssertConsoleTextPresent(value1 = "nameid-format:unspecified");
+	}
 
-	SAML.configureLiferaySAMLAsSP(
-		samlEntityID = "samlsp",
-		spURL = "http://www.able.com:9080/");
+	@description = "This is a use case for LPS-50747."
+	@priority = "5"
+	test ValidateVulnerabilitiesXMLAttacks {
+		property test.name.skip.portal.instance = "SAML#ValidateVulnerabilitiesXMLAttacks";
 
-	User.logoutPG();
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-	User.viewLoggedOutPG();
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-	SAML.executeSPInitiatedSSO(
-		password = "test",
-		specificURL = "http://www.able.com:9080",
-		spURL = "http://www.able.com:9080/",
-		userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
-	User.viewLoggedInPG();
+		User.viewLoggedOutPG();
 
-	ProductMenu.gotoPortlet(
-		category = "Content &amp; Data",
-		panel = "Site Administration",
-		portlet = "Web Content");
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	WebContentNavigator.gotoAddCP();
+		User.viewLoggedInPG();
 
-	var adminEditURL = Navigator.getCurrentURL();
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-	var maliciousURL = '''
+		WebContentNavigator.gotoAddCP();
+
+		var adminEditURL = Navigator.getCurrentURL();
+
+		var maliciousURL = '''
 				${adminEditURL}/&_15_content=%3C!DOCTYPE%20lolz%20%5B%0A%3C!ENTITY%20lol%20%22lol%22%3E%0A%3C!ENTITY%20lol2%20%22%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%26lol%3B%22%3E%0A%3C!ENTITY%20lol3%20%22%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%26lol2%3B%22%3E%0A%3C!ENTITY%20lol4%20%22%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%26lol3%3B%22%3E%0A%3C!ENTITY%20lol5%20%22%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%26lol4%3B%22%3E%0A%3C!ENTITY%20lol6%20%22%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%26lol5%3B%22%3E%0A%3C!ENTITY%20lol7%20%22%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%26lol6%3B%22%3E%0A%3C!ENTITY%20lol8%20%22%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%26lol7%3B%22%3E%0A%3C!ENTITY%20lol9%20%22%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%26lol8%3B%22%3E%0A%5D%3E%0A%3Clolz%3E%26lol9%3B%3C%2Flolz%3E
 			''';
 
-	Navigator.openSpecificURL(url = "${maliciousURL}");
+		Navigator.openSpecificURL(url = "${maliciousURL}");
 
-	WebContent.addCP(
-		webContentContent = "Web Content Content",
-		webContentTitle = "Web Content Title");
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title"
+		);
 
-	PortletEntry.publish();
+		PortletEntry.publish();
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	ProductMenu.gotoPortlet(
-		category = "Content &amp; Data",
-		panel = "Site Administration",
-		portlet = "Web Content");
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
 
-	WebContentNavigator.gotoAddCP();
+		WebContentNavigator.gotoAddCP();
 
-	var adminEditURL = Navigator.getCurrentURL();
+		var adminEditURL = Navigator.getCurrentURL();
 
-	Navigator.openSpecificURL(url = "${maliciousURL}");
+		Navigator.openSpecificURL(url = "${maliciousURL}");
 
-	WebContent.addCP(
-		webContentContent = "Web Content Content 2",
-		webContentTitle = "Web Content Title 2");
+		WebContent.addCP(
+			webContentContent = "Web Content Content 2",
+			webContentTitle = "Web Content Title 2"
+		);
 
-	PortletEntry.publish();
-}
+		PortletEntry.publish();
+	}
 
-@description = "Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
-@priority = "4"
-test ViewIdPInitiatedSSO {
-	property environment.acceptance = "false";
-	property test.name.skip.portal.instance = "SAML#ViewIdPInitiatedSSO";
+	@description = "Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
+	@priority = "4"
+	test ViewIdPInitiatedSSO {
+		property environment.acceptance = "false";
+		property test.name.skip.portal.instance = "SAML#ViewIdPInitiatedSSO";
 
-	SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-	SAML.configureLiferaySAMLAsSP(
-		samlEntityID = "samlsp",
-		spURL = "http://www.able.com:9080/");
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-	User.logoutPG();
+		User.logoutPG();
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	var portalURL = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-	// Verify SP is logged in
+		// Verify SP is logged in
 
-	SAML.executeIdPInitiatedSSO(
-		idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
-		password = "test",
-		spURL = "http://www.able.com:9080/",
-		userEmailAddress = "test@liferay.com");
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Verify IdP is logged in
+		// Verify IdP is logged in
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Logout SP and verify SP is logged out
+		// Logout SP and verify SP is logged out
 
-	User.logoutPG(specificURL = "http://www.able.com:9080");
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	// Verify IdP is also logged out
+		// Verify IdP is also logged out
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedOutPG();
-}
+		User.viewLoggedOutPG();
+	}
 
-@description = "LPS-50220 - IdP initiated SSO login should work regardless if 'Remember Me' is checked or not."
-@priority = "4"
-test ViewIdPInitiatedSSOWithRememberMeChecked {
-	property test.name.skip.portal.instance = "SAML#ViewIdPInitiatedSSOWithRememberMeChecked";
+	@description = "LPS-50220 - IdP initiated SSO login should work regardless if 'Remember Me' is checked or not."
+	@priority = "4"
+	test ViewIdPInitiatedSSOWithRememberMeChecked {
+		property test.name.skip.portal.instance = "SAML#ViewIdPInitiatedSSOWithRememberMeChecked";
 
-	SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-	SAML.configureLiferaySAMLAsSP(
-		samlEntityID = "samlsp",
-		spURL = "http://www.able.com:9080/");
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-	User.logoutPG();
+		User.logoutPG();
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	var portalURL = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-	// Verify SP is logged in
+		// Verify SP is logged in
 
-	SAML.executeIdPInitiatedSSO(
-		idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
-		password = "test",
-		rememberMeChecked = "true",
-		spURL = "http://www.able.com:9080/",
-		userEmailAddress = "test@liferay.com");
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			rememberMeChecked = "true",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Verify IdP is logged in
+		// Verify IdP is logged in
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Logout SP and verify SP is logged out
+		// Logout SP and verify SP is logged out
 
-	User.logoutPG(specificURL = "http://www.able.com:9080");
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	// Verify IdP is also logged out
+		// Verify IdP is also logged out
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedOutPG();
-}
+		User.viewLoggedOutPG();
+	}
 
-@description = "LPS-49666 - SAML Single Logout should support HTTP-POST binding."
-@priority = "4"
-test ViewSingleLogoutHTTPPostBindingInConsole {
-	property test.name.skip.portal.instance = "SAML#ViewSingleLogoutHTTPPostBindingInConsole";
+	@description = "LPS-49666 - SAML Single Logout should support HTTP-POST binding."
+	@priority = "4"
+	test ViewSingleLogoutHTTPPostBindingInConsole {
+		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutHTTPPostBindingInConsole";
 
-	SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-	SAML.configureLiferaySAMLAsSP(
-		samlEntityID = "samlsp",
-		spURL = "http://www.able.com:9080/");
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-	ProductMenu.gotoPortlet(
-		category = "Configuration",
-		panel = "Control Panel",
-		portlet = "Server Administration");
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
 
-	ServerAdministration.addCategoryLogLevels(
-		categoryName = "com.liferay.saml.opensaml.integration",
-		categoryPriority = "DEBUG");
+		ServerAdministration.addCategoryLogLevels(
+			categoryName = "com.liferay.saml.opensaml.integration",
+			categoryPriority = "DEBUG"
+		);
 
-	User.logoutPG();
+		User.logoutPG();
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	var portalURL = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
-	SAML.executeIdPInitiatedSSO(
-		idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
-		password = "test",
-		rememberMeChecked = "true",
-		spURL = "http://www.able.com:9080/",
-		userEmailAddress = "test@liferay.com");
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			rememberMeChecked = "true",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	User.logoutPG(specificURL = "http://www.able.com:9080");
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	AssertConsoleTextPresent(value1 = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST");
-}
+		AssertConsoleTextPresent(
+			value1 = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+		);
+	}
 
-@priority = "4"
-test ViewSingleLogoutAndForceAuthWithMultipleSPs {
-	property app.server.bundles.size = "2";
-	property databases.size = "2";
-	property test.name.skip.portal.instance = "SAML#ViewSingleLogoutAndForceAuthWithMultipleSPs";
+	@priority = "4"
+	test ViewSingleLogoutAndForceAuthWithMultipleSPs {
+		property app.server.bundles.size = "2";
+		property databases.size = "2";
+		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutAndForceAuthWithMultipleSPs";
 
-	SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-	SAML.configureLiferaySAMLAsSP(
-		samlEntityID = "samlsp",
-		spURL = "http://www.able.com:9080/");
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-	SAML.configureLiferaySAMLAsSP(
-		samlEntityID = "samlsp2",
-		spURL = "http://www.baker.com:10080");
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp2",
+			spURL = "http://www.baker.com:10080"
+		);
 
-	User.logoutPG();
+		User.logoutPG();
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	SAML.executeSPInitiatedSSO(
-		password = "test",
-		specificURL = "http://www.able.com:9080",
-		spURL = "http://www.able.com:9080/",
-		userEmailAddress = "test@liferay.com");
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Verify IdP is logged in
+		// Verify IdP is logged in
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	Navigator.openSpecificURL(url = "http://www.baker.com:10080");
+		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
 
-	Navigator.gotoLoginPage();
+		Navigator.gotoLoginPage();
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Initiate Single Logout for first SP
+		// Initiate Single Logout for first SP
 
-	User.logoutPG(specificURL = "http://www.able.com:9080");
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	// Verify IdP is also logged out
+		// Verify IdP is also logged out
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	// Verify second SP is also logged out
+		// Verify second SP is also logged out
 
-	Navigator.openSpecificURL(url = "http://www.baker.com:10080");
+		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	User.loginPG(
-		password = "test",
-		specificURL = "http://www.able.com:9080",
-		userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			specificURL = "http://www.able.com:9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	ProductMenu.gotoPortlet(
-		category = "Configuration",
-		panel = "Control Panel",
-		portlet = "SAML Admin");
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
 
-	SAMLNavigation.gotoIdentityProviderConnections();
+		SAMLNavigation.gotoIdentityProviderConnections();
 
-	SAMLPortlet.configureIdentityProviderConnection(
-		forceAuthn = "enable",
-		samlEntityID = "samlidp");
+		SAMLPortlet.configureIdentityProviderConnection(
+			forceAuthn = "enable",
+			samlEntityID = "samlidp"
+		);
 
-	Navigator.openSpecificURL(url = "http://www.baker.com:10080");
+		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
 
-	Navigator.gotoLoginPage();
+		Navigator.gotoLoginPage();
 
-	ProductMenu.gotoPortlet(
-		category = "Configuration",
-		panel = "Control Panel",
-		portlet = "SAML Admin");
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
 
-	SAMLNavigation.gotoIdentityProviderConnections();
+		SAMLNavigation.gotoIdentityProviderConnections();
 
-	SAMLPortlet.configureIdentityProviderConnection(
-		forceAuthn = "enable",
-		samlEntityID = "samlidp");
+		SAMLPortlet.configureIdentityProviderConnection(
+			forceAuthn = "enable",
+			samlEntityID = "samlidp"
+		);
 
-	User.logoutPG(specificURL = "http://www.baker.com:10080");
+		User.logoutPG(specificURL = "http://www.baker.com:10080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	User.loginPG(
-		password = "test",
-		specificURL = "http://www.able.com:9080",
-		userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			specificURL = "http://www.able.com:9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	Navigator.openSpecificURL(url = "http://www.baker.com:10080");
+		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
 
-	Navigator.gotoLoginPage();
+		Navigator.gotoLoginPage();
 
-	AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
-}
+		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
+	}
 
-@description = "Sign into portal by executing a SP initiated SSO login. This is done by clicking on the 'Sign In' link in the dockbar on the SP. After the SP is logged in, and if both instances has the same user and email address, the IdP will also be logged in."
-@priority = "4"
-test ViewSPInitiatedSSO {
-	property environment.acceptance = "false";
-	property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSO";
+	@description = "Sign into portal by executing a SP initiated SSO login. This is done by clicking on the 'Sign In' link in the dockbar on the SP. After the SP is logged in, and if both instances has the same user and email address, the IdP will also be logged in."
+	@priority = "4"
+	test ViewSPInitiatedSSO {
+		property environment.acceptance = "false";
+		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSO";
 
-	SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-	SAML.configureLiferaySAMLAsSP(
-		samlEntityID = "samlsp",
-		spURL = "http://www.able.com:9080/");
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/"
+		);
 
-	User.logoutPG();
+		User.logoutPG();
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	// Initiate Single Sign-On via SP
+		// Initiate Single Sign-On via SP
 
-	SAML.executeSPInitiatedSSO(
-		password = "test",
-		specificURL = "http://www.able.com:9080",
-		spURL = "http://www.able.com:9080/",
-		userEmailAddress = "test@liferay.com");
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Verify IdP is also logged in
+		// Verify IdP is also logged in
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Initiate Single Logout via SP
+		// Initiate Single Logout via SP
 
-	User.logoutPG(specificURL = "http://www.able.com:9080");
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	// Verify IdP is also logged out
+		// Verify IdP is also logged out
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedOutPG();
-}
+		User.viewLoggedOutPG();
+	}
 
-@priority = "4"
-test ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched {
-	property app.server.bundles.size = "2";
-	property databases.size = "2";
-	property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched";
+	@priority = "4"
+	test ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched {
+		property app.server.bundles.size = "2";
+		property databases.size = "2";
+		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched";
 
-	SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-	SAML.configureLiferaySAMLAsIdP(
-		idpURL = "http://www.able.com:9080",
-		samlEntityID = "samlidp2");
+		SAML.configureLiferaySAMLAsIdP(
+			idpURL = "http://www.able.com:9080",
+			samlEntityID = "samlidp2"
+		);
 
-	SAML.configureLiferaySAMLAsSP(
-		samlEntityID = "samlsp",
-		spURL = "http://www.baker.com:10080");
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.baker.com:10080"
+		);
 
-	User.logoutPG();
+		User.logoutPG();
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	SAML.connectSPAndIdP(
-		idpEntityID = "samlidp2",
-		idpURL = "http://www.able.com:9080",
-		spEntityID = "samlsp",
-		spURL = "http://www.baker.com:10080");
+		SAML.connectSPAndIdP(
+			idpEntityID = "samlidp2",
+			idpURL = "http://www.able.com:9080",
+			spEntityID = "samlsp",
+			spURL = "http://www.baker.com:10080"
+		);
 
-	User.logoutPG(specificURL = "http://www.able.com:9080");
+		User.logoutPG(specificURL = "http://www.able.com:9080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	// Initiate Single Sign-On via SP with first IdP
+		// Initiate Single Sign-On via SP with first IdP
 
-	SAML.executeSPInitiatedSSO(
-		idpName = "samlidp",
-		samlMultiIdPs = "true",
-		specificURL = "http://www.baker.com:10080");
+		SAML.executeSPInitiatedSSO(
+			idpName = "samlidp",
+			samlMultiIdPs = "true",
+			specificURL = "http://www.baker.com:10080"
+		);
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Verify first IdP is logged in
+		// Verify first IdP is logged in
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Initiate Single Logout via SP with first IdP
+		// Initiate Single Logout via SP with first IdP
 
-	User.logoutPG(specificURL = "http://www.baker.com:10080");
+		User.logoutPG(specificURL = "http://www.baker.com:10080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	// Verify first IdP is logged out
+		// Verify first IdP is logged out
 
-	Navigator.openURL();
+		Navigator.openURL();
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	// Initiate Single Sign-On via SP with second IdP
+		// Initiate Single Sign-On via SP with second IdP
 
-	SAML.executeSPInitiatedSSO(
-		idpName = "samlidp2",
-		samlMultiIdPs = "true",
-		specificURL = "http://www.baker.com:10080");
+		SAML.executeSPInitiatedSSO(
+			idpName = "samlidp2",
+			samlMultiIdPs = "true",
+			specificURL = "http://www.baker.com:10080"
+		);
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Verify second IdP is logged in
+		// Verify second IdP is logged in
 
-	Navigator.openSpecificURL(url = "http://www.able.com:9080");
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-	User.viewLoggedInPG();
+		User.viewLoggedInPG();
 
-	// Initiate Single Logout via SP with second IdP
+		// Initiate Single Logout via SP with second IdP
 
-	User.logoutPG(specificURL = "http://www.baker.com:10080");
+		User.logoutPG(specificURL = "http://www.baker.com:10080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	// Verify second IdP is logged out
+		// Verify second IdP is logged out
 
-	Navigator.openSpecificURL(url = "http://www.able.com:9080");
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	User.loginPG(
-		idpName = "samlidp",
-		password = "test",
-		samlMultiIdPs = "true",
-		specificURL = "http://www.baker.com:10080",
-		userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			idpName = "samlidp",
+			samlMultiIdPs = "true",
+			specificURL = "http://www.baker.com:10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	ProductMenu.gotoPortlet(
-		category = "Configuration",
-		panel = "Control Panel",
-		portlet = "SAML Admin");
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
 
-	SAMLNavigation.gotoIdentityProviderConnections();
+		SAMLNavigation.gotoIdentityProviderConnections();
 
-	SAMLPortlet.deleteSAMLConnection(samlEntityID = "samlidp");
+		SAMLPortlet.deleteSAMLConnection(samlEntityID = "samlidp");
 
-	SAMLNavigation.gotoIdentityProviderConnections();
+		SAMLNavigation.gotoIdentityProviderConnections();
 
-	SAMLPortlet.deleteSAMLConnection(samlEntityID = "samlidp2");
+		SAMLPortlet.deleteSAMLConnection(samlEntityID = "samlidp2");
 
-	SAMLNavigation.gotoGeneral();
+		SAMLNavigation.gotoGeneral();
 
-	AssertTextEquals(
-		locator1 = "CPSAMLAdmin#INFO_MESSAGE",
-		value1 = "You must configure at least one identity provider connection for SAML to function.");
+		AssertTextEquals(
+			locator1 = "CPSAMLAdmin#INFO_MESSAGE",
+			value1 = "You must configure at least one identity provider connection for SAML to function."
+		);
 
-	User.logoutPG(specificURL = "http://www.baker.com:10080");
+		User.logoutPG(specificURL = "http://www.baker.com:10080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	User.loginPG(
-		password = "test",
-		specificURL = "http://www.baker.com:10080",
-		userEmailAddress = "test@liferay.com");
+		User.loginPG(
+			specificURL = "http://www.baker.com:10080",
+			password = "test",
+			userEmailAddress = "test@liferay.com"
+		);
 
-	ProductMenu.gotoPortlet(
-		category = "Configuration",
-		panel = "Control Panel",
-		portlet = "SAML Admin");
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin"
+		);
 
-	SAMLNavigation.gotoServiceProvider();
+		SAMLNavigation.gotoServiceProvider();
 
-	SAMLPortlet.configureServiceProvider(allowShowingTheLoginPortlet = "disable");
+		SAMLPortlet.configureServiceProvider(allowShowingTheLoginPortlet = "disable");
 
-	User.logoutPG(specificURL = "http://www.baker.com:10080");
+		User.logoutPG(specificURL = "http://www.baker.com:10080");
 
-	User.viewLoggedOutPG();
+		User.viewLoggedOutPG();
 
-	Navigator.gotoLoginPage();
+		Navigator.gotoLoginPage();
 
-	AssertTextEquals(
-		locator1 = "Portlet#PORTLET_CONTENT",
-		value1 = "No identity provider is available to sign you in.");
-}
+		AssertTextEquals(
+			locator1 = "Portlet#PORTLET_CONTENT",
+			value1 = "No identity provider is available to sign you in."
+		);
+	}
 }

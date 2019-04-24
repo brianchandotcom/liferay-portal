@@ -30,6 +30,7 @@ class FragmentEditableFieldTooltip extends Component {
 	 */
 	created() {
 		this._handleDocumentClick = this._handleDocumentClick.bind(this);
+		this._handleFragmentEntryLinkListWrapperScroll = this._handleFragmentEntryLinkListWrapperScroll.bind(this);
 
 		this._handleWindowResize = debounce(
 			this._handleWindowResize.bind(this),
@@ -47,20 +48,35 @@ class FragmentEditableFieldTooltip extends Component {
 			'click',
 			this._handleDocumentClick
 		);
+
+		const fragmentEntryLinkListWrapper = document.querySelector(
+			'.fragment-entry-link-list-wrapper'
+		);
+
+		if (fragmentEntryLinkListWrapper) {
+			fragmentEntryLinkListWrapper.addEventListener(
+				'scroll',
+				this._handleFragmentEntryLinkListWrapperScroll
+			);
+		}
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	disposed() {
-		if (this._documentClickHandler) {
-			this._documentClickHandler.removeListener();
-			this._documentClickHandler = null;
-		}
+		this._documentClickHandler.removeListener();
+		this._windowResizeHandler.removeListener();
 
-		if (this._windowResizeHandler) {
-			this._windowResizeHandler.removeListener();
-			this._windowResizeHandler = null;
+		const fragmentEntryLinkListWrapper = document.querySelector(
+			'.fragment-entry-link-list-wrapper'
+		);
+
+		if (fragmentEntryLinkListWrapper) {
+			fragmentEntryLinkListWrapper.removeEventListener(
+				'scroll',
+				this._handleFragmentEntryLinkListWrapperScroll
+			);
 		}
 	}
 
@@ -125,6 +141,13 @@ class FragmentEditableFieldTooltip extends Component {
 	 * @private
 	 */
 	_handleWindowResize() {
+		this._alignTooltip();
+	}
+
+	/**
+	 * @private
+	 */
+	_handleFragmentEntryLinkListWrapperScroll() {
 		this._alignTooltip();
 	}
 

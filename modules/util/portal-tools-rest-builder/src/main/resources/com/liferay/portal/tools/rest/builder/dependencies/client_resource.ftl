@@ -67,13 +67,17 @@ public class ${schemaName}Resource {
 
 			httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-			HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
 			<#if javaMethodSignature.returnType?contains("Page<")>
+				HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
 				return Page.of(httpResponse.getContent(), ${schemaName}SerDes::toDTO);
 			<#elseif javaMethodSignature.returnType?ends_with("String")>
+				HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
 				return httpResponse.getContent();
 			<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
+				HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
 				try {
 					return ${javaMethodSignature.returnType?replace(".dto.", ".client.serdes.")}SerDes.toDTO(httpResponse.getContent());
 				}
@@ -82,6 +86,8 @@ public class ${schemaName}Resource {
 
 					throw e;
 				}
+			<#else>
+				httpInvoker.invoke();
 			</#if>
 		}
 	</#list>

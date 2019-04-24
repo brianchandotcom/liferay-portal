@@ -71,14 +71,20 @@ refererURL.setParameter("updateLayout", "true");
 		%>
 
 		<c:if test="<%= layout.isTypePortlet() %>">
-			<div class="add-portlet-message">
-				<h4><liferay-ui:message key="adding-widgets" /></h4>
+			<div class="bg-dark m-4 p-3 small text-white">
+				<p class="h3"><liferay-ui:message key="adding-widgets" /></p>
 
-				<h6 class="info-message"><liferay-ui:message key="to-add-a-widget-to-the-page-just-drag-it" /></h6>
+				<p class="mt-3"><liferay-ui:message key="to-add-a-widget-to-the-page-just-drag-it" /></p>
 
-				<h6><aui:icon image="live" label="can-be-added-once" markupView="lexicon" /></h6>
+				<ul class="list-unstyled mb-0">
+					<li class="my-2">
+						<aui:icon image="live" label="can-be-added-once" markupView="lexicon" />
+					</li>
 
-				<h6><aui:icon image="grid" label="can-be-added-several-times" markupView="lexicon" /></h6>
+					<li class="my-2">
+						<aui:icon image="grid" label="can-be-added-several-times" markupView="lexicon" />
+					</li>
+				</ul>
 			</div>
 		</c:if>
 

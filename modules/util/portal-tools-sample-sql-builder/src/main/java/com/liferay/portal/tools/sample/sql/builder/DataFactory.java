@@ -525,13 +525,6 @@ public class DataFactory {
 		return allAssetVocabularyModels;
 	}
 
-	public long getBlogsAssetEntryClassNameId() {
-		ClassNameModel classNameModel = _classNameModels.get(
-			getCombinedClassName(MBDiscussion.class, BlogsEntry.class));
-
-		return classNameModel.getClassNameId();
-	}
-
 	public long getBlogsEntryClassNameId() {
 		return getClassNameId(BlogsEntry.class);
 	}
@@ -794,13 +787,6 @@ public class DataFactory {
 
 	public VirtualHostModel getVirtualHostModel() {
 		return _virtualHostModel;
-	}
-
-	public long getWikiAssetEntryClassNameId() {
-		ClassNameModel classNameModel = _classNameModels.get(
-			getCombinedClassName(MBDiscussion.class, WikiPage.class));
-
-		return classNameModel.getClassNameId();
 	}
 
 	public long getWikiPageClassNameId() {
@@ -2292,9 +2278,12 @@ public class DataFactory {
 	public AssetEntryModel newMBDiscussionAssetEntryModel(
 		BlogsEntryModel blogsEntryModel) {
 
+		ClassNameModel classNameModel = _classNameModels.get(
+			getCombinedClassName(MBDiscussion.class, BlogsEntry.class));
+
 		return newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
-			blogsEntryModel.getModifiedDate(), getBlogsAssetEntryClassNameId(),
+			blogsEntryModel.getModifiedDate(), classNameModel.getClassNameId(),
 			blogsEntryModel.getEntryId(), "", 0, true, false, "",
 			String.valueOf(blogsEntryModel.getGroupId()));
 	}
@@ -2302,9 +2291,12 @@ public class DataFactory {
 	public AssetEntryModel newMBDiscussionAssetEntryModel(
 		WikiPageModel wikiPageModel) {
 
+		ClassNameModel classNameModel = _classNameModels.get(
+			getCombinedClassName(MBDiscussion.class, WikiPage.class));
+
 		return newAssetEntryModel(
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
-			wikiPageModel.getModifiedDate(), getWikiAssetEntryClassNameId(),
+			wikiPageModel.getModifiedDate(), classNameModel.getClassNameId(),
 			wikiPageModel.getResourcePrimKey(), "", 0, true, false, "",
 			String.valueOf(wikiPageModel.getGroupId()));
 	}

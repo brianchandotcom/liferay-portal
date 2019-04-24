@@ -14,9 +14,10 @@
 
 package com.liferay.comment.notifications.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
+import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
@@ -27,14 +28,15 @@ import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
@@ -52,11 +54,20 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Mockito;
+import org.mockito.stubbing.OngoingStubbing;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.api.mockito.expectation.ConstructorExpectationSetup;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 /**
  * @author Roberto Díaz
  * @author Sergio González
  */
-@RunWith(Arquillian.class)
+@PrepareForTest(GroupServiceSettingsLocator.class)
+@RunWith(PowerMockRunner.class)
 public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@ClassRule
@@ -68,6 +79,8 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		setUpDiscussionEmailCommentsAddedDisabled();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -82,39 +95,30 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 	public void testAddUserNotificationWhenDiscussionEmailPortalPropertyDisabled()
 		throws Exception {
 
-		PortletPreferences portletPreferences =
-			givenThatDiscussionEmailCommentsAddedIsDisabled();
+		subscribeToContainer();
 
-		try {
-			subscribeToContainer();
+		BaseModel<?> baseModel = addBaseModel();
 
-			BaseModel<?> baseModel = addBaseModel();
+		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 
-			Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+		List<JSONObject> userNotificationEventsJSONObjects =
+			getUserNotificationEventsJSONObjects(
+				user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
 
-			List<JSONObject> userNotificationEventsJSONObjects =
-				getUserNotificationEventsJSONObjects(
-					user.getUserId(), (Long)baseModel.getPrimaryKeyObj());
+		Assert.assertEquals(
+			userNotificationEventsJSONObjects.toString(), 1,
+			userNotificationEventsJSONObjects.size());
 
+		for (JSONObject userNotificationEventsJSONObject :
+				userNotificationEventsJSONObjects) {
+
+			Assert.assertTrue(
+				isValidUserNotificationEventObject(
+					(Long)baseModel.getPrimaryKeyObj(),
+					userNotificationEventsJSONObject));
 			Assert.assertEquals(
-				userNotificationEventsJSONObjects.toString(), 1,
-				userNotificationEventsJSONObjects.size());
-
-			for (JSONObject userNotificationEventsJSONObject :
-					userNotificationEventsJSONObjects) {
-
-				Assert.assertTrue(
-					isValidUserNotificationEventObject(
-						(Long)baseModel.getPrimaryKeyObj(),
-						userNotificationEventsJSONObject));
-				Assert.assertEquals(
-					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-					userNotificationEventsJSONObject.getInt(
-						"notificationType"));
-			}
-		}
-		finally {
-			restorePortletPreferences(portletPreferences);
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				userNotificationEventsJSONObject.getInt("notificationType"));
 		}
 	}
 
@@ -122,42 +126,32 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 	public void testUpdateUserNotificationWhenDiscussionEmailPortalPropertyDisabled()
 		throws Exception {
 
-		PortletPreferences portletPreferences =
-			givenThatDiscussionEmailCommentsAddedIsDisabled();
+		BaseModel<?> baseModel = addBaseModel();
 
-		try {
-			BaseModel<?> baseModel = addBaseModel();
+		subscribeToContainer();
 
-			subscribeToContainer();
+		BaseModel<?> updatedBasemodel = updateBaseModel(baseModel);
 
-			BaseModel<?> updatedBasemodel = updateBaseModel(baseModel);
+		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 
-			Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+		List<JSONObject> userNotificationEventsJSONObjects =
+			getUserNotificationEventsJSONObjects(
+				user.getUserId(), (Long)updatedBasemodel.getPrimaryKeyObj());
 
-			List<JSONObject> userNotificationEventsJSONObjects =
-				getUserNotificationEventsJSONObjects(
-					user.getUserId(),
-					(Long)updatedBasemodel.getPrimaryKeyObj());
+		Assert.assertEquals(
+			userNotificationEventsJSONObjects.toString(), 1,
+			userNotificationEventsJSONObjects.size());
 
+		for (JSONObject userNotificationEventsJSONObject :
+				userNotificationEventsJSONObjects) {
+
+			Assert.assertTrue(
+				isValidUserNotificationEventObject(
+					(Long)baseModel.getPrimaryKeyObj(),
+					userNotificationEventsJSONObject));
 			Assert.assertEquals(
-				userNotificationEventsJSONObjects.toString(), 1,
-				userNotificationEventsJSONObjects.size());
-
-			for (JSONObject userNotificationEventsJSONObject :
-					userNotificationEventsJSONObjects) {
-
-				Assert.assertTrue(
-					isValidUserNotificationEventObject(
-						(Long)baseModel.getPrimaryKeyObj(),
-						userNotificationEventsJSONObject));
-				Assert.assertEquals(
-					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-					userNotificationEventsJSONObject.getInt(
-						"notificationType"));
-			}
-		}
-		finally {
-			restorePortletPreferences(portletPreferences);
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+				userNotificationEventsJSONObject.getInt("notificationType"));
 		}
 	}
 
@@ -189,22 +183,6 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 	@Override
 	protected String getPortletId() {
 		return "com_liferay_comment_web_portlet_CommentPortlet";
-	}
-
-	protected PortletPreferences
-			givenThatDiscussionEmailCommentsAddedIsDisabled()
-		throws Exception {
-
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
-			user.getCompanyId(), false);
-
-		portletPreferences.setValue(
-			PropsKeys.DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED,
-			Boolean.FALSE.toString());
-
-		portletPreferences.store();
-
-		return portletPreferences;
 	}
 
 	@Override
@@ -241,6 +219,39 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 		portletPreferences.store();
 	}
 
+	protected void setUpDiscussionEmailCommentsAddedDisabled()
+		throws Exception {
+
+		ConstructorExpectationSetup<GroupServiceSettingsLocator>
+			groupServiceSettingsLocatorConstructorExpectationSetup =
+				PowerMockito.whenNew(GroupServiceSettingsLocator.class);
+
+		OngoingStubbing<GroupServiceSettingsLocator>
+			groupServiceSettingsLocatorOngoingStubbing =
+				groupServiceSettingsLocatorConstructorExpectationSetup.
+					withArguments(
+						Mockito.anyLong(),
+						Mockito.eq(MBConstants.SERVICE_NAME));
+
+		groupServiceSettingsLocatorOngoingStubbing.thenReturn(
+			_groupServiceSettingsLocator);
+
+		Mockito.when(
+			_configurationProvider.getConfiguration(
+				CommentGroupServiceConfiguration.class,
+				_groupServiceSettingsLocator)
+		).thenReturn(
+			_commentGroupServiceConfiguration
+		);
+
+		Mockito.when(
+			_commentGroupServiceConfiguration.
+				discussionEmailCommentsAddedEnabled()
+		).thenReturn(
+			false
+		);
+	}
+
 	@Override
 	protected void subscribeToContainer() throws Exception {
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
@@ -266,6 +277,13 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 			serviceContext);
 	}
 
+	private final CommentGroupServiceConfiguration
+		_commentGroupServiceConfiguration = Mockito.mock(
+			CommentGroupServiceConfiguration.class);
+	private final ConfigurationProvider _configurationProvider = Mockito.mock(
+		ConfigurationProvider.class);
 	private BlogsEntry _entry;
+	private final GroupServiceSettingsLocator _groupServiceSettingsLocator =
+		Mockito.mock(GroupServiceSettingsLocator.class);
 
 }

@@ -62,8 +62,7 @@ public class DLValidatorTest {
 		for (String blacklistLastChar : PropsValues.DL_CHAR_LAST_BLACKLIST) {
 			Assert.assertEquals(
 				name + StringPool.BLANK,
-				_dlValidator.fixName(
-					name + UnicodeFormatter.parseString(blacklistLastChar)));
+				_dlValidator.fixName(name + _parseString(blacklistLastChar)));
 		}
 	}
 
@@ -94,6 +93,14 @@ public class DLValidatorTest {
 		String name = StringUtil.randomString(20);
 
 		Assert.assertEquals(name, _dlValidator.fixName(name));
+	}
+
+	private String _parseString(String s) {
+		if (s.startsWith(UnicodeFormatter.UNICODE_PREFIX)) {
+			return UnicodeFormatter.parseString(s);
+		}
+
+		return s;
 	}
 
 	@Inject

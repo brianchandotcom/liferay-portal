@@ -1793,6 +1793,65 @@ public class JenkinsResultsParserUtil {
 		return Lists.partition(list, partitionSize);
 	}
 
+	public static void printTable(String[][] table) {
+		if (table.length == 0) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		int[] rowSizes = new int[table[0].length];
+
+		for (String[] row : table) {
+			for (int j = 0; j < row.length; j++) {
+				String item = row[j];
+
+				if (rowSizes[j] <= item.length()) {
+					rowSizes[j] = item.length();
+				}
+			}
+		}
+
+		int rowTotalSize = 0;
+
+		for (int i = 0; i < table.length; i++) {
+			String[] row = table[i];
+
+			for (int j = 0; j < row.length; j++) {
+				String item = row[j];
+
+				sb.append(String.format("| %-" + rowSizes[j] + "s ", item));
+
+				if (i == 0) {
+					rowTotalSize += rowSizes[j] + 3;
+				}
+			}
+
+			sb.append("|\n");
+
+			if (i == 0) {
+				rowTotalSize++;
+			}
+		}
+
+		String tableString = sb.toString();
+
+		sb = new StringBuilder();
+
+		for (int i = 0; i < rowTotalSize; i++) {
+			sb.append("-");
+		}
+
+		sb.append("\n");
+		sb.append(tableString);
+
+		for (int i = 0; i < rowTotalSize; i++) {
+			sb.append("-");
+		}
+
+		System.out.println(sb.toString());
+	}
+
 	public static String read(File file) throws IOException {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}

@@ -93,6 +93,16 @@ public class EtcdUtil {
 		}
 	}
 
+	public static boolean has(String etcdServerURL, String key) {
+		Node node = get(etcdServerURL, key);
+
+		if (node == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public static Node put(String etcdServerURL, String key) {
 		return put(etcdServerURL, key, null);
 	}

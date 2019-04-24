@@ -37,6 +37,10 @@ public class DLFolderConstants {
 
 	public static final String NAME_GENERAL_RESTRICTIONS = "blank";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String NAME_LABEL = "folder-name";
 
 	public static final int RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW = 1;

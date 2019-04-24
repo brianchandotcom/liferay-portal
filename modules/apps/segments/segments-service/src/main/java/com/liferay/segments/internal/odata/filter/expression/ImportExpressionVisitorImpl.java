@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal.odata.filter.expression;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -57,6 +58,9 @@ public class ImportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		_entityModelFieldMapper = entityModelFieldMapper;
 		_segmentsFieldCustomizerRegistry = segmentsFieldCustomizerRegistry;
 
+		_customFieldEntityFields =
+			entityModelFieldMapper.getCustomFieldEntityFields(entityModel);
+
 		_filterStringSB = new StringBuilder(filterString);
 	}
 
@@ -72,6 +76,9 @@ public class ImportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 		if (Objects.equals(EntityField.Type.ID, entityField.getType())) {
 			_importEntityFieldIDReferences(entityField, right);
+		}
+		else if (_customFieldEntityFields.containsKey(entityField.getName())) {
+			_importEntityFieldCustomFieldReferences(entityField);
 		}
 
 		return _filterStringSB.toString();
@@ -139,6 +146,25 @@ public class ImportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return _filterStringSB.toString();
 	}
 
+	private void _importEntityFieldCustomFieldReferences(
+		EntityField entityField) {
+
+		long expandoColumnId = _entityModelFieldMapper.getExpandoColumnId(
+			entityField.getName());
+
+		Map<Long, Long> newPrimaryKeysMap =
+			(Map<Long, Long>)_portletDataContext.getNewPrimaryKeysMap(
+				ExpandoColumn.class);
+
+		long newPrimaryKey = MapUtil.getLong(
+			newPrimaryKeysMap, GetterUtil.getLong(expandoColumnId),
+			GetterUtil.getLong(expandoColumnId));
+
+		_replace(
+			_filterStringSB, String.valueOf(expandoColumnId),
+			String.valueOf(newPrimaryKey));
+	}
+
 	private void _importEntityFieldIDReferences(
 		EntityField entityField, Object value) {
 
@@ -180,6 +206,7 @@ public class ImportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		sb.replace(pos, pos + oldValue.length(), newValue);
 	}
 
+	private final Map<String, EntityField> _customFieldEntityFields;
 	private final EntityModel _entityModel;
 	private final EntityModelFieldMapper _entityModelFieldMapper;
 	private final StringBuilder _filterStringSB;

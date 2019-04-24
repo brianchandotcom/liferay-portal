@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal.odata.filter.expression;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -58,6 +59,9 @@ public class ExportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		_entityModel = entityModel;
 		_entityModelFieldMapper = entityModelFieldMapper;
 		_segmentsFieldCustomizerRegistry = segmentsFieldCustomizerRegistry;
+
+		_customFieldEntityFields =
+			entityModelFieldMapper.getCustomFieldEntityFields(entityModel);
 	}
 
 	@Override
@@ -72,6 +76,9 @@ public class ExportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 		if (Objects.equals(EntityField.Type.ID, entityField.getType())) {
 			_exportEntityFieldIDReferences(entityField, right);
+		}
+		else if (_customFieldEntityFields.containsKey(entityField.getName())) {
+			_exportEntityFieldCustomFieldReferences(entityField);
 		}
 
 		return null;
@@ -139,6 +146,24 @@ public class ExportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return null;
 	}
 
+	private void _exportEntityFieldCustomFieldReferences(
+		EntityField entityField) {
+
+		ExpandoColumn expandoColumn = _entityModelFieldMapper.getExpandoColumn(
+			entityField.getName());
+
+		if (expandoColumn == null) {
+			return;
+		}
+
+		Element entityElement = _portletDataContext.getExportDataElement(
+			_stagedModel);
+
+		_portletDataContext.addReferenceElement(
+			_stagedModel, entityElement, expandoColumn,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
+	}
+
 	private void _exportEntityFieldIDReferences(
 		EntityField entityField, Object value) {
 
@@ -172,6 +197,7 @@ public class ExportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
 	}
 
+	private final Map<String, EntityField> _customFieldEntityFields;
 	private final EntityModel _entityModel;
 	private final EntityModelFieldMapper _entityModelFieldMapper;
 	private final PortletDataContext _portletDataContext;

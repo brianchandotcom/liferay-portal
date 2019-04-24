@@ -124,53 +124,47 @@ public class ConfiguratorExtender extends AbstractExtender {
 			propertyFunction,
 		String filePattern) {
 
-		try {
-			Enumeration<URL> entries = bundle.findEntries(
-				configurationPath, filePattern, true);
+		Enumeration<URL> entries = bundle.findEntries(
+			configurationPath, filePattern, true);
 
-			if (entries == null) {
-				return;
-			}
-
-			while (entries.hasMoreElements()) {
-				URL url = entries.nextElement();
-
-				String name = url.getFile();
-
-				int lastIndexOfSlash = name.lastIndexOf('/');
-
-				if (lastIndexOfSlash < 0) {
-					lastIndexOfSlash = 0;
-				}
-
-				String factoryPid = null;
-				String pid = null;
-
-				int index = name.lastIndexOf('-');
-
-				if (index > lastIndexOfSlash) {
-					factoryPid = name.substring(lastIndexOfSlash, index);
-					pid = name.substring(
-						index + 1, name.length() + 1 - filePattern.length());
-				}
-				else {
-					pid = name.substring(
-						lastIndexOfSlash,
-						name.length() + 1 - filePattern.length());
-				}
-
-				namedConfigurationContents.add(
-					new NamedConfigurationContent(
-						factoryPid, pid,
-						() -> {
-							try (InputStream inputStream = url.openStream()) {
-								return propertyFunction.apply(inputStream);
-							}
-						}));
-			}
+		if (entries == null) {
+			return;
 		}
-		catch (Throwable t) {
-			_logger.log(Logger.LOG_INFO, t.getMessage(), t);
+
+		while (entries.hasMoreElements()) {
+			URL url = entries.nextElement();
+
+			String name = url.getFile();
+
+			int lastIndexOfSlash = name.lastIndexOf('/');
+
+			if (lastIndexOfSlash < 0) {
+				lastIndexOfSlash = 0;
+			}
+
+			String factoryPid = null;
+			String pid = null;
+
+			int index = name.lastIndexOf('-');
+
+			if (index > lastIndexOfSlash) {
+				factoryPid = name.substring(lastIndexOfSlash, index);
+				pid = name.substring(
+					index + 1, name.length() + 1 - filePattern.length());
+			}
+			else {
+				pid = name.substring(
+					lastIndexOfSlash, name.length() + 1 - filePattern.length());
+			}
+
+			namedConfigurationContents.add(
+				new NamedConfigurationContent(
+					factoryPid, pid,
+					() -> {
+						try (InputStream inputStream = url.openStream()) {
+							return propertyFunction.apply(inputStream);
+						}
+					}));
 		}
 	}
 

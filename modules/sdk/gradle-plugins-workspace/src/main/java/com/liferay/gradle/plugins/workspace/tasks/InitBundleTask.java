@@ -133,7 +133,7 @@ public class InitBundleTask extends JavaExec {
 		if (!providedModules.isEmpty()) {
 			args.add("--provided-modules");
 
-			StringBuilder stringBuilder = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
 			Iterator<File> iterator = providedModules.iterator();
 
@@ -148,14 +148,14 @@ public class InitBundleTask extends JavaExec {
 
 				String pathString = path.toString();
 
-				stringBuilder.append(pathString);
+				sb.append(pathString);
 
 				if (iterator.hasNext()) {
-					stringBuilder.append(',');
+					sb.append(',');
 				}
 			}
 
-			String fileString = stringBuilder.toString();
+			String fileString = sb.toString();
 
 			args.add(fileString);
 		}

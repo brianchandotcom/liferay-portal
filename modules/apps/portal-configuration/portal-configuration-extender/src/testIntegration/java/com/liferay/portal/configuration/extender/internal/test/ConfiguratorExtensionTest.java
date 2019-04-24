@@ -15,11 +15,13 @@
 package com.liferay.portal.configuration.extender.internal.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
+import com.liferay.petra.io.DummyOutputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.extender.internal.ConfiguratorExtension;
 import com.liferay.portal.configuration.extender.internal.NamedConfigurationContent;
 
 import java.io.IOException;
+import java.io.PrintStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,7 +99,16 @@ public class ConfiguratorExtensionTest {
 					null, "test.pid",
 					() -> new TestProperties<>("key", "value"))));
 
-		configuratorExtension.start();
+		PrintStream printStream = System.err;
+
+		System.setErr(new PrintStream(new DummyOutputStream()));
+
+		try {
+			configuratorExtension.start();
+		}
+		finally {
+			System.setErr(printStream);
+		}
 
 		_configurationExtensions.add(configuratorExtension);
 

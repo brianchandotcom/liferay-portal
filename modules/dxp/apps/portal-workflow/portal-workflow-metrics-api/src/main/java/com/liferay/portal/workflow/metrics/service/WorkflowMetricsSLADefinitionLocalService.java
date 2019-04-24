@@ -329,7 +329,7 @@ public interface WorkflowMetricsSLADefinitionLocalService
 		long companyId, long processId, int status);
 
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
-			long workflowMetricsSLADefinitiontId, String name,
+			long workflowMetricsSLADefinitionId, String name,
 			String description, long duration, String[] pauseNodeKeys,
 			String[] startNodeKeys, String[] stopNodeKeys,
 			ServiceContext serviceContext)

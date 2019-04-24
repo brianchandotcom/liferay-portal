@@ -443,7 +443,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 	public static
 		com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition
 				updateWorkflowMetricsSLADefinition(
-					long workflowMetricsSLADefinitiontId, String name,
+					long workflowMetricsSLADefinitionId, String name,
 					String description, long duration, String[] pauseNodeKeys,
 					String[] startNodeKeys, String[] stopNodeKeys,
 					com.liferay.portal.kernel.service.ServiceContext
@@ -451,7 +451,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateWorkflowMetricsSLADefinition(
-			workflowMetricsSLADefinitiontId, name, description, duration,
+			workflowMetricsSLADefinitionId, name, description, duration,
 			pauseNodeKeys, startNodeKeys, stopNodeKeys, serviceContext);
 	}
 

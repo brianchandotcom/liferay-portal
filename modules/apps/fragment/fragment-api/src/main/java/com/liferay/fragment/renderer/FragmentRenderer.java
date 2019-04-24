@@ -41,7 +41,9 @@ public interface FragmentRenderer {
 		return clazz.getName();
 	}
 
-	public String getLabel(Locale locale);
+	public default String getLabel(Locale locale) {
+		return StringPool.BLANK;
+	}
 
 	public default int getType() {
 		return FragmentConstants.TYPE_COMPONENT;

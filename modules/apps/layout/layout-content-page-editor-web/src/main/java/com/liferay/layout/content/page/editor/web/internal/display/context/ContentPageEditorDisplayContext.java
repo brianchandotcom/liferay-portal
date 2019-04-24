@@ -961,7 +961,7 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"imagePreviewURL", fragmentRenderer.getImagePreviewURL(request)
 			).put(
-				"name", fragmentRenderer.getLabel(null)
+				"name", fragmentRenderer.getLabel(themeDisplay.getLocale())
 			);
 
 			soyContextDynamicFragments.add(soyContextDynamicFragment);

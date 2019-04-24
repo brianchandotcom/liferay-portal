@@ -36,7 +36,6 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -56,11 +55,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	@Override
 	public String getKey() {
 		return FragmentRendererConstants.FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY;
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return "Fragment Entry";
 	}
 
 	@Override

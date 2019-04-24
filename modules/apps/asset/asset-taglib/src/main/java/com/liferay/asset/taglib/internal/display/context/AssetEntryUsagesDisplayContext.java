@@ -160,8 +160,6 @@ public class AssetEntryUsagesDisplayContext {
 			plid = layout.getClassPK();
 		}
 
-		layout = LayoutLocalServiceUtil.fetchLayout(plid);
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
 				fetchLayoutPageTemplateEntryByPlid(plid);

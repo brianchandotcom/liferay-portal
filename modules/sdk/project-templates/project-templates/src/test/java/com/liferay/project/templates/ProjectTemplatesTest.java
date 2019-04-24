@@ -3182,9 +3182,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateWarCoreExtInWorkspace() throws Exception {
-		File workspaceDir = _buildWorkspace();
-
-		File modulesDir = new File(workspaceDir, "modules");
+		File modulesDir = new File(_buildWorkspace(), "modules");
 
 		File projectDir = _buildTemplateWithGradle(
 			modulesDir, "war-core-ext", "test-war-core-ext");

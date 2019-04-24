@@ -959,8 +959,7 @@ public class ContentPageEditorDisplayContext {
 			soyContextDynamicFragment.put(
 				"fragmentEntryKey", fragmentRenderer.getKey()
 			).put(
-				"imagePreviewURL",
-				fragmentRenderer.getImagePreviewURL(null, request)
+				"imagePreviewURL", fragmentRenderer.getImagePreviewURL(request)
 			).put(
 				"name", fragmentRenderer.getLabel(null)
 			);

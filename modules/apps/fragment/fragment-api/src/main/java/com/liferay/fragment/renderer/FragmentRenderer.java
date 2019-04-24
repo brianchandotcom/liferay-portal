@@ -29,11 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface FragmentRenderer {
 
-	public String getCollectionKey(
-		FragmentRendererContext fragmentRendererContext);
-
 	public default String getImagePreviewURL(
-		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
 		return StringPool.BLANK;

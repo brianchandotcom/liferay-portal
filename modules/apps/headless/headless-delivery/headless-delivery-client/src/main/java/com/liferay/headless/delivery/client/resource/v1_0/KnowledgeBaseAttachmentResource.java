@@ -109,7 +109,7 @@ public class KnowledgeBaseAttachmentResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(

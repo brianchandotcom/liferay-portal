@@ -41,7 +41,7 @@ public class TaxonomyCategoryResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public void putTaxonomyCategoryBatch(
@@ -58,7 +58,7 @@ public class TaxonomyCategoryResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

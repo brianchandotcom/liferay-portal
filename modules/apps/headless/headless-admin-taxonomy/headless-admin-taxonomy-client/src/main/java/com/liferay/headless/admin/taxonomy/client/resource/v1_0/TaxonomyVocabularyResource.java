@@ -107,7 +107,7 @@ public class TaxonomyVocabularyResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public TaxonomyVocabulary getTaxonomyVocabulary(Long taxonomyVocabularyId)

@@ -44,7 +44,7 @@ public class KeywordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public void putKeywordBatch(
@@ -61,7 +61,7 @@ public class KeywordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public Page<Keyword> postKeywordsCommonPage(

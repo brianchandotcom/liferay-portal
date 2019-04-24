@@ -43,7 +43,7 @@ public class BlogPostingResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception {
@@ -147,7 +147,7 @@ public class BlogPostingResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public com.liferay.headless.delivery.client.dto.v1_0.Rating

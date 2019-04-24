@@ -101,7 +101,7 @@ public class CommentResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public Comment getComment(Long commentId) throws Exception {

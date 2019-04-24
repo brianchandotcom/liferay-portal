@@ -103,7 +103,7 @@ public class DataLayoutResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public void deleteDataLayout(Long dataLayoutId) throws Exception {
@@ -117,7 +117,7 @@ public class DataLayoutResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public DataLayout getDataLayout(Long dataLayoutId) throws Exception {
@@ -216,7 +216,7 @@ public class DataLayoutResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	private static final Logger _logger = Logger.getLogger(

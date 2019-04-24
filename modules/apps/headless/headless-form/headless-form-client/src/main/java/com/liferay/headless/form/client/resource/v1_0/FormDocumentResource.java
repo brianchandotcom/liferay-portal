@@ -40,7 +40,7 @@ public class FormDocumentResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public FormDocument getFormDocument(Long formDocumentId) throws Exception {

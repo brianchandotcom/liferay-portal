@@ -117,7 +117,7 @@ public class DataRecordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public DataRecord getDataRecord(Long dataRecordId) throws Exception {

@@ -43,7 +43,7 @@ public class DocumentFolderResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public DocumentFolder getDocumentFolder(Long documentFolderId)

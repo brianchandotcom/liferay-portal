@@ -45,7 +45,7 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public MessageBoardMessage getMessageBoardMessage(
@@ -156,7 +156,7 @@ public class MessageBoardMessageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public com.liferay.headless.delivery.client.dto.v1_0.Rating

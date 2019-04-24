@@ -103,7 +103,7 @@ public class DataRecordCollectionResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public DataRecordCollection getDataRecordCollection(
@@ -185,7 +185,7 @@ public class DataRecordCollectionResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public void postSiteDataRecordCollectionPermission(
@@ -204,7 +204,7 @@ public class DataRecordCollectionResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public Page<DataRecordCollection> getSiteDataRecordCollectionsPage(

@@ -43,7 +43,7 @@ public class KeywordResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public Keyword getKeyword(Long keywordId) throws Exception {

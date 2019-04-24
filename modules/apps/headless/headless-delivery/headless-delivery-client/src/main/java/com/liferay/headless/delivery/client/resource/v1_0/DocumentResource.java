@@ -109,7 +109,7 @@ public class DocumentResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public Document getDocument(Long documentId) throws Exception {
@@ -219,7 +219,7 @@ public class DocumentResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public com.liferay.headless.delivery.client.dto.v1_0.Rating

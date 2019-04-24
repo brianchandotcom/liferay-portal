@@ -108,7 +108,7 @@ public class MessageBoardThreadResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public MessageBoardThread getMessageBoardThread(Long messageBoardThreadId)
@@ -218,7 +218,7 @@ public class MessageBoardThreadResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public com.liferay.headless.delivery.client.dto.v1_0.Rating

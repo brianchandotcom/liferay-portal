@@ -48,7 +48,7 @@ public class BlogPostingImageResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)

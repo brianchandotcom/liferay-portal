@@ -43,7 +43,7 @@ public class DataDefinitionResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public DataDefinition getDataDefinition(Long dataDefinitionId)
@@ -122,7 +122,7 @@ public class DataDefinitionResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public void postSiteDataDefinitionPermission(
@@ -141,7 +141,7 @@ public class DataDefinitionResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public Page<DataDefinition> getSiteDataDefinitionsPage(

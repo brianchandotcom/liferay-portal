@@ -45,7 +45,7 @@ public class MessageBoardSectionResource {
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+		httpInvoker.invoke();
 	}
 
 	public MessageBoardSection getMessageBoardSection(

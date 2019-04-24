@@ -12,9 +12,7 @@
 
 		${dataFactory.toInsertSQL(dataFactory.newWikiPageResourceModel(wikiPageModel))}
 
-		<#assign classNameId = dataFactory.getWikiAssetEntryClassNameId() />
-
-		${dataFactory.toInsertSQL(dataFactory.newAssetEntryModel(classNameId, wikiPageModel))}
+		${dataFactory.toInsertSQL(dataFactory.newMBDiscussionAssetEntryModel(wikiPageModel))}
 
 		<@insertAssetEntry
 			_categoryAndTag=true

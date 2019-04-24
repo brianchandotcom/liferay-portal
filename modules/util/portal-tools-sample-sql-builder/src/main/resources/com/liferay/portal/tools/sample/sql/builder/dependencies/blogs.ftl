@@ -17,9 +17,7 @@ ${dataFactory.toInsertSQL(userNotificationDeliveryModel)}
 
 	${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryMapping(friendlyURLEntryModel))}
 
-	<#assign classNameId = dataFactory.getBlogsAssetEntryClassNameId() />
-
-	${dataFactory.toInsertSQL(dataFactory.newAssetEntryModel(classNameId, blogsEntryModel))}
+	${dataFactory.toInsertSQL(dataFactory.newMBDiscussionAssetEntryModel(blogsEntryModel))}
 
 	<@insertAssetEntry
 		_categoryAndTag=true

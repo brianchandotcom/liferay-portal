@@ -1352,26 +1352,6 @@ public class DataFactory {
 			null, dLFolderModel.getName());
 	}
 
-	public AssetEntryModel newAssetEntryModel(
-		long classNameId, BlogsEntryModel blogsEntryModel) {
-
-		return newAssetEntryModel(
-			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
-			blogsEntryModel.getModifiedDate(), classNameId,
-			blogsEntryModel.getEntryId(), "", 0, true, false, "",
-			String.valueOf(blogsEntryModel.getGroupId()));
-	}
-
-	public AssetEntryModel newAssetEntryModel(
-		long classNameId, WikiPageModel wikiPageModel) {
-
-		return newAssetEntryModel(
-			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
-			wikiPageModel.getModifiedDate(), classNameId,
-			wikiPageModel.getResourcePrimKey(), "", 0, true, false, "",
-			String.valueOf(wikiPageModel.getGroupId()));
-	}
-
 	public AssetEntryModel newAssetEntryModel(MBMessageModel mbMessageModel) {
 		long classNameId = 0;
 		boolean visible = false;
@@ -2307,6 +2287,26 @@ public class DataFactory {
 		}
 
 		return mbCategoryModels;
+	}
+
+	public AssetEntryModel newMBDiscussionAssetEntryModel(
+		BlogsEntryModel blogsEntryModel) {
+
+		return newAssetEntryModel(
+			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
+			blogsEntryModel.getModifiedDate(), getBlogsAssetEntryClassNameId(),
+			blogsEntryModel.getEntryId(), "", 0, true, false, "",
+			String.valueOf(blogsEntryModel.getGroupId()));
+	}
+
+	public AssetEntryModel newMBDiscussionAssetEntryModel(
+		WikiPageModel wikiPageModel) {
+
+		return newAssetEntryModel(
+			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
+			wikiPageModel.getModifiedDate(), getWikiAssetEntryClassNameId(),
+			wikiPageModel.getResourcePrimKey(), "", 0, true, false, "",
+			String.valueOf(wikiPageModel.getGroupId()));
 	}
 
 	public MBDiscussionModel newMBDiscussionModel(

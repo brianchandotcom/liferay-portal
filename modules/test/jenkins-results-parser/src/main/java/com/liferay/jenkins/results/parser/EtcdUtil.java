@@ -37,7 +37,7 @@ import mousio.etcd4j.responses.EtcdKeysResponse;
  */
 public class EtcdUtil {
 
-	public static void delete(String etcdServerURL, Node node) {
+	public static synchronized void delete(String etcdServerURL, Node node) {
 		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
 			EtcdKeyDeleteRequest etcdKeyDeleteRequest = null;
 
@@ -62,7 +62,7 @@ public class EtcdUtil {
 		}
 	}
 
-	public static void delete(String etcdServerURL, String key) {
+	public static synchronized void delete(String etcdServerURL, String key) {
 		Node node = get(etcdServerURL, key);
 
 		if (node != null) {
@@ -70,7 +70,7 @@ public class EtcdUtil {
 		}
 	}
 
-	public static Node get(String etcdServerURL, String key) {
+	public static synchronized Node get(String etcdServerURL, String key) {
 		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
 			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);
 
@@ -101,7 +101,7 @@ public class EtcdUtil {
 		}
 	}
 
-	public static boolean has(String etcdServerURL, String key) {
+	public static synchronized boolean has(String etcdServerURL, String key) {
 		Node node = get(etcdServerURL, key);
 
 		if (node == null) {
@@ -111,11 +111,13 @@ public class EtcdUtil {
 		return true;
 	}
 
-	public static Node put(String etcdServerURL, String key) {
+	public static synchronized Node put(String etcdServerURL, String key) {
 		return put(etcdServerURL, key, null);
 	}
 
-	public static Node put(String etcdServerURL, String key, String value) {
+	public static synchronized Node put(
+		String etcdServerURL, String key, String value) {
+
 		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
 			EtcdKeyPutRequest etcdKeyPutRequest = null;
 
@@ -204,7 +206,7 @@ public class EtcdUtil {
 			_etcdNode = etcdNode;
 		}
 
-		private void _refreshEtcdNode() {
+		private synchronized void _refreshEtcdNode() {
 			try (EtcdClient etcdClient = getEtcdClient(_etcdServerURL)) {
 				EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(getKey());
 

@@ -49,11 +49,7 @@ public interface FragmentRenderer {
 		return FragmentConstants.TYPE_COMPONENT;
 	}
 
-	public default boolean isAvailable(HttpServletRequest httpServletRequest) {
-		return true;
-	}
-
-	public default boolean isSelectable() {
+	public default boolean isSelectable(HttpServletRequest httpServletRequest) {
 		return true;
 	}
 

@@ -954,7 +954,7 @@ public class ContentPageEditorDisplayContext {
 			_fragmentRendererTracker.getFragmentRenderers(type);
 
 		for (FragmentRenderer fragmentRenderer : fragmentRenderers) {
-			if (!fragmentRenderer.isSelectable()) {
+			if (!fragmentRenderer.isSelectable(request)) {
 				continue;
 			}
 

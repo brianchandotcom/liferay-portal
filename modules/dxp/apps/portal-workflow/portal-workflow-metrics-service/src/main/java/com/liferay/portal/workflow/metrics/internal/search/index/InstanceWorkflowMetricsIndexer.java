@@ -70,7 +70,6 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 					assetEntry.getTitleMap(), assetEntry.getDefaultLanguageId(),
 					assetEntry.getGroupId()),
 				false, true);
-
 			document.addLocalizedKeyword(
 				"assetType",
 				_createAssetTypeLocalizationMap(

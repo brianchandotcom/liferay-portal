@@ -16,7 +16,9 @@ package com.liferay.segments.internal.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.mobile.device.Device;
+import com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil;
 import com.liferay.portal.kernel.mobile.device.Dimensions;
+import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -32,6 +34,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import javax.servlet.http.Cookie;
@@ -55,11 +58,13 @@ public class RequestContextMapper {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Device device = themeDisplay.getDevice();
+		Device device = DeviceDetectionUtil.detectDevice(request);
 
 		Dimensions screenResolution = null;
 
-		if (device != null) {
+		if ((device != null) &&
+			!Objects.equals(device, UnknownDevice.getInstance())) {
+
 			context.put(Context.DEVICE_BRAND, device.getBrand());
 			context.put(Context.DEVICE_MODEL, device.getModel());
 

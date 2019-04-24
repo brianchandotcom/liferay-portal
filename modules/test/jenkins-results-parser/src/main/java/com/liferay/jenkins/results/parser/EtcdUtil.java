@@ -71,7 +71,7 @@ public class EtcdUtil {
 
 			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
 
-			return new Node(etcdKeysResponse.getNode());
+			return new Node(etcdServerURL, etcdKeysResponse.getNode());
 		}
 		catch (EtcdException ee) {
 			return null;
@@ -123,7 +123,7 @@ public class EtcdUtil {
 
 			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
 
-			return new Node(etcdKeysResponse.getNode());
+			return new Node(etcdServerURL, etcdKeysResponse.getNode());
 		}
 		catch (EtcdAuthenticationException | EtcdException | IOException |
 			   TimeoutException e) {
@@ -134,69 +134,84 @@ public class EtcdUtil {
 
 	public static class Node {
 
-		public Node(String key, String value) {
-			this(key);
-
-			_value = value;
+		public long getCreatedIndex() {
+			return _etcdNode.getCreatedIndex();
 		}
 
-		public void addNode(Node node) {
-			if (_value != null) {
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"Node ", getKey(), " is not a directory node"));
-			}
-
-			_childNodes.add(node);
+		public String getEtcdServerURL() {
+			return _etcdServerURL;
 		}
 
 		public String getKey() {
-			return _key;
+			return _etcdNode.getKey();
+		}
+
+		public long getModifiedIndex() {
+			_refreshEtcdNode();
+
+			return _etcdNode.getModifiedIndex();
+		}
+
+		public int getNodeCount() {
+			List<Node> nodes = getNodes();
+
+			return nodes.size();
 		}
 
 		public List<Node> getNodes() {
-			return _childNodes;
+			_refreshEtcdNode();
+
+			List<Node> nodes = new ArrayList<>();
+
+			List<EtcdKeysResponse.EtcdNode> childEtcdNodes =
+				_etcdNode.getNodes();
+
+			for (EtcdKeysResponse.EtcdNode childEtcdNode : childEtcdNodes) {
+				nodes.add(new Node(_etcdServerURL, childEtcdNode));
+			}
+
+			return nodes;
 		}
 
 		public String getValue() {
-			return _value;
+			if (!isDir()) {
+				_refreshEtcdNode();
+
+				return _etcdNode.getValue();
+			}
+
+			return null;
 		}
 
 		public boolean isDir() {
-			if (!_childNodes.isEmpty()) {
-				return true;
+			return _etcdNode.isDir();
+		}
+
+		private Node(String etcdServerURL, EtcdKeysResponse.EtcdNode etcdNode) {
+			_etcdServerURL = etcdServerURL;
+			_etcdNode = etcdNode;
+		}
+
+		private void _refreshEtcdNode() {
+			try (EtcdClient etcdClient = getEtcdClient(_etcdServerURL)) {
+				EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(getKey());
+
+				EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
+					etcdKeyGetRequest.send();
+
+				EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
+
+				_etcdNode = etcdKeysResponse.getNode();
 			}
+			catch (EtcdAuthenticationException | EtcdException | IOException |
+				   TimeoutException e) {
 
-			return false;
-		}
-
-		public void removeNode(Node node) {
-			_childNodes.remove(node);
-		}
-
-		private Node(EtcdKeysResponse.EtcdNode etcdNode) {
-			this(etcdNode.getKey());
-
-			if (etcdNode.isDir()) {
-				List<EtcdKeysResponse.EtcdNode> childEtcdNodes =
-					etcdNode.getNodes();
-
-				for (EtcdKeysResponse.EtcdNode childEtcdNode : childEtcdNodes) {
-					addNode(new Node(childEtcdNode));
-				}
-			}
-			else {
-				_value = etcdNode.getValue();
+				throw new RuntimeException(e);
 			}
 		}
 
-		private Node(String key) {
-			_key = key;
-		}
-
-		private final List<Node> _childNodes = new ArrayList<>();
-		private String _key;
-		private String _value;
+		private EtcdKeysResponse.EtcdNode _etcdNode;
+		private final String _etcdServerURL;
 
 	}
 

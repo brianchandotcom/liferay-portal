@@ -171,15 +171,9 @@
 	<#if validator.isNotNull(assetRenderer.getDiscussionPath()) && wikiPortletInstanceConfiguration.enableComments()>
 		<br />
 
-		<#assign discussionURL = renderResponse.createActionURL() />
-
-		${discussionURL.setParameter("javax.portlet.action", "/wiki/" + assetRenderer.getDiscussionPath())}
-
 		<@liferay_comment["discussion"]
 			className=wikiPageClassName
 			classPK=entry.getResourcePrimKey()
-			formAction=discussionURL?string
-			formName="fm2"
 			ratingsEnabled=wikiPortletInstanceConfiguration.enableCommentRatings()
 			redirect=currentURL
 			subject=assetRenderer.getTitle(locale)

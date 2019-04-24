@@ -22,6 +22,7 @@ import com.liferay.talend.http.client.LiferayHttpClient;
 import com.liferay.talend.http.client.exception.ConnectionException;
 import com.liferay.talend.http.client.exception.MalformedURLException;
 import com.liferay.talend.http.client.exception.OAuth2Exception;
+import com.liferay.talend.util.StringUtils;
 
 import java.net.URL;
 
@@ -63,18 +64,33 @@ public class ConnectionService {
 	public JsonObject getResponseJsonObject(InputDataSet inputDataSet)
 		throws ConnectionException {
 
+		return getResponseJsonObject(inputDataSet, null);
+	}
+
+	public JsonObject getResponseJsonObject(
+			InputDataSet inputDataSet, String endpoint)
+		throws ConnectionException {
+
 		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
 
 		String authorizationHeader = _getAuthorizationHeader(genericDataStore);
 
 		URL serverURL = getServerURL(genericDataStore);
 
+		if (StringUtils.isNull(endpoint)) {
+			endpoint = inputDataSet.getEndpoint();
+		}
+
 		_liferayHttpClient.base(serverURL.toString());
+
+		if (endpoint.startsWith("http://") || endpoint.startsWith("https://")) {
+			_liferayHttpClient.base(endpoint);
+			endpoint = "";
+		}
 
 		Response<JsonObject> jsonObjectResponse =
 			_liferayHttpClient.getJsonObjectResponse(
-				authorizationHeader, "application/json",
-				inputDataSet.getEndpoint());
+				authorizationHeader, "application/json", endpoint);
 
 		_validateResponse(jsonObjectResponse);
 
@@ -84,16 +100,32 @@ public class ConnectionService {
 	public String getResponseRawString(InputDataSet inputDataSet)
 		throws ConnectionException {
 
+		return getResponseRawString(inputDataSet, null);
+	}
+
+	public String getResponseRawString(
+			InputDataSet inputDataSet, String endpoint)
+		throws ConnectionException {
+
 		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
 
 		String authorizationHeader = _getAuthorizationHeader(genericDataStore);
 
 		URL serverURL = getServerURL(genericDataStore);
 
+		if (StringUtils.isNull(endpoint)) {
+			endpoint = inputDataSet.getEndpoint();
+		}
+
 		_liferayHttpClient.base(serverURL.toString());
 
+		if (endpoint.startsWith("http://") || endpoint.startsWith("https://")) {
+			_liferayHttpClient.base(endpoint);
+			endpoint = "";
+		}
+
 		Response<String> response = _liferayHttpClient.getRawStringResponse(
-			authorizationHeader, "*/*", inputDataSet.getEndpoint());
+			authorizationHeader, "*/*", endpoint);
 
 		_validateResponse(response);
 

@@ -156,9 +156,7 @@ public class ClientState {
 			ClassLoader classLoader = testClass.getClassLoader();
 
 			try {
-				URI locationURI = locationURL.toURI();
-
-				Path startPath = Paths.get(locationURI.getPath());
+				Path startPath = Paths.get(locationURL.toURI());
 
 				Files.walkFileTree(
 					startPath,

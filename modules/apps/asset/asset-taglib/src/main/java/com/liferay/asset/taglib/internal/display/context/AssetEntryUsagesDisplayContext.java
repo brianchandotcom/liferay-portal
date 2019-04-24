@@ -60,6 +60,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -257,8 +258,11 @@ public class AssetEntryUsagesDisplayContext {
 			AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE);
 	}
 
-	public PortletURL getPortletURL() {
-		return PortletURLUtil.getCurrent(_renderRequest, _renderResponse);
+	public PortletURL getPortletURL() throws PortletException {
+		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+			_renderRequest, _renderResponse);
+
+		return PortletURLUtil.clone(currentURLObj, _renderResponse);
 	}
 
 	public String getRedirect() {
@@ -271,7 +275,7 @@ public class AssetEntryUsagesDisplayContext {
 		return _redirect;
 	}
 
-	public SearchContainer getSearchContainer() {
+	public SearchContainer getSearchContainer() throws PortletException {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}

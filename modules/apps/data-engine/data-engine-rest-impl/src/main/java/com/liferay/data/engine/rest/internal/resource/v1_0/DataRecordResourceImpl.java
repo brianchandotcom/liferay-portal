@@ -20,7 +20,6 @@ import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRule;
 import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordValueUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunction;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.DataRuleFunctionFactory;
@@ -310,9 +309,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 					dataRuleFunction.validate(
 						dataDefinitionField,
 						dataDefinitionRule.getDataDefinitionRuleParameters(),
-						DataRecordValueUtil.getDataDefinitionFieldValue(
-							dataDefinitionField,
-							dataRecord.getDataRecordValues()));
+						dataRecordValuesMap.get(dataDefinitionField.getName()));
 
 				if (dataRuleFunctionResult.isValid()) {
 					continue;

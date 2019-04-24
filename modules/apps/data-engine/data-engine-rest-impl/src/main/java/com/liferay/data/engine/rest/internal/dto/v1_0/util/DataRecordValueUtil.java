@@ -34,22 +34,6 @@ import java.util.stream.StreamSupport;
  */
 public class DataRecordValueUtil {
 
-	public static Object getDataDefinitionFieldValue(
-		DataDefinitionField dataDefinitionField,
-		Map<String, ?> dataRecordValuesMap) {
-
-		if (dataDefinitionField.getLocalizable()) {
-			return (Map<String, ?>)dataRecordValuesMap.get(
-				dataDefinitionField.getName());
-		}
-		else if (dataDefinitionField.getRepeatable()) {
-			return (Object[])dataRecordValuesMap.get(
-				dataDefinitionField.getName());
-		}
-
-		return dataRecordValuesMap.get(dataDefinitionField.getName());
-	}
-
 	public static Map<String, ?> toDataRecordValuesMap(
 			DataDefinition dataDefinition, String json)
 		throws Exception {

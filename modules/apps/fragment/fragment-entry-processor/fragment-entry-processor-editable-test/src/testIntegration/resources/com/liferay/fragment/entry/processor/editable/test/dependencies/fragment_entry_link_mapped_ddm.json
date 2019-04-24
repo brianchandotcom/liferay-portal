@@ -1,0 +1,9 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_text": {
+			"defaultValue": "test",
+			"mappedField": "ddmTemplate_TEMPLATE_KEY",
+			"segments-experience-id-0" : {}
+		}
+	}
+}

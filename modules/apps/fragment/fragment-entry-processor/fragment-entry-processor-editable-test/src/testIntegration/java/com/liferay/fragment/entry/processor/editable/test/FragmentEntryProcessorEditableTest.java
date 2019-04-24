@@ -15,6 +15,12 @@
 package com.liferay.fragment.entry.processor.editable.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
@@ -24,12 +30,14 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -38,6 +46,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -133,6 +142,53 @@ public class FragmentEntryProcessorEditableTest {
 			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink));
+	}
+
+	@Test
+	public void testFragmentEntryProcessorEditableMappedDDMTemplate()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentEntry.getFragmentEntryId(),
+				PortalUtil.getClassNameId(Layout.class),
+				TestPropsValues.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				StringPool.BLANK, 0,
+				ServiceContextTestUtil.getServiceContext());
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
+
+		String editableValues = _getJsonFileAsString(
+			"fragment_entry_link_mapped_ddm.json");
+
+		FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			StringUtil.replace(
+				editableValues, "TEMPLATE_KEY", ddmTemplate.getTemplateKey()));
+
+		DDMTemplateLink ddmTemplateLink =
+			_ddmTemplateLinkLocalService.getTemplateLink(
+				PortalUtil.getClassNameId(FragmentEntryLink.class),
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertNotNull(ddmTemplateLink);
+
+		FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLink(
+			fragmentEntryLink);
+
+		ddmTemplateLink = _ddmTemplateLinkLocalService.fetchDDMTemplateLink(
+			ddmTemplateLink.getTemplateLinkId());
+
+		Assert.assertNull(ddmTemplateLink);
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -369,6 +425,9 @@ public class FragmentEntryProcessorEditableTest {
 
 		return bodyElement.html();
 	}
+
+	@Inject
+	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 	@Inject
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

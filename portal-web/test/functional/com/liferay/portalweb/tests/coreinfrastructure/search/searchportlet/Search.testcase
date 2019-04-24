@@ -1951,6 +1951,39 @@ definition {
 			userName = "Test Test");
 	}
 
+	test ViewSortedSearchResults {
+		JSONWebcontent.addWebContent(
+			content = "Content",
+			groupName = "Guest",
+			title = "Apple");
+
+		JSONWebcontent.addWebContent(
+			content = "Content",
+			groupName = "Guest",
+			title = "Banana");
+
+		JSONWebcontent.addWebContent(
+			content = "Content",
+			groupName = "Guest",
+			title = "Cantaloupe");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Content");
+
+		Portlet.addPG(portletName = "Sort");
+
+		SearchPortlets.chooseSortOption(sortOption = "Title");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cantaloupe");
+
+		SearchPortlets.chooseSortOption(sortOption = "Created");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Cantaloupe,Banana,Apple");
+
+		SearchPortlets.chooseSortOption(sortOption = "Created (oldest first)");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cantaloupe");
+	}
+
 	@priority = "4"
 	test ViewStagedAndLiveContentInSearchResults {
 		ProductMenu.gotoPortlet(

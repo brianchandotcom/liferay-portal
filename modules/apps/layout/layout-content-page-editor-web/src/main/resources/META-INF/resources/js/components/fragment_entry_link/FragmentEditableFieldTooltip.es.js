@@ -81,7 +81,8 @@ class FragmentEditableFieldTooltip extends Component {
 			Align.align(
 				this.refs.tooltip,
 				this.alignElement,
-				Align.Top
+				Align.Top,
+				false
 			);
 		}
 	}

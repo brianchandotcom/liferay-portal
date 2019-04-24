@@ -133,8 +133,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
-				item = "Edit"
-			);
+				item = "Edit");
 
 			Button.clickPublish();
 		}

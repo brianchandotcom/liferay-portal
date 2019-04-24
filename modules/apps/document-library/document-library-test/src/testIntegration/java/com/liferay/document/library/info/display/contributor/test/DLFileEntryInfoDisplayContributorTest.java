@@ -180,7 +180,8 @@ public class DLFileEntryInfoDisplayContributorTest {
 				JSONObject previewImageJSONObject =
 					(JSONObject)infoDisplayFieldsValues.get("previewImage");
 
-				Assert.assertEquals(0, previewImageJSONObject.length());
+				Assert.assertEquals(
+					StringPool.BLANK, previewImageJSONObject.getString("url"));
 			});
 	}
 

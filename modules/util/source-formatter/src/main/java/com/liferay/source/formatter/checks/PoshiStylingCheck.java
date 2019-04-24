@@ -40,6 +40,9 @@ public class PoshiStylingCheck extends BaseFileCheck {
 	private void _checkLineBreak(String fileName, String content) {
 		int x = -1;
 
+		int[] multiLineCommentsPositions =
+			PoshiSourceUtil.getMultiLinePositions(
+				content, _multiLineCommentsPattern);
 		int[] multiLineStringPositions = PoshiSourceUtil.getMultiLinePositions(
 			content, _multiLineStringPattern);
 
@@ -53,6 +56,8 @@ public class PoshiStylingCheck extends BaseFileCheck {
 			if ((content.charAt(x + 1) != CharPool.NEW_LINE) &&
 				!ToolsUtil.isInsideQuotes(content, x) &&
 				!PoshiSourceUtil.isInsideMultiLines(
+					getLineNumber(content, x), multiLineCommentsPositions) &&
+				!PoshiSourceUtil.isInsideMultiLines(
 					getLineNumber(content, x), multiLineStringPositions)) {
 
 				addMessage(
@@ -62,6 +67,8 @@ public class PoshiStylingCheck extends BaseFileCheck {
 		}
 	}
 
+	private static final Pattern _multiLineCommentsPattern = Pattern.compile(
+		"[ \t]/\\*.*?\\*/", Pattern.DOTALL);
 	private static final Pattern _multiLineStringPattern = Pattern.compile(
 		"'''.*?'''", Pattern.DOTALL);
 

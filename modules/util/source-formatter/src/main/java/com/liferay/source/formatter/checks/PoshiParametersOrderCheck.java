@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.PoshiSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.IOException;
@@ -96,8 +97,27 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 				sb.setIndex(sb.index() - 1);
 			}
 
-			content = StringUtil.replaceFirst(
-				content, parameters, sb.toString(), matcher1.start(1));
+			int x = content.indexOf(parameters);
+
+			int[] multiLineCommentsPositions =
+				PoshiSourceUtil.getMultiLinePositions(
+					content, _multiLineCommentsPattern);
+
+			while (content.indexOf(parameters, x) != -1) {
+				if (!PoshiSourceUtil.isInsideMultiLines(
+						SourceUtil.getLineNumber(content, x),
+						multiLineCommentsPositions)) {
+
+					break;
+				}
+
+				x = x + parameters.length();
+			}
+
+			if (content.indexOf(parameters, x) != -1) {
+				content = StringUtil.replaceFirst(
+					content, parameters, sb.toString(), x);
+			}
 		}
 
 		return content;
@@ -110,6 +130,8 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 			"(,(\\s*\\w+[ \t]*=[ \t]*(('''|\").*?\\9|\\w[^\n]*\\))\\s*))*))",
 			"(?=\\)\\s*;\n)"),
 		Pattern.DOTALL);
+	private static final Pattern _multiLineCommentsPattern = Pattern.compile(
+		"[ \t]/\\*.*?\\*/", Pattern.DOTALL);
 	private static final Pattern _parametersPattern = Pattern.compile(
 		"(\\w+)([ \t]*=[ \t]*)((('''|\").*?\\5|\\w[^\n]*\\))|.+?\\))",
 		Pattern.DOTALL);

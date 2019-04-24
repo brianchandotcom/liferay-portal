@@ -115,11 +115,11 @@ exports[`SegmentEdit should render 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        class="lexicon-icon lexicon-icon-view"
+                        class="lexicon-icon lexicon-icon-pencil"
                         viewBox="0 0 512 512"
                       >
                         <use
-                          xlink:href="#view"
+                          xlink:href="#pencil"
                         />
                       </svg>
                     </span>

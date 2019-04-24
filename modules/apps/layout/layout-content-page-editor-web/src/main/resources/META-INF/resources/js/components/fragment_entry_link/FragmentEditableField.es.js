@@ -8,7 +8,7 @@ import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
 import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.es';
 import './FragmentEditableFieldTooltip.es';
 
-import {CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
+import {DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 import {EDITABLE_FIELD_CONFIG_KEYS, FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
@@ -206,6 +206,15 @@ class FragmentEditableField extends PortletBase {
 		else {
 			this._disposeFloatingToolbar();
 		}
+
+		if (this._getItemId() === this.fragmentEditorClear) {
+			this._handleEditableDestroyed();
+		}
+		else if (this._getItemId() === this.fragmentEditorEnabled) {
+			this._enableEditor();
+
+			this._disposeFloatingToolbar();
+		}
 	}
 
 	/**
@@ -227,37 +236,6 @@ class FragmentEditableField extends PortletBase {
 	syncEditableValues() {
 		this._loadMappedFieldLabel();
 		this._updateMappedFieldValue();
-	}
-
-	/**
-	 * @inheritDoc
-	 * @param {!Object} newVal
-	 * @review
-	 */
-	syncFragmentEditorClear(newVal) {
-		if (newVal === this._getItemId()) {
-			this._handleEditableChanged('');
-
-			this.store.dispatchAction(
-				CLEAR_FRAGMENT_EDITOR,
-				{
-					itemId: ''
-				}
-			);
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 * @param {!Object} newVal
-	 * @review
-	 */
-	syncFragmentEditorEnabled(newVal) {
-		if (newVal === this._getItemId()) {
-			this._enableEditor();
-
-			this._disposeFloatingToolbar();
-		}
 	}
 
 	/**
@@ -405,8 +383,6 @@ class FragmentEditableField extends PortletBase {
 			this._preventEditableClick = false;
 		}
 		else {
-			this._disposeFloatingToolbar();
-
 			this.store.dispatchAction(
 				ENABLE_FRAGMENT_EDITOR,
 				{

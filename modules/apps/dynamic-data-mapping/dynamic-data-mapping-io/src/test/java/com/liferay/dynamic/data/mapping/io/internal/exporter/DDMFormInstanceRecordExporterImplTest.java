@@ -52,6 +52,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -563,14 +564,10 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 		DDMStructureVersion ddmStructureVersion = mock(
 			DDMStructureVersion.class);
 
-		List<DDMStructureVersion> ddmStructureVersions = new ArrayList<>();
-
-		ddmStructureVersions.add(ddmStructureVersion);
-
 		when(
 			ddmFormInstanceRecordExporter.getStructureVersions(1L)
 		).thenReturn(
-			ddmStructureVersions
+			Arrays.asList(ddmStructureVersion)
 		);
 
 		Map<String, DDMFormField> ddmFormFields = new LinkedHashMap<>();

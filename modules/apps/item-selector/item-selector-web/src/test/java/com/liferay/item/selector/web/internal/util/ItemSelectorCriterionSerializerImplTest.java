@@ -22,8 +22,7 @@ import com.liferay.item.selector.web.internal.TestURLItemSelectorReturnType;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
@@ -99,14 +98,8 @@ public class ItemSelectorCriterionSerializerImplTest {
 			new String[] {"tag1", "tag2", "tag3"},
 			_flickrItemSelectorCriterion.getTags());
 
-		List<ItemSelectorReturnType> expectedDesiredItemSelectorReturnTypes =
-			new ArrayList<>();
-
-		expectedDesiredItemSelectorReturnTypes.add(
-			_testURLItemSelectorReturnType);
-
 		Assert.assertEquals(
-			expectedDesiredItemSelectorReturnTypes,
+			Arrays.asList(_testURLItemSelectorReturnType),
 			_flickrItemSelectorCriterion.getDesiredItemSelectorReturnTypes());
 	}
 

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -62,12 +61,8 @@ public class AssetPublisherUtilTest {
 				String.valueOf(assetCategoryId2)
 			});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		long[] assetCategoryIds = _assetPublisherHelper.getAssetCategoryIds(
 			portletPreferences);
@@ -87,12 +82,8 @@ public class AssetPublisherUtilTest {
 			true, true, "assetCategories",
 			new String[] {String.valueOf(assetCategoryId)});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		long[] assetCategoryIds = _assetPublisherHelper.getAssetCategoryIds(
 			portletPreferences);
@@ -117,12 +108,8 @@ public class AssetPublisherUtilTest {
 				String.valueOf(assetCategoryId2)
 			});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		long[] assetCategoryIds = _assetPublisherHelper.getAssetCategoryIds(
 			portletPreferences);
@@ -139,12 +126,8 @@ public class AssetPublisherUtilTest {
 			true, false, "assetCategories",
 			new String[] {String.valueOf(assetCategoryId)});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		long[] assetCategoryIds = _assetPublisherHelper.getAssetCategoryIds(
 			portletPreferences);
@@ -169,12 +152,8 @@ public class AssetPublisherUtilTest {
 				String.valueOf(assetCategoryId2)
 			});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		long[] assetCategoryIds = _assetPublisherHelper.getAssetCategoryIds(
 			portletPreferences);
@@ -193,12 +172,8 @@ public class AssetPublisherUtilTest {
 			false, true, "assetCategories",
 			new String[] {String.valueOf(assetCategoryId)});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		long[] assetCategoryIds = _assetPublisherHelper.getAssetCategoryIds(
 			portletPreferences);
@@ -221,12 +196,8 @@ public class AssetPublisherUtilTest {
 				String.valueOf(assetCategoryId2)
 			});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		long[] assetCategoryIds = _assetPublisherHelper.getAssetCategoryIds(
 			portletPreferences);
@@ -245,12 +216,8 @@ public class AssetPublisherUtilTest {
 			false, false, "assetCategories",
 			new String[] {String.valueOf(assetCategoryId)});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		long[] assetCategoryIds = _assetPublisherHelper.getAssetCategoryIds(
 			portletPreferences);
@@ -266,12 +233,8 @@ public class AssetPublisherUtilTest {
 		AssetQueryRule assetQueryRule = new AssetQueryRule(
 			true, true, "assetTags", new String[] {assetTagName});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
 			portletPreferences);
@@ -291,12 +254,8 @@ public class AssetPublisherUtilTest {
 			true, true, "assetTags",
 			new String[] {assetTagName1, assetTagName2});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
 			portletPreferences);
@@ -315,12 +274,8 @@ public class AssetPublisherUtilTest {
 		AssetQueryRule assetQueryRule = new AssetQueryRule(
 			true, false, "assetTags", new String[] {assetTagName});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
 			portletPreferences);
@@ -340,12 +295,8 @@ public class AssetPublisherUtilTest {
 			true, false, "assetTags",
 			new String[] {assetTagName1, assetTagName2});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
 			portletPreferences);
@@ -361,12 +312,8 @@ public class AssetPublisherUtilTest {
 		AssetQueryRule assetQueryRule = new AssetQueryRule(
 			false, true, "assetTags", new String[] {assetTagName});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
 			portletPreferences);
@@ -384,12 +331,8 @@ public class AssetPublisherUtilTest {
 			false, true, "assetTags",
 			new String[] {assetTagName1, assetTagName2});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
 			portletPreferences);
@@ -405,12 +348,8 @@ public class AssetPublisherUtilTest {
 		AssetQueryRule assetQueryRule = new AssetQueryRule(
 			false, false, "assetTags", new String[] {assetTagName});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
 			portletPreferences);
@@ -428,12 +367,8 @@ public class AssetPublisherUtilTest {
 			false, false, "assetTags",
 			new String[] {assetTagName1, assetTagName2});
 
-		List<AssetQueryRule> assetQueryRules = new ArrayList();
-
-		assetQueryRules.add(assetQueryRule);
-
 		PortletPreferences portletPreferences =
-			getAssetPublisherPortletPreferences(assetQueryRules);
+			getAssetPublisherPortletPreferences(Arrays.asList(assetQueryRule));
 
 		String[] assetTagNames = _assetPublisherHelper.getAssetTagNames(
 			portletPreferences);

@@ -69,6 +69,7 @@ import com.liferay.rss.model.SyndModelFactory;
 import com.liferay.rss.util.RSSUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -471,11 +472,7 @@ public class JournalRSSUtil {
 
 		selfSyndLink.setRel("self");
 
-		List<SyndLink> syndLinks = new ArrayList<>();
-
-		syndLinks.add(selfSyndLink);
-
-		syndFeed.setLinks(syndLinks);
+		syndFeed.setLinks(Arrays.asList(selfSyndLink));
 
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(feed.getName());

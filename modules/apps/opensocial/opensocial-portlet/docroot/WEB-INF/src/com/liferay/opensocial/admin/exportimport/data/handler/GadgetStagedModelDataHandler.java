@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -60,13 +60,9 @@ public class GadgetStagedModelDataHandler
 	public List<Gadget> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<Gadget> gadgets = new ArrayList<>();
-
-		gadgets.add(
+		return Arrays.asList(
 			GadgetLocalServiceUtil.fetchGadgetByUuidAndCompanyId(
 				uuid, companyId));
-
-		return gadgets;
 	}
 
 	@Override

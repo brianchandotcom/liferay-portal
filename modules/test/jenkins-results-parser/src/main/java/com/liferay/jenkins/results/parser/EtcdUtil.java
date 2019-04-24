@@ -118,6 +118,10 @@ public class EtcdUtil {
 				etcdKeyPutRequest = etcdClient.put(key, value);
 			}
 
+			if (has(etcdServerURL, key)) {
+				etcdKeyPutRequest.prevExist(true);
+			}
+
 			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
 				etcdKeyPutRequest.send();
 

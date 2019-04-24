@@ -209,9 +209,8 @@ components:
                     format: int64
                     type: integer
                 dataRecordValues:
-                    items:
-                        $ref: '#/components/schemas/DataRecordValue'
-                    type: array
+                    additionalProperties: true
+                    type: object
                 id:
                     format: int64
                     type: integer
@@ -261,12 +260,6 @@ components:
                 viewDataRecord:
                     type: boolean
             type: object
-        DataRecordValue:
-            properties:
-                key:
-                    type: string
-                value:
-                    type: object
         LocalizedValue:
             description: https://www.schema.org/LocalizedValue
             properties:

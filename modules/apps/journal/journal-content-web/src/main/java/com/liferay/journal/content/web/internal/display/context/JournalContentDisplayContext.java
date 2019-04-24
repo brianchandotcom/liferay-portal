@@ -141,16 +141,10 @@ public class JournalContentDisplayContext {
 			return _article;
 		}
 
-		long previewAssetId = ParamUtil.getLong(
-			_portletRequest, "previewAssetId");
-
-		if (previewAssetId > 0) {
-			_article = JournalArticleLocalServiceUtil.fetchArticle(
-				previewAssetId);
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_article = _getArticleByPreviewAssetId();
 
 		if ((_article != null) &&
 			JournalArticlePermission.contains(
@@ -800,17 +794,7 @@ public class JournalContentDisplayContext {
 			return _preview;
 		}
 
-		long previewAssetId = ParamUtil.getLong(
-			_portletRequest, "previewAssetId");
-
-		if (previewAssetId <= 0) {
-			_preview = false;
-
-			return _preview;
-		}
-
-		JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(
-			previewAssetId);
+		JournalArticle article = _getArticleByPreviewAssetId();
 
 		if (article == null) {
 			_preview = false;
@@ -989,6 +973,40 @@ public class JournalContentDisplayContext {
 			portletRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
+	}
+
+	private JournalArticle _getArticleByPreviewAssetId() {
+		long previewAssetId = ParamUtil.getLong(
+			_portletRequest, "previewAssetId");
+
+		if (previewAssetId <= 0) {
+			return null;
+		}
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			previewAssetId);
+
+		if (assetEntry == null) {
+			return null;
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			assetEntry.getAssetRendererFactory();
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		try {
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
+
+			return (JournalArticle)assetRenderer.getAssetObject();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
 	}
 
 	private DDMTemplate _getDDMTemplate(String ddmTemplateKey)

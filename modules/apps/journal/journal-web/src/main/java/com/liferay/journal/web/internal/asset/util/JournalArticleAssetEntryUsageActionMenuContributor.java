@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -94,7 +93,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								_getURL(null, assetEntryUsage, request));
+								_getURL(assetEntryUsage, 0, request));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle, "view-in-page"));
@@ -125,7 +124,9 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 								dropdownItem -> {
 									dropdownItem.setHref(
 										_getURL(
-											article, assetEntryUsage, request));
+											assetEntryUsage,
+											assetEntryUsage.getAssetEntryId(),
+											request));
 									dropdownItem.setLabel(label);
 								});
 						}
@@ -139,7 +140,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	}
 
 	private String _getURL(
-		JournalArticle article, AssetEntryUsage assetEntryUsage,
+		AssetEntryUsage assetEntryUsage, long previewAssetId,
 		HttpServletRequest request) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -149,9 +150,9 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 			request, assetEntryUsage.getContainerKey(),
 			assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE);
 
-		if ((article != null) && !article.isApproved()) {
+		if (previewAssetId > 0) {
 			portletURL.setParameter(
-				"previewAssetId", String.valueOf(article.getId()));
+				"previewAssetId", String.valueOf(previewAssetId));
 		}
 
 		String portletURLString = _http.setParameter(
@@ -173,9 +174,6 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

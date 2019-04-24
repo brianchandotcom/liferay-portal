@@ -149,7 +149,9 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Entry2");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Entry2");
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Blogs Entry2 Title",
+			searchAssetType = "Blogs Entry");
 	}
 
 	@priority = "5"

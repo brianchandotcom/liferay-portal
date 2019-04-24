@@ -97,6 +97,11 @@ public class UserOrganizationSegmentsCriteriaContributor
 	}
 
 	@Override
+	public EntityModel getEntityModel() {
+		return _entityModel;
+	}
+
+	@Override
 	public String getEntityName() {
 		return OrganizationEntityModel.NAME;
 	}

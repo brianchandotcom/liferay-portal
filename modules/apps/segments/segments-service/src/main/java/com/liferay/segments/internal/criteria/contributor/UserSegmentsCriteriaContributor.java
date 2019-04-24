@@ -49,6 +49,11 @@ public class UserSegmentsCriteriaContributor
 	public static final String KEY = "user";
 
 	@Override
+	public EntityModel getEntityModel() {
+		return _entityModel;
+	}
+
+	@Override
 	public String getEntityName() {
 		return UserEntityModel.NAME;
 	}

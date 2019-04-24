@@ -49,6 +49,11 @@ public class OrganizationSegmentsCriteriaContributor
 	public static final String KEY = "organization";
 
 	@Override
+	public EntityModel getEntityModel() {
+		return _entityModel;
+	}
+
+	@Override
 	public String getEntityName() {
 		return OrganizationEntityModel.NAME;
 	}

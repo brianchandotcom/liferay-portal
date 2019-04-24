@@ -49,6 +49,11 @@ public class ContextSegmentsCriteriaContributor
 	public static final String KEY = "context";
 
 	@Override
+	public EntityModel getEntityModel() {
+		return _entityModel;
+	}
+
+	@Override
 	public String getEntityName() {
 		return ContextEntityModel.NAME;
 	}

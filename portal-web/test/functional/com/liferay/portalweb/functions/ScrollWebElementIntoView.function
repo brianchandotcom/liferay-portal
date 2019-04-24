@@ -3,6 +3,8 @@ definition {
 	function scrollWebElementIntoView {
 		WaitForSPARefresh();
 
+		selenium.waitForElementPresent();
+
 		selenium.scrollWebElementIntoView();
 
 		selenium.assertJavaScriptErrors();

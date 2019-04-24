@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -47,7 +50,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,6 +69,17 @@ public class OrganizationLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+	}
 
 	@Test
 	public void testAddOrganization() throws Exception {
@@ -840,6 +856,44 @@ public class OrganizationLocalServiceTest {
 	public void testSearchOrganizationsWithOrganizationsTreeParameter()
 		throws Exception {
 
+		testSearchOrganizationsWithOrganizationsTreeParameter(false);
+	}
+
+	@Test
+	public void testSearchOrganizationsWithOrganizationsTreeParameterAsUser()
+		throws Exception {
+
+		testSearchOrganizationsWithOrganizationsTreeParameter(true);
+	}
+
+	protected List<Object> getOrganizationsAndUsers(Organization organization) {
+		return OrganizationLocalServiceUtil.getOrganizationsAndUsers(
+			organization.getCompanyId(), organization.getOrganizationId(),
+			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	protected int getOrganizationsAndUsersCount(Organization organization) {
+		return OrganizationLocalServiceUtil.getOrganizationsAndUsersCount(
+			organization.getCompanyId(), organization.getOrganizationId(),
+			WorkflowConstants.STATUS_ANY);
+	}
+
+	protected Hits searchOrganizationsAndUsers(
+			Organization parentOrganization, String keywords)
+		throws Exception {
+
+		return OrganizationLocalServiceUtil.searchOrganizationsAndUsers(
+			parentOrganization.getCompanyId(),
+			parentOrganization.getOrganizationId(), keywords,
+			WorkflowConstants.STATUS_ANY, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	protected void testSearchOrganizationsWithOrganizationsTreeParameter(
+			boolean searchAsUser)
+		throws Exception {
+
 		Organization organization = OrganizationTestUtil.addOrganization();
 
 		Organization suborganization = OrganizationTestUtil.addOrganization(
@@ -851,6 +905,13 @@ public class OrganizationLocalServiceTest {
 		_organizations.add(organization);
 
 		_user = UserTestUtil.addUser();
+
+		if (searchAsUser) {
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(_user);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 
 		UserLocalServiceUtil.addOrganizationUsers(
 			organization.getOrganizationId(), new long[] {_user.getUserId()});
@@ -884,30 +945,6 @@ public class OrganizationLocalServiceTest {
 		Assert.assertEquals(indexerSearchResults, finderSearchResults);
 	}
 
-	protected List<Object> getOrganizationsAndUsers(Organization organization) {
-		return OrganizationLocalServiceUtil.getOrganizationsAndUsers(
-			organization.getCompanyId(), organization.getOrganizationId(),
-			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	protected int getOrganizationsAndUsersCount(Organization organization) {
-		return OrganizationLocalServiceUtil.getOrganizationsAndUsersCount(
-			organization.getCompanyId(), organization.getOrganizationId(),
-			WorkflowConstants.STATUS_ANY);
-	}
-
-	protected Hits searchOrganizationsAndUsers(
-			Organization parentOrganization, String keywords)
-		throws Exception {
-
-		return OrganizationLocalServiceUtil.searchOrganizationsAndUsers(
-			parentOrganization.getCompanyId(),
-			parentOrganization.getOrganizationId(), keywords,
-			WorkflowConstants.STATUS_ANY, null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
 	private String _getTreePath(Organization[] organizations) {
 		StringBundler sb = new StringBundler();
 
@@ -937,6 +974,8 @@ public class OrganizationLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();
+
+	private PermissionChecker _originalPermissionChecker;
 
 	@DeleteAfterTestRun
 	private User _user;

@@ -47,7 +47,4 @@ public class JSONWebServiceClientFactoryImpl
 		return jsonWebServiceClientImpl;
 	}
 
-	private JSONWebServiceClientFactoryImpl() {
-	}
-
 }

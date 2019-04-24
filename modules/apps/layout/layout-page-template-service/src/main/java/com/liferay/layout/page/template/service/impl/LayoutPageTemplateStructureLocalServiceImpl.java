@@ -76,7 +76,15 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		layoutPageTemplateStructurePersistence.update(
 			layoutPageTemplateStructure);
 
-		_fragmentEntryLinkLocalService.updateClassedModel(classNameId, classPK);
+		int count =
+			_fragmentEntryLinkLocalService.
+				getClassedModelFragmentEntryLinksCount(
+					groupId, classNameId, classPK);
+
+		if (count > 0) {
+			_fragmentEntryLinkLocalService.updateClassedModel(
+				classNameId, classPK);
+		}
 
 		// Layout page template structure rel
 

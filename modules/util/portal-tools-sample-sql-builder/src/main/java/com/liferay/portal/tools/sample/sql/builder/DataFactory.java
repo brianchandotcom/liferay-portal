@@ -285,9 +285,8 @@ public class DataFactory {
 
 		models.add(UserPersonalSite.class.getName());
 
-		models.add(_getCombinedClassName(MBDiscussion.class, BlogsEntry.class));
-
-		models.add(_getCombinedClassName(MBDiscussion.class, WikiPage.class));
+		models.add(_getMBDiscussionCombinedClassName(BlogsEntry.class));
+		models.add(_getMBDiscussionCombinedClassName(WikiPage.class));
 
 		for (String model : models) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();
@@ -2267,7 +2266,7 @@ public class DataFactory {
 		BlogsEntryModel blogsEntryModel) {
 
 		ClassNameModel classNameModel = _classNameModels.get(
-			_getCombinedClassName(MBDiscussion.class, BlogsEntry.class));
+			_getMBDiscussionCombinedClassName(BlogsEntry.class));
 
 		return newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
@@ -2280,7 +2279,7 @@ public class DataFactory {
 		WikiPageModel wikiPageModel) {
 
 		ClassNameModel classNameModel = _classNameModels.get(
-			_getCombinedClassName(MBDiscussion.class, WikiPage.class));
+			_getMBDiscussionCombinedClassName(WikiPage.class));
 
 		return newAssetEntryModel(
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
@@ -3917,16 +3916,10 @@ public class DataFactory {
 		}
 	}
 
-	private String _getCombinedClassName(
-		Class<?> firstClazz, Class<?> secondClazz) {
-
-		String className = firstClazz.getName();
-
-		return className.concat(
-			StringPool.UNDERLINE
-		).concat(
-			secondClazz.getName()
-		);
+	private String _getMBDiscussionCombinedClassName(Class<?> clazz) {
+		return StringBundler.concat(
+			MBDiscussion.class.getName(), StringPool.UNDERLINE,
+			clazz.getName());
 	}
 
 	private String _getResourcePermissionModelName(String... classNames) {

@@ -605,6 +605,8 @@ public class LayoutStagedModelDataHandler
 				GetterUtil.getLong(
 					layoutElement.attributeValue("draft-layout-id")));
 
+			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
+
 			draftLayout.setClassNameId(_portal.getClassNameId(Layout.class));
 			draftLayout.setClassPK(importedLayout.getPlid());
 

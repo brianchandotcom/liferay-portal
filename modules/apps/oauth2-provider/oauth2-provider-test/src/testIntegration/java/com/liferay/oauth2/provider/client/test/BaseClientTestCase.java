@@ -14,7 +14,6 @@
 
 package com.liferay.oauth2.provider.client.test;
 
-import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -54,8 +53,6 @@ import org.apache.cxf.jaxrs.provider.json.JSONProvider;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import org.jboss.shrinkwrap.api.Archive;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -70,13 +67,6 @@ import org.osgi.framework.FrameworkUtil;
  * @author Carlos Sierra Andrés
  */
 public abstract class BaseClientTestCase {
-
-	public static Archive<?> getArchive(
-			Class<? extends BundleActivator> bundleActivatorClass)
-		throws Exception {
-
-		return OAuth2ProviderTestUtil.getArchive(bundleActivatorClass);
-	}
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

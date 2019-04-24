@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
+import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 
@@ -36,7 +37,7 @@ public class TokenCompanyTest extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getArchive() throws Exception {
-		return BaseClientTestCase.getArchive(
+		return OAuth2ProviderTestUtil.getArchive(
 			AnnotatedApplicationTestPreparatorBundleActivator.class);
 	}
 

@@ -1,5 +1,4 @@
 import State, {Config} from 'metal-state';
-import dom from 'metal-dom';
 import {Store} from '../../store/store.es';
 
 import FragmentEditableFieldTooltip from './FragmentEditableFieldTooltip.es';
@@ -24,7 +23,20 @@ class FragmentStyleEditor extends State {
 
 		this.syncType();
 
-		this._onNodeClickHandler = dom.on(this.node, 'click', this._handleNodeClick);
+		this._onNodeClickHandler = document.addEventListener(
+			'click',
+			this._handleNodeClick
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	dispose() {
+		document.removeEventListener('click', this._handleNodeClick);
+
+		super.dispose();
 	}
 
 	/**
@@ -41,7 +53,9 @@ class FragmentStyleEditor extends State {
 	 * @private
 	 */
 	_handleNodeClick(event) {
-		if (event.target === this.node) {
+		if (this.node &&
+			(event.target === this.node || this.node.contains(event.target))) {
+
 			event.preventDefault();
 			event.stopPropagation();
 
@@ -61,6 +75,9 @@ class FragmentStyleEditor extends State {
 
 				this._tooltip.on('buttonClick', this._handleButtonClick);
 			}
+		}
+		else if (this._tooltip) {
+			this.disposeStyleTooltip();
 		}
 	}
 

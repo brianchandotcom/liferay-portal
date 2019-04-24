@@ -54,19 +54,21 @@ public class ImageEditableElementParser implements EditableElementParser {
 	public JSONObject getFieldTemplateConfigJSONObject(
 		String fieldName, Locale locale, Object fieldValue) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		String alt = StringPool.BLANK;
 
 		if (fieldValue == null) {
-			jsonObject.put(
-				"alt",
-				StringUtil.replace(
-					_TMPL_IMAGE_FIELD_ALT_TEMPLATE, "field_name", fieldName));
+			alt = StringUtil.replace(
+				_TMPL_IMAGE_FIELD_ALT_TEMPLATE, "field_name", fieldName);
 		}
 		else if (fieldValue instanceof JSONObject) {
 			JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
 
-			jsonObject.put("alt", fieldValueJSONObject.getString("alt"));
+			alt = fieldValueJSONObject.getString("alt");
 		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("alt", alt);
 
 		return jsonObject;
 	}

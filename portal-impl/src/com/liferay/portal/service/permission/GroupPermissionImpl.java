@@ -200,7 +200,9 @@ public class GroupPermissionImpl
 					 ActionKeys.ASSIGN_USER_ROLES) ||
 				  permissionChecker.hasPermission(
 					  originalGroup, Group.class.getName(), groupId,
-					  ActionKeys.MANAGE_LAYOUTS))) {
+					  ActionKeys.MANAGE_LAYOUTS) ||
+				  permissionChecker.isGroupMember(
+					  originalGroup.getGroupId()))) {
 
 			return true;
 		}

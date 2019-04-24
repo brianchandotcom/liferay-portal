@@ -406,7 +406,13 @@ class FragmentEditableField extends PortletBase {
 		}
 		else {
 			this._disposeFloatingToolbar();
-			this._enableEditor();
+
+			this.store.dispatchAction(
+				ENABLE_FRAGMENT_EDITOR,
+				{
+					itemId: `${this.fragmentEntryLinkId}-${this.editableId}`
+				}
+			);
 		}
 	}
 

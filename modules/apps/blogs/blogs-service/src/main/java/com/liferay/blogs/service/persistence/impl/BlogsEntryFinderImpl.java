@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.Timestamp;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -66,12 +66,8 @@ public class BlogsEntryFinderImpl
 		long organizationId, Date displayDate,
 		QueryDefinition<BlogsEntry> queryDefinition) {
 
-		List<Long> organizationIds = new ArrayList<>();
-
-		organizationIds.add(organizationId);
-
 		return countByOrganizationIds(
-			organizationIds, displayDate, queryDefinition);
+			Arrays.asList(organizationId), displayDate, queryDefinition);
 	}
 
 	@Override
@@ -195,12 +191,8 @@ public class BlogsEntryFinderImpl
 		long organizationId, Date displayDate,
 		QueryDefinition<BlogsEntry> queryDefinition) {
 
-		List<Long> organizationIds = new ArrayList<>();
-
-		organizationIds.add(organizationId);
-
 		return findByOrganizationIds(
-			organizationIds, displayDate, queryDefinition);
+			Arrays.asList(organizationId), displayDate, queryDefinition);
 	}
 
 	@Override

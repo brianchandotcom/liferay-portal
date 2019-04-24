@@ -18,9 +18,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,11 +38,7 @@ public class DefaultTaskAssignmentSelector implements TaskAssignmentSelector {
 		KaleoTaskAssignment kaleoTaskAssignment,
 		ExecutionContext executionContext) {
 
-		List<KaleoTaskAssignment> taskAssignments = new ArrayList<>(1);
-
-		taskAssignments.add(kaleoTaskAssignment);
-
-		return taskAssignments;
+		return Arrays.asList(kaleoTaskAssignment);
 	}
 
 }

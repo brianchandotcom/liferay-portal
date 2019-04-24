@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -58,11 +58,7 @@ public class BlogsEntryAtomCollectionAdapter
 
 	@Override
 	public List<String> getEntryAuthors(BlogsEntry blogsEntry) {
-		List<String> authors = new ArrayList<>();
-
-		authors.add(blogsEntry.getUserName());
-
-		return authors;
+		return Arrays.asList(blogsEntry.getUserName());
 	}
 
 	@Override

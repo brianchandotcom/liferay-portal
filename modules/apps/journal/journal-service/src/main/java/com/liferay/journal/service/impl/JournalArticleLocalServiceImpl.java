@@ -177,6 +177,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -3521,12 +3522,8 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY);
 
-		List<Long> folderIds = new ArrayList<>();
-
-		folderIds.add(folderId);
-
 		return journalArticleFinder.countByG_F(
-			groupId, folderIds, queryDefinition);
+			groupId, Arrays.asList(folderId), queryDefinition);
 	}
 
 	/**
@@ -4450,13 +4447,9 @@ public class JournalArticleLocalServiceImpl
 	public List<JournalArticle> search(
 		long groupId, long folderId, int status, int start, int end) {
 
-		List<Long> folderIds = new ArrayList<>();
-
-		folderIds.add(folderId);
-
 		return search(
-			groupId, folderIds, LocaleUtil.getMostRelevantLocale(), status,
-			start, end);
+			groupId, Arrays.asList(folderId),
+			LocaleUtil.getMostRelevantLocale(), status, start, end);
 	}
 
 	/**
@@ -4957,11 +4950,7 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int searchCount(long groupId, long folderId, int status) {
-		List<Long> folderIds = new ArrayList<>();
-
-		folderIds.add(folderId);
-
-		return searchCount(groupId, folderIds, status);
+		return searchCount(groupId, Arrays.asList(folderId), status);
 	}
 
 	/**

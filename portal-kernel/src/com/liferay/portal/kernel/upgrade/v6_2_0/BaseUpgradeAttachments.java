@@ -38,6 +38,7 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,11 +108,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				"com.liferay.portlet.documentlibrary.model.DLFileEntry");
 
-			List<String> actionIds = new ArrayList<>();
-
-			actionIds.add(ActionKeys.VIEW);
-
-			long bitwiseValue = getBitwiseValue(bitwiseValues, actionIds);
+			long bitwiseValue = getBitwiseValue(
+				bitwiseValues, Arrays.asList(ActionKeys.VIEW));
 
 			addResourcePermission(
 				companyId,
@@ -254,12 +252,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				"com.liferay.portlet.documentlibrary.model.DLFolder");
 
-			List<String> guestActionIds = new ArrayList<>();
-
-			guestActionIds.add(ActionKeys.VIEW);
-
 			long guestBitwiseValue = getBitwiseValue(
-				bitwiseValues, guestActionIds);
+				bitwiseValues, Arrays.asList(ActionKeys.VIEW));
 
 			addResourcePermission(
 				companyId, "com.liferay.portlet.documentlibrary.model.DLFolder",

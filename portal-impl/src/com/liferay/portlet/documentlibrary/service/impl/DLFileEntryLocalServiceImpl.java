@@ -129,6 +129,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -1237,12 +1238,8 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public int getFileEntriesCount(long groupId, long folderId, int status) {
-		List<Long> folderIds = new ArrayList<>();
-
-		folderIds.add(folderId);
-
 		return dlFileEntryFinder.countByG_F(
-			groupId, folderIds, new QueryDefinition<>(status));
+			groupId, Arrays.asList(folderId), new QueryDefinition<>(status));
 	}
 
 	@Override

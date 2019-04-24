@@ -39,8 +39,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -157,12 +156,8 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 		document.addKeyword(
 			Field.ASSET_CATEGORY_ID, assetCategory.getCategoryId());
 
-		List<AssetCategory> categories = new ArrayList<>(1);
-
-		categories.add(assetCategory);
-
 		addSearchAssetCategoryTitles(
-			document, Field.ASSET_CATEGORY_TITLE, categories);
+			document, Field.ASSET_CATEGORY_TITLE, Arrays.asList(assetCategory));
 
 		document.addKeyword(
 			Field.ASSET_PARENT_CATEGORY_ID,

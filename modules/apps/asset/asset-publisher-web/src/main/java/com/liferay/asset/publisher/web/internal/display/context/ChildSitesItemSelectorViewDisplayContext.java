@@ -29,6 +29,7 @@ import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -109,11 +110,8 @@ public class ChildSitesItemSelectorViewDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<Group> parentGroups = new ArrayList<>();
-
-		parentGroups.add(themeDisplay.getSiteGroup());
-
-		_groupParams.put("groupsTree", parentGroups);
+		_groupParams.put(
+			"groupsTree", Arrays.asList(themeDisplay.getSiteGroup()));
 
 		_groupParams.put("site", Boolean.TRUE);
 

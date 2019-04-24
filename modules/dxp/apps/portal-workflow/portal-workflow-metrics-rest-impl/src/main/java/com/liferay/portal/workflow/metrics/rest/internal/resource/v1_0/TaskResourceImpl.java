@@ -101,7 +101,8 @@ public class TaskResourceImpl
 
 		if (count > 0) {
 			return Page.of(
-				_getTasks(fieldSort, instanceIdsMap, pagination, tasksMap),
+				_getTasks(
+					fieldSort, instanceIdsMap, pagination, processId, tasksMap),
 				pagination, count);
 		}
 
@@ -181,7 +182,7 @@ public class TaskResourceImpl
 	}
 
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
-		Set<String> taskNames) {
+		long processId, Set<String> taskNames) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -195,7 +196,8 @@ public class TaskResourceImpl
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", false), termsQuery);
+			_queries.term("deleted", false),
+			_queries.term("processId", processId), termsQuery);
 	}
 
 	private Task _createTask(String taskName) {
@@ -322,7 +324,8 @@ public class TaskResourceImpl
 	}
 
 	private TermsAggregationResult _getSLATermsAggregationResult(
-		FieldSort fieldSort, Pagination pagination, Set<String> taskNames) {
+		FieldSort fieldSort, Pagination pagination, long processId,
+		Set<String> taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -359,7 +362,7 @@ public class TaskResourceImpl
 
 		searchSearchRequest.setIndexNames("workflow-metrics-sla-task-results");
 		searchSearchRequest.setQuery(
-			_createSLATaskResultsBooleanQuery(taskNames));
+			_createSLATaskResultsBooleanQuery(processId, taskNames));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -372,13 +375,13 @@ public class TaskResourceImpl
 
 	private Collection<Task> _getTasks(
 		FieldSort fieldSort, Map<String, List<String>> instanceIdsMap,
-		Pagination pagination, Map<String, Task> tasksMap) {
+		Pagination pagination, long processId, Map<String, Task> tasksMap) {
 
 		List<Task> tasks = new LinkedList<>();
 
 		TermsAggregationResult slaTermsAggregationResult =
 			_getSLATermsAggregationResult(
-				fieldSort, pagination, tasksMap.keySet());
+				fieldSort, pagination, processId, tasksMap.keySet());
 
 		if (_isOrderByInstanceCount(fieldSort.getField())) {
 			instanceIdsMap.forEach(

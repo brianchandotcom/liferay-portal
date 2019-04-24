@@ -159,7 +159,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private SearchSearchRequest _createSLATaskResultsSearchRequest(
-		long companyId, long instanceId, long processId) {
+		long companyId, long instanceId, long processId, long slaDefinitionId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -174,7 +174,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				_queries.term("companyId", companyId),
 				_queries.term("deleted", false),
 				_queries.term("instanceId", instanceId),
-				_queries.term("processId", processId)));
+				_queries.term("processId", processId),
+				_queries.term("slaDefinitionId", slaDefinitionId)));
 
 		searchSearchRequest.setSize(10000);
 
@@ -352,7 +353,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 						_createSLATaskResultsSearchRequest(
 							workflowMetricsSLAProcessResult.getCompanyId(),
 							workflowMetricsSLAProcessResult.getInstanceId(),
-							workflowMetricsSLAProcessResult.getProcessId())),
+							workflowMetricsSLAProcessResult.getProcessId(),
+							workflowMetricsSLAProcessResult.
+								getSLADefinitionId())),
 					workflowMetricsSLAProcessResult);
 			}
 		);

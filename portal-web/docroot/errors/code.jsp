@@ -16,8 +16,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page isErrorPage="true" %>
+<%@ page trimDirectiveWhitespaces="true" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.log.Log" %><%@
@@ -54,9 +54,10 @@ if (_log.isWarnEnabled()) {
 String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 %>
 
-<html>
-	<c:choose>
-		<c:when test="<%= !StringUtil.equalsIgnoreCase(HttpHeaders.XML_HTTP_REQUEST, xRequestWith) %>">
+<c:choose>
+	<c:when test="<%= !StringUtil.equalsIgnoreCase(HttpHeaders.XML_HTTP_REQUEST, xRequestWith) %>">
+		<%@ page contentType="text/html; charset=UTF-8" %>
+		<html>
 
 			<%
 			String redirect = null;
@@ -95,8 +96,12 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 				12345678901234567890123456789012345678901234567890123456789012345678901234567890
 				-->
 			</body>
-		</c:when>
-		<c:otherwise>
+		</html>
+	</c:when>
+	<c:otherwise>
+		<%@ page contentType="text/html; charset=UTF-8" %>
+		<html>
+
 			<head>
 				<title>Http Status <%= code %> - <%= LanguageUtil.get(request, "http-status-code[" + code + "]") %></title>
 			</head>
@@ -112,9 +117,9 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 					<liferay-ui:message key="resource" />: <%= HtmlUtil.escape(uri) %>
 				</p>
 			</body>
-		</c:otherwise>
-	</c:choose>
-</html>
+		</html>
+	</c:otherwise>
+</c:choose>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("portal_web.docroot.errors.code_jsp");

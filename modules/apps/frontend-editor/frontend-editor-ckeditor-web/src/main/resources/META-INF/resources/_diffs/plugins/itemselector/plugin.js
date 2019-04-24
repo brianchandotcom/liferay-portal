@@ -159,17 +159,17 @@
 						var dialogDefinition = event.data.definition;
 
 						if (dialogName === 'audio') {
-							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'audioselector', 'url');
+							instance._bindBrowseButton(event.editor, dialogDefinition, 'info', 'audioselector', 'url');
 						}
 						else if (dialogName === 'image') {
-							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'imageselector', 'txtUrl');
-							instance._bindBrowseButton(editor, dialogDefinition, 'Link', 'imageselector', 'txtUrl');
+							instance._bindBrowseButton(event.editor, dialogDefinition, 'info', 'imageselector', 'txtUrl');
+							instance._bindBrowseButton(event.editor, dialogDefinition, 'Link', 'imageselector', 'txtUrl');
 						}
 						else if (dialogName === 'video') {
-							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'videoselector', 'poster');
+							instance._bindBrowseButton(event.editor, dialogDefinition, 'info', 'videoselector', 'poster');
 						}
 						else if (dialogName === 'link') {
-							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'linkselector', 'url');
+							instance._bindBrowseButton(event.editor, dialogDefinition, 'info', 'linkselector', 'url');
 						}
 					}
 				);

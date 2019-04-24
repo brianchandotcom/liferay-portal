@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -63,14 +64,11 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 				return result;
 			}
 
+			Map<String, String> buildEnvMap = new HashMap<>();
 			int retries = 0;
 			long time = System.currentTimeMillis();
-			Map<String, String> stopPropertiesTempMap =
-				getStopPropertiesTempMap();
 
-			while (!stopPropertiesTempMap.containsKey(
-						"TOP_LEVEL_GITHUB_COMMENT_ID")) {
-
+			while (!buildEnvMap.containsKey("TOP_LEVEL_GITHUB_COMMENT_ID")) {
 				if (retries > 2) {
 					throw new RuntimeException(
 						"Unable to get TOP_LEVE_GITHUB_COMMENT_ID from stop " +
@@ -85,15 +83,26 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 					return result;
 				}
 
+				String buildURL = JenkinsResultsParserUtil.getLocalURL(
+					getBuildURL());
+
+				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+					buildURL + "/injectedEnvVars/api/json");
+
+				JSONObject envMapJSONObject = jsonObject.getJSONObject(
+					"envMap");
+
+				for (String key : envMapJSONObject.keySet()) {
+					buildEnvMap.put(key, envMapJSONObject.getString(key));
+				}
+
 				retries++;
 
 				JenkinsResultsParserUtil.sleep(10 * 1000);
-
-				stopPropertiesTempMap = getStopPropertiesTempMap();
 			}
 
 			if (matchCommentTokens(
-					getActualCommentTokens(stopPropertiesTempMap),
+					getActualCommentTokens(buildEnvMap),
 					getExpectedCommentTokens())) {
 
 				setResult("SUCCESS");

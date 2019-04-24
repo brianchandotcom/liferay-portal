@@ -53,6 +53,16 @@
 	<td>//div[contains(@class,'portlet-options')]/a[contains(@id,'_SearchPortlet') and @title='Options']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SORT_PORTLET_DROPDOWN</td>
+	<td>//div/select[contains(@id, "SortPortlet")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_PORTLET_SORT_OPTION</td>
+	<td>//div/select[contains(@id, "SortPortlet")]/option[contains(., "${sortOption}")]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

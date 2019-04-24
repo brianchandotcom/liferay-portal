@@ -298,6 +298,11 @@ version 1.1.2.
 - [LPS-93873]: Update the [Liferay Gradle Plugins Target Platform] dependency to
 version 1.1.12.
 
+## 2.0.1 - 2019-04-24
+
+### Fixed
+- [LPS-94606]: initBundleTask fails when there are multiple providedModules dependencies
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
@@ -363,3 +368,4 @@ version 1.1.12.
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-86549]: https://issues.liferay.com/browse/LPS-86549
 [LPS-93873]: https://issues.liferay.com/browse/LPS-93873
+[LPS-94606]: https://issues.liferay.com/browse/LPS-94606

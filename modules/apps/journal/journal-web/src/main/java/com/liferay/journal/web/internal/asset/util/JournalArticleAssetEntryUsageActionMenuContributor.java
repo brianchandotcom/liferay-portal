@@ -102,49 +102,38 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 						});
 				}
 
-				boolean hasUpdatePermission = false;
+				if (article.isDraft() || article.isPending() ||
+					article.isScheduled()) {
 
-				try {
-					hasUpdatePermission = JournalArticlePermission.contains(
-						themeDisplay.getPermissionChecker(), article,
-						ActionKeys.UPDATE);
-				}
-				catch (PortalException pe) {
-					_log.error("Unable to check article permission", pe);
-				}
+					try {
+						if (JournalArticlePermission.contains(
+								themeDisplay.getPermissionChecker(), article,
+								ActionKeys.UPDATE)) {
 
-				if (article.isDraft() && hasUpdatePermission) {
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_getURL(article, assetEntryUsage, request));
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									resourceBundle, "preview-draft-in-page"));
-						});
-				}
+							String key = "preview-draft-in-page";
 
-				if (article.isPending() && hasUpdatePermission) {
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_getURL(article, assetEntryUsage, request));
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									resourceBundle, "preview-pending-in-page"));
-						});
-				}
+							if (article.isPending()) {
+								key = "preview-pending-in-page";
+							}
+							else if (article.isScheduled()) {
+								key = "preview-scheduled-in-page";
+							}
 
-				if (article.isScheduled() && hasUpdatePermission) {
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_getURL(article, assetEntryUsage, request));
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									resourceBundle,
-									"preview-scheduled-in-page"));
-						});
+							String label = LanguageUtil.get(
+								resourceBundle, key);
+
+							add(
+								dropdownItem -> {
+									dropdownItem.setHref(
+										_getURL(
+											article, assetEntryUsage, request));
+									dropdownItem.setLabel(label);
+								});
+						}
+					}
+					catch (PortalException pe) {
+						_log.error("Unable to check article permission", pe);
+					}
 				}
 			}
 		};

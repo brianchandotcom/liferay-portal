@@ -94,8 +94,8 @@ public class ModuleFrameworkAdapterHelper {
 			}
 
 			packageNames[files.length] = "org.apache.felix.resolver.";
-			packageNames[files.length + 1] = "org.eclipse.equinox.";
-			packageNames[files.length + 2] = "org.eclipse.core.";
+			packageNames[files.length + 1] = "org.eclipse.core.";
+			packageNames[files.length + 2] = "org.eclipse.equinox.";
 			packageNames[files.length + 3] = "org.osgi.";
 
 			Arrays.sort(packageNames);

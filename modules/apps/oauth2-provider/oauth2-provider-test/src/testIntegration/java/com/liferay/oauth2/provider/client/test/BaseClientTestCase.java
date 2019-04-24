@@ -26,11 +26,15 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.HttpImpl;
 
+import java.lang.reflect.Field;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -55,6 +59,7 @@ import org.codehaus.jettison.json.JSONObject;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 import org.osgi.framework.BundleActivator;
@@ -72,8 +77,21 @@ public abstract class BaseClientTestCase {
 	}
 
 	@BeforeClass
-	public static void setUpClass() {
-		System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+	public static void setUpClass() throws Exception {
+		ClassLoader classLoader = BaseClientTestCase.class.getClassLoader();
+
+		Class<?> clazz = classLoader.loadClass(
+			"sun.net.www.protocol.http.HttpURLConnection");
+
+		Field field = clazz.getDeclaredField("restrictedHeaderSet");
+
+		field.setAccessible(true);
+
+		_originalRestrictedHeaderSet = (Set<String>)field.get(null);
+
+		_restrictedHeaderSet = new HashSet<>(_originalRestrictedHeaderSet);
+
+		_originalRestrictedHeaderSet.clear();
 
 		HttpUtil httpUtil = new HttpUtil();
 
@@ -82,6 +100,11 @@ public abstract class BaseClientTestCase {
 		DigesterUtil digesterUtil = new DigesterUtil();
 
 		digesterUtil.setDigester(new DigesterImpl());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_originalRestrictedHeaderSet.addAll(_restrictedHeaderSet);
 	}
 
 	protected static Client getClient() {
@@ -608,8 +631,10 @@ public abstract class BaseClientTestCase {
 		}
 	}
 
+	private static Set<String> _originalRestrictedHeaderSet;
 	private static final Pattern _pAuthTokenPattern = Pattern.compile(
 		"Liferay.authToken\\s*=\\s*(['\"])(((?!\\1).)*)\\1;");
+	private static Set<String> _restrictedHeaderSet;
 
 	@ArquillianResource
 	private URL _url;

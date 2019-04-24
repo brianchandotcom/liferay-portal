@@ -18,6 +18,7 @@ import static java.util.Collections.singletonList;
 
 import com.liferay.talend.configuration.LiferayInputMapperConfiguration;
 import com.liferay.talend.service.ConnectionService;
+import com.liferay.talend.service.LiferayService;
 
 import java.io.Serializable;
 
@@ -44,11 +45,13 @@ public class LiferayInputMapper implements Serializable {
 
 	public LiferayInputMapper(
 		final ConnectionService connectionService,
+		final LiferayService liferayService,
 		@Option("liferayInputMapperConfiguration") final
 			LiferayInputMapperConfiguration liferayInputMapperConfiguration,
 		final RecordBuilderFactory recordBuilderFactory) {
 
 		_connectionService = connectionService;
+		_liferayService = liferayService;
 		_liferayInputMapperConfiguration = liferayInputMapperConfiguration;
 		_recordBuilderFactory = recordBuilderFactory;
 	}
@@ -56,8 +59,8 @@ public class LiferayInputMapper implements Serializable {
 	@Emitter
 	public LiferayInputEmitter createWorker() {
 		return new LiferayInputEmitter(
-			_connectionService, _liferayInputMapperConfiguration,
-			_recordBuilderFactory);
+			_connectionService, _liferayService,
+			_liferayInputMapperConfiguration, _recordBuilderFactory);
 	}
 
 	@Assessor
@@ -73,6 +76,7 @@ public class LiferayInputMapper implements Serializable {
 	private final ConnectionService _connectionService;
 	private final LiferayInputMapperConfiguration
 		_liferayInputMapperConfiguration;
+	private final LiferayService _liferayService;
 	private final RecordBuilderFactory _recordBuilderFactory;
 
 }

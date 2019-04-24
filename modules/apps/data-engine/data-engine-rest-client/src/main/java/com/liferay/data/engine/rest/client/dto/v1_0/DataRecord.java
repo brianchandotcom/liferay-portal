@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 import com.liferay.data.engine.rest.client.serdes.v1_0.DataRecordSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -49,16 +50,16 @@ public class DataRecord {
 
 	protected Long dataRecordCollectionId;
 
-	public DataRecordValue[] getDataRecordValues() {
+	public Map<String, ?> getDataRecordValues() {
 		return dataRecordValues;
 	}
 
-	public void setDataRecordValues(DataRecordValue[] dataRecordValues) {
+	public void setDataRecordValues(Map<String, ?> dataRecordValues) {
 		this.dataRecordValues = dataRecordValues;
 	}
 
 	public void setDataRecordValues(
-		UnsafeSupplier<DataRecordValue[], Exception>
+		UnsafeSupplier<Map<String, ?>, Exception>
 			dataRecordValuesUnsafeSupplier) {
 
 		try {
@@ -69,7 +70,7 @@ public class DataRecord {
 		}
 	}
 
-	protected DataRecordValue[] dataRecordValues;
+	protected Map<String, ?> dataRecordValues;
 
 	public Long getId() {
 		return id;

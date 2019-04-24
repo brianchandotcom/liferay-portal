@@ -26,6 +26,7 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -71,17 +72,17 @@ public class DataRecord {
 	protected Long dataRecordCollectionId;
 
 	@Schema
-	public DataRecordValue[] getDataRecordValues() {
+	public Map<String, ?> getDataRecordValues() {
 		return dataRecordValues;
 	}
 
-	public void setDataRecordValues(DataRecordValue[] dataRecordValues) {
+	public void setDataRecordValues(Map<String, ?> dataRecordValues) {
 		this.dataRecordValues = dataRecordValues;
 	}
 
 	@JsonIgnore
 	public void setDataRecordValues(
-		UnsafeSupplier<DataRecordValue[], Exception>
+		UnsafeSupplier<Map<String, ?>, Exception>
 			dataRecordValuesUnsafeSupplier) {
 
 		try {
@@ -97,7 +98,7 @@ public class DataRecord {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DataRecordValue[] dataRecordValues;
+	protected Map<String, ?> dataRecordValues;
 
 	@Schema
 	public Long getId() {
@@ -169,17 +170,7 @@ public class DataRecord {
 
 			sb.append("\"dataRecordValues\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataRecordValues.length; i++) {
-				sb.append(String.valueOf(dataRecordValues[i]));
-
-				if ((i + 1) < dataRecordValues.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(dataRecordValues);
 		}
 
 		if (id != null) {

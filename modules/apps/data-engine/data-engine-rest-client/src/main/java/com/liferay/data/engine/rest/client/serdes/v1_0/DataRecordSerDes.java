@@ -15,13 +15,11 @@
 package com.liferay.data.engine.rest.client.serdes.v1_0;
 
 import com.liferay.data.engine.rest.client.dto.v1_0.DataRecord;
-import com.liferay.data.engine.rest.client.dto.v1_0.DataRecordValue;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -70,17 +68,7 @@ public class DataRecordSerDes {
 
 			sb.append("\"dataRecordValues\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataRecord.getDataRecordValues().length; i++) {
-				sb.append(String.valueOf(dataRecord.getDataRecordValues()[i]));
-
-				if ((i + 1) < dataRecord.getDataRecordValues().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(dataRecord.getDataRecordValues());
 		}
 
 		if (dataRecord.getId() != null) {
@@ -166,14 +154,7 @@ public class DataRecordSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dataRecordValues")) {
 				if (jsonParserFieldValue != null) {
 					dataRecord.setDataRecordValues(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataRecordValueSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new DataRecordValue[size]
-						));
+						(Map<String, ?>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

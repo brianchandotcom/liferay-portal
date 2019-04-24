@@ -59,10 +59,15 @@ import org.codehaus.jettison.json.JSONObject;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Carlos Sierra Andrés
@@ -105,6 +110,30 @@ public abstract class BaseClientTestCase {
 	@AfterClass
 	public static void tearDownClass() {
 		_originalRestrictedHeaderSet.addAll(_restrictedHeaderSet);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		_bundleActivator = getBundleActivator();
+
+		if (_bundleActivator != null) {
+			Bundle bundle = FrameworkUtil.getBundle(BaseClientTestCase.class);
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			_bundleActivator.start(bundleContext);
+		}
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		if (_bundleActivator != null) {
+			Bundle bundle = FrameworkUtil.getBundle(BaseClientTestCase.class);
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			_bundleActivator.stop(bundleContext);
+		}
 	}
 
 	protected static Client getClient() {
@@ -263,6 +292,10 @@ public abstract class BaseClientTestCase {
 		WebTarget webTarget = getOAuth2WebTarget();
 
 		return webTarget.path("authorize");
+	}
+
+	protected BundleActivator getBundleActivator() {
+		return null;
 	}
 
 	protected Response getClientCredentialsResponse(
@@ -635,6 +668,8 @@ public abstract class BaseClientTestCase {
 	private static final Pattern _pAuthTokenPattern = Pattern.compile(
 		"Liferay.authToken\\s*=\\s*(['\"])(((?!\\1).)*)\\1;");
 	private static Set<String> _restrictedHeaderSet;
+
+	private BundleActivator _bundleActivator;
 
 	@ArquillianResource
 	private URL _url;

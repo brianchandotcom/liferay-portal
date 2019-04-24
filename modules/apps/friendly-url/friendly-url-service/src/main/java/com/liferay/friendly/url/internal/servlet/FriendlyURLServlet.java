@@ -284,10 +284,10 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		long userId = portal.getUserId(request);
 
-		Company company = portal.getCompany(request);
-
 		if ((userId > 0) && _isImpersonated(request, userId)) {
 			try {
+				Company company = portal.getCompany(request);
+
 				String encDoAsUserId = Encryptor.encrypt(
 					company.getKeyObj(), String.valueOf(userId));
 

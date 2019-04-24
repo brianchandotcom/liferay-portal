@@ -442,7 +442,7 @@ definition {
 
 		DMDocumentSharing.viewDocumentViaSharedAssets(
 			assetSharingPermission = "View",
-			dmDocumentTitle = "DM Document Title (Version 1.0)");
+			dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared Content app."
@@ -477,7 +477,7 @@ definition {
 
 		DMDocumentSharing.viewDocumentViaSharedAssets(
 			assetSharingPermission = "View",
-			dmDocumentTitle = "DM Document Title (Version 1.0)");
+			dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This use case covers sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him. "
@@ -687,8 +687,7 @@ definition {
 
 		User.editPasswordCP(
 			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1"
-		);
+			userScreenName = "usersn1");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

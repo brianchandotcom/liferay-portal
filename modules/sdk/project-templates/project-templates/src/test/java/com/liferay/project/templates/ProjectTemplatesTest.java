@@ -1220,7 +1220,6 @@ public class ProjectTemplatesTest {
 			workspaceProjectDir, "build.gradle",
 			"originalModule group: \"com.liferay\", name: " +
 				"\"com.liferay.login.web\", version: \"1.0.0\"");
-
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
 
@@ -3175,7 +3174,6 @@ public class ProjectTemplatesTest {
 			"group: \"com.liferay\", name: \"com.liferay.gradle.plugins\"",
 			"apply plugin: \"com.liferay.ext.plugin\"",
 			"apply plugin: \"eclipse\"");
-
 		_testContains(
 			gradleProjectDir, "src/extImpl/resources/META-INF/ext-spring.xml");
 	}
@@ -3189,7 +3187,6 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			projectDir, "build.gradle", true, "^repositories \\{.*");
-
 		_testNotContains(
 			projectDir, "build.gradle", "buildscript",
 			"com.liferay.ext.plugin");

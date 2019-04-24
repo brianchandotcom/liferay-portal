@@ -255,6 +255,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
+		// Layout
+
+		layoutLocalService.deleteLayout(layoutPageTemplateEntry.getPlid());
+
 		// Layout prototype
 
 		long layoutPrototypeId = layoutPageTemplateEntry.getLayoutPrototypeId();

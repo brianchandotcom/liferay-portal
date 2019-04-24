@@ -4,6 +4,7 @@ import {PropTypes} from 'prop-types';
 
 class ClaySpinner extends Component {
 	static propTypes = {
+		className: PropTypes.string,
 		light: PropTypes.bool,
 		loading: PropTypes.bool,
 		size: PropTypes.oneOf(['sm'])
@@ -14,14 +15,15 @@ class ClaySpinner extends Component {
 	}
 
 	render() {
-		const {light, loading, size} = this.props;
+		const {className, light, loading, size} = this.props;
 
 		const classes = getCN(
 			'loading-animation',
 			{
 				'loading-animation-light': light,
 				'loading-animation-sm': size === 'sm'
-			}
+			},
+			className
 		);
 
 		return loading && (

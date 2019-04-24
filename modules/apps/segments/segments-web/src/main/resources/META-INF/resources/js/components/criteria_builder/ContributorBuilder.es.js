@@ -1,3 +1,5 @@
+import ClayButton from '../shared/ClayButton.es';
+import ClaySpinner from '../shared/ClaySpinner.es';
 import Conjunction from './Conjunction.es';
 import ContributorInputs from './ContributorInputs.es';
 import CriteriaBuilder from './CriteriaBuilder.es';
@@ -9,7 +11,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {buildQueryString, translateQueryToCriteria} from '../../utils/odata.es';
 import {CONJUNCTIONS} from '../../utils/constants.es';
+import {debounce} from 'metal-debounce';
 import {DragDropContext as dragDropContext} from 'react-dnd';
+import {getPluralMessage, sub} from '../../utils/utils.es';
 
 const conjunctionShape = PropTypes.shape(
 	{
@@ -67,16 +71,21 @@ class ContributorBuilder extends React.Component {
 	static propTypes = {
 		editing: PropTypes.bool.isRequired,
 		emptyContributors: PropTypes.bool.isRequired,
+		formId: PropTypes.string,
 		initialContributors: PropTypes.arrayOf(initialContributorShape),
+		membersCount: PropTypes.number,
 		onQueryChange: PropTypes.func,
+		previewMembersURL: PropTypes.string,
 		propertyGroups: PropTypes.arrayOf(propertyGroupShape),
+		requestMembersCountURL: PropTypes.string,
 		supportedConjunctions: PropTypes.arrayOf(conjunctionShape).isRequired,
 		supportedOperators: PropTypes.arrayOf(operatorShape).isRequired,
-		supportedPropertyTypes: propertyTypeShape.isRequired
+		supportedPropertyTypes: propertyTypeShape.isRequired,
+		values: PropTypes.object
 	};
 
 	static defaultProps = {
-		onQueryChange: () => {}
+		onQueryChange: () => { }
 	};
 
 	constructor(props) {
@@ -115,17 +124,59 @@ class ContributorBuilder extends React.Component {
 			conjunctionName: CONJUNCTIONS.AND,
 			contributors,
 			editingId: propertyKey
+			membersCount: this.props.membersCount,
+			membersCountLoading: false,
 		};
+
+		this._debouncedFetchMembersCount = debounce(
+			this._fetchMembersCount,
+			500
+		);
 	}
+
+	_fetchMembersCount = () => {
+		const formElement = document.getElementById(this.props.formId);
+
+		const formData = new FormData(formElement);
+
+		fetch(
+			this.props.requestMembersCountURL,
+			{
+				body: formData,
+				method: 'POST'
+			}
+		).then(
+			response => response.json()
+		).then(
+			membersCount => {
+				this.setState(
+					{
+						membersCount,
+						membersCountLoading: false
+					}
+				);
+			}
+		).catch(
+			() => {
+				this.setState({membersCountLoading: false});
+
+				Liferay.Util.openToast(
+					{
+						message: Liferay.Language.get('an-unexpected-error-occurred'),
+						title: Liferay.Language.get('error'),
+						type: 'danger'
+					}
+				);
+			}
+		);
+	};
 
 	_handleCriteriaChange = (criteriaChange, index) => {
 		const {onQueryChange} = this.props;
 
 		this.setState(
 			prevState => {
-				let diffState = null;
-
-				diffState = {
+				return {
 					contributors: prevState.contributors.map(
 						contributor => {
 							const {conjunctionId, properties, propertyKey} = contributor;
@@ -138,12 +189,14 @@ class ContributorBuilder extends React.Component {
 								} :
 								contributor;
 						}
-					)
+					),
+					membersCountLoading: true
 				};
-
-				return diffState;
 			},
-			onQueryChange
+			() => {
+				onQueryChange();
+				this._debouncedFetchMembersCount();
+			}
 		);
 	}
 
@@ -151,6 +204,29 @@ class ContributorBuilder extends React.Component {
 		this.setState(
 			{
 				editingId: editing ? undefined : id
+			}
+		);
+	}
+
+	_handlePreviewClick = url => () => {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true
+				},
+				id: 'segment-members-dialog',
+				title: sub(Liferay.Language.get('x-members'), [this.props.values.name]),
+				uri: url
+			}
+		);
+	}
+
+	_handleSelectorChange = event => {
+		const newPropertyKey = event.target.value;
+
+		this.setState(
+			{
+				newPropertyKey
 			}
 		);
 	}
@@ -196,13 +272,14 @@ class ContributorBuilder extends React.Component {
 		const {
 			editing,
 			emptyContributors,
+			previewMembersURL,
 			propertyGroups,
 			supportedConjunctions,
 			supportedOperators,
 			supportedPropertyTypes
 		} = this.props;
 
-		const {contributors, editingId} = this.state;
+		const {contributors, editingId, membersCount, membersCountLoading} = this.state;
 
 		const rootClasses = getCN(
 			'contributor-builder-root',
@@ -226,7 +303,39 @@ class ContributorBuilder extends React.Component {
 						<div className="container-fluid container-fluid-max-xl">
 							<div className="content-wrapper">
 								<div className="sheet">
-									<h2 className="sheet-title">{Liferay.Language.get('conditions')}</h2>
+									<div className="d-flex flex-wrap justify-content-between mb-4">
+										<h2 className="sheet-title mb-2">{Liferay.Language.get('conditions')}</h2>
+										<div className="criterion-string">
+											<span className="mr-4">
+												{Liferay.Language.get('conditions-match')}
+												<b className="ml-2">
+													{getPluralMessage(
+														Liferay.Language.get('x-member'),
+														Liferay.Language.get('x-members'),
+														membersCount
+													)}
+												</b>
+											</span>
+
+											<div className="btn-group">
+												<div className="btn-group-item inline-item">
+													<ClaySpinner
+														className="mr-4"
+														loading={membersCountLoading}
+														size="sm"
+													/>
+
+													<ClayButton
+														label={Liferay.Language.get('view-members')}
+														onClick={this._handlePreviewClick(previewMembersURL)}
+														size="sm"
+														type="button"
+													/>
+												</div>
+											</div>
+										</div>
+									</div>
+
 									<ContributorInputs contributors={contributors} />
 
 									{emptyContributors && (editingId == undefined || !editing) &&

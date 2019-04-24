@@ -41,6 +41,16 @@
 
 		.sheet {
 			padding-bottom: 1.5rem;
+
+			.criterion-string {
+				color: $mainLighten28;
+				font-weight: 600;
+
+				b {
+					color: $main;
+					font-weight: bold;
+				}
+			}
 		}
 	}
 

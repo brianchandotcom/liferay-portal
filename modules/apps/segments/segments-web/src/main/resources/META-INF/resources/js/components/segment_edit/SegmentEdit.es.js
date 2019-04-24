@@ -1,14 +1,11 @@
 import ClayButton from '../shared/ClayButton.es';
-import ClaySpinner from '../shared/ClaySpinner.es';
 import ClayToggle from '../shared/ClayToggle.es';
 import ContributorBuilder from '../criteria_builder/ContributorBuilder.es';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
 import TitleEditor from '../title_editor/TitleEditor.es';
-import {debounce} from 'metal-debounce';
 import {FieldArray, withFormik} from 'formik';
-import {getPluralMessage, sub} from '../../utils/utils.es';
 import {
 	SOURCES,
 	SUPPORTED_CONJUNCTIONS,
@@ -63,65 +60,15 @@ class SegmentEdit extends Component {
 	state = {
 		changesUnsaved: false,
 		editing: this.props.showInEditMode,
-		membersCount: this.props.initialMembersCount,
-		membersCountLoading: false
-	};
-
-	constructor(props) {
-		super(props);
-
-		this._debouncedFetchMembersCount = debounce(
-			this._fetchMembersCount,
-			500
-		);
-	}
-
-	_fetchMembersCount = () => {
-		const formElement = document.getElementById(this.props.formId);
-
-		const formData = new FormData(formElement);
-
-		fetch(
-			this.props.requestMembersCountURL,
-			{
-				body: formData,
-				method: 'POST'
-			}
-		).then(
-			response => response.json()
-		).then(
-			membersCount => {
-				this.setState(
-					{
-						membersCount,
-						membersCountLoading: false
-					}
-				);
-			}
-		).catch(
-			() => {
-				this.setState({membersCountLoading: false});
-
-				Liferay.Util.openToast(
-					{
-						message: Liferay.Language.get('an-unexpected-error-occurred'),
-						title: Liferay.Language.get('error'),
-						type: 'danger'
-					}
-				);
-			}
-		);
+		membersCount: this.props.initialMembersCount
 	};
 
 	_handleQueryChange = () => {
 		this.setState(
 			{
-				changesUnsaved: true,
-				membersCountLoading: true
+				changesUnsaved: true
 			},
-			this._debouncedFetchMembersCount
 		);
-
 	};
 
 	_handleCriteriaEdit = () => {
@@ -161,9 +108,9 @@ class SegmentEdit extends Component {
 	);
 
 	_renderContributors = () => {
-		const {contributors, propertyGroups} = this.props;
+		const {contributors, formId, previewMembersURL, propertyGroups, requestMembersCountURL, values} = this.props;
 
-		const {editing} = this.state;
+		const {editing, membersCount} = this.state;
 
 		const emptyContributors = this._isQueryEmpty();
 
@@ -172,29 +119,21 @@ class SegmentEdit extends Component {
 				<ContributorBuilder
 					editing={editing}
 					emptyContributors={emptyContributors}
+					formId={formId}
 					initialContributors={contributors}
+					membersCount={membersCount}
 					onQueryChange={this._handleQueryChange}
+					previewMembersURL={previewMembersURL}
 					propertyGroups={propertyGroups}
+					requestMembersCountURL={requestMembersCountURL}
 					supportedConjunctions={SUPPORTED_CONJUNCTIONS}
 					supportedOperators={SUPPORTED_OPERATORS}
 					supportedPropertyTypes={SUPPORTED_PROPERTY_TYPES}
+					values={values}
 				/> :
 				null
 		);
 	};
-
-	_handlePreviewClick = url => () => {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true
-				},
-				id: 'segment-members-dialog',
-				title: sub(Liferay.Language.get('x-members'), [this.props.values.name]),
-				uri: url
-			}
-		);
-	}
 
 	/**
 	 * Validates fields with validation and prevents the default form submission
@@ -240,13 +179,12 @@ class SegmentEdit extends Component {
 			handleChange,
 			locale,
 			portletNamespace,
-			previewMembersURL,
 			redirect,
 			source,
 			values
 		} = this.props;
 
-		const {changesUnsaved, editing, membersCount, membersCountLoading} = this.state;
+		const {changesUnsaved, editing} = this.state;
 
 		const {assetsPath} = this.context;
 
@@ -304,24 +242,6 @@ class SegmentEdit extends Component {
 
 						<div className="form-header-section-right">
 							<div className="btn-group">
-								<div className="btn-group-item">
-									<ClaySpinner
-										className="mr-4"
-										loading={membersCountLoading}
-										size="sm"
-									/>
-
-									<ClayButton
-										label={getPluralMessage(
-											Liferay.Language.get('x-member'),
-											Liferay.Language.get('x-members'),
-											membersCount
-										)}
-										onClick={this._handlePreviewClick(previewMembersURL)}
-										size="sm"
-										type="button"
-									/>
-								</div>
 								<div className="btn-group-item mr-2">
 									<ClayToggle
 										checked={editing}

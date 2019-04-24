@@ -342,20 +342,22 @@ class FragmentEntryLinkListRow extends Component {
 	/**
 	 * Callback executed when a key is pressed on the focused row.
 	 * @private
-	 * @param {Event} event
+	 * @param {KeyboardEvent} event
 	 */
 	_handleRowKeyUp(event) {
 		if (this.activeItemId === this.rowId &&
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
 
-			const direction = getItemMoveDirection(event.which);
+			const direction = getItemMoveDirection(event.keyCode);
 
-			moveRow(
-				direction,
-				getRowIndex(this.layoutData.structure, this.rowId),
-				this.store,
-				this.layoutData.structure
-			);
+			if (direction) {
+				moveRow(
+					direction,
+					getRowIndex(this.layoutData.structure, this.rowId),
+					this.store,
+					this.layoutData.structure
+				);
+			}
 		}
 	}
 

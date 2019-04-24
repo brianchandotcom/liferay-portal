@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +77,9 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = _portal.getPortletTitle(
-			DLPortletKeys.MEDIA_GALLERY_DISPLAY, locale);
+			DLPortletKeys.MEDIA_GALLERY_DISPLAY,
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass()));
 
 		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}

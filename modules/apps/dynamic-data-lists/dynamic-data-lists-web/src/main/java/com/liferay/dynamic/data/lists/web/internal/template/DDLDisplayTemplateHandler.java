@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.HashMap;
@@ -80,7 +81,9 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = _portal.getPortletTitle(
-			DDLPortletKeys.DYNAMIC_DATA_LISTS, locale);
+			DDLPortletKeys.DYNAMIC_DATA_LISTS,
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass()));
 
 		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}

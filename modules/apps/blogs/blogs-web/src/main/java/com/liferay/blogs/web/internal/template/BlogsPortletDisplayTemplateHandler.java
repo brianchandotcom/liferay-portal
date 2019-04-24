@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateMa
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.trash.TrashHelper;
 
@@ -76,8 +77,11 @@ public class BlogsPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		String portletTitle = _portal.getPortletTitle(
-			BlogsPortletKeys.BLOGS, locale);
+			BlogsPortletKeys.BLOGS, resourceBundle);
 
 		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}

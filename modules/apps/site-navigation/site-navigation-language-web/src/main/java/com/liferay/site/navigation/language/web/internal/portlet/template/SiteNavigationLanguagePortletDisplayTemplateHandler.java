@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.language.constants.SiteNavigationLanguagePortletKeys;
 import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebTemplateConfiguration;
@@ -60,7 +61,8 @@ public class SiteNavigationLanguagePortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = _portal.getPortletTitle(
-			SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE, locale);
+			SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE,
+			ResourceBundleUtil.getBundle(locale, getClass()));
 
 		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}

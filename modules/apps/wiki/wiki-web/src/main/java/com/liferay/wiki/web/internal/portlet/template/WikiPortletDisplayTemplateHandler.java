@@ -32,7 +32,6 @@ import com.liferay.wiki.service.WikiPageService;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,11 +53,10 @@ public class WikiPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		String portletTitle = _portal.getPortletTitle(
-			WikiPortletKeys.WIKI, resourceBundle);
+			WikiPortletKeys.WIKI,
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass()));
 
 		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}

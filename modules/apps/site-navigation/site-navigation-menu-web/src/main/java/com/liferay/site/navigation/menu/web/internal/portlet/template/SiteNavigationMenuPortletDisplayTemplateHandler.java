@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebTemplateConfiguration;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
@@ -71,7 +72,8 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = _portal.getPortletTitle(
-			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU, locale);
+			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
+			ResourceBundleUtil.getBundle(locale, getClass()));
 
 		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}

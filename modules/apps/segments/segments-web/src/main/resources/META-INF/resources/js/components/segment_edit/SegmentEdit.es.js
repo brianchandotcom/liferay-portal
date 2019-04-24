@@ -327,7 +327,7 @@ class SegmentEdit extends Component {
 										checked={editing}
 										className="toggle-editing"
 										disabled={editingToggleDisabled}
-										iconOff="view"
+										iconOff="pencil"
 										iconOn="pencil"
 										onChange={this._handleCriteriaEdit}
 									/>

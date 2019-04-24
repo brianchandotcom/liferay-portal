@@ -2794,14 +2794,16 @@ public abstract class BaseBuild implements Build {
 	protected Map<String, String> getTempMapFromBuildDatabase(
 		String tempMapName) {
 
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
-
-		Properties properties = buildDatabase.getProperties(tempMapName);
-
 		Map<String, String> tempMap = new HashMap<>();
 
-		for (String propertyName : properties.stringPropertyNames()) {
-			tempMap.put(propertyName, properties.getProperty(propertyName));
+		if (!fromArchive) {
+			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+			Properties properties = buildDatabase.getProperties(tempMapName);
+
+			for (String propertyName : properties.stringPropertyNames()) {
+				tempMap.put(propertyName, properties.getProperty(propertyName));
+			}
 		}
 
 		return tempMap;

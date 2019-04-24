@@ -147,19 +147,20 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 							value="<%= assetEntryUsage.getModifiedDate() %>"
 						/>
 
-						<%
-						List<DropdownItem> dropdownItems = assetEntryUsagesDisplayContext.getAssetEntryUsageActionDropdownItems(assetEntryUsage);
-						%>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smallest table-column-text-center"
+						>
 
-						<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand-smallest table-column-text-center"
-							>
+							<%
+							List<DropdownItem> dropdownItems = assetEntryUsagesDisplayContext.getAssetEntryUsageActionDropdownItems(assetEntryUsage);
+							%>
+
+							<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 								<clay:dropdown-actions
 									dropdownItems="<%= dropdownItems %>"
 								/>
-							</liferay-ui:search-container-column-text>
-						</c:if>
+							</c:if>
+						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
 					<liferay-ui:search-iterator

@@ -15,7 +15,21 @@
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -45,6 +59,83 @@ public class SLATaskResultWorkflowMetricsIndexer
 		document.addKeyword("taskName", taskName);
 
 		return document;
+	}
+
+	public void updateDocuments(
+		Map<Long, String> taskNames,
+		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(getIndexName());
+
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		searchSearchRequest.setQuery(
+			booleanQuery.addMustQueryClauses(
+				queries.term(
+					"companyId",
+					workflowMetricsSLAProcessResult.getCompanyId()),
+				queries.term(
+					"instanceId",
+					workflowMetricsSLAProcessResult.getInstanceId()),
+				queries.term(
+					"processId",
+					workflowMetricsSLAProcessResult.getProcessId()),
+				queries.term(
+					"slaDefinitionId",
+					workflowMetricsSLAProcessResult.getSLADefinitionId())));
+
+		searchSearchRequest.setSelectedFieldNames(Field.UID);
+
+		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
+			searchSearchRequest);
+
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		Stream.of(
+			searchSearchResponse.getSearchHits()
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).forEach(
+			document -> {
+				bulkDocumentRequest.addBulkableDocumentRequest(
+					new UpdateDocumentRequest(
+						getIndexName(), document.getString(Field.UID),
+						new DocumentImpl() {
+							{
+								addKeyword("deleted", true);
+								addKeyword(
+									Field.UID, document.getString(Field.UID));
+							}
+						}) {
+
+						{
+							setType(getIndexType());
+						}
+					});
+			}
+		);
+
+		taskNames.forEach(
+			(taskId, taskName) ->
+				bulkDocumentRequest.addBulkableDocumentRequest(
+					new IndexDocumentRequest(
+						getIndexName(),
+						createDocument(
+							taskId, taskName,
+							workflowMetricsSLAProcessResult)) {
+
+						{
+							setType(getIndexType());
+						}
+					}));
+
+		searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
 	@Override

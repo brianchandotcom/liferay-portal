@@ -128,7 +128,7 @@ function getFragmentRowIndex(structure, fragmentEntryLinkId) {
 
 /**
  * @param {number} keycode
- * @return {number}
+ * @return {number|null}
  * @review
  */
 function getItemMoveDirection(keycode) {

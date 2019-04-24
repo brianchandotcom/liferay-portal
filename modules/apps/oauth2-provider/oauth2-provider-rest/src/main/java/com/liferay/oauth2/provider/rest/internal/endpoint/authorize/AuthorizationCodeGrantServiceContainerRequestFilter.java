@@ -160,6 +160,13 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 			requestURIString = requestURIString.substring(portalURL.length());
 		}
 
+		// Workaround LPS-94559
+
+		String rawQuery = requestURI.getRawQuery();
+
+		requestURIString = requestURIString.replaceAll(
+			"\\?.*", "?" + rawQuery.replaceAll(":", "%3A"));
+
 		loginURL = _http.addParameter(loginURL, "redirect", requestURIString);
 
 		containerRequestContext.abortWith(

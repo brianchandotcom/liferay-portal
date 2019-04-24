@@ -359,18 +359,18 @@ definition {
 			locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
 			value1 = "${structureName}");
 
-		Panel.expandPanel(panel = "Default Template");
-
-		AssertTextEquals(
-			locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
-			value1 = "${templateName}");
-
 		PortletEntry.inputTitle(title = "${webContentTitle}");
 
 		Type(
 			key_fieldName = "${fieldName}",
 			locator1 = "TextInput#DDM",
 			value1 = "${webContentContent}");
+
+		if (isSet(templateName)) {
+			WebContent.selectTemplateCP(
+				structureName = "${structureName}",
+				templateName = "${templateName}");
+		}
 
 		Click(locator1 = "Button#PUBLISH");
 
@@ -385,12 +385,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
 				value1 = "${webContentContent}");
-		}
-
-		if (isSet(templateName)) {
-			WebContent.selectTemplateCP(
-				structureName = "${structureName}",
-				templateName = "${templateName}");
 		}
 	}
 

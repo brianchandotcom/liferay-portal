@@ -50,10 +50,17 @@ class FloatingToolbar extends Component {
 	created() {
 		this._defaultButtonClicked = this._defaultButtonClicked.bind(this);
 		this._handleWindowResize = this._handleWindowResize.bind(this);
-		this._handleWindowScroll = this._handleWindowScroll.bind(this);
+		this._handleWrapperScroll = this._handleWrapperScroll.bind(this);
 
 		window.addEventListener('resize', this._handleWindowResize);
-		window.addEventListener('scroll', this._handleWindowScroll);
+
+		const wrapper = document.querySelector(
+			'.fragment-entry-link-list-wrapper'
+		);
+
+		if (wrapper) {
+			wrapper.addEventListener('scroll', this._handleWrapperScroll);
+		}
 	}
 
 	/**
@@ -69,7 +76,14 @@ class FloatingToolbar extends Component {
 	 */
 	disposed() {
 		window.removeEventListener('resize', this._handleWindowResize);
-		window.removeEventListener('scroll', this._handleWindowScroll);
+
+		const wrapper = document.querySelector(
+			'.fragment-entry-link-list-wrapper'
+		);
+
+		if (wrapper) {
+			wrapper.removeEventListener('scroll', this._handleWrapperScroll);
+		}
 	}
 
 	/**
@@ -147,7 +161,7 @@ class FloatingToolbar extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleWindowScroll() {
+	_handleWrapperScroll() {
 		this._align();
 	}
 

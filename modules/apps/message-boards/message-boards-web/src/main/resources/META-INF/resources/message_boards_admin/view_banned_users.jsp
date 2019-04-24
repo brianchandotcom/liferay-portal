@@ -145,7 +145,7 @@ PortalUtil.setPageSubtitle(LanguageUtil.get(request, "banned-users"), request);
 				data: {
 					'<%= Constants.CMD %>': 'unban'
 				},
-				url: '<portlet:actionURL name="/message_boards/ban_user" var="banUserURL" />'
+				url: '<portlet:actionURL name="/message_boards/ban_user" />'
 			}
 		);
 	};

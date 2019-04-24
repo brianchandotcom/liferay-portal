@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -82,11 +83,11 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 		_addNamedConfigurations(
 			bundle, configurationPath, namedConfigurationContents,
-			url -> ConfigurationHandler.read(url.openStream()), "*.config");
+			inputStream -> ConfigurationHandler.read(inputStream), "*.config");
 
 		_addNamedConfigurations(
 			bundle, configurationPath, namedConfigurationContents,
-			url -> PropertiesUtil.load(url.openStream(), "UTF-8"),
+			inputStream -> PropertiesUtil.load(inputStream, "UTF-8"),
 			"*.properties");
 
 		if (namedConfigurationContents.isEmpty()) {
@@ -119,7 +120,8 @@ public class ConfiguratorExtender extends AbstractExtender {
 	private void _addNamedConfigurations(
 		Bundle bundle, String configurationPath,
 		List<NamedConfigurationContent> namedConfigurationContents,
-		UnsafeFunction<URL, Dictionary<?, ?>, IOException> propertyFunction,
+		UnsafeFunction<InputStream, Dictionary<?, ?>, IOException>
+			propertyFunction,
 		String filePattern) {
 
 		try {
@@ -159,7 +161,12 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 				namedConfigurationContents.add(
 					new NamedConfigurationContent(
-						factoryPid, pid, () -> propertyFunction.apply(url)));
+						factoryPid, pid,
+						() -> {
+							try (InputStream inputStream = url.openStream()) {
+								return propertyFunction.apply(inputStream);
+							}
+						}));
 			}
 		}
 		catch (Throwable t) {

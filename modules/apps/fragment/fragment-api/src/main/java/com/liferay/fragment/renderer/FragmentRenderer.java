@@ -16,6 +16,7 @@ package com.liferay.fragment.renderer;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.io.IOException;
 
@@ -42,7 +43,8 @@ public interface FragmentRenderer {
 	}
 
 	public default String getLabel(Locale locale) {
-		return StringPool.BLANK;
+		return LanguageUtil.get(
+			locale, FragmentConstants.getTypeLabel(getType()));
 	}
 
 	public default int getType() {

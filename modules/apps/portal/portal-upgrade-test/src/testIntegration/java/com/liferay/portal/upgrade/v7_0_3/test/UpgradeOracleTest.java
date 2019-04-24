@@ -55,9 +55,9 @@ public class UpgradeOracleTest {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		DB db = DBManagerUtil.getDB();
+		_db = DBManagerUtil.getDB();
 
-		Assume.assumeTrue(db.getDBType() == DBType.ORACLE);
+		Assume.assumeTrue(_db.getDBType() == DBType.ORACLE);
 	}
 
 	@Before

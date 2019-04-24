@@ -257,7 +257,12 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		// Layout
 
-		layoutLocalService.deleteLayout(layoutPageTemplateEntry.getPlid());
+		Layout layout = layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		if (layout != null) {
+			layoutLocalService.deleteLayout(layout);
+		}
 
 		// Layout prototype
 

@@ -45,6 +45,7 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 
 		_setHeaders(getString("headers", properties));
 
+		setClassLoader((ClassLoader)properties.get("classLoader"));
 		setHostName(getString("hostName", properties));
 		setHostPort(Integer.parseInt(getString("hostPort", properties)));
 		setKeyStore((KeyStore)properties.get("keyStore"));

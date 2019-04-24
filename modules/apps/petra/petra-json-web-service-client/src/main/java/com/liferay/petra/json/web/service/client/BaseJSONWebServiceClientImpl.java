@@ -106,6 +106,13 @@ public abstract class BaseJSONWebServiceClientImpl
 	implements JSONWebServiceClient {
 
 	public void afterPropertiesSet() throws IOReactorException {
+		if (_classLoader != null) {
+			TypeFactory typeFactory = TypeFactory.defaultInstance();
+
+			_objectMapper.setTypeFactory(
+				typeFactory.withClassLoader(_classLoader));
+		}
+
 		HttpAsyncClientBuilder httpAsyncClientBuilder =
 			HttpAsyncClients.custom();
 
@@ -759,6 +766,10 @@ public abstract class BaseJSONWebServiceClientImpl
 		}
 	}
 
+	public void setClassLoader(ClassLoader classLoader) {
+		_classLoader = classLoader;
+	}
+
 	public void setContextPath(String contextPath) {
 		_contextPath = contextPath;
 	}
@@ -1354,6 +1365,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		"status\":(\\d+)");
 
 	private AsyncHttpClient _asyncHttpClient;
+	private ClassLoader _classLoader;
 	private String _contextPath;
 	private Map<String, String> _headers = Collections.emptyMap();
 	private String _hostName;

@@ -136,6 +136,7 @@
 			{/call}
 		{else}
 			{call ClaySticker.render}
+				{param elementClasses: 'user-icon-color-' + $collaborator.userId % 10 /}
 				{param size: 'lg' /}
 				{param icon: 'user' /}
 				{param shape: 'circle' /}

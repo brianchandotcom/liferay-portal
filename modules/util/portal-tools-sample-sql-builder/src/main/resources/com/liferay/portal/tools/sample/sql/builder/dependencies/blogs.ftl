@@ -19,7 +19,7 @@ ${dataFactory.toInsertSQL(userNotificationDeliveryModel)}
 
 	<#assign classNameId = dataFactory.getBlogsAssetEntryClassNameId() />
 
-	${dataFactory.toInsertSQL(dataFactory.newAssetEntryModel(classNameId, blogsEntryModel, groupId))}
+	${dataFactory.toInsertSQL(dataFactory.newAssetEntryModel(classNameId, blogsEntryModel))}
 
 	<@insertAssetEntry
 		_categoryAndTag=true

@@ -14,7 +14,7 @@
 
 		<#assign classNameId = dataFactory.getWikiAssetEntryClassNameId() />
 
-		${dataFactory.toInsertSQL(dataFactory.newAssetEntryModel(classNameId, wikiPageModel, groupId))}
+		${dataFactory.toInsertSQL(dataFactory.newAssetEntryModel(classNameId, wikiPageModel))}
 
 		<@insertAssetEntry
 			_categoryAndTag=true

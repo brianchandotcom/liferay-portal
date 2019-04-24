@@ -1353,23 +1353,23 @@ public class DataFactory {
 	}
 
 	public AssetEntryModel newAssetEntryModel(
-		long classNameId, BlogsEntryModel blogsEntryModel, long groupId) {
+		long classNameId, BlogsEntryModel blogsEntryModel) {
 
 		return newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
 			blogsEntryModel.getModifiedDate(), classNameId,
 			blogsEntryModel.getEntryId(), "", 0, true, false, "",
-			String.valueOf(groupId));
+			String.valueOf(blogsEntryModel.getGroupId()));
 	}
 
 	public AssetEntryModel newAssetEntryModel(
-		long classNameId, WikiPageModel wikiPageModel, long groupId) {
+		long classNameId, WikiPageModel wikiPageModel) {
 
 		return newAssetEntryModel(
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
 			wikiPageModel.getModifiedDate(), classNameId,
 			wikiPageModel.getResourcePrimKey(), "", 0, true, false, "",
-			String.valueOf(groupId));
+			String.valueOf(wikiPageModel.getGroupId()));
 	}
 
 	public AssetEntryModel newAssetEntryModel(MBMessageModel mbMessageModel) {

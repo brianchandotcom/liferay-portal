@@ -62,6 +62,14 @@ public class EtcdUtil {
 		}
 	}
 
+	public static void delete(String etcdServerURL, String key) {
+		Node node = get(etcdServerURL, key);
+
+		if (node != null) {
+			delete(etcdServerURL, node);
+		}
+	}
+
 	public static Node get(String etcdServerURL, String key) {
 		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
 			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);

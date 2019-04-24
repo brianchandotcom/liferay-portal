@@ -108,6 +108,15 @@ public class TaskResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	private BooleanQuery _createBooleanQuery(long processId) {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("processId", processId));
+	}
+
 	private BooleanQuery _createBooleanQuery(long processId, String version) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -152,16 +161,10 @@ public class TaskResourceImpl
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		booleanQuery.addShouldQueryClauses(_createMustNotBooleanQuery());
+		booleanQuery.addShouldQueryClauses(_createBooleanQuery(processId));
 
 		return booleanQuery.addShouldQueryClauses(
 			_createBooleanQuery(processId, version));
-	}
-
-	private BooleanQuery _createMustNotBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		return booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
 	}
 
 	private BooleanQuery _createNodesBooleanQuery(

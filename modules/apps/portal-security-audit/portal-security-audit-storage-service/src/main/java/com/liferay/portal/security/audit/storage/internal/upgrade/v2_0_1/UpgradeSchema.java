@@ -16,7 +16,7 @@ package com.liferay.portal.security.audit.storage.internal.upgrade.v2_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.security.audit.storage.internal.upgrade.v2_0_0.util.AuditEventTable;
+import com.liferay.portal.security.audit.storage.internal.upgrade.v2_0_1.util.AuditEventTable;
 
 /**
  * @author Peter Petrekanics

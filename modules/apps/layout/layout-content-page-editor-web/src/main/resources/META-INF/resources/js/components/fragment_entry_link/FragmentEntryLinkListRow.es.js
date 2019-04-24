@@ -266,8 +266,8 @@ class FragmentEntryLinkListRow extends Component {
 
 		const nextColumnRect = nextColumnElement.getBoundingClientRect();
 
-		const maxPosition = nextColumnRect.x + nextColumnRect.width;
-		const minPosition = columnElement.getBoundingClientRect().x;
+		const maxPosition = nextColumnRect.left + nextColumnRect.width;
+		const minPosition = columnElement.getBoundingClientRect().left;
 		const position = Math.max(Math.min(event.clientX, maxPosition), minPosition);
 
 		const column = this._resizeRowColumns[columnIndex];

@@ -23,9 +23,7 @@ import com.liferay.portal.configuration.extender.internal.NamedConfigurationCont
 import java.io.IOException;
 import java.io.PrintStream;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -76,12 +74,6 @@ public class ConfiguratorExtensionTest {
 
 	@After
 	public void tearDown() {
-		for (ConfiguratorExtension configurationExtension :
-				_configurationExtensions) {
-
-			configurationExtension.destroy();
-		}
-
 		_bundleContext.ungetService(_serviceReference);
 	}
 
@@ -109,8 +101,6 @@ public class ConfiguratorExtensionTest {
 		finally {
 			System.setErr(printStream);
 		}
-
-		_configurationExtensions.add(configuratorExtension);
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -344,16 +334,12 @@ public class ConfiguratorExtensionTest {
 			Arrays.asList(namedConfigurationContents));
 
 		configuratorExtension.start();
-
-		_configurationExtensions.add(configuratorExtension);
 	}
 
 	@ArquillianResource
 	private BundleContext _bundleContext;
 
 	private ConfigurationAdmin _configurationAdmin;
-	private final Collection<ConfiguratorExtension> _configurationExtensions =
-		new ArrayList<>();
 	private ServiceReference<ConfigurationAdmin> _serviceReference;
 
 	private static class TestProperties<K, V> extends Hashtable<K, V> {

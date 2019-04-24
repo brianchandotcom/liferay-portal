@@ -130,16 +130,16 @@
 	<div class="autofit-col">
 		{if $collaborator.portraitURL}
 			{call ClaySticker.render}
-				{param size: 'lg' /}
 				{param imageSrc: $collaborator.portraitURL /}
 				{param shape: 'circle' /}
+				{param size: 'lg' /}
 			{/call}
 		{else}
 			{call ClaySticker.render}
 				{param elementClasses: 'user-icon-color-' + $collaborator.userId % 10 /}
-				{param size: 'lg' /}
 				{param icon: 'user' /}
 				{param shape: 'circle' /}
+				{param size: 'lg' /}
 				{param spritemap: $spritemap /}
 			{/call}
 		{/if}

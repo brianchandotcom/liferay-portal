@@ -104,6 +104,10 @@ definition {
 			AssertElementPresent(locator1 = "Comments#COMMENT_FIELD");
 		}
 
-		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
+			value1 = "${dmDocumentTitle}");
 	}
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.vldap.server.internal.handler;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.directory.api.ldap.model.message.LdapResult;
@@ -48,11 +48,7 @@ public abstract class BaseLdapHandler implements LdapHandler {
 	}
 
 	protected List<Response> toList(Response response) {
-		List<Response> responses = new ArrayList<>();
-
-		responses.add(response);
-
-		return responses;
+		return Arrays.asList(response);
 	}
 
 }

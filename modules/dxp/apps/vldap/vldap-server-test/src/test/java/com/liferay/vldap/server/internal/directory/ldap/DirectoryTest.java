@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -135,11 +136,7 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testToEntryStarSearchRequestAttribute() throws Exception {
-		List<String> searchRequestAttributes = new ArrayList<>();
-
-		searchRequestAttributes.add("*");
-
-		Entry entry = _directory.toEntry(searchRequestAttributes);
+		Entry entry = _directory.toEntry(Arrays.asList("*"));
 
 		Collection<Attribute> attributes = entry.getAttributes();
 
@@ -148,11 +145,7 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testToEntryWithHasSubordinates() throws Exception {
-		List<String> searchRequestAttributes = new ArrayList<>();
-
-		searchRequestAttributes.add("hassubordinates");
-
-		Entry entry = _directory.toEntry(searchRequestAttributes);
+		Entry entry = _directory.toEntry(Arrays.asList("hassubordinates"));
 
 		Collection<Attribute> attributes = entry.getAttributes();
 
@@ -163,11 +156,7 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 	public void testToEntryWithInvalidSearchRequestAttribute()
 		throws Exception {
 
-		List<String> searchRequestAttributes = new ArrayList<>();
-
-		searchRequestAttributes.add("test");
-
-		Entry entry = _directory.toEntry(searchRequestAttributes);
+		Entry entry = _directory.toEntry(Arrays.asList("test"));
 
 		Collection<Attribute> attributes = entry.getAttributes();
 
@@ -176,11 +165,7 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testToEntryWithValidSearchRequestAttribute() throws Exception {
-		List<String> searchRequestAttributes = new ArrayList<>();
-
-		searchRequestAttributes.add("testAttribute");
-
-		Entry entry = _directory.toEntry(searchRequestAttributes);
+		Entry entry = _directory.toEntry(Arrays.asList("testAttribute"));
 
 		Collection<Attribute> attributes = entry.getAttributes();
 
@@ -196,10 +181,6 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 			"testScreenName"
 		);
 
-		List<User> users = new ArrayList<>();
-
-		users.add(user);
-
 		when(
 			userLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
@@ -208,7 +189,7 @@ public class DirectoryTest extends BaseVLDAPTestCase {
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
 				Mockito.any(UserScreenNameComparator.class))
 		).thenReturn(
-			users
+			Arrays.asList(user)
 		);
 	}
 

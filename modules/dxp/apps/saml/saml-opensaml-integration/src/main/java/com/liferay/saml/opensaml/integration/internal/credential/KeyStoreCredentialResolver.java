@@ -30,7 +30,6 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -344,11 +343,8 @@ public class KeyStoreCredentialResolver
 		BasicX509Credential basicX509Credential = new BasicX509Credential(
 			x509Certificate);
 
-		List<X509Certificate> x509Certificates = new ArrayList<>();
-
-		x509Certificates.add(x509Certificate);
-
-		basicX509Credential.setEntityCertificateChain(x509Certificates);
+		basicX509Credential.setEntityCertificateChain(
+			Arrays.asList(x509Certificate));
 
 		basicX509Credential.setEntityId(entityId);
 		basicX509Credential.setUsageType(usageType);

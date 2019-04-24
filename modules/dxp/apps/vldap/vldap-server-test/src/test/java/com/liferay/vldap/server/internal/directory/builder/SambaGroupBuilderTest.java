@@ -21,6 +21,7 @@ import com.liferay.vldap.server.internal.directory.FilterConstraint;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -188,15 +189,11 @@ public class SambaGroupBuilderTest extends BaseVLDAPTestCase {
 			"testName"
 		);
 
-		List<Object> organizations = new ArrayList<>();
-
-		organizations.add(organization);
-
 		when(
 			organizationLocalService.dynamicQuery(
 				Mockito.any(DynamicQuery.class))
 		).thenReturn(
-			organizations
+			Arrays.asList(organization)
 		);
 
 		List<FilterConstraint> filterConstraints = new ArrayList<>();

@@ -67,6 +67,7 @@ import com.liferay.vldap.server.internal.util.LdapUtil;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -152,14 +153,10 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		getCommunitiesSearchBaseMethod.setAccessible(true);
 
-		List<Identifier> identifiers = new ArrayList<>();
-
-		identifiers.add(new Identifier("cn", "testScreenName"));
-
 		SearchBase searchBase =
 			(SearchBase)getCommunitiesSearchBaseMethod.invoke(
 				_classInstance, "Liferay", "testGroupName", 0, company,
-				identifiers);
+				Arrays.asList(new Identifier("cn", "testScreenName")));
 
 		assertUserSearchBase(searchBase, true);
 	}
@@ -423,14 +420,10 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		getOrganizationsSearchBaseMethod.setAccessible(true);
 
-		List<Identifier> identifiers = new ArrayList<>();
-
-		identifiers.add(new Identifier("cn", "testScreenName"));
-
 		SearchBase searchBase =
 			(SearchBase)getOrganizationsSearchBaseMethod.invoke(
 				_classInstance, "Liferay", "testOrganizationName", 0, company,
-				identifiers);
+				Arrays.asList(new Identifier("cn", "testScreenName")));
 
 		assertUserSearchBase(searchBase, true);
 	}
@@ -514,12 +507,9 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		getRolesSearchBaseMethod.setAccessible(true);
 
-		List<Identifier> identifiers = new ArrayList<>();
-
-		identifiers.add(new Identifier("cn", "testScreenName"));
-
 		SearchBase searchBase = (SearchBase)getRolesSearchBaseMethod.invoke(
-			_classInstance, "Liferay", "testRoleName", 0, company, identifiers);
+			_classInstance, "Liferay", "testRoleName", 0, company,
+			Arrays.asList(new Identifier("cn", "testScreenName")));
 
 		assertUserSearchBase(searchBase, true);
 	}
@@ -889,13 +879,10 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		getSearchBaseMethod.setAccessible(true);
 
-		List<Identifier> identifiers = new ArrayList<>();
-
-		identifiers.add(new Identifier("cn", "testScreenName"));
-
 		SearchBase searchBase = (SearchBase)getSearchBaseMethod.invoke(
 			_classInstance, "Liferay", 0, new LinkedHashMap<String, Object>(),
-			identifiers, _organization, company);
+			Arrays.asList(new Identifier("cn", "testScreenName")),
+			_organization, company);
 
 		assertUserSearchBase(searchBase, false);
 	}
@@ -1001,14 +988,10 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		getUserGroupsSearchBaseMethod.setAccessible(true);
 
-		List<Identifier> identifiers = new ArrayList<>();
-
-		identifiers.add(new Identifier("cn", "testScreenName"));
-
 		SearchBase searchBase =
 			(SearchBase)getUserGroupsSearchBaseMethod.invoke(
 				_classInstance, "Liferay", "testUserGroupName", 0, company,
-				identifiers);
+				Arrays.asList(new Identifier("cn", "testScreenName")));
 
 		assertUserSearchBase(searchBase, true);
 	}
@@ -1093,13 +1076,9 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		getUsersSearchBaseMethod.setAccessible(true);
 
-		List<Identifier> identifiers = new ArrayList<>();
-
-		identifiers.add(new Identifier("cn", "testScreenName"));
-
 		SearchBase searchBase = (SearchBase)getUsersSearchBaseMethod.invoke(
 			_classInstance, "Liferay", "testScreenName", 0, company,
-			identifiers);
+			Arrays.asList(new Identifier("cn", "testScreenName")));
 
 		assertUserSearchBase(searchBase, true);
 	}
@@ -1704,10 +1683,6 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 			_user
 		);
 
-		List<User> users = new ArrayList<>();
-
-		users.add(_user);
-
 		when(
 			userLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
@@ -1716,7 +1691,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
 				Mockito.any(UserScreenNameComparator.class))
 		).thenReturn(
-			users
+			Arrays.asList(_user)
 		);
 	}
 

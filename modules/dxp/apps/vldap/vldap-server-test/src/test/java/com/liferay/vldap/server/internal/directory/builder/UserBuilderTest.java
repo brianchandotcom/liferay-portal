@@ -34,6 +34,7 @@ import com.liferay.vldap.server.internal.directory.ldap.Directory;
 import com.liferay.vldap.server.internal.util.PortletPropsValues;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -771,10 +772,6 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 			group
 		);
 
-		List<Group> groups = new ArrayList<>();
-
-		groups.add(group);
-
 		when(
 			groupLocalService.search(
 				Mockito.anyLong(), Mockito.any(long[].class),
@@ -782,7 +779,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 				Mockito.any(LinkedHashMap.class), Mockito.anyBoolean(),
 				Mockito.anyInt(), Mockito.anyInt())
 		).thenReturn(
-			groups
+			Arrays.asList(group)
 		);
 
 		when(
@@ -830,14 +827,10 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 			PRIMARY_KEY
 		);
 
-		List<Organization> organizations = new ArrayList<>();
-
-		organizations.add(organization);
-
 		when(
 			_user.getOrganizations()
 		).thenReturn(
-			organizations
+			Arrays.asList(organization)
 		);
 
 		when(
@@ -891,14 +884,10 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 			PRIMARY_KEY
 		);
 
-		List<Role> roles = new ArrayList<>();
-
-		roles.add(role);
-
 		when(
 			_user.getRoles()
 		).thenReturn(
-			roles
+			Arrays.asList(role)
 		);
 
 		when(
@@ -930,14 +919,10 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 			PRIMARY_KEY
 		);
 
-		List<UserGroup> userGroups = new ArrayList<>();
-
-		userGroups.add(userGroup);
-
 		when(
 			_user.getUserGroups()
 		).thenReturn(
-			userGroups
+			Arrays.asList(userGroup)
 		);
 
 		when(

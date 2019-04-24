@@ -17,9 +17,8 @@ package com.liferay.vldap.server.internal.directory.builder;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,10 +52,6 @@ public class UsersBuilderTest extends BaseDirectoryBuilderTestCase {
 			"testScreenName"
 		);
 
-		List<User> users = new ArrayList<>();
-
-		users.add(user);
-
 		when(
 			userLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
@@ -65,7 +60,7 @@ public class UsersBuilderTest extends BaseDirectoryBuilderTestCase {
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
 				Mockito.any(UserScreenNameComparator.class))
 		).thenReturn(
-			users
+			Arrays.asList(user)
 		);
 
 		doTestBuildDirectories();

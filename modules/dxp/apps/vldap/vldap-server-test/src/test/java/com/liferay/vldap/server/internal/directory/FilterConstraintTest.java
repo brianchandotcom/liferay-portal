@@ -15,6 +15,7 @@
 package com.liferay.vldap.server.internal.directory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -144,13 +145,10 @@ public class FilterConstraintTest {
 	public void testGetCombinationsWithNullLeftFilter() {
 		List<FilterConstraint> leftFilterConstraint = new ArrayList<>();
 
-		List<FilterConstraint> rightFilterConstraint = new ArrayList<>();
-
-		rightFilterConstraint.add(getFilterConstraint("description", "test2"));
-
 		List<FilterConstraint> filterConstraints =
 			FilterConstraint.getCombinations(
-				leftFilterConstraint, rightFilterConstraint);
+				leftFilterConstraint,
+				Arrays.asList(getFilterConstraint("description", "test2")));
 
 		Assert.assertEquals(
 			filterConstraints.toString(), 0, filterConstraints.size());

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.vldap.server.internal.directory.builder.DirectoryBuilder;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -109,11 +109,7 @@ public class SearchBase {
 			return CompanyLocalServiceUtil.getCompanies();
 		}
 
-		List<Company> companies = new ArrayList<>(1);
-
-		companies.add(_company);
-
-		return companies;
+		return Arrays.asList(_company);
 	}
 
 	public Company getCompany() {

@@ -25,6 +25,7 @@ import com.liferay.portal.rules.engine.RulesResourceRetriever;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -133,11 +134,9 @@ public class RulesEngineImplTest {
 
 		userProfile.setAge(50);
 
-		List<Fact<?>> facts = new ArrayList<>();
-
-		facts.add(new Fact<UserProfile>("userProfile", userProfile));
-
-		_rulesEngine.execute("testDomainName", facts);
+		_rulesEngine.execute(
+			"testDomainName",
+			Arrays.asList(new Fact<UserProfile>("userProfile", userProfile)));
 
 		Assert.assertEquals(50, userProfile.getAge());
 	}
@@ -150,12 +149,10 @@ public class RulesEngineImplTest {
 
 		userProfile.setAge(18);
 
-		List<Fact<?>> facts = new ArrayList<>();
-
-		facts.add(new Fact<UserProfile>("userProfile", userProfile));
-
 		Map<String, ?> results = _rulesEngine.execute(
-			_rulesResourceRetriever, facts, Query.createStandardQuery());
+			_rulesResourceRetriever,
+			Arrays.asList(new Fact<UserProfile>("userProfile", userProfile)),
+			Query.createStandardQuery());
 
 		Assert.assertEquals(results.toString(), 1, results.size());
 
@@ -172,12 +169,10 @@ public class RulesEngineImplTest {
 
 		userProfile.setAge(50);
 
-		List<Fact<?>> facts = new ArrayList<>();
-
-		facts.add(new Fact<UserProfile>("userProfile", userProfile));
-
 		Map<String, ?> results = _rulesEngine.execute(
-			_rulesResourceRetriever, facts, Query.createStandardQuery());
+			_rulesResourceRetriever,
+			Arrays.asList(new Fact<UserProfile>("userProfile", userProfile)),
+			Query.createStandardQuery());
 
 		Assert.assertEquals(results.toString(), 1, results.size());
 
@@ -192,11 +187,9 @@ public class RulesEngineImplTest {
 
 		userProfile.setAge(18);
 
-		List<Fact<?>> facts = new ArrayList<>();
-
-		facts.add(new Fact<UserProfile>("userProfile", userProfile));
-
-		_rulesEngine.execute(_rulesResourceRetriever, facts);
+		_rulesEngine.execute(
+			_rulesResourceRetriever,
+			Arrays.asList(new Fact<UserProfile>("userProfile", userProfile)));
 
 		Assert.assertEquals(30, userProfile.getAge());
 	}
@@ -207,11 +200,9 @@ public class RulesEngineImplTest {
 
 		userProfile.setAge(50);
 
-		List<Fact<?>> facts = new ArrayList<>();
-
-		facts.add(new Fact<UserProfile>("userProfile", userProfile));
-
-		_rulesEngine.execute(_rulesResourceRetriever, facts);
+		_rulesEngine.execute(
+			_rulesResourceRetriever,
+			Arrays.asList(new Fact<UserProfile>("userProfile", userProfile)));
 
 		Assert.assertEquals(50, userProfile.getAge());
 	}

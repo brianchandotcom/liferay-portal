@@ -19,6 +19,7 @@ import com.liferay.vldap.server.internal.directory.FilterConstraint;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -41,12 +42,8 @@ public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 	protected void doTestBuildDirectoriesWithDefaultFilterConstraints()
 		throws Exception {
 
-		List<FilterConstraint> filterConstraints = new ArrayList<>();
-
-		filterConstraints.add(new FilterConstraint());
-
 		List<Directory> directories = directoryBuilder.buildDirectories(
-			searchBase, filterConstraints);
+			searchBase, Arrays.asList(new FilterConstraint()));
 
 		Directory directory = directories.get(0);
 

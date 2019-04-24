@@ -23,6 +23,7 @@ import com.liferay.vldap.server.internal.directory.FilterConstraint;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -253,10 +254,6 @@ public class OrganizationBuilderTest extends BaseVLDAPTestCase {
 			"testScreenName"
 		);
 
-		List<User> users = new ArrayList<>();
-
-		users.add(_user);
-
 		when(
 			userLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
@@ -265,7 +262,7 @@ public class OrganizationBuilderTest extends BaseVLDAPTestCase {
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
 				Mockito.any(UserScreenNameComparator.class))
 		).thenReturn(
-			users
+			Arrays.asList(_user)
 		);
 	}
 

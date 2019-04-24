@@ -285,9 +285,9 @@ public class DataFactory {
 
 		models.add(UserPersonalSite.class.getName());
 
-		models.add(getCombinedClassName(MBDiscussion.class, BlogsEntry.class));
+		models.add(_getCombinedClassName(MBDiscussion.class, BlogsEntry.class));
 
-		models.add(getCombinedClassName(MBDiscussion.class, WikiPage.class));
+		models.add(_getCombinedClassName(MBDiscussion.class, WikiPage.class));
 
 		for (String model : models) {
 			ClassNameModel classNameModel = new ClassNameModelImpl();
@@ -537,18 +537,6 @@ public class DataFactory {
 
 	public Collection<ClassNameModel> getClassNameModels() {
 		return _classNameModels.values();
-	}
-
-	public String getCombinedClassName(
-		Class<?> firstClazz, Class<?> secondClazz) {
-
-		String className = firstClazz.getName();
-
-		return className.concat(
-			StringPool.UNDERLINE
-		).concat(
-			secondClazz.getName()
-		);
 	}
 
 	public CompanyModel getCompanyModel() {
@@ -2279,7 +2267,7 @@ public class DataFactory {
 		BlogsEntryModel blogsEntryModel) {
 
 		ClassNameModel classNameModel = _classNameModels.get(
-			getCombinedClassName(MBDiscussion.class, BlogsEntry.class));
+			_getCombinedClassName(MBDiscussion.class, BlogsEntry.class));
 
 		return newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
@@ -2292,7 +2280,7 @@ public class DataFactory {
 		WikiPageModel wikiPageModel) {
 
 		ClassNameModel classNameModel = _classNameModels.get(
-			getCombinedClassName(MBDiscussion.class, WikiPage.class));
+			_getCombinedClassName(MBDiscussion.class, WikiPage.class));
 
 		return newAssetEntryModel(
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
@@ -3927,6 +3915,18 @@ public class DataFactory {
 		catch (ReflectiveOperationException roe) {
 			ReflectionUtil.throwException(roe);
 		}
+	}
+
+	private String _getCombinedClassName(
+		Class<?> firstClazz, Class<?> secondClazz) {
+
+		String className = firstClazz.getName();
+
+		return className.concat(
+			StringPool.UNDERLINE
+		).concat(
+			secondClazz.getName()
+		);
 	}
 
 	private String _getResourcePermissionModelName(String... classNames) {

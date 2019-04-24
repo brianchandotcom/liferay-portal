@@ -35,11 +35,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.InputStream;
 
 import java.util.Collections;
 
@@ -118,9 +115,8 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 			_mbMessageService.addMessage(
 				thread.getRootMessageId(), subject, body,
 				mbGroupServiceSettings.getMessageFormat(),
-				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-				false, MBThreadConstants.PRIORITY_NOT_GIVEN, false,
-				serviceContext);
+				Collections.emptyList(), false,
+				MBThreadConstants.PRIORITY_NOT_GIVEN, false, serviceContext);
 		}
 
 		LiferayActionResponse liferayActionResponse =

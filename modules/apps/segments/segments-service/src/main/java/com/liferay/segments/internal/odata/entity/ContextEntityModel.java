@@ -18,9 +18,9 @@ import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
+import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.segments.context.Context;
 
@@ -54,10 +54,10 @@ public class ContextEntityModel implements EntityModel {
 				Context.LAST_SIGN_IN_DATE_TIME,
 				locale -> Context.LAST_SIGN_IN_DATE_TIME,
 				locale -> Context.LAST_SIGN_IN_DATE_TIME),
-			new IntegerEntityField(
+			new DoubleEntityField(
 				Context.DEVICE_SCREEN_RESOLUTION_HEIGHT,
 				locale -> Context.DEVICE_SCREEN_RESOLUTION_HEIGHT),
-			new IntegerEntityField(
+			new DoubleEntityField(
 				Context.DEVICE_SCREEN_RESOLUTION_WIDTH,
 				locale -> Context.DEVICE_SCREEN_RESOLUTION_WIDTH),
 			new StringEntityField(Context.BROWSER, locale -> Context.BROWSER),

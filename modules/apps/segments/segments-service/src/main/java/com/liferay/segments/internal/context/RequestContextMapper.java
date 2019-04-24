@@ -79,10 +79,10 @@ public class RequestContextMapper {
 
 		context.put(
 			Context.DEVICE_SCREEN_RESOLUTION_HEIGHT,
-			screenResolution.getHeight());
+			(double)screenResolution.getHeight());
 		context.put(
 			Context.DEVICE_SCREEN_RESOLUTION_WIDTH,
-			screenResolution.getWidth());
+			(double)screenResolution.getWidth());
 
 		context.put(Context.LANGUAGE_ID, themeDisplay.getLanguageId());
 

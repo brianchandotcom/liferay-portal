@@ -301,7 +301,8 @@ version 1.1.12.
 ## 2.0.1 - 2019-04-24
 
 ### Fixed
-- [LPS-94606]: initBundleTask fails when there are multiple providedModules dependencies
+- [LPS-94606]: The `initBundle` task failed when the `providedModules`
+configuration contained more than one dependency.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

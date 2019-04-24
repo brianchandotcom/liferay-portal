@@ -88,24 +88,12 @@ public class FindThreadAction extends FindStrutsAction {
 		return _portletPageFinder;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.model.MBThread)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.message.boards.model.MBThread)"
 	)
-	protected void setPortletLayoutFinder(
-		PortletLayoutFinder portletPageFinder) {
-
-		_portletPageFinder = portletPageFinder;
-	}
-
-	private MBThreadLocalService _mbThreadLocalService;
 	private PortletLayoutFinder _portletPageFinder;
 
 }

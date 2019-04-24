@@ -172,11 +172,7 @@ public class RSSAction implements StrutsAction {
 		return mbGroupServiceSettings.isEnableRSS();
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageService(MBMessageService mbMessageService) {
-		_mbMessageService = mbMessageService;
-	}
-
+	@Reference
 	private MBMessageService _mbMessageService;
 
 	@Reference

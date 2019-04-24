@@ -86,23 +86,6 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageService(MBMessageService mbMessageService) {
-		_mbMessageService = mbMessageService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadService(MBThreadService mbThreadService) {
-		_mbThreadService = mbThreadService;
-	}
-
 	protected void splitThread(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -168,8 +151,13 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		actionResponse.sendRedirect(portletURL.toString());
 	}
 
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
 	private MBMessageService _mbMessageService;
+
+	@Reference
 	private MBThreadService _mbThreadService;
 
 	@Reference

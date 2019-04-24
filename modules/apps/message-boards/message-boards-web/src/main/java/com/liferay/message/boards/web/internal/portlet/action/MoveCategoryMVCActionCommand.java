@@ -79,11 +79,7 @@ public class MoveCategoryMVCActionCommand extends BaseMVCActionCommand {
 			categoryId, parentCategoryId, mergeWithParentCategory);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryService(MBCategoryService mbCategoryService) {
-		_mbCategoryService = mbCategoryService;
-	}
-
+	@Reference
 	private MBCategoryService _mbCategoryService;
 
 	@Reference

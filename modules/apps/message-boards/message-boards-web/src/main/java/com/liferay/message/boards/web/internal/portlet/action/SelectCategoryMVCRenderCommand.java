@@ -58,13 +58,7 @@ public class SelectCategoryMVCRenderCommand implements MVCRenderCommand {
 		return "/message_boards/select_category.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
-
+	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

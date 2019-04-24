@@ -77,11 +77,6 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBBanService(MBBanService mbBanService) {
-		_mbBanService = mbBanService;
-	}
-
 	protected void unbanUser(ActionRequest actionRequest) throws Exception {
 		long[] banUserIds = null;
 
@@ -102,6 +97,7 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference
 	private MBBanService _mbBanService;
 
 }

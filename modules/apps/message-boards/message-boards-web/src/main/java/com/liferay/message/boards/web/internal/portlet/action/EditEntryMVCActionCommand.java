@@ -139,16 +139,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryService(MBCategoryService mbCategoryService) {
-		_mbCategoryService = mbCategoryService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadService(MBThreadService mbThreadService) {
-		_mbThreadService = mbThreadService;
-	}
-
 	protected void unlockThreads(ActionRequest actionRequest) throws Exception {
 		long[] threadIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsMBThread");
@@ -158,7 +148,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference
 	private MBCategoryService _mbCategoryService;
+
+	@Reference
 	private MBThreadService _mbThreadService;
 
 }

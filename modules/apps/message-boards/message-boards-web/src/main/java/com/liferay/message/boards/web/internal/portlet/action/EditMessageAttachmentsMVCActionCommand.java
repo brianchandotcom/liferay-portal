@@ -175,11 +175,7 @@ public class EditMessageAttachmentsMVCActionCommand
 			messageId, fileName);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageService(MBMessageService mbMessageService) {
-		_mbMessageService = mbMessageService;
-	}
-
+	@Reference
 	private MBMessageService _mbMessageService;
 
 	@Reference(target = "(upload.response.handler=multiple)")

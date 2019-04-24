@@ -115,11 +115,7 @@ public class DeleteThreadMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBThreadService(MBThreadService mbThreadService) {
-		_mbThreadService = mbThreadService;
-	}
-
+	@Reference
 	private MBThreadService _mbThreadService;
 
 }

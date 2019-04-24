@@ -180,16 +180,6 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryService(MBCategoryService mbCategoryService) {
-		_mbCategoryService = mbCategoryService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
-
 	protected void subscribeCategory(ActionRequest actionRequest)
 		throws Exception {
 
@@ -292,7 +282,10 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
+	@Reference
 	private MBCategoryService _mbCategoryService;
+
+	@Reference
 	private TrashEntryService _trashEntryService;
 
 }

@@ -167,7 +167,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 				PrincipalThreadLocal.getUserId(), ddlRecordSet.getGroupId(),
 				_dataStorage.save(
 					ddlRecordSet.getRecordSetId(),
-					DataRecordValueUtil.toMap(dataRecord.getDataRecordValues()),
+					dataRecord.getDataRecordValues(),
 					ddlRecordSet.getGroupId()),
 				dataRecord.getDataRecordCollectionId(), new ServiceContext()));
 	}
@@ -192,8 +192,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			DataDefinitionUtil.toDataDefinition(ddmStructure), dataRecord);
 
 		long ddmStorageId = _dataStorage.save(
-			ddlRecordSet.getRecordSetId(),
-			DataRecordValueUtil.toMap(dataRecord.getDataRecordValues()),
+			ddlRecordSet.getRecordSetId(), dataRecord.getDataRecordValues(),
 			ddlRecord.getGroupId());
 
 		_ddlRecordLocalService.updateRecord(
@@ -232,10 +231,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		return new DataRecord() {
 			{
 				dataRecordCollectionId = ddlRecordSet.getRecordSetId();
-				dataRecordValues = DataRecordValueUtil.toDataRecordValues(
-					_dataStorage.get(
-						ddmStructure.getStructureId(),
-						ddlRecord.getDDMStorageId()));
+				dataRecordValues = _dataStorage.get(
+					ddmStructure.getStructureId(), ddlRecord.getDDMStorageId());
 				id = ddlRecord.getRecordId();
 			}
 		};
@@ -254,8 +251,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			Collectors.toSet()
 		);
 
-		Map<String, Object> dataRecordValuesMap = DataRecordValueUtil.toMap(
-			dataRecord.getDataRecordValues());
+		Map<String, ?> dataRecordValuesMap = dataRecord.getDataRecordValues();
 
 		Set<String> fieldNames = dataRecordValuesMap.keySet();
 

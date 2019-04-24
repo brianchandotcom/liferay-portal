@@ -57,23 +57,22 @@ public class JSONDataStorage implements DataStorage {
 	}
 
 	@Override
-	public Map<String, Object> get(long dataDefinitionId, long dataStorageId)
+	public Map<String, ?> get(long dataDefinitionId, long dataStorageId)
 		throws Exception {
 
 		DDMContent ddmContent = _ddmContentLocalService.getContent(
 			dataStorageId);
 
-		return DataRecordValueUtil.toMap(
-			DataRecordValueUtil.toDataRecordValues(
-				DataDefinitionUtil.toDataDefinition(
-					_ddmStructureLocalService.getStructure(dataDefinitionId)),
-				ddmContent.getData()));
+		return DataRecordValueUtil.toDataRecordValuesMap(
+			DataDefinitionUtil.toDataDefinition(
+				_ddmStructureLocalService.getStructure(dataDefinitionId)),
+			ddmContent.getData());
 	}
 
 	@Override
 	public long save(
-			long dataRecordCollectionId,
-			Map<String, Object> dataRecordValuesMap, long siteId)
+			long dataRecordCollectionId, Map<String, ?> dataRecordValuesMap,
+			long siteId)
 		throws Exception {
 
 		DataRecordCollection dataRecordCollection =

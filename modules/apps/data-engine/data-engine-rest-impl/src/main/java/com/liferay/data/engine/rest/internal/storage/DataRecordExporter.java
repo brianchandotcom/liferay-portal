@@ -70,8 +70,7 @@ public class DataRecordExporter {
 
 		try {
 			return DataRecordValueUtil.toJSON(
-				dataDefinition,
-				DataRecordValueUtil.toMap(dataRecord.getDataRecordValues()));
+				dataDefinition, dataRecord.getDataRecordValues());
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;

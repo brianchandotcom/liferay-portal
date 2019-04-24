@@ -16,17 +16,13 @@ package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.dto.v1_0.DataRecordValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -39,14 +35,11 @@ import java.util.stream.StreamSupport;
 public class DataRecordValueUtil {
 
 	public static Object getDataDefinitionFieldValue(
-			DataDefinitionField dataDefinitionField,
-			DataRecordValue[] dataRecordValues)
-		throws Exception {
-
-		Map<String, Object> dataRecordValuesMap = toMap(dataRecordValues);
+		DataDefinitionField dataDefinitionField,
+		Map<String, ?> dataRecordValuesMap) {
 
 		if (dataDefinitionField.getLocalizable()) {
-			return (Map<String, Object>)dataRecordValuesMap.get(
+			return (Map<String, ?>)dataRecordValuesMap.get(
 				dataDefinitionField.getName());
 		}
 		else if (dataDefinitionField.getRepeatable()) {
@@ -57,54 +50,31 @@ public class DataRecordValueUtil {
 		return dataRecordValuesMap.get(dataDefinitionField.getName());
 	}
 
-	public static DataRecordValue[] toDataRecordValues(
+	public static Map<String, ?> toDataRecordValuesMap(
 			DataDefinition dataDefinition, String json)
 		throws Exception {
 
+		Map<String, Object> dataRecordValuesMap = new HashMap<>();
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
-		return TransformUtil.transform(
-			dataDefinition.getDataDefinitionFields(),
-			dataDefinitionField -> {
-				if (!jsonObject.has(dataDefinitionField.getName())) {
-					return null;
-				}
+		for (DataDefinitionField dataDefinitionField :
+				dataDefinition.getDataDefinitionFields()) {
 
-				return new DataRecordValue() {
-					{
-						key = dataDefinitionField.getName();
-						value = _toDataRecordValueValue(
-							dataDefinitionField, jsonObject);
-					}
-				};
-			},
-			DataRecordValue.class);
-	}
+			if (!jsonObject.has(dataDefinitionField.getName())) {
+				continue;
+			}
 
-	public static DataRecordValue[] toDataRecordValues(
-		Map<String, Object> dataRecordValuesMap) {
-
-		List<DataRecordValue> dataRecordValues = new ArrayList<>();
-
-		for (Map.Entry<String, Object> entry : dataRecordValuesMap.entrySet()) {
-			DataRecordValue dataRecordValue = new DataRecordValue() {
-				{
-					key = entry.getKey();
-					value = entry.getValue();
-				}
-			};
-
-			dataRecordValues.add(dataRecordValue);
+			dataRecordValuesMap.put(
+				dataDefinitionField.getName(),
+				_toDataRecordValueValue(dataDefinitionField, jsonObject));
 		}
 
-		return dataRecordValues.toArray(
-			new DataRecordValue[dataRecordValues.size()]);
+		return dataRecordValuesMap;
 	}
 
 	public static String toJSON(
-			DataDefinition dataDefinition,
-			Map<String, Object> dataRecordValuesMap)
-		throws Exception {
+		DataDefinition dataDefinition, Map<String, ?> dataRecordValuesMap) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -145,19 +115,6 @@ public class DataRecordValueUtil {
 		}
 
 		return jsonObject.toString();
-	}
-
-	public static Map<String, Object> toMap(DataRecordValue[] dataRecordValues)
-		throws Exception {
-
-		Map<String, Object> dataRecordValuesMap = new HashMap<>();
-
-		for (DataRecordValue dataRecordValue : dataRecordValues) {
-			dataRecordValuesMap.put(
-				dataRecordValue.getKey(), dataRecordValue.getValue());
-		}
-
-		return dataRecordValuesMap;
 	}
 
 	private static Object _toDataRecordValueValue(

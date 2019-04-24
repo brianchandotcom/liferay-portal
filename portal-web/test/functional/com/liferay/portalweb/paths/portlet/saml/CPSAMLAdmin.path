@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAML_KEEP_ALIVE_URL</td>
+	<td>//input[contains(@name,'SamlAdminPortlet_ExpandoAttribute--keepAliveUR')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAML_ROLE_SELECT</td>
 	<td>//select[contains(@id,'saml-role')]</td>
 	<td></td>

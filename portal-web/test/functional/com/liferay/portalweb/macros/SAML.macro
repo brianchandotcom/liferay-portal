@@ -75,10 +75,12 @@ definition {
 		SAML.connectSPAndIdP(
 			attributes = "${attributes}",
 			idpEntityID = "samlidp",
+			idpKeepAliveURL = "${idpKeepAliveURL}",
 			idpURL = "http://localhost:8080",
 			nameIdentifierAttributeName = "${nameIdentifierAttributeName}",
 			nameIdentifierFormat = "${nameIdentifierFormat}",
 			spEntityID = "${samlEntityID}",
+			spKeepAliveURL = "${spKeepAliveURL}",
 			spURL = "${spURL}");
 	}
 
@@ -103,6 +105,7 @@ definition {
 
 		SAMLPortlet.addIdentityProviderConnection(
 			idpEntityID = "${idpEntityID}",
+			idpKeepAliveURL = "${idpKeepAliveURL}",
 			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
 			idpNameID = "${idpEntityID}",
 			nameIdentifierFormat = "${nameIdentifierFormat}");
@@ -136,6 +139,7 @@ definition {
 			nameIdentifierAttributeName = "${nameIdentifierAttributeName}",
 			nameIdentifierFormat = "${nameIdentifierFormat}",
 			spEntityID = "${spEntityID}",
+			spKeepAliveURL = "${spKeepAliveURL}",
 			spMetadataURL = "${spURL}/c/portal/saml/metadata",
 			spNameID = "${spEntityID}");
 	}

@@ -43,6 +43,46 @@ import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 @Service
 public class LiferayService {
 
+	public String extractEndpointPathSegment(URL openAPISpecURL) {
+		String openAPISpecRef = openAPISpecURL.toExternalForm();
+
+		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(
+			openAPISpecRef);
+
+		if (!serverURLMatcher.matches()) {
+			throw new MalformedURLException(
+				"Unable to extract Open API endpoint from URL " +
+					openAPISpecRef);
+		}
+
+		String serverInstanceURL = serverURLMatcher.group(1);
+
+		String endpoint = openAPISpecRef.substring(serverInstanceURL.length());
+
+		String endpointExtension = serverURLMatcher.group(7);
+
+		if (endpointExtension.equals("yaml")) {
+			endpoint = endpoint.replace(".yaml", ".json");
+		}
+
+		return endpoint;
+	}
+
+	public String extractJaxRSAppBasePathSegment(URL openAPISpecURL) {
+		String openAPISpecRef = openAPISpecURL.toExternalForm();
+
+		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(
+			openAPISpecRef);
+
+		if (!serverURLMatcher.matches()) {
+			throw new MalformedURLException(
+				"Unable to extract Open API endpoint from URL " +
+					openAPISpecRef);
+		}
+
+		return serverURLMatcher.group(3);
+	}
+
 	public Schema getEndpointTalendSchema(
 		InputDataSet inputDataSet, RecordBuilderFactory recordBuilderFactory) {
 
@@ -160,27 +200,6 @@ public class LiferayService {
 			jsonObject.getJsonObject(substring));
 	}
 
-	private String _extractEndpoint(String endpointURL) {
-		Matcher serverURLMatcher = _openAPISpecURLPattern.matcher(endpointURL);
-
-		if (!serverURLMatcher.matches()) {
-			throw new MalformedURLException(
-				"Unable to extract Open API endpoint from URL " + endpointURL);
-		}
-
-		String serverInstanceURL = serverURLMatcher.group(1);
-
-		String endpoint = endpointURL.substring(serverInstanceURL.length());
-
-		String endpointExtension = serverURLMatcher.group(6);
-
-		if (endpointExtension.equals("yaml")) {
-			endpoint = endpoint.replace(".yaml", ".json");
-		}
-
-		return endpoint;
-	}
-
 	private List<String> _filterPageableEndpoints(
 		Map<String, String> patternEvaluations,
 		JsonObject openAPISpecJsonObject) {
@@ -267,7 +286,7 @@ public class LiferayService {
 		"components>schemas>%s>properties>page>type";
 
 	private static final Pattern _openAPISpecURLPattern = Pattern.compile(
-		"(https?://.+(:\\d+)?)/o/(.+)/(v\\d+(.\\d+)*)/openapi\\.(yaml|json)");
+		"(https?://.+(:\\d+)?)(/o/(.+)/)(v\\d+(.\\d+)*)/openapi\\.(yaml|json)");
 
 	@Service
 	private ConnectionService _connectionService;

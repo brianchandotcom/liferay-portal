@@ -18,6 +18,11 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -53,7 +58,22 @@ public class AssetDisplayPageFormProcessorImpl
 				themeDisplay.getScopeGroupId(), classNameId, classPK);
 
 		int displayPageType = ParamUtil.getInteger(
-			portletRequest, "displayPageType");
+			portletRequest, "displayPageType",
+			AssetDisplayPageConstants.TYPE_DEFAULT);
+
+		long assetDisplayPageId = ParamUtil.getLong(
+			portletRequest, "assetDisplayPageId");
+
+		if ((displayPageType == AssetDisplayPageConstants.TYPE_DEFAULT) &&
+			(assetDisplayPageId == 0)) {
+
+			assetDisplayPageId = _getDefaultLayoutPageTemplateEntryId(
+				className, classPK, themeDisplay);
+
+			if (assetDisplayPageId == 0) {
+				displayPageType = AssetDisplayPageConstants.TYPE_NONE;
+			}
+		}
 
 		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
 			if (assetDisplayPageEntry != null) {
@@ -63,9 +83,6 @@ public class AssetDisplayPageFormProcessorImpl
 
 			return;
 		}
-
-		long assetDisplayPageId = ParamUtil.getLong(
-			portletRequest, "assetDisplayPageId");
 
 		if (assetDisplayPageEntry == null) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -84,9 +101,44 @@ public class AssetDisplayPageFormProcessorImpl
 			assetDisplayPageId, displayPageType);
 	}
 
+	private long _getDefaultLayoutPageTemplateEntryId(
+			String className, long classPK, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+
+		if (infoDisplayContributor != null) {
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+
+			if (infoDisplayObjectProvider != null) {
+				LayoutPageTemplateEntry defaultAssetDisplayPage =
+					_layoutPageTemplateEntryService.
+						fetchDefaultLayoutPageTemplateEntry(
+							themeDisplay.getScopeGroupId(),
+							_portal.getClassNameId(className),
+							infoDisplayObjectProvider.getClassTypeId());
+
+				if (defaultAssetDisplayPage != null) {
+					return defaultAssetDisplayPage.
+						getLayoutPageTemplateEntryId();
+				}
+			}
+		}
+
+		return 0;
+	}
+
 	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

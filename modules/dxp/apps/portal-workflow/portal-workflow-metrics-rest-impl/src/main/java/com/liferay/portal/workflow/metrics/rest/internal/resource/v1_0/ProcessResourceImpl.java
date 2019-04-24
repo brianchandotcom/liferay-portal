@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -493,9 +492,8 @@ public class ProcessResourceImpl
 		}
 
 		process.setUntrackedInstanceCount(
-			GetterUtil.getLong(process.getInstanceCount()) -
-				GetterUtil.getLong(process.getOnTimeInstanceCount()) -
-					GetterUtil.getLong(process.getOverdueInstanceCount()));
+			process.getInstanceCount() - process.getOnTimeInstanceCount() -
+				process.getOverdueInstanceCount());
 	}
 
 	private FieldSort _toFieldSort(Sort[] sorts) {

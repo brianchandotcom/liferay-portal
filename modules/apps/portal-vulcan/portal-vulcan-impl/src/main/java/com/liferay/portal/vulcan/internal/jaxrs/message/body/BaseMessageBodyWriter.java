@@ -74,11 +74,8 @@ public abstract class BaseMessageBodyWriter
 
 		ObjectMapper objectMapper = _getObjectMapper(clazz);
 
-		ObjectWriter objectWriter = objectMapper.writer();
-
-		if (MediaType.APPLICATION_XML_TYPE.equals(mediaType)) {
-			objectWriter = objectWriter.withRootName(clazz.getSimpleName());
-		}
+		ObjectWriter objectWriter = objectMapper.writerFor(
+			objectMapper.constructType(genericType));
 
 		objectWriter.writeValue(outputStream, object);
 

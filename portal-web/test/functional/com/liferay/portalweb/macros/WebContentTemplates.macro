@@ -189,11 +189,14 @@ definition {
 
 		WebContentTemplates._inputScript(templateScript = "${templateScript}");
 
-		if (("${templateLanguage}" == "ftl") || ("${templateLanguage}" =="vm")) {
-			WebContentTemplates._addFields(templateFieldNames = "${templateFieldNames}");
+		if ("${templateLanguage}" == "xsl") {
+			WebContentTemplates._inputTemplateFile(templateFile = "${templateFile}");
 		}
+		else {
+			WebContentTemplates._addFields(templateFieldNames = "${templateFieldNames}");
 
-		WebContentTemplates._inputTemplateFile(templateFile = "${templateFile}");
+			WebContentTemplates._inputTemplateFile(templateFile = "${templateFile}");
+		}
 	}
 
 	@summary = "Add localization for the template name"

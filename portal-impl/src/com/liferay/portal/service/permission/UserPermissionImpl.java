@@ -146,15 +146,6 @@ public class UserPermissionImpl
 					OrganizationLocalServiceUtil.getOrganization(
 						organizationId);
 
-				List<Organization> listParentOrganizations =
-					OrganizationLocalServiceUtil.getParentOrganizations(
-						organizationId);
-				List<Long> list = new ArrayList<>();
-
-				for (Organization orgParent : listParentOrganizations) {
-					list.add(orgParent.getOrganizationId());
-				}
-
 				if (OrganizationPermissionUtil.contains(
 						permissionChecker, organization,
 						ActionKeys.MANAGE_USERS)) {
@@ -163,30 +154,42 @@ public class UserPermissionImpl
 						return true;
 					}
 
-					User userLogged = permissionChecker.getUser();
+					List<Long> parentOrganizationIds = new ArrayList<>();
+					List<Organization> parentOrganizations =
+						OrganizationLocalServiceUtil.getParentOrganizations(
+							organizationId);
 
-					List<Organization> listUserloggedOrganizations =
-						userLogged.getOrganizations();
+					for (Organization parentOrganization :
+							parentOrganizations) {
 
-					for (Organization organizationOfUser :
-							listUserloggedOrganizations) {
+						parentOrganizationIds.add(
+							parentOrganization.getOrganizationId());
+					}
 
-						if (list.contains(
-								organizationOfUser.getOrganizationId()) ||
-							(organizationOfUser.getOrganizationId() ==
+					User currentUser = permissionChecker.getUser();
+
+					List<Organization> currentUserOrganizations =
+						currentUser.getOrganizations();
+
+					for (Organization currentUserOrganization :
+							currentUserOrganizations) {
+
+						if (parentOrganizationIds.contains(
+								currentUserOrganization.getOrganizationId()) ||
+							(currentUserOrganization.getOrganizationId() ==
 								organization.getOrganizationId())) {
 
 							if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-									userLogged.getUserId(),
-									organizationOfUser.getGroupId(),
+									currentUser.getUserId(),
+									currentUserOrganization.getGroupId(),
 									RoleConstants.ORGANIZATION_OWNER, false)) {
 
 								return true;
 							}
 
 							if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-									userLogged.getUserId(),
-									organizationOfUser.getGroupId(),
+									currentUser.getUserId(),
+									currentUserOrganization.getGroupId(),
 									RoleConstants.ORGANIZATION_ADMINISTRATOR,
 									false) &&
 								!UserGroupRoleLocalServiceUtil.hasUserGroupRole(

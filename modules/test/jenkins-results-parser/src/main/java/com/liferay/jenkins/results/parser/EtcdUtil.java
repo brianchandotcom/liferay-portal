@@ -73,9 +73,10 @@ public class EtcdUtil {
 
 			return new Node(etcdKeysResponse.getNode());
 		}
-		catch (EtcdAuthenticationException | EtcdException | IOException |
-			   TimeoutException e) {
-
+		catch (EtcdException ee) {
+			return null;
+		}
+		catch (EtcdAuthenticationException | IOException | TimeoutException e) {
 			throw new RuntimeException(e);
 		}
 	}

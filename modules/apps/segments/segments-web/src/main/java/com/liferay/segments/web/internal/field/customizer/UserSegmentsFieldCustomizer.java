@@ -16,6 +16,7 @@ package com.liferay.segments.web.internal.field.customizer;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -52,19 +53,23 @@ public class UserSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 	public static final String KEY = "user";
 
 	@Override
+	public ClassedModel getClassedModel(String fieldValue) {
+		return _getUser(fieldValue);
+	}
+
+	@Override
+	public String getClassName() {
+		return User.class.getName();
+	}
+
+	@Override
 	public List<String> getFieldNames() {
 		return _fieldNames;
 	}
 
 	@Override
 	public String getFieldValueName(String fieldValue, Locale locale) {
-		long userId = GetterUtil.getLong(fieldValue);
-
-		if (userId == 0) {
-			return fieldValue;
-		}
-
-		User user = _userLocalService.fetchUser(userId);
+		User user = _getUser(fieldValue);
 
 		if (user == null) {
 			return fieldValue;
@@ -102,6 +107,16 @@ public class UserSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 
 			return null;
 		}
+	}
+
+	private User _getUser(String fieldValue) {
+		long userId = GetterUtil.getLong(fieldValue);
+
+		if (userId == 0) {
+			return null;
+		}
+
+		return _userLocalService.fetchUser(userId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -16,6 +16,7 @@ package com.liferay.segments.web.internal.field.customizer;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -53,19 +54,23 @@ public class TeamSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 	public static final String KEY = "team";
 
 	@Override
+	public ClassedModel getClassedModel(String fieldValue) {
+		return _getTeam(fieldValue);
+	}
+
+	@Override
+	public String getClassName() {
+		return Team.class.getName();
+	}
+
+	@Override
 	public List<String> getFieldNames() {
 		return _fieldNames;
 	}
 
 	@Override
 	public String getFieldValueName(String fieldValue, Locale locale) {
-		long teamId = GetterUtil.getLong(fieldValue);
-
-		if (teamId == 0) {
-			return fieldValue;
-		}
-
-		Team team = _teamLocalService.fetchTeam(teamId);
+		Team team = _getTeam(fieldValue);
 
 		if (team == null) {
 			return fieldValue;
@@ -106,6 +111,16 @@ public class TeamSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 
 			return null;
 		}
+	}
+
+	private Team _getTeam(String fieldValue) {
+		long teamId = GetterUtil.getLong(fieldValue);
+
+		if (teamId == 0) {
+			return null;
+		}
+
+		return _teamLocalService.fetchTeam(teamId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

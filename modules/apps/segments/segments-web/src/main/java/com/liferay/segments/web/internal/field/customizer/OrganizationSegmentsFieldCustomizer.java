@@ -16,6 +16,7 @@ package com.liferay.segments.web.internal.field.customizer;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -53,20 +54,23 @@ public class OrganizationSegmentsFieldCustomizer
 	public static final String KEY = "organization";
 
 	@Override
+	public ClassedModel getClassedModel(String fieldValue) {
+		return _getOrganization(fieldValue);
+	}
+
+	@Override
+	public String getClassName() {
+		return Organization.class.getName();
+	}
+
+	@Override
 	public List<String> getFieldNames() {
 		return _fieldNames;
 	}
 
 	@Override
 	public String getFieldValueName(String fieldValue, Locale locale) {
-		long organizationId = GetterUtil.getLong(fieldValue);
-
-		if (organizationId == 0) {
-			return fieldValue;
-		}
-
-		Organization organization = _organizationLocalService.fetchOrganization(
-			organizationId);
+		Organization organization = _getOrganization(fieldValue);
 
 		if (organization == null) {
 			return fieldValue;
@@ -106,6 +110,16 @@ public class OrganizationSegmentsFieldCustomizer
 
 			return null;
 		}
+	}
+
+	private Organization _getOrganization(String fieldValue) {
+		long organizationId = GetterUtil.getLong(fieldValue);
+
+		if (organizationId == 0) {
+			return null;
+		}
+
+		return _organizationLocalService.fetchOrganization(organizationId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

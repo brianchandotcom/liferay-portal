@@ -17,6 +17,7 @@ package com.liferay.segments.web.internal.field.customizer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -54,19 +55,23 @@ public class GroupSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 	public static final String KEY = "group";
 
 	@Override
+	public ClassedModel getClassedModel(String fieldValue) {
+		return _getGroup(fieldValue);
+	}
+
+	@Override
+	public String getClassName() {
+		return Group.class.getName();
+	}
+
+	@Override
 	public List<String> getFieldNames() {
 		return _fieldNames;
 	}
 
 	@Override
 	public String getFieldValueName(String fieldValue, Locale locale) {
-		long groupId = GetterUtil.getLong(fieldValue);
-
-		if (groupId == 0) {
-			return fieldValue;
-		}
-
-		Group group = _groupLocalService.fetchGroup(groupId);
+		Group group = _getGroup(fieldValue);
 
 		if (group == null) {
 			return fieldValue;
@@ -116,6 +121,16 @@ public class GroupSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 
 			return null;
 		}
+	}
+
+	private Group _getGroup(String fieldValue) {
+		long groupId = GetterUtil.getLong(fieldValue);
+
+		if (groupId == 0) {
+			return null;
+		}
+
+		return _groupLocalService.fetchGroup(groupId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

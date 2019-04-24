@@ -160,6 +160,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 					{
 						dialog: {
 							constrain: true,
+							destroyOnHide: true,
 							modal: true
 						},
 						eventName: '<portlet:namespace />selectDDMTemplate',

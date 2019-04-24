@@ -1499,10 +1499,10 @@ alloy-ui@^3.1.0-deprecated.1, alloy-ui@^3.1.0-deprecated.40:
   resolved "https://registry.yarnpkg.com/alloy-ui/-/alloy-ui-3.1.0.tgz#95842e4c793abbfe84aa8abfc5a637cd36dda823"
   integrity sha1-lYQuTHk6u/6Eqoq/xaY3zTbdqCM=
 
-alloyeditor@2.0.0-beta.7:
-  version "2.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.0.0-beta.7.tgz#23acf20bee6ad369dd0ef1de6aaf75755e6f7527"
-  integrity sha512-gX8U0j4Kb6ItNCzdw/nVcp8nWBZ7oDouILbwUbk+EpfdoAQMnmCO8PeBrZ0h4VJYP5KRUeHJt3DdW3UKfgsnxw==
+alloyeditor@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/alloyeditor/-/alloyeditor-2.0.0.tgz#9eb8d5cf0e5ff09a9992ce1870ddd6de16a37d05"
+  integrity sha512-7mavejUI1oyLVCSlhsL2+Pch02YVYdXzQmLUA8fLaH9iVg+UOwgtxfbrqE2R+y9duoELejsqjYYbmWRYen1zsA==
   dependencies:
     clay-css "^2.11.1"
     prop-types "^15.6.2"
@@ -12397,21 +12397,6 @@ metal-soy-bundle@2.16.8, metal-soy-bundle@^2.16.8:
   integrity sha512-QMxPGGS12bltjtKCPaEdMol3D2GgNKU/kvS9h+mBYsPXJZCdD3BWfx7TnnBG8K7n7+gkOYwtlOzpjoGA8XHj/g==
   dependencies:
     metal-incremental-dom "^2.16.8"
-
-metal-soy-critic@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/metal-soy-critic/-/metal-soy-critic-2.4.0.tgz#51b19f05e77573e05e2f3ba0d7eb0a474d88820d"
-  integrity sha512-3RRd0+9lPv6XuDb01j7CwHW3QXCxgAQpqwKp7ezP+WTNcQWAKw8KPRTUnxqvtpqQ5fW5Vuds9l8/GObQ4VgMlg==
-  dependencies:
-    babel-traverse "^6.23.1"
-    babel-types "^6.23.0"
-    babylon "^6.16.1"
-    chalk "^1.1.3"
-    change-case "^3.0.1"
-    commander "^2.9.0"
-    glob "^7.1.1"
-    parsimmon "^1.2.0"
-    soyparser "^1.0.0"
 
 metal-soy@2.16.8, metal-soy@^2.0.0, metal-soy@^2.13.2, metal-soy@^2.16.0, metal-soy@^2.5.18:
   version "2.16.8"

@@ -54,7 +54,7 @@ const _restoreTask = function(state, params, node) {
 
 	componentIds.forEach(
 		componentId => {
-			const container = node.getElementById(componentId);
+			const container = node.querySelector(`#${componentId}`);
 
 			if (container) {
 				container.innerHTML = cache[componentId].html;

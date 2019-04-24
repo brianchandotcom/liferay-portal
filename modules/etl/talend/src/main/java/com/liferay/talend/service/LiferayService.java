@@ -43,6 +43,16 @@ import org.talend.sdk.component.api.service.record.RecordBuilderFactory;
 @Service
 public class LiferayService {
 
+	/**
+	 * Gets Liferay OpenAPI JSON specification location relative URL.
+	 *
+	 * Method strips protocol, hostname and port from URL that matches Liferay
+	 * REST service open API specification location pattern {@link
+	 * #_openAPISpecURLPattern}.
+	 *
+	 * @param  openAPISpecURL Liferay OpenAPI specification URL
+	 * @return endpoint location
+	 */
 	public String extractEndpointPathSegment(URL openAPISpecURL) {
 		String openAPISpecRef = openAPISpecURL.toExternalForm();
 
@@ -165,18 +175,50 @@ public class LiferayService {
 	}
 
 	/**
-	 * Gets string value of json node pointed by given <code>pattern</code>.
+	 * Gets string representation of value of single json attribute from given
+	 * <code>jsonObject</code>.
 	 *
-	 * Method recursively resolves value searched by given pattern.
+	 * Method recursively walks through json hierarchy and searches for the
+	 * attribute names chain that matches given <code>pattern</code>. Once
+	 * matching
+	 * <code>pattern</code>
+	 * is detected, method extracts string value of json entry whose attribute
+	 * name corresponds to last
+	 * element in <code>pattern</code>.
 	 *
-	 * <code>pattern</code> must match key1>key2>...>keyN syntax where key is
-	 * expected key value in given json structure.
+	 * <code>pattern</code> must match <code>key1>key2>...>keyN</code> syntax
+	 * where key1 to keyN are json attribute names and <code>></code> is
+	 * delimiter character.
 	 *
-	 * @param  pattern
-	 * @param  jsonObject
-	 * @return keyN string value of (N-1)th <code>jsonObject</code> if keyN is
-	 *         reachable through given <code>pattern</code>, <code>null</code>
-	 *         otherwise
+	 * For <code>jsonObject</code> with structure:
+	 * <pre>{
+	 * 		"attr1": {
+	 * 			"attr2": {
+	 * 				"attr3": {
+	 * 					"attrA": "value A",
+	 * 					"attrB": {
+	 * 						"attrB1": "value B"
+	 * 					}
+	 * 				}
+	 * 			}
+	 * 		},
+	 * 		"attr4": "value C"
+	 * }</pre>
+	 * results of invocation are:
+	 * <pre>_evaluatePattern("attr1>attr2>attr3>attrA", jsonObject)</pre>
+	 * returns <code>value A</code>
+	 * <pre>_evaluatePattern("attr1>attr2>attr3>attrB>attrB1", jsonObject)</pre>
+	 * returns <code>value B</code>
+	 * <pre>_evaluatePattern("attr4", jsonObject)</pre>
+	 * returns <code>value C</code>
+	 *
+	 * @param  pattern string expression that represents chain of attribute
+	 *         names delimited with <code>></code>
+	 * @param  jsonObject json object whose hierarchy contains searched
+	 *         attribute value
+	 * @return string representation of value of <code>jsonObject</code>
+	 *         attribute reachable with expression <code>pattern</code>,
+	 *         <code>null</code> if attribute doesn't exist
 	 */
 	private String _evaluatePattern(String pattern, JsonObject jsonObject) {
 		int delimiterIdx = pattern.indexOf(">");
@@ -245,17 +287,43 @@ public class LiferayService {
 	}
 
 	/**
-	 * Gets key, value map where each key is contained in given
-	 * <code>jsonObject</code> and value is String value pointed by given
-	 * <code>pattern</code>
+	 * Gets key, value map where each key is attribute name and corresponding
+	 * value is value contained in given <code>jsonObject</code>.
 	 *
-	 * <code>pattern</code> must match key1>key2>...>keyN syntax
+	 * Method collects keys from <code>jsonObject</code> attribute names and
+	 * searches for particular value in nested json objects
+	 * using expression given by <code>pattern</code>
 	 *
-	 * @param  pattern expression used to traverse underlying
-	 *         <code>jsonObject</code> hierarchy
-	 * @param  jsonObject source for key values
-	 * @return Map of key, values where keys point to resolvable values
-	 *         according given pattern
+	 * <code>pattern</code> must match <code>key1>key2>...>keyN</code> syntax
+	 * where key1 to keyN are json attribute names and <code>></code> is
+	 * delimiter character.
+	 *
+	 * For <code>jsonObject</code> with structure:
+	 * <pre>{
+	 * 		"attrA": {
+	 * 			"attr1": {
+	 * 				"attr2": "value X"
+	 * 				}
+	 * 			},
+	 * 			"attr3": "value Z"
+	 * 		},
+	 * 		"attrB": {
+	 * 			"attr1": {
+	 * 				"attr2": "value Y",
+	 * 				"attr4": "value W"
+	 * 				}
+	 * 			}
+	 * }</pre>
+	 * results of invocation are:
+	 * <pre>_evaluatePattern("attr1>attr2", jsonObject)</pre>
+	 * returns map <code>{"attrA": "value X", "attrB": "value Y"}</code>
+	 *
+	 * @param  pattern string expression that represents chain of attribute
+	 *         names delimited with <code>></code>
+	 * @param  jsonObject json object whose hierarchy contains attribute names
+	 *         and searched attribute values
+	 * @return key, values map where keys point to resolvable values according
+	 *         given pattern
 	 */
 	private Map<String, String> _mapKeysToPatternEvaluations(
 		final String pattern, JsonObject jsonObject) {

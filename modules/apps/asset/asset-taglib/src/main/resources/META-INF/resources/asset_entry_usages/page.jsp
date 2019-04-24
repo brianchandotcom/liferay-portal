@@ -37,6 +37,7 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 								PortletURL allNavigationURL = assetEntryUsagesDisplayContext.getPortletURL();
 
 								allNavigationURL.setParameter("navigation", "all");
+								allNavigationURL.setParameter("resetCur", Boolean.TRUE.toString());
 								%>
 
 								<a class="nav-link <%= Objects.equals(assetEntryUsagesDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>" href="<%= allNavigationURL.toString() %>">
@@ -49,6 +50,7 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 								PortletURL pagesNavigationURL = assetEntryUsagesDisplayContext.getPortletURL();
 
 								pagesNavigationURL.setParameter("navigation", "pages");
+								pagesNavigationURL.setParameter("resetCur", Boolean.TRUE.toString());
 								%>
 
 								<a class="nav-link <%= Objects.equals(assetEntryUsagesDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>" href="<%= pagesNavigationURL.toString() %>">
@@ -61,6 +63,7 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 								PortletURL pageTemplatesNavigationURL = assetEntryUsagesDisplayContext.getPortletURL();
 
 								pageTemplatesNavigationURL.setParameter("navigation", "page-templates");
+								pageTemplatesNavigationURL.setParameter("resetCur", Boolean.TRUE.toString());
 								%>
 
 								<a class="nav-link <%= Objects.equals(assetEntryUsagesDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>" href="<%= pageTemplatesNavigationURL.toString() %>">
@@ -73,6 +76,7 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 								PortletURL displayPagesNavigationURL = assetEntryUsagesDisplayContext.getPortletURL();
 
 								displayPagesNavigationURL.setParameter("navigation", "display-page-templates");
+								displayPagesNavigationURL.setParameter("resetCur", Boolean.TRUE.toString());
 								%>
 
 								<a class="nav-link <%= Objects.equals(assetEntryUsagesDisplayContext.getNavigation(), "display-page-templates") ? "active" : StringPool.BLANK %>" href="<%= displayPagesNavigationURL.toString() %>">

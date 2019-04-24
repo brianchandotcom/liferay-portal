@@ -95,11 +95,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		var key_tab = "Assigned to My Roles";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "NavTab#NAV_TABS",
-			value1 = "Assigned to My Roles");
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Blogs Entry Title");
 
@@ -107,11 +103,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		var key_tab = "Assigned to My Roles";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "NavTab#NAV_TABS",
-			value1 = "Assigned to My Roles");
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		Workflow.gotoAssetViaTableTitle(workflowAssetTitle = "Blogs Entry Title");
 

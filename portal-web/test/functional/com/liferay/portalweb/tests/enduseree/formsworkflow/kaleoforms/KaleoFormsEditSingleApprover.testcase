@@ -333,11 +333,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		var key_tab = "Assigned to Me";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "NavTab#NAV_TABS",
-			value1 = "Assigned to Me");
+		Navigator.gotoNavTab(navTab = "Assigned to Me");
 
 		Workflow.viewCompletedTask(
 			workflowAssetTitle = "Kaleo Forms Process",

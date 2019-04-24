@@ -735,11 +735,7 @@ definition {
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
 		var key_workflowTask = "${workflowTask}";
 
-		var key_tab = "Assigned to My Roles";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "NavTab#NAV_TABS",
-			value1 = "Assigned to My Roles");
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		Workflow._gotoPendingFilter();
 
@@ -882,11 +878,7 @@ definition {
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no tasks assigned to you.");
 
-		var key_tab = "Assigned to My Roles";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "NavTab#NAV_TABS",
-			value1 = "Assigned to My Roles");
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -986,11 +978,7 @@ definition {
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
 		var key_workflowTask = "${workflowTask}";
 
-		var key_tab = "Assigned to My Roles";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "NavTab#NAV_TABS",
-			value1 = "Assigned to My Roles");
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		Workflow._gotoPendingFilter();
 
@@ -1071,11 +1059,7 @@ definition {
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
 		var key_workflowTask = "${workflowTask}";
 
-		var key_tab = "Assigned to Me";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "NavTab#NAV_TABS",
-			value1 = "Assigned to Me");
+		Navigator.gotoNavTab(navTab = "Assigned to Me");
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_ACTIVE");
 
@@ -1099,11 +1083,7 @@ definition {
 	}
 
 	macro viewTaskAssignedToMeDetails {
-		var key_tab = "Assigned to Me";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "NavTab#NAV_TABS",
-			value1 = "Assigned to Me");
+		Navigator.gotoNavTab(navTab = "Assigned to Me");
 
 		Workflow._gotoPendingFilter();
 
@@ -1143,11 +1123,7 @@ definition {
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
 		var key_workflowTask = "${workflowTask}";
 
-		var key_tab = "Assigned to My Roles";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "NavTab#NAV_TABS",
-			value1 = "Assigned to My Roles");
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		Workflow._gotoPendingFilter();
 

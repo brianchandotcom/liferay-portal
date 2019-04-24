@@ -1267,7 +1267,7 @@ definition {
 			siteName = "Test Site Name");
 
 		WebContent.addPGViaWCD(
-			webContentContent = "@page_break@ Welcome @page_break@",
+			webContentContent = "@page_break@ Home @page_break@",
 			webContentTitle = "WC WebContent Title");
 
 		WebContent.viewPageBreak();

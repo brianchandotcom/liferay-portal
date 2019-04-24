@@ -44,13 +44,12 @@ public class UserPortraitTag extends IncludeTag {
 		String portraitURL = _getPortraitURL(user, themeDisplay);
 
 		if (Validator.isNull(portraitURL)) {
-			StringBundler sb = new StringBundler(14);
+			StringBundler sb = new StringBundler(13);
 
 			sb.append("<span class=\"sticker sticker-circle sticker-light ");
 
 			if (Validator.isNotNull(size)) {
-				sb.append("sticker-");
-				sb.append(size);
+				sb.append(_getSizeCssClass(size));
 				sb.append(CharPool.SPACE);
 			}
 
@@ -68,13 +67,12 @@ public class UserPortraitTag extends IncludeTag {
 			return sb.toString();
 		}
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("<span class=\"rounded-circle sticker sticker-primary ");
 
 		if (Validator.isNotNull(size)) {
-			sb.append("sticker-");
-			sb.append(size);
+			sb.append(_getSizeCssClass(size));
 			sb.append(CharPool.SPACE);
 		}
 
@@ -232,6 +230,10 @@ public class UserPortraitTag extends IncludeTag {
 
 			return null;
 		}
+	}
+
+	private static String _getSizeCssClass(String size) {
+		return "sticker-" + size;
 	}
 
 	private static final String _PAGE =

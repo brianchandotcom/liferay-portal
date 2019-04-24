@@ -353,92 +353,92 @@ public class ContextODataMatcherTest {
 	}
 
 	@Test
-	public void testMatchesIntegerEquals() throws Exception {
+	public void testMatchesDoubleEquals() throws Exception {
 		Context context = new Context() {
 			{
-				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000);
+				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000D);
 			}
 		};
 
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " eq 1000)"),
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " eq 1000.0)"),
 				context));
 		Assert.assertFalse(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " eq 1001)"),
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " eq 1001.0)"),
 				context));
 	}
 
 	@Test
-	public void testMatchesIntegerGreater() throws Exception {
+	public void testMatchesDoubleGreater() throws Exception {
 		Context context = new Context() {
 			{
-				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000);
+				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000D);
 			}
 		};
 
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " gt 900)"),
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " gt 900.0)"),
 				context));
 	}
 
 	@Test
-	public void testMatchesIntegerGreaterOrEquals() throws Exception {
+	public void testMatchesDoubleGreaterOrEquals() throws Exception {
 		Context context = new Context() {
 			{
-				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000);
+				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000D);
 			}
 		};
 
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " ge 900)"),
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " ge 900.0)"),
 				context));
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " ge 1000)"),
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " ge 1000.0)"),
 				context));
 	}
 
 	@Test
-	public void testMatchesIntegerLesser() throws Exception {
+	public void testMatchesDoubleLesser() throws Exception {
 		Context context = new Context() {
 			{
-				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000);
+				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000D);
 			}
 		};
 
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " lt 1100)"),
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " lt 1100.0)"),
 				context));
 	}
 
 	@Test
-	public void testMatchesIntegerLesserOrEquals() throws Exception {
+	public void testMatchesDoubleLesserOrEquals() throws Exception {
 		Context context = new Context() {
 			{
-				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000);
+				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000D);
 			}
 		};
 
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " le 1100)"),
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " le 1100.0)"),
 				context));
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
 				StringBundler.concat(
-					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " le 1000)"),
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " le 1000.0)"),
 				context));
 	}
 

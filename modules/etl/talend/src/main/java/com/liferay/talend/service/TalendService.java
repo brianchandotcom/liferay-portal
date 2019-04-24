@@ -69,14 +69,14 @@ public class TalendService {
 
 		if (type == null) {
 			if (propertyJsonObject.containsKey("$ref")) {
-				entryBuilder.withType(Schema.Type.RECORD);
+				entryBuilder.withType(Schema.Type.STRING);
 			}
 		}
 		else if (type.equals("array")) {
-			entryBuilder.withType(Schema.Type.ARRAY);
+			entryBuilder.withType(Schema.Type.STRING);
 		}
 		else if (type.equals("object")) {
-			entryBuilder.withType(Schema.Type.RECORD);
+			entryBuilder.withType(Schema.Type.STRING);
 		}
 		else {
 			_addJavaTypeRecordEntry(entryBuilder, propertyJsonObject);

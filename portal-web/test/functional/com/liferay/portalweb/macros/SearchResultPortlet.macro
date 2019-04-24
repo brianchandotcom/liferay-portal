@@ -73,4 +73,18 @@ definition {
 				value1 = "${searchTerm}");
 		}
 	}
+
+	macro viewSearchResultsSpecificOrder {
+		var resultOrder = "0";
+
+		for (var searchAssetTitle : list "${resultsList}") {
+			var resultOrder = MathUtil.sum("${resultOrder}", "1");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
+				resultOrder = "${resultOrder}",
+				value1 = "${searchAssetTitle}"
+			);
+		}
+	}
 }

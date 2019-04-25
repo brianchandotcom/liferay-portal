@@ -64,7 +64,8 @@ public class LayoutPageTemplateStructureHelperUtil {
 			structureJSONObject.put("columns", columnJSONArray);
 
 			structureJSONObject.put("rowId", String.valueOf(i));
-			structureJSONObject.put("type", _getRowType(fragmentEntryLink));
+			structureJSONObject.put(
+				"type", String.valueOf(_getRowType(fragmentEntryLink)));
 
 			structureJSONArray.put(structureJSONObject);
 		}
@@ -83,7 +84,7 @@ public class LayoutPageTemplateStructureHelperUtil {
 		return jsonObject;
 	}
 
-	private static String _getRowType(FragmentEntryLink fragmentEntryLink) {
+	private static int _getRowType(FragmentEntryLink fragmentEntryLink) {
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
 				fragmentEntryLink.getFragmentEntryId());
@@ -91,10 +92,10 @@ public class LayoutPageTemplateStructureHelperUtil {
 		if ((fragmentEntry != null) &&
 			(fragmentEntry.getType() == FragmentConstants.TYPE_COMPONENT)) {
 
-			return "fragments-editor-component-row";
+			return FragmentConstants.TYPE_COMPONENT;
 		}
 
-		return "fragments-editor-section-row";
+		return FragmentConstants.TYPE_SECTION;
 	}
 
 }

@@ -197,8 +197,8 @@ export const FRAGMENTS_EDITOR_ITEM_TYPES = {
  * @type {!object}
  */
 export const FRAGMENTS_EDITOR_ROW_TYPES = {
-	componentRow: 'fragments-editor-component-row',
-	sectionRow: 'fragments-editor-section-row'
+	componentRow: '1',
+	sectionRow: '0'
 };
 
 /**

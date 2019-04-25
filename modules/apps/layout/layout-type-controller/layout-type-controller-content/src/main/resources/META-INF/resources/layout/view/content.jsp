@@ -77,9 +77,9 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 						for (int i = 0; i < structureJSONArray.length(); i++) {
 							JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
 
-							String type = GetterUtil.getString(rowJSONObject.getString("type"), "fragments-editor-component-row");
+							int type = GetterUtil.getInteger(rowJSONObject.getInt("type"), FragmentConstants.TYPE_COMPONENT);
 
-							if (Objects.equals(type, "fragments-editor-component-row")) {
+							if (type == FragmentConstants.TYPE_COMPONENT) {
 								String backgroundColorCssClass = StringPool.BLANK;
 								String backgroundImage = StringPool.BLANK;
 								boolean columnSpacing = true;

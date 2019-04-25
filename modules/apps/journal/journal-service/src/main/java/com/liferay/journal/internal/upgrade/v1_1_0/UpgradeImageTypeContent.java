@@ -124,8 +124,8 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 	protected void dropJournalArticleImageTable() throws Exception {
 		runSQL(connection, "drop table JournalArticleImage");
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Deleted table JournalArticleImage");
+		if (_log.isInfoEnabled()) {
+			_log.info("Deleted table JournalArticleImage");
 		}
 	}
 

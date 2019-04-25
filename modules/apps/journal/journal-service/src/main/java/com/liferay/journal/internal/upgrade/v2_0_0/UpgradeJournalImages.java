@@ -52,8 +52,8 @@ public class UpgradeJournalImages extends UpgradeProcess {
 
 		runSQL(connection, "drop table JournalArticleImage");
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Deleted table JournalArticleImage");
+		if (_log.isInfoEnabled()) {
+			_log.info("Deleted table JournalArticleImage");
 		}
 	}
 

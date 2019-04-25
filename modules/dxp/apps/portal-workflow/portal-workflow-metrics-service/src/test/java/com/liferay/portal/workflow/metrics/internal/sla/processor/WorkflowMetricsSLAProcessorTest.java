@@ -248,6 +248,50 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
+	public void testProcessOnTimeSLAStoppedWithSameTask() {
+		LocalDateTime localDateTime = _createLocalDateTime();
+
+		LocalDateTime createDateLocalDateTime = localDateTime.minus(
+			10, ChronoUnit.SECONDS);
+
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = mock(
+			WorkflowMetricsSLADefinition.class);
+
+		when(
+			workflowMetricsSLADefinition.getDuration()
+		).thenReturn(
+			10000L
+		);
+
+		when(
+			workflowMetricsSLADefinition.getStartNodeKeys()
+		).thenReturn(
+			"1:enter"
+		);
+
+		when(
+			workflowMetricsSLADefinition.getStopNodeKeys()
+		).thenReturn(
+			"1:leave"
+		);
+
+		_test(
+			createDateLocalDateTime, 5000, null, localDateTime, true, 5000, 1,
+			workflowMetricsSLADefinition, WorkfowMetricsSLAStatus.STOPPED,
+			_createDocument(
+				new HashMap<String, Object>() {
+					{
+						put(
+							"completionDate",
+							_format(
+								localDateTime.minus(5, ChronoUnit.SECONDS)));
+						put("createDate", _format(createDateLocalDateTime));
+						put("taskId", 1);
+					}
+				}));
+	}
+
+	@Test
 	public void testProcessOverdueInstance() {
 		LocalDateTime localDateTime = _createLocalDateTime();
 

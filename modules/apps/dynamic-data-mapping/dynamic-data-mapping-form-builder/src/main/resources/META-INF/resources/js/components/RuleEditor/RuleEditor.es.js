@@ -10,7 +10,9 @@ import templates from './RuleEditor.soy.js';
 import {Config} from 'metal-state';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
 import {makeFetch} from '../../util/fetch.es';
+import {maxPageIndex, pagesOptions} from '../../util/pagesSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
+import {sub} from '../../util/strings.es.js';
 
 const fieldOptionStructure = Config.shapeOf(
 	{
@@ -483,7 +485,7 @@ class RuleEditor extends Component {
 	}
 
 	populateActionTargetValue(id, index) {
-		const {actions} = this;
+		const {actions, pageOptions} = this;
 
 		const previousTarget = actions[index].target;
 
@@ -491,7 +493,12 @@ class RuleEditor extends Component {
 		actions[index].label = id;
 
 		if (actions[index].action == 'jump-to-page') {
-			actions[index].label = id;
+			const optionSelected = pageOptions.filter(
+				option => {
+					return option.value == id;
+				}
+			);
+			actions[index].label = optionSelected[0].label;
 		}
 
 		if (id === undefined) {
@@ -538,26 +545,6 @@ class RuleEditor extends Component {
 				throw new Error(error);
 			}
 		);
-	}
-
-	populatePageOptions(pages, maxPageIndex = 0) {
-		let {pageOptions} = this;
-
-		pageOptions = [];
-
-		for (let pageIndex = maxPageIndex + 2; pageIndex <= pages.length; pageIndex++) {
-			pageIndex = pageIndex.toString();
-
-			pageOptions.push(
-				{
-					label: pageIndex,
-					name: pageIndex,
-					value: pageIndex
-				}
-			);
-		}
-
-		return pageOptions;
 	}
 
 	prepareStateForRender(state) {
@@ -662,7 +649,7 @@ class RuleEditor extends Component {
 			}
 		);
 
-		const maxPageIndex = this._getMaxPageIndex(conditions);
+		const maxPage = maxPageIndex(conditions, pages);
 
 		this.setState(
 			{
@@ -671,7 +658,7 @@ class RuleEditor extends Component {
 				conditions,
 				deletedFields: this._getDeletedFields(visitor),
 				fieldOptions: this._fieldOptionsValueFn(),
-				pageOptions: this.populatePageOptions(pages, maxPageIndex),
+				pageOptions: pagesOptions(pages, maxPage),
 				roles: this._rolesValueFn()
 			}
 		);
@@ -928,30 +915,6 @@ class RuleEditor extends Component {
 		return firstOperand.getAttribute(`${fieldClass.substring(1)}-index`);
 	}
 
-	_getMaxPageIndex(conditions) {
-		const {pages} = this;
-		const pageIndexes = [];
-		const visitor = new PagesVisitor(pages);
-
-		if (conditions.length && conditions[0].operands[0].value) {
-			conditions.forEach(
-				condition => {
-					visitor.mapFields(
-						(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
-							if (field.fieldName === condition.operands[0].value) {
-								pageIndexes.push(pageIndex);
-							}
-						}
-					);
-				}
-			);
-		}
-
-		const maxPageIndex = Math.max(...pageIndexes);
-
-		return isFinite(maxPageIndex) ? maxPageIndex : 0;
-	}
-
 	_getOperatorsByFieldType(fieldType) {
 		if (fieldType === 'integer' || fieldType === 'double') {
 			fieldType = 'number';
@@ -1196,7 +1159,7 @@ class RuleEditor extends Component {
 			{
 				actions,
 				conditions,
-				pageOptions: this.populatePageOptions(pages, maxPageIndex)
+				pageOptions: pagesOptions(pages, maxPageIndex)
 			}
 		);
 	}

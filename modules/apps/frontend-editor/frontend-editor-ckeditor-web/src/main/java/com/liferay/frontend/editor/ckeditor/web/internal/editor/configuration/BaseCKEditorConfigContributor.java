@@ -45,6 +45,7 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put(
 			"bodyClass", "html-editor " + HtmlUtil.escape(cssClasses));
+
 		jsonObject.put(
 			"contentsCss",
 			JSONUtil.putAll(

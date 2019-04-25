@@ -30,9 +30,9 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.service.FragmentCollectionServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -112,7 +112,7 @@ public class FragmentEntryProcessorEditableTest {
 	@Test
 	public void testFragmentEntryProcessorEditable() throws Exception {
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
@@ -132,7 +132,7 @@ public class FragmentEntryProcessorEditableTest {
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
@@ -153,7 +153,7 @@ public class FragmentEntryProcessorEditableTest {
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		fragmentEntryLink.setCss(_getFileAsString("media_query.css"));
 
@@ -171,13 +171,12 @@ public class FragmentEntryProcessorEditableTest {
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentEntry.getFragmentEntryId(),
-				PortalUtil.getClassNameId(Layout.class),
-				TestPropsValues.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				StringPool.BLANK, 0,
+				_portal.getClassNameId(Layout.class), TestPropsValues.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), StringPool.BLANK, 0,
 				ServiceContextTestUtil.getServiceContext());
 
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
@@ -188,14 +187,13 @@ public class FragmentEntryProcessorEditableTest {
 
 		editableValues = StringUtil.replace(
 			editableValues, "CLASS_NAME_ID",
-			String.valueOf(
-				PortalUtil.getClassNameId(assetEntry.getClassName())));
+			String.valueOf(_portal.getClassNameId(assetEntry.getClassName())));
 
 		editableValues = StringUtil.replace(
 			editableValues, "CLASS_PK",
 			String.valueOf(assetEntry.getClassPK()));
 
-		FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
+		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(), editableValues);
 
 		int count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
@@ -203,7 +201,7 @@ public class FragmentEntryProcessorEditableTest {
 
 		Assert.assertEquals(1, count);
 
-		FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLink(
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLink);
 
 		count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
@@ -219,13 +217,12 @@ public class FragmentEntryProcessorEditableTest {
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentEntry.getFragmentEntryId(),
-				PortalUtil.getClassNameId(Layout.class),
-				TestPropsValues.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				StringPool.BLANK, 0,
+				_portal.getClassNameId(Layout.class), TestPropsValues.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), StringPool.BLANK, 0,
 				ServiceContextTestUtil.getServiceContext());
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
@@ -233,24 +230,24 @@ public class FragmentEntryProcessorEditableTest {
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class));
+			_portal.getClassNameId(JournalArticle.class));
 
 		String editableValues = _getJsonFileAsString(
 			"fragment_entry_link_mapped_ddm.json");
 
-		FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
+		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			StringUtil.replace(
 				editableValues, "TEMPLATE_KEY", ddmTemplate.getTemplateKey()));
 
 		DDMTemplateLink ddmTemplateLink =
 			_ddmTemplateLinkLocalService.getTemplateLink(
-				PortalUtil.getClassNameId(FragmentEntryLink.class),
+				_portal.getClassNameId(FragmentEntryLink.class),
 				fragmentEntryLink.getFragmentEntryLinkId());
 
 		Assert.assertNotNull(ddmTemplateLink);
 
-		FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLink(
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLink);
 
 		ddmTemplateLink = _ddmTemplateLinkLocalService.fetchDDMTemplateLink(
@@ -279,7 +276,7 @@ public class FragmentEntryProcessorEditableTest {
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
@@ -302,7 +299,7 @@ public class FragmentEntryProcessorEditableTest {
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
@@ -325,7 +322,7 @@ public class FragmentEntryProcessorEditableTest {
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
@@ -348,7 +345,7 @@ public class FragmentEntryProcessorEditableTest {
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
@@ -370,7 +367,7 @@ public class FragmentEntryProcessorEditableTest {
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
@@ -401,7 +398,7 @@ public class FragmentEntryProcessorEditableTest {
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
@@ -424,7 +421,7 @@ public class FragmentEntryProcessorEditableTest {
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
 
@@ -450,11 +447,11 @@ public class FragmentEntryProcessorEditableTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		FragmentCollection fragmentCollection =
-			FragmentCollectionServiceUtil.addFragmentCollection(
+			_fragmentCollectionService.addFragmentCollection(
 				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 				serviceContext);
 
-		return FragmentEntryServiceUtil.addFragmentEntry(
+		return _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"Fragment Entry", null, _getFileAsString(htmlFile), null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
@@ -504,13 +501,26 @@ public class FragmentEntryProcessorEditableTest {
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 	@Inject
+	private FragmentCollectionService _fragmentCollectionService;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
+
+	@Inject
+	private FragmentEntryService _fragmentEntryService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Locale _originalSiteDefaultLocale;
 	private Locale _originalThemeDisplayDefaultLocale;
+
+	@Inject
+	private Portal _portal;
+
 	private String _processedHTML;
 
 }

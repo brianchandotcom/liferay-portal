@@ -159,7 +159,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 			resourceBundle = ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE;
 		}
 
-		return JSONUtil.put(
+		return JSONUtil.putAll(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "small"), "p", "small", 1),
 			getStyleFormatJSONObject(
@@ -250,7 +250,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 
 		return JSONUtil.put(
 			"buttons",
-			JSONUtil.put(
+			JSONUtil.putAll(
 				getStyleFormatsJSONObject(locale),
 				"bold", "italic", "underline", "ol",
 				"ul", "linkBrowse",

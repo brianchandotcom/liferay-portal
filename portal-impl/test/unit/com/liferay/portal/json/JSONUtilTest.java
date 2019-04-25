@@ -88,10 +88,11 @@ public class JSONUtilTest {
 	@Test
 	public void testHasValue() {
 		Assert.assertTrue(
-			JSONUtil.hasValue(JSONUtil.put("alpha", "beta", "gamma"), "gamma"));
+			JSONUtil.hasValue(
+				JSONUtil.putAll("alpha", "beta", "gamma"), "gamma"));
 
 		Assert.assertFalse(
-			JSONUtil.hasValue(JSONUtil.put("alpha", "beta", "gamma"), "1"));
+			JSONUtil.hasValue(JSONUtil.putAll("alpha", "beta", "gamma"), "1"));
 	}
 
 	@Test
@@ -146,7 +147,7 @@ public class JSONUtilTest {
 			"gamma"
 		);
 
-		JSONArray jsonArray2 = JSONUtil.put("alpha", "beta", "gamma");
+		JSONArray jsonArray2 = JSONUtil.putAll("alpha", "beta", "gamma");
 
 		for (int i = 0; i < jsonArray1.length(); i++) {
 			Assert.assertEquals(jsonArray1.get(i), jsonArray2.get(i));
@@ -188,7 +189,7 @@ public class JSONUtilTest {
 	@Test
 	public void testToLongArray() {
 		Assert.assertArrayEquals(
-			new long[] {1, 2}, JSONUtil.toLongArray(JSONUtil.put(1, 2)));
+			new long[] {1, 2}, JSONUtil.toLongArray(JSONUtil.putAll(1, 2)));
 	}
 
 	@Test
@@ -196,7 +197,7 @@ public class JSONUtilTest {
 		Assert.assertArrayEquals(
 			new long[] {1, 2},
 			JSONUtil.toLongArray(
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put("alpha", 1), JSONUtil.put("alpha", 2),
 					JSONUtil.put("beta", 3)),
 				"alpha"));
@@ -212,7 +213,7 @@ public class JSONUtilTest {
 					add(3L);
 				}
 			},
-			JSONUtil.toLongList(JSONUtil.put(1, 2, 3)));
+			JSONUtil.toLongList(JSONUtil.putAll(1, 2, 3)));
 	}
 
 	@Test
@@ -226,7 +227,7 @@ public class JSONUtilTest {
 				}
 			},
 			JSONUtil.toLongList(
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put("alpha", 1), JSONUtil.put("alpha", 2),
 					JSONUtil.put("alpha", 3)),
 				"alpha"));
@@ -242,7 +243,7 @@ public class JSONUtilTest {
 					add(3L);
 				}
 			},
-			JSONUtil.toLongSet(JSONUtil.put(1, 2, 3)));
+			JSONUtil.toLongSet(JSONUtil.putAll(1, 2, 3)));
 	}
 
 	@Test
@@ -255,7 +256,7 @@ public class JSONUtilTest {
 				}
 			},
 			JSONUtil.toLongSet(
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put("alpha", 1), JSONUtil.put("alpha", 2),
 					JSONUtil.put("beta", 3)),
 				"alpha"));
@@ -265,7 +266,7 @@ public class JSONUtilTest {
 	public void testToObjectArray() {
 		Assert.assertArrayEquals(
 			new Object[] {1, "beta", true},
-			JSONUtil.toObjectArray(JSONUtil.put(1, "beta", true)));
+			JSONUtil.toObjectArray(JSONUtil.putAll(1, "beta", true)));
 	}
 
 	@Test
@@ -273,7 +274,7 @@ public class JSONUtilTest {
 		Assert.assertArrayEquals(
 			new Object[] {1, true},
 			JSONUtil.toObjectArray(
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put("alpha", 1), JSONUtil.put("alpha", true),
 					JSONUtil.put("beta", 3)),
 				"alpha"));
@@ -289,7 +290,7 @@ public class JSONUtilTest {
 					add(true);
 				}
 			},
-			JSONUtil.toObjectList(JSONUtil.put(1, "beta", true)));
+			JSONUtil.toObjectList(JSONUtil.putAll(1, "beta", true)));
 	}
 
 	@Test
@@ -302,7 +303,7 @@ public class JSONUtilTest {
 				}
 			},
 			JSONUtil.toObjectList(
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put("alpha", 1), JSONUtil.put("alpha", "beta"),
 					JSONUtil.put("beta", true)),
 				"alpha"));
@@ -318,7 +319,7 @@ public class JSONUtilTest {
 					add(true);
 				}
 			},
-			JSONUtil.toObjectSet(JSONUtil.put(1, "beta", true)));
+			JSONUtil.toObjectSet(JSONUtil.putAll(1, "beta", true)));
 	}
 
 	@Test
@@ -331,7 +332,7 @@ public class JSONUtilTest {
 				}
 			},
 			JSONUtil.toObjectSet(
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put("alpha", 1), JSONUtil.put("alpha", "beta"),
 					JSONUtil.put("beta", true)),
 				"alpha"));
@@ -341,7 +342,7 @@ public class JSONUtilTest {
 	public void testToStringArray() {
 		Assert.assertArrayEquals(
 			new String[] {"alpha", "beta", "gamma"},
-			JSONUtil.toStringArray(JSONUtil.put("alpha", "beta", "gamma")));
+			JSONUtil.toStringArray(JSONUtil.putAll("alpha", "beta", "gamma")));
 	}
 
 	@Test
@@ -349,7 +350,7 @@ public class JSONUtilTest {
 		Assert.assertArrayEquals(
 			new String[] {"alpha", "beta"},
 			JSONUtil.toStringArray(
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put("alpha", "alpha"),
 					JSONUtil.put("alpha", "beta"),
 					JSONUtil.put("beta", "gamma")),
@@ -366,7 +367,7 @@ public class JSONUtilTest {
 					add("gamma");
 				}
 			},
-			JSONUtil.toStringList(JSONUtil.put("alpha", "beta", "gamma")));
+			JSONUtil.toStringList(JSONUtil.putAll("alpha", "beta", "gamma")));
 	}
 
 	@Test
@@ -379,7 +380,7 @@ public class JSONUtilTest {
 				}
 			},
 			JSONUtil.toStringList(
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put("alpha", "alpha"),
 					JSONUtil.put("alpha", "beta"),
 					JSONUtil.put("beta", "gamma")),
@@ -396,7 +397,7 @@ public class JSONUtilTest {
 					add("gamma");
 				}
 			},
-			JSONUtil.toStringSet(JSONUtil.put("alpha", "beta", "gamma")));
+			JSONUtil.toStringSet(JSONUtil.putAll("alpha", "beta", "gamma")));
 	}
 
 	@Test
@@ -409,7 +410,7 @@ public class JSONUtilTest {
 				}
 			},
 			JSONUtil.toStringSet(
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put("alpha", "alpha"),
 					JSONUtil.put("alpha", "beta"),
 					JSONUtil.put("beta", "gamma")),

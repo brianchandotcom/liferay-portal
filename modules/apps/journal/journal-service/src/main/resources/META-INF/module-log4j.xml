@@ -14,12 +14,20 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.journal.internal.upgrade.v1_1_0.UpgradeImageTypeContent">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.journal.internal.upgrade.v1_1_0.UpgradeJournalArticleLocalizedValues">
 		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.journal.internal.upgrade.v1_1_5.UpgradeContentImages">
 		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.journal.internal.upgrade.v2_0_0.UpgradeJournalImages">
+		<priority value="INFO" />
 	</category>
 
 	<category name="com.liferay.journal.lar">

@@ -8,7 +8,7 @@ import '../floating_toolbar/FloatingToolbar.es';
 import './FragmentEntryLink.es';
 import './FragmentEntryLinkListRow.es';
 import {CLEAR_DROP_TARGET, MOVE_FRAGMENT_ENTRY_LINK, MOVE_ROW, UPDATE_DROP_TARGET} from '../../actions/actions.es';
-import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
+import {FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
 import {initializeDragDrop} from '../../utils/FragmentsEditorDragDrop.es';
 import {moveItem, setDraggingItemPosition, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
@@ -68,7 +68,7 @@ class FragmentEntryLinkList extends Component {
 			);
 		}
 		else if (sourceItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
-			if (sourceItemData.fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section) {
+			if (sourceItemData.fragmentEntryLinkType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
 				dropValid = (
 					(targetItemData.itemType) &&
 					(sourceItemData.itemId !== targetItemData.itemId) &&

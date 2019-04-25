@@ -7,7 +7,7 @@ import templates from './FragmentEntryLink.soy';
 import {MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK} from '../../actions/actions.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {getFragmentColumn, getFragmentRowIndex, getItemMoveDirection, getItemPath, getTargetBorder, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
-import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
+import {FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../utils/constants';
 import {moveItem, moveRow, removeItem, setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 
@@ -36,16 +36,10 @@ class FragmentEntryLink extends Component {
 			FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 		);
 
-		let fragmentEntryLinkType = FRAGMENT_ENTRY_LINK_TYPES.component;
-
-		if (state.rowType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
-			fragmentEntryLinkType = FRAGMENT_ENTRY_LINK_TYPES.section;
-		}
-
 		let nextState = setIn(
 			state,
 			['_fragmentEntryLinkType'],
-			fragmentEntryLinkType
+			state.rowType
 		);
 
 		nextState = setIn(
@@ -91,7 +85,7 @@ class FragmentEntryLink extends Component {
 			const {fragmentEntryLinkType} = event.delegateTarget.dataset;
 
 			if (direction) {
-				if (fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section) {
+				if (fragmentEntryLinkType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
 					moveRow(
 						direction,
 						getFragmentRowIndex(

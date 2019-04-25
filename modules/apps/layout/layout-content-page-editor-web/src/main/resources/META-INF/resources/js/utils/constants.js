@@ -152,16 +152,6 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 };
 
 /**
- * Fragment Entry Link types
- * @review
- * @type {!object}
- */
-export const FRAGMENT_ENTRY_LINK_TYPES = {
-	component: 'fragment-entry-link-component',
-	section: 'fragment-entry-link-section'
-};
-
-/**
  * Fragments Editor dragging class
  * @review
  * @type {string}

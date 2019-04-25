@@ -6,7 +6,7 @@ import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarCard.es';
 import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_DROP_TARGET, UPDATE_DROP_TARGET, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS} from '../../../actions/actions.es';
-import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
+import {FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
 import {setDraggingItemPosition} from '../../../utils/FragmentsEditorUpdateUtils.es';
@@ -139,7 +139,7 @@ class SidebarAvailableSections extends Component {
 					ADD_FRAGMENT_ENTRY_LINK,
 					{
 						fragmentEntryKey: itemId,
-						fragmentEntryLinkType: FRAGMENT_ENTRY_LINK_TYPES.section,
+						fragmentEntryLinkType: FRAGMENTS_EDITOR_ROW_TYPES.sectionRow,
 						fragmentName: itemName
 					}
 				)
@@ -181,7 +181,7 @@ class SidebarAvailableSections extends Component {
 				ADD_FRAGMENT_ENTRY_LINK,
 				{
 					fragmentEntryKey: event.itemId,
-					fragmentEntryLinkType: FRAGMENT_ENTRY_LINK_TYPES.section,
+					fragmentEntryLinkType: FRAGMENTS_EDITOR_ROW_TYPES.sectionRow,
 					fragmentName: event.itemName
 				}
 			)

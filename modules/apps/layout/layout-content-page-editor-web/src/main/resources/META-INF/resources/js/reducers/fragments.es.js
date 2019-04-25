@@ -2,7 +2,7 @@ import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR,
 import {add, addRow, remove, setIn, updateIn, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
-import {FRAGMENT_ENTRY_LINK_TYPES, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
 import {getColumn, getDropRowPosition, getFragmentColumn, getFragmentRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
@@ -24,7 +24,7 @@ function addFragment(
 	dropTargetItemId,
 	dropTargetItemType,
 	layoutData,
-	fragmentEntryLinkType = FRAGMENT_ENTRY_LINK_TYPES.component
+	fragmentEntryLinkType = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
 ) {
 	let nextData = layoutData;
 
@@ -363,8 +363,8 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 				];
 
 				const fragmentEntryLinkType = fragmentEntryLinkRow.type === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow ?
-					FRAGMENT_ENTRY_LINK_TYPES.section :
-					FRAGMENT_ENTRY_LINK_TYPES.component;
+					FRAGMENTS_EDITOR_ROW_TYPES.sectionRow :
+					FRAGMENTS_EDITOR_ROW_TYPES.componentRow;
 
 				nextState = setIn(
 					nextState,
@@ -732,16 +732,12 @@ function _addSingleFragmentRow(
 	fragmentEntryLinkType,
 	position
 ) {
-	const rowType = fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section ?
-		FRAGMENTS_EDITOR_ROW_TYPES.sectionRow :
-		FRAGMENTS_EDITOR_ROW_TYPES.componentRow;
-
 	return addRow(
 		['12'],
 		layoutData,
 		position,
 		[fragmentEntryLinkId],
-		rowType
+		fragmentEntryLinkType
 	);
 }
 
@@ -810,7 +806,7 @@ function _removeFragment(
 
 	let nextData = null;
 
-	if (fragmentEntryLinkType === FRAGMENT_ENTRY_LINK_TYPES.section) {
+	if (fragmentEntryLinkType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
 		nextData = updateIn(
 			layoutData,
 			['structure'],

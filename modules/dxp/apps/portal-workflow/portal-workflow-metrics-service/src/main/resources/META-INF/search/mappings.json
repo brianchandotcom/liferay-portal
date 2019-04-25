@@ -3,27 +3,6 @@
 		"date_detection": false,
 		"dynamic_templates": [
 			{
-				"template_long_sortable": {
-					"mapping": {
-						"store": true,
-						"type": "long"
-					},
-					"match": "*_sortable",
-					"match_mapping_type": "long"
-				}
-			},
-			{
-				"template_string_sortable": {
-					"mapping": {
-						"normalizer" : "keyword_lowercase",
-						"store": true,
-						"type": "keyword"
-					},
-					"match": "*_sortable",
-					"match_mapping_type": "string"
-				}
-			},
-			{
 				"template_ar": {
 					"mapping": {
 						"analyzer": "arabic",
@@ -271,6 +250,16 @@
 				}
 			},
 			{
+				"template_long_sortable": {
+					"mapping": {
+						"store": true,
+						"type": "long"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "long"
+				}
+			},
+			{
 				"template_nl": {
 					"mapping": {
 						"analyzer": "dutch",
@@ -358,6 +347,17 @@
 					"match": "\\w+_ru\\b|\\w+_ru_RU\\b",
 					"match_mapping_type": "string",
 					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_string_sortable": {
+					"mapping": {
+						"normalizer" : "keyword_lowercase",
+						"store": true,
+						"type": "keyword"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "string"
 				}
 			},
 			{
@@ -572,27 +572,6 @@
 		"date_detection": false,
 		"dynamic_templates": [
 			{
-				"template_long_sortable": {
-					"mapping": {
-						"store": true,
-						"type": "long"
-					},
-					"match": "*_sortable",
-					"match_mapping_type": "long"
-				}
-			},
-			{
-				"template_string_sortable": {
-					"mapping": {
-						"normalizer" : "keyword_lowercase",
-						"store": true,
-						"type": "keyword"
-					},
-					"match": "*_sortable",
-					"match_mapping_type": "string"
-				}
-			},
-			{
 				"template_ar": {
 					"mapping": {
 						"analyzer": "arabic",
@@ -840,6 +819,16 @@
 				}
 			},
 			{
+				"template_long_sortable": {
+					"mapping": {
+						"store": true,
+						"type": "long"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "long"
+				}
+			},
+			{
 				"template_nl": {
 					"mapping": {
 						"analyzer": "dutch",
@@ -927,6 +916,17 @@
 					"match": "\\w+_ru\\b|\\w+_ru_RU\\b",
 					"match_mapping_type": "string",
 					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_string_sortable": {
+					"mapping": {
+						"normalizer" : "keyword_lowercase",
+						"store": true,
+						"type": "keyword"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "string"
 				}
 			},
 			{

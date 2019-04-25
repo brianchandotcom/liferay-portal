@@ -76,7 +76,8 @@ public class BaseMessagingConfiguratorTest {
 	public void testCustomClassLoaderDestinationConfiguration()
 		throws InterruptedException, InvalidSyntaxException {
 
-		final TestClassLoader testClassLoader = new TestClassLoader();
+		final ClassLoader testClassLoader = new ClassLoader() {
+		};
 
 		_baseMessagingConfigurator = new BaseMessagingConfigurator() {
 
@@ -235,13 +236,10 @@ public class BaseMessagingConfiguratorTest {
 	private BaseMessagingConfigurator _baseMessagingConfigurator;
 	private ServiceTracker<Destination, Destination> _serviceTracker;
 
-	private static class TestClassLoader extends ClassLoader {
-	}
-
 	private static class TestClassLoaderMessageListener
 		implements MessageListener {
 
-		public TestClassLoaderMessageListener(TestClassLoader testClassLoader) {
+		public TestClassLoaderMessageListener(ClassLoader testClassLoader) {
 			_testClassLoader = testClassLoader;
 		}
 

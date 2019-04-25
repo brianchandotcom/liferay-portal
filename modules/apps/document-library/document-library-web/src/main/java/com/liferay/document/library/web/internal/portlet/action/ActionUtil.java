@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -244,6 +245,13 @@ public class ActionUtil {
 		}
 
 		Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+		if (folder.isMountPoint()) {
+			com.liferay.portal.kernel.repository.Repository repository =
+				RepositoryProviderUtil.getRepository(folder.getRepositoryId());
+
+			folder = repository.getFolder(folder.getFolderId());
+		}
 
 		if (!folder.isRepositoryCapabilityProvided(TrashCapability.class)) {
 			return folder;

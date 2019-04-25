@@ -211,6 +211,15 @@ public class ReleaseVersionsTest {
 		}
 
 		Version masterVersion = masterVersionPair.getKey();
+
+		// If a module has version x.0.0, it means it has never been published
+
+		if ((masterVersion.getMinor() == 0) &&
+			(masterVersion.getMicro() == 0)) {
+
+			return null;
+		}
+
 		Version releaseVersion = releaseVersionPair.getKey();
 
 		if (!releaseVersion.equals(new Version(1, 0, 0)) &&

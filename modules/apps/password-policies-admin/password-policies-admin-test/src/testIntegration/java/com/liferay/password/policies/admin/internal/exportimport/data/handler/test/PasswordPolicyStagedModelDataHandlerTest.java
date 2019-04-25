@@ -16,6 +16,7 @@ package com.liferay.password.policies.admin.internal.exportimport.data.handler.t
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -61,15 +62,11 @@ public class PasswordPolicyStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return PasswordPolicyLocalServiceUtil.
-				fetchPasswordPolicyByUuidAndCompanyId(
-					uuid, group.getCompanyId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws PortalException {
+
+		return PasswordPolicyLocalServiceUtil.
+			getPasswordPolicyByUuidAndCompanyId(uuid, group.getCompanyId());
 	}
 
 	@Override

@@ -135,8 +135,6 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Asset Publisher");
-
 		AssetPublisherPortlet.configureCategoriesFilterPG(categoryName = "Category Name 1");
 
 		Navigator.gotoStagedSitePage(

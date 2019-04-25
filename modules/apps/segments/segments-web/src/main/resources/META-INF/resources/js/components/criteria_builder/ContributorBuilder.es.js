@@ -306,17 +306,6 @@ class ContributorBuilder extends React.Component {
 									<div className="d-flex flex-wrap justify-content-between mb-4">
 										<h2 className="sheet-title mb-2">{Liferay.Language.get('conditions')}</h2>
 										<div className="criterion-string">
-											<span className="mr-4">
-												{Liferay.Language.get('conditions-match')}
-												<b className="ml-2">
-													{getPluralMessage(
-														Liferay.Language.get('x-member'),
-														Liferay.Language.get('x-members'),
-														membersCount
-													)}
-												</b>
-											</span>
-
 											<div className="btn-group">
 												<div className="btn-group-item inline-item">
 													<ClaySpinner
@@ -324,6 +313,19 @@ class ContributorBuilder extends React.Component {
 														loading={membersCountLoading}
 														size="sm"
 													/>
+
+													{!membersCountLoading &&
+														<span className="mr-4">
+															{Liferay.Language.get('conditions-match')}
+															<b className="ml-2">
+																{getPluralMessage(
+																	Liferay.Language.get('x-member'),
+																	Liferay.Language.get('x-members'),
+																	membersCount
+																)}
+															</b>
+														</span>
+													}
 
 													<ClayButton
 														label={Liferay.Language.get('view-members')}

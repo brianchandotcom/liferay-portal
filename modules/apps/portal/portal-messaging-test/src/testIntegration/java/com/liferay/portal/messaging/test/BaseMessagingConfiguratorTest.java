@@ -68,6 +68,8 @@ public class BaseMessagingConfiguratorTest {
 	@After
 	public void tearDown() {
 		_serviceTracker.close();
+
+		_baseMessagingConfigurator.destroy();
 	}
 
 	@Test
@@ -76,15 +78,14 @@ public class BaseMessagingConfiguratorTest {
 
 		final TestClassLoader testClassLoader = new TestClassLoader();
 
-		BaseMessagingConfigurator pluginMessagingConfigurator =
-			new BaseMessagingConfigurator() {
+		_baseMessagingConfigurator = new BaseMessagingConfigurator() {
 
-				@Override
-				protected ClassLoader getOperatingClassloader() {
-					return testClassLoader;
-				}
+			@Override
+			protected ClassLoader getOperatingClassloader() {
+				return testClassLoader;
+			}
 
-			};
+		};
 
 		Set<DestinationConfiguration> destinationConfigurations =
 			new HashSet<>();
@@ -96,7 +97,7 @@ public class BaseMessagingConfiguratorTest {
 			DestinationConfiguration.createParallelDestinationConfiguration(
 				"liferay/plugintest2"));
 
-		pluginMessagingConfigurator.setDestinationConfigurations(
+		_baseMessagingConfigurator.setDestinationConfigurations(
 			destinationConfigurations);
 
 		Map<String, List<MessageListener>> messageListeners = new HashMap<>();
@@ -108,9 +109,9 @@ public class BaseMessagingConfiguratorTest {
 		messageListenersList.add(
 			new TestClassLoaderMessageListener(testClassLoader));
 
-		pluginMessagingConfigurator.setMessageListeners(messageListeners);
+		_baseMessagingConfigurator.setMessageListeners(messageListeners);
 
-		pluginMessagingConfigurator.afterPropertiesSet();
+		_baseMessagingConfigurator.afterPropertiesSet();
 
 		_serviceTracker = new ServiceTracker<>(
 			_bundleContext,
@@ -155,8 +156,7 @@ public class BaseMessagingConfiguratorTest {
 	public void testPortalClassLoaderDestinationConfiguration()
 		throws InterruptedException, InvalidSyntaxException {
 
-		DefaultMessagingConfigurator defaultMessagingConfigurator =
-			new DefaultMessagingConfigurator();
+		_baseMessagingConfigurator = new DefaultMessagingConfigurator();
 
 		Set<DestinationConfiguration> destinationConfigurations =
 			new HashSet<>();
@@ -168,7 +168,7 @@ public class BaseMessagingConfiguratorTest {
 			DestinationConfiguration.createParallelDestinationConfiguration(
 				"liferay/portaltest2"));
 
-		defaultMessagingConfigurator.setDestinationConfigurations(
+		_baseMessagingConfigurator.setDestinationConfigurations(
 			destinationConfigurations);
 
 		Map<String, List<MessageListener>> messageListeners = new HashMap<>();
@@ -187,9 +187,9 @@ public class BaseMessagingConfiguratorTest {
 		messageListenersList2.add(
 			new TestMessageListener("liferay/portaltest2"));
 
-		defaultMessagingConfigurator.setMessageListeners(messageListeners);
+		_baseMessagingConfigurator.setMessageListeners(messageListeners);
 
-		defaultMessagingConfigurator.afterPropertiesSet();
+		_baseMessagingConfigurator.afterPropertiesSet();
 
 		_serviceTracker = new ServiceTracker<>(
 			_bundleContext,
@@ -232,6 +232,7 @@ public class BaseMessagingConfiguratorTest {
 
 	private static BundleContext _bundleContext;
 
+	private BaseMessagingConfigurator _baseMessagingConfigurator;
 	private ServiceTracker<Destination, Destination> _serviceTracker;
 
 	private static class TestClassLoader extends ClassLoader {

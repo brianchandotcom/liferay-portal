@@ -84,6 +84,10 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 			int retries = 0;
 			long time = System.currentTimeMillis();
 
+			if (fromArchive) {
+				buildEnvMap = getStopPropertiesTempMap();
+			}
+
 			while (!buildEnvMap.containsKey("TOP_LEVEL_GITHUB_COMMENT_ID")) {
 				if (retries > 2) {
 					throw new RuntimeException(

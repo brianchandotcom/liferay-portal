@@ -29,20 +29,17 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jeyvison Nascimento
  */
+@Component(
+	immediate = true, property = "data.storage.type=json",
+	service = DataStorage.class
+)
 public class JSONDataStorage implements DataStorage {
-
-	public JSONDataStorage(
-		DDLRecordSetLocalService ddlRecordSetLocalService,
-		DDMContentLocalService ddmContentLocalService,
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-		_ddmContentLocalService = ddmContentLocalService;
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
 
 	@Override
 	public long delete(long dataStorageId) throws Exception {
@@ -97,8 +94,13 @@ public class JSONDataStorage implements DataStorage {
 		return ddmContent.getPrimaryKey();
 	}
 
-	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private final DDMContentLocalService _ddmContentLocalService;
-	private final DDMStructureLocalService _ddmStructureLocalService;
+	@Reference
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
+	private DDMContentLocalService _ddmContentLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

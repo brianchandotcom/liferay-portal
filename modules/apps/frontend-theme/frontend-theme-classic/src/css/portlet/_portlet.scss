@@ -20,18 +20,31 @@
 
 .portlet {
 	> .portlet-topper {
+		font-size: 0.87rem;
 		padding: 0 4px 0 8px;
 
 		@include sm {
 			right: auto;
 		}
 
+		@include media-breakpoint-up(md) {
+			display: block;
+			white-space: nowrap;
+		}
+
 		.portlet-title-default {
+			display: inline-block;
 			line-height: 1.5rem;
+			vertical-align: middle;
 		}
 
 		.portlet-name-text {
 			margin-right: 0.75rem;
+		}
+
+		.portlet-topper-toolbar {
+			display: inline-block;
+			vertical-align: middle;
 		}
 
 		.portlet-topper-toolbar, .icon-monospaced {

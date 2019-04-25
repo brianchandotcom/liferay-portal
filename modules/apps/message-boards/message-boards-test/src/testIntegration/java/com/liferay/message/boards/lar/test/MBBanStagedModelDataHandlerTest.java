@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.MBBanLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
@@ -65,20 +66,18 @@ public class MBBanStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		List<MBBan> bans = null;
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws PortalException {
 
-		try {
-			bans = MBBanLocalServiceUtil.getBans(group.getGroupId(), 0, 1);
+		List<MBBan> bans = MBBanLocalServiceUtil.getBans(
+			group.getGroupId(), 0, 1);
 
-			if (!bans.isEmpty()) {
-				return bans.get(0);
-			}
-		}
-		catch (Exception e) {
+		if (!bans.isEmpty()) {
+			return bans.get(0);
 		}
 
-		return null;
+		throw new PortalException(
+			"Unable to get MBBan with groupId: " + group.getGroupId());
 	}
 
 	@Override

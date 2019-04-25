@@ -21,6 +21,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.MBThreadFlagLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -95,8 +96,10 @@ public class MBThreadFlagStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		return MBThreadFlagLocalServiceUtil.fetchMBThreadFlagByUuidAndGroupId(
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws PortalException {
+
+		return MBThreadFlagLocalServiceUtil.getMBThreadFlagByUuidAndGroupId(
 			uuid, group.getGroupId());
 	}
 

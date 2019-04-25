@@ -22,5 +22,5 @@ Provide-Capability:\
 		version:Version="${Bundle-Version}"
 Require-Capability:\
 	osgi.extender;\
-		filter:="(&(osgi.extender=liferay.js)(version>=3.0)(!(version>=4.0)))"
+		filter:="(&(osgi.extender=liferay.js)(version>=4.0)(!(version>=5.0)))"
 Web-ContextPath: /frontend-taglib

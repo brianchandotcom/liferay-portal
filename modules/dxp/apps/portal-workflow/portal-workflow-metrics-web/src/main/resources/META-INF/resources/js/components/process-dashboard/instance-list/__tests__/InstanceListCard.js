@@ -9,13 +9,13 @@ test('Should component load process instances', () => {
 	const data = {
 		items: [
 			{
-				assetName: 'Item Subject Test',
+				assetTitle: 'Item Subject Test',
 				assetType: 'Process',
-				createdBy: 'User Test',
-				creationDate: new Date('2019', '01', '01'),
+				dateCreated: new Date('2019', '01', '01'),
 				id: 12351,
-				processSteps: ['Step 1', 'Step 2', 'Step 3'],
-				status: 'overdue'
+				status: 'Overdue',
+				taskNames: ['Step 1', 'Step 2', 'Step 3'],
+				userName: 'User Test'
 			}
 		],
 		title: 'Single Approver',
@@ -41,13 +41,13 @@ test('Should component receive props', () => {
 	const data = {
 		items: [
 			{
-				assetName: 'Item Subject Test',
+				assetTitle: 'Item Subject Test',
 				assetType: 'Process',
-				createdBy: 'User Test',
-				creationDate: new Date('2019', '01', '01'),
+				dateCreated: new Date('2019', '01', '01'),
 				id: 12351,
-				processSteps: ['Step 1', 'Step 2', 'Step 3'],
-				status: 'overdue'
+				status: 'Overdue',
+				taskNames: ['Step 1', 'Step 2', 'Step 3'],
+				userName: 'User Test'
 			}
 		],
 		title: 'Single Approver',
@@ -140,13 +140,13 @@ test('Should render component', () => {
 	const data = {
 		items: [
 			{
-				assetName: 'Item Subject Test',
+				assetTitle: 'Item Subject Test',
 				assetType: 'Process',
-				createdBy: 'User Test',
-				creationDate: new Date('2019', '01', '01'),
+				dateCreated: new Date('2019', '01', '01'),
 				id: 12351,
-				processSteps: ['Step 1', 'Step 2', 'Step 3'],
-				status: 'no-sla-counting'
+				status: 'Untracked',
+				taskNames: ['Step 1', 'Step 2', 'Step 3'],
+				userName: 'User Test'
 			}
 		],
 		title: 'Single Approver',

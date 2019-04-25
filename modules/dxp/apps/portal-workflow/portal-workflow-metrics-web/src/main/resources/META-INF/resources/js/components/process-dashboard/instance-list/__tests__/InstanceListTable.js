@@ -6,30 +6,37 @@ import { MockRouter as Router } from '../../../../test/mock/MockRouter';
 test('Should render component', () => {
 	const data = [
 		{
-			assetName: 'Item Subject Test',
+			assetTitle: 'Item Subject Test',
 			assetType: 'Process',
-			createdBy: 'User Test',
-			creationDate: new Date('2019', '01', '01'),
+			dateCreated: new Date('2019', '01', '01'),
 			id: 12351,
-			processSteps: ['Step 1', 'Step 2', 'Step 3'],
-			status: 'on-time'
+			status: 'OnTime',
+			taskNames: ['Step 1', 'Step 2', 'Step 3'],
+			userName: 'User Test'
 		},
 		{
-			assetName: 'Item Subject Test 2',
+			assetTitle: 'Item Subject Test 2',
 			assetType: 'Process',
-			createdBy: 'User Test',
-			creationDate: new Date('2019', '01', '02'),
+			dateCreated: new Date('2019', '01', '02'),
 			id: 12351,
-			processSteps: ['Step 1', 'Step 2'],
-			status: 'overdue'
+			status: 'Overdue',
+			taskNames: ['Step 1', 'Step 2'],
+			userName: 'User Test'
 		},
 		{
-			assetName: 'Item Subject Test 3',
+			assetTitle: 'Item Subject Test 3',
 			assetType: 'Process',
-			createdBy: 'User Test',
-			creationDate: new Date('2019', '01', '03'),
+			dateCreated: new Date('2019', '01', '03'),
 			id: 12351,
-			status: 'no-sla-counting'
+			status: 'Untracked',
+			userName: 'User Test'
+		},
+		{
+			assetTitle: 'Item Subject Test 4',
+			assetType: 'Process',
+			dateCreated: new Date('2019', '01', '04'),
+			id: 12351,
+			userName: 'User Test'
 		}
 	];
 

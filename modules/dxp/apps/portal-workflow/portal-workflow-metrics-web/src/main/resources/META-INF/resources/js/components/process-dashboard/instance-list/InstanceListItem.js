@@ -4,15 +4,7 @@ import React from 'react';
 
 export default class InstanceListItem extends React.Component {
 	getStatusIcon(status) {
-		if (status === 'overdue') {
-			return {
-				bgColor: 'bg-danger-light',
-				iconColor: 'text-danger',
-				iconName: 'exclamation-circle'
-			};
-		}
-
-		if (status === 'on-time') {
+		if (status === 'OnTime') {
 			return {
 				bgColor: 'bg-success-light',
 				iconColor: 'text-success',
@@ -20,49 +12,69 @@ export default class InstanceListItem extends React.Component {
 			};
 		}
 
-		return {
-			bgColor: 'bg-info-light',
-			iconColor: 'text-info',
-			iconName: 'hr'
-		};
+		if (status === 'Overdue') {
+			return {
+				bgColor: 'bg-danger-light',
+				iconColor: 'text-danger',
+				iconName: 'exclamation-circle'
+			};
+		}
+
+		if (status === 'Untracked') {
+			return {
+				bgColor: 'bg-info-light',
+				iconColor: 'text-info',
+				iconName: 'hr'
+			};
+		}
+
+		return null;
 	}
 
 	render() {
 		const {
-			assetName,
+			assetTitle,
 			assetType,
-			createdBy,
-			creationDate,
+			dateCreated,
 			id,
-			processSteps = [],
-			status
+			status,
+			taskNames = [],
+			userName
 		} = this.props;
 
 		const statusIcon = this.getStatusIcon(status);
 
 		return (
 			<tr>
-				<td className="lfr-title-column table-title text-center">
-					<span className={`mr-3 sticker sticker-sm ${statusIcon.bgColor}`}>
-						<span className="inline-item">
-							<Icon
-								elementClasses={statusIcon.iconColor}
-								iconName={statusIcon.iconName}
-							/>
+				<td>
+					{statusIcon && (
+						<span className={`mr-3 sticker sticker-sm ${statusIcon.bgColor}`}>
+							<span className="inline-item">
+								<Icon
+									elementClasses={statusIcon.iconColor}
+									iconName={statusIcon.iconName}
+								/>
+							</span>
 						</span>
-					</span>
+					)}
+				</td>
 
+				<td className="lfr-title-column table-title">
 					<strong>{id}</strong>
 				</td>
 
-				<td>{`${assetType}: ${assetName}`}</td>
+				<td>{`${assetType}: ${assetTitle}`}</td>
 
-				<td>{processSteps.join(', ')}</td>
+				<td>
+					{taskNames.length
+						? taskNames.join(', ')
+						: Liferay.Language.get('completed')}
+				</td>
 
-				<td>{createdBy}</td>
+				<td>{userName}</td>
 
 				<td className="pr-4 text-right">
-					{moment(creationDate).format('MMM DD, LT')}
+					{moment(dateCreated).format('MMM DD, LT')}
 				</td>
 			</tr>
 		);

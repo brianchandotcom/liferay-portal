@@ -10,10 +10,9 @@ export default class InstanceListTable extends React.Component {
 				<table className="show-quick-actions-on-hover table table-fixed table-heading-nowrap table-hover table-list">
 					<thead>
 						<tr>
-							<th
-								className="text-center table-head-title"
-								style={{ width: '10%' }}
-							>
+							<th style={{ width: '5%' }} />
+
+							<th className="table-head-title" style={{ width: '10%' }}>
 								{Liferay.Language.get('id')}
 							</th>
 
@@ -28,7 +27,7 @@ export default class InstanceListTable extends React.Component {
 								{Liferay.Language.get('process-step')}
 							</th>
 
-							<th className="table-head-title" style={{ width: '20%' }}>
+							<th className="table-head-title" style={{ width: '15%' }}>
 								{Liferay.Language.get('created-by')}
 							</th>
 

@@ -37,7 +37,7 @@ public abstract class BasePortalErrorCodeDynamicInclude
 
 		String mimeType = getMimeType();
 
-		httpServletResponse.setContentType(mimeType);
+		httpServletResponse.setContentType(mimeType + _CHARSET);
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
@@ -57,5 +57,7 @@ public abstract class BasePortalErrorCodeDynamicInclude
 
 	protected abstract void writeMessage(
 		String mimeType, String message, PrintWriter printWriter);
+
+	private static final String _CHARSET = "; charset=UTF-8";
 
 }

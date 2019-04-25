@@ -21,7 +21,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataLayoutRow;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
@@ -89,9 +89,9 @@ public class DataLayoutUtil {
 					jsonObject.getJSONArray("rows"),
 					rowJSONObject -> _toDataLayoutRow(rowJSONObject),
 					DataLayoutRow.class);
-				description = LocalizedValueUtil.toLocalizedValues(
+				description = LocalizedValueUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("description"));
-				title = LocalizedValueUtil.toLocalizedValues(
+				title = LocalizedValueUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("title"));
 			}
 		};
@@ -123,7 +123,7 @@ public class DataLayoutUtil {
 	private static JSONObject _toJSONObject(DataLayoutPage dataLayoutPage)
 		throws Exception {
 
-		if (ArrayUtil.isEmpty(dataLayoutPage.getTitle())) {
+		if (MapUtil.isEmpty(dataLayoutPage.getTitle())) {
 			throw new Exception("Title is required");
 		}
 

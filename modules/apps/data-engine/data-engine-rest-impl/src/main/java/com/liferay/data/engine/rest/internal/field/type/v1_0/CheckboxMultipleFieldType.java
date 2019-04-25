@@ -63,7 +63,7 @@ public class CheckboxMultipleFieldType extends BaseFieldType {
 				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
 				jsonObject.getBoolean("showAsSwitcher")));
 		dataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizedValues(
+			LocalizedValueUtil.toLocalizedStrings(
 				jsonObject.getJSONObject("predefinedValue")));
 
 		return dataDefinitionField;

@@ -52,7 +52,7 @@ public class CheckboxFieldType extends BaseFieldType {
 				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
 				jsonObject.getBoolean("showAsSwitcher")));
 		dataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizedValues(
+			LocalizedValueUtil.toLocalizedStrings(
 				jsonObject.getJSONObject("predefinedValue")));
 
 		return dataDefinitionField;

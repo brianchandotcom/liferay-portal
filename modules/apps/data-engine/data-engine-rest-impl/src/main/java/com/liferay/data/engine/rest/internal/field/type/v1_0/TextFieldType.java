@@ -64,13 +64,13 @@ public class TextFieldType extends BaseFieldType {
 				DataFieldOptionUtil.toDataFieldOptions(
 					jsonObject.getJSONObject("options"))));
 		dataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizedValues(
+			LocalizedValueUtil.toLocalizedStrings(
 				jsonObject.getJSONObject("placeholder")));
 		dataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizedValues(
+			LocalizedValueUtil.toLocalizedStrings(
 				jsonObject.getJSONObject("predefinedValue")));
 		dataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizedValues(
+			LocalizedValueUtil.toLocalizedStrings(
 				jsonObject.getJSONObject("tooltip")));
 
 		return dataDefinitionField;

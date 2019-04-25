@@ -111,7 +111,7 @@ public abstract class BaseFieldType implements FieldType {
 					jsonObject.getBoolean("showLabel"));
 				fieldType = jsonObject.getString("type");
 				indexable = jsonObject.getBoolean("indexable", true);
-				label = LocalizedValueUtil.toLocalizedValues(
+				label = LocalizedValueUtil.toLocalizedStrings(
 					Optional.ofNullable(
 						jsonObject.getJSONObject("label")
 					).orElse(
@@ -120,7 +120,7 @@ public abstract class BaseFieldType implements FieldType {
 				localizable = jsonObject.getBoolean("localizable", false);
 				name = jsonObject.getString("name");
 				repeatable = jsonObject.getBoolean("repeatable", false);
-				tip = LocalizedValueUtil.toLocalizedValues(
+				tip = LocalizedValueUtil.toLocalizedStrings(
 					Optional.ofNullable(
 						jsonObject.getJSONObject("tip")
 					).orElse(

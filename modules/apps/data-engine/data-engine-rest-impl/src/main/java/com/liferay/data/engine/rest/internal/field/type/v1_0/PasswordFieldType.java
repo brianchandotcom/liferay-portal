@@ -50,12 +50,12 @@ public class PasswordFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "placeholder",
-				LocalizedValueUtil.toLocalizedValues(
+				LocalizedValueUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("placeholder"))));
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "tooltip",
-				LocalizedValueUtil.toLocalizedValues(
+				LocalizedValueUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("tooltip"))));
 
 		return dataDefinitionField;

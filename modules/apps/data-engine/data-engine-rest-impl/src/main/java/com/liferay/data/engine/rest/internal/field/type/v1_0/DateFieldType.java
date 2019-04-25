@@ -47,7 +47,7 @@ public class DateFieldType extends BaseFieldType {
 		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
 
 		dataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizedValues(
+			LocalizedValueUtil.toLocalizedStrings(
 				jsonObject.getJSONObject("predefinedValue")));
 
 		return dataDefinitionField;

@@ -48,7 +48,7 @@ public class DataFieldOptionUtil {
 			String key = keys.next();
 
 			Map<String, String> localizationMap =
-				LocalizedValueUtil.toLocalizationMap(
+				LocalizedValueUtil.toLocalizedStrings(
 					jsonObject.getJSONObject(key));
 
 			DataFieldOption dataFieldOption = new DataFieldOption(

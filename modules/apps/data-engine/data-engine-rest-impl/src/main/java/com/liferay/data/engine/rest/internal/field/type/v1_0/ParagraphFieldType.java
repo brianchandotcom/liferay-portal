@@ -50,7 +50,7 @@ public class ParagraphFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "text",
-				LocalizedValueUtil.toLocalizedValues(
+				LocalizedValueUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("text"))));
 
 		return dataDefinitionField;

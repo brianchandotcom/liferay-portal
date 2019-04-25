@@ -66,7 +66,7 @@ public class RadioFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "predefinedValue",
-				LocalizedValueUtil.toLocalizedValues(
+				LocalizedValueUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("predefinedValue"))));
 
 		return dataDefinitionField;

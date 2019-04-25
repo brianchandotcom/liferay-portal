@@ -114,13 +114,14 @@ public class BndBundleUtil {
 
 		importPackages.add("!aQute.bnd.build");
 		importPackages.add("!aQute.bnd.osgi");
-		importPackages.add("*");
 
 		String importPackageString = project.getProperty("Import-Package");
 
 		if (importPackageString != null) {
 			importPackages.addAll(StringUtil.split(importPackageString));
 		}
+
+		importPackages.add("*");
 
 		project.setProperty(
 			"Import-Package", StringUtil.merge(importPackages, ","));

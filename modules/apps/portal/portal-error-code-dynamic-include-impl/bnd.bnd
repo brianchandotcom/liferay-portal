@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Error Code Dynamic Include Implementation
-Bundle-SymbolicName: com.liferay.portal.error.code.dynamic.include.impl
-Bundle-Version: 1.0.0
-Web-ContextPath: /portal-error-code-dynamic-include-impl

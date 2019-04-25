@@ -162,7 +162,7 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 			_id = null;
 			_ignoreRequestValue = false;
 			_namespace = null;
-			_showSelectButton = false;
+			_showSelectButton = true;
 			_tagNames = null;
 		}
 	}
@@ -291,7 +291,7 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 	private String _id;
 	private boolean _ignoreRequestValue;
 	private String _namespace;
-	private Boolean _showSelectButton = false;
+	private Boolean _showSelectButton = true;
 	private String _tagNames;
 
 }

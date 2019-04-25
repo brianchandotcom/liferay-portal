@@ -28,6 +28,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
@@ -51,6 +52,32 @@ public class WorkflowMetricsRESTTestHelper {
 
 		_queries = queries;
 		_searchEngineAdapter = searchEngineAdapter;
+	}
+
+	public Instance addInstance(
+			long companyId, long processId, Instance instance)
+		throws Exception {
+
+		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
+			"workflow-metrics-instances",
+			_createWorkflowMetricsInstanceDocument(
+				companyId, instance.getId(), processId)) {
+
+			{
+				setType("WorkflowMetricsInstanceType");
+			}
+		};
+
+		_searchEngineAdapter.execute(indexDocumentRequest);
+
+		_retryAssertCount(
+			"workflow-metrics-instances", "instanceId", instance.getId());
+
+		return new Instance() {
+			{
+				id = instance.getId();
+			}
+		};
 	}
 
 	public Node addNode(long companyId, long processId, Node node)
@@ -113,7 +140,7 @@ public class WorkflowMetricsRESTTestHelper {
 			new IndexDocumentRequest(
 				"workflow-metrics-instances",
 				_createWorkflowMetricsInstanceDocument(
-					companyId, process.getId())) {
+					companyId, 0, process.getId())) {
 
 				{
 					setType("WorkflowMetricsInstanceType");
@@ -217,6 +244,23 @@ public class WorkflowMetricsRESTTestHelper {
 		};
 	}
 
+	public void deleteInstance(
+		long companyId, long instanceId, long processId) {
+
+		Document instanceDocument = _createWorkflowMetricsInstanceDocument(
+			companyId, instanceId, processId);
+
+		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
+			"workflow-metrics-processes", instanceDocument.getUID()) {
+
+			{
+				setType("WorkflowMetricsProcessType");
+			}
+		};
+
+		_searchEngineAdapter.execute(deleteDocumentRequest);
+	}
+
 	public void deleteNode(long companyId, long processId, String name) {
 		Document nodeDocument = _createWorkflowMetricsNodeDocument(
 			companyId, 0, name, processId, "STATE");
@@ -248,7 +292,7 @@ public class WorkflowMetricsRESTTestHelper {
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		Document instanceDocument = _createWorkflowMetricsInstanceDocument(
-			companyId, processId);
+			companyId, 0, processId);
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new DeleteDocumentRequest(
@@ -357,16 +401,17 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _createWorkflowMetricsInstanceDocument(
-		long companyId, long processId) {
+		long companyId, long instanceId, long processId) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
-			"WorkflowMetricsInstance", _digest(companyId, processId, 0));
+			"WorkflowMetricsInstance",
+			_digest(companyId, processId, instanceId));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("completed", false);
 		document.addKeyword("deleted", false);
-		document.addKeyword("instanceId", 0);
+		document.addKeyword("instanceId", instanceId);
 		document.addKeyword("processId", processId);
 		document.addKeyword("version", "1.0");
 

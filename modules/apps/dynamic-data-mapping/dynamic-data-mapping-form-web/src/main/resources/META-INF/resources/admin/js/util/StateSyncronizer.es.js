@@ -149,6 +149,18 @@ class StateSyncronizer extends Component {
 			name
 		} = state;
 
+		Object.keys(state.name).forEach(
+			key => {
+				state.name[key] = Liferay.Util.unescape(state.name[key]);
+			}
+		);
+
+		Object.keys(state.description).forEach(
+			key => {
+				state.description[key] = Liferay.Util.unescape(state.description[key]);
+			}
+		);
+
 		if (settingsDDMForm) {
 			const settings = settingsDDMForm.get('context');
 

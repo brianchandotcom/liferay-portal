@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>MARK_AS_READ</td>
-	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'container-fluid')]//a/*[name()='svg'][contains(@class,'lexicon-icon-envelope-open')]</td>
+	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'container-fluid')]//button[contains(@aria-label,'envelope-open')]</td>
 	<td></td>
 </tr>
 <tr>

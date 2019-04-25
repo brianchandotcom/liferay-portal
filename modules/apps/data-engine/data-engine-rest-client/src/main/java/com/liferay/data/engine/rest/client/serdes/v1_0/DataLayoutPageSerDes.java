@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.client.serdes.v1_0;
 
 import com.liferay.data.engine.rest.client.dto.v1_0.DataLayoutPage;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataLayoutRow;
-import com.liferay.data.engine.rest.client.dto.v1_0.LocalizedValue;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.util.HashMap;
@@ -86,17 +85,7 @@ public class DataLayoutPageSerDes {
 
 			sb.append("\"description\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataLayoutPage.getDescription().length; i++) {
-				sb.append(String.valueOf(dataLayoutPage.getDescription()[i]));
-
-				if ((i + 1) < dataLayoutPage.getDescription().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(dataLayoutPage.getDescription());
 		}
 
 		if (dataLayoutPage.getTitle() != null) {
@@ -106,17 +95,7 @@ public class DataLayoutPageSerDes {
 
 			sb.append("\"title\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataLayoutPage.getTitle().length; i++) {
-				sb.append(String.valueOf(dataLayoutPage.getTitle()[i]));
-
-				if ((i + 1) < dataLayoutPage.getTitle().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(dataLayoutPage.getTitle());
 		}
 
 		sb.append("}");
@@ -197,25 +176,13 @@ public class DataLayoutPageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					dataLayoutPage.setDescription(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					dataLayoutPage.setTitle(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else {

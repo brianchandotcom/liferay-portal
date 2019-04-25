@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.client.serdes.v1_0;
 
 import com.liferay.data.engine.rest.client.dto.v1_0.CustomProperty;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.client.dto.v1_0.LocalizedValue;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.util.HashMap;
@@ -89,20 +88,7 @@ public class DataDefinitionFieldSerDes {
 
 			sb.append("\"defaultValue\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataDefinitionField.getDefaultValue().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(dataDefinitionField.getDefaultValue()[i]));
-
-				if ((i + 1) < dataDefinitionField.getDefaultValue().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(dataDefinitionField.getDefaultValue());
 		}
 
 		if (dataDefinitionField.getFieldType() != null) {
@@ -146,17 +132,7 @@ public class DataDefinitionFieldSerDes {
 
 			sb.append("\"label\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataDefinitionField.getLabel().length; i++) {
-				sb.append(String.valueOf(dataDefinitionField.getLabel()[i]));
-
-				if ((i + 1) < dataDefinitionField.getLabel().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(dataDefinitionField.getLabel());
 		}
 
 		if (dataDefinitionField.getLocalizable() != null) {
@@ -200,17 +176,7 @@ public class DataDefinitionFieldSerDes {
 
 			sb.append("\"tip\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataDefinitionField.getTip().length; i++) {
-				sb.append(String.valueOf(dataDefinitionField.getTip()[i]));
-
-				if ((i + 1) < dataDefinitionField.getTip().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(dataDefinitionField.getTip());
 		}
 
 		sb.append("}");
@@ -351,13 +317,7 @@ public class DataDefinitionFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "defaultValue")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setDefaultValue(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						(Map<String, ?>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fieldType")) {
@@ -381,13 +341,7 @@ public class DataDefinitionFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "label")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setLabel(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "localizable")) {
@@ -410,13 +364,7 @@ public class DataDefinitionFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "tip")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setTip(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else {

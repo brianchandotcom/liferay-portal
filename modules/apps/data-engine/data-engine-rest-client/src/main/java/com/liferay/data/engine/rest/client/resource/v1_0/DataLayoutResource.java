@@ -52,14 +52,7 @@ public class DataLayoutResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, DataLayoutSerDes::toDTO);
+		return Page.of(httpResponse.getContent(), DataLayoutSerDes::toDTO);
 	}
 
 	public DataLayout postDataDefinitionDataLayout(
@@ -81,19 +74,13 @@ public class DataLayoutResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
 		try {
-			return DataLayoutSerDes.toDTO(content);
+			return DataLayoutSerDes.toDTO(httpResponse.getContent());
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
+				Level.WARNING,
+				"Unable to process HTTP response: " + httpResponse.getContent(),
 				e);
 
 			throw e;
@@ -117,13 +104,6 @@ public class DataLayoutResource {
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
 	public void deleteDataLayout(Long dataLayoutId) throws Exception {
@@ -138,13 +118,6 @@ public class DataLayoutResource {
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
 	public DataLayout getDataLayout(Long dataLayoutId) throws Exception {
@@ -160,19 +133,13 @@ public class DataLayoutResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
 		try {
-			return DataLayoutSerDes.toDTO(content);
+			return DataLayoutSerDes.toDTO(httpResponse.getContent());
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
+				Level.WARNING,
+				"Unable to process HTTP response: " + httpResponse.getContent(),
 				e);
 
 			throw e;
@@ -197,19 +164,13 @@ public class DataLayoutResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
 		try {
-			return DataLayoutSerDes.toDTO(content);
+			return DataLayoutSerDes.toDTO(httpResponse.getContent());
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
+				Level.WARNING,
+				"Unable to process HTTP response: " + httpResponse.getContent(),
 				e);
 
 			throw e;
@@ -236,14 +197,7 @@ public class DataLayoutResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, DataLayoutSerDes::toDTO);
+		return Page.of(httpResponse.getContent(), DataLayoutSerDes::toDTO);
 	}
 
 	public void postSiteDataLayoutPermission(
@@ -263,13 +217,6 @@ public class DataLayoutResource {
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
 	private static final Logger _logger = Logger.getLogger(

@@ -26,6 +26,7 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -72,18 +73,17 @@ public class DataDefinitionField {
 	protected CustomProperty[] customProperties;
 
 	@Schema
-	public LocalizedValue[] getDefaultValue() {
+	public Map<String, ?> getDefaultValue() {
 		return defaultValue;
 	}
 
-	public void setDefaultValue(LocalizedValue[] defaultValue) {
+	public void setDefaultValue(Map<String, ?> defaultValue) {
 		this.defaultValue = defaultValue;
 	}
 
 	@JsonIgnore
 	public void setDefaultValue(
-		UnsafeSupplier<LocalizedValue[], Exception>
-			defaultValueUnsafeSupplier) {
+		UnsafeSupplier<Map<String, ?>, Exception> defaultValueUnsafeSupplier) {
 
 		try {
 			defaultValue = defaultValueUnsafeSupplier.get();
@@ -98,7 +98,7 @@ public class DataDefinitionField {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] defaultValue;
+	protected Map<String, ?> defaultValue;
 
 	@Schema
 	public String getFieldType() {
@@ -183,17 +183,17 @@ public class DataDefinitionField {
 	protected Boolean indexable;
 
 	@Schema
-	public LocalizedValue[] getLabel() {
+	public Map<String, String> getLabel() {
 		return label;
 	}
 
-	public void setLabel(LocalizedValue[] label) {
+	public void setLabel(Map<String, String> label) {
 		this.label = label;
 	}
 
 	@JsonIgnore
 	public void setLabel(
-		UnsafeSupplier<LocalizedValue[], Exception> labelUnsafeSupplier) {
+		UnsafeSupplier<Map<String, String>, Exception> labelUnsafeSupplier) {
 
 		try {
 			label = labelUnsafeSupplier.get();
@@ -208,7 +208,7 @@ public class DataDefinitionField {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] label;
+	protected Map<String, String> label;
 
 	@Schema
 	public Boolean getLocalizable() {
@@ -293,17 +293,17 @@ public class DataDefinitionField {
 	protected Boolean repeatable;
 
 	@Schema
-	public LocalizedValue[] getTip() {
+	public Map<String, String> getTip() {
 		return tip;
 	}
 
-	public void setTip(LocalizedValue[] tip) {
+	public void setTip(Map<String, String> tip) {
 		this.tip = tip;
 	}
 
 	@JsonIgnore
 	public void setTip(
-		UnsafeSupplier<LocalizedValue[], Exception> tipUnsafeSupplier) {
+		UnsafeSupplier<Map<String, String>, Exception> tipUnsafeSupplier) {
 
 		try {
 			tip = tipUnsafeSupplier.get();
@@ -318,7 +318,7 @@ public class DataDefinitionField {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] tip;
+	protected Map<String, String> tip;
 
 	@Override
 	public boolean equals(Object object) {
@@ -374,17 +374,7 @@ public class DataDefinitionField {
 
 			sb.append("\"defaultValue\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < defaultValue.length; i++) {
-				sb.append(String.valueOf(defaultValue[i]));
-
-				if ((i + 1) < defaultValue.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(defaultValue);
 		}
 
 		if (fieldType != null) {
@@ -428,17 +418,7 @@ public class DataDefinitionField {
 
 			sb.append("\"label\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < label.length; i++) {
-				sb.append(String.valueOf(label[i]));
-
-				if ((i + 1) < label.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(label);
 		}
 
 		if (localizable != null) {
@@ -482,17 +462,7 @@ public class DataDefinitionField {
 
 			sb.append("\"tip\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < tip.length; i++) {
-				sb.append(String.valueOf(tip[i]));
-
-				if ((i + 1) < tip.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(tip);
 		}
 
 		sb.append("}");

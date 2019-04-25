@@ -15,6 +15,7 @@
 package com.liferay.sharing.notifications.internal.notifications;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
@@ -68,7 +71,10 @@ public class SharingUserNotificationHandler
 		AssetRenderer<?> assetRenderer = getAssetRenderer(
 			sharingEntry.getClassName(), sharingEntry.getClassPK());
 
-		if (assetRenderer == null) {
+		if ((assetRenderer == null) ||
+			_isInTrash(
+				sharingEntry.getClassName(), sharingEntry.getClassPK())) {
+
 			_userNotificationEventLocalService.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
@@ -84,6 +90,19 @@ public class SharingUserNotificationHandler
 		}
 
 		return message;
+	}
+
+	private boolean _isInTrash(String className, long classPK)
+		throws PortalException {
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
+		if (trashHandler == null) {
+			return false;
+		}
+
+		return trashHandler.isInTrash(classPK);
 	}
 
 	@Reference

@@ -383,7 +383,7 @@ class FragmentEditableField extends PortletBase {
 			this._preventEditableClick = false;
 		}
 		else {
-			this.store.dispatchAction(
+			this.store.dispatch(
 				ENABLE_FRAGMENT_EDITOR,
 				{
 					itemId: `${this.fragmentEntryLinkId}-${this.editableId}`
@@ -409,7 +409,7 @@ class FragmentEditableField extends PortletBase {
 	_handleEditableDestroyed() {
 		this._editing = false;
 
-		this.store.dispatchAction(
+		this.store.dispatch(
 			DISABLE_FRAGMENT_EDITOR
 		);
 	}
@@ -442,7 +442,7 @@ class FragmentEditableField extends PortletBase {
 		const {panelId, type} = data;
 
 		if (type === 'editor') {
-			this.store.dispatchAction(
+			this.store.dispatch(
 				ENABLE_FRAGMENT_EDITOR,
 				{
 					itemId: this._getItemId()
@@ -456,7 +456,7 @@ class FragmentEditableField extends PortletBase {
 
 			event.preventDefault();
 
-			this.store.dispatchAction(OPEN_ASSET_TYPE_DIALOG);
+			this.store.dispatch(OPEN_ASSET_TYPE_DIALOG);
 		}
 	}
 
@@ -526,13 +526,13 @@ class FragmentEditableField extends PortletBase {
 		const editableValueSegmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId) || prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
 
 		this.store
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: true
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_EDITABLE_VALUE,
 				{
 					editableId: this.editableId,
@@ -542,7 +542,7 @@ class FragmentEditableField extends PortletBase {
 					fragmentEntryLinkId: this.fragmentEntryLinkId
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_CONFIG_ATTRIBUTES,
 				{
 					config: {
@@ -552,19 +552,19 @@ class FragmentEditableField extends PortletBase {
 					fragmentEntryLinkId: this.fragmentEntryLinkId
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_TRANSLATION_STATUS,
 				{
 					segmentsExperienceId: this.segmentsExperienceId || this.defaultSegmentsExperienceId
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_LAST_SAVE_DATE,
 				{
 					lastSaveDate: new Date()
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: false

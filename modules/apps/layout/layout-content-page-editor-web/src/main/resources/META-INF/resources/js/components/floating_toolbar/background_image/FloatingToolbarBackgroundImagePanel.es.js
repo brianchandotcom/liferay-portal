@@ -45,13 +45,13 @@ class FloatingToolbarBackgroundImagePanel extends Component {
 	 */
 	_updateRowBackgroundImage(backgroundImage) {
 		this.store
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: true
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_ROW_CONFIG,
 				{
 					config: {
@@ -60,16 +60,16 @@ class FloatingToolbarBackgroundImagePanel extends Component {
 					rowId: this.itemId
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_TRANSLATION_STATUS
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_LAST_SAVE_DATE,
 				{
 					lastSaveDate: new Date()
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: false

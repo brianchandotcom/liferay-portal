@@ -87,29 +87,29 @@ function addRow(
  */
 function moveItem(store, moveItemAction, moveItemPayload) {
 	store
-		.dispatchAction(
+		.dispatch(
 			UPDATE_SAVING_CHANGES_STATUS,
 			{
 				savingChanges: true
 			}
 		)
-		.dispatchAction(
+		.dispatch(
 			moveItemAction,
 			moveItemPayload
 		)
-		.dispatchAction(
+		.dispatch(
 			UPDATE_LAST_SAVE_DATE,
 			{
 				lastSaveDate: new Date()
 			}
 		)
-		.dispatchAction(
+		.dispatch(
 			UPDATE_SAVING_CHANGES_STATUS,
 			{
 				savingChanges: false
 			}
 		)
-		.dispatchAction(
+		.dispatch(
 			CLEAR_DROP_TARGET
 		);
 }
@@ -162,23 +162,23 @@ function remove(array, position) {
  */
 function removeItem(store, removeItemAction, removeItemPayload) {
 	store
-		.dispatchAction(
+		.dispatch(
 			UPDATE_SAVING_CHANGES_STATUS,
 			{
 				savingChanges: true
 			}
 		)
-		.dispatchAction(
+		.dispatch(
 			removeItemAction,
 			removeItemPayload
 		)
-		.dispatchAction(
+		.dispatch(
 			UPDATE_LAST_SAVE_DATE,
 			{
 				lastSaveDate: new Date()
 			}
 		)
-		.dispatchAction(
+		.dispatch(
 			UPDATE_SAVING_CHANGES_STATUS,
 			{
 				savingChanges: false
@@ -294,26 +294,26 @@ function updateIn(object, keyPath, updater, defaultValue) {
  */
 function updateRow(store, updateAction, payload) {
 	store
-		.dispatchAction(
+		.dispatch(
 			UPDATE_SAVING_CHANGES_STATUS,
 			{
 				savingChanges: true
 			}
 		)
-		.dispatchAction(
+		.dispatch(
 			updateAction,
 			payload
 		)
-		.dispatchAction(
+		.dispatch(
 			UPDATE_TRANSLATION_STATUS
 		)
-		.dispatchAction(
+		.dispatch(
 			UPDATE_LAST_SAVE_DATE,
 			{
 				lastSaveDate: new Date()
 			}
 		)
-		.dispatchAction(
+		.dispatch(
 			UPDATE_SAVING_CHANGES_STATUS,
 			{
 				savingChanges: false

@@ -62,7 +62,7 @@ class SelectMappingDialog extends PortletBase {
 	 */
 	_handleMappeableFieldSelected(key = '') {
 		this.store
-			.dispatchAction(
+			.dispatch(
 				UPDATE_EDITABLE_VALUE,
 				{
 					editableId: this.editableId,
@@ -70,7 +70,7 @@ class SelectMappingDialog extends PortletBase {
 					editableValueId: 'mappedField',
 					fragmentEntryLinkId: this.fragmentEntryLinkId
 				}
-			).dispatchAction(
+			).dispatch(
 				HIDE_MAPPING_DIALOG
 			);
 	}
@@ -82,7 +82,7 @@ class SelectMappingDialog extends PortletBase {
 	 */
 	_handleCancelButtonClick() {
 		this.store
-			.dispatchAction(
+			.dispatch(
 				HIDE_MAPPING_DIALOG
 			);
 	}

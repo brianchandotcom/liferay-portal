@@ -58,13 +58,13 @@ class FloatingToolbarLinkPanel extends Component {
 	 */
 	_updateRowConfig(config) {
 		this.store
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: true
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_CONFIG_ATTRIBUTES,
 				{
 					config,
@@ -72,13 +72,13 @@ class FloatingToolbarLinkPanel extends Component {
 					fragmentEntryLinkId: this.item.fragmentEntryLinkId
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_LAST_SAVE_DATE,
 				{
 					lastSaveDate: new Date()
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: false

@@ -20,13 +20,13 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 */
 	_updateFragmentConfig(config) {
 		this.store
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: true
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_CONFIG_ATTRIBUTES,
 				{
 					config,
@@ -34,16 +34,16 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 					fragmentEntryLinkId: this.item.fragmentEntryLinkId
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_TRANSLATION_STATUS
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_LAST_SAVE_DATE,
 				{
 					lastSaveDate: new Date()
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: false
@@ -57,7 +57,7 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleClearImageButtonClick() {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			CLEAR_FRAGMENT_EDITOR,
 			{
 				itemId: this.itemId
@@ -99,7 +99,7 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleSelectImageButtonClick() {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			ENABLE_FRAGMENT_EDITOR,
 			{
 				itemId: this.itemId

@@ -171,7 +171,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 				callback: selectedAssetEntry => {
 					this._selectAssetEntry(selectedAssetEntry);
 
-					this.store.dispatchAction(
+					this.store.dispatch(
 						ADD_MAPPED_ASSET_ENTRY,
 						selectedAssetEntry
 					);
@@ -320,13 +320,13 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_updateEditableValues(key, value) {
 		this.store
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: true
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_EDITABLE_VALUE,
 				{
 					editableId: this.item.editableId,
@@ -335,13 +335,13 @@ class FloatingToolbarMappingPanel extends PortletBase {
 					fragmentEntryLinkId: this.item.fragmentEntryLinkId
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_LAST_SAVE_DATE,
 				{
 					lastSaveDate: new Date()
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: false

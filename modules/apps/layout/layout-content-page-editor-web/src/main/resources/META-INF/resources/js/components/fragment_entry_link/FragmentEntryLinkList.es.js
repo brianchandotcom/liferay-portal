@@ -247,7 +247,7 @@ class FragmentEntryLinkList extends Component {
 				targetBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.top;
 			}
 
-			this.store.dispatchAction(
+			this.store.dispatch(
 				UPDATE_DROP_TARGET,
 				{
 					dropTargetBorder: targetBorder,
@@ -264,7 +264,7 @@ class FragmentEntryLinkList extends Component {
 	 * @review
 	 */
 	_handleDragEnd() {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			CLEAR_DROP_TARGET
 		);
 	}

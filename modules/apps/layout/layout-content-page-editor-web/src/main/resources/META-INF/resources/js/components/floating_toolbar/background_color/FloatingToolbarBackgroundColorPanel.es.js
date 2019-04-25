@@ -49,29 +49,29 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	 */
 	_updateRowConfig(config) {
 		this.store
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: true
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_ROW_CONFIG,
 				{
 					config,
 					rowId: this.itemId
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_TRANSLATION_STATUS
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_LAST_SAVE_DATE,
 				{
 					lastSaveDate: new Date()
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: false

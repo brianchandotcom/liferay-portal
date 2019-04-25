@@ -42,7 +42,7 @@ class SidebarLayoutsPanel extends Component {
 	_handleDragLayout(eventData) {
 		const {hoveredRowBorder, hoveredRowId} = eventData;
 
-		this.store.dispatchAction(
+		this.store.dispatch(
 			UPDATE_DROP_TARGET,
 			{
 				dropTargetBorder: hoveredRowBorder,
@@ -62,12 +62,12 @@ class SidebarLayoutsPanel extends Component {
 	_handleDropLayout(eventData) {
 		const layoutColumns = this._layouts[eventData.layoutIndex].columns;
 
-		this.store.dispatchAction(
+		this.store.dispatch(
 			ADD_ROW,
 			{
 				layoutColumns
 			}
-		).dispatchAction(
+		).dispatch(
 			CLEAR_DROP_TARGET
 		);
 
@@ -85,7 +85,7 @@ class SidebarLayoutsPanel extends Component {
 	 * @review
 	 */
 	_handleLeaveLayoutTarget() {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			CLEAR_DROP_TARGET
 		);
 	}

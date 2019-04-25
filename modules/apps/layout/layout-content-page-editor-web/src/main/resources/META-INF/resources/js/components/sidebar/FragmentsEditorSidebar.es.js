@@ -48,7 +48,7 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 	_handleHide() {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			UPDATE_SELECTED_SIDEBAR_PANEL_ID,
 			{sidebarPanelId: ''}
 		);

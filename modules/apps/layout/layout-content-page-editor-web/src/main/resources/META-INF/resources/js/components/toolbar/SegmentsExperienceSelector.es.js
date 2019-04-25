@@ -140,7 +140,7 @@ class SegmentsExperienceSelector extends Component {
 	 * @review
 	 */
 	_createSegmentsExperience(name, segmentsEntryId) {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			CREATE_SEGMENTS_EXPERIENCE,
 			{
 				name,
@@ -176,7 +176,7 @@ class SegmentsExperienceSelector extends Component {
 	 * @review
 	 */
 	_deleteSegmentsExperience(segmentsExperienceId) {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			DELETE_SEGMENTS_EXPERIENCE,
 			{
 				segmentsExperienceId
@@ -291,7 +291,7 @@ class SegmentsExperienceSelector extends Component {
 	 * @memberof SegmentsExperienceSelector
 	 */
 	_editSegmentsExperience({segmentsExperienceId, name, segmentsEntryId}) {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			EDIT_SEGMENTS_EXPERIENCE,
 			{
 				name,
@@ -520,7 +520,7 @@ class SegmentsExperienceSelector extends Component {
 			);
 		};
 
-		this.store.dispatchAction(
+		this.store.dispatch(
 			UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
 			payload
 		).done(
@@ -596,7 +596,7 @@ class SegmentsExperienceSelector extends Component {
 	 * @review
 	 */
 	_selectSegmentsExperience(segmentsExperienceId) {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			SELECT_SEGMENTS_EXPERIENCE,
 			{
 				segmentsExperienceId

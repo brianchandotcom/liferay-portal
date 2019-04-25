@@ -137,7 +137,7 @@ class Store extends State {
 	 * @return {Store}
 	 * @review
 	 */
-	dispatchAction(actionType, payload) {
+	dispatch(actionType, payload) {
 		this._dispatchPromise = this._dispatchPromise.then(
 			() => this._reducers.reduce(
 				(promiseNextState, reducer) => promiseNextState.then(

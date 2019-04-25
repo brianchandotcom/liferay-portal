@@ -107,7 +107,7 @@ class FragmentsEditor extends Component {
 		const {fragmentsEditorItemId, fragmentsEditorItemType} = FragmentsEditor._getItemTarget(event);
 
 		if (fragmentsEditorItemId && fragmentsEditorItemType && this.store) {
-			this.store.dispatchAction(
+			this.store.dispatch(
 				UPDATE_HOVERED_ITEM,
 				{
 					hoveredItemId: fragmentsEditorItemId,
@@ -116,7 +116,7 @@ class FragmentsEditor extends Component {
 			);
 		}
 		else if (this.store) {
-			this.store.dispatchAction(
+			this.store.dispatch(
 				CLEAR_HOVERED_ITEM
 			);
 		}
@@ -135,7 +135,7 @@ class FragmentsEditor extends Component {
 			} = FragmentsEditor._getItemTarget(event);
 
 			if (fragmentsEditorItemId && fragmentsEditorItemType) {
-				this.store.dispatchAction(
+				this.store.dispatch(
 					UPDATE_ACTIVE_ITEM,
 					{
 						activeItemId: fragmentsEditorItemId,
@@ -147,7 +147,7 @@ class FragmentsEditor extends Component {
 				event.target.parentElement !== document.body &&
 				!dom.closest(event.target, '.modal')) {
 
-				this.store.dispatchAction(
+				this.store.dispatch(
 					CLEAR_ACTIVE_ITEM
 				);
 			}

@@ -90,7 +90,7 @@ class SidebarAvailableElements extends Component {
 				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.row;
 			}
 
-			this.store.dispatchAction(
+			this.store.dispatch(
 				UPDATE_DROP_TARGET,
 				{
 					dropTargetBorder: nearestBorder,
@@ -107,7 +107,7 @@ class SidebarAvailableElements extends Component {
 	 * @review
 	 */
 	_handleDragEnd() {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			CLEAR_DROP_TARGET
 		);
 	}
@@ -132,32 +132,32 @@ class SidebarAvailableElements extends Component {
 			);
 
 			this.store
-				.dispatchAction(
+				.dispatch(
 					UPDATE_SAVING_CHANGES_STATUS,
 					{
 						savingChanges: true
 					}
 				)
-				.dispatchAction(
+				.dispatch(
 					ADD_FRAGMENT_ENTRY_LINK,
 					{
 						fragmentEntryKey: itemId,
 						fragmentName: itemName
 					}
 				)
-				.dispatchAction(
+				.dispatch(
 					UPDATE_LAST_SAVE_DATE,
 					{
 						lastSaveDate: new Date()
 					}
 				)
-				.dispatchAction(
+				.dispatch(
 					UPDATE_SAVING_CHANGES_STATUS,
 					{
 						savingChanges: false
 					}
 				)
-				.dispatchAction(
+				.dispatch(
 					CLEAR_DROP_TARGET
 				);
 		}
@@ -173,26 +173,26 @@ class SidebarAvailableElements extends Component {
 	 */
 	_handleEntryClick(event) {
 		this.store
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: true
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				ADD_FRAGMENT_ENTRY_LINK,
 				{
 					fragmentEntryKey: event.itemId,
 					fragmentName: event.itemName
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_LAST_SAVE_DATE,
 				{
 					lastSaveDate: new Date()
 				}
 			)
-			.dispatchAction(
+			.dispatch(
 				UPDATE_SAVING_CHANGES_STATUS,
 				{
 					savingChanges: false

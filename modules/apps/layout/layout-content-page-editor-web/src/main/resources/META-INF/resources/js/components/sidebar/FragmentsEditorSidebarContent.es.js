@@ -54,13 +54,13 @@ class FragmentsEditorSidebarContent extends Component {
 		const {sidebarPanelId} = event.delegateTarget.dataset;
 
 		if (this.selectedSidebarPanelId === sidebarPanelId) {
-			this.store.dispatchAction(
+			this.store.dispatch(
 				UPDATE_SELECTED_SIDEBAR_PANEL_ID,
 				{sidebarPanelId: ''}
 			);
 		}
 		else {
-			this.store.dispatchAction(
+			this.store.dispatch(
 				UPDATE_SELECTED_SIDEBAR_PANEL_ID,
 				{sidebarPanelId}
 			);
@@ -73,7 +73,7 @@ class FragmentsEditorSidebarContent extends Component {
 	 * @review
 	 */
 	_hideSidebar() {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			UPDATE_SELECTED_SIDEBAR_PANEL_ID,
 			{sidebarPanelId: ''}
 		);

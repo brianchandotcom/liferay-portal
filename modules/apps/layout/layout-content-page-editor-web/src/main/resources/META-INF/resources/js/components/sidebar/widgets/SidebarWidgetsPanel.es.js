@@ -208,7 +208,7 @@ class SidebarWidgetsPanel extends Component {
 				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.row;
 			}
 
-			this.store.dispatchAction(
+			this.store.dispatch(
 				UPDATE_DROP_TARGET,
 				{
 					dropTargetBorder: nearestBorder,
@@ -225,7 +225,7 @@ class SidebarWidgetsPanel extends Component {
 	 * @review
 	 */
 	_handleDragEnd() {
-		this.store.dispatchAction(
+		this.store.dispatch(
 			CLEAR_DROP_TARGET
 		);
 	}
@@ -266,32 +266,32 @@ class SidebarWidgetsPanel extends Component {
 			);
 
 			this.store
-				.dispatchAction(
+				.dispatch(
 					UPDATE_SAVING_CHANGES_STATUS,
 					{
 						savingChanges: true
 					}
 				)
-				.dispatchAction(
+				.dispatch(
 					ADD_PORTLET,
 					{
 						instanceable,
 						portletId
 					}
 				)
-				.dispatchAction(
+				.dispatch(
 					UPDATE_LAST_SAVE_DATE,
 					{
 						lastSaveDate: new Date()
 					}
 				)
-				.dispatchAction(
+				.dispatch(
 					UPDATE_SAVING_CHANGES_STATUS,
 					{
 						savingChanges: false
 					}
 				)
-				.dispatchAction(
+				.dispatch(
 					CLEAR_DROP_TARGET
 				);
 		}

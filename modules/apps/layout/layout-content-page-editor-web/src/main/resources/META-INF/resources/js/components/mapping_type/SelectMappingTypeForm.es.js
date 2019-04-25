@@ -94,7 +94,7 @@ class SelectMappingTypeForm extends PortletBase {
 		this._selectedMappingSubtypeId = '';
 
 		this.store
-			.dispatchAction(
+			.dispatch(
 				HIDE_MAPPING_TYPE_DIALOG
 			);
 	}
@@ -163,17 +163,17 @@ class SelectMappingTypeForm extends PortletBase {
 		}
 
 		this.store
-			.dispatchAction(
+			.dispatch(
 				HIDE_MAPPING_TYPE_DIALOG
 			)
-			.dispatchAction(
+			.dispatch(
 				SELECT_MAPPEABLE_TYPE,
 				{
 					mappingTypes,
 					selectedMappingSubtypeId: this._selectedMappingSubtypeId,
 					selectedMappingTypeId: this._selectedMappingTypeId
 				}
-			).dispatchAction(
+			).dispatch(
 				UPDATE_LAST_SAVE_DATE,
 				{
 					lastSaveDate: new Date()

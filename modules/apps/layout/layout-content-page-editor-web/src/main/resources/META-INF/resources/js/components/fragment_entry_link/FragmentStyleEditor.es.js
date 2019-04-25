@@ -106,7 +106,7 @@ class FragmentStyleEditor extends State {
 	_handleChangeStyle(event) {
 		if (event.eventType === 'map') {
 			this.store
-				.dispatchAction(
+				.dispatch(
 					OPEN_MAPPING_FIELDS_DIALOG,
 					{
 						editableId: `${this.selectorText} ${event.name}`,

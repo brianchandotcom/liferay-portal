@@ -48,7 +48,7 @@ class TranslationStatus extends Component {
 	_handleLanguageChange(event) {
 		event.preventDefault();
 
-		this.store.dispatchAction(
+		this.store.dispatch(
 			CHANGE_LANGUAGE_ID,
 			{
 				languageId: event.delegateTarget.getAttribute('data-languageid')

@@ -207,19 +207,6 @@ class EditCategories extends Component {
 		return document.getElementById(this.namespace + this.hiddenInput + vocabularyId);
 	}
 
-	/**
-	 * Checks if a required vocabulary has categories or not.
-	 *
-	 * @param  {Event} event
-	 */
-	_handleCategoriesChange(event) {
-		let vocabularyId = event.vocabularyId[0];
-
-		if (this._requiredVocabularies.includes(parseInt(vocabularyId, 10))) {
-			this._checkRequiredVocabulary(vocabularyId);
-		}
-	}
-
 	_handleInputFocus(event) {
 		const dataProvider = event.target.refs.autocomplete.refs.dataProvider;
 		const modal = this.element.querySelector('.modal');
@@ -240,7 +227,18 @@ class EditCategories extends Component {
 	}
 
 	_handleSelectedItemsChange(event) {
-		this._assetVocabularyCategories.set(event.vocabularyId, event.selectedItems);
+		const vocabularyId = event.vocabularyId;
+
+		this._assetVocabularyCategories.set(vocabularyId, event.selectedItems);
+
+		if (this._requiredVocabularies.includes(parseInt(vocabularyId, 10))) {
+			setTimeout(
+				() => {
+					this._checkRequiredVocabulary(vocabularyId);
+				},
+				0
+			);
+		}
 	}
 
 	/**
@@ -256,7 +254,7 @@ class EditCategories extends Component {
 
 		setTimeout(
 			() => {
-				if (!this._validateRequiredVocabularies() || this._checkErrors()) {
+				if (this._checkErrors()) {
 					return;
 				}
 
@@ -361,23 +359,6 @@ class EditCategories extends Component {
 		}
 
 		return categoriesObjList;
-	}
-
-	_validateRequiredVocabularies() {
-		let requiredVocabularies = this._requiredVocabularies;
-		let valid = true;
-
-		if (requiredVocabularies) {
-			requiredVocabularies.forEach(
-				vocabularyId => {
-					if (!this._checkRequiredVocabulary(vocabularyId)) {
-						valid = false;
-					}
-				}
-			);
-		}
-
-		return valid;
 	}
 }
 

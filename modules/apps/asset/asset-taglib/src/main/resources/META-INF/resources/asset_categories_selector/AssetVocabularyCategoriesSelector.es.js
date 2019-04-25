@@ -20,16 +20,6 @@ class AssetVocabularyCategoriesSelector extends Component {
 		this._dataSource = this._handleQuery.bind(this);
 	}
 
-	syncCategoryIds(event) {
-		this.emit(
-			'categoryIdsChange',
-			{
-				categoryIds: this.categoryIds,
-				vocabularyId: this.vocabularyIds
-			}
-		);
-	}
-
 	/**
 	 * Opens the tag selection dialog.
 	 *

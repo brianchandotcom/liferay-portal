@@ -149,6 +149,16 @@ public class JSONUtil {
 	}
 
 	public static JSONArray put(Object... values) {
+		return putAll(values);
+	}
+
+	public static JSONObject put(String key, Object value) {
+		JSONObject jsonObject = _createJSONObject();
+
+		return jsonObject.put(key, value);
+	}
+
+	public static JSONArray putAll(Object... values) {
 		JSONArray jsonArray = _createJSONArray();
 
 		for (Object value : values) {
@@ -156,12 +166,6 @@ public class JSONUtil {
 		}
 
 		return jsonArray;
-	}
-
-	public static JSONObject put(String key, Object value) {
-		JSONObject jsonObject = _createJSONObject();
-
-		return jsonObject.put(key, value);
 	}
 
 	public static JSONArray replace(

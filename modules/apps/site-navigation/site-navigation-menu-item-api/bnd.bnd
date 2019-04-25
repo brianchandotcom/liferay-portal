@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Navigation Menu Item API
 Bundle-SymbolicName: com.liferay.site.navigation.menu.item.api
-Bundle-Version: 2.0.0
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.site.navigation.menu.item.layout.constants,\
 	com.liferay.site.navigation.menu.item.util

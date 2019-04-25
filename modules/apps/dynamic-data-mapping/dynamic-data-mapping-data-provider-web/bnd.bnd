@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Data Provider Web
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.data.provider.web
-Bundle-Version: 3.0.0
+Bundle-Version: 4.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\

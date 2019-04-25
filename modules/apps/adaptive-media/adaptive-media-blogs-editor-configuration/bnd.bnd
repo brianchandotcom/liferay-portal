@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Adaptive Media Blogs Editor Configuration
 Bundle-SymbolicName: com.liferay.adaptive.media.blogs.editor.configuration
-Bundle-Version: 3.0.0
+Bundle-Version: 4.0.0
 -dsannotations-options: inherit

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Data Engine REST Implementation
 Bundle-SymbolicName: com.liferay.data.engine.rest.impl
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.data.engine.lang)";\

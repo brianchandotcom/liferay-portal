@@ -11,5 +11,5 @@
 		"format": "liferay-npm-scripts format",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "4.0.0"
+	"version": "5.0.0"
 }

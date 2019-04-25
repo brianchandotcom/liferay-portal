@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Blogs Reading Time
 Bundle-SymbolicName: com.liferay.blogs.reading.time
-Bundle-Version: 2.0.0
+Bundle-Version: 3.0.0
 -dsannotations-options: inherit

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Friendly URL API
 Bundle-SymbolicName: com.liferay.friendly.url.api
-Bundle-Version: 2.0.0
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.friendly.url.exception,\
 	com.liferay.friendly.url.model,\

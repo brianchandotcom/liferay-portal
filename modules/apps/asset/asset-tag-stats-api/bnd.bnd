@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Tag Stats API
 Bundle-SymbolicName: com.liferay.asset.tag.stats.api
-Bundle-Version: 2.0.0
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.asset.tag.stats.exception,\
 	com.liferay.asset.tag.stats.model,\

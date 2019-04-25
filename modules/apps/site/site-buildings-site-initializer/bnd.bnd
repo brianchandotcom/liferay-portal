@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Site Buildings Site Initializer
 Bundle-SymbolicName: com.liferay.site.buildings.site.initializer
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Web-ContextPath: /site-buildings-site-initializer

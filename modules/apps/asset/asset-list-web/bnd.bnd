@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset List Web
 Bundle-SymbolicName: com.liferay.asset.list.web
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Provide-Capability:\
 	soy;\
 		type="asset-list-web";\

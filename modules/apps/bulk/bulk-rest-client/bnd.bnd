@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Bulk REST Client
 Bundle-SymbolicName: com.liferay.bulk.rest.client
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.bulk.rest.client.dto.v1_0,\
 	com.liferay.bulk.rest.client.pagination,\

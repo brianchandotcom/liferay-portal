@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Petra Model Adapter
 Bundle-SymbolicName: com.liferay.petra.model.adapter
-Bundle-Version: 3.0.0
+Bundle-Version: 4.0.0
 Export-Package: com.liferay.petra.model.adapter.util

@@ -181,5 +181,5 @@
 		"test:snapshots": "NODE_ENV=test jest --coverage -u",
 		"test_DISABLED": "cross-env NODE_ENV=test jest --coverage"
 	},
-	"version": "2.0.0"
+	"version": "3.0.0"
 }

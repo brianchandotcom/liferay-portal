@@ -162,5 +162,5 @@
 		"test:snapshots": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage -u && npm run clean",
 		"test_DISABLED": "npm run build-soy-tests && cross-env NODE_ENV=test jest --coverage && npm run clean"
 	},
-	"version": "2.0.0"
+	"version": "3.0.0"
 }

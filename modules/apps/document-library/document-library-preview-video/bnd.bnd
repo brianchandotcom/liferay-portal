@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Document Library Preview Video
 Bundle-SymbolicName: com.liferay.document.library.preview.video
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Provide-Capability:\
 	soy;\
 		type="document-library-preview-video";\

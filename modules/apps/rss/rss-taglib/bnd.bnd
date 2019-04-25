@@ -1,6 +1,6 @@
 Bundle-Name: Liferay RSS Taglib
 Bundle-SymbolicName: com.liferay.rss.taglib
-Bundle-Version: 2.0.0
+Bundle-Version: 3.0.0
 Export-Package: com.liferay.rss.taglib.servlet.taglib
 Provide-Capability:\
 	osgi.extender;\

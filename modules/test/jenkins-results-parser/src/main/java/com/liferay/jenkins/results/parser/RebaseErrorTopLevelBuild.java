@@ -67,18 +67,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 			String localBuildURL = JenkinsResultsParserUtil.getLocalURL(
 				getBuildURL());
 
-			for (int i = 0; i < 30; i++) {
-				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					localBuildURL + "/api/json?tree=duration", false);
-
-				int duration = jsonObject.getInt("duration");
-
-				if (duration > 0) {
-					break;
-				}
-
-				JenkinsResultsParserUtil.sleep(10 * 1000);
-			}
+			waitForNonzeroDuration(localBuildURL);
 
 			Map<String, String> buildEnvMap = new HashMap<>();
 			int retries = 0;
@@ -224,6 +213,21 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 		}
 
 		return true;
+	}
+
+	protected void waitForNonzeroDuration(String localBuildURL) throws IOException {
+		for (int i = 0; i < 30; i++) {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				localBuildURL + "/api/json?tree=duration", false);
+
+			int duration = jsonObject.getInt("duration");
+
+			if (duration > 0) {
+				return;
+			}
+
+			JenkinsResultsParserUtil.sleep(10 * 1000);
+		}
 	}
 
 	private boolean _validResult;

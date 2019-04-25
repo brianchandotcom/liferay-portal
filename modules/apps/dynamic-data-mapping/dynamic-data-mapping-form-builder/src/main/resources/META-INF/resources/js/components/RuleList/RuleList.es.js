@@ -8,6 +8,7 @@ import templates from './RuleList.soy.js';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
+import {maxPageIndex, pagesOptions} from '../../util/pagesSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
 /**
@@ -135,6 +136,7 @@ class RuleList extends Component {
 	}
 
 	prepareStateForRender(states) {
+		const {pages} = this;
 		const rules = this._setDataProviderNames(states);
 
 		return {
@@ -154,6 +156,8 @@ class RuleList extends Component {
 						...rule,
 						actions: rule.actions.map(
 							action => {
+								let newAction = '';
+
 								if (action.action === 'auto-fill') {
 									const {inputs, outputs} = action;
 
@@ -170,14 +174,40 @@ class RuleList extends Component {
 								let fieldLabel = this._getFieldLabel(action.target);
 
 								if (action.action == 'jump-to-page') {
-									fieldLabel = (parseInt(action.target, 10) + 1).toString();
+									const fieldTarget = (parseInt(action.target, 10) + 1).toString();
+
+									if (action.label) {
+										fieldLabel = action.label;
+									}
+									else {
+										const maxPageIndexRes = maxPageIndex(rule.conditions, pages);
+
+										const pagesOptionsList = pagesOptions(pages, maxPageIndexRes);
+
+										const pageOption = pagesOptionsList.filter(
+											option => {
+												return option.value == fieldTarget;
+											}
+										);
+
+										fieldLabel = pageOption[0].label;
+									}
+
+									newAction = {
+										...action,
+										label: fieldLabel,
+										target: fieldTarget
+									};
+								}
+								else {
+									newAction = {
+										...action,
+										label: fieldLabel,
+										target: fieldLabel
+									};
 								}
 
-								return {
-									...action,
-									label: fieldLabel,
-									target: fieldLabel
-								};
+								return newAction;
 							}
 						),
 						conditions: rule.conditions.map(

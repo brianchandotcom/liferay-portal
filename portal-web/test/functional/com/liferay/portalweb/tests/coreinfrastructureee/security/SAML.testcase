@@ -144,6 +144,67 @@ definition {
 	}
 
 	@priority = "4"
+	test AssertKeepAliveToKeepMySAMLSessionAlive {
+		property app.server.bundles.size = "2";
+		property databases.size = "2";
+		property test.name.skip.portal.instance = "SAML#AssertKeepAliveToKeepMySAMLSessionAlive";
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+
+		SAML.configureLiferaySAMLAsSP(
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			samlEntityID = "samlsp",
+			spKeepAlive = "http://www.able.com:9080/c/portal/saml/keep_alive",
+			spURL = "http://www.able.com:9080/");
+
+		SAML.configureLiferaySAMLAsSP(
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			samlEntityID = "samlsp2",
+			spKeepAliveURL = "http://www.baker.com:10080/c/portal/saml/keep_alive",
+			spURL = "http://www.baker.com:10080");
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
+
+		User.viewLoggedOutPG();
+
+		SAML.executeSPInitiatedSSO(
+			password = "test",
+			specificURL = "http://www.able.com:9080",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com");
+
+		User.viewLoggedInPG();
+
+		Navigator.openURL();
+
+		User.viewLoggedInPG();
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:10080");
+
+		Navigator.gotoLoginPage();
+
+		User.viewLoggedInPG();
+
+		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/saml/keep_alive?entityId=");
+
+		var count = Page.getTextCountFromHtmlSource(text = "document.write");
+
+		// Workaround for LPS-94699
+
+		/*if (!("${count}" == "2")) {
+			fail("That response should contain two document.write commands");
+		}*/
+	}
+
+	@priority = "4"
 	test AssertSignedSAMLMetadata {
 		property test.name.skip.portal.instance = "SAML#AssertSignedSAMLMetadata";
 

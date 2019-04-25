@@ -16,7 +16,7 @@
 
 <%@ include file="/entries/init.jsp" %>
 
-<label class="align-baseline mb-0 mr-4">
+<label class="align-baseline mb-0 mr-3">
 	<clay:link
 		buttonStyle="outline-secondary"
 		elementClasses="btn-sm"

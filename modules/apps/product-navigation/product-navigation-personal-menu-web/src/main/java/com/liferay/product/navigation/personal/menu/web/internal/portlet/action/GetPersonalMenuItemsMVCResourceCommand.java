@@ -261,6 +261,14 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			jsonArray.put(jsonObject);
 		}
 
+		if ((jsonArray.length() > 0) && !themeDisplay.isImpersonated()) {
+			User user = themeDisplay.getUser();
+
+			JSONObject jsonObject = (JSONObject)jsonArray.get(0);
+
+			jsonObject.put("label", user.getFullName());
+		}
+
 		return jsonArray;
 	}
 

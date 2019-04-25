@@ -83,7 +83,7 @@ class FragmentStyleEditor extends State {
 
 	/**
 	 * Handles click events for tooltip buttons.
-	 * @param {MouseEvent} event The tooltip button click.
+	 * @param {{buttonId: string}} event The tooltip button click.
 	 */
 	_handleButtonClick(event) {
 		if (this._styleEditor) {

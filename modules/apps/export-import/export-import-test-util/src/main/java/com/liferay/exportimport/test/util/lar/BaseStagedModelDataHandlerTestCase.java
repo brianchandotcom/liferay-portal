@@ -36,6 +36,7 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -692,7 +693,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		return parameterMap;
 	}
 
-	protected abstract StagedModel getStagedModel(String uuid, Group group);
+	protected abstract StagedModel getStagedModel(String uuid, Group group)
+		throws PortalException;
 
 	protected abstract Class<? extends StagedModel> getStagedModelClass();
 

@@ -107,13 +107,14 @@ class ContributorBuilder extends React.Component {
 			}
 		);
 
-		const firstPropertyKey = propertyGroups.length && propertyGroups[0].propertyKey;
+		const firstContributorNotEmpty = contributors.find(contributor => contributor.query !== '');
+		
+		const propertyKey = firstContributorNotEmpty ? firstContributorNotEmpty.propertyKey : propertyGroups[0].propertyKey;
 
 		this.state = {
 			conjunctionName: CONJUNCTIONS.AND,
 			contributors,
-			editingId: firstPropertyKey,
-			newPropertyKey: firstPropertyKey
+			editingId: propertyKey
 		};
 	}
 
@@ -150,16 +151,6 @@ class ContributorBuilder extends React.Component {
 		this.setState(
 			{
 				editingId: editing ? undefined : id
-			}
-		);
-	}
-
-	_handleSelectorChange = event => {
-		const newPropertyKey = event.target.value;
-
-		this.setState(
-			{
-				newPropertyKey
 			}
 		);
 	}

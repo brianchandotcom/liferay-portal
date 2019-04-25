@@ -17,6 +17,7 @@ package com.liferay.user.associated.data.web.internal.util;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
@@ -110,7 +111,8 @@ public class UADSearchContainerBuilder {
 
 		searchContainer.setResults(results);
 
-		searchContainer.setRowChecker(new RowChecker(liferayPortletResponse));
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 		searchContainer.setTotal(uadEntities.size());
 
 		return searchContainer;

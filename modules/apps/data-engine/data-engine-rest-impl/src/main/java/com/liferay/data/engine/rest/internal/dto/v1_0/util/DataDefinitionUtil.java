@@ -46,10 +46,10 @@ public class DataDefinitionUtil {
 					DataDefinitionRule.class);
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
-				description = LocalizedValueUtil.toLocalizedValues(
+				description = LocalizedValueUtil.toLocalizedStrings(
 					ddmStructure.getDescriptionMap());
 				id = ddmStructure.getStructureId();
-				name = LocalizedValueUtil.toLocalizedValues(
+				name = LocalizedValueUtil.toLocalizedStrings(
 					ddmStructure.getNameMap());
 				siteId = ddmStructure.getGroupId();
 				storageType = ddmStructure.getStorageType();
@@ -81,7 +81,7 @@ public class DataDefinitionUtil {
 		return new DataDefinitionField() {
 			{
 				if (jsonObject.has("predefinedValue")) {
-					defaultValue = LocalizedValueUtil.toLocalizedValues(
+					defaultValue = LocalizedValueUtil.toLocalizedStrings(
 						jsonObject.getJSONObject("predefinedValue"));
 				}
 
@@ -97,7 +97,7 @@ public class DataDefinitionUtil {
 					throw new Exception("Label is required");
 				}
 
-				label = LocalizedValueUtil.toLocalizedValues(
+				label = LocalizedValueUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("label"));
 
 				localizable = jsonObject.getBoolean("localizable", false);
@@ -114,7 +114,7 @@ public class DataDefinitionUtil {
 					throw new Exception("Tip is required");
 				}
 
-				tip = LocalizedValueUtil.toLocalizedValues(
+				tip = LocalizedValueUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("tip"));
 			}
 		};

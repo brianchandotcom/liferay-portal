@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -99,7 +99,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception {
 
-		if (ArrayUtil.isEmpty(dataLayout.getName())) {
+		if (MapUtil.isEmpty(dataLayout.getName())) {
 			throw new Exception("Name is required");
 		}
 
@@ -116,8 +116,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			_ddmStructureLayoutLocalService.addStructureLayout(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
 				_getDDMStructureVersionId(dataDefinitionId),
-				LocalizedValueUtil.toLocalizationMap(dataLayout.getName()),
-				LocalizedValueUtil.toLocalizationMap(
+				LocalizedValueUtil.toLocalizedValues(dataLayout.getName()),
+				LocalizedValueUtil.toLocalizedValues(
 					dataLayout.getDescription()),
 				DataLayoutUtil.toJSON(dataLayout), serviceContext);
 
@@ -201,7 +201,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
 		throws Exception {
 
-		if (ArrayUtil.isEmpty(dataLayout.getName())) {
+		if (MapUtil.isEmpty(dataLayout.getName())) {
 			throw new Exception("Name is required");
 		}
 
@@ -213,8 +213,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			_ddmStructureLayoutLocalService.updateStructureLayout(
 				dataLayoutId,
 				_getDDMStructureVersionId(dataLayout.getDataDefinitionId()),
-				LocalizedValueUtil.toLocalizationMap(dataLayout.getName()),
-				LocalizedValueUtil.toLocalizationMap(
+				LocalizedValueUtil.toLocalizedValues(dataLayout.getName()),
+				LocalizedValueUtil.toLocalizedValues(
 					dataLayout.getDescription()),
 				DataLayoutUtil.toJSON(dataLayout), new ServiceContext()));
 	}
@@ -262,11 +262,11 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		dataLayout.setDataDefinitionId(_getDDMStructureId(ddmStructureLayout));
 		dataLayout.setId(ddmStructureLayout.getStructureLayoutId());
 		dataLayout.setDescription(
-			LocalizedValueUtil.toLocalizedValues(
+			LocalizedValueUtil.toLocalizedStrings(
 				ddmStructureLayout.getDescriptionMap()));
 		dataLayout.setDateModified(ddmStructureLayout.getModifiedDate());
 		dataLayout.setName(
-			LocalizedValueUtil.toLocalizedValues(
+			LocalizedValueUtil.toLocalizedStrings(
 				ddmStructureLayout.getNameMap()));
 		dataLayout.setUserId(ddmStructureLayout.getUserId());
 

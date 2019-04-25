@@ -169,9 +169,9 @@ public class DataRecordCollectionResourceImpl
 			_ddlRecordSetLocalService.addRecordSet(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
 				dataDefinitionId, null,
-				LocalizedValueUtil.toLocalizationMap(
+				LocalizedValueUtil.toLocalizedValues(
 					dataRecordCollection.getName()),
-				LocalizedValueUtil.toLocalizationMap(
+				LocalizedValueUtil.toLocalizedValues(
 					dataRecordCollection.getDescription()),
 				0, DDLRecordSetConstants.SCOPE_DATA_ENGINE, serviceContext));
 
@@ -291,9 +291,9 @@ public class DataRecordCollectionResourceImpl
 		return DataRecordCollectionUtil.toDataRecordCollection(
 			_ddlRecordSetLocalService.updateRecordSet(
 				dataRecordCollectionId, ddlRecordSet.getDDMStructureId(),
-				LocalizedValueUtil.toLocalizationMap(
+				LocalizedValueUtil.toLocalizedValues(
 					dataRecordCollection.getName()),
-				LocalizedValueUtil.toLocalizationMap(
+				LocalizedValueUtil.toLocalizedValues(
 					dataRecordCollection.getDescription()),
 				0, serviceContext));
 	}

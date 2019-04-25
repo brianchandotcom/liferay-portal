@@ -50,7 +50,7 @@ public class EditorFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "placeholder",
-				LocalizedValueUtil.toLocalizedValues(
+				LocalizedValueUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("placeholder"))));
 
 		return dataDefinitionField;

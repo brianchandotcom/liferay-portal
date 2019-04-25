@@ -93,10 +93,11 @@ class SelectMappingTypeForm extends PortletBase {
 		this._selectedMappingTypeId = '';
 		this._selectedMappingSubtypeId = '';
 
-		this.store
-			.dispatch(
-				HIDE_MAPPING_TYPE_DIALOG
-			);
+		this.store.dispatch(
+			{
+				type: HIDE_MAPPING_TYPE_DIALOG
+			}
+		);
 	}
 
 	/**
@@ -164,19 +165,21 @@ class SelectMappingTypeForm extends PortletBase {
 
 		this.store
 			.dispatch(
-				HIDE_MAPPING_TYPE_DIALOG
+				{
+					type: HIDE_MAPPING_TYPE_DIALOG
+				}
 			)
 			.dispatch(
-				SELECT_MAPPEABLE_TYPE,
 				{
 					mappingTypes,
 					selectedMappingSubtypeId: this._selectedMappingSubtypeId,
-					selectedMappingTypeId: this._selectedMappingTypeId
+					selectedMappingTypeId: this._selectedMappingTypeId,
+					type: SELECT_MAPPEABLE_TYPE
 				}
 			).dispatch(
-				UPDATE_LAST_SAVE_DATE,
 				{
-					lastSaveDate: new Date()
+					lastSaveDate: new Date(),
+					type: UPDATE_LAST_SAVE_DATE
 				}
 			);
 	}

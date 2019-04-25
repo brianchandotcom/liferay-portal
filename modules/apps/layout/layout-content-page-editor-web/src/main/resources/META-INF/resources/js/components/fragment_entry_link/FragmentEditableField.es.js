@@ -384,9 +384,9 @@ class FragmentEditableField extends PortletBase {
 		}
 		else {
 			this.store.dispatch(
-				ENABLE_FRAGMENT_EDITOR,
 				{
-					itemId: `${this.fragmentEntryLinkId}-${this.editableId}`
+					itemId: `${this.fragmentEntryLinkId}-${this.editableId}`,
+					type: ENABLE_FRAGMENT_EDITOR
 				}
 			);
 		}
@@ -410,7 +410,9 @@ class FragmentEditableField extends PortletBase {
 		this._editing = false;
 
 		this.store.dispatch(
-			DISABLE_FRAGMENT_EDITOR
+			{
+				type: DISABLE_FRAGMENT_EDITOR
+			}
 		);
 	}
 
@@ -443,9 +445,9 @@ class FragmentEditableField extends PortletBase {
 
 		if (type === 'editor') {
 			this.store.dispatch(
-				ENABLE_FRAGMENT_EDITOR,
 				{
-					itemId: this._getItemId()
+					itemId: this._getItemId(),
+					type: ENABLE_FRAGMENT_EDITOR
 				}
 			);
 		}
@@ -456,7 +458,11 @@ class FragmentEditableField extends PortletBase {
 
 			event.preventDefault();
 
-			this.store.dispatch(OPEN_ASSET_TYPE_DIALOG);
+			this.store.dispatch(
+				{
+					type: OPEN_ASSET_TYPE_DIALOG
+				}
+			);
 		}
 	}
 
@@ -527,47 +533,47 @@ class FragmentEditableField extends PortletBase {
 
 		this.store
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: true
+					savingChanges: true,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			)
 			.dispatch(
-				UPDATE_EDITABLE_VALUE,
 				{
 					editableId: this.editableId,
 					editableValue: newValue,
 					editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
 					editableValueSegmentsExperienceId,
-					fragmentEntryLinkId: this.fragmentEntryLinkId
+					fragmentEntryLinkId: this.fragmentEntryLinkId,
+					type: UPDATE_EDITABLE_VALUE
 				}
 			)
 			.dispatch(
-				UPDATE_CONFIG_ATTRIBUTES,
 				{
 					config: {
 						[EDITABLE_FIELD_CONFIG_KEYS.imageSource]: newValue
 					},
 					editableId: this.editableId,
-					fragmentEntryLinkId: this.fragmentEntryLinkId
+					fragmentEntryLinkId: this.fragmentEntryLinkId,
+					type: UPDATE_CONFIG_ATTRIBUTES
 				}
 			)
 			.dispatch(
-				UPDATE_TRANSLATION_STATUS,
 				{
-					segmentsExperienceId: this.segmentsExperienceId || this.defaultSegmentsExperienceId
+					segmentsExperienceId: this.segmentsExperienceId || this.defaultSegmentsExperienceId,
+					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
 			.dispatch(
-				UPDATE_LAST_SAVE_DATE,
 				{
-					lastSaveDate: new Date()
+					lastSaveDate: new Date(),
+					type: UPDATE_LAST_SAVE_DATE
 				}
 			)
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: false
+					savingChanges: false,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			);
 	}

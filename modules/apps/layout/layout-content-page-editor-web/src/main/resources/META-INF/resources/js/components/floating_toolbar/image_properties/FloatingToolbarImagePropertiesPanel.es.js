@@ -21,32 +21,34 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	_updateFragmentConfig(config) {
 		this.store
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: true
+					savingChanges: true,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			)
 			.dispatch(
-				UPDATE_CONFIG_ATTRIBUTES,
 				{
 					config,
 					editableId: this.item.editableId,
-					fragmentEntryLinkId: this.item.fragmentEntryLinkId
+					fragmentEntryLinkId: this.item.fragmentEntryLinkId,
+					type: UPDATE_CONFIG_ATTRIBUTES
 				}
 			)
 			.dispatch(
-				UPDATE_TRANSLATION_STATUS
-			)
-			.dispatch(
-				UPDATE_LAST_SAVE_DATE,
 				{
-					lastSaveDate: new Date()
+					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: false
+					lastSaveDate: new Date(),
+					type: UPDATE_LAST_SAVE_DATE
+				}
+			)
+			.dispatch(
+				{
+					savingChanges: false,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			);
 	}
@@ -58,9 +60,9 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 */
 	_handleClearImageButtonClick() {
 		this.store.dispatch(
-			CLEAR_FRAGMENT_EDITOR,
 			{
-				itemId: this.itemId
+				itemId: this.itemId,
+				type: CLEAR_FRAGMENT_EDITOR
 			}
 		);
 	}
@@ -100,9 +102,9 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 */
 	_handleSelectImageButtonClick() {
 		this.store.dispatch(
-			ENABLE_FRAGMENT_EDITOR,
 			{
-				itemId: this.itemId
+				itemId: this.itemId,
+				type: ENABLE_FRAGMENT_EDITOR
 			}
 		);
 	}

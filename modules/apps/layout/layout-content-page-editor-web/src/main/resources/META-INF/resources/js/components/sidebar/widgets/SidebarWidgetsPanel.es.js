@@ -209,11 +209,11 @@ class SidebarWidgetsPanel extends Component {
 			}
 
 			this.store.dispatch(
-				UPDATE_DROP_TARGET,
 				{
 					dropTargetBorder: nearestBorder,
 					dropTargetItemId,
-					dropTargetItemType
+					dropTargetItemType,
+					type: UPDATE_DROP_TARGET
 				}
 			);
 		}
@@ -226,7 +226,9 @@ class SidebarWidgetsPanel extends Component {
 	 */
 	_handleDragEnd() {
 		this.store.dispatch(
-			CLEAR_DROP_TARGET
+			{
+				type: CLEAR_DROP_TARGET
+			}
 		);
 	}
 
@@ -267,32 +269,34 @@ class SidebarWidgetsPanel extends Component {
 
 			this.store
 				.dispatch(
-					UPDATE_SAVING_CHANGES_STATUS,
 					{
-						savingChanges: true
+						savingChanges: true,
+						type: UPDATE_SAVING_CHANGES_STATUS
 					}
 				)
 				.dispatch(
-					ADD_PORTLET,
 					{
 						instanceable,
-						portletId
+						portletId,
+						type: ADD_PORTLET
 					}
 				)
 				.dispatch(
-					UPDATE_LAST_SAVE_DATE,
 					{
-						lastSaveDate: new Date()
+						lastSaveDate: new Date(),
+						type: UPDATE_LAST_SAVE_DATE
 					}
 				)
 				.dispatch(
-					UPDATE_SAVING_CHANGES_STATUS,
 					{
-						savingChanges: false
+						savingChanges: false,
+						type: UPDATE_SAVING_CHANGES_STATUS
 					}
 				)
 				.dispatch(
-					CLEAR_DROP_TARGET
+					{
+						type: CLEAR_DROP_TARGET
+					}
 				);
 		}
 	}

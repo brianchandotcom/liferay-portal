@@ -144,9 +144,9 @@ function startListeningWidgetConfigurationChange(store) {
 				'submitForm',
 				() => {
 					store.dispatch(
-						UPDATE_LAST_SAVE_DATE,
 						{
-							lastSaveDate: new Date()
+							lastSaveDate: new Date(),
+							type: UPDATE_LAST_SAVE_DATE
 						}
 					);
 				}

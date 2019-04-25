@@ -132,17 +132,17 @@ class Store extends State {
 	 * Dispatch an action to the store. Each action is identified by a given
 	 * actionType, and can contain an optional payload with any kind of
 	 * information.
-	 * @param {!string} actionType
-	 * @param {string|number|array|object} payload
+	 * @param {object} action
+	 * @param {string} action.type
 	 * @return {Store}
 	 * @review
 	 */
-	dispatch(actionType, payload) {
+	dispatch(action) {
 		this._dispatchPromise = this._dispatchPromise.then(
 			() => this._reducers.reduce(
 				(promiseNextState, reducer) => promiseNextState.then(
 					nextState => Promise.resolve(
-						reducer(nextState, actionType, payload)
+						reducer(nextState, action)
 					)
 				),
 				Promise.resolve(this._state)
@@ -155,10 +155,7 @@ class Store extends State {
 
 						if ((process.env.NODE_ENV === 'development') && this._devTools) {
 							this._devTools.send(
-								{
-									payload,
-									type: actionType
-								},
+								action,
 								this._state
 							);
 						}

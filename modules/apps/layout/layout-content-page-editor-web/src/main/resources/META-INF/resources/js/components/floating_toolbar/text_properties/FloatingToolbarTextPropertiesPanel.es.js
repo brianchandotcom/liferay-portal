@@ -22,32 +22,34 @@ class FloatingToolbarTextPropertiesPanel extends Component {
 	_updateFragmentConfig(config) {
 		this.store
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: true
+					savingChanges: true,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			)
 			.dispatch(
-				UPDATE_CONFIG_ATTRIBUTES,
 				{
 					config,
 					editableId: this.item.editableId,
-					fragmentEntryLinkId: this.item.fragmentEntryLinkId
+					fragmentEntryLinkId: this.item.fragmentEntryLinkId,
+					type: UPDATE_CONFIG_ATTRIBUTES
 				}
 			)
 			.dispatch(
-				UPDATE_TRANSLATION_STATUS
-			)
-			.dispatch(
-				UPDATE_LAST_SAVE_DATE,
 				{
-					lastSaveDate: new Date()
+					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: false
+					lastSaveDate: new Date(),
+					type: UPDATE_LAST_SAVE_DATE
+				}
+			)
+			.dispatch(
+				{
+					savingChanges: false,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			);
 	}

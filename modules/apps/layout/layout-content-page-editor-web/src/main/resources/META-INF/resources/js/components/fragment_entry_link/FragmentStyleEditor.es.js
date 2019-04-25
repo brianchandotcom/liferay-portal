@@ -107,12 +107,12 @@ class FragmentStyleEditor extends State {
 		if (event.eventType === 'map') {
 			this.store
 				.dispatch(
-					OPEN_MAPPING_FIELDS_DIALOG,
 					{
 						editableId: `${this.selectorText} ${event.name}`,
 						editableType: event.type,
 						fragmentEntryLinkId: this.fragmentEntryLinkId,
-						mappedFieldId: ''
+						mappedFieldId: '',
+						type: OPEN_MAPPING_FIELDS_DIALOG
 					}
 				);
 

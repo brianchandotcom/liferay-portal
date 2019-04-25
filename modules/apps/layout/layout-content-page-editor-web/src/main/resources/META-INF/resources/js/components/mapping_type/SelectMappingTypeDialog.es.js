@@ -18,10 +18,11 @@ class SelectMappingTypeDialog extends Component {
 	 * @review
 	 */
 	_handleVisibleChanged() {
-		this.store
-			.dispatch(
-				HIDE_MAPPING_TYPE_DIALOG
-			);
+		this.store.dispatch(
+			{
+				type: HIDE_MAPPING_TYPE_DIALOG
+			}
+		);
 	}
 }
 

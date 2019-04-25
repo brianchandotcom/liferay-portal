@@ -59,29 +59,29 @@ class FloatingToolbarLinkPanel extends Component {
 	_updateRowConfig(config) {
 		this.store
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: true
+					savingChanges: true,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			)
 			.dispatch(
-				UPDATE_CONFIG_ATTRIBUTES,
 				{
 					config,
 					editableId: this.item.editableId,
-					fragmentEntryLinkId: this.item.fragmentEntryLinkId
+					fragmentEntryLinkId: this.item.fragmentEntryLinkId,
+					type: UPDATE_CONFIG_ATTRIBUTES
 				}
 			)
 			.dispatch(
-				UPDATE_LAST_SAVE_DATE,
 				{
-					lastSaveDate: new Date()
+					lastSaveDate: new Date(),
+					type: UPDATE_LAST_SAVE_DATE
 				}
 			)
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: false
+					savingChanges: false,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			);
 	}

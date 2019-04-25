@@ -49,9 +49,9 @@ class TranslationStatus extends Component {
 		event.preventDefault();
 
 		this.store.dispatch(
-			CHANGE_LANGUAGE_ID,
 			{
-				languageId: event.delegateTarget.getAttribute('data-languageid')
+				languageId: event.delegateTarget.getAttribute('data-languageid'),
+				type: CHANGE_LANGUAGE_ID
 			}
 		);
 	}

@@ -141,10 +141,10 @@ class SegmentsExperienceSelector extends Component {
 	 */
 	_createSegmentsExperience(name, segmentsEntryId) {
 		this.store.dispatch(
-			CREATE_SEGMENTS_EXPERIENCE,
 			{
 				name,
-				segmentsEntryId
+				segmentsEntryId,
+				type: CREATE_SEGMENTS_EXPERIENCE
 			}
 		).done(
 			() => {
@@ -177,9 +177,9 @@ class SegmentsExperienceSelector extends Component {
 	 */
 	_deleteSegmentsExperience(segmentsExperienceId) {
 		this.store.dispatch(
-			DELETE_SEGMENTS_EXPERIENCE,
 			{
-				segmentsExperienceId
+				segmentsExperienceId,
+				type: DELETE_SEGMENTS_EXPERIENCE
 			}
 		).done(
 			() => {
@@ -292,11 +292,11 @@ class SegmentsExperienceSelector extends Component {
 	 */
 	_editSegmentsExperience({segmentsExperienceId, name, segmentsEntryId}) {
 		this.store.dispatch(
-			EDIT_SEGMENTS_EXPERIENCE,
 			{
 				name,
 				segmentsEntryId,
-				segmentsExperienceId
+				segmentsExperienceId,
+				type: EDIT_SEGMENTS_EXPERIENCE
 			}
 		).done(
 			() => {
@@ -521,8 +521,13 @@ class SegmentsExperienceSelector extends Component {
 		};
 
 		this.store.dispatch(
-			UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
-			payload
+			Object.assign(
+				{},
+				payload,
+				{
+					type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
+				}
+			)
 		).done(
 			removeBlurListener
 		).failed(
@@ -597,9 +602,9 @@ class SegmentsExperienceSelector extends Component {
 	 */
 	_selectSegmentsExperience(segmentsExperienceId) {
 		this.store.dispatch(
-			SELECT_SEGMENTS_EXPERIENCE,
 			{
-				segmentsExperienceId
+				segmentsExperienceId,
+				type: SELECT_SEGMENTS_EXPERIENCE
 			}
 		);
 	}

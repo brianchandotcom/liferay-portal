@@ -108,16 +108,18 @@ class FragmentsEditor extends Component {
 
 		if (fragmentsEditorItemId && fragmentsEditorItemType && this.store) {
 			this.store.dispatch(
-				UPDATE_HOVERED_ITEM,
 				{
 					hoveredItemId: fragmentsEditorItemId,
-					hoveredItemType: fragmentsEditorItemType
+					hoveredItemType: fragmentsEditorItemType,
+					type: UPDATE_HOVERED_ITEM
 				}
 			);
 		}
 		else if (this.store) {
 			this.store.dispatch(
-				CLEAR_HOVERED_ITEM
+				{
+					type: CLEAR_HOVERED_ITEM
+				}
 			);
 		}
 	}
@@ -136,10 +138,10 @@ class FragmentsEditor extends Component {
 
 			if (fragmentsEditorItemId && fragmentsEditorItemType) {
 				this.store.dispatch(
-					UPDATE_ACTIVE_ITEM,
 					{
 						activeItemId: fragmentsEditorItemId,
-						activeItemType: fragmentsEditorItemType
+						activeItemType: fragmentsEditorItemType,
+						type: UPDATE_ACTIVE_ITEM
 					}
 				);
 			}
@@ -148,7 +150,9 @@ class FragmentsEditor extends Component {
 				!dom.closest(event.target, '.modal')) {
 
 				this.store.dispatch(
-					CLEAR_ACTIVE_ITEM
+					{
+						type: CLEAR_ACTIVE_ITEM
+					}
 				);
 			}
 		}

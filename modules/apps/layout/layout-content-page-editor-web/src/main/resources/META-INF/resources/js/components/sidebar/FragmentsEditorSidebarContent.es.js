@@ -55,14 +55,18 @@ class FragmentsEditorSidebarContent extends Component {
 
 		if (this.selectedSidebarPanelId === sidebarPanelId) {
 			this.store.dispatch(
-				UPDATE_SELECTED_SIDEBAR_PANEL_ID,
-				{sidebarPanelId: ''}
+				{
+					sidebarPanelId: '',
+					type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+				}
 			);
 		}
 		else {
 			this.store.dispatch(
-				UPDATE_SELECTED_SIDEBAR_PANEL_ID,
-				{sidebarPanelId}
+				{
+					sidebarPanelId,
+					type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+				}
 			);
 		}
 	}
@@ -74,8 +78,10 @@ class FragmentsEditorSidebarContent extends Component {
 	 */
 	_hideSidebar() {
 		this.store.dispatch(
-			UPDATE_SELECTED_SIDEBAR_PANEL_ID,
-			{sidebarPanelId: ''}
+			{
+				sidebarPanelId: '',
+				type: UPDATE_SELECTED_SIDEBAR_PANEL_ID
+			}
 		);
 	}
 

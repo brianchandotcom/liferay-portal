@@ -50,31 +50,33 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	_updateRowConfig(config) {
 		this.store
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: true
+					savingChanges: true,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			)
 			.dispatch(
-				UPDATE_ROW_CONFIG,
 				{
 					config,
-					rowId: this.itemId
+					rowId: this.itemId,
+					type: UPDATE_ROW_CONFIG
 				}
 			)
 			.dispatch(
-				UPDATE_TRANSLATION_STATUS
-			)
-			.dispatch(
-				UPDATE_LAST_SAVE_DATE,
 				{
-					lastSaveDate: new Date()
+					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: false
+					lastSaveDate: new Date(),
+					type: UPDATE_LAST_SAVE_DATE
+				}
+			)
+			.dispatch(
+				{
+					savingChanges: false,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			);
 	}

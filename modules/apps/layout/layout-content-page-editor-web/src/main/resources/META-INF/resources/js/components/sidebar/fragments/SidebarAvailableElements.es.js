@@ -91,11 +91,11 @@ class SidebarAvailableElements extends Component {
 			}
 
 			this.store.dispatch(
-				UPDATE_DROP_TARGET,
 				{
 					dropTargetBorder: nearestBorder,
 					dropTargetItemId,
-					dropTargetItemType
+					dropTargetItemType,
+					type: UPDATE_DROP_TARGET
 				}
 			);
 		}
@@ -108,7 +108,9 @@ class SidebarAvailableElements extends Component {
 	 */
 	_handleDragEnd() {
 		this.store.dispatch(
-			CLEAR_DROP_TARGET
+			{
+				type: CLEAR_DROP_TARGET
+			}
 		);
 	}
 
@@ -133,32 +135,34 @@ class SidebarAvailableElements extends Component {
 
 			this.store
 				.dispatch(
-					UPDATE_SAVING_CHANGES_STATUS,
 					{
-						savingChanges: true
+						savingChanges: true,
+						type: UPDATE_SAVING_CHANGES_STATUS
 					}
 				)
 				.dispatch(
-					ADD_FRAGMENT_ENTRY_LINK,
 					{
 						fragmentEntryKey: itemId,
-						fragmentName: itemName
+						fragmentName: itemName,
+						type: ADD_FRAGMENT_ENTRY_LINK
 					}
 				)
 				.dispatch(
-					UPDATE_LAST_SAVE_DATE,
 					{
-						lastSaveDate: new Date()
+						lastSaveDate: new Date(),
+						type: UPDATE_LAST_SAVE_DATE
 					}
 				)
 				.dispatch(
-					UPDATE_SAVING_CHANGES_STATUS,
 					{
-						savingChanges: false
+						savingChanges: false,
+						type: UPDATE_SAVING_CHANGES_STATUS
 					}
 				)
 				.dispatch(
-					CLEAR_DROP_TARGET
+					{
+						type: CLEAR_DROP_TARGET
+					}
 				);
 		}
 	}
@@ -174,28 +178,28 @@ class SidebarAvailableElements extends Component {
 	_handleEntryClick(event) {
 		this.store
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: true
+					savingChanges: true,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			)
 			.dispatch(
-				ADD_FRAGMENT_ENTRY_LINK,
 				{
 					fragmentEntryKey: event.itemId,
-					fragmentName: event.itemName
+					fragmentName: event.itemName,
+					type: ADD_FRAGMENT_ENTRY_LINK
 				}
 			)
 			.dispatch(
-				UPDATE_LAST_SAVE_DATE,
 				{
-					lastSaveDate: new Date()
+					lastSaveDate: new Date(),
+					type: UPDATE_LAST_SAVE_DATE
 				}
 			)
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: false
+					savingChanges: false,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			);
 	}

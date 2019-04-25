@@ -88,29 +88,36 @@ function addRow(
 function moveItem(store, moveItemAction, moveItemPayload) {
 	store
 		.dispatch(
-			UPDATE_SAVING_CHANGES_STATUS,
 			{
-				savingChanges: true
+				savingChanges: true,
+				type: UPDATE_SAVING_CHANGES_STATUS
 			}
 		)
 		.dispatch(
-			moveItemAction,
-			moveItemPayload
+			Object.assign(
+				{},
+				moveItemPayload,
+				{
+					type: moveItemAction
+				}
+			)
 		)
 		.dispatch(
-			UPDATE_LAST_SAVE_DATE,
 			{
-				lastSaveDate: new Date()
+				lastSaveDate: new Date(),
+				type: UPDATE_LAST_SAVE_DATE
 			}
 		)
 		.dispatch(
-			UPDATE_SAVING_CHANGES_STATUS,
 			{
-				savingChanges: false
+				savingChanges: false,
+				type: UPDATE_SAVING_CHANGES_STATUS
 			}
 		)
 		.dispatch(
-			CLEAR_DROP_TARGET
+			{
+				type: CLEAR_DROP_TARGET
+			}
 		);
 }
 
@@ -163,25 +170,30 @@ function remove(array, position) {
 function removeItem(store, removeItemAction, removeItemPayload) {
 	store
 		.dispatch(
-			UPDATE_SAVING_CHANGES_STATUS,
 			{
-				savingChanges: true
+				savingChanges: true,
+				type: UPDATE_SAVING_CHANGES_STATUS
 			}
 		)
 		.dispatch(
-			removeItemAction,
-			removeItemPayload
+			Object.assign(
+				{},
+				removeItemPayload,
+				{
+					type: removeItemAction
+				}
+			),
 		)
 		.dispatch(
-			UPDATE_LAST_SAVE_DATE,
 			{
-				lastSaveDate: new Date()
+				lastSaveDate: new Date(),
+				type: UPDATE_LAST_SAVE_DATE
 			}
 		)
 		.dispatch(
-			UPDATE_SAVING_CHANGES_STATUS,
 			{
-				savingChanges: false
+				savingChanges: false,
+				type: UPDATE_SAVING_CHANGES_STATUS
 			}
 		);
 }
@@ -295,9 +307,9 @@ function updateIn(object, keyPath, updater, defaultValue) {
 function updateRow(store, updateAction, payload) {
 	store
 		.dispatch(
-			UPDATE_SAVING_CHANGES_STATUS,
 			{
-				savingChanges: true
+				savingChanges: true,
+				type: UPDATE_SAVING_CHANGES_STATUS
 			}
 		)
 		.dispatch(
@@ -305,18 +317,20 @@ function updateRow(store, updateAction, payload) {
 			payload
 		)
 		.dispatch(
-			UPDATE_TRANSLATION_STATUS
-		)
-		.dispatch(
-			UPDATE_LAST_SAVE_DATE,
 			{
-				lastSaveDate: new Date()
+				type: UPDATE_TRANSLATION_STATUS
 			}
 		)
 		.dispatch(
-			UPDATE_SAVING_CHANGES_STATUS,
 			{
-				savingChanges: false
+				lastSaveDate: new Date(),
+				type: UPDATE_LAST_SAVE_DATE
+			}
+		)
+		.dispatch(
+			{
+				savingChanges: false,
+				type: UPDATE_SAVING_CHANGES_STATUS
 			}
 		);
 }

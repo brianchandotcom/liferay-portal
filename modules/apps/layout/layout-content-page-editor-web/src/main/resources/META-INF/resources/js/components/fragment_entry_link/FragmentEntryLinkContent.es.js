@@ -318,13 +318,13 @@ class FragmentEntryLinkContent extends Component {
 			prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
 
 		this.store.dispatch(
-			UPDATE_EDITABLE_VALUE,
 			{
 				editableId: event.name,
 				editableValue: event.value,
 				editableValueId: this.languageId,
 				editableValueSegmentsExperienceId,
 				fragmentEntryLinkId: this.fragmentEntryLinkId
+				type: UPDATE_EDITABLE_VALUE
 			}
 		);
 	}

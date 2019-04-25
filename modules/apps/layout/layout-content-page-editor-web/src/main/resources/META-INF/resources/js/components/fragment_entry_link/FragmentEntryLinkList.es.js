@@ -248,11 +248,11 @@ class FragmentEntryLinkList extends Component {
 			}
 
 			this.store.dispatch(
-				UPDATE_DROP_TARGET,
 				{
 					dropTargetBorder: targetBorder,
 					dropTargetItemId: dropTargetItemData.itemId,
-					dropTargetItemType: dropTargetItemData.itemType
+					dropTargetItemType: dropTargetItemData.itemType,
+					type: UPDATE_DROP_TARGET
 				}
 			);
 		}
@@ -265,7 +265,9 @@ class FragmentEntryLinkList extends Component {
 	 */
 	_handleDragEnd() {
 		this.store.dispatch(
-			CLEAR_DROP_TARGET
+			{
+				type: CLEAR_DROP_TARGET
+			}
 		);
 	}
 

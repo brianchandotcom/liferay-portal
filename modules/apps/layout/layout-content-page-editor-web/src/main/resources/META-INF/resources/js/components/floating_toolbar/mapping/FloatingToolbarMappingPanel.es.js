@@ -172,8 +172,13 @@ class FloatingToolbarMappingPanel extends PortletBase {
 					this._selectAssetEntry(selectedAssetEntry);
 
 					this.store.dispatch(
-						ADD_MAPPED_ASSET_ENTRY,
-						selectedAssetEntry
+						Object.assign(
+							{},
+							selectedAssetEntry,
+							{
+								type: ADD_MAPPED_ASSET_ENTRY
+							}
+						)
 					);
 
 					requestAnimationFrame(
@@ -321,30 +326,30 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_updateEditableValues(key, value) {
 		this.store
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: true
+					savingChanges: true,
+					type: UPDATE_SAVING_CHANGES_STATUS
 				}
 			)
 			.dispatch(
-				UPDATE_EDITABLE_VALUE,
 				{
 					editableId: this.item.editableId,
 					editableValue: value,
 					editableValueId: key,
-					fragmentEntryLinkId: this.item.fragmentEntryLinkId
+					fragmentEntryLinkId: this.item.fragmentEntryLinkId,
+					type: UPDATE_EDITABLE_VALUE
 				}
 			)
 			.dispatch(
-				UPDATE_LAST_SAVE_DATE,
 				{
-					lastSaveDate: new Date()
+					lastSaveDate: new Date(),
+					type: UPDATE_LAST_SAVE_DATE
 				}
 			)
 			.dispatch(
-				UPDATE_SAVING_CHANGES_STATUS,
 				{
-					savingChanges: false
+					savingChanges: false,
+					UPDATE_SAVING_CHANGES_STATUS
 				}
 			);
 	}

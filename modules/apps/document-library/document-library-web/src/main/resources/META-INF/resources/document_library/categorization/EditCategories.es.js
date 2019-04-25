@@ -17,6 +17,8 @@ class EditCategories extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
+		this._assetVocabularyCategories = new Map();
+
 		this._bulkStatusComponent =	Liferay.component(this.namespace + 'BulkStatus');
 	}
 
@@ -173,16 +175,11 @@ class EditCategories extends Component {
 	 */
 	_getFinalCategories() {
 		let finalCategories = [];
-		let inputElementName = this.namespace + this.hiddenInput;
 
-		this.vocabularies.forEach(
-			vocabulary => {
-				let inputNode = document.getElementById(inputElementName + vocabulary.id);
-
-				if (inputNode.value) {
-					let categoryIds = inputNode.value.split(',').map(Number);
-					finalCategories = finalCategories.concat(categoryIds);
-				}
+		this._assetVocabularyCategories.forEach(
+			category => {
+				const categoryIds = category.map(item => item.value);
+				finalCategories = finalCategories.concat(categoryIds);
 			}
 		);
 
@@ -240,6 +237,10 @@ class EditCategories extends Component {
 	 */
 	_handleRadioChange(event) {
 		this.append = event.target.value === 'add';
+	}
+
+	_handleSelectedItemsChange(event) {
+		this._assetVocabularyCategories.set(event.vocabularyId, event.selectedItems);
 	}
 
 	/**

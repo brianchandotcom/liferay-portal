@@ -738,7 +738,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private static final Pattern _cssMediaQueryPattern = Pattern.compile(
 		"(@media[^{]+)\\{([\\s\\S]+?\\})\\s*\\}");
 	private static final Pattern _cssPropertyPattern = Pattern.compile(
-		"([^:]+)\\s*:([^;]+);");
+		"([^:]+)\\s*:\\s*((url\\([^\\)]+\\))|([^;]+));");
 	private static final Pattern _cssSelectorPattern = Pattern.compile(
 		"([^\\{]+)\\s*\\{([^\\}]+)\\}");
 

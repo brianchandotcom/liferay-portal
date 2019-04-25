@@ -132,7 +132,7 @@ definition {
 		else if ("${item}" == "URL") {
 			NavigationMenusAdmin._editItemURL(
 				name = "${name}",
-				url = "${url");
+				url = "${url}");
 		}
 
 		PortletEntry.save();

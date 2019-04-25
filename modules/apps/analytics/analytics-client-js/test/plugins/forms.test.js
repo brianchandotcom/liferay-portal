@@ -44,7 +44,7 @@ describe('Forms Plugin', () => {
 
 			expect(events.length).to.equal(2);
 
-			events[1].should.deep.include({
+			expect(events[1]).to.deep.include({
 				applicationId,
 				eventId: 'formViewed'
 			});
@@ -80,7 +80,7 @@ describe('Forms Plugin', () => {
 
 			expect(events.length).to.equal(1);
 
-			events[0].should.deep.include({
+			expect(events[0]).to.deep.include({
 				applicationId,
 				eventId: 'formSubmitted',
 				properties: {
@@ -110,7 +110,7 @@ describe('Forms Plugin', () => {
 
 			expect(events.length).to.equal(1);
 
-			events[0].should.deep.include({
+			expect(events[0]).to.deep.include({
 				applicationId,
 				eventId: 'fieldFocused',
 				properties: {

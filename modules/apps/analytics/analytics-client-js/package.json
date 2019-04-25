@@ -58,7 +58,7 @@
 		"build": "rimraf build/ && webpack",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
-		"test_DISABLED": "karma start karma.conf.js"
+		"test": "karma start karma.conf.js"
 	},
 	"version": "1.0.0"
 }

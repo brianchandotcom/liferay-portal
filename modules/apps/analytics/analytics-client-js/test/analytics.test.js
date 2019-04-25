@@ -309,7 +309,7 @@ describe('Analytics Client', () => {
 
 			const events = JSON.parse(localStorage.getItem(STORAGE_KEY_EVENTS));
 
-			events.should.have.lengthOf.at.least(eventsNumber);
+			expect(events).to.have.lengthOf.at.least(eventsNumber);
 		});
 	});
 });

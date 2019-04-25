@@ -68,7 +68,7 @@ class Layout extends Component {
 				plugins.push(
 					{
 						cfg: {
-							rowSelector: '.layout-column'
+							rowSelector: '.layout-item'
 						},
 						fn: A.Plugin.SearchContainerSelect
 					}

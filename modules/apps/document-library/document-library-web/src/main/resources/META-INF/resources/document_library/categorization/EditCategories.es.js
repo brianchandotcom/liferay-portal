@@ -254,48 +254,51 @@ class EditCategories extends Component {
 	_handleFormSubmit(event) {
 		event.preventDefault();
 
-	setTimeout(() => {
-		if (!this._validateRequiredVocabularies() || this._checkErrors()) {
-			return;
-		}
-
-		let finalCategories = this._getFinalCategories();
-
-		let addedCategories = [];
-
-		if (!this.append) {
-			addedCategories = finalCategories;
-		}
-		else {
-			addedCategories = finalCategories.filter(
-				categoryId => this.initialCategories.indexOf(categoryId) == -1
-			);
-		}
-
-		let removedCategories = this.initialCategories.filter(
-			category => finalCategories.indexOf(category) == -1
-		);
-
-		let instance = this;
-
-		this._fetchCategoriesRequest(
-			this.urlUpdateCategories,
-			this.append ? 'PATCH' : 'PUT',
-			{
-				documentBulkSelection: this._getSelection(),
-				taxonomyCategoryIdsToAdd: addedCategories,
-				taxonomyCategoryIdsToRemove: removedCategories
-			}
-		).then(
-			response => {
-				instance.close();
-
-				if (instance._bulkStatusComponent) {
-					instance._bulkStatusComponent.startWatch();
+		setTimeout(
+			() => {
+				if (!this._validateRequiredVocabularies() || this._checkErrors()) {
+					return;
 				}
-			}
+
+				let finalCategories = this._getFinalCategories();
+
+				let addedCategories = [];
+
+				if (!this.append) {
+					addedCategories = finalCategories;
+				}
+				else {
+					addedCategories = finalCategories.filter(
+						categoryId => this.initialCategories.indexOf(categoryId) == -1
+					);
+				}
+
+				let removedCategories = this.initialCategories.filter(
+					category => finalCategories.indexOf(category) == -1
+				);
+
+				let instance = this;
+
+				this._fetchCategoriesRequest(
+					this.urlUpdateCategories,
+					this.append ? 'PATCH' : 'PUT',
+					{
+						documentBulkSelection: this._getSelection(),
+						taxonomyCategoryIdsToAdd: addedCategories,
+						taxonomyCategoryIdsToRemove: removedCategories
+					}
+				).then(
+					response => {
+						instance.close();
+
+						if (instance._bulkStatusComponent) {
+							instance._bulkStatusComponent.startWatch();
+						}
+					}
+				);
+			},
+			250
 		);
-	}, 250);
 	}
 
 	_parseVocabularies(vocabularies) {

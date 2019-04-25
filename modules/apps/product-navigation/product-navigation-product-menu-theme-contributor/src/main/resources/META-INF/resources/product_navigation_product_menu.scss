@@ -73,6 +73,8 @@ body {
 		}
 
 		&:focus {
+			background-color: #1B2228;
+			box-shadow: none;
 			color: #FFF;
 
 			@include placeholder {

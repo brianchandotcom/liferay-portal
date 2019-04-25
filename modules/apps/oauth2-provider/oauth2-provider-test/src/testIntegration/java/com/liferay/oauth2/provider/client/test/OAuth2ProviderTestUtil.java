@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.test.util;
+package com.liferay.oauth2.provider.client.test;
 
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;

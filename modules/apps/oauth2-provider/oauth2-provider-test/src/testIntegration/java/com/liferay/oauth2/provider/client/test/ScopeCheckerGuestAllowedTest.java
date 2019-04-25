@@ -19,7 +19,6 @@ import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.test.internal.TestApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
-import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;

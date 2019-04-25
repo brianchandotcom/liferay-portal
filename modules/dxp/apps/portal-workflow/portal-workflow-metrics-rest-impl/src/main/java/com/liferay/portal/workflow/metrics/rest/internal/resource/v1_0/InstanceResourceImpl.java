@@ -392,11 +392,11 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			return;
 		}
 
-		if (_isOnTime(bucket)) {
-			instance.setStatus(Status.ON_TIME);
-		}
-		else if (_isOverdue(bucket)) {
+		if (_isOverdue(bucket)) {
 			instance.setStatus(Status.OVERDUE);
+		}
+		else if (_isOnTime(bucket)) {
+			instance.setStatus(Status.ON_TIME);
 		}
 		else {
 			instance.setStatus(Status.UNTRACKED);

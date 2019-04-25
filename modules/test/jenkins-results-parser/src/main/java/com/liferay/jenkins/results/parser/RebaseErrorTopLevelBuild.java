@@ -64,12 +64,12 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 				return result;
 			}
 
-			for (int i = 0; i < 30; i++) {
-				String buildURL = JenkinsResultsParserUtil.getLocalURL(
-					getBuildURL());
+			String localBuildURL = JenkinsResultsParserUtil.getLocalURL(
+				getBuildURL());
 
+			for (int i = 0; i < 30; i++) {
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					buildURL + "/api/json?tree=duration", false);
+					localBuildURL + "/api/json?tree=duration", false);
 
 				int duration = jsonObject.getInt("duration");
 
@@ -99,11 +99,8 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 					return result;
 				}
 
-				String buildURL = JenkinsResultsParserUtil.getLocalURL(
-					getBuildURL());
-
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					buildURL + "/injectedEnvVars/api/json", false);
+					localBuildURL + "/injectedEnvVars/api/json", false);
 
 				JSONObject envMapJSONObject = jsonObject.getJSONObject(
 					"envMap");

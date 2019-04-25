@@ -16,14 +16,7 @@ package com.liferay.fragment.entry.processor.editable.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
@@ -33,7 +26,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -208,52 +200,6 @@ public class FragmentEntryProcessorEditableTest {
 			assetEntry.getEntryId());
 
 		Assert.assertEquals(0, count);
-	}
-
-	@Test
-	public void testFragmentEntryProcessorEditableMappedDDMTemplate()
-		throws Exception {
-
-		FragmentEntry fragmentEntry = _addFragmentEntry("fragment_entry.html");
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				fragmentEntry.getFragmentEntryId(),
-				_portal.getClassNameId(Layout.class), TestPropsValues.getPlid(),
-				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), StringPool.BLANK, 0,
-				ServiceContextTestUtil.getServiceContext());
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName());
-
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), ddmStructure.getStructureId(),
-			_portal.getClassNameId(JournalArticle.class));
-
-		String editableValues = _getJsonFileAsString(
-			"fragment_entry_link_mapped_ddm.json");
-
-		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-			fragmentEntryLink.getFragmentEntryLinkId(),
-			StringUtil.replace(
-				editableValues, "TEMPLATE_KEY", ddmTemplate.getTemplateKey()));
-
-		DDMTemplateLink ddmTemplateLink =
-			_ddmTemplateLinkLocalService.getTemplateLink(
-				_portal.getClassNameId(FragmentEntryLink.class),
-				fragmentEntryLink.getFragmentEntryLinkId());
-
-		Assert.assertNotNull(ddmTemplateLink);
-
-		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
-			fragmentEntryLink);
-
-		ddmTemplateLink = _ddmTemplateLinkLocalService.fetchDDMTemplateLink(
-			ddmTemplateLink.getTemplateLinkId());
-
-		Assert.assertNull(ddmTemplateLink);
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -492,13 +438,7 @@ public class FragmentEntryProcessorEditableTest {
 	}
 
 	@Inject
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Inject
 	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
-
-	@Inject
-	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;

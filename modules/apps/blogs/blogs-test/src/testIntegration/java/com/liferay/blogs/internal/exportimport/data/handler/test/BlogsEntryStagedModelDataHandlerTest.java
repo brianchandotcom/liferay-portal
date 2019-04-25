@@ -314,14 +314,11 @@ public class BlogsEntryStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return BlogsEntryLocalServiceUtil.getBlogsEntryByUuidAndGroupId(
-				uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws PortalException {
+
+		return BlogsEntryLocalServiceUtil.getBlogsEntryByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public interface AMImageConfiguration {
 	 * Sets the supported mime types that generate adaptive media images.
 	 */
 	@Meta.AD(
-		deflt = "image/bmp|image/gif|image/jpeg|image/pjpeg|image/png|image/tiff|image/x-citrix-jpeg|image/x-citrix-png|image/x-ms-bmp|image/x-png|image/x-tiff",
+		deflt = "image/bmp|image/gif|image/jpeg|image/pjpeg|image/png|image/x-citrix-jpeg|image/x-citrix-png|image/x-ms-bmp|image/x-png",
 		description = "supported-mime-types-key-description",
 		name = "supported-mime-type", required = false
 	)

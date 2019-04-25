@@ -84,13 +84,9 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.addPageTemplate(
+		PageTemplatesAdmin.addDuplicatePageTemplate(
 			pageTemplateName = "Test",
 			siteTemplate = "true");
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR_MODAL_CONTENT",
-			value1 = "A page template entry with that name already exists.");
 	}
 
 	@priority = "4"

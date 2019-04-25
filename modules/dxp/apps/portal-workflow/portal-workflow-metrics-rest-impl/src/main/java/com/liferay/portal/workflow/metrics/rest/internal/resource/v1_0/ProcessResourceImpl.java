@@ -24,7 +24,6 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
-import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
@@ -47,6 +46,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.ProcessEntityModel;
+import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
@@ -161,24 +161,6 @@ public class ProcessResourceImpl
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("completed", false), _queries.term("deleted", false),
 			_createProcessIdTermsQuery(processIds));
-	}
-
-	private BooleanQuery _createOnTimeBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
-
-		return booleanQuery.addMustQueryClauses(_queries.term("onTime", true));
-	}
-
-	private BooleanQuery _createOverdueBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
-
-		return booleanQuery.addMustQueryClauses(_queries.term("onTime", false));
 	}
 
 	private Process _createProcess(Document document) {
@@ -384,18 +366,20 @@ public class ProcessResourceImpl
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"processId", "processId");
 
-		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime", _createOnTimeBooleanQuery());
-
 		CardinalityAggregation cardinalityAggregation =
 			_aggregations.cardinality("instanceCount", "instanceId");
 
-		onTimeFilterAggregation.addChildAggregation(cardinalityAggregation);
+		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
+			"onTime", _resourceHelper.createMustNotBooleanQuery());
+
+		onTimeFilterAggregation.addChildAggregation(
+			_resourceHelper.createOnTimeScriptedMetricAggregation());
 
 		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue", _createOverdueBooleanQuery());
+			"overdue", _resourceHelper.createMustNotBooleanQuery());
 
-		overdueFilterAggregation.addChildAggregation(cardinalityAggregation);
+		overdueFilterAggregation.addChildAggregation(
+			_resourceHelper.createOverdueScriptedMetricAggregation());
 
 		termsAggregation.addChildrenAggregations(
 			cardinalityAggregation, onTimeFilterAggregation,
@@ -406,7 +390,8 @@ public class ProcessResourceImpl
 			!_isOrderByTitle(fieldSort.getField())) {
 
 			termsAggregation.addPipelineAggregation(
-				_createBucketSortPipelineAggregation(fieldSort, pagination));
+				_resourceHelper.createBucketSortPipelineAggregation(
+					fieldSort, pagination));
 		}
 
 		termsAggregation.setSize(processIds.size());
@@ -472,15 +457,8 @@ public class ProcessResourceImpl
 			return;
 		}
 
-		FilterAggregationResult filterAggregationResult =
-			(FilterAggregationResult)bucket.getChildAggregationResult("onTime");
-
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)
-				filterAggregationResult.getChildAggregationResult(
-					"instanceCount");
-
-		process.setOnTimeInstanceCount(cardinalityAggregationResult.getValue());
+		process.setOnTimeInstanceCount(
+			_resourceHelper.getOnTimeInstanceCount(bucket));
 	}
 
 	private void _setOverdueInstanceCount(Bucket bucket, Process process) {
@@ -488,17 +466,8 @@ public class ProcessResourceImpl
 			return;
 		}
 
-		FilterAggregationResult filterAggregationResult =
-			(FilterAggregationResult)bucket.getChildAggregationResult(
-				"overdue");
-
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)
-				filterAggregationResult.getChildAggregationResult(
-					"instanceCount");
-
 		process.setOverdueInstanceCount(
-			cardinalityAggregationResult.getValue());
+			_resourceHelper.getOverdueInstanceCount(bucket));
 	}
 
 	private void _setUntrackedInstanceCount(Process process) {
@@ -531,9 +500,9 @@ public class ProcessResourceImpl
 			fieldName = StringUtil.extractFirst(fieldName, "InstanceCount");
 
 			fieldName = fieldName.concat(
-				StringPool.PERIOD
+				StringPool.GREATER_THAN
 			).concat(
-				"instanceCount"
+				"instanceCount.value"
 			);
 		}
 		else if (_isOrderByTitle(fieldName)) {
@@ -555,6 +524,9 @@ public class ProcessResourceImpl
 
 	@Reference
 	private Queries _queries;
+
+	@Reference
+	private ResourceHelper _resourceHelper;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

@@ -25,11 +25,8 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
-import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
-import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -44,8 +41,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.Status;
+import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
-import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.text.DateFormat;
 
@@ -142,24 +139,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("processId", processId));
 	}
 
-	private BooleanQuery _createOnTimeBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
-
-		return booleanQuery.addMustQueryClauses(_queries.term("onTime", true));
-	}
-
-	private BooleanQuery _createOverdueBooleanQuery() {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
-
-		return booleanQuery.addMustQueryClauses(_queries.term("onTime", false));
-	}
-
 	private BooleanQuery _createSLAProcessResultsBooleanQuery(
 		Set<Long> instanceIds, long processId) {
 
@@ -248,21 +227,19 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			"instanceId", "instanceId");
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime", _createOnTimeBooleanQuery());
+			"onTime", _resourceHelper.createMustNotBooleanQuery());
 
-		CardinalityAggregation cardinalityAggregation =
-			_aggregations.cardinality("slaCount", "slaDefinitionId");
-
-		onTimeFilterAggregation.addChildAggregation(cardinalityAggregation);
+		onTimeFilterAggregation.addChildAggregation(
+			_resourceHelper.createOnTimeScriptedMetricAggregation());
 
 		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue", _createOverdueBooleanQuery());
+			"overdue", _resourceHelper.createMustNotBooleanQuery());
 
-		overdueFilterAggregation.addChildAggregation(cardinalityAggregation);
+		overdueFilterAggregation.addChildAggregation(
+			_resourceHelper.createOverdueScriptedMetricAggregation());
 
 		termsAggregation.addChildrenAggregations(
-			cardinalityAggregation, onTimeFilterAggregation,
-			overdueFilterAggregation);
+			onTimeFilterAggregation, overdueFilterAggregation);
 
 		termsAggregation.setSize(instanceIds.size());
 
@@ -353,16 +330,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private boolean _isOnTime(Bucket bucket) {
-		FilterAggregationResult filterAggregationResult =
-			(FilterAggregationResult)bucket.getChildAggregationResult("onTime");
-
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)
-				filterAggregationResult.getChildAggregationResult("slaCount");
-
-		if ((cardinalityAggregationResult != null) &&
-			(cardinalityAggregationResult.getValue() > 0)) {
-
+		if (_resourceHelper.getOnTimeInstanceCount(bucket) > 0) {
 			return true;
 		}
 
@@ -370,17 +338,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private boolean _isOverdue(Bucket bucket) {
-		FilterAggregationResult filterAggregationResult =
-			(FilterAggregationResult)bucket.getChildAggregationResult(
-				"overdue");
-
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)
-				filterAggregationResult.getChildAggregationResult("slaCount");
-
-		if ((cardinalityAggregationResult != null) &&
-			(cardinalityAggregationResult.getValue() > 0)) {
-
+		if (_resourceHelper.getOverdueInstanceCount(bucket) > 0) {
 			return true;
 		}
 
@@ -424,6 +382,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Reference
 	private Queries _queries;
+
+	@Reference
+	private ResourceHelper _resourceHelper;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

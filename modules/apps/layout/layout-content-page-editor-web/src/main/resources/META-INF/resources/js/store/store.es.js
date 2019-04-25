@@ -109,6 +109,9 @@ class Store extends State {
 	constructor(initialState = {}, reducers = []) {
 		super();
 
+		this.dispatch = this.dispatch.bind(this);
+		this.getState = this.getState.bind(this);
+
 		this._setInitialState(initialState);
 		this.registerReducers(reducers);
 
@@ -132,47 +135,53 @@ class Store extends State {
 	 * Dispatch an action to the store. Each action is identified by a given
 	 * actionType, and can contain an optional payload with any kind of
 	 * information.
-	 * @param {object} action
-	 * @param {string} action.type
+	 * @param {{type: string}|((dispatch: function, getState: function) => Promise|void)} action
 	 * @return {Store}
 	 * @review
 	 */
 	dispatch(action) {
-		this._dispatchPromise = this._dispatchPromise.then(
-			() => this._reducers.reduce(
-				(promiseNextState, reducer) => promiseNextState.then(
-					nextState => Promise.resolve(
-						reducer(nextState, action)
-					)
-				),
-				Promise.resolve(this._state)
-			).then(
-				nextState => {
-					if (this._state !== nextState) {
-						this._state = this._getFrozenState(nextState);
+		if (typeof action === 'function') {
+			this._dispatchPromise = this._dispatchPromise.then(
+				() => Promise.resolve(action(this.dispatch, this.getState))
+			);
+		}
+		else {
+			this._dispatchPromise = this._dispatchPromise.then(
+				() => this._reducers.reduce(
+					(promiseNextState, reducer) => promiseNextState.then(
+						nextState => Promise.resolve(
+							reducer(nextState, action)
+						)
+					),
+					Promise.resolve(this._state)
+				).then(
+					nextState => {
+						if (this._state !== nextState) {
+							this._state = this._getFrozenState(nextState);
 
-						this.emit('change', this._state);
+							this.emit('change', this._state);
 
-						if ((process.env.NODE_ENV === 'development') && this._devTools) {
-							this._devTools.send(
-								action,
-								this._state
-							);
+							if ((process.env.NODE_ENV === 'development') && this._devTools) {
+								this._devTools.send(
+									action,
+									this._state
+								);
+							}
 						}
+
+						return new Promise(
+							resolve => {
+								requestAnimationFrame(
+									() => {
+										resolve(this);
+									}
+								);
+							}
+						);
 					}
-
-					return new Promise(
-						resolve => {
-							requestAnimationFrame(
-								() => {
-									resolve(this);
-								}
-							);
-						}
-					);
-				}
-			)
-		);
+				)
+			);
+		}
 
 		return this;
 	}

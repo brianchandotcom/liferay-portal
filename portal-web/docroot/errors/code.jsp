@@ -169,8 +169,7 @@ private static String _getDynamicIncludeKey(String accept) {
 
 				return 1;
 			}
-		).reversed(
-		).thenComparing(
+		).reversed().thenComparing(
 			mediaRange -> {
 				int pos = mediaRange.indexOf(CharPool.SEMICOLON);
 				if (pos > 0) {

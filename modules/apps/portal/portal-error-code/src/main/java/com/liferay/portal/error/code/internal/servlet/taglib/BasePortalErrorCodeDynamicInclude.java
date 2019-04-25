@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.error.code.dynamic.include.impl;
+package com.liferay.portal.error.code.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

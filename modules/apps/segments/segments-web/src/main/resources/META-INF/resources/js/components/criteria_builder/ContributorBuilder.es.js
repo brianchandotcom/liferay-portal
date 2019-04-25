@@ -242,13 +242,12 @@ class ContributorBuilder extends React.Component {
 										}
 									).map(
 										(criteria, i) => {
-											const editingCriteria = editing && editingId === criteria.propertyKey;
 											return (
 												<React.Fragment key={i}>
 													{(i !== 0) &&
 													<React.Fragment>
 														<Conjunction
-															className="ml-0"
+															className="mb-4 ml-0 mt-4"
 															conjunctionName={criteria.conjunctionId}
 															editing={editing}
 															onClick={this._handleRootConjunctionClick}
@@ -260,11 +259,8 @@ class ContributorBuilder extends React.Component {
 													<CriteriaBuilder
 														criteria={criteria.criteriaMap}
 														editing={editing}
-														editingCriteria={editingCriteria}
-														editingId={editingId}
 														emptyContributors={emptyContributors}
 														entityName={criteria.entityName}
-														id={criteria.propertyKey}
 														modelLabel={criteria.modelLabel}
 														onChange={this._handleCriteriaChange}
 														propertyKey={criteria.propertyKey}

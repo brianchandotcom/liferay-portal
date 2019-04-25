@@ -5,7 +5,8 @@ import React, {Component} from 'react';
 import {
 	insertAtIndex,
 	removeAtIndex,
-	replaceAtIndex
+	replaceAtIndex,
+	sub
 } from '../../utils/utils.es';
 
 const CRITERIA_GROUP_SHAPE = {
@@ -44,7 +45,6 @@ class CriteriaBuilder extends Component {
 			}
 		),
 		editing: PropTypes.bool.isRequired,
-		editingCriteria: PropTypes.bool.isRequired,
 		emptyContributors: PropTypes.bool.isRequired,
 
 		/**
@@ -55,7 +55,6 @@ class CriteriaBuilder extends Component {
 		 * @type {?(string|undefined)}
 		 */
 		entityName: PropTypes.string.isRequired,
-		id: PropTypes.string.isRequired,
 
 		/**
 		 * Name displayed to label a contributor and its' properties.
@@ -146,7 +145,7 @@ class CriteriaBuilder extends Component {
 	_handleCriteriaChange = newCriteria => {
 		const items = this._cleanCriteriaMapItems([newCriteria], true);
 
-		this.props.onChange(items[items.length - 1], this.props.id);
+		this.props.onChange(items[items.length - 1], this.props.propertyKey);
 	}
 
 	/**
@@ -255,8 +254,6 @@ class CriteriaBuilder extends Component {
 		const {
 			criteria,
 			editing,
-			editingCriteria,
-			editingId,
 			emptyContributors,
 			entityName,
 			modelLabel,
@@ -268,18 +265,26 @@ class CriteriaBuilder extends Component {
 		} = this.props;
 
 		const criteriaBuilderClassNames = getCN(
-			'criteria-builder-root',
-			{
-				'read-only-container-root': !editingCriteria && editing && editingId != undefined
-			}
+			'criteria-builder-root'
 		);
 
 		return (
 			<div className={criteriaBuilderClassNames}>
+				<h4 className="sheet-subtitle">
+					{sub(
+						Liferay.Language.get('x-with-property-x'),
+						[
+							modelLabel,
+							''
+						],
+						false
+					)}
+				</h4>
+
 				{(!emptyContributors || editing) &&
 					<CriteriaGroup
 						criteria={criteria}
-						editing={editingCriteria}
+						editing={editing}
 						emptyContributors={emptyContributors}
 						entityName={entityName}
 						groupId={criteria && criteria.groupId}

@@ -22,7 +22,6 @@ const altProps = {
 			propertyKey: 'user-organization'
 		}
 	],
-	editing: false,
 	initialMembersCount: 0,
 	initialSegmentActive: false,
 	initialSegmentName: '',
@@ -231,7 +230,8 @@ const altProps = {
 			propertyKey: 'user-organization'
 		}
 	],
-	redirect: 'http://localhost:8080/group/guest/~/control_panel/manage/-/segments/entries?p_p_auth=1EwOzg1e'
+	redirect: 'http://localhost:8080/group/guest/~/control_panel/manage/-/segments/entries?p_p_auth=1EwOzg1e',
+	showInEditMode: false
 };
 
 const context = {

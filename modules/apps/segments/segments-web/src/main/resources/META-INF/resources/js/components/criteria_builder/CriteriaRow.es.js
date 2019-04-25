@@ -16,8 +16,7 @@ import {
 	createNewGroup,
 	dateToInternationalHuman,
 	getSupportedOperatorsFromType,
-	objectToFormData,
-	sub
+	objectToFormData
 } from '../../utils/utils.es';
 import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import {DragTypes} from '../../utils/drag-types.es';
@@ -218,7 +217,6 @@ class CriteriaRow extends Component {
 	}
 
 	_getReadableCriteriaString = (
-		modelLabel,
 		propertyLabel,
 		operatorLabel,
 		value,
@@ -228,23 +226,18 @@ class CriteriaRow extends Component {
 			dateToInternationalHuman(value) :
 			value;
 
-		return sub(
-			Liferay.Language.get('x-with-property-x-x-x'),
-			[
-				<span key="model-name">
-					{modelLabel}
-				</span>,
-				<b key="property">
+		return (
+			<span>
+				<b className="mr-1">
 					{propertyLabel}
-				</b>,
-				<span className="operator" key="operator">
+				</b>
+				<span className="operator mr-1">
 					{operatorLabel}
-				</span>,
-				<b key="value">
+				</span>
+				<b>
 					{parsedValue}
 				</b>
-			],
-			false
+			</span>
 		);
 	}
 
@@ -362,7 +355,6 @@ class CriteriaRow extends Component {
 			dragging,
 			editing,
 			hover,
-			modelLabel,
 			supportedOperators,
 			supportedProperties,
 			supportedPropertyTypes
@@ -413,18 +405,9 @@ class CriteriaRow extends Component {
 							)}
 
 							<span className="criterion-string">
-								{sub(
-									Liferay.Language.get('x-with-property-x'),
-									[
-										<span key="model-name">
-											{modelLabel}
-										</span>,
-										<b key="property">
-											{propertyLabel}
-										</b>
-									],
-									false
-								)}
+								<b key="property">
+									{propertyLabel}
+								</b>
 							</span>
 
 							<ClaySelect
@@ -458,17 +441,14 @@ class CriteriaRow extends Component {
 							/>
 						</div>
 					) : (
-						<div className="read-only-container">
-							<span className="criterion-string">
-								{this._getReadableCriteriaString(
-									modelLabel,
-									propertyLabel,
-									operatorLabel,
-									criterion.displayValue || value,
-									selectedProperty.type
-								)}
-							</span>
-						</div>
+						<span className="criterion-string">
+							{this._getReadableCriteriaString(
+								propertyLabel,
+								operatorLabel,
+								criterion.displayValue || value,
+								selectedProperty.type
+							)}
+						</span>
 					)}
 				</div>
 			)

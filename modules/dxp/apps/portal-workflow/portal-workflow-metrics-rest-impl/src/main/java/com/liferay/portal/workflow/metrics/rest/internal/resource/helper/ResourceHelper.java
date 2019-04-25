@@ -44,6 +44,19 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ResourceHelper.class)
 public class ResourceHelper {
 
+	public BucketSortPipelineAggregation createBucketSortPipelineAggregation(
+		FieldSort fieldSort, Pagination pagination) {
+
+		BucketSortPipelineAggregation bucketSortPipelineAggregation =
+			_aggregations.bucketSort("sort");
+
+		bucketSortPipelineAggregation.addSortFields(fieldSort);
+		bucketSortPipelineAggregation.setFrom(pagination.getStartPosition());
+		bucketSortPipelineAggregation.setSize(pagination.getPageSize() + 1);
+
+		return bucketSortPipelineAggregation;
+	}
+
 	public BooleanQuery createMustNotBooleanQuery() {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 

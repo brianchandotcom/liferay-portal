@@ -28,7 +28,6 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
-import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -141,19 +140,6 @@ public class ProcessResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	private BucketSortPipelineAggregation _createBucketSortPipelineAggregation(
-		FieldSort fieldSort, Pagination pagination) {
-
-		BucketSortPipelineAggregation bucketSortPipelineAggregation =
-			_aggregations.bucketSort("sort");
-
-		bucketSortPipelineAggregation.addSortFields(fieldSort);
-		bucketSortPipelineAggregation.setFrom(pagination.getStartPosition());
-		bucketSortPipelineAggregation.setSize(pagination.getPageSize() + 1);
-
-		return bucketSortPipelineAggregation;
-	}
-
 	private BooleanQuery _createInstanceBooleanQuery(Set<Long> processIds) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -237,7 +223,8 @@ public class ProcessResourceImpl
 			_isOrderByInstanceCount(fieldSort.getField())) {
 
 			termsAggregation.addPipelineAggregation(
-				_createBucketSortPipelineAggregation(fieldSort, pagination));
+				_resourceHelper.createBucketSortPipelineAggregation(
+					fieldSort, pagination));
 		}
 
 		termsAggregation.setSize(processIds.size());

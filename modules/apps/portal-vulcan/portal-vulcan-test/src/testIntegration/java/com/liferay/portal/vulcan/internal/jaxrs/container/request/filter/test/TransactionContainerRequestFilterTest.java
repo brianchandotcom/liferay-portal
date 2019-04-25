@@ -24,9 +24,14 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
+import java.io.IOException;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,12 +92,7 @@ public class TransactionContainerRequestFilterTest {
 			"http://localhost:8080/o/test-vulcan/failure/" +
 				group.getGroupId());
 
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		httpURLConnection.setRequestMethod("DELETE");
-
-		Assert.assertEquals(500, httpURLConnection.getResponseCode());
+		Assert.assertEquals(500, _getHttpResponseCode(url));
 
 		Assert.assertNotNull(
 			GroupLocalServiceUtil.getGroup(group.getGroupId()));
@@ -106,13 +106,7 @@ public class TransactionContainerRequestFilterTest {
 			"http://localhost:8080/o/test-vulcan/success/" +
 				group.getGroupId());
 
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		httpURLConnection.setDoOutput(true);
-		httpURLConnection.setRequestMethod("DELETE");
-
-		Assert.assertEquals(204, httpURLConnection.getResponseCode());
+		Assert.assertEquals(204, _getHttpResponseCode(url));
 
 		Assert.assertNull(GroupLocalServiceUtil.getGroup(group.getGroupId()));
 	}
@@ -142,6 +136,22 @@ public class TransactionContainerRequestFilterTest {
 			GroupLocalServiceUtil.deleteGroup(siteId);
 		}
 
+	}
+
+	private int _getHttpResponseCode(URL url) throws IOException {
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
+
+		Base64.Encoder encoder = Base64.getEncoder();
+
+		String basicAuth = encoder.encodeToString(
+			"test@liferay.com:test".getBytes(StandardCharsets.UTF_8));
+
+		httpURLConnection.setRequestMethod("DELETE");
+		httpURLConnection.setRequestProperty(
+			"Authorization", "Basic " + basicAuth);
+
+		return httpURLConnection.getResponseCode();
 	}
 
 	private ServiceRegistration<Application> _serviceRegistration;

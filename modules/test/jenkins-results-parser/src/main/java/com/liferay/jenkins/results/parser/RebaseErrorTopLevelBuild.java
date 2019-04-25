@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -164,30 +163,6 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 			"dependencies/RebaseErrorTopLevelBuildTemplate.html");
 
 		return getCommentTokens(getRootElement(resource));
-	}
-
-	protected Map<String, String> getInjectedEnvironmentVariablesMap(
-			String localBuildURL)
-		throws IOException {
-
-		Map<String, String> injectedEnvironmentVariablesMap;
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			localBuildURL + "/injectedEnvVars/api/json", false);
-
-		JSONObject envMapJSONObject = jsonObject.getJSONObject("envMap");
-
-		Set<String> envMapJSONObjectKeySet = envMapJSONObject.keySet();
-
-		injectedEnvironmentVariablesMap = new HashMap<>(
-			envMapJSONObjectKeySet.size());
-
-		for (String key : envMapJSONObjectKeySet) {
-			injectedEnvironmentVariablesMap.put(
-				key, envMapJSONObject.getString(key));
-		}
-
-		return injectedEnvironmentVariablesMap;
 	}
 
 	protected Element getRootElement(String content) {

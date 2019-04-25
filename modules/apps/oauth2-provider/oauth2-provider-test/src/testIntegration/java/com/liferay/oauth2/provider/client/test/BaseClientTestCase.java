@@ -48,8 +48,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
-import org.apache.cxf.jaxrs.provider.json.JSONProvider;
-
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -124,9 +122,7 @@ public abstract class BaseClientTestCase {
 	}
 
 	protected static Client getClient() {
-		Client client = ClientBuilder.newClient();
-
-		return client.register(JSONProvider.class);
+		return ClientBuilder.newClient();
 	}
 
 	protected Invocation.Builder authorize(

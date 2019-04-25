@@ -16,6 +16,7 @@ package com.liferay.users.admin.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
@@ -162,14 +163,11 @@ public class OrganizationStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return OrganizationLocalServiceUtil.
-				fetchOrganizationByUuidAndCompanyId(uuid, group.getCompanyId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws PortalException {
+
+		return OrganizationLocalServiceUtil.getOrganizationByUuidAndCompanyId(
+			uuid, group.getCompanyId());
 	}
 
 	@Override

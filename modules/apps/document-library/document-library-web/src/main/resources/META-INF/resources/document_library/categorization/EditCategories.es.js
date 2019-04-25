@@ -65,10 +65,10 @@ class EditCategories extends Component {
 		let valid = true;
 
 		if (inputNode.value) {
-			inputNode.parentElement.classList.remove('has-error');
+			inputNode.parentElement.parentElement.classList.remove('has-error');
 		}
 		else {
-			inputNode.parentElement.classList.add('has-error');
+			inputNode.parentElement.parentElement.classList.add('has-error');
 
 			let feedbackErrorNode = inputNode.parentElement.querySelector('.' + this._feedbackErrorClass);
 

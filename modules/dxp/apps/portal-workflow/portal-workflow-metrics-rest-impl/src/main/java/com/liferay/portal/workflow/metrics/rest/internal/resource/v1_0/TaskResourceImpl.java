@@ -148,7 +148,7 @@ public class TaskResourceImpl
 			TermsQuery termsQuery = _queries.terms("name");
 
 			termsQuery.addValues(
-				taskNames.toArray(new String[taskNames.size()]));
+				taskNames.toArray(new Object[taskNames.size()]));
 
 			booleanQuery.addShouldQueryClauses(termsQuery);
 		}
@@ -181,18 +181,35 @@ public class TaskResourceImpl
 			_queries.term("deleted", false), _queries.term("type", "TASK"));
 	}
 
+	private BooleanQuery _createOnTimeBooleanQuery() {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(
+			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
+
+		return booleanQuery.addMustQueryClauses(_queries.term("onTime", true));
+	}
+
+	private BooleanQuery _createOverdueBooleanQuery() {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(
+			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
+
+		return booleanQuery.addMustQueryClauses(_queries.term("onTime", false));
+	}
+
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
 		long processId, Set<String> taskNames) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
-			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
+			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
 
 		TermsQuery termsQuery = _queries.terms("taskName");
 
-		termsQuery.addValues(taskNames.toArray(new String[taskNames.size()]));
+		termsQuery.addValues(taskNames.toArray(new Object[taskNames.size()]));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
@@ -333,7 +350,7 @@ public class TaskResourceImpl
 			"taskName", "taskName");
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime", _queries.term("onTime", true));
+			"onTime", _createOnTimeBooleanQuery());
 
 		CardinalityAggregation cardinalityAggregation =
 			_aggregations.cardinality("instanceCount", "instanceId");
@@ -341,7 +358,7 @@ public class TaskResourceImpl
 		onTimeFilterAggregation.addChildAggregation(cardinalityAggregation);
 
 		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue", _queries.term("onTime", false));
+			"overdue", _createOverdueBooleanQuery());
 
 		overdueFilterAggregation.addChildAggregation(cardinalityAggregation);
 

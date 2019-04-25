@@ -148,8 +148,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		booleanQuery.addMustNotQueryClauses(
 			_queries.term("slaDefinitionId", "0"),
-			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
-			_queries.term("status", WorkfowMetricsSLAStatus.STOPPED));
+			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", companyId),

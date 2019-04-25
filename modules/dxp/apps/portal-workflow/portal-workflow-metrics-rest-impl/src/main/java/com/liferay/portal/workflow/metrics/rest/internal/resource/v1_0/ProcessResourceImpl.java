@@ -163,6 +163,24 @@ public class ProcessResourceImpl
 			_createProcessIdTermsQuery(processIds));
 	}
 
+	private BooleanQuery _createOnTimeBooleanQuery() {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(
+			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
+
+		return booleanQuery.addMustQueryClauses(_queries.term("onTime", true));
+	}
+
+	private BooleanQuery _createOverdueBooleanQuery() {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustNotQueryClauses(
+			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
+
+		return booleanQuery.addMustQueryClauses(_queries.term("onTime", false));
+	}
+
 	private Process _createProcess(Document document) {
 		return new Process() {
 			{
@@ -202,7 +220,7 @@ public class ProcessResourceImpl
 			stream.map(
 				String::valueOf
 			).toArray(
-				String[]::new
+				Object[]::new
 			));
 
 		return termsQuery;
@@ -214,8 +232,7 @@ public class ProcessResourceImpl
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
-			_queries.term("status", WorkfowMetricsSLAStatus.NEW));
+			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
@@ -368,7 +385,7 @@ public class ProcessResourceImpl
 			"processId", "processId");
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime", _queries.term("onTime", true));
+			"onTime", _createOnTimeBooleanQuery());
 
 		CardinalityAggregation cardinalityAggregation =
 			_aggregations.cardinality("instanceCount", "instanceId");
@@ -376,7 +393,7 @@ public class ProcessResourceImpl
 		onTimeFilterAggregation.addChildAggregation(cardinalityAggregation);
 
 		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue", _queries.term("onTime", false));
+			"overdue", _createOverdueBooleanQuery());
 
 		overdueFilterAggregation.addChildAggregation(cardinalityAggregation);
 

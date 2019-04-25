@@ -398,6 +398,8 @@ definition {
 
 		Pause(locator1 = "3000");
 
+		Alert.viewSuccessMessage();
+
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title 2");

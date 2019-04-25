@@ -64,10 +64,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 				return result;
 			}
 
-			String localBuildURL = JenkinsResultsParserUtil.getLocalURL(
-				getBuildURL());
-
-			waitForNonzeroDuration(localBuildURL);
+			waitForNonzeroDuration();
 
 			Map<String, String> buildEnvMap = new HashMap<>();
 			int retries = 0;
@@ -92,8 +89,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 					return result;
 				}
 
-				buildEnvMap.putAll(
-					getInjectedEnvironmentVariablesMap(localBuildURL));
+				buildEnvMap.putAll(getInjectedEnvironmentVariablesMap());
 
 				retries++;
 
@@ -208,11 +204,12 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 		return true;
 	}
 
-	protected void waitForNonzeroDuration(String localBuildURL)
-		throws IOException {
-
+	protected void waitForNonzeroDuration() throws IOException {
 		long maxWaitTime = 300 * 1000;
 		long startTime = System.currentTimeMillis();
+
+		String localBuildURL = JenkinsResultsParserUtil.getLocalURL(
+			getBuildURL());
 
 		while ((System.currentTimeMillis() - startTime) < maxWaitTime) {
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(

@@ -2309,11 +2309,13 @@ public abstract class BaseBuild implements Build {
 		return getGitHubMessageJobResultsElement();
 	}
 
-	protected Map<String, String> getInjectedEnvironmentVariablesMap(
-			String localBuildURL)
+	protected Map<String, String> getInjectedEnvironmentVariablesMap()
 		throws IOException {
 
 		Map<String, String> injectedEnvironmentVariablesMap;
+
+		String localBuildURL = JenkinsResultsParserUtil.getLocalURL(
+			getBuildURL());
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			localBuildURL + "/injectedEnvVars/api/json", false);

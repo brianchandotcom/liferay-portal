@@ -125,12 +125,10 @@ public abstract class BaseReportFillManager implements ReportFillManager {
 		ReportRequestContext reportRequestContext =
 			reportRequest.getReportRequestContext();
 
-		String dataSourceCharSet = GetterUtil.getString(
+		return GetterUtil.getString(
 			(String)reportRequestContext.getAttribute(
 				ReportRequestContext.DATA_SOURCE_CHARSET),
 			StringPool.UTF8);
-
-		return dataSourceCharSet;
 	}
 
 	protected String[] getDataSourceColumnNames(ReportRequest reportRequest) {

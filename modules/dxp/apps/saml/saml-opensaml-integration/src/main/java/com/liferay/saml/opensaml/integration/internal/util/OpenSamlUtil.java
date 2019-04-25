@@ -810,10 +810,7 @@ public class OpenSamlUtil {
 			(SAMLObjectBuilder<SubjectConfirmation>)_getBuilder(
 				SubjectConfirmation.DEFAULT_ELEMENT_NAME);
 
-		SubjectConfirmation subjectConfirmation =
-			samlObjectBuilder.buildObject();
-
-		return subjectConfirmation;
+		return samlObjectBuilder.buildObject();
 	}
 
 	public static SubjectConfirmationData buildSubjectConfirmationData() {
@@ -821,10 +818,7 @@ public class OpenSamlUtil {
 			(SAMLObjectBuilder<SubjectConfirmationData>)_getBuilder(
 				SubjectConfirmationData.DEFAULT_ELEMENT_NAME);
 
-		SubjectConfirmationData subjectConfirmationData =
-			samlObjectBuilder.buildObject();
-
-		return subjectConfirmationData;
+		return samlObjectBuilder.buildObject();
 	}
 
 	public static String marshall(XMLObject xmlObject)

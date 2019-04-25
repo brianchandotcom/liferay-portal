@@ -124,13 +124,11 @@ public class LoginFailure implements AuthFailure {
 			"headers", _jsonFactory.serialize(headerMap));
 		additionalInfoJSONObject.put("reason", reason);
 
-		AuditMessage auditMessage = new AuditMessage(
+		return new AuditMessage(
 			EventTypes.LOGIN_FAILURE, user.getCompanyId(), user.getUserId(),
 			user.getFullName(), User.class.getName(),
 			String.valueOf(user.getPrimaryKey()), null,
 			additionalInfoJSONObject);
-
-		return auditMessage;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LoginFailure.class);

@@ -379,18 +379,14 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		String orderByCol = ParamUtil.getString(
+		return ParamUtil.getString(
 			_kaleoDesignerRequestHelper.getRequest(), "orderByCol",
 			"last-modified");
-
-		return orderByCol;
 	}
 
 	public String getOrderByType() {
-		String orderByType = ParamUtil.getString(
+		return ParamUtil.getString(
 			_kaleoDesignerRequestHelper.getRequest(), "orderByType", "asc");
-
-		return orderByType;
 	}
 
 	public LiferayPortletURL getPortletURL() {

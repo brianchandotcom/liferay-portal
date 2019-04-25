@@ -219,11 +219,9 @@ public class KaleoFormsUtil {
 		}
 
 		if (!descriptionMap.isEmpty()) {
-			String description = LocalizationUtil.updateLocalization(
+			return LocalizationUtil.updateLocalization(
 				descriptionMap, StringPool.BLANK, "Description",
 				_getDefaultLanguageId());
-
-			return description;
 		}
 
 		if (kaleoProcess != null) {
@@ -262,10 +260,8 @@ public class KaleoFormsUtil {
 		}
 
 		if (!nameMap.isEmpty()) {
-			String name = LocalizationUtil.updateLocalization(
+			return LocalizationUtil.updateLocalization(
 				nameMap, StringPool.BLANK, "Name", _getDefaultLanguageId());
-
-			return name;
 		}
 
 		if (kaleoProcess != null) {
@@ -376,11 +372,8 @@ public class KaleoFormsUtil {
 		long companyId, String name, int version) {
 
 		try {
-			WorkflowDefinition workflowDefinition =
-				WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-					companyId, name, version);
-
-			return workflowDefinition;
+			return WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+				companyId, name, version);
 		}
 		catch (Exception e) {
 			return null;

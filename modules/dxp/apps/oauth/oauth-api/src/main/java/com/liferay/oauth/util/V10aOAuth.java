@@ -309,9 +309,7 @@ public class V10aOAuth implements OAuth {
 		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(bytes));
 
 		try {
-			DefaultOAuthAccessor oAuthAccessor = deserializer.readObject();
-
-			return oAuthAccessor;
+			return deserializer.readObject();
 		}
 		catch (ClassNotFoundException cnfe) {
 			cnfe.printStackTrace();

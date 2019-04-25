@@ -76,10 +76,8 @@ public class KaleoProcessImpl extends KaleoProcessBaseImpl {
 
 	@Override
 	public String getWorkflowDefinition() {
-		String workflowDefinition =
-			getWorkflowDefinitionName() + "@" + getWorkflowDefinitionVersion();
-
-		return workflowDefinition;
+		return getWorkflowDefinitionName() + "@" +
+			getWorkflowDefinitionVersion();
 	}
 
 }

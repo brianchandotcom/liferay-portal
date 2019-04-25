@@ -218,11 +218,9 @@ public class ReportEngineImplTest extends TestCase {
 			new MemoryReportDesignRetriever(
 				"test", new Date(), reportByteArray);
 
-		ReportRequest reportRequest = new ReportRequest(
+		return new ReportRequest(
 			reportRequestContext, reportDesignRetriever,
 			new HashMap<String, String>(), reportFormat.getValue());
-
-		return reportRequest;
 	}
 
 	private BundleContext _bundleContext;

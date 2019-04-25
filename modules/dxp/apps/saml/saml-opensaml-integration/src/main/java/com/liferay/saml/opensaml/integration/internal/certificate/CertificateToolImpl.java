@@ -94,11 +94,8 @@ public class CertificateToolImpl implements CertificateTool {
 			X509CertificateHolder x509CertificateHolder =
 				x509v1CertificateBuilder.build(contentSigner);
 
-			X509Certificate x509Certificate =
-				jcaX509CertificateConverter.getCertificate(
-					x509CertificateHolder);
-
-			return x509Certificate;
+			return jcaX509CertificateConverter.getCertificate(
+				x509CertificateHolder);
 		}
 		catch (Exception oce) {
 			throw new CertificateException(oce);
@@ -114,9 +111,7 @@ public class CertificateToolImpl implements CertificateTool {
 
 		keyPairGenerator.initialize(keySize);
 
-		KeyPair keyPair = keyPairGenerator.genKeyPair();
-
-		return keyPair;
+		return keyPairGenerator.genKeyPair();
 	}
 
 	@Override

@@ -216,7 +216,10 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 	}
 
 	protected void waitForNonzeroDuration(String localBuildURL) throws IOException {
-		for (int i = 0; i < 30; i++) {
+		long maxWaitTime = 300 * 1000;
+		long startTime = System.currentTimeMillis();
+
+		while ((System.currentTimeMillis() - startTime) < maxWaitTime) {
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				localBuildURL + "/api/json?tree=duration", false);
 

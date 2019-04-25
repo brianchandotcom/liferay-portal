@@ -8,6 +8,28 @@ components:
                 message:
                     type: string
             type: object
+        Instance:
+            description: https://www.schema.org/Instance
+            properties:
+                assetTitle:
+                    type: string
+                assetType:
+                    type: string
+                dateCreated:
+                    format: date-time
+                id:
+                    format: int64
+                    type: integer
+                status:
+                    enum: [OnTime, Overdue, Untracked]
+                    type: string
+                taskNames:
+                    items:
+                        type: string
+                    type: array
+                userName:
+                    type: string
+            type: object
         Node:
             description: https://www.schema.org/Node
             properties:
@@ -157,6 +179,41 @@ paths:
                                 $ref: "#/components/schemas/Process"
                     description: ""
             tags: ["Process"]
+    "/processes/{processId}/instances":
+        get:
+            operationId: getProcessInstancesPage
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  required: true
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Instance"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Instance"
+                                type: array
+                    description: ""
+            tags: ["Instance"]
     "/processes/{processId}/nodes":
         get:
             operationId: getProcessNodesPage

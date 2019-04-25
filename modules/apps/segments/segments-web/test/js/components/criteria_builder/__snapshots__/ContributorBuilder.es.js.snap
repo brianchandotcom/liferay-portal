@@ -786,11 +786,43 @@ exports[`ContributorBuilder should render builder with sidebar: initialRenderEdi
             <div
               class="sheet"
             >
-              <h2
-                class="sheet-title"
+              <div
+                class="d-flex flex-wrap justify-content-between mb-4"
               >
-                conditions
-              </h2>
+                <h2
+                  class="sheet-title mb-2"
+                >
+                  conditions
+                </h2>
+                <div
+                  class="criterion-string"
+                >
+                  <div
+                    class="btn-group"
+                  >
+                    <div
+                      class="btn-group-item inline-item"
+                    >
+                      <span
+                        class="mr-4"
+                      >
+                        conditions-match
+                        <b
+                          class="ml-2"
+                        >
+                          x-members
+                        </b>
+                      </span>
+                      <button
+                        class="btn btn-secondary btn-sm"
+                        type="button"
+                      >
+                        view-members
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <input
                 class="field form-control"
                 data-testid="input_test_id"
@@ -810,6 +842,11 @@ exports[`ContributorBuilder should render builder with sidebar: initialRenderEdi
               <div
                 class="criteria-builder-root"
               >
+                <h4
+                  class="sheet-subtitle"
+                >
+                  x-with-property-x
+                </h4>
                 <div
                   class="criteria-group-item-root color--user"
                 >
@@ -1621,11 +1658,43 @@ exports[`ContributorBuilder should render builder without sidebar: initialRender
             <div
               class="sheet"
             >
-              <h2
-                class="sheet-title"
+              <div
+                class="d-flex flex-wrap justify-content-between mb-4"
               >
-                conditions
-              </h2>
+                <h2
+                  class="sheet-title mb-2"
+                >
+                  conditions
+                </h2>
+                <div
+                  class="criterion-string"
+                >
+                  <div
+                    class="btn-group"
+                  >
+                    <div
+                      class="btn-group-item inline-item"
+                    >
+                      <span
+                        class="mr-4"
+                      >
+                        conditions-match
+                        <b
+                          class="ml-2"
+                        >
+                          x-members
+                        </b>
+                      </span>
+                      <button
+                        class="btn btn-secondary btn-sm"
+                        type="button"
+                      >
+                        view-members
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <input
                 class="field form-control"
                 data-testid="input_test_id"

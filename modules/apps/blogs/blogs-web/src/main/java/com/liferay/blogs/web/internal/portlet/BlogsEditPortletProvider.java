@@ -17,7 +17,6 @@ package com.liferay.blogs.web.internal.portlet;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,11 +29,10 @@ import org.osgi.service.component.annotations.Component;
 		"model.class.name=com.liferay.blogs.model.BlogsEntry",
 		"service.ranking:Integer=100"
 	},
-	service = {EditPortletProvider.class, ViewPortletProvider.class}
+	service = EditPortletProvider.class
 )
 public class BlogsEditPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ViewPortletProvider {
+	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
 	public String getPortletName() {

@@ -12,8 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging;
+package com.liferay.portal.messaging.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.config.BaseMessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -35,10 +40,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Michael C. Han
  */
+@RunWith(Arquillian.class)
 public class BaseMessagingConfiguratorTest {
 
 	@ClassRule

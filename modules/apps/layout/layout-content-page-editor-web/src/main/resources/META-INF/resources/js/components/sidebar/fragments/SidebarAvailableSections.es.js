@@ -139,7 +139,7 @@ class SidebarAvailableSections extends Component {
 					ADD_FRAGMENT_ENTRY_LINK,
 					{
 						fragmentEntryKey: itemId,
-						fragmentEntryLinkType: FRAGMENTS_EDITOR_ROW_TYPES.sectionRow,
+						fragmentEntryLinkRowType: FRAGMENTS_EDITOR_ROW_TYPES.sectionRow,
 						fragmentName: itemName
 					}
 				)
@@ -181,7 +181,7 @@ class SidebarAvailableSections extends Component {
 				ADD_FRAGMENT_ENTRY_LINK,
 				{
 					fragmentEntryKey: event.itemId,
-					fragmentEntryLinkType: FRAGMENTS_EDITOR_ROW_TYPES.sectionRow,
+					fragmentEntryLinkRowType: FRAGMENTS_EDITOR_ROW_TYPES.sectionRow,
 					fragmentName: event.itemName
 				}
 			)

@@ -38,7 +38,7 @@ class FragmentEntryLink extends Component {
 
 		let nextState = setIn(
 			state,
-			['_fragmentEntryLinkType'],
+			['_fragmentEntryLinkRowType'],
 			state.rowType
 		);
 
@@ -82,10 +82,10 @@ class FragmentEntryLink extends Component {
 			event.stopPropagation();
 
 			const direction = getItemMoveDirection(event.keyCode);
-			const {fragmentEntryLinkType} = event.delegateTarget.dataset;
+			const {fragmentEntryLinkRowType} = event.delegateTarget.dataset;
 
 			if (direction) {
-				if (fragmentEntryLinkType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
+				if (fragmentEntryLinkRowType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
 					moveRow(
 						direction,
 						getFragmentRowIndex(

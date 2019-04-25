@@ -13,7 +13,7 @@ import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/Fra
  * @param {string} dropTargetItemId
  * @param {string} dropTargetItemType
  * @param {object} layoutData
- * @param {string} fragmentEntryLinkType
+ * @param {string} fragmentEntryLinkRowType
  * @private
  * @return {object}
  * @review
@@ -24,7 +24,7 @@ function addFragment(
 	dropTargetItemId,
 	dropTargetItemType,
 	layoutData,
-	fragmentEntryLinkType = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
+	fragmentEntryLinkRowType = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
 ) {
 	let nextData = layoutData;
 
@@ -70,7 +70,7 @@ function addFragment(
 		nextData = _addSingleFragmentRow(
 			layoutData,
 			fragmentEntryLinkId,
-			fragmentEntryLinkType,
+			fragmentEntryLinkRowType,
 			position
 		);
 	}
@@ -78,7 +78,7 @@ function addFragment(
 		nextData = _addSingleFragmentRow(
 			layoutData,
 			fragmentEntryLinkId,
-			fragmentEntryLinkType,
+			fragmentEntryLinkRowType,
 			layoutData.structure.length
 		);
 	}
@@ -123,7 +123,7 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 								nextState.dropTargetItemId,
 								nextState.dropTargetItemType,
 								nextState.layoutData,
-								payload.fragmentEntryLinkType
+								payload.fragmentEntryLinkRowType
 							);
 
 							return updatePageEditorLayoutData(
@@ -299,7 +299,7 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 				nextData = _removeFragment(
 					nextState.layoutData,
 					payload.fragmentEntryLinkId,
-					payload.fragmentEntryLinkType
+					payload.fragmentEntryLinkRowType
 				);
 
 				nextData = addFragment(
@@ -308,7 +308,7 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 					payload.targetItemId,
 					payload.targetItemType,
 					nextData,
-					payload.fragmentEntryLinkType
+					payload.fragmentEntryLinkRowType
 				);
 
 				updatePageEditorLayoutData(nextData, nextState.segmentsExperienceId).then(
@@ -343,7 +343,7 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
  * @param {string} actionType
  * @param {object} payload
  * @param {string} payload.fragmentEntryLinkId
- * @param {string} payload.fragmentEntryLinkType
+ * @param {string} payload.fragmentEntryLinkRowType
  * @return {Promise<object>}
  * @review
  */
@@ -362,17 +362,13 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					)
 				];
 
-				const fragmentEntryLinkType = fragmentEntryLinkRow.type === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow ?
-					FRAGMENTS_EDITOR_ROW_TYPES.sectionRow :
-					FRAGMENTS_EDITOR_ROW_TYPES.componentRow;
-
 				nextState = setIn(
 					nextState,
 					['layoutData'],
 					_removeFragment(
 						nextState.layoutData,
 						fragmentEntryLinkId,
-						fragmentEntryLinkType
+						fragmentEntryLinkRow.type || FRAGMENTS_EDITOR_ROW_TYPES.componentRow
 					)
 				);
 
@@ -722,14 +718,14 @@ function _addFragmentToColumn(
  *
  * @param {object} layoutData
  * @param {string} fragmentEntryLinkId
- * @param {string} fragmentEntryLinkType
+ * @param {string} fragmentEntryLinkRowType
  * @param {number} position
  * @return {object}
  */
 function _addSingleFragmentRow(
 	layoutData,
 	fragmentEntryLinkId,
-	fragmentEntryLinkType,
+	fragmentEntryLinkRowType,
 	position
 ) {
 	return addRow(
@@ -737,7 +733,7 @@ function _addSingleFragmentRow(
 		layoutData,
 		position,
 		[fragmentEntryLinkId],
-		fragmentEntryLinkType
+		fragmentEntryLinkRowType
 	);
 }
 
@@ -775,19 +771,19 @@ function _getDropFragmentPosition(
  * Removes a given fragmentEntryLinkId from a given layoutData.
  * It does not remove it from fragmentEntryLinks array.
  *
- * If the fragmentEntryLinkType is "section", it will remove the whole
+ * If the fragmentEntryLinkRowType is "section", it will remove the whole
  * row (and columns) too.
  *
  * @param {object} layoutData
  * @param {string} fragmentEntryLinkId
- * @param {string} [fragmentEntryLinkType=FRAGMENTS_EDITOR_ROW_TYPES.componentRow]
+ * @param {string} [fragmentEntryLinkRowType=FRAGMENTS_EDITOR_ROW_TYPES.componentRow]
  * @return {object} Next layout data
  * @review
  */
 function _removeFragment(
 	layoutData,
 	fragmentEntryLinkId,
-	fragmentEntryLinkType = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
+	fragmentEntryLinkRowType = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
 ) {
 	const {structure} = layoutData;
 
@@ -806,7 +802,7 @@ function _removeFragment(
 
 	let nextData = null;
 
-	if (fragmentEntryLinkType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
+	if (fragmentEntryLinkRowType === FRAGMENTS_EDITOR_ROW_TYPES.sectionRow) {
 		nextData = updateIn(
 			layoutData,
 			['structure'],

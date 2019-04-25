@@ -7,6 +7,7 @@
 .fragments-editor-sidebar {
 	box-shadow: none;
 	height: 100vh;
+	overflow: visible;
 	padding-left: $sidebarWidth - $sidebarButtonsWidth;
 	position: fixed;
 	right: 0;

@@ -1,0 +1,21 @@
+def map = new HashMap();
+
+for (state in states) {
+	if (state == null) {
+		continue;
+	}
+
+	for (entry in state.entrySet()) {
+		map.merge(entry.key, entry.value, (onTime1, onTime2) -> onTime1 && onTime2);
+	}
+}
+
+def instanceCount = 0;
+
+for (entry in map.entrySet()) {
+	if (entry.value == true) {
+		instanceCount += 1;
+	}
+}
+
+return instanceCount;

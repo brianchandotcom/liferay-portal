@@ -14,10 +14,11 @@
 
 package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
-import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.NodeSerDes;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.InstanceSerDes;
 
 import java.util.logging.Logger;
 
@@ -28,15 +29,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class NodeResource {
+public class InstanceResource {
 
-	public Page<Node> getProcessNodesPage(Long processId) throws Exception {
+	public Page<Instance> getProcessInstancesPage(
+			Long processId, Pagination pagination)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+		httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+		httpInvoker.parameter(
+			"pageSize", String.valueOf(pagination.getPageSize()));
+
 		httpInvoker.path(
-			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes",
+			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances",
 			processId);
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
@@ -50,10 +58,10 @@ public class NodeResource {
 		_logger.fine("HTTP response message: " + httpResponse.getMessage());
 		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 
-		return Page.of(content, NodeSerDes::toDTO);
+		return Page.of(content, InstanceSerDes::toDTO);
 	}
 
 	private static final Logger _logger = Logger.getLogger(
-		NodeResource.class.getName());
+		InstanceResource.class.getName());
 
 }

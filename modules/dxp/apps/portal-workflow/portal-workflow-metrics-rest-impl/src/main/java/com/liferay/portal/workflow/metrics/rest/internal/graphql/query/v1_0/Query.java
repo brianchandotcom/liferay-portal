@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
@@ -46,6 +48,14 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
+
+	public static void setInstanceResourceComponentServiceObjects(
+		ComponentServiceObjects<InstanceResource>
+			instanceResourceComponentServiceObjects) {
+
+		_instanceResourceComponentServiceObjects =
+			instanceResourceComponentServiceObjects;
+	}
 
 	public static void setNodeResourceComponentServiceObjects(
 		ComponentServiceObjects<NodeResource>
@@ -77,6 +87,25 @@ public class Query {
 
 		_taskResourceComponentServiceObjects =
 			taskResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
+	public Collection<Instance> getProcessInstancesPage(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_instanceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			instanceResource -> {
+				Page paginationPage = instanceResource.getProcessInstancesPage(
+					processId, Pagination.of(pageSize, page));
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -191,6 +220,14 @@ public class Query {
 		}
 	}
 
+	private void _populateResourceContext(InstanceResource instanceResource)
+		throws Exception {
+
+		instanceResource.setContextCompany(
+			CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId()));
+	}
+
 	private void _populateResourceContext(NodeResource nodeResource)
 		throws Exception {
 
@@ -223,6 +260,8 @@ public class Query {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
+	private static ComponentServiceObjects<InstanceResource>
+		_instanceResourceComponentServiceObjects;
 	private static ComponentServiceObjects<NodeResource>
 		_nodeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProcessResource>

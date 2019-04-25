@@ -14,6 +14,14 @@
 
 package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.TaskSerDes;
+
+import java.util.logging.Logger;
+
 import javax.annotation.Generated;
 
 /**
@@ -22,4 +30,40 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public class TaskResource {
+
+	public Page<Task> getProcessTasksPage(
+			Long processId, Pagination pagination, String sortString)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.parameter("page", String.valueOf(pagination.getPage()));
+		httpInvoker.parameter(
+			"pageSize", String.valueOf(pagination.getPageSize()));
+
+		httpInvoker.parameter("sort", sortString);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks",
+			processId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
+		return Page.of(content, TaskSerDes::toDTO);
+	}
+
+	private static final Logger _logger = Logger.getLogger(
+		TaskResource.class.getName());
+
 }

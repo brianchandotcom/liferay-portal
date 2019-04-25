@@ -169,8 +169,16 @@ class AssetVocabularyCategoriesSelector extends Component {
 		this._unexistingCategoryError = false;
 	}
 
-	syncSelectedItems() {
+	syncSelectedItems(event) {
 		this.categoryIds = this._getCategoryIds();
+
+		this.emit(
+			'selectedItemsChange',
+			{
+				selectedItems: event,
+				vocabularyId: this.vocabularyIds[0]
+			}
+		);
 	}
 
 	/**

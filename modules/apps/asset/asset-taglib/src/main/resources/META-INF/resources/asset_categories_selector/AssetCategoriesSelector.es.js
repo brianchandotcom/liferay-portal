@@ -14,6 +14,10 @@ class AssetCategoriesSelector extends Component {
 	_handleInputFocus(event) {
 		this.emit('inputFocus', event);
 	}
+
+	_handleSelectedItemsChange(event) {
+		this.emit('selectedItemsChange', event);
+	}
 }
 
 AssetCategoriesSelector.STATE = {

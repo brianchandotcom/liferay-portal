@@ -18,6 +18,30 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addDuplicatePageTemplate {
+		if (isSet(pageTemplateType)) {
+			var menuItem = "${pageTemplateType}";
+		}
+		else {
+			var menuItem = "Content Page Template";
+		}
+
+		if ("${siteTemplate}" == "true") {
+			LexiconEntry.gotoAdd();
+		}
+		else {
+			LexiconEntry.gotoAddMenuItem(menuItem = "${menuItem}");
+		}
+
+		PortletEntry.inputName(name = "${pageTemplateName}");
+
+		Button.clickSave();
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_MODAL_CONTENT",
+			value1 = "A page template entry with that name already exists.");
+	}
+
 	macro addPageTemplate {
 		if (isSet(pageTemplateType)) {
 			var menuItem = "${pageTemplateType}";

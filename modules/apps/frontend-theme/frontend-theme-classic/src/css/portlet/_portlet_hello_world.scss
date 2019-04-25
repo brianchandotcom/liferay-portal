@@ -6,7 +6,7 @@
 	min-height: 390px;
 	padding-top: 30px;
 
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		padding-left: 50px;
 	}
 
@@ -24,7 +24,7 @@
 	.portlet-body {
 		padding-right: 30%;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			padding-right: 60%;
 		}
 	}

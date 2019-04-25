@@ -50,7 +50,7 @@ header {
 			.user-full-name {
 				margin-left: 0.5rem;
 
-				@include media-query(null, $screen-xs-max) {
+				@include media-breakpoint-down(sm) {
 					display: none;
 				}
 			}
@@ -77,7 +77,7 @@ header {
 }
 
 .btn-group + .info-panel {
-	@include md {
+	@include media-breakpoint-up(md) {
 		top: auto;
 	}
 }

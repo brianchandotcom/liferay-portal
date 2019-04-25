@@ -23,7 +23,7 @@
 		font-size: 0.87rem;
 		padding: 0 4px 0 8px;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			right: auto;
 		}
 

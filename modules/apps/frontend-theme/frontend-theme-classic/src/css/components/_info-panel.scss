@@ -1,5 +1,5 @@
 .info-panel {
-	@include md {
+	@include media-breakpoint-up(md) {
 		bottom: 0;
 		position: absolute;
 		top: 0;

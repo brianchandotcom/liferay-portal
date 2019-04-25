@@ -42,10 +42,35 @@ public class TextPlainPortalErrorCodeDynamicInclude
 	}
 
 	@Override
-	protected void writeMessage(
-		String mimeType, String message, PrintWriter printWriter) {
+	protected void writeDetailedMessage(
+		String message, String requestURI, int statusCode, Throwable throwable,
+		PrintWriter printWriter) {
 
-		printWriter.write(message);
+		printWriter.print("Message: ");
+		printWriter.println(message);
+
+		printWriter.print("Request URI: ");
+		printWriter.println(requestURI);
+
+		printWriter.print("Status Code: ");
+		printWriter.println(String.valueOf(statusCode));
+
+		if (throwable != null) {
+			printWriter.print("Throwable: ");
+
+			throwable.printStackTrace(printWriter);
+		}
+	}
+
+	@Override
+	protected void writeMessage(
+		int statusCode, String message, PrintWriter printWriter) {
+
+		printWriter.print("Message: ");
+		printWriter.println(message);
+
+		printWriter.print("Status Code: ");
+		printWriter.println(String.valueOf(statusCode));
 	}
 
 	private String _mimeType;

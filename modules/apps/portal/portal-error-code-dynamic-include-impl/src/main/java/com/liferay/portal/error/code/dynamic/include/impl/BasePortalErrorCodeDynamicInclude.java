@@ -14,12 +14,15 @@
 
 package com.liferay.portal.error.code.dynamic.include.impl;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.JavaConstants;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,11 +44,31 @@ public abstract class BasePortalErrorCodeDynamicInclude
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		writeMessage(
-			mimeType,
-			(String)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE),
-			printWriter);
+		if (_log.isDebugEnabled()) {
+			String message = (String)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE);
+
+			Throwable throwable = (Throwable)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_SERVLET_ERROR_EXCEPTION);
+
+			String requestURI = (String)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_SERVLET_ERROR_REQUEST_URI);
+
+			int statusCode = (Integer)httpServletRequest.getAttribute(
+				RequestDispatcher.ERROR_STATUS_CODE);
+
+			writeDetailedMessage(
+				message, requestURI, statusCode, throwable, printWriter);
+		}
+		else {
+			String message = (String)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE);
+
+			int statusCode = (Integer)httpServletRequest.getAttribute(
+				RequestDispatcher.ERROR_STATUS_CODE);
+
+			writeMessage(statusCode, message, printWriter);
+		}
 	}
 
 	@Override
@@ -55,9 +78,16 @@ public abstract class BasePortalErrorCodeDynamicInclude
 
 	protected abstract String getMimeType();
 
+	protected abstract void writeDetailedMessage(
+		String message, String requestURI, int statusCode, Throwable throwable,
+		PrintWriter printWriter);
+
 	protected abstract void writeMessage(
-		String mimeType, String message, PrintWriter printWriter);
+		int statusCode, String message, PrintWriter printWriter);
 
 	private static final String _CHARSET = "; charset=UTF-8";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasePortalErrorCodeDynamicInclude.class);
 
 }

@@ -14,15 +14,21 @@
 
 package com.liferay.portal.error.code.dynamic.include.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReader;
 
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Sierra Andrés
@@ -45,17 +51,61 @@ public class ApplicationXMLPortalErrorCodeDynamicInclude
 	}
 
 	@Override
-	protected void writeMessage(
-		String mimeType, String message, PrintWriter printWriter) {
+	protected void writeDetailedMessage(
+		String message, String requestURI, int statusCode, Throwable throwable,
+		PrintWriter printWriter) {
 
-		printWriter.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-		printWriter.write("<error>");
-		printWriter.write("<message>");
-		printWriter.write(message);
-		printWriter.write("</message>");
-		printWriter.write("</error>");
+		Document document = _saxReader.createDocument(StringPool.UTF8);
+
+		Element errorElement = document.addElement("error");
+
+		Element messageElement = errorElement.addElement("message");
+
+		messageElement.addText(message);
+
+		Element requestURIElement = errorElement.addElement("requestURI");
+
+		requestURIElement.addText(requestURI);
+
+		Element statusCodeElement = errorElement.addElement("statusCode");
+
+		statusCodeElement.addText(String.valueOf(statusCode));
+
+		if (throwable != null) {
+			Element throwableElement = errorElement.addElement("throwable");
+
+			StringWriter stackTrace = new StringWriter();
+
+			throwable.printStackTrace(new PrintWriter(stackTrace));
+
+			throwableElement.addCDATA(stackTrace.toString());
+		}
+
+		printWriter.print(document.asXML());
+	}
+
+	@Override
+	protected void writeMessage(
+		int statusCode, String message, PrintWriter printWriter) {
+
+		Document document = _saxReader.createDocument(StringPool.UTF8);
+
+		Element errorElement = document.addElement("error");
+
+		Element messageElement = errorElement.addElement("message");
+
+		messageElement.addText(message);
+
+		Element statusCodeElement = errorElement.addElement("statusCode");
+
+		statusCodeElement.addText(String.valueOf(statusCode));
+
+		printWriter.print(document.asXML());
 	}
 
 	private String _mimeType;
+
+	@Reference
+	private SAXReader _saxReader;
 
 }

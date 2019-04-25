@@ -14,6 +14,11 @@
 
 package com.liferay.portal.error.code.dynamic.include.impl;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -23,6 +28,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Sierra Andrés
@@ -45,13 +51,56 @@ public class ApplicationJsonPortalErrorCodeDynamicInclude
 	}
 
 	@Override
-	protected void writeMessage(
-		String mimeType, String message, PrintWriter printWriter) {
+	protected void writeDetailedMessage(
+		String message, String requestURI, int statusCode, Throwable throwable,
+		PrintWriter printWriter) {
 
-		printWriter.write("{message: \"");
-		printWriter.write(message);
-		printWriter.write("\"}");
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put("message", message);
+		jsonObject.put("requestURI", message);
+		jsonObject.put("statusCode", statusCode);
+
+		if (throwable != null) {
+			try {
+				jsonObject.put(
+					"throwable",
+					_jsonFactory.createJSONObject(
+						_jsonFactory.serializeThrowable(throwable)));
+			}
+			catch (JSONException jsone) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to serialize throwable " + throwable.toString(),
+						jsone);
+				}
+
+				jsonObject.put(
+					"throwableSerialized",
+					_jsonFactory.serializeThrowable(throwable));
+			}
+		}
+
+		printWriter.write(jsonObject.toString());
 	}
+
+	@Override
+	protected void writeMessage(
+		int statusCode, String message, PrintWriter printWriter) {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put("message", message);
+		jsonObject.put("statusCode", statusCode);
+
+		printWriter.write(jsonObject.toString());
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ApplicationJsonPortalErrorCodeDynamicInclude.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private String _mimeType;
 

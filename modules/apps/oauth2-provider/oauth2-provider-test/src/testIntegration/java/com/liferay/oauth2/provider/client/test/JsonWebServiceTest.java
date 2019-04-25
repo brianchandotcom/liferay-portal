@@ -16,6 +16,8 @@ package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -28,8 +30,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-
-import org.codehaus.jettison.json.JSONObject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -79,7 +79,7 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 
 		Response response = invocationBuilder.post(Entity.form(formData));
 
-		JSONObject jsonObject = new JSONObject(
+		JSONObject jsonObject = new JSONObjectImpl(
 			response.readEntity(String.class));
 
 		Assert.assertEquals("testcompany", jsonObject.getString("webId"));

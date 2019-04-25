@@ -15,6 +15,9 @@
 package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Digester;
@@ -47,9 +50,6 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -599,20 +599,14 @@ public abstract class BaseClientTestCase {
 	protected String parseJsonField(Response response, String fieldName) {
 		JSONObject jsonObject = parseJSONObject(response);
 
-		try {
-			return jsonObject.getString(fieldName);
-		}
-		catch (JSONException jsone) {
-			throw new IllegalArgumentException(
-				"The token service returned " + jsonObject.toString());
-		}
+		return jsonObject.getString(fieldName);
 	}
 
 	protected JSONObject parseJSONObject(Response response) {
 		String json = response.readEntity(String.class);
 
 		try {
-			return new JSONObject(json);
+			return new JSONObjectImpl(json);
 		}
 		catch (JSONException jsone) {
 			throw new IllegalArgumentException(

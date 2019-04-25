@@ -24,6 +24,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -132,8 +133,10 @@ public class FragmentEntryStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		return FragmentEntryLocalServiceUtil.fetchFragmentEntryByUuidAndGroupId(
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws PortalException {
+
+		return FragmentEntryLocalServiceUtil.getFragmentEntryByUuidAndGroupId(
 			uuid, group.getGroupId());
 	}
 

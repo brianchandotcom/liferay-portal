@@ -23,13 +23,13 @@
 		font-size: 0.87rem;
 		padding: 0 4px 0 8px;
 
-		@include media-breakpoint-up(sm) {
-			right: auto;
-		}
-
 		@include media-breakpoint-up(md) {
 			display: block;
 			white-space: nowrap;
+		}
+
+		@include media-breakpoint-up(sm) {
+			right: auto;
 		}
 
 		.portlet-title-default {

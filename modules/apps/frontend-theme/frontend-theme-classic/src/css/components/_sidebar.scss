@@ -1,5 +1,9 @@
 .sidebar-default {
 	.sidebar-header {
+		@include media-breakpoint-up(sm) {
+			padding-top: 0;
+		}
+
 		h4 {
 			padding-top: 8px;
 		}
@@ -12,10 +16,6 @@
 
 		.icon-monospaced {
 			color: $secondary;
-		}
-
-		@include media-breakpoint-up(sm) {
-			padding-top: 0;
 		}
 	}
 

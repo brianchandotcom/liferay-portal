@@ -254,6 +254,7 @@ class EditCategories extends Component {
 	_handleFormSubmit(event) {
 		event.preventDefault();
 
+	setTimeout(() => {
 		if (!this._validateRequiredVocabularies() || this._checkErrors()) {
 			return;
 		}
@@ -294,6 +295,7 @@ class EditCategories extends Component {
 				}
 			}
 		);
+	}, 250);
 	}
 
 	_parseVocabularies(vocabularies) {

@@ -26,6 +26,7 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -72,17 +73,18 @@ public class DataLayoutPage {
 	protected DataLayoutRow[] dataLayoutRows;
 
 	@Schema
-	public LocalizedValue[] getDescription() {
+	public Map<String, String> getDescription() {
 		return description;
 	}
 
-	public void setDescription(LocalizedValue[] description) {
+	public void setDescription(Map<String, String> description) {
 		this.description = description;
 	}
 
 	@JsonIgnore
 	public void setDescription(
-		UnsafeSupplier<LocalizedValue[], Exception> descriptionUnsafeSupplier) {
+		UnsafeSupplier<Map<String, String>, Exception>
+			descriptionUnsafeSupplier) {
 
 		try {
 			description = descriptionUnsafeSupplier.get();
@@ -97,20 +99,20 @@ public class DataLayoutPage {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] description;
+	protected Map<String, String> description;
 
 	@Schema
-	public LocalizedValue[] getTitle() {
+	public Map<String, String> getTitle() {
 		return title;
 	}
 
-	public void setTitle(LocalizedValue[] title) {
+	public void setTitle(Map<String, String> title) {
 		this.title = title;
 	}
 
 	@JsonIgnore
 	public void setTitle(
-		UnsafeSupplier<LocalizedValue[], Exception> titleUnsafeSupplier) {
+		UnsafeSupplier<Map<String, String>, Exception> titleUnsafeSupplier) {
 
 		try {
 			title = titleUnsafeSupplier.get();
@@ -125,7 +127,7 @@ public class DataLayoutPage {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] title;
+	protected Map<String, String> title;
 
 	@Override
 	public boolean equals(Object object) {
@@ -181,17 +183,7 @@ public class DataLayoutPage {
 
 			sb.append("\"description\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < description.length; i++) {
-				sb.append(String.valueOf(description[i]));
-
-				if ((i + 1) < description.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(description);
 		}
 
 		if (title != null) {
@@ -201,17 +193,7 @@ public class DataLayoutPage {
 
 			sb.append("\"title\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < title.length; i++) {
-				sb.append(String.valueOf(title[i]));
-
-				if ((i + 1) < title.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(title);
 		}
 
 		sb.append("}");

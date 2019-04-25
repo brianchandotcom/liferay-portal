@@ -53,14 +53,8 @@ public class DataRecordCollectionResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, DataRecordCollectionSerDes::toDTO);
+		return Page.of(
+			httpResponse.getContent(), DataRecordCollectionSerDes::toDTO);
 	}
 
 	public DataRecordCollection postDataDefinitionDataRecordCollection(
@@ -83,19 +77,13 @@ public class DataRecordCollectionResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
 		try {
-			return DataRecordCollectionSerDes.toDTO(content);
+			return DataRecordCollectionSerDes.toDTO(httpResponse.getContent());
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
+				Level.WARNING,
+				"Unable to process HTTP response: " + httpResponse.getContent(),
 				e);
 
 			throw e;
@@ -116,13 +104,6 @@ public class DataRecordCollectionResource {
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
 	public DataRecordCollection getDataRecordCollection(
@@ -141,19 +122,13 @@ public class DataRecordCollectionResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
 		try {
-			return DataRecordCollectionSerDes.toDTO(content);
+			return DataRecordCollectionSerDes.toDTO(httpResponse.getContent());
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
+				Level.WARNING,
+				"Unable to process HTTP response: " + httpResponse.getContent(),
 				e);
 
 			throw e;
@@ -181,19 +156,13 @@ public class DataRecordCollectionResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
 		try {
-			return DataRecordCollectionSerDes.toDTO(content);
+			return DataRecordCollectionSerDes.toDTO(httpResponse.getContent());
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
+				Level.WARNING,
+				"Unable to process HTTP response: " + httpResponse.getContent(),
 				e);
 
 			throw e;
@@ -217,13 +186,6 @@ public class DataRecordCollectionResource {
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
 	public void postSiteDataRecordCollectionPermission(
@@ -243,13 +205,6 @@ public class DataRecordCollectionResource {
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
 	public Page<DataRecordCollection> getSiteDataRecordCollectionsPage(
@@ -272,14 +227,8 @@ public class DataRecordCollectionResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, DataRecordCollectionSerDes::toDTO);
+		return Page.of(
+			httpResponse.getContent(), DataRecordCollectionSerDes::toDTO);
 	}
 
 	private static final Logger _logger = Logger.getLogger(

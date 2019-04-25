@@ -26,6 +26,7 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -71,17 +72,18 @@ public class DataRecordCollection {
 	protected Long dataDefinitionId;
 
 	@Schema
-	public LocalizedValue[] getDescription() {
+	public Map<String, String> getDescription() {
 		return description;
 	}
 
-	public void setDescription(LocalizedValue[] description) {
+	public void setDescription(Map<String, String> description) {
 		this.description = description;
 	}
 
 	@JsonIgnore
 	public void setDescription(
-		UnsafeSupplier<LocalizedValue[], Exception> descriptionUnsafeSupplier) {
+		UnsafeSupplier<Map<String, String>, Exception>
+			descriptionUnsafeSupplier) {
 
 		try {
 			description = descriptionUnsafeSupplier.get();
@@ -96,7 +98,7 @@ public class DataRecordCollection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] description;
+	protected Map<String, String> description;
 
 	@Schema
 	public Long getId() {
@@ -125,17 +127,17 @@ public class DataRecordCollection {
 	protected Long id;
 
 	@Schema
-	public LocalizedValue[] getName() {
+	public Map<String, String> getName() {
 		return name;
 	}
 
-	public void setName(LocalizedValue[] name) {
+	public void setName(Map<String, String> name) {
 		this.name = name;
 	}
 
 	@JsonIgnore
 	public void setName(
-		UnsafeSupplier<LocalizedValue[], Exception> nameUnsafeSupplier) {
+		UnsafeSupplier<Map<String, String>, Exception> nameUnsafeSupplier) {
 
 		try {
 			name = nameUnsafeSupplier.get();
@@ -150,7 +152,7 @@ public class DataRecordCollection {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] name;
+	protected Map<String, String> name;
 
 	@Override
 	public boolean equals(Object object) {
@@ -197,17 +199,7 @@ public class DataRecordCollection {
 
 			sb.append("\"description\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < description.length; i++) {
-				sb.append(String.valueOf(description[i]));
-
-				if ((i + 1) < description.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(description);
 		}
 
 		if (id != null) {
@@ -227,17 +219,7 @@ public class DataRecordCollection {
 
 			sb.append("\"name\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < name.length; i++) {
-				sb.append(String.valueOf(name[i]));
-
-				if ((i + 1) < name.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(name);
 		}
 
 		sb.append("}");

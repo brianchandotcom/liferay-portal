@@ -52,14 +52,7 @@ public class DataRecordResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return Page.of(content, DataRecordSerDes::toDTO);
+		return Page.of(httpResponse.getContent(), DataRecordSerDes::toDTO);
 	}
 
 	public DataRecord postDataRecordCollectionDataRecord(
@@ -81,19 +74,13 @@ public class DataRecordResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
 		try {
-			return DataRecordSerDes.toDTO(content);
+			return DataRecordSerDes.toDTO(httpResponse.getContent());
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
+				Level.WARNING,
+				"Unable to process HTTP response: " + httpResponse.getContent(),
 				e);
 
 			throw e;
@@ -116,14 +103,7 @@ public class DataRecordResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
-		return content;
+		return httpResponse.getContent();
 	}
 
 	public void deleteDataRecord(Long dataRecordId) throws Exception {
@@ -138,13 +118,6 @@ public class DataRecordResource {
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
 	public DataRecord getDataRecord(Long dataRecordId) throws Exception {
@@ -160,19 +133,13 @@ public class DataRecordResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
 		try {
-			return DataRecordSerDes.toDTO(content);
+			return DataRecordSerDes.toDTO(httpResponse.getContent());
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
+				Level.WARNING,
+				"Unable to process HTTP response: " + httpResponse.getContent(),
 				e);
 
 			throw e;
@@ -197,19 +164,13 @@ public class DataRecordResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		String content = httpResponse.getContent();
-
-		_logger.fine("HTTP response content: " + content);
-
-		_logger.fine("HTTP response message: " + httpResponse.getMessage());
-		_logger.fine("HTTP response status: " + httpResponse.getStatus());
-
 		try {
-			return DataRecordSerDes.toDTO(content);
+			return DataRecordSerDes.toDTO(httpResponse.getContent());
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING, "Unable to process HTTP response: " + content,
+				Level.WARNING,
+				"Unable to process HTTP response: " + httpResponse.getContent(),
 				e);
 
 			throw e;

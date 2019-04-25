@@ -893,6 +893,11 @@ public class StagingGroupHelperTest {
 		_setPortalProperty("TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
 
 		int serverPort = PortalUtil.getPortalServerPort(false);
+
+		Assert.assertFalse(
+			"Invalid server port: " + serverPort,
+			(serverPort < 1) || (serverPort > 65535));
+
 		String pathContext = PortalUtil.getPathContext();
 
 		ServiceTestUtil.setUser(TestPropsValues.getUser());

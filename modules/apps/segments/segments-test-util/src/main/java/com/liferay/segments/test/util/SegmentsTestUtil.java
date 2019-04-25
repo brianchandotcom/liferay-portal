@@ -14,7 +14,6 @@
 
 package com.liferay.segments.test.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -22,6 +21,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
@@ -49,7 +50,7 @@ public class SegmentsTestUtil {
 
 		return addSegmentsEntry(
 			groupId, segmentsEntryKey, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), _EMPTY_CRITERIA_STRING,
 			RandomTestUtil.randomString());
 	}
 
@@ -58,7 +59,7 @@ public class SegmentsTestUtil {
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry = addSegmentsEntry(
-			groupId, StringPool.BLANK, className);
+			groupId, _EMPTY_CRITERIA_STRING, className);
 
 		SegmentsEntryRelLocalServiceUtil.addSegmentsEntryRel(
 			segmentsEntry.getSegmentsEntryId(),
@@ -94,7 +95,7 @@ public class SegmentsTestUtil {
 
 		return addSegmentsEntry(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), _EMPTY_CRITERIA_STRING,
 			SegmentsConstants.SOURCE_DEFAULT, RandomTestUtil.randomString(),
 			serviceContext);
 	}
@@ -160,5 +161,8 @@ public class SegmentsTestUtil {
 			segmentsEntry.getSegmentsEntryId(), classNameId, classPK,
 			serviceContext);
 	}
+
+	private static final String _EMPTY_CRITERIA_STRING =
+		CriteriaSerializer.serialize(new Criteria());
 
 }

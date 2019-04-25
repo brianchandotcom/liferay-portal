@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.model.SegmentsEntry;
@@ -78,7 +80,7 @@ public class SegmentsEntryLocalServiceTest {
 		String segmentsEntryKey = RandomTestUtil.randomString();
 		String name = RandomTestUtil.randomString();
 		String description = RandomTestUtil.randomString();
-		String criteria = RandomTestUtil.randomString();
+		String criteria = CriteriaSerializer.serialize(new Criteria());
 		String type = RandomTestUtil.randomString();
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(

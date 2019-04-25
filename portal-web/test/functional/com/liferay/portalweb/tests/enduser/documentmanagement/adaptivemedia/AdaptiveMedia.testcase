@@ -133,9 +133,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
 
-		AdaptiveMedia.adaptRemainingImages(
-			imageName = "Low Resolution",
-			percentAdapted = "100");
+		AdaptiveMedia.adaptRemainingImages(imageName = "Low Resolution");
 
 		AdaptiveMedia.addImageResolution(
 			imageName = "High Resolution",
@@ -714,9 +712,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
 
-		AdaptiveMedia.adaptRemainingImages(
-			imageName = "Low Resolution",
-			percentAdapted = "100");
+		AdaptiveMedia.adaptRemainingImages(imageName = "Low Resolution");
 
 		AdaptiveMedia.disableImageResolution(
 			imageName = "Low Resolution",
@@ -757,9 +753,7 @@ definition {
 			imageName = "Low Resolution",
 			imageState = "Enabled");
 
-		AdaptiveMedia.adaptRemainingImages(
-			imageName = "Low Resolution",
-			percentAdapted = "100");
+		AdaptiveMedia.adaptRemainingImages(imageName = "Low Resolution");
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Low Resolution");
 

@@ -201,7 +201,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 						editableValueJSONObject, locale, segmentsExperienceIds);
 				}
 
-				if (!Objects.equals(value, StringPool.BLANK)) {
+				if (Validator.isNotNull(value)) {
 					properties.put(property.getKey(), value);
 				}
 			}

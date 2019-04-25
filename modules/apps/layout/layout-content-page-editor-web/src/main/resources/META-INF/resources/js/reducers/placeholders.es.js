@@ -4,23 +4,23 @@ import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 /**
  * Updates active element data with the information sent.
  * @param {!object} state
- * @param {CLEAR_ACTIVE_ITEM|UPDATE_ACTIVE_ITEM} actionType
- * @param {object} payload
- * @param {string} payload.activeItemId
- * @param {string} payload.activeItemType
+ * @param {object} action
+ * @param {string} action.activeItemId
+ * @param {string} action.activeItemType
+ * @param {string} action.type
  * @return {object}
  * @review
  */
-function updateActiveItemReducer(state, actionType, payload) {
+function updateActiveItemReducer(state, action) {
 	let nextState = state;
 
-	if (actionType === CLEAR_ACTIVE_ITEM) {
+	if (action.type === CLEAR_ACTIVE_ITEM) {
 		nextState = setIn(nextState, ['activeItemId'], null);
 		nextState = setIn(nextState, ['activeItemType'], null);
 	}
-	else if (actionType === UPDATE_ACTIVE_ITEM) {
-		nextState = setIn(nextState, ['activeItemId'], payload.activeItemId);
-		nextState = setIn(nextState, ['activeItemType'], payload.activeItemType);
+	else if (action.type === UPDATE_ACTIVE_ITEM) {
+		nextState = setIn(nextState, ['activeItemId'], action.activeItemId);
+		nextState = setIn(nextState, ['activeItemType'], action.activeItemType);
 	}
 
 	return nextState;
@@ -29,26 +29,40 @@ function updateActiveItemReducer(state, actionType, payload) {
 /**
  * Updates drop target element with the information sent.
  * @param {!object} state
- * @param {CLEAR_DROP_TARGET|UPDATE_DROP_TARGET} actionType
- * @param {object} payload
- * @param {string} payload.dropTargetBorder
- * @param {string} payload.dropTargetItemId
- * @param {string} payload.dropTargetItemType
+ * @param {object} action
+ * @param {string} action.dropTargetBorder
+ * @param {string} action.dropTargetItemId
+ * @param {string} action.dropTargetItemType
+ * @param {string} action.type
  * @return {object}
  * @review
  */
-function updateDropTargetReducer(state, actionType, payload) {
+function updateDropTargetReducer(state, action) {
 	let nextState = state;
 
-	if (actionType === CLEAR_DROP_TARGET) {
+	if (action.type === CLEAR_DROP_TARGET) {
 		nextState = setIn(nextState, ['dropTargetBorder'], null);
 		nextState = setIn(nextState, ['dropTargetItemId'], null);
 		nextState = setIn(nextState, ['dropTargetItemType'], null);
 	}
-	else if (actionType === UPDATE_DROP_TARGET) {
-		nextState = setIn(nextState, ['dropTargetBorder'], payload.dropTargetBorder);
-		nextState = setIn(nextState, ['dropTargetItemId'], payload.dropTargetItemId);
-		nextState = setIn(nextState, ['dropTargetItemType'], payload.dropTargetItemType);
+	else if (action.type === UPDATE_DROP_TARGET) {
+		nextState = setIn(
+			nextState,
+			['dropTargetBorder'],
+			action.dropTargetBorder
+		);
+
+		nextState = setIn(
+			nextState,
+			['dropTargetItemId'],
+			action.dropTargetItemId
+		);
+
+		nextState = setIn(
+			nextState,
+			['dropTargetItemType'],
+			action.dropTargetItemType
+		);
 	}
 
 	return nextState;
@@ -56,24 +70,29 @@ function updateDropTargetReducer(state, actionType, payload) {
 
 /**
  * Updates hovered element data with the information sent.
- * @param {!object} state
- * @param {CLEAR_HOVERED_ITEM|UPDATE_HOVERED_ITEM} actionType
- * @param {object} payload
- * @param {string} payload.hoveredItemId
- * @param {string} payload.hoveredItemType
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.hoveredItemId
+ * @param {string} action.hoveredItemType
+ * @param {string} action.type
  * @return {object}
  * @review
  */
-function updateHoveredItemReducer(state, actionType, payload) {
+function updateHoveredItemReducer(state, action) {
 	let nextState = state;
 
-	if (actionType === CLEAR_HOVERED_ITEM) {
+	if (action.type === CLEAR_HOVERED_ITEM) {
 		nextState = setIn(nextState, ['hoveredItemId'], null);
 		nextState = setIn(nextState, ['hoveredItemType'], null);
 	}
-	else if (actionType === UPDATE_HOVERED_ITEM) {
-		nextState = setIn(nextState, ['hoveredItemId'], payload.hoveredItemId);
-		nextState = setIn(nextState, ['hoveredItemType'], payload.hoveredItemType);
+	else if (action.type === UPDATE_HOVERED_ITEM) {
+		nextState = setIn(nextState, ['hoveredItemId'], action.hoveredItemId);
+
+		nextState = setIn(
+			nextState,
+			['hoveredItemType'],
+			action.hoveredItemType
+		);
 	}
 
 	return nextState;

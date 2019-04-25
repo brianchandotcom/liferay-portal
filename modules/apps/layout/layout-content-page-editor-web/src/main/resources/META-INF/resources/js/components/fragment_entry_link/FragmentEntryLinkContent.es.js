@@ -323,7 +323,7 @@ class FragmentEntryLinkContent extends Component {
 				editableValue: event.value,
 				editableValueId: this.languageId,
 				editableValueSegmentsExperienceId,
-				fragmentEntryLinkId: this.fragmentEntryLinkId
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
 				type: UPDATE_EDITABLE_VALUE
 			}
 		);

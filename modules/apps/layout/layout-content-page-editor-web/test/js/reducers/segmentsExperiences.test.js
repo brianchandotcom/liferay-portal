@@ -83,9 +83,10 @@ describe(
 					layoutData: currentLayout
 				};
 
-				const payload = {
+				const action = {
 					name: 'test experience name',
-					segmentsEntryId: 'test-segment-id'
+					segmentsEntryId: 'test-segment-id',
+					type: CREATE_SEGMENTS_EXPERIENCE
 				};
 
 				const serviceContext = JSON.stringify({
@@ -97,12 +98,12 @@ describe(
 					active: true,
 					classNameId: prevState.classNameId,
 					classPK: prevState.classPK,
-					nameMap: JSON.stringify({en_US: payload.name}),
-					segmentsEntryId: payload.segmentsEntryId,
+					nameMap: JSON.stringify({en_US: action.name}),
+					segmentsEntryId: action.segmentsEntryId,
 					serviceContext
 				};
 
-				createSegmentsExperienceReducer(prevState, CREATE_SEGMENTS_EXPERIENCE, payload)
+				createSegmentsExperienceReducer(prevState, action)
 				.then(response => {
 					expect(response).toMatchSnapshot();
 
@@ -113,26 +114,23 @@ describe(
 						expect.objectContaining({})
 					);
 
-					const secondPayload = {
+					const secondAction = {
 						name: 'second test experience name',
-						segmentsEntryId: 'test-segment-id'
+						segmentsEntryId: 'test-segment-id',
+						type: CREATE_SEGMENTS_EXPERIENCE
 					};
 
 					const secondLiferayServiceParams = {
 						active: true,
 						classNameId: prevState.classNameId,
 						classPK: prevState.classPK,
-						nameMap: JSON.stringify({en_US: secondPayload.name}),
-						segmentsEntryId: secondPayload.segmentsEntryId,
+						nameMap: JSON.stringify({en_US: secondAction.name}),
+						segmentsEntryId: secondAction.segmentsEntryId,
 						serviceContext
 					};
 
 					expect(
-						createSegmentsExperienceReducer(
-							response,
-							CREATE_SEGMENTS_EXPERIENCE,
-							secondPayload
-						)
+						createSegmentsExperienceReducer(response, secondAction)
 					).resolves.toMatchSnapshot();
 
 					expect(spy).toHaveBeenLastCalledWith(
@@ -220,9 +218,9 @@ describe(
 
 				deleteSegmentsExperienceReducer(
 					prevState,
-					DELETE_SEGMENTS_EXPERIENCE,
 					{
-						segmentsExperienceId: SEGMENTS_EXPERIENCE_ID
+						segmentsExperienceId: SEGMENTS_EXPERIENCE_ID,
+						type: DELETE_SEGMENTS_EXPERIENCE
 					}
 				).then(
 					response => {
@@ -236,9 +234,9 @@ describe(
 
 						deleteSegmentsExperienceReducer(
 							response,
-							DELETE_SEGMENTS_EXPERIENCE,
 							{
-								segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND
+								segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND,
+								type: DELETE_SEGMENTS_EXPERIENCE
 							}
 						).then(
 							state => {
@@ -308,10 +306,11 @@ describe(
 					}
 				};
 
-				const payload = {
+				const action = {
 					name: 'A modified test experience',
 					segmentsEntryId: 'relevantSegmentId',
-					segmentsExperienceId: SEGMENTS_EXPERIENCE_ID
+					segmentsExperienceId: SEGMENTS_EXPERIENCE_ID,
+					type: EDIT_SEGMENTS_EXPERIENCE
 				};
 				const prevState = {
 					availableSegmentsExperiences,
@@ -320,19 +319,15 @@ describe(
 
 				expect.assertions(3);
 
-				editSegmentsExperienceReducer(
-					prevState,
-					EDIT_SEGMENTS_EXPERIENCE,
-					payload
-				).then(
+				editSegmentsExperienceReducer(prevState, action).then(
 					state => {
 						expect(state.availableSegmentsExperiences[SEGMENTS_EXPERIENCE_ID_SECOND]).toEqual(prevState.availableSegmentsExperiences[SEGMENTS_EXPERIENCE_ID_SECOND]);
 						expect(state.availableSegmentsExperiences[SEGMENTS_EXPERIENCE_ID_DEFAULT]).toEqual(prevState.availableSegmentsExperiences[SEGMENTS_EXPERIENCE_ID_DEFAULT]);
 						expect(state.availableSegmentsExperiences[SEGMENTS_EXPERIENCE_ID]).toEqual(
 							{
 								...prevState.availableSegmentsExperiences[SEGMENTS_EXPERIENCE_ID],
-								name: payload.name,
-								segmentsEntryId: payload.segmentsEntryId
+								name: action.name,
+								segmentsEntryId: action.segmentsEntryId
 							}
 						);
 					}
@@ -390,11 +385,12 @@ describe(
 				}
 			};
 
-			const prevPayload = {
-				segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND
+			const prevAction = {
+				segmentsExperienceId: SEGMENTS_EXPERIENCE_ID_SECOND,
+				type: SELECT_SEGMENTS_EXPERIENCE
 			};
 
-			selectSegmentsExperienceReducer(prevState, SELECT_SEGMENTS_EXPERIENCE, prevPayload)
+			selectSegmentsExperienceReducer(prevState, prevAction)
 				.then(response => {
 					expect(response).toMatchSnapshot()
 					done();

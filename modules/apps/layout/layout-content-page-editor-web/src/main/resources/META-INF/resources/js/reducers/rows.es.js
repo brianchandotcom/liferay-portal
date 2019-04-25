@@ -6,19 +6,19 @@ import {MAX_COLUMNS} from '../utils/rowConstants';
 import {removeFragmentEntryLinks, updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
- * @param {!object} state
- * @param {!string} actionType
- * @param {!object} payload
- * @param {!Array} payload.layoutColumns
+ * @param {object} state
+ * @param {object} action
+ * @param {[]} action.layoutColumns
+ * @param {string} action.type
  * @return {object}
  * @review
  */
-function addRowReducer(state, actionType, payload) {
+function addRowReducer(state, action) {
 	let nextState = state;
 
 	return new Promise(
 		resolve => {
-			if (actionType === ADD_ROW) {
+			if (action.type === ADD_ROW) {
 				const position = getDropRowPosition(
 					nextState.layoutData.structure,
 					nextState.dropTargetItemId,
@@ -26,18 +26,17 @@ function addRowReducer(state, actionType, payload) {
 				);
 
 				const nextData = addRow(
-					payload.layoutColumns,
+					action.layoutColumns,
 					nextState.layoutData,
 					position
 				);
 
-				updatePageEditorLayoutData(nextData, nextState.segmentsExperienceId).then(
+				updatePageEditorLayoutData(
+					nextData,
+					nextState.segmentsExperienceId
+				).then(
 					() => {
-						nextState = setIn(
-							nextState,
-							['layoutData'],
-							nextData
-						);
+						nextState = setIn(nextState, ['layoutData'], nextData);
 
 						resolve(nextState);
 					}
@@ -55,35 +54,34 @@ function addRowReducer(state, actionType, payload) {
 }
 
 /**
- * @param {!object} state
- * @param {!string} actionType
- * @param {!object} payload
- * @param {!string} payload.rowId
- * @param {!string} payload.targetBorder
- * @param {!string} payload.targetItemId
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.rowId
+ * @param {string} action.targetBorder
+ * @param {string} action.targetItemId
+ * @param {object} action.type
  * @return {object}
  * @review
  */
-function moveRowReducer(state, actionType, payload) {
+function moveRowReducer(state, action) {
 	let nextState = state;
 
 	return new Promise(
 		resolve => {
-			if (actionType === MOVE_ROW) {
+			if (action.type === MOVE_ROW) {
 				const nextData = _moveRow(
-					payload.rowId,
+					action.rowId,
 					nextState.layoutData,
-					payload.targetItemId,
-					payload.targetBorder
+					action.targetItemId,
+					action.targetBorder
 				);
 
-				updatePageEditorLayoutData(nextData, nextState.segmentsExperienceId).then(
+				updatePageEditorLayoutData(
+					nextData,
+					nextState.segmentsExperienceId
+				).then(
 					() => {
-						nextState = setIn(
-							nextState,
-							['layoutData'],
-							nextData
-						);
+						nextState = setIn(nextState, ['layoutData'], nextData);
 
 						resolve(nextState);
 					}
@@ -101,32 +99,32 @@ function moveRowReducer(state, actionType, payload) {
 }
 
 /**
- * @param {!object} state
- * @param {!string} actionType
- * @param {!object} payload
- * @param {!Array} payload.rowId
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.rowId
+ * @param {string} action.type
  * @return {object}
  * @review
  */
-function removeRowReducer(state, actionType, payload) {
+function removeRowReducer(state, action) {
 	let nextState = state;
 
 	return new Promise(
 		resolve => {
-			if (actionType === REMOVE_ROW) {
+			if (action.type === REMOVE_ROW) {
 				nextState = updateIn(
 					nextState,
 					['layoutData', 'structure'],
 					structure => remove(
 						structure,
-						getRowIndex(structure, payload.rowId)
+						getRowIndex(structure, action.rowId)
 					),
 					[]
 				);
 
 				const fragmentEntryLinkIds = getRowFragmentEntryLinkIds(
 					state.layoutData.structure[
-						getRowIndex(state.layoutData.structure, payload.rowId)
+						getRowIndex(state.layoutData.structure, action.rowId)
 					]
 				).filter(
 					fragmentEntryLinkId => !containsFragmentEntryLinkId(
@@ -172,22 +170,22 @@ function removeRowReducer(state, actionType, payload) {
 }
 
 /**
- * @param {!object} state
- * @param {!string} actionType
- * @param {!object} payload
- * @param {!Array} payload.columns
- * @param {!string} payload.rowId
+ * @param {object} state
+ * @param {object} action
+ * @param {[]} action.columns
+ * @param {string} action.rowId
+ * @param {string} action.type
  * @return {object}
  * @review
  */
-const updateRowColumnsReducer = (state, actionType, payload) => new Promise(
+const updateRowColumnsReducer = (state, action) => new Promise(
 	resolve => {
 		let nextState = state;
 
-		if (actionType === UPDATE_ROW_COLUMNS) {
+		if (action.type === UPDATE_ROW_COLUMNS) {
 			const rowIndex = getRowIndex(
 				nextState.layoutData.structure,
-				payload.rowId
+				action.rowId
 			);
 
 			if (rowIndex === -1) {
@@ -198,10 +196,10 @@ const updateRowColumnsReducer = (state, actionType, payload) => new Promise(
 					nextState.layoutData,
 					[
 						'structure',
-						rowIndex,
+						rowIndex.toString(),
 						'columns'
 					],
-					payload.columns
+					action.columns
 				);
 
 				updatePageEditorLayoutData(
@@ -232,46 +230,66 @@ const updateRowColumnsReducer = (state, actionType, payload) => new Promise(
 
 /**
  * @param {!object} state
- * @param {!string} actionType
- * @param {!object} payload
- * @param {!Array} payload.rowId
+ * @param {object} action
+ * @param {number} action.numberOfColumns
+ * @param {string} action.rowId
+ * @param {string} action.type
  * @return {object}
  * @review
  */
-function updateRowColumnsNumberReducer(state, actionType, payload) {
+function updateRowColumnsNumberReducer(state, action) {
 	let nextState = state;
 
 	return new Promise(
 		resolve => {
-			if (actionType === UPDATE_ROW_COLUMNS_NUMBER) {
+			if (action.type === UPDATE_ROW_COLUMNS_NUMBER) {
 
 				let fragmentEntryLinkIdsToRemove = [];
 				let nextData;
 
-				const numberOfColumns = payload.numberOfColumns;
+				const numberOfColumns = action.numberOfColumns;
 
 				const columnsSize = Math.floor(MAX_COLUMNS / numberOfColumns);
-				const rowIndex = getRowIndex(nextState.layoutData.structure, payload.rowId);
+
+				const rowIndex = getRowIndex(
+					nextState.layoutData.structure,
+					action.rowId
+				);
 
 				let columns = nextState.layoutData.structure[rowIndex].columns;
 
 				if (numberOfColumns > columns.length) {
-					nextData = _addColumns(nextState.layoutData, rowIndex, numberOfColumns, columnsSize);
+					nextData = _addColumns(
+						nextState.layoutData,
+						rowIndex,
+						numberOfColumns,
+						columnsSize
+					);
 				}
 				else {
 					let fragmentEntryLinkIdsToRemove = getRowFragmentEntryLinkIds(
 						{
-							columns: columns.slice(numberOfColumns - columns.length)
+							columns: columns.slice(
+								numberOfColumns - columns.length
+							)
 						}
 					);
 
 					fragmentEntryLinkIdsToRemove.forEach(
 						fragmentEntryLinkId => {
-							nextState = updateWidgets(nextState, fragmentEntryLinkId);
+							nextState = updateWidgets(
+								nextState,
+								fragmentEntryLinkId
+							);
 						}
 					);
 
-					nextData = _removeColumns(nextState.layoutData, rowIndex, numberOfColumns, columnsSize);
+					nextData = _removeColumns(
+						nextState.layoutData,
+						rowIndex,
+						numberOfColumns,
+						columnsSize
+					);
 				}
 
 				updatePageEditorLayoutData(
@@ -285,15 +303,9 @@ function updateRowColumnsNumberReducer(state, actionType, payload) {
 					)
 				).then(
 					() => {
-						nextState = setIn(
-							nextState,
-							['layoutData'],
-							nextData
-						);
+						nextState = setIn(nextState, ['layoutData'], nextData);
 
 						resolve(nextState);
-
-						return nextState;
 					}
 				).catch(
 					() => {
@@ -310,27 +322,27 @@ function updateRowColumnsNumberReducer(state, actionType, payload) {
 
 /**
  * @param {object} state
- * @param {string} actionType
- * @param {object} payload
- * @param {object} payload.config
- * @param {string} payload.rowId
+ * @param {object} action
+ * @param {object} action.config
+ * @param {string} action.rowId
+ * @param {string} action.type
  * @return {object}
  */
-const updateRowConfigReducer = (state, actionType, payload) => new Promise(
+const updateRowConfigReducer = (state, action) => new Promise(
 	resolve => {
 		let nextState = state;
 
-		if (actionType === UPDATE_ROW_CONFIG) {
+		if (action.type === UPDATE_ROW_CONFIG) {
 			const rowIndex = getRowIndex(
 				nextState.layoutData.structure,
-				payload.rowId
+				action.rowId
 			);
 
 			if (rowIndex === -1) {
 				resolve(nextState);
 			}
 			else {
-				Object.entries(payload.config).forEach(
+				Object.entries(action.config).forEach(
 					entry => {
 						const [key, value] = entry;
 

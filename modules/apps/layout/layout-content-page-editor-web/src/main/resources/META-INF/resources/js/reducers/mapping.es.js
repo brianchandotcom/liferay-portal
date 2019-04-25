@@ -3,20 +3,20 @@ import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * @param {object} state
- * @param {string} actionType
- * @param {object} payload
- * @param {string} payload.classNameId
- * @param {string} payload.classPK
- * @param {string} payload.title
+ * @param {object} action
+ * @param {string} action.classNameId
+ * @param {string} action.classPK
+ * @param {string} action.title
+ * @param {string} action.type
  */
-function addMappingAssetEntry(state, actionType, payload) {
+function addMappingAssetEntry(state, action) {
 	let nextState = state;
 
-	if (actionType === ADD_MAPPED_ASSET_ENTRY) {
+	if (action.type === ADD_MAPPED_ASSET_ENTRY) {
 		const hasAssetEntry = nextState.mappedAssetEntries.some(
 			assetEntry => (
-				(assetEntry.classNameId === payload.classNameId) &&
-				(assetEntry.classPK === payload.classPK)
+				(assetEntry.classNameId === action.classNameId) &&
+				(assetEntry.classPK === action.classPK)
 			)
 		);
 
@@ -24,7 +24,7 @@ function addMappingAssetEntry(state, actionType, payload) {
 			nextState = setIn(
 				nextState,
 				['mappedAssetEntries'],
-				[...nextState.mappedAssetEntries, payload]
+				[...nextState.mappedAssetEntries, action]
 			);
 		}
 	}

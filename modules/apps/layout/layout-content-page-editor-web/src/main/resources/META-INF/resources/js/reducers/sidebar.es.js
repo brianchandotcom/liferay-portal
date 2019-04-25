@@ -3,20 +3,20 @@ import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * @param {object} state
- * @param {string} actionType
- * @param {object} payload
- * @param {string} [payload.sidebarPanelId='']
+ * @param {object} action
+ * @param {string} action.type
+ * @param {string} [action.sidebarPanelId='']
  * @return {object}
  * @review
  */
-function updateSelectedSidebarPanelId(state, actionType, payload) {
+function updateSelectedSidebarPanelId(state, action) {
 	let nextState = state;
 
-	if (actionType === UPDATE_SELECTED_SIDEBAR_PANEL_ID) {
+	if (action.type === UPDATE_SELECTED_SIDEBAR_PANEL_ID) {
 		nextState = setIn(
 			nextState,
 			['selectedSidebarPanelId'],
-			payload.sidebarPanelId
+			action.sidebarPanelId || ''
 		);
 	}
 

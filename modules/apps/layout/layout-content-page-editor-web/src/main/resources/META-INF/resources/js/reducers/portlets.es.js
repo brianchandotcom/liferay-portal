@@ -7,26 +7,26 @@ import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es'
 import editableValuesMigrator from '../utils/fragmentMigrator.es';
 
 /**
- * @param {!object} state
- * @param {!string} actionType
- * @param {!object} payload
- * @param {!boolean} payload.instanceable
- * @param {!string} payload.portletId
+ * @param {object} state
+ * @param {object} action
+ * @param {boolean} action.instanceable
+ * @param {string} action.portletId
+ * @param {string} action.type
  * @return {object}
  * @review
  */
-function addPortletReducer(state, actionType, payload) {
+function addPortletReducer(state, action) {
 	return new Promise(
 		resolve => {
 			let nextState = state;
 
-			if (actionType === ADD_PORTLET) {
+			if (action.type === ADD_PORTLET) {
 				let fragmentEntryLink = null;
 				let nextData = null;
 
 				_addPortlet(
 					nextState.addPortletURL,
-					payload.portletId,
+					action.portletId,
 					nextState.classNameId,
 					nextState.classPK,
 					nextState.portletNamespace,
@@ -61,7 +61,7 @@ function addPortletReducer(state, actionType, payload) {
 						response => {
 							fragmentEntryLink = response;
 
-							fragmentEntryLink.portletId = payload.portletId;
+							fragmentEntryLink.portletId = action.portletId;
 
 							nextState = setIn(
 								nextState,
@@ -72,8 +72,11 @@ function addPortletReducer(state, actionType, payload) {
 								fragmentEntryLink
 							);
 
-							if (!payload.instanceable) {
-								const widgetPath = getWidgetPath(nextState.widgets, payload.portletId);
+							if (!action.instanceable) {
+								const widgetPath = getWidgetPath(
+									nextState.widgets,
+									action.portletId
+								);
 
 								nextState = setIn(
 									nextState,

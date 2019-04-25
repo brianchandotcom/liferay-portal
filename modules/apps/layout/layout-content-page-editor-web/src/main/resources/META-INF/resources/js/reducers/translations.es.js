@@ -6,38 +6,39 @@ const EDITABLE_VALUES_KEY = 'com.liferay.fragment.entry.processor.editable.Edita
 
 /**
  * Reducer for changing languageId
- * @param {!object} state
- * @param {!string} actionType
- * @param {object} payload
- * @param {string} payload.languageId
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.languageId
+ * @param {string} action.type
  * @return {object}
  * @review
  */
-function languageIdReducer(state, actionType, payload) {
+function languageIdReducer(state, action) {
 	let nextState = state;
 
-	if (actionType === CHANGE_LANGUAGE_ID) {
-		nextState = setIn(nextState, ['languageId'], payload.languageId);
+	if (action.type === CHANGE_LANGUAGE_ID) {
+		nextState = setIn(nextState, ['languageId'], action.languageId);
 	}
 
 	return nextState;
 }
 
 /**
- * @param {!object} state
- * @param {!string} actionType
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.type
  * @return {object}
  * @review
  */
-function translationStatusReducer(state, actionType) {
+function translationStatusReducer(state, action) {
 	let nextState = state;
 
 	if (
-		actionType === ADD_FRAGMENT_ENTRY_LINK ||
-		actionType === UPDATE_TRANSLATION_STATUS ||
-		actionType === REMOVE_FRAGMENT_ENTRY_LINK ||
-		actionType === SELECT_SEGMENTS_EXPERIENCE ||
-		actionType === CREATE_SEGMENTS_EXPERIENCE
+		action.type === ADD_FRAGMENT_ENTRY_LINK ||
+		action.type === UPDATE_TRANSLATION_STATUS ||
+		action.type === REMOVE_FRAGMENT_ENTRY_LINK ||
+		action.type === SELECT_SEGMENTS_EXPERIENCE ||
+		action.type === CREATE_SEGMENTS_EXPERIENCE
 	) {
 		const segmentsExperienceId = nextState.segmentsExperienceId || nextState.defaultSegmentsExperienceId;
 
@@ -47,7 +48,11 @@ function translationStatusReducer(state, actionType) {
 			prefixSegmentsExperienceId(segmentsExperienceId)
 		);
 
-		nextState = setIn(nextState, ['translationStatus'], nextTranslationStatus);
+		nextState = setIn(
+			nextState,
+			['translationStatus'],
+			nextTranslationStatus
+		);
 	}
 
 	return nextState;

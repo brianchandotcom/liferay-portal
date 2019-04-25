@@ -181,22 +181,27 @@ function _removeLayoutDataItem(state, segmentsExperienceId) {
 
 /**
  * @param {object} state
+ * @param {string} state.classNameId
+ * @param {string} state.classPK
  * @param {string} state.defaultLanguageId
- * @param {string} actionType
- * @param {object} payload
- * @param {string} payload.segmentsEntryId
- * @param {string} payload.name
+ * @param {string} state.defaultSegmentsExperienceId
+ * @param {[]} state.layoutData
+ * @param {Array<{segmentsExperienceId: string}>} state.layoutDataList
+ * @param {object} action
+ * @param {string} action.segmentsEntryId
+ * @param {string} action.name
+ * @param {string} action.type
  * @return {Promise}
  * @review
  */
-function createSegmentsExperienceReducer(state, actionType, payload) {
+function createSegmentsExperienceReducer(state, action) {
 	return new Promise(
 		(resolve, reject) => {
 			let nextState = state;
 
-			if (actionType === CREATE_SEGMENTS_EXPERIENCE) {
+			if (action.type === CREATE_SEGMENTS_EXPERIENCE) {
 				const {classNameId, classPK} = nextState;
-				const {name, segmentsEntryId} = payload;
+				const {name, segmentsEntryId} = action;
 
 				const nameMap = JSON.stringify(
 					{
@@ -282,19 +287,22 @@ function createSegmentsExperienceReducer(state, actionType, payload) {
 /**
  * @param {object} state
  * @param {Array} state.availableSegmentsExperiences
+ * @param {string} state.defaultSegmentsExperienceId
+ * @param {{structure: []}} state.layoutData
+ * @param {[]} state.layoutDataList
  * @param {string} state.segmentsExperienceId
- * @param {string} actionType
- * @param {object} payload
- * @param {string} payload.experienceId
+ * @param {object} action
+ * @param {string} action.segmentsExperienceId
+ * @param {string} action.type
  * @returns {Promise}
  */
-function deleteSegmentsExperienceReducer(state, actionType, payload) {
+function deleteSegmentsExperienceReducer(state, action) {
 	return new Promise(
 		(resolve, reject) => {
 			try {
 				let nextState = state;
-				if (actionType === DELETE_SEGMENTS_EXPERIENCE) {
-					const {segmentsExperienceId} = payload;
+				if (action.type === DELETE_SEGMENTS_EXPERIENCE) {
+					const {segmentsExperienceId} = action;
 
 					const fragmentEntryLinkIds = nextState.layoutData.structure.reduce(
 						(allFragmentEntryLinkIds, row) => [
@@ -382,28 +390,30 @@ function deleteSegmentsExperienceReducer(state, actionType, payload) {
  *
  * @export
  * @param {object} state
+ * @param {object} state.layoutData
+ * @param {object} state.layoutDataList
  * @param {string} state.segmentsExperienceId
- * @param {string} actionType
- * @param {object} payload
- * @param {string} payload.segmentsExperienceId
+ * @param {object} action
+ * @param {string} action.segmentsExperienceId
+ * @param {string} action.type
  * @returns {Promise}
  */
-function selectSegmentsExperienceReducer(state, actionType, payload) {
+function selectSegmentsExperienceReducer(state, action) {
 	return new Promise(
 		(resolve, reject) => {
 			let nextState = state;
-			if (actionType === SELECT_SEGMENTS_EXPERIENCE) {
-				if (payload.segmentsExperienceId === nextState.segmentsExperienceId) {
+			if (action.type === SELECT_SEGMENTS_EXPERIENCE) {
+				if (action.segmentsExperienceId === nextState.segmentsExperienceId) {
 					resolve(nextState);
 				}
 				else {
-					_switchLayoutDataList(nextState, payload.segmentsExperienceId)
+					_switchLayoutDataList(nextState, action.segmentsExperienceId)
 						.then(
 							newState => {
 								let nextNewState = setIn(
 									newState,
 									['segmentsExperienceId'],
-									payload.segmentsExperienceId,
+									action.segmentsExperienceId,
 								);
 								resolve(nextNewState);
 							}
@@ -424,24 +434,24 @@ function selectSegmentsExperienceReducer(state, actionType, payload) {
 
 /**
  * @param {object} state
- * @param {string} actionType
- * @param {object} payload
- * @param {string} payload.segmentsEntryId
- * @param {string} payload.name
- * @param {string} payload.segmentsExperienceId
+ * @param {object} action
+ * @param {string} action.segmentsEntryId
+ * @param {string} action.name
+ * @param {string} action.segmentsExperienceId
+ * @param {string} action.type
  * @return {Promise}
  * @review
  */
-function editSegmentsExperienceReducer(state, actionType, payload) {
+function editSegmentsExperienceReducer(state, action) {
 	return new Promise(
 		(resolve, reject) => {
 			let nextState = state;
-			if (actionType === EDIT_SEGMENTS_EXPERIENCE) {
+			if (action.type === EDIT_SEGMENTS_EXPERIENCE) {
 				const {
 					name,
 					segmentsEntryId,
 					segmentsExperienceId
-				} = payload;
+				} = action;
 
 				const nameMap = JSON.stringify(
 					{
@@ -501,26 +511,28 @@ function editSegmentsExperienceReducer(state, actionType, payload) {
  *
  * @param {object} state
  * @param {Array} state.availableSegmentsExperiences
- * @param {string} actionType
- * @param {object} payload
- * @param {('up' | 'down')} payload.direction
- * @param {string} payload.segmentsExperienceId
- * @param {number} payload.priority
+ * @param {object} action
+ * @param {('up' | 'down')} action.direction
+ * @param {string} action.segmentsExperienceId
+ * @param {number|string} action.priority
+ * @param {string} action.type
  * @return {Promise}
  */
-function updateSegmentsExperiencePriorityReducer(state, actionType, payload) {
+function updateSegmentsExperiencePriorityReducer(state, action) {
 	return new Promise(
 		(resolve, reject) => {
 			let nextState = state;
 
-			if (actionType === UPDATE_SEGMENTS_EXPERIENCE_PRIORITY) {
+			if (action.type === UPDATE_SEGMENTS_EXPERIENCE_PRIORITY) {
 				const {
 					direction,
 					priority: oldPriority,
 					segmentsExperienceId
-				} = payload;
+				} = action;
 
-				const priority = parseInt(oldPriority, 10);
+				const priority = typeof oldPriority === 'number' ?
+					oldPriority :
+					parseInt(oldPriority, 10);
 
 				const newPriority = (direction === 'up') ?
 					priority + 1 :
@@ -534,7 +546,9 @@ function updateSegmentsExperiencePriorityReducer(state, actionType, payload) {
 					}
 				).then(
 					() => {
-						const availableSegmentsExperiencesArray = Object.values(nextState.availableSegmentsExperiences);
+						const availableSegmentsExperiencesArray = Object.values(
+							nextState.availableSegmentsExperiences
+						);
 
 						const subTargetExperience = availableSegmentsExperiencesArray.find(
 							experience => {

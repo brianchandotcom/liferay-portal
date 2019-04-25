@@ -38,6 +38,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
@@ -458,14 +459,11 @@ public class FileEntryStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected FileEntry getStagedModel(String uuid, Group group) {
-		try {
-			return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-				uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected FileEntry getStagedModel(String uuid, Group group)
+		throws PortalException {
+
+		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override

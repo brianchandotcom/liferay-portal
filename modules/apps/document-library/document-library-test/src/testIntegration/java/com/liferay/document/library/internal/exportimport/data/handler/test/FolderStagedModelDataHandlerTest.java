@@ -30,6 +30,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -256,17 +257,14 @@ public class FolderStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			DLFolder dlFolder =
-				DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
-					uuid, group.getGroupId());
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws PortalException {
 
-			return new LiferayFolder(dlFolder);
-		}
-		catch (Exception e) {
-			return null;
-		}
+		DLFolder dlFolder =
+			DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
+				uuid, group.getGroupId());
+
+		return new LiferayFolder(dlFolder);
 	}
 
 	@Override

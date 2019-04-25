@@ -10,7 +10,14 @@ exports[`Should render component 1`] = `
     <thead>
       <tr>
         <th
-          className="text-center table-head-title"
+          style={
+            Object {
+              "width": "5%",
+            }
+          }
+        />
+        <th
+          className="table-head-title"
           style={
             Object {
               "width": "10%",
@@ -43,7 +50,7 @@ exports[`Should render component 1`] = `
           className="table-head-title"
           style={
             Object {
-              "width": "20%",
+              "width": "15%",
             }
           }
         >
@@ -63,9 +70,7 @@ exports[`Should render component 1`] = `
     </thead>
     <tbody>
       <tr>
-        <td
-          className="lfr-title-column table-title text-center"
-        >
+        <td>
           <span
             className="mr-3 sticker sticker-sm bg-success-light"
           >
@@ -83,6 +88,10 @@ exports[`Should render component 1`] = `
               </svg>
             </span>
           </span>
+        </td>
+        <td
+          className="lfr-title-column table-title"
+        >
           <strong>
             12351
           </strong>
@@ -103,9 +112,7 @@ exports[`Should render component 1`] = `
         </td>
       </tr>
       <tr>
-        <td
-          className="lfr-title-column table-title text-center"
-        >
+        <td>
           <span
             className="mr-3 sticker sticker-sm bg-danger-light"
           >
@@ -123,6 +130,10 @@ exports[`Should render component 1`] = `
               </svg>
             </span>
           </span>
+        </td>
+        <td
+          className="lfr-title-column table-title"
+        >
           <strong>
             12351
           </strong>
@@ -143,9 +154,7 @@ exports[`Should render component 1`] = `
         </td>
       </tr>
       <tr>
-        <td
-          className="lfr-title-column table-title text-center"
-        >
+        <td>
           <span
             className="mr-3 sticker sticker-sm bg-info-light"
           >
@@ -163,6 +172,10 @@ exports[`Should render component 1`] = `
               </svg>
             </span>
           </span>
+        </td>
+        <td
+          className="lfr-title-column table-title"
+        >
           <strong>
             12351
           </strong>
@@ -171,7 +184,7 @@ exports[`Should render component 1`] = `
           Process: Item Subject Test 3
         </td>
         <td>
-          
+          completed
         </td>
         <td>
           User Test
@@ -180,6 +193,30 @@ exports[`Should render component 1`] = `
           className="pr-4 text-right"
         >
           Feb 03, 12:00 AM
+        </td>
+      </tr>
+      <tr>
+        <td />
+        <td
+          className="lfr-title-column table-title"
+        >
+          <strong>
+            12351
+          </strong>
+        </td>
+        <td>
+          Process: Item Subject Test 4
+        </td>
+        <td>
+          completed
+        </td>
+        <td>
+          User Test
+        </td>
+        <td
+          className="pr-4 text-right"
+        >
+          Feb 04, 12:00 AM
         </td>
       </tr>
     </tbody>

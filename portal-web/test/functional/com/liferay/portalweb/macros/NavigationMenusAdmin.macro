@@ -92,6 +92,24 @@ definition {
 		Modal.save();
 	}
 
+	macro addTranslation {
+		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
+
+		Pause(locator1 = "3000");
+
+		if (IsElementPresent(locator1 = "SiteNavigationMenu#SET_CUSTOM_NAME_CHECKBOX")) {
+			Check.checkToggleSwitch(locator1 = "SiteNavigationMenu#SET_CUSTOM_NAME_CHECKBOX");
+		}
+
+		PortletEntry.changeLocale(
+			fieldName = "Name",
+			locale = "${locale}");
+
+		PortletEntry.inputName(name = "${translation}");
+
+		Button.clickSave();
+	}
+
 	macro configureMenuType {
 		if ("${menuType}" == "Primary Navigation") {
 			LexiconEntry.gotoEntryMenuItemNoError(

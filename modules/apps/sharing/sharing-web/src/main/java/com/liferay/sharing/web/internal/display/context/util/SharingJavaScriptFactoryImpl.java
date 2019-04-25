@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -223,7 +224,8 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		String title = _getAssetTitle(className, classPK, locale);
 
 		if (Validator.isNotNull(title)) {
-			return LanguageUtil.format(resourceBundle, "share-x", title);
+			return LanguageUtil.format(
+				resourceBundle, "share-x", HtmlUtil.escapeJS(title));
 		}
 
 		return LanguageUtil.get(resourceBundle, "share");

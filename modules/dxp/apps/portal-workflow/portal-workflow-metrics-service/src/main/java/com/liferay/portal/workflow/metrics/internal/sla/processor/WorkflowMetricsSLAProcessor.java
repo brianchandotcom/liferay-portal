@@ -404,9 +404,8 @@ public class WorkflowMetricsSLAProcessor {
 						taskInterval._endLocalDateTime);
 				}
 			}
-			else if (startTimeMarkers.containsKey(taskId) &&
-					 !stopTimeMarkers.containsKey(taskId)) {
 
+			if (startTimeMarkers.containsKey(taskId)) {
 				if (Objects.equals(startTimeMarkers.get(taskId), "enter")) {
 					workflowMetricsSLAStopwatch.run(
 						taskInterval._startLocalDateTime);
@@ -419,7 +418,8 @@ public class WorkflowMetricsSLAProcessor {
 						taskInterval._endLocalDateTime);
 				}
 			}
-			else if (stopTimeMarkers.containsKey(taskId)) {
+
+			if (stopTimeMarkers.containsKey(taskId)) {
 				if (Objects.equals(stopTimeMarkers.get(taskId), "enter")) {
 					workflowMetricsSLAStopwatch.stop(
 						taskInterval._startLocalDateTime);

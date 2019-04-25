@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sharing.constants.SharingPortletKeys;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -104,6 +106,10 @@ public class SharingUserAutocompleteMVCResourceCommand
 		}
 
 		User user = themeDisplay.getUser();
+
+		if (ArrayUtil.isEmpty(user.getGroupIds())) {
+			return Collections.emptyList();
+		}
 
 		return _userLocalService.searchSocial(
 			themeDisplay.getCompanyId(), user.getGroupIds(), query, 0, 20,

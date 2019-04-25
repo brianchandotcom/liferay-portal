@@ -42,7 +42,7 @@
 	}
 
 	&--collapsed > &-content > &-section {
-		transform: translateX(calc(100% + #{$sidebarButtonsWidth + $sidebarLeftBorderWidth}));
+		transform: translateX(100%) translateX(#{$sidebarButtonsWidth + $sidebarLeftBorderWidth});
 	}
 
 	@media (min-width: 768px) {

@@ -23,10 +23,6 @@ import com.liferay.portal.kernel.messaging.config.BaseMessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,11 +32,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -53,9 +57,22 @@ public class BaseMessagingConfiguratorTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			BaseMessagingConfiguratorTest.class);
+
+		_bundleContext = bundle.getBundleContext();
+	}
+
+	@After
+	public void tearDown() {
+		_serviceTracker.close();
+	}
+
 	@Test
 	public void testCustomClassLoaderDestinationConfiguration()
-		throws InterruptedException {
+		throws InterruptedException, InvalidSyntaxException {
 
 		final TestClassLoader testClassLoader = new TestClassLoader();
 
@@ -95,22 +112,20 @@ public class BaseMessagingConfiguratorTest {
 
 		pluginMessagingConfigurator.afterPropertiesSet();
 
-		Registry registry = RegistryUtil.getRegistry();
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext,
+			_bundleContext.createFilter(
+				"(&(destination.name=*plugintest*)(objectClass=com.liferay." +
+					"portal.kernel.messaging.Destination))"),
+			null);
 
-		Filter filter = registry.getFilter(
-			"(&(destination.name=*plugintest*)(objectClass=com.liferay." +
-				"portal.kernel.messaging.Destination))");
+		_serviceTracker.open();
 
-		ServiceTracker<Destination, Destination> serviceTracker =
-			registry.trackServices(filter);
-
-		serviceTracker.open();
-
-		while (ArrayUtil.isEmpty(serviceTracker.getServices())) {
+		while (ArrayUtil.isEmpty(_serviceTracker.getServices())) {
 			Thread.sleep(1000);
 		}
 
-		Object[] services = serviceTracker.getServices();
+		Object[] services = _serviceTracker.getServices();
 
 		Assert.assertEquals(Arrays.toString(services), 2, services.length);
 
@@ -138,7 +153,7 @@ public class BaseMessagingConfiguratorTest {
 
 	@Test
 	public void testPortalClassLoaderDestinationConfiguration()
-		throws InterruptedException {
+		throws InterruptedException, InvalidSyntaxException {
 
 		DefaultMessagingConfigurator defaultMessagingConfigurator =
 			new DefaultMessagingConfigurator();
@@ -176,22 +191,20 @@ public class BaseMessagingConfiguratorTest {
 
 		defaultMessagingConfigurator.afterPropertiesSet();
 
-		Registry registry = RegistryUtil.getRegistry();
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext,
+			_bundleContext.createFilter(
+				"(&(destination.name=*portaltest*)(objectClass=com.liferay." +
+					"portal.kernel.messaging.Destination))"),
+			null);
 
-		Filter filter = registry.getFilter(
-			"(&(destination.name=*portaltest*)(objectClass=com.liferay." +
-				"portal.kernel.messaging.Destination))");
+		_serviceTracker.open();
 
-		ServiceTracker<Destination, Destination> serviceTracker =
-			registry.trackServices(filter);
-
-		serviceTracker.open();
-
-		while (ArrayUtil.isEmpty(serviceTracker.getServices())) {
+		while (ArrayUtil.isEmpty(_serviceTracker.getServices())) {
 			Thread.sleep(1000);
 		}
 
-		Object[] services = serviceTracker.getServices();
+		Object[] services = _serviceTracker.getServices();
 
 		Assert.assertEquals(Arrays.toString(services), 2, services.length);
 
@@ -216,6 +229,10 @@ public class BaseMessagingConfiguratorTest {
 			}
 		}
 	}
+
+	private static BundleContext _bundleContext;
+
+	private ServiceTracker<Destination, Destination> _serviceTracker;
 
 	private static class TestClassLoader extends ClassLoader {
 	}

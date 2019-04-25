@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.Staging;
@@ -30,9 +31,13 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.xml.Element;
@@ -95,9 +100,7 @@ public class PortletDisplayTemplatePortletDataHandler
 
 	@Activate
 	protected void activate() {
-		setExportControls(
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "application-display-templates", true, true));
+		setExportControls(_getPortletDataHandlerControls());
 		setStagingControls(getExportControls());
 	}
 
@@ -236,6 +239,39 @@ public class PortletDisplayTemplatePortletDataHandler
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private PortletDataHandlerControl[] _getPortletDataHandlerControls() {
+		List<PortletDataHandlerControl> portletDataHandlerControls =
+			new ArrayList<>();
+
+		portletDataHandlerControls.add(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "application-display-templates", true, true));
+
+		for (TemplateHandler templateHandler :
+				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
+
+			ClassName className = _classNameLocalService.fetchClassName(
+				templateHandler.getClassName());
+
+			if (className == null) {
+				continue;
+			}
+
+			portletDataHandlerControls.add(
+				new PortletDataHandlerBoolean(
+					NAMESPACE,
+					templateHandler.getName(LocaleUtil.getSiteDefault()), true,
+					false, null, DDMTemplate.class.getName(),
+					className.getValue()));
+		}
+
+		return portletDataHandlerControls.toArray(
+			new PortletDataHandlerControl[portletDataHandlerControls.size()]);
+	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 

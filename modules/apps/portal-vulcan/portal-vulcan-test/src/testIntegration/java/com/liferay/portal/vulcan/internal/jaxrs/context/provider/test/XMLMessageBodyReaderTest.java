@@ -30,6 +30,9 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.nio.charset.StandardCharsets;
+
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,7 +83,13 @@ public class XMLMessageBodyReaderTest {
 
 		URLConnection urlConnection = url.openConnection();
 
+		Base64.Encoder encoder = Base64.getEncoder();
+
+		String basicAuth = encoder.encodeToString(
+			"test@liferay.com:test".getBytes(StandardCharsets.UTF_8));
+
 		urlConnection.setDoOutput(true);
+		urlConnection.setRequestProperty("Authorization", "Basic " + basicAuth);
 		urlConnection.setRequestProperty(
 			"Content-Type", MediaType.APPLICATION_XML);
 

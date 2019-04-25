@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -32,9 +31,15 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
+import java.net.URLConnection;
 
+import java.nio.charset.StandardCharsets;
+
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -91,7 +96,7 @@ public class SiteValidatorContainerRequestFilterTest {
 	public void testInValidGroup() throws Exception {
 		URL url = new URL("http://localhost:8080/o/test-vulcan/0/name");
 
-		StringUtil.read(url.openStream());
+		StringUtil.read(_getInputStream(url));
 	}
 
 	@Test
@@ -108,7 +113,7 @@ public class SiteValidatorContainerRequestFilterTest {
 			"http://localhost:8080/o/test-vulcan/" + group.getGroupId() +
 				"/name");
 
-		String groupName = StringUtil.read(url.openStream());
+		String groupName = StringUtil.read(_getInputStream(url));
 
 		Assert.assertEquals(group.getName(LocaleUtil.getDefault()), groupName);
 	}
@@ -132,8 +137,20 @@ public class SiteValidatorContainerRequestFilterTest {
 
 	}
 
-	@Inject
-	private GroupLocalService _groupLocalService;
+	private InputStream _getInputStream(URL url) throws IOException {
+		URLConnection urlConnection = url.openConnection();
+
+		Base64.Encoder encoder = Base64.getEncoder();
+
+		String basicAuth = encoder.encodeToString(
+			"test@liferay.com:test".getBytes(StandardCharsets.UTF_8));
+
+		urlConnection.setRequestProperty("Authorization", "Basic " + basicAuth);
+
+		urlConnection.connect();
+
+		return urlConnection.getInputStream();
+	}
 
 	@Inject
 	private Portal _portal;

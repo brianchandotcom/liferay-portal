@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -92,15 +93,8 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 					return result;
 				}
 
-				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					localBuildURL + "/injectedEnvVars/api/json", false);
-
-				JSONObject envMapJSONObject = jsonObject.getJSONObject(
-					"envMap");
-
-				for (String key : envMapJSONObject.keySet()) {
-					buildEnvMap.put(key, envMapJSONObject.getString(key));
-				}
+				buildEnvMap.putAll(
+					getInjectedEnvironmentVariablesMap(localBuildURL));
 
 				retries++;
 
@@ -172,6 +166,30 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 		return getCommentTokens(getRootElement(resource));
 	}
 
+	protected Map<String, String> getInjectedEnvironmentVariablesMap(
+			String localBuildURL)
+		throws IOException {
+
+		Map<String, String> injectedEnvironmentVariablesMap;
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			localBuildURL + "/injectedEnvVars/api/json", false);
+
+		JSONObject envMapJSONObject = jsonObject.getJSONObject("envMap");
+
+		Set<String> envMapJSONObjectKeySet = envMapJSONObject.keySet();
+
+		injectedEnvironmentVariablesMap = new HashMap<>(
+			envMapJSONObjectKeySet.size());
+
+		for (String key : envMapJSONObjectKeySet) {
+			injectedEnvironmentVariablesMap.put(
+				key, envMapJSONObject.getString(key));
+		}
+
+		return injectedEnvironmentVariablesMap;
+	}
+
 	protected Element getRootElement(String content) {
 		try {
 			Document document = Dom4JUtil.parse(
@@ -215,7 +233,9 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 		return true;
 	}
 
-	protected void waitForNonzeroDuration(String localBuildURL) throws IOException {
+	protected void waitForNonzeroDuration(String localBuildURL)
+		throws IOException {
+
 		long maxWaitTime = 300 * 1000;
 		long startTime = System.currentTimeMillis();
 

@@ -16,9 +16,7 @@ definition {
 
 		AssertVisible(locator1 = "AdaptiveMediaTable#PROGRESS");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "AdaptiveMediaTable#PROGRESS",
-			value1 = "${percentAdapted}");
+		AssertElementPresent(locator1 = "AdaptiveMediaTable#PROGRESS_SUCCESS");
 
 		Alert.closeMessage(messageType = "GENERIC");
 	}

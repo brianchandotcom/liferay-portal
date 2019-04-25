@@ -47,12 +47,7 @@ public class OAuth2ProviderTestUtil {
 			Class<? extends BundleActivator> bundleActivatorClass)
 		throws Exception {
 
-		return getArchive(bundleActivatorClass, new File("bnd.bnd"));
-	}
-
-	public static Archive<?> getArchive(
-			Class<? extends BundleActivator> bundleActivatorClass, File bndFile)
-		throws Exception {
+		File bndFile = new File("bnd.bnd");
 
 		String javaClassPathString = System.getProperty("java.class.path");
 

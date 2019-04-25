@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.upgrade.v2_0_0;
+package com.liferay.journal.internal.upgrade.v3_0_0;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

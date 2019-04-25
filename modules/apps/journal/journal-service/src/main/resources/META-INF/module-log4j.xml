@@ -26,7 +26,7 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.journal.internal.upgrade.v2_0_0.UpgradeJournalImages">
+	<category name="com.liferay.journal.internal.upgrade.v3_0_0.UpgradeJournalImages">
 		<priority value="INFO" />
 	</category>
 

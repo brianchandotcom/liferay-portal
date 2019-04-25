@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -568,10 +567,7 @@ public class LayoutsAdminDisplayContext {
 			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
 
 			layoutJSONObject.put(
-				"actions",
-				String.join(
-					StringPool.COMMA,
-					_getAvailableActionDropdownItems(layout)));
+				"actions", _getAvailableActionDropdownItems(layout));
 			layoutJSONObject.put(
 				"actionURLs", _getActionURLsJSONObject(layout));
 			layoutJSONObject.put("active", _isActive(layout.getPlid()));
@@ -1491,22 +1487,20 @@ public class LayoutsAdminDisplayContext {
 		return _activeLayoutSetBranchId;
 	}
 
-	private List<String> _getAvailableActionDropdownItems(Layout layout)
+	private String _getAvailableActionDropdownItems(Layout layout)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		if (LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.DELETE)) {
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.DELETE)) {
 
-			return Collections.singletonList("deleteSelectedPages");
+			return "deleteSelectedPages";
 		}
 
-		return Collections.emptyList();
+		return StringPool.BLANK;
 	}
 
 	private String _getBackURL() {

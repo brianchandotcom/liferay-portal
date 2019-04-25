@@ -785,6 +785,7 @@ Layout.STATE = {
 		Config.arrayOf(
 			Config.shapeOf(
 				{
+					actions: Config.string().required(),
 					actionURLs: Config.object().required(),
 					active: Config.bool().required(),
 					checked: Config.bool().required(),

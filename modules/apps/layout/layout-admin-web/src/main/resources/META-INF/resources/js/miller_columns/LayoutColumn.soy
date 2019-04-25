@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param layoutColumn: list<[
+		actions: string,
 		actionURLs: map<string, string>,
 		active: bool,
 		checked: bool,
@@ -104,6 +105,7 @@
 {template .layoutColumnItem}
 	{@param layoutColumnIndex: number}
 	{@param layoutColumnItem: [
+		actions: string,
 		actionURLs: map<string, string>,
 		active: bool,
 		checked: bool,
@@ -149,6 +151,7 @@
 
 	{let $listGroupItemAttributes kind="attributes"}
 		class="{$listGroupItemClasses}"
+		data-actions="{$layoutColumnItem.actions ?: ''}"
 		data-layout-column-item-plid="{$layoutColumnItem.plid}"
 
 		{if $layoutColumnItem.active}

@@ -470,7 +470,6 @@ public class AssetPublisherExportImportTest
 		testExportImportAssetEntries(layoutGroup);
 	}
 
-	@Ignore
 	@Test
 	public void testExportImportSeveralScopedAssetEntries() throws Exception {
 		List<Group> groups = new ArrayList<>();
@@ -829,7 +828,6 @@ public class AssetPublisherExportImportTest
 					"classTypeIdsJournalArticleAssetRendererFactory", null)));
 	}
 
-	@Ignore
 	@Test
 	public void testSeveralLayoutScopeIds() throws Exception {
 		Company company = CompanyLocalServiceUtil.getCompany(
@@ -882,7 +880,6 @@ public class AssetPublisherExportImportTest
 			StringUtil.merge(portletPreferences.getValues("scopeIds", null)));
 	}
 
-	@Ignore
 	@Test
 	public void testSeveralLegacyLayoutScopeIds() throws Exception {
 		Layout secondLayout = LayoutTestUtil.addLayout(group);

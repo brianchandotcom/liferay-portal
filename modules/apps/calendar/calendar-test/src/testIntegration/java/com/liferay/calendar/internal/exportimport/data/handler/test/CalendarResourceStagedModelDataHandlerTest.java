@@ -20,6 +20,7 @@ import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarResourceTestUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -127,14 +128,11 @@ public class CalendarResourceStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return CalendarResourceLocalServiceUtil.
-				getCalendarResourceByUuidAndGroupId(uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws PortalException {
+
+		return CalendarResourceLocalServiceUtil.
+			getCalendarResourceByUuidAndGroupId(uuid, group.getGroupId());
 	}
 
 	@Override

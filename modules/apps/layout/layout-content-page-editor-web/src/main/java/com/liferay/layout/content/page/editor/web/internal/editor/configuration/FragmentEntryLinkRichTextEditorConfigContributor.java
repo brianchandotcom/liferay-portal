@@ -70,7 +70,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(getAllowedContentText());
-		sb.append(" a[*](*); div[*](*){text-align}; img[*](*){*}; ");
+		sb.append(" a[*](*); div[*](*){text-align}; img[*](*){*}; p[*](*); ");
 		sb.append(getAllowedContentLists());
 		sb.append(getAllowedContentTable());
 		sb.append(" span[*](*){*}; ");

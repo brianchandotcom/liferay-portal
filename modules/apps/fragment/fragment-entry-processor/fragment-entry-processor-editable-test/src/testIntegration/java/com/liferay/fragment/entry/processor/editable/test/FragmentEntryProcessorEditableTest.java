@@ -34,8 +34,6 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -57,6 +55,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portlet.asset.util.test.AssetTestUtil;
 
 import java.io.IOException;
 
@@ -181,27 +180,23 @@ public class FragmentEntryProcessorEditableTest {
 				StringPool.BLANK, 0,
 				ServiceContextTestUtil.getServiceContext());
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
 
 		String editableValues = _getJsonFileAsString(
 			"fragment_entry_link_mapped_asset_field.json");
 
 		editableValues = StringUtil.replace(
 			editableValues, "CLASS_NAME_ID",
-			String.valueOf(PortalUtil.getClassNameId(JournalArticle.class)));
+			String.valueOf(
+				PortalUtil.getClassNameId(assetEntry.getClassName())));
 
 		editableValues = StringUtil.replace(
 			editableValues, "CLASS_PK",
-			String.valueOf(journalArticle.getResourcePrimKey()));
+			String.valueOf(assetEntry.getClassPK()));
 
 		FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(), editableValues);
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			PortalUtil.getClassNameId(JournalArticle.class),
-			journalArticle.getResourcePrimKey());
 
 		int count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
 			assetEntry.getEntryId());

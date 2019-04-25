@@ -204,7 +204,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			assetCategories.toString(), assetCategories.isEmpty());
 	}
 
-	@Ignore
 	@Test
 	public void testCleanStagedModelDataHandler() throws Exception {
 
@@ -371,7 +370,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			originalLastPublishDate, stagedGroupedModel.getLastPublishDate());
 	}
 
-	@Ignore
 	@Test
 	public void testStagedModelDataHandler() throws Exception {
 

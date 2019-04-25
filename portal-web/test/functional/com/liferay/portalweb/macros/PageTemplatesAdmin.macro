@@ -1,4 +1,24 @@
 definition {
+	macro _addPageTemplate {
+		if (isSet(pageTemplateType)) {
+			var menuItem = "${pageTemplateType}";
+		}
+		else {
+			var menuItem = "Content Page Template";
+		}
+
+		if ("${siteTemplate}" == "true") {
+			LexiconEntry.gotoAdd();
+		}
+		else {
+			LexiconEntry.gotoAddMenuItem(menuItem = "${menuItem}");
+		}
+
+		PortletEntry.inputName(name = "${pageTemplateName}");
+
+		Button.clickSave();
+	}
+
 	macro _gotoAddCollection {
 		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
 			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
@@ -19,23 +39,11 @@ definition {
 	}
 
 	macro addDuplicatePageTemplate {
-		if (isSet(pageTemplateType)) {
-			var menuItem = "${pageTemplateType}";
-		}
-		else {
-			var menuItem = "Content Page Template";
-		}
-
-		if ("${siteTemplate}" == "true") {
-			LexiconEntry.gotoAdd();
-		}
-		else {
-			LexiconEntry.gotoAddMenuItem(menuItem = "${menuItem}");
-		}
-
-		PortletEntry.inputName(name = "${pageTemplateName}");
-
-		Button.clickSave();
+		PageTemplatesAdmin._addPageTemplate(
+			menuItem = "${menuItem}",
+			pageTemplateName = "${pageTemplateName}",
+			pageTemplateType = "${pageTemplateType}",
+			siteTemplate = "${siteTemplate}");
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR_MODAL_CONTENT",
@@ -43,23 +51,11 @@ definition {
 	}
 
 	macro addPageTemplate {
-		if (isSet(pageTemplateType)) {
-			var menuItem = "${pageTemplateType}";
-		}
-		else {
-			var menuItem = "Content Page Template";
-		}
-
-		if ("${siteTemplate}" == "true") {
-			LexiconEntry.gotoAdd();
-		}
-		else {
-			LexiconEntry.gotoAddMenuItem(menuItem = "${menuItem}");
-		}
-
-		PortletEntry.inputName(name = "${pageTemplateName}");
-
-		Button.clickSave();
+		PageTemplatesAdmin._addPageTemplate(
+			menuItem = "${menuItem}",
+			pageTemplateName = "${pageTemplateName}",
+			pageTemplateType = "${pageTemplateType}",
+			siteTemplate = "${siteTemplate}");
 
 		PageEditor.assertFragmentSidebarLoaded();
 	}

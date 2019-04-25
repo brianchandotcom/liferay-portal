@@ -28,26 +28,25 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	property = "error.code.content.type=application/xml",
-	service = DynamicInclude.class
+	property = "mime.type=application/xml", service = DynamicInclude.class
 )
 public class ApplicationXMLPortalErrorCodeDynamicInclude
 	extends BasePortalErrorCodeDynamicInclude {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_contentType = MapUtil.getString(
-			properties, "error.code.content.type", "application/xml");
+		_mimeType = MapUtil.getString(
+			properties, "mime.type", "application/xml");
 	}
 
 	@Override
-	protected String getContentType() {
-		return _contentType;
+	protected String getMimeType() {
+		return _mimeType;
 	}
 
 	@Override
 	protected void writeMessage(
-		String contentType, String message, PrintWriter printWriter) {
+		String mimeType, String message, PrintWriter printWriter) {
 
 		printWriter.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
 		printWriter.write("<error>");
@@ -57,6 +56,6 @@ public class ApplicationXMLPortalErrorCodeDynamicInclude
 		printWriter.write("</error>");
 	}
 
-	private String _contentType;
+	private String _mimeType;
 
 }

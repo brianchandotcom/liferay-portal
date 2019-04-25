@@ -27,31 +27,27 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
-	property = "error.code.content.type=text/plain",
-	service = DynamicInclude.class
-)
+@Component(property = "mime.type=text/plain", service = DynamicInclude.class)
 public class TextPlainPortalErrorCodeDynamicInclude
 	extends BasePortalErrorCodeDynamicInclude {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_errorCodeContentType = MapUtil.getString(
-			properties, "error.code.content.type", "text/plain");
+		_mimeType = MapUtil.getString(properties, "mime.type", "text/plain");
 	}
 
 	@Override
-	protected String getContentType() {
-		return _errorCodeContentType;
+	protected String getMimeType() {
+		return _mimeType;
 	}
 
 	@Override
 	protected void writeMessage(
-		String contentType, String message, PrintWriter printWriter) {
+		String mimeType, String message, PrintWriter printWriter) {
 
 		printWriter.write(message);
 	}
 
-	private String _errorCodeContentType;
+	private String _mimeType;
 
 }

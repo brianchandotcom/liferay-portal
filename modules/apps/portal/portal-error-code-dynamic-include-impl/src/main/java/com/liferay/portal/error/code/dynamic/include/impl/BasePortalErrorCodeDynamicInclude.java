@@ -35,14 +35,14 @@ public abstract class BasePortalErrorCodeDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		String contentType = getContentType();
+		String mimeType = getMimeType();
 
-		httpServletResponse.setContentType(contentType);
+		httpServletResponse.setContentType(mimeType);
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		writeMessage(
-			contentType,
+			mimeType,
 			(String)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE),
 			printWriter);
@@ -50,12 +50,12 @@ public abstract class BasePortalErrorCodeDynamicInclude
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/errors/code.jsp#" + getContentType());
+		dynamicIncludeRegistry.register("/errors/code.jsp#" + getMimeType());
 	}
 
-	protected abstract String getContentType();
+	protected abstract String getMimeType();
 
 	protected abstract void writeMessage(
-		String contentType, String message, PrintWriter printWriter);
+		String mimeType, String message, PrintWriter printWriter);
 
 }

@@ -28,32 +28,31 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	property = "error.code.content.type=application/json",
-	service = DynamicInclude.class
+	property = "mime.type=application/json", service = DynamicInclude.class
 )
 public class ApplicationJsonPortalErrorCodeDynamicInclude
 	extends BasePortalErrorCodeDynamicInclude {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_contentType = MapUtil.getString(
-			properties, "error.code.content.type", "application/json");
+		_mimeType = MapUtil.getString(
+			properties, "mime.type", "application/json");
 	}
 
 	@Override
-	protected String getContentType() {
-		return _contentType;
+	protected String getMimeType() {
+		return _mimeType;
 	}
 
 	@Override
 	protected void writeMessage(
-		String contentType, String message, PrintWriter printWriter) {
+		String mimeType, String message, PrintWriter printWriter) {
 
 		printWriter.write("{message: \"");
 		printWriter.write(message);
 		printWriter.write("\"}");
 	}
 
-	private String _contentType;
+	private String _mimeType;
 
 }

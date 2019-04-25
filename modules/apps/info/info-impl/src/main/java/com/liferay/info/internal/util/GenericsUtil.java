@@ -14,8 +14,6 @@
 
 package com.liferay.info.internal.util;
 
-import com.liferay.info.provider.InfoListProvider;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -24,26 +22,29 @@ import java.lang.reflect.Type;
  */
 public class GenericsUtil {
 
-	public static Class<?> getItemClass(Object object) {
-		Class<?> infoListProviderClass = object.getClass();
-
-		Type[] genericInterfaceTypes =
-			infoListProviderClass.getGenericInterfaces();
+	public static Class<?> getItemClass(Class clazz) {
+		Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
 
 		for (Type genericInterfaceType : genericInterfaceTypes) {
 			ParameterizedType parameterizedType =
 				(ParameterizedType)genericInterfaceType;
 
-			Class<?> clazz = (Class)parameterizedType.getRawType();
-
-			if (!clazz.equals(InfoListProvider.class)) {
-				continue;
-			}
-
 			return (Class<?>)parameterizedType.getActualTypeArguments()[0];
 		}
 
+		Class<?> superclass = clazz.getSuperclass();
+
+		if (superclass != null) {
+			return getItemClass(superclass);
+		}
+
 		return Object.class;
+	}
+
+	public static Class<?> getItemClass(Object object) {
+		Class<?> infoListProviderClass = object.getClass();
+
+		return getItemClass(infoListProviderClass);
 	}
 
 	public static String getItemClassName(Object object) {

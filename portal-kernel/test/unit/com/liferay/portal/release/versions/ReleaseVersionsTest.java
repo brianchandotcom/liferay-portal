@@ -146,6 +146,16 @@ public class ReleaseVersionsTest {
 						return FileVisitResult.CONTINUE;
 					}
 
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (dirName.endsWith("-test") ||
+						dirName.endsWith("-test-api") ||
+						dirName.endsWith("-test-impl") ||
+						dirName.endsWith("-test-service")) {
+
+						return FileVisitResult.CONTINUE;
+					}
+
 					Path bndBndRelativePath = _portalPath.relativize(
 						bndBndPath);
 

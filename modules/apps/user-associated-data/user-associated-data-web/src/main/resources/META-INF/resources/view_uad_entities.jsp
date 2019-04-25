@@ -80,7 +80,7 @@ if (parentContainerId > 0) {
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= entityTypeSidebarURL %>"
-				searchContainerId="UADEntities"
+				searchContainerId="<%= viewUADEntitiesDisplay.getSearchContainerID(request, renderResponse.getNamespace()) %>"
 			>
 				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>

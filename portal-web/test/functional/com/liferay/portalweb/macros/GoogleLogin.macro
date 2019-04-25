@@ -13,9 +13,7 @@ definition {
 				locator1 = "TextInput#ANSWER",
 				value1 = "test");
 
-			KeyPress(
-				locator1 = "TextInput#ANSWER",
-				value1 = "\RETURN");
+			Button.clickSave();
 		}
 
 		SelectWindow.selectWindowTopNoSPARefresh();

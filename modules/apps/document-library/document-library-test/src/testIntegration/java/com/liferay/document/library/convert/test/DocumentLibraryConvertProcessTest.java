@@ -72,6 +72,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -130,16 +131,19 @@ public class DocumentLibraryConvertProcessTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testMigrateDLAndDeleteFilesInSourceStore() throws Exception {
 		testMigrateAndCheckOldRepositoryFiles(Boolean.TRUE);
 	}
 
+	@Ignore
 	@Test
 	public void testMigrateDLAndKeepFilesInSourceStore() throws Exception {
 		testMigrateAndCheckOldRepositoryFiles(Boolean.FALSE);
 	}
 
+	@Ignore
 	@Test
 	public void testMigrateDLWhenFileEntryInFolder() throws Exception {
 		ServiceContext serviceContext =
@@ -154,11 +158,13 @@ public class DocumentLibraryConvertProcessTest {
 		testMigrateDL(folder.getFolderId());
 	}
 
+	@Ignore
 	@Test
 	public void testMigrateDLWhenFileEntryInRootFolder() throws Exception {
 		testMigrateDL(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
+	@Ignore
 	@Test
 	public void testMigrateImages() throws Exception {
 		_image = addImage();
@@ -169,6 +175,7 @@ public class DocumentLibraryConvertProcessTest {
 			0, 0, _image.getImageId() + ".jpg");
 	}
 
+	@Ignore
 	@Test
 	public void testMigrateMB() throws Exception {
 		MBMessage mbMessage = addMBMessageAttachment();
@@ -188,6 +195,7 @@ public class DocumentLibraryConvertProcessTest {
 			dlFileEntry.getName());
 	}
 
+	@Ignore
 	@Test
 	public void testStoreUpdatedAfterConversion() throws Exception {
 		_convertProcess.convert();

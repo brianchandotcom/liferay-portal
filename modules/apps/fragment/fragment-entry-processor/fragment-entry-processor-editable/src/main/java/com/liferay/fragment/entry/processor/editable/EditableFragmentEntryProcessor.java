@@ -506,8 +506,16 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Matcher selectorMatcher = _cssSelectorPattern.matcher(css);
 
+		if (css.contains(_CSS_MEDIA_QUERY)) {
+			stylesheet.putAll(_parseMediaQueries(css));
+		}
+
 		while (selectorMatcher.find()) {
 			String selector = StringUtil.trim(selectorMatcher.group(1));
+
+			if (selector.startsWith(_CSS_MEDIA_QUERY)) {
+				continue;
+			}
 
 			String cssText = selectorMatcher.group(2);
 
@@ -560,6 +568,28 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return false;
 	}
 
+	private Map<String, Map<String, String>> _parseMediaQueries(String css) {
+		Matcher mediaQueryMatcher = _cssMediaQueryPattern.matcher(css);
+
+		Map<String, Map<String, String>> mediaQueryStylesheet = new HashMap<>();
+
+		while (mediaQueryMatcher.find()) {
+			String mediaQuery = mediaQueryMatcher.group(1);
+
+			String mediaQueryContent = mediaQueryMatcher.group(2);
+
+			Map<String, Map<String, String>> mediaQueryContentMap =
+				_getStylesheet(mediaQueryContent);
+
+			mediaQueryContentMap.forEach(
+				(selector, properties) -> mediaQueryStylesheet.put(
+					mediaQuery + StringPool.OPEN_CURLY_BRACE + selector,
+					properties));
+		}
+
+		return mediaQueryStylesheet;
+	}
+
 	private String _toCSSString(Map<String, Map<String, String>> stylesheet) {
 		StringBundler sb = new StringBundler(stylesheet.size() * 7);
 
@@ -583,6 +613,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			sb.append(StringPool.OPEN_CURLY_BRACE);
 			sb.append(propertiesSB.toString());
 			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (StringUtil.startsWith(selector.getKey(), _CSS_MEDIA_QUERY)) {
+				sb.append(StringPool.CLOSE_CURLY_BRACE);
+			}
+
 			sb.append(StringPool.SPACE);
 		}
 
@@ -687,11 +722,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				"you-must-define-a-valid-type-for-each-editable-element"));
 	}
 
+	private static final String _CSS_MEDIA_QUERY = "@media";
+
 	private static final String _EDITABLE_VALUES_SEGMENTS_EXPERIENCE_ID_PREFIX =
 		"segments-experience-id-";
 
 	private static final String[] _REQUIRED_ATTRIBUTE_NAMES = {"id", "type"};
 
+	private static final Pattern _cssMediaQueryPattern = Pattern.compile(
+		"(@media[^{]+)\\{([\\s\\S]+?\\})\\s*\\}");
 	private static final Pattern _cssPropertyPattern = Pattern.compile(
 		"([^:]+)\\s*:([^;]+);");
 	private static final Pattern _cssSelectorPattern = Pattern.compile(

@@ -221,7 +221,13 @@ private static String _getDynamicIncludeKey(String accept) {
 	else {
 		String[] mediaRanges = accept.split(StringPool.COMMA);
 
-		for (String mediaRange : mediaRanges) {
+		for (int i = 0; i < mediaRanges.length; i++) {
+			String mediaRange = mediaRanges[i];
+
+			if (_extractWeight(mediaRange) == null) {
+				mediaRange += ";q=" + (mediaRanges.length - i);
+			}
+
 			mediaRangesSet.add(mediaRange);
 		}
 	}

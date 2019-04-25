@@ -139,6 +139,13 @@ public class ReleaseVersionsTest {
 						return FileVisitResult.CONTINUE;
 					}
 
+					Path lfrbuildRelengIgnorePath = dirPath.resolve(
+						".lfrbuild-releng-ignore");
+
+					if (Files.exists(lfrbuildRelengIgnorePath)) {
+						return FileVisitResult.CONTINUE;
+					}
+
 					Path bndBndRelativePath = _portalPath.relativize(
 						bndBndPath);
 

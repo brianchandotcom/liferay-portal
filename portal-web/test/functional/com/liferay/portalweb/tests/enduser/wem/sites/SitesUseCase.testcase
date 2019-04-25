@@ -571,6 +571,11 @@ definition {
 
 		PortalSettings.editVirtualHostCP(virtualHostName = "www.able.com");
 
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
 		PortalSettings.editConfigurationAuthenticationGeneral(enableRequireStrangers = "true");
 
 		PortalSettings.editConfigurationUsersEmailNotificationsCP();

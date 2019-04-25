@@ -1180,6 +1180,25 @@ components:
                     description: The number of comments this StructuredContent has received.
                     readOnly: true
                     type: integer
+                relatedContents:
+                    items:
+                        properties:
+                            contentType:
+                                description: The type of the content.
+                                readOnly: true
+                                type: string
+                            id:
+                                description: The identifier of the resource.
+                                format: int64
+                                readOnly: true
+                                type: integer
+                            title:
+                                description: The title of the content.
+                                readOnly: true
+                                type: string
+                        type: object
+                    readOnly: true
+                    type: array
                 renderedContents:
                     description: A list of rendered StructuredContents, the result of using a template to process the content, returning html.
                     items:

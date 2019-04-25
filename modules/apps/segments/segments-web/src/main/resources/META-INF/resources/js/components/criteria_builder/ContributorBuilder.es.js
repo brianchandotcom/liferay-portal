@@ -117,15 +117,15 @@ class ContributorBuilder extends React.Component {
 		);
 
 		const firstContributorNotEmpty = contributors.find(contributor => contributor.query !== '');
-		
+
 		const propertyKey = firstContributorNotEmpty ? firstContributorNotEmpty.propertyKey : propertyGroups[0].propertyKey;
 
 		this.state = {
 			conjunctionName: CONJUNCTIONS.AND,
 			contributors,
-			editingId: propertyKey
+			editingId: propertyKey,
 			membersCount: this.props.membersCount,
-			membersCountLoading: false,
+			membersCountLoading: false
 		};
 
 		this._debouncedFetchMembersCount = debounce(

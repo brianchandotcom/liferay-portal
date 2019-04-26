@@ -2123,6 +2123,24 @@ definition {
 		}
 	}
 
+	macro UnassignRegularRoleCP {
+		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+
+		UserNavigator.gotoRoles();
+
+		var key_regularRoleName = "${regularRoleName}";
+
+		Click(
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_REMOVE_ROLE",
+			value1 = "${regularRoleName}");
+
+		PortletEntry.save();
+
+		AssertElementNotPresent(
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_TITLE",
+			value1 = "${regularRoleName}");
+	}
+
 	macro unlockUserAccount {
 		Pause(locator1 = "1000");
 

@@ -20,9 +20,11 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutVersion;
+import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -3593,16 +3596,21 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	private void _removeUserPreferences(Layout layout, boolean signedIn) {
-		List<com.liferay.portal.kernel.model.PortalPreferences>
-			portalPreferenceses =
-				PortalPreferencesLocalServiceUtil.getPortalPreferenceses(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PortalPreferences.class, classLoader
+		).add(
+			RestrictionsFactoryUtil.eq(
+				"ownerType", ResourceConstants.SCOPE_INDIVIDUAL)
+		);
+
+		List<PortalPreferences> portalPreferenceses =
+			PortalPreferencesLocalServiceUtil.dynamicQuery(dynamicQuery);
 
 		long plid = layout.getPlid();
 
-		for (com.liferay.portal.kernel.model.PortalPreferences
-				portalPreferences : portalPreferenceses) {
-
+		for (PortalPreferences portalPreferences : portalPreferenceses) {
 			if (portalPreferences.getPreferences().contains(
 					CustomizedPages.namespacePlid(plid))) {
 

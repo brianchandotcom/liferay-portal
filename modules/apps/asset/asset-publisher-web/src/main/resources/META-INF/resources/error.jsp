@@ -25,6 +25,7 @@
 	title="error"
 />
 
+<liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="the-asset-category-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchGroupException.class %>" message="the-site-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchModelException.class %>" message="the-asset-could-not-be-found" />
 

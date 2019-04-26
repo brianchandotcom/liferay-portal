@@ -157,6 +157,11 @@
 </tr>
 <!--ROLES_REGULAR_ROLES-->
 <tr>
+	<td>ROLES_REGULAR_ROLES_REMOVE_ROLE</td>
+	<td>//tr[contains(.,'${key_regularRoleName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROLES_REGULAR_ROLES_SELECT_LINK</td>
 	<td>//a[contains(@id,'selectRegularRoleLink')]/span</td>
 	<td></td>

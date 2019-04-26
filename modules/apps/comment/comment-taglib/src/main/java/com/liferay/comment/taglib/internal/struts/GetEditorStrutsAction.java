@@ -83,14 +83,7 @@ public class GetEditorStrutsAction implements StrutsAction {
 		return null;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.comment.taglib)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.comment.taglib)")
 	private ServletContext _servletContext;
 
 }

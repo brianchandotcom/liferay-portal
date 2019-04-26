@@ -66,12 +66,6 @@ public class DDMFormInstanceRecordStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Ignore
-	@Test
-	public void testCleanAssetCategoriesAndTags() throws Exception {
-		super.testCleanAssetCategoriesAndTags();
-	}
-
-	@Ignore
 	@Override
 	@Test
 	public void testCleanStagedModelDataHandler() throws Exception {

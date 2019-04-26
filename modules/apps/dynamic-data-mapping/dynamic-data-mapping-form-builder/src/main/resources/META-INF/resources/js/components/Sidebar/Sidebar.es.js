@@ -773,37 +773,25 @@ class Sidebar extends Component {
 
 	_renderElementSets() {
 		const {fieldSets} = this.props;
-		const group = Object.keys(fieldSets);
+		const groups = Object.keys(fieldSets);
 
 		let elementSetsArea = '';
 
-		if (group.length > 0) {
-			elementSetsArea = this._renderElementSetsGroups(group);
+		if (groups.length > 0) {
+			elementSetsArea = this._renderElementSetsGroups(groups);
 		}
 		else {
-			elementSetsArea = this._renderElementSetsEmpty();
+			elementSetsArea = this._renderEmptyElementSets();
 		}
 
 		return elementSetsArea;
 	}
 
-	_renderElementSetsEmpty() {
-		return (
-			<div class="list-group-body  list-group">
-				<div class="main-content-body">
-					<div class="text-center text-muted">
-						<p class="text-default">{Liferay.Language.get('there-are-no-element-sets-yet')}</p>
-					</div>
-				</div>
-			</div>
-		);
-	}
-
-	_renderElementSetsGroups(group) {
+	_renderElementSetsGroups(groups) {
 		const {fieldSets, spritemap} = this.props;
 		return (
 			<div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-				{group.map(
+				{groups.map(
 					key => (
 						<div
 							aria-labelledby={`#ddm-field-types-${key}-header`}
@@ -844,6 +832,18 @@ class Sidebar extends Component {
 						</div>
 					)
 				)}
+			</div>
+		);
+	}
+
+	_renderEmptyElementSets() {
+		return (
+			<div class="list-group-body  list-group">
+				<div class="main-content-body">
+					<div class="text-center text-muted">
+						<p class="text-default">{Liferay.Language.get('there-are-no-element-sets-yet')}</p>
+					</div>
+				</div>
 			</div>
 		);
 	}

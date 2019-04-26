@@ -215,13 +215,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_createInstancesBooleanQuery(companyId, processId));
 		searchSearchRequest.setSize(10000);
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
 		return Stream.of(
-			searchHits.getSearchHits()
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
 		).flatMap(
 			List::parallelStream
 		).map(
@@ -251,13 +250,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				_queries.term("processId", processId),
 				_queries.term("version", version)));
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
 		return Stream.of(
-			searchHits.getSearchHits()
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
 		).flatMap(
 			List::parallelStream
 		).map(
@@ -273,13 +271,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	private Map<Long, String> _getTaskNames(
 		SearchSearchRequest searchSearchRequest) {
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
 		return Stream.of(
-			searchHits.getSearchHits()
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
 		).flatMap(
 			List::parallelStream
 		).map(
@@ -319,13 +316,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 					getWorkflowMetricsSLADefinitionId()));
 		searchSearchRequest.setSize(10000);
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
 		Stream.of(
-			searchHits.getSearchHits()
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
 		).flatMap(
 			List::parallelStream
 		).map(

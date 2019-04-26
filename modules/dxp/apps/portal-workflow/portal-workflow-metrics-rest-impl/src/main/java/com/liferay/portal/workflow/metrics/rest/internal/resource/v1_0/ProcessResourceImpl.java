@@ -84,36 +84,46 @@ public class ProcessResourceImpl
 
 	@Override
 	public Process getProcess(Long processId) throws Exception {
-		SearchSearchResponse searchSearchResponse =
-			_getProcessesSearchSearchResponse(null, null, processId, null);
+		return Stream.of(
+			_getProcessesSearchSearchResponse(null, null, processId, null)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).findFirst(
+		).map(
+			document -> {
+				Process process = _createProcess(document);
 
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
+				TermsAggregationResult slaTermsAggregationResult =
+					_getSLATermsAggregationResult(
+						null, null, Collections.singleton(processId));
 
-		for (SearchHit searchHit : searchHits.getSearchHits()) {
-			Process process = _createProcess(searchHit.getDocument());
+				_populateProcessWithSLAMetrics(
+					slaTermsAggregationResult.getBucket(
+						String.valueOf(processId)),
+					process);
 
-			TermsAggregationResult instanceTermsAggregationResult =
-				_getInstanceTermsAggregationResult(
-					null, null, Collections.singleton(processId));
+				TermsAggregationResult instanceTermsAggregationResult =
+					_getInstanceTermsAggregationResult(
+						null, null, Collections.singleton(processId));
 
-			for (Bucket bucket : instanceTermsAggregationResult.getBuckets()) {
-				_setInstanceCount(bucket, process);
+				_setInstanceCount(
+					instanceTermsAggregationResult.getBucket(
+						String.valueOf(processId)),
+					process);
+
+				_setUntrackedInstanceCount(process);
+
+				return process;
 			}
-
-			TermsAggregationResult slaTermsAggregationResult =
-				_getSLATermsAggregationResult(
-					null, null, Collections.singleton(processId));
-
-			for (Bucket bucket : slaTermsAggregationResult.getBuckets()) {
-				_populateProcessWithSLAMetrics(bucket, process);
-			}
-
-			_setUntrackedInstanceCount(process);
-
-			return process;
-		}
-
-		return new Process();
+		).orElse(
+			new Process()
+		);
 	}
 
 	@Override

@@ -63,14 +63,13 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 
 		searchSearchRequest.setSize(10000);
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
 		return Page.of(
 			Stream.of(
-				searchHits.getSearchHits()
+				_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+			).map(
+				SearchSearchResponse::getSearchHits
+			).map(
+				SearchHits::getSearchHits
 			).flatMap(
 				List::stream
 			).map(
@@ -96,13 +95,12 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 
 		searchSearchRequest.setSelectedFieldNames("version");
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
 		return Stream.of(
-			searchHits.getSearchHits()
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
 		).flatMap(
 			List::parallelStream
 		).map(

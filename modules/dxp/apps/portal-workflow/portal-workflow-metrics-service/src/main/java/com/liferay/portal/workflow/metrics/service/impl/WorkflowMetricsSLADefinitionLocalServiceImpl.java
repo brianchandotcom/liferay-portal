@@ -288,13 +288,12 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		searchSearchRequest.setSelectedFieldNames("version");
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
 		return Stream.of(
-			searchHits.getSearchHits()
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
 		).flatMap(
 			List::parallelStream
 		).map(

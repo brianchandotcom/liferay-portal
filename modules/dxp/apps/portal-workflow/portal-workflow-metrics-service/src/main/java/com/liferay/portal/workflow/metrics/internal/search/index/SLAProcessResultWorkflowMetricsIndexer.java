@@ -156,24 +156,22 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			List::stream
 		).map(
 			SearchHit::getDocument
-		).forEach(
-			document -> {
-				bulkDocumentRequest.addBulkableDocumentRequest(
-					new UpdateDocumentRequest(
-						getIndexName(), document.getString(Field.UID),
-						new DocumentImpl() {
-							{
-								addKeyword("deleted", true);
-								addKeyword(
-									Field.UID, document.getString(Field.UID));
-							}
-						}) {
+		).map(
+			document -> new UpdateDocumentRequest(
+				getIndexName(), document.getString(Field.UID),
+				new DocumentImpl() {
+					{
+						addKeyword("deleted", true);
+						addKeyword(Field.UID, document.getString(Field.UID));
+					}
+				}) {
 
-						{
-							setType(getIndexType());
-						}
-					});
+				{
+					setType(getIndexType());
+				}
 			}
+		).forEach(
+			bulkDocumentRequest::addBulkableDocumentRequest
 		);
 
 		searchEngineAdapter.execute(bulkDocumentRequest);

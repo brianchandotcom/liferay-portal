@@ -652,6 +652,85 @@ definition {
 
 		DMNavigator.gotoShareViaSharedAssets(dmDocumentTitle = "DM Document Title");
 
+		DMDocument.shareWithNoSharingPermissionsUser(userEmailAddress = "userea2@liferay.com");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+
+		DMNavigator.gotoShareViaSharedAssets(dmDocumentTitle = "DM Document Title");
+
+		IFrame.selectModalFrame();
+
+		Type(
+			locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_INPUT",
+			value1 = "userea2@liferay.com");
+
+		AssertElementPresent(locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_DROPDOWN");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.UnassignRegularRoleCP(
+			regularRoleName = "Administrator",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Memberships");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+
+		DMNavigator.gotoShareViaSharedAssets(dmDocumentTitle = "DM Document Title");
+
 		DMDocument.sharePG(
 			shareable = "true",
 			userEmailAddress = "userea2@liferay.com",

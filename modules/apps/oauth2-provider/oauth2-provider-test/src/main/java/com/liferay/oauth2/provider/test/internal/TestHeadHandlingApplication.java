@@ -14,6 +14,8 @@
 
 package com.liferay.oauth2.provider.test.internal;
 
+import com.liferay.oauth2.provider.test.internal.annotation.CUSTOM;
+
 import java.util.Collections;
 import java.util.Set;
 

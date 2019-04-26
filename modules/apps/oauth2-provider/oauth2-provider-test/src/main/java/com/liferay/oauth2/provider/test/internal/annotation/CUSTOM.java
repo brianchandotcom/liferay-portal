@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.test.internal;
+package com.liferay.oauth2.provider.test.internal.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

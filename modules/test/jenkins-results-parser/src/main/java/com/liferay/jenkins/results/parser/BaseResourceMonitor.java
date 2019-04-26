@@ -38,6 +38,11 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 	}
 
 	@Override
+	public Integer getAllowedResourceConnections() {
+		return _allowedResourceConnections;
+	}
+
+	@Override
 	public String getEtcdServerURL() {
 		return _etcdServerURL;
 	}
@@ -68,7 +73,7 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 	public synchronized List<ResourceConnection> getResourceConnectionQueue() {
 		Set<ResourceConnection> resourceConnections = new TreeSet<>();
 
-		EtcdUtil.Node node = EtcdUtil.get(_etcdServerURL, getKey());
+		EtcdUtil.Node node = EtcdUtil.get(getEtcdServerURL(), getKey());
 
 		for (EtcdUtil.Node childNode : node.getNodes()) {
 			resourceConnections.add(new ResourceConnection(this, childNode));

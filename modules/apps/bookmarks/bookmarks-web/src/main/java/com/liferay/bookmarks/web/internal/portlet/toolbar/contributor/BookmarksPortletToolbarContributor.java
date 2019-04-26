@@ -130,8 +130,7 @@ public class BookmarksPortletToolbarContributor
 
 		urlMenuItem.setLabel(
 			LanguageUtil.get(
-				_portal.getHttpServletRequest(portletRequest),
-				(folder != null) ? "subfolder" : "folder"));
+				_portal.getHttpServletRequest(portletRequest), "folder"));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

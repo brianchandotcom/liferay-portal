@@ -1,5 +1,9 @@
 .sidebar-default {
 	.sidebar-header {
+		@include media-breakpoint-up(sm) {
+			padding-top: 0;
+		}
+
 		h4 {
 			padding-top: 8px;
 		}
@@ -13,14 +17,10 @@
 		.icon-monospaced {
 			color: $secondary;
 		}
-
-		@include sm {
-			padding-top: 0;
-		}
 	}
 
 	.navbar-default {
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			background-color: transparent;
 
 			.navbar-nav {
@@ -47,7 +47,7 @@
 	}
 
 	.navigation-bar-light, .sidebar-block > .list-group-item, .panel {
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			background-color: transparent;
 			border-color: transparent;
 		}

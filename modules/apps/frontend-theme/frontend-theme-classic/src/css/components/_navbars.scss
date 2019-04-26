@@ -21,7 +21,7 @@
 	}
 
 	.navbar-blank {
-		@include media-query(null, $screen-xs-max) {
+		@include media-breakpoint-down(sm) {
 			margin-top: 1rem;
 		}
 	}
@@ -56,7 +56,7 @@
 	.navbar-nav {
 		.nav-item:not(:last-of-type) {
 			.nav-link {
-				@include lg {
+				@include media-breakpoint-up(lg) {
 					margin-right: 16px;
 				}
 			}

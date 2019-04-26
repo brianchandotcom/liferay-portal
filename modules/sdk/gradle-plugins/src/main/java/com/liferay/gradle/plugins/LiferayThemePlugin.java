@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.util.Validator;
 
@@ -193,6 +194,13 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 					Task gulpBuildTask = GradleUtil.getTask(
 						project, _GULP_BUILD_TASK_NAME);
+
+					if (GradleUtil.hasTask(
+							project, NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
+
+						gulpBuildTask.finalizedBy(
+							NodePlugin.NPM_RUN_BUILD_TASK_NAME);
+					}
 
 					configurablePublishArtifact.builtBy(gulpBuildTask);
 				}

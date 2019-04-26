@@ -155,6 +155,11 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			ddmFormRenderingContext.getHttpServletResponse(),
 			DDMFormFieldTypesDynamicInclude.class.getName(), true);
 
+		DynamicIncludeUtil.include(
+			ddmFormRenderingContext.getHttpServletRequest(),
+			ddmFormRenderingContext.getHttpServletResponse(),
+			DDMFormRenderer.class.getName() + "#formRendered", true);
+
 		return html.concat(javaScript);
 	}
 

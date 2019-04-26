@@ -1520,12 +1520,12 @@ definition {
 		var webContentFolderName1 = "WC Folder Name 1";
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
-				-u test@liferay.com:test \
-				-d groupId=${liferaySiteId} \
-				-d parentFolderId=0 \
-				-d name=${webContentFolderName1} \
-				-d description=''
+		${portalURL}/api/jsonws/journal.journalfolder/add-folder \
+		-u test@liferay.com:test \
+		-d groupId=${liferaySiteId} \
+		-d parentFolderId=0 \
+		-d name=${webContentFolderName1} \
+		-d description=''
 		''';
 
 		var webContentFolderId1 = JSONCurlUtil.post(
@@ -1554,12 +1554,12 @@ definition {
 		var webContentFolderName2 = "WC Folder Name 2";
 
 		var curl = '''
-			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
-				-u test@liferay.com:test \
-				-d groupId=${liferaySiteId} \
-				-d parentFolderId=0 \
-				-d name=${webContentFolderName2} \
-				-d description=''
+		${portalURL}/api/jsonws/journal.journalfolder/add-folder \
+		-u test@liferay.com:test \
+		-d groupId=${liferaySiteId} \
+		-d parentFolderId=0 \
+		-d name=${webContentFolderName2} \
+		-d description=''
 		''';
 
 		var webContentFolderId2 = JSONCurlUtil.post(
@@ -2040,20 +2040,20 @@ definition {
 		// LPS-83060
 
 		/* <execute macro="SearchPortlets#configureEmbeddedScope">
-			<var name="searchScope" value="Everything" />
+		<var name="searchScope" value="Everything" />
 		</execute>
 
 		<execute macro="SearchPortlets#searchEmbedded">
-			<var name="searchTerm" value="Web Content Article" />
+		<var name="searchTerm" value="Web Content Article" />
 		</execute>
 
 		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
-			<var name="searchAssetTitle" value="WebContent Title" />
-			<var name="searchAssetType" value="Web Content Article" />
+		<var name="searchAssetTitle" value="WebContent Title" />
+		<var name="searchAssetType" value="Web Content Article" />
 		</execute>
 
 		<execute macro="SearchPortlets#configureEmbeddedScope">
-			<var name="searchScope" value="This Site" />
+		<var name="searchScope" value="This Site" />
 		</execute> */
 
 		Navigator.gotoStagedView();

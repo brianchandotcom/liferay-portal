@@ -2,6 +2,28 @@ import React from 'react';
 import { MockRouter as Router } from '../../../../test/mock/MockRouter';
 import SummaryCard from '../SummaryCard';
 
+test('Should format percentage', () => {
+	const props = {
+		iconColor: 'danger',
+		iconName: 'exclamation-circle',
+		processId: 12345,
+		title: 'Overdue',
+		total: false,
+		totalValue: 858000,
+		value: 156403
+	};
+
+	const component = mount(
+		<Router>
+			<SummaryCard {...props} />
+		</Router>
+	);
+
+	const instance = component.find(SummaryCard).instance();
+
+	expect(instance.formattedPercentage).toEqual('18.23%');
+});
+
 test('Should format value for values with more than 4 digits', () => {
 	const props = {
 		iconColor: 'danger',
@@ -22,6 +44,26 @@ test('Should format value for values with more than 4 digits', () => {
 	const instance = component.find(SummaryCard).instance();
 
 	expect(instance.formattedValue).toEqual('156.4K');
+});
+
+test('Should not format percentage for total item', () => {
+	const props = {
+		processId: 12345,
+		title: 'Total',
+		total: true,
+		totalValue: 858000,
+		value: 858000
+	};
+
+	const component = mount(
+		<Router>
+			<SummaryCard {...props} />
+		</Router>
+	);
+
+	const instance = component.find(SummaryCard).instance();
+
+	expect(instance.formattedPercentage).toEqual(null);
 });
 
 test('Should not format value for values with 4 or less digits', () => {
@@ -55,6 +97,26 @@ test('Should render component', () => {
 		total: false,
 		totalValue: 55,
 		value: 31
+	};
+
+	const component = mount(
+		<Router>
+			<SummaryCard {...props} />
+		</Router>
+	);
+
+	expect(component).toMatchSnapshot();
+});
+
+test('Should render component with disabled state', () => {
+	const props = {
+		iconColor: 'success',
+		iconName: 'check-circle',
+		processId: 12345,
+		title: 'On Time',
+		total: false,
+		totalValue: 55,
+		value: undefined
 	};
 
 	const component = mount(

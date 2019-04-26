@@ -44,6 +44,10 @@ test('Should component set error state after request fails', () => {
 
 	const instance = component.find(WorkloadByStepCard).instance();
 
+	instance.setState({
+		loading: false
+	});
+
 	instance.loadData().catch(() => {
 		expect(instance.state.errors).toEqual(
 			'There was a problem retrieving data. Please try reloading the page.'

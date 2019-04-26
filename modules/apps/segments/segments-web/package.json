@@ -84,7 +84,7 @@
 	"private": true,
 	"scripts": {
 		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
-		"build:libs": "webpack",
+		"build:libs": "liferay-npm-scripts webpack",
 		"csf": "csf {src,test}/**/*.es.js src/**/*.scss",
 		"format": "npm run csf -- -i",
 		"test": "env TZ=utc jest",

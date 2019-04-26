@@ -15,7 +15,9 @@
 package com.liferay.change.tracking.service.impl;
 
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
 import com.liferay.change.tracking.exception.CTCollectionNameException;
+import com.liferay.change.tracking.exception.CTException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
@@ -60,14 +62,14 @@ public class CTCollectionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(name);
+		User user = userLocalService.getUser(userId);
+
+		_validate(user.getCompanyId(), name, description);
 
 		long ctCollectionId = counterLocalService.increment();
 
 		CTCollection ctCollection = ctCollectionPersistence.create(
 			ctCollectionId);
-
-		User user = userLocalService.getUser(userId);
 
 		ctCollection.setCompanyId(user.getCompanyId());
 		ctCollection.setUserId(user.getUserId());
@@ -219,6 +221,33 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
+	public CTCollection updateCTCollection(
+			long userId, long ctCollectionId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		_validate(user.getCompanyId(), name, description);
+
+		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
+			ctCollectionId);
+
+		Date modifiedDate = serviceContext.getModifiedDate(new Date());
+
+		ctCollection.setModifiedDate(modifiedDate);
+
+		ctCollection.setName(name);
+		ctCollection.setDescription(description);
+		ctCollection.setStatusByUserId(user.getUserId());
+		ctCollection.setStatusByUserName(user.getFullName());
+
+		ctCollection.setStatusDate(modifiedDate);
+
+		return ctCollectionPersistence.update(ctCollection);
+	}
+
+	@Override
 	public CTCollection updateStatus(
 			long userId, CTCollection ctCollection, int status,
 			ServiceContext serviceContext)
@@ -240,16 +269,28 @@ public class CTCollectionLocalServiceImpl
 		return ctCollectionPersistence.update(ctCollection);
 	}
 
-	private void _validate(String name) throws CTCollectionNameException {
+	private void _validate(long companyId, String name, String description)
+		throws CTException {
+
 		if (Validator.isNull(name)) {
-			throw new CTCollectionNameException();
+			throw new CTCollectionNameException(companyId);
 		}
 
 		int nameMaxLength = ModelHintsUtil.getMaxLength(
 			CTCollection.class.getName(), "name");
 
 		if (name.length() > nameMaxLength) {
-			throw new CTCollectionNameException("Name is too long");
+			throw new CTCollectionNameException(companyId, "Name is too long");
+		}
+
+		int descriptionMaxLength = ModelHintsUtil.getMaxLength(
+			CTCollection.class.getName(), "description");
+
+		if ((description != null) &&
+			(description.length() > descriptionMaxLength)) {
+
+			throw new CTCollectionDescriptionException(
+				companyId, "Description is too long");
 		}
 	}
 

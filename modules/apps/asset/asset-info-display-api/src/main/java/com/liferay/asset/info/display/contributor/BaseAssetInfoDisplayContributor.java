@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.model.VersionedAssetEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.info.display.contributor.InfoDisplayField;
@@ -79,8 +80,19 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 				getAssetRendererFactoryByClassNameId(
 					assetEntry.getClassNameId());
 
-		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
-			assetEntry.getClassPK());
+		AssetRenderer<T> assetRenderer = null;
+
+		if (assetEntry instanceof VersionedAssetEntry) {
+			VersionedAssetEntry versionedAssetEntry =
+				(VersionedAssetEntry)assetEntry;
+
+			assetRenderer = assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK(), versionedAssetEntry.getVersionType());
+		}
+		else {
+			assetRenderer = assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK());
+		}
 
 		T assetObject = assetRenderer.getAssetObject();
 

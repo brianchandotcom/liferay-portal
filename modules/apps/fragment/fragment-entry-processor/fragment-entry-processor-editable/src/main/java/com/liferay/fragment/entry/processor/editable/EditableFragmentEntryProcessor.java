@@ -16,7 +16,9 @@ package com.liferay.fragment.entry.processor.editable;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.model.VersionedAssetEntry;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -192,7 +194,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 					value = _getMappedValue(
 						editableElementParser, editableValueJSONObject, mode,
-						locale);
+						locale, previewClassPK);
 				}
 
 				if (Validator.isNull(value)) {
@@ -250,11 +252,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			if (_isMapped(editableValueJSONObject, mode)) {
 				value = _getMappedValue(
 					editableElementParser, editableValueJSONObject, mode,
-					locale);
+					locale, previewClassPK);
 
 				configJSONObject = _getMappedValueConfigJSONObject(
 					editableElementParser, editableValueJSONObject, mode,
-					locale);
+					locale, previewClassPK);
 			}
 
 			if (Validator.isNull(value)) {
@@ -374,7 +376,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private String _getMappedValue(
 			EditableElementParser editableElementParser, JSONObject jsonObject,
-			String mode, Locale locale)
+			String mode, Locale locale, long previewClassPK)
 		throws PortalException {
 
 		String value = jsonObject.getString("mappedField");
@@ -411,10 +413,16 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				_portal.getClassName(classNameId));
 
+		int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
+
+		if (previewClassPK == assetEntry.getEntryId()) {
+			versionType = AssetRendererFactory.TYPE_LATEST;
+		}
+
 		String fieldId = jsonObject.getString("fieldId");
 
 		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
-			assetEntry, fieldId, locale);
+			new VersionedAssetEntry(assetEntry, versionType), fieldId, locale);
 
 		if (fieldValue instanceof ContentAccessor) {
 			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
@@ -427,7 +435,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private JSONObject _getMappedValueConfigJSONObject(
 			EditableElementParser editableElementParser, JSONObject jsonObject,
-			String mode, Locale locale)
+			String mode, Locale locale, long previewClassPK)
 		throws PortalException {
 
 		String value = jsonObject.getString("mappedField");
@@ -460,6 +468,12 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			return JSONFactoryUtil.createJSONObject();
 		}
 
+		int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
+
+		if (previewClassPK == assetEntry.getEntryId()) {
+			versionType = AssetRendererFactory.TYPE_LATEST;
+		}
+
 		String fieldId = jsonObject.getString("fieldId");
 
 		InfoDisplayContributor infoDisplayContributor =
@@ -467,7 +481,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				_portal.getClassName(classNameId));
 
 		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
-			assetEntry, fieldId, locale);
+			new VersionedAssetEntry(assetEntry, versionType), fieldId, locale);
 
 		return editableElementParser.getFieldTemplateConfigJSONObject(
 			fieldId, locale, fieldValue);

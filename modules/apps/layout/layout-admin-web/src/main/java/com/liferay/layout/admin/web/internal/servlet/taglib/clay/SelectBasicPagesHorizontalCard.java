@@ -92,7 +92,7 @@ public class SelectBasicPagesHorizontalCard implements HorizontalCard {
 	public String getElementClasses() {
 		return "add-layout-action-option card-interactive " +
 			"card-interactive-primary card-type-template " +
-			"template-card-horizontal";
+				"template-card-horizontal";
 	}
 
 	@Override

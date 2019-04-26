@@ -217,11 +217,6 @@ public class TinyMCEEditorConfigContributor
 	protected JSONArray getToolbarsLiferayJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
-		JSONArray jsonArray = JSONUtil.put(
-			"styleselect fontselect fontsizeselect | forecolor backcolor | " +
-				"bold italic underline strikethrough | alignleft aligncenter " +
-					"alignright alignjustify");
-
 		String buttons =
 			"cut copy paste searchreplace bullist numlist | outdent indent " +
 				"blockquote | undo redo | link unlink anchor image media ";
@@ -230,12 +225,13 @@ public class TinyMCEEditorConfigContributor
 			buttons += "code";
 		}
 
-		return jsonArray.put(
-			buttons
-		).put(
+		return JSONUtil.putAll(
+			"styleselect fontselect fontsizeselect | forecolor backcolor | " +
+				"bold italic underline strikethrough | alignleft aligncenter " +
+					"alignright alignjustify",
+			buttons,
 			"table | hr removeformat | subscript superscript | charmap " +
-				"emoticons | preview print fullscreen"
-		);
+				"emoticons | preview print fullscreen");
 	}
 
 	protected JSONArray getToolbarsPhoneJSONArray() {

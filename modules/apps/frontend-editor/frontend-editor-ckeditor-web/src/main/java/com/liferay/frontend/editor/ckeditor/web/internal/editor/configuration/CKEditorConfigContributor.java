@@ -234,6 +234,15 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 	protected JSONArray getToolbarLiferayArticleJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
+		String buttons = "['Table', '-', 'ImageSelector',";
+
+		if (XugglerUtil.isEnabled()) {
+			buttons += " 'AudioSelector', 'VideoSelector',";
+		}
+
+		buttons +=
+			" 'Flash', '-', 'LiferayPageBreak', '-', 'Smiley', 'SpecialChar']";
+
 		JSONArray jsonArray = JSONUtil.putAll(
 			toJSONArray(
 				"['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', " +
@@ -246,28 +255,12 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 				"['NumberedList', 'BulletedList', '-' ,'Outdent', 'Indent', " +
 					"'-', 'Blockquote']"),
 			"/", toJSONArray("['Styles', 'FontSize']"),
-			toJSONArray("['Link', 'Unlink', 'Anchor']"));
-
-		String buttons = "['Table', '-', 'ImageSelector',";
-
-		if (XugglerUtil.isEnabled()) {
-			buttons += " 'AudioSelector', 'VideoSelector',";
-		}
-
-		buttons +=
-			" 'Flash', '-', 'LiferayPageBreak', '-', 'Smiley', 'SpecialChar']";
-
-		jsonArray.put(
-			toJSONArray(buttons)
-		).put(
-			"/"
-		).put(
+			toJSONArray("['Link', 'Unlink', 'Anchor']"), toJSONArray(buttons),
+			"/",
 			toJSONArray(
 				"['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', " +
-					"'-', 'SelectAll' , '-', 'Undo', 'Redo']")
-		).put(
-			toJSONArray("['Find', 'Replace', '-', 'SpellChecker', 'Scayt']")
-		);
+					"'-', 'SelectAll' , '-', 'Undo', 'Redo']"),
+			toJSONArray("['Find', 'Replace', '-', 'SpellChecker', 'Scayt']"));
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));
@@ -281,6 +274,14 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 	protected JSONArray getToolbarLiferayJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
+		String buttons = "['Table', '-', 'ImageSelector',";
+
+		if (XugglerUtil.isEnabled()) {
+			buttons = buttons.concat(" 'AudioSelector', 'VideoSelector',");
+		}
+
+		buttons = buttons.concat(" 'Flash', '-', 'Smiley', 'SpecialChar']");
+
 		JSONArray jsonArray = JSONUtil.putAll(
 			toJSONArray(
 				"['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', " +
@@ -292,21 +293,8 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			toJSONArray(
 				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']"),
 			"/", toJSONArray("['Styles', 'FontSize']"),
-			toJSONArray("['Link', 'Unlink', 'Anchor']"));
-
-		String buttons = "['Table', '-', 'ImageSelector',";
-
-		if (XugglerUtil.isEnabled()) {
-			buttons = buttons.concat(" 'AudioSelector', 'VideoSelector',");
-		}
-
-		buttons = buttons.concat(" 'Flash', '-', 'Smiley', 'SpecialChar']");
-
-		jsonArray.put(
-			toJSONArray(buttons)
-		).put(
-			"/"
-		);
+			toJSONArray("['Link', 'Unlink', 'Anchor']"), toJSONArray(buttons),
+			"/");
 
 		boolean inlineEdit = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(

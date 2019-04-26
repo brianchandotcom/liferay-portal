@@ -310,7 +310,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		private static Map<Integer, String[]> _markerFileNames =
 			new HashMap<Integer, String[]>() {
 				{
-					put(0, new String[] {"subsystem.bnd", ".gitrepo"});
+					put(0, new String[] {".lfrbuild-release-src", ".gitrepo"});
 					put(1, new String[] {"app.bnd"});
 					put(2, new String[] {"bnd.bnd"});
 					put(

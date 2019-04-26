@@ -31,8 +31,8 @@ public interface ResourceMonitor {
 
 	public void printResourceConnectionQueue();
 
-	public void signal(String resourceName);
+	public void signal(String connectionName);
 
-	public void wait(String resourceName);
+	public void wait(String connectionName);
 
 }

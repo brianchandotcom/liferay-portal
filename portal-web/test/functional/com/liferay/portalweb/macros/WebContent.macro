@@ -1357,8 +1357,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "APAsset#DOCUMENT_CONVERSION_NAME",
 				value1 = "${documentTypeUppercase}");
-
-			AssertElementPresent(locator1 = "APAsset#DOCUMENT_CONVERSION_NAME_ICON");
 		}
 	}
 

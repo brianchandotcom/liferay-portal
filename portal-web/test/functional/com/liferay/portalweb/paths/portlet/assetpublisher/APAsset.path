@@ -54,11 +54,6 @@
 	<td>//a[contains (.,'${key_documentType}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>DOCUMENT_CONVERSION_NAME_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'${key_documentType}')]/../i</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

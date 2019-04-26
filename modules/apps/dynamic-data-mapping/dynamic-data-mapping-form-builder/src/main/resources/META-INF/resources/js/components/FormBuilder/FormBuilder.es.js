@@ -107,6 +107,7 @@ class FormBuilder extends Component {
 
 	attached() {
 		const {activePage, pages} = this.props;
+		const {store} = this.context;
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
 		const translationManager = document.querySelector('.ddm-translation-manager');
 
@@ -118,6 +119,10 @@ class FormBuilder extends Component {
 		if (!this._pageHasFields(pages, activePage)) {
 			this.openSidebar();
 		}
+
+		this._eventHandler.add(
+			store.on('fieldDuplicated', () => this.openSidebar())
+		);
 	}
 
 	created() {
@@ -317,7 +322,7 @@ class FormBuilder extends Component {
 			}
 		}
 
-		if (openSidebar || this._fieldWasDuplicated(changes.focusedField)) {
+		if (openSidebar) {
 			this.openSidebar();
 		}
 	}
@@ -342,10 +347,6 @@ class FormBuilder extends Component {
 				throw new Error(error);
 			}
 		);
-	}
-
-	_fieldWasDuplicated(field) {
-		return field.newVal.openSidebar && !field.prevVal.openSidebar;
 	}
 
 	_handleAddFieldButtonClicked() {

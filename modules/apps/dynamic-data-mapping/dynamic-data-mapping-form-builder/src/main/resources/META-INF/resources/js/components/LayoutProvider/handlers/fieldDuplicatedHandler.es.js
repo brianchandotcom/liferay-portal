@@ -19,7 +19,6 @@ const handleFieldDuplicated = (state, event) => {
 		fieldName: newFieldName,
 		label,
 		name: newFieldName,
-		openSidebar: true,
 		settingsContext: {
 			...field.settingsContext,
 			pages: visitor.mapFields(

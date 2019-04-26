@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.web.internal.servlet.taglib;
 
+import com.liferay.dynamic.data.mapping.web.internal.portlet.DDMPortlet;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -78,7 +79,8 @@ public class DDMWebTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
+		dynamicIncludeRegistry.register(
+			DDMPortlet.class.getName() + "#formRendered");
 	}
 
 	@Reference

@@ -8,14 +8,15 @@ import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
 import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.es';
 import './FragmentEditableFieldTooltip.es';
 
-import {DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
+import {DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_CONFIG_ATTRIBUTES, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 import {EDITABLE_FIELD_CONFIG_KEYS, FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../actions/saveChanges.es';
-import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {getItemPath, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
+import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties, shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
+import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
@@ -535,14 +536,13 @@ class FragmentEditableField extends PortletBase {
 		this.store
 			.dispatch(enableSavingChangesStatusAction())
 			.dispatch(
-				{
-					editableId: this.editableId,
-					editableValue: newValue,
-					editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
-					editableValueSegmentsExperienceId,
-					fragmentEntryLinkId: this.fragmentEntryLinkId,
-					type: UPDATE_EDITABLE_VALUE
-				}
+				updateEditableValueAction(
+					this.fragmentEntryLinkId,
+					this.editableId,
+					this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+					newValue,
+					editableValueSegmentsExperienceId
+				)
 			)
 			.dispatch(
 				{

@@ -4,14 +4,14 @@ import {Config} from 'metal-state';
 import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 
-import FragmentEditableField from './FragmentEditableField.es';
-import FragmentStyleEditor from './FragmentStyleEditor.es';
+import {getConnectedComponent} from '../../store/ConnectedComponent.es';
+import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
-import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
+import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
+import FragmentEditableField from './FragmentEditableField.es';
+import FragmentStyleEditor from './FragmentStyleEditor.es';
 import templates from './FragmentEntryLinkContent.soy';
-import {UPDATE_EDITABLE_VALUE} from '../../actions/actions.es';
-import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 
 const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
 
@@ -318,14 +318,13 @@ class FragmentEntryLinkContent extends Component {
 			prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
 
 		this.store.dispatch(
-			{
-				editableId: event.name,
-				editableValue: event.value,
-				editableValueId: this.languageId,
-				editableValueSegmentsExperienceId,
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				type: UPDATE_EDITABLE_VALUE
-			}
+			updateEditableValueAction(
+				this.fragmentEntryLinkId,
+				event.name,
+				this.languageId,
+				event.value,
+				editableValueSegmentsExperienceId
+			)
 		);
 	}
 

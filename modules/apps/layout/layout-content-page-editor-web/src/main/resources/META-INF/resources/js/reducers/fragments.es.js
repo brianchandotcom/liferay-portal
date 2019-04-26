@@ -1,4 +1,4 @@
-import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE} from '../actions/actions.es';
+import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE_SUCCESS} from '../actions/actions.es';
 import {add, addRow, remove, setIn, updateIn, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
@@ -439,109 +439,26 @@ function removeFragmentEntryLinkReducer(state, action) {
  * @param {object} action
  * @param {string} action.type
  * @param {string} action.fragmentEntryLinkId
- * @param {string} action.editableId
- * @param {string} action.editableValue
- * @param {string} action.editableValueId
- * @param {string} action.editableValueSegmentsExperienceId
+ * @param {string} action.editableValues
  * @return {object}
  * @review
  */
 function updateEditableValueReducer(state, action) {
 	let nextState = state;
 
-	return new Promise(
-		resolve => {
-			if (action.type === UPDATE_EDITABLE_VALUE) {
-				const {
-					editableId,
-					editableValue,
-					editableValueId,
-					editableValueSegmentsExperienceId,
-					fragmentEntryLinkId
-				} = action;
+	if (action.type === UPDATE_EDITABLE_VALUE_SUCCESS) {
+		nextState = setIn(
+			nextState,
+			[
+				'fragmentEntryLinks',
+				action.fragmentEntryLinkId,
+				'editableValues'
+			],
+			action.editableValues
+		);
+	}
 
-				const {editableValues} = nextState.fragmentEntryLinks[
-					fragmentEntryLinkId
-				];
-
-				const keysTreeArray = editableValueSegmentsExperienceId ? [
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-					editableId,
-					editableValueSegmentsExperienceId
-				] : [
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-					editableId
-				];
-
-				let nextEditableValues = setIn(
-					editableValues,
-					[...keysTreeArray, editableValueId],
-					editableValue
-				);
-
-				if (editableValueId === 'mappedField') {
-					nextEditableValues = updateIn(
-						nextEditableValues,
-						keysTreeArray,
-						editableValue => {
-							const nextEditableValue = Object.assign({}, editableValue);
-
-							[
-								'config',
-								state.defaultSegmentsEntryId,
-								...Object.keys(state.availableLanguages),
-								...Object.keys(state.availableSegmentsEntries)
-							].forEach(
-								key => {
-									delete nextEditableValue[key];
-								}
-							);
-
-							return nextEditableValue;
-						}
-					);
-				}
-
-				const formData = new FormData();
-
-				formData.append(
-					`${nextState.portletNamespace}fragmentEntryLinkId`,
-					fragmentEntryLinkId
-				);
-
-				formData.append(
-					`${nextState.portletNamespace}editableValues`,
-					JSON.stringify(nextEditableValues)
-				);
-
-				fetch(
-					nextState.editFragmentEntryLinkURL,
-					{
-						body: formData,
-						credentials: 'include',
-						method: 'POST'
-					}
-				).then(
-					() => {
-						nextState = setIn(
-							nextState,
-							[
-								'fragmentEntryLinks',
-								fragmentEntryLinkId,
-								'editableValues'
-							],
-							nextEditableValues
-						);
-
-						resolve(nextState);
-					}
-				);
-			}
-			else {
-				resolve(nextState);
-			}
-		}
-	);
+	return nextState;
 }
 
 /**

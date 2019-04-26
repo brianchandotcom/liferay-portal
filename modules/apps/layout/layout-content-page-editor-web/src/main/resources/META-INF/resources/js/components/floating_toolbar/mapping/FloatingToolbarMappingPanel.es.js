@@ -3,14 +3,14 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
-import {ADD_MAPPED_ASSET_ENTRY, UPDATE_EDITABLE_VALUE} from '../../../actions/actions.es';
+import {ADD_MAPPED_ASSET_ENTRY} from '../../../actions/actions.es';
 import {COMPATIBLE_TYPES} from '../../../utils/constants';
-import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
-import getConnectedComponent from '../../../store/ConnectedComponent.es';
-import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
-import templates from './FloatingToolbarMappingPanel.soy';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
+import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {updateEditableValueAction} from '../../../actions/updateEditableValue.es';
+import getConnectedComponent from '../../../store/ConnectedComponent.es';
+import templates from './FloatingToolbarMappingPanel.soy';
 
 const SOURCE_TYPE_IDS = {
 	content: 'specific_content',
@@ -321,19 +321,14 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @param {!string} value
 	 */
 	_updateEditableValues(key, value) {
-		this.store
-			.dispatch(enableSavingChangesStatusAction())
-			.dispatch(
-				{
-					editableId: this.item.editableId,
-					editableValue: value,
-					editableValueId: key,
-					fragmentEntryLinkId: this.item.fragmentEntryLinkId,
-					type: UPDATE_EDITABLE_VALUE
-				}
+		this.store.dispatch(
+			updateEditableValueAction(
+				this.item.fragmentEntryLinkId,
+				this.item.editableId,
+				key,
+				value
 			)
-			.dispatch(updateLastSaveDateAction())
-			.dispatch(disableSavingChangesStatusAction());
+		);
 	}
 }
 

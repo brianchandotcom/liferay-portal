@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -217,6 +218,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			fragmentEntryLink.getEditableValues());
 
 		Document document = _getDocument(html);
+
+		_assetEntriesFieldValues = new HashMap<>();
 
 		for (Element element : document.select("lfr-editable")) {
 			EditableElementParser editableElementParser =
@@ -509,6 +512,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			return null;
 		}
 
+		String fieldId = jsonObject.getString("fieldId");
+
+		Map<String, Object> fieldsValues = _assetEntriesFieldValues.get(
+			assetEntry.getEntryId());
+
+		if (MapUtil.isNotEmpty(fieldsValues)) {
+			return fieldsValues.getOrDefault(fieldId, null);
+		}
+
 		InfoDisplayContributor infoDisplayContributor =
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
 				assetEntry.getClassName());
@@ -519,10 +531,12 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			versionType = AssetRendererFactory.TYPE_LATEST;
 		}
 
-		String fieldId = jsonObject.getString("fieldId");
+		fieldsValues = infoDisplayContributor.getInfoDisplayFieldsValues(
+			new VersionedAssetEntry(assetEntry, versionType), locale);
 
-		return infoDisplayContributor.getInfoDisplayFieldValue(
-			new VersionedAssetEntry(assetEntry, versionType), fieldId, locale);
+		_assetEntriesFieldValues.put(assetEntry.getEntryId(), fieldsValues);
+
+		return fieldsValues.get(fieldId);
 	}
 
 	private boolean _isMapped(JSONObject jsonObject, String mode) {
@@ -725,6 +739,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		"([^:]+)\\s*:([^;]+);");
 	private static final Pattern _cssSelectorPattern = Pattern.compile(
 		"([^\\{]+)\\s*\\{([^\\}]+)\\}");
+
+	private Map<Long, Map<String, Object>> _assetEntriesFieldValues;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

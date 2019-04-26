@@ -3,9 +3,9 @@ import {generateFieldName} from '../util/fields.es';
 import {PagesVisitor} from '../../../util/visitors.es';
 import {sub} from '../../../util/strings.es';
 
-const handleFieldDuplicated = (state, event) => {
+const handleFieldDuplicated = (state, editingLanguageId, event) => {
 	const {columnIndex, pageIndex, rowIndex} = event;
-	const {locale, pages} = state;
+	const {pages} = state;
 	const field = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
 	const label = sub(
 		Liferay.Language.get('copy-of-x'),
@@ -34,7 +34,7 @@ const handleFieldDuplicated = (state, event) => {
 							...field,
 							localizedValue: {
 								...field.localizedValue,
-								[locale]: label
+								[editingLanguageId]: label
 							},
 							value: label
 						};

@@ -139,6 +139,16 @@ public class EtcdUtil {
 			}
 		}
 
+		public boolean exists() {
+			_refreshEtcdNode();
+
+			if (_etcdNode != null) {
+				return true;
+			}
+
+			return false;
+		}
+
 		public long getCreatedIndex() {
 			return _etcdNode.getCreatedIndex();
 		}

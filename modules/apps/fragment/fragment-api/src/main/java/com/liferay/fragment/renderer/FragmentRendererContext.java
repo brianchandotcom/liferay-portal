@@ -36,6 +36,8 @@ public interface FragmentRendererContext {
 
 	public String getMode();
 
+	public long getPreviewClassPK();
+
 	public long[] getSegmentsExperienceIds();
 
 }

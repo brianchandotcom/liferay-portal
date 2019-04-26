@@ -97,6 +97,10 @@
 	.message-content {
 		display: block;
 
+		.alloy-editor-container .alloy-editor-wrapper {
+			padding-top: .5em;
+		}
+
 		img {
 			max-width: 100%;
 		}

@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface FragmentRenderer {
 
+	public String getCollectionKey();
+
 	public default String getImagePreviewURL(
 		HttpServletRequest httpServletRequest) {
 

@@ -17,6 +17,8 @@ package com.liferay.change.tracking.rest.internal.resource;
 import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.CTManager;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
+import com.liferay.change.tracking.exception.CTCollectionNameException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.rest.internal.exception.CTJaxRsException;
 import com.liferay.change.tracking.rest.internal.exception.CannotCreateCTCollectionException;
@@ -27,9 +29,11 @@ import com.liferay.change.tracking.rest.internal.model.collection.CTCollectionUp
 import com.liferay.change.tracking.rest.internal.util.CTJaxRsUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -37,8 +41,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -99,19 +105,57 @@ public class CTCollectionResource {
 
 		User user = CTJaxRsUtil.getUser(userId);
 
+		Locale locale = user.getLocale();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		CTJaxRsUtil.checkChangeTrackingEnabled(companyId, _ctEngineManager);
 
-		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.createCTCollection(
-				user.getUserId(), ctCollectionUpdateModel.getName(),
-				ctCollectionUpdateModel.getDescription());
+		try {
+			Optional<CTCollection> ctCollectionOptional =
+				_ctEngineManager.createCTCollection(
+					user.getUserId(), ctCollectionUpdateModel.getName(),
+					ctCollectionUpdateModel.getDescription());
 
-		return ctCollectionOptional.map(
-			this::_getCTCollectionModel
-		).orElseThrow(
-			() -> new CannotCreateCTCollectionException(
-				companyId, "Cannot create Change Tracking Collection")
-		);
+			return ctCollectionOptional.map(
+				this::_getCTCollectionModel
+			).orElseThrow(
+				() -> new CannotCreateCTCollectionException(
+					companyId,
+					LanguageUtil.get(
+						resourceBundle,
+						"cannot-create-change-tracking-collection"))
+			);
+		}
+		catch (PortalException pe) {
+			if (pe instanceof CTCollectionNameException) {
+				if (Validator.isNull(pe.getMessage())) {
+					throw new CannotCreateCTCollectionException(
+						companyId,
+						LanguageUtil.get(
+							resourceBundle, "collection-name-cannot-be-null"));
+				}
+
+				throw new CannotCreateCTCollectionException(
+					companyId,
+					LanguageUtil.get(
+						resourceBundle, "collection-name-too-long"));
+			}
+			else if (pe instanceof CTCollectionDescriptionException) {
+				throw new CannotCreateCTCollectionException(
+					companyId,
+					LanguageUtil.get(
+						resourceBundle, "collection-description-too-long"));
+			}
+			else {
+				throw new CannotCreateCTCollectionException(
+					companyId,
+					LanguageUtil.get(
+						resourceBundle,
+						"cannot-create-change-tracking-collection"));
+			}
+		}
 	}
 
 	@DELETE

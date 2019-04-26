@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -512,7 +511,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		InfoDisplayContributor infoDisplayContributor =
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				_portal.getClassName(classNameId));
+				assetEntry.getClassName());
 
 		int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 
@@ -735,8 +734,5 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
-	@Reference
-	private Portal _portal;
 
 }

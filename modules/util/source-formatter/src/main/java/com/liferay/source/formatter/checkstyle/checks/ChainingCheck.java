@@ -276,8 +276,20 @@ public class ChainingCheck extends BaseCheck {
 		String variableTypeName = DetailASTUtil.getVariableTypeName(
 			methodCallDetailAST, classOrVariableName, false);
 
+		String fullyQualifiedClassName = variableTypeName;
+
+		for (String importName :
+				DetailASTUtil.getImportNames(methodCallDetailAST)) {
+
+			if (importName.endsWith("." + variableTypeName)) {
+				fullyQualifiedClassName = importName;
+
+				break;
+			}
+		}
+
 		List<String> requiredChainingMethodNames =
-			_getRequiredChainingMethodNames(variableTypeName);
+			_getRequiredChainingMethodNames(fullyQualifiedClassName);
 
 		if (requiredChainingMethodNames == null) {
 			return;
@@ -522,9 +534,11 @@ public class ChainingCheck extends BaseCheck {
 		}
 	}
 
-	private List<String> _getRequiredChainingMethodNames(String className) {
+	private List<String> _getRequiredChainingMethodNames(
+		String fullyQualifiedClassName) {
+
 		if (_requiredChainingMethodNamesMap != null) {
-			return _requiredChainingMethodNamesMap.get(className);
+			return _requiredChainingMethodNamesMap.get(fullyQualifiedClassName);
 		}
 
 		_requiredChainingMethodNamesMap = new HashMap<>();
@@ -575,10 +589,11 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			_requiredChainingMethodNamesMap.put(
-				javaClass.getName(), requiredChainingMethodNames);
+				javaClass.getPackageName() + "." + javaClass.getName(),
+				requiredChainingMethodNames);
 		}
 
-		return _requiredChainingMethodNamesMap.get(className);
+		return _requiredChainingMethodNamesMap.get(fullyQualifiedClassName);
 	}
 
 	private String _getReturnType(

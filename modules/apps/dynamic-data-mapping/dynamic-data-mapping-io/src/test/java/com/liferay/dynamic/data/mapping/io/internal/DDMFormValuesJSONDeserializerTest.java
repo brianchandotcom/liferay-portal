@@ -475,10 +475,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			expectedJSONArray.toString(), value.getString(LocaleUtil.US),
 			false);
 
-		expectedJSONArray = JSONFactoryUtil.createJSONArray();
-
-		expectedJSONArray.put("Value 2");
-		expectedJSONArray.put("Value 3");
+		expectedJSONArray = JSONUtil.putAll("Value 2", "Value 3");
 
 		JSONAssert.assertEquals(
 			expectedJSONArray.toString(), value.getString(LocaleUtil.BRAZIL),

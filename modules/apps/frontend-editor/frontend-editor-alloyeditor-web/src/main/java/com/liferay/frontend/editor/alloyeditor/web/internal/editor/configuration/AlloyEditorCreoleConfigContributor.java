@@ -138,8 +138,6 @@ public class AlloyEditorCreoleConfigContributor
 	}
 
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		ResourceBundle resourceBundle = null;
 
 		try {
@@ -149,36 +147,28 @@ public class AlloyEditorCreoleConfigContributor
 			resourceBundle = ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE;
 		}
 
-		jsonArray.put(
+		return JSONUtil.putAll(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "normal"), "p",
-				_CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
-				_CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2",
-				_CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "3"), "h3",
-				_CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "4"), "h4",
-				_CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "5"), "h5",
-				_CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
+				_CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "6"), "h6",
 				_CKEDITOR_STYLE_BLOCK));
-
-		return jsonArray;
 	}
 
 	protected JSONObject getStyleFormatsJSONObject(Locale locale) {

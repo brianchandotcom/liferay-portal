@@ -106,57 +106,43 @@ public class TinyMCEEditorConfigContributor
 	}
 
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		jsonArray.put(
+		return JSONUtil.putAll(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "normal"), "inline", "p",
-				null));
-		jsonArray.put(
+				null),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "1"), "block",
-				"h1", null));
-		jsonArray.put(
+				"h1", null),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "2"), "block",
-				"h2", null));
-		jsonArray.put(
+				"h2", null),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "3"), "block",
-				"h3", null));
-		jsonArray.put(
+				"h3", null),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "4"), "block",
-				"h4", null));
-		jsonArray.put(
+				"h4", null),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "preformatted-text"), "block",
-				"pre", null));
-		jsonArray.put(
+				"pre", null),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "cited-work"), "inline",
-				"cite", null));
-		jsonArray.put(
+				"cite", null),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "computer-code"), "inline",
-				"code", null));
-		jsonArray.put(
+				"code", null),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "info-message"), "block",
-				"div", "portlet-msg-info"));
-		jsonArray.put(
+				"div", "portlet-msg-info"),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "alert-message"), "block",
-				"div", "portlet-msg-alert"));
-		jsonArray.put(
+				"div", "portlet-msg-alert"),
 			getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "error-message"), "block",
 				"div", "portlet-msg-error"));
-
-		return jsonArray;
 	}
 
 	protected JSONArray getToolbarJSONArray(

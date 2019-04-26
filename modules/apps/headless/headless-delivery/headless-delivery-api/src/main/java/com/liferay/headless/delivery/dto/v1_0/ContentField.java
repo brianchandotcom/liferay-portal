@@ -216,6 +216,7 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean repeatable;
 
+	@Schema
 	public Value getValue() {
 		return value;
 	}

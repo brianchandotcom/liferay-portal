@@ -55,7 +55,7 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 
 	@Override
 	@GET
-	@Operation(description = "Get segments of a site")
+	@Operation(description = "Gets a site's segments.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -76,7 +76,7 @@ public abstract class BaseSegmentResourceImpl implements SegmentResource {
 
 	@Override
 	@GET
-	@Operation(description = "Get segments of an user")
+	@Operation(description = "Gets a user's segments.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),

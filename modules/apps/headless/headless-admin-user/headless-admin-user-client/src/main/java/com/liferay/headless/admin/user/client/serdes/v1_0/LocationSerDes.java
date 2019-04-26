@@ -18,8 +18,10 @@ import com.liferay.headless.admin.user.client.dto.v1_0.Location;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -40,6 +42,12 @@ public class LocationSerDes {
 		LocationJSONParser locationJSONParser = new LocationJSONParser();
 
 		return locationJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		LocationJSONParser locationJSONParser = new LocationJSONParser();
+
+		return locationJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(Location location) {
@@ -131,6 +139,34 @@ public class LocationSerDes {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private static class LocationJSONParser extends BaseJSONParser<Location> {

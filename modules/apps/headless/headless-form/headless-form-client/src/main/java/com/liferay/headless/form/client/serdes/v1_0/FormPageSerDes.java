@@ -19,8 +19,10 @@ import com.liferay.headless.form.client.dto.v1_0.FormPage;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -42,6 +44,12 @@ public class FormPageSerDes {
 		FormPageJSONParser formPageJSONParser = new FormPageJSONParser();
 
 		return formPageJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		FormPageJSONParser formPageJSONParser = new FormPageJSONParser();
+
+		return formPageJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(FormPage formPage) {
@@ -158,6 +166,34 @@ public class FormPageSerDes {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private static class FormPageJSONParser extends BaseJSONParser<FormPage> {

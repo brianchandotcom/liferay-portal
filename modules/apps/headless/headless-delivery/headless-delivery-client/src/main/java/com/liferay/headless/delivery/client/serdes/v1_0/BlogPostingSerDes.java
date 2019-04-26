@@ -22,8 +22,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -47,6 +49,13 @@ public class BlogPostingSerDes {
 			new BlogPostingJSONParser();
 
 		return blogPostingJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		BlogPostingJSONParser blogPostingJSONParser =
+			new BlogPostingJSONParser();
+
+		return blogPostingJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(BlogPosting blogPosting) {
@@ -495,6 +504,34 @@ public class BlogPostingSerDes {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private static class BlogPostingJSONParser

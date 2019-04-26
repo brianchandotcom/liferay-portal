@@ -56,7 +56,7 @@ public abstract class BaseSegmentUserResourceImpl
 
 	@Override
 	@GET
-	@Operation(description = "Get users of a segment")
+	@Operation(description = "Gets a segment's users.")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "segmentId"),

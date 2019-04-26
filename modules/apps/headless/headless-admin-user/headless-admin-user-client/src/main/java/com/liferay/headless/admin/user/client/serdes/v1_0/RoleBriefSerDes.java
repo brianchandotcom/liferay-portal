@@ -18,8 +18,10 @@ import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -40,6 +42,12 @@ public class RoleBriefSerDes {
 		RoleBriefJSONParser roleBriefJSONParser = new RoleBriefJSONParser();
 
 		return roleBriefJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		RoleBriefJSONParser roleBriefJSONParser = new RoleBriefJSONParser();
+
+		return roleBriefJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(RoleBrief roleBrief) {
@@ -108,6 +116,34 @@ public class RoleBriefSerDes {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private static class RoleBriefJSONParser extends BaseJSONParser<RoleBrief> {

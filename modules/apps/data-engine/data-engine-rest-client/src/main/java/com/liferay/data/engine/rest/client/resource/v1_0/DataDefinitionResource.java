@@ -44,6 +44,13 @@ public class DataDefinitionResource {
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
 	public DataDefinition getDataDefinition(Long dataDefinitionId)
@@ -61,13 +68,19 @@ public class DataDefinitionResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
 		try {
-			return DataDefinitionSerDes.toDTO(httpResponse.getContent());
+			return DataDefinitionSerDes.toDTO(content);
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING,
-				"Unable to process HTTP response: " + httpResponse.getContent(),
+				Level.WARNING, "Unable to process HTTP response: " + content,
 				e);
 
 			throw e;
@@ -93,13 +106,19 @@ public class DataDefinitionResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
 		try {
-			return DataDefinitionSerDes.toDTO(httpResponse.getContent());
+			return DataDefinitionSerDes.toDTO(content);
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING,
-				"Unable to process HTTP response: " + httpResponse.getContent(),
+				Level.WARNING, "Unable to process HTTP response: " + content,
 				e);
 
 			throw e;
@@ -123,6 +142,13 @@ public class DataDefinitionResource {
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
 	public void postSiteDataDefinitionPermission(
@@ -142,6 +168,13 @@ public class DataDefinitionResource {
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 	}
 
 	public Page<DataDefinition> getSiteDataDefinitionsPage(
@@ -164,7 +197,14 @@ public class DataDefinitionResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
-		return Page.of(httpResponse.getContent(), DataDefinitionSerDes::toDTO);
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
+		return Page.of(content, DataDefinitionSerDes::toDTO);
 	}
 
 	public DataDefinition postSiteDataDefinition(
@@ -186,13 +226,19 @@ public class DataDefinitionResource {
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
 		try {
-			return DataDefinitionSerDes.toDTO(httpResponse.getContent());
+			return DataDefinitionSerDes.toDTO(content);
 		}
 		catch (Exception e) {
 			_logger.log(
-				Level.WARNING,
-				"Unable to process HTTP response: " + httpResponse.getContent(),
+				Level.WARNING, "Unable to process HTTP response: " + content,
 				e);
 
 			throw e;

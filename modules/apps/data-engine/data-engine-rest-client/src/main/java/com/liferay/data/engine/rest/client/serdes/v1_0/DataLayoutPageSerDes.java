@@ -19,8 +19,10 @@ import com.liferay.data.engine.rest.client.dto.v1_0.DataLayoutRow;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -44,6 +46,13 @@ public class DataLayoutPageSerDes {
 			new DataLayoutPageJSONParser();
 
 		return dataLayoutPageJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		DataLayoutPageJSONParser dataLayoutPageJSONParser =
+			new DataLayoutPageJSONParser();
+
+		return dataLayoutPageJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(DataLayoutPage dataLayoutPage) {
@@ -85,7 +94,7 @@ public class DataLayoutPageSerDes {
 
 			sb.append("\"description\": ");
 
-			sb.append(dataLayoutPage.getDescription());
+			sb.append(_toJSON(dataLayoutPage.getDescription()));
 		}
 
 		if (dataLayoutPage.getTitle() != null) {
@@ -95,7 +104,7 @@ public class DataLayoutPageSerDes {
 
 			sb.append("\"title\": ");
 
-			sb.append(dataLayoutPage.getTitle());
+			sb.append(_toJSON(dataLayoutPage.getTitle()));
 		}
 
 		sb.append("}");
@@ -143,6 +152,34 @@ public class DataLayoutPageSerDes {
 		return string.replaceAll("\"", "\\\\\"");
 	}
 
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private static class DataLayoutPageJSONParser
 		extends BaseJSONParser<DataLayoutPage> {
 
@@ -176,13 +213,15 @@ public class DataLayoutPageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					dataLayoutPage.setDescription(
-						(Map<String, String>)jsonParserFieldValue);
+						DataLayoutPageSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					dataLayoutPage.setTitle(
-						(Map<String, String>)jsonParserFieldValue);
+						DataLayoutPageSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

@@ -54,6 +54,7 @@ public class SharepointServerResponseConverter {
 		_sharepointURLHelper = sharepointURLHelper;
 		_extRepository = extRepository;
 		_siteAbsoluteURL = siteAbsoluteURL;
+		_libraryPath = libraryPath;
 
 		_rootDocumentPath = _join(
 			StringPool.SLASH, siteAbsoluteURL, libraryPath);
@@ -324,8 +325,9 @@ public class SharepointServerResponseConverter {
 		Date createDate = _parseDate(jsonObject.getString("TimeCreated"));
 		Date modifiedDate = _parseDate(
 			jsonObject.getString("TimeLastModified"));
-		long effectiveBasePermissionsBits = _getEffectiveBasePermissionsBits(
-			jsonObject);
+		long effectiveBasePermissionsBits =
+			_getFolderEffectiveBasePermissionsBits(
+				jsonObject, _isRootFolder(extRepositoryModelKey));
 
 		return (T)new SharepointFolder(
 			extRepositoryModelKey, name, createDate, modifiedDate,
@@ -356,6 +358,27 @@ public class SharepointServerResponseConverter {
 		}
 
 		return title + StringPool.PERIOD + extension;
+	}
+
+	private long _getFolderEffectiveBasePermissionsBits(
+		JSONObject jsonObject, boolean isRootFolder) {
+
+		JSONObject listAllItemFieldsJSONObject = jsonObject.getJSONObject(
+			"ListItemAllFields");
+
+		if (listAllItemFieldsJSONObject.has("__deferred")) {
+			if (isRootFolder) {
+				return 1;
+			}
+
+			return 0;
+		}
+
+		return _getEffectiveBasePermissionsBits(jsonObject);
+	}
+
+	private boolean _isRootFolder(String extRepositoryModelKey) {
+		return extRepositoryModelKey.equals(StringPool.SLASH + _libraryPath);
 	}
 
 	private String _join(String delimiter, String... strings) {
@@ -395,6 +418,7 @@ public class SharepointServerResponseConverter {
 		"/Forms/AllItems.aspx";
 
 	private final ExtRepository _extRepository;
+	private final String _libraryPath;
 	private final String _rootDocumentPath;
 	private final SharepointURLHelper _sharepointURLHelper;
 	private final String _siteAbsoluteURL;

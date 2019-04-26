@@ -95,6 +95,23 @@ function setStore(store) {
 }
 
 /**
+ * @param {string} fragmentEntryLinkId
+ * @param {object} editableValues
+ * @return {Promise<Response>}
+ */
+function updateEditableValues(fragmentEntryLinkId, editableValues) {
+	const state = _store.getState();
+
+	return _fetch(
+		state.editFragmentEntryLinkURL,
+		{
+			fragmentEntryLinkId,
+			editableValues: JSON.stringify(editableValues)
+		}
+	);
+}
+
+/**
  * @param {Object} layoutData
  * @param {string} segmentsExperienceId
  * @return {Promise<Response>}
@@ -117,5 +134,6 @@ export {
 	removeExperience,
 	removeFragmentEntryLinks,
 	setStore,
+	updateEditableValues,
 	updatePageEditorLayoutData
 };

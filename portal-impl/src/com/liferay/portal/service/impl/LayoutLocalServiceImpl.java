@@ -304,7 +304,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			}
 		}
 
-		Layout layout = publishDraft(draftLayout);
+		Layout layout = updateDraft(draftLayout);
 
 		// Layout friendly URLs
 
@@ -2450,12 +2450,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		PortalUtil.updateImageId(
 			draftLayout, true, bytes, "iconImageId", 0, 0, 0);
 
-		return publishDraft(draftLayout);
+		return updateDraft(draftLayout);
 	}
 
 	@Override
 	public Layout updateLayout(Layout layout) throws PortalException {
-		return publishDraft(getDraft(layout));
+		return updateDraft(getDraft(layout));
 	}
 
 	/**
@@ -2481,7 +2481,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		draftLayout.setPublishDate(publishDate);
 
-		return publishDraft(draftLayout);
+		return updateDraft(draftLayout);
 	}
 
 	/**
@@ -2509,7 +2509,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		draftLayout.setClassNameId(classNameId);
 		draftLayout.setClassPK(classPK);
 
-		return publishDraft(draftLayout);
+		return updateDraft(draftLayout);
 	}
 
 	/**
@@ -2710,7 +2710,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			draftLayout.setPublishDate(now);
 		}
 
-		return publishDraft(draftLayout);
+		return updateDraft(draftLayout);
 	}
 
 	/**
@@ -2744,7 +2744,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		draftLayout.setColorSchemeId(colorSchemeId);
 		draftLayout.setCss(css);
 
-		return publishDraft(draftLayout);
+		return updateDraft(draftLayout);
 	}
 
 	/**
@@ -2770,7 +2770,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		draftLayout.setModifiedDate(now);
 		draftLayout.setName(name, LocaleUtil.fromLanguageId(languageId));
 
-		layout = publishDraft(draftLayout);
+		layout = updateDraft(draftLayout);
 
 		Group group = layout.getGroup();
 
@@ -2983,7 +2983,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			draftLayout.setPriority(nextPriority);
 
-			publishDraft(draftLayout);
+			updateDraft(draftLayout);
 		}
 	}
 
@@ -3019,7 +3019,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		draftLayout.setModifiedDate(new Date());
 		draftLayout.setPriority(nextPriority);
 
-		layout = publishDraft(draftLayout);
+		layout = updateDraft(draftLayout);
 
 		List<Layout> layouts = layoutPersistence.findByG_P_P_Head(
 			layout.getGroupId(), layout.isPrivateLayout(),
@@ -3059,7 +3059,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			curDraftLayout.setModifiedDate(layout.getModifiedDate());
 			curDraftLayout.setPriority(curNextPriority);
 
-			curLayout = publishDraft(curDraftLayout);
+			curLayout = updateDraft(curDraftLayout);
 
 			if (curLayout.equals(layout)) {
 				layout = curLayout;

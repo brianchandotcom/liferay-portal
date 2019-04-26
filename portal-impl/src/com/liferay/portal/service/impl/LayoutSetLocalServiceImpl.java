@@ -84,7 +84,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		draftLayoutSet = initLayoutSet(draftLayoutSet);
 
-		return publishDraft(draftLayoutSet);
+		return updateDraft(draftLayoutSet);
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 			draftLayoutSet.setLogoId(layoutSet.getLogoId());
 
-			layoutSet = publishDraft(draftLayoutSet);
+			layoutSet = updateDraft(draftLayoutSet);
 		}
 		else {
 			layoutSetPersistence.removeByG_P_Head(
@@ -317,7 +317,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	public LayoutSet updateLayoutSet(LayoutSet layoutSet)
 		throws PortalException {
 
-		return publishDraft(getDraft(layoutSet));
+		return updateDraft(getDraft(layoutSet));
 	}
 
 	/**
@@ -357,7 +357,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			draftLayoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);
 
-			publishDraft(draftLayoutSet);
+			updateDraft(draftLayoutSet);
 
 			return;
 		}
@@ -400,7 +400,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			PortalUtil.updateImageId(
 				draftLayoutSet, logo, bytes, "logoId", 0, 0, 0);
 
-			return publishDraft(draftLayoutSet);
+			return updateDraft(draftLayoutSet);
 		}
 
 		layoutSetBranch.setModifiedDate(new Date());
@@ -485,7 +485,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			draftLayoutSet.setColorSchemeId(colorSchemeId);
 			draftLayoutSet.setCss(css);
 
-			layoutSet = publishDraft(draftLayoutSet);
+			layoutSet = updateDraft(draftLayoutSet);
 
 			if (PrefsPropsUtil.getBoolean(
 					PropsKeys.THEME_SYNC_ON_GROUP,
@@ -499,7 +499,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 				otherDraftLayoutSet.setThemeId(themeId);
 				otherDraftLayoutSet.setColorSchemeId(colorSchemeId);
 
-				publishDraft(otherDraftLayoutSet);
+				updateDraft(otherDraftLayoutSet);
 			}
 
 			return layoutSet;
@@ -539,7 +539,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		draftLayoutSet.setModifiedDate(new Date());
 		draftLayoutSet.setPageCount(pageCount);
 
-		return publishDraft(draftLayoutSet);
+		return updateDraft(draftLayoutSet);
 	}
 
 	@Override
@@ -566,7 +566,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 			draftLayoutSet.setSettingsProperties(settingsProperties);
 
-			return publishDraft(draftLayoutSet);
+			return updateDraft(draftLayoutSet);
 		}
 
 		layoutSetBranch.setModifiedDate(new Date());

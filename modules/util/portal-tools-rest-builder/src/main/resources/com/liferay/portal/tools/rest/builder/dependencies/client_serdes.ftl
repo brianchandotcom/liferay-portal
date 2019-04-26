@@ -14,8 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -37,6 +39,12 @@ public class ${schemaName}SerDes {
 		${schemaName}JSONParser ${schemaVarName}JSONParser = new ${schemaName}JSONParser();
 
 		return ${schemaVarName}JSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		${schemaName}JSONParser ${schemaVarName}JSONParser = new ${schemaName}JSONParser();
+
+		return ${schemaVarName}JSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(${schemaName} ${schemaVarName}) {
@@ -92,6 +100,8 @@ public class ${schemaName}SerDes {
 								</#if>
 
 								sb.append("\"");
+							<#elseif stringUtil.startsWith(propertyType, "Map<")>
+								sb.append(_toJSON(${schemaVarName}.get${propertyName?cap_first}()[i]));
 							<#elseif allSchemas[propertyType?remove_ending("[]")]??>
 								sb.append(String.valueOf(${schemaVarName}.get${propertyName?cap_first}()[i]));
 							<#else>
@@ -117,6 +127,8 @@ public class ${schemaName}SerDes {
 							</#if>
 
 							sb.append("\"");
+						<#elseif stringUtil.startsWith(propertyType, "Map<")>
+							sb.append(_toJSON(${schemaVarName}.get${propertyName?cap_first}()));
 						<#else>
 							sb.append(${schemaVarName}.get${propertyName?cap_first}());
 						</#if>
@@ -182,6 +194,35 @@ public class ${schemaName}SerDes {
 		return string.replaceAll("\"", "\\\\\"");
 	}
 
+	private static String _toJSON(Map<String, ?> map) {
+
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private static class ${schemaName}JSONParser extends BaseJSONParser<${schemaName}> {
 
 		@Override
@@ -225,6 +266,8 @@ public class ${schemaName}SerDes {
 							toIntegers((Object[])jsonParserFieldValue)
 						<#elseif stringUtil.equals(propertyType, "String[]")>
 							toStrings((Object[])jsonParserFieldValue)
+						<#elseif stringUtil.startsWith(propertyType, "Map<")>
+							${schemaName}SerDes.toMap((String)jsonParserFieldValue)
 						<#elseif allSchemas?keys?seq_contains(propertyType)>
 							${propertyType}SerDes.toDTO((String)jsonParserFieldValue)
 						<#elseif propertyType?ends_with("[]") && allSchemas?keys?seq_contains(propertyType?remove_ending("[]"))>

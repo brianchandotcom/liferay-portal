@@ -38,6 +38,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(new Version(5, 0, 0), new UpgradeBadColumnNames());
 
 		upgradeProcesses.put(new Version(5, 0, 1), new UpgradePersonalMenu());
+
+		upgradeProcesses.put(new Version(5, 0, 2), new UpgradeCountry());
 	}
 
 }

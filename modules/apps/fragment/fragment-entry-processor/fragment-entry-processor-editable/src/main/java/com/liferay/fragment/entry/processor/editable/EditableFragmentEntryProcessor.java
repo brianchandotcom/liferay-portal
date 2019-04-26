@@ -151,7 +151,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkCSS(
 			FragmentEntryLink fragmentEntryLink, String css, String mode,
-			Locale locale, long[] segmentsExperienceIds)
+			Locale locale, long[] segmentsExperienceIds, long previewClassPK)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -210,7 +210,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html, String mode,
-			Locale locale, long[] segmentsExperienceIds)
+			Locale locale, long[] segmentsExperienceIds, long previewClassPK)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(

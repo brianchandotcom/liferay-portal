@@ -148,7 +148,7 @@ public class FragmentEntryProcessorEditableTest {
 			_getFileAsString("processed_media_query.css"),
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkCSS(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.getMostRelevantLocale(), new long[0]));
+				LocaleUtil.getMostRelevantLocale(), new long[0], 0));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)

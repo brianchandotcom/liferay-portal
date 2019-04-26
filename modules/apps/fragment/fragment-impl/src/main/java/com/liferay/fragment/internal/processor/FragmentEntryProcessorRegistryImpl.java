@@ -100,7 +100,7 @@ public class FragmentEntryProcessorRegistryImpl
 	@Override
 	public String processFragmentEntryLinkCSS(
 			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
-			long[] segmentsExperienceIds)
+			long[] segmentsExperienceIds, long previewClassPK)
 		throws PortalException {
 
 		String css = fragmentEntryLink.getCss();
@@ -109,7 +109,8 @@ public class FragmentEntryProcessorRegistryImpl
 				_serviceTrackerList) {
 
 			css = fragmentEntryProcessor.processFragmentEntryLinkCSS(
-				fragmentEntryLink, css, mode, locale, segmentsExperienceIds);
+				fragmentEntryLink, css, mode, locale, segmentsExperienceIds,
+				previewClassPK);
 		}
 
 		return css;
@@ -118,7 +119,7 @@ public class FragmentEntryProcessorRegistryImpl
 	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
-			long[] segmentsExperienceIds)
+			long[] segmentsExperienceIds, long previewClassPK)
 		throws PortalException {
 
 		String html = fragmentEntryLink.getHtml();
@@ -127,7 +128,8 @@ public class FragmentEntryProcessorRegistryImpl
 				_serviceTrackerList) {
 
 			html = fragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html, mode, locale, segmentsExperienceIds);
+				fragmentEntryLink, html, mode, locale, segmentsExperienceIds,
+				previewClassPK);
 		}
 
 		return html;

@@ -85,12 +85,14 @@ public abstract class BaseMultiDestinationProxyBean {
 	private static volatile SynchronousMessageSender
 		_defaultSynchronousMessageSender =
 			ServiceProxyFactory.newServiceTrackedInstance(
-				SynchronousMessageSender.class, BaseProxyBean.class,
+				SynchronousMessageSender.class,
+				BaseMultiDestinationProxyBean.class,
 				"_defaultSynchronousMessageSender", "(mode=DEFAULT)", true);
 	private static volatile SynchronousMessageSender
 		_directSynchronousMessageSender =
 			ServiceProxyFactory.newServiceTrackedInstance(
-				SynchronousMessageSender.class, BaseProxyBean.class,
+				SynchronousMessageSender.class,
+				BaseMultiDestinationProxyBean.class,
 				"_directSynchronousMessageSender", "(mode=DIRECT)", true);
 
 	private SynchronousMessageSender.Mode _mode;

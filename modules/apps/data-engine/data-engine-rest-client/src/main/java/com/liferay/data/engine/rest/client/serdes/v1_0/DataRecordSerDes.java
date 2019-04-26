@@ -18,8 +18,10 @@ import com.liferay.data.engine.rest.client.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -40,6 +42,12 @@ public class DataRecordSerDes {
 		DataRecordJSONParser dataRecordJSONParser = new DataRecordJSONParser();
 
 		return dataRecordJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		DataRecordJSONParser dataRecordJSONParser = new DataRecordJSONParser();
+
+		return dataRecordJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(DataRecord dataRecord) {
@@ -68,7 +76,7 @@ public class DataRecordSerDes {
 
 			sb.append("\"dataRecordValues\": ");
 
-			sb.append(dataRecord.getDataRecordValues());
+			sb.append(_toJSON(dataRecord.getDataRecordValues()));
 		}
 
 		if (dataRecord.getId() != null) {
@@ -127,6 +135,34 @@ public class DataRecordSerDes {
 		return string.replaceAll("\"", "\\\\\"");
 	}
 
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private static class DataRecordJSONParser
 		extends BaseJSONParser<DataRecord> {
 
@@ -154,7 +190,7 @@ public class DataRecordSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dataRecordValues")) {
 				if (jsonParserFieldValue != null) {
 					dataRecord.setDataRecordValues(
-						(Map<String, ?>)jsonParserFieldValue);
+						DataRecordSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

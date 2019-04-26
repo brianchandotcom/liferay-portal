@@ -18,8 +18,10 @@ import com.liferay.data.engine.rest.client.dto.v1_0.DataRecordCollection;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -42,6 +44,13 @@ public class DataRecordCollectionSerDes {
 			new DataRecordCollectionJSONParser();
 
 		return dataRecordCollectionJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		DataRecordCollectionJSONParser dataRecordCollectionJSONParser =
+			new DataRecordCollectionJSONParser();
+
+		return dataRecordCollectionJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(DataRecordCollection dataRecordCollection) {
@@ -70,7 +79,7 @@ public class DataRecordCollectionSerDes {
 
 			sb.append("\"description\": ");
 
-			sb.append(dataRecordCollection.getDescription());
+			sb.append(_toJSON(dataRecordCollection.getDescription()));
 		}
 
 		if (dataRecordCollection.getId() != null) {
@@ -90,7 +99,7 @@ public class DataRecordCollectionSerDes {
 
 			sb.append("\"name\": ");
 
-			sb.append(dataRecordCollection.getName());
+			sb.append(_toJSON(dataRecordCollection.getName()));
 		}
 
 		sb.append("}");
@@ -148,6 +157,34 @@ public class DataRecordCollectionSerDes {
 		return string.replaceAll("\"", "\\\\\"");
 	}
 
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private static class DataRecordCollectionJSONParser
 		extends BaseJSONParser<DataRecordCollection> {
 
@@ -175,7 +212,8 @@ public class DataRecordCollectionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					dataRecordCollection.setDescription(
-						(Map<String, String>)jsonParserFieldValue);
+						DataRecordCollectionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -187,7 +225,8 @@ public class DataRecordCollectionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					dataRecordCollection.setName(
-						(Map<String, String>)jsonParserFieldValue);
+						DataRecordCollectionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

@@ -22,8 +22,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -45,6 +47,12 @@ public class FormSerDes {
 		FormJSONParser formJSONParser = new FormJSONParser();
 
 		return formJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		FormJSONParser formJSONParser = new FormJSONParser();
+
+		return formJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(Form form) {
@@ -371,6 +379,34 @@ public class FormSerDes {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private static class FormJSONParser extends BaseJSONParser<Form> {

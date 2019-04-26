@@ -21,8 +21,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -45,6 +47,13 @@ public class DocumentFolderSerDes {
 			new DocumentFolderJSONParser();
 
 		return documentFolderJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		DocumentFolderJSONParser documentFolderJSONParser =
+			new DocumentFolderJSONParser();
+
+		return documentFolderJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(DocumentFolder documentFolder) {
@@ -275,6 +284,34 @@ public class DocumentFolderSerDes {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private static class DocumentFolderJSONParser

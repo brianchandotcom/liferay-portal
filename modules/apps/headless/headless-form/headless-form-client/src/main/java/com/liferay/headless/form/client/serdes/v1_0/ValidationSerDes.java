@@ -18,8 +18,10 @@ import com.liferay.headless.form.client.dto.v1_0.Validation;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -40,6 +42,12 @@ public class ValidationSerDes {
 		ValidationJSONParser validationJSONParser = new ValidationJSONParser();
 
 		return validationJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		ValidationJSONParser validationJSONParser = new ValidationJSONParser();
+
+		return validationJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(Validation validation) {
@@ -130,6 +138,34 @@ public class ValidationSerDes {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private static class ValidationJSONParser

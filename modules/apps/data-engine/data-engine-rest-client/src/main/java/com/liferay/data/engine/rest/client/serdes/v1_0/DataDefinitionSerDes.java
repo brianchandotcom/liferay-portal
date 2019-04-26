@@ -23,8 +23,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -48,6 +50,13 @@ public class DataDefinitionSerDes {
 			new DataDefinitionJSONParser();
 
 		return dataDefinitionJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		DataDefinitionJSONParser dataDefinitionJSONParser =
+			new DataDefinitionJSONParser();
+
+		return dataDefinitionJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(DataDefinition dataDefinition) {
@@ -148,7 +157,7 @@ public class DataDefinitionSerDes {
 
 			sb.append("\"description\": ");
 
-			sb.append(dataDefinition.getDescription());
+			sb.append(_toJSON(dataDefinition.getDescription()));
 		}
 
 		if (dataDefinition.getId() != null) {
@@ -168,7 +177,7 @@ public class DataDefinitionSerDes {
 
 			sb.append("\"name\": ");
 
-			sb.append(dataDefinition.getName());
+			sb.append(_toJSON(dataDefinition.getName()));
 		}
 
 		if (dataDefinition.getSiteId() != null) {
@@ -299,6 +308,34 @@ public class DataDefinitionSerDes {
 		return string.replaceAll("\"", "\\\\\"");
 	}
 
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private static class DataDefinitionJSONParser
 		extends BaseJSONParser<DataDefinition> {
 
@@ -360,7 +397,8 @@ public class DataDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinition.setDescription(
-						(Map<String, String>)jsonParserFieldValue);
+						DataDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -372,7 +410,8 @@ public class DataDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinition.setName(
-						(Map<String, String>)jsonParserFieldValue);
+						DataDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

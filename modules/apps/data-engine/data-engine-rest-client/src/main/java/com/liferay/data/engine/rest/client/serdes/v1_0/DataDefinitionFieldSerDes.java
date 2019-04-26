@@ -19,8 +19,10 @@ import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -44,6 +46,13 @@ public class DataDefinitionFieldSerDes {
 			new DataDefinitionFieldJSONParser();
 
 		return dataDefinitionFieldJSONParser.parseToDTOs(json);
+	}
+
+	public static Map toMap(String json) {
+		DataDefinitionFieldJSONParser dataDefinitionFieldJSONParser =
+			new DataDefinitionFieldJSONParser();
+
+		return dataDefinitionFieldJSONParser.parseToMap(json);
 	}
 
 	public static String toJSON(DataDefinitionField dataDefinitionField) {
@@ -88,7 +97,7 @@ public class DataDefinitionFieldSerDes {
 
 			sb.append("\"defaultValue\": ");
 
-			sb.append(dataDefinitionField.getDefaultValue());
+			sb.append(_toJSON(dataDefinitionField.getDefaultValue()));
 		}
 
 		if (dataDefinitionField.getFieldType() != null) {
@@ -132,7 +141,7 @@ public class DataDefinitionFieldSerDes {
 
 			sb.append("\"label\": ");
 
-			sb.append(dataDefinitionField.getLabel());
+			sb.append(_toJSON(dataDefinitionField.getLabel()));
 		}
 
 		if (dataDefinitionField.getLocalizable() != null) {
@@ -176,7 +185,7 @@ public class DataDefinitionFieldSerDes {
 
 			sb.append("\"tip\": ");
 
-			sb.append(dataDefinitionField.getTip());
+			sb.append(_toJSON(dataDefinitionField.getTip()));
 		}
 
 		sb.append("}");
@@ -284,6 +293,34 @@ public class DataDefinitionFieldSerDes {
 		return string.replaceAll("\"", "\\\\\"");
 	}
 
+	private static String _toJSON(Map<String, ?> map) {
+		Set set = map.entrySet();
+
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(entry.getKey());
+			sb.append("\":");
+
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private static class DataDefinitionFieldJSONParser
 		extends BaseJSONParser<DataDefinitionField> {
 
@@ -317,7 +354,8 @@ public class DataDefinitionFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "defaultValue")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setDefaultValue(
-						(Map<String, ?>)jsonParserFieldValue);
+						DataDefinitionFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fieldType")) {
@@ -341,7 +379,8 @@ public class DataDefinitionFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "label")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setLabel(
-						(Map<String, String>)jsonParserFieldValue);
+						DataDefinitionFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "localizable")) {
@@ -364,7 +403,8 @@ public class DataDefinitionFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "tip")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setTip(
-						(Map<String, String>)jsonParserFieldValue);
+						DataDefinitionFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

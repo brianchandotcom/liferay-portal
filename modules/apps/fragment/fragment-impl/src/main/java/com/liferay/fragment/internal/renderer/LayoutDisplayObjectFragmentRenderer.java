@@ -51,8 +51,13 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 
 	@Override
+	public String getCollectionKey() {
+		return "display-page";
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
-		return "Display Page Content";
+		return LanguageUtil.get(locale, "content");
 	}
 
 	@Override

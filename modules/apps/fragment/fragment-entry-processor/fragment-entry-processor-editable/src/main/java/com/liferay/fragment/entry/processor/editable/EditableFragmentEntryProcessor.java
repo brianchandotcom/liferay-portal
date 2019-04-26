@@ -385,43 +385,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				editableElementParser.getFieldTemplate(), "field_name", value);
 		}
 
-		if (!_isMapped(jsonObject, mode)) {
+		Object fieldValue = _getValue(jsonObject, mode, locale, previewClassPK);
+
+		if (fieldValue == null) {
 			return StringPool.BLANK;
 		}
-
-		long classNameId = jsonObject.getLong("classNameId");
-		long classPK = jsonObject.getLong("classPK");
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			classNameId, classPK);
-
-		if (assetEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			assetEntry.getClassName());
-
-		if ((trashHandler == null) ||
-			trashHandler.isInTrash(assetEntry.getClassPK())) {
-
-			return StringPool.BLANK;
-		}
-
-		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				_portal.getClassName(classNameId));
-
-		int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
-
-		if (previewClassPK == assetEntry.getEntryId()) {
-			versionType = AssetRendererFactory.TYPE_LATEST;
-		}
-
-		String fieldId = jsonObject.getString("fieldId");
-
-		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
-			new VersionedAssetEntry(assetEntry, versionType), fieldId, locale);
 
 		return editableElementParser.parseFieldValue(fieldValue);
 	}
@@ -438,43 +406,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				value, locale, null);
 		}
 
-		if (!_isMapped(jsonObject, mode)) {
+		Object fieldValue = _getValue(jsonObject, mode, locale, previewClassPK);
+
+		if (fieldValue == null) {
 			return JSONFactoryUtil.createJSONObject();
-		}
-
-		long classNameId = jsonObject.getLong("classNameId");
-		long classPK = jsonObject.getLong("classPK");
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			classNameId, classPK);
-
-		if (assetEntry == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			assetEntry.getClassName());
-
-		if ((trashHandler == null) ||
-			trashHandler.isInTrash(assetEntry.getClassPK())) {
-
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
-
-		if (previewClassPK == assetEntry.getEntryId()) {
-			versionType = AssetRendererFactory.TYPE_LATEST;
 		}
 
 		String fieldId = jsonObject.getString("fieldId");
-
-		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				_portal.getClassName(classNameId));
-
-		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
-			new VersionedAssetEntry(assetEntry, versionType), fieldId, locale);
 
 		return editableElementParser.getFieldTemplateConfigJSONObject(
 			fieldId, locale, fieldValue);
@@ -542,6 +480,50 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return stylesheet;
+	}
+
+	private Object _getValue(
+			JSONObject jsonObject, String mode, Locale locale,
+			long previewClassPK)
+		throws PortalException {
+
+		if (!_isMapped(jsonObject, mode)) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		long classNameId = jsonObject.getLong("classNameId");
+		long classPK = jsonObject.getLong("classPK");
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			classNameId, classPK);
+
+		if (assetEntry == null) {
+			return null;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			assetEntry.getClassName());
+
+		if ((trashHandler == null) ||
+			trashHandler.isInTrash(assetEntry.getClassPK())) {
+
+			return null;
+		}
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				_portal.getClassName(classNameId));
+
+		int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
+
+		if (previewClassPK == assetEntry.getEntryId()) {
+			versionType = AssetRendererFactory.TYPE_LATEST;
+		}
+
+		String fieldId = jsonObject.getString("fieldId");
+
+		return infoDisplayContributor.getInfoDisplayFieldValue(
+			new VersionedAssetEntry(assetEntry, versionType), fieldId, locale);
 	}
 
 	private boolean _isMapped(JSONObject jsonObject, String mode) {

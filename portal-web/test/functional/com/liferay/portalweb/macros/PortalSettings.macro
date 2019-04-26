@@ -154,18 +154,29 @@ definition {
 		}
 	}
 
-	macro configureGoogleApps {
-		Panel.expandPanel(panel = "Google Apps");
-
+	macro configureGoogleDrive {
 		Type(
-			locator1 = "TextInput#GOOGLE_APPS_API_KEY",
-			value1 = "${googleAppsAPIKey}");
-
-		Type(
-			locator1 = "TextInput#GOOGLE_CLIENT_ID",
+			key_text = "clientId",
+			locator1 = "TextArea#ANY",
 			value1 = "${googleClientID}");
 
-		PortletEntry.save();
+		Type(
+			key_text = "clientSecret",
+			locator1 = "TextArea#ANY",
+			value1 = "${googleClientSecret}");
+
+		if (isSet(googlePickerAPIKey)) {
+			Type(
+				key_text = "pickerAPIKey",
+				locator1 = "TextArea#ANY",
+				value1 = "${googlePickerAPIKey}");
+		}
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro configureLDAPSetting {

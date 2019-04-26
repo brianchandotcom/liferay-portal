@@ -36,7 +36,7 @@ module.exports = function(config) {
 		},
 
 		files: [
-			'test.webpack.js',
+			'test/index.js',
 		],
 
 		frameworks: ['chai', 'mocha', 'sinon'],
@@ -52,7 +52,7 @@ module.exports = function(config) {
 		],
 
 		preprocessors: {
-			'test.webpack.js': ['webpack', 'sourcemap'],
+			'test/index.js': ['webpack', 'sourcemap'],
 		},
 
 		reporters: ['progress', 'coverage-istanbul'],

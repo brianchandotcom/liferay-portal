@@ -46,6 +46,11 @@ public class AssetListEntryAssetEntryRelImpl
 		return _assetEntryUuid;
 	}
 
+	@Override
+	public void setAssetEntryUuid(String assetEntryUuid) {
+		_assetEntryUuid = assetEntryUuid;
+	}
+
 	private String _assetEntryUuid;
 
 }

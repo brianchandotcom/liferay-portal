@@ -152,6 +152,11 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 };
 
 /**
+ * @type {string}
+ */
+export const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
+
+/**
  * Fragments Editor dragging class
  * @review
  * @type {string}

@@ -4,6 +4,7 @@ import {Config} from 'metal-state';
 import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../utils/constants';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
@@ -12,8 +13,6 @@ import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 import FragmentEditableField from './FragmentEditableField.es';
 import FragmentStyleEditor from './FragmentStyleEditor.es';
 import templates from './FragmentEntryLinkContent.soy';
-
-const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
 
 /**
  * Creates a Fragment Entry Link Content component.
@@ -477,10 +476,5 @@ const ConnectedFragmentEntryLinkContent = getConnectedComponent(
 
 Soy.register(ConnectedFragmentEntryLinkContent, templates);
 
-export {
-	ConnectedFragmentEntryLinkContent,
-	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-	FragmentEntryLinkContent
-};
-
+export {ConnectedFragmentEntryLinkContent, FragmentEntryLinkContent};
 export default ConnectedFragmentEntryLinkContent;

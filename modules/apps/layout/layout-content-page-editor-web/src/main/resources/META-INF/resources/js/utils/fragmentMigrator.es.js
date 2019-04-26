@@ -1,5 +1,9 @@
-const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from './constants';
 
+/**
+ * @param {object} object
+ * @param {string} defaultSegmentsExperienceKey
+ */
 function _editableFragmentMigrator(object, defaultSegmentsExperienceKey) {
 	let alternativeObject = null;
 	let defaultSegment = {};
@@ -19,6 +23,10 @@ function _editableFragmentMigrator(object, defaultSegmentsExperienceKey) {
 	return alternativeObject || object;
 }
 
+/**
+ * @param {object} editableValue
+ * @param {string} defaultSegmentsExperienceKey
+ */
 function editableValuesMigrator(editableValue, defaultSegmentsExperienceKey) {
 	let jsonEditableValues = JSON.parse(editableValue);
 	let result;

@@ -1,4 +1,4 @@
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
 import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from './saveChanges.es';
 import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';

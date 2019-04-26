@@ -1,8 +1,7 @@
 import {ADD_FRAGMENT_ENTRY_LINK, CHANGE_LANGUAGE_ID, CREATE_SEGMENTS_EXPERIENCE, REMOVE_FRAGMENT_ENTRY_LINK, SELECT_SEGMENTS_EXPERIENCE, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
-import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
 import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
-
-const EDITABLE_VALUES_KEY = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * Reducer for changing languageId
@@ -72,7 +71,7 @@ function _getEditableValues(fragmentEntryLinks) {
 		)
 		.map(
 			fragmentEntryLink => (
-				fragmentEntryLink.editableValues[EDITABLE_VALUES_KEY]
+				fragmentEntryLink.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
 			)
 		)
 		.filter(

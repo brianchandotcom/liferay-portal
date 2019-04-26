@@ -4,9 +4,8 @@ import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
 import {REMOVE_FRAGMENT_ENTRY_LINK, REMOVE_ROW} from '../../../actions/actions.es';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../fragment_entry_link/FragmentEntryLinkContent.es';
 import {removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../../utils/constants';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {getItemPath, getRowFragmentEntryLinkIds} from '../../../utils/FragmentsEditorGetUtils.es';
 import templates from './SidebarPageStructurePanel.soy';

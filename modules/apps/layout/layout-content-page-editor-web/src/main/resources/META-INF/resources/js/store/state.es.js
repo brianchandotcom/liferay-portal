@@ -1,6 +1,6 @@
 import {Config} from 'metal-state';
 
-import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 const LayoutDataShape = Config.shapeOf(
@@ -372,7 +372,7 @@ const INITIAL_STATE = {
 					content: Config.any().value(''),
 					editableValues: Config.shapeOf(
 						{
-							['com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor']: Config.objectOf(
+							[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: Config.objectOf(
 								Config.shapeOf(
 									{
 										classNameId: Config.string().value(''),

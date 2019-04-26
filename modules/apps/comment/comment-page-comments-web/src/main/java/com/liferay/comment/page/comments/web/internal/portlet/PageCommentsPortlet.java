@@ -52,10 +52,8 @@ import org.osgi.service.component.annotations.Reference;
 public class PageCommentsPortlet extends MVCPortlet {
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.comment.page.comments.web)(release.schema.version=2.0.0))",
-		unbind = "-"
+		target = "(&(release.bundle.symbolic.name=com.liferay.comment.page.comments.web)(release.schema.version=2.0.0))"
 	)
-	protected void setRelease(Release release) {
-	}
+	private Release _release;
 
 }

@@ -225,10 +225,8 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 	}
 
 	protected DDMFormField createDDMFormField() {
-		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+		return DDMFormTestUtil.createTextDDMFormField(
 			"name", false, false, false);
-
-		return ddmFormField;
 	}
 
 	protected List<Map<String, String>> createDDMFormOptions() {

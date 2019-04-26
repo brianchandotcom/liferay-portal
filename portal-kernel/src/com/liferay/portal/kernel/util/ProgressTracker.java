@@ -68,9 +68,7 @@ public class ProgressTracker implements Serializable {
 	public String getMessage() {
 		Tuple tuple = _progress.get(_status);
 
-		String message = GetterUtil.getString(tuple.getObject(1));
-
-		return message;
+		return GetterUtil.getString(tuple.getObject(1));
 	}
 
 	public int getPercent() {

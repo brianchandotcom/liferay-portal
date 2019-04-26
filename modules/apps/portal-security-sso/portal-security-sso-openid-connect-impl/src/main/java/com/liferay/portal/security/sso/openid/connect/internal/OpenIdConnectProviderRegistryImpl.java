@@ -168,15 +168,12 @@ public class OpenIdConnectProviderRegistryImpl
 				e);
 		}
 
-		OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
-			openIdConnectProvider = new OpenIdConnectProviderImpl(
-				openIdConnectProviderConfiguration.providerName(),
-				openIdConnectProviderConfiguration.openIdConnectClientId(),
-				openIdConnectProviderConfiguration.openIdConnectClientSecret(),
-				openIdConnectProviderConfiguration.scopes(),
-				openIdConnectMetadataFactory);
-
-		return openIdConnectProvider;
+		return new OpenIdConnectProviderImpl(
+			openIdConnectProviderConfiguration.providerName(),
+			openIdConnectProviderConfiguration.openIdConnectClientId(),
+			openIdConnectProviderConfiguration.openIdConnectClientSecret(),
+			openIdConnectProviderConfiguration.scopes(),
+			openIdConnectMetadataFactory);
 	}
 
 	protected void removeOpenConnectIdProvider(String factoryPid) {

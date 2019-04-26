@@ -411,15 +411,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		protected JSONArray convertToJSONArray(String value) {
 			if (Validator.isNull(value)) {
-				JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-				return jsonArray;
+				return _jsonFactory.createJSONArray();
 			}
 
 			try {
-				JSONArray jsonArray = _jsonFactory.createJSONArray(value);
-
-				return jsonArray;
+				return _jsonFactory.createJSONArray(value);
 			}
 			catch (Exception e) {
 				JSONArray jsonArray = _jsonFactory.createJSONArray();

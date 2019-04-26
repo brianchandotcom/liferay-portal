@@ -2271,9 +2271,7 @@ public class StringUtil {
 						String.valueOf(classLoader)));
 			}
 
-			String s = read(is);
-
-			return s;
+			return read(is);
 		}
 	}
 

@@ -43,10 +43,7 @@ public class UpdateDocumentRequestExecutorImpl
 
 		RestStatus restStatus = updateResponse.status();
 
-		UpdateDocumentResponse updateDocumentResponse =
-			new UpdateDocumentResponse(restStatus.getStatus());
-
-		return updateDocumentResponse;
+		return new UpdateDocumentResponse(restStatus.getStatus());
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")

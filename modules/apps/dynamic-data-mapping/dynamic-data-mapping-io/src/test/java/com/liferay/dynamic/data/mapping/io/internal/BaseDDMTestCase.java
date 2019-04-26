@@ -69,10 +69,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	protected DDMFormLayoutColumn createDDMFormLayoutColumn(
 		int size, String... fieldNames) {
 
-		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
-			size, fieldNames);
-
-		return ddmFormLayoutColumn;
+		return new DDMFormLayoutColumn(size, fieldNames);
 	}
 
 	protected List<DDMFormLayoutColumn> createDDMFormLayoutColumns(

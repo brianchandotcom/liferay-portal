@@ -76,10 +76,8 @@ public class ReplicatedSolrClientFactory implements SolrClientFactory {
 
 		LBHttpSolrClient writerLBHttpSolrClient = builder.build();
 
-		ReadWriteSolrClient readWriteSolrClient = new ReadWriteSolrClient(
+		return new ReadWriteSolrClient(
 			readerLBHttpSolrClient, writerLBHttpSolrClient);
-
-		return readWriteSolrClient;
 	}
 
 	@Activate

@@ -53,11 +53,8 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 
 		TimeValue timeValue = bulkByScrollResponse.getTook();
 
-		UpdateByQueryDocumentResponse updateByQueryDocumentResponse =
-			new UpdateByQueryDocumentResponse(
-				bulkByScrollResponse.getUpdated(), timeValue.getMillis());
-
-		return updateByQueryDocumentResponse;
+		return new UpdateByQueryDocumentResponse(
+			bulkByScrollResponse.getUpdated(), timeValue.getMillis());
 	}
 
 	protected UpdateByQueryRequestBuilder createUpdateByQueryRequestBuilder(

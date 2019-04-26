@@ -256,11 +256,9 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		EntityField entityField, Object fieldValue) {
 
 		if (Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
-			Predicate<Context> predicate = p -> StringUtils.containsIgnoreCase(
+			return p -> StringUtils.containsIgnoreCase(
 				String.valueOf(p.get(entityField.getName())),
 				String.valueOf(fieldValue));
-
-			return predicate;
 		}
 
 		throw new UnsupportedOperationException(
@@ -296,11 +294,9 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
 			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
 
-			Predicate<Context> predicate = p ->
+			return p ->
 				((Comparable)fieldValue).compareTo(
 					p.get(entityField.getName())) <= 0;
-
-			return predicate;
 		}
 
 		throw new UnsupportedOperationException(
@@ -319,11 +315,9 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
 			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
 
-			Predicate<Context> predicate = p ->
+			return p ->
 				((Comparable)fieldValue).compareTo(
 					p.get(entityField.getName())) < 0;
-
-			return predicate;
 		}
 
 		throw new UnsupportedOperationException(
@@ -335,14 +329,12 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		EntityField entityField, Object fieldValue) {
 
 		if (Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
-			Predicate<Context> predicate = p -> Stream.of(
+			return p -> Stream.of(
 				(String[])p.get(_lambdaCollectionEntityField.getName())
 			).anyMatch(
 				c -> StringUtils.containsIgnoreCase(
 					String.valueOf(c), String.valueOf(fieldValue))
 			);
-
-			return predicate;
 		}
 
 		throw new UnsupportedOperationException(
@@ -373,14 +365,12 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		EntityField entityField, Object fieldValue) {
 
 		if (Objects.equals(entityField.getType(), EntityField.Type.STRING)) {
-			Predicate<Context> predicate = p -> Stream.of(
+			return p -> Stream.of(
 				(String[])p.get(_lambdaCollectionEntityField.getName())
 			).anyMatch(
 				c -> fieldValue.equals(
 					_normalizeStringLiteral(String.valueOf(c)))
 			);
-
-			return predicate;
 		}
 
 		throw new UnsupportedOperationException(
@@ -409,11 +399,9 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
 			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
 
-			Predicate<Context> predicate = p ->
+			return p ->
 				((Comparable)fieldValue).compareTo(
 					p.get(entityField.getName())) >= 0;
-
-			return predicate;
 		}
 
 		throw new UnsupportedOperationException(
@@ -432,11 +420,9 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			 Objects.equals(entityField.getType(), EntityField.Type.INTEGER) ||
 			 Objects.equals(entityField.getType(), EntityField.Type.STRING))) {
 
-			Predicate<Context> predicate = p ->
+			return p ->
 				((Comparable)fieldValue).compareTo(
 					p.get(entityField.getName())) > 0;
-
-			return predicate;
 		}
 
 		throw new UnsupportedOperationException(

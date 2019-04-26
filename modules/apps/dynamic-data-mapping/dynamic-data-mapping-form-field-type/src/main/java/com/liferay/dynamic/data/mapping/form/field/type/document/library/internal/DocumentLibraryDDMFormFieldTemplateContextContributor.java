@@ -188,12 +188,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		}
 
 		try {
-			String itemSelectorAuthToken = AuthTokenUtil.getToken(
+			return AuthTokenUtil.getToken(
 				request,
 				portal.getControlPanelPlid(themeDisplay.getCompanyId()),
 				PortletKeys.ITEM_SELECTOR);
-
-			return itemSelectorAuthToken;
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to generate item selector auth token ", pe);

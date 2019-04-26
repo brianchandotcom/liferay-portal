@@ -142,10 +142,8 @@ public class CustomFacetPortlet extends MVCPortlet {
 			portletSharedSearchResponse.getFederatedSearchResponse(
 				customFacetPortletPreferences.getFederatedSearchKeyOptional());
 
-		Facet facet = searchResponse.withFacetContextGet(
+		return searchResponse.withFacetContextGet(
 			facetContext -> facetContext.getFacet(getPortletId(renderRequest)));
-
-		return facet;
 	}
 
 	protected String getParameterName(

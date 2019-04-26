@@ -40,9 +40,7 @@ public class SubrepositoryGitRepositoryJob
 				jobProperties, "test.batch.names");
 		}
 
-		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
-
-		return testBatchNamesSet;
+		return getSetFromString(testBatchNames);
 	}
 
 	@Override

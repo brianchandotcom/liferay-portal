@@ -61,13 +61,11 @@ public class MBUserNotificationTest extends BaseUserNotificationTestCase {
 		MBTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+		return MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			group.getGroupId(), _category.getCategoryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
-
-		return message;
 	}
 
 	@Override

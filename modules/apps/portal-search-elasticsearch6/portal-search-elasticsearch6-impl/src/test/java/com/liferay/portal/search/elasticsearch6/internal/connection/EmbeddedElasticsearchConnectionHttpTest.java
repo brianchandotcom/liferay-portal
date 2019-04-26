@@ -106,9 +106,7 @@ public class EmbeddedElasticsearchConnectionHttpTest {
 		TransportAddress transportAddress =
 			boundTransportAddress.publishAddress();
 
-		int port = transportAddress.getPort();
-
-		return port;
+		return transportAddress.getPort();
 	}
 
 	protected String toString(URL url) throws Exception {

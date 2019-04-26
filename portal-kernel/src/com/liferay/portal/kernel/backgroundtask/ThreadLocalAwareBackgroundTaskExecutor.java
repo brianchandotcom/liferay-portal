@@ -38,11 +38,8 @@ public class ThreadLocalAwareBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskExecutor clone() {
-		BackgroundTaskExecutor backgroundTaskExecutor =
-			new ThreadLocalAwareBackgroundTaskExecutor(
-				getBackgroundTaskExecutor(), _backgroundTaskThreadLocalManager);
-
-		return backgroundTaskExecutor;
+		return new ThreadLocalAwareBackgroundTaskExecutor(
+			getBackgroundTaskExecutor(), _backgroundTaskThreadLocalManager);
 	}
 
 	@Override

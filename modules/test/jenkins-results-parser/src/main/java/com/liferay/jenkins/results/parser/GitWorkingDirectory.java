@@ -910,10 +910,7 @@ public class GitWorkingDirectory {
 			return null;
 		}
 
-		LocalGitBranch currentLocalGitBranch = getLocalGitBranch(
-			currentBranchName);
-
-		return currentLocalGitBranch;
+		return getLocalGitBranch(currentBranchName);
 	}
 
 	public String getGitConfigProperty(String gitConfigPropertyName) {
@@ -1991,10 +1988,7 @@ public class GitWorkingDirectory {
 
 		String standardOut = executionResult.getStandardOut();
 
-		List<String> localGitBranchNames = toShortNameList(
-			Arrays.asList(standardOut.split("\n")));
-
-		return localGitBranchNames;
+		return toShortNameList(Arrays.asList(standardOut.split("\n")));
 	}
 
 	protected LocalGitCommit getLocalGitCommit(String gitLogEntity) {

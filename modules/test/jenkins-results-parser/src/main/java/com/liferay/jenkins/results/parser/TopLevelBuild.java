@@ -1209,11 +1209,9 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getMoreDetailsElement() {
-		Element moreDetailsElement = Dom4JUtil.getNewElement(
+		return Dom4JUtil.getNewElement(
 			"h5", null, "For more details click ",
 			Dom4JUtil.getNewAnchorElement(getJenkinsReportURL(), "here"), ".");
-
-		return moreDetailsElement;
 	}
 
 	protected Element getResourceFileContentAsElement(

@@ -660,14 +660,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		nameMap.put(LocaleUtil.getDefault(), String.valueOf(layout.getPlid()));
 
-		Group scopeGroup = groupLocalService.addGroup(
+		return groupLocalService.addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			Layout.class.getName(), layout.getPlid(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null, 0, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
 			null);
-
-		return scopeGroup;
 	}
 
 	/**

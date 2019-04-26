@@ -205,10 +205,7 @@ public class ShindigUtil {
 
 		uuid = PortalUUIDUtil.fromJsSafeUuid(uuid);
 
-		com.liferay.opensocial.model.Gadget gadget =
-			GadgetLocalServiceUtil.getGadget(uuid, companyId);
-
-		return gadget;
+		return GadgetLocalServiceUtil.getGadget(uuid, companyId);
 	}
 
 	public static Folder getGadgetEditorRootFolder(long repositoryId)

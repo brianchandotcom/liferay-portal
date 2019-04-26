@@ -792,9 +792,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 			dateList.add(dateTime);
 		}
 
-		ExDate exDate = new ExDate(dateList);
-
-		return exDate;
+		return new ExDate(dateList);
 	}
 
 	protected String toString(net.fortuna.ical4j.model.Calendar iCalCalendar)

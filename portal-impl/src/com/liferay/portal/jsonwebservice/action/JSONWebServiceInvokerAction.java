@@ -171,10 +171,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		protected JSONSerializer createJSONSerializer() {
-			JSONSerializer jsonSerializer =
-				JSONFactoryUtil.createJSONSerializer();
-
-			return jsonSerializer;
+			return JSONFactoryUtil.createJSONSerializer();
 		}
 
 		private Object _result;

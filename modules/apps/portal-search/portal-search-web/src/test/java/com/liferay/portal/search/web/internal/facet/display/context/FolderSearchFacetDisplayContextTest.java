@@ -262,10 +262,7 @@ public class FolderSearchFacetDisplayContextTest {
 		folderSearchFacetDisplayBuilder.setParameterName(_facet.getFieldId());
 		folderSearchFacetDisplayBuilder.setParameterValue(facetParam);
 
-		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			folderSearchFacetDisplayBuilder.build();
-
-		return folderSearchFacetDisplayContext;
+		return folderSearchFacetDisplayBuilder.build();
 	}
 
 	protected TermCollector createTermCollector(long folderId, int count) {

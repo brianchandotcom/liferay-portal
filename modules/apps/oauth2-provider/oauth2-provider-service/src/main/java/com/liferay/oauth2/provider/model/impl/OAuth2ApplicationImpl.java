@@ -36,13 +36,11 @@ public class OAuth2ApplicationImpl extends OAuth2ApplicationBaseImpl {
 		Stream<String> stream = Arrays.stream(
 			StringUtil.split(getAllowedGrantTypes()));
 
-		List<GrantType> grantTypes = stream.map(
+		return stream.map(
 			GrantType::valueOf
 		).collect(
 			Collectors.toList()
 		);
-
-		return grantTypes;
 	}
 
 	@Override

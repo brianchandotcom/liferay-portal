@@ -211,13 +211,10 @@ public class SaveFormInstanceMVCCommandHelper {
 		String settingsContext = ParamUtil.getString(
 			portletRequest, "serializedSettingsContext");
 
-		DDMFormValues settingsDDMFormValues =
-			ddmFormTemplateContextToDDMFormValues.deserialize(
-				DDMFormContextDeserializerRequest.with(
-					DDMFormFactory.create(DDMFormInstanceSettings.class),
-					settingsContext));
-
-		return settingsDDMFormValues;
+		return ddmFormTemplateContextToDDMFormValues.deserialize(
+			DDMFormContextDeserializerRequest.with(
+				DDMFormFactory.create(DDMFormInstanceSettings.class),
+				settingsContext));
 	}
 
 	protected DDMFormInstance updateFormInstance(

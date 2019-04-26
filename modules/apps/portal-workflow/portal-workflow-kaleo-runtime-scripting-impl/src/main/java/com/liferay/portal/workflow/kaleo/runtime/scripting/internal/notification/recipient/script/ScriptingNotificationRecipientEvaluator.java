@@ -51,12 +51,10 @@ public class ScriptingNotificationRecipientEvaluator
 			ExecutionContext executionContext)
 		throws PortalException {
 
-		Map<String, Object> results = _kaleoScriptingEvaluator.execute(
+		return _kaleoScriptingEvaluator.execute(
 			executionContext, _outputNames,
 			kaleoNotificationRecipient.getRecipientScriptLanguage(),
 			kaleoNotificationRecipient.getRecipientScript());
-
-		return results;
 	}
 
 	private static final Set<String> _outputNames = new HashSet<>(

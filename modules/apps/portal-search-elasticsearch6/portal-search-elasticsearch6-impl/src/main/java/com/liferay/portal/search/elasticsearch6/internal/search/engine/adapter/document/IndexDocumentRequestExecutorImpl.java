@@ -43,10 +43,8 @@ public class IndexDocumentRequestExecutorImpl
 
 		RestStatus restStatus = indexResponse.status();
 
-		IndexDocumentResponse indexDocumentResponse = new IndexDocumentResponse(
+		return new IndexDocumentResponse(
 			restStatus.getStatus(), indexResponse.getId());
-
-		return indexDocumentResponse;
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")

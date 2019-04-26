@@ -42,10 +42,8 @@ public class PercolateQueryTranslatorImpl implements PercolateQueryTranslator {
 		documentJSONs.forEach(
 			documentJSON -> bytesArrays.add(new BytesArray(documentJSON)));
 
-		PercolateQueryBuilder percolateQueryBuilder = new PercolateQueryBuilder(
+		return new PercolateQueryBuilder(
 			percolateQuery.getField(), bytesArrays, XContentType.JSON);
-
-		return percolateQueryBuilder;
 	}
 
 }

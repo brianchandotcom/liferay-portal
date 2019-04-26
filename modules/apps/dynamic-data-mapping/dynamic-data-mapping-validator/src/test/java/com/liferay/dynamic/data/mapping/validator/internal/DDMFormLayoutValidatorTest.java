@@ -145,10 +145,7 @@ public class DDMFormLayoutValidatorTest {
 	private DDMFormLayoutColumn _createDDMFormLayoutColumn(
 		int size, String... fieldNames) {
 
-		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
-			size, fieldNames);
-
-		return ddmFormLayoutColumn;
+		return new DDMFormLayoutColumn(size, fieldNames);
 	}
 
 	private DDMFormLayoutPage _createDDMFormLayoutPage(

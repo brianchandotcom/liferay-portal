@@ -3318,10 +3318,7 @@ public class PortalImpl implements Portal {
 			return (LiferayPortletRequest)portletRequest;
 		}
 
-		LiferayPortletRequest liferayPortletRequest =
-			LiferayPortletUtil.getLiferayPortletRequest(portletRequest);
-
-		return liferayPortletRequest;
+		return LiferayPortletUtil.getLiferayPortletRequest(portletRequest);
 	}
 
 	@Override
@@ -3332,10 +3329,7 @@ public class PortalImpl implements Portal {
 			return (LiferayPortletResponse)portletResponse;
 		}
 
-		LiferayPortletResponse liferayPortletResponse =
-			LiferayPortletUtil.getLiferayPortletResponse(portletResponse);
-
-		return liferayPortletResponse;
+		return LiferayPortletUtil.getLiferayPortletResponse(portletResponse);
 	}
 
 	@Override

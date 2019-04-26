@@ -48,11 +48,9 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public Object clone() {
-		DDMStructureImpl ddmStructureImpl = new DDMStructureImpl(
+		return new DDMStructureImpl(
 			(com.liferay.dynamic.data.mapping.model.DDMStructure)
 				_ddmStructure.clone());
-
-		return ddmStructureImpl;
 	}
 
 	@Override

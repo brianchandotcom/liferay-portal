@@ -203,10 +203,7 @@ public class CalendarSearcherTest {
 	protected static SearchContext getSearchContext(Group group)
 		throws Exception {
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			group.getGroupId());
-
-		return searchContext;
+		return SearchContextTestUtil.getSearchContext(group.getGroupId());
 	}
 
 	protected void addCalendar(String name) throws PortalException {

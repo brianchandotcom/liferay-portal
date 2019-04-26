@@ -377,11 +377,9 @@ public class CSSBuilder implements AutoCloseable {
 			}
 		}
 
-		String css = _sassCompiler.compileFile(
+		return _sassCompiler.compileFile(
 			filePath, _importDirName + File.pathSeparator + cssBasePath,
 			_cssBuilderArgs.isGenerateSourceMap(), filePath + ".map");
-
-		return css;
 	}
 
 	private void _parseSassFile(String fileName) throws Exception {

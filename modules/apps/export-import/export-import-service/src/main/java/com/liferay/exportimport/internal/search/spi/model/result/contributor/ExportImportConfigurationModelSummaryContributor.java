@@ -41,10 +41,7 @@ public class ExportImportConfigurationModelSummaryContributor
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
 
-		Summary summary = createSummary(
-			document, Field.TITLE, Field.DESCRIPTION);
-
-		return summary;
+		return createSummary(document, Field.TITLE, Field.DESCRIPTION);
 	}
 
 	protected Summary createSummary(

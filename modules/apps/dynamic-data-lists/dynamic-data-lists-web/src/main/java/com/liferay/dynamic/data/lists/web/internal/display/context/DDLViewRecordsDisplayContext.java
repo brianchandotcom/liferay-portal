@@ -282,17 +282,13 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		String orderByCol = ParamUtil.getString(
+		return ParamUtil.getString(
 			_liferayPortletRequest, "orderByCol", "modified-date");
-
-		return orderByCol;
 	}
 
 	public String getOrderByType() {
-		String orderByType = ParamUtil.getString(
+		return ParamUtil.getString(
 			_liferayPortletRequest, "orderByType", "asc");
-
-		return orderByType;
 	}
 
 	public PortletURL getPortletURL() {

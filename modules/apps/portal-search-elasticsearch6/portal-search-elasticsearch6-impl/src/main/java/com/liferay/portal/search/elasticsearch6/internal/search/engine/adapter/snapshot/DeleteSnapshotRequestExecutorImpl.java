@@ -42,10 +42,8 @@ public class DeleteSnapshotRequestExecutorImpl
 		AcknowledgedResponse acknowledgedResponse =
 			deleteSnapshotRequestBuilder.get();
 
-		DeleteSnapshotResponse deleteSnapshotResponse =
-			new DeleteSnapshotResponse(acknowledgedResponse.isAcknowledged());
-
-		return deleteSnapshotResponse;
+		return new DeleteSnapshotResponse(
+			acknowledgedResponse.isAcknowledged());
 	}
 
 	protected DeleteSnapshotRequestBuilder createDeleteSnapshotRequestBuilder(

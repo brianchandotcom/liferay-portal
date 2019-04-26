@@ -769,9 +769,7 @@ public class SearchResultSummaryDisplayBuilder {
 
 		Summary summary = summaryBuilder.build();
 
-		String highlightedValue = summary.getContent();
-
-		return highlightedValue;
+		return summary.getContent();
 	}
 
 	protected String getHighlightedValuesToString(String fieldName) {

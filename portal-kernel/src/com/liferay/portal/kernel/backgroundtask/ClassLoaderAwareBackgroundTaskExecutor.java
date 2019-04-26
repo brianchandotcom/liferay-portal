@@ -31,11 +31,8 @@ public class ClassLoaderAwareBackgroundTaskExecutor
 
 	@Override
 	public BackgroundTaskExecutor clone() {
-		BackgroundTaskExecutor backgroundTaskExecutor =
-			new ClassLoaderAwareBackgroundTaskExecutor(
-				getBackgroundTaskExecutor(), _classLoader);
-
-		return backgroundTaskExecutor;
+		return new ClassLoaderAwareBackgroundTaskExecutor(
+			getBackgroundTaskExecutor(), _classLoader);
 	}
 
 	@Override

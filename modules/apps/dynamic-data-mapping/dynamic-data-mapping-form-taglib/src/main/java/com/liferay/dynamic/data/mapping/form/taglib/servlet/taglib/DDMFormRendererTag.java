@@ -283,10 +283,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 	}
 
 	protected ThemeDisplay getThemeDisplay() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay;
+		return (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 	}
 
 	protected boolean hasAddFormInstanceRecordPermission() {

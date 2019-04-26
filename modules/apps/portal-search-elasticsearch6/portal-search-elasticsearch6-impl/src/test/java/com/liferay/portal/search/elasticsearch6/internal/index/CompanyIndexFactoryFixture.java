@@ -43,14 +43,12 @@ public class CompanyIndexFactoryFixture {
 	}
 
 	public CompanyIndexFactory getCompanyIndexFactory() {
-		CompanyIndexFactory companyIndexFactory = new CompanyIndexFactory() {
+		return new CompanyIndexFactory() {
 			{
 				indexNameBuilder = new TestIndexNameBuilder();
 				jsonFactory = new JSONFactoryImpl();
 			}
 		};
-
-		return companyIndexFactory;
 	}
 
 	public String getIndexName() {

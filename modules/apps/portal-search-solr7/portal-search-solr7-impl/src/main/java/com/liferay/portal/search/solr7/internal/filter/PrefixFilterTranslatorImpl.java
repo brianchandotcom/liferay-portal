@@ -32,9 +32,7 @@ public class PrefixFilterTranslatorImpl implements PrefixFilterTranslator {
 	public Query translate(PrefixFilter prefixFilter) {
 		Term term = new Term(prefixFilter.getField(), prefixFilter.getPrefix());
 
-		PrefixQuery prefixQuery = new PrefixQuery(term);
-
-		return prefixQuery;
+		return new PrefixQuery(term);
 	}
 
 }

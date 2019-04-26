@@ -48,9 +48,7 @@ public abstract class BasePortalReleaseJob
 		String testBatchNamesString = JenkinsResultsParserUtil.getProperty(
 			getJobProperties(), "test.batch.names[" + _portalBranchName + "]");
 
-		Set<String> testBatchNames = getSetFromString(testBatchNamesString);
-
-		return testBatchNames;
+		return getSetFromString(testBatchNamesString);
 	}
 
 	@Override

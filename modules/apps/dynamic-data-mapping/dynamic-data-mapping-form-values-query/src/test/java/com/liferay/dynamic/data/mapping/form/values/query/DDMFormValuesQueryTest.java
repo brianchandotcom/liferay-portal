@@ -581,10 +581,7 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 	protected DDMFormValuesQuery createDDMFormValuesQuery(String query)
 		throws Exception {
 
-		DDMFormValuesQuery ddmFormValuesQuery =
-			_ddmFormValuesQueryFactory.create(_ddmFormValues, query);
-
-		return ddmFormValuesQuery;
+		return _ddmFormValuesQueryFactory.create(_ddmFormValues, query);
 	}
 
 	protected Value createLocalizedValue(

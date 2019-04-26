@@ -630,9 +630,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			return StringPool.SLASH;
 		}
 
-		String shortFileName = fullFileName.substring(0, Math.max(x, y));
-
-		return shortFileName;
+		return fullFileName.substring(0, Math.max(x, y));
 	}
 
 	@Override
@@ -640,9 +638,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		int x = fullFileName.lastIndexOf(CharPool.SLASH);
 		int y = fullFileName.lastIndexOf(CharPool.BACK_SLASH);
 
-		String shortFileName = fullFileName.substring(Math.max(x, y) + 1);
-
-		return shortFileName;
+		return fullFileName.substring(Math.max(x, y) + 1);
 	}
 
 	@Override

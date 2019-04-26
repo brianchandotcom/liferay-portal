@@ -208,10 +208,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 			_facet.getFieldId());
 		assetTagsSearchFacetDisplayBuilder.setParameterValue(facetParam);
 
-		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
-			assetTagsSearchFacetDisplayBuilder.build();
-
-		return assetTagsSearchFacetDisplayContext;
+		return assetTagsSearchFacetDisplayBuilder.build();
 	}
 
 	protected TermCollector createTermCollector(String term, int frequency) {

@@ -215,10 +215,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 			suggestSearchRequest.addSuggester(suggester);
 
-			SuggestSearchResponse suggestSearchResponse =
-				_searchEngineAdapter.execute(suggestSearchRequest);
-
-			return suggestSearchResponse;
+			return _searchEngineAdapter.execute(suggestSearchRequest);
 		}
 		catch (RuntimeException re) {
 			String message = re.getMessage();

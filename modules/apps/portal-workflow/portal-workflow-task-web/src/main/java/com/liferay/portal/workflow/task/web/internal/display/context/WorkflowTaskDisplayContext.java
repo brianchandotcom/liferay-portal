@@ -625,9 +625,7 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public Map<String, Object> getWorkflowTaskActionLinkData() {
-		Map<String, Object> data = new HashMap<>();
-
-		return data;
+		return new HashMap<>();
 	}
 
 	public String getWorkflowTaskAssigneeUserName(WorkflowTask workflowTask) {

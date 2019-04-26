@@ -127,12 +127,9 @@ public class UpdateDataProviderMVCActionCommand
 			Objects.equals(ddmFormFieldValue.getName(), name) &&
 			Objects.equals(ddmFormFieldValue.getInstanceId(), instanceId);
 
-		Optional<DDMFormFieldValue> matchedDDMFormFieldValueOptional =
-			storedDDMFormFieldValuesStream.filter(
-				predicate
-			).findFirst();
-
-		return matchedDDMFormFieldValueOptional;
+		return storedDDMFormFieldValuesStream.filter(
+			predicate
+		).findFirst();
 	}
 
 	protected void flattenDDMFormFieldValues(

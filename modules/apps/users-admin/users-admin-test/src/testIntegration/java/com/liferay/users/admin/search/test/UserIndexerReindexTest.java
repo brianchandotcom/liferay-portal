@@ -82,9 +82,7 @@ public class UserIndexerReindexTest {
 	protected User createNewUser() throws Exception {
 		String screenName = RandomTestUtil.randomString();
 
-		User user = userSearchFixture.addUser(screenName, group);
-
-		return user;
+		return userSearchFixture.addUser(screenName, group);
 	}
 
 	protected void setUpIndexedFieldsFixture() {

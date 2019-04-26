@@ -364,9 +364,7 @@ public abstract class BaseBuild implements Build {
 		sb.append(getBuildNumber());
 		sb.append("[\\/]*");
 
-		String buildURLRegex = sb.toString();
-
-		return buildURLRegex;
+		return sb.toString();
 	}
 
 	@Override

@@ -41,11 +41,8 @@ public class FuzzyQueryTranslatorImpl implements FuzzyQueryTranslator {
 			fuzzyQuery.setBoost(fuzzyQuery.getBoost());
 		}
 
-		org.apache.lucene.search.FuzzyQuery luceneFuzzyQuery =
-			new org.apache.lucene.search.FuzzyQuery(
-				term, maxEdits, prefixLength, maxExpansions, false);
-
-		return luceneFuzzyQuery;
+		return new org.apache.lucene.search.FuzzyQuery(
+			term, maxEdits, prefixLength, maxExpansions, false);
 	}
 
 }

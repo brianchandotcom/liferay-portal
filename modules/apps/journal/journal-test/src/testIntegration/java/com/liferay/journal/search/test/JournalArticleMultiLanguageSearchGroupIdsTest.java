@@ -190,14 +190,12 @@ public class JournalArticleMultiLanguageSearchGroupIdsTest {
 	}
 
 	protected Group addGroup(Locale locale) throws Exception, PortalException {
-		Group group = _userSearchFixture.addGroup(
+		return _userSearchFixture.addGroup(
 			new GroupBlueprint() {
 				{
 					setDefaultLocale(locale);
 				}
 			});
-
-		return group;
 	}
 
 	protected void addJapanArticle(String title, String content) {

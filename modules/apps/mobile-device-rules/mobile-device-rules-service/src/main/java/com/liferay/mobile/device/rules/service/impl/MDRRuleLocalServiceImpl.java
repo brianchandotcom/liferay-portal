@@ -101,12 +101,10 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
 			ruleGroupId);
 
-		MDRRule newRule = addRule(
+		return addRule(
 			ruleGroup.getRuleGroupId(), rule.getNameMap(),
 			rule.getDescriptionMap(), rule.getType(), rule.getTypeSettings(),
 			serviceContext);
-
-		return newRule;
 	}
 
 	@Override

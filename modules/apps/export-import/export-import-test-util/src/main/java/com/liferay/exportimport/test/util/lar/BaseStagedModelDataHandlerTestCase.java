@@ -795,11 +795,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	protected StagedModel readExportedStagedModel(StagedModel stagedModel) {
 		String stagedModelPath = ExportImportPathUtil.getModelPath(stagedModel);
 
-		StagedModel exportedStagedModel =
-			(StagedModel)portletDataContext.getZipEntryAsObject(
-				stagedModelPath);
-
-		return exportedStagedModel;
+		return (StagedModel)portletDataContext.getZipEntryAsObject(
+			stagedModelPath);
 	}
 
 	protected boolean supportLastPublishDateUpdate() {

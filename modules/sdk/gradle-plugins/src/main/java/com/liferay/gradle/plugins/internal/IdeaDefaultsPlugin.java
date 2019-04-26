@@ -195,9 +195,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	private IdeaModule _getIdeaModule(IdeaPlugin ideaPlugin) {
 		IdeaModel ideaModel = ideaPlugin.getModel();
 
-		IdeaModule ideaModule = ideaModel.getModule();
-
-		return ideaModule;
+		return ideaModel.getModule();
 	}
 
 	private static final String _CLEAN_IDEA_TASK_NAME = "cleanIdea";

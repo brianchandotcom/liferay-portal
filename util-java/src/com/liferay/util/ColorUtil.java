@@ -35,21 +35,17 @@ public class ColorUtil {
 	}
 
 	public static Color blend(int[] color1, int[] color2, double ratio) {
-		Color blended = new Color(
+		return new Color(
 			(int)(((color2[0] - color1[0]) * ratio) + color1[0]),
 			(int)(((color2[1] - color1[1]) * ratio) + color1[1]),
 			(int)(((color2[2] - color1[2]) * ratio) + color1[2]));
-
-		return blended;
 	}
 
 	public static Color darker(int[] color, double ratio) {
-		Color darkened = new Color(
+		return new Color(
 			(int)(color[0] - (color[0] * ratio)),
 			(int)(color[1] - (color[1] * ratio)),
 			(int)(color[2] - (color[2] * ratio)));
-
-		return darkened;
 	}
 
 	public static String getHex(int[] rgb) {
@@ -132,12 +128,10 @@ public class ColorUtil {
 	}
 
 	public static Color lighter(int[] color, double ratio) {
-		Color lightened = new Color(
+		return new Color(
 			(int)(((0xFF - color[0]) * ratio) + color[0]),
 			(int)(((0xFF - color[1]) * ratio) + color[1]),
 			(int)(((0xFF - color[2]) * ratio) + color[2]));
-
-		return lightened;
 	}
 
 	private static final String _KEY = "0123456789ABCDEF";

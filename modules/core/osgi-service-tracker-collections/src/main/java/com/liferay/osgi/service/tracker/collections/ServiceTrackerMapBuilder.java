@@ -112,13 +112,10 @@ public class ServiceTrackerMapBuilder {
 
 		@Override
 		public ServiceTrackerMap<K, R> build() {
-			ServiceTrackerMap<K, R> serviceTrackerMap =
-				new ServiceTrackerMapImpl<>(
-					_bundleContext, _clazz, _filterString,
-					_serviceReferenceMapper, _serviceTrackerCustomizer,
-					_serviceTrackerBucketFactory, _serviceTrackerMapListener);
-
-			return serviceTrackerMap;
+			return new ServiceTrackerMapImpl<>(
+				_bundleContext, _clazz, _filterString, _serviceReferenceMapper,
+				_serviceTrackerCustomizer, _serviceTrackerBucketFactory,
+				_serviceTrackerMapListener);
 		}
 
 		@Override

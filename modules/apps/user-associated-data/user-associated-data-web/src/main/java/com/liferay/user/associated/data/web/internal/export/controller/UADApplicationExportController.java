@@ -52,9 +52,7 @@ public class UADApplicationExportController {
 				"application", applicationKey,
 				_getApplicationDataCount(applicationKey, userId));
 
-			File file = _exportApplicationData(applicationKey, userId);
-
-			return file;
+			return _exportApplicationData(applicationKey, userId);
 		}
 		catch (Throwable t) {
 			throw t;

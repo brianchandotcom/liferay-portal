@@ -50,11 +50,9 @@ public class DDMStructureLinkImpl implements DDMStructureLink {
 
 	@Override
 	protected Object clone() {
-		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl(
+		return new DDMStructureLinkImpl(
 			(com.liferay.dynamic.data.mapping.model.DDMStructureLink)
 				_ddmStructureLink.clone());
-
-		return ddmStructureLinkImpl;
 	}
 
 	private final com.liferay.dynamic.data.mapping.model.DDMStructureLink

@@ -232,10 +232,7 @@ public abstract class SettingsConfigurationAction
 		ServletContext servletContext = (ServletContext)request.getAttribute(
 			WebKeys.CTX);
 
-		PortletConfig selPortletConfig = PortletConfigFactoryUtil.create(
-			selPortlet, servletContext);
-
-		return selPortletConfig;
+		return PortletConfigFactoryUtil.create(selPortlet, servletContext);
 	}
 
 	protected Settings getSettings(ActionRequest actionRequest)

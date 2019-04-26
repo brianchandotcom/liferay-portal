@@ -143,13 +143,11 @@ public class SourceFormatBuild extends TopLevelBuild {
 			"https://github.com/", senderUsername, "/",
 			gitHubRemoteGitRepositoryName, "/commit/", senderSHA);
 
-		Element senderBranchDetailsElement = Dom4JUtil.getNewElement(
+		return Dom4JUtil.getNewElement(
 			"p", null, "Branch Name: ",
 			Dom4JUtil.getNewAnchorElement(senderBranchURL, senderBranchName),
 			Dom4JUtil.getNewElement("br"), "Branch GIT ID: ",
 			Dom4JUtil.getNewAnchorElement(senderCommitURL, senderSHA));
-
-		return senderBranchDetailsElement;
 	}
 
 	@Override

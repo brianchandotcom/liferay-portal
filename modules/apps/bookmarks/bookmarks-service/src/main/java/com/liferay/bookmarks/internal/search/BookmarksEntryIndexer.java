@@ -119,9 +119,7 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(document, Field.TITLE, Field.URL);
-
-		return summary;
+		return createSummary(document, Field.TITLE, Field.URL);
 	}
 
 	@Override

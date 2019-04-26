@@ -182,10 +182,7 @@ public class WikiPageTitleSearcherTest {
 	}
 
 	protected SearchContext getSearchContext(Group group) throws Exception {
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			group.getGroupId());
-
-		return searchContext;
+		return SearchContextTestUtil.getSearchContext(group.getGroupId());
 	}
 
 	@Inject(filter = "model.class.name=com.liferay.wiki.model.WikiPage")

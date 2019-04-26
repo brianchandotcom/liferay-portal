@@ -84,15 +84,11 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		_getRequestParameterAutoLoginConfiguration(long companyId) {
 
 		try {
-			RequestParameterAutoLoginConfiguration
-				requestParameterAutoLoginConfiguration =
-					_configurationProvider.getConfiguration(
-						RequestParameterAutoLoginConfiguration.class,
-						new CompanyServiceSettingsLocator(
-							companyId,
-							RequestParameterAutoLoginConstants.SERVICE_NAME));
-
-			return requestParameterAutoLoginConfiguration;
+			return _configurationProvider.getConfiguration(
+				RequestParameterAutoLoginConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId,
+					RequestParameterAutoLoginConstants.SERVICE_NAME));
 		}
 		catch (ConfigurationException ce) {
 			_log.error(

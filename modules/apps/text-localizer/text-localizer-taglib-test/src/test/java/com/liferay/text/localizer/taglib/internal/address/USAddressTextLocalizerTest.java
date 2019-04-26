@@ -182,7 +182,7 @@ public class USAddressTextLocalizerTest {
 	}
 
 	private Address _createAddress() {
-		Address address = new AddressWrapper(null) {
+		return new AddressWrapper(null) {
 
 			@Override
 			public Country getCountry() {
@@ -229,8 +229,6 @@ public class USAddressTextLocalizerTest {
 			}
 
 		};
-
-		return address;
 	}
 
 	private AddressTextLocalizer _createAddressTextLocalizer() {

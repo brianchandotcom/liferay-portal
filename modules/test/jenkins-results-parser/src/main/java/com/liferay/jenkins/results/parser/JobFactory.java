@@ -56,10 +56,8 @@ public class JobFactory {
 		String jobName, String testSuiteName, String portalBranchName,
 		String repositoryName) {
 
-		Job job = _newJob(
+		return _newJob(
 			jobName, testSuiteName, portalBranchName, repositoryName);
-
-		return job;
 	}
 
 	private static boolean _isCentralMergePullRequest(

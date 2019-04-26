@@ -43,10 +43,7 @@ public class IndicesExistsIndexRequestExecutorImpl
 		IndicesExistsResponse indicesExistsResponse =
 			indicesExistsRequestBuilder.get();
 
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			new IndicesExistsIndexResponse(indicesExistsResponse.isExists());
-
-		return indicesExistsIndexResponse;
+		return new IndicesExistsIndexResponse(indicesExistsResponse.isExists());
 	}
 
 	protected IndicesExistsRequestBuilder createIndicesExistsRequestBuilder(

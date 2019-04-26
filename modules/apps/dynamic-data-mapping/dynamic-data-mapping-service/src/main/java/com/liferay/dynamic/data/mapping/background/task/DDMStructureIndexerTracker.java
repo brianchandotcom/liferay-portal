@@ -49,9 +49,7 @@ public class DDMStructureIndexerTracker {
 			return null;
 		}
 
-		DDMStructureIndexer ddmStructureIndexer = serviceWrapper.getService();
-
-		return ddmStructureIndexer;
+		return serviceWrapper.getService();
 	}
 
 	@Activate

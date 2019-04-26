@@ -80,11 +80,7 @@ public class DDMFormFieldTemplateContextContributorTestHelper
 			createNumericDDMFormFieldTemplateContextContributor()
 		throws Exception {
 
-		NumericDDMFormFieldTemplateContextContributor
-			numericDDMFormFieldTemplateContextContributor =
-				new NumericDDMFormFieldTemplateContextContributor();
-
-		return numericDDMFormFieldTemplateContextContributor;
+		return new NumericDDMFormFieldTemplateContextContributor();
 	}
 
 	public RadioDDMFormFieldTemplateContextContributor

@@ -212,9 +212,7 @@ public class Encryptor {
 
 			keyGenerator.init(KEY_SIZE, new SecureRandom());
 
-			Key key = keyGenerator.generateKey();
-
-			return key;
+			return keyGenerator.generateKey();
 		}
 		catch (Exception e) {
 			throw new EncryptorException(e);

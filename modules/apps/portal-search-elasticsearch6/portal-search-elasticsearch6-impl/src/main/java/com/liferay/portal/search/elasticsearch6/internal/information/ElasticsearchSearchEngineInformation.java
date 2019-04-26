@@ -66,7 +66,7 @@ public class ElasticsearchSearchEngineInformation
 
 			Stream<NodeInfo> stream = nodeInfos.stream();
 
-			String nodesString = stream.map(
+			return stream.map(
 				nodeInfo -> {
 					DiscoveryNode node = nodeInfo.getNode();
 
@@ -83,8 +83,6 @@ public class ElasticsearchSearchEngineInformation
 			).collect(
 				Collectors.joining(StringPool.COMMA_AND_SPACE)
 			);
-
-			return nodesString;
 		}
 		catch (Exception e) {
 			_log.error("Unable to get node information", e);

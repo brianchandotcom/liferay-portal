@@ -47,11 +47,9 @@ public class ThreadDumpFilter
 	public Object doFilterTry(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		ScheduledFuture<?> scheduledFuture = _scheduledExecutorService.schedule(
+		return _scheduledExecutorService.schedule(
 			_threadDumper, PropsValues.THREAD_DUMP_SPEED_THRESHOLD,
 			TimeUnit.SECONDS);
-
-		return scheduledFuture;
 	}
 
 	private static final int _MAX_THREAD_DUMPERS = 5;

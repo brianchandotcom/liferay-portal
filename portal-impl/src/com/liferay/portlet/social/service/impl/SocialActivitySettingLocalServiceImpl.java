@@ -388,11 +388,8 @@ public class SocialActivitySettingLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		List<SocialActivitySetting> activitySettings =
-			socialActivitySettingPersistence.findByG_C_A(
-				groupId, classNameId, activityType);
-
-		return activitySettings;
+		return socialActivitySettingPersistence.findByG_C_A(
+			groupId, classNameId, activityType);
 	}
 
 	protected String toJSON(

@@ -73,15 +73,11 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 			classPK = (Long)baseModel.getPrimaryKeyObj();
 		}
 
-		Tuple tuple = new Tuple(classPK, resourcePrimKey);
-
-		return tuple;
+		return new Tuple(classPK, resourcePrimKey);
 	}
 
 	protected String getDocumentUID(String className, long classPK) {
-		String uid = Field.getUID(className, String.valueOf(classPK));
-
-		return uid;
+		return Field.getUID(className, String.valueOf(classPK));
 	}
 
 	private final Document _document = new DocumentImpl();

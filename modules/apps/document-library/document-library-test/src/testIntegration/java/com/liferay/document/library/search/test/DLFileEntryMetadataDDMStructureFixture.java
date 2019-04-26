@@ -102,7 +102,7 @@ public class DLFileEntryMetadataDDMStructureFixture {
 
 			fileAttributes.put("fileEntryTypeId", fileEntryTypeId);
 
-			FileEntry fileEntry = _fileEntrySearchFixture.addFileEntry(
+			return _fileEntrySearchFixture.addFileEntry(
 				new FileEntryBlueprint() {
 					{
 						addAttributes(fileAttributes);
@@ -113,8 +113,6 @@ public class DLFileEntryMetadataDDMStructureFixture {
 						setUserId(_dlFixture.getUserId());
 					}
 				});
-
-			return fileEntry;
 		}
 	}
 

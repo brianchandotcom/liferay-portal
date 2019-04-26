@@ -116,10 +116,8 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 
 	protected Settings getSettings(long companyId) {
 		try {
-			Settings settings = settingsFactory.getSettings(
+			return settingsFactory.getSettings(
 				new CompanyServiceSettingsLocator(companyId, getSettingsId()));
-
-			return settings;
 		}
 		catch (SettingsException se) {
 			throw new IllegalStateException(se);

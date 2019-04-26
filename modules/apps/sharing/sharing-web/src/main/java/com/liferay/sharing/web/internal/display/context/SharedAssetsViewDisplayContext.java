@@ -383,10 +383,7 @@ public class SharedAssetsViewDisplayContext {
 	}
 
 	private PortletURL _getCurrentSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			_currentURLObj, _liferayPortletResponse);
-
-		return sortingURL;
+		return PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse);
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

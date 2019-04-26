@@ -350,9 +350,7 @@ public class FileUtil {
 
 		Path jarPath = Paths.get(jarUri);
 
-		FileSystem fileSystem = FileSystems.newFileSystem(jarPath, null);
-
-		return fileSystem;
+		return FileSystems.newFileSystem(jarPath, null);
 	}
 
 	private static URI _getJarUri() throws URISyntaxException {

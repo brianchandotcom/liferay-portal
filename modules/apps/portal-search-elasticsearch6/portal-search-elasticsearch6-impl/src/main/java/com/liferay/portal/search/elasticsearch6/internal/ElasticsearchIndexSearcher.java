@@ -381,9 +381,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
 			searchContext);
 
-		SearchRequest searchRequest = searchRequestBuilder.build();
-
-		return searchRequest;
+		return searchRequestBuilder.build();
 	}
 
 	protected boolean handle(Exception e) {

@@ -690,9 +690,7 @@ public abstract class BaseDB implements DB {
 			nullable = "not null;";
 		}
 
-		String[] template = {words[1], words[2], words[3], words[4], nullable};
-
-		return template;
+		return new String[] {words[1], words[2], words[3], words[4], nullable};
 	}
 
 	protected String[] buildColumnTypeTokens(String line) {
@@ -714,9 +712,7 @@ public abstract class BaseDB implements DB {
 			}
 		}
 
-		String[] template = {words[1], words[2], "", words[3], nullable};
-
-		return template;
+		return new String[] {words[1], words[2], "", words[3], nullable};
 	}
 
 	protected abstract String buildCreateFileContent(

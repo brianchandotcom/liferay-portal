@@ -176,15 +176,10 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		_getRequestHeaderAutoLoginConfiguration(long companyId) {
 
 		try {
-			RequestHeaderAutoLoginConfiguration
-				requestHeaderAutoLoginConfiguration =
-					_configurationProvider.getConfiguration(
-						RequestHeaderAutoLoginConfiguration.class,
-						new CompanyServiceSettingsLocator(
-							companyId,
-							RequestHeaderAutoLoginConstants.SERVICE_NAME));
-
-			return requestHeaderAutoLoginConfiguration;
+			return _configurationProvider.getConfiguration(
+				RequestHeaderAutoLoginConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, RequestHeaderAutoLoginConstants.SERVICE_NAME));
 		}
 		catch (ConfigurationException ce) {
 			_log.error(

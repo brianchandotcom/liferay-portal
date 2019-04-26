@@ -41,10 +41,8 @@ public class CreateIndexRequestExecutorImpl
 		org.elasticsearch.action.admin.indices.create.CreateIndexResponse
 			elasticsearchCreateIndexResponse = createIndexRequestBuilder.get();
 
-		CreateIndexResponse createIndexResponse = new CreateIndexResponse(
+		return new CreateIndexResponse(
 			elasticsearchCreateIndexResponse.isAcknowledged());
-
-		return createIndexResponse;
 	}
 
 	protected CreateIndexRequestBuilder createCreateIndexRequestBuilder(

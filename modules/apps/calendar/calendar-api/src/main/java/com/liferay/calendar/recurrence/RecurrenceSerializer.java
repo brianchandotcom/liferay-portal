@@ -190,11 +190,9 @@ public class RecurrenceSerializer {
 	}
 
 	private static DateValue _toDateValue(Calendar jCalendar) {
-		DateValue dateValue = new DateValueImpl(
+		return new DateValueImpl(
 			jCalendar.get(Calendar.YEAR), jCalendar.get(Calendar.MONTH) + 1,
 			jCalendar.get(Calendar.DATE));
-
-		return dateValue;
 	}
 
 	private static Calendar _toJCalendar(

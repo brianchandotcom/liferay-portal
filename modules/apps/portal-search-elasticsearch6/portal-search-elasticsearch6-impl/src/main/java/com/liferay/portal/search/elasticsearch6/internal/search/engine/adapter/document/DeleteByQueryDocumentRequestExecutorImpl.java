@@ -51,11 +51,8 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 
 		TimeValue timeValue = bulkByScrollResponse.getTook();
 
-		DeleteByQueryDocumentResponse deleteByQueryDocumentResponse =
-			new DeleteByQueryDocumentResponse(
-				bulkByScrollResponse.getDeleted(), timeValue.getMillis());
-
-		return deleteByQueryDocumentResponse;
+		return new DeleteByQueryDocumentResponse(
+			bulkByScrollResponse.getDeleted(), timeValue.getMillis());
 	}
 
 	protected DeleteByQueryRequestBuilder createDeleteByQueryRequestBuilder(

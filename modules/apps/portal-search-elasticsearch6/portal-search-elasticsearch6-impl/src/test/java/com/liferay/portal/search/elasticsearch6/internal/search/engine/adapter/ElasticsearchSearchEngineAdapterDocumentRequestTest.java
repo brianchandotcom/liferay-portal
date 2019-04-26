@@ -620,10 +620,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		indexDocumentRequest.setType(_MAPPING_NAME);
 
-		IndexDocumentResponse indexDocumentResponse =
-			_searchEngineAdapter.execute(indexDocumentRequest);
-
-		return indexDocumentResponse;
+		return _searchEngineAdapter.execute(indexDocumentRequest);
 	}
 
 	private UpdateDocumentResponse _updateDocumentWithAdapter(
@@ -634,10 +631,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		updateDocumentRequest.setType(_MAPPING_NAME);
 
-		UpdateDocumentResponse updateDocumentResponse =
-			_searchEngineAdapter.execute(updateDocumentRequest);
-
-		return updateDocumentResponse;
+		return _searchEngineAdapter.execute(updateDocumentRequest);
 	}
 
 	private static final String _FIELD_NAME = "matchDocument";

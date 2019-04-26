@@ -367,12 +367,10 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		Collection<SearchRequestBuilder> searchRequestBuilders =
 			_federatedSearchRequestBuildersMap.values();
 
-		Stream<SearchRequest> map = searchRequestBuilders.stream(
+		return searchRequestBuilders.stream(
 		).map(
 			SearchRequestBuilder::build
 		);
-
-		return map;
 	}
 
 	protected SearchRequestBuilder newFederatedSearchRequestBuilder(

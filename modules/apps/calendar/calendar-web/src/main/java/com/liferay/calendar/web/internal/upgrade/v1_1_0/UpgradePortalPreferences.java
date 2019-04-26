@@ -74,11 +74,9 @@ public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
 				String id = idMatcher.group(0);
 				String preference = preferenceMatcher.group(0);
 
-				String newPreferenceName = StringUtil.replace(
+				return StringUtil.replace(
 					_newPreferencePatternsMap.get(preference), "{calendarId}",
 					id);
-
-				return newPreferenceName;
 			}
 		}
 

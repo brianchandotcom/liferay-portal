@@ -41,10 +41,7 @@ public class OpenIndexRequestExecutorImpl implements OpenIndexRequestExecutor {
 		AcknowledgedResponse acknowledgedResponse =
 			openIndexRequestBuilder.get();
 
-		OpenIndexResponse openIndexResponse = new OpenIndexResponse(
-			acknowledgedResponse.isAcknowledged());
-
-		return openIndexResponse;
+		return new OpenIndexResponse(acknowledgedResponse.isAcknowledged());
 	}
 
 	protected OpenIndexRequestBuilder createOpenIndexRequestBuilder(

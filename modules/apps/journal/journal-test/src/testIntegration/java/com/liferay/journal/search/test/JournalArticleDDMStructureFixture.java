@@ -94,28 +94,25 @@ public class JournalArticleDDMStructureFixture {
 	private JournalArticleBlueprint _createJournalArticleBlueprint(
 		String title, String content, Locale locale) {
 
-		JournalArticleBlueprint journalArticleBlueprint =
-			new JournalArticleBlueprint() {
-				{
-					setGroupId(_group.getGroupId());
-					setJournalArticleContent(
-						new JournalArticleContent() {
-							{
-								setDefaultLocale(locale);
-								setName("content");
-								put(locale, content);
-							}
-						});
-					setJournalArticleTitle(
-						new JournalArticleTitle() {
-							{
-								put(locale, title);
-							}
-						});
-				}
-			};
-
-		return journalArticleBlueprint;
+		return new JournalArticleBlueprint() {
+			{
+				setGroupId(_group.getGroupId());
+				setJournalArticleContent(
+					new JournalArticleContent() {
+						{
+							setDefaultLocale(locale);
+							setName("content");
+							put(locale, content);
+						}
+					});
+				setJournalArticleTitle(
+					new JournalArticleTitle() {
+						{
+							put(locale, title);
+						}
+					});
+			}
+		};
 	}
 
 	private final List<DDMStructure> _ddmStructures = new ArrayList<>();

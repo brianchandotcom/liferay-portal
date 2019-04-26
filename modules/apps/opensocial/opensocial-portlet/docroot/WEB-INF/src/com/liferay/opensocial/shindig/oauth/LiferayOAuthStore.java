@@ -109,11 +109,9 @@ public class LiferayOAuthStore implements OAuthStore {
 			return null;
 		}
 
-		TokenInfo tokenInfo = new TokenInfo(
+		return new TokenInfo(
 			oAuthToken.getAccessToken(), oAuthToken.getTokenSecret(),
 			oAuthToken.getSessionHandle(), oAuthToken.getExpiration());
-
-		return tokenInfo;
 	}
 
 	public void removeToken(

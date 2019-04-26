@@ -405,10 +405,8 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 		ldapContext.bind(name, new PortalLDAPContext(attributes));
 
-		Binding binding = _portalLDAP.getGroup(
+		return _portalLDAP.getGroup(
 			ldapServerId, userGroup.getCompanyId(), userGroup.getName());
-
-		return binding;
 	}
 
 	protected Binding addUser(
@@ -427,11 +425,9 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 		ldapContext.bind(name, new PortalLDAPContext(attributes));
 
-		Binding binding = _portalLDAP.getUser(
+		return _portalLDAP.getUser(
 			ldapServerId, user.getCompanyId(), user.getScreenName(),
 			user.getEmailAddress());
-
-		return binding;
 	}
 
 	@Reference(

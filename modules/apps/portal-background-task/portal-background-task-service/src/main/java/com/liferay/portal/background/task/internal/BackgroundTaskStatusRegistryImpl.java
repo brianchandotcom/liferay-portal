@@ -92,10 +92,7 @@ public class BackgroundTaskStatusRegistryImpl
 		lock.lock();
 
 		try {
-			BackgroundTaskStatus backgroundTaskStatus =
-				_backgroundTaskStatuses.remove(backgroundTaskId);
-
-			return backgroundTaskStatus;
+			return _backgroundTaskStatuses.remove(backgroundTaskId);
 		}
 		finally {
 			lock.unlock();

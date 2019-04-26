@@ -42,10 +42,7 @@ public class CloseIndexRequestExecutorImpl
 		AcknowledgedResponse acknowledgedResponse =
 			closeIndexRequestBuilder.get();
 
-		CloseIndexResponse closeIndexResponse = new CloseIndexResponse(
-			acknowledgedResponse.isAcknowledged());
-
-		return closeIndexResponse;
+		return new CloseIndexResponse(acknowledgedResponse.isAcknowledged());
 	}
 
 	protected CloseIndexRequestBuilder createCloseIndexRequestBuilder(

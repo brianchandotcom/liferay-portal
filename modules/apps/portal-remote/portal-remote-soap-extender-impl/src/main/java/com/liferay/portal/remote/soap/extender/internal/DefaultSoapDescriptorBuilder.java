@@ -51,9 +51,7 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 			if ((soapEndpointName != null) &&
 				(soapEndpointName instanceof QName)) {
 
-				QName endpointName = (QName)soapEndpointName;
-
-				return endpointName;
+				return (QName)soapEndpointName;
 			}
 
 			return null;

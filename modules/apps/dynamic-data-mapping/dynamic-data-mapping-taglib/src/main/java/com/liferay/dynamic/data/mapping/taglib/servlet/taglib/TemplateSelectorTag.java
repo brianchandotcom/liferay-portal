@@ -89,10 +89,8 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 
 		Class<?> clazz = getClass();
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, clazz.getClassLoader());
-
-		return resourceBundle;
 	}
 
 	@Override

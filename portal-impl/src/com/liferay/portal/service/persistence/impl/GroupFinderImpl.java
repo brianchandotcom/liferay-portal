@@ -785,10 +785,8 @@ public class GroupFinderImpl
 			qPos.add(site);
 			qPos.add(remoteStagingGroupCount);
 
-			List<Group> groups = (List<Group>)QueryUtil.list(
+			return (List<Group>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			return groups;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

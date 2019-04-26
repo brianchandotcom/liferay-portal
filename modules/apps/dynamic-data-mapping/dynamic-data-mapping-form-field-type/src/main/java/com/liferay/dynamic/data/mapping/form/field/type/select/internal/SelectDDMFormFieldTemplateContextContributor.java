@@ -191,10 +191,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 			return null;
 		}
 
-		String predefinedValueString = predefinedValue.getString(
+		return predefinedValue.getString(
 			ddmFormFieldRenderingContext.getLocale());
-
-		return predefinedValueString;
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {

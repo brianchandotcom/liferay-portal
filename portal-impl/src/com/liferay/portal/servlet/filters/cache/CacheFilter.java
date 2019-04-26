@@ -237,10 +237,8 @@ public class CacheFilter extends BasePortalFilter {
 
 		if (Validator.isNull(friendlyURL)) {
 			try {
-				long plid = LayoutLocalServiceUtil.getDefaultPlid(
+				return LayoutLocalServiceUtil.getDefaultPlid(
 					groupId, privateLayout);
-
-				return plid;
 			}
 			catch (Exception e) {
 				_log.warn(e, e);

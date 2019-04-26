@@ -1036,11 +1036,8 @@ public class DDMFormAdminDisplayContext {
 		HttpServletRequest httpServletRequest =
 			formAdminRequestHelper.getRequest();
 
-		DDMFormInstanceRecord formInstanceRecord =
-			(DDMFormInstanceRecord)httpServletRequest.getAttribute(
-				DDMFormWebKeys.DYNAMIC_DATA_MAPPING_FORM_INSTANCE_RECORD);
-
-		return formInstanceRecord;
+		return (DDMFormInstanceRecord)httpServletRequest.getAttribute(
+			DDMFormWebKeys.DYNAMIC_DATA_MAPPING_FORM_INSTANCE_RECORD);
 	}
 
 	protected String getDisplayStyle(

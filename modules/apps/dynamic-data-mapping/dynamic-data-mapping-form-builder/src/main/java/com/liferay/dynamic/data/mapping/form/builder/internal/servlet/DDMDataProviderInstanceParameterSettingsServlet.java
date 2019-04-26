@@ -251,10 +251,7 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 			DDMFormValues ddmFormValues = getDataProviderFormValues(
 				ddmDataProvider, ddmDataProviderInstance);
 
-			JSONObject parametersJSONObject = createParametersJSONObject(
-				ddmDataProvider, ddmFormValues);
-
-			return parametersJSONObject;
+			return createParametersJSONObject(ddmDataProvider, ddmFormValues);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

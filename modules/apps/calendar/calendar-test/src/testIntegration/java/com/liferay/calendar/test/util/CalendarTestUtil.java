@@ -74,14 +74,12 @@ public class CalendarTestUtil {
 			timeZone = TimeZoneUtil.getDefault();
 		}
 
-		Calendar calendar = CalendarLocalServiceUtil.addCalendar(
+		return CalendarLocalServiceUtil.addCalendar(
 			group.getCreatorUserId(), group.getGroupId(),
 			calendarResource.getCalendarResourceId(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), timeZone.getID(),
 			RandomTestUtil.randomInt(), false, false, false, serviceContext);
-
-		return calendar;
 	}
 
 	public static Calendar addCalendar(User user) throws PortalException {

@@ -1862,10 +1862,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 		Folder folder = getFolder(session, folderId);
 
-		org.apache.chemistry.opencmis.client.api.Folder cmisFolder =
-			(org.apache.chemistry.opencmis.client.api.Folder)folder.getModel();
-
-		return cmisFolder;
+		return (org.apache.chemistry.opencmis.client.api.Folder)
+			folder.getModel();
 	}
 
 	protected List<String> getCmisFolderIds(Session session, long folderId)

@@ -199,10 +199,7 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 			OutputStream portletOutputStream =
 				mimeResponse.getPortletOutputStream();
 
-			ServletOutputStream servletOutputStream =
-				new ServletOutputStreamAdapter(portletOutputStream);
-
-			return servletOutputStream;
+			return new ServletOutputStreamAdapter(portletOutputStream);
 		}
 
 		return new NullServletOutputStream();

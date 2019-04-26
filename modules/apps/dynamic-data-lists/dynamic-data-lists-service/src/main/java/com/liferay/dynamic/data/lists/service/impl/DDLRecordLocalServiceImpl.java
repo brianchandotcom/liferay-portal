@@ -1252,10 +1252,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	}
 
 	protected Indexer<DDLRecord> getDDLRecordIndexer() {
-		Indexer<DDLRecord> indexer = indexerRegistry.nullSafeGetIndexer(
-			DDLRecord.class);
-
-		return indexer;
+		return indexerRegistry.nullSafeGetIndexer(DDLRecord.class);
 	}
 
 	protected String getNextVersion(

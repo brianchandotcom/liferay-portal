@@ -49,7 +49,7 @@ public class SyncOAuthHelperUtil {
 			}
 		}
 
-		SyncOAuthHelper syncOAuthHelper = new SyncOAuthHelper() {
+		return new SyncOAuthHelper() {
 
 			public void enableOAuth(
 				long companyId, ServiceContext serviceContext) {
@@ -66,8 +66,6 @@ public class SyncOAuthHelperUtil {
 			}
 
 		};
-
-		return syncOAuthHelper;
 	}
 
 	public static boolean isDeployed() {

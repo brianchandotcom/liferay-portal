@@ -47,10 +47,7 @@ public class CreateSnapshotRequestExecutorImpl
 		SnapshotDetails snapshotDetails = SnapshotInfoConverter.convert(
 			elasticsearchCreateSnapshotResponse.getSnapshotInfo());
 
-		CreateSnapshotResponse createSnapshotResponse =
-			new CreateSnapshotResponse(snapshotDetails);
-
-		return createSnapshotResponse;
+		return new CreateSnapshotResponse(snapshotDetails);
 	}
 
 	protected CreateSnapshotRequestBuilder createCreateSnapshotRequestBuilder(

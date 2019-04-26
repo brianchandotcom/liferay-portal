@@ -100,10 +100,7 @@ public class SPAUtil {
 			ResourceBundleLoaderUtil.
 				getResourceBundleLoaderByServletContextName(servletContextName);
 
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
-		return resourceBundle;
+		return resourceBundleLoader.loadResourceBundle(locale);
 	}
 
 	public String getLoginRedirect(HttpServletRequest request) {

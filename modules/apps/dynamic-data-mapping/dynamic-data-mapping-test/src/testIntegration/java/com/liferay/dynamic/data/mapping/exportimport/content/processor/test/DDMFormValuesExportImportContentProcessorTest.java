@@ -313,11 +313,8 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		DDMFormInstanceTestHelper ddmFormInstanceTestHelper =
 			new DDMFormInstanceTestHelper(group);
 
-		DDMFormInstance ddmFormInstance =
-			ddmFormInstanceTestHelper.addDDMFormInstance(
-				_ddmStructure, fileEntry);
-
-		return ddmFormInstance;
+		return ddmFormInstanceTestHelper.addDDMFormInstance(
+			_ddmStructure, fileEntry);
 	}
 
 	private static ServiceTracker

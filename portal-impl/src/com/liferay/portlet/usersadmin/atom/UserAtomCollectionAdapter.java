@@ -129,27 +129,20 @@ public class UserAtomCollectionAdapter extends BaseAtomCollectionAdapter<User> {
 		long groupId = atomRequestContext.getLongParameter("groupId");
 
 		if (groupId > 0) {
-			List<User> users = UserServiceUtil.getGroupUsers(groupId);
-
-			return users;
+			return UserServiceUtil.getGroupUsers(groupId);
 		}
 
 		long organizationId = atomRequestContext.getLongParameter(
 			"organizationId");
 
 		if (organizationId > 0) {
-			List<User> users = UserServiceUtil.getOrganizationUsers(
-				organizationId);
-
-			return users;
+			return UserServiceUtil.getOrganizationUsers(organizationId);
 		}
 
 		long userGroupId = atomRequestContext.getLongParameter("userGroupId");
 
 		if (userGroupId > 0) {
-			List<User> users = UserServiceUtil.getUserGroupUsers(userGroupId);
-
-			return users;
+			return UserServiceUtil.getUserGroupUsers(userGroupId);
 		}
 
 		long companyId = CompanyThreadLocal.getCompanyId();
@@ -161,10 +154,8 @@ public class UserAtomCollectionAdapter extends BaseAtomCollectionAdapter<User> {
 
 			AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
-			List<User> users = UserServiceUtil.getCompanyUsers(
+			return UserServiceUtil.getCompanyUsers(
 				companyId, atomPager.getStart(), atomPager.getEnd() + 1);
-
-			return users;
 		}
 
 		return Collections.emptyList();

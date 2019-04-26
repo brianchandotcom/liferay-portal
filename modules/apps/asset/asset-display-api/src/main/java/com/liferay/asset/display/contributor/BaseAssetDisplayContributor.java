@@ -128,10 +128,8 @@ public abstract class BaseAssetDisplayContributor<T>
 		Map<String, Object> assetDisplayFieldsValues =
 			getAssetDisplayFieldsValues(assetEntry, locale);
 
-		Object fieldValue = assetDisplayFieldsValues.getOrDefault(
+		return assetDisplayFieldsValues.getOrDefault(
 			fieldName, StringPool.BLANK);
-
-		return fieldValue;
 	}
 
 	@Override

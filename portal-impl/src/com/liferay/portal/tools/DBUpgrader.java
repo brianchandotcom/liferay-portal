@@ -413,9 +413,7 @@ public class DBUpgrader {
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				int count = rs.getInt(1);
-
-				return count;
+				return rs.getInt(1);
 			}
 
 			return 0;

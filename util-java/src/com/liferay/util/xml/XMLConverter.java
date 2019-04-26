@@ -26,11 +26,9 @@ public class XMLConverter {
 	public static javax.xml.namespace.QName toJavaxQName(
 		org.dom4j.QName dom4jQName) {
 
-		javax.xml.namespace.QName javaxQName = new javax.xml.namespace.QName(
+		return new javax.xml.namespace.QName(
 			dom4jQName.getNamespaceURI(), dom4jQName.getName(),
 			dom4jQName.getNamespacePrefix());
-
-		return javaxQName;
 	}
 
 	public static org.w3c.dom.Document toW3CDocument(
@@ -39,9 +37,7 @@ public class XMLConverter {
 
 		DOMWriter dom4jWriter = new DOMWriter();
 
-		org.w3c.dom.Document w3cDoc = dom4jWriter.write(dom4jDoc);
-
-		return w3cDoc;
+		return dom4jWriter.write(dom4jDoc);
 	}
 
 	public static org.w3c.dom.Element toW3CElement(org.dom4j.Element dom4jEl)

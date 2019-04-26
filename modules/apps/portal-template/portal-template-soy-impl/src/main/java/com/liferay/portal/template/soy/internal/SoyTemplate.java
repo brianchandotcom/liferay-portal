@@ -173,10 +173,8 @@ public class SoyTemplate extends BaseTemplate {
 		ResourceBundle languageResourceBundle = _getLanguageResourceBundle(
 			templateResources, locale);
 
-		SoyMsgBundleBridge soyMsgBundleBridge = new SoyMsgBundleBridge(
+		return new SoyMsgBundleBridge(
 			soyMsgBundle, locale, languageResourceBundle);
-
-		return soyMsgBundleBridge;
 	}
 
 	protected SoyFileSet getSoyFileSet(List<TemplateResource> templateResources)

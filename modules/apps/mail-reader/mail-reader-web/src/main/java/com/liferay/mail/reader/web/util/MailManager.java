@@ -149,13 +149,11 @@ public class MailManager {
 	public Message addDraft(long accountId) throws PortalException {
 		Account account = AccountLocalServiceUtil.getAccount(accountId);
 
-		Message message = MessageLocalServiceUtil.addMessage(
+		return MessageLocalServiceUtil.addMessage(
 			_user.getUserId(), account.getDraftFolderId(), account.getAddress(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, new Date(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
 			ContentTypes.TEXT_HTML_UTF8);
-
-		return message;
 	}
 
 	public JSONObject addFolder(long accountId, String displayName)

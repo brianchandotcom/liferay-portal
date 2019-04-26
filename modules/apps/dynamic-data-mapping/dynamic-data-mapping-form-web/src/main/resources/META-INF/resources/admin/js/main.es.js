@@ -353,8 +353,8 @@ class Form extends Component {
 
 		this._eventHandler.add(
 			dom.on(`#${namespace}ControlMenu *[data-title="Back"]`, 'click', this._handleBackButtonClicked),
-            dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked)
-        );
+			dom.on('.forms-management-bar li', 'click', this._handleFormNavClicked)
+		);
 
 		if (showPublishAlert) {
 			if (published) {

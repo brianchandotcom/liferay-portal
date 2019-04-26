@@ -531,11 +531,39 @@ class FragmentEditableField extends PortletBase {
 	 */
 	_saveChanges(newValue) {
 		this._unsavedChanges = false;
-		const editableValueSegmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId) || prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
 
-		this.store
-			.dispatch(enableSavingChangesStatusAction())
-			.dispatch(
+		const editableValueSegmentsExperienceId = (
+			prefixSegmentsExperienceId(this.segmentsExperienceId) ||
+			prefixSegmentsExperienceId(this.defaultSegmentsExperienceId)
+		);
+
+		if (this.type === 'image') {
+			this.store
+				.dispatch(enableSavingChangesStatusAction())
+				.dispatch(
+					{
+						config: {
+							[EDITABLE_FIELD_CONFIG_KEYS.imageSource]: newValue
+						},
+						editableId: this.editableId,
+						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						type: UPDATE_CONFIG_ATTRIBUTES
+					}
+				)
+				.dispatch(
+					{
+						segmentsExperienceId: (
+							this.segmentsExperienceId ||
+							this.defaultSegmentsExperienceId
+						),
+						type: UPDATE_TRANSLATION_STATUS
+					}
+				)
+				.dispatch(updateLastSaveDateAction())
+				.dispatch(disableSavingChangesStatusAction());
+		}
+		else {
+			this.store.dispatch(
 				updateEditableValueAction(
 					this.fragmentEntryLinkId,
 					this.editableId,
@@ -543,25 +571,9 @@ class FragmentEditableField extends PortletBase {
 					newValue,
 					editableValueSegmentsExperienceId
 				)
-			)
-			.dispatch(
-				{
-					config: {
-						[EDITABLE_FIELD_CONFIG_KEYS.imageSource]: newValue
-					},
-					editableId: this.editableId,
-					fragmentEntryLinkId: this.fragmentEntryLinkId,
-					type: UPDATE_CONFIG_ATTRIBUTES
-				}
-			)
-			.dispatch(
-				{
-					segmentsExperienceId: this.segmentsExperienceId || this.defaultSegmentsExperienceId,
-					type: UPDATE_TRANSLATION_STATUS
-				}
-			)
-			.dispatch(updateLastSaveDateAction())
-			.dispatch(disableSavingChangesStatusAction());
+			);
+		}
+
 	}
 
 	/**

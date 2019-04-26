@@ -5,7 +5,7 @@ import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS} from './actions.es'
  */
 function disableSavingChangesStatusAction() {
 	return {
-		savingChanges: true,
+		savingChanges: false,
 		type: UPDATE_SAVING_CHANGES_STATUS
 	};
 }

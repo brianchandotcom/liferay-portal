@@ -46,7 +46,7 @@
 		border-bottom: 1px solid #CDCED9;
 	}
 
-	.navigation-bar-light, .sidebar-block > .list-group-item, .panel {
+	.navigation-bar-light, .sidebar-block > .list-group-item, .panel, .panel-group .panel {
 		@include media-breakpoint-up(sm) {
 			background-color: transparent;
 			border-color: transparent;

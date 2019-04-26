@@ -87,7 +87,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 									"deleteUsers('", Constants.RESTORE, "');"));
 							dropdownItem.setIcon("undo");
 							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "restore"));
+								LanguageUtil.get(_request, "activate"));
 							dropdownItem.setQuickAction(true);
 						});
 				}

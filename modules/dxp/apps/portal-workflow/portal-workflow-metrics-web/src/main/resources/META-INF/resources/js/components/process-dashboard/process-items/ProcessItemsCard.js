@@ -15,13 +15,7 @@ class ProcessItemsCard extends React.Component {
 		this.state = {
 			error: null,
 			loading: false,
-			process: {
-				dueAfterInstanceCount: 0,
-				dueInInstanceCount: 0,
-				instanceCount: 0,
-				onTimeInstanceCount: 0,
-				overdueInstanceCount: 0
-			}
+			process: {}
 		};
 	}
 
@@ -48,8 +42,9 @@ class ProcessItemsCard extends React.Component {
 
 	requestData() {
 		const { client } = this.context;
-		const { processId } = this.props;
-		const urlRequest = `/processes/${processId}`;
+		const { completed = false, processId } = this.props;
+
+		const urlRequest = `/processes/${processId}?completed=${completed}`;
 
 		this.setState({
 			loading: true
@@ -60,7 +55,7 @@ class ProcessItemsCard extends React.Component {
 
 	render() {
 		const { error, loading, process } = this.state;
-		const { processId } = this.props;
+		const { panelDescription, panelTitle, processId } = this.props;
 
 		const errorRender = Component =>
 			(error && (
@@ -83,15 +78,9 @@ class ProcessItemsCard extends React.Component {
 			<Panel>
 				<Panel.Header elementClasses={'dashboard-panel-header'}>
 					<div>
-						<span className={'mr-3'}>
-							{Liferay.Language.get('pending-items')}
-						</span>
+						<span className={'mr-3'}>{panelTitle}</span>
 
-						<Tooltip
-							message={Liferay.Language.get('pending-items-description')}
-							position="right"
-							width="288"
-						>
+						<Tooltip message={panelDescription} position="right" width="288">
 							<Icon iconName={'question-circle-full'} />
 						</Tooltip>
 					</div>
@@ -122,8 +111,31 @@ class ProcessItemsCard extends React.Component {
 
 ProcessItemsCard.contextType = AppContext;
 
-export class PendingItemsCard extends ProcessItemsCard {
-	constructor(props) {
-		super(props);
+export class CompletedItemsCard extends React.Component {
+	render() {
+		const { processId } = this.props;
+
+		return (
+			<ProcessItemsCard
+				completed
+				panelDescription={Liferay.Language.get('completed-items-description')}
+				panelTitle={Liferay.Language.get('completed-items')}
+				processId={processId}
+			/>
+		);
+	}
+}
+
+export class PendingItemsCard extends React.Component {
+	render() {
+		const { processId } = this.props;
+
+		return (
+			<ProcessItemsCard
+				panelDescription={Liferay.Language.get('pending-items-description')}
+				panelTitle={Liferay.Language.get('pending-items')}
+				processId={processId}
+			/>
+		);
 	}
 }

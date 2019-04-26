@@ -1,4 +1,8 @@
 import {
+	CompletedItemsCard,
+	PendingItemsCard
+} from './process-items/ProcessItemsCard';
+import {
 	Redirect,
 	Route,
 	HashRouter as Router,
@@ -6,7 +10,6 @@ import {
 } from 'react-router-dom';
 import { AppContext } from '../AppContext';
 import { getPathname } from '../../shared/components/tabs/TabItem';
-import { PendingItemsCard } from './process-items/ProcessItemsCard';
 import React from 'react';
 import Tabs from '../../shared/components/tabs/Tabs';
 import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard';
@@ -14,6 +17,16 @@ import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard';
 class ProcessDashboard extends React.Component {
 	render() {
 		const { processId, query } = this.props;
+
+		const completedTab = {
+			key: 'completed',
+			name: Liferay.Language.get('completed'),
+			params: {
+				processId
+			},
+			path: '/dashboard/:processId/completed',
+			query
+		};
 		const pendingTab = {
 			key: 'pending',
 			name: Liferay.Language.get('pending'),
@@ -31,7 +44,7 @@ class ProcessDashboard extends React.Component {
 
 		return (
 			<div className="workflow-process-dashboard">
-				<Tabs tabs={[pendingTab]} />
+				<Tabs tabs={[pendingTab, completedTab]} />
 
 				<Router>
 					<Switch>
@@ -48,6 +61,12 @@ class ProcessDashboard extends React.Component {
 							exact
 							path={pendingTab.path}
 							render={withParams(PendingItemsCard, WorkloadByStepCard)}
+						/>
+
+						<Route
+							exact
+							path={completedTab.path}
+							render={withParams(CompletedItemsCard)}
 						/>
 					</Switch>
 				</Router>

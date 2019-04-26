@@ -148,16 +148,10 @@ public class CommentUserNotificationHandler
 		return message;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommentUserNotificationHandler.class);
 
+	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 
 	@Reference

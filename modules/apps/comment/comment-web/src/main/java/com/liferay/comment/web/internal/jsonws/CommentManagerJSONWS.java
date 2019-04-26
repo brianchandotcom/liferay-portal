@@ -290,17 +290,10 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		return user.getFullName();
 	}
 
-	@Reference(unbind = "-")
-	protected void setCommentManager(CommentManager commentManager) {
-		_commentManager = commentManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
+	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 }

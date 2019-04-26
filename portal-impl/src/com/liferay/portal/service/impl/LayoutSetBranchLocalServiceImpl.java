@@ -153,7 +153,7 @@ public class LayoutSetBranchLocalServiceImpl
 
 			List<Layout> layouts = layoutPersistence.findByG_P_Head(
 				layoutSetBranch.getGroupId(), layoutSetBranch.isPrivateLayout(),
-				true);
+				false);
 
 			for (Layout layout : layouts) {
 				LayoutBranch layoutBranch =

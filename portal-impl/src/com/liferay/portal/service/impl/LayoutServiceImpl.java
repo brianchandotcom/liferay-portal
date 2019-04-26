@@ -644,7 +644,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	@Override
 	public List<Layout> getLayouts(long groupId, boolean privateLayout) {
 		return layoutPersistence.filterFindByG_P_Head(
-			groupId, privateLayout, true);
+			groupId, privateLayout, false);
 	}
 
 	@Override
@@ -672,7 +672,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public List<Layout> getLayouts(long groupId, String type) {
-		return layoutPersistence.filterFindByG_T_Head(groupId, type, true);
+		return layoutPersistence.filterFindByG_T_Head(groupId, type, false);
 	}
 
 	@Override
@@ -680,13 +680,13 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		long groupId, String type, int start, int end) {
 
 		return layoutPersistence.filterFindByG_T_Head(
-			groupId, type, true, start, end);
+			groupId, type, false, start, end);
 	}
 
 	@Override
 	public int getLayoutsCount(long groupId, boolean privateLayout) {
 		return layoutPersistence.filterCountByG_P_Head(
-			groupId, privateLayout, true);
+			groupId, privateLayout, false);
 	}
 
 	@Override
@@ -694,7 +694,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		long groupId, boolean privateLayout, long parentLayoutId) {
 
 		return layoutPersistence.filterCountByG_P_P_Head(
-			groupId, privateLayout, parentLayoutId, true);
+			groupId, privateLayout, parentLayoutId, false);
 	}
 
 	@Override
@@ -703,12 +703,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		int priority) {
 
 		return layoutPersistence.filterCountByG_P_P_LtP_Head(
-			groupId, privateLayout, parentLayoutId, priority, true);
+			groupId, privateLayout, parentLayoutId, priority, false);
 	}
 
 	@Override
 	public int getLayoutsCount(long groupId, String type) {
-		return layoutPersistence.filterCountByG_T_Head(groupId, type, true);
+		return layoutPersistence.filterCountByG_T_Head(groupId, type, false);
 	}
 
 	@Override

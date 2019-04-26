@@ -24,13 +24,6 @@ import templates from './FragmentEditableField.soy';
 const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
 
 /**
- * Delay to save changes of an editable field
- * @review
- * @type {!number}
- */
-const SAVE_CHANGES_DELAY = 1500;
-
-/**
  * FragmentEditableField
  */
 class FragmentEditableField extends PortletBase {
@@ -109,18 +102,9 @@ class FragmentEditableField extends PortletBase {
 	 * @review
 	 */
 	created() {
-		this._handleBeforeNavigate = this._handleBeforeNavigate.bind(this);
-		this._handleBeforeUnload = this._handleBeforeUnload.bind(this);
 		this._handleEditableChanged = this._handleEditableChanged.bind(this);
 		this._handleEditableDestroyed = this._handleEditableDestroyed.bind(this);
 		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(this);
-
-		this._beforeNavigateHandler = Liferay.on(
-			'beforeNavigate',
-			this._handleBeforeNavigate
-		);
-
-		window.addEventListener('beforeunload', this._handleBeforeUnload);
 	}
 
 	/**
@@ -128,14 +112,8 @@ class FragmentEditableField extends PortletBase {
 	 * @review
 	 */
 	disposed() {
-		clearTimeout(this._saveChangesTimeout);
-
 		this._destroyProcessors();
 		this._disposeFloatingToolbar();
-
-		this._beforeNavigateHandler.detach();
-
-		window.removeEventListener('beforeunload', this._handleBeforeUnload);
 	}
 
 	/**
@@ -225,8 +203,11 @@ class FragmentEditableField extends PortletBase {
 	 * @review
 	 */
 	shouldUpdate(changes) {
-		return this._editing ?
-			shouldUpdateOnChangeProperties(changes, ['languageId', 'segmentsExperienceId']) :
+		return this._getItemId() === this.fragmentEditorEnabled ?
+			shouldUpdateOnChangeProperties(
+				changes,
+				['fragmentEditorEnabled', 'languageId', 'segmentsExperienceId']
+			) :
 			shouldUpdatePureComponent(changes);
 	}
 
@@ -329,8 +310,6 @@ class FragmentEditableField extends PortletBase {
 			this._handleEditableChanged,
 			this._handleEditableDestroyed
 		);
-
-		this._editing = true;
 	}
 
 	/**
@@ -341,38 +320,6 @@ class FragmentEditableField extends PortletBase {
 	 */
 	_getItemId() {
 		return `${this.fragmentEntryLinkId}-${this.editableId}`;
-	}
-
-	/**
-	 * Handle beforeNavigate SPA event
-	 * and destroy all existing processors.
-	 * @private
-	 * @review
-	 */
-	_handleBeforeNavigate(event) {
-		if (this._unsavedChanges) {
-			const msg = Liferay.Language.get('do-you-want-to-leave-this-site');
-
-			if (!confirm(msg)) {
-				event.originalEvent.preventDefault();
-			}
-		}
-	}
-
-	/**
-	 * Handle beforeunload event and show confirmation dialog
-	 * if there are unsaved changes
-	 * @private
-	 * @review
-	 */
-	_handleBeforeUnload(event) {
-		const confirmationMessage = '';
-
-		if (this._unsavedChanges) {
-			event.returnValue = confirmationMessage;
-		}
-
-		return confirmationMessage;
 	}
 
 	/**
@@ -409,8 +356,6 @@ class FragmentEditableField extends PortletBase {
 	 * @review
 	 */
 	_handleEditableDestroyed() {
-		this._editing = false;
-
 		this.store.dispatch(
 			{
 				type: DISABLE_FRAGMENT_EDITOR
@@ -424,16 +369,47 @@ class FragmentEditableField extends PortletBase {
 	 * @private
 	 */
 	_handleEditableChanged(newValue) {
-		this._unsavedChanges = true;
-
-		clearTimeout(this._saveChangesTimeout);
-
-		this._saveChangesTimeout = setTimeout(
-			() => {
-				this._saveChanges(newValue);
-			},
-			SAVE_CHANGES_DELAY
+		const editableValueSegmentsExperienceId = (
+			prefixSegmentsExperienceId(this.segmentsExperienceId) ||
+			prefixSegmentsExperienceId(this.defaultSegmentsExperienceId)
 		);
+
+		if (this.type === 'image') {
+			this.store
+				.dispatch(enableSavingChangesStatusAction())
+				.dispatch(
+					{
+						config: {
+							[EDITABLE_FIELD_CONFIG_KEYS.imageSource]: newValue
+						},
+						editableId: this.editableId,
+						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						type: UPDATE_CONFIG_ATTRIBUTES
+					}
+				)
+				.dispatch(
+					{
+						segmentsExperienceId: (
+							this.segmentsExperienceId ||
+							this.defaultSegmentsExperienceId
+						),
+						type: UPDATE_TRANSLATION_STATUS
+					}
+				)
+				.dispatch(updateLastSaveDateAction())
+				.dispatch(disableSavingChangesStatusAction());
+		}
+		else {
+			this.store.dispatch(
+				updateEditableValueAction(
+					this.fragmentEntryLinkId,
+					this.editableId,
+					this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+					newValue,
+					editableValueSegmentsExperienceId
+				)
+			);
+		}
 	}
 
 	/**
@@ -523,57 +499,6 @@ class FragmentEditableField extends PortletBase {
 					}
 				);
 		}
-	}
-
-	/**
-	 * Saves editable value changes
-	 * @param {string} newValue
-	 */
-	_saveChanges(newValue) {
-		this._unsavedChanges = false;
-
-		const editableValueSegmentsExperienceId = (
-			prefixSegmentsExperienceId(this.segmentsExperienceId) ||
-			prefixSegmentsExperienceId(this.defaultSegmentsExperienceId)
-		);
-
-		if (this.type === 'image') {
-			this.store
-				.dispatch(enableSavingChangesStatusAction())
-				.dispatch(
-					{
-						config: {
-							[EDITABLE_FIELD_CONFIG_KEYS.imageSource]: newValue
-						},
-						editableId: this.editableId,
-						fragmentEntryLinkId: this.fragmentEntryLinkId,
-						type: UPDATE_CONFIG_ATTRIBUTES
-					}
-				)
-				.dispatch(
-					{
-						segmentsExperienceId: (
-							this.segmentsExperienceId ||
-							this.defaultSegmentsExperienceId
-						),
-						type: UPDATE_TRANSLATION_STATUS
-					}
-				)
-				.dispatch(updateLastSaveDateAction())
-				.dispatch(disableSavingChangesStatusAction());
-		}
-		else {
-			this.store.dispatch(
-				updateEditableValueAction(
-					this.fragmentEntryLinkId,
-					this.editableId,
-					this.languageId || DEFAULT_LANGUAGE_ID_KEY,
-					newValue,
-					editableValueSegmentsExperienceId
-				)
-			);
-		}
-
 	}
 
 	/**
@@ -706,20 +631,6 @@ FragmentEditableField.STATE = {
 		.value(null),
 
 	/**
-	 * Flag indicating if the editable editor is active.
-	 * @default false
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-	_editing: Config
-		.internal()
-		.bool()
-		.value(false),
-
-	/**
 	 * Translated label of the mapped field
 	 * @instance
 	 * @memberOf FragmentEditableField
@@ -753,32 +664,7 @@ FragmentEditableField.STATE = {
 	 */
 	_preventEditableClick: Config
 		.bool()
-		.value(),
-
-	/**
-	 * Id of the timeout to save changes
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {number}
-	 */
-
-	_saveChangesTimeout: Config.number().internal(),
-
-	/**
-	 * Flag indicating if there are unsaved changes
-	 * @default false
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-	_unsavedChanges: Config
-		.internal()
-		.bool()
-		.value(false)
+		.value()
 };
 
 const ConnectedFragmentEditableField = getConnectedComponent(

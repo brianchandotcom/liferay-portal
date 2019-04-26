@@ -458,7 +458,14 @@ function updateEditableValueReducer(state, action) {
 
 		if (action.type === UPDATE_EDITABLE_VALUE_SUCCESS) {
 			nextState = setIn(nextState, ['savingChanges'], false);
-			nextState = setIn(nextState, ['lastSaveDate'], action.date);
+
+			nextState = setIn(
+				nextState,
+				['lastSaveDate'],
+				action.date.toLocaleTimeString(
+					Liferay.ThemeDisplay.getBCP47LanguageId()
+				)
+			);
 		}
 		else if (action.type === UPDATE_EDITABLE_VALUE_ERROR) {
 			nextState = setIn(nextState, ['savingChanges'], false);

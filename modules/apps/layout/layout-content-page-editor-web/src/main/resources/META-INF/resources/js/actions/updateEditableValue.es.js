@@ -1,8 +1,56 @@
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
-import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from './saveChanges.es';
 import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import {UPDATE_EDITABLE_VALUE_ERROR, UPDATE_EDITABLE_VALUE_LOADING, UPDATE_EDITABLE_VALUE_SUCCESS} from './actions.es';
+import debouncedAlert from '../utils/debouncedAlert.es';
+
+/**
+ * @type {number}
+ */
+const UPDATE_EDITABLE_VALUES_DELAY = 1500;
+
+/**
+ * @param {function} dispatch
+ * @param {string} fragmentEntryLinkId
+ * @param {object} previousEditableValues
+ * @param {object} nextEditableValues
+ * @review
+ */
+const debouncedUpdateEditableValues = debouncedAlert(
+	/**
+	 * @param {function} dispatch
+	 * @param {string} fragmentEntryLinkId
+	 * @param {object} previousEditableValues
+	 * @param {object} nextEditableValues
+ 	 * @review
+	 */
+	(
+		dispatch,
+		fragmentEntryLinkId,
+		previousEditableValues,
+		nextEditableValues
+	) => {
+		updateEditableValues(
+			fragmentEntryLinkId,
+			nextEditableValues
+		).then(
+			() => {
+				dispatch(updateEditableValueSuccessAction());
+			}
+		).catch(
+			() => {
+				dispatch(
+					updateEditableValueErrorAction(
+						fragmentEntryLinkId,
+						previousEditableValues
+					)
+				);
+			}
+		);
+	},
+
+	UPDATE_EDITABLE_VALUES_DELAY
+);
 
 /**
  * @param {string} fragmentEntryLinkId
@@ -76,22 +124,11 @@ function updateEditableValueAction(
 			)
 		);
 
-		updateEditableValues(
+		debouncedUpdateEditableValues(
+			dispatch,
 			fragmentEntryLinkId,
+			editableValues,
 			nextEditableValues
-		).then(
-			() => {
-				dispatch(updateEditableValueSuccessAction());
-			}
-		).catch(
-			() => {
-				dispatch(
-					updateEditableValueErrorAction(
-						fragmentEntryLinkId,
-						editableValues
-					)
-				);
-			}
 		);
 	};
 }

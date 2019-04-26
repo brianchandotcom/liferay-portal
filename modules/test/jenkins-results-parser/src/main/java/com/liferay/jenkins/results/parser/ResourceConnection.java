@@ -78,6 +78,10 @@ public class ResourceConnection implements Comparable {
 		return _node.getKey();
 	}
 
+	public String getMonitorName() {
+		return _resourceMonitor.getName();
+	}
+
 	public String getName() {
 		String key = _node.getKey();
 

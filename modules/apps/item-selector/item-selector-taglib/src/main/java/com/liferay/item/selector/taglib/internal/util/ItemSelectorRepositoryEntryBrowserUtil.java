@@ -105,6 +105,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 		JSONObject firstTabJSONObject = JSONFactoryUtil.createJSONObject();
 
 		FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+		Date modifiedDate = fileEntry.getModifiedDate();
 
 		JSONArray firstTabDataJSONArray = JSONUtil.putAll(
 			_createJSONObject(
@@ -115,11 +116,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 				TextFormatter.formatStorageSize(fileEntry.getSize(), locale)),
 			_createJSONObject(
 				LanguageUtil.get(locale, "name"),
-				HtmlUtil.escape(DLUtil.getTitleWithExtension(fileEntry))));
-
-		Date modifiedDate = fileEntry.getModifiedDate();
-
-		firstTabDataJSONArray.put(
+				HtmlUtil.escape(DLUtil.getTitleWithExtension(fileEntry))),
 			_createJSONObject(
 				LanguageUtil.get(locale, "modified"),
 				LanguageUtil.format(

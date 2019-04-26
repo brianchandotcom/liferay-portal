@@ -32,7 +32,10 @@ export const ADD_PORTLET = 'addPortlet';
 export const MOVE_FRAGMENT_ENTRY_LINK = 'moveFragmentEntryLink';
 export const REMOVE_FRAGMENT_ENTRY_LINK = 'removeFragmentEntryLink';
 export const UPDATE_CONFIG_ATTRIBUTES = 'updateConfigAttributes';
-export const UPDATE_EDITABLE_VALUE_SUCCESS = 'updateEditableValueSuccess';
+
+export const UPDATE_EDITABLE_VALUE_ERROR = 'UPDATE_EDITABLE_VALUE_ERROR';
+export const UPDATE_EDITABLE_VALUE_LOADING = 'UPDATE_EDITABLE_VALUE_LOADING';
+export const UPDATE_EDITABLE_VALUE_SUCCESS = 'UPDATE_EDITABLE_VALUE_SUCCESS';
 
 export const CLEAR_ACTIVE_ITEM = 'clearActiveItem';
 export const CLEAR_DROP_TARGET = 'clearDragTarget';

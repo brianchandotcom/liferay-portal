@@ -2,7 +2,7 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
 import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from './saveChanges.es';
 import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
-import {UPDATE_EDITABLE_VALUE_SUCCESS} from './actions.es';
+import {UPDATE_EDITABLE_VALUE_ERROR, UPDATE_EDITABLE_VALUE_LOADING, UPDATE_EDITABLE_VALUE_SUCCESS} from './actions.es';
 
 /**
  * @param {string} fragmentEntryLinkId
@@ -69,29 +69,50 @@ function updateEditableValueAction(
 			);
 		}
 
-		dispatch(enableSavingChangesStatusAction());
+		dispatch(
+			updateEditableValueLoadingAction(
+				fragmentEntryLinkId,
+				nextEditableValues
+			)
+		);
 
 		updateEditableValues(
 			fragmentEntryLinkId,
 			nextEditableValues
 		).then(
 			() => {
+				dispatch(updateEditableValueSuccessAction());
+			}
+		).catch(
+			() => {
 				dispatch(
-					updateEditableValueSuccessAction(
+					updateEditableValueErrorAction(
 						fragmentEntryLinkId,
 						editableValues
 					)
 				);
-
-				dispatch(updateLastSaveDateAction());
-				dispatch(disableSavingChangesStatusAction());
-			}
-		).catch(
-			() => {
-				dispatch(disableSavingChangesStatusAction());
-				dispatch(updateLastSaveDateAction());
 			}
 		);
+	};
+}
+
+/**
+ * @param {string} fragmentEntryLinkId
+ * @param {object} editableValues
+ * @param {Date} [date=new Date()]
+ * @return {object}
+ * @review
+ */
+function updateEditableValueErrorAction(
+	fragmentEntryLinkId,
+	editableValues,
+	date = new Date()
+) {
+	return {
+		date,
+		editableValues,
+		fragmentEntryLinkId,
+		type: UPDATE_EDITABLE_VALUE_ERROR
 	};
 }
 
@@ -101,10 +122,22 @@ function updateEditableValueAction(
  * @return {object}
  * @review
  */
-function updateEditableValueSuccessAction(fragmentEntryLinkId, editableValues) {
+function updateEditableValueLoadingAction(fragmentEntryLinkId, editableValues) {
 	return {
 		editableValues,
 		fragmentEntryLinkId,
+		type: UPDATE_EDITABLE_VALUE_LOADING
+	};
+}
+
+/**
+ * @param {Date} [date=new Date()]
+ * @return {object}
+ * @review
+ */
+function updateEditableValueSuccessAction(date = new Date()) {
+	return {
+		date,
 		type: UPDATE_EDITABLE_VALUE_SUCCESS
 	};
 }

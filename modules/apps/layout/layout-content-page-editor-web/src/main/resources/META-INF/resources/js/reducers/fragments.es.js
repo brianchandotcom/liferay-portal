@@ -1,4 +1,4 @@
-import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE_SUCCESS} from '../actions/actions.es';
+import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE_ERROR, UPDATE_EDITABLE_VALUE_LOADING, UPDATE_EDITABLE_VALUE_SUCCESS} from '../actions/actions.es';
 import {add, addRow, remove, setIn, updateIn, updateWidgets} from '../utils/FragmentsEditorUpdateUtils.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES, FRAGMENTS_EDITOR_ROW_TYPES} from '../utils/constants';
@@ -439,22 +439,35 @@ function removeFragmentEntryLinkReducer(state, action) {
  * @param {string} action.type
  * @param {string} action.fragmentEntryLinkId
  * @param {string} action.editableValues
+ * @param {Date} action.date
  * @return {object}
  * @review
  */
 function updateEditableValueReducer(state, action) {
 	let nextState = state;
 
-	if (action.type === UPDATE_EDITABLE_VALUE_SUCCESS) {
-		nextState = setIn(
-			nextState,
-			[
-				'fragmentEntryLinks',
-				action.fragmentEntryLinkId,
-				'editableValues'
-			],
-			action.editableValues
-		);
+	if (action.type === UPDATE_EDITABLE_VALUE_ERROR ||
+		action.type === UPDATE_EDITABLE_VALUE_LOADING ||
+		action.type === UPDATE_EDITABLE_VALUE_SUCCESS) {
+
+		const editablesPath = [
+			'fragmentEntryLinks',
+			action.fragmentEntryLinkId,
+			'editableValues'
+		];
+
+		if (action.type === UPDATE_EDITABLE_VALUE_SUCCESS) {
+			nextState = setIn(nextState, ['savingChanges'], false);
+			nextState = setIn(nextState, ['lastSaveDate'], action.date);
+		}
+		else if (action.type === UPDATE_EDITABLE_VALUE_ERROR) {
+			nextState = setIn(nextState, ['savingChanges'], false);
+			nextState = setIn(nextState, editablesPath, action.editableValues);
+		}
+		else if (action.type === UPDATE_EDITABLE_VALUE_LOADING) {
+			nextState = setIn(nextState, ['savingChanges'], true);
+			nextState = setIn(nextState, editablesPath, action.editableValues);
+		}
 	}
 
 	return nextState;

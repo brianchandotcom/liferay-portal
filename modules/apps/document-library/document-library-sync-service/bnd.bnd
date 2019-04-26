@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.document.library.sync.service
 Bundle-Version: 3.0.0
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
+-dsannotations-options: inherit

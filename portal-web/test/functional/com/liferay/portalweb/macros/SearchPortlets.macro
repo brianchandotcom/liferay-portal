@@ -39,8 +39,7 @@ definition {
 
 		Click(
 			locator1 = "Search#SORT_PORTLET_SORT_OPTION",
-			sortOption = "${sortOption}"
-		);
+			sortOption = "${sortOption}");
 	}
 
 	macro configureDestination {

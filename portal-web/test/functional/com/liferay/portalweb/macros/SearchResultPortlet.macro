@@ -83,8 +83,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
 				resultOrder = "${resultOrder}",
-				value1 = "${searchAssetTitle}"
-			);
+				value1 = "${searchAssetTitle}");
 		}
 	}
 }

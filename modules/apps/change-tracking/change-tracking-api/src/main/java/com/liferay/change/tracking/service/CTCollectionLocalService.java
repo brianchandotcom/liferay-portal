@@ -375,6 +375,11 @@ public interface CTCollectionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTCollection updateCTCollection(CTCollection ctCollection);
 
+	public CTCollection updateCTCollection(
+			long userId, long ctCollectionId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public CTCollection updateStatus(
 			long userId, CTCollection ctCollection, int status,
 			ServiceContext serviceContext)

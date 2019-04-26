@@ -617,6 +617,16 @@ public class CTCollectionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTCollection updateCTCollection(
+			long userId, long ctCollectionId, String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.updateCTCollection(
+			userId, ctCollectionId, name, description, serviceContext);
+	}
+
+	@Override
 	public com.liferay.change.tracking.model.CTCollection updateStatus(
 			long userId,
 			com.liferay.change.tracking.model.CTCollection ctCollection,

@@ -16,6 +16,7 @@
 		"liferay-npm-bundler-preset-standard": "2.7.1",
 		"liferay-npm-scripts": "1.5.1",
 		"liferay-theme-es2015-hook": "8.0.0-rc.2",
+		"webpack": "^4.30.0",
 		"webpack-cli": "^3.3.1"
 	},
 	"private": true,

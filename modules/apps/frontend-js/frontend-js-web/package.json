@@ -40,7 +40,6 @@
 	},
 	"devDependencies": {
 		"babel-loader": "^8.0.5",
-		"webpack": "4.29.5",
 		"webpack-merge": "^4.1.2"
 	},
 	"jest": {

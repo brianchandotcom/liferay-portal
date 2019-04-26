@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.util.AssetEntryUsageActionMenuContributor;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.journal.model.JournalArticle;
@@ -28,10 +29,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -140,24 +144,44 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	}
 
 	private String _getURL(
-		AssetEntryUsage assetEntryUsage, long previewAssetEntryId,
-		HttpServletRequest request) {
+			AssetEntryUsage assetEntryUsage, long previewAssetEntryId,
+			HttpServletRequest request)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, assetEntryUsage.getContainerKey(),
-			assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE);
+		String layoutURL = null;
 
-		if (previewAssetEntryId > 0) {
-			portletURL.setParameter(
-				"previewAssetEntryId", String.valueOf(previewAssetEntryId));
+		if (assetEntryUsage.getContainerType() == _portal.getClassNameId(
+				FragmentEntryLink.class)) {
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				assetEntryUsage.getPlid());
+
+			layoutURL = _portal.getLayoutFriendlyURL(layout, themeDisplay);
+
+			if (previewAssetEntryId > 0) {
+				layoutURL = _http.setParameter(
+					layoutURL, "previewAssetEntryId",
+					String.valueOf(previewAssetEntryId));
+			}
+		}
+		else {
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				request, assetEntryUsage.getContainerKey(),
+				assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE);
+
+			if (previewAssetEntryId > 0) {
+				portletURL.setParameter(
+					"previewAssetEntryId", String.valueOf(previewAssetEntryId));
+			}
+
+			layoutURL = portletURL.toString();
 		}
 
 		String portletURLString = _http.setParameter(
-			portletURL.toString(), "p_l_back_url",
-			themeDisplay.getURLCurrent());
+			layoutURL, "p_l_back_url", themeDisplay.getURLCurrent());
 
 		return portletURLString + "#portlet_" +
 			assetEntryUsage.getContainerKey();
@@ -174,6 +198,12 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

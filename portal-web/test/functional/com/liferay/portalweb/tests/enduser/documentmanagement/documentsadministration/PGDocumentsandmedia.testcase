@@ -741,12 +741,14 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		var googlePropertiesSet = MathUtil.randomNumber("3");
-		var googleAppsAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");
 		var googleClientID = PropsUtil.get("google.client.id.${googlePropertiesSet}");
+		var googleClientSecret = PropsUtil.get("google.client.secret.${googlePropertiesSet}");
+		var googlePickerAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");
 
-		PortalSettings.configureGoogleApps(
-			googleAppsAPIKey = "${googleAppsAPIKey}",
-			googleClientID = "${googleClientID}");
+		PortalSettings.configureGoogleDrive(
+			googleClientID = "${googleClientID}",
+			googleClientSecret = "${googleClientSecret}",
+			googlePickerAPIKey = "${googlePickerAPIKey}");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1051,12 +1053,14 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		var googlePropertiesSet = MathUtil.randomNumber("3");
-		var googleAppsAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");
 		var googleClientID = PropsUtil.get("google.client.id.${googlePropertiesSet}");
+		var googleClientSecret = PropsUtil.get("google.client.secret.${googlePropertiesSet}");
+		var googlePickerAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");
 
-		PortalSettings.configureGoogleApps(
-			googleAppsAPIKey = "${googleAppsAPIKey}",
-			googleClientID = "${googleClientID}");
+		PortalSettings.configureGoogleDrive(
+			googleClientID = "${googleClientID}",
+			googleClientSecret = "${googleClientSecret}",
+			googlePickerAPIKey = "${googlePickerAPIKey}");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

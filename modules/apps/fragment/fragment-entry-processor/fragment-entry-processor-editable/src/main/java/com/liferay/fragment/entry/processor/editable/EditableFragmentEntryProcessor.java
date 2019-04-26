@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
-import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -423,12 +422,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
 			new VersionedAssetEntry(assetEntry, versionType), fieldId, locale);
-
-		if (fieldValue instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
-
-			fieldValue = contentAccessor.getContent();
-		}
 
 		return editableElementParser.parseFieldValue(fieldValue);
 	}

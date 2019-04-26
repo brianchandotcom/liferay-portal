@@ -38,7 +38,6 @@
 		"metal-dom": "2.16.8",
 		"mocha": "^4.0.1",
 		"prettier-eslint-cli": "^4.4.0",
-		"rimraf": "^2.6.2",
 		"sinon": "^4.1.2"
 	},
 	"homepage": "https://github.com/liferay/com-liferay-analytics#readme",
@@ -53,7 +52,7 @@
 		"url": "git+https://github.com/liferay/com-liferay-analytics.git"
 	},
 	"scripts": {
-		"build": "rimraf build/ && liferay-npm-scripts webpack",
+		"build": "liferay-npm-scripts webpack",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
 		"test": "karma start karma.conf.js"

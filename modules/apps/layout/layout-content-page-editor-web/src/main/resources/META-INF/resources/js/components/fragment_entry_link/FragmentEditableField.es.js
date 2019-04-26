@@ -8,8 +8,9 @@ import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
 import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.es';
 import './FragmentEditableFieldTooltip.es';
 
-import {DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
+import {DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_CONFIG_ATTRIBUTES, UPDATE_EDITABLE_VALUE, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 import {EDITABLE_FIELD_CONFIG_KEYS, FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../actions/saveChanges.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {getItemPath, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
@@ -532,12 +533,7 @@ class FragmentEditableField extends PortletBase {
 		const editableValueSegmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId) || prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
 
 		this.store
-			.dispatch(
-				{
-					savingChanges: true,
-					type: UPDATE_SAVING_CHANGES_STATUS
-				}
-			)
+			.dispatch(enableSavingChangesStatusAction())
 			.dispatch(
 				{
 					editableId: this.editableId,
@@ -564,18 +560,8 @@ class FragmentEditableField extends PortletBase {
 					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
-			.dispatch(
-				{
-					lastSaveDate: new Date(),
-					type: UPDATE_LAST_SAVE_DATE
-				}
-			)
-			.dispatch(
-				{
-					savingChanges: false,
-					type: UPDATE_SAVING_CHANGES_STATUS
-				}
-			);
+			.dispatch(updateLastSaveDateAction())
+			.dispatch(disableSavingChangesStatusAction());
 	}
 
 	/**

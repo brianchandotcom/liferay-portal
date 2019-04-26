@@ -3,17 +3,14 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
+import {ADD_MAPPED_ASSET_ENTRY, UPDATE_EDITABLE_VALUE} from '../../../actions/actions.es';
 import {COMPATIBLE_TYPES} from '../../../utils/constants';
+import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarMappingPanel.soy';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
-import {
-	ADD_MAPPED_ASSET_ENTRY,
-	UPDATE_EDITABLE_VALUE, UPDATE_LAST_SAVE_DATE,
-	UPDATE_SAVING_CHANGES_STATUS
-} from '../../../actions/actions.es';
 
 const SOURCE_TYPE_IDS = {
 	content: 'specific_content',
@@ -325,12 +322,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_updateEditableValues(key, value) {
 		this.store
-			.dispatch(
-				{
-					savingChanges: true,
-					type: UPDATE_SAVING_CHANGES_STATUS
-				}
-			)
+			.dispatch(enableSavingChangesStatusAction())
 			.dispatch(
 				{
 					editableId: this.item.editableId,
@@ -340,18 +332,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 					type: UPDATE_EDITABLE_VALUE
 				}
 			)
-			.dispatch(
-				{
-					lastSaveDate: new Date(),
-					type: UPDATE_LAST_SAVE_DATE
-				}
-			)
-			.dispatch(
-				{
-					savingChanges: false,
-					UPDATE_SAVING_CHANGES_STATUS
-				}
-			);
+			.dispatch(updateLastSaveDateAction())
+			.dispatch(disableSavingChangesStatusAction());
 	}
 }
 

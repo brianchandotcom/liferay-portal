@@ -1,5 +1,6 @@
-import {CLEAR_DROP_TARGET, MOVE_ROW, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
+import {CLEAR_DROP_TARGET, MOVE_ROW, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
 import {DEFAULT_COMPONENT_ROW_CONFIG, DEFAULT_SECTION_ROW_CONFIG} from './rowConstants';
+import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../actions/saveChanges.es';
 import {FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ROW_TYPES} from './constants';
 import {getTargetBorder, getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
 
@@ -87,12 +88,7 @@ function addRow(
  */
 function moveItem(store, moveItemAction, moveItemPayload) {
 	store
-		.dispatch(
-			{
-				savingChanges: true,
-				type: UPDATE_SAVING_CHANGES_STATUS
-			}
-		)
+		.dispatch(enableSavingChangesStatusAction())
 		.dispatch(
 			Object.assign(
 				{},
@@ -102,18 +98,8 @@ function moveItem(store, moveItemAction, moveItemPayload) {
 				}
 			)
 		)
-		.dispatch(
-			{
-				lastSaveDate: new Date(),
-				type: UPDATE_LAST_SAVE_DATE
-			}
-		)
-		.dispatch(
-			{
-				savingChanges: false,
-				type: UPDATE_SAVING_CHANGES_STATUS
-			}
-		)
+		.dispatch(updateLastSaveDateAction())
+		.dispatch(disableSavingChangesStatusAction())
 		.dispatch(
 			{
 				type: CLEAR_DROP_TARGET
@@ -169,12 +155,7 @@ function remove(array, position) {
  */
 function removeItem(store, removeItemAction, removeItemPayload) {
 	store
-		.dispatch(
-			{
-				savingChanges: true,
-				type: UPDATE_SAVING_CHANGES_STATUS
-			}
-		)
+		.dispatch(enableSavingChangesStatusAction())
 		.dispatch(
 			Object.assign(
 				{},
@@ -184,18 +165,8 @@ function removeItem(store, removeItemAction, removeItemPayload) {
 				}
 			),
 		)
-		.dispatch(
-			{
-				lastSaveDate: new Date(),
-				type: UPDATE_LAST_SAVE_DATE
-			}
-		)
-		.dispatch(
-			{
-				savingChanges: false,
-				type: UPDATE_SAVING_CHANGES_STATUS
-			}
-		);
+		.dispatch(updateLastSaveDateAction())
+		.dispatch(disableSavingChangesStatusAction());
 }
 
 /**
@@ -306,12 +277,7 @@ function updateIn(object, keyPath, updater, defaultValue) {
  */
 function updateRow(store, updateAction, payload) {
 	store
-		.dispatch(
-			{
-				savingChanges: true,
-				type: UPDATE_SAVING_CHANGES_STATUS
-			}
-		)
+		.dispatch(enableSavingChangesStatusAction())
 		.dispatch(
 			updateAction,
 			payload
@@ -321,18 +287,8 @@ function updateRow(store, updateAction, payload) {
 				type: UPDATE_TRANSLATION_STATUS
 			}
 		)
-		.dispatch(
-			{
-				lastSaveDate: new Date(),
-				type: UPDATE_LAST_SAVE_DATE
-			}
-		)
-		.dispatch(
-			{
-				savingChanges: false,
-				type: UPDATE_SAVING_CHANGES_STATUS
-			}
-		);
+		.dispatch(updateLastSaveDateAction())
+		.dispatch(disableSavingChangesStatusAction());
 }
 
 /**

@@ -4,7 +4,8 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 
-import {ADD_PORTLET, CLEAR_DROP_TARGET, UPDATE_DROP_TARGET, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS} from '../../../actions/actions.es';
+import {ADD_PORTLET, CLEAR_DROP_TARGET, UPDATE_DROP_TARGET} from '../../../actions/actions.es';
+import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import {FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
@@ -268,12 +269,7 @@ class SidebarWidgetsPanel extends Component {
 			);
 
 			this.store
-				.dispatch(
-					{
-						savingChanges: true,
-						type: UPDATE_SAVING_CHANGES_STATUS
-					}
-				)
+				.dispatch(enableSavingChangesStatusAction())
 				.dispatch(
 					{
 						instanceable,
@@ -281,18 +277,8 @@ class SidebarWidgetsPanel extends Component {
 						type: ADD_PORTLET
 					}
 				)
-				.dispatch(
-					{
-						lastSaveDate: new Date(),
-						type: UPDATE_LAST_SAVE_DATE
-					}
-				)
-				.dispatch(
-					{
-						savingChanges: false,
-						type: UPDATE_SAVING_CHANGES_STATUS
-					}
-				)
+				.dispatch(updateLastSaveDateAction())
+				.dispatch(disableSavingChangesStatusAction())
 				.dispatch(
 					{
 						type: CLEAR_DROP_TARGET

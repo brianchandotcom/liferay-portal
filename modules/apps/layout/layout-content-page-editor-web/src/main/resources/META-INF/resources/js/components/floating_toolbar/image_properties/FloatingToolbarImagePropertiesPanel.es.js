@@ -3,9 +3,10 @@ import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarImagePropertiesPanelDelegateTemplate.soy';
 import {EDITABLE_FIELD_CONFIG_KEYS, TARGET_TYPES} from '../../../utils/constants';
+import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarImagePropertiesPanel.soy';
-import {CLEAR_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, UPDATE_CONFIG_ATTRIBUTES, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {CLEAR_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, UPDATE_CONFIG_ATTRIBUTES, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarImagePropertiesPanel
@@ -20,12 +21,7 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 */
 	_updateFragmentConfig(config) {
 		this.store
-			.dispatch(
-				{
-					savingChanges: true,
-					type: UPDATE_SAVING_CHANGES_STATUS
-				}
-			)
+			.dispatch(enableSavingChangesStatusAction())
 			.dispatch(
 				{
 					config,
@@ -39,18 +35,8 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
-			.dispatch(
-				{
-					lastSaveDate: new Date(),
-					type: UPDATE_LAST_SAVE_DATE
-				}
-			)
-			.dispatch(
-				{
-					savingChanges: false,
-					type: UPDATE_SAVING_CHANGES_STATUS
-				}
-			);
+			.dispatch(updateLastSaveDateAction())
+			.dispatch(disableSavingChangesStatusAction());
 	}
 
 	/**

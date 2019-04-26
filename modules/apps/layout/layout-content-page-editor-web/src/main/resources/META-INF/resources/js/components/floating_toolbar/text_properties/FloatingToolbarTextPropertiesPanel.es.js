@@ -4,9 +4,10 @@ import Soy, {Config} from 'metal-soy';
 import '../common/FloatingToolbarColorPicker.es';
 import './FloatingToolbarTextPropertiesPanelDelegateTemplate.soy';
 import {EDITABLE_FIELD_CONFIG_KEYS, TEXT_ALIGNMENT_OPTIONS, TEXT_STYLES} from '../../../utils/constants';
+import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarTextPropertiesPanel.soy';
-import {UPDATE_CONFIG_ATTRIBUTES, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {UPDATE_CONFIG_ATTRIBUTES, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarTextPropertiesPanel
@@ -21,12 +22,7 @@ class FloatingToolbarTextPropertiesPanel extends Component {
 	 */
 	_updateFragmentConfig(config) {
 		this.store
-			.dispatch(
-				{
-					savingChanges: true,
-					type: UPDATE_SAVING_CHANGES_STATUS
-				}
-			)
+			.dispatch(enableSavingChangesStatusAction())
 			.dispatch(
 				{
 					config,
@@ -40,18 +36,8 @@ class FloatingToolbarTextPropertiesPanel extends Component {
 					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
-			.dispatch(
-				{
-					lastSaveDate: new Date(),
-					type: UPDATE_LAST_SAVE_DATE
-				}
-			)
-			.dispatch(
-				{
-					savingChanges: false,
-					type: UPDATE_SAVING_CHANGES_STATUS
-				}
-			);
+			.dispatch(updateLastSaveDateAction())
+			.dispatch(disableSavingChangesStatusAction());
 	}
 
 	/**

@@ -5,7 +5,8 @@ import position from 'metal-position';
 import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarCard.es';
-import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_DROP_TARGET, UPDATE_DROP_TARGET, UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS} from '../../../actions/actions.es';
+import {ADD_FRAGMENT_ENTRY_LINK, CLEAR_DROP_TARGET, UPDATE_DROP_TARGET} from '../../../actions/actions.es';
+import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import {FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
@@ -134,12 +135,7 @@ class SidebarAvailableElements extends Component {
 			);
 
 			this.store
-				.dispatch(
-					{
-						savingChanges: true,
-						type: UPDATE_SAVING_CHANGES_STATUS
-					}
-				)
+				.dispatch(enableSavingChangesStatusAction())
 				.dispatch(
 					{
 						fragmentEntryKey: itemId,
@@ -147,18 +143,8 @@ class SidebarAvailableElements extends Component {
 						type: ADD_FRAGMENT_ENTRY_LINK
 					}
 				)
-				.dispatch(
-					{
-						lastSaveDate: new Date(),
-						type: UPDATE_LAST_SAVE_DATE
-					}
-				)
-				.dispatch(
-					{
-						savingChanges: false,
-						type: UPDATE_SAVING_CHANGES_STATUS
-					}
-				)
+				.dispatch(updateLastSaveDateAction())
+				.dispatch(disableSavingChangesStatusAction())
 				.dispatch(
 					{
 						type: CLEAR_DROP_TARGET
@@ -177,12 +163,7 @@ class SidebarAvailableElements extends Component {
 	 */
 	_handleEntryClick(event) {
 		this.store
-			.dispatch(
-				{
-					savingChanges: true,
-					type: UPDATE_SAVING_CHANGES_STATUS
-				}
-			)
+			.dispatch(enableSavingChangesStatusAction())
 			.dispatch(
 				{
 					fragmentEntryKey: event.itemId,
@@ -190,18 +171,8 @@ class SidebarAvailableElements extends Component {
 					type: ADD_FRAGMENT_ENTRY_LINK
 				}
 			)
-			.dispatch(
-				{
-					lastSaveDate: new Date(),
-					type: UPDATE_LAST_SAVE_DATE
-				}
-			)
-			.dispatch(
-				{
-					savingChanges: false,
-					type: UPDATE_SAVING_CHANGES_STATUS
-				}
-			);
+			.dispatch(updateLastSaveDateAction())
+			.dispatch(disableSavingChangesStatusAction());
 	}
 
 	/**

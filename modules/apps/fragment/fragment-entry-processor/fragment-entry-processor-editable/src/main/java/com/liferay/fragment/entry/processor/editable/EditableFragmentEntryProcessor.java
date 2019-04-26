@@ -14,9 +14,10 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
-import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.model.VersionedAssetEntry;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -34,7 +35,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -151,7 +152,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkCSS(
 			FragmentEntryLink fragmentEntryLink, String css, String mode,
-			Locale locale, long[] segmentsExperienceIds)
+			Locale locale, long[] segmentsExperienceIds, long previewClassPK)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -192,7 +193,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 					value = _getMappedValue(
 						editableElementParser, editableValueJSONObject, mode,
-						locale);
+						locale, previewClassPK);
 				}
 
 				if (Validator.isNull(value)) {
@@ -210,13 +211,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html, String mode,
-			Locale locale, long[] segmentsExperienceIds)
+			Locale locale, long[] segmentsExperienceIds, long previewClassPK)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			fragmentEntryLink.getEditableValues());
 
 		Document document = _getDocument(html);
+
+		_assetEntriesFieldValues = new HashMap<>();
 
 		for (Element element : document.select("lfr-editable")) {
 			EditableElementParser editableElementParser =
@@ -250,11 +253,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			if (_isMapped(editableValueJSONObject, mode)) {
 				value = _getMappedValue(
 					editableElementParser, editableValueJSONObject, mode,
-					locale);
+					locale, previewClassPK);
 
 				configJSONObject = _getMappedValueConfigJSONObject(
 					editableElementParser, editableValueJSONObject, mode,
-					locale);
+					locale, previewClassPK);
 			}
 
 			if (Validator.isNull(value)) {
@@ -374,7 +377,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private String _getMappedValue(
 			EditableElementParser editableElementParser, JSONObject jsonObject,
-			String mode, Locale locale)
+			String mode, Locale locale, long previewClassPK)
 		throws PortalException {
 
 		String value = jsonObject.getString("mappedField");
@@ -384,42 +387,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				editableElementParser.getFieldTemplate(), "field_name", value);
 		}
 
-		if (!_isMapped(jsonObject, mode)) {
+		Object fieldValue = _getValue(jsonObject, mode, locale, previewClassPK);
+
+		if (fieldValue == null) {
 			return StringPool.BLANK;
-		}
-
-		long classNameId = jsonObject.getLong("classNameId");
-		long classPK = jsonObject.getLong("classPK");
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			classNameId, classPK);
-
-		if (assetEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			assetEntry.getClassName());
-
-		if ((trashHandler == null) ||
-			trashHandler.isInTrash(assetEntry.getClassPK())) {
-
-			return StringPool.BLANK;
-		}
-
-		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				_portal.getClassName(classNameId));
-
-		String fieldId = jsonObject.getString("fieldId");
-
-		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
-			assetEntry, fieldId, locale);
-
-		if (fieldValue instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
-
-			fieldValue = contentAccessor.getContent();
 		}
 
 		return editableElementParser.parseFieldValue(fieldValue);
@@ -427,7 +398,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private JSONObject _getMappedValueConfigJSONObject(
 			EditableElementParser editableElementParser, JSONObject jsonObject,
-			String mode, Locale locale)
+			String mode, Locale locale, long previewClassPK)
 		throws PortalException {
 
 		String value = jsonObject.getString("mappedField");
@@ -437,37 +408,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				value, locale, null);
 		}
 
-		if (!_isMapped(jsonObject, mode)) {
-			return JSONFactoryUtil.createJSONObject();
-		}
+		Object fieldValue = _getValue(jsonObject, mode, locale, previewClassPK);
 
-		long classNameId = jsonObject.getLong("classNameId");
-		long classPK = jsonObject.getLong("classPK");
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			classNameId, classPK);
-
-		if (assetEntry == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			assetEntry.getClassName());
-
-		if ((trashHandler == null) ||
-			trashHandler.isInTrash(assetEntry.getClassPK())) {
-
+		if (fieldValue == null) {
 			return JSONFactoryUtil.createJSONObject();
 		}
 
 		String fieldId = jsonObject.getString("fieldId");
-
-		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				_portal.getClassName(classNameId));
-
-		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
-			assetEntry, fieldId, locale);
 
 		return editableElementParser.getFieldTemplateConfigJSONObject(
 			fieldId, locale, fieldValue);
@@ -535,6 +482,61 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return stylesheet;
+	}
+
+	private Object _getValue(
+			JSONObject jsonObject, String mode, Locale locale,
+			long previewClassPK)
+		throws PortalException {
+
+		if (!_isMapped(jsonObject, mode)) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		long classNameId = jsonObject.getLong("classNameId");
+		long classPK = jsonObject.getLong("classPK");
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			classNameId, classPK);
+
+		if (assetEntry == null) {
+			return null;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			assetEntry.getClassName());
+
+		if ((trashHandler == null) ||
+			trashHandler.isInTrash(assetEntry.getClassPK())) {
+
+			return null;
+		}
+
+		String fieldId = jsonObject.getString("fieldId");
+
+		Map<String, Object> fieldsValues = _assetEntriesFieldValues.get(
+			assetEntry.getEntryId());
+
+		if (MapUtil.isNotEmpty(fieldsValues)) {
+			return fieldsValues.getOrDefault(fieldId, null);
+		}
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				assetEntry.getClassName());
+
+		int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
+
+		if (previewClassPK == assetEntry.getEntryId()) {
+			versionType = AssetRendererFactory.TYPE_LATEST;
+		}
+
+		fieldsValues = infoDisplayContributor.getInfoDisplayFieldsValues(
+			new VersionedAssetEntry(assetEntry, versionType), locale);
+
+		_assetEntriesFieldValues.put(assetEntry.getEntryId(), fieldsValues);
+
+		return fieldsValues.get(fieldId);
 	}
 
 	private boolean _isMapped(JSONObject jsonObject, String mode) {
@@ -738,6 +740,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private static final Pattern _cssSelectorPattern = Pattern.compile(
 		"([^\\{]+)\\s*\\{([^\\}]+)\\}");
 
+	private Map<Long, Map<String, Object>> _assetEntriesFieldValues;
+
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -746,8 +750,5 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
-	@Reference
-	private Portal _portal;
 
 }

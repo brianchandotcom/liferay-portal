@@ -39,7 +39,7 @@ public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkHTML(
 		FragmentEntryLink fragmentEntryLink, String html, String mode,
-		Locale locale, long[] segmentsExperienceIds) {
+		Locale locale, long[] segmentsExperienceIds, long previewClassPK) {
 
 		return html;
 	}

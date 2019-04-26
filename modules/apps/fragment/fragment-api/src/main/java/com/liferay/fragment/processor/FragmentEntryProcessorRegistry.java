@@ -42,6 +42,15 @@ public interface FragmentEntryProcessorRegistry {
 			long[] segmentsExperienceIds)
 		throws PortalException {
 
+		return processFragmentEntryLinkCSS(
+			fragmentEntryLink, mode, locale, segmentsExperienceIds, 0);
+	}
+
+	public default String processFragmentEntryLinkCSS(
+			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
+			long[] segmentsExperienceIds, long previewClassPK)
+		throws PortalException {
+
 		return fragmentEntryLink.getCss();
 	}
 
@@ -69,9 +78,18 @@ public interface FragmentEntryProcessorRegistry {
 			fragmentEntryLink, mode, locale, new long[0]);
 	}
 
-	public String processFragmentEntryLinkHTML(
+	public default String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
 			long[] segmentsExperienceIds)
+		throws PortalException {
+
+		return processFragmentEntryLinkHTML(
+			fragmentEntryLink, mode, locale, segmentsExperienceIds, 0);
+	}
+
+	public String processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
+			long[] segmentsExperienceIds, long previewClassPK)
 		throws PortalException;
 
 	public void validateFragmentEntryHTML(String html) throws PortalException;

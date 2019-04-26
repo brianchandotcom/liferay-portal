@@ -173,7 +173,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				fragmentRendererContext.getFragmentEntryLink(),
 				fragmentRendererContext.getMode(),
 				fragmentRendererContext.getLocale(),
-				fragmentRendererContext.getSegmentsExperienceIds());
+				fragmentRendererContext.getSegmentsExperienceIds(),
+				fragmentRendererContext.getPreviewClassPK());
 
 		if ((httpServletRequest != null) && (httpServletResponse != null) &&
 			Validator.isNotNull(css)) {
@@ -188,7 +189,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				fragmentRendererContext.getFragmentEntryLink(),
 				fragmentRendererContext.getMode(),
 				fragmentRendererContext.getLocale(),
-				fragmentRendererContext.getSegmentsExperienceIds());
+				fragmentRendererContext.getSegmentsExperienceIds(),
+				fragmentRendererContext.getPreviewClassPK());
 
 		if ((httpServletRequest != null) && (httpServletResponse != null) &&
 			Validator.isNotNull(html)) {

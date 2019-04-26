@@ -12,32 +12,26 @@
  * details.
  */
 
-package com.liferay.fragment.renderer;
+package com.liferay.asset.model;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.fragment.model.FragmentEntryLink;
-
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetEntryWrapper;
 
 /**
  * @author Jorge Ferrer
  */
-@ProviderType
-public interface FragmentRendererContext {
+public class VersionedAssetEntry extends AssetEntryWrapper {
 
-	public Optional<Map<String, Object>> getFieldValuesOptional();
+	public VersionedAssetEntry(AssetEntry assetEntry, int versionType) {
+		super(assetEntry);
 
-	public FragmentEntryLink getFragmentEntryLink();
+		_versionType = versionType;
+	}
 
-	public Locale getLocale();
+	public int getVersionType() {
+		return _versionType;
+	}
 
-	public String getMode();
-
-	public long getPreviewClassPK();
-
-	public long[] getSegmentsExperienceIds();
+	private final int _versionType;
 
 }

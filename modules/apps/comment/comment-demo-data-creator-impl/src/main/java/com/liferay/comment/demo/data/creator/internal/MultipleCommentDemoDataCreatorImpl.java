@@ -62,18 +62,6 @@ public class MultipleCommentDemoDataCreatorImpl
 		_commentDemoDataCreator.delete();
 	}
 
-	@Reference(unbind = "-")
-	public void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommentDemoDataCreator(
-		CommentDemoDataCreator commentDemoDataCreator) {
-
-		_commentDemoDataCreator = commentDemoDataCreator;
-	}
-
 	private int _addComments(
 			List<Long> userIds, ClassedModel classedModel, long commentId,
 			int maxComments, int level)
@@ -130,7 +118,10 @@ public class MultipleCommentDemoDataCreatorImpl
 	private static final List<String> _excludedUsers = Arrays.asList(
 		"test@liferay.com", "default@liferay.com");
 
+	@Reference
 	private CommentDemoDataCreator _commentDemoDataCreator;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

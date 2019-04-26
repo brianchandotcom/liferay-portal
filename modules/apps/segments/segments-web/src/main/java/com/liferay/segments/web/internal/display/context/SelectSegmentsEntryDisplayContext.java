@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -240,13 +239,13 @@ public class SelectSegmentsEntryDisplayContext {
 	private OrderByComparator<SegmentsEntry> _getOrderByComparator() {
 		boolean orderByAsc = false;
 
-		String orderByCol = _getOrderByCol();
-
 		String orderByType = getOrderByType();
 
 		if (orderByType.equals("asc")) {
 			orderByAsc = true;
 		}
+
+		String orderByCol = _getOrderByCol();
 
 		OrderByComparator<SegmentsEntry> orderByComparator = null;
 
@@ -305,17 +304,29 @@ public class SelectSegmentsEntryDisplayContext {
 	}
 
 	private Sort _getSort() {
-		String orderByCol = _getOrderByCol();
+		boolean orderByAsc = false;
 
-		if (orderByCol.equals("name")) {
-			return SortFactoryUtil.getSort(
-				SegmentsEntry.class, Sort.STRING_TYPE, Field.NAME,
-				getOrderByType());
+		String orderByType = getOrderByType();
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
 		}
 
-		return SortFactoryUtil.getSort(
-			SegmentsEntry.class, Sort.LONG_TYPE, Field.MODIFIED_DATE,
-			getOrderByType());
+		String orderByCol = _getOrderByCol();
+
+		Sort sort = null;
+
+		if (orderByCol.equals("name")) {
+			String sortFieldName = Field.getSortableFieldName(
+				"localized_name_".concat(_themeDisplay.getLanguageId()));
+
+			sort = new Sort(sortFieldName, Sort.STRING_TYPE, orderByAsc);
+		}
+		else {
+			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+		}
+
+		return sort;
 	}
 
 	private boolean _hasResults() throws PortalException {

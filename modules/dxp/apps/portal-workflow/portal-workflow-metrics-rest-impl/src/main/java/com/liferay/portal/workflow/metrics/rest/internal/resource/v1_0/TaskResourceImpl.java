@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.AggregationResult;
@@ -55,7 +54,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -90,18 +88,19 @@ public class TaskResourceImpl
 
 		String latestProcessVersion = _getLatestProcessVersion(processId);
 
-		Map<String, List<String>> instanceIdsMap = _getInstanceIdsMap(
+		Map<String, Long> instanceCountMap = _getInstanceCountMap(
 			fieldSort, pagination, processId, latestProcessVersion);
 
 		Map<String, Task> tasksMap = _getTasksMap(
-			processId, instanceIdsMap.keySet(), latestProcessVersion);
+			processId, instanceCountMap.keySet(), latestProcessVersion);
 
 		long count = tasksMap.size();
 
 		if (count > 0) {
 			return Page.of(
 				_getTasks(
-					fieldSort, instanceIdsMap, pagination, processId, tasksMap),
+					fieldSort, instanceCountMap, pagination, processId,
+					tasksMap),
 				pagination, count);
 		}
 
@@ -207,50 +206,37 @@ public class TaskResourceImpl
 			_queries.term("completed", false), _queries.term("deleted", false));
 	}
 
-	private List<String> _getBucketKeys(Bucket bucket, String name) {
-		TermsAggregationResult termsAggregationResult =
-			(TermsAggregationResult)bucket.getChildAggregationResult(name);
+	private long _getInstanceCount(Bucket bucket) {
+		CardinalityAggregationResult cardinalityAggregationResult =
+			(CardinalityAggregationResult)bucket.getChildAggregationResult(
+				"instanceCount");
 
-		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
-
-		Stream<Bucket> stream = buckets.stream();
-
-		return stream.map(
-			Bucket::getKey
-		).collect(
-			Collectors.toList()
-		);
+		return cardinalityAggregationResult.getValue();
 	}
 
-	private Map<String, List<String>> _getInstanceIdsMap(
+	private Map<String, Long> _getInstanceCountMap(
 		FieldSort fieldSort, Pagination pagination, long processId,
 		String version) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		TermsAggregation taskIdTermsAggregation = _aggregations.terms(
+		TermsAggregation termsAggregation = _aggregations.terms(
 			"taskName", "taskName");
 
-		TermsAggregation instanceIdTermsAggregation = _aggregations.terms(
-			"instanceId", "instanceId");
-
-		instanceIdTermsAggregation.setSize(10000);
-
-		taskIdTermsAggregation.addChildrenAggregations(
-			_aggregations.cardinality("instanceCount", "instanceId"),
-			instanceIdTermsAggregation);
+		termsAggregation.addChildrenAggregations(
+			_aggregations.cardinality("instanceCount", "instanceId"));
 
 		if ((fieldSort != null) &&
 			_isOrderByInstanceCount(fieldSort.getField())) {
 
-			taskIdTermsAggregation.addPipelineAggregation(
+			termsAggregation.addPipelineAggregation(
 				_resourceHelper.createBucketSortPipelineAggregation(
 					fieldSort, pagination));
 		}
 
-		taskIdTermsAggregation.setSize(10000);
+		termsAggregation.setSize(10000);
 
-		searchSearchRequest.addAggregation(taskIdTermsAggregation);
+		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
 		searchSearchRequest.setQuery(
@@ -272,7 +258,7 @@ public class TaskResourceImpl
 		return stream.collect(
 			LinkedHashMap::new,
 			(map, bucket) -> map.put(
-				bucket.getKey(), _getBucketKeys(bucket, "instanceId")),
+				bucket.getKey(), _getInstanceCount(bucket)),
 			Map::putAll);
 	}
 
@@ -290,13 +276,12 @@ public class TaskResourceImpl
 
 		searchSearchRequest.setSelectedFieldNames("version");
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
 		return Stream.of(
-			searchHits.getSearchHits()
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
 		).flatMap(
 			List::parallelStream
 		).map(
@@ -363,7 +348,7 @@ public class TaskResourceImpl
 	}
 
 	private Collection<Task> _getTasks(
-		FieldSort fieldSort, Map<String, List<String>> instanceIdsMap,
+		FieldSort fieldSort, Map<String, Long> instanceCountMap,
 		Pagination pagination, long processId, Map<String, Task> tasksMap) {
 
 		List<Task> tasks = new LinkedList<>();
@@ -373,13 +358,13 @@ public class TaskResourceImpl
 				fieldSort, pagination, processId, tasksMap.keySet());
 
 		if (_isOrderByInstanceCount(fieldSort.getField())) {
-			instanceIdsMap.forEach(
-				(taskName, instanceIds) -> {
+			instanceCountMap.forEach(
+				(taskName, instanceCount) -> {
 					Task task = tasksMap.remove(taskName);
 
 					_populateTaskWithSLAMetrics(
 						slaTermsAggregationResult.getBucket(taskName), task);
-					_setInstanceCount(instanceIds, task);
+					_setInstanceCount(instanceCount, task);
 					_updateTaskName(task);
 
 					tasks.add(task);
@@ -390,7 +375,7 @@ public class TaskResourceImpl
 				Task task = tasksMap.remove(bucket.getKey());
 
 				_populateTaskWithSLAMetrics(bucket, task);
-				_setInstanceCount(instanceIdsMap.get(bucket.getKey()), task);
+				_setInstanceCount(instanceCountMap.get(bucket.getKey()), task);
 				_updateTaskName(task);
 
 				tasks.add(task);
@@ -459,12 +444,8 @@ public class TaskResourceImpl
 		_setOverdueInstanceCount(bucket, task);
 	}
 
-	private void _setInstanceCount(List<String> instanceIds, Task task) {
-		if (ListUtil.isEmpty(instanceIds)) {
-			return;
-		}
-
-		task.setInstanceCount(Long.valueOf(instanceIds.size()) - 1);
+	private void _setInstanceCount(Long instanceCount, Task task) {
+		task.setInstanceCount(instanceCount - 1);
 	}
 
 	private void _setOnTimeInstanceCount(Bucket bucket, Task task) {

@@ -4,7 +4,7 @@ dependencies {
 	compileInclude classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.ner.person", version: "1.5.0"
 	compileInclude classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.sent", version: "1.5.0"
 	compileInclude classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.token", version: "1.5.0"
-	compileInclude group: "org.apache.opennlp", name: "opennlp-tools", version: "1.8.1"
+	compileInclude group: "org.apache.opennlp", name: "opennlp-tools", version: "1.9.1"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

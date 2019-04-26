@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -34,6 +36,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,13 +81,21 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", themeDisplay.getLocale(), getClass());
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("<div class=\"portlet-msg-info\">");
+			sb.append(
+				LanguageUtil.get(
+					resourceBundle, "the-rendered-content-will-be-shown-here"));
+			sb.append("</div>");
+
 			try {
 				PrintWriter printWriter = httpServletResponse.getWriter();
 
-				printWriter.write(
-					LanguageUtil.get(
-						themeDisplay.getLocale(),
-						"the-rendered-content-will-be-shown-here"));
+				printWriter.write(sb.toString());
 			}
 			catch (IOException ioe) {
 				if (_log.isDebugEnabled()) {

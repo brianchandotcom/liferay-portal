@@ -537,3 +537,31 @@ No code changes are necessary.
 
 Documents & Media has been reviewed from a UX perspective, and removing the
 navigation tabs in widget pages was part of a UI clean up process.
+
+---------------------------------------
+
+### Remove Hong Kong and Macau from the list of countries
+- **Date:** 2019-Apr-26
+- **JIRA Ticket:** [LPS-82203](https://issues.liferay.com/browse/LPS-82203)
+
+#### What changed?
+
+Hong Kong and Macau are removed from the list of countries and listed as regions
+of China as Xianggang (region code: CN-91) and Aomen (region code: CN-92)
+respectively.
+
+#### Who is affected?
+
+This affects anyone who use Hong Kong and Macau in the addresses.
+
+#### How should I update my code?
+
+No code changes are necessary. However, if you have hardcoded the countryId of
+Hong Kong and Macau in your code, they should be updated to China's countryId.
+References to Hong Kong and Macau should be done with their corresponding
+regionId.
+
+#### Why was this change made?
+
+After the handover of Hong Kong in 1997 and of Macau in 1999, Hong Kong and
+Macau are now the special administrative regions of China.

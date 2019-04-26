@@ -150,7 +150,27 @@ public class ArraysAsListCheck extends BaseCheck {
 
 		FullIdent fullIdent = FullIdent.createFullIdent(firstChildDetailAST);
 
-		return Objects.equals(fullIdent.getText(), variableName + ".add");
+		if (!Objects.equals(fullIdent.getText(), variableName + ".add")) {
+			return false;
+		}
+
+		DetailAST elistDetailAST = detailAST.findFirstToken(TokenTypes.ELIST);
+
+		if (elistDetailAST.getChildCount() != 1) {
+			return true;
+		}
+
+		firstChildDetailAST = elistDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.EXPR) {
+			firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private boolean _isAssignNewArrayList(DetailAST detailAST) {

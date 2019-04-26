@@ -601,8 +601,11 @@ public class JournalConverterImpl implements JournalConverter {
 										"the-recycle-bin"));
 						}
 
-						jsonObject.put("title", title);
-						jsonObject.put("uuid", article.getUuid());
+						jsonObject.put(
+							"title", title
+						).put(
+							"uuid", article.getUuid()
+						);
 					}
 					else {
 						jsonObject.put(
@@ -646,8 +649,11 @@ public class JournalConverterImpl implements JournalConverter {
 				}
 			}
 
-			jsonObject.put("layoutId", layoutId);
-			jsonObject.put("privateLayout", privateLayout);
+			jsonObject.put(
+				"layoutId", layoutId
+			).put(
+				"privateLayout", privateLayout
+			);
 
 			serializable = jsonObject.toString();
 		}

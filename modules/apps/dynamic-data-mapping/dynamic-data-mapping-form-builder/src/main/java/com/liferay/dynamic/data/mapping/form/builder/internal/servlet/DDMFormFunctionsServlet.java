@@ -122,9 +122,10 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 		String labelLanguageKey = key + CharPool.UNDERLINE + "function";
 
 		jsonObject.put(
-			"label", LanguageUtil.get(resourceBundle, labelLanguageKey));
-
-		jsonObject.put("value", key);
+			"label", LanguageUtil.get(resourceBundle, labelLanguageKey)
+		).put(
+			"value", key
+		);
 
 		String tooltipLanguageKey = key + CharPool.UNDERLINE + "tooltip";
 

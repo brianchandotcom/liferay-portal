@@ -156,10 +156,13 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			ancestorLayoutNames[i] = ancestorLayout.getName(locale);
 		}
 
-		jsonObject.put("ancestorLayoutIds", ancestorLayoutIds);
-		jsonObject.put("ancestorLayoutNames", ancestorLayoutNames);
-
-		jsonObject.put("start", start);
+		jsonObject.put(
+			"ancestorLayoutIds", ancestorLayoutIds
+		).put(
+			"ancestorLayoutNames", ancestorLayoutNames
+		).put(
+			"start", start
+		);
 
 		return jsonObject.toString();
 	}
@@ -593,11 +596,14 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			Layout layout = layoutTreeNode.getLayout();
 
-			jsonObject.put("contentDisplayPage", layout.isContentDisplayPage());
 			jsonObject.put(
+				"contentDisplayPage", layout.isContentDisplayPage()
+			).put(
 				"deleteable",
-				_isDeleteable(layout, themeDisplay, layoutSetBranch));
-			jsonObject.put("friendlyURL", layout.getFriendlyURL());
+				_isDeleteable(layout, themeDisplay, layoutSetBranch)
+			).put(
+				"friendlyURL", layout.getFriendlyURL()
+			);
 
 			if (layout instanceof VirtualLayout) {
 				VirtualLayout virtualLayout = (VirtualLayout)layout;
@@ -608,30 +614,41 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				jsonObject.put("groupId", layout.getGroupId());
 			}
 
-			jsonObject.put("hasChildren", layout.hasChildren());
-			jsonObject.put("layoutId", layout.getLayoutId());
-			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
 			jsonObject.put(
+				"hasChildren", layout.hasChildren()
+			).put(
+				"layoutId", layout.getLayoutId()
+			).put(
+				"name", layout.getName(themeDisplay.getLocale())
+			).put(
 				"parentable",
 				LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.ADD_LAYOUT));
-			jsonObject.put("parentLayoutId", layout.getParentLayoutId());
-			jsonObject.put("plid", layout.getPlid());
-			jsonObject.put("priority", layout.getPriority());
-			jsonObject.put("privateLayout", layout.isPrivateLayout());
-			jsonObject.put("regularURL", layout.getRegularURL(request));
-			jsonObject.put(
+					ActionKeys.ADD_LAYOUT)
+			).put(
+				"parentLayoutId", layout.getParentLayoutId()
+			).put(
+				"plid", layout.getPlid()
+			).put(
+				"priority", layout.getPriority()
+			).put(
+				"privateLayout", layout.isPrivateLayout()
+			).put(
+				"regularURL", layout.getRegularURL(request)
+			).put(
 				"sortable",
 				hasManageLayoutsPermission && !mobile &&
-				SitesUtil.isLayoutSortable(layout));
-			jsonObject.put("type", layout.getType());
-			jsonObject.put(
+				SitesUtil.isLayoutSortable(layout)
+			).put(
+				"type", layout.getType()
+			).put(
 				"updateable",
 				LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE));
-			jsonObject.put("uuid", layout.getUuid());
+					ActionKeys.UPDATE)
+			).put(
+				"uuid", layout.getUuid()
+			);
 
 			LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
 				layout);
@@ -651,8 +668,10 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 				if (!layoutBranch.isMaster()) {
 					jsonObject.put(
-						"layoutBranchId", layoutBranch.getLayoutBranchId());
-					jsonObject.put("layoutBranchName", layoutBranch.getName());
+						"layoutBranchId", layoutBranch.getLayoutBranchId()
+					).put(
+						"layoutBranchName", layoutBranch.getName()
+					);
 				}
 
 				if (layoutRevision.isHead()) {
@@ -660,10 +679,12 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				}
 
 				jsonObject.put(
-					"layoutRevisionId", layoutRevision.getLayoutRevisionId());
-				jsonObject.put("layoutSetBranchId", layoutSetBranchId);
-				jsonObject.put(
-					"layoutSetBranchName", boundLayoutSetBranch.getName());
+					"layoutRevisionId", layoutRevision.getLayoutRevisionId()
+				).put(
+					"layoutSetBranchId", layoutSetBranchId
+				).put(
+					"layoutSetBranchName", boundLayoutSetBranch.getName()
+				);
 			}
 
 			jsonArray.put(jsonObject);
@@ -671,8 +692,11 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject();
 
-		responseJSONObject.put("layouts", jsonArray);
-		responseJSONObject.put("total", layoutTreeNodes.getTotal());
+		responseJSONObject.put(
+			"layouts", jsonArray
+		).put(
+			"total", layoutTreeNodes.getTotal()
+		);
 
 		return responseJSONObject;
 	}

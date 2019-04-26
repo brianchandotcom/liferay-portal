@@ -64,10 +64,11 @@ public class GetInfoDisplayContributorsMVCActionCommand
 
 			jsonObject.put(
 				"id",
-				_portal.getClassNameId(infoDisplayContributor.getClassName()));
-			jsonObject.put(
+				_portal.getClassNameId(infoDisplayContributor.getClassName())
+			).put(
 				"label",
-				infoDisplayContributor.getLabel(themeDisplay.getLocale()));
+				infoDisplayContributor.getLabel(themeDisplay.getLocale())
+			);
 
 			jsonArray.put(jsonObject);
 		}

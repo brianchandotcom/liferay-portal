@@ -199,8 +199,11 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected Value createImageValue(int index) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("alt", "This is a image description. " + index);
-		jsonObject.put("data", "base64Value" + index);
+		jsonObject.put(
+			"alt", "This is a image description. " + index
+		).put(
+			"data", "base64Value" + index
+		);
 
 		return new UnlocalizedValue(
 			JSONObjectUtil.toOrderedJSONString(jsonObject));

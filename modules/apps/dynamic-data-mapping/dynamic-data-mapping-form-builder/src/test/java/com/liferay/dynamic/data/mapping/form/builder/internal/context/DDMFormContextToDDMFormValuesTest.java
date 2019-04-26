@@ -151,8 +151,11 @@ public class DDMFormContextToDDMFormValuesTest extends PowerMockito {
 		String enValue = StringUtil.randomString();
 		String ptValue = StringUtil.randomString();
 
-		jsonObject.put("en_US", enValue);
-		jsonObject.put("pt_BR", ptValue);
+		jsonObject.put(
+			"en_US", enValue
+		).put(
+			"pt_BR", ptValue
+		);
 
 		Value value1 = DDMFormValuesTestUtil.createLocalizedValue(
 			enValue, ptValue, LocaleUtil.US);

@@ -94,12 +94,19 @@ public class ScreensRatingsEntryServiceImpl
 			jsonObject.put("average", 0);
 		}
 
-		jsonObject.put("className", className);
-		jsonObject.put("classPK", classPK);
-		jsonObject.put("ratings", ratings);
-		jsonObject.put("totalCount", ratingsEntries.size());
-		jsonObject.put("totalScore", totalScore);
-		jsonObject.put("userScore", userScore);
+		jsonObject.put(
+			"className", className
+		).put(
+			"classPK", classPK
+		).put(
+			"ratings", ratings
+		).put(
+			"totalCount", ratingsEntries.size()
+		).put(
+			"totalScore", totalScore
+		).put(
+			"userScore", userScore
+		);
 
 		return jsonObject;
 	}

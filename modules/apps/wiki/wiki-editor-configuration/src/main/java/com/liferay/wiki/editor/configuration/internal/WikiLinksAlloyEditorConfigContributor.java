@@ -87,9 +87,11 @@ public class WikiLinksAlloyEditorConfigContributor
 
 		cfgJSONObject.put("appendProtocol", false);
 
-		jsonObject.put("cfg", cfgJSONObject);
-
-		jsonObject.put("name", buttonName);
+		jsonObject.put(
+			"cfg", cfgJSONObject
+		).put(
+			"name", buttonName
+		);
 
 		return jsonObject;
 	}

@@ -504,11 +504,15 @@ public class JournalDisplayContext {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("children", jsonArray);
-		jsonObject.put("icon", "folder");
-		jsonObject.put("id", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		jsonObject.put(
-			"name", LanguageUtil.get(_themeDisplay.getLocale(), "home"));
+			"children", jsonArray
+		).put(
+			"icon", "folder"
+		).put(
+			"id", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID
+		).put(
+			"name", LanguageUtil.get(_themeDisplay.getLocale(), "home")
+		);
 
 		return JSONUtil.put(jsonObject);
 	}
@@ -1234,9 +1238,13 @@ public class JournalDisplayContext {
 				jsonObject.put("children", childrenJSONArray);
 			}
 
-			jsonObject.put("icon", "folder");
-			jsonObject.put("id", folder.getFolderId());
-			jsonObject.put("name", folder.getName());
+			jsonObject.put(
+				"icon", "folder"
+			).put(
+				"id", folder.getFolderId()
+			).put(
+				"name", folder.getName()
+			);
 
 			if (folder.getFolderId() == getParentFolderId()) {
 				jsonObject.put("selected", true);

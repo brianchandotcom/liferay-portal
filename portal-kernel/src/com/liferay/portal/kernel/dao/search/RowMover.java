@@ -69,9 +69,11 @@ public class RowMover {
 			rowMoverDropTargetsJSONArray.put(rowMoverDropTargetJSONObject);
 		}
 
-		jsonObject.put("dropTargets", rowMoverDropTargetsJSONArray);
-
-		jsonObject.put("rowSelector", _rowSelector);
+		jsonObject.put(
+			"dropTargets", rowMoverDropTargetsJSONArray
+		).put(
+			"rowSelector", _rowSelector
+		);
 
 		return jsonObject.toString();
 	}

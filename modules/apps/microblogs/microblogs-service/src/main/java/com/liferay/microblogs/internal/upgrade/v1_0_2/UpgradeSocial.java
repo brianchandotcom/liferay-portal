@@ -69,9 +69,10 @@ public class UpgradeSocial extends UpgradeProcess {
 						"receiverMicroblogsEntryId");
 
 					extraDataJSONObject.put(
-						"parentMicroblogsEntryId", parentMicroblogsEntryId);
-
-					extraDataJSONObject.remove("receiverMicroblogsEntryId");
+						"parentMicroblogsEntryId", parentMicroblogsEntryId
+					).remove(
+						"receiverMicroblogsEntryId"
+					);
 
 					updateSocialActivity(activityId, extraDataJSONObject);
 				}

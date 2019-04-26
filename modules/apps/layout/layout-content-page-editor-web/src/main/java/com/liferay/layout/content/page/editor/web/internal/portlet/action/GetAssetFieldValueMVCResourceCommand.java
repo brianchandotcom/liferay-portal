@@ -88,13 +88,17 @@ public class GetAssetFieldValueMVCResourceCommand
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("classNameId", classNameId);
-		jsonObject.put("classPK", classPK);
-		jsonObject.put("fieldId", fieldId);
 		jsonObject.put(
+			"classNameId", classNameId
+		).put(
+			"classPK", classPK
+		).put(
+			"fieldId", fieldId
+		).put(
 			"fieldValue",
 			infoDisplayContributor.getInfoDisplayFieldValue(
-				assetEntry, fieldId, themeDisplay.getLocale()));
+				assetEntry, fieldId, themeDisplay.getLocale())
+		);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);

@@ -69,8 +69,11 @@ public class JournalMediaEditorConfigContributor
 			buttonsJSONArray = JSONFactoryUtil.createJSONArray();
 		}
 
-		buttonsJSONArray.put("video");
-		buttonsJSONArray.put("audio");
+		buttonsJSONArray.put(
+			"video"
+		).put(
+			"audio"
+		);
 
 		addJSONObject.put("buttons", buttonsJSONArray);
 

@@ -49,8 +49,10 @@ public class DebugPortExecutor extends BaseExecutor {
 
 		if (debugPort == null) {
 			responseJSONObject.put(
-				JSONKeys.ERROR, "Server was not started in debug mode");
-			responseJSONObject.put(JSONKeys.STATUS, 1);
+				JSONKeys.ERROR, "Server was not started in debug mode"
+			).put(
+				JSONKeys.STATUS, 1
+			);
 		}
 		else {
 			responseJSONObject.put(JSONKeys.OUTPUT, debugPort);

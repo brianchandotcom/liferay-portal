@@ -303,8 +303,10 @@ public class DDLRecordStagedModelDataHandlerTest
 		JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject();
 
 		fieldValueJSONObject.put(
-			"groupId", String.valueOf(fileEntry.getGroupId()));
-		fieldValueJSONObject.put("uuid", fileEntry.getUuid());
+			"groupId", String.valueOf(fileEntry.getGroupId())
+		).put(
+			"uuid", fileEntry.getUuid()
+		);
 
 		Value value = ddmFormFieldValue.getValue();
 

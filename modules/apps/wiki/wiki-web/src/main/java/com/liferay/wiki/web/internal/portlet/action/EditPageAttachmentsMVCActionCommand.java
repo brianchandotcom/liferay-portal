@@ -362,8 +362,11 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				jsonObject.put("message", errorMessage);
-				jsonObject.put("status", errorType);
+				jsonObject.put(
+					"message", errorMessage
+				).put(
+					"status", errorType
+				);
 
 				JSONPortletResponseUtil.writeJSON(
 					actionRequest, actionResponse, jsonObject);

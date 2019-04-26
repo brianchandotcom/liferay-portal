@@ -133,8 +133,11 @@ public class SharingUserAutocompleteMVCResourceCommand
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("emailAddress", user.getEmailAddress());
-			jsonObject.put("fullName", user.getFullName());
+			jsonObject.put(
+				"emailAddress", user.getEmailAddress()
+			).put(
+				"fullName", user.getFullName()
+			);
 
 			String portraitURL = StringPool.BLANK;
 
@@ -142,9 +145,11 @@ public class SharingUserAutocompleteMVCResourceCommand
 				portraitURL = user.getPortraitURL(themeDisplay);
 			}
 
-			jsonObject.put("portraitURL", portraitURL);
-
-			jsonObject.put("userId", Long.valueOf(user.getUserId()));
+			jsonObject.put(
+				"portraitURL", portraitURL
+			).put(
+				"userId", Long.valueOf(user.getUserId())
+			);
 
 			jsonArray.put(jsonObject);
 		}

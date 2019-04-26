@@ -305,10 +305,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-		extraDataJSONObject.put("fileEntryTitle", fileEntry.getTitle());
-		extraDataJSONObject.put("title", page.getTitle());
-		extraDataJSONObject.put("version", page.getVersion());
+		extraDataJSONObject.put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"fileEntryTitle", fileEntry.getTitle()
+		).put(
+			"title", page.getTitle()
+		).put(
+			"version", page.getVersion()
+		);
 
 		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_ADD_ATTACHMENT,
@@ -341,10 +346,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-		extraDataJSONObject.put("fileEntryTitle", fileEntry.getTitle());
-		extraDataJSONObject.put("title", page.getTitle());
-		extraDataJSONObject.put("version", page.getVersion());
+		extraDataJSONObject.put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"fileEntryTitle", fileEntry.getTitle()
+		).put(
+			"title", page.getTitle()
+		).put(
+			"version", page.getVersion()
+		);
 
 		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_ADD_ATTACHMENT,
@@ -1620,12 +1630,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 		extraDataJSONObject.put(
-			"fileEntryTitle",
-			trashHelper.getOriginalTitle(fileEntry.getTitle()));
-		extraDataJSONObject.put("title", page.getTitle());
-		extraDataJSONObject.put("version", page.getVersion());
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"fileEntryTitle", trashHelper.getOriginalTitle(fileEntry.getTitle())
+		).put(
+			"title", page.getTitle()
+		).put(
+			"version", page.getVersion()
+		);
 
 		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
@@ -1796,8 +1809,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		extraDataJSONObject.put(
-			"title", trashHelper.getOriginalTitle(page.getTitle()));
-		extraDataJSONObject.put("version", page.getVersion());
+			"title", trashHelper.getOriginalTitle(page.getTitle())
+		).put(
+			"version", page.getVersion()
+		);
 
 		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
@@ -1926,12 +1941,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 		extraDataJSONObject.put(
-			"fileEntryTitle",
-			trashHelper.getOriginalTitle(fileEntry.getTitle()));
-		extraDataJSONObject.put("title", page.getTitle());
-		extraDataJSONObject.put("version", page.getVersion());
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"fileEntryTitle", trashHelper.getOriginalTitle(fileEntry.getTitle())
+		).put(
+			"title", page.getTitle()
+		).put(
+			"version", page.getVersion()
+		);
 
 		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
 			userId, fileEntry.getFileEntryId());
@@ -2227,8 +2245,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				JSONObject extraDataJSONObject =
 					JSONFactoryUtil.createJSONObject();
 
-				extraDataJSONObject.put("title", page.getTitle());
-				extraDataJSONObject.put("version", page.getVersion());
+				extraDataJSONObject.put(
+					"title", page.getTitle()
+				).put(
+					"version", page.getVersion()
+				);
 
 				int type = WikiActivityKeys.UPDATE_PAGE;
 
@@ -2995,8 +3016,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		extraDataJSONObject.put("title", page.getTitle());
-		extraDataJSONObject.put("version", page.getVersion());
+		extraDataJSONObject.put(
+			"title", page.getTitle()
+		).put(
+			"version", page.getVersion()
+		);
 
 		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,

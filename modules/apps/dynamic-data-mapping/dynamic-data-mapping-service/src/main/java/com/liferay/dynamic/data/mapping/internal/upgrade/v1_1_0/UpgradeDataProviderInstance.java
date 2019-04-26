@@ -89,17 +89,25 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 
 		JSONObject fieldValueJSONObject = _jsonFactory.createJSONObject();
 
-		fieldValueJSONObject.put("instanceId", StringUtil.randomString(8));
-		fieldValueJSONObject.put("name", "filterable");
-		fieldValueJSONObject.put("value", "false");
+		fieldValueJSONObject.put(
+			"instanceId", StringUtil.randomString(8)
+		).put(
+			"name", "filterable"
+		).put(
+			"value", "false"
+		);
 
 		fieldValuesJSONArray.put(fieldValueJSONObject);
 
 		fieldValueJSONObject = _jsonFactory.createJSONObject();
 
-		fieldValueJSONObject.put("instanceId", StringUtil.randomString(8));
-		fieldValueJSONObject.put("name", "filterParameterName");
-		fieldValueJSONObject.put("value", "");
+		fieldValueJSONObject.put(
+			"instanceId", StringUtil.randomString(8)
+		).put(
+			"name", "filterParameterName"
+		).put(
+			"value", ""
+		);
 
 		fieldValuesJSONArray.put(fieldValueJSONObject);
 	}

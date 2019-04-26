@@ -2044,10 +2044,12 @@ public class StagingImpl implements Staging {
 						false));
 			}
 
-			errorMessageJSONObject.put("size", referrers.size());
 			errorMessageJSONObject.put(
+				"size", referrers.size()
+			).put(
 				"type",
-				ResourceActionsUtil.getModelResource(locale, entry.getKey()));
+				ResourceActionsUtil.getModelResource(locale, entry.getKey())
+			);
 
 			warningMessagesJSONArray.put(errorMessageJSONObject);
 		}

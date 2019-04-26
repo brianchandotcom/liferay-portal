@@ -130,9 +130,13 @@ public class WorkflowTaskUserNotificationHandlerTest {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("entryClassName", entryClassName);
-		jsonObject.put("notificationMessage", _NOTIFICATION_MESSAGE);
-		jsonObject.put("workflowTaskId", workflowTaskId);
+		jsonObject.put(
+			"entryClassName", entryClassName
+		).put(
+			"notificationMessage", _NOTIFICATION_MESSAGE
+		).put(
+			"workflowTaskId", workflowTaskId
+		);
 
 		return new UserNotificationEventWrapper(null) {
 

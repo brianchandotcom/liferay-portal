@@ -50,10 +50,15 @@ public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("displayStyle", "list");
-		jsonObject.put("frequencyThreshold", 1);
-		jsonObject.put("maxTerms", 10);
-		jsonObject.put("showAssetCount", true);
+		jsonObject.put(
+			"displayStyle", "list"
+		).put(
+			"frequencyThreshold", 1
+		).put(
+			"maxTerms", 10
+		).put(
+			"showAssetCount", true
+		);
 
 		facetConfiguration.setDataJSONObject(jsonObject);
 
@@ -96,10 +101,15 @@ public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 		boolean showAssetCount = ParamUtil.getBoolean(
 			actionRequest, getClassName() + "showAssetCount", true);
 
-		jsonObject.put("displayStyle", displayStyleFacet);
-		jsonObject.put("frequencyThreshold", frequencyThreshold);
-		jsonObject.put("maxTerms", maxTerms);
-		jsonObject.put("showAssetCount", showAssetCount);
+		jsonObject.put(
+			"displayStyle", displayStyleFacet
+		).put(
+			"frequencyThreshold", frequencyThreshold
+		).put(
+			"maxTerms", maxTerms
+		).put(
+			"showAssetCount", showAssetCount
+		);
 
 		return jsonObject;
 	}

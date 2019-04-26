@@ -112,9 +112,10 @@ public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 		ServiceContext serviceContext = executionContext.getServiceContext();
 
 		jsonObject.put(
-			"serviceContext", _jsonFactory.serialize(serviceContext));
-
-		jsonObject.put("transitionName", executionContext.getTransitionName());
+			"serviceContext", _jsonFactory.serialize(serviceContext)
+		).put(
+			"transitionName", executionContext.getTransitionName()
+		);
 
 		return jsonObject.toString();
 	}

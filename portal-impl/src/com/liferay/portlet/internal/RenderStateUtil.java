@@ -222,8 +222,10 @@ public class RenderStateUtil {
 			"portlets",
 			_getPortletsJSONObject(
 				request, themeDisplay, layoutTypePortlet, portlets,
-				renderDataMap));
-		jsonObject.put("prpMap", _getPRPGroupsJSONObject(portlets));
+				renderDataMap)
+		).put(
+			"prpMap", _getPRPGroupsJSONObject(portlets)
+		);
 
 		return jsonObject;
 	}
@@ -236,28 +238,32 @@ public class RenderStateUtil {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("allowedPM", _getAllowedPortletModesJSONArray(portlet));
-		jsonObject.put("allowedWS", _getAllowedWindowStatesJSONArray(portlet));
 		jsonObject.put(
+			"allowedPM", _getAllowedPortletModesJSONArray(portlet)
+		).put(
+			"allowedWS", _getAllowedWindowStatesJSONArray(portlet)
+		).put(
 			"encodedActionURL",
 			URLCodec.encodeURL(
-				_createActionURL(request, themeDisplay.getLayout(), portlet)));
-		jsonObject.put(
+				_createActionURL(request, themeDisplay.getLayout(), portlet))
+		).put(
 			"encodedRenderURL",
 			URLCodec.encodeURL(
-				_createRenderURL(request, themeDisplay.getLayout(), portlet)));
-		jsonObject.put(
+				_createRenderURL(request, themeDisplay.getLayout(), portlet))
+		).put(
 			"encodedResourceURL",
 			URLCodec.encodeURL(
-				_createResourceURL(
-					request, themeDisplay.getLayout(), portlet)));
-		jsonObject.put("pubParms", _getPortletPRPJSONObject(portlet));
-		jsonObject.put("renderData", _getRenderDataJSONObject(renderData));
-		jsonObject.put(
+				_createResourceURL(request, themeDisplay.getLayout(), portlet))
+		).put(
+			"pubParms", _getPortletPRPJSONObject(portlet)
+		).put(
+			"renderData", _getRenderDataJSONObject(renderData)
+		).put(
 			"state",
 			_getPortletStateJSONObject(
 				request, themeDisplay, layoutTypePortlet, portlet,
-				changedPublicRenderParameters));
+				changedPublicRenderParameters)
+		);
 
 		return jsonObject;
 	}
@@ -396,13 +402,14 @@ public class RenderStateUtil {
 			"parameters",
 			_getPortletParametersJSONObject(
 				request, themeDisplay.getPlid(), portlet,
-				changedPublicRenderParameters));
-		jsonObject.put(
+				changedPublicRenderParameters)
+		).put(
 			"portletMode",
-			_getPortletMode(layoutTypePortlet, portlet.getPortletId()));
-		jsonObject.put(
+			_getPortletMode(layoutTypePortlet, portlet.getPortletId())
+		).put(
 			"windowState",
-			_getWindowState(layoutTypePortlet, portlet.getPortletId()));
+			_getWindowState(layoutTypePortlet, portlet.getPortletId())
+		);
 
 		return jsonObject;
 	}
@@ -460,12 +467,18 @@ public class RenderStateUtil {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (renderData == null) {
-			jsonObject.put("content", StringPool.BLANK);
-			jsonObject.put("mimeType", StringPool.BLANK);
+			jsonObject.put(
+				"content", StringPool.BLANK
+			).put(
+				"mimeType", StringPool.BLANK
+			);
 		}
 		else {
-			jsonObject.put("content", renderData.getContent());
-			jsonObject.put("mimeType", renderData.getContentType());
+			jsonObject.put(
+				"content", renderData.getContent()
+			).put(
+				"mimeType", renderData.getContentType()
+			);
 		}
 
 		return jsonObject;

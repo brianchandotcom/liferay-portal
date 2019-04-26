@@ -81,9 +81,13 @@ public class InfoDisplayField {
 	public JSONObject toJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("key", getKey());
-		jsonObject.put("label", getLabel());
-		jsonObject.put("type", getType());
+		jsonObject.put(
+			"key", getKey()
+		).put(
+			"label", getLabel()
+		).put(
+			"type", getType()
+		);
 
 		return jsonObject;
 	}

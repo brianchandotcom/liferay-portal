@@ -316,12 +316,19 @@ public class JournalArticleTrashHandlerTest
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("groupId", group.getGroupId());
-		jsonObject.put("name", "liferay.png");
-		jsonObject.put("tempFile", Boolean.TRUE.toString());
-		jsonObject.put("title", "liferay.png");
-		jsonObject.put("type", "journal");
-		jsonObject.put("uuid", tempFileEntry.getUuid());
+		jsonObject.put(
+			"groupId", group.getGroupId()
+		).put(
+			"name", "liferay.png"
+		).put(
+			"tempFile", Boolean.TRUE.toString()
+		).put(
+			"title", "liferay.png"
+		).put(
+			"type", "journal"
+		).put(
+			"uuid", tempFileEntry.getUuid()
+		);
 
 		dynamicContent.setText(jsonObject.toString());
 

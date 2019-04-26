@@ -419,8 +419,11 @@ public class JournalArticleExportImportContentProcessor
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-			jsonObject.put("className", JournalArticle.class.getName());
-			jsonObject.put("classPK", journalArticle.getResourcePrimKey());
+			jsonObject.put(
+				"className", JournalArticle.class.getName()
+			).put(
+				"classPK", journalArticle.getResourcePrimKey()
+			);
 
 			content = StringUtil.replace(
 				content, journalArticleReference, jsonObject.toString());

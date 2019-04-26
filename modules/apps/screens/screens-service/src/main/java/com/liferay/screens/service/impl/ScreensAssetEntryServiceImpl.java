@@ -271,8 +271,10 @@ public class ScreensAssetEntryServiceImpl
 		fileEntryJSONObject.put(
 			"fileEntry",
 			JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(fileEntry)));
-		fileEntryJSONObject.put("url", getFileEntryPreviewURL(fileEntry));
+				JSONFactoryUtil.looseSerialize(fileEntry))
+		).put(
+			"url", getFileEntryPreviewURL(fileEntry)
+		);
 
 		return fileEntryJSONObject;
 	}
@@ -327,9 +329,11 @@ public class ScreensAssetEntryServiceImpl
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			JSONFactoryUtil.looseSerialize(journalArticle));
 
-		journalArticleJSONObject.put("modelAttributes", jsonObject);
 		journalArticleJSONObject.put(
-			"modelValues", jsonObject.getString("content"));
+			"modelAttributes", jsonObject
+		).put(
+			"modelValues", jsonObject.getString("content")
+		);
 
 		jsonObject.remove("content");
 
@@ -372,12 +376,19 @@ public class ScreensAssetEntryServiceImpl
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			JSONFactoryUtil.looseSerialize(assetEntry));
 
-		jsonObject.put("className", assetEntry.getClassName());
-		jsonObject.put("description", assetEntry.getDescription(locale));
-		jsonObject.put("locale", String.valueOf(locale));
-		jsonObject.put("object", getAssetObjectJSONObject(assetEntry, locale));
-		jsonObject.put("summary", assetEntry.getSummary(locale));
-		jsonObject.put("title", assetEntry.getTitle(locale));
+		jsonObject.put(
+			"className", assetEntry.getClassName()
+		).put(
+			"description", assetEntry.getDescription(locale)
+		).put(
+			"locale", String.valueOf(locale)
+		).put(
+			"object", getAssetObjectJSONObject(assetEntry, locale)
+		).put(
+			"summary", assetEntry.getSummary(locale)
+		).put(
+			"title", assetEntry.getTitle(locale)
+		);
 
 		return jsonObject;
 	}

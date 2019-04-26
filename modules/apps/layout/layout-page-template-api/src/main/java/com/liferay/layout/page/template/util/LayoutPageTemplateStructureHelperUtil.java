@@ -43,30 +43,37 @@ public class LayoutPageTemplateStructureHelperUtil {
 
 			JSONObject structureJSONObject = JSONFactoryUtil.createJSONObject();
 
-			JSONArray columnJSONArray = JSONFactoryUtil.createJSONArray();
-
 			JSONObject columnJSONObject = JSONFactoryUtil.createJSONObject();
 
-			columnJSONObject.put("columnId", String.valueOf(i));
 			columnJSONObject.put(
+				"columnId", String.valueOf(i)
+			).put(
 				"fragmentEntryLinkIds",
-				JSONUtil.put(fragmentEntryLink.getFragmentEntryLinkId()));
-			columnJSONObject.put("size", StringPool.BLANK);
+				JSONUtil.put(fragmentEntryLink.getFragmentEntryLinkId())
+			).put(
+				"size", StringPool.BLANK
+			);
 
-			columnJSONArray.put(columnJSONObject);
+			JSONArray columnJSONArray = JSONUtil.put(columnJSONObject);
 
-			structureJSONObject.put("columns", columnJSONArray);
-
-			structureJSONObject.put("rowId", String.valueOf(i));
 			structureJSONObject.put(
-				"type", String.valueOf(_getRowType(fragmentEntryLink)));
+				"columns", columnJSONArray
+			).put(
+				"rowId", String.valueOf(i)
+			).put(
+				"type", String.valueOf(_getRowType(fragmentEntryLink))
+			);
 
 			structureJSONArray.put(structureJSONObject);
 		}
 
-		jsonObject.put("config", JSONFactoryUtil.createJSONObject());
-		jsonObject.put("nextColumnId", fragmentEntryLinks.size());
-		jsonObject.put("nextRowId", fragmentEntryLinks.size());
+		jsonObject.put(
+			"config", JSONFactoryUtil.createJSONObject()
+		).put(
+			"nextColumnId", fragmentEntryLinks.size()
+		).put(
+			"nextRowId", fragmentEntryLinks.size()
+		);
 
 		if (!fragmentEntryLinks.isEmpty()) {
 			jsonObject.put(

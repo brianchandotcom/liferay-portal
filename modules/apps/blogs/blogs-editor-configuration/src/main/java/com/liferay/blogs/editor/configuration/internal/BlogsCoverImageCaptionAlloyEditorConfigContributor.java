@@ -49,9 +49,10 @@ public class BlogsCoverImageCaptionAlloyEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		jsonObject.put(
-			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
-
-		jsonObject.put("toolbars", getToolbarsJSONObject());
+			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore"
+		).put(
+			"toolbars", getToolbarsJSONObject()
+		);
 	}
 
 	protected JSONObject getToolbarsJSONObject() {
@@ -65,8 +66,11 @@ public class BlogsCoverImageCaptionAlloyEditorConfigContributor
 	protected JSONObject getToolbarsStylesJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("selections", getToolbarStylesSelectionsJSONArray());
-		jsonObject.put("tabIndex", 1);
+		jsonObject.put(
+			"selections", getToolbarStylesSelectionsJSONArray()
+		).put(
+			"tabIndex", 1
+		);
 
 		return jsonObject;
 	}
@@ -80,9 +84,13 @@ public class BlogsCoverImageCaptionAlloyEditorConfigContributor
 	protected JSONObject getToolbarStylesSelectionsLinkJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("buttons", toJSONArray("['linkEdit']"));
-		jsonObject.put("name", "link");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
+		jsonObject.put(
+			"buttons", toJSONArray("['linkEdit']")
+		).put(
+			"name", "link"
+		).put(
+			"test", "AlloyEditor.SelectionTest.link"
+		);
 
 		return jsonObject;
 	}
@@ -90,9 +98,13 @@ public class BlogsCoverImageCaptionAlloyEditorConfigContributor
 	protected JSONObject getToolbarStylesSelectionsTextJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("buttons", toJSONArray("['link']"));
-		jsonObject.put("name", "text");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
+		jsonObject.put(
+			"buttons", toJSONArray("['link']")
+		).put(
+			"name", "text"
+		).put(
+			"test", "AlloyEditor.SelectionTest.text"
+		);
 
 		return jsonObject;
 	}

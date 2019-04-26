@@ -67,8 +67,10 @@ public class MBAttachmentHTMLEditorConfigContributor
 			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
 
 		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString()
+		).put(
+			"filebrowserImageBrowseUrl", itemSelectorURL.toString()
+		);
 	}
 
 	protected ItemSelectorCriterion getImageItemSelectorCriterion() {

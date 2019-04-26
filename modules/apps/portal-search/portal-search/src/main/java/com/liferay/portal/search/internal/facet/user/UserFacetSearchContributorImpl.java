@@ -116,8 +116,11 @@ public class UserFacetSearchContributorImpl
 
 			JSONObject jsonObject = facetConfiguration.getData();
 
-			jsonObject.put("frequencyThreshold", _frequencyThreshold);
-			jsonObject.put("maxTerms", _maxTerms);
+			jsonObject.put(
+				"frequencyThreshold", _frequencyThreshold
+			).put(
+				"maxTerms", _maxTerms
+			);
 
 			return facetConfiguration;
 		}

@@ -63,18 +63,22 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 				long entryId = payloadJSONObject.getLong("entryId");
 
 				if (entryId > 0) {
-					payloadJSONObject.put("classPK", entryId);
-
-					payloadJSONObject.remove("entryId");
+					payloadJSONObject.put(
+						"classPK", entryId
+					).remove(
+						"entryId"
+					);
 				}
 				else if (type.equals("1_WAR_contactsportlet")) {
 					long socialRequestId = payloadJSONObject.getLong(
 						"requestId");
 
 					if (socialRequestId > 0) {
-						payloadJSONObject.put("classPK", socialRequestId);
-
-						payloadJSONObject.remove("socialRequestId");
+						payloadJSONObject.put(
+							"classPK", socialRequestId
+						).remove(
+							"socialRequestId"
+						);
 					}
 				}
 				else if (type.equals("2_WAR_soportlet")) {
@@ -82,9 +86,11 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 						"memberRequestId");
 
 					if (memberRequestId > 0) {
-						payloadJSONObject.put("classPK", memberRequestId);
-
-						payloadJSONObject.remove("memberRequestId");
+						payloadJSONObject.put(
+							"classPK", memberRequestId
+						).remove(
+							"memberRequestId"
+						);
 					}
 				}
 

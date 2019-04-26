@@ -69,16 +69,23 @@ public class AssetCategoriesSelectorDisplayContext {
 			jsonObject = vocabulariesJSONArray.getJSONObject(0);
 		}
 		else {
-			jsonObject.put("children", vocabulariesJSONArray);
-			jsonObject.put("icon", "folder");
-			jsonObject.put("id", "0");
 			jsonObject.put(
+				"children", vocabulariesJSONArray
+			).put(
+				"icon", "folder"
+			).put(
+				"id", "0"
+			).put(
 				"name",
-				LanguageUtil.get(themeDisplay.getLocale(), "vocabularies"));
+				LanguageUtil.get(themeDisplay.getLocale(), "vocabularies")
+			);
 		}
 
-		jsonObject.put("disabled", true);
-		jsonObject.put("expanded", true);
+		jsonObject.put(
+			"disabled", true
+		).put(
+			"expanded", true
+		);
 
 		return JSONUtil.put(jsonObject);
 	}
@@ -223,9 +230,13 @@ public class AssetCategoriesSelectorDisplayContext {
 				jsonObject.put("children", children);
 			}
 
-			jsonObject.put("icon", "categories");
-			jsonObject.put("id", category.getCategoryId());
-			jsonObject.put("name", category.getTitle(themeDisplay.getLocale()));
+			jsonObject.put(
+				"icon", "categories"
+			).put(
+				"id", category.getCategoryId()
+			).put(
+				"name", category.getTitle(themeDisplay.getLocale())
+			);
 
 			if (getSelectedCategories().contains(
 					String.valueOf(category.getCategoryId()))) {
@@ -249,12 +260,18 @@ public class AssetCategoriesSelectorDisplayContext {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put(
-				"children", _getCategoriesJSONArray(vocabularyId, 0));
-			jsonObject.put("disabled", !allowedSelectVocabularies);
-			jsonObject.put("icon", "vocabulary");
-			jsonObject.put("id", vocabularyId);
-			jsonObject.put("name", getVocabularyTitle(vocabularyId));
-			jsonObject.put("vocabulary", true);
+				"children", _getCategoriesJSONArray(vocabularyId, 0)
+			).put(
+				"disabled", !allowedSelectVocabularies
+			).put(
+				"icon", "vocabulary"
+			).put(
+				"id", vocabularyId
+			).put(
+				"name", getVocabularyTitle(vocabularyId)
+			).put(
+				"vocabulary", true
+			);
 
 			jsonArray.put(jsonObject);
 		}

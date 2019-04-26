@@ -55,10 +55,13 @@ public class NotificationExportImportLifecycleListener
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("backgroundTaskId", backgroundTaskId);
 		jsonObject.put(
-			"exportImportConfigurationId", exportImportConfigurationId);
-		jsonObject.put("status", status);
+			"backgroundTaskId", backgroundTaskId
+		).put(
+			"exportImportConfigurationId", exportImportConfigurationId
+		).put(
+			"status", status
+		);
 
 		return jsonObject;
 	}

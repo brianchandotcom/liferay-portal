@@ -37,9 +37,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -366,49 +366,72 @@ public class MailManager {
 	public JSONObject getDefaultAccountsJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		JSONObject gmailAccountJSONObject = JSONFactoryUtil.createJSONObject();
 
-		gmailAccountJSONObject.put("address", "@gmail.com");
 		gmailAccountJSONObject.put(
+			"address", "@gmail.com"
+		).put(
 			"descriptionLanguageKey",
-			"please-enable-imap-in-you-gmail-settings-for-mail-to-work");
-		gmailAccountJSONObject.put("folderPrefix", "");
-		gmailAccountJSONObject.put("hideSettings", true);
-		gmailAccountJSONObject.put("incomingHostName", "imap.gmail.com");
-		gmailAccountJSONObject.put("incomingPort", 993);
-		gmailAccountJSONObject.put("incomingSecure", true);
-		gmailAccountJSONObject.put("outgoingHostName", "smtp.gmail.com");
-		gmailAccountJSONObject.put("outgoingPort", 465);
-		gmailAccountJSONObject.put("outgoingSecure", true);
-		gmailAccountJSONObject.put("protocol", "imap");
-		gmailAccountJSONObject.put("titleLanguageKey", "gmail-account");
-		gmailAccountJSONObject.put("useLocalPartAsLogin", true);
-
-		jsonArray.put(gmailAccountJSONObject);
+			"please-enable-imap-in-you-gmail-settings-for-mail-to-work"
+		).put(
+			"folderPrefix", ""
+		).put(
+			"hideSettings", true
+		).put(
+			"incomingHostName", "imap.gmail.com"
+		).put(
+			"incomingPort", 993
+		).put(
+			"incomingSecure", true
+		).put(
+			"outgoingHostName", "smtp.gmail.com"
+		).put(
+			"outgoingPort", 465
+		).put(
+			"outgoingSecure", true
+		).put(
+			"protocol", "imap"
+		).put(
+			"titleLanguageKey", "gmail-account"
+		).put(
+			"useLocalPartAsLogin", true
+		);
 
 		JSONObject customMailAccontJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		customMailAccontJSONObject.put("address", "");
-		customMailAccontJSONObject.put("descriptionLanguageKey", "");
-		customMailAccontJSONObject.put("folderPrefix", "");
-		customMailAccontJSONObject.put("hideSettings", false);
-		customMailAccontJSONObject.put("incomingHostName", "");
-		customMailAccontJSONObject.put("incomingPort", 110);
-		customMailAccontJSONObject.put("incomingSecure", false);
-		customMailAccontJSONObject.put("outgoingHostName", "");
-		customMailAccontJSONObject.put("outgoingPort", 25);
-		customMailAccontJSONObject.put("outgoingSecure", false);
-		customMailAccontJSONObject.put("protocol", "imap");
 		customMailAccontJSONObject.put(
-			"titleLanguageKey", "custom-mail-account");
-		customMailAccontJSONObject.put("useLocalPartAsLogin", false);
+			"address", ""
+		).put(
+			"descriptionLanguageKey", ""
+		).put(
+			"folderPrefix", ""
+		).put(
+			"hideSettings", false
+		).put(
+			"incomingHostName", ""
+		).put(
+			"incomingPort", 110
+		).put(
+			"incomingSecure", false
+		).put(
+			"outgoingHostName", ""
+		).put(
+			"outgoingPort", 25
+		).put(
+			"outgoingSecure", false
+		).put(
+			"protocol", "imap"
+		).put(
+			"titleLanguageKey", "custom-mail-account"
+		).put(
+			"useLocalPartAsLogin", false
+		);
 
-		jsonArray.put(customMailAccontJSONObject);
-
-		jsonObject.put("accounts", jsonArray);
+		jsonObject.put(
+			"accounts",
+			JSONUtil.putAll(
+				gmailAccountJSONObject, customMailAccontJSONObject));
 
 		return jsonObject;
 	}
@@ -851,9 +874,11 @@ public class MailManager {
 		ResourceBundle resourceBundle = _portletConfig.getResourceBundle(
 			_user.getLocale());
 
-		jsonObject.put("message", LanguageUtil.get(resourceBundle, message));
-
-		jsonObject.put("status", status);
+		jsonObject.put(
+			"message", LanguageUtil.get(resourceBundle, message)
+		).put(
+			"status", status
+		);
 
 		if (Validator.isNotNull(value)) {
 			jsonObject.put("value", value);

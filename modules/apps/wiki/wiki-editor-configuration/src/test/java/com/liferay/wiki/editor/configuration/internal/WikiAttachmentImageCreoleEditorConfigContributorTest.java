@@ -111,11 +111,13 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 
 		expectedJSONObject.put(
 			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithUrlSelectionViews");
-		expectedJSONObject.put(
+			"itemSelectorPortletURLWithUrlSelectionViews"
+		).put(
 			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithUrlSelectionViews");
-		expectedJSONObject.put("removePlugins", "plugin1,ae_addimages");
+			"itemSelectorPortletURLWithUrlSelectionViews"
+		).put(
+			"removePlugins", "plugin1,ae_addimages"
+		);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
@@ -173,11 +175,13 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 
 		expectedJSONObject.put(
 			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews");
-		expectedJSONObject.put(
+			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
+		).put(
 			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews");
-		expectedJSONObject.put("removePlugins", "plugin1");
+			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
+		).put(
+			"removePlugins", "plugin1"
+		);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
@@ -255,10 +259,12 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", "defaultItemSelectorPortletURL");
-		jsonObject.put(
-			"filebrowserImageBrowseUrl", "defaultItemSelectorPortletURL");
-		jsonObject.put("removePlugins", "plugin1");
+			"filebrowserImageBrowseLinkUrl", "defaultItemSelectorPortletURL"
+		).put(
+			"filebrowserImageBrowseUrl", "defaultItemSelectorPortletURL"
+		).put(
+			"removePlugins", "plugin1"
+		);
 
 		return jsonObject;
 	}

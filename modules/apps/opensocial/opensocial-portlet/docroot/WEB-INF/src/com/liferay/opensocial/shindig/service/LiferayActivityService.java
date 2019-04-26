@@ -372,10 +372,13 @@ public class LiferayActivityService implements ActivityService {
 			JSONObject mediaItemsJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
-			mediaItemsJSONObject.put("mimeType", mediaItem.getMimeType());
 			mediaItemsJSONObject.put(
-				"type", String.valueOf(mediaItem.getType()));
-			mediaItemsJSONObject.put("url", mediaItem.getUrl());
+				"mimeType", mediaItem.getMimeType()
+			).put(
+				"type", String.valueOf(mediaItem.getType())
+			).put(
+				"url", mediaItem.getUrl()
+			);
 
 			mediaItemsJSONArray.put(mediaItemsJSONObject);
 		}

@@ -91,8 +91,11 @@ public class RolesServlet extends BaseDDMFormBuilderServlet {
 	protected JSONObject toJSONObject(Role role) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("id", role.getRoleId());
-		jsonObject.put("name", role.getName());
+		jsonObject.put(
+			"id", role.getRoleId()
+		).put(
+			"name", role.getName()
+		);
 
 		return jsonObject;
 	}

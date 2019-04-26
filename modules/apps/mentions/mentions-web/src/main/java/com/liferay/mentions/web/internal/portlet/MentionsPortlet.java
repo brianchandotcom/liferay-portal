@@ -143,13 +143,15 @@ public class MentionsPortlet extends MVCPortlet {
 					"</a>");
 			}
 
-			jsonObject.put("mention", mention);
-
 			jsonObject.put(
+				"mention", mention
+			).put(
 				"portraitHTML",
 				UserPortraitTag.getUserPortraitHTML(
-					StringPool.BLANK, user, themeDisplay));
-			jsonObject.put("screenName", user.getScreenName());
+					StringPool.BLANK, user, themeDisplay)
+			).put(
+				"screenName", user.getScreenName()
+			);
 
 			jsonArray.put(jsonObject);
 		}

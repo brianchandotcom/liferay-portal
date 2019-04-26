@@ -67,9 +67,10 @@ public class AdaptedImagesPercentageMVCResourceCommand
 
 		jsonObject.put(
 			"adaptedImages",
-			String.valueOf(Math.min(entriesCount, expectedEntriesCount)));
-
-		jsonObject.put("totalImages", String.valueOf(expectedEntriesCount));
+			String.valueOf(Math.min(entriesCount, expectedEntriesCount))
+		).put(
+			"totalImages", String.valueOf(expectedEntriesCount)
+		);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);

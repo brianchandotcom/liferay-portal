@@ -181,8 +181,11 @@ public class SyncHelperImpl implements SyncHelper {
 
 		JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
 
-		errorJSONObject.put("message", throwableMessage);
-		errorJSONObject.put("type", ClassUtil.getClassName(throwable));
+		errorJSONObject.put(
+			"message", throwableMessage
+		).put(
+			"type", ClassUtil.getClassName(throwable)
+		);
 
 		sb.append(errorJSONObject.toString());
 
@@ -212,10 +215,11 @@ public class SyncHelperImpl implements SyncHelper {
 			throwableMessage = rootCauseThrowable.toString();
 		}
 
-		rootCauseJSONObject.put("message", throwableMessage);
-
 		rootCauseJSONObject.put(
-			"type", ClassUtil.getClassName(rootCauseThrowable));
+			"message", throwableMessage
+		).put(
+			"type", ClassUtil.getClassName(rootCauseThrowable)
+		);
 
 		sb.append(rootCauseJSONObject);
 

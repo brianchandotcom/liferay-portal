@@ -73,8 +73,11 @@ public class GetInfoClassTypesMVCActionCommand extends BaseMVCActionCommand {
 			for (ClassType classType : classTypes) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				jsonObject.put("id", classType.getClassTypeId());
-				jsonObject.put("label", classType.getName());
+				jsonObject.put(
+					"id", classType.getClassTypeId()
+				).put(
+					"label", classType.getName()
+				);
 
 				jsonArray.put(jsonObject);
 			}

@@ -213,8 +213,11 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			String errorMessage = themeDisplay.translate(
 				"an-unexpected-error-occurred-while-deleting-the-file");
 
-			jsonObject.put("deleted", Boolean.FALSE);
-			jsonObject.put("errorMessage", errorMessage);
+			jsonObject.put(
+				"deleted", Boolean.FALSE
+			).put(
+				"errorMessage", errorMessage
+			);
 		}
 
 		writeJSON(actionRequest, actionResponse, jsonObject);

@@ -68,11 +68,17 @@ public class EditLayoutAction extends JSONAction {
 			if (cmd.equals("add")) {
 				String[] array = addPage(themeDisplay, request, response);
 
-				jsonObject.put("deletable", Boolean.valueOf(array[2]));
-				jsonObject.put("layoutId", array[0]);
-				jsonObject.put("sortable", Boolean.valueOf(array[3]));
-				jsonObject.put("updateable", Boolean.valueOf(array[4]));
-				jsonObject.put("url", array[1]);
+				jsonObject.put(
+					"deletable", Boolean.valueOf(array[2])
+				).put(
+					"layoutId", array[0]
+				).put(
+					"sortable", Boolean.valueOf(array[3])
+				).put(
+					"updateable", Boolean.valueOf(array[4])
+				).put(
+					"url", array[1]
+				);
 			}
 			else if (cmd.equals("delete")) {
 				SitesUtil.deleteLayout(request, response);
@@ -104,16 +110,21 @@ public class EditLayoutAction extends JSONAction {
 
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-				jsonObject.put("groupId", layout.getGroupId());
-				jsonObject.put("layoutId", layout.getLayoutId());
 				jsonObject.put(
-					"originalParentLayoutId", layout.getParentLayoutId());
-				jsonObject.put("originalParentPlid", layout.getParentPlid());
-				jsonObject.put("originalPriority", layout.getPriority());
-
-				jsonObject.put("plid", plid);
-
-				jsonObject.put("status", HttpServletResponse.SC_BAD_REQUEST);
+					"groupId", layout.getGroupId()
+				).put(
+					"layoutId", layout.getLayoutId()
+				).put(
+					"originalParentLayoutId", layout.getParentLayoutId()
+				).put(
+					"originalParentPlid", layout.getParentPlid()
+				).put(
+					"originalPriority", layout.getPriority()
+				).put(
+					"plid", plid
+				).put(
+					"status", HttpServletResponse.SC_BAD_REQUEST
+				);
 			}
 		}
 

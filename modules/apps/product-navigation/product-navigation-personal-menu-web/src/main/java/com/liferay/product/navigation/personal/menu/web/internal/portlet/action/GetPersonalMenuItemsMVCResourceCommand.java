@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -89,21 +90,20 @@ public class GetPersonalMenuItemsMVCResourceCommand
 	private JSONArray _getImpersonationItemsJSONArray(
 		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		JSONObject jsonObject1 = JSONFactoryUtil.createJSONObject();
 
 		jsonObject1.put(
 			"href",
 			_http.removeParameter(
-				ParamUtil.getString(portletRequest, "currentURL"),
-				"doAsUserId"));
-		jsonObject1.put("icon", "change");
-		jsonObject1.put(
+				ParamUtil.getString(portletRequest, "currentURL"), "doAsUserId")
+		).put(
+			"icon", "change"
+		).put(
 			"label",
-			LanguageUtil.get(themeDisplay.getLocale(), "be-yourself-again"));
+			LanguageUtil.get(themeDisplay.getLocale(), "be-yourself-again")
+		);
 
-		jsonArray.put(jsonObject1);
+		JSONArray jsonArray = JSONUtil.put(jsonObject1);
 
 		User realUser = themeDisplay.getRealUser();
 		User user = themeDisplay.getUser();
@@ -149,9 +149,12 @@ public class GetPersonalMenuItemsMVCResourceCommand
 				"href",
 				_http.setParameter(
 					ParamUtil.getString(portletRequest, "currentURL"),
-					"doAsUserLanguageId", doAsUserLanguageId));
-			jsonObject2.put("icon", "globe");
-			jsonObject2.put("label", changeLanguageLabel);
+					"doAsUserLanguageId", doAsUserLanguageId)
+			).put(
+				"icon", "globe"
+			).put(
+				"label", changeLanguageLabel
+			);
 
 			jsonArray.put(jsonObject2);
 		}
@@ -194,9 +197,11 @@ public class GetPersonalMenuItemsMVCResourceCommand
 				_log.error(pe, pe);
 			}
 
-			jsonObject.put("icon", personalMenuEntry.getIcon(portletRequest));
 			jsonObject.put(
-				"label", personalMenuEntry.getLabel(themeDisplay.getLocale()));
+				"icon", personalMenuEntry.getIcon(portletRequest)
+			).put(
+				"label", personalMenuEntry.getLabel(themeDisplay.getLocale())
+			);
 
 			jsonArray.put(jsonObject);
 		}
@@ -230,11 +235,12 @@ public class GetPersonalMenuItemsMVCResourceCommand
 				"label",
 				StringUtil.appendParentheticalSuffix(
 					user.getFullName(),
-					LanguageUtil.get(
-						themeDisplay.getLocale(), "impersonated")));
-
-			impersonationJSONObject.put("separator", true);
-			impersonationJSONObject.put("type", "group");
+					LanguageUtil.get(themeDisplay.getLocale(), "impersonated"))
+			).put(
+				"separator", true
+			).put(
+				"type", "group"
+			);
 
 			jsonArray.put(impersonationJSONObject);
 		}

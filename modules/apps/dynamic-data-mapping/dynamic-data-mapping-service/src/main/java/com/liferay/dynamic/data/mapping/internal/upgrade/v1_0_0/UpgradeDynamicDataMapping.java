@@ -2619,8 +2619,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		protected String toJSON(long groupId, String fileEntryUuid) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("groupId", groupId);
-			jsonObject.put("uuid", fileEntryUuid);
+			jsonObject.put(
+				"groupId", groupId
+			).put(
+				"uuid", fileEntryUuid
+			);
 
 			return jsonObject.toString();
 		}

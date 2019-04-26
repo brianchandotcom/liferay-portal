@@ -104,22 +104,23 @@ public class DDMFormFieldTypesJSONSerializer
 		jsonObject.put(
 			"group",
 			MapUtil.getString(
-				ddmFormFieldTypeProperties, "ddm.form.field.type.group"));
-		jsonObject.put(
+				ddmFormFieldTypeProperties, "ddm.form.field.type.group")
+		).put(
 			"icon",
 			MapUtil.getString(
 				ddmFormFieldTypeProperties, "ddm.form.field.type.icon",
-				"icon-ok-circle"));
-		jsonObject.put(
+				"icon-ok-circle")
+		).put(
 			"javaScriptClass",
 			MapUtil.getString(
 				ddmFormFieldTypeProperties, "ddm.form.field.type.js.class.name",
-				"Liferay.DDM.Renderer.Field"));
-		jsonObject.put(
+				"Liferay.DDM.Renderer.Field")
+		).put(
 			"javaScriptModule",
 			MapUtil.getString(
 				ddmFormFieldTypeProperties, "ddm.form.field.type.js.module",
-				"liferay-ddm-form-renderer-field"));
+				"liferay-ddm-form-renderer-field")
+		);
 
 		String description = MapUtil.getString(
 			ddmFormFieldTypeProperties, "ddm.form.field.type.description");
@@ -150,11 +151,13 @@ public class DDMFormFieldTypesJSONSerializer
 			}
 		}
 
-		jsonObject.put("name", ddmFormFieldType.getName());
 		jsonObject.put(
+			"name", ddmFormFieldType.getName()
+		).put(
 			"system",
 			MapUtil.getBoolean(
-				ddmFormFieldTypeProperties, "ddm.form.field.type.system"));
+				ddmFormFieldTypeProperties, "ddm.form.field.type.system")
+		);
 
 		DDMFormFieldRenderer ddmFormFieldRenderer =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(

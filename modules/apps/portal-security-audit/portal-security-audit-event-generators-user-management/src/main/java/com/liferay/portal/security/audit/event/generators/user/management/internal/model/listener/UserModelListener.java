@@ -79,10 +79,14 @@ public class UserModelListener extends BaseModelListener<User> {
 				auditMessage.getAdditionalInfo();
 
 			additionalInfoJSONObject.put(
-				"emailAddress", user.getEmailAddress());
-			additionalInfoJSONObject.put("screenName", user.getScreenName());
-			additionalInfoJSONObject.put("userId", user.getUserId());
-			additionalInfoJSONObject.put("userName", user.getFullName());
+				"emailAddress", user.getEmailAddress()
+			).put(
+				"screenName", user.getScreenName()
+			).put(
+				"userId", user.getUserId()
+			).put(
+				"userName", user.getFullName()
+			);
 
 			_auditRouter.route(auditMessage);
 		}

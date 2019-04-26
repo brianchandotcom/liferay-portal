@@ -30,8 +30,11 @@ public class JoinFunctionTest {
 	public void testArray() {
 		JSONArray jsonArray = new JSONArrayImpl();
 
-		jsonArray.put("value1");
-		jsonArray.put("value2");
+		jsonArray.put(
+			"value1"
+		).put(
+			"value2"
+		);
 
 		JoinFunction joinFunction = new JoinFunction();
 

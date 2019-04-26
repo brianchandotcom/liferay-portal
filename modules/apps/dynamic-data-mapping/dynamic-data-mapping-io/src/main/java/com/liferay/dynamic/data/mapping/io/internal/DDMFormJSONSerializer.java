@@ -207,8 +207,10 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 
 			jsonObject.put(
 				"label",
-				toJSONObject(ddmFormFieldOptions.getOptionLabels(optionValue)));
-			jsonObject.put("value", optionValue);
+				toJSONObject(ddmFormFieldOptions.getOptionLabels(optionValue))
+			).put(
+				"value", optionValue
+			);
 
 			jsonArray.put(jsonObject);
 		}
@@ -292,8 +294,10 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
-			"errorMessage", ddmFormFieldValidation.getErrorMessage());
-		jsonObject.put("expression", ddmFormFieldValidation.getExpression());
+			"errorMessage", ddmFormFieldValidation.getErrorMessage()
+		).put(
+			"expression", ddmFormFieldValidation.getExpression()
+		);
 
 		return jsonObject;
 	}
@@ -302,9 +306,12 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
-			"actions", ruleActionsToJSONArray(ddmFormRule.getActions()));
-		jsonObject.put("condition", ddmFormRule.getCondition());
-		jsonObject.put("enabled", ddmFormRule.isEnabled());
+			"actions", ruleActionsToJSONArray(ddmFormRule.getActions())
+		).put(
+			"condition", ddmFormRule.getCondition()
+		).put(
+			"enabled", ddmFormRule.isEnabled()
+		);
 
 		return jsonObject;
 	}
@@ -315,10 +322,12 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
-			"body", toJSONObject(ddmFormSuccessPageSettings.getBody()));
-		jsonObject.put("enabled", ddmFormSuccessPageSettings.isEnabled());
-		jsonObject.put(
-			"title", toJSONObject(ddmFormSuccessPageSettings.getTitle()));
+			"body", toJSONObject(ddmFormSuccessPageSettings.getBody())
+		).put(
+			"enabled", ddmFormSuccessPageSettings.isEnabled()
+		).put(
+			"title", toJSONObject(ddmFormSuccessPageSettings.getTitle())
+		);
 
 		return jsonObject;
 	}

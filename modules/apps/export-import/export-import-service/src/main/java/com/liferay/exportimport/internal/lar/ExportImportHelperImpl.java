@@ -747,8 +747,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		if (ArrayUtil.contains(selectedPlids, 0)) {
 			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
 
-			layoutJSONObject.put("includeChildren", true);
-			layoutJSONObject.put("plid", 0);
+			layoutJSONObject.put(
+				"includeChildren", true
+			).put(
+				"plid", 0
+			);
 
 			jsonArray.put(layoutJSONObject);
 		}
@@ -1701,8 +1704,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		if (checked) {
 			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
 
-			layoutJSONObject.put("includeChildren", includeChildren);
-			layoutJSONObject.put("plid", layout.getPlid());
+			layoutJSONObject.put(
+				"includeChildren", includeChildren
+			).put(
+				"plid", layout.getPlid()
+			);
 
 			layoutsJSONArray.put(layoutJSONObject);
 		}

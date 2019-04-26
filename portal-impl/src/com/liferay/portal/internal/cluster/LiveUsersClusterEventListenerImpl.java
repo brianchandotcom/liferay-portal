@@ -60,8 +60,11 @@ public class LiveUsersClusterEventListenerImpl implements ClusterEventListener {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("clusterNodeId", clusterNode.getClusterNodeId());
-			jsonObject.put("command", command);
+			jsonObject.put(
+				"clusterNodeId", clusterNode.getClusterNodeId()
+			).put(
+				"command", command
+			);
 
 			message.setPayload(jsonObject.toString());
 

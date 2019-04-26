@@ -136,14 +136,23 @@ public class ImageImportDDMFormFieldValueTransformer
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("alt", alt);
-		jsonObject.put("fileEntryId", fileEntry.getFileEntryId());
-		jsonObject.put("groupId", fileEntry.getGroupId());
-		jsonObject.put("name", fileEntry.getFileName());
-		jsonObject.put("resourcePrimKey", article.getResourcePrimKey());
-		jsonObject.put("title", fileEntry.getTitle());
-		jsonObject.put("type", type);
-		jsonObject.put("uuid", fileEntry.getUuid());
+		jsonObject.put(
+			"alt", alt
+		).put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"name", fileEntry.getFileName()
+		).put(
+			"resourcePrimKey", article.getResourcePrimKey()
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"type", type
+		).put(
+			"uuid", fileEntry.getUuid()
+		);
 
 		return jsonObject.toString();
 	}

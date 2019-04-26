@@ -50,8 +50,10 @@ public class ImageJournalUploadResponseHandler
 
 			errorJSONObject.put(
 				"errorType",
-				ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION);
-			errorJSONObject.put("message", StringPool.BLANK);
+				ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION
+			).put(
+				"message", StringPool.BLANK
+			);
 
 			jsonObject.put("error", errorJSONObject);
 		}

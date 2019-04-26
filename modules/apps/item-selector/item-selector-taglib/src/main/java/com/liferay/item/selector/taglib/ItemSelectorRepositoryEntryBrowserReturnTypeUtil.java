@@ -71,16 +71,22 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtil
 
 		JSONObject fileEntryJSONObject = JSONFactoryUtil.createJSONObject();
 
-		fileEntryJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-		fileEntryJSONObject.put("groupId", fileEntry.getGroupId());
-		fileEntryJSONObject.put("title", fileEntry.getTitle());
-		fileEntryJSONObject.put("type", "document");
 		fileEntryJSONObject.put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"type", "document"
+		).put(
 			"url",
 			DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK, false, false));
-		fileEntryJSONObject.put("uuid", fileEntry.getUuid());
+				StringPool.BLANK, false, false)
+		).put(
+			"uuid", fileEntry.getUuid()
+		);
 
 		return fileEntryJSONObject.toString();
 	}

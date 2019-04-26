@@ -434,8 +434,10 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			JSONFactoryUtil.createJSONObject();
 
 		notificationEventJSONObject.put(
-			"classPK", tasksEntry.getTasksEntryId());
-		notificationEventJSONObject.put("userId", serviceContext.getUserId());
+			"classPK", tasksEntry.getTasksEntryId()
+		).put(
+			"userId", serviceContext.getUserId()
+		);
 
 		for (long receiverUserId : receiverUserIds) {
 			if ((receiverUserId == 0) ||

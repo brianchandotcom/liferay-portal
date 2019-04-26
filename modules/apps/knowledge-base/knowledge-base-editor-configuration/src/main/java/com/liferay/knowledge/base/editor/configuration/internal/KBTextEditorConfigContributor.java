@@ -48,11 +48,15 @@ public class KBTextEditorConfigContributor extends BaseEditorConfigContributor {
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("allowedContent", "p");
-		jsonObject.put("disallowedContent", "br");
 		jsonObject.put(
-			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
-		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
+			"allowedContent", "p"
+		).put(
+			"disallowedContent", "br"
+		).put(
+			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore"
+		).put(
+			"toolbars", JSONFactoryUtil.createJSONObject()
+		);
 	}
 
 }

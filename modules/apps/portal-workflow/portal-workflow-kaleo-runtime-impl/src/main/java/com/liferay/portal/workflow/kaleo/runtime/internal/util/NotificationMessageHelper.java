@@ -49,22 +49,23 @@ public class NotificationMessageHelper {
 		jsonObject.put(
 			WorkflowConstants.CONTEXT_COMPANY_ID,
 			String.valueOf(
-				workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID)));
-		jsonObject.put(
+				workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID))
+		).put(
 			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
 			(String)workflowContext.get(
-				WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
-		jsonObject.put(
+				WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME)
+		).put(
 			WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
 			String.valueOf(
-				workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)));
-		jsonObject.put(
+				workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK))
+		).put(
 			WorkflowConstants.CONTEXT_ENTRY_TYPE,
-			(String)workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE));
-		jsonObject.put(
+			(String)workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_TYPE)
+		).put(
 			WorkflowConstants.CONTEXT_GROUP_ID,
 			String.valueOf(
-				workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID)));
+				workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID))
+		);
 
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
@@ -72,12 +73,12 @@ public class NotificationMessageHelper {
 		long userId = getUserId(executionContext, kaleoInstanceToken);
 
 		jsonObject.put(
-			WorkflowConstants.CONTEXT_USER_ID, String.valueOf(userId));
-
-		jsonObject.put("notificationMessage", notificationMessage);
-
-		jsonObject.put(
-			"workflowInstanceId", kaleoInstanceToken.getKaleoInstanceId());
+			WorkflowConstants.CONTEXT_USER_ID, String.valueOf(userId)
+		).put(
+			"notificationMessage", notificationMessage
+		).put(
+			"workflowInstanceId", kaleoInstanceToken.getKaleoInstanceId()
+		);
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			executionContext.getKaleoTaskInstanceToken();

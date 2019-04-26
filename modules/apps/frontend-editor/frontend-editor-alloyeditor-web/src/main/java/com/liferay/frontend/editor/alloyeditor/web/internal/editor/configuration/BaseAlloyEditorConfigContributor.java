@@ -58,26 +58,27 @@ public abstract class BaseAlloyEditorConfigContributor
 			inputEditorTaglibAttributes);
 
 		jsonObject.put(
-			"contentsLanguage", contentsLanguageId.replace("iw_", "he_"));
-
-		jsonObject.put("disableNativeSpellChecker", Boolean.FALSE);
-
-		jsonObject.put(
+			"contentsLanguage", contentsLanguageId.replace("iw_", "he_")
+		).put(
+			"disableNativeSpellChecker", Boolean.FALSE
+		).put(
 			"extraPlugins",
 			"ae_autolink,ae_dragresize,ae_addimages,ae_imagealignment," +
 				"ae_placeholder,ae_selectionregion,ae_tableresize," +
-					"ae_tabletools,ae_uicore");
-
-		jsonObject.put("imageScaleResize", "scale");
+					"ae_tabletools,ae_uicore"
+		).put(
+			"imageScaleResize", "scale"
+		);
 
 		String languageId = getLanguageId(themeDisplay);
 
-		jsonObject.put("language", languageId.replace("iw_", "he_"));
-
 		jsonObject.put(
+			"language", languageId.replace("iw_", "he_")
+		).put(
 			"removePlugins",
 			"contextmenu,elementspath,floatingspace,image,link,liststyle," +
-				"resize,table,tabletools,toolbar");
+				"resize,table,tabletools,toolbar"
+		);
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(

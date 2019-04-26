@@ -124,22 +124,34 @@ public class UpgradeDDMFormInstanceSettingsTest {
 	protected JSONArray createFieldValues(boolean hasSetting) {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		jsonArray.put(getFieldValueJSONObject("requireCaptcha", "false"));
-		jsonArray.put(getFieldValueJSONObject("redirectURL", ""));
-		jsonArray.put(getFieldValueJSONObject("storageType", "json"));
-		jsonArray.put(getFieldValueJSONObject("workflowDefinition", ""));
 		jsonArray.put(
-			getFieldValueJSONObject("sendEmailNotification", "false"));
-		jsonArray.put(getFieldValueJSONObject("emailFromName", ""));
-		jsonArray.put(getFieldValueJSONObject("emailFromAddress", ""));
-		jsonArray.put(getFieldValueJSONObject("emailToAddress", ""));
-		jsonArray.put(getFieldValueJSONObject("emailSubject", ""));
-		jsonArray.put(getFieldValueJSONObject("published", "false"));
+			getFieldValueJSONObject("requireCaptcha", "false")
+		).put(
+			getFieldValueJSONObject("redirectURL", "")
+		).put(
+			getFieldValueJSONObject("storageType", "json")
+		).put(
+			getFieldValueJSONObject("workflowDefinition", "")
+		).put(
+			getFieldValueJSONObject("sendEmailNotification", "false")
+		).put(
+			getFieldValueJSONObject("emailFromName", "")
+		).put(
+			getFieldValueJSONObject("emailFromAddress", "")
+		).put(
+			getFieldValueJSONObject("emailToAddress", "")
+		).put(
+			getFieldValueJSONObject("emailSubject", "")
+		).put(
+			getFieldValueJSONObject("published", "false")
+		);
 
 		if (hasSetting) {
-			jsonArray.put(getFieldValueJSONObject("autosaveEnabled", "false"));
 			jsonArray.put(
-				getFieldValueJSONObject("requireAuthentication", "false"));
+				getFieldValueJSONObject("autosaveEnabled", "false")
+			).put(
+				getFieldValueJSONObject("requireAuthentication", "false")
+			);
 		}
 
 		return jsonArray;
@@ -169,9 +181,11 @@ public class UpgradeDDMFormInstanceSettingsTest {
 		JSONArray availableLanguagesJSONArray = getAvailableLanguagesJSONArray(
 			"en_US");
 
-		object.put("availableLanguageIdss", availableLanguagesJSONArray);
-
-		object.put("defaultLanguageId", "en_US");
+		object.put(
+			"availableLanguageIdss", availableLanguagesJSONArray
+		).put(
+			"defaultLanguageId", "en_US"
+		);
 
 		JSONArray fieldValues = createFieldValues(hasSetting);
 
@@ -191,9 +205,13 @@ public class UpgradeDDMFormInstanceSettingsTest {
 	protected JSONObject getFieldValueJSONObject(String name, String value) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("instanceId", RandomTestUtil.randomString());
-		jsonObject.put("name", name);
-		jsonObject.put("value", value);
+		jsonObject.put(
+			"instanceId", RandomTestUtil.randomString()
+		).put(
+			"name", name
+		).put(
+			"value", value
+		);
 
 		return jsonObject;
 	}

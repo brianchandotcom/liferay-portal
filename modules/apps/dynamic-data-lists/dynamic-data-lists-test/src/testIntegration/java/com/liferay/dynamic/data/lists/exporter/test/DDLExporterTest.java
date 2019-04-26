@@ -665,11 +665,17 @@ public class DDLExporterTest {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("groupId", fileEntry.getGroupId());
-		jsonObject.put("name", fileEntry.getTitle());
-		jsonObject.put("tempFile", "false");
-		jsonObject.put("title", fileEntry.getTitle());
-		jsonObject.put("uuid", fileEntry.getUuid());
+		jsonObject.put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"name", fileEntry.getTitle()
+		).put(
+			"tempFile", "false"
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"uuid", fileEntry.getUuid()
+		);
 
 		return jsonObject.toString();
 	}
@@ -677,8 +683,11 @@ public class DDLExporterTest {
 	protected String createGeolocationDDMFormFieldValue() throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("latitude", "-8.035");
-		jsonObject.put("longitude", "-34.918");
+		jsonObject.put(
+			"latitude", "-8.035"
+		).put(
+			"longitude", "-34.918"
+		);
 
 		return jsonObject.toString();
 	}
@@ -689,9 +698,13 @@ public class DDLExporterTest {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("groupId", layout.getGroupId());
-		jsonObject.put("layoutId", layout.getLayoutId());
-		jsonObject.put("privateLayout", layout.isPrivateLayout());
+		jsonObject.put(
+			"groupId", layout.getGroupId()
+		).put(
+			"layoutId", layout.getLayoutId()
+		).put(
+			"privateLayout", layout.isPrivateLayout()
+		);
 
 		return jsonObject.toString();
 	}

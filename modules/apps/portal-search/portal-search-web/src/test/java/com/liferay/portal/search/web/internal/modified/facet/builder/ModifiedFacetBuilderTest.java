@@ -137,8 +137,11 @@ public class ModifiedFacetBuilderTest {
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		jsonObject.put("label", StringUtil.trim(label));
-		jsonObject.put("range", StringUtil.trim(range));
+		jsonObject.put(
+			"label", StringUtil.trim(label)
+		).put(
+			"range", StringUtil.trim(range)
+		);
 
 		jsonArray.put(jsonObject);
 	}

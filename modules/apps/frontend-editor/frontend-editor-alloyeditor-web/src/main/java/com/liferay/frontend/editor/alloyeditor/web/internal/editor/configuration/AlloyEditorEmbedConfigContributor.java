@@ -81,9 +81,13 @@ public class AlloyEditorEmbedConfigContributor
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("id", editorEmbedProvider.getId());
-		jsonObject.put("tpl", editorEmbedProvider.getTpl());
-		jsonObject.put("type", editorEmbedProviderType);
+		jsonObject.put(
+			"id", editorEmbedProvider.getId()
+		).put(
+			"tpl", editorEmbedProvider.getTpl()
+		).put(
+			"type", editorEmbedProviderType
+		);
 
 		JSONArray urlSchemesJSONArray = JSONFactoryUtil.createJSONArray();
 

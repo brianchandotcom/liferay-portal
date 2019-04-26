@@ -87,11 +87,12 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 		parametersJSONObject.put(
 			"inputs",
 			getInputParametersJSONArray(
-				ddmDataProviderParameterSetting.inputParameters()));
-		parametersJSONObject.put(
+				ddmDataProviderParameterSetting.inputParameters())
+		).put(
 			"outputs",
 			getOutputParametersJSONArray(
-				ddmDataProviderParameterSetting.outputParameters()));
+				ddmDataProviderParameterSetting.outputParameters())
+		);
 
 		return parametersJSONObject;
 	}
@@ -185,11 +186,14 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 				inputJSONObject.put("label", name);
 			}
 
-			inputJSONObject.put("name", name);
 			inputJSONObject.put(
+				"name", name
+			).put(
 				"required",
-				ddmDataProviderInputParameterSetting.inputParameterRequired());
-			inputJSONObject.put("type", type);
+				ddmDataProviderInputParameterSetting.inputParameterRequired()
+			).put(
+				"type", type
+			);
 
 			inputsJSONArray.put(inputJSONObject);
 		}

@@ -51,12 +51,15 @@ public class TranslationManagerTag extends ComponentRendererTag {
 
 			String w3cLanguageId = LocaleUtil.toW3cLanguageId(locale);
 
-			localeJSONObject.put("code", w3cLanguageId);
-			localeJSONObject.put("icon", StringUtil.toLowerCase(w3cLanguageId));
-
-			localeJSONObject.put("id", languageId);
 			localeJSONObject.put(
-				"label", locale.getDisplayName(themeDisplay.getLocale()));
+				"code", w3cLanguageId
+			).put(
+				"icon", StringUtil.toLowerCase(w3cLanguageId)
+			).put(
+				"id", languageId
+			).put(
+				"label", locale.getDisplayName(themeDisplay.getLocale())
+			);
 
 			if (ArrayUtil.contains(_availableLocales, locale)) {
 				availableLocalesJSONArray.put(localeJSONObject);

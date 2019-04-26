@@ -97,9 +97,11 @@ public class AMImageSerializerImpl implements AMImageSerializer {
 						name, String.valueOf(value)));
 			});
 
-		jsonObject.put("attributes", attributesJSONObject);
-
-		jsonObject.put("uri", adaptiveMedia.getURI());
+		jsonObject.put(
+			"attributes", attributesJSONObject
+		).put(
+			"uri", adaptiveMedia.getURI()
+		);
 
 		return jsonObject.toString();
 	}

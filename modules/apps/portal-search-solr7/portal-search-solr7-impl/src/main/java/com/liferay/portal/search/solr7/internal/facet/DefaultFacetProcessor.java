@@ -90,9 +90,11 @@ public class DefaultFacetProcessor implements FacetProcessor<SolrQuery> {
 	protected JSONObject getFacetParameters(Facet facet) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("field", facet.getFieldName());
-
-		jsonObject.put("type", "terms");
+		jsonObject.put(
+			"field", facet.getFieldName()
+		).put(
+			"type", "terms"
+		);
 
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 

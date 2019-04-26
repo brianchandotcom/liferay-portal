@@ -285,8 +285,11 @@ public class ModifiedFacetDisplayBuilderTest {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("label", label);
-		jsonObject.put("range", range);
+		jsonObject.put(
+			"label", label
+		).put(
+			"range", range
+		);
 
 		jsonArray.put(jsonObject);
 	}

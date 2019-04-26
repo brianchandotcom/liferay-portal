@@ -104,12 +104,16 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 			jsonObject.put(
 				"children",
 				_getSiteNavigationMenuItemsJSONArray(
-					siteNavigationMenu.getSiteNavigationMenuId(), 0));
-
-			jsonObject.put("disabled", true);
-			jsonObject.put("icon", "blogs");
-			jsonObject.put("id", "0");
-			jsonObject.put("name", siteNavigationMenu.getName());
+					siteNavigationMenu.getSiteNavigationMenuId(), 0)
+			).put(
+				"disabled", true
+			).put(
+				"icon", "blogs"
+			).put(
+				"id", "0"
+			).put(
+				"name", siteNavigationMenu.getName()
+			);
 
 			jsonArray.put(jsonObject);
 
@@ -136,11 +140,15 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 			privateLayout = false;
 		}
 
-		jsonObject.put("children", _getLayoutItemsJSONArray(privateLayout, 0));
-
-		jsonObject.put("disabled", true);
-		jsonObject.put("icon", "page");
-		jsonObject.put("id", "0");
+		jsonObject.put(
+			"children", _getLayoutItemsJSONArray(privateLayout, 0)
+		).put(
+			"disabled", true
+		).put(
+			"icon", "page"
+		).put(
+			"id", "0"
+		);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -205,10 +213,15 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 				jsonObject.put("children", childrenJSONArray);
 			}
 
-			jsonObject.put("icon", "page");
-			jsonObject.put("id", layout.getUuid());
-			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
-			jsonObject.put("selected", false);
+			jsonObject.put(
+				"icon", "page"
+			).put(
+				"id", layout.getUuid()
+			).put(
+				"name", layout.getName(themeDisplay.getLocale())
+			).put(
+				"selected", false
+			);
 
 			jsonArray.put(jsonObject);
 		}
@@ -257,17 +270,17 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 					getSiteNavigationMenuItemType(
 						siteNavigationMenuItem.getType());
 
-			jsonObject.put("icon", siteNavigationMenuItemType.getIcon());
-
 			jsonObject.put(
+				"icon", siteNavigationMenuItemType.getIcon()
+			).put(
 				"id",
 				String.valueOf(
-					siteNavigationMenuItem.getSiteNavigationMenuItemId()));
-
-			jsonObject.put(
+					siteNavigationMenuItem.getSiteNavigationMenuItemId())
+			).put(
 				"name",
 				siteNavigationMenuItemType.getTitle(
-					siteNavigationMenuItem, themeDisplay.getLocale()));
+					siteNavigationMenuItem, themeDisplay.getLocale())
+			);
 
 			if (siteNavigationMenuItem.getSiteNavigationMenuItemId() ==
 					_getSiteNavigationMenuItemId()) {

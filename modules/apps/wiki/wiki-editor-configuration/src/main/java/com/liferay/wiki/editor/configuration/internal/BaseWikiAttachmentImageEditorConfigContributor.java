@@ -101,8 +101,11 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 			requestBackedPortletURLFactory, name + "selectItem",
 			wikiPageResourcePrimKey, themeDisplay);
 
-		jsonObject.put("filebrowserImageBrowseLinkUrl", itemSelectorURL);
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL);
+		jsonObject.put(
+			"filebrowserImageBrowseLinkUrl", itemSelectorURL
+		).put(
+			"filebrowserImageBrowseUrl", itemSelectorURL
+		);
 	}
 
 	protected ItemSelectorCriterion getImageItemSelectorCriterion(

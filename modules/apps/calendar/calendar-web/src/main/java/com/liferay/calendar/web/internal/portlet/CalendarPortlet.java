@@ -235,9 +235,11 @@ public class CalendarPortlet extends MVCPortlet {
 				String message = themeDisplay.translate(
 					"an-unexpected-error-occurred-while-importing-your-file");
 
-				jsonObject.put("error", message);
-
-				jsonObject.put("success", false);
+				jsonObject.put(
+					"error", message
+				).put(
+					"success", false
+				);
 			}
 		}
 		else {
@@ -247,9 +249,11 @@ public class CalendarPortlet extends MVCPortlet {
 			String message = ResourceBundleUtil.getString(
 				resourceBundle, "failed-to-import-empty-file");
 
-			jsonObject.put("error", message);
-
-			jsonObject.put("success", false);
+			jsonObject.put(
+				"error", message
+			).put(
+				"success", false
+			);
 		}
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
@@ -1547,11 +1551,17 @@ public class CalendarPortlet extends MVCPortlet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("day", nowCalendar.get(java.util.Calendar.DAY_OF_MONTH));
-		jsonObject.put("hour", nowCalendar.get(java.util.Calendar.HOUR_OF_DAY));
-		jsonObject.put("minute", nowCalendar.get(java.util.Calendar.MINUTE));
-		jsonObject.put("month", nowCalendar.get(java.util.Calendar.MONTH));
-		jsonObject.put("year", nowCalendar.get(java.util.Calendar.YEAR));
+		jsonObject.put(
+			"day", nowCalendar.get(java.util.Calendar.DAY_OF_MONTH)
+		).put(
+			"hour", nowCalendar.get(java.util.Calendar.HOUR_OF_DAY)
+		).put(
+			"minute", nowCalendar.get(java.util.Calendar.MINUTE)
+		).put(
+			"month", nowCalendar.get(java.util.Calendar.MONTH)
+		).put(
+			"year", nowCalendar.get(java.util.Calendar.YEAR)
+		);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
@@ -1647,8 +1657,11 @@ public class CalendarPortlet extends MVCPortlet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("error", message);
-		jsonObject.put("success", false);
+		jsonObject.put(
+			"error", message
+		).put(
+			"success", false
+		);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}

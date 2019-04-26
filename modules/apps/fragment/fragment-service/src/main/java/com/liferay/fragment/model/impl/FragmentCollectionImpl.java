@@ -107,8 +107,11 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("description", getDescription());
-		jsonObject.put("name", getName());
+		jsonObject.put(
+			"description", getDescription()
+		).put(
+			"name", getName()
+		);
 
 		zipWriter.addEntry(
 			path + StringPool.SLASH +

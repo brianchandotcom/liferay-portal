@@ -35,16 +35,20 @@ public class MarketplaceLicenseUtil {
 	public static String getOrder(String productEntryName) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("cmd", "GET_ORDER");
-		jsonObject.put("hostName", LicenseManagerUtil.getHostName());
 		jsonObject.put(
-			"ipAddresses",
-			StringUtil.merge(LicenseManagerUtil.getIpAddresses()));
-		jsonObject.put(
+			"cmd", "GET_ORDER"
+		).put(
+			"hostName", LicenseManagerUtil.getHostName()
+		).put(
+			"ipAddresses", StringUtil.merge(LicenseManagerUtil.getIpAddresses())
+		).put(
 			"macAddresses",
-			StringUtil.merge(LicenseManagerUtil.getMacAddresses()));
-		jsonObject.put("productEntryName", productEntryName);
-		jsonObject.put("serverId", Arrays.toString(getServerIdBytes()));
+			StringUtil.merge(LicenseManagerUtil.getMacAddresses())
+		).put(
+			"productEntryName", productEntryName
+		).put(
+			"serverId", Arrays.toString(getServerIdBytes())
+		);
 
 		String response = LicenseUtil.sendRequest(jsonObject.toString());
 

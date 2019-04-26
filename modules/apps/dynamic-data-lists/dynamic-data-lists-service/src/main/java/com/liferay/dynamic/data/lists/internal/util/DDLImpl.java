@@ -93,8 +93,11 @@ public class DDLImpl implements DDL {
 			jsonObject.put(fieldName, StringPool.BLANK);
 		}
 
-		jsonObject.put("displayIndex", record.getDisplayIndex());
-		jsonObject.put("recordId", record.getRecordId());
+		jsonObject.put(
+			"displayIndex", record.getDisplayIndex()
+		).put(
+			"recordId", record.getRecordId()
+		);
 
 		DDLRecordVersion recordVersion = record.getRecordVersion();
 
@@ -207,15 +210,19 @@ public class DDLImpl implements DDL {
 
 			LocalizedValue label = ddmFormField.getLabel();
 
-			jsonObject.put("label", label.getString(locale));
-
-			jsonObject.put("name", name);
+			jsonObject.put(
+				"label", label.getString(locale)
+			).put(
+				"name", name
+			);
 
 			boolean required = ddmFormField.isRequired();
 
-			jsonObject.put("required", required);
-
-			jsonObject.put("sortable", true);
+			jsonObject.put(
+				"required", required
+			).put(
+				"sortable", true
+			);
 
 			String type = ddmFormField.getType();
 

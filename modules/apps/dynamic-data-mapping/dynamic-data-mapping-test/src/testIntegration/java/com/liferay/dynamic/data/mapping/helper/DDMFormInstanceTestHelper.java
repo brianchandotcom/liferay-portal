@@ -174,11 +174,17 @@ public class DDMFormInstanceTestHelper {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("classPK", fileEntry.getFileEntryId());
-		jsonObject.put("groupId", fileEntry.getGroupId());
-		jsonObject.put("title", fileEntry.getTitle());
-		jsonObject.put("type", "document");
-		jsonObject.put("uuid", fileEntry.getUuid());
+		jsonObject.put(
+			"classPK", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"type", "document"
+		).put(
+			"uuid", fileEntry.getUuid()
+		);
 
 		List<DDMFormField> ddmFormFields = fileEntryDDMForm.getDDMFormFields();
 

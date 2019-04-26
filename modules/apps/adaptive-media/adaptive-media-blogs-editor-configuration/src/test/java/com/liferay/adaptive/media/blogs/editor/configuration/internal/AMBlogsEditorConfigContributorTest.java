@@ -216,10 +216,11 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
 
 		originalJSONObject.put(
-			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
-		originalJSONObject.put(
+			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore"
+		).put(
 			"filebrowserImageBrowseLinkUrl",
-			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
+			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType"
+		);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());

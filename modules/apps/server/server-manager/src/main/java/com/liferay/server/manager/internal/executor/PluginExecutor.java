@@ -180,8 +180,10 @@ public class PluginExecutor extends BaseExecutor {
 				responseJSONObject.put(
 					JSONKeys.ERROR,
 					"Context directory " + installedDir.getAbsolutePath() +
-						" does not exist");
-				responseJSONObject.put(JSONKeys.STATUS, 1);
+						" does not exist"
+				).put(
+					JSONKeys.STATUS, 1
+				);
 
 				return;
 			}
@@ -361,8 +363,11 @@ public class PluginExecutor extends BaseExecutor {
 			return tempFile;
 		}
 
-		responseJSONObject.put(JSONKeys.ERROR, message);
-		responseJSONObject.put(JSONKeys.STATUS, 1);
+		responseJSONObject.put(
+			JSONKeys.ERROR, message
+		).put(
+			JSONKeys.STATUS, 1
+		);
 
 		return null;
 	}

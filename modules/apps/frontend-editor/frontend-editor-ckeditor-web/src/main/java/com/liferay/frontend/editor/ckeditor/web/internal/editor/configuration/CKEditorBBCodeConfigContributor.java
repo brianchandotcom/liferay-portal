@@ -50,47 +50,54 @@ public class CKEditorBBCodeConfigContributor
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put("allowedContent", Boolean.TRUE);
-		jsonObject.put("enterMode", 2);
 		jsonObject.put(
-			"extraPlugins", "a11yhelpbtn,bbcode,itemselector,wikilink");
-		jsonObject.put("fontSize_defaultLabel", "14");
-		jsonObject.put(
+			"allowedContent", Boolean.TRUE
+		).put(
+			"enterMode", 2
+		).put(
+			"extraPlugins", "a11yhelpbtn,bbcode,itemselector,wikilink"
+		).put(
+			"fontSize_defaultLabel", "14"
+		).put(
 			"fontSize_sizes",
-			"10/10px;12/12px;14/14px;16/16px;18/18px;24/24px;32/32px;48/48px");
-		jsonObject.put("format_tags", "p;pre");
-		jsonObject.put(
+			"10/10px;12/12px;14/14px;16/16px;18/18px;24/24px;32/32px;48/48px"
+		).put(
+			"format_tags", "p;pre"
+		).put(
 			"imagesPath",
 			HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
-				"/message_boards/");
-		jsonObject.put("lang", getLangJSONObject(inputEditorTaglibAttributes));
-		jsonObject.put("newThreadURL", MBThreadConstants.NEW_THREAD_URL);
-		jsonObject.put(
+				"/message_boards/"
+		).put(
+			"lang", getLangJSONObject(inputEditorTaglibAttributes)
+		).put(
+			"newThreadURL", MBThreadConstants.NEW_THREAD_URL
+		).put(
 			"removePlugins",
 			"bidi,div,elementspath,flash,forms,indentblock,keystrokes,link," +
 				"maximize,newpage,pagebreak,preview,print,save,showblocks," +
-					"templates,video");
-		jsonObject.put(
+					"templates,video"
+		).put(
 			"smiley_descriptions",
-			toJSONArray(BBCodeTranslatorUtil.getEmoticonDescriptions()));
-		jsonObject.put(
+			toJSONArray(BBCodeTranslatorUtil.getEmoticonDescriptions())
+		).put(
 			"smiley_images",
-			toJSONArray(BBCodeTranslatorUtil.getEmoticonFiles()));
-		jsonObject.put(
+			toJSONArray(BBCodeTranslatorUtil.getEmoticonFiles())
+		).put(
 			"smiley_path",
-			HtmlUtil.escape(themeDisplay.getPathThemeImages()) + "/emoticons/");
-		jsonObject.put(
+			HtmlUtil.escape(themeDisplay.getPathThemeImages()) + "/emoticons/"
+		).put(
 			"smiley_symbols",
-			toJSONArray(BBCodeTranslatorUtil.getEmoticonSymbols()));
-		jsonObject.put(
+			toJSONArray(BBCodeTranslatorUtil.getEmoticonSymbols())
+		).put(
 			"toolbar_bbcode",
-			getToolbarsBBCodeJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			getToolbarsBBCodeJSONArray(inputEditorTaglibAttributes)
+		).put(
 			"toolbar_phone",
-			getToolbarsPhoneJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			getToolbarsPhoneJSONArray(inputEditorTaglibAttributes)
+		).put(
 			"toolbar_tablet",
-			getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
+			getToolbarsTabletJSONArray(inputEditorTaglibAttributes)
+		);
 	}
 
 	protected JSONObject getLangJSONObject(

@@ -76,8 +76,11 @@ public class SortPortletPreferencesImpl implements SortPortletPreferences {
 		for (Preset preset : _presets) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("field", preset._field);
-			jsonObject.put("label", preset._label);
+			jsonObject.put(
+				"field", preset._field
+			).put(
+				"label", preset._label
+			);
 
 			jsonArray.put(jsonObject);
 		}

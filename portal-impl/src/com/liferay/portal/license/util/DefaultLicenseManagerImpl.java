@@ -88,12 +88,17 @@ public class DefaultLicenseManagerImpl implements LicenseManager {
 
 			byte[] serverIdBytes = LicenseUtil.getServerIdBytes();
 
-			jsonObject.put(Constants.CMD, "GET_LICENSE_STATE");
-
-			jsonObject.put("hostName", getHostName());
-			jsonObject.put("ipAddresses", StringUtil.merge(getIpAddresses()));
-			jsonObject.put("macAddresses", StringUtil.merge(getMacAddresses()));
-			jsonObject.put("productId", productId);
+			jsonObject.put(
+				Constants.CMD, "GET_LICENSE_STATE"
+			).put(
+				"hostName", getHostName()
+			).put(
+				"ipAddresses", StringUtil.merge(getIpAddresses())
+			).put(
+				"macAddresses", StringUtil.merge(getMacAddresses())
+			).put(
+				"productId", productId
+			);
 
 			String productVersion = licenseProperties.get("productVersion");
 
@@ -104,15 +109,19 @@ public class DefaultLicenseManagerImpl implements LicenseManager {
 
 			String randomUuid = uuid.toString();
 
-			jsonObject.put("randomUuid", randomUuid);
-
-			jsonObject.put("serverId", Arrays.toString(serverIdBytes));
+			jsonObject.put(
+				"randomUuid", randomUuid
+			).put(
+				"serverId", Arrays.toString(serverIdBytes)
+			);
 
 			String userCount = licenseProperties.get("userCount");
 
-			jsonObject.put("userCount", userCount);
-
-			jsonObject.put("version", 2);
+			jsonObject.put(
+				"userCount", userCount
+			).put(
+				"version", 2
+			);
 
 			String response = LicenseUtil.sendRequest(jsonObject.toString());
 

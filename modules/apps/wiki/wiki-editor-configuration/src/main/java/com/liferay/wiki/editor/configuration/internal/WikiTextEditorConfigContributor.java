@@ -47,10 +47,13 @@ public class WikiTextEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("allowedContent", "p");
-		jsonObject.put("disallowedContent", "br");
 		jsonObject.put(
-			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
+			"allowedContent", "p"
+		).put(
+			"disallowedContent", "br"
+		).put(
+			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore"
+		);
 
 		String removePlugins = jsonObject.getString("removePlugins");
 
@@ -61,9 +64,11 @@ public class WikiTextEditorConfigContributor
 			removePlugins = "magicline";
 		}
 
-		jsonObject.put("removePlugins", removePlugins);
-
-		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
+		jsonObject.put(
+			"removePlugins", removePlugins
+		).put(
+			"toolbars", JSONFactoryUtil.createJSONObject()
+		);
 	}
 
 }

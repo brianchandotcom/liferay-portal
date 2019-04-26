@@ -62,12 +62,19 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 		for (SearchFacet searchFacet : searchFacetTracker.getSearchFacets()) {
 			JSONObject facetJSONObject = JSONFactoryUtil.createJSONObject();
 
-			facetJSONObject.put("className", searchFacet.getFacetClassName());
-			facetJSONObject.put("data", searchFacet.getJSONData(actionRequest));
-			facetJSONObject.put("fieldName", searchFacet.getFieldName());
-			facetJSONObject.put("id", searchFacet.getId());
-			facetJSONObject.put("label", searchFacet.getLabel());
-			facetJSONObject.put("order", searchFacet.getOrder());
+			facetJSONObject.put(
+				"className", searchFacet.getFacetClassName()
+			).put(
+				"data", searchFacet.getJSONData(actionRequest)
+			).put(
+				"fieldName", searchFacet.getFieldName()
+			).put(
+				"id", searchFacet.getId()
+			).put(
+				"label", searchFacet.getLabel()
+			).put(
+				"order", searchFacet.getOrder()
+			);
 
 			boolean displayFacet = ParamUtil.getBoolean(
 				actionRequest, searchFacet.getClassName() + "displayFacet");

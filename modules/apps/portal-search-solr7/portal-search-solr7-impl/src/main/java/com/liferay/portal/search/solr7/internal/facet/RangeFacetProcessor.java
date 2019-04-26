@@ -109,9 +109,11 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 	protected JSONObject getFacetParameters(Facet facet, String range) {
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		jsonObject.put("q", facet.getFieldName() + StringPool.COLON + range);
-
-		jsonObject.put("type", "query");
+		jsonObject.put(
+			"q", facet.getFieldName() + StringPool.COLON + range
+		).put(
+			"type", "query"
+		);
 
 		return jsonObject;
 	}

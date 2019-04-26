@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributo
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -47,17 +48,17 @@ public class BaseMentionsEditorConfigContributor
 
 		autoCompleteConfigJSONObject.put("requestTemplate", "query={query}");
 
-		JSONArray triggerJSONArray = JSONFactoryUtil.createJSONArray();
-
 		JSONObject triggerJSONObject = JSONFactoryUtil.createJSONObject();
 
 		triggerJSONObject.put(
 			"regExp",
 			"(?:\\strigger|^trigger)(" +
-				MentionsMatcherUtil.getScreenNameRegularExpression() + ")");
-		triggerJSONObject.put(
-			"resultFilters", "function(query, results) {return results;}");
-		triggerJSONObject.put("resultTextLocator", "screenName");
+				MentionsMatcherUtil.getScreenNameRegularExpression() + ")"
+		).put(
+			"resultFilters", "function(query, results) {return results;}"
+		).put(
+			"resultTextLocator", "screenName"
+		);
 
 		PortletURL autoCompleteUserURL =
 			requestBackedPortletURLFactory.createResourceURL(
@@ -67,10 +68,13 @@ public class BaseMentionsEditorConfigContributor
 			autoCompleteUserURL.toString() + "&" +
 				PortalUtil.getPortletNamespace(MentionsPortletKeys.MENTIONS);
 
-		triggerJSONObject.put("source", source);
-
-		triggerJSONObject.put("term", "@");
-		triggerJSONObject.put("tplReplace", "{mention}");
+		triggerJSONObject.put(
+			"source", source
+		).put(
+			"term", "@"
+		).put(
+			"tplReplace", "{mention}"
+		);
 
 		String tplResults = StringBundler.concat(
 			"<div class=\"p-1 autofit-row autofit-row-center\">",
@@ -83,7 +87,7 @@ public class BaseMentionsEditorConfigContributor
 
 		triggerJSONObject.put("tplResults", tplResults);
 
-		triggerJSONArray.put(triggerJSONObject);
+		JSONArray triggerJSONArray = JSONUtil.put(triggerJSONObject);
 
 		autoCompleteConfigJSONObject.put("trigger", triggerJSONArray);
 

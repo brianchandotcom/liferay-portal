@@ -321,9 +321,13 @@ public class EditorConfigTransformerTest {
 			ThemeDisplay themeDisplay,
 			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-			jsonObject.put("textMode", "html");
-			jsonObject.put("toolbar", "HTMLToolbar");
-			jsonObject.put("version", "basic");
+			jsonObject.put(
+				"textMode", "html"
+			).put(
+				"toolbar", "HTMLToolbar"
+			).put(
+				"version", "basic"
+			);
 		}
 
 	}
@@ -341,9 +345,13 @@ public class EditorConfigTransformerTest {
 			String uploadURL = editorOptions.getUploadURL();
 
 			if (Validator.isNotNull(uploadURL)) {
-				configJSONObject.put("upload", true);
-				configJSONObject.put("uploadURL", uploadURL);
-				configJSONObject.put("version", "advanced");
+				configJSONObject.put(
+					"upload", true
+				).put(
+					"uploadURL", uploadURL
+				).put(
+					"version", "advanced"
+				);
 			}
 
 			if (editorOptions.isTextMode()) {

@@ -14,6 +14,10 @@
 		max-width: 800px;
 	}
 
+	.navbar-nav .nav-link.active {
+		pointer-events: none;
+	}
+
 	.sla-form > .sheet {
 		margin-top: 24px;
 

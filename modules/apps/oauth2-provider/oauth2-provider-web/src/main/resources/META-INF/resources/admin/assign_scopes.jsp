@@ -76,7 +76,6 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 	AUI().use(
 		'node',
 		'aui-modal',
-		'event-outside',
 		function(A) {
 			if (A.all('#<portlet:namespace />navGlobalScopes .panel').size() > 0) {
 				A.one('#<portlet:namespace />navScopeTypes').toggleClass('hidden', false);

@@ -25,14 +25,6 @@ exports[`Should remove a item 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -57,22 +49,12 @@ exports[`Should remove a item 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -130,22 +112,12 @@ exports[`Should remove a item 1`] = `
                               "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
-                            Object {
-                              "hash": "",
-                              "pathname": "/",
-                              "search": "?backPath=%2F",
-                            },
-                            Object {
-                              "hash": "",
-                              "pathname": "/slas/1234",
-                              "search": "?backPath=%2Fprocesses",
-                            },
                           ],
                           "go": [Function],
                           "goBack": [Function],
                           "goForward": [Function],
                           "index": 0,
-                          "length": 3,
+                          "length": 1,
                           "listen": [Function],
                           "location": Object {
                             "hash": "",
@@ -210,22 +182,12 @@ exports[`Should remove a item 1`] = `
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -437,14 +399,6 @@ exports[`Should render toast with SLA saved message 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -469,22 +423,12 @@ exports[`Should render toast with SLA saved message 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -542,22 +486,12 @@ exports[`Should render toast with SLA saved message 1`] = `
                               "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
-                            Object {
-                              "hash": "",
-                              "pathname": "/",
-                              "search": "?backPath=%2F",
-                            },
-                            Object {
-                              "hash": "",
-                              "pathname": "/slas/1234",
-                              "search": "?backPath=%2Fprocesses",
-                            },
                           ],
                           "go": [Function],
                           "goBack": [Function],
                           "goForward": [Function],
                           "index": 0,
-                          "length": 3,
+                          "length": 1,
                           "listen": [Function],
                           "location": Object {
                             "hash": "",
@@ -622,22 +556,12 @@ exports[`Should render toast with SLA saved message 1`] = `
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -749,14 +673,6 @@ exports[`Should render toast with SLA updated message 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -781,22 +697,12 @@ exports[`Should render toast with SLA updated message 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -854,22 +760,12 @@ exports[`Should render toast with SLA updated message 1`] = `
                               "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
-                            Object {
-                              "hash": "",
-                              "pathname": "/",
-                              "search": "?backPath=%2F",
-                            },
-                            Object {
-                              "hash": "",
-                              "pathname": "/slas/1234",
-                              "search": "?backPath=%2Fprocesses",
-                            },
                           ],
                           "go": [Function],
                           "goBack": [Function],
                           "goForward": [Function],
                           "index": 0,
-                          "length": 3,
+                          "length": 1,
                           "listen": [Function],
                           "location": Object {
                             "hash": "",
@@ -934,22 +830,12 @@ exports[`Should render toast with SLA updated message 1`] = `
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -1061,14 +947,6 @@ exports[`Should test props change 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -1093,22 +971,12 @@ exports[`Should test props change 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -1166,22 +1034,12 @@ exports[`Should test props change 1`] = `
                               "pathname": "/processes/1/10/title%3Aasc",
                               "search": "?backPath=%2F",
                             },
-                            Object {
-                              "hash": "",
-                              "pathname": "/",
-                              "search": "?backPath=%2F",
-                            },
-                            Object {
-                              "hash": "",
-                              "pathname": "/slas/1234",
-                              "search": "?backPath=%2Fprocesses",
-                            },
                           ],
                           "go": [Function],
                           "goBack": [Function],
                           "goForward": [Function],
                           "index": 0,
-                          "length": 3,
+                          "length": 1,
                           "listen": [Function],
                           "location": Object {
                             "hash": "",
@@ -1246,22 +1104,12 @@ exports[`Should test props change 1`] = `
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",

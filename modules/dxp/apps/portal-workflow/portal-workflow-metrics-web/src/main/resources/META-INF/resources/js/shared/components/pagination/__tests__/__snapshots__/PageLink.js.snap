@@ -15,14 +15,6 @@ exports[`Should change page 1`] = `
         "pathname": "/processes/1/10/title%3Aasc",
         "search": "?backPath=%2F",
       },
-      Object {
-        "pathname": "/",
-        "search": "?backPath=%2F",
-      },
-      Object {
-        "pathname": "/slas/1234",
-        "search": "?backPath=%2Fprocesses",
-      },
     ]
   }
   keyLength={0}
@@ -108,14 +100,6 @@ exports[`Should test change page when disabled 1`] = `
         },
         "pathname": "/processes/1/10/title%3Aasc",
         "search": "?backPath=%2F",
-      },
-      Object {
-        "pathname": "/",
-        "search": "?backPath=%2F",
-      },
-      Object {
-        "pathname": "/slas/1234",
-        "search": "?backPath=%2Fprocesses",
       },
     ]
   }

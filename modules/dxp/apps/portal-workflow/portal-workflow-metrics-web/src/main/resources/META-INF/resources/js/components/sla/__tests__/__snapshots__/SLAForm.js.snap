@@ -16,14 +16,6 @@ exports[`Should display error when submitting the form with empty name 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -48,22 +40,12 @@ exports[`Should display error when submitting the form with empty name 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -616,22 +598,12 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -695,22 +667,12 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                                   "pathname": "/processes/1/10/title%3Aasc",
                                   "search": "?backPath=%2F",
                                 },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "?backPath=%2F",
-                                },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/slas/1234",
-                                  "search": "?backPath=%2Fprocesses",
-                                },
                               ],
                               "go": [Function],
                               "goBack": [Function],
                               "goForward": [Function],
                               "index": 0,
-                              "length": 3,
+                              "length": 1,
                               "listen": [Function],
                               "location": Object {
                                 "hash": "",
@@ -782,14 +744,6 @@ exports[`Should display error when the server returns a failure 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -814,22 +768,12 @@ exports[`Should display error when the server returns a failure 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -1382,22 +1326,12 @@ exports[`Should display error when the server returns a failure 1`] = `
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -1461,22 +1395,12 @@ exports[`Should display error when the server returns a failure 1`] = `
                                   "pathname": "/processes/1/10/title%3Aasc",
                                   "search": "?backPath=%2F",
                                 },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "?backPath=%2F",
-                                },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/slas/1234",
-                                  "search": "?backPath=%2Fprocesses",
-                                },
                               ],
                               "go": [Function],
                               "goBack": [Function],
                               "goForward": [Function],
                               "index": 0,
-                              "length": 3,
+                              "length": 1,
                               "listen": [Function],
                               "location": Object {
                                 "hash": "",
@@ -1539,14 +1463,6 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -1571,22 +1487,12 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -2139,22 +2045,12 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -2218,22 +2114,12 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                                   "pathname": "/processes/1/10/title%3Aasc",
                                   "search": "?backPath=%2F",
                                 },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "?backPath=%2F",
-                                },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/slas/1234",
-                                  "search": "?backPath=%2Fprocesses",
-                                },
                               ],
                               "go": [Function],
                               "goBack": [Function],
                               "goForward": [Function],
                               "index": 0,
-                              "length": 3,
+                              "length": 1,
                               "listen": [Function],
                               "location": Object {
                                 "hash": "",
@@ -2296,14 +2182,6 @@ exports[`Should display errors when input blur with invalid values 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -2328,22 +2206,12 @@ exports[`Should display errors when input blur with invalid values 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -2896,22 +2764,12 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -2975,22 +2833,12 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                                   "pathname": "/processes/1/10/title%3Aasc",
                                   "search": "?backPath=%2F",
                                 },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "?backPath=%2F",
-                                },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/slas/1234",
-                                  "search": "?backPath=%2Fprocesses",
-                                },
                               ],
                               "go": [Function],
                               "goBack": [Function],
                               "goForward": [Function],
                               "index": 0,
-                              "length": 3,
+                              "length": 1,
                               "listen": [Function],
                               "location": Object {
                                 "hash": "",
@@ -3053,14 +2901,6 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -3085,22 +2925,12 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -3653,22 +3483,12 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -3732,22 +3552,12 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                                   "pathname": "/processes/1/10/title%3Aasc",
                                   "search": "?backPath=%2F",
                                 },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "?backPath=%2F",
-                                },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/slas/1234",
-                                  "search": "?backPath=%2Fprocesses",
-                                },
                               ],
                               "go": [Function],
                               "goBack": [Function],
                               "goForward": [Function],
                               "index": 0,
-                              "length": 3,
+                              "length": 1,
                               "listen": [Function],
                               "location": Object {
                                 "hash": "",
@@ -4543,14 +4353,6 @@ exports[`Should redirect to SLA list 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -4569,22 +4371,12 @@ exports[`Should redirect to SLA list 1`] = `
               "search": "",
               "state": undefined,
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -5127,22 +4919,12 @@ exports[`Should redirect to SLA list 1`] = `
                                 "search": "",
                                 "state": undefined,
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -5194,22 +4976,12 @@ exports[`Should redirect to SLA list 1`] = `
                                   "search": "",
                                   "state": undefined,
                                 },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "?backPath=%2F",
-                                },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/slas/1234",
-                                  "search": "?backPath=%2Fprocesses",
-                                },
                               ],
                               "go": [Function],
                               "goBack": [Function],
                               "goForward": [Function],
                               "index": 0,
-                              "length": 3,
+                              "length": 1,
                               "listen": [Function],
                               "location": Object {
                                 "hash": "",
@@ -5673,14 +5445,6 @@ exports[`Should render component in edit mode 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -5705,22 +5469,12 @@ exports[`Should render component in edit mode 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -6275,22 +6029,12 @@ exports[`Should render component in edit mode 1`] = `
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -6354,22 +6098,12 @@ exports[`Should render component in edit mode 1`] = `
                                   "pathname": "/processes/1/10/title%3Aasc",
                                   "search": "?backPath=%2F",
                                 },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "?backPath=%2F",
-                                },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/slas/1234",
-                                  "search": "?backPath=%2Fprocesses",
-                                },
                               ],
                               "go": [Function],
                               "goBack": [Function],
                               "goForward": [Function],
                               "index": 0,
-                              "length": 3,
+                              "length": 1,
                               "listen": [Function],
                               "location": Object {
                                 "hash": "",
@@ -6432,14 +6166,6 @@ exports[`Should update state after input changes 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -6464,22 +6190,12 @@ exports[`Should update state after input changes 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -7062,22 +6778,12 @@ exports[`Should update state after input changes 1`] = `
                                 "pathname": "/processes/1/10/title%3Aasc",
                                 "search": "?backPath=%2F",
                               },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
                             ],
                             "go": [Function],
                             "goBack": [Function],
                             "goForward": [Function],
                             "index": 0,
-                            "length": 3,
+                            "length": 1,
                             "listen": [Function],
                             "location": Object {
                               "hash": "",
@@ -7141,22 +6847,12 @@ exports[`Should update state after input changes 1`] = `
                                   "pathname": "/processes/1/10/title%3Aasc",
                                   "search": "?backPath=%2F",
                                 },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "?backPath=%2F",
-                                },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/slas/1234",
-                                  "search": "?backPath=%2Fprocesses",
-                                },
                               ],
                               "go": [Function],
                               "goBack": [Function],
                               "goForward": [Function],
                               "index": 0,
-                              "length": 3,
+                              "length": 1,
                               "listen": [Function],
                               "location": Object {
                                 "hash": "",

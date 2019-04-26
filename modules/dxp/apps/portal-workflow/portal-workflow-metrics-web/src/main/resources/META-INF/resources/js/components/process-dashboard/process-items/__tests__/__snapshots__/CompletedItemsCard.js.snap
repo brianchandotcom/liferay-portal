@@ -1,0 +1,323 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <CompletedItemsCard
+        processId="35315"
+      >
+        <ProcessItemsCard
+          completed={true}
+          panelDescription="Completed workflow items are counted and categorized by their SLA status."
+          panelTitle="Completed Items"
+          processId="35315"
+        >
+          <Panel>
+            <div
+              className="container-fluid-1280 mt-4"
+            >
+              <div
+                className="panel panel-secondary"
+              >
+                <Header
+                  elementClasses="dashboard-panel-header"
+                >
+                  <div
+                    className="panel-header dashboard-panel-header"
+                  >
+                    <div>
+                      <div>
+                        <span
+                          className="mr-3"
+                        >
+                          Completed Items
+                        </span>
+                        <Tooltip
+                          message="Completed workflow items are counted and categorized by their SLA status."
+                          position="right"
+                          width="288"
+                        >
+                          <span
+                            className="workflow-tooltip"
+                            onMouseLeave={[Function]}
+                          >
+                            <span
+                              className="tooltip-trigger"
+                              onMouseOver={[Function]}
+                            >
+                              <Icon
+                                iconName="question-circle-full"
+                              >
+                                <svg
+                                  className="lexicon-icon lexicon-icon-question-circle-full"
+                                  focusable="false"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                                  />
+                                </svg>
+                              </Icon>
+                            </span>
+                          </span>
+                        </Tooltip>
+                      </div>
+                    </div>
+                  </div>
+                </Header>
+                <Body>
+                  <div
+                    className="panel-body"
+                  >
+                    <div
+                      className="pb-6 pt-5"
+                    >
+                      <LoadingState>
+                        <span
+                          aria-hidden="true"
+                          className="loading-animation"
+                        />
+                      </LoadingState>
+                    </div>
+                  </div>
+                </Body>
+              </div>
+            </div>
+          </Panel>
+        </ProcessItemsCard>
+      </CompletedItemsCard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render component with failure state 1`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <CompletedItemsCard
+        processId="35315"
+      >
+        <ProcessItemsCard
+          completed={true}
+          panelDescription="Completed workflow items are counted and categorized by their SLA status."
+          panelTitle="Completed Items"
+          processId="35315"
+        >
+          <Panel>
+            <div
+              className="container-fluid-1280 mt-4"
+            >
+              <div
+                className="panel panel-secondary"
+              >
+                <Header
+                  elementClasses="dashboard-panel-header"
+                >
+                  <div
+                    className="panel-header dashboard-panel-header"
+                  >
+                    <div>
+                      <div>
+                        <span
+                          className="mr-3"
+                        >
+                          Completed Items
+                        </span>
+                        <Tooltip
+                          message="Completed workflow items are counted and categorized by their SLA status."
+                          position="right"
+                          width="288"
+                        >
+                          <span
+                            className="workflow-tooltip"
+                            onMouseLeave={[Function]}
+                          >
+                            <span
+                              className="tooltip-trigger"
+                              onMouseOver={[Function]}
+                            >
+                              <Icon
+                                iconName="question-circle-full"
+                              >
+                                <svg
+                                  className="lexicon-icon lexicon-icon-question-circle-full"
+                                  focusable="false"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full"
+                                  />
+                                </svg>
+                              </Icon>
+                            </span>
+                          </span>
+                        </Tooltip>
+                      </div>
+                    </div>
+                  </div>
+                </Header>
+                <Body>
+                  <div
+                    className="panel-body"
+                  >
+                    <div
+                      className="pb-6 pt-5"
+                    >
+                      <LoadingState>
+                        <span
+                          aria-hidden="true"
+                          className="loading-animation"
+                        />
+                      </LoadingState>
+                    </div>
+                  </div>
+                </Body>
+              </div>
+            </div>
+          </Panel>
+        </ProcessItemsCard>
+      </CompletedItemsCard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;

@@ -25,14 +25,6 @@ exports[`Should component receive props 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -57,22 +49,12 @@ exports[`Should component receive props 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -161,31 +143,21 @@ exports[`Should component receive props 1`] = `
                     emptyMessageClassName="small"
                     emptyMessageText="There are no pending items at the moment."
                     errorMessageText={null}
-                    fetching={true}
+                    fetching={false}
                     hideAnimation={true}
-                    loading={false}
+                    loading={true}
                   >
                     <div>
-                      <EmptyState
-                        className="border-0"
-                        hideAnimation={true}
-                        message="There are no pending items at the moment."
-                        messageClassName="small"
+                      <div
+                        className="border-0 pb-6 pt-6 sheet"
                       >
-                        <div
-                          className="border-0 pb-5 pt-6 sheet taglib-empty-result-message"
-                        >
-                          <div
-                            className="sheet-text text-center"
-                          >
-                            <p
-                              className="small"
-                            >
-                              There are no pending items at the moment.
-                            </p>
-                          </div>
-                        </div>
-                      </EmptyState>
+                        <LoadingState>
+                          <span
+                            aria-hidden="true"
+                            className="loading-animation"
+                          />
+                        </LoadingState>
+                      </div>
                     </div>
                   </ListView>
                 </div>
@@ -224,14 +196,6 @@ exports[`Should component shows empty state when items is undefined 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -256,22 +220,12 @@ exports[`Should component shows empty state when items is undefined 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -356,31 +310,21 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                     emptyMessageClassName="small"
                     emptyMessageText="There are no pending items at the moment."
                     errorMessageText={null}
-                    fetching={true}
+                    fetching={false}
                     hideAnimation={true}
-                    loading={false}
+                    loading={true}
                   >
                     <div>
-                      <EmptyState
-                        className="border-0"
-                        hideAnimation={true}
-                        message="There are no pending items at the moment."
-                        messageClassName="small"
+                      <div
+                        className="border-0 pb-6 pt-6 sheet"
                       >
-                        <div
-                          className="border-0 pb-5 pt-6 sheet taglib-empty-result-message"
-                        >
-                          <div
-                            className="sheet-text text-center"
-                          >
-                            <p
-                              className="small"
-                            >
-                              There are no pending items at the moment.
-                            </p>
-                          </div>
-                        </div>
-                      </EmptyState>
+                        <LoadingState>
+                          <span
+                            aria-hidden="true"
+                            className="loading-animation"
+                          />
+                        </LoadingState>
+                      </div>
                     </div>
                   </ListView>
                 </div>
@@ -419,14 +363,6 @@ exports[`Should render component 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -451,22 +387,12 @@ exports[`Should render component 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -555,31 +481,21 @@ exports[`Should render component 1`] = `
                     emptyMessageClassName="small"
                     emptyMessageText="There are no pending items at the moment."
                     errorMessageText={null}
-                    fetching={true}
+                    fetching={false}
                     hideAnimation={true}
-                    loading={false}
+                    loading={true}
                   >
                     <div>
-                      <EmptyState
-                        className="border-0"
-                        hideAnimation={true}
-                        message="There are no pending items at the moment."
-                        messageClassName="small"
+                      <div
+                        className="border-0 pb-6 pt-6 sheet"
                       >
-                        <div
-                          className="border-0 pb-5 pt-6 sheet taglib-empty-result-message"
-                        >
-                          <div
-                            className="sheet-text text-center"
-                          >
-                            <p
-                              className="small"
-                            >
-                              There are no pending items at the moment.
-                            </p>
-                          </div>
-                        </div>
-                      </EmptyState>
+                        <LoadingState>
+                          <span
+                            aria-hidden="true"
+                            className="loading-animation"
+                          />
+                        </LoadingState>
+                      </div>
                     </div>
                   </ListView>
                 </div>
@@ -637,17 +553,12 @@ exports[`Should render component with empty data 1`] = `
     >
       <div>
         <div
-          className="border-0 pb-5 pt-6 sheet taglib-empty-result-message"
+          className="border-0 pb-6 pt-6 sheet"
         >
-          <div
-            className="sheet-text text-center"
-          >
-            <p
-              className="small"
-            >
-              There are no pending items at the moment.
-            </p>
-          </div>
+          <span
+            aria-hidden="true"
+            className="loading-animation"
+          />
         </div>
       </div>
     </div>
@@ -699,17 +610,12 @@ exports[`Should render component with error state 1`] = `
     >
       <div>
         <div
-          className="border-0 pb-5 pt-6 sheet taglib-empty-result-message"
+          className="border-0 pb-6 pt-6 sheet"
         >
-          <div
-            className="sheet-text text-center"
-          >
-            <p
-              className="small"
-            >
-              There are no pending items at the moment.
-            </p>
-          </div>
+          <span
+            aria-hidden="true"
+            className="loading-animation"
+          />
         </div>
       </div>
     </div>

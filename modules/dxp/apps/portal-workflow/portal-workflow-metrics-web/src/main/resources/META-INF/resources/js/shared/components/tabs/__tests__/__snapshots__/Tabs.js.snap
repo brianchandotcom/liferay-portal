@@ -1,0 +1,519 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should expand tab items 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Tabs
+        location={
+          Object {
+            "pathname": "/dashboard/:processId/completed",
+          }
+        }
+        tabs={
+          Array [
+            Object {
+              "key": "completed",
+              "name": "completed",
+              "params": Object {
+                "processId": 35135,
+              },
+              "path": "/dashboard/:processId/completed",
+            },
+            Object {
+              "key": "pending",
+              "name": "pending",
+              "params": Object {
+                "processId": 35135,
+              },
+              "path": "/dashboard/:processId/pending",
+            },
+          ]
+        }
+      >
+        <nav
+          className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+        >
+          <div
+            className="container-fluid container-fluid-max-xl"
+          >
+            <button
+              aria-expanded={false}
+              aria-label="toggle-navigation"
+              className="collapsed navbar-toggler navbar-toggler-link"
+              onClick={[Function]}
+            >
+              completed
+              <Icon
+                iconName="caret-bottom"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-caret-bottom"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                  />
+                </svg>
+              </Icon>
+            </button>
+            <div
+              className="collapse navbar-collapse "
+            >
+              <div
+                className="container-fluid container-fluid-max-xl"
+              >
+                <ul
+                  className="navbar-nav"
+                >
+                  <li
+                    className="nav-item"
+                    key="0"
+                    onClick={[Function]}
+                  >
+                    <TabItem
+                      active={true}
+                      key="completed"
+                      name="completed"
+                      params={
+                        Object {
+                          "processId": 35135,
+                        }
+                      }
+                      path="/dashboard/:processId/completed"
+                    >
+                      <Link
+                        aria-label="current-page"
+                        className="active nav-link"
+                        replace={false}
+                        to={
+                          Object {
+                            "pathname": "/dashboard/35135/completed",
+                            "search": undefined,
+                          }
+                        }
+                      >
+                        <a
+                          aria-label="current-page"
+                          className="active nav-link"
+                          href="/dashboard/35135/completed"
+                          onClick={[Function]}
+                        >
+                          <span
+                            className="navbar-text-truncate"
+                          >
+                            completed
+                          </span>
+                        </a>
+                      </Link>
+                    </TabItem>
+                  </li>
+                  <li
+                    className="nav-item"
+                    key="1"
+                    onClick={[Function]}
+                  >
+                    <TabItem
+                      active={false}
+                      key="pending"
+                      name="pending"
+                      params={
+                        Object {
+                          "processId": 35135,
+                        }
+                      }
+                      path="/dashboard/:processId/pending"
+                    >
+                      <Link
+                        aria-label=""
+                        className=" nav-link"
+                        replace={false}
+                        to={
+                          Object {
+                            "pathname": "/dashboard/35135/pending",
+                            "search": undefined,
+                          }
+                        }
+                      >
+                        <a
+                          aria-label=""
+                          className=" nav-link"
+                          href="/dashboard/35135/pending"
+                          onClick={[Function]}
+                        >
+                          <span
+                            className="navbar-text-truncate"
+                          >
+                            pending
+                          </span>
+                        </a>
+                      </Link>
+                    </TabItem>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </Tabs>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should hide tab items 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Tabs
+        location={
+          Object {
+            "pathname": "/dashboard/:processId/completed",
+          }
+        }
+        tabs={
+          Array [
+            Object {
+              "key": "completed",
+              "name": "completed",
+              "params": Object {
+                "processId": 35135,
+              },
+              "path": "/dashboard/:processId/completed",
+            },
+            Object {
+              "key": "pending",
+              "name": "pending",
+              "params": Object {
+                "processId": 35135,
+              },
+              "path": "/dashboard/:processId/pending",
+            },
+          ]
+        }
+      >
+        <nav
+          className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+        >
+          <div
+            className="container-fluid container-fluid-max-xl"
+          >
+            <button
+              aria-expanded={false}
+              aria-label="toggle-navigation"
+              className="collapsed navbar-toggler navbar-toggler-link"
+              onClick={[Function]}
+            >
+              completed
+              <Icon
+                iconName="caret-bottom"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-caret-bottom"
+                  focusable="false"
+                  role="presentation"
+                >
+                  <use
+                    href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                  />
+                </svg>
+              </Icon>
+            </button>
+            <div
+              className="collapse navbar-collapse "
+            >
+              <div
+                className="container-fluid container-fluid-max-xl"
+              >
+                <ul
+                  className="navbar-nav"
+                >
+                  <li
+                    className="nav-item"
+                    key="0"
+                    onClick={[Function]}
+                  >
+                    <TabItem
+                      active={true}
+                      key="completed"
+                      name="completed"
+                      params={
+                        Object {
+                          "processId": 35135,
+                        }
+                      }
+                      path="/dashboard/:processId/completed"
+                    >
+                      <Link
+                        aria-label="current-page"
+                        className="active nav-link"
+                        replace={false}
+                        to={
+                          Object {
+                            "pathname": "/dashboard/35135/completed",
+                            "search": undefined,
+                          }
+                        }
+                      >
+                        <a
+                          aria-label="current-page"
+                          className="active nav-link"
+                          href="/dashboard/35135/completed"
+                          onClick={[Function]}
+                        >
+                          <span
+                            className="navbar-text-truncate"
+                          >
+                            completed
+                          </span>
+                        </a>
+                      </Link>
+                    </TabItem>
+                  </li>
+                  <li
+                    className="nav-item"
+                    key="1"
+                    onClick={[Function]}
+                  >
+                    <TabItem
+                      active={false}
+                      key="pending"
+                      name="pending"
+                      params={
+                        Object {
+                          "processId": 35135,
+                        }
+                      }
+                      path="/dashboard/:processId/pending"
+                    >
+                      <Link
+                        aria-label=""
+                        className=" nav-link"
+                        replace={false}
+                        to={
+                          Object {
+                            "pathname": "/dashboard/35135/pending",
+                            "search": undefined,
+                          }
+                        }
+                      >
+                        <a
+                          aria-label=""
+                          className=" nav-link"
+                          href="/dashboard/35135/pending"
+                          onClick={[Function]}
+                        >
+                          <span
+                            className="navbar-text-truncate"
+                          >
+                            pending
+                          </span>
+                        </a>
+                      </Link>
+                    </TabItem>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </Tabs>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render component 1`] = `
+<nav
+  className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+>
+  <div
+    className="container-fluid container-fluid-max-xl"
+  >
+    <button
+      aria-expanded={false}
+      aria-label="toggle-navigation"
+      className="collapsed navbar-toggler navbar-toggler-link"
+      onClick={[Function]}
+    >
+      pending
+      <svg
+        className="lexicon-icon lexicon-icon-caret-bottom"
+        focusable="false"
+        role="presentation"
+      >
+        <use
+          href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+        />
+      </svg>
+    </button>
+    <div
+      className="collapse navbar-collapse "
+    >
+      <div
+        className="container-fluid container-fluid-max-xl"
+      >
+        <ul
+          className="navbar-nav"
+        >
+          <li
+            className="nav-item"
+            onClick={[Function]}
+          >
+            <a
+              aria-label=""
+              className=" nav-link"
+              href="/dashboard/35135/completed"
+              onClick={[Function]}
+            >
+              <span
+                className="navbar-text-truncate"
+              >
+                completed
+              </span>
+            </a>
+          </li>
+          <li
+            className="nav-item"
+            onClick={[Function]}
+          >
+            <a
+              aria-label="current-page"
+              className="active nav-link"
+              href="/dashboard/35135/pending"
+              onClick={[Function]}
+            >
+              <span
+                className="navbar-text-truncate"
+              >
+                pending
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+`;

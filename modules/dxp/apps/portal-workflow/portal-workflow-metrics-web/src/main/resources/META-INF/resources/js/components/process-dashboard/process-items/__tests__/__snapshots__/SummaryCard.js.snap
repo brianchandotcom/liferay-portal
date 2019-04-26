@@ -16,14 +16,6 @@ exports[`Should render component 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -48,22 +40,12 @@ exports[`Should render component 1`] = `
               "pathname": "/processes/1/10/title%3Aasc",
               "search": "?backPath=%2F",
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -119,22 +101,12 @@ exports[`Should render component 1`] = `
                       "pathname": "/processes/1/10/title%3Aasc",
                       "search": "?backPath=%2F",
                     },
-                    Object {
-                      "hash": "",
-                      "pathname": "/",
-                      "search": "?backPath=%2F",
-                    },
-                    Object {
-                      "hash": "",
-                      "pathname": "/slas/1234",
-                      "search": "?backPath=%2Fprocesses",
-                    },
                   ],
                   "go": [Function],
                   "goBack": [Function],
                   "goForward": [Function],
                   "index": 0,
-                  "length": 3,
+                  "length": 1,
                   "listen": [Function],
                   "location": Object {
                     "hash": "",
@@ -201,22 +173,12 @@ exports[`Should render component 1`] = `
                         "pathname": "/processes/1/10/title%3Aasc",
                         "search": "?backPath=%2F",
                       },
-                      Object {
-                        "hash": "",
-                        "pathname": "/",
-                        "search": "?backPath=%2F",
-                      },
-                      Object {
-                        "hash": "",
-                        "pathname": "/slas/1234",
-                        "search": "?backPath=%2Fprocesses",
-                      },
                     ],
                     "go": [Function],
                     "goBack": [Function],
                     "goForward": [Function],
                     "index": 0,
-                    "length": 3,
+                    "length": 1,
                     "listen": [Function],
                     "location": Object {
                       "hash": "",
@@ -300,6 +262,267 @@ exports[`Should render component 1`] = `
                           className=" xsmall"
                         >
                           56.36%
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                </Link>
+              </ChildLinkWrapper>
+            </Component>
+          </Route>
+        </withRouter()>
+      </SummaryCard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render component with disabled state 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SummaryCard
+        iconColor="success"
+        iconName="check-circle"
+        processId={12345}
+        title="On Time"
+        total={false}
+        totalValue={55}
+      >
+        <withRouter()
+          className="disabled process-dashboard-summary-card"
+          onMouseOut={[Function]}
+          onMouseOver={[Function]}
+          to="/instances/12345/20/1"
+        >
+          <Route>
+            <Component
+              className="disabled process-dashboard-summary-card"
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/processes/1/10/title%3Aasc",
+                    "search": "?backPath=%2F",
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/processes/1/10/title%3Aasc",
+                  "search": "?backPath=%2F",
+                }
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              onMouseOut={[Function]}
+              onMouseOver={[Function]}
+              to="/instances/12345/20/1"
+            >
+              <ChildLinkWrapper
+                backPath="/"
+                className="disabled process-dashboard-summary-card"
+                currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+                to="/instances/12345/20/1"
+              >
+                <Link
+                  className="disabled process-dashboard-summary-card"
+                  onMouseOut={[Function]}
+                  onMouseOver={[Function]}
+                  replace={false}
+                  to={
+                    Object {
+                      "pathname": "/instances/12345/20/1",
+                      "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                    }
+                  }
+                >
+                  <a
+                    className="disabled process-dashboard-summary-card"
+                    href="/instances/12345/20/1?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                    onClick={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
+                  >
+                    <div>
+                      <div
+                        className="header"
+                      >
+                        <span
+                          className="bg-success-light mr-3 sticker sticker-circle"
+                        >
+                          <span
+                            className="inline-item"
+                          >
+                            <Icon
+                              elementClasses="text-success"
+                              iconName="check-circle"
+                            >
+                              <svg
+                                className="lexicon-icon lexicon-icon-check-circle text-success"
+                                focusable="false"
+                                role="presentation"
+                              >
+                                <use
+                                  href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle"
+                                />
+                              </svg>
+                            </Icon>
+                          </span>
+                        </span>
+                        <span>
+                          On Time
                         </span>
                       </div>
                     </div>

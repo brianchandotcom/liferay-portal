@@ -158,7 +158,7 @@ exports[`Should render component 1`] = `
           className="table-cell-expand table-cell-minw-200 table-title lfr-title-column"
         >
           <a
-            href="/dashboard/36401/20/1/overdueInstanceCount%3Aasc?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+            href="/dashboard/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
             onClick={[Function]}
           >
             <span>

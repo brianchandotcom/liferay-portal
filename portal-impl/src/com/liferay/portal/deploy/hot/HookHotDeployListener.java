@@ -2207,7 +2207,9 @@ public class HookHotDeployListener
 			PropsUtil.addProperties(properties);
 		}
 
-		field.set(null, value);
+		if (!_propsKeysEvents.contains(key)) {
+			field.set(null, value);
+		}
 	}
 
 	private void _initServices(
@@ -2302,12 +2304,14 @@ public class HookHotDeployListener
 		"journal.article.form.update", "layout.form.add", "layout.form.update",
 		"layout.set.form.update", "layout.static.portlets.all",
 		"login.events.post", "login.events.pre", "login.form.navigation.post",
-		"login.form.navigation.pre", "organizations.form.add.identification",
-		"organizations.form.add.main", "organizations.form.add.miscellaneous",
+		"login.form.navigation.pre", "logout.events.pre", "logout.events.post",
+		"organizations.form.add.identification", "organizations.form.add.main",
+		"organizations.form.add.miscellaneous",
 		"portlet.add.default.resource.check.whitelist",
 		"portlet.add.default.resource.check.whitelist.actions",
 		"portlet.interrupted.request.whitelist",
 		"portlet.interrupted.request.whitelist.actions",
+		"servlet.service.events.post", "servlet.service.events.pre",
 		"session.phishing.protected.attributes", "sites.form.add.advanced",
 		"sites.form.add.main", "sites.form.add.miscellaneous",
 		"sites.form.add.seo", "sites.form.update.advanced",

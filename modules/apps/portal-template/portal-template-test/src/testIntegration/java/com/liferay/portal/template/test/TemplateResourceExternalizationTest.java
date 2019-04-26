@@ -40,9 +40,6 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-
 import java.net.URL;
 
 import org.junit.Assert;
@@ -125,22 +122,12 @@ public class TemplateResourceExternalizationTest {
 
 		DDMTemplate ddmTemplate = (DDMTemplate)ProxyUtil.newProxyInstance(
 			clazz.getClassLoader(), new Class<?>[] {DDMTemplate.class},
-			new InvocationHandler() {
-
-				@Override
-				public Object invoke(
-						Object proxy, Method method, Object[] arguments)
-					throws Throwable {
-
-					String methodName = method.getName();
-
-					if (methodName.equals("getTemplateId")) {
-						return templateId;
-					}
-
-					throw new UnsupportedOperationException();
+			(proxy, method, arguments) -> {
+				if ("getTemplateId".equals(method.getName())) {
+					return templateId;
 				}
 
+				throw new UnsupportedOperationException();
 			});
 
 		String ddmTemplateKey = "testKey";

@@ -2345,6 +2345,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
+				if (structuredContent.getRelatedContents() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("renderedContents", additionalAssertFieldName)) {
 				if (structuredContent.getRenderedContents() == null) {
 					valid = false;
@@ -2595,6 +2603,17 @@ public abstract class BaseStructuredContentResourceTestCase {
 				if (!Objects.deepEquals(
 						structuredContent1.getNumberOfComments(),
 						structuredContent2.getNumberOfComments())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						structuredContent1.getRelatedContents(),
+						structuredContent2.getRelatedContents())) {
 
 					return false;
 				}
@@ -2888,6 +2907,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfComments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("relatedContents")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

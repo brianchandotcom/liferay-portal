@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.RenderedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
@@ -279,6 +280,29 @@ public class StructuredContentSerDes {
 			sb.append(structuredContent.getNumberOfComments());
 		}
 
+		if (structuredContent.getRelatedContents() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relatedContents\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < structuredContent.getRelatedContents().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(structuredContent.getRelatedContents()[i]));
+
+				if ((i + 1) < structuredContent.getRelatedContents().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (structuredContent.getRenderedContents() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -527,6 +551,15 @@ public class StructuredContentSerDes {
 				String.valueOf(structuredContent.getNumberOfComments()));
 		}
 
+		if (structuredContent.getRelatedContents() == null) {
+			map.put("relatedContents", null);
+		}
+		else {
+			map.put(
+				"relatedContents",
+				String.valueOf(structuredContent.getRelatedContents()));
+		}
+
 		if (structuredContent.getRenderedContents() == null) {
 			map.put("renderedContents", null);
 		}
@@ -703,6 +736,18 @@ public class StructuredContentSerDes {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setNumberOfComments(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setRelatedContents(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RelatedContentSerDes.toDTO((String)object)
+						).toArray(
+							size -> new RelatedContent[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "renderedContents")) {

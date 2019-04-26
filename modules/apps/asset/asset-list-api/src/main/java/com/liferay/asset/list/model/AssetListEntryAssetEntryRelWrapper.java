@@ -320,6 +320,11 @@ public class AssetListEntryAssetEntryRelWrapper
 		model.setAssetEntryId(assetEntryId);
 	}
 
+	@Override
+	public void setAssetEntryUuid(String assetEntryUuid) {
+		model.setAssetEntryUuid(assetEntryUuid);
+	}
+
 	/**
 	 * Sets the asset list entry asset entry rel ID of this asset list entry asset entry rel.
 	 *

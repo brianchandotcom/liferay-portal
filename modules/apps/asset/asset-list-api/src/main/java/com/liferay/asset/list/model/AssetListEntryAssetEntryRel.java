@@ -65,4 +65,6 @@ public interface AssetListEntryAssetEntryRel
 
 	public String getAssetEntryUuid();
 
+	public void setAssetEntryUuid(String assetEntryUuid);
+
 }

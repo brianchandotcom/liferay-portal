@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.command.RunNotifierCommand;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 
 import java.net.InetAddress;
@@ -181,7 +182,7 @@ public class ClientState {
 								0, relativePathString.length() - 6);
 
 							relativePathString = relativePathString.replace(
-								'/', '.');
+								File.separatorChar, '.');
 
 							try {
 								Class<?> clazz = classLoader.loadClass(

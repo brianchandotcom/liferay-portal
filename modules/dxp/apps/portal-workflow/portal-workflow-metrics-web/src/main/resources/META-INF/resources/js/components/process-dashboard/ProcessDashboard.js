@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import { AppContext } from '../AppContext';
 import { getPathname } from '../../shared/components/tabs/TabItem';
-import PendingItemsCard from './pending-items/PendingItemsCard';
+import { PendingItemsCard } from './process-items/ProcessItemsCard';
 import React from 'react';
 import Tabs from '../../shared/components/tabs/Tabs';
 import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard';

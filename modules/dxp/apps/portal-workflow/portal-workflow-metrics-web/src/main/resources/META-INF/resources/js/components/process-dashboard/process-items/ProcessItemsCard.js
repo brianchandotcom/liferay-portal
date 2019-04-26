@@ -8,7 +8,7 @@ import ReloadButton from '../../../shared/components/list/ReloadButton';
 import SummaryCard from './SummaryCard';
 import Tooltip from '../../../shared/components/Tooltip';
 
-class PendingItemsCard extends React.Component {
+class ProcessItemsCard extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -120,5 +120,10 @@ class PendingItemsCard extends React.Component {
 	}
 }
 
-PendingItemsCard.contextType = AppContext;
-export default PendingItemsCard;
+ProcessItemsCard.contextType = AppContext;
+
+export class PendingItemsCard extends ProcessItemsCard {
+	constructor(props) {
+		super(props);
+	}
+}

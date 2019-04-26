@@ -1,6 +1,6 @@
 import fetch from '../../../../test/mock/fetch';
 import fetchFailure from '../../../../test/mock/fetchFailure';
-import PendingItemsCard from '../PendingItemsCard';
+import { PendingItemsCard } from '../ProcessItemsCard';
 import React from 'react';
 import { MockRouter as Router } from '../../../../test/mock/MockRouter';
 

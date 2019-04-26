@@ -67,8 +67,7 @@
 		"sass-loader": "^7.1.0",
 		"snapshot-diff": "^0.4.1",
 		"style-loader": "^0.23.1",
-		"webpack": "^4.29.5",
-		"webpack-cli": "^3.2.3"
+		"webpack": "^4.29.5"
 	},
 	"jest": {
 		"modulePathIgnorePatterns": [

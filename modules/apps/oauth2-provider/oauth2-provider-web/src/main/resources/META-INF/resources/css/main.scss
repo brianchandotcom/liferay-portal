@@ -4,14 +4,14 @@ $grayTextColor: #6B6C7E;
 $removedItemHighlightColor: #FFEEF0;
 $addedItemHighlightColor: #E6FFED;
 
-.assign-scopes-modal {
-	max-width: 100% !important;
-	max-height: 90% !important;
+.modal-full-screen {
+	max-height: 80vh !important;
+	max-width: 80vw !important;
 	width: 800px;
+}
 
-	.inline {
-		display: inline-block;
-	}
+.assign-scopes-modal .inline {
+	display: inline-block;
 }
 
 .edit-client-credentials-modal {

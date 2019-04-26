@@ -26,7 +26,7 @@ class PendingItemsCard extends React.Component {
 	}
 
 	componentWillMount() {
-		this.requestData()
+		return this.requestData()
 			.then(data => {
 				this.context.setTitle(data.title);
 

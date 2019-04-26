@@ -20,8 +20,16 @@ class WorkloadByStepCard extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		return this.loadData(this.props);
+	}
+
+	componentWillUnmount() {
+		this.unmounted = true;
+	}
+
 	componentWillReceiveProps(nextProps) {
-		this.loadData(nextProps);
+		return this.loadData(nextProps);
 	}
 
 	loadData(props = this.props) {
@@ -67,6 +75,12 @@ class WorkloadByStepCard extends React.Component {
 
 				return data;
 			});
+	}
+
+	setState(newState) {
+		if (!this.unmounted) {
+			super.setState(newState);
+		}
 	}
 
 	render() {

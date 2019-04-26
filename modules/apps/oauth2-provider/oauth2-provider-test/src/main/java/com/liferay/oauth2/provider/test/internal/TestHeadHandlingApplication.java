@@ -25,7 +25,7 @@ import javax.ws.rs.core.Application;
 /**
  * @author Carlos Sierra Andrés
  */
-public class TestApplicationWithHead extends Application {
+public class TestHeadHandlingApplication extends Application {
 
 	@CUSTOM
 	public String getCustomString() {

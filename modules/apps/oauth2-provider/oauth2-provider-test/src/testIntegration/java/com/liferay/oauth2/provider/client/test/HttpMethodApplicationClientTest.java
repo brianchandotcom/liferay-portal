@@ -15,7 +15,7 @@
 package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.oauth2.provider.test.internal.TestApplication;
-import com.liferay.oauth2.provider.test.internal.TestApplicationWithHead;
+import com.liferay.oauth2.provider.test.internal.TestHeadHandlingApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -143,7 +143,7 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 			registerJaxRsApplication(new TestApplication(), "methods", null);
 
 			registerJaxRsApplication(
-				new TestApplicationWithHead(), "methods-with-head", null);
+				new TestHeadHandlingApplication(), "methods-with-head", null);
 
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 

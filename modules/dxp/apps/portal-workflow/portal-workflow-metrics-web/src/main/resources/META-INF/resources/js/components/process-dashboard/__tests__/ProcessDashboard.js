@@ -1,14 +1,23 @@
+import ProcessDashboard, { withParams } from '../ProcessDashboard';
 import fetch from '../../../test/mock/fetch';
 import fetchFailure from '../../../test/mock/fetchFailure';
-import ProcessDashboard from '../ProcessDashboard';
+import { PendingItemsCard } from '../process-items/ProcessItemsCard';
 import React from 'react';
-import renderer from 'react-test-renderer';
 import { MockRouter as Router } from '../../../test/mock/MockRouter';
+import WorkloadByStepCard from '../workload-by-step/WorkloadByStepCard';
 
-test('Should render component', () => {
+test('Should render component with completed tab activated', () => {
+	const component = mount(
+		<Router client={fetchFailure()} initialPath="/dashboard/35315">
+			<ProcessDashboard processId={35315} />
+		</Router>
+	);
+
+	expect(component).toMatchSnapshot();
+});
+
+test('Should render component with default tab activated', () => {
 	const data = {
-		dueAfterInstanceCount: 1,
-		dueInInstanceCount: 0,
 		id: 35315,
 		instanceCount: 1,
 		onTimeInstanceCount: 1,
@@ -16,25 +25,37 @@ test('Should render component', () => {
 		title: 'Single Approver'
 	};
 
-	const component = renderer.create(
-		<Router client={fetch(data)}>
+	const component = mount(
+		<Router client={fetch(data)} initialPath="/dashboard/35315">
 			<ProcessDashboard processId={35315} />
 		</Router>
 	);
 
-	const tree = component.toJSON();
-
-	expect(tree).toMatchSnapshot();
+	expect(component).toMatchSnapshot();
 });
 
 test('Should render component with failure state', () => {
-	const component = renderer.create(
-		<Router client={fetchFailure()}>
-			<ProcessDashboard />
+	const component = mount(
+		<Router client={fetchFailure()} initialPath="/dashboard/35315/completed">
+			<ProcessDashboard processId={35315} />
 		</Router>
 	);
 
-	const tree = component.toJSON();
+	expect(component).toMatchSnapshot();
+});
 
-	expect(tree).toMatchSnapshot();
+test('Should render dashboard route children', () => {
+	const component = mount(
+		<Router client={fetch({})}>
+			{withParams(PendingItemsCard, WorkloadByStepCard)({
+				match: {
+					params: {
+						processId: 35315
+					}
+				}
+			})}
+		</Router>
+	);
+
+	expect(component).toMatchSnapshot();
 });

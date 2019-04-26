@@ -38,7 +38,9 @@ export class MockRouter extends React.Component {
 	}
 
 	render() {
-		const { page = 1, search, sort } = this.props;
+		const defaultPath = `/processes/1/10/${encodeURIComponent('title:asc')}`;
+
+		const { initialPath = defaultPath, page = 1, search, sort } = this.props;
 
 		const initialEntries = [
 			{
@@ -49,16 +51,8 @@ export class MockRouter extends React.Component {
 						sort
 					}
 				},
-				pathname: `/processes/1/10/${encodeURIComponent('title:asc')}`,
+				pathname: initialPath,
 				search: '?backPath=%2F'
-			},
-			{
-				pathname: '/',
-				search: '?backPath=%2F'
-			},
-			{
-				pathname: '/slas/1234',
-				search: '?backPath=%2Fprocesses'
 			}
 		];
 

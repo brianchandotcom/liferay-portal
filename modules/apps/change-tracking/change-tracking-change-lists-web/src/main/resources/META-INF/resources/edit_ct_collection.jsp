@@ -40,6 +40,9 @@ portletDisplay.setShowBackIcon(true);
 </liferay-portlet:actionURL>
 
 <liferay-ui:error key="ctCollectionDuplicate" message="name-is-already-used-by-another-change-list" />
+<liferay-ui:error key="ctCollectionNameIsNull" message="collection-name-cannot-be-null" />
+<liferay-ui:error exception="<%= CTCollectionDescriptionException.class %>" message="collection-description-too-long" />
+<liferay-ui:error exception="<%= CTCollectionNameException.class %>" message="collection-name-too-long" />
 
 <div class="custom-sheet sheet sheet-lg">
 	<aui:form action='<%= actionURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="addChangeListFm">
@@ -50,7 +53,9 @@ portletDisplay.setShowBackIcon(true);
 			<aui:validator name="required" />
 		</aui:input>
 
-		<aui:input label="description" name="description" placeholder="change-list-description-placeholder" value="<%= description %>" />
+		<aui:input label="description" name="description" placeholder="change-list-description-placeholder" value="<%= description %>">
+			<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "description") %></aui:validator>
+		</aui:input>
 
 		<aui:button-row>
 			<aui:button id="saveButton" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />

@@ -49,7 +49,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		MenuItem.click(menuItem = "Subfolder");
+		MenuItem.click(menuItem = "Folder");
 
 		Button.clickSave();
 
@@ -93,7 +93,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		MenuItem.click(menuItem = "Subfolder");
+		MenuItem.click(menuItem = "Folder");
 
 		var key_folderName = "${subfolderName}";
 
@@ -115,7 +115,7 @@ definition {
 	macro addSubfolderPG {
 		Portlet.clickPortletPlusIconPG(portletName = "Bookmarks");
 
-		MenuItem.click(menuItem = "Subfolder");
+		MenuItem.click(menuItem = "Folder");
 
 		PortletEntry.inputName(name = "${folderName}");
 

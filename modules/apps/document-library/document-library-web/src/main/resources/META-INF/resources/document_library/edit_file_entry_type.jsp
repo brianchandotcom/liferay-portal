@@ -82,6 +82,14 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 		<aui:fieldset-group cssClass="edit-file-entry-type" markupView="lexicon">
 			<aui:fieldset collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">
+				<aui:field-wrapper>
+					<c:if test="<%= (ddmStructure != null) && (ddmStructure.getGroupId() != scopeGroupId) %>">
+						<div class="alert alert-warning">
+							<liferay-ui:message key="this-document-type-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-document-type" />
+						</div>
+					</c:if>
+				</aui:field-wrapper>
+
 				<aui:input name="name" />
 
 				<aui:input name="description" />

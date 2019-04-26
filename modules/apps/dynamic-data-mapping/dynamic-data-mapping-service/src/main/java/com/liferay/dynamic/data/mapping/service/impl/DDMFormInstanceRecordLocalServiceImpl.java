@@ -414,6 +414,14 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				serviceContext);
 		}
 
+		// Asset
+
+		updateAsset(
+			userId, ddmFormInstanceRecord, ddmFormInstanceRecordVersion,
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(), serviceContext.getLocale(),
+			serviceContext.getAssetPriority());
+
 		if (isKeepFormInstanceRecordVersionLabel(
 				ddmFormInstanceRecord.getFormInstanceRecordVersion(),
 				ddmFormInstanceRecordVersion, serviceContext)) {

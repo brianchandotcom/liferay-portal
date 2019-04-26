@@ -37,36 +37,11 @@ import mousio.etcd4j.responses.EtcdKeysResponse;
  */
 public class EtcdUtil {
 
-	public static synchronized void delete(String etcdServerURL, Node node) {
-		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
-			EtcdKeyDeleteRequest etcdKeyDeleteRequest = null;
-
-			if (!node.isDir()) {
-				etcdKeyDeleteRequest = etcdClient.delete(node.getKey());
-			}
-			else {
-				etcdKeyDeleteRequest = etcdClient.deleteDir(node.getKey());
-
-				etcdKeyDeleteRequest.recursive();
-			}
-
-			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
-				etcdKeyDeleteRequest.send();
-
-			etcdResponsePromise.get();
-		}
-		catch (EtcdAuthenticationException | EtcdException | IOException |
-			   TimeoutException e) {
-
-			throw new RuntimeException(e);
-		}
-	}
-
 	public static synchronized void delete(String etcdServerURL, String key) {
 		Node node = get(etcdServerURL, key);
 
 		if (node != null) {
-			delete(etcdServerURL, node);
+			node.delete();
 		}
 	}
 
@@ -138,6 +113,31 @@ public class EtcdUtil {
 	}
 
 	public static class Node {
+
+		public void delete() {
+			try (EtcdClient etcdClient = getEtcdClient(_etcdServerURL)) {
+				EtcdKeyDeleteRequest etcdKeyDeleteRequest = null;
+
+				if (!isDir()) {
+					etcdKeyDeleteRequest = etcdClient.delete(getKey());
+				}
+				else {
+					etcdKeyDeleteRequest = etcdClient.deleteDir(getKey());
+
+					etcdKeyDeleteRequest.recursive();
+				}
+
+				EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
+					etcdKeyDeleteRequest.send();
+
+				etcdResponsePromise.get();
+			}
+			catch (EtcdAuthenticationException | EtcdException | IOException |
+				   TimeoutException e) {
+
+				throw new RuntimeException(e);
+			}
+		}
 
 		public long getCreatedIndex() {
 			return _etcdNode.getCreatedIndex();

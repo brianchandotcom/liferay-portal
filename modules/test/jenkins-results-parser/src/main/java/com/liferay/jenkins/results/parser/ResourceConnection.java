@@ -101,7 +101,7 @@ public class ResourceConnection implements Comparable {
 		EtcdUtil.Node node = EtcdUtil.get(etcdServerURL, _node.getKey());
 
 		if (node != null) {
-			EtcdUtil.delete(etcdServerURL, _node);
+			_node.delete();
 		}
 		else {
 			System.out.println(

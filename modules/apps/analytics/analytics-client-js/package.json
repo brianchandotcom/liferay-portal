@@ -53,7 +53,7 @@
 		"url": "git+https://github.com/liferay/com-liferay-analytics.git"
 	},
 	"scripts": {
-		"build": "rimraf build/ && webpack",
+		"build": "rimraf build/ && liferay-npm-scripts webpack",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
 		"test": "karma start karma.conf.js"

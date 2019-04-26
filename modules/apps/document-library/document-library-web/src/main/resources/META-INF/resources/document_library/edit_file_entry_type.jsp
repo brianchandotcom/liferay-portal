@@ -83,10 +83,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 		<aui:model-context bean="<%= fileEntryType %>" model="<%= DLFileEntryType.class %>" />
 
 		<aui:fieldset-group cssClass="edit-file-entry-type" markupView="lexicon">
-
-
 			<aui:fieldset collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">
-
 				<aui:field-wrapper>
 					<c:if test="<%= (ddmStructure != null) && (groupId != scopeGroupId) %>">
 						<div class="alert alert-warning">
@@ -94,7 +91,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 						</div>
 					</c:if>
 				</aui:field-wrapper>
-				
+
 				<aui:input name="name" />
 
 				<aui:input name="description" />

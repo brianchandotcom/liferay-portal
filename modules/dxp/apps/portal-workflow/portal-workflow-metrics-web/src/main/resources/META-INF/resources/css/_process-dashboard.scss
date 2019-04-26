@@ -47,6 +47,10 @@ $c: ".workflow-process-dashboard";
 			}
 		}
 
+		.header {
+			line-height: 2rem;
+		}
+
 		&.disabled {
 			cursor: not-allowed;
 			pointer-events: none;

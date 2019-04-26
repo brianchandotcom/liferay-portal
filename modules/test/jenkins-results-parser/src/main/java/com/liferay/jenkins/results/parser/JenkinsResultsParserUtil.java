@@ -1798,58 +1798,59 @@ public class JenkinsResultsParserUtil {
 			return;
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		int[] rowSizes = new int[table[0].length];
+		int[] maxColumnWidth = new int[table[0].length];
 
 		for (String[] row : table) {
-			for (int j = 0; j < row.length; j++) {
-				String item = row[j];
+			for (int columnNumber = 0; columnNumber < row.length;
+				 columnNumber++) {
 
-				if (rowSizes[j] <= item.length()) {
-					rowSizes[j] = item.length();
+				String item = row[columnNumber];
+
+				if (maxColumnWidth[columnNumber] <= item.length()) {
+					maxColumnWidth[columnNumber] = item.length();
 				}
 			}
 		}
 
-		int rowTotalSize = 0;
+		StringBuilder rowsStringBuilder = new StringBuilder();
 
-		for (int i = 0; i < table.length; i++) {
-			String[] row = table[i];
+		for (String[] row : table) {
+			for (int columnNumber = 0; columnNumber < row.length;
+				 columnNumber++) {
 
-			for (int j = 0; j < row.length; j++) {
-				String item = row[j];
+				String cellText = row[columnNumber];
 
-				sb.append(String.format("| %-" + rowSizes[j] + "s ", item));
-
-				if (i == 0) {
-					rowTotalSize += rowSizes[j] + 3;
-				}
+				rowsStringBuilder.append(
+					String.format(
+						combine(
+							"| %-",
+							String.valueOf(maxColumnWidth[columnNumber]), "s "),
+						cellText));
 			}
 
-			sb.append("|\n");
-
-			if (i == 0) {
-				rowTotalSize++;
-			}
+			rowsStringBuilder.append("|\n");
 		}
 
-		String tableString = sb.toString();
+		int rowTotalSize = rowsStringBuilder.indexOf("\n");
 
-		sb = new StringBuilder();
+		StringBuilder tableStringBuilder = new StringBuilder();
 
-		for (int i = 0; i < rowTotalSize; i++) {
-			sb.append("-");
+		for (int columnNumber = 0; columnNumber < rowTotalSize;
+			 columnNumber++) {
+
+			tableStringBuilder.append("-");
 		}
 
-		sb.append("\n");
-		sb.append(tableString);
+		tableStringBuilder.append("\n");
+		tableStringBuilder.append(rowsStringBuilder);
 
-		for (int i = 0; i < rowTotalSize; i++) {
-			sb.append("-");
+		for (int columnNumber = 0; columnNumber < rowTotalSize;
+			 columnNumber++) {
+
+			tableStringBuilder.append("-");
 		}
 
-		System.out.println(sb.toString());
+		System.out.println(tableStringBuilder.toString());
 	}
 
 	public static String read(File file) throws IOException {

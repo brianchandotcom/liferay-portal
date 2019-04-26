@@ -201,9 +201,11 @@ public class AlloyEditorCreoleConfigContributor
 
 		buttonJSONObject.put("name", "table");
 
-		buttonsJSONArray.put(buttonJSONObject);
-
-		buttonsJSONArray.put("hline");
+		buttonsJSONArray.put(
+			buttonJSONObject
+		).put(
+			"hline"
+		);
 
 		jsonObject.put("buttons", buttonsJSONArray);
 

@@ -69,9 +69,13 @@ public class SetOptionsFunctionTest extends PowerMockito {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		jsonArray.put(_createJSONObject("label1", "value1"));
-		jsonArray.put(_createJSONObject("label2", "value2"));
-		jsonArray.put(_createJSONObject("label3", "value3"));
+		jsonArray.put(
+			_createJSONObject("label1", "value1")
+		).put(
+			_createJSONObject("label2", "value2")
+		).put(
+			_createJSONObject("label3", "value3")
+		);
 
 		jsonObject.put("pt_BR", jsonArray);
 

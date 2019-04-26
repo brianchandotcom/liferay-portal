@@ -230,13 +230,12 @@ public class TinyMCEEditorConfigContributor
 			buttons += "code";
 		}
 
-		jsonArray.put(buttons);
-
-		jsonArray.put(
+		return jsonArray.put(
+			buttons
+		).put(
 			"table | hr removeformat | subscript superscript | charmap " +
-				"emoticons | preview print fullscreen");
-
-		return jsonArray;
+				"emoticons | preview print fullscreen"
+		);
 	}
 
 	protected JSONArray getToolbarsPhoneJSONArray() {

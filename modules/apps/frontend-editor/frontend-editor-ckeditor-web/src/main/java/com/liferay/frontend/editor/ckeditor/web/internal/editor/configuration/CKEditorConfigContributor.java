@@ -257,15 +257,17 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		buttons +=
 			" 'Flash', '-', 'LiferayPageBreak', '-', 'Smiley', 'SpecialChar']";
 
-		jsonArray.put(toJSONArray(buttons));
-
-		jsonArray.put("/");
 		jsonArray.put(
+			toJSONArray(buttons)
+		).put(
+			"/"
+		).put(
 			toJSONArray(
 				"['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', " +
-					"'-', 'SelectAll' , '-', 'Undo', 'Redo']"));
-		jsonArray.put(
-			toJSONArray("['Find', 'Replace', '-', 'SpellChecker', 'Scayt']"));
+					"'-', 'SelectAll' , '-', 'Undo', 'Redo']")
+		).put(
+			toJSONArray("['Find', 'Replace', '-', 'SpellChecker', 'Scayt']")
+		);
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));
@@ -300,9 +302,11 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 
 		buttons = buttons.concat(" 'Flash', '-', 'Smiley', 'SpecialChar']");
 
-		jsonArray.put(toJSONArray(buttons));
-
-		jsonArray.put("/");
+		jsonArray.put(
+			toJSONArray(buttons)
+		).put(
+			"/"
+		);
 
 		boolean inlineEdit = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(
@@ -315,9 +319,10 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		jsonArray.put(
 			toJSONArray(
 				"['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', " +
-					"'-', 'SelectAll' , '-', 'Undo', 'Redo']"));
-		jsonArray.put(
-			toJSONArray("['Find', 'Replace', '-', 'SpellChecker', 'Scayt']"));
+					"'-', 'SelectAll' , '-', 'Undo', 'Redo']")
+		).put(
+			toJSONArray("['Find', 'Replace', '-', 'SpellChecker', 'Scayt']")
+		);
 
 		if (!inlineEdit && isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));

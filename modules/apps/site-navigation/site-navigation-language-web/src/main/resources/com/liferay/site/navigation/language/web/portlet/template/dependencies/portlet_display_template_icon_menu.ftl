@@ -1,10 +1,10 @@
 <#if entries?has_content>
-	<#assign normalizedDefaultLanguageId = stringUtil.toLowerCase(stringUtil.replace(languageId, "_", "-")) />
+	<#assign normalizedDefaultLanguageId = stringUtil.replace(languageId, "_", "-") />
 
 	<div class="truncate-text">
 		<@liferay_ui["icon-menu"]
 			direction="left-side"
-			icon=normalizedDefaultLanguageId
+			icon=stringUtil.toLowerCase(normalizedDefaultLanguageId)
 			markupView="lexicon"
 			showWhenSingleIcon=true
 			triggerLabel=normalizedDefaultLanguageId

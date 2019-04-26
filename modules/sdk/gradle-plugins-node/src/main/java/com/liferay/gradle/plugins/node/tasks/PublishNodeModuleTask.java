@@ -297,9 +297,8 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 		if (!NodePluginUtil.isYarnScriptFile(scriptFile)) {
 			return new File(getTemporaryDir(), "npmrc");
 		}
-		else {
-			return new File(scriptFile.getParentFile(), ".npmrc");
-		}
+
+		return new File(scriptFile.getParentFile(), ".npmrc");
 	}
 
 	private void _updatePackageJsonFile(Path packageJsonPath)

@@ -1175,6 +1175,16 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "The item was shared successfully.");
 	}
 
+	macro shareWithNoSharingPermissionsUser {
+		IFrame.selectModalFrame();
+
+		Type(
+			locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_INPUT",
+			value1 = "${userEmailAddress}");
+
+		AssertElementNotPresent(locator1 = "DocumentsAndMediaShare#INVITE_TO_COLLABORATE_DROPDOWN");
+	}
+
 	macro tearDownCP {
 		Navigator.openURL();
 

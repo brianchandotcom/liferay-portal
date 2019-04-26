@@ -71,22 +71,13 @@ public class EtcdUtil {
 	}
 
 	public static synchronized Node get(String etcdServerURL, String key) {
-		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
-			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);
+		EtcdKeysResponse.EtcdNode etcdNode = _getEtcdNode(etcdServerURL, key);
 
-			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
-				etcdKeyGetRequest.send();
+		if (etcdNode != null) {
+			return new Node(etcdServerURL, etcdNode);
+		}
 
-			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
-
-			return new Node(etcdServerURL, etcdKeysResponse.getNode());
-		}
-		catch (EtcdException ee) {
-			return null;
-		}
-		catch (EtcdAuthenticationException | IOException | TimeoutException e) {
-			throw new RuntimeException(e);
-		}
+		return null;
 	}
 
 	public static EtcdClient getEtcdClient(String url) {
@@ -207,26 +198,33 @@ public class EtcdUtil {
 		}
 
 		private synchronized void _refreshEtcdNode() {
-			try (EtcdClient etcdClient = getEtcdClient(_etcdServerURL)) {
-				EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(getKey());
-
-				EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
-					etcdKeyGetRequest.send();
-
-				EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
-
-				_etcdNode = etcdKeysResponse.getNode();
-			}
-			catch (EtcdAuthenticationException | EtcdException | IOException |
-				   TimeoutException e) {
-
-				throw new RuntimeException(e);
-			}
+			_etcdNode = _getEtcdNode(_etcdServerURL, getKey());
 		}
 
 		private EtcdKeysResponse.EtcdNode _etcdNode;
 		private final String _etcdServerURL;
 
+	}
+
+	private static synchronized EtcdKeysResponse.EtcdNode _getEtcdNode(
+		String etcdServerURL, String key) {
+
+		try (EtcdClient etcdClient = getEtcdClient(etcdServerURL)) {
+			EtcdKeyGetRequest etcdKeyGetRequest = etcdClient.get(key);
+
+			EtcdResponsePromise<EtcdKeysResponse> etcdResponsePromise =
+				etcdKeyGetRequest.send();
+
+			EtcdKeysResponse etcdKeysResponse = etcdResponsePromise.get();
+
+			return etcdKeysResponse.getNode();
+		}
+		catch (EtcdException ee) {
+			return null;
+		}
+		catch (EtcdAuthenticationException | IOException | TimeoutException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

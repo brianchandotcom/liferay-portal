@@ -46,9 +46,10 @@ export default class AppComponent extends React.Component {
 
 	render() {
 		const { defaultDelta, namespace, title } = this.state;
-		const withParams = Component => ({ match: { params } }) => (
-			<Component {...params} />
-		);
+		const withParams = Component => ({
+			location: { search },
+			match: { params }
+		}) => <Component {...params} query={search} />;
 
 		return (
 			<Router>
@@ -75,7 +76,7 @@ export default class AppComponent extends React.Component {
 							/>
 
 							<Route
-								path="/dashboard/:processId/:pageSize/:page/:sort"
+								path="/dashboard/:processId"
 								render={withParams(ProcessDashboard)}
 							/>
 

@@ -70,7 +70,7 @@
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
 		"test": "liferay-npm-scripts test",
-		"webpack": "webpack --config webpack.prod.js"
+		"webpack": "webpack"
 	},
 	"version": "4.0.0"
 }

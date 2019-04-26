@@ -68,8 +68,7 @@
 		"snapshot-diff": "^0.4.1",
 		"style-loader": "^0.23.1",
 		"webpack": "^4.29.5",
-		"webpack-cli": "^3.2.3",
-		"webpack-dev-server": "^3.1.10"
+		"webpack-cli": "^3.2.3"
 	},
 	"jest": {
 		"modulePathIgnorePatterns": [
@@ -90,7 +89,6 @@
 		"build:libs": "webpack",
 		"csf": "csf {src,test}/**/*.es.js src/**/*.scss",
 		"format": "npm run csf -- -i",
-		"start": "webpack-dev-server --config ./webpack.dev.config.js",
 		"test": "env TZ=utc jest",
 		"test:watch": "jest --watch"
 	},

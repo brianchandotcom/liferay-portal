@@ -697,15 +697,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), as of 7.2.0
-	 */
-	@Deprecated
-	@Override
-	public Layout createLayout(long plid) {
-		return layoutPersistence.create(plid);
-	}
-
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Layout delete(Layout layout) throws PortalException {

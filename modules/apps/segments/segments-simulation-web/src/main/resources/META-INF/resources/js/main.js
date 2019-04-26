@@ -46,6 +46,7 @@ AUI.add(
 
 						instance._eventHandles.push(
 							Liferay.on('SimulationMenu:closeSimulationPanel', A.bind('_deactivateSimulation', instance)),
+							Liferay.on('SimulationMenu:openSimulationPanel', A.bind('_simulateSegmentsEntries', instance)),
 							A.on(
 								'beforeunload',
 								function() {
@@ -56,34 +57,7 @@ AUI.add(
 
 						var form = instance.get('form');
 
-						A.one('#' + form.id).delegate(
-							'click',
-							function(event) {
-								A.io.request(
-									instance.get('simulateSegmentsEntriesUrl'),
-									{
-										form: {
-											id: instance.get('form')
-										},
-										method: 'POST',
-										after: {
-											success: function(event, id, obj) {
-												var iframe = A.one('#simulationDeviceIframe');
-
-												if (iframe) {
-													var iframeWindow = A.Node.getDOMNode(iframe.get('contentWindow'));
-
-													if (iframeWindow) {
-														iframeWindow.location.reload();
-													}
-												}
-											}
-										}
-									}
-								);
-							},
-							'input'
-						);
+						A.one('#' + form.id).delegate('click', instance._simulateSegmentsEntries, 'input', instance);
 					},
 
 					_deactivateSimulation: function() {
@@ -99,6 +73,33 @@ AUI.add(
 								after: {
 									success: function(event, id, obj) {
 										A.all('#' + form.id + ' input').set('checked', false);
+									}
+								}
+							}
+						);
+					},
+
+					_simulateSegmentsEntries: function() {
+						var instance = this;
+
+						A.io.request(
+							instance.get('simulateSegmentsEntriesUrl'),
+							{
+								form: {
+									id: instance.get('form')
+								},
+								method: 'POST',
+								after: {
+									success: function(event, id, obj) {
+										var iframe = A.one('#simulationDeviceIframe');
+
+										if (iframe) {
+											var iframeWindow = A.Node.getDOMNode(iframe.get('contentWindow'));
+
+											if (iframeWindow) {
+												iframeWindow.location.reload();
+											}
+										}
 									}
 								}
 							}

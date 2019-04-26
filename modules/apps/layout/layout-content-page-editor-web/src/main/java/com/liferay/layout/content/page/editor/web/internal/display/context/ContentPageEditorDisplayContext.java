@@ -940,10 +940,13 @@ public class ContentPageEditorDisplayContext {
 		return soyContext;
 	}
 
-	private SoyContext _getSoyContextDynamicFragments(int type) {
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+	private List<SoyContext> _getSoyContextDynamicFragments(int type) {
+		List<SoyContext> soyContexts = new ArrayList<>();
 
-		List<SoyContext> soyContextDynamicFragments = new ArrayList<>();
+		Map<String, List<SoyContext>> fragmentCollectionSoyContext =
+			new HashMap<>();
+		Map<String, FragmentRenderer> fragmentCollectionFragmentRenderers =
+			new HashMap<>();
 
 		List<FragmentRenderer> fragmentRenderers =
 			_fragmentRendererTracker.getFragmentRenderers(type);
@@ -964,25 +967,54 @@ public class ContentPageEditorDisplayContext {
 				"name", fragmentRenderer.getLabel(themeDisplay.getLocale())
 			);
 
-			soyContextDynamicFragments.add(soyContextDynamicFragment);
+			List<SoyContext> collectionSoyContexts =
+				fragmentCollectionSoyContext.get(
+					fragmentRenderer.getCollectionKey());
+
+			if (collectionSoyContexts == null) {
+				List<SoyContext> dynamicFragmentSoyContexts =
+					fragmentCollectionSoyContext.computeIfAbsent(
+						fragmentRenderer.getCollectionKey(),
+						key -> new ArrayList<>());
+
+				dynamicFragmentSoyContexts.add(soyContextDynamicFragment);
+
+				fragmentCollectionSoyContext.put(
+					fragmentRenderer.getCollectionKey(),
+					dynamicFragmentSoyContexts);
+
+				fragmentCollectionFragmentRenderers.put(
+					fragmentRenderer.getCollectionKey(), fragmentRenderer);
+			}
+			else {
+				collectionSoyContexts.add(soyContextDynamicFragment);
+			}
 		}
 
-		if (soyContextDynamicFragments.isEmpty()) {
-			return soyContext;
+		for (Map.Entry<String, List<SoyContext>> entry :
+				fragmentCollectionSoyContext.entrySet()) {
+
+			FragmentRenderer fragmentRenderer =
+				fragmentCollectionFragmentRenderers.get(entry.getKey());
+
+			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+			soyContext.put(
+				"fragmentCollectionId", entry.getKey()
+			).put(
+				"fragmentEntries", entry.getValue()
+			).put(
+				"name",
+				LanguageUtil.get(
+					ResourceBundleUtil.getBundle(
+						themeDisplay.getLocale(), fragmentRenderer.getClass()),
+					"fragment.collection.label." + entry.getKey())
+			);
+
+			soyContexts.add(soyContext);
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
-
-		soyContext.put(
-			"fragmentCollectionId", "dynamic-collection"
-		).put(
-			"fragmentEntries", soyContextDynamicFragments
-		).put(
-			"name", LanguageUtil.get(resourceBundle, "dynamic-collection")
-		);
-
-		return soyContext;
+		return soyContexts;
 	}
 
 	private List<SoyContext> _getSoyContextFragmentCollections(int type) {
@@ -1017,12 +1049,7 @@ public class ContentPageEditorDisplayContext {
 			soyContexts.add(soyContext);
 		}
 
-		SoyContext soyContextDynamicFragments = _getSoyContextDynamicFragments(
-			type);
-
-		if (!soyContextDynamicFragments.isEmpty()) {
-			soyContexts.add(_getSoyContextDynamicFragments(type));
-		}
+		soyContexts.addAll(_getSoyContextDynamicFragments(type));
 
 		return soyContexts;
 	}

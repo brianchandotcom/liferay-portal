@@ -18,14 +18,10 @@ class ProcessListItem extends React.Component {
 			title
 		} = this.props;
 
-		const defaultSort = encodeURIComponent('overdueInstanceCount:asc');
-
-		const dashboardPath = `/dashboard/${id}/${defaultDelta}/1/${defaultSort}`;
-
 		return (
 			<tr>
 				<td className="table-cell-expand table-cell-minw-200 table-title lfr-title-column">
-					<ChildLink to={dashboardPath}>
+					<ChildLink to={`/dashboard/${id}`}>
 						<span>{title}</span>
 					</ChildLink>
 				</td>

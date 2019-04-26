@@ -120,9 +120,6 @@ public class LayoutsAdminDisplayContext {
 		_layoutCopyHelper =
 			(LayoutCopyHelper)_liferayPortletRequest.getAttribute(
 				LayoutAdminWebKeys.LAYOUT_COPY_HELPER);
-
-		_liferayPortletRequest.setAttribute(
-			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
 	}
 
 	public List<DropdownItem> getAddLayoutDropdownItems() {

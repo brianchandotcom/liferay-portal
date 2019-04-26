@@ -112,20 +112,39 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 
 	@Override
 	public void wait(String connectionName) {
+		wait(connectionName, this, null);
+	}
+
+	protected void wait(
+		String connectionName, ResourceMonitor resourceMonitor,
+		String competingResourceMonitorName) {
+
 		ResourceConnection resourceConnection = new ResourceConnection(
-			this, connectionName);
+			resourceMonitor, connectionName);
+
+		Integer allowedResourceConnections =
+			resourceMonitor.getAllowedResourceConnections();
 
 		while (true) {
 			List<ResourceConnection> resourceConnectionQueue =
 				getResourceConnectionQueue();
 
-			for (int i = 0; i < _allowedResourceConnections; i++) {
+			for (int i = 0; i < allowedResourceConnections; i++) {
 				if (i >= resourceConnectionQueue.size()) {
 					break;
 				}
 
 				ResourceConnection queuedResourceConnection =
 					resourceConnectionQueue.get(i);
+
+				if (competingResourceMonitorName != null) {
+					String monitorName =
+						queuedResourceConnection.getMonitorName();
+
+					if (monitorName.equals(competingResourceMonitorName)) {
+						break;
+					}
+				}
 
 				if (connectionName.equals(queuedResourceConnection.getName())) {
 					resourceConnection.setState(

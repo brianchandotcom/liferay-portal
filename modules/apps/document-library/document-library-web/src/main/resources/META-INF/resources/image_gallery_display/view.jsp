@@ -190,7 +190,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 								markupView="lexicon"
 							/>
 
-							<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
+							<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "folder" : "folders" %>' />
 						</div>
 
 						<%

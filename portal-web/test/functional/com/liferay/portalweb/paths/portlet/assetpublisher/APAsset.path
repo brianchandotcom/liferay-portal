@@ -51,7 +51,7 @@
 <!--DOCUMENT_CONVERSION-->
 <tr>
 	<td>DOCUMENT_CONVERSION_NAME</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'${key_documentType}')]</td>
+	<td>//a[contains (.,'${key_documentType}')]</td>
 	<td></td>
 </tr>
 <tr>

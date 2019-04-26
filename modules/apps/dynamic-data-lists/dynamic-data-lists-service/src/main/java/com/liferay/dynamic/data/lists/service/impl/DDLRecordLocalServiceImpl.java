@@ -948,6 +948,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				recordVersion.getStatus(), serviceContext);
 		}
 
+		// Asset
+
+		updateAsset(
+			userId, record, recordVersion, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(), serviceContext.getLocale(),
+			serviceContext.getAssetPriority());
+
 		if (isKeepRecordVersionLabel(
 				record.getRecordVersion(), recordVersion, serviceContext)) {
 

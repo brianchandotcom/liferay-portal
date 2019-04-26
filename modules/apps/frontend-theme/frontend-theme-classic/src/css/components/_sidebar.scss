@@ -46,10 +46,7 @@
 		border-bottom: 1px solid #CDCED9;
 	}
 
-	.navigation-bar-light,
-	.sidebar-block > .list-group-item,
-	.panel,
-	.panel-group .panel {
+	.navigation-bar-light, .sidebar-block > .list-group-item, .panel, .panel-group .panel {
 		@include sm {
 			background-color: transparent;
 			border-color: transparent;

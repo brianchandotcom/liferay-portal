@@ -1,7 +1,7 @@
 import {PagesVisitor} from './visitors.es';
 import {sub} from './strings.es.js';
 
-export function pagesOptions(pages, maxPageIndex = 0) {
+export function pageOptions(pages, maxPageIndex = 0) {
 	const pageOptions = [];
 
 	for (let pageIndex = maxPageIndex + 2; pageIndex <= pages.length; pageIndex++) {

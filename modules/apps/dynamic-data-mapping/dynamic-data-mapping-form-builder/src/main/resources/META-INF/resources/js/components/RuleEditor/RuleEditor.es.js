@@ -10,9 +10,8 @@ import templates from './RuleEditor.soy.js';
 import {Config} from 'metal-state';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
 import {makeFetch} from '../../util/fetch.es';
-import {maxPageIndex, pagesOptions} from '../../util/pagesSupport.es';
+import {maxPageIndex, pageOptions} from '../../util/pageSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
-import {sub} from '../../util/strings.es.js';
 
 const fieldOptionStructure = Config.shapeOf(
 	{
@@ -493,12 +492,13 @@ class RuleEditor extends Component {
 		actions[index].label = id;
 
 		if (actions[index].action == 'jump-to-page') {
-			const optionSelected = pageOptions.filter(
+			const selectedOption = pageOptions.find(
 				option => {
 					return option.value == id;
 				}
 			);
-			actions[index].label = optionSelected[0].label;
+
+			actions[index].label = selectedOption.label;
 		}
 
 		if (id === undefined) {
@@ -658,7 +658,7 @@ class RuleEditor extends Component {
 				conditions,
 				deletedFields: this._getDeletedFields(visitor),
 				fieldOptions: this._fieldOptionsValueFn(),
-				pageOptions: pagesOptions(pages, maxPage),
+				pageOptions: pageOptions(pages, maxPage),
 				roles: this._rolesValueFn()
 			}
 		);
@@ -1159,7 +1159,7 @@ class RuleEditor extends Component {
 			{
 				actions,
 				conditions,
-				pageOptions: pagesOptions(pages, maxPageIndex)
+				pageOptions: pageOptions(pages, maxPageIndex)
 			}
 		);
 	}

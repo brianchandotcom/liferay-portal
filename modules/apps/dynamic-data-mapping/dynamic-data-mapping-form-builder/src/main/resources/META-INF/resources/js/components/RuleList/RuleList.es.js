@@ -8,7 +8,7 @@ import templates from './RuleList.soy.js';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
-import {maxPageIndex, pagesOptions} from '../../util/pagesSupport.es';
+import {maxPageIndex, pageOptions} from '../../util/pageSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
 /**
@@ -182,15 +182,15 @@ class RuleList extends Component {
 									else {
 										const maxPageIndexRes = maxPageIndex(rule.conditions, pages);
 
-										const pagesOptionsList = pagesOptions(pages, maxPageIndexRes);
+										const pageOptionsList = pageOptions(pages, maxPageIndexRes);
 
-										const pageOption = pagesOptionsList.filter(
+										const selectedPage = pageOptionsList.find(
 											option => {
 												return option.value == fieldTarget;
 											}
 										);
 
-										fieldLabel = pageOption[0].label;
+										fieldLabel = selectedPage.label;
 									}
 
 									newAction = {

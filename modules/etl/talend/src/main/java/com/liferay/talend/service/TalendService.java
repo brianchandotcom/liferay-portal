@@ -14,8 +14,8 @@
 
 package com.liferay.talend.service;
 
-import com.liferay.talend.openapi.OpenApiFormat;
-import com.liferay.talend.openapi.OpenApiType;
+import com.liferay.talend.openapi.OpenAPIFormat;
+import com.liferay.talend.openapi.OpenAPIType;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -88,37 +88,37 @@ public class TalendService {
 	private Schema.Entry.Builder _addJavaTypeRecordEntry(
 		Schema.Entry.Builder entryBuilder, JsonObject propertyJsonObject) {
 
-		OpenApiType openApiType = OpenApiType.fromDefinition(
+		OpenAPIType openAPIType = OpenAPIType.fromDefinition(
 			propertyJsonObject.getString("type"));
 
-		OpenApiFormat openApiFormat = OpenApiFormat.fromOpenApiTypeAndFormat(
-			openApiType, propertyJsonObject.getString("format", null));
+		OpenAPIFormat openAPIFormat = OpenAPIFormat.fromOpenAPITypeAndFormat(
+			openAPIType, propertyJsonObject.getString("format", null));
 
-		if (openApiFormat == OpenApiFormat.BOOLEAN) {
+		if (openAPIFormat == OpenAPIFormat.BOOLEAN) {
 			entryBuilder.withType(Schema.Type.BOOLEAN);
 		}
-		else if (openApiFormat == OpenApiFormat.BINARY) {
+		else if (openAPIFormat == OpenAPIFormat.BINARY) {
 			entryBuilder.withType(Schema.Type.BYTES);
 		}
-		else if (openApiFormat == OpenApiFormat.DATE) {
+		else if (openAPIFormat == OpenAPIFormat.DATE) {
 			entryBuilder.withType(Schema.Type.DATETIME);
 		}
-		else if (openApiFormat == OpenApiFormat.DATE_TIME) {
+		else if (openAPIFormat == OpenAPIFormat.DATE_TIME) {
 			entryBuilder.withType(Schema.Type.DATETIME);
 		}
-		else if (openApiFormat == OpenApiFormat.DOUBLE) {
+		else if (openAPIFormat == OpenAPIFormat.DOUBLE) {
 			entryBuilder.withType(Schema.Type.DOUBLE);
 		}
-		else if (openApiFormat == OpenApiFormat.FLOAT) {
+		else if (openAPIFormat == OpenAPIFormat.FLOAT) {
 			entryBuilder.withType(Schema.Type.FLOAT);
 		}
-		else if (openApiFormat == OpenApiFormat.INT32) {
+		else if (openAPIFormat == OpenAPIFormat.INT32) {
 			entryBuilder.withType(Schema.Type.INT);
 		}
-		else if (openApiFormat == OpenApiFormat.INT64) {
+		else if (openAPIFormat == OpenAPIFormat.INT64) {
 			entryBuilder.withType(Schema.Type.LONG);
 		}
-		else if (openApiFormat == OpenApiFormat.STRING) {
+		else if (openAPIFormat == OpenAPIFormat.STRING) {
 			entryBuilder.withType(Schema.Type.STRING);
 		}
 

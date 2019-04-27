@@ -17,28 +17,28 @@ package com.liferay.talend.openapi;
 /**
  * @author Igor Beslic
  */
-public enum OpenApiType {
+public enum OpenAPIType {
 
 	ARRAY("array"), BOOLEAN("boolean"), DICTIONARY("dictionary"),
 	INTEGER("integer"), NUMBER("number"), OBJECT("object"), STRING("string");
 
-	public static OpenApiType fromDefinition(String openApiTypeDefinition) {
-		for (OpenApiType openApiType : values()) {
-			if (openApiTypeDefinition.equals(
-					openApiType._openApiTypeDefinition)) {
+	public static OpenAPIType fromDefinition(String openAPITypeDefinition) {
+		for (OpenAPIType openAPIType : values()) {
+			if (openAPITypeDefinition.equals(
+					openAPIType._openAPITypeDefinition)) {
 
-				return openApiType;
+				return openAPIType;
 			}
 		}
 
-		throw new OpenApiException(
-			"Unknown OpenAPI type " + openApiTypeDefinition);
+		throw new OpenAPIException(
+			"Unknown OpenAPI type " + openAPITypeDefinition);
 	}
 
-	private OpenApiType(String openApiTypeDefinition) {
-		_openApiTypeDefinition = openApiTypeDefinition;
+	private OpenAPIType(String openAPITypeDefinition) {
+		_openAPITypeDefinition = openAPITypeDefinition;
 	}
 
-	private final String _openApiTypeDefinition;
+	private final String _openAPITypeDefinition;
 
 }

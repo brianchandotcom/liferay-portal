@@ -67,12 +67,6 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Ignore
-	@Test
-	public void testCleanAssetCategoriesAndTags() throws Exception {
-		super.testCleanAssetCategoriesAndTags();
-	}
-
 	@Test
 	public void testImportLayoutPageTemplateEntryByDefaultUser()
 		throws Exception {

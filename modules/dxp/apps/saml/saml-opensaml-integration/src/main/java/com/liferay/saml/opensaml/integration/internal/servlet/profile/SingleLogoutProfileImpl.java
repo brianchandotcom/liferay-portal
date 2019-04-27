@@ -659,6 +659,16 @@ public class SingleLogoutProfileImpl
 		SamlSloContext samlSloContext = getSamlSloContext(
 			request, messageContext);
 
+		if (samlSloContext == null) {
+			sendIdpLogoutResponse(
+				request, response, StatusCode.UNKNOWN_PRINCIPAL,
+				new SamlSloContext(
+					null, messageContext, _samlIdpSpConnectionLocalService,
+					_samlIdpSpSessionLocalService, _userLocalService));
+
+			return;
+		}
+
 		Set<String> samlSpEntityIds = samlSloContext.getSamlSpEntityIds();
 
 		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
@@ -670,13 +680,6 @@ public class SingleLogoutProfileImpl
 			sendIdpLogoutResponse(
 				request, response, StatusCode.UNSUPPORTED_BINDING,
 				samlSloContext);
-		}
-		else if (samlSloContext == null) {
-			sendIdpLogoutResponse(
-				request, response, StatusCode.UNKNOWN_PRINCIPAL,
-				new SamlSloContext(
-					null, messageContext, _samlIdpSpConnectionLocalService,
-					_samlIdpSpSessionLocalService, _userLocalService));
 		}
 		else if (!samlSpEntityIds.isEmpty()) {
 			initiateIdpSingleLogout(request, response);

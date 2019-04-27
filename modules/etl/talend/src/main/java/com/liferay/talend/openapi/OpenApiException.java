@@ -17,9 +17,9 @@ package com.liferay.talend.openapi;
 /**
  * @author Igor Beslic
  */
-public class OpenApiException extends RuntimeException {
+public class OpenAPIException extends RuntimeException {
 
-	public OpenApiException(String message) {
+	public OpenAPIException(String message) {
 		super(message);
 	}
 

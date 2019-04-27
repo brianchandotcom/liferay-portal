@@ -17,61 +17,61 @@ package com.liferay.talend.openapi;
 /**
  * @author Igor Beslic
  */
-public enum OpenApiFormat {
+public enum OpenAPIFormat {
 
-	BIGDECIMAL("bigdecimal", OpenApiType.NUMBER, true),
-	BINARY("binary", OpenApiType.STRING, false),
-	BOOLEAN("boolean", OpenApiType.BOOLEAN, true),
-	BYTE("byte", OpenApiType.STRING, false),
-	DATE("date", OpenApiType.STRING, false),
-	DATE_TIME("date-time", OpenApiType.STRING, false),
-	DICTIONARY(null, OpenApiType.DICTIONARY, true),
-	DOUBLE("double", OpenApiType.NUMBER, false),
-	FLOAT("float", OpenApiType.NUMBER, true),
-	INT32("int32", OpenApiType.INTEGER, true),
-	INT64("int64", OpenApiType.INTEGER, false),
-	STRING(null, OpenApiType.STRING, true);
+	BIGDECIMAL("bigdecimal", OpenAPIType.NUMBER, true),
+	BINARY("binary", OpenAPIType.STRING, false),
+	BOOLEAN("boolean", OpenAPIType.BOOLEAN, true),
+	BYTE("byte", OpenAPIType.STRING, false),
+	DATE("date", OpenAPIType.STRING, false),
+	DATE_TIME("date-time", OpenAPIType.STRING, false),
+	DICTIONARY(null, OpenAPIType.DICTIONARY, true),
+	DOUBLE("double", OpenAPIType.NUMBER, false),
+	FLOAT("float", OpenAPIType.NUMBER, true),
+	INT32("int32", OpenAPIType.INTEGER, true),
+	INT64("int64", OpenAPIType.INTEGER, false),
+	STRING(null, OpenAPIType.STRING, true);
 
-	public static OpenApiFormat fromOpenApiTypeAndFormat(
-		OpenApiType openApiType, String openApiFormatDefinition) {
+	public static OpenAPIFormat fromOpenAPITypeAndFormat(
+		OpenAPIType openAPIType, String openAPIFormatDefinition) {
 
-		OpenApiFormat defaultOpenApiFormat = null;
+		OpenAPIFormat defaultOpenAPIFormat = null;
 
-		for (OpenApiFormat openApiFormat : values()) {
-			if (openApiType != openApiFormat._openApiType) {
+		for (OpenAPIFormat openAPIFormat : values()) {
+			if (openAPIType != openAPIFormat._openAPIType) {
 				continue;
 			}
 
-			if ((openApiFormatDefinition == null) && openApiFormat._default) {
-				return openApiFormat;
+			if ((openAPIFormatDefinition == null) && openAPIFormat._default) {
+				return openAPIFormat;
 			}
 
-			if ((openApiFormatDefinition != null) &&
-				openApiFormatDefinition.equals(
-					openApiFormat._openApiFormatDefinition)) {
+			if ((openAPIFormatDefinition != null) &&
+				openAPIFormatDefinition.equals(
+					openAPIFormat._openAPIFormatDefinition)) {
 
-				return openApiFormat;
+				return openAPIFormat;
 			}
 
-			if (openApiFormat._default) {
-				defaultOpenApiFormat = openApiFormat;
+			if (openAPIFormat._default) {
+				defaultOpenAPIFormat = openAPIFormat;
 			}
 		}
 
-		return defaultOpenApiFormat;
+		return defaultOpenAPIFormat;
 	}
 
-	private OpenApiFormat(
-		String openApiFormatDefinition, OpenApiType openApiType,
+	private OpenAPIFormat(
+		String openAPIFormatDefinition, OpenAPIType openAPIType,
 		boolean defaultFormat) {
 
 		_default = defaultFormat;
-		_openApiFormatDefinition = openApiFormatDefinition;
-		_openApiType = openApiType;
+		_openAPIFormatDefinition = openAPIFormatDefinition;
+		_openAPIType = openAPIType;
 	}
 
 	private final boolean _default;
-	private final String _openApiFormatDefinition;
-	private final OpenApiType _openApiType;
+	private final String _openAPIFormatDefinition;
+	private final OpenAPIType _openAPIType;
 
 }

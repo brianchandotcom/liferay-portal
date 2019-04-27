@@ -33,7 +33,7 @@ public class LiferayServiceTest {
 		LiferayService liferayService = new LiferayService();
 
 		List<String> pageableEndpoints = liferayService.getPageableEndpoints(
-			_getOpenApiJsonObject());
+			_getOpenAPIJsonObject());
 
 		Assert.assertFalse(
 			"Pageable endpoints are empty", pageableEndpoints.isEmpty());
@@ -72,7 +72,7 @@ public class LiferayServiceTest {
 				"http://test.com:8080/o/test-endpoint/v1.0/openapi.json"));
 	}
 
-	private JsonObject _getOpenApiJsonObject() {
+	private JsonObject _getOpenAPIJsonObject() {
 		JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
 
 		objectBuilder.add("key1", "value1");

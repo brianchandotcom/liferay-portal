@@ -289,6 +289,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
 		AssertTextEquals(
 			locator1 = "LexiconCard#CARD_TITLE",
 			value1 = "${orgName}");

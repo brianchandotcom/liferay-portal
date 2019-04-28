@@ -93,19 +93,13 @@ definition {
 
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "My Account",
-				panel = "User",
-				portlet = "Account Settings");
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
 			User.editDetailsViaMyAccount(userScreenNameEdit = "test");
 
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "My Account",
-				panel = "User",
-				portlet = "Account Settings");
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
 			User.editPasswordViaMyAccount(
 				currentPassword = "password",

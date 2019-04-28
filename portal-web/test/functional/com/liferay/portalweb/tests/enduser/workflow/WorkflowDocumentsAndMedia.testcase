@@ -160,10 +160,7 @@ definition {
 		for (var i : list "1,2,3,4") {
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "My Account",
-				panel = "User",
-				portlet = "My Workflow Tasks");
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.assignToMeTaskByActions(
 				workflowAssetTitle = "Document_1.doc",
@@ -172,10 +169,7 @@ definition {
 
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "My Account",
-				panel = "User",
-				portlet = "My Workflow Tasks");
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.approveTaskByActions(
 				boardWorkflowTask = "${i}",
@@ -187,10 +181,7 @@ definition {
 		for (var i : list "1,2,3,4") {
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "My Account",
-				panel = "User",
-				portlet = "My Workflow Tasks");
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.assignToMeTaskByActions(
 				workflowAssetTitle = "Document_2.doc",
@@ -201,10 +192,7 @@ definition {
 
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "My Account",
-				panel = "User",
-				portlet = "My Workflow Tasks");
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.approveTaskByActions(
 				boardWorkflowTask = "${i}",
@@ -216,10 +204,7 @@ definition {
 		for (var i : list "1,2,3,4") {
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "My Account",
-				panel = "User",
-				portlet = "My Workflow Tasks");
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.assignToMeTaskByActions(
 				workflowAssetTitle = "Document_3.doc",
@@ -230,10 +215,7 @@ definition {
 
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "My Account",
-				panel = "User",
-				portlet = "My Workflow Tasks");
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.approveTaskByActions(
 				boardWorkflowTask = "${i}",

@@ -5399,10 +5399,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Submissions");
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.withdrawTaskByActions(
 			workflowAssetTitle = "Kaleo Forms Process",

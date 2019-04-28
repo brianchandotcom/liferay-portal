@@ -62,10 +62,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Submissions");
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.withdrawTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
@@ -118,10 +115,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Submissions");
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.withdrawTaskByDetails(
 			workflowAssetContent = "WC WebContent Content",
@@ -167,10 +161,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Submissions");
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.withdrawTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
@@ -215,10 +206,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Submissions");
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.withdrawTaskByDetails(
 			workflowAssetContent = "WC WebContent Content",
@@ -278,10 +266,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Submissions");
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.viewCannotWithdrawTaskByActions(
 			workflowAssetTitle = "WC WebContent Title",
@@ -326,10 +311,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Submissions");
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.withdrawTaskCompletedNoByDetails(
 			workflowAssetContent = "WC WebContent Content",

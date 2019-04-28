@@ -28,10 +28,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Subscriptions");
+		UserBar.gotoDropdownItem(dropdownItem = "My Subscriptions");
 
 		ProductMenu.gotoPortlet(
 			category = "Apps",

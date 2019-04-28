@@ -1233,10 +1233,7 @@ definition {
 
 			Navigator.openURL();
 
-			ProductMenu.gotoPortlet(
-				category = "My Account",
-				panel = "User",
-				portlet = "My Workflow Tasks");
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.assignToMeTaskByActions(
 				workflowAssetTitle = "User ${n} Blog Title Approved",
@@ -1255,10 +1252,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Submissions");
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.viewMySubmissions(
 			workflowAssetTitle = "User 1 Blog Title Pending",
@@ -1282,10 +1276,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Submissions");
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
 		Workflow.viewMySubmissions(
 			workflowAssetTitle = "User 2 Blog Title Pending",

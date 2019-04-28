@@ -34,17 +34,11 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		MyAccount.addOrganization(organizationName = "Organization Name");
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		Organization.addMemberCP(
 			orgName = "Organization Name",
@@ -53,10 +47,7 @@ definition {
 			userName = "userfn userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		Organization.gotoCP(
 			orgName = "Organization Name",
@@ -69,18 +60,12 @@ definition {
 
 	@priority = "4"
 	test AddOrganizations {
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		for (var i : list "1,2,3") {
 			MyAccount.addOrganization(organizationName = "Organization Name ${i}");
 
-			ProductMenu.gotoPortlet(
-				category = "My Account",
-				panel = "User",
-				portlet = "My Organizations");
+			UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 			Organization.searchCP(
 				orgName = "Organization Name ${i}",
@@ -90,41 +75,26 @@ definition {
 
 	@priority = "5"
 	test DeleteOrganization {
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		MyAccount.addOrganization(organizationName = "Organization Name");
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		Organization.deleteCP(orgName = "Organization Name");
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		Organization.viewNoOrganizationsFoundCP();
 	}
 
 	@priority = "5"
 	test EditOrganizationSite {
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		MyAccount.addOrganization(organizationName = "Organization Name");
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
@@ -138,19 +108,13 @@ definition {
 			siteName = "Organization Name",
 			siteType = "Private");
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		Organization.editSiteCP(
 			orgName = "Organization Name",
 			orgNameEdit = "Organization Name Edit");
 
-		ProductMenu.gotoPortlet(
-			category = "My Account",
-			panel = "User",
-			portlet = "My Organizations");
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
 		Organization.searchCP(
 			orgName = "Organization Name Edit",

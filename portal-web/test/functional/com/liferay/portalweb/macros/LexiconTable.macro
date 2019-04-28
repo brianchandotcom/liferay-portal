@@ -49,4 +49,11 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
 			value1 = "${tableEntry}");
 	}
+
+	macro viewTableEntryTitleLink {
+		AssertTextEquals(
+			key_tableEntry = "${tableEntry}",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+			value1 = "${tableEntry}");
+	}
 }

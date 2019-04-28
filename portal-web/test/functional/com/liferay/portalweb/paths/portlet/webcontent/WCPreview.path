@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>BODY_FIELD</td>
-	<td>//div[@class='portlet-body']/div[contains(@class,'container')]</td>
+	<td>//div[@class='portlet-body']/div[contains(@class,'m-4')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -539,6 +539,8 @@ definition {
 
 	@priority = "3"
 	test CannotAddDuplicateKBFolder {
+		property test.name.skip.portal.instance = "CPKnowledgebase#CannotAddDuplicateKBFolder";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -850,6 +852,8 @@ definition {
 
 	@priority = "3"
 	test ViewChildArticleInKBArticleViaKBAdmin {
+		property test.name.skip.portal.instance = "CPKnowledgebase#ViewChildArticleInKBArticleViaKBAdmin";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1101,6 +1105,8 @@ definition {
 
 	@priority = "3"
 	test ViewKBTemplateViaAddKBArticleCP {
+		property test.name.skip.portal.instance = "CPKnowledgebase#ViewKBTemplateViaAddKBArticleCP";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1142,6 +1148,8 @@ definition {
 
 	@priority = "3"
 	test ViewPendingKBArticleContent {
+		property test.name.skip.portal.instance = "CPKnowledgebase#ViewPendingKBArticleContent";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

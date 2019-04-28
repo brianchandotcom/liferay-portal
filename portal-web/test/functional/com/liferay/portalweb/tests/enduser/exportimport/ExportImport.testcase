@@ -986,6 +986,8 @@ definition {
 	@description = "This is a test for LPS-91233."
 	@priority = "3"
 	test PublishWebContentWithBrokenLink {
+		property test.name.skip.portal.instance = "ExportImport#PublishWebContentWithBrokenLink";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

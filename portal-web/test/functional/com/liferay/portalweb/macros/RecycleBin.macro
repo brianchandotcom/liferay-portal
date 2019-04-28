@@ -181,7 +181,7 @@ definition {
 				value1 = "The Recycle Bin shows all assets removed by users. Assets can be restored or permanently deleted.");
 		}
 
-		LexiconTable.viewTableEntryTitle(tableEntry = "${assetName}");
+		LexiconTable.viewTableEntryTitleLink(tableEntry = "${assetName}");
 
 		LexiconTable.viewTableEntryText(
 			tableEntry = "${assetName}",

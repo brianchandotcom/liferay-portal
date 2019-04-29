@@ -137,30 +137,6 @@ if (portletTitleBasedNavigation) {
 		/>
 	</c:if>
 
-	<c:if test="<%= !portletTitleBasedNavigation %>">
-		<div class="btn-group">
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				label="info"
-			/>
-
-			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
-
-				<%
-				for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
-				%>
-
-					<liferay-ui:toolbar-item
-						toolbarItem="<%= toolbarItem %>"
-					/>
-
-				<%
-				}
-				%>
-
-			</c:if>
-		</div>
-	</c:if>
-
 	<c:choose>
 		<c:when test="<%= portletTitleBasedNavigation %>">
 			<div class="contextual-sidebar sidebar-light sidebar-preview">
@@ -189,6 +165,31 @@ if (portletTitleBasedNavigation) {
 
 	<div class="<%= portletTitleBasedNavigation ? "contextual-sidebar-content" : "sidenav-content" %>">
 		<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
+
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<div class="btn-group">
+				<liferay-frontend:management-bar-sidenav-toggler-button
+					label="info"
+				/>
+
+				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+
+					<%
+						for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
+					%>
+
+					<liferay-ui:toolbar-item
+						toolbarItem="<%= toolbarItem %>"
+					/>
+
+					<%
+						}
+					%>
+
+				</c:if>
+			</div>
+		</c:if>
+
 
 		<c:if test="<%= (fileEntry.getLock() != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 			<c:choose>

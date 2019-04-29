@@ -56,12 +56,12 @@ public class KeyValueFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "placeholder",
-				LocalizationUtil.toLocalizedStrings(
+				LocalizationUtil.toStringsMap(
 					jsonObject.getJSONObject("placeholder"))));
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "tooltip",
-				LocalizationUtil.toLocalizedStrings(
+				LocalizationUtil.toStringsMap(
 					jsonObject.getJSONObject("tooltip"))));
 
 		return dataDefinitionField;

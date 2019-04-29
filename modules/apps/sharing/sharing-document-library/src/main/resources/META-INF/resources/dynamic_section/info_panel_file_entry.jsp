@@ -85,7 +85,7 @@ boolean showManageCollaborators = GetterUtil.getBoolean(request.getAttribute("in
 <c:if test="<%= showManageCollaborators %>">
 	<div class="autofit-row sidebar-panel">
 		<clay:button
-			elementClasses="manage-collaborators-btn"
+			elementClasses="btn-link manage-collaborators-btn"
 			id='<%= liferayPortletResponse.getNamespace() + "manageCollaboratorsButton" %>'
 			label='<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
 			size="sm"

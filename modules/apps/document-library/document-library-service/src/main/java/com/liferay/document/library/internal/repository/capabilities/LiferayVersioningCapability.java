@@ -65,6 +65,21 @@ public class LiferayVersioningCapability
 		return new LocalRepositoryWrapper(localRepository) {
 
 			@Override
+			public void checkInFileEntry(
+					long userId, long fileEntryId,
+					DLVersionNumberIncrease dlVersionNumberIncrease,
+					String changeLog, ServiceContext serviceContext)
+				throws PortalException {
+
+				super.checkInFileEntry(
+					userId, fileEntryId, dlVersionNumberIncrease, changeLog,
+					serviceContext);
+
+				_purgeVersions(
+					dlAppServiceAdapter, super.getFileEntry(fileEntryId));
+			}
+
+			@Override
 			public FileEntry updateFileEntry(
 					long userId, long fileEntryId, String sourceFileName,
 					String mimeType, String title, String description,
@@ -107,6 +122,21 @@ public class LiferayVersioningCapability
 			repository);
 
 		return new RepositoryWrapper(repository) {
+
+			@Override
+			public void checkInFileEntry(
+					long userId, long fileEntryId,
+					DLVersionNumberIncrease dlVersionNumberIncrease,
+					String changeLog, ServiceContext serviceContext)
+				throws PortalException {
+
+				super.checkInFileEntry(
+					userId, fileEntryId, dlVersionNumberIncrease, changeLog,
+					serviceContext);
+
+				_purgeVersions(
+					dlAppServiceAdapter, super.getFileEntry(fileEntryId));
+			}
 
 			@Override
 			public FileEntry updateFileEntry(
@@ -159,7 +189,7 @@ public class LiferayVersioningCapability
 	private FileEntry _purgeVersions(
 		DLAppServiceAdapter dlAppServiceAdapter, FileEntry fileEntry) {
 
-		if (_versionPurger == null) {
+		if ((_versionPurger == null) || fileEntry.isCheckedOut()) {
 			return fileEntry;
 		}
 

@@ -78,6 +78,15 @@ public class DocumentCreationHelpers {
 		return document -> document.addText(fieldName, values);
 	}
 
+	public static DocumentCreationHelper singleTextSortable(
+		String fieldName, String fieldNameSortable, String... values) {
+
+		return document -> {
+			document.addText(fieldName, values);
+			document.addText(fieldNameSortable, values);
+		};
+	}
+
 	public static DocumentCreationHelper twoKeywords(
 		String fieldName1, String value1, String fieldName2, String value2) {
 

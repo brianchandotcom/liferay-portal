@@ -86,12 +86,12 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.POSTGRESQL,
-				expectedLog = "ERROR: relation \"ix_d5f1e2a2\" already exists",
+				expectedLog = "ERROR: relation ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.SYBASE,
-				expectedLog = "There is already an index on table 'ResourcePermission' named 'IX_D5F1E2A2'",
+				expectedLog = "There is already an index on table 'ResourcePermission' named ",
 				expectedType = ExpectedType.PREFIX
 			)
 		},

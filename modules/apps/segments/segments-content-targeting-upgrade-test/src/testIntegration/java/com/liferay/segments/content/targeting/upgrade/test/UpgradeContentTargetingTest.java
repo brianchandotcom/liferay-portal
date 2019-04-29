@@ -394,9 +394,7 @@ public class UpgradeContentTargetingTest {
 
 		long contentTargetingUserSegmentId = -1L;
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("value", "liferay");
+		JSONObject jsonObject = JSONUtil.put("value", "liferay");
 
 		JSONArray jsonArray = JSONUtil.put(jsonObject);
 
@@ -761,9 +759,7 @@ public class UpgradeContentTargetingTest {
 	private String _getCustomFieldRuleTypeSettings(
 		ExpandoColumn expandoColumn, String expandoValue) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"attributeName", expandoColumn.getName()
 		).put(
 			"value", expandoValue

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -250,9 +251,7 @@ public class ScreensAssetEntryServiceImpl
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(
 			assetEntry.getClassPK());
 
-		JSONObject blogsEntryJSONObject = JSONFactoryUtil.createJSONObject();
-
-		blogsEntryJSONObject.put(
+		JSONObject blogsEntryJSONObject = JSONUtil.put(
 			"blogsEntry",
 			JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(blogsEntry)));
@@ -266,9 +265,7 @@ public class ScreensAssetEntryServiceImpl
 		FileEntry fileEntry = dlAppService.getFileEntry(
 			assetEntry.getClassPK());
 
-		JSONObject fileEntryJSONObject = JSONFactoryUtil.createJSONObject();
-
-		fileEntryJSONObject.put(
+		JSONObject fileEntryJSONObject = JSONUtil.put(
 			"fileEntry",
 			JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(fileEntry))
@@ -317,10 +314,7 @@ public class ScreensAssetEntryServiceImpl
 				journalArticleResource.getArticleId());
 		}
 
-		JSONObject journalArticleJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		journalArticleJSONObject.put(
+		JSONObject journalArticleJSONObject = JSONUtil.put(
 			"DDMStructure",
 			JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(
@@ -345,9 +339,7 @@ public class ScreensAssetEntryServiceImpl
 
 		User user = userService.getUserById(assetEntry.getClassPK());
 
-		JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
-
-		userJSONObject.put(
+		JSONObject userJSONObject = JSONUtil.put(
 			"user",
 			JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(user)));

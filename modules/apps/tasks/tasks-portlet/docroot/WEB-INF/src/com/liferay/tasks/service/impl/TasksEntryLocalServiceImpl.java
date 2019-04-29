@@ -20,8 +20,8 @@ package com.liferay.tasks.service.impl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
@@ -101,9 +101,8 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", tasksEntry.getTitle());
+		JSONObject extraDataJSONObject = JSONUtil.put(
+			"title", tasksEntry.getTitle());
 
 		socialActivityLocalService.addActivity(
 			userId, groupId, TasksEntry.class.getName(), tasksEntryId,
@@ -407,9 +406,8 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			activity = TasksActivityKeys.RESOLVE_ENTRY;
 		}
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", tasksEntry.getTitle());
+		JSONObject extraDataJSONObject = JSONUtil.put(
+			"title", tasksEntry.getTitle());
 
 		socialActivityLocalService.addActivity(
 			serviceContext.getUserId(), tasksEntry.getGroupId(),
@@ -430,10 +428,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
 		receiverUserIds.remove(serviceContext.getUserId());
 
-		JSONObject notificationEventJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		notificationEventJSONObject.put(
+		JSONObject notificationEventJSONObject = JSONUtil.put(
 			"classPK", tasksEntry.getTasksEntryId()
 		).put(
 			"userId", serviceContext.getUserId()

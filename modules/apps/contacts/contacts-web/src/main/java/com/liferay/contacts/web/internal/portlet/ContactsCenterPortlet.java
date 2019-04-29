@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -276,9 +277,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		long userId = ParamUtil.getLong(resourceRequest, "userId");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("success", Boolean.TRUE);
+		JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
 
 		JSONObject userJSONObject = getUserJSONObject(
 			resourceResponse, themeDisplay, userId);
@@ -314,9 +313,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		for (long userId : userIds) {
 			try {
-				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
-
-				userJSONObject.put(
+				JSONObject userJSONObject = JSONUtil.put(
 					"success", Boolean.TRUE
 				).put(
 					"user",
@@ -771,9 +768,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (long userId : userIds) {
-			JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
-
-			userJSONObject.put(
+			JSONObject userJSONObject = JSONUtil.put(
 				"success", Boolean.TRUE
 			).put(
 				"user", getUserJSONObject(actionResponse, themeDisplay, userId)
@@ -807,9 +802,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject optionsJSONObject = JSONFactoryUtil.createJSONObject();
-
-		optionsJSONObject.put(
+		JSONObject optionsJSONObject = JSONUtil.put(
 			"end", end
 		).put(
 			"filterBy", filterBy
@@ -1125,10 +1118,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				SocialRelationConstants.SOCIAL_RELATION_REQUEST,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
-			JSONObject notificationEventJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			notificationEventJSONObject.put(
+			JSONObject notificationEventJSONObject = JSONUtil.put(
 				"classPK", socialRequest.getRequestId()
 			).put(
 				"userId", socialRequest.getUserId()

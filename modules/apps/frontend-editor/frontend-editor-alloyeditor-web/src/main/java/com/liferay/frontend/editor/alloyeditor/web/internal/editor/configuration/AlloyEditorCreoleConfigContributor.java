@@ -79,9 +79,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONObject buttonCfgJSONObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject linkEditJSONObject = JSONFactoryUtil.createJSONObject();
-
-		linkEditJSONObject.put(
+		JSONObject linkEditJSONObject = JSONUtil.put(
 			"appendProtocol", false
 		).put(
 			"showTargetSelector", false
@@ -131,13 +129,9 @@ public class AlloyEditorCreoleConfigContributor
 	protected JSONObject getStyleFormatJSONObject(
 		String styleFormatName, String element, int type) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = JSONUtil.put("name", styleFormatName);
 
-		jsonObject.put("name", styleFormatName);
-
-		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
-
-		styleJSONObject.put(
+		JSONObject styleJSONObject = JSONUtil.put(
 			"element", element
 		).put(
 			"type", type
@@ -185,9 +179,8 @@ public class AlloyEditorCreoleConfigContributor
 	protected JSONObject getStyleFormatsJSONObject(Locale locale) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
-
-		stylesJSONObject.put("styles", getStyleFormatsJSONArray(locale));
+		JSONObject stylesJSONObject = JSONUtil.put(
+			"styles", getStyleFormatsJSONArray(locale));
 
 		jsonObject.put(
 			"cfg", stylesJSONObject
@@ -203,9 +196,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONObject buttonJSONObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject cfgJSONObject = JSONFactoryUtil.createJSONObject();
-
-		cfgJSONObject.put(
+		JSONObject cfgJSONObject = JSONUtil.put(
 			"tableAttributes", JSONFactoryUtil.createJSONObject());
 
 		buttonJSONObject.put(
@@ -224,9 +215,7 @@ public class AlloyEditorCreoleConfigContributor
 	}
 
 	protected JSONObject getToolbarsJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"add", getToolbarsAddJSONObject()
 		).put(
 			"styles", getToolbarsStylesJSONObject(locale)
@@ -236,9 +225,7 @@ public class AlloyEditorCreoleConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"selections", getToolbarsStylesSelectionsJSONArray(locale)
 		).put(
 			"tabIndex", 1
@@ -250,9 +237,7 @@ public class AlloyEditorCreoleConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsHeadingTextJSONObject(
 		Locale locale) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons", JSONUtil.put(getStyleFormatsJSONObject(locale))
 		).put(
 			"name", "headertext"
@@ -278,9 +263,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONObject linkEditJSONObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject cfgJSONObject = JSONFactoryUtil.createJSONObject();
-
-		cfgJSONObject.put(
+		JSONObject cfgJSONObject = JSONUtil.put(
 			"appendProtocol", false
 		).put(
 			"showTargetSelector", false
@@ -306,9 +289,7 @@ public class AlloyEditorCreoleConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsTableJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons",
 			toJSONArray(
 				"['tableHeading', 'tableRow', 'tableColumn', 'tableCell', " +
@@ -330,9 +311,7 @@ public class AlloyEditorCreoleConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsTextJSONObject(
 		Locale locale) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons",
 			JSONUtil.putAll(
 				getStyleFormatsJSONObject(locale), "bold", "italic", "ul", "ol",

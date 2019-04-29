@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -303,9 +303,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId = page.getUserId();
 		}
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
+		JSONObject extraDataJSONObject = JSONUtil.put(
 			"fileEntryId", fileEntry.getFileEntryId()
 		).put(
 			"fileEntryTitle", fileEntry.getTitle()
@@ -344,9 +342,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId = page.getUserId();
 		}
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
+		JSONObject extraDataJSONObject = JSONUtil.put(
 			"fileEntryId", fileEntry.getFileEntryId()
 		).put(
 			"fileEntryTitle", fileEntry.getTitle()
@@ -1628,9 +1624,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		fileEntry = PortletFileRepositoryUtil.movePortletFileEntryToTrash(
 			userId, fileEntry.getFileEntryId());
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
+		JSONObject extraDataJSONObject = JSONUtil.put(
 			"fileEntryId", fileEntry.getFileEntryId()
 		).put(
 			"fileEntryTitle", trashHelper.getOriginalTitle(fileEntry.getTitle())
@@ -1806,9 +1800,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
+		JSONObject extraDataJSONObject = JSONUtil.put(
 			"title", trashHelper.getOriginalTitle(page.getTitle())
 		).put(
 			"version", page.getVersion()
@@ -1939,9 +1931,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
+		JSONObject extraDataJSONObject = JSONUtil.put(
 			"fileEntryId", fileEntry.getFileEntryId()
 		).put(
 			"fileEntryTitle", trashHelper.getOriginalTitle(fileEntry.getTitle())
@@ -2242,10 +2232,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				 wikiGroupServiceOverriddenConfiguration.
 					 pageMinorEditAddSocialActivity())) {
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put(
+				JSONObject extraDataJSONObject = JSONUtil.put(
 					"title", page.getTitle()
 				).put(
 					"version", page.getVersion()
@@ -3014,9 +3001,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
+		JSONObject extraDataJSONObject = JSONUtil.put(
 			"title", page.getTitle()
 		).put(
 			"version", page.getVersion()

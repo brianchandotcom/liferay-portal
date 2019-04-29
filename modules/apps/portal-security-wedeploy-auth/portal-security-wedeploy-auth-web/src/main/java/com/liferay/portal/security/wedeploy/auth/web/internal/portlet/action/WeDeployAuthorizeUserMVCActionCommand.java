@@ -15,8 +15,8 @@
 package com.liferay.portal.security.wedeploy.auth.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -73,9 +73,7 @@ public class WeDeployAuthorizeUserMVCActionCommand
 					getWeDeployAuthToken(actionRequest, themeDisplay));
 			}
 			else if (cmd.equals("deny")) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonObject.put("error", "access_denied");
+				JSONObject jsonObject = JSONUtil.put("error", "access_denied");
 
 				JSONPortletResponseUtil.writeJSON(
 					actionRequest, actionResponse, jsonObject);
@@ -84,9 +82,7 @@ public class WeDeployAuthorizeUserMVCActionCommand
 		catch (Exception e) {
 			_log.error(e, e);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"error_message",
 				LanguageUtil.get(
 					themeDisplay.getLocale(),

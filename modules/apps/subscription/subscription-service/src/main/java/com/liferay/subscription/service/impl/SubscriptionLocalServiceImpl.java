@@ -16,8 +16,8 @@ package com.liferay.subscription.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
@@ -144,9 +144,8 @@ public class SubscriptionLocalServiceImpl
 
 			// Social
 
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put("title", assetEntry.getTitle());
+			JSONObject extraDataJSONObject = JSONUtil.put(
+				"title", assetEntry.getTitle());
 
 			SocialActivityManagerUtil.addActivity(
 				userId, assetEntry, SocialActivityConstants.TYPE_SUBSCRIBE,
@@ -225,9 +224,8 @@ public class SubscriptionLocalServiceImpl
 			className.getClassName(), subscription.getClassPK());
 
 		if (assetEntry != null) {
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put("title", assetEntry.getTitle());
+			JSONObject extraDataJSONObject = JSONUtil.put(
+				"title", assetEntry.getTitle());
 
 			SocialActivityManagerUtil.addActivity(
 				subscription.getUserId(), subscription,

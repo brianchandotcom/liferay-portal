@@ -88,9 +88,7 @@ public class AlloyEditorConfigContributor
 	protected JSONObject getStyleFormatJSONObject(
 		String styleFormatName, String element, String cssClass, int type) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"name", styleFormatName
 		).put(
 			"style", getStyleJSONObject(element, cssClass, type)
@@ -147,13 +145,10 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getStyleFormatsJSONObject(Locale locale) {
-		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject stylesJSONObject = JSONUtil.put(
+			"styles", getStyleFormatsJSONArray(locale));
 
-		stylesJSONObject.put("styles", getStyleFormatsJSONArray(locale));
-
-		JSONObject styleFormatsJSONObject = JSONFactoryUtil.createJSONObject();
-
-		styleFormatsJSONObject.put(
+		JSONObject styleFormatsJSONObject = JSONUtil.put(
 			"cfg", stylesJSONObject
 		).put(
 			"name", "styles"
@@ -168,10 +163,7 @@ public class AlloyEditorConfigContributor
 		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
 
 		if (Validator.isNotNull(cssClass)) {
-			JSONObject attributesJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			attributesJSONObject.put("class", cssClass);
+			JSONObject attributesJSONObject = JSONUtil.put("class", cssClass);
 
 			styleJSONObject.put("attributes", attributesJSONObject);
 		}
@@ -186,9 +178,7 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsAddJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons", toJSONArray("['image', 'embedVideo', 'table', 'hline']")
 		).put(
 			"tabIndex", 2
@@ -198,9 +188,7 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"add", getToolbarsAddJSONObject()
 		).put(
 			"styles", getToolbarsStylesJSONObject(locale)
@@ -210,9 +198,7 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"selections", getToolbarsStylesSelectionsJSONArray(locale)
 		).put(
 			"tabIndex", 1
@@ -222,9 +208,7 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsEmbedURLJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons", toJSONArray("['imageLeft', 'imageCenter', 'imageRight']")
 		).put(
 			"name", "embedurl"
@@ -236,9 +220,7 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsImageJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons",
 			toJSONArray(
 				"['imageLeft', 'imageCenter', 'imageRight', 'linkBrowse', " +
@@ -264,9 +246,7 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons", toJSONArray("['linkEditBrowse']")
 		).put(
 			"name", "link"
@@ -278,9 +258,7 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsTableJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons",
 			toJSONArray(
 				"['tableHeading', 'tableRow', 'tableColumn', 'tableCell', " +
@@ -302,9 +280,7 @@ public class AlloyEditorConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsTextJSONObject(
 		Locale locale) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons",
 			JSONUtil.putAll(
 				getStyleFormatsJSONObject(locale), "bold", "italic",

@@ -15,8 +15,8 @@
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -67,9 +67,8 @@ public class UpdateSiteNavigationMEnuMVCActionCommand
 			_siteNavigationMenuService.updateSiteNavigationMenu(
 				siteNavigationMenuId, name, serviceContext);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("redirectURL", getRedirectURL(actionResponse));
+			JSONObject jsonObject = JSONUtil.put(
+				"redirectURL", getRedirectURL(actionResponse));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

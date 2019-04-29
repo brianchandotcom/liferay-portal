@@ -18,7 +18,6 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -56,17 +55,14 @@ public class BlogsCoverImageCaptionAlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("styles", getToolbarsStylesJSONObject());
+		JSONObject jsonObject = JSONUtil.put(
+			"styles", getToolbarsStylesJSONObject());
 
 		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsStylesJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"selections", getToolbarStylesSelectionsJSONArray()
 		).put(
 			"tabIndex", 1
@@ -82,9 +78,7 @@ public class BlogsCoverImageCaptionAlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarStylesSelectionsLinkJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons", toJSONArray("['linkEdit']")
 		).put(
 			"name", "link"
@@ -96,9 +90,7 @@ public class BlogsCoverImageCaptionAlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarStylesSelectionsTextJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons", toJSONArray("['link']")
 		).put(
 			"name", "text"

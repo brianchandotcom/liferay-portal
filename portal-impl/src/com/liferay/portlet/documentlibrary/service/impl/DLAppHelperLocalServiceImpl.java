@@ -41,8 +41,8 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.repository.Repository;
@@ -449,9 +449,8 @@ public class DLAppHelperLocalServiceImpl
 
 			// Social
 
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put("title", fileShortcut.getToTitle());
+			JSONObject extraDataJSONObject = JSONUtil.put(
+				"title", fileShortcut.getToTitle());
 
 			SocialActivityManagerUtil.addActivity(
 				userId, fileShortcut,
@@ -492,9 +491,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
+		JSONObject extraDataJSONObject = JSONUtil.put(
 			"title", TrashUtil.getOriginalTitle(fileShortcut.getToTitle()));
 
 		SocialActivityManagerUtil.addActivity(
@@ -771,9 +768,8 @@ public class DLAppHelperLocalServiceImpl
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", fileEntry.getTitle());
+		JSONObject extraDataJSONObject = JSONUtil.put(
+			"title", fileEntry.getTitle());
 
 		SocialActivityManagerUtil.addActivity(
 			userId, fileEntry, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
@@ -804,9 +800,8 @@ public class DLAppHelperLocalServiceImpl
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", fileShortcut.getToTitle());
+		JSONObject extraDataJSONObject = JSONUtil.put(
+			"title", fileShortcut.getToTitle());
 
 		SocialActivityManagerUtil.addActivity(
 			userId, fileShortcut,
@@ -863,9 +858,8 @@ public class DLAppHelperLocalServiceImpl
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", folder.getName());
+		JSONObject extraDataJSONObject = JSONUtil.put(
+			"title", folder.getName());
 
 		SocialActivityManagerUtil.addActivity(
 			userId, folder, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
@@ -1225,10 +1219,8 @@ public class DLAppHelperLocalServiceImpl
 					activityType = DLActivityKeys.ADD_FILE_ENTRY;
 				}
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put("title", fileEntry.getTitle());
+				JSONObject extraDataJSONObject = JSONUtil.put(
+					"title", fileEntry.getTitle());
 
 				SocialActivityManagerUtil.addUniqueActivity(
 					latestFileVersion.getStatusByUserId(), activityCreateDate,
@@ -1360,9 +1352,8 @@ public class DLAppHelperLocalServiceImpl
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", fileEntry.getTitle());
+		JSONObject extraDataJSONObject = JSONUtil.put(
+			"title", fileEntry.getTitle());
 
 		SocialActivityManagerUtil.addActivity(
 			userId, fileEntry, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
@@ -1469,9 +1460,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
+		JSONObject extraDataJSONObject = JSONUtil.put(
 			"title", TrashUtil.getOriginalTitle(fileEntry.getTitle()));
 
 		SocialActivityManagerUtil.addActivity(
@@ -1543,9 +1532,8 @@ public class DLAppHelperLocalServiceImpl
 
 			// Social
 
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put("title", folder.getName());
+			JSONObject extraDataJSONObject = JSONUtil.put(
+				"title", folder.getName());
 
 			SocialActivityManagerUtil.addActivity(
 				userId, folder, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
@@ -1598,9 +1586,8 @@ public class DLAppHelperLocalServiceImpl
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", folder.getName());
+		JSONObject extraDataJSONObject = JSONUtil.put(
+			"title", folder.getName());
 
 		SocialActivityManagerUtil.addActivity(
 			userId, folder, SocialActivityConstants.TYPE_MOVE_TO_TRASH,

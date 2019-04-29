@@ -17,6 +17,7 @@ package com.liferay.portlet.configuration.css.web.internal.portlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -192,10 +193,7 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 		JSONObject backgroundPositionJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		JSONObject backgroundPositionLeftJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		backgroundPositionLeftJSONObject.put(
+		JSONObject backgroundPositionLeftJSONObject = JSONUtil.put(
 			"unit", StringPool.BLANK
 		).put(
 			"value", StringPool.BLANK
@@ -204,10 +202,7 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 		backgroundPositionJSONObject.put(
 			"left", backgroundPositionLeftJSONObject);
 
-		JSONObject backgroundPositionTopJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		backgroundPositionTopJSONObject.put(
+		JSONObject backgroundPositionTopJSONObject = JSONUtil.put(
 			"unit", StringPool.BLANK
 		).put(
 			"value", StringPool.BLANK
@@ -361,9 +356,7 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 	}
 
 	protected String getCSS(ActionRequest actionRequest) {
-		JSONObject cssJSONObject = JSONFactoryUtil.createJSONObject();
-
-		cssJSONObject.put(
+		JSONObject cssJSONObject = JSONUtil.put(
 			"advancedData", getAdvancedDataJSONObject(actionRequest)
 		).put(
 			"bgData", getBgDataJSONObject(actionRequest)

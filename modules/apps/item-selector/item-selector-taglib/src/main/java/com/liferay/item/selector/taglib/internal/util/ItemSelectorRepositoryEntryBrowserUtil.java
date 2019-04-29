@@ -137,9 +137,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 
 		groupsJSONArray.put(firstTabJSONObject);
 
-		JSONObject secondTabJSONObject = JSONFactoryUtil.createJSONObject();
-
-		secondTabJSONObject.put(
+		JSONObject secondTabJSONObject = JSONUtil.put(
 			"data",
 			JSONUtil.putAll(
 				_createJSONObject(
@@ -223,9 +221,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 	}
 
 	private static JSONObject _createJSONObject(String key, String value) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"key", key
 		).put(
 			"value", value

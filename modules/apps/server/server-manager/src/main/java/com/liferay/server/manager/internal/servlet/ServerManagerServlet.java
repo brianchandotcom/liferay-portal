@@ -15,8 +15,8 @@
 package com.liferay.server.manager.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -143,9 +143,7 @@ public class ServerManagerServlet extends HttpServlet {
 			return;
 		}
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject();
-
-		responseJSONObject.put(
+		JSONObject responseJSONObject = JSONUtil.put(
 			JSONKeys.ERROR, StringPool.BLANK
 		).put(
 			JSONKeys.OUTPUT, StringPool.BLANK

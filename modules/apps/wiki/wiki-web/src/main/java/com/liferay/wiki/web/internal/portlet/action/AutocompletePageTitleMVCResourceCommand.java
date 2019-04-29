@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -107,9 +108,8 @@ public class AutocompletePageTitleMVCResourceCommand
 		Hits hits = _wikiPageSearcher.search(searchContext);
 
 		for (Document document : hits.getDocs()) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("title", document.get(Field.TITLE));
+			JSONObject jsonObject = JSONUtil.put(
+				"title", document.get(Field.TITLE));
 
 			jsonArray.put(jsonObject);
 		}

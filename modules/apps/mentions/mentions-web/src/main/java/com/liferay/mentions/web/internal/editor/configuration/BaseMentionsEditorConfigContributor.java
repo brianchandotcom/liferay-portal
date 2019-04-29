@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributo
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -42,16 +43,12 @@ public class BaseMentionsEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		JSONObject autoCompleteConfigJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		autoCompleteConfigJSONObject.put("requestTemplate", "query={query}");
+		JSONObject autoCompleteConfigJSONObject = JSONUtil.put(
+			"requestTemplate", "query={query}");
 
 		JSONArray triggerJSONArray = JSONFactoryUtil.createJSONArray();
 
-		JSONObject triggerJSONObject = JSONFactoryUtil.createJSONObject();
-
-		triggerJSONObject.put(
+		JSONObject triggerJSONObject = JSONUtil.put(
 			"regExp",
 			"(?:\\strigger|^trigger)(" +
 				MentionsMatcherUtil.getScreenNameRegularExpression() + ")"

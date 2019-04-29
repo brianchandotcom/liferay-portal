@@ -17,8 +17,8 @@ package com.liferay.social.activity.service.test.util;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -73,9 +73,7 @@ public class SocialActivityTestUtil {
 	}
 
 	public static String createExtraDataJSON(String key, String value) {
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(key, value);
+		JSONObject extraDataJSONObject = JSONUtil.put(key, value);
 
 		return extraDataJSONObject.toString();
 	}

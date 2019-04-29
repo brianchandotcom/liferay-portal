@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -91,9 +92,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		JSONObject jsonObject1 = JSONFactoryUtil.createJSONObject();
-
-		jsonObject1.put(
+		JSONObject jsonObject1 = JSONUtil.put(
 			"href",
 			_http.removeParameter(
 				ParamUtil.getString(portletRequest, "currentURL"), "doAsUserId")
@@ -223,10 +222,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isImpersonated()) {
-			JSONObject impersonationJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			impersonationJSONObject.put(
+			JSONObject impersonationJSONObject = JSONUtil.put(
 				"items",
 				_getImpersonationItemsJSONArray(portletRequest, themeDisplay));
 

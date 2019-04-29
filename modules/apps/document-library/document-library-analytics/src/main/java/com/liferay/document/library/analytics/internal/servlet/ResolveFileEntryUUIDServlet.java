@@ -16,8 +16,8 @@ package com.liferay.document.library.analytics.internal.servlet;
 
 import com.liferay.document.library.analytics.internal.constants.DocumentLibraryAnalyticsConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -85,9 +85,8 @@ public class ResolveFileEntryUUIDServlet extends HttpServlet {
 		try {
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("error", throwable.getMessage());
+			JSONObject jsonObject = JSONUtil.put(
+				"error", throwable.getMessage());
 
 			printWriter.write(jsonObject.toString());
 
@@ -106,9 +105,8 @@ public class ResolveFileEntryUUIDServlet extends HttpServlet {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("fileEntryId", fileEntry.getFileEntryId());
+		JSONObject jsonObject = JSONUtil.put(
+			"fileEntryId", fileEntry.getFileEntryId());
 
 		printWriter.write(jsonObject.toString());
 

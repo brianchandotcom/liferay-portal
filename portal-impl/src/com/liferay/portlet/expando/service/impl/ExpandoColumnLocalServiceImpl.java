@@ -26,8 +26,8 @@ import com.liferay.expando.kernel.model.adapter.StagedExpandoColumn;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -408,9 +408,7 @@ public class ExpandoColumnLocalServiceImpl
 		StagedModelType stagedModelType =
 			stagedExpandoColumn.getStagedModelType();
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
+		JSONObject extraDataJSONObject = JSONUtil.put(
 			"companyId", stagedExpandoColumn.getCompanyId()
 		).put(
 			"uuid", stagedExpandoColumn.getUuid()

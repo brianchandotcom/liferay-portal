@@ -19,6 +19,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -112,9 +113,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"filebrowserBrowseUrl", "oneTabItemSelectorPortletURL"
 		).put(
 			"removePlugins", "plugin1"
@@ -138,9 +137,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"filebrowserBrowseUrl", "twoTabsItemSelectorPortletURL"
 		).put(
 			"removePlugins", "plugin1"
@@ -166,9 +163,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"filebrowserBrowseUrl", "oneTabItemSelectorPortletURL"
 		).put(
 			"removePlugins", "plugin1"
@@ -181,9 +176,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 	protected JSONObject getJSONObjectWithDefaultItemSelectorURL()
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"filebrowserBrowseUrl", "defaultItemSelectorPortletURL"
 		).put(
 			"removePlugins", "plugin1"

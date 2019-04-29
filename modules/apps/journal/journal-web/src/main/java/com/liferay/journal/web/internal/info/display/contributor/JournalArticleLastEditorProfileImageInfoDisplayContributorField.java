@@ -20,8 +20,8 @@ import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -80,9 +80,8 @@ public class JournalArticleLastEditorProfileImageInfoDisplayContributorField
 
 		if (themeDisplay != null) {
 			try {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonObject.put("url", user.getPortraitURL(getThemeDisplay()));
+				JSONObject jsonObject = JSONUtil.put(
+					"url", user.getPortraitURL(getThemeDisplay()));
 
 				return jsonObject;
 			}

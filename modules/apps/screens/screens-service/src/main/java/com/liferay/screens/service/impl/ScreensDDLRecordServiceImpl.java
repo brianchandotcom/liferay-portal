@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -116,9 +117,7 @@ public class ScreensDDLRecordServiceImpl
 			DDLRecord ddlRecord, Locale locale)
 		throws PortalException {
 
-		JSONObject ddlRecordJSONObject = JSONFactoryUtil.createJSONObject();
-
-		ddlRecordJSONObject.put(
+		JSONObject ddlRecordJSONObject = JSONUtil.put(
 			"modelAttributes",
 			JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(

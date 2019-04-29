@@ -17,6 +17,7 @@ package com.liferay.portal.security.service.access.policy.web.internal.portlet;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -190,9 +191,8 @@ public class SAPPortlet extends MVCPortlet {
 			for (Map.Entry<String, Set<JSONWebServiceActionMapping>> entry :
 					jsonWebServiceActionMappingsMap.entrySet()) {
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonObject.put("serviceClassName", entry.getKey());
+				JSONObject jsonObject = JSONUtil.put(
+					"serviceClassName", entry.getKey());
 
 				Set<JSONWebServiceActionMapping>
 					jsonWebServiceActionMappingsSet = entry.getValue();

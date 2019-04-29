@@ -16,6 +16,7 @@ package com.liferay.marketplace.store.web.internal.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -33,9 +34,7 @@ import java.util.Arrays;
 public class MarketplaceLicenseUtil {
 
 	public static String getOrder(String productEntryName) throws Exception {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"cmd", "GET_ORDER"
 		).put(
 			"hostName", LicenseManagerUtil.getHostName()

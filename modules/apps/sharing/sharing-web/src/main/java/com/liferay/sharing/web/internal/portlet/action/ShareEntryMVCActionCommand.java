@@ -16,6 +16,7 @@ package com.liferay.sharing.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -117,9 +118,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 					return null;
 				});
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"successMessage",
 				LanguageUtil.get(
 					resourceBundle, "the-item-was-shared-successfully"));

@@ -27,8 +27,8 @@ import com.liferay.microblogs.util.MicroblogsUtil;
 import com.liferay.microblogs.util.comparator.EntryCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -170,9 +170,7 @@ public class MicroblogsEntryLocalServiceImpl
 			activityKey = MicroblogsActivityKeys.REPOST_ENTRY;
 		}
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put(
+		JSONObject extraDataJSONObject = JSONUtil.put(
 			"content", microblogsEntry.getContent()
 		).put(
 			"parentMicroblogsEntryId", parentMicroblogsEntryId
@@ -590,10 +588,7 @@ public class MicroblogsEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		final JSONObject notificationEventJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		notificationEventJSONObject.put(
+		final JSONObject notificationEventJSONObject = JSONUtil.put(
 			"className", MicroblogsEntry.class.getName()
 		).put(
 			"classPK", microblogsEntry.getMicroblogsEntryId()

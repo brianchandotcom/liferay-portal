@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -83,9 +84,7 @@ public class AuditMessageBuilder {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Attribute attribute : attributes) {
-			JSONObject attributeJSONObject = JSONFactoryUtil.createJSONObject();
-
-			attributeJSONObject.put(
+			JSONObject attributeJSONObject = JSONUtil.put(
 				"name", attribute.getName()
 			).put(
 				"newValue", attribute.getNewValue()

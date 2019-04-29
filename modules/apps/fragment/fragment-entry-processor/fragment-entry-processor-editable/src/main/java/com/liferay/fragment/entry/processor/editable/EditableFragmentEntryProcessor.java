@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -135,10 +136,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				continue;
 			}
 
-			JSONObject defaultValueJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			defaultValueJSONObject.put(
+			JSONObject defaultValueJSONObject = JSONUtil.put(
 				"config", editableElementParser.getAttributes(element)
 			).put(
 				"defaultValue", editableElementParser.getValue(element)

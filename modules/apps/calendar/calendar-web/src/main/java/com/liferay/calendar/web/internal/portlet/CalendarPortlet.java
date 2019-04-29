@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -1549,9 +1550,7 @@ public class CalendarPortlet extends MVCPortlet {
 		java.util.Calendar nowCalendar = CalendarFactoryUtil.getCalendar(
 			timeZone);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"day", nowCalendar.get(java.util.Calendar.DAY_OF_MONTH)
 		).put(
 			"hour", nowCalendar.get(java.util.Calendar.HOUR_OF_DAY)
@@ -1655,9 +1654,7 @@ public class CalendarPortlet extends MVCPortlet {
 			_log.warn(message);
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"error", message
 		).put(
 			"success", false

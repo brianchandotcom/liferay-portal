@@ -114,9 +114,7 @@ public class AlloyEditorBBCodeConfigContributor
 	protected JSONObject getLangJSONObject(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"code",
 			LanguageUtil.get(
 				getContentsLocale(inputEditorTaglibAttributes), "code"));
@@ -127,9 +125,7 @@ public class AlloyEditorBBCodeConfigContributor
 	protected JSONObject getStyleFormatJSONObject(
 		String styleFormatName, String element, String cssClass, int type) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"name", styleFormatName
 		).put(
 			"style", getStyleJSONObject(element, cssClass, type)
@@ -163,9 +159,8 @@ public class AlloyEditorBBCodeConfigContributor
 	protected JSONObject getStyleFormatsJSONObject(Locale locale) {
 		JSONObject styleFormatsJSONObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
-
-		stylesJSONObject.put("styles", getStyleFormatsJSONArray(locale));
+		JSONObject stylesJSONObject = JSONUtil.put(
+			"styles", getStyleFormatsJSONArray(locale));
 
 		styleFormatsJSONObject.put(
 			"cfg", stylesJSONObject
@@ -182,10 +177,7 @@ public class AlloyEditorBBCodeConfigContributor
 		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
 
 		if (Validator.isNotNull(cssClass)) {
-			JSONObject attributesJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			attributesJSONObject.put("class", cssClass);
+			JSONObject attributesJSONObject = JSONUtil.put("class", cssClass);
 
 			styleJSONObject.put("attributes", attributesJSONObject);
 		}
@@ -200,9 +192,7 @@ public class AlloyEditorBBCodeConfigContributor
 	}
 
 	protected JSONObject getToolbarsAddJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons", JSONUtil.put("image")
 		).put(
 			"tabIndex", 2
@@ -212,9 +202,7 @@ public class AlloyEditorBBCodeConfigContributor
 	}
 
 	protected JSONObject getToolbarsJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"add", getToolbarsAddJSONObject()
 		).put(
 			"styles", getToolbarsStylesJSONObject(locale)
@@ -224,9 +212,7 @@ public class AlloyEditorBBCodeConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"selections", getToolbarsStylesSelectionsJSONArray(locale)
 		).put(
 			"tabIndex", 1
@@ -242,9 +228,7 @@ public class AlloyEditorBBCodeConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons", toJSONArray("['linkEditBrowse']")
 		).put(
 			"name", "link"
@@ -258,9 +242,7 @@ public class AlloyEditorBBCodeConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsTextJSONObject(
 		Locale locale) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons",
 			JSONUtil.putAll(
 				getStyleFormatsJSONObject(locale), "bold", "italic",

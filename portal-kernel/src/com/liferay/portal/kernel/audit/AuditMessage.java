@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.audit;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -258,9 +259,7 @@ public class AuditMessage implements Serializable {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			_ADDITIONAL_INFO, _additionalInfoJSONObject
 		).put(
 			_COMPANY_ID, _companyId

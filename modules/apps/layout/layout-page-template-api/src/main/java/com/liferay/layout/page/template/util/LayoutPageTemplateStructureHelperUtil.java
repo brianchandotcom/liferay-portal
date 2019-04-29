@@ -45,9 +45,7 @@ public class LayoutPageTemplateStructureHelperUtil {
 
 			JSONArray columnJSONArray = JSONFactoryUtil.createJSONArray();
 
-			JSONObject columnJSONObject = JSONFactoryUtil.createJSONObject();
-
-			columnJSONObject.put(
+			JSONObject columnJSONObject = JSONUtil.put(
 				"columnId", String.valueOf(i)
 			).put(
 				"fragmentEntryLinkIds",

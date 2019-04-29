@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
@@ -210,9 +211,7 @@ public class RenderStateUtil {
 		LayoutTypePortlet layoutTypePortlet,
 		Map<String, RenderData> renderDataMap) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"encodedCurrentURL",
 			URLCodec.encodeURL(PortalUtil.getCurrentCompleteURL(request)));
 
@@ -236,9 +235,7 @@ public class RenderStateUtil {
 		RenderData renderData,
 		Map<String, String[]> changedPublicRenderParameters) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"allowedPM", _getAllowedPortletModesJSONArray(portlet)
 		).put(
 			"allowedWS", _getAllowedWindowStatesJSONArray(portlet)
@@ -396,9 +393,7 @@ public class RenderStateUtil {
 		LayoutTypePortlet layoutTypePortlet, Portlet portlet,
 		Map<String, String[]> changedPublicRenderParameters) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"parameters",
 			_getPortletParametersJSONObject(
 				request, themeDisplay.getPlid(), portlet,

@@ -19,6 +19,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLWrapper;
@@ -107,9 +108,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, null, null);
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl",
 			"itemSelectorPortletURLWithImageUrlSelectionViews"
 		).put(
@@ -171,9 +170,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 			jsonObject, _inputEditorTaglibAttributes, new ThemeDisplay(),
 			requestBackedPortletURLFactory);
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl",
 			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews"
 		).put(
@@ -254,9 +251,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 	protected JSONObject getJSONObjectWithDefaultItemSelectorURL()
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl", "defaultItemSelectorPortletURL"
 		).put(
 			"filebrowserImageBrowseUrl", "defaultItemSelectorPortletURL"

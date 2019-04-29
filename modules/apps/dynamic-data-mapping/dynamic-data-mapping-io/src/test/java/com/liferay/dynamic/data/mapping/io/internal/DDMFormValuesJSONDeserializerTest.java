@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -279,9 +278,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		Assert.assertFalse(documentLibraryValue.isLocalized());
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"groupId", 10192
 		).put(
 			"uuid", "c8acdf70-e101-46a6-83e5-c5f5e087b0dc"
@@ -353,9 +350,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		Assert.assertEquals("autx", ddmFormFieldValue.getInstanceId());
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"groupId", 10192
 		).put(
 			"uuid", "c8acdf70-e101-46a6-83e5-c5f5e087b0dc"
@@ -381,9 +376,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		Value value = ddmFormFieldValue.getValue();
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"latitude", 34.0286226
 		).put(
 			"longitude", -117.8103367
@@ -393,9 +386,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			expectedJSONObject.toString(), value.getString(LocaleUtil.US),
 			false);
 
-		expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		expectedJSONObject = JSONUtil.put(
 			"latitude", -8.0349219
 		).put(
 			"longitude", -34.91922120
@@ -427,9 +418,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		Value value = ddmFormFieldValue.getValue();
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"alt", "This is a image description."
 		).put(
 			"data", "base64Value"
@@ -439,9 +428,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			expectedJSONObject.toString(), value.getString(LocaleUtil.US),
 			false);
 
-		expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		expectedJSONObject = JSONUtil.put(
 			"alt", "Isto e uma descricao de imagem."
 		).put(
 			"data", "valorEmBase64"
@@ -460,9 +447,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		Value value = ddmFormFieldValue.getValue();
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"groupId", 10192
 		).put(
 			"layoutId", 1
@@ -474,9 +459,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			expectedJSONObject.toString(), value.getString(LocaleUtil.US),
 			false);
 
-		expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		expectedJSONObject = JSONUtil.put(
 			"groupId", 10192
 		).put(
 			"layoutId", 2

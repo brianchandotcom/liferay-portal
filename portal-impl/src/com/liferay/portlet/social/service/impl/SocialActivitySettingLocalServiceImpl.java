@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -278,9 +279,7 @@ public class SocialActivitySettingLocalServiceImpl
 			activitySetting.setName(name);
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("enabled", enabled);
+		JSONObject jsonObject = JSONUtil.put("enabled", enabled);
 
 		activitySetting.setValue(jsonObject.toString());
 
@@ -395,9 +394,7 @@ public class SocialActivitySettingLocalServiceImpl
 	protected String toJSON(
 		SocialActivityCounterDefinition activityCounterDefinition) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"enabled", activityCounterDefinition.isEnabled()
 		).put(
 			"limitEnabled", activityCounterDefinition.isLimitEnabled()

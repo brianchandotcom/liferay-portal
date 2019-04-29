@@ -17,6 +17,7 @@ package com.liferay.portal.search.web.internal.portlet.action;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -60,9 +61,7 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 		JSONArray facetsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (SearchFacet searchFacet : searchFacetTracker.getSearchFacets()) {
-			JSONObject facetJSONObject = JSONFactoryUtil.createJSONObject();
-
-			facetJSONObject.put(
+			JSONObject facetJSONObject = JSONUtil.put(
 				"className", searchFacet.getFacetClassName()
 			).put(
 				"data", searchFacet.getJSONData(actionRequest)

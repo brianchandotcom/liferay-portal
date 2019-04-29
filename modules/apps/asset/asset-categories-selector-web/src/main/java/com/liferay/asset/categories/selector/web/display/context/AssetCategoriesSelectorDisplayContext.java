@@ -257,9 +257,7 @@ public class AssetCategoriesSelectorDisplayContext {
 			_request, "allowedSelectVocabularies");
 
 		for (long vocabularyId : getVocabularyIds()) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"children", _getCategoriesJSONArray(vocabularyId, 0)
 			).put(
 				"disabled", !allowedSelectVocabularies

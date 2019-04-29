@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.license.messaging;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Message;
 
 /**
@@ -66,9 +67,7 @@ public enum LicenseManagerMessageType {
 
 		message.setDestinationName(getDestinationName());
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("type", name());
+		JSONObject jsonObject = JSONUtil.put("type", name());
 
 		message.setPayload(jsonObject.toString());
 
@@ -80,9 +79,7 @@ public enum LicenseManagerMessageType {
 
 		message.setDestinationName(getDestinationName());
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"state", lcsPortletState.intValue()
 		).put(
 			"type", name()

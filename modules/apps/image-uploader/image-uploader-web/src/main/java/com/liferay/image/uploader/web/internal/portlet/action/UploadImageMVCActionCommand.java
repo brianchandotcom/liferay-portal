@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -168,9 +169,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 				FileEntry tempImageFileEntry = addTempImageFileEntry(
 					actionRequest);
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonObject.put(
+				JSONObject jsonObject = JSONUtil.put(
 					"tempImageFileName", tempImageFileEntry.getTitle());
 
 				JSONPortletResponseUtil.writeJSON(
@@ -276,9 +275,8 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 							themeDisplay.getLocale()));
 				}
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonObject.put("errorMessage", errorMessage);
+				JSONObject jsonObject = JSONUtil.put(
+					"errorMessage", errorMessage);
 
 				JSONPortletResponseUtil.writeJSON(
 					actionRequest, actionResponse, jsonObject);

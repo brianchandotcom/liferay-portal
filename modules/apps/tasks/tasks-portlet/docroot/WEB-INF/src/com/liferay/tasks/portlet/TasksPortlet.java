@@ -19,8 +19,8 @@ package com.liferay.tasks.portlet;
 
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -71,9 +71,7 @@ public class TasksPortlet extends MVCPortlet {
 			actionResponse.sendRedirect(redirect);
 		}
 		else {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("success", Boolean.TRUE);
+			JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
 
 			HttpServletResponse response = PortalUtil.getHttpServletResponse(
 				actionResponse);

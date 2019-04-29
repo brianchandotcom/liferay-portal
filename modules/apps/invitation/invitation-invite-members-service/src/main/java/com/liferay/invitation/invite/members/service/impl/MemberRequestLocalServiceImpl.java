@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -438,10 +438,7 @@ public class MemberRequestLocalServiceImpl
 				MembershipRequestConstants.STATUS_PENDING,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
-			JSONObject notificationEventJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			notificationEventJSONObject.put(
+			JSONObject notificationEventJSONObject = JSONUtil.put(
 				"classPK", memberRequest.getMemberRequestId()
 			).put(
 				"userId", memberRequest.getUserId()

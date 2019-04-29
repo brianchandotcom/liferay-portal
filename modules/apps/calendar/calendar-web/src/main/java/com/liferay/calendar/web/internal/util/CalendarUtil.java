@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -142,9 +143,8 @@ public class CalendarUtil {
 			for (Integer month : months) {
 				List<Integer> days = monthsMap.get(month);
 
-				JSONObject jsonObjectDay = JSONFactoryUtil.createJSONObject();
-
-				jsonObjectDay.put(StringUtil.merge(days), ruleName);
+				JSONObject jsonObjectDay = JSONUtil.put(
+					StringUtil.merge(days), ruleName);
 
 				jsonObjectMonth.put(String.valueOf(month), jsonObjectDay);
 			}
@@ -174,9 +174,7 @@ public class CalendarUtil {
 			TimeZone timeZone)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"allDay", calendarBooking.isAllDay()
 		).put(
 			"calendarBookingId", calendarBooking.getCalendarBookingId()
@@ -309,9 +307,8 @@ public class CalendarUtil {
 			ThemeDisplay themeDisplay, Calendar calendar)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("calendarId", calendar.getCalendarId());
+		JSONObject jsonObject = JSONUtil.put(
+			"calendarId", calendar.getCalendarId());
 
 		CalendarResource calendarResource =
 			_calendarResourceLocalService.fetchCalendarResource(
@@ -357,9 +354,7 @@ public class CalendarUtil {
 	public static JSONObject toCalendarResourceJSONObject(
 		ThemeDisplay themeDisplay, CalendarResource calendarResource) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"calendarResourceId", calendarResource.getCalendarResourceId()
 		).put(
 			"classNameId", calendarResource.getClassNameId()
@@ -466,9 +461,7 @@ public class CalendarUtil {
 			PermissionChecker permissionChecker, Calendar calendar)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			ActionKeys.DELETE,
 			_calendarModelResourcePermission.contains(
 				permissionChecker, calendar, ActionKeys.DELETE)

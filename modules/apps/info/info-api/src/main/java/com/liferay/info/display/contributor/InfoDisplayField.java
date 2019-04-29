@@ -14,8 +14,8 @@
 
 package com.liferay.info.display.contributor;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 
 import java.util.Objects;
@@ -79,9 +79,7 @@ public class InfoDisplayField {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"key", getKey()
 		).put(
 			"label", getLabel()

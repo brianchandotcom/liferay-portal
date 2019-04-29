@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -294,10 +294,8 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 					continue;
 				}
 
-				JSONObject extraSettingsJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraSettingsJSONObject.put("macPackage", true);
+				JSONObject extraSettingsJSONObject = JSONUtil.put(
+					"macPackage", true);
 
 				ps2.setString(1, extraSettingsJSONObject.toString());
 

@@ -36,6 +36,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -203,9 +204,7 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 	@Test
 	public void testDocumentLibraryFieldValueRenderer() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"groupId", RandomTestUtil.randomLong()
 		).put(
 			"uuid", RandomTestUtil.randomString()
@@ -225,9 +224,7 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGeolocationFieldValueRenderer() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"latitude", 9.8765
 		).put(
 			"longitude", 1.2345
@@ -285,9 +282,7 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 	@Test
 	public void testLinkToPageFieldValueRenderer() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"groupId", RandomTestUtil.randomLong()
 		).put(
 			"layoutId", RandomTestUtil.randomLong()

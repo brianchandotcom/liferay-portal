@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -147,9 +148,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"apps", getInstalledAppsJSONArray()
 		).put(
 			"cmd", "getInstalledApps"
@@ -317,9 +316,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		String productEntryName = ParamUtil.getString(
 			actionRequest, "productEntryName");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("cmd", "updateAppLicense");
+		JSONObject jsonObject = JSONUtil.put("cmd", "updateAppLicense");
 
 		if (Validator.isNull(orderUuid) &&
 			Validator.isNotNull(productEntryName)) {
@@ -343,9 +340,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"cmd", "updateApps"
 		).put(
 			"message", "success"
@@ -460,9 +455,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 	}
 
 	protected JSONObject getAppJSONObject(App app) throws Exception {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"appId", app.getRemoteAppId()
 		).put(
 			"downloaded", app.isDownloaded()
@@ -482,9 +475,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			return getAppJSONObject(app);
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"appId", remoteAppId
 		).put(
 			"downloaded", false

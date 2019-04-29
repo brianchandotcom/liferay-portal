@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.notifications;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
@@ -137,9 +137,7 @@ public class NotificationEvent implements Serializable {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			_KEY_ARCHIVED, _archived
 		).put(
 			_KEY_DELIVERY_BY, _deliverBy

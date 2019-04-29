@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -74,10 +75,7 @@ public class EditSegmentsEntryDisplayContext {
 			Criteria.Criterion criterion =
 				segmentsCriteriaContributor.getCriterion(getCriteria());
 
-			JSONObject jsonContributorObject =
-				JSONFactoryUtil.createJSONObject();
-
-			jsonContributorObject.put(
+			JSONObject jsonContributorObject = JSONUtil.put(
 				"conjunctionId", _getCriterionConjunction(criterion)
 			).put(
 				"conjunctionInputId",
@@ -122,10 +120,7 @@ public class EditSegmentsEntryDisplayContext {
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
 				segmentsCriteriaContributors) {
 
-			JSONObject jsonContributorObject =
-				JSONFactoryUtil.createJSONObject();
-
-			jsonContributorObject.put(
+			JSONObject jsonContributorObject = JSONUtil.put(
 				"entityName", segmentsCriteriaContributor.getEntityName()
 			).put(
 				"name", segmentsCriteriaContributor.getLabel(locale)

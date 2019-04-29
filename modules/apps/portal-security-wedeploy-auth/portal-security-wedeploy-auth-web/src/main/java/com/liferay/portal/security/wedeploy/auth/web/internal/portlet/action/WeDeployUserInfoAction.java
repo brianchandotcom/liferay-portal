@@ -16,6 +16,7 @@ package com.liferay.portal.security.wedeploy.auth.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,9 +69,7 @@ public class WeDeployUserInfoAction implements StrutsAction {
 			User user = _userLocalService.getUser(
 				weDeployAuthToken.getUserId());
 
-			JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
-
-			userJSONObject.put(
+			JSONObject userJSONObject = JSONUtil.put(
 				"email", user.getEmailAddress()
 			).put(
 				"name", user.getFullName()

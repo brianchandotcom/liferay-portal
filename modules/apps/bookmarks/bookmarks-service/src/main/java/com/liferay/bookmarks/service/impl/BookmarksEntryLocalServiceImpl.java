@@ -34,8 +34,8 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -143,9 +143,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", entry.getName());
+		JSONObject extraDataJSONObject = JSONUtil.put("title", entry.getName());
 
 		socialActivityLocalService.addActivity(
 			userId, groupId, BookmarksEntry.class.getName(), entryId,
@@ -641,9 +639,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Social
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", entry.getName());
+		JSONObject extraDataJSONObject = JSONUtil.put("title", entry.getName());
 
 		socialActivityLocalService.addActivity(
 			userId, entry.getGroupId(), BookmarksEntry.class.getName(), entryId,
@@ -673,9 +669,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		bookmarksEntryPersistence.update(entry);
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", entry.getName());
+		JSONObject extraDataJSONObject = JSONUtil.put("title", entry.getName());
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 

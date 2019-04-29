@@ -503,9 +503,7 @@ public class JournalDisplayContext {
 			_themeDisplay.getScopeGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"children", jsonArray
 		).put(
 			"icon", "folder"

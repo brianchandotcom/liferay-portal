@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -811,9 +812,7 @@ public class DDMImpl implements DDM {
 		JSONArray ddmFormFieldsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"dataType", ddmFormField.getDataType()
 			).put(
 				"id", ddmFormField.getName()
@@ -1158,9 +1157,7 @@ public class DDMImpl implements DDM {
 			byte[] bytes = getImageBytes(uploadRequest, fieldNameValue);
 
 			if (ArrayUtil.isNotEmpty(bytes)) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonObject.put(
+				JSONObject jsonObject = JSONUtil.put(
 					"alt", uploadRequest.getParameter(fieldNameValue + "Alt")
 				).put(
 					"data", UnicodeFormatter.bytesToHex(bytes)

@@ -97,9 +97,7 @@ public class TinyMCEEditorConfigContributor
 		String styleFormatName, String type, String element,
 		String cssClasses) {
 
-		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
-
-		styleJSONObject.put(
+		JSONObject styleJSONObject = JSONUtil.put(
 			type, element
 		).put(
 			"classes", cssClasses
@@ -203,9 +201,7 @@ public class TinyMCEEditorConfigContributor
 	protected JSONObject getToolbarsJSONObject(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"email", getToolbarsEmailJSONArray(inputEditorTaglibAttributes)
 		).put(
 			"liferay", getToolbarsLiferayJSONArray(inputEditorTaglibAttributes)

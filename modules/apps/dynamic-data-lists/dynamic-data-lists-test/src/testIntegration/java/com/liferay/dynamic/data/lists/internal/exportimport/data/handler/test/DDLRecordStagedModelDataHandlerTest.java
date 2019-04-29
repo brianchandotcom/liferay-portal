@@ -44,6 +44,7 @@ import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -300,9 +301,7 @@ public class DDLRecordStagedModelDataHandlerTest
 		DDMFormFieldValue ddmFormFieldValue =
 			createEmptyDocumentLibraryDDMFormFieldValue(locale, fieldName);
 
-		JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject();
-
-		fieldValueJSONObject.put(
+		JSONObject fieldValueJSONObject = JSONUtil.put(
 			"groupId", String.valueOf(fileEntry.getGroupId())
 		).put(
 			"uuid", fileEntry.getUuid()

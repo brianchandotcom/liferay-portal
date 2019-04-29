@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -748,9 +749,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		if (ArrayUtil.contains(selectedPlids, 0)) {
-			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
-
-			layoutJSONObject.put(
+			JSONObject layoutJSONObject = JSONUtil.put(
 				"includeChildren", true
 			).put(
 				"plid", 0
@@ -1718,9 +1717,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			selectedLayoutIds, layout.getLayoutId());
 
 		if (checked) {
-			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
-
-			layoutJSONObject.put(
+			JSONObject layoutJSONObject = JSONUtil.put(
 				"includeChildren", includeChildren
 			).put(
 				"plid", layout.getPlid()

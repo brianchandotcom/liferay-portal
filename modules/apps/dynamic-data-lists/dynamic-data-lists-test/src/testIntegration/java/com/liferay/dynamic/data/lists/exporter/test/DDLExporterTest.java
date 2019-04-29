@@ -38,7 +38,6 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -663,9 +662,7 @@ public class DDLExporterTest {
 			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
 			serviceContext);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"groupId", fileEntry.getGroupId()
 		).put(
 			"name", fileEntry.getTitle()
@@ -681,9 +678,7 @@ public class DDLExporterTest {
 	}
 
 	protected String createGeolocationDDMFormFieldValue() throws Exception {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"latitude", "-8.035"
 		).put(
 			"longitude", "-34.918"
@@ -696,9 +691,7 @@ public class DDLExporterTest {
 		Layout layout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "Link to Page content", false);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"groupId", layout.getGroupId()
 		).put(
 			"layoutId", layout.getLayoutId()

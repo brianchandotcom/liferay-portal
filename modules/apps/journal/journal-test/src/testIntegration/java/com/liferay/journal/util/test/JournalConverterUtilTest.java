@@ -37,6 +37,7 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -609,9 +610,7 @@ public class JournalConverterUtilTest {
 		docLibraryField.setDDMStructureId(ddmStructureId);
 		docLibraryField.setName("document_library");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"groupId", fileEntry.getGroupId()
 		).put(
 			"title", fileEntry.getTitle()

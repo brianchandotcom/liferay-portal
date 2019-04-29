@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -310,9 +311,7 @@ public class EditAssetListDisplayContext {
 		}
 
 		if (rulesJSONArray.length() == 0) {
-			JSONObject defaultRule = JSONFactoryUtil.createJSONObject();
-
-			defaultRule.put(
+			JSONObject defaultRule = JSONUtil.put(
 				"queryContains", true
 			).put(
 				"type", "assetTags"

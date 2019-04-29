@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
@@ -59,9 +60,7 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 			PortletRequest portletRequest, PortalException pe)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("success", Boolean.FALSE);
+		JSONObject jsonObject = JSONUtil.put("success", Boolean.FALSE);
 
 		if (pe instanceof AntivirusScannerException ||
 			pe instanceof FileExtensionException ||
@@ -100,9 +99,7 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 					ServletResponseConstants.SC_UPLOAD_REQUEST_SIZE_EXCEPTION;
 			}
 
-			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
-
-			errorJSONObject.put(
+			JSONObject errorJSONObject = JSONUtil.put(
 				"errorType", errorType
 			).put(
 				"message", errorMessage
@@ -121,9 +118,7 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
-
-		imageJSONObject.put(
+		JSONObject imageJSONObject = JSONUtil.put(
 			"attributeDataImageId", EditorConstants.ATTRIBUTE_DATA_IMAGE_ID
 		).put(
 			"fileEntryId", fileEntry.getFileEntryId()

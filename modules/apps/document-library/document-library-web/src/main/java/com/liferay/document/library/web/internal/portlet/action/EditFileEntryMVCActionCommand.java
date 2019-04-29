@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -163,9 +164,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			String fileName = validFileNameKVP.getKey();
 			String originalFileName = validFileNameKVP.getValue();
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"added", Boolean.TRUE
 			).put(
 				"fileName", fileName
@@ -180,9 +179,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			String fileName = invalidFileNameKVP.getKey();
 			String errorMessage = invalidFileNameKVP.getValue();
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"added", Boolean.FALSE
 			).put(
 				"errorMessage", errorMessage
@@ -964,9 +961,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					description, changeLog, inputStream, size, serviceContext);
 
 				if (cmd.equals(Constants.ADD_DYNAMIC)) {
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-					jsonObject.put("fileEntryId", fileEntry.getFileEntryId());
+					JSONObject jsonObject = JSONUtil.put(
+						"fileEntryId", fileEntry.getFileEntryId());
 
 					JSONPortletResponseUtil.writeJSON(
 						actionRequest, actionResponse, jsonObject);

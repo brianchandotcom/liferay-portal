@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -368,9 +369,7 @@ public class MailManager {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		JSONObject gmailAccountJSONObject = JSONFactoryUtil.createJSONObject();
-
-		gmailAccountJSONObject.put(
+		JSONObject gmailAccountJSONObject = JSONUtil.put(
 			"address", "@gmail.com"
 		).put(
 			"descriptionLanguageKey",
@@ -401,10 +400,7 @@ public class MailManager {
 
 		jsonArray.put(gmailAccountJSONObject);
 
-		JSONObject customMailAccontJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		customMailAccontJSONObject.put(
+		JSONObject customMailAccontJSONObject = JSONUtil.put(
 			"address", ""
 		).put(
 			"descriptionLanguageKey", ""

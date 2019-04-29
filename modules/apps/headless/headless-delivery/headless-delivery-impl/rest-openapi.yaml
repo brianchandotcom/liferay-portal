@@ -1093,6 +1093,23 @@ components:
                     readOnly: true
                     type: number
             type: object
+        RelatedContent:
+            # @review
+            description: Represents a relationship between two resources, internally modeled as AssetLink.
+            properties:
+                contentType:
+                    description: The type of the content.
+                    readOnly: true
+                    type: string
+                id:
+                    description: The identifier of the resource.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                title:
+                    description: The title of the content.
+                    readOnly: true
+                    type: string
         StructuredContent:
             description: Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is modeled internally as a `JournalArticle`.
             properties:
@@ -1161,21 +1178,7 @@ components:
                     type: integer
                 relatedContents:
                     items:
-                        properties:
-                            contentType:
-                                description: The type of the content.
-                                readOnly: true
-                                type: string
-                            id:
-                                description: The identifier of the resource.
-                                format: int64
-                                readOnly: true
-                                type: integer
-                            title:
-                                description: The title of the content.
-                                readOnly: true
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
                     type: array
                 renderedContents:

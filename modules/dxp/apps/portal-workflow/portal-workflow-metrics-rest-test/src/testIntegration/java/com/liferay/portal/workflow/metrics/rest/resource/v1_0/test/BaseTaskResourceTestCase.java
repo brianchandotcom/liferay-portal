@@ -446,6 +446,14 @@ public abstract class BaseTaskResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (task.getKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (task.getName() == null) {
 					valid = false;
@@ -515,6 +523,14 @@ public abstract class BaseTaskResourceTestCase {
 				if (!Objects.deepEquals(
 						task1.getInstanceCount(), task2.getInstanceCount())) {
 
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(task1.getKey(), task2.getKey())) {
 					return false;
 				}
 
@@ -613,6 +629,14 @@ public abstract class BaseTaskResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(task.getKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
 			sb.append(String.valueOf(task.getName()));
@@ -639,6 +663,7 @@ public abstract class BaseTaskResourceTestCase {
 		return new Task() {
 			{
 				instanceCount = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 				onTimeInstanceCount = RandomTestUtil.randomLong();
 				overdueInstanceCount = RandomTestUtil.randomLong();

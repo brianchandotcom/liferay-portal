@@ -63,6 +63,20 @@ public class TaskSerDes {
 			sb.append(task.getInstanceCount());
 		}
 
+		if (task.getKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(task.getKey()));
+
+			sb.append("\"");
+		}
+
 		if (task.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -120,6 +134,13 @@ public class TaskSerDes {
 		}
 		else {
 			map.put("instanceCount", String.valueOf(task.getInstanceCount()));
+		}
+
+		if (task.getKey() == null) {
+			map.put("key", null);
+		}
+		else {
+			map.put("key", String.valueOf(task.getKey()));
 		}
 
 		if (task.getName() == null) {
@@ -206,6 +227,11 @@ public class TaskSerDes {
 				if (jsonParserFieldValue != null) {
 					task.setInstanceCount(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "key")) {
+				if (jsonParserFieldValue != null) {
+					task.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

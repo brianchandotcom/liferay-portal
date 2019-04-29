@@ -22,6 +22,8 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 
 <div class="lfr-product-menu-sidebar" id="productMenuSidebar">
 	<div class="sidebar-header">
+		<h1 class="sr-only"><liferay-ui:message key="product-admin-menu" /></h1>
+
 		<div class="autofit-row">
 			<div class="autofit-col autofit-col-expand">
 				<a href="<%= PortalUtil.addPreservedParameters(themeDisplay, themeDisplay.getURLPortal(), false, true) %>">

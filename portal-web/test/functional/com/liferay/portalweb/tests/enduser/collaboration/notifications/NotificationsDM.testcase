@@ -84,7 +84,9 @@ definition {
 	test ViewNoWebsiteNotificationForNewDocumentInFolder {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		NotificationsPortlet.gotoNotificationDelivery(notificationCount = "0");
+		Navigator.gotoNotifications();
+
+		LexiconEntry.gotoEllipsisMenuItemDM(menuItem = "Configuration");
 
 		IFrame.selectConfigurationFrame();
 
@@ -139,7 +141,9 @@ definition {
 	test ViewNoWebsiteNotificationForUpdatedDocumentInFolder {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		NotificationsPortlet.gotoNotificationDelivery(notificationCount = "0");
+		Navigator.gotoNotifications();
+
+		LexiconEntry.gotoEllipsisMenuItemDM(menuItem = "Configuration");
 
 		IFrame.selectConfigurationFrame();
 

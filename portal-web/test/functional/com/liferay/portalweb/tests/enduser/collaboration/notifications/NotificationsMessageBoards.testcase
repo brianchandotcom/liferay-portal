@@ -155,7 +155,9 @@ definition {
 	test ViewNoWebsiteNotificationForNewThreadInCategory {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		NotificationsPortlet.gotoNotificationDelivery();
+		Navigator.gotoNotifications();
+
+		LexiconEntry.gotoEllipsisMenuItemDM(menuItem = "Configuration");
 
 		IFrame.selectConfigurationFrame();
 
@@ -201,7 +203,9 @@ definition {
 	test ViewNoWebsiteNotificationForUpdatedThreadInCategory {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		NotificationsPortlet.gotoNotificationDelivery();
+		Navigator.gotoNotifications();
+
+		LexiconEntry.gotoEllipsisMenuItemDM(menuItem = "Configuration");
 
 		IFrame.selectConfigurationFrame();
 

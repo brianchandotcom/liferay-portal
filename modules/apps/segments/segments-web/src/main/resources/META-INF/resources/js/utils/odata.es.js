@@ -1,4 +1,3 @@
-import '../libs/odata-parser.js';
 import {
 	CONJUNCTIONS,
 	FUNCTIONAL_OPERATORS,
@@ -14,7 +13,7 @@ const OPERATORS = {
 	...RELATIONAL_OPERATORS
 };
 
-const oDataFilterFn = window.oDataParser.filter;
+const oDataFilterFn = require('../libs/odata-parser').filter;
 
 const EXPRESSION_TYPES = {
 	AND: 'AndExpression',

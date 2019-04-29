@@ -49,5 +49,8 @@
 		],
 		"whatwg-fetch": true
 	},
+	"ignore": [
+		"**/odata-parser.js"
+	],
 	"preset": "liferay-npm-bundler-preset-liferay-dev"
 }

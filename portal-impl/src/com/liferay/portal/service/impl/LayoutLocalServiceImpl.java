@@ -3609,25 +3609,24 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			PortalPreferences.class, classLoader);
 
-		dynamicQuery = dynamicQuery.add(
+		String namespacePlid = CustomizedPages.namespacePlid(layout.getPlid());
+
+		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
 				"ownerType", ResourceConstants.SCOPE_INDIVIDUAL));
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.like(
+				"preferences", "%" + namespacePlid + "%"));
 
 		List<PortalPreferences> portalPreferenceses =
 			portalPreferencesLocalService.dynamicQuery(dynamicQuery);
 
-		long plid = layout.getPlid();
-
 		for (PortalPreferences portalPreferences : portalPreferenceses) {
-			String preferences = portalPreferences.getPreferences();
+			PortalPreferencesImpl portalPreferencesImpl =
+				new PortalPreferencesImpl(portalPreferences, false);
 
-			if (preferences.contains(CustomizedPages.namespacePlid(plid))) {
-				PortalPreferencesImpl portalPreferencesImpl =
-					new PortalPreferencesImpl(portalPreferences, false);
-
-				portalPreferencesImpl.resetValues(
-					CustomizedPages.namespacePlid(plid));
-			}
+			portalPreferencesImpl.resetValues(namespacePlid);
 		}
 	}
 

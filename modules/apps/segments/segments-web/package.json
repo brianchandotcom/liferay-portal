@@ -80,7 +80,7 @@
 	"name": "segments-web",
 	"private": true,
 	"scripts": {
-		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
+		"build": "liferay-npm-scripts build",
 		"build:libs": "liferay-npm-scripts webpack",
 		"csf": "csf {src,test}/**/*.es.js src/**/*.scss",
 		"format": "npm run csf -- -i",

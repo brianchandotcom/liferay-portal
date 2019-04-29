@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizationUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -56,12 +56,12 @@ public class KeyValueFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "placeholder",
-				LocalizedValueUtil.toLocalizedStrings(
+				LocalizationUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("placeholder"))));
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "tooltip",
-				LocalizedValueUtil.toLocalizedStrings(
+				LocalizationUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("tooltip"))));
 
 		return dataDefinitionField;
@@ -77,12 +77,12 @@ public class KeyValueFieldType extends BaseFieldType {
 				dataDefinitionField.getCustomProperties(), "autoFocus", false)
 		).put(
 			"placeholder",
-			LocalizedValueUtil.toJSONObject(
+			LocalizationUtil.toJSONObject(
 				CustomPropertyUtil.getLocalizedValue(
 					dataDefinitionField.getCustomProperties(), "placeholder"))
 		).put(
 			"tooltip",
-			LocalizedValueUtil.toJSONObject(
+			LocalizationUtil.toJSONObject(
 				CustomPropertyUtil.getLocalizedValue(
 					dataDefinitionField.getCustomProperties(), "tooltip"))
 		);
@@ -96,14 +96,14 @@ public class KeyValueFieldType extends BaseFieldType {
 				dataDefinitionField.getCustomProperties(), "autoFocus", false));
 		context.put(
 			"placeholder",
-			LocalizedValueUtil.getLocalizedValue(
+			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
 				CustomPropertyUtil.getLocalizedValue(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 		context.put("strings", _getStrings());
 		context.put(
 			"tooltip",
-			LocalizedValueUtil.getLocalizedValue(
+			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
 				CustomPropertyUtil.getLocalizedValue(
 					dataDefinitionField.getCustomProperties(), "tooltip")));

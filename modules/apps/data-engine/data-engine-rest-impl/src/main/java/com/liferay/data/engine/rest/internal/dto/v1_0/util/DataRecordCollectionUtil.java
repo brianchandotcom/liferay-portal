@@ -28,10 +28,10 @@ public class DataRecordCollectionUtil {
 		return new DataRecordCollection() {
 			{
 				dataDefinitionId = ddlRecordSet.getDDMStructureId();
-				description = LocalizedValueUtil.toLocalizedStrings(
+				description = LocalizationUtil.toLocalizedStrings(
 					ddlRecordSet.getDescriptionMap());
 				id = ddlRecordSet.getRecordSetId();
-				name = LocalizedValueUtil.toLocalizedStrings(
+				name = LocalizationUtil.toLocalizedStrings(
 					ddlRecordSet.getNameMap());
 			}
 		};

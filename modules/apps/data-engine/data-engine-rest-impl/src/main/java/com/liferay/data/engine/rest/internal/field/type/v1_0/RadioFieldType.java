@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizationUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.DataFieldOptionUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -66,7 +66,7 @@ public class RadioFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "predefinedValue",
-				LocalizedValueUtil.toLocalizedStrings(
+				LocalizationUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("predefinedValue"))));
 
 		return dataDefinitionField;
@@ -106,7 +106,7 @@ public class RadioFieldType extends BaseFieldType {
 				LanguageUtil.getLanguageId(httpServletRequest)));
 		context.put(
 			"predefinedValue",
-			LocalizedValueUtil.getLocalizedValue(
+			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
 				CustomPropertyUtil.getLocalizedValue(
 					dataDefinitionField.getCustomProperties(),

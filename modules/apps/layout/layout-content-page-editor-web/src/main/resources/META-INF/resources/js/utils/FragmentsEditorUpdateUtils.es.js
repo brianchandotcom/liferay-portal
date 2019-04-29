@@ -1,6 +1,6 @@
 import {CLEAR_DROP_TARGET, MOVE_ROW, UPDATE_TRANSLATION_STATUS} from '../actions/actions.es';
 import {DEFAULT_COMPONENT_ROW_CONFIG, DEFAULT_SECTION_ROW_CONFIG} from './rowConstants';
-import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../actions/saveChanges.es';
+import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../actions/saveChanges.es';
 import {FRAGMENTS_EDITOR_DRAGGING_CLASS, FRAGMENTS_EDITOR_ROW_TYPES} from './constants';
 import {getTargetBorder, getWidget, getWidgetPath} from './FragmentsEditorGetUtils.es';
 

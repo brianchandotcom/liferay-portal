@@ -60,7 +60,8 @@ function debouncedAlert(
 		clearPendingCallback();
 
 		beforeNavigateHandler = Liferay.on(
-			'beforeNavigate', handleBeforeNavigate
+			'beforeNavigate',
+			handleBeforeNavigate
 		);
 
 		window.addEventListener(

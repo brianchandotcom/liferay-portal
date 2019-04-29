@@ -5,7 +5,7 @@ import Soy from 'metal-soy';
 import '../common/FloatingToolbarColorPicker.es';
 import './FloatingToolbarBackgroundColorPanelDelegateTemplate.soy';
 import {CONFIG_KEYS} from '../../../utils/rowConstants';
-import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
+import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarBackgroundColorPanel.soy';
 import {UPDATE_ROW_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';

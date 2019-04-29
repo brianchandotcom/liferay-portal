@@ -4,7 +4,7 @@ import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarLinkPanelDelegateTemplate.soy';
 import {BUTTON_TYPES, TARGET_TYPES} from '../../../utils/constants';
-import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
+import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import templates from './FloatingToolbarLinkPanel.soy';
 import {UPDATE_CONFIG_ATTRIBUTES} from '../../../actions/actions.es';
 

@@ -17,6 +17,7 @@ const UPDATE_EDITABLE_VALUES_DELAY = 1500;
  * @review
  */
 const debouncedUpdateEditableValues = debouncedAlert(
+
 	/**
 	 * @param {function} dispatch
 	 * @param {string} fragmentEntryLinkId
@@ -68,10 +69,6 @@ function updateEditableValueAction(
 	editableValue,
 	editableValueSegmentsExperienceId = ''
 ) {
-	/**
-	 * @param {function} dispatch
-	 * @param {function} getState
-	 */
 	return function(dispatch, getState) {
 		const state = getState();
 

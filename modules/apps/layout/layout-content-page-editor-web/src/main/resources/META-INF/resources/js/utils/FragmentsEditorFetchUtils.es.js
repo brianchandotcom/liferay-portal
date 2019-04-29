@@ -105,8 +105,8 @@ function updateEditableValues(fragmentEntryLinkId, editableValues) {
 	return _fetch(
 		state.editFragmentEntryLinkURL,
 		{
-			fragmentEntryLinkId,
-			editableValues: JSON.stringify(editableValues)
+			editableValues: JSON.stringify(editableValues),
+			fragmentEntryLinkId
 		}
 	);
 }

@@ -4,7 +4,7 @@ import Soy, {Config} from 'metal-soy';
 import '../common/FloatingToolbarColorPicker.es';
 import './FloatingToolbarTextPropertiesPanelDelegateTemplate.soy';
 import {EDITABLE_FIELD_CONFIG_KEYS, TEXT_ALIGNMENT_OPTIONS, TEXT_STYLES} from '../../../utils/constants';
-import {enableSavingChangesStatusAction, disableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
+import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarTextPropertiesPanel.soy';
 import {UPDATE_CONFIG_ATTRIBUTES, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';

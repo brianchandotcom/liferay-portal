@@ -50,6 +50,7 @@ import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
 import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryMenuItemContributorRegistry;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -187,6 +188,12 @@ public class SharedAssetsViewDisplayContext {
 		menu.setDirection("left-side");
 		menu.setMarkupView("lexicon");
 		menu.setTriggerCssClass("component-action");
+
+		if (!isVisible(sharingEntry)) {
+			menu.setMenuItems(Collections.emptyList());
+
+			return menu;
+		}
 
 		List<MenuItem> menuItems = new ArrayList<>(2);
 

@@ -84,9 +84,19 @@ public class TaskResourceImpl
 	public Page<Task> getProcessTasksPage(
 		Long processId, Pagination pagination, Sort[] sorts) {
 
-		FieldSort fieldSort = _toFieldSort(sorts);
-
 		String latestProcessVersion = _getLatestProcessVersion(processId);
+
+		if (pagination == null) {
+			Map<String, Long> instanceCountMap = _getInstanceCountMap(
+				null, null, processId, latestProcessVersion);
+
+			Map<String, Task> tasksMap = _getTasksMap(
+				processId, instanceCountMap.keySet(), latestProcessVersion);
+
+			return Page.of(tasksMap.values());
+		}
+
+		FieldSort fieldSort = _toFieldSort(sorts);
 
 		Map<String, Long> instanceCountMap = _getInstanceCountMap(
 			fieldSort, pagination, processId, latestProcessVersion);
@@ -187,8 +197,9 @@ public class TaskResourceImpl
 	private Task _createTask(String taskName) {
 		return new Task() {
 			{
-				instanceCount = 0L;
-				name = taskName;
+				key = taskName;
+				name = LanguageUtil.get(
+					contextAcceptLanguage.getPreferredLocale(), taskName);
 			}
 		};
 	}
@@ -365,7 +376,6 @@ public class TaskResourceImpl
 					_populateTaskWithSLAMetrics(
 						slaTermsAggregationResult.getBucket(taskName), task);
 					_setInstanceCount(instanceCount, task);
-					_updateTaskName(task);
 
 					tasks.add(task);
 				});
@@ -376,7 +386,6 @@ public class TaskResourceImpl
 
 				_populateTaskWithSLAMetrics(bucket, task);
 				_setInstanceCount(instanceCountMap.get(bucket.getKey()), task);
-				_updateTaskName(task);
 
 				tasks.add(task);
 			}
@@ -422,7 +431,7 @@ public class TaskResourceImpl
 		).map(
 			this::_createTask
 		).collect(
-			LinkedHashMap::new, (map, task) -> map.put(task.getName(), task),
+			LinkedHashMap::new, (map, task) -> map.put(task.getKey(), task),
 			Map::putAll
 		);
 	}
@@ -491,14 +500,6 @@ public class TaskResourceImpl
 			sort.isReverse() ? SortOrder.DESC : SortOrder.ASC);
 
 		return fieldSort;
-	}
-
-	private void _updateTaskName(Task task) {
-		String taskName = task.getName();
-
-		task.setName(
-			LanguageUtil.get(
-				contextAcceptLanguage.getPreferredLocale(), taskName));
 	}
 
 	private static final EntityModel _entityModel = new TaskEntityModel();

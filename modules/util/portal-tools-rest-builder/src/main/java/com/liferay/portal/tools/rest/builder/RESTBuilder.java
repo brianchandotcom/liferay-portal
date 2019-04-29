@@ -978,19 +978,32 @@ public class RESTBuilder {
 				String httpMethodLine = s.substring(
 					s.lastIndexOf("\n", y) + 1, s.indexOf("\n", y));
 
+				String leadingWhiteSpace =
+					pathLine.replaceAll("^(\\s+).+", "$1") +
+						httpMethodLine.replaceAll("^(\\s+).+", "$1");
+
 				int z = s.indexOf('\n', y);
 
 				String line = s.substring(z + 1, s.indexOf("\n", z + 1));
 
-				if (line.contains("operationId:")) {
-					continue;
+				while (line.matches(leadingWhiteSpace + "\\w.*")) {
+					String text = line.trim();
+
+					if ((text.compareTo("operationId:") > 0) ||
+						(s.indexOf('\n', z + 1) == -1)) {
+
+						break;
+					}
+
+					z = s.indexOf('\n', z + 1);
+
+					line = s.substring(z + 1, s.indexOf("\n", z + 1));
 				}
 
 				StringBuilder sb = new StringBuilder();
 
 				sb.append(s.substring(0, z + 1));
-				sb.append(pathLine.replaceAll("^(\\s+).+", "$1"));
-				sb.append(httpMethodLine.replaceAll("^(\\s+).+", "$1"));
+				sb.append(leadingWhiteSpace);
 				sb.append("operationId: ");
 				sb.append(javaMethodSignature.getMethodName());
 				sb.append("\n");

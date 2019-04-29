@@ -100,8 +100,9 @@ public class LayoutCommonTag extends IncludeTag {
 		}
 
 		jspWriter.write(
-			"<form action=\"#\" id=\"hrefFm\" method=\"post\" name=\"hrefFm\"" +
-				"><span></span><input type=\"submit\" hidden/></form>");
+			"<form action=\"#\" class=\"hide\" id=\"hrefFm\" method=\"post\" " +
+				"name=\"hrefFm\"><span></span><input hidden type=\"submit\"/>" +
+					"</form>");
 
 		return EVAL_PAGE;
 	}

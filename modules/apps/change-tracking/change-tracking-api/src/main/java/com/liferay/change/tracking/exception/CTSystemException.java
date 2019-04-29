@@ -14,11 +14,14 @@
 
 package com.liferay.change.tracking.exception;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Gergely Mathe
  */
+@ProviderType
 public class CTSystemException extends SystemException {
 
 	public CTSystemException(long companyId) {

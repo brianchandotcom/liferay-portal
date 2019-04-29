@@ -14,9 +14,12 @@
 
 package com.liferay.change.tracking.exception;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public class CTProcessException extends CTException {
 
 	public CTProcessException(long companyId, long ctProcessId, String msg) {

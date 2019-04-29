@@ -19,7 +19,11 @@ import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.configuration.CTConfigurationRegistry;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
+import com.liferay.change.tracking.exception.CTCollectionNameException;
 import com.liferay.change.tracking.exception.CTException;
+import com.liferay.change.tracking.exception.CollectionDescriptionException;
+import com.liferay.change.tracking.exception.CollectionNameException;
 import com.liferay.change.tracking.internal.util.ChangeTrackingThreadLocal;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
@@ -128,7 +132,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 	@Override
 	public Optional<CTCollection> createCTCollection(
 			long userId, String name, String description)
-		throws PortalException {
+		throws CTException {
 
 		long companyId = _getCompanyId(userId);
 
@@ -508,7 +512,7 @@ public class CTEngineManagerImpl implements CTEngineManager {
 
 	private Optional<CTCollection> _createCTCollection(
 			long userId, String name, String description)
-		throws PortalException {
+		throws CTException {
 
 		CTCollection ctCollection = null;
 
@@ -525,11 +529,15 @@ public class CTEngineManagerImpl implements CTEngineManager {
 					return addedCTCollection;
 				});
 		}
+		catch (CollectionDescriptionException cde) {
+			throw new CTCollectionDescriptionException(
+				CompanyThreadLocal.getCompanyId(), cde.getMessage(), cde);
+		}
+		catch (CollectionNameException cne) {
+			throw new CTCollectionNameException(
+				CompanyThreadLocal.getCompanyId(), cne.getMessage(), cne);
+		}
 		catch (Throwable t) {
-			if (t instanceof PortalException) {
-				throw (PortalException)t;
-			}
-
 			_log.error(
 				"Unable to create change tracking collection with name " + name,
 				t);

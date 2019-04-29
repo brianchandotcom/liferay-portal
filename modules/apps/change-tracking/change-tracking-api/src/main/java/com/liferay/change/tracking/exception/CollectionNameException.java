@@ -19,37 +19,24 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Gergely Mathe
+ * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class CTException extends PortalException {
+public class CollectionNameException extends PortalException {
 
-	public CTException(long companyId) {
-		_companyId = companyId;
+	public CollectionNameException() {
 	}
 
-	public CTException(long companyId, String msg) {
+	public CollectionNameException(String msg) {
 		super(msg);
-
-		_companyId = companyId;
 	}
 
-	public CTException(long companyId, String msg, Throwable cause) {
+	public CollectionNameException(String msg, Throwable cause) {
 		super(msg, cause);
-
-		_companyId = companyId;
 	}
 
-	public CTException(long companyId, Throwable cause) {
+	public CollectionNameException(Throwable cause) {
 		super(cause);
-
-		_companyId = companyId;
 	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	private final long _companyId;
 
 }

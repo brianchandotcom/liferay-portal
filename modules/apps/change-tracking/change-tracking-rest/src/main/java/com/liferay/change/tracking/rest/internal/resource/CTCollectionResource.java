@@ -129,7 +129,13 @@ public class CTCollectionResource {
 			);
 		}
 		catch (PortalException pe) {
-			if (pe instanceof CTCollectionNameException) {
+			if (pe instanceof CTCollectionDescriptionException) {
+				throw new CannotCreateCTCollectionException(
+					companyId,
+					LanguageUtil.get(
+						resourceBundle, "collection-description-too-long"));
+			}
+			else if (pe instanceof CTCollectionNameException) {
 				if (Validator.isNull(pe.getMessage())) {
 					throw new CannotCreateCTCollectionException(
 						companyId,
@@ -141,12 +147,6 @@ public class CTCollectionResource {
 					companyId,
 					LanguageUtil.get(
 						resourceBundle, "collection-name-too-long"));
-			}
-			else if (pe instanceof CTCollectionDescriptionException) {
-				throw new CannotCreateCTCollectionException(
-					companyId,
-					LanguageUtil.get(
-						resourceBundle, "collection-description-too-long"));
 			}
 			else {
 				throw new CannotCreateCTCollectionException(

@@ -94,8 +94,9 @@ public class FormRecordUtil {
 								}
 
 								if (fileEntry != null) {
-									document = FormDocumentUtil.toFormDocument(
-										dlurlHelper, fileEntry);
+									formDocument =
+										FormDocumentUtil.toFormDocument(
+											dlurlHelper, fileEntry);
 								}
 
 								name = ddmFormFieldValue.getName();

@@ -164,6 +164,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 		Assert.assertEquals(0, dlFileEntry.getFileEntryTypeId());
 
 		int numberOfVersions = 1;
+
 		_withMaximumNumberOfVersions(
 			numberOfVersions,
 			() -> {
@@ -218,7 +219,10 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 		List<DLFileVersion> fileVersions =
 			DLFileVersionLocalServiceUtil.getFileVersions(
 				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_APPROVED);
-		Assert.assertEquals(numberOfVersions, fileVersions.size());
+
+		Assert.assertEquals(
+			"The number of versions stored are: ", numberOfVersions,
+			fileVersions.size());
 	}
 
 	@Test

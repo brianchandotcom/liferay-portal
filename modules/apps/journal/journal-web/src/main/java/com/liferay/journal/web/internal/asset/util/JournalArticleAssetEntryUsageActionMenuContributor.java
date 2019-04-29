@@ -14,7 +14,6 @@
 
 package com.liferay.journal.web.internal.asset.util;
 
-import com.liferay.asset.constants.AssetEntryUsageConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.model.AssetEntryUsage;
@@ -25,8 +24,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -43,7 +40,6 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -71,16 +67,6 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	@Override
 	public List<DropdownItem> getAssetEntryUsageActionMenu(
 		AssetEntryUsage assetEntryUsage, HttpServletRequest request) {
-
-		if (assetEntryUsage.getType() ==
-				AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
-
-			return Collections.emptyList();
-		}
-
-		if (_isWidgetPageTemplate(assetEntryUsage)) {
-			return Collections.emptyList();
-		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			assetEntryUsage.getAssetEntryId());
@@ -194,38 +180,6 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 
 		return portletURLString + "#portlet_" +
 			assetEntryUsage.getContainerKey();
-	}
-
-	private boolean _isWidgetPageTemplate(AssetEntryUsage assetEntryUsage) {
-		if (assetEntryUsage.getType() !=
-				AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE) {
-
-			return false;
-		}
-
-		long plid = assetEntryUsage.getPlid();
-
-		Layout layout = _layoutLocalService.fetchLayout(plid);
-
-		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {
-			plid = layout.getClassPK();
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(plid);
-
-		if (layoutPageTemplateEntry == null) {
-			return false;
-		}
-
-		if (layoutPageTemplateEntry.getType() !=
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

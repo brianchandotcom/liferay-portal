@@ -33,6 +33,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -344,6 +345,44 @@ public class AssetEntryUsagesDisplayContext {
 		_searchContainer = assetEntryUsagesSearchContainer;
 
 		return _searchContainer;
+	}
+
+	public boolean isShowPreview(AssetEntryUsage assetEntryUsage) {
+		if (assetEntryUsage.getType() ==
+				AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
+
+			return false;
+		}
+
+		if (assetEntryUsage.getType() !=
+				AssetEntryUsageConstants.TYPE_PAGE_TEMPLATE) {
+
+			return false;
+		}
+
+		long plid = assetEntryUsage.getPlid();
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
+		if ((layout.getClassNameId() > 0) && (layout.getClassPK() > 0)) {
+			plid = layout.getClassPK();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(plid);
+
+		if (layoutPageTemplateEntry == null) {
+			return false;
+		}
+
+		if (layoutPageTemplateEntry.getType() !=
+				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private String _getFragmentEntryName(FragmentEntryLink fragmentEntryLink) {

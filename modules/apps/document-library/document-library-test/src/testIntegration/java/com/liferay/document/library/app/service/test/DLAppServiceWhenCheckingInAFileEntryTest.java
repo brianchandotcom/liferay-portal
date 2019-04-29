@@ -94,28 +94,23 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 				workflowHandlerInvocationCounter.getCount(
 					"updateStatus", int.class, Map.class));
 
-			_withMaximumNumberOfVersions(
-				5,
-				() -> {
-					DLAppServiceTestUtil.updateFileEntry(
-						group.getGroupId(), fileEntry.getFileEntryId(),
-						RandomTestUtil.randomString(), true);
+			DLAppServiceTestUtil.updateFileEntry(
+				group.getGroupId(), fileEntry.getFileEntryId(),
+				RandomTestUtil.randomString(), true);
 
-					Assert.assertEquals(
-						1,
-						workflowHandlerInvocationCounter.getCount(
-							"updateStatus", int.class, Map.class));
+			Assert.assertEquals(
+				1,
+				workflowHandlerInvocationCounter.getCount(
+					"updateStatus", int.class, Map.class));
 
-					DLAppServiceUtil.checkInFileEntry(
-						fileEntry.getFileEntryId(),
-						DLVersionNumberIncrease.MINOR,
-						RandomTestUtil.randomString(), serviceContext);
+			DLAppServiceUtil.checkInFileEntry(
+				fileEntry.getFileEntryId(), DLVersionNumberIncrease.MINOR,
+				RandomTestUtil.randomString(), serviceContext);
 
-					Assert.assertEquals(
-						2,
-						workflowHandlerInvocationCounter.getCount(
-							"updateStatus", int.class, Map.class));
-				});
+			Assert.assertEquals(
+				2,
+				workflowHandlerInvocationCounter.getCount(
+					"updateStatus", int.class, Map.class));
 		}
 	}
 
@@ -134,15 +129,11 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 		DLAppServiceUtil.checkOutFileEntry(
 			fileEntry.getFileEntryId(), serviceContext);
 
-		_withMaximumNumberOfVersions(
-			5,
-			() -> {
-				DLAppServiceUtil.checkInFileEntry(
-					fileEntry.getFileEntryId(), DLVersionNumberIncrease.MINOR,
-					RandomTestUtil.randomString(), serviceContext);
+		DLAppServiceUtil.checkInFileEntry(
+			fileEntry.getFileEntryId(), DLVersionNumberIncrease.MINOR,
+			RandomTestUtil.randomString(), serviceContext);
 
-				Assert.assertEquals(3, counter.get());
-			});
+		Assert.assertEquals(3, counter.get());
 	}
 
 	@Test
@@ -259,33 +250,26 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			"fileEntryTypeId",
 			basicDocumentDLFileEntryType.getFileEntryTypeId());
 
-		_withMaximumNumberOfVersions(
-			5,
-			() -> {
-				FileEntry updatedFileEntry = DLAppServiceUtil.updateFileEntry(
-					checkedOutFileEntry.getFileEntryId(),
-					checkedOutFileEntry.getFileName(),
-					checkedOutFileEntry.getMimeType(),
-					checkedOutFileEntry.getTitle(),
-					checkedOutFileEntry.getDescription(),
-					StringUtil.randomString(), DLVersionNumberIncrease.NONE,
-					null, 0, serviceContext);
+		FileEntry updatedFileEntry = DLAppServiceUtil.updateFileEntry(
+			checkedOutFileEntry.getFileEntryId(),
+			checkedOutFileEntry.getFileName(),
+			checkedOutFileEntry.getMimeType(), checkedOutFileEntry.getTitle(),
+			checkedOutFileEntry.getDescription(), StringUtil.randomString(),
+			DLVersionNumberIncrease.NONE, null, 0, serviceContext);
 
-				DLAppServiceUtil.checkInFileEntry(
-					updatedFileEntry.getFileEntryId(),
-					DLVersionNumberIncrease.NONE, StringUtil.randomString(),
-					serviceContext);
+		DLAppServiceUtil.checkInFileEntry(
+			updatedFileEntry.getFileEntryId(), DLVersionNumberIncrease.NONE,
+			StringUtil.randomString(), serviceContext);
 
-				FileEntry checkedInFileEntry = DLAppServiceUtil.getFileEntry(
-					updatedFileEntry.getFileEntryId());
+		FileEntry checkedInFileEntry = DLAppServiceUtil.getFileEntry(
+			updatedFileEntry.getFileEntryId());
 
-				DLFileEntry checkedInDLFileEntry =
-					(DLFileEntry)checkedInFileEntry.getModel();
+		DLFileEntry checkedInDLFileEntry =
+			(DLFileEntry)checkedInFileEntry.getModel();
 
-				Assert.assertEquals(
-					basicDocumentDLFileEntryType.getFileEntryTypeId(),
-					checkedInDLFileEntry.getFileEntryTypeId());
-			});
+		Assert.assertEquals(
+			basicDocumentDLFileEntryType.getFileEntryTypeId(),
+			checkedInDLFileEntry.getFileEntryTypeId());
 	}
 
 	@Test
@@ -321,38 +305,30 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 
 		serviceContext.setAssetTagNames(new String[] {"tag3", "tag4"});
 
-		_withMaximumNumberOfVersions(
-			5,
-			() -> {
-				FileEntry updatedFileEntry = DLAppServiceUtil.updateFileEntry(
-					checkedOutFileEntry.getFileEntryId(),
-					checkedOutFileEntry.getFileName(),
-					checkedOutFileEntry.getMimeType(),
-					checkedOutFileEntry.getTitle(),
-					checkedOutFileEntry.getDescription(),
-					StringUtil.randomString(), DLVersionNumberIncrease.NONE,
-					null, 0, serviceContext);
+		FileEntry updatedFileEntry = DLAppServiceUtil.updateFileEntry(
+			checkedOutFileEntry.getFileEntryId(),
+			checkedOutFileEntry.getFileName(),
+			checkedOutFileEntry.getMimeType(), checkedOutFileEntry.getTitle(),
+			checkedOutFileEntry.getDescription(), StringUtil.randomString(),
+			DLVersionNumberIncrease.NONE, null, 0, serviceContext);
 
-				DLAppServiceUtil.checkInFileEntry(
-					updatedFileEntry.getFileEntryId(),
-					DLVersionNumberIncrease.NONE, StringUtil.randomString(),
-					serviceContext);
+		DLAppServiceUtil.checkInFileEntry(
+			updatedFileEntry.getFileEntryId(), DLVersionNumberIncrease.NONE,
+			StringUtil.randomString(), serviceContext);
 
-				FileEntry checkedInFileEntry = DLAppServiceUtil.getFileEntry(
-					updatedFileEntry.getFileEntryId());
+		FileEntry checkedInFileEntry = DLAppServiceUtil.getFileEntry(
+			updatedFileEntry.getFileEntryId());
 
-				FileVersion lastFileVersion =
-					checkedInFileEntry.getFileVersion();
+		FileVersion lastFileVersion = checkedInFileEntry.getFileVersion();
 
-				AssetEntry lastFileVersionAssetEntry =
-					AssetEntryLocalServiceUtil.getEntry(
-						DLFileEntryConstants.getClassName(),
-						lastFileVersion.getPrimaryKey());
+		AssetEntry lastFileVersionAssetEntry =
+			AssetEntryLocalServiceUtil.getEntry(
+				DLFileEntryConstants.getClassName(),
+				lastFileVersion.getPrimaryKey());
 
-				Assert.assertArrayEquals(
-					new String[] {"tag3", "tag4"},
-					lastFileVersionAssetEntry.getTagNames());
-			});
+		Assert.assertArrayEquals(
+			new String[] {"tag3", "tag4"},
+			lastFileVersionAssetEntry.getTagNames());
 	}
 
 	private void _withMaximumNumberOfVersions(

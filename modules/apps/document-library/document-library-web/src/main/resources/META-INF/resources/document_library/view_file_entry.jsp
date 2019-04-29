@@ -190,7 +190,6 @@ if (portletTitleBasedNavigation) {
 			</div>
 		</c:if>
 
-
 		<c:if test="<%= (fileEntry.getLock() != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 			<c:choose>
 				<c:when test="<%= fileEntry.hasLock() %>">

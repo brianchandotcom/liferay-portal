@@ -50,7 +50,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) throws ModelListenerException {
-		if (!layout.isHead() || !_isContentLayout(layout)) {
+		if (!_isContentLayout(layout)) {
 			return;
 		}
 
@@ -72,7 +72,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterUpdate(Layout layout) throws ModelListenerException {
-		if (!_isContentLayout(layout) || !layout.isHead()) {
+		if (!_isContentLayout(layout)) {
 			return;
 		}
 
@@ -81,7 +81,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
-		if (!_isContentLayout(layout) || !layout.isHead()) {
+		if (!_isContentLayout(layout)) {
 			return;
 		}
 

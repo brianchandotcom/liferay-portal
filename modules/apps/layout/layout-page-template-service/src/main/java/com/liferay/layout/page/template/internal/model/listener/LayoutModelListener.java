@@ -36,9 +36,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) ||
-			!layout.isHead()) {
-
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 			return;
 		}
 

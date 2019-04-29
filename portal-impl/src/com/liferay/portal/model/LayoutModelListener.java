@@ -48,8 +48,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
 		try {
 			if ((layout == null) ||
-				!LayoutStagingUtil.isBranchingLayout(layout) ||
-				!layout.isHead()) {
+				!LayoutStagingUtil.isBranchingLayout(layout)) {
 
 				return;
 			}
@@ -73,10 +72,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	protected void clearCache(Layout layout) {
 		if (layout == null) {
-			return;
-		}
-
-		if (!layout.isHead()) {
 			return;
 		}
 

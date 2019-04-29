@@ -30,11 +30,7 @@ String ldapBaseProviderUrl = ldapServerConfiguration.baseProviderURL();
 String ldapBaseDN = ldapServerConfiguration.baseDN();
 String ldapSecurityPrincipal = ldapServerConfiguration.securityPrincipal();
 
-String ldapSecurityCredentials = ldapServerConfiguration.securityCredential();
-
-if (Validator.isNull(ldapSecurityCredentials)) {
-	ldapSecurityCredentials = Portal.TEMP_OBFUSCATION_VALUE;
-}
+String ldapSecurityCredentials = Portal.TEMP_OBFUSCATION_VALUE;
 
 String ldapAuthSearchFilter = ldapServerConfiguration.authSearchFilter();
 String ldapUserSearchFilter = ldapServerConfiguration.userSearchFilter();

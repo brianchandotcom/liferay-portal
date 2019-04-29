@@ -62,6 +62,12 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	<c:otherwise>
 		<aui:input name="newArticleId" type="hidden" />
 		<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
+
+		<c:if test="<%= (article != null) && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
+			<p class="article-id">
+				<b><liferay-ui:message key="id" /></b>: <%= article.getArticleId() %>
+			</p>
+		</c:if>
 	</c:otherwise>
 </c:choose>
 

@@ -10,6 +10,7 @@ dependencies {
 	testIntegrationCompile project(":apps:comment:comment-page-comments-web")
 	testIntegrationCompile project(":apps:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:message-boards:message-boards-test-util")
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:static:osgi:osgi-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

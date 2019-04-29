@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author Victor Oliveira
@@ -97,10 +96,10 @@ public class FormRecordUtil {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				localizedValue.getString(locale));
 
-			Object fileEntryId = jsonObject.opt("fileEntryId");
+			long fileEntryId = jsonObject.getLong("fileEntryId", 0);
 
-			if (Objects.nonNull(fileEntryId)) {
-				fileEntry = dlAppService.getFileEntry((Long)fileEntryId);
+			if (fileEntryId > 0) {
+				fileEntry = dlAppService.getFileEntry(fileEntryId);
 			}
 		}
 		catch (JSONException jsone) {

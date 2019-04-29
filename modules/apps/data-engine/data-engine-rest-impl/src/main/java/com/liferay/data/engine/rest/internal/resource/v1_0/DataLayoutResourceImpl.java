@@ -19,7 +19,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataLayoutPermission;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.constants.DataLayoutConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataLayoutUtil;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizationUtil;
+import com.liferay.data.engine.rest.internal.util.LocalizationUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataLayout;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;

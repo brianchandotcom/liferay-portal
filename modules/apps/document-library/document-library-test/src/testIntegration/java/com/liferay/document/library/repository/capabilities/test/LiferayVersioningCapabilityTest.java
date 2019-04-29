@@ -195,6 +195,46 @@ public class LiferayVersioningCapabilityTest {
 			});
 	}
 
+	@Test
+	public void testRespectsTheLimitWhenCheckedInAndOut() throws Exception {
+		int numberOfVersions = 2;
+
+		_withMaximumNumberOfVersionsConfigured(
+			numberOfVersions,
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId());
+
+				FileEntry fileEntry = _addRandomFileEntry(serviceContext);
+
+				for (int i = 0; i < (numberOfVersions + 10); i++) {
+					DLAppServiceUtil.checkOutFileEntry(
+						fileEntry.getFileEntryId(), serviceContext);
+
+					DLAppServiceUtil.checkInFileEntry(
+						fileEntry.getFileEntryId(),
+						DLVersionNumberIncrease.MAJOR,
+						StringUtil.randomString(), serviceContext);
+				}
+
+				List<FileVersion> fileVersions = fileEntry.getFileVersions(
+					WorkflowConstants.STATUS_ANY);
+
+				Assert.assertEquals(
+					"The number of versions stored are: ", numberOfVersions,
+					fileVersions.size());
+
+				FileVersion fileVersion = fileVersions.get(0);
+
+				Assert.assertEquals("13.0", fileVersion.getVersion());
+
+				fileVersion = fileVersions.get(1);
+
+				Assert.assertEquals("12.0", fileVersion.getVersion());
+			});
+	}
+
 	private FileEntry _addRandomFileEntry(ServiceContext serviceContext)
 		throws PortalException {
 

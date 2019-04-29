@@ -1712,15 +1712,18 @@ public class AssetPublisherDisplayContext {
 		}
 	}
 
-	public void setPageKeywords() throws PortalException {
+	public void setPageKeywords() {
 		if (getAssetCategoryId() > 0) {
 			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.getCategory(getAssetCategoryId());
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					getAssetCategoryId());
 
-			PortalUtil.setPageKeywords(
-				HtmlUtil.escape(
-					assetCategory.getTitle(_themeDisplay.getLocale())),
-				_request);
+			if (assetCategory != null) {
+				PortalUtil.setPageKeywords(
+					HtmlUtil.escape(
+						assetCategory.getTitle(_themeDisplay.getLocale())),
+					_request);
+			}
 		}
 
 		if (Validator.isNotNull(getAssetTagName())) {

@@ -69,11 +69,15 @@ public class AssetCategoryUtil {
 			PortletURL portletURL, boolean portletBreadcrumbEntry)
 		throws Exception {
 
+		AssetCategory assetCategory =
+			AssetCategoryLocalServiceUtil.fetchAssetCategory(assetCategoryId);
+
+		if (assetCategory == null) {
+			return;
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(
-			assetCategoryId);
 
 		List<AssetCategory> ancestorCategories = assetCategory.getAncestors();
 

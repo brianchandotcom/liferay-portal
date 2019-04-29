@@ -31,12 +31,14 @@ class FragmentEntryLinkList extends Component {
 	static _addDropTargetItemTypesToState(state) {
 		let nextState = state;
 
-		nextState = setIn(nextState,
+		nextState = setIn(
+			nextState,
 			['dropTargetItemTypes'],
 			FRAGMENTS_EDITOR_ITEM_TYPES
 		);
 
-		nextState = setIn(nextState,
+		nextState = setIn(
+			nextState,
 			['fragmentsEditorRowTypes'],
 			FRAGMENTS_EDITOR_ROW_TYPES
 		);

@@ -71,17 +71,17 @@ public class LocalizationUtil {
 	}
 
 	public static Map<String, String> toStringsMap(JSONObject jsonObject) {
-		Map<String, String> localizedValues = new HashMap<>();
+		Map<String, String> stringsMap = new HashMap<>();
 
 		Iterator<String> keys = jsonObject.keys();
 
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			localizedValues.put(key, jsonObject.getString(key));
+			stringsMap.put(key, jsonObject.getString(key));
 		}
 
-		return localizedValues;
+		return stringsMap;
 	}
 
 	public static Map<String, String> toStringsMap(

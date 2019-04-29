@@ -169,6 +169,11 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: completed
+                  required: true
+                  schema:
+                      type: boolean
             responses:
                 200:
                     content:

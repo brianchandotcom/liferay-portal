@@ -20,8 +20,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.headless.form.dto.v1_0.FieldValue;
+import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,7 +45,7 @@ public class FormRecordUtil {
 			DDMFormInstanceRecord ddmFormInstanceRecord,
 			DLAppService dlAppService, DLURLHelper dlurlHelper, Locale locale,
 			Portal portal, UserLocalService userLocalService)
-		throws PortalException {
+		throws Exception {
 
 		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
 
@@ -72,33 +72,9 @@ public class FormRecordUtil {
 
 						return new FieldValue() {
 							{
-								FileEntry fileEntry = null;
-
-								try {
-									JSONObject jsonObject =
-										JSONFactoryUtil.createJSONObject(
-											localizedValue.getString(locale));
-
-									Object fileEntryId = jsonObject.opt(
-										"fileEntryId");
-
-									if (Objects.nonNull(fileEntryId)) {
-										fileEntry = dlAppService.getFileEntry(
-											(Long)fileEntryId);
-									}
-								}
-								catch (JSONException jsone) {
-									if (_log.isWarnEnabled()) {
-										_log.warn(jsone, jsone);
-									}
-								}
-
-								if (fileEntry != null) {
-									formDocument =
-										FormDocumentUtil.toFormDocument(
-											dlurlHelper, fileEntry);
-								}
-
+								formDocument = _toFormDocument(
+									dlAppService, dlurlHelper, locale,
+									localizedValue);
 								name = ddmFormFieldValue.getName();
 								value = localizedValue.getString(locale);
 							}
@@ -108,6 +84,36 @@ public class FormRecordUtil {
 				id = ddmFormInstanceRecord.getFormInstanceRecordId();
 			}
 		};
+	}
+
+	private static FormDocument _toFormDocument(
+			DLAppService dlAppService, DLURLHelper dlurlHelper, Locale locale,
+			Value localizedValue)
+		throws Exception {
+
+		FileEntry fileEntry = null;
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				localizedValue.getString(locale));
+
+			Object fileEntryId = jsonObject.opt("fileEntryId");
+
+			if (Objects.nonNull(fileEntryId)) {
+				fileEntry = dlAppService.getFileEntry((Long)fileEntryId);
+			}
+		}
+		catch (JSONException jsone) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(jsone, jsone);
+			}
+		}
+
+		if (fileEntry != null) {
+			return FormDocumentUtil.toFormDocument(dlurlHelper, fileEntry);
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(FormRecordUtil.class);

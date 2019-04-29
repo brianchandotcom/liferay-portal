@@ -16,18 +16,15 @@ package com.liferay.roles.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.RoleFinderUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -140,23 +137,6 @@ public class RoleFinderTest {
 			"The method findByC_N_S_P_A should have returned the role " +
 				_arbitraryRole.getRoleId(),
 			exists);
-	}
-
-	protected static ResourceAction getModelResourceAction()
-		throws PortalException {
-
-		String name = RandomTestUtil.randomString() + "Model";
-
-		List<String> actionIds = new ArrayList<>();
-
-		actionIds.add(ActionKeys.UPDATE);
-		actionIds.add(ActionKeys.VIEW);
-
-		ResourceActionLocalServiceUtil.checkResourceActions(
-			name, actionIds, true);
-
-		return ResourceActionLocalServiceUtil.getResourceAction(
-			name, ActionKeys.VIEW);
 	}
 
 	private static ResourceAction _arbitraryResourceAction;

@@ -179,10 +179,12 @@ public class StructureUtil {
 						if (Objects.equals("date", type)) {
 							return type;
 						}
-						else if (Objects.equals("document_library", type)) {
+
+						if (Objects.equals("document_library", type)) {
 							return "document";
 						}
-						else if (Objects.equals("paragraph", type)) {
+
+						if (Objects.equals("paragraph", type)) {
 							return "string";
 						}
 

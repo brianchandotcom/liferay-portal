@@ -23,8 +23,7 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.asset.constants.AssetEntryUsageConstants" %><%@
-page import="com.liferay.asset.taglib.internal.display.context.AssetEntryUsagesDisplayContext" %><%@
+<%@ page import="com.liferay.asset.taglib.internal.display.context.AssetEntryUsagesDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@

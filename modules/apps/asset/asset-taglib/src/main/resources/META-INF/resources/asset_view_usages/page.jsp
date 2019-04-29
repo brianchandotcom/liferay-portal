@@ -46,7 +46,7 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 		<liferay-ui:search-container-column-text
 			cssClass="text-right"
 		>
-			<c:if test="<%= assetEntryUsage.getType() != AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE %>">
+			<c:if test="<%= assetEntryUsagesDisplayContext.isShowPreview(assetEntryUsage) %>">
 
 				<%
 				Layout curLayout = LayoutLocalServiceUtil.fetchLayout(assetEntryUsage.getPlid());

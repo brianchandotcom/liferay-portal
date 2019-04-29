@@ -101,9 +101,7 @@ public class AssetEntryUsagesDisplayContext {
 	public List<DropdownItem> getAssetEntryUsageActionDropdownItems(
 		AssetEntryUsage assetEntryUsage) {
 
-		if (assetEntryUsage.getType() ==
-				AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
-
+		if (!isShowPreview(assetEntryUsage)) {
 			return Collections.emptyList();
 		}
 

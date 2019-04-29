@@ -255,9 +255,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					editableElementParser, editableValueJSONObject, mode,
 					locale, previewClassPK);
 
-				configJSONObject = _getMappedValueConfigJSONObject(
-					editableElementParser, editableValueJSONObject, mode,
-					locale, previewClassPK);
+				JSONObject mappedValueConfigJSONObject =
+					_getMappedValueConfigJSONObject(
+						editableElementParser, editableValueJSONObject, mode,
+						locale, previewClassPK);
+
+				configJSONObject = JSONUtil.merge(
+					configJSONObject, mappedValueConfigJSONObject);
 			}
 
 			if (Validator.isNull(value)) {

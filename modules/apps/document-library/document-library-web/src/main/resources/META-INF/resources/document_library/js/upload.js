@@ -1352,7 +1352,11 @@ AUI.add(
 						imageNode.attr('src', thumbnailPath);
 
 						if (instance._getDisplayStyle() === CSS_ICON) {
-							imageNode.ancestor('div').setStyle('backgroundImage', 'url("' + thumbnailPath + '")');
+							var divNode = imageNode.ancestor('div');
+
+							divNode.setStyle('backgroundImage', 'url("' + thumbnailPath + '")');
+							divNode.setStyle('backgroundPosition', 'center');
+							divNode.setStyle('backgroundRepeat', 'no-repeat');
 						}
 					},
 

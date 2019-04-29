@@ -25,18 +25,6 @@
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param? _handleLayoutColumnItemDropdownItemClick: any}
-	{@param? draggingItem: [
-		actionURLs: map<string, string>,
-		active: bool,
-		checked: bool,
-		description: string,
-		hasChild: bool,
-		plid: string,
-		title: string,
-		url: string
-	]}
-	{@param? draggingItemPosition: string}
-	{@param? hoveredLayoutColumnItemPlid: string}
 
 	{let $layoutColumnClasses kind="text"}
 		col-11
@@ -61,16 +49,6 @@
 		ref="layoutItemsWrapper"
 	>
 		{foreach $layoutColumnItem in $layoutColumn}
-			{let $styleModifier kind="text"}
-				{if $hoveredLayoutColumnItemPlid == $layoutColumnItem.plid}
-					{$draggingItemPosition}
-				{/if}
-
-				{if $draggingItem and $draggingItem.plid == $layoutColumnItem.plid}
-					{sp}layout-column-item-dragged
-				{/if}
-			{/let}
-
 			{call .layoutColumnItem}
 				{param _handleLayoutColumnItemDropdownItemClick: $_handleLayoutColumnItemDropdownItemClick /}
 				{param key: $layoutColumnItem.plid /}
@@ -81,7 +59,6 @@
 				{param handleLayoutColumnItemClick: $handleLayoutColumnItemClick /}
 				{param pathThemeImages: $pathThemeImages /}
 				{param portletNamespace: $portletNamespace /}
-				{param styleModifier: $styleModifier /}
 			{/call}
 		{/foreach}
 	</ul>
@@ -124,7 +101,6 @@
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param? _handleLayoutColumnItemDropdownItemClick: any}
-	{@param? styleModifier: string}
 
 	{let $listGroupItemClasses kind="text"}
 		layout-item
@@ -142,10 +118,6 @@
 		{if $layoutColumnItem.active}
 			{sp}active-item
 			{sp}focus
-		{/if}
-
-		{if $styleModifier}
-			{sp}{$styleModifier}
 		{/if}
 	{/let}
 

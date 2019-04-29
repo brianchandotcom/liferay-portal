@@ -15,20 +15,6 @@
 	{@param _handleLayoutColumnItemCheck: any}
 	{@param _handleLayoutColumnItemCheckboxClick: any}
 	{@param _handleLayoutColumnItemClick: any}
-	{@param? _draggingItem: [
-		actionURLs: map<string, string>,
-		active: bool,
-		checked: bool,
-		description: string,
-		hasChild: bool,
-		homePage: bool,
-		homePageTitle: string,
-		plid: string,
-		title: string,
-		url: string
-	]}
-	{@param? _draggingItemPosition: string}
-	{@param? _hoveredLayoutColumnItemPlid: string}
 
 	<div ref="layout">
 		{call com.liferay.layout.admin.web.LayoutBreadcrumbs.render}
@@ -38,9 +24,6 @@
 		<div class="bg-white flex-nowrap layout-columns row" ref="layoutColumns">
 			{foreach $layoutColumn in $layoutColumns}
 				{call com.liferay.layout.admin.web.LayoutColumn.render}
-					{param draggingItem: $_draggingItem /}
-					{param draggingItemPosition: $_draggingItemPosition /}
-					{param hoveredLayoutColumnItemPlid: $_hoveredLayoutColumnItemPlid /}
 					{param layoutColumn: $layoutColumn /}
 					{param layoutColumnIndex: index($layoutColumn) /}
 					{param handleLayoutColumnItemCheck: $_handleLayoutColumnItemCheck /}

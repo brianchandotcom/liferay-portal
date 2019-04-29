@@ -564,7 +564,7 @@ public class LayoutsAdminDisplayContext {
 			}
 
 			JSONObject layoutJSONObject = JSONUtil.put(
-				"actions", _getAvailableActionDropdownItems(layout)
+				"actions", _getAvailableActions(layout)
 			).put(
 				"actionURLs", _getActionURLsJSONObject(layout)
 			).put(
@@ -1490,9 +1490,7 @@ public class LayoutsAdminDisplayContext {
 		return _activeLayoutSetBranchId;
 	}
 
-	private String _getAvailableActionDropdownItems(Layout layout)
-		throws PortalException {
-
+	private String _getAvailableActions(Layout layout) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

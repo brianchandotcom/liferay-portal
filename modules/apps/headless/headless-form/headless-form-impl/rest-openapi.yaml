@@ -113,7 +113,7 @@ components:
                     description: https://www.schema.org/FormFieldValue
                     items:
                         properties:
-                            document:
+                            formDocument:
                                 allOf:
                                     - $ref: "#/components/schemas/FormDocument"
                                 readOnly: true

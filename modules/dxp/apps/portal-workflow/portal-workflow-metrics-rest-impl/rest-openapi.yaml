@@ -107,6 +107,8 @@ components:
                 instanceCount:
                     format: int64
                     type: integer
+                key:
+                    type: string
                 name:
                     type: string
                 onTimeInstanceCount:

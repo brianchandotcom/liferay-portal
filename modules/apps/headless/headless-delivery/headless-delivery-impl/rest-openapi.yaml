@@ -99,6 +99,11 @@ components:
                     description: The number of comments this blog post has received.
                     readOnly: true
                     type: integer
+                relatedContents:
+                    items:
+                        $ref: "#/components/schemas/RelatedContent"
+                    readOnly: true
+                    type: array
                 siteId:
                     description: The ID of the site to which this blog post is scoped.
                     format: int64
@@ -548,6 +553,11 @@ components:
                     description: The number of comments on the document.
                     readOnly: true
                     type: integer
+                relatedContents:
+                    items:
+                        $ref: "#/components/schemas/RelatedContent"
+                    readOnly: true
+                    type: array
                 sizeInBytes:
                     description: The document's size in bytes.
                     format: int64
@@ -704,6 +714,11 @@ components:
                     format: int64
                     type: integer
                     writeOnly: true
+                relatedContents:
+                    items:
+                        $ref: "#/components/schemas/RelatedContent"
+                    readOnly: true
+                    type: array
                 siteId:
                     description: The ID of the site to which this article is scoped.
                     format: int64
@@ -921,6 +936,11 @@ components:
                     description: The number of the message's child messages.
                     readOnly: true
                     type: integer
+                relatedContents:
+                    items:
+                        $ref: "#/components/schemas/RelatedContent"
+                    readOnly: true
+                    type: array
                 showAsAnswer:
                     description: A flag that indicates whether the message is answering a question.
                     type: boolean
@@ -1036,6 +1056,11 @@ components:
                     description: The number of the thread's messages.
                     readOnly: true
                     type: integer
+                relatedContents:
+                    items:
+                        $ref: "#/components/schemas/RelatedContent"
+                    readOnly: true
+                    type: array
                 showAsQuestion:
                     description: A flag that indicates whether this thread was posted as a question that can receive approved answers.
                     type: boolean

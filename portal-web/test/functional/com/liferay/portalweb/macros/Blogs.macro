@@ -142,7 +142,7 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 	}
 
 	macro addEntryWithUploadedCoverImage {

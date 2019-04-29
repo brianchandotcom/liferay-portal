@@ -3,5 +3,5 @@ dependencies {
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":private:apps:oauth:oauth-api")
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

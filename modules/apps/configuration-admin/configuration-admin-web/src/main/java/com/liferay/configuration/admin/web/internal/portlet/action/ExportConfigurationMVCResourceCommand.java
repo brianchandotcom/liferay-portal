@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.FileInputStream;
 
@@ -261,6 +262,13 @@ public class ExportConfigurationMVCResourceCommand
 				ConfigurationModel.ALL);
 
 		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
+			if (!PropsValues.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES &&
+				(attributeDefinition.getType() ==
+					AttributeDefinition.PASSWORD)) {
+
+				continue;
+			}
+
 			String[] values = AttributeDefinitionUtil.getProperty(
 				attributeDefinition, configuration);
 

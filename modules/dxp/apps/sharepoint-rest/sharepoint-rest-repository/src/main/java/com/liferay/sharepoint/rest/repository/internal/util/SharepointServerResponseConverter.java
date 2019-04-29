@@ -326,8 +326,7 @@ public class SharepointServerResponseConverter {
 		Date modifiedDate = _parseDate(
 			jsonObject.getString("TimeLastModified"));
 		long effectiveBasePermissionsBits =
-			_getFolderEffectiveBasePermissionsBits(
-				jsonObject, _isRootFolder(extRepositoryModelKey));
+			_getFolderEffectiveBasePermissionsBits(jsonObject);
 
 		return (T)new SharepointFolder(
 			extRepositoryModelKey, name, createDate, modifiedDate,
@@ -360,9 +359,7 @@ public class SharepointServerResponseConverter {
 		return title + StringPool.PERIOD + extension;
 	}
 
-	private long _getFolderEffectiveBasePermissionsBits(
-		JSONObject jsonObject, boolean isRootFolder) {
-
+	private long _getFolderEffectiveBasePermissionsBits(JSONObject jsonObject) {
 		JSONObject listAllItemFieldsJSONObject = jsonObject.getJSONObject(
 			"ListItemAllFields");
 
@@ -370,7 +367,10 @@ public class SharepointServerResponseConverter {
 			return _getEffectiveBasePermissionsBits(jsonObject);
 		}
 
-		if (isRootFolder) {
+		String extRepositoryModelKey = jsonObject.getString(
+			"ServerRelativeUrl");
+
+		if (_isRootFolder(extRepositoryModelKey)) {
 			return 1;
 		}
 

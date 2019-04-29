@@ -42,7 +42,7 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 %>
 
 <portlet:actionURL name="/layout/edit_layout_set" var="editLayoutSetURL">
-	<portlet:param name="mvcPath" value="/edit_layout_set.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_set" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

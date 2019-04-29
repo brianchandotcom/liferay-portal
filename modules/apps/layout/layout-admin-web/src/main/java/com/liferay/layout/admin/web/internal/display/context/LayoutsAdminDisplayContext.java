@@ -402,7 +402,8 @@ public class LayoutsAdminDisplayContext {
 	public String getFirstColumnConfigureLayoutURL(boolean privatePages) {
 		PortletURL editLayoutSetURL = _liferayPortletResponse.createRenderURL();
 
-		editLayoutSetURL.setParameter("mvcPath", "/edit_layout_set.jsp");
+		editLayoutSetURL.setParameter(
+			"mvcRenderCommandName", "/layout/edit_layout_set");
 		editLayoutSetURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
 		editLayoutSetURL.setParameter("backURL", _themeDisplay.getURLCurrent());

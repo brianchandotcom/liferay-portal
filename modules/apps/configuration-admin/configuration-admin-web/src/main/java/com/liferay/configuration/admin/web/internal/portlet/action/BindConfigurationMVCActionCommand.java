@@ -57,6 +57,7 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -247,6 +248,10 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 				String key = keys.nextElement();
 
 				Object value = properties.get(key);
+
+				if (Objects.equals(value, Portal.TEMP_OBFUSCATION_VALUE)) {
+					continue;
+				}
 
 				configuredProperties.put(key, value);
 			}

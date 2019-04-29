@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Dictionary;
@@ -79,13 +80,18 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		Configuration configuration = _configurationModel.getConfiguration();
 
-		if (hasConfigurationAttribute(configuration, attributeDefinition)) {
-			values = AttributeDefinitionUtil.getProperty(
-				attributeDefinition, configuration);
+		if (attributeDefinition.getType() == AttributeDefinition.PASSWORD) {
+			values = _PASSWORD_TYPE_VALUES;
 		}
 		else {
-			values = AttributeDefinitionUtil.getDefaultValue(
-				attributeDefinition);
+			if (hasConfigurationAttribute(configuration, attributeDefinition)) {
+				values = AttributeDefinitionUtil.getProperty(
+					attributeDefinition, configuration);
+			}
+			else {
+				values = AttributeDefinitionUtil.getDefaultValue(
+					attributeDefinition);
+			}
 		}
 
 		addDDMFormFieldValues(
@@ -165,6 +171,10 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		ddmFormFieldValue.setValue(localizedValue);
 	}
+
+	private static final String[] _PASSWORD_TYPE_VALUES = {
+		Portal.TEMP_OBFUSCATION_VALUE
+	};
 
 	private final ConfigurationModel _configurationModel;
 	private final DDMForm _ddmForm;

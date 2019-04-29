@@ -95,7 +95,7 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 	@Override
 	public boolean isEmpty() throws PortalException {
 		int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(
-			getGroupId(), getKbFolderId(), WorkflowConstants.STATUS_ANY);
+			getGroupId(), getKbFolderId(), WorkflowConstants.STATUS_APPROVED);
 
 		if (kbArticlesCount > 0) {
 			return false;

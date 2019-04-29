@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Workflow Metrics REST Client
 Bundle-SymbolicName: com.liferay.portal.workflow.metrics.rest.client
-Bundle-Version: 2.0.0
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.workflow.metrics.rest.client.dto.v1_0,\
 	com.liferay.portal.workflow.metrics.rest.client.pagination,\

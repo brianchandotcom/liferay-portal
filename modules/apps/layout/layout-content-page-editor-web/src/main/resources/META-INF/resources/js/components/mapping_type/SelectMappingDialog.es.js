@@ -86,7 +86,7 @@ class SelectMappingDialog extends PortletBase {
 		this.store
 			.dispatch(
 				{
-					HIDE_MAPPING_DIALOG
+					type: HIDE_MAPPING_DIALOG
 				}
 			);
 	}

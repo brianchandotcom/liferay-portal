@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -264,6 +265,26 @@ public class BlogPostingSerDes {
 			sb.append(blogPosting.getNumberOfComments());
 		}
 
+		if (blogPosting.getRelatedContents() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relatedContents\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < blogPosting.getRelatedContents().length; i++) {
+				sb.append(String.valueOf(blogPosting.getRelatedContents()[i]));
+
+				if ((i + 1) < blogPosting.getRelatedContents().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (blogPosting.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -456,6 +477,15 @@ public class BlogPostingSerDes {
 				String.valueOf(blogPosting.getNumberOfComments()));
 		}
 
+		if (blogPosting.getRelatedContents() == null) {
+			map.put("relatedContents", null);
+		}
+		else {
+			map.put(
+				"relatedContents",
+				String.valueOf(blogPosting.getRelatedContents()));
+		}
+
 		if (blogPosting.getSiteId() == null) {
 			map.put("siteId", null);
 		}
@@ -602,6 +632,18 @@ public class BlogPostingSerDes {
 				if (jsonParserFieldValue != null) {
 					blogPosting.setNumberOfComments(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {
+				if (jsonParserFieldValue != null) {
+					blogPosting.setRelatedContents(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RelatedContentSerDes.toDTO((String)object)
+						).toArray(
+							size -> new RelatedContent[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

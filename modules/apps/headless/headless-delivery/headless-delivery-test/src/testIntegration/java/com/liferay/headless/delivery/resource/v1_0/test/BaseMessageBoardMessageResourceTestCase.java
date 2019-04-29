@@ -1834,6 +1834,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
+				if (messageBoardMessage.getRelatedContents() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("showAsAnswer", additionalAssertFieldName)) {
 				if (messageBoardMessage.getShowAsAnswer() == null) {
 					valid = false;
@@ -2031,6 +2039,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 						messageBoardMessage1.getNumberOfMessageBoardMessages(),
 						messageBoardMessage2.
 							getNumberOfMessageBoardMessages())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage1.getRelatedContents(),
+						messageBoardMessage2.getRelatedContents())) {
 
 					return false;
 				}
@@ -2237,6 +2256,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfMessageBoardMessages")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("relatedContents")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

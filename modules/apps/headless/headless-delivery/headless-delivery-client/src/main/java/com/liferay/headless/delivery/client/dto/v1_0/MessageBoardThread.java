@@ -298,6 +298,28 @@ public class MessageBoardThread {
 
 	protected Integer numberOfMessageBoardMessages;
 
+	public RelatedContent[] getRelatedContents() {
+		return relatedContents;
+	}
+
+	public void setRelatedContents(RelatedContent[] relatedContents) {
+		this.relatedContents = relatedContents;
+	}
+
+	public void setRelatedContents(
+		UnsafeSupplier<RelatedContent[], Exception>
+			relatedContentsUnsafeSupplier) {
+
+		try {
+			relatedContents = relatedContentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected RelatedContent[] relatedContents;
+
 	public Boolean getShowAsQuestion() {
 		return showAsQuestion;
 	}

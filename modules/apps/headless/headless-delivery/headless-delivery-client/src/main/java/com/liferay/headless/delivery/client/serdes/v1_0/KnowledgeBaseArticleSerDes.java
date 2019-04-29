@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -248,6 +249,32 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append(knowledgeBaseArticle.getParentKnowledgeBaseFolderId());
 		}
 
+		if (knowledgeBaseArticle.getRelatedContents() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relatedContents\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < knowledgeBaseArticle.getRelatedContents().length; i++) {
+
+				sb.append(
+					String.valueOf(
+						knowledgeBaseArticle.getRelatedContents()[i]));
+
+				if ((i + 1) <
+						knowledgeBaseArticle.getRelatedContents().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (knowledgeBaseArticle.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -471,6 +498,15 @@ public class KnowledgeBaseArticleSerDes {
 					knowledgeBaseArticle.getParentKnowledgeBaseFolderId()));
 		}
 
+		if (knowledgeBaseArticle.getRelatedContents() == null) {
+			map.put("relatedContents", null);
+		}
+		else {
+			map.put(
+				"relatedContents",
+				String.valueOf(knowledgeBaseArticle.getRelatedContents()));
+		}
+
 		if (knowledgeBaseArticle.getSiteId() == null) {
 			map.put("siteId", null);
 		}
@@ -631,6 +667,18 @@ public class KnowledgeBaseArticleSerDes {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseArticle.setParentKnowledgeBaseFolderId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseArticle.setRelatedContents(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RelatedContentSerDes.toDTO((String)object)
+						).toArray(
+							size -> new RelatedContent[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

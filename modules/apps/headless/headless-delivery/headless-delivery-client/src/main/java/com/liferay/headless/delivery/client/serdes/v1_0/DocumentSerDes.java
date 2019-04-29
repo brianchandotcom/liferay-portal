@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
+import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -240,6 +241,26 @@ public class DocumentSerDes {
 			sb.append(document.getNumberOfComments());
 		}
 
+		if (document.getRelatedContents() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relatedContents\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < document.getRelatedContents().length; i++) {
+				sb.append(String.valueOf(document.getRelatedContents()[i]));
+
+				if ((i + 1) < document.getRelatedContents().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (document.getSizeInBytes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -427,6 +448,15 @@ public class DocumentSerDes {
 				String.valueOf(document.getNumberOfComments()));
 		}
 
+		if (document.getRelatedContents() == null) {
+			map.put("relatedContents", null);
+		}
+		else {
+			map.put(
+				"relatedContents",
+				String.valueOf(document.getRelatedContents()));
+		}
+
 		if (document.getSizeInBytes() == null) {
 			map.put("sizeInBytes", null);
 		}
@@ -570,6 +600,18 @@ public class DocumentSerDes {
 				if (jsonParserFieldValue != null) {
 					document.setNumberOfComments(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {
+				if (jsonParserFieldValue != null) {
+					document.setRelatedContents(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RelatedContentSerDes.toDTO((String)object)
+						).toArray(
+							size -> new RelatedContent[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {

@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -207,6 +209,29 @@ public class MessageBoardThreadSerDes {
 			sb.append(messageBoardThread.getNumberOfMessageBoardMessages());
 		}
 
+		if (messageBoardThread.getRelatedContents() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relatedContents\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < messageBoardThread.getRelatedContents().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(messageBoardThread.getRelatedContents()[i]));
+
+				if ((i + 1) < messageBoardThread.getRelatedContents().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (messageBoardThread.getShowAsQuestion() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -359,6 +384,15 @@ public class MessageBoardThreadSerDes {
 					messageBoardThread.getNumberOfMessageBoardMessages()));
 		}
 
+		if (messageBoardThread.getRelatedContents() == null) {
+			map.put("relatedContents", null);
+		}
+		else {
+			map.put(
+				"relatedContents",
+				String.valueOf(messageBoardThread.getRelatedContents()));
+		}
+
 		if (messageBoardThread.getShowAsQuestion() == null) {
 			map.put("showAsQuestion", null);
 		}
@@ -490,6 +524,18 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setNumberOfMessageBoardMessages(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setRelatedContents(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RelatedContentSerDes.toDTO((String)object)
+						).toArray(
+							size -> new RelatedContent[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "showAsQuestion")) {

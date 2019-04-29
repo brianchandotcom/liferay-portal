@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -217,6 +219,30 @@ public class MessageBoardMessageSerDes {
 			sb.append(messageBoardMessage.getNumberOfMessageBoardMessages());
 		}
 
+		if (messageBoardMessage.getRelatedContents() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relatedContents\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < messageBoardMessage.getRelatedContents().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						messageBoardMessage.getRelatedContents()[i]));
+
+				if ((i + 1) < messageBoardMessage.getRelatedContents().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (messageBoardMessage.getShowAsAnswer() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -365,6 +391,15 @@ public class MessageBoardMessageSerDes {
 					messageBoardMessage.getNumberOfMessageBoardMessages()));
 		}
 
+		if (messageBoardMessage.getRelatedContents() == null) {
+			map.put("relatedContents", null);
+		}
+		else {
+			map.put(
+				"relatedContents",
+				String.valueOf(messageBoardMessage.getRelatedContents()));
+		}
+
 		if (messageBoardMessage.getShowAsAnswer() == null) {
 			map.put("showAsAnswer", null);
 		}
@@ -493,6 +528,18 @@ public class MessageBoardMessageSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardMessage.setNumberOfMessageBoardMessages(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardMessage.setRelatedContents(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RelatedContentSerDes.toDTO((String)object)
+						).toArray(
+							size -> new RelatedContent[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "showAsAnswer")) {

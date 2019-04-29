@@ -1242,6 +1242,14 @@ public abstract class BaseBlogPostingResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
+				if (blogPosting.getRelatedContents() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"taxonomyCategories", additionalAssertFieldName)) {
 
@@ -1472,6 +1480,17 @@ public abstract class BaseBlogPostingResourceTestCase {
 				if (!Objects.deepEquals(
 						blogPosting1.getNumberOfComments(),
 						blogPosting2.getNumberOfComments())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						blogPosting1.getRelatedContents(),
+						blogPosting2.getRelatedContents())) {
 
 					return false;
 				}
@@ -1741,6 +1760,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfComments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("relatedContents")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

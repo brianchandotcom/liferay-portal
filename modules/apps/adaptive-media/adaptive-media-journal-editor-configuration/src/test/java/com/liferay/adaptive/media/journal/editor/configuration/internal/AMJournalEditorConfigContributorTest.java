@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -99,9 +100,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
-		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
-
-		originalJSONObject.put(
+		JSONObject originalJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl",
 			"journalItemSelectorCriterionFileEntryItemSelectorReturnType");
 
@@ -154,9 +153,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
-		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
-
-		originalJSONObject.put(
+		JSONObject originalJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl",
 			"journalItemSelectorCriterionFileEntryItemSelectorReturnType");
 
@@ -208,9 +205,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
-		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
-
-		originalJSONObject.put(
+		JSONObject originalJSONObject = JSONUtil.put(
 			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore"
 		).put(
 			"filebrowserImageBrowseLinkUrl",
@@ -275,9 +270,8 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 
 	@Test
 	public void testImgIsAddedToAllowedContent() throws Exception {
-		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
-
-		originalJSONObject.put("allowedContent", "a[*](*); div(*);");
+		JSONObject originalJSONObject = JSONUtil.put(
+			"allowedContent", "a[*](*); div(*);");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -289,9 +283,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put(
+		JSONObject expectedJSONObject = JSONUtil.put(
 			"allowedContent", "a[*](*); div(*); img[*](*){*};");
 
 		JSONAssert.assertEquals(
@@ -322,9 +314,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 	public void testImgIsNotAddedToAllowedContentIfEverythingWasAlreadyAllowed()
 		throws Exception {
 
-		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
-
-		originalJSONObject.put("allowedContent", true);
+		JSONObject originalJSONObject = JSONUtil.put("allowedContent", true);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -336,9 +326,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
-		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
-
-		expectedJSONObject.put("allowedContent", true);
+		JSONObject expectedJSONObject = JSONUtil.put("allowedContent", true);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
@@ -348,9 +336,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 	public void testItemSelectorURLWhenNoFileBrowserImageBrowseLinkUrl()
 		throws Exception {
 
-		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
-
-		originalJSONObject.put(
+		JSONObject originalJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl", StringPool.BLANK);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -391,9 +377,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			_getAudioItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
-		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
-
-		originalJSONObject.put(
+		JSONObject originalJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl",
 			"audioItemSelectorCriterionFileEntryItemSelectorReturnType");
 
@@ -457,9 +441,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
-		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
-
-		originalJSONObject.put(
+		JSONObject originalJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl",
 			"journalItemSelectorCriterionFileEntryItemSelectorReturnType");
 
@@ -517,9 +499,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			_getFileItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
 
-		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
-
-		originalJSONObject.put(
+		JSONObject originalJSONObject = JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl",
 			"fileItemSelectorCriterionFileEntryItemSelectorReturnType");
 

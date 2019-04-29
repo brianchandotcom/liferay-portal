@@ -89,9 +89,9 @@ public class DataLayoutUtil {
 					jsonObject.getJSONArray("rows"),
 					rowJSONObject -> _toDataLayoutRow(rowJSONObject),
 					DataLayoutRow.class);
-				description = LocalizationUtil.toLocalizedStrings(
+				description = LocalizationUtil.toStringsMap(
 					jsonObject.getJSONObject("description"));
-				title = LocalizationUtil.toLocalizedStrings(
+				title = LocalizationUtil.toStringsMap(
 					jsonObject.getJSONObject("title"));
 			}
 		};

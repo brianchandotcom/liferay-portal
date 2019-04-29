@@ -116,8 +116,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			_ddmStructureLayoutLocalService.addStructureLayout(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
 				_getDDMStructureVersionId(dataDefinitionId),
-				LocalizationUtil.toLocalizedValues(dataLayout.getName()),
-				LocalizationUtil.toLocalizedValues(
+				LocalizationUtil.toLocalesMap(dataLayout.getName()),
+				LocalizationUtil.toLocalesMap(
 					dataLayout.getDescription()),
 				DataLayoutUtil.toJSON(dataLayout), serviceContext);
 
@@ -213,8 +213,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			_ddmStructureLayoutLocalService.updateStructureLayout(
 				dataLayoutId,
 				_getDDMStructureVersionId(dataLayout.getDataDefinitionId()),
-				LocalizationUtil.toLocalizedValues(dataLayout.getName()),
-				LocalizationUtil.toLocalizedValues(
+				LocalizationUtil.toLocalesMap(dataLayout.getName()),
+				LocalizationUtil.toLocalesMap(
 					dataLayout.getDescription()),
 				DataLayoutUtil.toJSON(dataLayout), new ServiceContext()));
 	}
@@ -262,11 +262,11 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		dataLayout.setDataDefinitionId(_getDDMStructureId(ddmStructureLayout));
 		dataLayout.setId(ddmStructureLayout.getStructureLayoutId());
 		dataLayout.setDescription(
-			LocalizationUtil.toLocalizedStrings(
+			LocalizationUtil.toStringsMap(
 				ddmStructureLayout.getDescriptionMap()));
 		dataLayout.setDateModified(ddmStructureLayout.getModifiedDate());
 		dataLayout.setName(
-			LocalizationUtil.toLocalizedStrings(
+			LocalizationUtil.toStringsMap(
 				ddmStructureLayout.getNameMap()));
 		dataLayout.setUserId(ddmStructureLayout.getUserId());
 

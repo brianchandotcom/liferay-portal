@@ -62,17 +62,17 @@ public class NumericFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "placeholder",
-				LocalizationUtil.toLocalizedStrings(
+				LocalizationUtil.toStringsMap(
 					jsonObject.getJSONObject("placeholder"))));
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "predefinedValue",
-				LocalizationUtil.toLocalizedStrings(
+				LocalizationUtil.toStringsMap(
 					jsonObject.getJSONObject("predefinedValue"))));
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "tooltip",
-				LocalizationUtil.toLocalizedStrings(
+				LocalizationUtil.toStringsMap(
 					jsonObject.getJSONObject("tooltip"))));
 
 		return dataDefinitionField;

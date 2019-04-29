@@ -64,7 +64,7 @@ public class SelectFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "predefinedValue",
-				LocalizationUtil.toLocalizedStrings(
+				LocalizationUtil.toStringsMap(
 					jsonObject.getJSONObject("predefinedValue"))));
 
 		return dataDefinitionField;

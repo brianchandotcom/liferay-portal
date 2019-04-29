@@ -52,7 +52,7 @@ public class LocalizationUtil {
 		return jsonObject;
 	}
 
-	public static Map<String, String> toLocalizedStrings(
+	public static Map<String, String> toStringsMap(
 		JSONObject jsonObject) {
 
 		Map<String, String> localizedValues = new HashMap<>();
@@ -68,35 +68,35 @@ public class LocalizationUtil {
 		return localizedValues;
 	}
 
-	public static Map<String, String> toLocalizedStrings(
+	public static Map<String, String> toStringsMap(
 		Map<Locale, String> localizationMap) {
 
-		Map<String, String> localizedValues = new HashMap<>();
+		Map<String, String> stringsMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : localizationMap.entrySet()) {
-			localizedValues.put(
+			stringsMap.put(
 				LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
 		}
 
-		return localizedValues;
+		return stringsMap;
 	}
 
-	public static Map<Locale, String> toLocalizedValues(
+	public static Map<Locale, String> toLocalesMap(
 		Map<String, ?> localizedValues) {
 
 		if (MapUtil.isEmpty(localizedValues)) {
 			return Collections.emptyMap();
 		}
 
-		Map<Locale, String> localizationMap = new HashMap<>();
+		Map<Locale, String> localesMap = new HashMap<>();
 
 		for (Map.Entry<String, ?> entry : localizedValues.entrySet()) {
-			localizationMap.put(
+			localesMap.put(
 				LocaleUtil.fromLanguageId(entry.getKey()),
 				(String)entry.getValue());
 		}
 
-		return localizationMap;
+		return localesMap;
 	}
 
 }

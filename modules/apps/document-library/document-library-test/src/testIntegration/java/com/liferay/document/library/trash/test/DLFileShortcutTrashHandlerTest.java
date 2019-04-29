@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -267,7 +268,7 @@ public class DLFileShortcutTrashHandlerTest
 	}
 
 	protected void trashFileEntry() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -312,5 +313,8 @@ public class DLFileShortcutTrashHandlerTest
 
 	private final WhenIsAssetable _whenIsAssetable =
 		new DefaultWhenIsAssetable();
+
+	@DeleteAfterTestRun
+	private Group group;
 
 }

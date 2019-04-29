@@ -77,13 +77,20 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.QUERY, name = "completed")
+		}
+	)
 	@Path("/processes/{processId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Process")})
 	public Process getProcess(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId)
+				processId,
+			@NotNull @Parameter(hidden = true) @QueryParam("completed") Boolean
+				completed)
 		throws Exception {
 
 		return new Process();

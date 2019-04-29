@@ -146,13 +146,16 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	public Process getProcess(@GraphQLName("processId") Long processId)
+	public Process getProcess(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("completed") Boolean completed)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_processResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			processResource -> processResource.getProcess(processId));
+			processResource -> processResource.getProcess(
+				processId, completed));
 	}
 
 	@GraphQLField

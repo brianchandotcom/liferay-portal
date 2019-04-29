@@ -369,7 +369,9 @@ public abstract class BaseProcessResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Process invokeGetProcess(Long processId) throws Exception {
+	protected Process invokeGetProcess(Long processId, Boolean completed)
+		throws Exception {
+
 		Http.Options options = _createHttpOptions();
 
 		String location =
@@ -395,7 +397,8 @@ public abstract class BaseProcessResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokeGetProcessResponse(Long processId)
+	protected Http.Response invokeGetProcessResponse(
+			Long processId, Boolean completed)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();

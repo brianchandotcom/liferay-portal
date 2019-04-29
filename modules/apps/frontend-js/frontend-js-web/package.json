@@ -65,7 +65,7 @@
 	},
 	"name": "frontend-js-web",
 	"scripts": {
-		"build": "liferay-npm-scripts webpack && liferay-npm-scripts build",
+		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
 		"test": "liferay-npm-scripts test"

@@ -941,8 +941,8 @@ paths:
             tags: ["Role"]
     "/segments/{segmentId}/user-accounts":
         get:
-            operationId: getSegmentUserAccountsPage
             description: Gets a segment's users.
+            operationId: getSegmentUserAccountsPage
             parameters:
                 - in: path
                   name: segmentId
@@ -975,8 +975,8 @@ paths:
             tags: ["SegmentUser"]
     "/sites/{siteId}/segments":
         get:
-            operationId: getSiteSegmentsPage
             description: Gets a site's segments.
+            operationId: getSiteSegmentsPage
             parameters:
                 - in: path
                   name: siteId
@@ -1009,8 +1009,8 @@ paths:
             tags: ["Segment"]
     "/sites/{siteId}/user-accounts/{userAccountId}/segments":
         get:
-            operationId: getSiteUserAccountSegmentsPage
             description: Gets a user's segments.
+            operationId: getSiteUserAccountSegmentsPage
             parameters:
                 - in: path
                   name: siteId

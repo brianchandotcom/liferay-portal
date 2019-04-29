@@ -27,6 +27,8 @@
 	<div class="closed hidden-print lfr-add-panel lfr-admin-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= portletNamespace %>addPanelId">
 		<div class="product-menu sidebar sidebar-inverse sidenav-menu">
 			<div class="sidebar-header">
+				<h1 class="sr-only"><liferay-ui:message key="widget-selection-panel" /></h1>
+
 				<span><liferay-ui:message key="add" /></span>
 
 				<a aria-label="<%= LanguageUtil.get(request, "close") %>" class="sidenav-close" href="javascript:;">

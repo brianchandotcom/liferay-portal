@@ -366,15 +366,15 @@ public class SharepointServerResponseConverter {
 		JSONObject listAllItemFieldsJSONObject = jsonObject.getJSONObject(
 			"ListItemAllFields");
 
-		if (listAllItemFieldsJSONObject.has("__deferred")) {
-			if (isRootFolder) {
-				return 1;
-			}
-
-			return 0;
+		if (!listAllItemFieldsJSONObject.has("__deferred")) {
+			return _getEffectiveBasePermissionsBits(jsonObject);
 		}
 
-		return _getEffectiveBasePermissionsBits(jsonObject);
+		if (isRootFolder) {
+			return 1;
+		}
+
+		return 0;
 	}
 
 	private boolean _isRootFolder(String extRepositoryModelKey) {

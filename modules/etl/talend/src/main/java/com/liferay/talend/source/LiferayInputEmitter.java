@@ -75,46 +75,14 @@ public class LiferayInputEmitter implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		_inputDataSet = _liferayInputMapperConfiguration.getInputDataSet();
+		InputDataSet inputDataSet =
+			_liferayInputMapperConfiguration.getInputDataSet();
 
 		_intputSchema = _liferayService.getEndpointTalendSchema(
-			_inputDataSet, _recordBuilderFactory);
+			inputDataSet, _recordBuilderFactory);
 
-		GenericDataStore genericDataStore = _inputDataSet.getGenericDataStore();
-
-		URL openAPISpecURL = genericDataStore.getOpenAPISpecURL();
-
-		URL serverURL = ConnectionService.getServerURL(genericDataStore);
-
-		String appBasePathSegment =
-			_liferayService.extractJaxRSAppBasePathSegment(openAPISpecURL);
-
-		String endpoint = _inputDataSet.getEndpoint();
-
-		UriBuilder uriBuilder = UriBuilder.fromPath(serverURL.toExternalForm());
-
-		URI resourceURI = uriBuilder.path(
-			appBasePathSegment
-		).path(
-			endpoint
-		).build(
-			_inputDataSet.getFirstPathParam(),
-			_inputDataSet.getSecondPathParam(),
-			_inputDataSet.getThirdPathParam()
-		);
-
-		JsonObject responseJsonObject =
-			_connectionService.getResponseJsonObject(
-				_inputDataSet, resourceURI.toString());
-
-		final JsonNode responseJsonNode = JsonUtils.toJsonNode(
-			responseJsonObject);
-
-		final JsonNode totalCountJsonNode = responseJsonNode.path("totalCount");
-
-		_totalCount = totalCountJsonNode.asInt();
-
-		JsonNode itemsJsonNode = responseJsonNode.path("items");
+		JsonNode itemsJsonNode = _getItemsJsonNode(
+			_liferayInputMapperConfiguration.getPage());
 
 		if (!itemsJsonNode.isArray()) {
 			throw new RuntimeException(
@@ -122,23 +90,34 @@ public class LiferayInputEmitter implements Serializable {
 		}
 
 		_itemsIterator = itemsJsonNode.elements();
+		_segmentPageCounter.incrementAndGet();
 	}
 
 	@Producer
 	public Record next() {
-		if (_currentItemIndex.incrementAndGet() > _totalCount) {
-			return null;
-		}
+		while (_segmentPageCounter.get() <=
+					_liferayInputMapperConfiguration.getSegmentPages()) {
 
-		while (_itemsIterator.hasNext()) {
-			JsonNode itemJsonNode = _itemsIterator.next();
+			while (_itemsIterator.hasNext()) {
+				JsonNode itemJsonNode = _itemsIterator.next();
 
-			List<Schema.Entry> schemaEntries = _intputSchema.getEntries();
+				List<Schema.Entry> schemaEntries = _intputSchema.getEntries();
 
-			Record.Builder recordBuilder =
-				_recordBuilderFactory.newRecordBuilder();
+				Record.Builder recordBuilder =
+					_recordBuilderFactory.newRecordBuilder();
 
-			return _getRecord(itemJsonNode, schemaEntries, recordBuilder);
+				return _getRecord(itemJsonNode, schemaEntries, recordBuilder);
+			}
+
+			JsonNode itemsJsonNode = _getItemsJsonNode(
+				_liferayInputMapperConfiguration.getPage() +
+					_segmentPageCounter.getAndIncrement());
+
+			if (!itemsJsonNode.isArray()) {
+				return null;
+			}
+
+			_itemsIterator = itemsJsonNode.elements();
 		}
 
 		// `null` means we finished the processing of the resource collection
@@ -148,6 +127,35 @@ public class LiferayInputEmitter implements Serializable {
 
 	@PreDestroy
 	public void release() {
+	}
+
+	private JsonNode _getItemsJsonNode(int page) {
+		InputDataSet inputDataSet =
+			_liferayInputMapperConfiguration.getInputDataSet();
+
+		UriBuilder uriBuilder = _getResourceUriBuilder(inputDataSet);
+
+		URI resourceURI = uriBuilder.path(
+			inputDataSet.getEndpoint()
+		).queryParam(
+			"page", page
+		).queryParam(
+			"pageSize", _liferayInputMapperConfiguration.getPageSize()
+		).queryParam(
+			"sort", _liferayInputMapperConfiguration.getSort()
+		).build(
+			inputDataSet.getFirstPathParam(), inputDataSet.getSecondPathParam(),
+			inputDataSet.getThirdPathParam()
+		);
+
+		JsonObject responseJsonObject =
+			_connectionService.getResponseJsonObject(
+				inputDataSet, resourceURI.toString());
+
+		final JsonNode responseJsonNode = JsonUtils.toJsonNode(
+			responseJsonObject);
+
+		return responseJsonNode.path("items");
 	}
 
 	private Record _getRecord(
@@ -228,9 +236,29 @@ public class LiferayInputEmitter implements Serializable {
 		return recordBuilder.build();
 	}
 
+	/**
+	 * Returns an UriBuilder with pre-added JaxRS Application Base
+	 * e.g: http://localhost:8080/o/headless-commerce-admin-catalog/
+	 *
+	 * @param inputDataSet
+	 * @return UriBuilder
+	 */
+	private UriBuilder _getResourceUriBuilder(InputDataSet inputDataSet) {
+		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
+
+		URL openAPISpecURL = genericDataStore.getOpenAPISpecURL();
+
+		URL serverURL = ConnectionService.getServerURL(genericDataStore);
+
+		String appBasePathSegment =
+			_liferayService.extractJaxRSAppBasePathSegment(openAPISpecURL);
+
+		UriBuilder uriBuilder = UriBuilder.fromPath(serverURL.toExternalForm());
+
+		return uriBuilder.path(appBasePathSegment);
+	}
+
 	private final ConnectionService _connectionService;
-	private AtomicInteger _currentItemIndex = new AtomicInteger();
-	private InputDataSet _inputDataSet;
 	private Schema _intputSchema;
 	private Iterator<JsonNode> _itemsIterator;
 	private final LiferayInputMapperConfiguration
@@ -238,6 +266,6 @@ public class LiferayInputEmitter implements Serializable {
 	private final LiferayService _liferayService;
 	private final Logger _logger = Logger.getLogger("LiferayInputEmitter");
 	private final RecordBuilderFactory _recordBuilderFactory;
-	private int _totalCount;
+	private AtomicInteger _segmentPageCounter = new AtomicInteger();
 
 }

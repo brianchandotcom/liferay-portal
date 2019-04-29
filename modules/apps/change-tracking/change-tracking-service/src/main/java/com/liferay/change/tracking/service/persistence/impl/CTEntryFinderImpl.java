@@ -40,17 +40,71 @@ import org.osgi.service.component.annotations.Reference;
 public class CTEntryFinderImpl
 	extends CTEntryFinderBaseImpl implements CTEntryFinder {
 
-	public static final String COUNT_BY_RELATED_CT_ENTRIES =
-		CTEntryFinder.class.getName() + ".countByRelatedCTEntries";
-
 	public static final String COUNT_BY_CT_COLLECTION_ID =
 		CTEntryFinder.class.getName() + ".countByCTCollectionId";
+
+	public static final String COUNT_BY_RELATED_CT_ENTRIES =
+		CTEntryFinder.class.getName() + ".countByRelatedCTEntries";
 
 	public static final String FIND_BY_CT_COLLECTION_ID =
 		CTEntryFinder.class.getName() + ".findByCTCollectionId";
 
 	public static final String FIND_BY_RELATED_CT_ENTRIES =
 		CTEntryFinder.class.getName() + ".findByRelatedCTEntries";
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public int countByCTCollectionId(
+		long ctCollectionId, QueryDefinition<CTEntry> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_CT_COLLECTION_ID);
+
+			sql = _customSQL.appendCriteria(
+				sql, "AND (CTEntry.originalCTCollectionId = ?)");
+
+			if (queryDefinition.isExcludeStatus()) {
+				sql = _customSQL.appendCriteria(
+					sql, "AND (CTEntry.status != ?)");
+			}
+			else {
+				sql = _customSQL.appendCriteria(
+					sql, "AND (CTEntry.status = ?)");
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(ctCollectionId);
+			qPos.add(ctCollectionId);
+			qPos.add(queryDefinition.getStatus());
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -91,60 +145,6 @@ public class CTEntryFinderImpl
 			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
 				qPos.add(queryDefinition.getStatus());
 			}
-
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public int countByCTCollectionId(
-		long ctCollectionId, QueryDefinition<CTEntry> queryDefinition) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), COUNT_BY_CT_COLLECTION_ID);
-
-			sql = _customSQL.appendCriteria(
-				sql, "AND (CTEntry.originalCTCollectionId = ?)");
-
-			if (queryDefinition.isExcludeStatus()) {
-				sql = _customSQL.appendCriteria(
-					sql, "AND (CTEntry.status != ?)");
-			}
-			else {
-				sql = _customSQL.appendCriteria(
-					sql, "AND (CTEntry.status = ?)");
-			}
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(ctCollectionId);
-			qPos.add(ctCollectionId);
-			qPos.add(queryDefinition.getStatus());
 
 			Iterator<Long> itr = q.iterate();
 

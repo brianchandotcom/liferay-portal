@@ -159,11 +159,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			(map, instance) -> map.put(instance.getId(), instance), Map::putAll
 		);
 
-		Map<String, List<String>> taskNames = _getTaskNames(
-			instancesMap.keySet(), processId);
-
 		TermsAggregationResult slaTermsAggregationResult =
 			_getSLATermsAggregationResult(instancesMap.keySet(), processId);
+		Map<String, List<String>> taskNames = _getTaskNames(
+			instancesMap.keySet(), processId);
 
 		instancesMap.forEach(
 			(instanceId, instance) -> {

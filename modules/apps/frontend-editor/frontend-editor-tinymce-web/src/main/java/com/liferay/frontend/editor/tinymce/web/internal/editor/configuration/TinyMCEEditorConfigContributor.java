@@ -97,15 +97,13 @@ public class TinyMCEEditorConfigContributor
 		String styleFormatName, String type, String element,
 		String cssClasses) {
 
-		JSONObject styleJSONObject = JSONUtil.put(
+		return JSONUtil.put(
 			type, element
 		).put(
 			"classes", cssClasses
 		).put(
 			"title", styleFormatName
 		);
-
-		return styleJSONObject;
 	}
 
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
@@ -201,7 +199,7 @@ public class TinyMCEEditorConfigContributor
 	protected JSONObject getToolbarsJSONObject(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"email", getToolbarsEmailJSONArray(inputEditorTaglibAttributes)
 		).put(
 			"liferay", getToolbarsLiferayJSONArray(inputEditorTaglibAttributes)
@@ -212,8 +210,6 @@ public class TinyMCEEditorConfigContributor
 		).put(
 			"tablet", getToolbarsTabletJSONArray(inputEditorTaglibAttributes)
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONArray getToolbarsLiferayJSONArray(

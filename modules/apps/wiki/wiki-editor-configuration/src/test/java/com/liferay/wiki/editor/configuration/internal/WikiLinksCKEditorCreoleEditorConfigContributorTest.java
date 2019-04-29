@@ -176,13 +176,11 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 	protected JSONObject getJSONObjectWithDefaultItemSelectorURL()
 		throws Exception {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"filebrowserBrowseUrl", "defaultItemSelectorPortletURL"
 		).put(
 			"removePlugins", "plugin1"
 		);
-
-		return jsonObject;
 	}
 
 	protected void populateInputEditorWikiPageAttributes(

@@ -251,12 +251,10 @@ public class ScreensAssetEntryServiceImpl
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(
 			assetEntry.getClassPK());
 
-		JSONObject blogsEntryJSONObject = JSONUtil.put(
+		return JSONUtil.put(
 			"blogsEntry",
 			JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(blogsEntry)));
-
-		return blogsEntryJSONObject;
 	}
 
 	protected JSONObject getFileEntryJSONObject(AssetEntry assetEntry)
@@ -265,15 +263,13 @@ public class ScreensAssetEntryServiceImpl
 		FileEntry fileEntry = dlAppService.getFileEntry(
 			assetEntry.getClassPK());
 
-		JSONObject fileEntryJSONObject = JSONUtil.put(
+		return JSONUtil.put(
 			"fileEntry",
 			JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(fileEntry))
 		).put(
 			"url", getFileEntryPreviewURL(fileEntry)
 		);
-
-		return fileEntryJSONObject;
 	}
 
 	protected String getFileEntryPreviewURL(FileEntry fileEntry) {
@@ -339,12 +335,10 @@ public class ScreensAssetEntryServiceImpl
 
 		User user = userService.getUserById(assetEntry.getClassPK());
 
-		JSONObject userJSONObject = JSONUtil.put(
+		return JSONUtil.put(
 			"user",
 			JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(user)));
-
-		return userJSONObject;
 	}
 
 	protected JSONArray toJSONArray(

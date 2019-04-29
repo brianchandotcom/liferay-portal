@@ -19,7 +19,6 @@ import com.liferay.info.display.contributor.InfoDisplayContributorField;
 import com.liferay.info.display.contributor.InfoDisplayContributorFieldType;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -63,10 +62,8 @@ public class JournalArticleSmallImageAssetDisplayContributorField
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		if (themeDisplay != null) {
-			JSONObject jsonObject = JSONUtil.put(
+			return JSONUtil.put(
 				"url", article.getArticleImageURL(themeDisplay));
-
-			return jsonObject;
 		}
 
 		return StringPool.BLANK;

@@ -354,7 +354,7 @@ public class CalendarUtil {
 	public static JSONObject toCalendarResourceJSONObject(
 		ThemeDisplay themeDisplay, CalendarResource calendarResource) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"calendarResourceId", calendarResource.getCalendarResourceId()
 		).put(
 			"classNameId", calendarResource.getClassNameId()
@@ -371,8 +371,6 @@ public class CalendarUtil {
 		).put(
 			"userId", calendarResource.getUserId()
 		);
-
-		return jsonObject;
 	}
 
 	public static JSONArray toCalendarsJSONArray(
@@ -461,7 +459,7 @@ public class CalendarUtil {
 			PermissionChecker permissionChecker, Calendar calendar)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			ActionKeys.DELETE,
 			_calendarModelResourcePermission.contains(
 				permissionChecker, calendar, ActionKeys.DELETE)
@@ -487,8 +485,6 @@ public class CalendarUtil {
 				permissionChecker, calendar,
 				CalendarActionKeys.VIEW_BOOKING_DETAILS)
 		);
-
-		return jsonObject;
 	}
 
 	private static CalendarBookingService _calendarBookingService;

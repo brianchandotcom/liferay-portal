@@ -66,9 +66,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 			alt = fieldValueJSONObject.getString("alt");
 		}
 
-		JSONObject jsonObject = JSONUtil.put("alt", alt);
-
-		return jsonObject;
+		return JSONUtil.put("alt", alt);
 	}
 
 	@Override

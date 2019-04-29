@@ -137,7 +137,7 @@ public class NotificationEvent implements Serializable {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			_KEY_ARCHIVED, _archived
 		).put(
 			_KEY_DELIVERY_BY, _deliverBy
@@ -154,8 +154,6 @@ public class NotificationEvent implements Serializable {
 		).put(
 			_KEY_UUID, _uuid
 		);
-
-		return jsonObject;
 	}
 
 	private static final String _KEY_ARCHIVED = "archived";

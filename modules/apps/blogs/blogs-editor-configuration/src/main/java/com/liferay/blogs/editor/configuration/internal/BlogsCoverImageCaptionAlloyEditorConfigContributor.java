@@ -55,20 +55,15 @@ public class BlogsCoverImageCaptionAlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
-			"styles", getToolbarsStylesJSONObject());
-
-		return jsonObject;
+		return JSONUtil.put("styles", getToolbarsStylesJSONObject());
 	}
 
 	protected JSONObject getToolbarsStylesJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"selections", getToolbarStylesSelectionsJSONArray()
 		).put(
 			"tabIndex", 1
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONArray getToolbarStylesSelectionsJSONArray() {
@@ -78,27 +73,23 @@ public class BlogsCoverImageCaptionAlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarStylesSelectionsLinkJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons", toJSONArray("['linkEdit']")
 		).put(
 			"name", "link"
 		).put(
 			"test", "AlloyEditor.SelectionTest.link"
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarStylesSelectionsTextJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons", toJSONArray("['link']")
 		).put(
 			"name", "text"
 		).put(
 			"test", "AlloyEditor.SelectionTest.text"
 		);
-
-		return jsonObject;
 	}
 
 }

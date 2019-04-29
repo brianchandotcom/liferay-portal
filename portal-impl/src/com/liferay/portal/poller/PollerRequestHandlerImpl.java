@@ -265,13 +265,11 @@ public class PollerRequestHandlerImpl
 			}
 		}
 
-		JSONObject pollerResponseHeaderJSONObject = JSONUtil.put(
+		return JSONUtil.put(
 			"suspendPolling", suspendPolling
 		).put(
 			"userId", pollerHeader.getUserId()
 		);
-
-		return pollerResponseHeaderJSONObject;
 	}
 
 	protected void executePollerRequests(

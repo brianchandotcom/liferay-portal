@@ -455,7 +455,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 	}
 
 	protected JSONObject getAppJSONObject(App app) throws Exception {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"appId", app.getRemoteAppId()
 		).put(
 			"downloaded", app.isDownloaded()
@@ -464,8 +464,6 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		).put(
 			"version", app.getVersion()
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getAppJSONObject(long remoteAppId) throws Exception {
@@ -475,7 +473,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			return getAppJSONObject(app);
 		}
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"appId", remoteAppId
 		).put(
 			"downloaded", false
@@ -484,8 +482,6 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		).put(
 			"version", StringPool.BLANK
 		);
-
-		return jsonObject;
 	}
 
 	@Override

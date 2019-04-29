@@ -55,20 +55,15 @@ public class JournalArticleDescriptionEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONUtil.put(
-			"styles", getToolbarsStylesJSONObject(locale));
-
-		return jsonObject;
+		return JSONUtil.put("styles", getToolbarsStylesJSONObject(locale));
 	}
 
 	protected JSONObject getToolbarsStylesJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"selections", getToolbarsStylesSelectionsJSONArray(locale)
 		).put(
 			"tabIndex", 1
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONArray getToolbarsStylesSelectionsJSONArray(Locale locale) {
@@ -78,7 +73,7 @@ public class JournalArticleDescriptionEditorConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsTextJSONObject(
 		Locale locale) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons",
 			JSONUtil.putAll("bold", "italic", "underline", "ol", "ul", "link")
 		).put(
@@ -86,8 +81,6 @@ public class JournalArticleDescriptionEditorConfigContributor
 		).put(
 			"test", "AlloyEditor.SelectionTest.text"
 		);
-
-		return jsonObject;
 	}
 
 }

@@ -259,7 +259,7 @@ public class AuditMessage implements Serializable {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			_ADDITIONAL_INFO, _additionalInfoJSONObject
 		).put(
 			_COMPANY_ID, _companyId
@@ -288,8 +288,6 @@ public class AuditMessage implements Serializable {
 		).put(
 			_USER_NAME, _userName
 		);
-
-		return jsonObject;
 	}
 
 	private DateFormat _getDateFormat() {

@@ -178,7 +178,7 @@ public class FlagsTag extends ComponentRendererTag {
 	private JSONObject _getDataJSONObject(Map<String, Object> context) {
 		String namespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);
 
-		JSONObject dataJSONObject = JSONUtil.put(
+		return JSONUtil.put(
 			namespace + "className", context.get("className")
 		).put(
 			namespace + "classPK", context.get("classPK")
@@ -189,8 +189,6 @@ public class FlagsTag extends ComponentRendererTag {
 		).put(
 			namespace + "reportedUserId", context.get("reportedUserId")
 		);
-
-		return dataJSONObject;
 	}
 
 	private Map<String, String> _getReasons(long companyId)

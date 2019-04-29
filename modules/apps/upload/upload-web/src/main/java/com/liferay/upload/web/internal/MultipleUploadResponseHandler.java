@@ -133,7 +133,7 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 
 		String sourceFileName = uploadPortletRequest.getFileName("file");
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"groupId", fileEntry.getGroupId()
 		).put(
 			"name", fileEntry.getTitle()
@@ -142,8 +142,6 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 		).put(
 			"uuid", fileEntry.getUuid()
 		);
-
-		return jsonObject;
 	}
 
 	@Activate

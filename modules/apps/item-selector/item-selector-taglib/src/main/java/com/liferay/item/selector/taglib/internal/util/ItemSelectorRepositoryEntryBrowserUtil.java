@@ -221,13 +221,11 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 	}
 
 	private static JSONObject _createJSONObject(String key, String value) {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"key", key
 		).put(
 			"value", value
 		);
-
-		return jsonObject;
 	}
 
 }

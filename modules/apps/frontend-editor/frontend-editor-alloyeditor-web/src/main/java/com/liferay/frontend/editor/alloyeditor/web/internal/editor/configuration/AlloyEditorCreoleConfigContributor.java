@@ -215,37 +215,31 @@ public class AlloyEditorCreoleConfigContributor
 	}
 
 	protected JSONObject getToolbarsJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"add", getToolbarsAddJSONObject()
 		).put(
 			"styles", getToolbarsStylesJSONObject(locale)
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsStylesJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"selections", getToolbarsStylesSelectionsJSONArray(locale)
 		).put(
 			"tabIndex", 1
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsHeadingTextJSONObject(
 		Locale locale) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons", JSONUtil.put(getStyleFormatsJSONObject(locale))
 		).put(
 			"name", "headertext"
 		).put(
 			"test", "AlloyEditor.SelectionTest.headingtext"
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONArray getToolbarsStylesSelectionsJSONArray(Locale locale) {
@@ -289,7 +283,7 @@ public class AlloyEditorCreoleConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsTableJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons",
 			toJSONArray(
 				"['tableHeading', 'tableRow', 'tableColumn', 'tableCell', " +
@@ -304,14 +298,12 @@ public class AlloyEditorCreoleConfigContributor
 		).put(
 			"test", "AlloyEditor.SelectionTest.table"
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsTextJSONObject(
 		Locale locale) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons",
 			JSONUtil.putAll(
 				getStyleFormatsJSONObject(locale), "bold", "italic", "ul", "ol",
@@ -321,8 +313,6 @@ public class AlloyEditorCreoleConfigContributor
 		).put(
 			"test", "AlloyEditor.SelectionTest.text"
 		);
-
-		return jsonObject;
 	}
 
 	private static final int _CKEDITOR_STYLE_BLOCK = 1;

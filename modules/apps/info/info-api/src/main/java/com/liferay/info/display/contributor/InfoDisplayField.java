@@ -79,15 +79,13 @@ public class InfoDisplayField {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"key", getKey()
 		).put(
 			"label", getLabel()
 		).put(
 			"type", getType()
 		);
-
-		return jsonObject;
 	}
 
 	private static final String _TYPE = "text";

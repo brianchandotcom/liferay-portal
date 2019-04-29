@@ -58,7 +58,7 @@ import java.util.List;
 public class ContactsUtil {
 
 	public static JSONObject getEntryJSONObject(Entry entry) {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"comments", entry.getComments()
 		).put(
 			"emailAddress", entry.getEmailAddress()
@@ -69,8 +69,6 @@ public class ContactsUtil {
 		).put(
 			"portalUser", false
 		);
-
-		return jsonObject;
 	}
 
 	public static long getGroupId(String filterBy) {

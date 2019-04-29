@@ -88,13 +88,11 @@ public class AlloyEditorConfigContributor
 	protected JSONObject getStyleFormatJSONObject(
 		String styleFormatName, String element, String cssClass, int type) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"name", styleFormatName
 		).put(
 			"style", getStyleJSONObject(element, cssClass, type)
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
@@ -148,13 +146,11 @@ public class AlloyEditorConfigContributor
 		JSONObject stylesJSONObject = JSONUtil.put(
 			"styles", getStyleFormatsJSONArray(locale));
 
-		JSONObject styleFormatsJSONObject = JSONUtil.put(
+		return JSONUtil.put(
 			"cfg", stylesJSONObject
 		).put(
 			"name", "styles"
 		);
-
-		return styleFormatsJSONObject;
 	}
 
 	protected JSONObject getStyleJSONObject(
@@ -178,49 +174,41 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsAddJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons", toJSONArray("['image', 'embedVideo', 'table', 'hline']")
 		).put(
 			"tabIndex", 2
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"add", getToolbarsAddJSONObject()
 		).put(
 			"styles", getToolbarsStylesJSONObject(locale)
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsStylesJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"selections", getToolbarsStylesSelectionsJSONArray(locale)
 		).put(
 			"tabIndex", 1
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsEmbedURLJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons", toJSONArray("['imageLeft', 'imageCenter', 'imageRight']")
 		).put(
 			"name", "embedurl"
 		).put(
 			"test", "AlloyEditor.SelectionTest.embedUrl"
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsImageJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons",
 			toJSONArray(
 				"['imageLeft', 'imageCenter', 'imageRight', 'linkBrowse', " +
@@ -232,8 +220,6 @@ public class AlloyEditorConfigContributor
 		).put(
 			"test", "AlloyEditor.SelectionTest.image"
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONArray getToolbarsStylesSelectionsJSONArray(Locale locale) {
@@ -246,19 +232,17 @@ public class AlloyEditorConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons", toJSONArray("['linkEditBrowse']")
 		).put(
 			"name", "link"
 		).put(
 			"test", "AlloyEditor.SelectionTest.link"
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsTableJSONObject() {
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons",
 			toJSONArray(
 				"['tableHeading', 'tableRow', 'tableColumn', 'tableCell', " +
@@ -273,14 +257,12 @@ public class AlloyEditorConfigContributor
 		).put(
 			"test", "AlloyEditor.SelectionTest.table"
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsTextJSONObject(
 		Locale locale) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"buttons",
 			JSONUtil.putAll(
 				getStyleFormatsJSONObject(locale), "bold", "italic",
@@ -290,8 +272,6 @@ public class AlloyEditorConfigContributor
 		).put(
 			"test", "AlloyEditor.SelectionTest.text"
 		);
-
-		return jsonObject;
 	}
 
 	private static final int _CKEDITOR_STYLE_BLOCK = 1;

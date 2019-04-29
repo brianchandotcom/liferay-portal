@@ -691,13 +691,11 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			jsonArray.put(jsonObject);
 		}
 
-		JSONObject responseJSONObject = JSONUtil.put(
+		return JSONUtil.put(
 			"layouts", jsonArray
 		).put(
 			"total", layoutTreeNodes.getTotal()
 		);
-
-		return responseJSONObject;
 	}
 
 	private JSONObject _toJSONObject(

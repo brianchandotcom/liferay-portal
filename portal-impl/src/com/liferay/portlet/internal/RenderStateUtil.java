@@ -235,7 +235,7 @@ public class RenderStateUtil {
 		RenderData renderData,
 		Map<String, String[]> changedPublicRenderParameters) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"allowedPM", _getAllowedPortletModesJSONArray(portlet)
 		).put(
 			"allowedWS", _getAllowedWindowStatesJSONArray(portlet)
@@ -261,8 +261,6 @@ public class RenderStateUtil {
 				request, themeDisplay, layoutTypePortlet, portlet,
 				changedPublicRenderParameters)
 		);
-
-		return jsonObject;
 	}
 
 	private static PortletMode _getPortletMode(
@@ -393,7 +391,7 @@ public class RenderStateUtil {
 		LayoutTypePortlet layoutTypePortlet, Portlet portlet,
 		Map<String, String[]> changedPublicRenderParameters) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"parameters",
 			_getPortletParametersJSONObject(
 				request, themeDisplay.getPlid(), portlet,
@@ -405,8 +403,6 @@ public class RenderStateUtil {
 			"windowState",
 			_getWindowState(layoutTypePortlet, portlet.getPortletId())
 		);
-
-		return jsonObject;
 	}
 
 	private static JSONObject _getPRPGroupsJSONObject(List<Portlet> portlets) {

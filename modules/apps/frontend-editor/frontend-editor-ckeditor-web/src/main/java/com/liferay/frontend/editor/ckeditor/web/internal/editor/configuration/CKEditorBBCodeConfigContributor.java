@@ -102,12 +102,10 @@ public class CKEditorBBCodeConfigContributor
 	protected JSONObject getLangJSONObject(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"code",
 			LanguageUtil.get(
 				getContentsLocale(inputEditorTaglibAttributes), "code"));
-
-		return jsonObject;
 	}
 
 	protected JSONArray getToolbarsBBCodeJSONArray(

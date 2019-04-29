@@ -253,15 +253,13 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 	protected JSONObject getJSONObjectWithDefaultItemSelectorURL()
 		throws Exception {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl", "defaultItemSelectorPortletURL"
 		).put(
 			"filebrowserImageBrowseUrl", "defaultItemSelectorPortletURL"
 		).put(
 			"removePlugins", "plugin1"
 		);
-
-		return jsonObject;
 	}
 
 	protected void setAllowBrowseDocuments(boolean allowBrowseDocuments) {

@@ -157,9 +157,7 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 			return JSONFactoryUtil.createJSONObject(data);
 		}
 
-		JSONObject jsonObject = JSONUtil.put("data", data);
-
-		return jsonObject;
+		return JSONUtil.put("data", data);
 	}
 
 }

@@ -41,7 +41,7 @@ public class FormDocumentResourceImpl extends BaseFormDocumentResourceImpl {
 
 	@Override
 	public FormDocument getFormDocument(Long formDocumentId) throws Exception {
-		return FormDocumentUtil.toDocument(
+		return FormDocumentUtil.toFormDocument(
 			_dlurlHelper, _dlAppService.getFileEntry(formDocumentId));
 	}
 

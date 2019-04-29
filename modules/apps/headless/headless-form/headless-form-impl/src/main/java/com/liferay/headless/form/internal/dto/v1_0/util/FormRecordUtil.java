@@ -94,7 +94,7 @@ public class FormRecordUtil {
 								}
 
 								if (fileEntry != null) {
-									document = FormDocumentUtil.toDocument(
+									document = FormDocumentUtil.toFormDocument(
 										dlurlHelper, fileEntry);
 								}
 

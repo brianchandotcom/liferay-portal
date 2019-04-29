@@ -91,7 +91,7 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 			0L
 		);
 
-		return FormDocumentUtil.toDocument(
+		return FormDocumentUtil.toFormDocument(
 			_dlurlHelper,
 			_dlAppService.addFileEntry(
 				ddmFormInstance.getGroupId(), folderId,

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
  */
 public class FormDocumentUtil {
 
-	public static FormDocument toDocument(
+	public static FormDocument toFormDocument(
 			DLURLHelper dlurlHelper, FileEntry fileEntry)
 		throws Exception {
 

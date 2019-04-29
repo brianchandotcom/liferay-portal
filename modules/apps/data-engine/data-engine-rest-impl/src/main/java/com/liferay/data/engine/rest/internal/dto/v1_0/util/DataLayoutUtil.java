@@ -89,9 +89,9 @@ public class DataLayoutUtil {
 					jsonObject.getJSONArray("rows"),
 					rowJSONObject -> _toDataLayoutRow(rowJSONObject),
 					DataLayoutRow.class);
-				description = LocalizedValueUtil.toLocalizedStrings(
+				description = LocalizationUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("description"));
-				title = LocalizedValueUtil.toLocalizedStrings(
+				title = LocalizationUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("title"));
 			}
 		};
@@ -129,14 +129,14 @@ public class DataLayoutUtil {
 
 		return JSONUtil.put(
 			"description",
-			LocalizedValueUtil.toJSONObject(dataLayoutPage.getDescription())
+			LocalizationUtil.toJSONObject(dataLayoutPage.getDescription())
 		).put(
 			"rows",
 			JSONUtil.toJSONArray(
 				dataLayoutPage.getDataLayoutRows(),
 				dataLayoutRow -> _toJSONObject(dataLayoutRow))
 		).put(
-			"title", LocalizedValueUtil.toJSONObject(dataLayoutPage.getTitle())
+			"title", LocalizationUtil.toJSONObject(dataLayoutPage.getTitle())
 		);
 	}
 

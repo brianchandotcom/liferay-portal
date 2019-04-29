@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
+import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizationUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.template.soy.data.SoyDataFactory;
@@ -50,7 +50,7 @@ public class EditorFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "placeholder",
-				LocalizedValueUtil.toLocalizedStrings(
+				LocalizationUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("placeholder"))));
 
 		return dataDefinitionField;
@@ -62,7 +62,7 @@ public class EditorFieldType extends BaseFieldType {
 
 		return jsonObject.put(
 			"placeholder",
-			LocalizedValueUtil.toJSONObject(
+			LocalizationUtil.toJSONObject(
 				CustomPropertyUtil.getLocalizedValue(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 	}
@@ -71,7 +71,7 @@ public class EditorFieldType extends BaseFieldType {
 	protected void addContext(Map<String, Object> context) {
 		context.put(
 			"placeholder",
-			LocalizedValueUtil.getLocalizedValue(
+			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
 				CustomPropertyUtil.getLocalizedValue(
 					dataDefinitionField.getCustomProperties(), "placeholder")));

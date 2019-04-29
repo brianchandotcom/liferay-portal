@@ -46,10 +46,10 @@ public class DataDefinitionUtil {
 					DataDefinitionRule.class);
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
-				description = LocalizedValueUtil.toLocalizedStrings(
+				description = LocalizationUtil.toLocalizedStrings(
 					ddmStructure.getDescriptionMap());
 				id = ddmStructure.getStructureId();
-				name = LocalizedValueUtil.toLocalizedStrings(
+				name = LocalizationUtil.toLocalizedStrings(
 					ddmStructure.getNameMap());
 				siteId = ddmStructure.getGroupId();
 				storageType = ddmStructure.getStorageType();
@@ -81,7 +81,7 @@ public class DataDefinitionUtil {
 		return new DataDefinitionField() {
 			{
 				if (jsonObject.has("predefinedValue")) {
-					defaultValue = LocalizedValueUtil.toLocalizedStrings(
+					defaultValue = LocalizationUtil.toLocalizedStrings(
 						jsonObject.getJSONObject("predefinedValue"));
 				}
 
@@ -97,7 +97,7 @@ public class DataDefinitionUtil {
 					throw new Exception("Label is required");
 				}
 
-				label = LocalizedValueUtil.toLocalizedStrings(
+				label = LocalizationUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("label"));
 
 				localizable = jsonObject.getBoolean("localizable", false);
@@ -114,7 +114,7 @@ public class DataDefinitionUtil {
 					throw new Exception("Tip is required");
 				}
 
-				tip = LocalizedValueUtil.toLocalizedStrings(
+				tip = LocalizationUtil.toLocalizedStrings(
 					jsonObject.getJSONObject("tip"));
 			}
 		};
@@ -159,7 +159,7 @@ public class DataDefinitionUtil {
 			"indexable", dataDefinitionField.getIndexable()
 		).put(
 			"label",
-			LocalizedValueUtil.toJSONObject(dataDefinitionField.getLabel())
+			LocalizationUtil.toJSONObject(dataDefinitionField.getLabel())
 		).put(
 			"localizable", dataDefinitionField.getLocalizable()
 		).put(
@@ -167,7 +167,7 @@ public class DataDefinitionUtil {
 		).put(
 			"repeatable", dataDefinitionField.getRepeatable()
 		).put(
-			"tip", LocalizedValueUtil.toJSONObject(dataDefinitionField.getTip())
+			"tip", LocalizationUtil.toJSONObject(dataDefinitionField.getTip())
 		).put(
 			"type", type
 		);

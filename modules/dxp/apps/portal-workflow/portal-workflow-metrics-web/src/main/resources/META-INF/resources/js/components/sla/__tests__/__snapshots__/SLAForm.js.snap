@@ -213,6 +213,7 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -283,6 +284,7 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -371,6 +373,7 @@ exports[`Should display error when submitting the form with empty name 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -941,6 +944,7 @@ exports[`Should display error when the server returns a failure 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -1011,6 +1015,7 @@ exports[`Should display error when the server returns a failure 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -1099,6 +1104,7 @@ exports[`Should display error when the server returns a failure 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -1660,6 +1666,7 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -1730,6 +1737,7 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -1818,6 +1826,7 @@ exports[`Should display errors when duration was changed but keep empty 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -2379,6 +2388,7 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -2449,6 +2459,7 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -2537,6 +2548,7 @@ exports[`Should display errors when input blur with invalid values 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -3098,6 +3110,7 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -3168,6 +3181,7 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -3256,6 +3270,7 @@ exports[`Should display errors when submitting the form with empty values 1`] = 
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -3629,14 +3644,6 @@ exports[`Should edit the SLA with valid values 1`] = `
           "pathname": "/processes/1/10/title%3Aasc",
           "search": "?backPath=%2F",
         },
-        Object {
-          "pathname": "/",
-          "search": "?backPath=%2F",
-        },
-        Object {
-          "pathname": "/slas/1234",
-          "search": "?backPath=%2Fprocesses",
-        },
       ]
     }
     keyLength={0}
@@ -3655,22 +3662,12 @@ exports[`Should edit the SLA with valid values 1`] = `
               "search": "",
               "state": undefined,
             },
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "?backPath=%2F",
-            },
-            Object {
-              "hash": "",
-              "pathname": "/slas/1234",
-              "search": "?backPath=%2Fprocesses",
-            },
           ],
           "go": [Function],
           "goBack": [Function],
           "goForward": [Function],
           "index": 0,
-          "length": 3,
+          "length": 1,
           "listen": [Function],
           "location": Object {
             "hash": "",
@@ -3798,711 +3795,6 @@ exports[`Should edit the SLA with valid values 1`] = `
                 className="row"
               >
                 <div
-                  className="form-group col col-sm-12 "
-                >
-                  <FieldLabel
-                    fieldId="sla_time_start"
-                    required={true}
-                    text="start"
-                  >
-                    <label
-                      htmlFor="sla_time_start"
-                    >
-                      start 
-                      <span
-                        className="reference-mark"
-                      >
-                        <Icon
-                          iconName="asterisk"
-                        >
-                          <svg
-                            className="lexicon-icon lexicon-icon-asterisk"
-                            focusable="false"
-                            role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
-                        </Icon>
-                      </span>
-                    </label>
-                  </FieldLabel>
-                  <div
-                    className="form-text"
-                  >
-                    Time Will Begin Counting When:
-                  </div>
-                  <MultiSelect
-                    data={Array []}
-                    onChangeTags={[Function]}
-                    selectedTagsId={Array []}
-                  >
-                    <div
-                      className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-                      onFocus={[Function]}
-                    >
-                      <div
-                        className="col-11 p-0 d-flex flex-wrap"
-                      >
-                        <input
-                          className="form-control-inset"
-                          onChange={[Function]}
-                          onFocus={[Function]}
-                          onKeyUp={[Function]}
-                          placeholder="Select or type an option."
-                          type="text"
-                          value=""
-                        />
-                      </div>
-                      <div
-                        className="col-1 mt-1 text-right"
-                        onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
-                      >
-                        <Icon
-                          iconName="caret-double"
-                        >
-                          <svg
-                            className="lexicon-icon lexicon-icon-caret-double"
-                            focusable="false"
-                            role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
-                        </Icon>
-                      </div>
-                    </div>
-                  </MultiSelect>
-                </div>
-              </div>
-              <div
-                className="row"
-              >
-                <div
-                  className="form-group col col-sm-12"
-                >
-                  <FieldLabel
-                    fieldId="sla_time_pause"
-                    text="Pause"
-                  >
-                    <label
-                      htmlFor="sla_time_pause"
-                    >
-                      Pause 
-                    </label>
-                  </FieldLabel>
-                  <div
-                    className="form-text"
-                  >
-                    Time Won't Be Considered When:
-                  </div>
-                  <MultiSelect
-                    data={Array []}
-                    onChangeTags={[Function]}
-                    selectedTagsId={Array []}
-                  >
-                    <div
-                      className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-                      onFocus={[Function]}
-                    >
-                      <div
-                        className="col-11 p-0 d-flex flex-wrap"
-                      >
-                        <input
-                          className="form-control-inset"
-                          onChange={[Function]}
-                          onFocus={[Function]}
-                          onKeyUp={[Function]}
-                          placeholder="Select or type an option."
-                          type="text"
-                          value=""
-                        />
-                      </div>
-                      <div
-                        className="col-1 mt-1 text-right"
-                        onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
-                      >
-                        <Icon
-                          iconName="caret-double"
-                        >
-                          <svg
-                            className="lexicon-icon lexicon-icon-caret-double"
-                            focusable="false"
-                            role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
-                        </Icon>
-                      </div>
-                    </div>
-                  </MultiSelect>
-                </div>
-              </div>
-              <div
-                className="row"
-              >
-                <div
-                  className="form-group col col-sm-12 "
-                >
-                  <FieldLabel
-                    fieldId="sla_time_stop"
-                    required={true}
-                    text="Stop"
-                  >
-                    <label
-                      htmlFor="sla_time_stop"
-                    >
-                      Stop 
-                      <span
-                        className="reference-mark"
-                      >
-                        <Icon
-                          iconName="asterisk"
-                        >
-                          <svg
-                            className="lexicon-icon lexicon-icon-asterisk"
-                            focusable="false"
-                            role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
-                        </Icon>
-                      </span>
-                    </label>
-                  </FieldLabel>
-                  <div
-                    className="form-text"
-                  >
-                    Time Will Stop Counting When:
-                  </div>
-                  <MultiSelect
-                    data={Array []}
-                    onChangeTags={[Function]}
-                    selectedTagsId={Array []}
-                  >
-                    <div
-                      className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
-                      onFocus={[Function]}
-                    >
-                      <div
-                        className="col-11 p-0 d-flex flex-wrap"
-                      >
-                        <input
-                          className="form-control-inset"
-                          onChange={[Function]}
-                          onFocus={[Function]}
-                          onKeyUp={[Function]}
-                          placeholder="Select or type an option."
-                          type="text"
-                          value=""
-                        />
-                      </div>
-                      <div
-                        className="col-1 mt-1 text-right"
-                        onClick={[Function]}
-                        style={
-                          Object {
-                            "paddingRight": "0px",
-                          }
-                        }
-                      >
-                        <Icon
-                          iconName="caret-double"
-                        >
-                          <svg
-                            className="lexicon-icon lexicon-icon-caret-double"
-                            focusable="false"
-                            role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
-                            />
-                          </svg>
-                        </Icon>
-                      </div>
-                    </div>
-                  </MultiSelect>
-                </div>
-              </div>
-              <h3
-                className="sheet-subtitle"
-              >
-                <FieldLabel
-                  fieldId="sla_description"
-                  required={true}
-                  text="DURATION TIME"
-                >
-                  <label
-                    htmlFor="sla_description"
-                  >
-                    DURATION TIME 
-                    <span
-                      className="reference-mark"
-                    >
-                      <Icon
-                        iconName="asterisk"
-                      >
-                        <svg
-                          className="lexicon-icon lexicon-icon-asterisk"
-                          focusable="false"
-                          role="presentation"
-                        >
-                          <use
-                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                          />
-                        </svg>
-                      </Icon>
-                    </span>
-                  </label>
-                </FieldLabel>
-              </h3>
-              <div
-                className="sheet-text"
-              >
-                Define a duration time to be met. Enter at least one of the following fields.
-              </div>
-              <div
-                className="row"
-              >
-                <div
-                  className="form-group col col-sm-5 "
-                >
-                  <FieldLabel
-                    fieldId="sla_duration_days"
-                    text="Days"
-                  >
-                    <label
-                      htmlFor="sla_duration_days"
-                    >
-                      Days 
-                    </label>
-                  </FieldLabel>
-                  <reactTextMask
-                    className="form-control"
-                    id="sla_duration_days"
-                    mask={[Function]}
-                    maxLength={4}
-                    name="days"
-                    onChange={[Function]}
-                    onFocus={[Function]}
-                    value={null}
-                  >
-                    <input
-                      className="form-control"
-                      id="sla_duration_days"
-                      mask={[Function]}
-                      maxLength={4}
-                      name="days"
-                      onChange={[Function]}
-                      onFocus={[Function]}
-                      type="text"
-                      value={null}
-                    />
-                  </reactTextMask>
-                  <div
-                    className="form-text"
-                  >
-                    Enter a whole number.
-                  </div>
-                </div>
-                <div
-                  className="form-group col col-sm-3 "
-                >
-                  <FieldLabel
-                    fieldId="sla_duration_hours"
-                    text="Hours"
-                  >
-                    <label
-                      htmlFor="sla_duration_hours"
-                    >
-                      Hours 
-                    </label>
-                  </FieldLabel>
-                  <reactTextMask
-                    className="form-control"
-                    id="sla_duration_hours"
-                    mask={
-                      Array [
-                        /\\\\d/,
-                        /\\\\d/,
-                        ":",
-                        /\\\\d/,
-                        /\\\\d/,
-                      ]
-                    }
-                    name="hours"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    placeholder="00:00"
-                    value=""
-                  >
-                    <input
-                      className="form-control"
-                      id="sla_duration_hours"
-                      mask={
-                        Array [
-                          /\\\\d/,
-                          /\\\\d/,
-                          ":",
-                          /\\\\d/,
-                          /\\\\d/,
-                        ]
-                      }
-                      name="hours"
-                      onBlur={[Function]}
-                      onChange={[Function]}
-                      placeholder="00:00"
-                      type="text"
-                      value=""
-                    />
-                  </reactTextMask>
-                </div>
-              </div>
-            </div>
-            <div
-              className="sheet-footer sheet-footer-btn-block-sm-down"
-            >
-              <div
-                className="btn-group"
-              >
-                <div
-                  className="btn-group-item"
-                >
-                  <button
-                    className="btn btn-primary"
-                    onClick={[Function]}
-                    type="button"
-                  >
-                    Save
-                  </button>
-                </div>
-                <div
-                  className="btn-group-item"
-                >
-                  <withRouter()
-                    className="btn btn-secondary"
-                  >
-                    <Route>
-                      <Component
-                        className="btn btn-secondary"
-                        history={
-                          Object {
-                            "action": "REPLACE",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "",
-                                "state": undefined,
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "?backPath=%2F",
-                              },
-                              Object {
-                                "hash": "",
-                                "pathname": "/slas/1234",
-                                "search": "?backPath=%2Fprocesses",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 3,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/",
-                              "search": "",
-                              "state": undefined,
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        location={
-                          Object {
-                            "hash": "",
-                            "match": Object {
-                              "params": Object {
-                                "page": 1,
-                                "search": undefined,
-                                "sort": undefined,
-                              },
-                            },
-                            "pathname": "/processes/1/10/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          }
-                        }
-                        match={
-                          Object {
-                            "isExact": false,
-                            "params": Object {},
-                            "path": "/",
-                            "url": "/",
-                          }
-                        }
-                      >
-                        <BackLinkWrapper
-                          backPath="/"
-                          className="btn btn-secondary"
-                          currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
-                          history={
-                            Object {
-                              "action": "REPLACE",
-                              "block": [Function],
-                              "canGo": [Function],
-                              "createHref": [Function],
-                              "entries": Array [
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "",
-                                  "state": undefined,
-                                },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/",
-                                  "search": "?backPath=%2F",
-                                },
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/slas/1234",
-                                  "search": "?backPath=%2Fprocesses",
-                                },
-                              ],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "index": 0,
-                              "length": 3,
-                              "listen": [Function],
-                              "location": Object {
-                                "hash": "",
-                                "pathname": "/",
-                                "search": "",
-                                "state": undefined,
-                              },
-                              "push": [Function],
-                              "replace": [Function],
-                            }
-                          }
-                        >
-                          <Link
-                            className="btn btn-secondary"
-                            replace={false}
-                            to="/"
-                          >
-                            <a
-                              className="btn btn-secondary"
-                              href="/"
-                              onClick={[Function]}
-                            >
-                              Cancel
-                            </a>
-                          </Link>
-                        </BackLinkWrapper>
-                      </Component>
-                    </Route>
-                  </withRouter()>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </SLAForm>
-    </Router>
-  </MemoryRouter>
-</MockRouter>
-`;
-
-exports[`Should redirect to SLA list 1`] = `
-<MockRouter>
-  <MemoryRouter
-    initialEntries={
-      Array [
-        Object {
-          "match": Object {
-            "params": Object {
-              "page": 1,
-              "search": undefined,
-              "sort": undefined,
-            },
-          },
-          "pathname": "/processes/1/10/title%3Aasc",
-          "search": "?backPath=%2F",
-        },
-      ]
-    }
-    keyLength={0}
-  >
-    <Router
-      history={
-        Object {
-          "action": "REPLACE",
-          "block": [Function],
-          "canGo": [Function],
-          "createHref": [Function],
-          "entries": Array [
-            Object {
-              "hash": "",
-              "pathname": "/",
-              "search": "",
-              "state": undefined,
-            },
-          ],
-          "go": [Function],
-          "goBack": [Function],
-          "goForward": [Function],
-          "index": 0,
-          "length": 1,
-          "listen": [Function],
-          "location": Object {
-            "hash": "",
-            "pathname": "/",
-            "search": "",
-            "state": undefined,
-          },
-          "push": [Function],
-          "replace": [Function],
-        }
-      }
-    >
-      <SLAForm
-        processId="123"
-      >
-        <div
-          className="sla-form"
-        >
-          <form
-            className="sheet sheet-lg"
-            role="form"
-          >
-            <div
-              className="sheet-header"
-            >
-              <h2
-                className="sheet-title"
-              >
-                SLA Definition
-              </h2>
-            </div>
-            <div
-              className="sheet-section"
-            >
-              <div
-                className="row"
-              >
-                <div
-                  className="form-group col col-sm-5 "
-                >
-                  <FieldLabel
-                    fieldId="sla_name"
-                    required={true}
-                    text="Name"
-                  >
-                    <label
-                      htmlFor="sla_name"
-                    >
-                      Name 
-                      <span
-                        className="reference-mark"
-                      >
-                        <Icon
-                          iconName="asterisk"
-                        >
-                          <svg
-                            className="lexicon-icon lexicon-icon-asterisk"
-                            focusable="false"
-                            role="presentation"
-                          >
-                            <use
-                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
-                            />
-                          </svg>
-                        </Icon>
-                      </span>
-                    </label>
-                  </FieldLabel>
-                  <input
-                    autoFocus={true}
-                    className="form-control"
-                    id="sla_name"
-                    maxLength={75}
-                    name="name"
-                    onChange={[Function]}
-                    type="text"
-                    value=""
-                  />
-                </div>
-                <div
-                  className="form-group col col-sm-7"
-                >
-                  <FieldLabel
-                    fieldId="sla_description"
-                    text="Description"
-                  >
-                    <label
-                      htmlFor="sla_description"
-                    >
-                      Description 
-                    </label>
-                  </FieldLabel>
-                  <input
-                    className="form-control"
-                    id="sla_description"
-                    name="description"
-                    onChange={[Function]}
-                    onFocus={[Function]}
-                    type="text"
-                    value=""
-                  />
-                </div>
-              </div>
-              <h3
-                className="sheet-subtitle"
-              >
-                <FieldLabel
-                  fieldId="sla_time_frame"
-                  text="TIME FRAME"
-                >
-                  <label
-                    htmlFor="sla_time_frame"
-                  >
-                    TIME FRAME 
-                  </label>
-                </FieldLabel>
-              </h3>
-              <div
-                className="sheet-text"
-              >
-                Define when time should be tracked based on workflow steps.
-              </div>
-              <div
-                className="row"
-              >
-                <div
                   className="col col-sm-12 form-group "
                 >
                   <FieldLabel
@@ -4540,6 +3832,7 @@ exports[`Should redirect to SLA list 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -4610,6 +3903,7 @@ exports[`Should redirect to SLA list 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -4698,6 +3992,7 @@ exports[`Should redirect to SLA list 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -4988,6 +4283,730 @@ exports[`Should redirect to SLA list 1`] = `
                                 "pathname": "/",
                                 "search": "",
                                 "state": undefined,
+                              },
+                              "push": [Function],
+                              "replace": [Function],
+                            }
+                          }
+                        >
+                          <Link
+                            className="btn btn-secondary"
+                            replace={false}
+                            to="/"
+                          >
+                            <a
+                              className="btn btn-secondary"
+                              href="/"
+                              onClick={[Function]}
+                            >
+                              Cancel
+                            </a>
+                          </Link>
+                        </BackLinkWrapper>
+                      </Component>
+                    </Route>
+                  </withRouter()>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </SLAForm>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should redirect to SLA list 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SLAForm
+        processId="123"
+      >
+        <div
+          className="sla-form"
+        >
+          <form
+            className="sheet sheet-lg"
+            role="form"
+          >
+            <div
+              className="sheet-header"
+            >
+              <h2
+                className="sheet-title"
+              >
+                SLA Definition
+              </h2>
+            </div>
+            <div
+              className="sheet-section"
+            >
+              <div
+                className="row"
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_name"
+                    required={true}
+                    text="Name"
+                  >
+                    <label
+                      htmlFor="sla_name"
+                    >
+                      Name 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <input
+                    autoFocus={true}
+                    className="form-control"
+                    id="sla_name"
+                    maxLength={75}
+                    name="name"
+                    onChange={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  className="form-group col col-sm-7"
+                >
+                  <FieldLabel
+                    fieldId="sla_description"
+                    text="Description"
+                  >
+                    <label
+                      htmlFor="sla_description"
+                    >
+                      Description 
+                    </label>
+                  </FieldLabel>
+                  <input
+                    className="form-control"
+                    id="sla_description"
+                    name="description"
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <h3
+                className="sheet-subtitle"
+              >
+                <FieldLabel
+                  fieldId="sla_time_frame"
+                  text="TIME FRAME"
+                >
+                  <label
+                    htmlFor="sla_time_frame"
+                  >
+                    TIME FRAME 
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define when time should be tracked based on workflow steps.
+              </div>
+              <div
+                className="row"
+              >
+                <div
+                  className="col col-sm-12 form-group "
+                >
+                  <FieldLabel
+                    fieldId="sla_time_start"
+                    required={true}
+                    text="start"
+                  >
+                    <label
+                      htmlFor="sla_time_start"
+                    >
+                      start 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <div
+                    className="form-text"
+                  >
+                    Time Will Begin Counting When:
+                  </div>
+                  <MultiSelect
+                    data={Array []}
+                    fieldId="compositeId"
+                    onChangeTags={[Function]}
+                    selectedTagsId={Array []}
+                  >
+                    <div
+                      className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+                      onFocus={[Function]}
+                    >
+                      <div
+                        className="col-11 p-0 d-flex flex-wrap"
+                      >
+                        <input
+                          className="form-control-inset"
+                          onChange={[Function]}
+                          onFocus={[Function]}
+                          onKeyUp={[Function]}
+                          placeholder="Select or type an option."
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                      <div
+                        className="col-1 mt-1 text-right"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "paddingRight": "0px",
+                          }
+                        }
+                      >
+                        <Icon
+                          iconName="caret-double"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-double"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                            />
+                          </svg>
+                        </Icon>
+                      </div>
+                    </div>
+                  </MultiSelect>
+                </div>
+              </div>
+              <div
+                className="row"
+              >
+                <div
+                  className="col col-sm-12 form-group"
+                >
+                  <FieldLabel
+                    fieldId="sla_time_pause"
+                    text="Pause"
+                  >
+                    <label
+                      htmlFor="sla_time_pause"
+                    >
+                      Pause 
+                    </label>
+                  </FieldLabel>
+                  <div
+                    className="form-text"
+                  >
+                    Time Won't Be Considered When:
+                  </div>
+                  <MultiSelect
+                    data={Array []}
+                    fieldId="compositeId"
+                    onChangeTags={[Function]}
+                    selectedTagsId={Array []}
+                  >
+                    <div
+                      className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+                      onFocus={[Function]}
+                    >
+                      <div
+                        className="col-11 p-0 d-flex flex-wrap"
+                      >
+                        <input
+                          className="form-control-inset"
+                          onChange={[Function]}
+                          onFocus={[Function]}
+                          onKeyUp={[Function]}
+                          placeholder="Select or type an option."
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                      <div
+                        className="col-1 mt-1 text-right"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "paddingRight": "0px",
+                          }
+                        }
+                      >
+                        <Icon
+                          iconName="caret-double"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-double"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                            />
+                          </svg>
+                        </Icon>
+                      </div>
+                    </div>
+                  </MultiSelect>
+                </div>
+              </div>
+              <div
+                className="row"
+              >
+                <div
+                  className="col col-sm-12 form-group "
+                >
+                  <FieldLabel
+                    fieldId="sla_time_stop"
+                    required={true}
+                    text="Stop"
+                  >
+                    <label
+                      htmlFor="sla_time_stop"
+                    >
+                      Stop 
+                      <span
+                        className="reference-mark"
+                      >
+                        <Icon
+                          iconName="asterisk"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-asterisk"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                            />
+                          </svg>
+                        </Icon>
+                      </span>
+                    </label>
+                  </FieldLabel>
+                  <div
+                    className="form-text"
+                  >
+                    Time Will Stop Counting When:
+                  </div>
+                  <MultiSelect
+                    data={Array []}
+                    fieldId="compositeId"
+                    onChangeTags={[Function]}
+                    selectedTagsId={Array []}
+                  >
+                    <div
+                      className=" align-items-start form-control form-control-tag-group multi-select-wrapper"
+                      onFocus={[Function]}
+                    >
+                      <div
+                        className="col-11 p-0 d-flex flex-wrap"
+                      >
+                        <input
+                          className="form-control-inset"
+                          onChange={[Function]}
+                          onFocus={[Function]}
+                          onKeyUp={[Function]}
+                          placeholder="Select or type an option."
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                      <div
+                        className="col-1 mt-1 text-right"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "paddingRight": "0px",
+                          }
+                        }
+                      >
+                        <Icon
+                          iconName="caret-double"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-caret-double"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double"
+                            />
+                          </svg>
+                        </Icon>
+                      </div>
+                    </div>
+                  </MultiSelect>
+                </div>
+              </div>
+              <h3
+                className="sheet-subtitle"
+              >
+                <FieldLabel
+                  fieldId="sla_description"
+                  required={true}
+                  text="DURATION TIME"
+                >
+                  <label
+                    htmlFor="sla_description"
+                  >
+                    DURATION TIME 
+                    <span
+                      className="reference-mark"
+                    >
+                      <Icon
+                        iconName="asterisk"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-asterisk"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk"
+                          />
+                        </svg>
+                      </Icon>
+                    </span>
+                  </label>
+                </FieldLabel>
+              </h3>
+              <div
+                className="sheet-text"
+              >
+                Define a duration time to be met. Enter at least one of the following fields.
+              </div>
+              <div
+                className="row"
+              >
+                <div
+                  className="form-group col col-sm-5 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_days"
+                    text="Days"
+                  >
+                    <label
+                      htmlFor="sla_duration_days"
+                    >
+                      Days 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_days"
+                    mask={[Function]}
+                    maxLength={4}
+                    name="days"
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    value={null}
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_days"
+                      mask={[Function]}
+                      maxLength={4}
+                      name="days"
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      type="text"
+                      value={null}
+                    />
+                  </reactTextMask>
+                  <div
+                    className="form-text"
+                  >
+                    Enter a whole number.
+                  </div>
+                </div>
+                <div
+                  className="form-group col col-sm-3 "
+                >
+                  <FieldLabel
+                    fieldId="sla_duration_hours"
+                    text="Hours"
+                  >
+                    <label
+                      htmlFor="sla_duration_hours"
+                    >
+                      Hours 
+                    </label>
+                  </FieldLabel>
+                  <reactTextMask
+                    className="form-control"
+                    id="sla_duration_hours"
+                    mask={
+                      Array [
+                        /\\\\d/,
+                        /\\\\d/,
+                        ":",
+                        /\\\\d/,
+                        /\\\\d/,
+                      ]
+                    }
+                    name="hours"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    placeholder="00:00"
+                    value=""
+                  >
+                    <input
+                      className="form-control"
+                      id="sla_duration_hours"
+                      mask={
+                        Array [
+                          /\\\\d/,
+                          /\\\\d/,
+                          ":",
+                          /\\\\d/,
+                          /\\\\d/,
+                        ]
+                      }
+                      name="hours"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      placeholder="00:00"
+                      type="text"
+                      value=""
+                    />
+                  </reactTextMask>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sheet-footer sheet-footer-btn-block-sm-down"
+            >
+              <div
+                className="btn-group"
+              >
+                <div
+                  className="btn-group-item"
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Save
+                  </button>
+                </div>
+                <div
+                  className="btn-group-item"
+                >
+                  <withRouter()
+                    className="btn btn-secondary"
+                  >
+                    <Route>
+                      <Component
+                        className="btn btn-secondary"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 1,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": false,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
+                      >
+                        <BackLinkWrapper
+                          backPath="/"
+                          className="btn btn-secondary"
+                          currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                          history={
+                            Object {
+                              "action": "POP",
+                              "block": [Function],
+                              "canGo": [Function],
+                              "createHref": [Function],
+                              "entries": Array [
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/processes/1/10/title%3Aasc",
+                                  "search": "?backPath=%2F",
+                                },
+                              ],
+                              "go": [Function],
+                              "goBack": [Function],
+                              "goForward": [Function],
+                              "index": 0,
+                              "length": 1,
+                              "listen": [Function],
+                              "location": Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
                               },
                               "push": [Function],
                               "replace": [Function],
@@ -5644,6 +5663,7 @@ exports[`Should render component in edit mode 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -5714,6 +5734,7 @@ exports[`Should render component in edit mode 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -5802,6 +5823,7 @@ exports[`Should render component in edit mode 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -6393,6 +6415,7 @@ exports[`Should update state after input changes 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -6463,6 +6486,7 @@ exports[`Should update state after input changes 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >
@@ -6551,6 +6575,7 @@ exports[`Should update state after input changes 1`] = `
                   </div>
                   <MultiSelect
                     data={Array []}
+                    fieldId="compositeId"
                     onChangeTags={[Function]}
                     selectedTagsId={Array []}
                   >

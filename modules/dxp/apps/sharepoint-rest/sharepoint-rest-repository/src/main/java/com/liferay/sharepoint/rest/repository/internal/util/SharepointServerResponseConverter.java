@@ -370,15 +370,11 @@ public class SharepointServerResponseConverter {
 		String extRepositoryModelKey = jsonObject.getString(
 			"ServerRelativeUrl");
 
-		if (_isRootFolder(extRepositoryModelKey)) {
+		if (extRepositoryModelKey.equals(StringPool.SLASH + _libraryPath)) {
 			return 1;
 		}
 
 		return 0;
-	}
-
-	private boolean _isRootFolder(String extRepositoryModelKey) {
-		return extRepositoryModelKey.equals(StringPool.SLASH + _libraryPath);
 	}
 
 	private String _join(String delimiter, String... strings) {

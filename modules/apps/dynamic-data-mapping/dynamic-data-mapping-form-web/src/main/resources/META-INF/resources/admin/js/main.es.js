@@ -462,7 +462,9 @@ class Form extends Component {
 			defaultLanguageId,
 			editingLanguageId,
 			events: {
-				paginationModeChanged: this._handlePaginationModeChanded
+				paginationModeChanged: this._handlePaginationModeChanded,
+				ruleAdded: this._handleRuleSaved.bind(this),
+				ruleSaved: this._handleRuleSaved.bind(this)
 			},
 			initialPages: context.pages,
 			initialPaginationMode: context.paginationMode,
@@ -783,6 +785,10 @@ class Form extends Component {
 				paginationMode: newVal
 			}
 		);
+	}
+
+	_handleRuleSaved() {
+		this._autoSave.save(true);
 	}
 
 	_handleSaveButtonClicked(event) {

@@ -22,7 +22,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataLayoutPage;
 import com.liferay.data.engine.rest.dto.v1_0.DataLayoutRow;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataLayoutUtil;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizationUtil;
+import com.liferay.data.engine.rest.internal.util.LocalizationUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.CaptchaFieldType;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.CheckboxFieldType;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.CheckboxMultipleFieldType;

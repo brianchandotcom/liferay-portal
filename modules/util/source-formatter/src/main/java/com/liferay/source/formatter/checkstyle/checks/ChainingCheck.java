@@ -348,6 +348,23 @@ public class ChainingCheck extends BaseCheck {
 			return;
 		}
 
+		while (true) {
+			DetailAST firstChildDetailAST =
+				nextMethodCallDetailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+				break;
+			}
+
+			firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
+				break;
+			}
+
+			nextMethodCallDetailAST = firstChildDetailAST;
+		}
+
 		String nextClassOrVariableName = _getClassOrVariableName(
 			nextMethodCallDetailAST);
 

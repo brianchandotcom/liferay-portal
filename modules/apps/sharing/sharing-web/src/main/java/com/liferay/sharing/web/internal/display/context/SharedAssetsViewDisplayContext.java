@@ -197,7 +197,7 @@ public class SharedAssetsViewDisplayContext {
 
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		if (hasEditPermission(
+		if (_hasEditPermission(
 				sharingEntry.getClassNameId(), sharingEntry.getClassPK())) {
 
 			menuItems.add(_createEditMenuItem(sharingEntry));
@@ -266,7 +266,7 @@ public class SharedAssetsViewDisplayContext {
 		return sharingEntryInterpreter.getTitle(sharingEntry);
 	}
 
-	public boolean hasEditPermission(long classNameId, long classPK) {
+	private boolean _hasEditPermission(long classNameId, long classPK) {
 		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
 			_themeDisplay.getUserId(), classNameId, classPK);
 

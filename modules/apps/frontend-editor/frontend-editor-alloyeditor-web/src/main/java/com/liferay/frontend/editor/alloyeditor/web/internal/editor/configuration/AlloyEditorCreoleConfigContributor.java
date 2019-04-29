@@ -267,10 +267,8 @@ public class AlloyEditorCreoleConfigContributor
 			"name", "linkEditBrowse"
 		);
 
-		JSONArray linkButtonsJSONArray = JSONUtil.put(linkEditJSONObject);
-
 		jsonObject.put(
-			"buttons", linkButtonsJSONArray
+			"buttons", JSONUtil.put(linkEditJSONObject)
 		).put(
 			"name", "link"
 		).put(

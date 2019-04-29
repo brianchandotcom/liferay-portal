@@ -52,10 +52,8 @@ public class LayoutPageTemplateStructureHelperUtil {
 				"size", StringPool.BLANK
 			);
 
-			JSONArray columnJSONArray = JSONUtil.put(columnJSONObject);
-
 			structureJSONObject.put(
-				"columns", columnJSONArray
+				"columns", JSONUtil.put(columnJSONObject)
 			).put(
 				"rowId", String.valueOf(i)
 			).put(

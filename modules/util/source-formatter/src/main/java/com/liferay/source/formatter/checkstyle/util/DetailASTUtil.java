@@ -73,20 +73,19 @@ public class DetailASTUtil {
 		DetailAST siblingDetailAST = rootDetailAST.getNextSibling();
 
 		while (true) {
-			if (siblingDetailAST.getType() == TokenTypes.IMPORT) {
-				FullIdent importIdent = FullIdent.createFullIdentBelow(
-					siblingDetailAST);
+			if ((siblingDetailAST == null) ||
+				(siblingDetailAST.getType() != TokenTypes.IMPORT)) {
 
-				importNamesList.add(importIdent.getText());
+				return importNamesList;
 			}
-			else {
-				break;
-			}
+
+			FullIdent importIdent = FullIdent.createFullIdentBelow(
+				siblingDetailAST);
+
+			importNamesList.add(importIdent.getText());
 
 			siblingDetailAST = siblingDetailAST.getNextSibling();
 		}
-
-		return importNamesList;
 	}
 
 	public static List<DetailAST> getMethodCalls(

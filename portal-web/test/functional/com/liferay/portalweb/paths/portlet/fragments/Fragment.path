@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>FRAGMENT</td>
-	<td>//div[contains(@class,'layout-content')]//section[${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
+	<td>//div[contains(@class,'layout-content')]//section[${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')] | //div[contains(@class,'layout-content')]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
 	<td></td>
 </tr>
 <tr>

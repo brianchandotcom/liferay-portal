@@ -266,19 +266,6 @@ public class SharedAssetsViewDisplayContext {
 		return sharingEntryInterpreter.getTitle(sharingEntry);
 	}
 
-	private boolean _hasEditPermission(long classNameId, long classPK) {
-		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
-			_themeDisplay.getUserId(), classNameId, classPK);
-
-		if ((sharingEntry != null) &&
-			sharingEntry.hasSharingPermission(SharingEntryAction.UPDATE)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isVisible(SharingEntry sharingEntry) throws PortalException {
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
@@ -485,6 +472,19 @@ public class SharedAssetsViewDisplayContext {
 
 		return sharingEntryEditRenderer.getURLEdit(
 			sharingEntry, liferayPortletRequest, liferayPortletResponse);
+	}
+
+	private boolean _hasEditPermission(long classNameId, long classPK) {
+		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
+			_themeDisplay.getUserId(), classNameId, classPK);
+
+		if ((sharingEntry != null) &&
+			sharingEntry.hasSharingPermission(SharingEntryAction.UPDATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isIncoming() {

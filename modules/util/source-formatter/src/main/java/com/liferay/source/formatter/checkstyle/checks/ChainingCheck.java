@@ -365,10 +365,12 @@ public class ChainingCheck extends BaseCheck {
 			nextMethodCallDetailAST = firstChildDetailAST;
 		}
 
-		String nextClassOrVariableName = _getClassOrVariableName(
-			nextMethodCallDetailAST);
+		if (classOrVariableName.equals(
+				_getClassOrVariableName(nextMethodCallDetailAST)) &&
+			!Objects.equals(
+				DetailASTUtil.getMethodName(nextMethodCallDetailAST),
+				"remove")) {
 
-		if (Objects.equals(classOrVariableName, nextClassOrVariableName)) {
 			log(
 				methodCallDetailAST, _MSG_REQUIRED_CHAINING,
 				classOrVariableName + "." + methodName);

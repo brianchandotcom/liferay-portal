@@ -2711,8 +2711,20 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		typeSettingsProperties.fastLoad(typeSettings);
 
+		boolean customizableLayout = Boolean.valueOf(
+			typeSettingsProperties.getProperty(
+				LayoutConstants.CUSTOMIZABLE_LAYOUT, StringPool.FALSE));
+
 		Layout layout = layoutPersistence.findByG_P_L_Head(
 			groupId, privateLayout, layoutId, false);
+
+		boolean wasCustomizableLayout = Boolean.valueOf(
+			layout.getTypeSettingsProperty(
+				LayoutConstants.CUSTOMIZABLE_LAYOUT, StringPool.FALSE));
+
+		if (!customizableLayout && wasCustomizableLayout) {
+			_removeUserPreferences(layout, false);
+		}
 
 		Layout draftLayout = getDraft(layout);
 

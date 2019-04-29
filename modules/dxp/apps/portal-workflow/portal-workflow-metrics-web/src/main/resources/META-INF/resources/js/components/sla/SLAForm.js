@@ -43,7 +43,7 @@ class SLAForm extends React.Component {
 		this.state = {
 			errors: {},
 			loading: false,
-			redirectToSlaList: false
+			redirectToSLAList: false
 		};
 	}
 
@@ -84,26 +84,40 @@ class SLAForm extends React.Component {
 	}
 
 	@autobind
-	handlePauseNodesChange(pauseNodeKeys) {
-		slaStore.setState({ pauseNodeKeys });
+	handlePauseNodesChange(nodeKeys) {
+		const { startNodeKeys, stopNodeKeys } = slaStore.getState();
+
+		const pauseNodeKeys = nodeStore
+			.getPauseNodes(startNodeKeys.nodeKeys, stopNodeKeys.nodeKeys)
+			.filter(({ compositeId }) => nodeKeys.includes(`${compositeId}`));
+
+		slaStore.setState({ pauseNodeKeys: { nodeKeys: pauseNodeKeys } });
 		this.setState({});
 	}
 
 	@autobind
-	handleStartNodes(startNodeKeys) {
+	handleStartNodes(nodeKeys) {
 		const { errors } = this.state;
+		const startNodeKeys = nodeStore
+			.getState()
+			.nodes.filter(({ compositeId }) => nodeKeys.includes(`${compositeId}`));
 
+		errors[ALERT_MESSAGE] = '';
 		errors[START_NODE_KEYS] = validateNodeKeys(startNodeKeys);
-		slaStore.setState({ startNodeKeys });
+		slaStore.setState({ startNodeKeys: { nodeKeys: startNodeKeys } });
 		this.setState({ errors });
 	}
 
 	@autobind
-	handleStopNodesChange(stopNodeKeys) {
+	handleStopNodesChange(nodeKeys) {
 		const { errors } = this.state;
+		const stopNodeKeys = nodeStore
+			.getState()
+			.nodes.filter(({ compositeId }) => nodeKeys.includes(`${compositeId}`));
 
+		errors[ALERT_MESSAGE] = '';
 		errors[STOP_NODE_KEYS] = validateNodeKeys(stopNodeKeys);
-		slaStore.setState({ stopNodeKeys });
+		slaStore.setState({ stopNodeKeys: { nodeKeys: stopNodeKeys } });
 		this.setState({ errors });
 	}
 
@@ -118,11 +132,12 @@ class SLAForm extends React.Component {
 		} = slaStore.getState();
 		const { errors } = this.state;
 
+		errors[ALERT_MESSAGE] = '';
 		errors[DURATION] = validateDuration(days, hours);
 		errors[HOURS] = validateHours(hours);
 		errors[NAME] = validateName(name);
-		errors[START_NODE_KEYS] = validateNodeKeys(startNodeKeys);
-		errors[STOP_NODE_KEYS] = validateNodeKeys(stopNodeKeys);
+		errors[START_NODE_KEYS] = validateNodeKeys(startNodeKeys.nodeKeys);
+		errors[STOP_NODE_KEYS] = validateNodeKeys(stopNodeKeys.nodeKeys);
 
 		if (hasErrors(errors)) {
 			errors[ALERT_MESSAGE] = Liferay.Language.get(
@@ -134,15 +149,13 @@ class SLAForm extends React.Component {
 		else {
 			const { id, processId } = this.props;
 
-			errors[ALERT_MESSAGE] = '';
-
 			return slaStore
 				.saveSLA(processId, id)
 				.then(() => {
 					const status = id ? AppStatus.slaUpdated : AppStatus.slaSaved;
 
 					this.context.setStatus(status, () => {
-						this.setState({ redirectToSlaList: true });
+						this.setState({ redirectToSLAList: true });
 					});
 				})
 				.catch(result => {
@@ -216,30 +229,54 @@ class SLAForm extends React.Component {
 
 	render() {
 		const {
+			errors,
+			id,
+			loading = false,
+			redirectToSLAList = false
+		} = this.state;
+
+		if (loading) {
+			return <LoadingState />;
+		}
+
+		if (redirectToSLAList) {
+			return <BackRedirect />;
+		}
+
+		const {
 			days,
 			description,
 			hours,
 			name,
-			pauseNodeKeys,
-			startNodeKeys,
-			stopNodeKeys
+			pauseNodeKeys: { nodeKeys: pauseNodeKeys },
+			startNodeKeys: { nodeKeys: startNodeKeys },
+			stopNodeKeys: { nodeKeys: stopNodeKeys }
 		} = slaStore.getState();
 		const daysMask = createNumberMask({
 			includeThousandsSeparator: false,
 			prefix: ''
 		});
-		const { errors, id, loading, redirectToSlaList } = this.state;
 		const onChangeHandler = validationFunc => evt => {
 			this.handleChange(evt, validationFunc);
 		};
 
-		if (loading === true) {
-			return <LoadingState />;
-		}
+		const pauseNodes = nodeStore.getPauseNodes(startNodeKeys, stopNodeKeys);
+		const startNodes = nodeStore.getStartNodes(pauseNodeKeys, stopNodeKeys);
+		const stopNodes = nodeStore.getStopNodes(pauseNodeKeys, startNodeKeys);
 
-		if (redirectToSlaList === true) {
-			return <BackRedirect />;
-		}
+		const [pauseNodeTagIds, startNodeTagIds, stopNodeTagIds] = [
+			pauseNodes.filter(({ id }) => pauseNodeKeys.find(node => node.id == id)),
+			startNodes.filter(({ compositeId }) =>
+				startNodeKeys.find(
+					node => `${node.id}:${node.executionType}` === compositeId
+				)
+			),
+			stopNodes.filter(({ compositeId }) =>
+				stopNodeKeys.find(
+					node => `${node.id}:${node.executionType}` === compositeId
+				)
+			)
+		].map(nodeKeys => nodeKeys.map(({ compositeId }) => `${compositeId}`));
 
 		return (
 			<div className="sla-form">
@@ -338,9 +375,10 @@ class SLAForm extends React.Component {
 								</div>
 
 								<MultiSelect
-									data={nodeStore.getStartNodes()}
+									data={startNodes}
+									fieldId="compositeId"
 									onChangeTags={this.handleStartNodes}
-									selectedTagsId={startNodeKeys}
+									selectedTagsId={startNodeTagIds}
 								/>
 
 								{errors[START_NODE_KEYS] && (
@@ -361,9 +399,10 @@ class SLAForm extends React.Component {
 								</div>
 
 								<MultiSelect
-									data={nodeStore.getPauseNodes()}
+									data={pauseNodes}
+									fieldId="compositeId"
 									onChangeTags={this.handlePauseNodesChange}
-									selectedTagsId={pauseNodeKeys}
+									selectedTagsId={pauseNodeTagIds}
 								/>
 							</div>
 						</div>
@@ -385,9 +424,10 @@ class SLAForm extends React.Component {
 								</div>
 
 								<MultiSelect
-									data={nodeStore.getStopNodes()}
+									data={stopNodes}
+									fieldId="compositeId"
 									onChangeTags={this.handleStopNodesChange}
-									selectedTagsId={stopNodeKeys}
+									selectedTagsId={stopNodeTagIds}
 								/>
 
 								{errors[STOP_NODE_KEYS] && (

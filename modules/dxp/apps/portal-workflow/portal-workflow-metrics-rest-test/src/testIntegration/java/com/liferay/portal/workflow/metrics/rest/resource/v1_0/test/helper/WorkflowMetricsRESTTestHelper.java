@@ -237,6 +237,7 @@ public class WorkflowMetricsRESTTestHelper {
 		return new Task() {
 			{
 				instanceCount = 0L;
+				key = task.getKey();
 				name = task.getName();
 				onTimeInstanceCount = 0L;
 				overdueInstanceCount = 0L;
@@ -251,10 +252,10 @@ public class WorkflowMetricsRESTTestHelper {
 			companyId, instanceId, processId);
 
 		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
-			"workflow-metrics-processes", instanceDocument.getUID()) {
+			"workflow-metrics-instances", instanceDocument.getUID()) {
 
 			{
-				setType("WorkflowMetricsProcessType");
+				setType("WorkflowMetricsInstanceType");
 			}
 		};
 

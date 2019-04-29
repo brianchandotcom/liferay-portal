@@ -69,7 +69,9 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	public List<DropdownItem> getAssetEntryUsageActionMenu(
 		AssetEntryUsage assetEntryUsage, HttpServletRequest request) {
 
-		if (assetEntryUsage.getType() != AssetEntryUsageConstants.TYPE_LAYOUT) {
+		if (assetEntryUsage.getType() ==
+				AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
+		
 			return Collections.emptyList();
 		}
 

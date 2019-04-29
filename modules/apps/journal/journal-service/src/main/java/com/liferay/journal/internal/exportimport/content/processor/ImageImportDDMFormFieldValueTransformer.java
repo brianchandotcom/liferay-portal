@@ -82,7 +82,8 @@ public class ImageImportDDMFormFieldValueTransformer
 				valueString);
 
 			FileEntry importedFileEntry = fetchImportedFileEntry(
-				_portletDataContext, jsonObject.getLong("fileEntryId"));
+				_portletDataContext, jsonObject.getLong("fileEntryId"),
+				jsonObject.getString("uuid"));
 
 			if (importedFileEntry == null) {
 				continue;
@@ -116,7 +117,7 @@ public class ImageImportDDMFormFieldValueTransformer
 	}
 
 	protected FileEntry fetchImportedFileEntry(
-			PortletDataContext portletDataContext, long oldClassPK)
+			PortletDataContext portletDataContext, long oldClassPK, String uuid)
 		throws PortalException {
 
 		Map<Long, Long> fileEntryPKs =
@@ -125,8 +126,12 @@ public class ImageImportDDMFormFieldValueTransformer
 
 		Long classPK = fileEntryPKs.get(oldClassPK);
 
+		FileEntry existingFileEntry =
+			_dlAppService.getFileEntryByUuidAndGroupId(
+				uuid, portletDataContext.getScopeGroupId());
+
 		if (classPK == null) {
-			return null;
+			return existingFileEntry;
 		}
 
 		return _dlAppService.getFileEntry(classPK);

@@ -52,9 +52,25 @@ public class LocalizationUtil {
 		return jsonObject;
 	}
 
-	public static Map<String, String> toStringsMap(
-		JSONObject jsonObject) {
+	public static Map<Locale, String> toLocalesMap(
+		Map<String, ?> localizedValues) {
 
+		if (MapUtil.isEmpty(localizedValues)) {
+			return Collections.emptyMap();
+		}
+
+		Map<Locale, String> localesMap = new HashMap<>();
+
+		for (Map.Entry<String, ?> entry : localizedValues.entrySet()) {
+			localesMap.put(
+				LocaleUtil.fromLanguageId(entry.getKey()),
+				(String)entry.getValue());
+		}
+
+		return localesMap;
+	}
+
+	public static Map<String, String> toStringsMap(JSONObject jsonObject) {
 		Map<String, String> localizedValues = new HashMap<>();
 
 		Iterator<String> keys = jsonObject.keys();
@@ -79,24 +95,6 @@ public class LocalizationUtil {
 		}
 
 		return stringsMap;
-	}
-
-	public static Map<Locale, String> toLocalesMap(
-		Map<String, ?> localizedValues) {
-
-		if (MapUtil.isEmpty(localizedValues)) {
-			return Collections.emptyMap();
-		}
-
-		Map<Locale, String> localesMap = new HashMap<>();
-
-		for (Map.Entry<String, ?> entry : localizedValues.entrySet()) {
-			localesMap.put(
-				LocaleUtil.fromLanguageId(entry.getKey()),
-				(String)entry.getValue());
-		}
-
-		return localesMap;
 	}
 
 }

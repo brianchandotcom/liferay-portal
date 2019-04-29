@@ -19,9 +19,9 @@ import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.constants.DataDefinitionConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
-import com.liferay.data.engine.rest.internal.util.LocalizationUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
+import com.liferay.data.engine.rest.internal.util.LocalizationUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
@@ -189,8 +189,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				_getClassNameId(), null,
 				LocalizationUtil.toLocalesMap(dataDefinition.getName()),
-				LocalizationUtil.toLocalesMap(
-					dataDefinition.getDescription()),
+				LocalizationUtil.toLocalesMap(dataDefinition.getDescription()),
 				DataDefinitionUtil.toJSON(dataDefinition),
 				dataDefinition.getStorageType(), serviceContext));
 
@@ -246,8 +245,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				PrincipalThreadLocal.getUserId(), dataDefinitionId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				LocalizationUtil.toLocalesMap(dataDefinition.getName()),
-				LocalizationUtil.toLocalesMap(
-					dataDefinition.getDescription()),
+				LocalizationUtil.toLocalesMap(dataDefinition.getDescription()),
 				DataDefinitionUtil.toJSON(dataDefinition),
 				new ServiceContext()));
 	}

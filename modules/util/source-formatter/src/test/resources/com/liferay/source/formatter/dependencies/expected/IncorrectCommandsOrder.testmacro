@@ -55,4 +55,11 @@ if (true) {
 		''';
 		var metalComponentReady = ""
 	}
+
+	@description = "This is the description for MacroF."
+	@ignore = "true"
+	@priority = "5"
+	macro MacroF{
+		Upgrade.resetTestUser();
+	}
 }

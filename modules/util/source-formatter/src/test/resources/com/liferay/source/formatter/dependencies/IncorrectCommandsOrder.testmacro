@@ -25,6 +25,13 @@ definition {
 		Upgrade.resetTestUserPassword();
 	}
 
+	@description = "This is the description for MacroF."
+	@ignore = "true"
+@priority = "5"
+macro MacroF{
+		Upgrade.resetTestUser();
+	}
+
 	@description = "This is the description for MacroE."
 	macro MacroE {
 		var javaScript = '''

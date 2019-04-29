@@ -1607,14 +1607,13 @@ public class CalendarPortlet extends MVCPortlet {
 		java.util.Calendar startTimeJCalendar = getJCalendar(
 			resourceRequest, "startTime");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		boolean result =
 			_calendarBookingLocalService.hasExclusiveCalendarBooking(
 				calendar, startTimeJCalendar.getTimeInMillis(),
 				endTimeJCalendar.getTimeInMillis());
 
-		jsonObject.put("hasExclusiveCalendarBooking", result);
+		JSONObject jsonObject = JSONUtil.put(
+			"hasExclusiveCalendarBooking", result);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}

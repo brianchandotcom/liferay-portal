@@ -14,7 +14,6 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -132,8 +131,6 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 			String errorMessage =
 				"an-unexpected-error-occurred-while-sharing-the-item";
 
@@ -141,7 +138,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 				errorMessage = "you-do-not-have-permission-to-share-this-item";
 			}
 
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"errorMessage", LanguageUtil.get(resourceBundle, errorMessage));
 
 			JSONPortletResponseUtil.writeJSON(

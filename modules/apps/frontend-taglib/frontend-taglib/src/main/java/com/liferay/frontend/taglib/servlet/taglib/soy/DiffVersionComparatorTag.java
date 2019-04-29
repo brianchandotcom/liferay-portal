@@ -52,14 +52,12 @@ public class DiffVersionComparatorTag extends ComponentRendererTag {
 			DiffVersion diffVersion, PortletURL sourceURL, PortletURL targetURL)
 		throws PortalException {
 
-		JSONObject diffVersionJSONObject = JSONFactoryUtil.createJSONObject();
-
 		Date modifiedDate = diffVersion.getModifiedDate();
 
 		String timeDescription = LanguageUtil.getTimeDescription(
 			request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 
-		diffVersionJSONObject.put(
+		JSONObject diffVersionJSONObject = JSONUtil.put(
 			"displayDate",
 			LanguageUtil.format(request, "x-ago", timeDescription, false)
 		).put(

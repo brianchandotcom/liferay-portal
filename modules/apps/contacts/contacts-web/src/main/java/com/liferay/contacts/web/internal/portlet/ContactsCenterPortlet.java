@@ -307,8 +307,6 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		long[] userIds = StringUtil.split(
 			ParamUtil.getString(resourceRequest, "userIds"), 0L);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (long userId : userIds) {
@@ -332,7 +330,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			}
 		}
 
-		jsonObject.put("contacts", jsonArray);
+		JSONObject jsonObject = JSONUtil.put("contacts", jsonArray);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
@@ -423,8 +421,6 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				continue;
 			}
 
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
 			String portletId = PortletIdCodec.decodePortletName(
 				portal.getPortletId(actionRequest));
 
@@ -434,7 +430,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				portletId = ContactsPortletKeys.CONTACTS_CENTER;
 			}
 
-			extraDataJSONObject.put("portletId", portletId);
+			JSONObject extraDataJSONObject = JSONUtil.put(
+				"portletId", portletId);
 
 			SocialRequest socialRequest = socialRequestLocalService.addRequest(
 				themeDisplay.getUserId(), 0, User.class.getName(),
@@ -758,12 +755,11 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		long[] userIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "userIds"), 0L);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		JSONObject contactListJSONObject = getContactsJSONObject(
 			actionRequest, actionResponse);
 
-		jsonObject.put("contactList", contactListJSONObject);
+		JSONObject jsonObject = JSONUtil.put(
+			"contactList", contactListJSONObject);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -800,8 +796,6 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		int start = ParamUtil.getInteger(portletRequest, "start");
 		int end = ParamUtil.getInteger(portletRequest, "end");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		JSONObject optionsJSONObject = JSONUtil.put(
 			"end", end
 		).put(
@@ -812,7 +806,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			"start", start
 		);
 
-		jsonObject.put("options", optionsJSONObject);
+		JSONObject jsonObject = JSONUtil.put("options", optionsJSONObject);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

@@ -81,8 +81,6 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 	}
 
 	protected static JSONObject createDataJSONObject(String... ranges) {
-		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (String range : ranges) {
@@ -91,7 +89,7 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 			jsonArray.put(jsonObject);
 		}
 
-		dataJSONObject.put("ranges", jsonArray);
+		JSONObject dataJSONObject = JSONUtil.put("ranges", jsonArray);
 
 		return dataJSONObject;
 	}

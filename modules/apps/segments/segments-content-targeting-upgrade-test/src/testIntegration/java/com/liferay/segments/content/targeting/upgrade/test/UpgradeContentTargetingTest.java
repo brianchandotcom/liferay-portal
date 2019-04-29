@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -772,12 +771,10 @@ public class UpgradeContentTargetingTest {
 		ZonedDateTime startZonedDateTime, ZonedDateTime endZonedDateTime,
 		String timeZoneId, String type) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd HH:mm", LocaleUtil.ENGLISH);
 
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"startDate",
 			dateFormat.format(Date.from(startZonedDateTime.toInstant()))
 		).put(

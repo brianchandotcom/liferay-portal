@@ -54,8 +54,8 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -2804,15 +2804,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			User user, MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
 		String title = message.getSubject();
 
 		if (message.isDiscussion()) {
 			title = HtmlUtil.stripHtml(title);
 		}
 
-		extraDataJSONObject.put("title", title);
+		JSONObject extraDataJSONObject = JSONUtil.put("title", title);
 
 		if (!message.isDiscussion()) {
 			if (!message.isAnonymous() && !user.isDefaultUser()) {

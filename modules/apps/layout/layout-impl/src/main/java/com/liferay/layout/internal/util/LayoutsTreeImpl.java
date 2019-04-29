@@ -587,13 +587,12 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		boolean mobile = BrowserSnifferUtil.isMobile(request);
 
 		for (LayoutTreeNode layoutTreeNode : layoutTreeNodes) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 			JSONObject childrenJSONObject = _toJSONObject(
 				request, groupId, layoutTreeNode.getChildLayoutTreeNodes(),
 				layoutSetBranch);
 
-			jsonObject.put("children", childrenJSONObject);
+			JSONObject jsonObject = JSONUtil.put(
+				"children", childrenJSONObject);
 
 			Layout layout = layoutTreeNode.getLayout();
 

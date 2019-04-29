@@ -56,8 +56,6 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		JSONArray facetsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (SearchFacet searchFacet : searchFacetTracker.getSearchFacets()) {
@@ -88,7 +86,7 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 			facetsJSONArray.put(facetJSONObject);
 		}
 
-		jsonObject.put("facets", facetsJSONArray);
+		JSONObject jsonObject = JSONUtil.put("facets", facetsJSONArray);
 
 		setPreference(
 			actionRequest, "searchConfiguration", jsonObject.toString());

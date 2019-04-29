@@ -419,13 +419,10 @@ public class LiferayActivityService implements ActivityService {
 		JSONArray templateParamsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {
-			JSONObject templateParamJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
 			String name = entry.getKey();
 			String value = entry.getValue();
 
-			templateParamJSONObject.put(name, value);
+			JSONObject templateParamJSONObject = JSONUtil.put(name, value);
 
 			templateParamsJSONArray.put(templateParamJSONObject);
 		}

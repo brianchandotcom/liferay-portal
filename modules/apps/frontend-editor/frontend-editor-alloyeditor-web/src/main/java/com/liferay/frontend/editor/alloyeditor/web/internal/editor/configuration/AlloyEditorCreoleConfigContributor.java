@@ -77,15 +77,14 @@ public class AlloyEditorCreoleConfigContributor
 			}
 		}
 
-		JSONObject buttonCfgJSONObject = JSONFactoryUtil.createJSONObject();
-
 		JSONObject linkEditJSONObject = JSONUtil.put(
 			"appendProtocol", false
 		).put(
 			"showTargetSelector", false
 		);
 
-		buttonCfgJSONObject.put("linkEditBrowse", linkEditJSONObject);
+		JSONObject buttonCfgJSONObject = JSONUtil.put(
+			"linkEditBrowse", linkEditJSONObject);
 
 		jsonObject.put(
 			"buttonCfg", buttonCfgJSONObject
@@ -177,12 +176,10 @@ public class AlloyEditorCreoleConfigContributor
 	}
 
 	protected JSONObject getStyleFormatsJSONObject(Locale locale) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		JSONObject stylesJSONObject = JSONUtil.put(
 			"styles", getStyleFormatsJSONArray(locale));
 
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"cfg", stylesJSONObject
 		).put(
 			"name", "styles"
@@ -192,20 +189,16 @@ public class AlloyEditorCreoleConfigContributor
 	}
 
 	protected JSONObject getToolbarsAddJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		JSONObject buttonJSONObject = JSONFactoryUtil.createJSONObject();
-
 		JSONObject cfgJSONObject = JSONUtil.put(
 			"tableAttributes", JSONFactoryUtil.createJSONObject());
 
-		buttonJSONObject.put(
+		JSONObject buttonJSONObject = JSONUtil.put(
 			"cfg", cfgJSONObject
 		).put(
 			"name", "table"
 		);
 
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons", JSONUtil.putAll("image", buttonJSONObject, "hline")
 		).put(
 			"tabIndex", 2
@@ -251,23 +244,19 @@ public class AlloyEditorCreoleConfigContributor
 	}
 
 	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		JSONObject linkEditJSONObject = JSONFactoryUtil.createJSONObject();
-
 		JSONObject cfgJSONObject = JSONUtil.put(
 			"appendProtocol", false
 		).put(
 			"showTargetSelector", false
 		);
 
-		linkEditJSONObject.put(
+		JSONObject linkEditJSONObject = JSONUtil.put(
 			"cfg", cfgJSONObject
 		).put(
 			"name", "linkEditBrowse"
 		);
 
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"buttons", JSONUtil.put(linkEditJSONObject)
 		).put(
 			"name", "link"

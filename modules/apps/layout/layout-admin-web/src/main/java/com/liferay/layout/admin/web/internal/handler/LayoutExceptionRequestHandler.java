@@ -17,8 +17,8 @@ package com.liferay.layout.admin.web.internal.handler;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -51,8 +51,6 @@ public class LayoutExceptionRequestHandler {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		String errorMessage = null;
 
@@ -88,7 +86,7 @@ public class LayoutExceptionRequestHandler {
 				themeDisplay.getRequest(), "an-unexpected-error-occurred");
 		}
 
-		jsonObject.put("error", errorMessage);
+		JSONObject jsonObject = JSONUtil.put("error", errorMessage);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

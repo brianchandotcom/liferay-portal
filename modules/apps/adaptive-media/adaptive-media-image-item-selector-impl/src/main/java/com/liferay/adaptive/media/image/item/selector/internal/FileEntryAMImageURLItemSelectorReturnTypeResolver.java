@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -61,8 +62,6 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		JSONObject fileEntryJSONObject = JSONFactoryUtil.createJSONObject();
-
 		String previewURL = null;
 
 		if (fileEntry.getGroupId() == fileEntry.getRepositoryId()) {
@@ -75,7 +74,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 				themeDisplay, fileEntry, "&imagePreview=1", false);
 		}
 
-		fileEntryJSONObject.put(
+		JSONObject fileEntryJSONObject = JSONUtil.put(
 			"defaultSource", previewURL
 		).put(
 			"fileEntryId", fileEntry.getFileEntryId()
@@ -100,8 +99,6 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 	}
 
 	private JSONObject _getSourceJSONObject(MediaQuery mediaQuery) {
-		JSONObject sourceJSONObject = JSONFactoryUtil.createJSONObject();
-
 		JSONObject attributesJSONObject = JSONFactoryUtil.createJSONObject();
 
 		for (Condition condition : mediaQuery.getConditions()) {
@@ -109,7 +106,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolver
 				condition.getAttribute(), condition.getValue());
 		}
 
-		sourceJSONObject.put(
+		JSONObject sourceJSONObject = JSONUtil.put(
 			"attributes", attributesJSONObject
 		).put(
 			"src", mediaQuery.getSrc()

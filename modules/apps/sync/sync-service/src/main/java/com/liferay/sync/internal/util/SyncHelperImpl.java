@@ -26,7 +26,6 @@ import com.liferay.petra.io.delta.DeltaUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.lock.Lock;
@@ -206,15 +205,13 @@ public class SyncHelperImpl implements SyncHelper {
 			rootCauseThrowable = rootCauseThrowable.getCause();
 		}
 
-		JSONObject rootCauseJSONObject = JSONFactoryUtil.createJSONObject();
-
 		throwableMessage = rootCauseThrowable.getMessage();
 
 		if (Validator.isNull(throwableMessage)) {
 			throwableMessage = rootCauseThrowable.toString();
 		}
 
-		rootCauseJSONObject.put(
+		JSONObject rootCauseJSONObject = JSONUtil.put(
 			"message", throwableMessage
 		).put(
 			"type", ClassUtil.getClassName(rootCauseThrowable)

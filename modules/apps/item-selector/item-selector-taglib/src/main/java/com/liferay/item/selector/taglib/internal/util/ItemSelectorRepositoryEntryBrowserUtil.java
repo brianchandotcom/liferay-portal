@@ -22,7 +22,6 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.taglib.ItemSelectorRepositoryEntryBrowserReturnTypeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -98,10 +97,6 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 			FileEntry fileEntry, Locale locale)
 		throws PortalException {
 
-		JSONObject itemMetadataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		JSONObject firstTabJSONObject = JSONFactoryUtil.createJSONObject();
-
 		FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
 		Date modifiedDate = fileEntry.getModifiedDate();
 
@@ -127,7 +122,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 						HtmlUtil.escape(fileEntry.getUserName())
 					})));
 
-		firstTabJSONObject.put(
+		JSONObject firstTabJSONObject = JSONUtil.put(
 			"data", firstTabDataJSONArray
 		).put(
 			"title", LanguageUtil.get(locale, "file-info")
@@ -151,7 +146,8 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 
 		groupsJSONArray.put(secondTabJSONObject);
 
-		itemMetadataJSONObject.put("groups", groupsJSONArray);
+		JSONObject itemMetadataJSONObject = JSONUtil.put(
+			"groups", groupsJSONArray);
 
 		return itemMetadataJSONObject;
 	}

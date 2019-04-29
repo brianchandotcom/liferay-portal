@@ -18,8 +18,8 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -67,11 +67,9 @@ public class UpdateLayoutPageTemplateEntryMVCActionCommand
 				addSuccessMessage(actionRequest, actionResponse);
 			}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-			jsonObject.put("redirectURL", redirect);
+			JSONObject jsonObject = JSONUtil.put("redirectURL", redirect);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

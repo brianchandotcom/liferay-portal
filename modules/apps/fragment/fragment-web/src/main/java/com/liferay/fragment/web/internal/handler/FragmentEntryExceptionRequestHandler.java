@@ -16,8 +16,8 @@ package com.liferay.fragment.web.internal.handler;
 
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -44,15 +44,13 @@ public class FragmentEntryExceptionRequestHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		String errorMessage = "an-unexpected-error-occurred";
 
 		if (pe instanceof FragmentEntryNameException) {
 			errorMessage = "please-enter-a-valid-name";
 		}
 
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"error", LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
 
 		JSONPortletResponseUtil.writeJSON(

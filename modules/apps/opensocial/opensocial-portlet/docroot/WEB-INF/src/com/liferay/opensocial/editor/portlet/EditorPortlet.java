@@ -200,14 +200,13 @@ public class EditorPortlet extends AdminPortlet {
 
 		serviceContext.setScopeGroupId(folder.getGroupId());
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			folder.getRepositoryId(), folderId, fileEntryTitle,
 			resourceRequest.getContentType(), fileEntryTitle, StringPool.BLANK,
 			StringPool.BLANK, bytes, serviceContext);
 
-		jsonObject.put("fileEntryId", fileEntry.getFileEntryId());
+		JSONObject jsonObject = JSONUtil.put(
+			"fileEntryId", fileEntry.getFileEntryId());
 
 		String portalURL = PortalUtil.getPortalURL(themeDisplay);
 
@@ -403,8 +402,6 @@ public class EditorPortlet extends AdminPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		String fileEntryURL = ParamUtil.getString(
 			resourceRequest, "fileEntryURL");
 
@@ -413,7 +410,7 @@ public class EditorPortlet extends AdminPortlet {
 
 		ModulePrefs modulePrefs = gadgetSpec.getModulePrefs();
 
-		jsonObject.put("height", modulePrefs.getHeight());
+		JSONObject jsonObject = JSONUtil.put("height", modulePrefs.getHeight());
 
 		long moduleId = ShindigUtil.getModuleId(
 			resourceResponse.getNamespace());

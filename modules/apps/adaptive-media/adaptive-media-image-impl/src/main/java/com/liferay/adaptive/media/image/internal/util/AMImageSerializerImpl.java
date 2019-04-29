@@ -25,6 +25,7 @@ import com.liferay.adaptive.media.image.util.AMImageSerializer;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.io.InputStream;
 
@@ -80,8 +81,6 @@ public class AMImageSerializerImpl implements AMImageSerializer {
 
 	@Override
 	public String serialize(AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		JSONObject attributesJSONObject = JSONFactoryUtil.createJSONObject();
 
 		Map<String, AMAttribute<?, ?>> allowedAMAttributes =
@@ -97,7 +96,7 @@ public class AMImageSerializerImpl implements AMImageSerializer {
 						name, String.valueOf(value)));
 			});
 
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"attributes", attributesJSONObject
 		).put(
 			"uri", adaptiveMedia.getURI()

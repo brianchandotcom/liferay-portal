@@ -114,13 +114,12 @@ public class SAPPortlet extends MVCPortlet {
 		for (JSONWebServiceActionMapping jsonWebServiceActionMapping :
 				jsonWebServiceActionMappingsSet) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 			Method method = jsonWebServiceActionMapping.getActionMethod();
 
 			String actionMethodName = method.getName();
 
-			jsonObject.put("actionMethodName", actionMethodName);
+			JSONObject jsonObject = JSONUtil.put(
+				"actionMethodName", actionMethodName);
 
 			jsonArray.put(jsonObject);
 		}

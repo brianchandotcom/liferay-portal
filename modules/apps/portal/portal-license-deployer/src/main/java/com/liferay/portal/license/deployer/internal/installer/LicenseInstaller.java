@@ -14,8 +14,8 @@
 
 package com.liferay.portal.license.deployer.internal.installer;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -60,11 +60,9 @@ public class LicenseInstaller implements ArtifactInstaller {
 
 	@Override
 	public void install(File file) throws Exception {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		String content = FileUtil.read(file);
 
-		jsonObject.put("licenseXML", content);
+		JSONObject jsonObject = JSONUtil.put("licenseXML", content);
 
 		LicenseManagerUtil.registerLicense(jsonObject);
 	}

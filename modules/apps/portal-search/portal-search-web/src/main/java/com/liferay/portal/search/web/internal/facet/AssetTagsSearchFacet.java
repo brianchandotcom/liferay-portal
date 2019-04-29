@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.facet;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
@@ -89,8 +88,6 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public JSONObject getJSONData(ActionRequest actionRequest) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		String displayStyleFacet = ParamUtil.getString(
 			actionRequest, getClassName() + "displayStyleFacet", "list");
 		int frequencyThreshold = ParamUtil.getInteger(
@@ -100,7 +97,7 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 		boolean showAssetCount = ParamUtil.getBoolean(
 			actionRequest, getClassName() + "showAssetCount", true);
 
-		jsonObject.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"displayStyle", displayStyleFacet
 		).put(
 			"frequencyThreshold", frequencyThreshold

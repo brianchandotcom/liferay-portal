@@ -725,6 +725,7 @@
 		<reference entity="LayoutSet" package-path="com.liferay.portal" />
 		<reference entity="LayoutSetPrototype" package-path="com.liferay.portal" />
 		<reference entity="PluginSetting" package-path="com.liferay.portal" />
+		<reference entity="PortalPreferences" package-path="com.liferay.portal" />
 		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />

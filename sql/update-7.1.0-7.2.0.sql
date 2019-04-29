@@ -8,7 +8,7 @@ alter table Layout add publishDate DATE null;
 
 COMMIT_TRANSACTION;
 
-update Layout set headId = plid, head = TRUE, system_ = FALSE;
+update Layout set headId = plid, head = FALSE, system_ = FALSE;
 
 insert into Counter (name, currentId)
 	select
@@ -21,7 +21,7 @@ alter table LayoutSet add head BOOLEAN;
 
 COMMIT_TRANSACTION;
 
-update LayoutSet set headId = layoutSetId, head = TRUE;
+update LayoutSet set headId = layoutSetId, head = FALSE;
 
 insert into Counter (name, currentId)
 	select

@@ -32,8 +32,7 @@ public class DataRecordCollectionUtil {
 				description = LocalizationUtil.toStringsMap(
 					ddlRecordSet.getDescriptionMap());
 				id = ddlRecordSet.getRecordSetId();
-				name = LocalizationUtil.toStringsMap(
-					ddlRecordSet.getNameMap());
+				name = LocalizationUtil.toStringsMap(ddlRecordSet.getNameMap());
 			}
 		};
 	}

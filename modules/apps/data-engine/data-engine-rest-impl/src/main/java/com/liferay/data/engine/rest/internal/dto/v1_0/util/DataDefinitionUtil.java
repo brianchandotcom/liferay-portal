@@ -50,8 +50,7 @@ public class DataDefinitionUtil {
 				description = LocalizationUtil.toStringsMap(
 					ddmStructure.getDescriptionMap());
 				id = ddmStructure.getStructureId();
-				name = LocalizationUtil.toStringsMap(
-					ddmStructure.getNameMap());
+				name = LocalizationUtil.toStringsMap(ddmStructure.getNameMap());
 				siteId = ddmStructure.getGroupId();
 				storageType = ddmStructure.getStorageType();
 				userId = ddmStructure.getUserId();

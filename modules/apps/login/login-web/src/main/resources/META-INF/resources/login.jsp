@@ -71,9 +71,9 @@
 				<liferay-util:dynamic-include key="com.liferay.login.web#/login.jsp#alertPre" />
 
 				<c:choose>
-					<c:when test='<%= SessionMessages.contains(request, "passwordSent") %>'>
+					<c:when test='<%= SessionMessages.contains(request, "forgotPasswordCompleted") %>'>
 						<div class="alert alert-success">
-							<liferay-ui:message key="an-email-has-been-sent-to-the-provided-email-address" />
+							<liferay-ui:message key="your-request-completed-successfully" />
 						</div>
 					</c:when>
 					<c:when test='<%= SessionMessages.contains(request, "userAdded") %>'>

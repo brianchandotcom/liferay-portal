@@ -43,8 +43,6 @@ public class LayoutPageTemplateStructureHelperUtil {
 
 			JSONObject structureJSONObject = JSONFactoryUtil.createJSONObject();
 
-			JSONArray columnJSONArray = JSONFactoryUtil.createJSONArray();
-
 			JSONObject columnJSONObject = JSONUtil.put(
 				"columnId", String.valueOf(i)
 			).put(
@@ -54,7 +52,7 @@ public class LayoutPageTemplateStructureHelperUtil {
 				"size", StringPool.BLANK
 			);
 
-			columnJSONArray.put(columnJSONObject);
+			JSONArray columnJSONArray = JSONUtil.put(columnJSONObject);
 
 			structureJSONObject.put(
 				"columns", columnJSONArray

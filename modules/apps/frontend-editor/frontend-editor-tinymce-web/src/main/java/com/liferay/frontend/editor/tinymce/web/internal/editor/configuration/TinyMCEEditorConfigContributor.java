@@ -18,7 +18,6 @@ import com.liferay.frontend.editor.tinymce.web.internal.constants.TinyMCEEditorC
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -240,8 +239,6 @@ public class TinyMCEEditorConfigContributor
 	protected JSONArray getToolbarsSimpleJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		String buttons =
 			"bold italic underline strikethrough | bullist numlist | table | " +
 				"link unlink image";
@@ -250,7 +247,7 @@ public class TinyMCEEditorConfigContributor
 			buttons += " code";
 		}
 
-		jsonArray.put(buttons);
+		JSONArray jsonArray = JSONUtil.put(buttons);
 
 		return jsonArray;
 	}

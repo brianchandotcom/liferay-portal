@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeR
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
@@ -79,8 +78,6 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 	}
 
 	protected String createExpectedJSON() {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		JSONObject jsonObject = JSONUtil.put(
 			"icon", "my-icon"
 		).put(
@@ -91,7 +88,7 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 			"name", "Text"
 		);
 
-		jsonArray.put(jsonObject);
+		JSONArray jsonArray = JSONUtil.put(jsonObject);
 
 		return jsonArray.toString();
 	}

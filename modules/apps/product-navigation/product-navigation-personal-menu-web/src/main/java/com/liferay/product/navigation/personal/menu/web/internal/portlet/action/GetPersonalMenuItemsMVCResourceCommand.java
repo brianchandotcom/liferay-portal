@@ -90,8 +90,6 @@ public class GetPersonalMenuItemsMVCResourceCommand
 	private JSONArray _getImpersonationItemsJSONArray(
 		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		JSONObject jsonObject1 = JSONUtil.put(
 			"href",
 			_http.removeParameter(
@@ -103,7 +101,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			LanguageUtil.get(themeDisplay.getLocale(), "be-yourself-again")
 		);
 
-		jsonArray.put(jsonObject1);
+		JSONArray jsonArray = JSONUtil.put(jsonObject1);
 
 		User realUser = themeDisplay.getRealUser();
 		User user = themeDisplay.getUser();

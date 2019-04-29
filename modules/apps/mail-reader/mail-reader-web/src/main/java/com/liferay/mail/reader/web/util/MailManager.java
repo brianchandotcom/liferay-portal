@@ -367,8 +367,6 @@ public class MailManager {
 	public JSONObject getDefaultAccountsJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		JSONObject gmailAccountJSONObject = JSONUtil.put(
 			"address", "@gmail.com"
 		).put(
@@ -398,7 +396,7 @@ public class MailManager {
 			"useLocalPartAsLogin", true
 		);
 
-		jsonArray.put(gmailAccountJSONObject);
+		JSONArray jsonArray = JSONUtil.put(gmailAccountJSONObject);
 
 		JSONObject customMailAccontJSONObject = JSONUtil.put(
 			"address", ""

@@ -253,8 +253,6 @@ public class AlloyEditorCreoleConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONArray linkButtonsJSONArray = JSONFactoryUtil.createJSONArray();
-
 		JSONObject linkEditJSONObject = JSONFactoryUtil.createJSONObject();
 
 		JSONObject cfgJSONObject = JSONUtil.put(
@@ -269,7 +267,7 @@ public class AlloyEditorCreoleConfigContributor
 			"name", "linkEditBrowse"
 		);
 
-		linkButtonsJSONArray.put(linkEditJSONObject);
+		JSONArray linkButtonsJSONArray = JSONUtil.put(linkEditJSONObject);
 
 		jsonObject.put(
 			"buttons", linkButtonsJSONArray

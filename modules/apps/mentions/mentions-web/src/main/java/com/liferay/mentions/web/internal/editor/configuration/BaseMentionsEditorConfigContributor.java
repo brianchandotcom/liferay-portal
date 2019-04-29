@@ -19,7 +19,6 @@ import com.liferay.mentions.matcher.MentionsMatcherUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -45,8 +44,6 @@ public class BaseMentionsEditorConfigContributor
 
 		JSONObject autoCompleteConfigJSONObject = JSONUtil.put(
 			"requestTemplate", "query={query}");
-
-		JSONArray triggerJSONArray = JSONFactoryUtil.createJSONArray();
 
 		JSONObject triggerJSONObject = JSONUtil.put(
 			"regExp",
@@ -85,7 +82,7 @@ public class BaseMentionsEditorConfigContributor
 
 		triggerJSONObject.put("tplResults", tplResults);
 
-		triggerJSONArray.put(triggerJSONObject);
+		JSONArray triggerJSONArray = JSONUtil.put(triggerJSONObject);
 
 		autoCompleteConfigJSONObject.put("trigger", triggerJSONArray);
 

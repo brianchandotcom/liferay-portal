@@ -83,7 +83,7 @@ public class ProcessResourceImpl
 	}
 
 	@Override
-	public Process getProcess(Boolean completed, Long processId)
+	public Process getProcess(Long processId, Boolean completed)
 		throws Exception {
 
 		return Stream.of(

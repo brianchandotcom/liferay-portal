@@ -83,7 +83,9 @@ public class ProcessResourceImpl
 	}
 
 	@Override
-	public Process getProcess(Long processId) throws Exception {
+	public Process getProcess(Boolean completed, Long processId)
+		throws Exception {
+
 		return Stream.of(
 			_getProcessesSearchSearchResponse(null, null, processId, null)
 		).map(
@@ -101,7 +103,8 @@ public class ProcessResourceImpl
 
 				TermsAggregationResult slaTermsAggregationResult =
 					_getSLATermsAggregationResult(
-						null, null, Collections.singleton(processId));
+						completed, null, null,
+						Collections.singleton(processId));
 
 				_populateProcessWithSLAMetrics(
 					slaTermsAggregationResult.getBucket(
@@ -110,7 +113,8 @@ public class ProcessResourceImpl
 
 				TermsAggregationResult instanceTermsAggregationResult =
 					_getInstanceTermsAggregationResult(
-						null, null, Collections.singleton(processId));
+						completed, null, null,
+						Collections.singleton(processId));
 
 				_setInstanceCount(
 					instanceTermsAggregationResult.getBucket(
@@ -150,12 +154,22 @@ public class ProcessResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	private BooleanQuery _createInstanceBooleanQuery(Set<Long> processIds) {
+	private BooleanQuery _createBooleanQuery(boolean completed) {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		return booleanQuery.addShouldQueryClauses(
+			_queries.term("completed", completed),
+			_queries.term("instanceId", 0));
+	}
+
+	private BooleanQuery _createInstanceBooleanQuery(
+		boolean completed, Set<Long> processIds) {
+
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("completed", false), _queries.term("deleted", false),
+			_queries.term("deleted", false), _createBooleanQuery(completed),
 			_createProcessIdTermsQuery(processIds));
 	}
 
@@ -205,12 +219,23 @@ public class ProcessResourceImpl
 	}
 
 	private BooleanQuery _createSLAProcessResultsBooleanQuery(
-		Set<Long> processIds) {
+		boolean completed, Set<Long> processIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
+		if (completed) {
+			BooleanQuery shouldBooleanQuery = _queries.booleanQuery();
+
+			shouldBooleanQuery.addShouldQueryClauses(
+				_queries.term("slaDefinitionId", 0),
+				_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
+
+			booleanQuery.addMustQueryClauses(shouldBooleanQuery);
+		}
+		else {
+			booleanQuery.addMustNotQueryClauses(
+				_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
+		}
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
@@ -219,7 +244,8 @@ public class ProcessResourceImpl
 	}
 
 	private TermsAggregationResult _getInstanceTermsAggregationResult(
-		FieldSort fieldSort, Pagination pagination, Set<Long> processIds) {
+		boolean completed, FieldSort fieldSort, Pagination pagination,
+		Set<Long> processIds) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -242,7 +268,8 @@ public class ProcessResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
-		searchSearchRequest.setQuery(_createInstanceBooleanQuery(processIds));
+		searchSearchRequest.setQuery(
+			_createInstanceBooleanQuery(completed, processIds));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -274,10 +301,10 @@ public class ProcessResourceImpl
 
 		TermsAggregationResult instanceTermsAggregationResult =
 			_getInstanceTermsAggregationResult(
-				fieldSort, pagination, processesMap.keySet());
+				false, fieldSort, pagination, processesMap.keySet());
 		TermsAggregationResult slaTermsAggregationResult =
 			_getSLATermsAggregationResult(
-				fieldSort, pagination, processesMap.keySet());
+				false, fieldSort, pagination, processesMap.keySet());
 
 		if (_isOrderByInstanceCount(fieldSort.getField())) {
 			for (Bucket bucket : instanceTermsAggregationResult.getBuckets()) {
@@ -356,7 +383,8 @@ public class ProcessResourceImpl
 	}
 
 	private TermsAggregationResult _getSLATermsAggregationResult(
-		FieldSort fieldSort, Pagination pagination, Set<Long> processIds) {
+		boolean completed, FieldSort fieldSort, Pagination pagination,
+		Set<Long> processIds) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -398,7 +426,7 @@ public class ProcessResourceImpl
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-sla-process-results");
 		searchSearchRequest.setQuery(
-			_createSLAProcessResultsBooleanQuery(processIds));
+			_createSLAProcessResultsBooleanQuery(completed, processIds));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

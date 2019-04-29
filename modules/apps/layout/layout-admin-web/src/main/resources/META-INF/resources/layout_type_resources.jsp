@@ -66,22 +66,6 @@ if (selLayout != null) {
 			/>
 		</div>
 	</c:when>
-	<c:when test='<%= Objects.equals(id, "copy") %>'>
-
-		<%
-		request.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutsAdminDisplayContext.getLayoutDescriptions());
-		%>
-
-		<div class="layout-type">
-			<p class="small text-muted">
-				<liferay-ui:message key="copy-of-a-page-description" />
-			</p>
-
-			<liferay-util:include page="/html/portal/layout/edit/portlet_applications.jsp">
-				<liferay-util:param name="copyLayoutIdPrefix" value="addLayout" />
-			</liferay-util:include>
-		</div>
-	</c:when>
 	<c:when test='<%= Objects.equals(id, "layout-prototype") %>'>
 
 		<%

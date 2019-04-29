@@ -9,6 +9,36 @@ import slaStore from '../store/slaStore';
 jest.mock('../../AppContext');
 jest.useFakeTimers();
 
+const defaultSlaStore = {
+	pauseNodeKeys: {
+		nodeKeys: []
+	},
+	startNodeKeys: {
+		nodeKeys: [
+			{
+				executionType: 'enter',
+				id: 13
+			},
+			{
+				executionType: 'enter',
+				id: 1545
+			}
+		]
+	},
+	stopNodeKeys: {
+		nodeKeys: [
+			{
+				executionType: 'leave',
+				id: 13
+			},
+			{
+				executionType: 'leave',
+				id: 1545
+			}
+		]
+	}
+};
+
 test('Should render component', () => {
 	const component = renderer.create(
 		<Router>
@@ -25,7 +55,11 @@ test('Should render component in edit mode', () => {
 	const data = {
 		description: 'Total time to complete the request.',
 		duration: 1553879089,
-		name: 'Total resolution time'
+		name: 'Total resolution time',
+		pauseNodeKeys: { nodeKeys: [] },
+		processId: '',
+		startNodeKeys: { nodeKeys: [] },
+		stopNodeKeys: { nodeKeys: [] }
 	};
 
 	const component = mount(
@@ -58,43 +92,8 @@ test('Should submit a new SLA with valid values', () => {
 		days: 3,
 		hours: '10:50',
 		name: 'New SLA',
-		startNodeKeys: ['13', '1545'],
-		stopNodeKeys: ['13', '1545']
+		...defaultSlaStore
 	});
-
-	instance.handleSubmit().then(() => {
-		expect(component).toMatchSnapshot();
-	});
-});
-
-xtest('Should edit the SLA with valid values', () => {
-	const data = {
-		duration: 1553879089,
-		name: 'Total resolution time'
-	};
-
-	const dataUpdated = {
-		days: 4,
-		description: 'Total time to complete the request.',
-		hours: '10:50',
-		id: 1234,
-		name: 'Total resolution time',
-		processId: '123',
-		startNodeKeys: ['13', '1545'],
-		stopNodeKeys: ['13', '1545']
-	};
-
-	slaStore.client = fetch(dataUpdated);
-
-	const component = mount(
-		<Router client={fetch(data)}>
-			<SLAForm id={1234} processId="123" />
-		</Router>
-	);
-
-	const instance = component.find(SLAForm).instance();
-
-	slaStore.setState(dataUpdated);
 
 	instance.handleSubmit().then(() => {
 		expect(component).toMatchSnapshot();
@@ -198,8 +197,7 @@ test('Should display error on alert when receive a server error after submit', (
 		days: 3,
 		hours: '10:50',
 		name: 'New SLA',
-		startNodeKeys: ['13', '1545'],
-		stopNodeKeys: ['13', '1545']
+		...defaultSlaStore
 	});
 
 	instance.handleSubmit().then(() => {
@@ -231,8 +229,7 @@ test('Should display error on field when receive a server error after submit', (
 	slaStore.setState({
 		days: 3,
 		name: 'SLA 1',
-		startNodeKeys: ['13', '1545'],
-		stopNodeKeys: ['13', '1545']
+		...defaultSlaStore
 	});
 
 	instance.handleSubmit();
@@ -258,8 +255,7 @@ test('Should display error when submitting the form with invalid hours', () => {
 		days: 3,
 		hours: '12:10',
 		name: 'New SLA',
-		startNodeKeys: ['13', '1545'],
-		stopNodeKeys: ['13', '1545']
+		...defaultSlaStore
 	});
 
 	instance.handleSubmit().then(() => {
@@ -287,13 +283,45 @@ test('Should display error when the server returns a failure', () => {
 		days: 3,
 		hours: '12:10',
 		name: 'New SLA',
-		startNodeKeys: ['13', '1545'],
-		stopNodeKeys: ['13', '1545']
+		...defaultSlaStore
 	});
 
 	instance.handleSubmit();
 
 	expect(component).toMatchSnapshot();
+});
+
+test('Should edit the SLA with valid values', () => {
+	const data = {
+		duration: 1553879089,
+		name: 'Total resolution time'
+	};
+
+	const dataUpdated = {
+		days: 4,
+		description: 'Total time to complete the request.',
+		hours: '10:50',
+		id: 1234,
+		name: 'Total resolution time',
+		processId: '123',
+		...defaultSlaStore
+	};
+
+	slaStore.client = fetch(dataUpdated);
+
+	const component = mount(
+		<Router client={fetch(data)}>
+			<SLAForm id={1234} processId="123" />
+		</Router>
+	);
+
+	const instance = component.find(SLAForm).instance();
+
+	slaStore.setState(dataUpdated);
+
+	instance.handleSubmit().then(() => {
+		expect(component).toMatchSnapshot();
+	});
 });
 
 test('Should update state after input changes', () => {

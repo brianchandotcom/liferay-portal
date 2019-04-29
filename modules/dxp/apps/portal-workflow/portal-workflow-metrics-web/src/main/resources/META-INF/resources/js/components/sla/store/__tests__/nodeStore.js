@@ -1,6 +1,5 @@
 import client from '../../../../test/mock/fetch';
 import { NodeStore } from '../nodeStore';
-import { SLAStore } from '../slaStore';
 
 test('Should test fetch', () => {
 	const defaultData = {
@@ -40,19 +39,18 @@ test('Should test fetch', () => {
 		totalCount: 4
 	};
 
-	const slaStore = new SLAStore(client());
+	const pauseNodeKeys = [];
+	const startNodeKeys = [];
+	const stopNodeKeys = [
+		{
+			executionType: 'leave',
+			id: 26625
+		}
+	];
 
-	slaStore.setState({
-		pauseNodeKeys: [],
-		startNodeKeys: [],
-		stopNodeKeys: ['26625:leave']
-	});
-
-	const nodeStore = new NodeStore(client(defaultData), slaStore);
+	const nodeStore = new NodeStore(client(defaultData));
 
 	nodeStore.fetchNodes('1').then(() => {
-		expect(nodeStore.getState()).toMatchObject({ nodes: defaultData.items });
-
 		expect(nodeStore.getNodes().map(({ id }) => id)).toMatchObject([
 			26603,
 			26605,
@@ -60,18 +58,21 @@ test('Should test fetch', () => {
 			26625
 		]);
 
-		expect(nodeStore.getPauseNodes().map(({ id }) => id)).toMatchObject([
-			26610
-		]);
+		nodeStore.getPauseNodes('teste:', startNodeKeys, stopNodeKeys);
 
-		expect(nodeStore.getStartNodes().map(({ id }) => id)).toMatchObject([
-			26605,
-			'26610:enter',
-			'26625:enter',
-			'26610:leave'
-		]);
+		expect(
+			nodeStore
+				.getPauseNodes(startNodeKeys, stopNodeKeys)
+				.map(({ compositeId }) => compositeId)
+		).toMatchObject([26610]);
 
-		expect(nodeStore.getStopNodes().map(({ id }) => id)).toMatchObject([
+		expect(
+			nodeStore.getStartNodes(pauseNodeKeys, stopNodeKeys).map(({ id }) => id)
+		).toMatchObject([26605, '26610:enter', '26625:enter', '26610:leave']);
+
+		expect(
+			nodeStore.getStopNodes(pauseNodeKeys, startNodeKeys).map(({ id }) => id)
+		).toMatchObject([
 			26603,
 			'26610:enter',
 			'26625:enter',
@@ -85,16 +86,22 @@ test('Should test fetch', () => {
 
 		expect(nodeStore.getNodes().map(({ id }) => id)).toMatchObject([]);
 
-		expect(nodeStore.getPauseNodes().map(({ id }) => id)).toMatchObject([]);
+		expect(
+			nodeStore.getPauseNodes(startNodeKeys, stopNodeKeys).map(({ id }) => id)
+		).toMatchObject([]);
 
-		expect(nodeStore.getStartNodes().map(({ id }) => id)).toMatchObject([]);
+		expect(
+			nodeStore.getStartNodes(pauseNodeKeys, stopNodeKeys).map(({ id }) => id)
+		).toMatchObject([]);
 
-		expect(nodeStore.getStopNodes().map(({ id }) => id)).toMatchObject([]);
+		expect(
+			nodeStore.getStopNodes(pauseNodeKeys, startNodeKeys).map(({ id }) => id)
+		).toMatchObject([]);
 	});
 });
 
 test('Should test initial state', () => {
-	const nodeStore = new NodeStore(client(), new SLAStore(client()));
+	const nodeStore = new NodeStore(client());
 
 	const defaultData = {
 		nodes: []
@@ -104,7 +111,7 @@ test('Should test initial state', () => {
 });
 
 test('Should test sort', () => {
-	const nodeStore = new NodeStore(client(), new SLAStore(client()));
+	const nodeStore = new NodeStore(client());
 
 	const nodeA = { name: 'a' };
 	const nodeB = { name: 'b' };

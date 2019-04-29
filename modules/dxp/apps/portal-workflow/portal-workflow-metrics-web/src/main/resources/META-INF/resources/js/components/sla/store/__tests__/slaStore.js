@@ -7,10 +7,10 @@ test('Should test fetch data', () => {
 		description: '',
 		hours: '',
 		name: 'test',
-		pauseNodeKeys: [],
+		pauseNodeKeys: { nodeKeys: [] },
 		processId: '',
-		startNodeKeys: [],
-		stopNodeKeys: []
+		startNodeKeys: { nodeKeys: [] },
+		stopNodeKeys: { nodeKeys: [] }
 	};
 
 	const slaStore = new SLAStore(client(data));
@@ -43,10 +43,10 @@ test('Should test initial state', () => {
 		description: '',
 		hours: '',
 		name: '',
-		pauseNodeKeys: [],
+		pauseNodeKeys: { nodeKeys: [] },
 		processId: '',
-		startNodeKeys: [],
-		stopNodeKeys: []
+		startNodeKeys: { nodeKeys: [] },
+		stopNodeKeys: { nodeKeys: [] }
 	};
 
 	expect(slaStore.getState()).toMatchObject(defaultData);
@@ -60,10 +60,10 @@ test('Should test reset', () => {
 		description: '',
 		hours: '',
 		name: '',
-		pauseNodeKeys: [],
+		pauseNodeKeys: { nodeKeys: [] },
 		processId: '',
-		startNodeKeys: [],
-		stopNodeKeys: []
+		startNodeKeys: { nodeKeys: [] },
+		stopNodeKeys: { nodeKeys: [] }
 	};
 
 	slaStore.setState({ description: 'test' });
@@ -79,10 +79,10 @@ test('Should test save data', () => {
 		description: '',
 		hours: '',
 		name: 'test',
-		pauseNodeKeys: [],
+		pauseNodeKeys: { nodeKeys: [] },
 		processId: '',
-		startNodeKeys: [],
-		stopNodeKeys: []
+		startNodeKeys: { nodeKeys: [] },
+		stopNodeKeys: { nodeKeys: [] }
 	};
 
 	const slaStore = new SLAStore(client(data));
@@ -98,10 +98,10 @@ test('Should test update data', () => {
 		description: '',
 		hours: '',
 		name: 'test',
-		pauseNodeKeys: [],
+		pauseNodeKeys: { nodeKeys: [] },
 		processId: '',
-		startNodeKeys: [],
-		stopNodeKeys: []
+		startNodeKeys: { nodeKeys: [] },
+		stopNodeKeys: { nodeKeys: [] }
 	};
 
 	const slaStore = new SLAStore(client(data));

@@ -48,6 +48,7 @@ import java.text.DateFormat;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -94,19 +95,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				assetTitle = document.getString(
 					_getLocalizedName("assetTitle"));
 				assetType = document.getString(_getLocalizedName("assetType"));
-
-				try {
-					DateFormat dateFormat = _getDateFormat();
-
-					dateCreated = dateFormat.parse(
-						document.getDate("createDate"));
-				}
-				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(e, e);
-					}
-				}
-
+				dateCreated = _toDate(document.getDate("createDate"));
 				id = document.getLong("instanceId");
 				userName = document.getString("userName");
 			}
@@ -149,15 +138,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("deleted", false),
 			_queries.term("processId", processId),
 			_createInstanceIdTermsQuery(instanceIds));
-	}
-
-	private DateFormat _getDateFormat() {
-		if (_dateFormat == null) {
-			_dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				_INDEX_DATE_FORMAT_PATTERN);
-		}
-
-		return _dateFormat;
 	}
 
 	private Collection<Instance> _getInstances(
@@ -369,6 +349,22 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		instance.setTaskNames(taskNames.toArray(new String[taskNames.size()]));
 	}
 
+	private Date _toDate(String dateString) {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			_INDEX_DATE_FORMAT_PATTERN);
+
+		try {
+			return dateFormat.parse(dateString);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			return null;
+		}
+	}
+
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
 		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
 
@@ -377,8 +373,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Reference
 	private Aggregations _aggregations;
-
-	private DateFormat _dateFormat;
 
 	@Reference
 	private Queries _queries;

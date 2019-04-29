@@ -78,12 +78,6 @@ definition {
 		MenuItem.click(menuItem = "${menuItem}");
 	}
 
-	macro gotoEllipsisMenuItemDM {
-		Click.waitForMenuToggleJSClick(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "${menuItem}");
-	}
-
 	macro gotoEllipsisMenuItemNoError {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 

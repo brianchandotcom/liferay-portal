@@ -72,7 +72,7 @@ public class TextHtmlPortalErrorCodeJSPDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.error.code.dynamic.include.impl)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.error.code)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

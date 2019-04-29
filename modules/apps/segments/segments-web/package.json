@@ -81,7 +81,6 @@
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
-		"build:libs": "liferay-npm-scripts webpack",
 		"csf": "csf {src,test}/**/*.es.js src/**/*.scss",
 		"format": "npm run csf -- -i",
 		"test": "env TZ=utc liferay-npm-scripts test",

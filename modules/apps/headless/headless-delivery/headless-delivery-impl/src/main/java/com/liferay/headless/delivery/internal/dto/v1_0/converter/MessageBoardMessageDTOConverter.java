@@ -14,13 +14,18 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
@@ -28,6 +33,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,6 +60,9 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 		MBMessage mbMessage = _mbMessageService.getMessage(
 			dtoConverterContext.getResourcePrimKey());
 
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			mbMessage.getModelClassName(), mbMessage.getMessageId());
+
 		return new MessageBoardMessage() {
 			{
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
@@ -70,6 +79,14 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 					_assetTagLocalService.getTags(
 						MBMessage.class.getName(), mbMessage.getMessageId()),
 					AssetTag.NAME_ACCESSOR);
+				relatedContents = TransformUtil.transformToArray(
+					_assetLinkLocalService.getDirectLinks(
+						assetEntry.getEntryId()),
+					assetLink -> RelatedContentUtil.toRelatedContent(
+						_assetEntryLocalService.getEntry(
+							assetLink.getEntryId2()),
+						_dtoConverterRegistry, dtoConverterContext.getLocale()),
+					RelatedContent.class);
 				numberOfMessageBoardAttachments =
 					mbMessage.getAttachmentsFileEntriesCount();
 				numberOfMessageBoardMessages =
@@ -94,7 +111,16 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 	}
 
 	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetLinkLocalService _assetLinkLocalService;
+
+	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

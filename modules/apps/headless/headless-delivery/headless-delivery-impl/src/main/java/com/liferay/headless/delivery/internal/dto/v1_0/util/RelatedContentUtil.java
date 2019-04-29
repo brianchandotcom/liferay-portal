@@ -15,11 +15,9 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
 import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DTOConverterRegistry;
-import com.liferay.ratings.kernel.model.RatingsStats;
 
 import java.util.Locale;
 
@@ -31,6 +29,7 @@ public class RelatedContentUtil {
 	public static RelatedContent toRelatedContent(
 		AssetEntry assetEntry, DTOConverterRegistry dtoConverterRegistry,
 		Locale locale) {
+
 		if (assetEntry == null) {
 			return null;
 		}

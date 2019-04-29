@@ -21,19 +21,24 @@ import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.dto.v1_0.Document;
+import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
 import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -75,6 +80,9 @@ public class DocumentDTOConverter implements DTOConverter {
 
 		User user = _userService.getUserById(fileEntry.getUserId());
 
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
 		return new Document() {
 			{
 				adaptedImages = _getAdaptiveMedias(fileEntry);
@@ -99,6 +107,14 @@ public class DocumentDTOConverter implements DTOConverter {
 					AssetTag.NAME_ACCESSOR);
 				numberOfComments = _commentManager.getCommentsCount(
 					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+				relatedContents = TransformUtil.transformToArray(
+					_assetLinkLocalService.getDirectLinks(
+						assetEntry.getEntryId()),
+					assetLink -> RelatedContentUtil.toRelatedContent(
+						_assetEntryLocalService.getEntry(
+							assetLink.getEntryId2()),
+						_dtoConverterRegistry, dtoConverterContext.getLocale()),
+					RelatedContent.class);
 				sizeInBytes = fileEntry.getSize();
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
@@ -181,6 +197,12 @@ public class DocumentDTOConverter implements DTOConverter {
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetLinkLocalService _assetLinkLocalService;
+
+	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
@@ -191,6 +213,9 @@ public class DocumentDTOConverter implements DTOConverter {
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private Portal _portal;

@@ -70,17 +70,11 @@ import javax.portlet.RenderResponse;
 public class AssetEntryUsagesDisplayContext {
 
 	public AssetEntryUsagesDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		String className, long classPK) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		long classPK = GetterUtil.getLong(
-			(String)_renderRequest.getAttribute(
-				"liferay-asset:asset-entry-usages:classPK"));
-		String className = GetterUtil.getString(
-			_renderRequest.getAttribute(
-				"liferay-asset:asset-entry-usages:className"));
 
 		_assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
 

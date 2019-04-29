@@ -17,7 +17,10 @@
 <%@ include file="/asset_entry_usages/init.jsp" %>
 
 <%
-AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUsagesDisplayContext(renderRequest, renderResponse);
+long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-entry-usages:classPK"));
+String className = GetterUtil.getString(request.getAttribute("liferay-asset:asset-entry-usages:className"));
+
+AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUsagesDisplayContext(renderRequest, renderResponse, className, classPK);
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">

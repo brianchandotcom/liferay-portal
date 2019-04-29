@@ -16,11 +16,21 @@ package com.liferay.change.tracking.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+
 /**
  * @author Zoltan Csaszi
  */
 @ProviderType
 public class CTCollectionNameException extends CTException {
+
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	public CTCollectionNameException() {
+		super(CompanyThreadLocal.getCompanyId());
+	}
 
 	public CTCollectionNameException(long companyId) {
 		super(companyId);
@@ -38,6 +48,30 @@ public class CTCollectionNameException extends CTException {
 
 	public CTCollectionNameException(long companyId, Throwable cause) {
 		super(companyId, cause);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	public CTCollectionNameException(String msg) {
+		super(CompanyThreadLocal.getCompanyId(), msg);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	public CTCollectionNameException(String msg, Throwable cause) {
+		super(CompanyThreadLocal.getCompanyId(), msg, cause);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	public CTCollectionNameException(Throwable cause) {
+		super(CompanyThreadLocal.getCompanyId(), cause);
 	}
 
 }

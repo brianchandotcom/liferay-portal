@@ -105,10 +105,8 @@ public class CTCollectionResource {
 
 		User user = CTJaxRsUtil.getUser(userId);
 
-		Locale locale = user.getLocale();
-
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			"content.Language", user.getLocale(), getClass());
 
 		CTJaxRsUtil.checkChangeTrackingEnabled(companyId, _ctEngineManager);
 

@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
 	devServer: {
@@ -14,7 +15,6 @@ module.exports = {
 		publicPath: '/o/segments-web/'
 	},
 	entry: {
-		'ODataParser': path.resolve(__dirname, 'src', 'main', 'resources', 'META-INF', 'resources', 'js', 'libs', 'ODataParser.es.js'),
 		'index.dev': path.resolve(__dirname, 'src', 'main', 'resources', 'META-INF', 'resources', 'js', 'index.dev.es.js')
 	},
 	mode: 'development',
@@ -49,13 +49,17 @@ module.exports = {
 		filename: `[name].js`,
 		library: 'oDataParser',
 		libraryTarget: 'window',
-		path: path.resolve(__dirname,'dev-build')
+		path: path.resolve(__dirname, 'dev-build')
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
 			appMountId: 'app',
 			template: require('html-webpack-template')
-		})
+		}),
+		new webpack.NormalModuleReplacementPlugin(
+			/\.\.\/libs\/odata-parser/,
+			'../libs/ODataParser.es.js'
+		),
 	],
 	resolve: {
 		extensions: ['.js', '.jsx', '.svg']

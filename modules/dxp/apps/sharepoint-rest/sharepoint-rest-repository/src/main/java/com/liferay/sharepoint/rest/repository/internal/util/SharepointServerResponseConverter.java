@@ -410,7 +410,7 @@ public class SharepointServerResponseConverter {
 		}
 	}
 
-	private static final long _GRANT_ALL_PERMISSIONS = 1;
+	private static final long _GRANT_ALL_PERMISSIONS = 0x7FFFFFFFFFFFFFFFL;
 
 	private static final long _GRANT_NO_PERMISSIONS = 0;
 

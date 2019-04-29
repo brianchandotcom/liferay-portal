@@ -380,7 +380,10 @@ class LayoutProvider extends Component {
 						activePage,
 						defaultLanguageId,
 						editingLanguageId,
-						events: this.getEvents(),
+						events: {
+							...this.getEvents(),
+							...child.props.events
+						},
 						focusedField: this.getFocusedField(),
 						pages: this.getPages(),
 						paginationMode,
@@ -590,6 +593,8 @@ class LayoutProvider extends Component {
 				]
 			}
 		);
+
+		this.emit('ruleAdded', {});
 	}
 
 	_handleRuleDeleted({ruleId}) {
@@ -622,6 +627,8 @@ class LayoutProvider extends Component {
 				rules
 			}
 		);
+
+		this.emit('ruleSaved', {});
 	}
 
 	_handleSidebarFieldBlurred() {

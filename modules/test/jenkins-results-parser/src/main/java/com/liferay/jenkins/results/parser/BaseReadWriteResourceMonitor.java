@@ -31,7 +31,7 @@ public abstract class BaseReadWriteResourceMonitor
 		super(etcdServerURL, monitorName, readMaxConnections);
 
 		_writeResourceMonitor = new DefaultResourceMonitor(
-			etcdServerURL, monitorName + "__write", 1);
+			etcdServerURL, monitorName + "_write", 1);
 	}
 
 	@Override

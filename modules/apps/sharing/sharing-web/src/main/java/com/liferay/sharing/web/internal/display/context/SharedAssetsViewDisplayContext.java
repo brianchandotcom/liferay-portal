@@ -195,7 +195,7 @@ public class SharedAssetsViewDisplayContext {
 			return menu;
 		}
 
-		List<MenuItem> menuItems = new ArrayList<>(2);
+		List<MenuItem> menuItems = new ArrayList<>();
 
 		if (hasEditPermission(
 				sharingEntry.getClassNameId(), sharingEntry.getClassPK())) {

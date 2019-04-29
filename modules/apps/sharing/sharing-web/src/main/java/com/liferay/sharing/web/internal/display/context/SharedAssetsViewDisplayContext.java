@@ -188,6 +188,10 @@ public class SharedAssetsViewDisplayContext {
 		menu.setMarkupView("lexicon");
 		menu.setTriggerCssClass("component-action");
 
+		if (!isVisible(sharingEntry)) {
+			return null;
+		}
+
 		List<MenuItem> menuItems = new ArrayList<>(2);
 
 		if (hasEditPermission(

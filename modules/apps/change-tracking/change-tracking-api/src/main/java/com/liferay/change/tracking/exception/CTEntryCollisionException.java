@@ -14,9 +14,12 @@
 
 package com.liferay.change.tracking.exception;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public class CTEntryCollisionException extends CTException {
 
 	public CTEntryCollisionException(long companyId, long ctEntryId) {

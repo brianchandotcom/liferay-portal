@@ -16,11 +16,11 @@ package com.liferay.change.tracking;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.change.tracking.exception.CTException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryAggregate;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.List;
@@ -62,12 +62,11 @@ public interface CTEngineManager {
 	 * @param  userId the primary key of the user who initiated the action
 	 * @param  name the change tracking collection's name
 	 * @param  description the change tracking collection's description
-	 * @throws PortalException
 	 * @return the new change tracking collection
 	 */
 	public Optional<CTCollection> createCTCollection(
 			long userId, String name, String description)
-		throws PortalException;
+		throws CTException;
 
 	/**
 	 * Deletes the change tracking collection.

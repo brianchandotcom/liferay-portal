@@ -247,9 +247,7 @@ public class TinyMCEEditorConfigContributor
 			buttons += " code";
 		}
 
-		JSONArray jsonArray = JSONUtil.put(buttons);
-
-		return jsonArray;
+		return JSONUtil.put(buttons);
 	}
 
 	protected JSONArray getToolbarsTabletJSONArray(

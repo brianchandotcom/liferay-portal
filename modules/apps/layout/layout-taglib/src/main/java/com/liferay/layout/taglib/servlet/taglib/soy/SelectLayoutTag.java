@@ -198,9 +198,7 @@ public class SelectLayoutTag extends ComponentRendererTag {
 			"name", themeDisplay.getScopeGroupName()
 		);
 
-		JSONArray layoutsJSONArray = JSONUtil.put(jsonObject);
-
-		return layoutsJSONArray;
+		return JSONUtil.put(jsonObject);
 	}
 
 	private JSONArray _getLayoutsJSONArray(

@@ -371,10 +371,10 @@ public class SharepointServerResponseConverter {
 			"ServerRelativeUrl");
 
 		if (extRepositoryModelKey.equals(StringPool.SLASH + _libraryPath)) {
-			return 1;
+			return _GRANT_ALL_PERMISSIONS;
 		}
 
-		return 0;
+		return _GRANT_NO_PERMISSIONS;
 	}
 
 	private String _join(String delimiter, String... strings) {
@@ -409,6 +409,10 @@ public class SharepointServerResponseConverter {
 			throw new RuntimeException(pe);
 		}
 	}
+
+	private static final long _GRANT_ALL_PERMISSIONS = 1;
+
+	private static final long _GRANT_NO_PERMISSIONS = 0;
 
 	private static final String _SHAREPOINT_ALL_ITEMS_LIST_PATH =
 		"/Forms/AllItems.aspx";

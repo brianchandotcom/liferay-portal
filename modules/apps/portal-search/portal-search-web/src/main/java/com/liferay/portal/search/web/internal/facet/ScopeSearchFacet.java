@@ -91,15 +91,13 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 		boolean showAssetCount = ParamUtil.getBoolean(
 			actionRequest, getClassName() + "showAssetCount", true);
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"frequencyThreshold", frequencyThreshold
 		).put(
 			"maxTerms", maxTerms
 		).put(
 			"showAssetCount", showAssetCount
 		);
-
-		return jsonObject;
 	}
 
 	@Override

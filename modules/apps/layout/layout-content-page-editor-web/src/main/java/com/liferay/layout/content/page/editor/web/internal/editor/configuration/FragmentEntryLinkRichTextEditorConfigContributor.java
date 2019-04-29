@@ -216,13 +216,11 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 			"tabIndex", 1
 		);
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"add", toolbarJSONObject
 		).put(
 			"styles", getToolbarsStylesJSONObject(locale)
 		);
-
-		return jsonObject;
 	}
 
 	protected JSONObject getToolbarsStylesJSONObject(Locale locale) {

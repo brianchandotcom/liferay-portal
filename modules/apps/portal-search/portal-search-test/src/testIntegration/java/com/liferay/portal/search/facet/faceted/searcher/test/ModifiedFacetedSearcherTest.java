@@ -89,9 +89,7 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 			jsonArray.put(jsonObject);
 		}
 
-		JSONObject dataJSONObject = JSONUtil.put("ranges", jsonArray);
-
-		return dataJSONObject;
+		return JSONUtil.put("ranges", jsonArray);
 	}
 
 	protected static void setConfigurationRanges(

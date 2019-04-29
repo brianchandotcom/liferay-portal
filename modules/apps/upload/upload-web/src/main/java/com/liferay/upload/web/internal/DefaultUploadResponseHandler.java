@@ -148,13 +148,11 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 			"uuid", fileEntry.getUuid()
 		);
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"file", imageJSONObject
 		).put(
 			"success", Boolean.TRUE
 		);
-
-		return jsonObject;
 	}
 
 	@Activate

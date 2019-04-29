@@ -18,14 +18,18 @@ class SLAStore {
 				description = '',
 				duration,
 				name,
-				pauseNodeKeys = [],
-				startNodeKeys = [],
-				stopNodeKeys = []
+				pauseNodeKeys,
+				startNodeKeys,
+				stopNodeKeys
 			} = result.data;
 
 			const { days, hours, minutes } = getDurationValues(duration);
 
 			const formattedHours = formatHours(hours, minutes);
+
+			pauseNodeKeys.nodeKeys = pauseNodeKeys.nodeKeys || [];
+			startNodeKeys.nodeKeys = startNodeKeys.nodeKeys || [];
+			stopNodeKeys.nodeKeys = stopNodeKeys.nodeKeys || [];
 
 			this.setState({
 				days,
@@ -51,10 +55,19 @@ class SLAStore {
 			description: '',
 			hours: '',
 			name: '',
-			pauseNodeKeys: [],
+			pauseNodeKeys: {
+				nodeKeys: [],
+				status: 0
+			},
 			processId: '',
-			startNodeKeys: [],
-			stopNodeKeys: []
+			startNodeKeys: {
+				nodeKeys: [],
+				status: 0
+			},
+			stopNodeKeys: {
+				nodeKeys: [],
+				status: 0
+			}
 		});
 	}
 
@@ -81,10 +94,29 @@ class SLAStore {
 			description,
 			duration,
 			name,
-			pauseNodeKeys,
+			pauseNodeKeys: {
+				nodeKeys: pauseNodeKeys.nodeKeys.map(({ executionType, id }) => ({
+					executionType,
+					id
+				})),
+				status: 0
+			},
 			processId,
-			startNodeKeys,
-			stopNodeKeys
+			startNodeKeys: {
+				nodeKeys: startNodeKeys.nodeKeys.map(({ executionType, id }) => ({
+					executionType,
+					id
+				})),
+				status: 0
+			},
+			status: 0,
+			stopNodeKeys: {
+				nodeKeys: stopNodeKeys.nodeKeys.map(({ executionType, id }) => ({
+					executionType,
+					id
+				})),
+				status: 0
+			}
 		});
 	}
 

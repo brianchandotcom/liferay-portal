@@ -1,10 +1,8 @@
 import client from '../../../shared/rest/fetch';
-import slaStore from './slaStore';
 
 class NodeStore {
-	constructor(client, slaStore) {
+	constructor(client) {
 		this.client = client;
-		this.slaStore = slaStore;
 		this.state = {
 			nodes: []
 		};
@@ -25,99 +23,129 @@ class NodeStore {
 	fetchNodes(processId) {
 		return this.client
 			.get(`/processes/${processId}/nodes`)
-			.then(({ data: { items } }) => (this.setState({ nodes: items }), items));
+			.then(({ data: { items } }) => {
+				const entersTaskString = Liferay.Language.get('enters-task');
+				const leavesTaskString = Liferay.Language.get('leaves-task');
+				const nodeBegins = [];
+				const nodeEnds = [];
+				const nodeEnters = [];
+				const nodeLeaves = [];
+				const processBeginsString = Liferay.Language.get('process-begins');
+				const processEndsString = Liferay.Language.get('process-ends');
+
+				items.forEach(node => {
+					if (node.type === 'STATE') {
+						const newNode = {
+							...node,
+							desc: node.initial
+								? processBeginsString
+								: `${processEndsString} ${node.name}`,
+							executionType: node.initial ? 'begin' : 'end'
+						};
+
+						if (node.initial) {
+							nodeBegins.push(newNode);
+						}
+						else {
+							nodeEnds.push(newNode);
+						}
+					}
+					else if (node.type === 'TASK') {
+						nodeEnters.push({
+							...node,
+							desc: `${entersTaskString} ${node.name}`,
+							executionType: 'enter'
+						});
+
+						nodeLeaves.push({
+							...node,
+							desc: `${leavesTaskString} ${node.name}`,
+							executionType: 'leave'
+						});
+					}
+				});
+
+				nodeEnters.sort(this.compareToName);
+				nodeLeaves.sort(this.compareToName);
+
+				const nodes = [
+					...nodeBegins,
+					...nodeEnters,
+					...nodeLeaves,
+					...nodeEnds
+				].map(node => ({
+					...node,
+					compositeId: `${node.id}:${node.executionType}`
+				}));
+
+				this.setState({ nodes });
+
+				return nodes;
+			});
 	}
 
-	getNodes() {
-		return this.getState().nodes.map(node => ({ ...node, desc: node.name }));
-	}
-
-	getPauseNodes() {
-		const { startNodeKeys, stopNodeKeys } = this.slaStore.getState();
-
+	getPauseNodes(startNodeKeys, stopNodeKeys) {
 		const selectedNodes = [...startNodeKeys, ...stopNodeKeys]
-			.filter(id => {
-				const splitedNode = id.split(':');
-
-				return (
-					splitedNode.length && ['enter', 'leave'].includes(splitedNode[1])
-				);
-			})
-			.map(id => id.split(':')[0]);
+			.map(({ id }) => `${id}`)
+			.filter((id, index, self) => self.indexOf(id) === index);
 
 		const onTaskString = Liferay.Language.get('on-task');
 
-		const nodes = this.getNodes()
-			.filter(({ type }) => type === 'TASK')
+		return this.getState()
+			.nodes.filter(({ type }) => type === 'TASK')
 			.filter(({ id }) => !selectedNodes.includes(`${id}`))
-			.map(node => ({ ...node, desc: `${onTaskString} ${node.name}` }));
-
-		nodes.sort(this.compareToName);
-
-		return nodes;
+			.filter(
+				(node, index, self) =>
+					self.findIndex(({ id }) => id == node.id) === index
+			)
+			.map(node => ({
+				...node,
+				compositeId: `${node.id}:on`,
+				desc: `${onTaskString} ${node.name}`,
+				executionType: 'on'
+			}));
 	}
 
-	getStartNodes() {
-		const { stopNodeKeys } = this.slaStore.getState();
+	getStartNodes(pauseNodeKeys, stopNodeKeys) {
+		const pauseNodeKeyIds = pauseNodeKeys.map(({ id }) => `${id}`);
 
-		const taskNodes = this.getTaskNodes().filter(
-			({ id }) => !stopNodeKeys.includes(`${id}`)
+		const nodeKeyCompositeIds = stopNodeKeys.map(
+			({ executionType, id }) => `${id}:${executionType}`
 		);
 
-		return this.getNodes()
-			.filter(({ initial, type }) => type === 'STATE' && initial === true)
-			.map(node => ({ ...node, desc: Liferay.Language.get('process-begins') }))
-			.concat(taskNodes);
+		return this.getState()
+			.nodes.filter(
+				({ compositeId, id }) =>
+					!nodeKeyCompositeIds.includes(`${compositeId}`) &&
+					!pauseNodeKeyIds.includes(`${id}`)
+			)
+			.filter(
+				({ initial, type }) =>
+					(type === 'STATE' && initial === true) || type === 'TASK'
+			);
 	}
 
 	getState() {
 		return this.state;
 	}
 
-	getStopNodes() {
-		const { startNodeKeys } = this.slaStore.getState();
+	getStopNodes(pauseNodeKeys, startNodeKeys) {
+		const pauseNodeKeyIds = pauseNodeKeys.map(({ id }) => `${id}`);
 
-		const taskNodes = this.getTaskNodes().filter(
-			({ id }) => !startNodeKeys.includes(`${id}`)
+		const nodeKeyCompositeIds = startNodeKeys.map(
+			({ executionType, id }) => `${id}:${executionType}`
 		);
 
-		return this.getNodes()
-			.filter(({ terminal, type }) => type === 'STATE' && terminal === true)
-			.map(node => ({
-				...node,
-				desc: `${Liferay.Language.get('process-ends')} ${node.name}`
-			}))
-			.concat(taskNodes);
-	}
-
-	getTaskNodes() {
-		const entersTaskString = Liferay.Language.get('enters-task');
-		const leavesTaskString = Liferay.Language.get('leaves-task');
-		const nodeEnters = [];
-		const nodeLeaves = [];
-		const { pauseNodeKeys } = this.slaStore.getState();
-
-		this.getNodes()
-			.filter(
-				({ id, type }) => type === 'TASK' && !pauseNodeKeys.includes(`${id}`)
+		return this.getState()
+			.nodes.filter(
+				({ compositeId, id }) =>
+					!nodeKeyCompositeIds.includes(`${compositeId}`) &&
+					!pauseNodeKeyIds.includes(`${id}`)
 			)
-			.forEach(node => {
-				nodeEnters.push({
-					...node,
-					desc: `${entersTaskString} ${node.name}`,
-					id: `${node.id}:enter`
-				});
-				nodeLeaves.push({
-					...node,
-					desc: `${leavesTaskString} ${node.name}`,
-					id: `${node.id}:leave`
-				});
-			});
-
-		nodeEnters.sort(this.compareToName);
-		nodeLeaves.sort(this.compareToName);
-
-		return [...nodeEnters, ...nodeLeaves];
+			.filter(
+				({ terminal, type }) =>
+					(type === 'STATE' && terminal === true) || type === 'TASK'
+			);
 	}
 
 	setState(props) {
@@ -125,5 +153,5 @@ class NodeStore {
 	}
 }
 
-export default new NodeStore(client, slaStore);
+export default new NodeStore(client);
 export { NodeStore };

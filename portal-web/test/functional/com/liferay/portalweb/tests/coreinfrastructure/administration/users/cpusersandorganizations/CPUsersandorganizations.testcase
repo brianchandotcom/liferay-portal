@@ -498,6 +498,8 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
+		Alert.viewSuccessMessage();
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

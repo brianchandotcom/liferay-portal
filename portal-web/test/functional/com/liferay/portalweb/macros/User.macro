@@ -268,8 +268,6 @@ definition {
 				value1 = "The screen name cannot be an email address or a reserved word, such as postfix. It must contain only alphanumeric or the following special characters: -._.");
 		}
 		else {
-			Alert.viewSuccessMessage();
-
 			AssertTextEquals(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
 				value1 = "${userScreenName}");

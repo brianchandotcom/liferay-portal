@@ -1863,6 +1863,11 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL));
 
+	public static final boolean MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES));
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */

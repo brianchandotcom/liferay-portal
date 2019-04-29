@@ -21,7 +21,6 @@ import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.util.BlogsUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchContainerResults;
@@ -33,18 +32,19 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -56,6 +56,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -173,14 +176,6 @@ public class BlogEntriesDisplayContext {
 		_populateResults(entriesSearchContainer);
 
 		return entriesSearchContainer;
-	}
-
-	private long _getEntryId(Document document) {
-		if (!Objects.equals(StringPool.BLANK, document.get(Field.CLASS_PK))) {
-			return GetterUtil.getLong(document.get(Field.CLASS_PK));
-		}
-
-		return GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 	}
 
 	private int _getStatus() {
@@ -311,39 +306,42 @@ public class BlogEntriesDisplayContext {
 
 			Hits hits = indexer.search(searchContext);
 
-			entriesResults = new ArrayList<>(hits.getLength());
-
 			searchContainer.setTotal(hits.getLength());
 
-			Document[] docs = hits.getDocs();
+			List<SearchResult> searchResults =
+				SearchResultUtil.getSearchResults(
+					hits, LocaleUtil.getDefault());
 
-			for (int i = 0; i < docs.length; i++) {
-				Document doc = hits.doc(i);
+			Stream<SearchResult> stream = searchResults.stream();
 
-				long entryId = _getEntryId(doc);
-
-				BlogsEntry entry = null;
-
-				try {
-					entry = BlogsEntryServiceUtil.getEntry(entryId);
-
-					entry = entry.toEscapedModel();
-				}
-				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Blogs search index is stale and contains entry " +
-								entryId);
-					}
-
-					continue;
-				}
-
-				entriesResults.add(entry);
-			}
+			entriesResults = stream.map(
+				this::_toBlogsEntryOptional
+			).filter(
+				Optional::isPresent
+			).collect(
+				Collectors.toList()
+			);
 		}
 
 		searchContainer.setResults(entriesResults);
+	}
+
+	private Optional<BlogsEntry> _toBlogsEntryOptional(
+		SearchResult searchResult) {
+
+		try {
+			return Optional.of(
+				BlogsEntryServiceUtil.getEntry(searchResult.getClassPK()));
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Blogs search index is stale and contains entry " +
+						searchResult.getClassPK());
+			}
+
+			return Optional.empty();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

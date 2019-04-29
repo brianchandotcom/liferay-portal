@@ -43,6 +43,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentDocumentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.resource.v1_0.BaseStructuredContentResourceImpl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -141,30 +142,10 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				relatedContents = TransformUtil.transformToArray(
 					_assetLinkLocalService.getDirectLinks(
 						assetEntry.getEntryId()),
-					assetLink -> new RelatedContent() {
-						{
-							AssetEntry relatedAssetEntry =
-								_assetEntryLocalService.getEntry(
-									assetLink.getEntryId2());
-
-							id = relatedAssetEntry.getClassPK();
-							title = relatedAssetEntry.getTitle(
-								dtoConverterContext.getLocale());
-
-							setContentType(
-								() -> {
-									DTOConverter dtoConverter =
-										_dtoConverterRegistry.getDTOConverter(
-											relatedAssetEntry.getClassName());
-
-									if (dtoConverter == null) {
-										return relatedAssetEntry.getClassName();
-									}
-
-									return dtoConverter.getContentType();
-								});
-						}
-					},
+					assetLink -> RelatedContentUtil.toRelatedContent(
+						_assetEntryLocalService.getEntry(
+							assetLink.getEntryId2()),
+						_dtoConverterRegistry, dtoConverterContext.getLocale()),
 					RelatedContent.class);
 				renderedContents = _toRenderedContents(
 					ddmStructure, journalArticle,

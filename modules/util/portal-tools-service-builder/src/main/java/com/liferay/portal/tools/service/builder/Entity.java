@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -640,8 +639,13 @@ public class Entity implements Comparable<Entity> {
 
 		for (EntityColumn entityColumn : _entityColumns) {
 			if (entityColumn.isUADUserId()) {
+				List<EntityColumn> uadAnonymizableEntityColumns =
+					new ArrayList<>();
+
+				uadAnonymizableEntityColumns.add(entityColumn);
+
 				uadAnonymizableEntityColumnsMap.put(
-					entityColumn.getName(), Arrays.asList(entityColumn));
+					entityColumn.getName(), uadAnonymizableEntityColumns);
 			}
 		}
 

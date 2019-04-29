@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.version.VersionServiceListener;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -3608,21 +3607,21 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PortalPreferences.class, classLoader
-		).add(
+			PortalPreferences.class, classLoader);
+
+		dynamicQuery = dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"ownerType", ResourceConstants.SCOPE_INDIVIDUAL)
-		);
+				"ownerType", ResourceConstants.SCOPE_INDIVIDUAL));
 
 		List<PortalPreferences> portalPreferenceses =
-			PortalPreferencesLocalServiceUtil.dynamicQuery(dynamicQuery);
+			portalPreferencesLocalService.dynamicQuery(dynamicQuery);
 
 		long plid = layout.getPlid();
 
 		for (PortalPreferences portalPreferences : portalPreferenceses) {
-			if (portalPreferences.getPreferences().contains(
-					CustomizedPages.namespacePlid(plid))) {
+			String preferences = portalPreferences.getPreferences();
 
+			if (preferences.contains(CustomizedPages.namespacePlid(plid))) {
 				PortalPreferencesImpl portalPreferencesImpl =
 					new PortalPreferencesImpl(portalPreferences, false);
 

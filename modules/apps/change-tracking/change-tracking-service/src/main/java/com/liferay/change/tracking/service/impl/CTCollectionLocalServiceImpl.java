@@ -240,7 +240,6 @@ public class CTCollectionLocalServiceImpl
 		ctCollection.setDescription(description);
 		ctCollection.setStatusByUserId(user.getUserId());
 		ctCollection.setStatusByUserName(user.getFullName());
-
 		ctCollection.setStatusDate(modifiedDate);
 
 		return ctCollectionPersistence.update(ctCollection);

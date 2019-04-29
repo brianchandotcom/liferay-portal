@@ -65,21 +65,23 @@ public class FragmentEntryLinkEditorConfigContributor
 			requestBackedPortletURLFactory, namespace + name + "selectItem",
 			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
 
-		jsonObject.put("allowedContent", "");
-
-		jsonObject.put("disallowedContent", "br");
-
-		jsonObject.put("enterMode", 2);
-
-		jsonObject.put("extraPlugins", getExtraPluginsLists());
-
 		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
-
-		jsonObject.put("removePlugins", getRemovePluginsLists());
-
-		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
+			"allowedContent", ""
+		).put(
+			"disallowedContent", "br"
+		).put(
+			"enterMode", 2
+		).put(
+			"extraPlugins", getExtraPluginsLists()
+		).put(
+			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString()
+		).put(
+			"filebrowserImageBrowseUrl", itemSelectorURL.toString()
+		).put(
+			"removePlugins", getRemovePluginsLists()
+		).put(
+			"toolbars", JSONFactoryUtil.createJSONObject()
+		);
 	}
 
 	protected String getExtraPluginsLists() {

@@ -80,8 +80,11 @@ public class ModifiedFacetPortletPreferencesImpl
 		for (int i = 0; i < _LABELS.length; i++) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("label", _LABELS[i]);
-			jsonObject.put("range", _RANGES[i]);
+			jsonObject.put(
+				"label", _LABELS[i]
+			).put(
+				"range", _RANGES[i]
+			);
 
 			jsonArray.put(jsonObject);
 		}

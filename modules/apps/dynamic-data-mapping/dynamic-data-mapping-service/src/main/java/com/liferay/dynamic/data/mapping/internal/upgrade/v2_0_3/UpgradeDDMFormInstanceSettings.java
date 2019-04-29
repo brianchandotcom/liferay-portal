@@ -68,9 +68,13 @@ public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
 
 		JSONObject settingJSONObject = _jsonFactory.createJSONObject();
 
-		settingJSONObject.put("instanceId", StringUtil.randomString());
-		settingJSONObject.put("name", propertyName);
-		settingJSONObject.put("value", value);
+		settingJSONObject.put(
+			"instanceId", StringUtil.randomString()
+		).put(
+			"name", propertyName
+		).put(
+			"value", value
+		);
 
 		return settingJSONObject;
 	}

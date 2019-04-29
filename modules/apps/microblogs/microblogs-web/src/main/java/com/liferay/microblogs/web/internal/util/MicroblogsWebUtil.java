@@ -89,13 +89,19 @@ public class MicroblogsWebUtil {
 
 			JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
 
-			userJSONObject.put("emailAddress", user.getEmailAddress());
-			userJSONObject.put("fullName", user.getFullName());
-			userJSONObject.put("jobTitle", user.getJobTitle());
 			userJSONObject.put(
-				"portraitURL", user.getPortraitURL(themeDisplay));
-			userJSONObject.put("screenName", user.getScreenName());
-			userJSONObject.put("userId", user.getUserId());
+				"emailAddress", user.getEmailAddress()
+			).put(
+				"fullName", user.getFullName()
+			).put(
+				"jobTitle", user.getJobTitle()
+			).put(
+				"portraitURL", user.getPortraitURL(themeDisplay)
+			).put(
+				"screenName", user.getScreenName()
+			).put(
+				"userId", user.getUserId()
+			);
 
 			jsonArray.put(userJSONObject);
 		}

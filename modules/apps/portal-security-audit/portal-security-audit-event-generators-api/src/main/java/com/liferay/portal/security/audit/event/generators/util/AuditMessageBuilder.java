@@ -60,10 +60,11 @@ public class AuditMessageBuilder {
 			JSONFactoryUtil.createJSONObject();
 
 		if ((realUserId > 0) && (userId != realUserId)) {
-			additionalInfoJSONObject.put("doAsUserId", String.valueOf(userId));
 			additionalInfoJSONObject.put(
-				"doAsUserName",
-				PortalUtil.getUserName(userId, StringPool.BLANK));
+				"doAsUserId", String.valueOf(userId)
+			).put(
+				"doAsUserName", PortalUtil.getUserName(userId, StringPool.BLANK)
+			);
 		}
 
 		if (attributes != null) {
@@ -84,9 +85,13 @@ public class AuditMessageBuilder {
 		for (Attribute attribute : attributes) {
 			JSONObject attributeJSONObject = JSONFactoryUtil.createJSONObject();
 
-			attributeJSONObject.put("name", attribute.getName());
-			attributeJSONObject.put("newValue", attribute.getNewValue());
-			attributeJSONObject.put("oldValue", attribute.getOldValue());
+			attributeJSONObject.put(
+				"name", attribute.getName()
+			).put(
+				"newValue", attribute.getNewValue()
+			).put(
+				"oldValue", attribute.getOldValue()
+			);
 
 			jsonArray.put(attributeJSONObject);
 		}

@@ -71,10 +71,12 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			"bodyClass",
 			StringBundler.concat(
 				"html-editor ", HtmlUtil.escape(colorScheme.getCssClass()), " ",
-				HtmlUtil.escape(cssClasses)));
-
-		jsonObject.put("closeNoticeTimeout", 8000);
-		jsonObject.put("entities", Boolean.FALSE);
+				HtmlUtil.escape(cssClasses))
+		).put(
+			"closeNoticeTimeout", 8000
+		).put(
+			"entities", Boolean.FALSE
+		);
 
 		String extraPlugins = "a11yhelpbtn,itemselector,lfrpopup,media";
 
@@ -86,36 +88,39 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			extraPlugins += ",ajaxsave,restore";
 		}
 
-		jsonObject.put("extraPlugins", extraPlugins);
-
 		jsonObject.put(
+			"extraPlugins", extraPlugins
+		).put(
 			"filebrowserWindowFeatures",
-			"title=" + LanguageUtil.get(themeDisplay.getLocale(), "browse"));
-		jsonObject.put("pasteFromWordRemoveFontStyles", Boolean.FALSE);
-		jsonObject.put("pasteFromWordRemoveStyles", Boolean.FALSE);
-		jsonObject.put(
-			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale()));
-		jsonObject.put(
+			"title=" + LanguageUtil.get(themeDisplay.getLocale(), "browse")
+		).put(
+			"pasteFromWordRemoveFontStyles", Boolean.FALSE
+		).put(
+			"pasteFromWordRemoveStyles", Boolean.FALSE
+		).put(
+			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale())
+		).put(
 			"toolbar_editInPlace",
-			getToolbarEditInPlaceJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			getToolbarEditInPlaceJSONArray(inputEditorTaglibAttributes)
+		).put(
 			"toolbar_email",
-			getToolbarEmailJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			getToolbarEmailJSONArray(inputEditorTaglibAttributes)
+		).put(
 			"toolbar_liferay",
-			getToolbarLiferayJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			getToolbarLiferayJSONArray(inputEditorTaglibAttributes)
+		).put(
 			"toolbar_liferayArticle",
-			getToolbarLiferayArticleJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			getToolbarLiferayArticleJSONArray(inputEditorTaglibAttributes)
+		).put(
 			"toolbar_phone",
-			getToolbarPhoneJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			getToolbarPhoneJSONArray(inputEditorTaglibAttributes)
+		).put(
 			"toolbar_simple",
-			getToolbarSimpleJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			getToolbarSimpleJSONArray(inputEditorTaglibAttributes)
+		).put(
 			"toolbar_tablet",
-			getToolbarTabletJSONArray(inputEditorTaglibAttributes));
+			getToolbarTabletJSONArray(inputEditorTaglibAttributes)
+		);
 	}
 
 	protected JSONObject getStyleFormatJSONObject(
@@ -132,8 +137,11 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			styleJSONObject.put("attributes", attributesJSONObject);
 		}
 
-		styleJSONObject.put("element", element);
-		styleJSONObject.put("name", styleFormatName);
+		styleJSONObject.put(
+			"element", element
+		).put(
+			"name", styleFormatName
+		);
 
 		return styleJSONObject;
 	}

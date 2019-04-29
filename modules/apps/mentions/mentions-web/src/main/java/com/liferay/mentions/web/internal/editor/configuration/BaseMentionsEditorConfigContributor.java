@@ -54,10 +54,12 @@ public class BaseMentionsEditorConfigContributor
 		triggerJSONObject.put(
 			"regExp",
 			"(?:\\strigger|^trigger)(" +
-				MentionsMatcherUtil.getScreenNameRegularExpression() + ")");
-		triggerJSONObject.put(
-			"resultFilters", "function(query, results) {return results;}");
-		triggerJSONObject.put("resultTextLocator", "screenName");
+				MentionsMatcherUtil.getScreenNameRegularExpression() + ")"
+		).put(
+			"resultFilters", "function(query, results) {return results;}"
+		).put(
+			"resultTextLocator", "screenName"
+		);
 
 		PortletURL autoCompleteUserURL =
 			requestBackedPortletURLFactory.createResourceURL(
@@ -67,10 +69,13 @@ public class BaseMentionsEditorConfigContributor
 			autoCompleteUserURL.toString() + "&" +
 				PortalUtil.getPortletNamespace(MentionsPortletKeys.MENTIONS);
 
-		triggerJSONObject.put("source", source);
-
-		triggerJSONObject.put("term", "@");
-		triggerJSONObject.put("tplReplace", "{mention}");
+		triggerJSONObject.put(
+			"source", source
+		).put(
+			"term", "@"
+		).put(
+			"tplReplace", "{mention}"
+		);
 
 		String tplResults = StringBundler.concat(
 			"<div class=\"p-1 autofit-row autofit-row-center\">",

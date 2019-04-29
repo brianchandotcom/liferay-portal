@@ -405,9 +405,13 @@ public class LicenseUtil {
 
 		JSONObject jsonObject = new JSONObjectImpl();
 
-		jsonObject.put("liferayVersion", ReleaseInfo.getBuildNumber());
-		jsonObject.put("orderUuid", orderUuid);
-		jsonObject.put("version", 2);
+		jsonObject.put(
+			"liferayVersion", ReleaseInfo.getBuildNumber()
+		).put(
+			"orderUuid", orderUuid
+		).put(
+			"version", 2
+		);
 
 		if (Validator.isNull(productEntryName)) {
 			jsonObject.put(Constants.CMD, "QUERY");
@@ -419,16 +423,22 @@ public class LicenseUtil {
 				jsonObject.put("productEntryName", "basic");
 
 				if (productEntryName.equals("basic-cluster")) {
-					jsonObject.put("cluster", true);
-					jsonObject.put("maxServers", maxServers);
+					jsonObject.put(
+						"cluster", true
+					).put(
+						"maxServers", maxServers
+					);
 				}
 				else if (productEntryName.startsWith("basic-")) {
 					String[] productNameArray = StringUtil.split(
 						productEntryName, StringPool.DASH);
 
 					if (productNameArray.length >= 3) {
-						jsonObject.put("clusterId", productNameArray[2]);
-						jsonObject.put("offeringEntryId", productNameArray[1]);
+						jsonObject.put(
+							"clusterId", productNameArray[2]
+						).put(
+							"offeringEntryId", productNameArray[1]
+						);
 					}
 				}
 			}
@@ -436,11 +446,17 @@ public class LicenseUtil {
 				jsonObject.put("productEntryName", productEntryName);
 			}
 
-			jsonObject.put("hostName", PortalUtil.getComputerName());
-			jsonObject.put("ipAddresses", StringUtil.merge(getIpAddresses()));
-			jsonObject.put("macAddresses", StringUtil.merge(getMacAddresses()));
-			jsonObject.put("processorCores", getProcessorCores());
-			jsonObject.put("serverId", Arrays.toString(getServerIdBytes()));
+			jsonObject.put(
+				"hostName", PortalUtil.getComputerName()
+			).put(
+				"ipAddresses", StringUtil.merge(getIpAddresses())
+			).put(
+				"macAddresses", StringUtil.merge(getMacAddresses())
+			).put(
+				"processorCores", getProcessorCores()
+			).put(
+				"serverId", Arrays.toString(getServerIdBytes())
+			);
 		}
 
 		return jsonObject;

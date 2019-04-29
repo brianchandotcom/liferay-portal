@@ -108,10 +108,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			sb.append("></lfr-editable>");
 
-			jsonObject.put("content", sb.toString());
-
 			jsonObject.put(
-				"name", "lfr-editable:" + editableElementParser.getKey());
+				"content", sb.toString()
+			).put(
+				"name", "lfr-editable:" + editableElementParser.getKey()
+			);
 
 			jsonArray.put(jsonObject);
 		}
@@ -138,9 +139,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				JSONFactoryUtil.createJSONObject();
 
 			defaultValueJSONObject.put(
-				"config", editableElementParser.getAttributes(element));
-			defaultValueJSONObject.put(
-				"defaultValue", editableElementParser.getValue(element));
+				"config", editableElementParser.getAttributes(element)
+			).put(
+				"defaultValue", editableElementParser.getValue(element)
+			);
 
 			defaultEditableValuesJSONObject.put(
 				element.attr("id"), defaultValueJSONObject);

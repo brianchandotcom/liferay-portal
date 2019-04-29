@@ -151,8 +151,10 @@ public class BlogsContentEditorConfigContributor
 			urlItemSelectorCriterion, uploadItemSelectorCriterion);
 
 		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString()
+		).put(
+			"filebrowserImageBrowseUrl", itemSelectorURL.toString()
+		);
 	}
 
 	private void _populateTwitterButton(JSONObject jsonObject) {

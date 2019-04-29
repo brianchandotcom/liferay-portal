@@ -187,12 +187,19 @@ public class SelectLayoutTag extends ComponentRendererTag {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("children", jsonArray);
-		jsonObject.put("disabled", true);
-		jsonObject.put("expanded", true);
-		jsonObject.put("icon", "home");
-		jsonObject.put("id", "0");
-		jsonObject.put("name", themeDisplay.getScopeGroupName());
+		jsonObject.put(
+			"children", jsonArray
+		).put(
+			"disabled", true
+		).put(
+			"expanded", true
+		).put(
+			"icon", "home"
+		).put(
+			"id", "0"
+		).put(
+			"name", themeDisplay.getScopeGroupName()
+		);
 
 		layoutsJSONArray.put(jsonObject);
 
@@ -240,14 +247,21 @@ public class SelectLayoutTag extends ComponentRendererTag {
 				jsonObject.put("disabled", true);
 			}
 
-			jsonObject.put("groupId", layout.getGroupId());
-			jsonObject.put("icon", "page");
-			jsonObject.put("id", layout.getUuid());
-			jsonObject.put("layoutId", layout.getLayoutId());
-			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
-			jsonObject.put("privateLayout", layout.isPrivateLayout());
 			jsonObject.put(
-				"url", PortalUtil.getLayoutRelativeURL(layout, themeDisplay));
+				"groupId", layout.getGroupId()
+			).put(
+				"icon", "page"
+			).put(
+				"id", layout.getUuid()
+			).put(
+				"layoutId", layout.getLayoutId()
+			).put(
+				"name", layout.getName(themeDisplay.getLocale())
+			).put(
+				"privateLayout", layout.isPrivateLayout()
+			).put(
+				"url", PortalUtil.getLayoutRelativeURL(layout, themeDisplay)
+			);
 
 			if (Objects.equals(layout.getUuid(), selectedLayoutUuid)) {
 				jsonObject.put("selected", true);

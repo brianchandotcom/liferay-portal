@@ -70,8 +70,11 @@ public class WeDeployUserInfoAction implements StrutsAction {
 
 			JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
 
-			userJSONObject.put("email", user.getEmailAddress());
-			userJSONObject.put("name", user.getFullName());
+			userJSONObject.put(
+				"email", user.getEmailAddress()
+			).put(
+				"name", user.getFullName()
+			);
 
 			jsonObject.put("info", userJSONObject);
 		}

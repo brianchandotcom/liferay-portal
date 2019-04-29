@@ -107,9 +107,13 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 		JSONObject optionsJSONObject = JSONFactoryUtil.createJSONObject();
 
-		optionsJSONObject.put("end", end);
-		optionsJSONObject.put("keywords", keywords);
-		optionsJSONObject.put("start", start);
+		optionsJSONObject.put(
+			"end", end
+		).put(
+			"keywords", keywords
+		).put(
+			"start", start
+		);
 
 		jsonObject.put("options", optionsJSONObject);
 
@@ -125,10 +129,14 @@ public class InviteMembersPortlet extends MVCPortlet {
 			userJSONObject.put(
 				"hasPendingMemberRequest",
 				_memberRequestLocalService.hasPendingMemberRequest(
-					themeDisplay.getScopeGroupId(), user.getUserId()));
-			userJSONObject.put("userEmailAddress", user.getEmailAddress());
-			userJSONObject.put("userFullName", user.getFullName());
-			userJSONObject.put("userId", user.getUserId());
+					themeDisplay.getScopeGroupId(), user.getUserId())
+			).put(
+				"userEmailAddress", user.getEmailAddress()
+			).put(
+				"userFullName", user.getFullName()
+			).put(
+				"userId", user.getUserId()
+			);
 
 			jsonArray.put(userJSONObject);
 		}

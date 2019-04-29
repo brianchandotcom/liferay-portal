@@ -139,14 +139,23 @@ public class NotificationEvent implements Serializable {
 	public JSONObject toJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put(_KEY_ARCHIVED, _archived);
-		jsonObject.put(_KEY_DELIVERY_BY, _deliverBy);
-		jsonObject.put(_KEY_DELIVERY_REQUIRED, _deliveryRequired);
-		jsonObject.put(_KEY_DELIVERY_TYPE, _deliveryType);
-		jsonObject.put(_KEY_PAYLOAD, _payloadJSONObject);
-		jsonObject.put(_KEY_TIMESTAMP, _timestamp);
-		jsonObject.put(_KEY_TYPE, _type);
-		jsonObject.put(_KEY_UUID, _uuid);
+		jsonObject.put(
+			_KEY_ARCHIVED, _archived
+		).put(
+			_KEY_DELIVERY_BY, _deliverBy
+		).put(
+			_KEY_DELIVERY_REQUIRED, _deliveryRequired
+		).put(
+			_KEY_DELIVERY_TYPE, _deliveryType
+		).put(
+			_KEY_PAYLOAD, _payloadJSONObject
+		).put(
+			_KEY_TIMESTAMP, _timestamp
+		).put(
+			_KEY_TYPE, _type
+		).put(
+			_KEY_UUID, _uuid
+		);
 
 		return jsonObject;
 	}

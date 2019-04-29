@@ -397,14 +397,19 @@ public class SocialActivitySettingLocalServiceImpl
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("enabled", activityCounterDefinition.isEnabled());
 		jsonObject.put(
-			"limitEnabled", activityCounterDefinition.isLimitEnabled());
-		jsonObject.put(
-			"limitPeriod", activityCounterDefinition.getLimitPeriod());
-		jsonObject.put("limitValue", activityCounterDefinition.getLimitValue());
-		jsonObject.put("ownerType", activityCounterDefinition.getOwnerType());
-		jsonObject.put("value", activityCounterDefinition.getIncrement());
+			"enabled", activityCounterDefinition.isEnabled()
+		).put(
+			"limitEnabled", activityCounterDefinition.isLimitEnabled()
+		).put(
+			"limitPeriod", activityCounterDefinition.getLimitPeriod()
+		).put(
+			"limitValue", activityCounterDefinition.getLimitValue()
+		).put(
+			"ownerType", activityCounterDefinition.getOwnerType()
+		).put(
+			"value", activityCounterDefinition.getIncrement()
+		);
 
 		return jsonObject.toString();
 	}

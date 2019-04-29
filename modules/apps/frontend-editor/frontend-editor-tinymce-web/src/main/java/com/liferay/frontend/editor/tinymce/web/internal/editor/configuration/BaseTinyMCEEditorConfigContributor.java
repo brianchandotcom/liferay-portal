@@ -64,10 +64,13 @@ public abstract class BaseTinyMCEEditorConfigContributor
 					themeDisplay.getRequest(),
 					themeDisplay.getPathThemeCss() + "/main.css")));
 
-		jsonObject.put("content_css", sb.toString());
-
-		jsonObject.put("convert_urls", Boolean.FALSE);
-		jsonObject.put("extended_valid_elements", _EXTENDED_VALID_ELEMENTS);
+		jsonObject.put(
+			"content_css", sb.toString()
+		).put(
+			"convert_urls", Boolean.FALSE
+		).put(
+			"extended_valid_elements", _EXTENDED_VALID_ELEMENTS
+		);
 
 		ItemSelector itemSelector = getItemSelector();
 
@@ -93,19 +96,26 @@ public abstract class BaseTinyMCEEditorConfigContributor
 			itemSelectorCriteria.toArray(
 				new ItemSelectorCriterion[itemSelectorCriteria.size()]));
 
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
-
-		jsonObject.put("invalid_elements", "script");
+		jsonObject.put(
+			"filebrowserImageBrowseUrl", itemSelectorURL.toString()
+		).put(
+			"invalid_elements", "script"
+		);
 
 		String contentsLanguageId = (String)inputEditorTaglibAttributes.get(
 			TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":contentsLanguageId");
 
-		jsonObject.put("language", getTinyMCELanguage(contentsLanguageId));
-
-		jsonObject.put("menubar", Boolean.FALSE);
-		jsonObject.put("mode", "textareas");
-		jsonObject.put("relative_urls", Boolean.FALSE);
-		jsonObject.put("remove_script_host", Boolean.FALSE);
+		jsonObject.put(
+			"language", getTinyMCELanguage(contentsLanguageId)
+		).put(
+			"menubar", Boolean.FALSE
+		).put(
+			"mode", "textareas"
+		).put(
+			"relative_urls", Boolean.FALSE
+		).put(
+			"remove_script_host", Boolean.FALSE
+		);
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
@@ -115,13 +125,15 @@ public abstract class BaseTinyMCEEditorConfigContributor
 			inputEditorTaglibAttributes.get(
 				TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
 
-		jsonObject.put("selector", "#" + namespace + name);
-
 		jsonObject.put(
+			"selector", "#" + namespace + name
+		).put(
 			"toolbar",
 			"bold italic underline | alignleft aligncenter alignright | " +
-				"preview print");
-		jsonObject.put("toolbar_items_size", "small");
+				"preview print"
+		).put(
+			"toolbar_items_size", "small"
+		);
 	}
 
 	protected abstract ItemSelector getItemSelector();

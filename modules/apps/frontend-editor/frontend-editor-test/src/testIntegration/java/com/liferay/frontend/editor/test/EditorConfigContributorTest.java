@@ -601,8 +601,11 @@ public class EditorConfigContributorTest {
 
 			JSONObject toolbarsJSONObject = _jsonFactory.createJSONObject();
 
-			toolbarsJSONObject.put("button1", "image");
-			toolbarsJSONObject.put("button2", "gif");
+			toolbarsJSONObject.put(
+				"button1", "image"
+			).put(
+				"button2", "gif"
+			);
 
 			jsonObject.put("toolbars", toolbarsJSONObject);
 		}
@@ -658,8 +661,11 @@ public class EditorConfigContributorTest {
 				jsonObject.put("toolbars", toolbarsJSONObject);
 			}
 
-			toolbarsJSONObject.put("button1", "link");
-			toolbarsJSONObject.put("button2", "bold");
+			toolbarsJSONObject.put(
+				"button1", "link"
+			).put(
+				"button2", "bold"
+			);
 
 			jsonObject.put("toolbars", toolbarsJSONObject);
 		}
@@ -685,8 +691,11 @@ public class EditorConfigContributorTest {
 				jsonObject.put("toolbars", toolbarsJSONObject);
 			}
 
-			toolbarsJSONObject.put("button2", "play");
-			toolbarsJSONObject.put("button3", "stop");
+			toolbarsJSONObject.put(
+				"button2", "play"
+			).put(
+				"button3", "stop"
+			);
 		}
 
 	}

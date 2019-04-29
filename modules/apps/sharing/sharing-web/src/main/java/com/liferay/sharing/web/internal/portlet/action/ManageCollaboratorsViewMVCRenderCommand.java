@@ -128,12 +128,13 @@ public class ManageCollaboratorsViewMVCRenderCommand
 						themeDisplay);
 				}
 
-				collaboratorJSONObject.put("portraitURL", portraitURL);
-
 				collaboratorJSONObject.put(
-					"fullName", sharingEntryToUser.getFullName());
-				collaboratorJSONObject.put(
-					"sharingEntryId", sharingEntry.getSharingEntryId());
+					"portraitURL", portraitURL
+				).put(
+					"fullName", sharingEntryToUser.getFullName()
+				).put(
+					"sharingEntryId", sharingEntry.getSharingEntryId()
+				);
 
 				String expirationDateAsText = null;
 				String expirationDateTooltip = null;
@@ -159,18 +160,18 @@ public class ManageCollaboratorsViewMVCRenderCommand
 				}
 
 				collaboratorJSONObject.put(
-					"sharingEntryExpirationDate", expirationDateAsText);
-				collaboratorJSONObject.put(
-					"sharingEntryExpirationDateTooltip", expirationDateTooltip);
-
-				collaboratorJSONObject.put(
+					"sharingEntryExpirationDate", expirationDateAsText
+				).put(
+					"sharingEntryExpirationDateTooltip", expirationDateTooltip
+				).put(
 					"sharingEntryPermissionDisplaySelectOptions",
 					_getSharingEntryPermissionDisplaySelectOptions(
-						sharingEntry, renderRequest));
-				collaboratorJSONObject.put(
-					"sharingEntryShareable", sharingEntry.isShareable());
-				collaboratorJSONObject.put(
-					"userId", Long.valueOf(sharingEntryToUser.getUserId()));
+						sharingEntry, renderRequest)
+				).put(
+					"sharingEntryShareable", sharingEntry.isShareable()
+				).put(
+					"userId", Long.valueOf(sharingEntryToUser.getUserId())
+				);
 
 				collaboratorsJSONArray.put(collaboratorJSONObject);
 			}
@@ -231,12 +232,12 @@ public class ManageCollaboratorsViewMVCRenderCommand
 			sharingEntryPermissionDisplaySelectOptionJSONObject.put(
 				"selected",
 				currentSharingEntryPermissionDisplayActionKeyActionId.equals(
-					userSharingEntryPermissionDisplayActionKey.getActionId()));
-
-			sharingEntryPermissionDisplaySelectOptionJSONObject.put(
+					userSharingEntryPermissionDisplayActionKey.getActionId())
+			).put(
 				"value",
 				sharingEntryPermissionDisplay.
-					getSharingEntryPermissionDisplayActionId());
+					getSharingEntryPermissionDisplayActionId()
+			);
 
 			sharingEntryPermissionDisplaySelectOptionsJSONArray.put(
 				sharingEntryPermissionDisplaySelectOptionJSONObject);

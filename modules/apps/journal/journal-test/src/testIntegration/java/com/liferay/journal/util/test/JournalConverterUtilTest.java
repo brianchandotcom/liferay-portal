@@ -611,10 +611,15 @@ public class JournalConverterUtilTest {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("groupId", fileEntry.getGroupId());
-		jsonObject.put("title", fileEntry.getTitle());
-		jsonObject.put("uuid", fileEntry.getUuid());
-		jsonObject.put("version", fileEntry.getVersion());
+		jsonObject.put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"uuid", fileEntry.getUuid()
+		).put(
+			"version", fileEntry.getVersion()
+		);
 
 		docLibraryField.addValue(_enLocale, jsonObject.toString());
 
@@ -695,12 +700,18 @@ public class JournalConverterUtilTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (includeGroupId) {
-			jsonObject.put("groupId", layout.getGroupId());
-			jsonObject.put("label", layout.getName(locale));
+			jsonObject.put(
+				"groupId", layout.getGroupId()
+			).put(
+				"label", layout.getName(locale)
+			);
 		}
 
-		jsonObject.put("layoutId", layout.getLayoutId());
-		jsonObject.put("privateLayout", layout.isPrivateLayout());
+		jsonObject.put(
+			"layoutId", layout.getLayoutId()
+		).put(
+			"privateLayout", layout.isPrivateLayout()
+		);
 
 		return jsonObject.toString();
 	}

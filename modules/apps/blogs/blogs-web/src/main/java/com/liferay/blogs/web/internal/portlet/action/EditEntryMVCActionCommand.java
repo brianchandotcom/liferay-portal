@@ -211,11 +211,14 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				jsonObject.put(
 					"attributeDataImageId",
-					EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-				jsonObject.put("content", entry.getContent());
-				jsonObject.put(
-					"coverImageFileEntryId", entry.getCoverImageFileEntryId());
-				jsonObject.put("entryId", entry.getEntryId());
+					EditorConstants.ATTRIBUTE_DATA_IMAGE_ID
+				).put(
+					"content", entry.getContent()
+				).put(
+					"coverImageFileEntryId", entry.getCoverImageFileEntryId()
+				).put(
+					"entryId", entry.getEntryId()
+				);
 
 				JSONPortletResponseUtil.writeJSON(
 					actionRequest, actionResponse, jsonObject);

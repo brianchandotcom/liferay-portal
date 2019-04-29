@@ -1323,8 +1323,11 @@ public class JournalArticleLocalServiceImpl
 		if (articleResource != null) {
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-			extraDataJSONObject.put("uuid", article.getUuid());
-			extraDataJSONObject.put("version", article.getVersion());
+			extraDataJSONObject.put(
+				"uuid", article.getUuid()
+			).put(
+				"version", article.getVersion()
+			);
 
 			systemEventLocalService.addSystemEvent(
 				0, article.getGroupId(), article.getModelClassName(),
@@ -6972,10 +6975,13 @@ public class JournalArticleLocalServiceImpl
 				JSONObject cdataJSONObject = JSONFactoryUtil.createJSONObject(
 					dynamicContentElement.getText());
 
-				cdataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 				cdataJSONObject.put(
-					"resourcePrimKey", article.getResourcePrimKey());
-				cdataJSONObject.put("uuid", fileEntry.getUuid());
+					"fileEntryId", fileEntry.getFileEntryId()
+				).put(
+					"resourcePrimKey", article.getResourcePrimKey()
+				).put(
+					"uuid", fileEntry.getUuid()
+				);
 
 				dynamicContentElement.clearContent();
 

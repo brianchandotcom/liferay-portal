@@ -567,8 +567,10 @@ public class LayoutsAdminDisplayContext {
 			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
 
 			layoutJSONObject.put(
-				"actionURLs", _getActionURLsJSONObject(layout));
-			layoutJSONObject.put("active", _isActive(layout.getPlid()));
+				"actionURLs", _getActionURLsJSONObject(layout)
+			).put(
+				"active", _isActive(layout.getPlid())
+			);
 
 			LayoutTypeController layoutTypeController =
 				LayoutTypeControllerTracker.getLayoutTypeController(
@@ -613,16 +615,19 @@ public class LayoutsAdminDisplayContext {
 			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 				getSelGroup(), layout.isPrivateLayout(), layout.getLayoutId());
 
-			layoutJSONObject.put("hasChild", childLayoutsCount > 0);
-
 			layoutJSONObject.put(
-				"homePageTitle", _getHomePageTitle(privateLayout));
+				"hasChild", childLayoutsCount > 0
+			).put(
+				"homePageTitle", _getHomePageTitle(privateLayout)
+			);
 
 			LayoutType layoutType = layout.getLayoutType();
 
-			layoutJSONObject.put("parentable", layoutType.isParentable());
-
-			layoutJSONObject.put("plid", layout.getPlid());
+			layoutJSONObject.put(
+				"parentable", layoutType.isParentable()
+			).put(
+				"plid", layout.getPlid()
+			);
 
 			PortletURL portletURL = getPortletURL();
 
@@ -634,10 +639,11 @@ public class LayoutsAdminDisplayContext {
 			portletURL.setParameter(
 				"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
-			layoutJSONObject.put("url", portletURL.toString());
-
 			layoutJSONObject.put(
-				"title", layout.getName(_themeDisplay.getLocale()));
+				"url", portletURL.toString()
+			).put(
+				"title", layout.getName(_themeDisplay.getLocale())
+			);
 
 			layoutsJSONArray.put(layoutJSONObject);
 		}
@@ -1519,11 +1525,16 @@ public class LayoutsAdminDisplayContext {
 		JSONObject pagesJSONObject = JSONFactoryUtil.createJSONObject();
 
 		pagesJSONObject.put(
-			"actionURLs", _getFirstColumnActionURLsJSONObject(privatePages));
-		pagesJSONObject.put("active", active);
-		pagesJSONObject.put("hasChild", true);
-		pagesJSONObject.put("plid", LayoutConstants.DEFAULT_PLID);
-		pagesJSONObject.put("title", getTitle(privatePages));
+			"actionURLs", _getFirstColumnActionURLsJSONObject(privatePages)
+		).put(
+			"active", active
+		).put(
+			"hasChild", true
+		).put(
+			"plid", LayoutConstants.DEFAULT_PLID
+		).put(
+			"title", getTitle(privatePages)
+		);
 
 		PortletURL pagesURL = getPortletURL();
 
@@ -1666,11 +1677,14 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put(
 				"active",
 				layoutSetBranch.getLayoutSetBranchId() ==
-					_getActiveLayoutSetBranchId());
-			jsonObject.put("hasChild", true);
-			jsonObject.put("plid", LayoutConstants.DEFAULT_PLID);
-			jsonObject.put(
-				"title", LanguageUtil.get(_request, layoutSetBranch.getName()));
+					_getActiveLayoutSetBranchId()
+			).put(
+				"hasChild", true
+			).put(
+				"plid", LayoutConstants.DEFAULT_PLID
+			).put(
+				"title", LanguageUtil.get(_request, layoutSetBranch.getName())
+			);
 
 			PortletURL portletURL = getPortletURL();
 

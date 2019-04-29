@@ -57,15 +57,16 @@ public class TinyMCEEditorConfigContributor
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put("mode", "exact");
 		jsonObject.put(
-			"plugins", getPluginsJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
-			"style_formats",
-			getStyleFormatsJSONArray(themeDisplay.getLocale()));
-		jsonObject.put(
+			"mode", "exact"
+		).put(
+			"plugins", getPluginsJSONArray(inputEditorTaglibAttributes)
+		).put(
+			"style_formats", getStyleFormatsJSONArray(themeDisplay.getLocale())
+		).put(
 			"toolbar",
-			getToolbarJSONArray(inputEditorTaglibAttributes, themeDisplay));
+			getToolbarJSONArray(inputEditorTaglibAttributes, themeDisplay)
+		);
 	}
 
 	@Override
@@ -98,9 +99,13 @@ public class TinyMCEEditorConfigContributor
 
 		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
 
-		styleJSONObject.put(type, element);
-		styleJSONObject.put("classes", cssClasses);
-		styleJSONObject.put("title", styleFormatName);
+		styleJSONObject.put(
+			type, element
+		).put(
+			"classes", cssClasses
+		).put(
+			"title", styleFormatName
+		);
 
 		return styleJSONObject;
 	}
@@ -201,15 +206,16 @@ public class TinyMCEEditorConfigContributor
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			"email", getToolbarsEmailJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
-			"liferay",
-			getToolbarsLiferayJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put("phone", getToolbarsPhoneJSONArray());
-		jsonObject.put(
-			"simple", getToolbarsSimpleJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
-			"tablet", getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
+			"email", getToolbarsEmailJSONArray(inputEditorTaglibAttributes)
+		).put(
+			"liferay", getToolbarsLiferayJSONArray(inputEditorTaglibAttributes)
+		).put(
+			"phone", getToolbarsPhoneJSONArray()
+		).put(
+			"simple", getToolbarsSimpleJSONArray(inputEditorTaglibAttributes)
+		).put(
+			"tablet", getToolbarsTabletJSONArray(inputEditorTaglibAttributes)
+		);
 
 		return jsonObject;
 	}

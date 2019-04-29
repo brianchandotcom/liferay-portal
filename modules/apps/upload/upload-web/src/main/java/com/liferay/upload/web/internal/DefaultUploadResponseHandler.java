@@ -102,8 +102,11 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 
 			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
 
-			errorJSONObject.put("errorType", errorType);
-			errorJSONObject.put("message", errorMessage);
+			errorJSONObject.put(
+				"errorType", errorType
+			).put(
+				"message", errorMessage
+			);
 
 			jsonObject.put("error", errorJSONObject);
 		}
@@ -121,17 +124,24 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
 
 		imageJSONObject.put(
-			"attributeDataImageId", EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-		imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-		imageJSONObject.put("groupId", fileEntry.getGroupId());
-		imageJSONObject.put("mimeType", fileEntry.getMimeType());
+			"attributeDataImageId", EditorConstants.ATTRIBUTE_DATA_IMAGE_ID
+		).put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"mimeType", fileEntry.getMimeType()
+		);
 
 		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
 
-		imageJSONObject.put("randomId", randomId);
-
-		imageJSONObject.put("title", fileEntry.getTitle());
-		imageJSONObject.put("type", "document");
+		imageJSONObject.put(
+			"randomId", randomId
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"type", "document"
+		);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
@@ -140,13 +150,17 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 		String url = PortletFileRepositoryUtil.getPortletFileEntryURL(
 			themeDisplay, fileEntry, StringPool.BLANK);
 
-		imageJSONObject.put("url", url);
+		imageJSONObject.put(
+			"url", url
+		).put(
+			"uuid", fileEntry.getUuid()
+		);
 
-		imageJSONObject.put("uuid", fileEntry.getUuid());
-
-		jsonObject.put("file", imageJSONObject);
-
-		jsonObject.put("success", Boolean.TRUE);
+		jsonObject.put(
+			"file", imageJSONObject
+		).put(
+			"success", Boolean.TRUE
+		);
 
 		return jsonObject;
 	}

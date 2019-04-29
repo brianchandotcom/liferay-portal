@@ -281,9 +281,13 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		expectedJSONObject.put("groupId", 10192);
-		expectedJSONObject.put("uuid", "c8acdf70-e101-46a6-83e5-c5f5e087b0dc");
-		expectedJSONObject.put("version", 1.0);
+		expectedJSONObject.put(
+			"groupId", 10192
+		).put(
+			"uuid", "c8acdf70-e101-46a6-83e5-c5f5e087b0dc"
+		).put(
+			"version", 1.0
+		);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(),
@@ -351,9 +355,13 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		expectedJSONObject.put("groupId", 10192);
-		expectedJSONObject.put("uuid", "c8acdf70-e101-46a6-83e5-c5f5e087b0dc");
-		expectedJSONObject.put("version", 1.0);
+		expectedJSONObject.put(
+			"groupId", 10192
+		).put(
+			"uuid", "c8acdf70-e101-46a6-83e5-c5f5e087b0dc"
+		).put(
+			"version", 1.0
+		);
 
 		Value value = ddmFormFieldValue.getValue();
 
@@ -375,8 +383,11 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		expectedJSONObject.put("latitude", 34.0286226);
-		expectedJSONObject.put("longitude", -117.8103367);
+		expectedJSONObject.put(
+			"latitude", 34.0286226
+		).put(
+			"longitude", -117.8103367
+		);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(), value.getString(LocaleUtil.US),
@@ -384,8 +395,11 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		expectedJSONObject.put("latitude", -8.0349219);
-		expectedJSONObject.put("longitude", -34.91922120);
+		expectedJSONObject.put(
+			"latitude", -8.0349219
+		).put(
+			"longitude", -34.91922120
+		);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(), value.getString(LocaleUtil.BRAZIL),
@@ -415,8 +429,11 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		expectedJSONObject.put("alt", "This is a image description.");
-		expectedJSONObject.put("data", "base64Value");
+		expectedJSONObject.put(
+			"alt", "This is a image description."
+		).put(
+			"data", "base64Value"
+		);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(), value.getString(LocaleUtil.US),
@@ -424,8 +441,11 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		expectedJSONObject.put("alt", "Isto e uma descricao de imagem.");
-		expectedJSONObject.put("data", "valorEmBase64");
+		expectedJSONObject.put(
+			"alt", "Isto e uma descricao de imagem."
+		).put(
+			"data", "valorEmBase64"
+		);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(), value.getString(LocaleUtil.BRAZIL),
@@ -442,9 +462,13 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		expectedJSONObject.put("groupId", 10192);
-		expectedJSONObject.put("layoutId", 1);
-		expectedJSONObject.put("privateLayout", false);
+		expectedJSONObject.put(
+			"groupId", 10192
+		).put(
+			"layoutId", 1
+		).put(
+			"privateLayout", false
+		);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(), value.getString(LocaleUtil.US),
@@ -452,9 +476,13 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
-		expectedJSONObject.put("groupId", 10192);
-		expectedJSONObject.put("layoutId", 2);
-		expectedJSONObject.put("privateLayout", false);
+		expectedJSONObject.put(
+			"groupId", 10192
+		).put(
+			"layoutId", 2
+		).put(
+			"privateLayout", false
+		);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(), value.getString(LocaleUtil.BRAZIL),

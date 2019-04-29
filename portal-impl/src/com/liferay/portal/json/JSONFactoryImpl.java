@@ -309,13 +309,19 @@ public class JSONFactoryImpl implements JSONFactory {
 
 		JSONObject errorJSONObject = createJSONObject();
 
-		errorJSONObject.put("message", throwableMessage);
-		errorJSONObject.put("type", ClassUtil.getClassName(throwable));
+		errorJSONObject.put(
+			"message", throwableMessage
+		).put(
+			"type", ClassUtil.getClassName(throwable)
+		);
 
-		jsonObject.put("error", errorJSONObject);
-
-		jsonObject.put("exception", throwableMessage);
-		jsonObject.put("throwable", throwable.toString());
+		jsonObject.put(
+			"error", errorJSONObject
+		).put(
+			"exception", throwableMessage
+		).put(
+			"throwable", throwable.toString()
+		);
 
 		if (throwable.getCause() == null) {
 			return jsonObject.toString();
@@ -335,10 +341,11 @@ public class JSONFactoryImpl implements JSONFactory {
 			throwableMessage = rootCauseThrowable.toString();
 		}
 
-		rootCauseJSONObject.put("message", throwableMessage);
-
 		rootCauseJSONObject.put(
-			"type", ClassUtil.getClassName(rootCauseThrowable));
+			"message", throwableMessage
+		).put(
+			"type", ClassUtil.getClassName(rootCauseThrowable)
+		);
 
 		jsonObject.put("rootCause", rootCauseJSONObject);
 

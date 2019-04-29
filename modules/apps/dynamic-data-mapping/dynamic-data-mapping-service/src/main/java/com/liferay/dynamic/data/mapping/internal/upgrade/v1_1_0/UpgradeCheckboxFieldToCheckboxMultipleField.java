@@ -154,9 +154,10 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 		JSONObject optionJSONObject = _jsonFactory.createJSONObject();
 
 		optionJSONObject.put(
-			"label", checkboxFieldJSONObject.getJSONObject("label"));
-		optionJSONObject.put(
-			"value", checkboxFieldJSONObject.getString("name"));
+			"label", checkboxFieldJSONObject.getJSONObject("label")
+		).put(
+			"value", checkboxFieldJSONObject.getString("name")
+		);
 
 		optionsJSONArray.put(optionJSONObject);
 
@@ -208,13 +209,16 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 	protected void transformCheckboxDDMFormField(
 		JSONObject checkboxFieldJSONObject) {
 
-		checkboxFieldJSONObject.put("dataType", "string");
 		checkboxFieldJSONObject.put(
-			"options", getOptionsJSONArray(checkboxFieldJSONObject));
-		checkboxFieldJSONObject.put(
+			"dataType", "string"
+		).put(
+			"options", getOptionsJSONArray(checkboxFieldJSONObject)
+		).put(
 			"predefinedValue",
-			getPredefinedValueJSONObject(checkboxFieldJSONObject));
-		checkboxFieldJSONObject.put("type", "checkbox_multiple");
+			getPredefinedValueJSONObject(checkboxFieldJSONObject)
+		).put(
+			"type", "checkbox_multiple"
+		);
 	}
 
 	protected void transformCheckboxDDMFormFieldValues(

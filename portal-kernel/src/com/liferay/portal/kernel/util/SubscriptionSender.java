@@ -676,12 +676,19 @@ public class SubscriptionSender implements Serializable {
 	protected void populateNotificationEventJSONObject(
 		JSONObject notificationEventJSONObject) {
 
-		notificationEventJSONObject.put("className", _className);
-		notificationEventJSONObject.put("classPK", _classPK);
-		notificationEventJSONObject.put("entryTitle", _entryTitle);
-		notificationEventJSONObject.put("entryURL", _entryURL);
-		notificationEventJSONObject.put("notificationType", _notificationType);
-		notificationEventJSONObject.put("userId", currentUserId);
+		notificationEventJSONObject.put(
+			"className", _className
+		).put(
+			"classPK", _classPK
+		).put(
+			"entryTitle", _entryTitle
+		).put(
+			"entryURL", _entryURL
+		).put(
+			"notificationType", _notificationType
+		).put(
+			"userId", currentUserId
+		);
 	}
 
 	protected void processMailMessage(MailMessage mailMessage, Locale locale)

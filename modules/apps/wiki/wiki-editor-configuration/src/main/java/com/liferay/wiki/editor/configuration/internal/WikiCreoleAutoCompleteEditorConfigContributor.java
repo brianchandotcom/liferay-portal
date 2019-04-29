@@ -65,8 +65,10 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 		JSONObject triggerJSONObject = JSONFactoryUtil.createJSONObject();
 
 		triggerJSONObject.put(
-			"resultFilters", "function(query, results) {return results;}");
-		triggerJSONObject.put("resultTextLocator", "title");
+			"resultFilters", "function(query, results) {return results;}"
+		).put(
+			"resultTextLocator", "title"
+		);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -87,12 +89,15 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 			autoCompletePageTitleURL.toString() + "&" +
 				_portal.getPortletNamespace(portletDisplay.getId());
 
-		triggerJSONObject.put("source", source);
-
-		triggerJSONObject.put("term", "[");
-		triggerJSONObject.put("tplReplace", "<a href=\"{title}\">{title}</a>");
 		triggerJSONObject.put(
-			"tplResults", "<span class=\"h5 truncate-text\">{title}</span>");
+			"source", source
+		).put(
+			"term", "["
+		).put(
+			"tplReplace", "<a href=\"{title}\">{title}</a>"
+		).put(
+			"tplResults", "<span class=\"h5 truncate-text\">{title}</span>"
+		);
 
 		triggerJSONArray.put(triggerJSONObject);
 

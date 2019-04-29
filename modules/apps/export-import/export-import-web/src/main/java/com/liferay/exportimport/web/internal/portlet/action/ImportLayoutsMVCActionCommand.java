@@ -174,8 +174,11 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			String errorMessage = themeDisplay.translate(
 				"an-unexpected-error-occurred-while-deleting-the-file");
 
-			jsonObject.put("deleted", Boolean.FALSE);
-			jsonObject.put("errorMessage", errorMessage);
+			jsonObject.put(
+				"deleted", Boolean.FALSE
+			).put(
+				"errorMessage", errorMessage
+			);
 		}
 
 		JSONPortletResponseUtil.writeJSON(

@@ -74,10 +74,11 @@ public class DateRangeFactory {
 			JSONObject normalizedJSONObject = jsonFactory.createJSONObject();
 
 			normalizedJSONObject.put(
-				"label", rangeJSONObject.getString("label"));
-			normalizedJSONObject.put(
+				"label", rangeJSONObject.getString("label")
+			).put(
 				"range",
-				replaceAliases(rangeJSONObject.getString("range"), calendar));
+				replaceAliases(rangeJSONObject.getString("range"), calendar)
+			);
 
 			normalizedRangesJSONArray.put(normalizedJSONObject);
 		}

@@ -49,9 +49,10 @@ public class JournalArticleDescriptionEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		jsonObject.put(
-			"allowedContent", "p br strong i ol ul li u link pre em a");
-		jsonObject.put(
-			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
+			"allowedContent", "p br strong i ol ul li u link pre em a"
+		).put(
+			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale())
+		);
 	}
 
 	protected JSONObject getToolbarsJSONObject(Locale locale) {
@@ -66,8 +67,10 @@ public class JournalArticleDescriptionEditorConfigContributor
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			"selections", getToolbarsStylesSelectionsJSONArray(locale));
-		jsonObject.put("tabIndex", 1);
+			"selections", getToolbarsStylesSelectionsJSONArray(locale)
+		).put(
+			"tabIndex", 1
+		);
 
 		return jsonObject;
 	}
@@ -83,9 +86,12 @@ public class JournalArticleDescriptionEditorConfigContributor
 
 		jsonObject.put(
 			"buttons",
-			JSONUtil.putAll("bold", "italic", "underline", "ol", "ul", "link"));
-		jsonObject.put("name", "text");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
+			JSONUtil.putAll("bold", "italic", "underline", "ol", "ul", "link")
+		).put(
+			"name", "text"
+		).put(
+			"test", "AlloyEditor.SelectionTest.text"
+		);
 
 		return jsonObject;
 	}

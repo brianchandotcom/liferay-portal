@@ -172,9 +172,11 @@ public class MicroblogsEntryLocalServiceImpl
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		extraDataJSONObject.put("content", microblogsEntry.getContent());
 		extraDataJSONObject.put(
-			"parentMicroblogsEntryId", parentMicroblogsEntryId);
+			"content", microblogsEntry.getContent()
+		).put(
+			"parentMicroblogsEntryId", parentMicroblogsEntryId
+		);
 
 		socialActivityLocalService.addActivity(
 			userId, 0, MicroblogsEntry.class.getName(), microblogsEntryId,
@@ -592,14 +594,15 @@ public class MicroblogsEntryLocalServiceImpl
 			JSONFactoryUtil.createJSONObject();
 
 		notificationEventJSONObject.put(
-			"className", MicroblogsEntry.class.getName());
-		notificationEventJSONObject.put(
-			"classPK", microblogsEntry.getMicroblogsEntryId());
-		notificationEventJSONObject.put(
+			"className", MicroblogsEntry.class.getName()
+		).put(
+			"classPK", microblogsEntry.getMicroblogsEntryId()
+		).put(
 			"entryTitle",
 			MicroblogsUtil.getProcessedContent(
 				StringUtil.shorten(microblogsEntry.getContent(), 50),
-				serviceContext));
+				serviceContext)
+		);
 
 		AssetRendererFactory<MicroblogsEntry> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
@@ -622,8 +625,11 @@ public class MicroblogsEntryLocalServiceImpl
 			}
 		}
 
-		notificationEventJSONObject.put("entryURL", entryURL);
-		notificationEventJSONObject.put("userId", microblogsEntry.getUserId());
+		notificationEventJSONObject.put(
+			"entryURL", entryURL
+		).put(
+			"userId", microblogsEntry.getUserId()
+		);
 
 		final List<Long> receiverUserIds = MicroblogsUtil.getSubscriberUserIds(
 			microblogsEntry);

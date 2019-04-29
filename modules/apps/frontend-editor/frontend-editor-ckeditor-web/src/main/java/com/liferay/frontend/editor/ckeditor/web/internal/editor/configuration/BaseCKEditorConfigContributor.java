@@ -44,9 +44,8 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":cssClasses"));
 
 		jsonObject.put(
-			"bodyClass", "html-editor " + HtmlUtil.escape(cssClasses));
-
-		jsonObject.put(
+			"bodyClass", "html-editor " + HtmlUtil.escape(cssClasses)
+		).put(
 			"contentsCss",
 			JSONUtil.putAll(
 				HtmlUtil.escape(
@@ -56,7 +55,8 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 				HtmlUtil.escape(
 					PortalUtil.getStaticResourceURL(
 						themeDisplay.getRequest(),
-						themeDisplay.getPathThemeCss() + "/main.css"))));
+						themeDisplay.getPathThemeCss() + "/main.css")))
+		);
 
 		String contentsLanguageDir = getContentsLanguageDir(
 			inputEditorTaglibAttributes);
@@ -70,9 +70,11 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 		contentsLanguageId = contentsLanguageId.replace("iw", "he");
 		contentsLanguageId = contentsLanguageId.replace("_", "-");
 
-		jsonObject.put("contentsLanguage", contentsLanguageId);
-
-		jsonObject.put("height", 265);
+		jsonObject.put(
+			"contentsLanguage", contentsLanguageId
+		).put(
+			"height", 265
+		);
 
 		String languageId = getLanguageId(themeDisplay);
 

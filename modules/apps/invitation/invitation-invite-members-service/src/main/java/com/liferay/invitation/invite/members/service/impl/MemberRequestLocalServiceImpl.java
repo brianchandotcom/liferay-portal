@@ -442,9 +442,10 @@ public class MemberRequestLocalServiceImpl
 				JSONFactoryUtil.createJSONObject();
 
 			notificationEventJSONObject.put(
-				"classPK", memberRequest.getMemberRequestId());
-			notificationEventJSONObject.put(
-				"userId", memberRequest.getUserId());
+				"classPK", memberRequest.getMemberRequestId()
+			).put(
+				"userId", memberRequest.getUserId()
+			);
 
 			NotificationEvent notificationEvent =
 				NotificationEventFactoryUtil.createNotificationEvent(

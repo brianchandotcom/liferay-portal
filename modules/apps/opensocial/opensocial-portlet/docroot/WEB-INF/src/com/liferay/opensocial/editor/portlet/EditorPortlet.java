@@ -319,10 +319,15 @@ public class EditorPortlet extends AdminPortlet {
 		for (Folder folder : folders) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("entryId", folder.getFolderId());
-			jsonObject.put("label", folder.getName());
-			jsonObject.put("leaf", false);
-			jsonObject.put("type", "editor");
+			jsonObject.put(
+				"entryId", folder.getFolderId()
+			).put(
+				"label", folder.getName()
+			).put(
+				"leaf", false
+			).put(
+				"type", "editor"
+			);
 
 			jsonArray.put(jsonObject);
 		}
@@ -368,10 +373,13 @@ public class EditorPortlet extends AdminPortlet {
 				catch (Exception e) {
 				}
 
-				jsonObject.put("gadgetId", gadgetId);
-
-				jsonObject.put("label", fileEntry.getTitle());
-				jsonObject.put("leaf", true);
+				jsonObject.put(
+					"gadgetId", gadgetId
+				).put(
+					"label", fileEntry.getTitle()
+				).put(
+					"leaf", true
+				);
 
 				JSONObject jsonPermissions = JSONFactoryUtil.createJSONObject();
 
@@ -384,9 +392,11 @@ public class EditorPortlet extends AdminPortlet {
 						"unpublishPermission", unpublishPermission);
 				}
 
-				jsonObject.put("permissions", jsonPermissions);
-
-				jsonObject.put("type", "editor");
+				jsonObject.put(
+					"permissions", jsonPermissions
+				).put(
+					"type", "editor"
+				);
 
 				jsonArray.put(jsonObject);
 			}
@@ -437,9 +447,11 @@ public class EditorPortlet extends AdminPortlet {
 			ownerId, themeDisplay.getUserId(), fileEntryURL, portalURL,
 			fileEntryURL, moduleId, currentURL);
 
-		jsonObject.put("secureToken", secureToken);
-
-		jsonObject.put("specUrl", fileEntryURL);
+		jsonObject.put(
+			"secureToken", secureToken
+		).put(
+			"specUrl", fileEntryURL
+		);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}

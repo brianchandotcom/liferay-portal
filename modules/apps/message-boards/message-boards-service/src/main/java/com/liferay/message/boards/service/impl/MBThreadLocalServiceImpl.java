@@ -779,8 +779,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		extraDataJSONObject.put("rootMessageId", thread.getRootMessageId());
-		extraDataJSONObject.put("title", message.getSubject());
+		extraDataJSONObject.put(
+			"rootMessageId", thread.getRootMessageId()
+		).put(
+			"title", message.getSubject()
+		);
 
 		SocialActivityManagerUtil.addActivity(
 			userId, thread, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
@@ -900,8 +903,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		extraDataJSONObject.put("rootMessageId", thread.getRootMessageId());
-		extraDataJSONObject.put("title", message.getSubject());
+		extraDataJSONObject.put(
+			"rootMessageId", thread.getRootMessageId()
+		).put(
+			"title", message.getSubject()
+		);
 
 		SocialActivityManagerUtil.addActivity(
 			userId, thread, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,

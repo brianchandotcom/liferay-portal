@@ -110,8 +110,11 @@ public class ModifiedFacetBuilder {
 			(key, value) -> {
 				JSONObject range = _jsonFactory.createJSONObject();
 
-				range.put("label", key);
-				range.put("range", value);
+				range.put(
+					"label", key
+				).put(
+					"range", value
+				);
 
 				rangesJSONArray.put(range);
 			});

@@ -205,8 +205,11 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 	public void testDocumentLibraryFieldValueRenderer() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("groupId", RandomTestUtil.randomLong());
-		jsonObject.put("uuid", RandomTestUtil.randomString());
+		jsonObject.put(
+			"groupId", RandomTestUtil.randomLong()
+		).put(
+			"uuid", RandomTestUtil.randomString()
+		);
 
 		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
 			"DocumentLibrary", new UnlocalizedValue(jsonObject.toString()));
@@ -224,8 +227,11 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 	public void testGeolocationFieldValueRenderer() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("latitude", 9.8765);
-		jsonObject.put("longitude", 1.2345);
+		jsonObject.put(
+			"latitude", 9.8765
+		).put(
+			"longitude", 1.2345
+		);
 
 		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
 			"Geolocation", new UnlocalizedValue(jsonObject.toString()));
@@ -281,9 +287,13 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 	public void testLinkToPageFieldValueRenderer() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("groupId", RandomTestUtil.randomLong());
-		jsonObject.put("layoutId", RandomTestUtil.randomLong());
-		jsonObject.put("privateLayout", RandomTestUtil.randomBoolean());
+		jsonObject.put(
+			"groupId", RandomTestUtil.randomLong()
+		).put(
+			"layoutId", RandomTestUtil.randomLong()
+		).put(
+			"privateLayout", RandomTestUtil.randomBoolean()
+		);
 
 		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
 			"LinkToPage", new UnlocalizedValue(jsonObject.toString()));

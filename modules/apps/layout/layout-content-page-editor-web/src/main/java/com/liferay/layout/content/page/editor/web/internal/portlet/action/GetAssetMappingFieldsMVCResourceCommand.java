@@ -97,9 +97,13 @@ public class GetAssetMappingFieldsMVCResourceCommand
 		for (InfoDisplayField infoDisplayField : infoDisplayFields) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("key", infoDisplayField.getKey());
-			jsonObject.put("label", infoDisplayField.getLabel());
-			jsonObject.put("type", infoDisplayField.getType());
+			jsonObject.put(
+				"key", infoDisplayField.getKey()
+			).put(
+				"label", infoDisplayField.getLabel()
+			).put(
+				"type", infoDisplayField.getType()
+			);
 
 			jsonArray.put(jsonObject);
 		}

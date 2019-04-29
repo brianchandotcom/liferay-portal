@@ -120,10 +120,14 @@ public class DDMFormBuilderSettingsRetrieverHelper {
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			jsonObject.put(
-				"description", ddmStructure.getDescription(locale, true));
-			jsonObject.put("icon", "forms");
-			jsonObject.put("id", ddmStructure.getStructureId());
-			jsonObject.put("name", ddmStructure.getName(locale, true));
+				"description", ddmStructure.getDescription(locale, true)
+			).put(
+				"icon", "forms"
+			).put(
+				"id", ddmStructure.getStructureId()
+			).put(
+				"name", ddmStructure.getName(locale, true)
+			);
 
 			jsonArray.put(jsonObject);
 		}

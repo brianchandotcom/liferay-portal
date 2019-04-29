@@ -173,9 +173,11 @@ public class DDMFormBuilderContextFactoryHelper {
 			LocalizedValue label = ddmFormFieldOptions.getOptionLabels(
 				optionValue);
 
-			jsonObject.put("label", label.getString(locale));
-
-			jsonObject.put("value", optionValue);
+			jsonObject.put(
+				"label", label.getString(locale)
+			).put(
+				"value", optionValue
+			);
 
 			jsonArray.put(jsonObject);
 		}
@@ -293,8 +295,10 @@ public class DDMFormBuilderContextFactoryHelper {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
-			"errorMessage", ddmFormFieldValidation.getErrorMessage());
-		jsonObject.put("expression", ddmFormFieldValidation.getExpression());
+			"errorMessage", ddmFormFieldValidation.getErrorMessage()
+		).put(
+			"expression", ddmFormFieldValidation.getExpression()
+		);
 
 		return new UnlocalizedValue(jsonObject.toString());
 	}

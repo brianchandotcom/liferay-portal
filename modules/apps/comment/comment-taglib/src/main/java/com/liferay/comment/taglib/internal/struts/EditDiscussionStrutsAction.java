@@ -97,8 +97,11 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-					jsonObject.put("commentId", commentId);
-					jsonObject.put("randomNamespace", randomNamespace);
+					jsonObject.put(
+						"commentId", commentId
+					).put(
+						"randomNamespace", randomNamespace
+					);
 
 					writeJSON(namespacedRequest, response, jsonObject);
 

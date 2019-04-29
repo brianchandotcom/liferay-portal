@@ -129,11 +129,12 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 					_jsonFactory.createJSONObject();
 
 				dataProviderInstanceJSONObject.put(
-					"id", ddmDataProviderInstance.getDataProviderInstanceId());
-				dataProviderInstanceJSONObject.put(
-					"name", ddmDataProviderInstance.getName(locale));
-				dataProviderInstanceJSONObject.put(
-					"uuid", ddmDataProviderInstance.getUuid());
+					"id", ddmDataProviderInstance.getDataProviderInstanceId()
+				).put(
+					"name", ddmDataProviderInstance.getName(locale)
+				).put(
+					"uuid", ddmDataProviderInstance.getUuid()
+				);
 
 				dataProviderInstancesJSONArray.put(
 					dataProviderInstanceJSONObject);

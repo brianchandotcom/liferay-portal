@@ -168,23 +168,30 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 			String fullName = ContactConstants.getFullName(
 				firstName, middleName, lastName);
 
-			curUserJSONObject.put("fullName", fullName);
-
-			curUserJSONObject.put("groupId", groupId);
-			curUserJSONObject.put("portraitId", portraitId);
+			curUserJSONObject.put(
+				"fullName", fullName
+			).put(
+				"groupId", groupId
+			).put(
+				"portraitId", portraitId
+			);
 
 			String portraitURL = UserConstants.getPortraitURL(
 				StringPool.BLANK, male, portraitId, userUuid);
 
-			curUserJSONObject.put("portraitURL", portraitURL);
-
-			curUserJSONObject.put("screenName", screenName);
+			curUserJSONObject.put(
+				"portraitURL", portraitURL
+			).put(
+				"screenName", screenName
+			);
 
 			String statusMessage = buddyStatus.getMessage();
 
-			curUserJSONObject.put("statusMessage", statusMessage);
-
-			curUserJSONObject.put("userId", userId);
+			curUserJSONObject.put(
+				"statusMessage", statusMessage
+			).put(
+				"userId", userId
+			);
 
 			buddiesJSONArray.put(curUserJSONObject);
 		}
@@ -224,18 +231,24 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 			JSONObject entryJSONObject = JSONFactoryUtil.createJSONObject();
 
-			entryJSONObject.put("createDate", entry.getCreateDate());
-			entryJSONObject.put("entryId", entry.getEntryId());
-			entryJSONObject.put("fromUserId", entry.getFromUserId());
+			entryJSONObject.put(
+				"createDate", entry.getCreateDate()
+			).put(
+				"entryId", entry.getEntryId()
+			).put(
+				"fromUserId", entry.getFromUserId()
+			);
 
 			if (entry.getFromUserId() != pollerRequest.getUserId()) {
 				try {
 					User fromUser = _userLocalService.getUserById(
 						entry.getFromUserId());
 
-					entryJSONObject.put("fromFullName", fromUser.getFullName());
 					entryJSONObject.put(
-						"fromPortraitId", fromUser.getPortraitId());
+						"fromFullName", fromUser.getFullName()
+					).put(
+						"fromPortraitId", fromUser.getPortraitId()
+					);
 				}
 				catch (NoSuchUserException nsue) {
 
@@ -249,9 +262,13 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 				}
 			}
 
-			entryJSONObject.put("content", HtmlUtil.escape(entry.getContent()));
-			entryJSONObject.put("flag", entry.getFlag());
-			entryJSONObject.put("toUserId", entry.getToUserId());
+			entryJSONObject.put(
+				"content", HtmlUtil.escape(entry.getContent())
+			).put(
+				"flag", entry.getFlag()
+			).put(
+				"toUserId", entry.getToUserId()
+			);
 
 			entriesJSONArray.put(entryJSONObject);
 		}

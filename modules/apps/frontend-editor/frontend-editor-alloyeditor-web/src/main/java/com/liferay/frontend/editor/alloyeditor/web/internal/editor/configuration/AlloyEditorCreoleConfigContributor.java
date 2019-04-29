@@ -81,23 +81,31 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONObject linkEditJSONObject = JSONFactoryUtil.createJSONObject();
 
-		linkEditJSONObject.put("appendProtocol", false);
-		linkEditJSONObject.put("showTargetSelector", false);
+		linkEditJSONObject.put(
+			"appendProtocol", false
+		).put(
+			"showTargetSelector", false
+		);
 
 		buttonCfgJSONObject.put("linkEditBrowse", linkEditJSONObject);
 
-		jsonObject.put("buttonCfg", buttonCfgJSONObject);
-
-		jsonObject.put("decodeLinks", Boolean.TRUE);
-		jsonObject.put("disableObjectResizing", Boolean.TRUE);
+		jsonObject.put(
+			"buttonCfg", buttonCfgJSONObject
+		).put(
+			"decodeLinks", Boolean.TRUE
+		).put(
+			"disableObjectResizing", Boolean.TRUE
+		);
 
 		String extraPlugins = jsonObject.getString("extraPlugins");
 
 		extraPlugins = extraPlugins.concat(",creole,itemselector,media");
 
-		jsonObject.put("extraPlugins", extraPlugins);
-
-		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
+		jsonObject.put(
+			"extraPlugins", extraPlugins
+		).put(
+			"format_tags", "p;h1;h2;h3;h4;h5;h6;pre"
+		);
 
 		String removePlugins = jsonObject.getString("removePlugins");
 
@@ -114,10 +122,10 @@ public class AlloyEditorCreoleConfigContributor
 				","
 			).concat(
 				sb.toString()
-			));
-
-		jsonObject.put(
-			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
+			)
+		).put(
+			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale())
+		);
 	}
 
 	protected JSONObject getStyleFormatJSONObject(
@@ -129,8 +137,11 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
 
-		styleJSONObject.put("element", element);
-		styleJSONObject.put("type", type);
+		styleJSONObject.put(
+			"element", element
+		).put(
+			"type", type
+		);
 
 		jsonObject.put("style", styleJSONObject);
 
@@ -178,9 +189,11 @@ public class AlloyEditorCreoleConfigContributor
 
 		stylesJSONObject.put("styles", getStyleFormatsJSONArray(locale));
 
-		jsonObject.put("cfg", stylesJSONObject);
-
-		jsonObject.put("name", "styles");
+		jsonObject.put(
+			"cfg", stylesJSONObject
+		).put(
+			"name", "styles"
+		);
 
 		return jsonObject;
 	}
@@ -195,14 +208,17 @@ public class AlloyEditorCreoleConfigContributor
 		cfgJSONObject.put(
 			"tableAttributes", JSONFactoryUtil.createJSONObject());
 
-		buttonJSONObject.put("cfg", cfgJSONObject);
-
-		buttonJSONObject.put("name", "table");
+		buttonJSONObject.put(
+			"cfg", cfgJSONObject
+		).put(
+			"name", "table"
+		);
 
 		jsonObject.put(
-			"buttons", JSONUtil.putAll("image", buttonJSONObject, "hline"));
-
-		jsonObject.put("tabIndex", 2);
+			"buttons", JSONUtil.putAll("image", buttonJSONObject, "hline")
+		).put(
+			"tabIndex", 2
+		);
 
 		return jsonObject;
 	}
@@ -210,8 +226,11 @@ public class AlloyEditorCreoleConfigContributor
 	protected JSONObject getToolbarsJSONObject(Locale locale) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("add", getToolbarsAddJSONObject());
-		jsonObject.put("styles", getToolbarsStylesJSONObject(locale));
+		jsonObject.put(
+			"add", getToolbarsAddJSONObject()
+		).put(
+			"styles", getToolbarsStylesJSONObject(locale)
+		);
 
 		return jsonObject;
 	}
@@ -220,8 +239,10 @@ public class AlloyEditorCreoleConfigContributor
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			"selections", getToolbarsStylesSelectionsJSONArray(locale));
-		jsonObject.put("tabIndex", 1);
+			"selections", getToolbarsStylesSelectionsJSONArray(locale)
+		).put(
+			"tabIndex", 1
+		);
 
 		return jsonObject;
 	}
@@ -232,9 +253,12 @@ public class AlloyEditorCreoleConfigContributor
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			"buttons", JSONUtil.put(getStyleFormatsJSONObject(locale)));
-		jsonObject.put("name", "headertext");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.headingtext");
+			"buttons", JSONUtil.put(getStyleFormatsJSONObject(locale))
+		).put(
+			"name", "headertext"
+		).put(
+			"test", "AlloyEditor.SelectionTest.headingtext"
+		);
 
 		return jsonObject;
 	}
@@ -256,18 +280,27 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONObject cfgJSONObject = JSONFactoryUtil.createJSONObject();
 
-		cfgJSONObject.put("appendProtocol", false);
-		cfgJSONObject.put("showTargetSelector", false);
+		cfgJSONObject.put(
+			"appendProtocol", false
+		).put(
+			"showTargetSelector", false
+		);
 
-		linkEditJSONObject.put("cfg", cfgJSONObject);
-
-		linkEditJSONObject.put("name", "linkEditBrowse");
+		linkEditJSONObject.put(
+			"cfg", cfgJSONObject
+		).put(
+			"name", "linkEditBrowse"
+		);
 
 		linkButtonsJSONArray.put(linkEditJSONObject);
 
-		jsonObject.put("buttons", linkButtonsJSONArray);
-		jsonObject.put("name", "link");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
+		jsonObject.put(
+			"buttons", linkButtonsJSONArray
+		).put(
+			"name", "link"
+		).put(
+			"test", "AlloyEditor.SelectionTest.link"
+		);
 
 		return jsonObject;
 	}
@@ -279,13 +312,17 @@ public class AlloyEditorCreoleConfigContributor
 			"buttons",
 			toJSONArray(
 				"['tableHeading', 'tableRow', 'tableColumn', 'tableCell', " +
-					"'tableRemove']"));
-		jsonObject.put(
+					"'tableRemove']")
+		).put(
 			"getArrowBoxClasses",
-			"AlloyEditor.SelectionGetArrowBoxClasses.table");
-		jsonObject.put("name", "table");
-		jsonObject.put("setPosition", "AlloyEditor.SelectionSetPosition.table");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.table");
+			"AlloyEditor.SelectionGetArrowBoxClasses.table"
+		).put(
+			"name", "table"
+		).put(
+			"setPosition", "AlloyEditor.SelectionSetPosition.table"
+		).put(
+			"test", "AlloyEditor.SelectionTest.table"
+		);
 
 		return jsonObject;
 	}
@@ -299,9 +336,12 @@ public class AlloyEditorCreoleConfigContributor
 			"buttons",
 			JSONUtil.putAll(
 				getStyleFormatsJSONObject(locale), "bold", "italic", "ul", "ol",
-				"linkBrowse", "removeFormat"));
-		jsonObject.put("name", "text");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
+				"linkBrowse", "removeFormat")
+		).put(
+			"name", "text"
+		).put(
+			"test", "AlloyEditor.SelectionTest.text"
+		);
 
 		return jsonObject;
 	}

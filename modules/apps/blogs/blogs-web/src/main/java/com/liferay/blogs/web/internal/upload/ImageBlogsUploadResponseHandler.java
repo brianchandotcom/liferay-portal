@@ -69,8 +69,11 @@ public class ImageBlogsUploadResponseHandler implements UploadResponseHandler {
 
 			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
 
-			errorJSONObject.put("errorType", errorType);
-			errorJSONObject.put("message", errorMessage);
+			errorJSONObject.put(
+				"errorType", errorType
+			).put(
+				"message", errorMessage
+			);
 
 			jsonObject.put("error", errorJSONObject);
 		}

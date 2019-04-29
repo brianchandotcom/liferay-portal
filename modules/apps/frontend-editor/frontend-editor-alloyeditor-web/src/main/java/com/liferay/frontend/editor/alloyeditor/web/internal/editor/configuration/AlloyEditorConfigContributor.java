@@ -71,10 +71,11 @@ public class AlloyEditorConfigContributor
 			extraPlugins = "itemselector,media,embedurl";
 		}
 
-		jsonObject.put("extraPlugins", extraPlugins);
-
 		jsonObject.put(
-			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
+			"extraPlugins", extraPlugins
+		).put(
+			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale())
+		);
 	}
 
 	@Activate
@@ -89,8 +90,11 @@ public class AlloyEditorConfigContributor
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("name", styleFormatName);
-		jsonObject.put("style", getStyleJSONObject(element, cssClass, type));
+		jsonObject.put(
+			"name", styleFormatName
+		).put(
+			"style", getStyleJSONObject(element, cssClass, type)
+		);
 
 		return jsonObject;
 	}
@@ -149,8 +153,11 @@ public class AlloyEditorConfigContributor
 
 		JSONObject styleFormatsJSONObject = JSONFactoryUtil.createJSONObject();
 
-		styleFormatsJSONObject.put("cfg", stylesJSONObject);
-		styleFormatsJSONObject.put("name", "styles");
+		styleFormatsJSONObject.put(
+			"cfg", stylesJSONObject
+		).put(
+			"name", "styles"
+		);
 
 		return styleFormatsJSONObject;
 	}
@@ -169,8 +176,11 @@ public class AlloyEditorConfigContributor
 			styleJSONObject.put("attributes", attributesJSONObject);
 		}
 
-		styleJSONObject.put("element", element);
-		styleJSONObject.put("type", type);
+		styleJSONObject.put(
+			"element", element
+		).put(
+			"type", type
+		);
 
 		return styleJSONObject;
 	}
@@ -179,9 +189,10 @@ public class AlloyEditorConfigContributor
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			"buttons",
-			toJSONArray("['image', 'embedVideo', 'table', 'hline']"));
-		jsonObject.put("tabIndex", 2);
+			"buttons", toJSONArray("['image', 'embedVideo', 'table', 'hline']")
+		).put(
+			"tabIndex", 2
+		);
 
 		return jsonObject;
 	}
@@ -189,8 +200,11 @@ public class AlloyEditorConfigContributor
 	protected JSONObject getToolbarsJSONObject(Locale locale) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("add", getToolbarsAddJSONObject());
-		jsonObject.put("styles", getToolbarsStylesJSONObject(locale));
+		jsonObject.put(
+			"add", getToolbarsAddJSONObject()
+		).put(
+			"styles", getToolbarsStylesJSONObject(locale)
+		);
 
 		return jsonObject;
 	}
@@ -199,8 +213,10 @@ public class AlloyEditorConfigContributor
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			"selections", getToolbarsStylesSelectionsJSONArray(locale));
-		jsonObject.put("tabIndex", 1);
+			"selections", getToolbarsStylesSelectionsJSONArray(locale)
+		).put(
+			"tabIndex", 1
+		);
 
 		return jsonObject;
 	}
@@ -209,10 +225,12 @@ public class AlloyEditorConfigContributor
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			"buttons",
-			toJSONArray("['imageLeft', 'imageCenter', 'imageRight']"));
-		jsonObject.put("name", "embedurl");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.embedUrl");
+			"buttons", toJSONArray("['imageLeft', 'imageCenter', 'imageRight']")
+		).put(
+			"name", "embedurl"
+		).put(
+			"test", "AlloyEditor.SelectionTest.embedUrl"
+		);
 
 		return jsonObject;
 	}
@@ -224,10 +242,14 @@ public class AlloyEditorConfigContributor
 			"buttons",
 			toJSONArray(
 				"['imageLeft', 'imageCenter', 'imageRight', 'linkBrowse', " +
-					"'imageAlt']"));
-		jsonObject.put("name", "image");
-		jsonObject.put("setPosition", "AlloyEditor.SelectionSetPosition.image");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.image");
+					"'imageAlt']")
+		).put(
+			"name", "image"
+		).put(
+			"setPosition", "AlloyEditor.SelectionSetPosition.image"
+		).put(
+			"test", "AlloyEditor.SelectionTest.image"
+		);
 
 		return jsonObject;
 	}
@@ -244,9 +266,13 @@ public class AlloyEditorConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("buttons", toJSONArray("['linkEditBrowse']"));
-		jsonObject.put("name", "link");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
+		jsonObject.put(
+			"buttons", toJSONArray("['linkEditBrowse']")
+		).put(
+			"name", "link"
+		).put(
+			"test", "AlloyEditor.SelectionTest.link"
+		);
 
 		return jsonObject;
 	}
@@ -258,13 +284,17 @@ public class AlloyEditorConfigContributor
 			"buttons",
 			toJSONArray(
 				"['tableHeading', 'tableRow', 'tableColumn', 'tableCell', " +
-					"'tableRemove']"));
-		jsonObject.put(
+					"'tableRemove']")
+		).put(
 			"getArrowBoxClasses",
-			"AlloyEditor.SelectionGetArrowBoxClasses.table");
-		jsonObject.put("name", "table");
-		jsonObject.put("setPosition", "AlloyEditor.SelectionSetPosition.table");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.table");
+			"AlloyEditor.SelectionGetArrowBoxClasses.table"
+		).put(
+			"name", "table"
+		).put(
+			"setPosition", "AlloyEditor.SelectionSetPosition.table"
+		).put(
+			"test", "AlloyEditor.SelectionTest.table"
+		);
 
 		return jsonObject;
 	}
@@ -278,9 +308,12 @@ public class AlloyEditorConfigContributor
 			"buttons",
 			JSONUtil.putAll(
 				getStyleFormatsJSONObject(locale), "bold", "italic",
-				"underline", "ol", "ul", "linkBrowse"));
-		jsonObject.put("name", "text");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
+				"underline", "ol", "ul", "linkBrowse")
+		).put(
+			"name", "text"
+		).put(
+			"test", "AlloyEditor.SelectionTest.text"
+		);
 
 		return jsonObject;
 	}

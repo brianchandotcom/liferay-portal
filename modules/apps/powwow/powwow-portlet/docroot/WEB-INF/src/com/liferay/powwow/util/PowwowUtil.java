@@ -424,9 +424,10 @@ public class PowwowUtil {
 			JSONFactoryUtil.createJSONObject();
 
 		notificationEventJSONObject.put(
-			"classPK", powwowParticipant.getPowwowMeetingId());
-		notificationEventJSONObject.put(
-			"userId", powwowParticipant.getUserId());
+			"classPK", powwowParticipant.getPowwowMeetingId()
+		).put(
+			"userId", powwowParticipant.getUserId()
+		);
 
 		NotificationEvent notificationEvent =
 			NotificationEventFactoryUtil.createNotificationEvent(

@@ -206,26 +206,33 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("body", comment.getBody());
-		jsonObject.put("commentId", Long.valueOf(comment.getCommentId()));
+		jsonObject.put(
+			"body", comment.getBody()
+		).put(
+			"commentId", Long.valueOf(comment.getCommentId())
+		);
 
 		Date createDate = comment.getCreateDate();
 
-		jsonObject.put("createDate", Long.valueOf(createDate.getTime()));
-
 		jsonObject.put(
+			"createDate", Long.valueOf(createDate.getTime())
+		).put(
 			"deletePermission",
-			discussionPermission.hasDeletePermission(comment.getCommentId()));
+			discussionPermission.hasDeletePermission(comment.getCommentId())
+		);
 
 		Date modifiedDate = comment.getModifiedDate();
 
-		jsonObject.put("modifiedDate", Long.valueOf(modifiedDate.getTime()));
-
 		jsonObject.put(
+			"modifiedDate", Long.valueOf(modifiedDate.getTime())
+		).put(
 			"updatePermission",
-			discussionPermission.hasUpdatePermission(comment.getCommentId()));
-		jsonObject.put("userId", Long.valueOf(comment.getUserId()));
-		jsonObject.put("userName", comment.getUserName());
+			discussionPermission.hasUpdatePermission(comment.getCommentId())
+		).put(
+			"userId", Long.valueOf(comment.getUserId())
+		).put(
+			"userName", comment.getUserName()
+		);
 
 		return jsonObject;
 	}

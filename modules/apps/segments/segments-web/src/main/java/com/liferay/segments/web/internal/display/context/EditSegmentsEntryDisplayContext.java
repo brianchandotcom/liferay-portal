@@ -78,19 +78,20 @@ public class EditSegmentsEntryDisplayContext {
 				JSONFactoryUtil.createJSONObject();
 
 			jsonContributorObject.put(
-				"conjunctionId", _getCriterionConjunction(criterion));
-			jsonContributorObject.put(
+				"conjunctionId", _getCriterionConjunction(criterion)
+			).put(
 				"conjunctionInputId",
 				_renderResponse.getNamespace() + "criterionConjunction" +
-					segmentsCriteriaContributor.getKey());
-			jsonContributorObject.put(
-				"initialQuery", _getCriterionFilterString(criterion));
-			jsonContributorObject.put(
+					segmentsCriteriaContributor.getKey()
+			).put(
+				"initialQuery", _getCriterionFilterString(criterion)
+			).put(
 				"inputId",
 				_renderResponse.getNamespace() + "criterionFilter" +
-					segmentsCriteriaContributor.getKey());
-			jsonContributorObject.put(
-				"propertyKey", segmentsCriteriaContributor.getKey());
+					segmentsCriteriaContributor.getKey()
+			).put(
+				"propertyKey", segmentsCriteriaContributor.getKey()
+			);
 
 			jsonContributorsArray.put(jsonContributorObject);
 		}
@@ -125,17 +126,17 @@ public class EditSegmentsEntryDisplayContext {
 				JSONFactoryUtil.createJSONObject();
 
 			jsonContributorObject.put(
-				"entityName", segmentsCriteriaContributor.getEntityName());
-			jsonContributorObject.put(
-				"name", segmentsCriteriaContributor.getLabel(locale));
-			jsonContributorObject.put(
+				"entityName", segmentsCriteriaContributor.getEntityName()
+			).put(
+				"name", segmentsCriteriaContributor.getLabel(locale)
+			).put(
 				"properties",
 				JSONFactoryUtil.createJSONArray(
 					JSONFactoryUtil.looseSerializeDeep(
-						segmentsCriteriaContributor.getFields(
-							_renderRequest))));
-			jsonContributorObject.put(
-				"propertyKey", segmentsCriteriaContributor.getKey());
+						segmentsCriteriaContributor.getFields(_renderRequest)))
+			).put(
+				"propertyKey", segmentsCriteriaContributor.getKey()
+			);
 
 			jsonContributorsArray.put(jsonContributorObject);
 		}

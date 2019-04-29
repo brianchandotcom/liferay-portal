@@ -687,11 +687,15 @@ public class DDMImpl implements DDM {
 
 			String name = fieldName.concat(StringUtil.randomString());
 
-			optionJSONObject.put("id", name);
-			optionJSONObject.put("name", name);
-
-			optionJSONObject.put("type", "option");
-			optionJSONObject.put("value", optionValue);
+			optionJSONObject.put(
+				"id", name
+			).put(
+				"name", name
+			).put(
+				"type", "option"
+			).put(
+				"value", optionValue
+			);
 
 			addDDMFormFieldLocalizedProperty(
 				optionJSONObject, "label",
@@ -809,17 +813,29 @@ public class DDMImpl implements DDM {
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("dataType", ddmFormField.getDataType());
-			jsonObject.put("id", ddmFormField.getName());
-			jsonObject.put("indexType", ddmFormField.getIndexType());
-			jsonObject.put("localizable", ddmFormField.isLocalizable());
-			jsonObject.put("multiple", ddmFormField.isMultiple());
-			jsonObject.put("name", ddmFormField.getName());
-			jsonObject.put("readOnly", ddmFormField.isReadOnly());
-			jsonObject.put("repeatable", ddmFormField.isRepeatable());
-			jsonObject.put("required", ddmFormField.isRequired());
-			jsonObject.put("showLabel", ddmFormField.isShowLabel());
-			jsonObject.put("type", ddmFormField.getType());
+			jsonObject.put(
+				"dataType", ddmFormField.getDataType()
+			).put(
+				"id", ddmFormField.getName()
+			).put(
+				"indexType", ddmFormField.getIndexType()
+			).put(
+				"localizable", ddmFormField.isLocalizable()
+			).put(
+				"multiple", ddmFormField.isMultiple()
+			).put(
+				"name", ddmFormField.getName()
+			).put(
+				"readOnly", ddmFormField.isReadOnly()
+			).put(
+				"repeatable", ddmFormField.isRepeatable()
+			).put(
+				"required", ddmFormField.isRequired()
+			).put(
+				"showLabel", ddmFormField.isShowLabel()
+			).put(
+				"type", ddmFormField.getType()
+			);
 
 			addDDMFormFieldLocalizedProperties(
 				jsonObject, ddmFormField, defaultLocale, defaultLocale);
@@ -840,13 +856,14 @@ public class DDMImpl implements DDM {
 					LocaleUtil.toLanguageId(availableLocale), localeMap);
 			}
 
-			jsonObject.put("localizationMap", localizationMapJSONObject);
-
 			jsonObject.put(
+				"localizationMap", localizationMapJSONObject
+			).put(
 				"fields",
 				getDDMFormFieldsJSONArray(
 					ddmFormField.getNestedDDMFormFields(), availableLocales,
-					defaultLocale));
+					defaultLocale)
+			);
 
 			ddmFormFieldsJSONArray.put(jsonObject);
 		}
@@ -1144,8 +1161,10 @@ public class DDMImpl implements DDM {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				jsonObject.put(
-					"alt", uploadRequest.getParameter(fieldNameValue + "Alt"));
-				jsonObject.put("data", UnicodeFormatter.bytesToHex(bytes));
+					"alt", uploadRequest.getParameter(fieldNameValue + "Alt")
+				).put(
+					"data", UnicodeFormatter.bytesToHex(bytes)
+				);
 
 				return jsonObject.toString();
 			}

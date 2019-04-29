@@ -56,10 +56,15 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 
 		JSONObject fileEntryJSONObject = JSONFactoryUtil.createJSONObject();
 
-		fileEntryJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-		fileEntryJSONObject.put("groupId", fileEntry.getGroupId());
-		fileEntryJSONObject.put("title", fileEntry.getTitle());
-		fileEntryJSONObject.put("type", "document");
+		fileEntryJSONObject.put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"title", fileEntry.getTitle()
+		).put(
+			"type", "document"
+		);
 
 		String previewURL = null;
 
@@ -73,9 +78,11 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 				themeDisplay, fileEntry, "&imagePreview=1", false);
 		}
 
-		fileEntryJSONObject.put("url", previewURL);
-
-		fileEntryJSONObject.put("uuid", fileEntry.getUuid());
+		fileEntryJSONObject.put(
+			"url", previewURL
+		).put(
+			"uuid", fileEntry.getUuid()
+		);
 
 		return fileEntryJSONObject.toString();
 	}

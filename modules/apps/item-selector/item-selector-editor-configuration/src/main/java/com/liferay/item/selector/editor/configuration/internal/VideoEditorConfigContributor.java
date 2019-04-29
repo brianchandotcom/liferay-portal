@@ -69,9 +69,10 @@ public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 
 		if (itemSelectorURL != null) {
 			jsonObject.put(
-				"filebrowserVideoBrowseLinkUrl", itemSelectorURL.toString());
-			jsonObject.put(
-				"filebrowserVideoBrowseUrl", itemSelectorURL.toString());
+				"filebrowserVideoBrowseLinkUrl", itemSelectorURL.toString()
+			).put(
+				"filebrowserVideoBrowseUrl", itemSelectorURL.toString()
+			);
 		}
 	}
 

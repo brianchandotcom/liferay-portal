@@ -51,13 +51,19 @@ public class GetCategoriesAction extends JSONAction {
 				AssetCategoryServiceUtil.getChildCategories(
 					category.getCategoryId());
 
-			jsonObject.put("categoryId", category.getCategoryId());
-			jsonObject.put("childrenCount", childCategories.size());
-			jsonObject.put("hasChildren", !childCategories.isEmpty());
-			jsonObject.put("name", category.getName());
-			jsonObject.put("parentCategoryId", category.getParentCategoryId());
 			jsonObject.put(
-				"titleCurrentValue", category.getTitleCurrentValue());
+				"categoryId", category.getCategoryId()
+			).put(
+				"childrenCount", childCategories.size()
+			).put(
+				"hasChildren", !childCategories.isEmpty()
+			).put(
+				"name", category.getName()
+			).put(
+				"parentCategoryId", category.getParentCategoryId()
+			).put(
+				"titleCurrentValue", category.getTitleCurrentValue()
+			);
 
 			jsonArray.put(jsonObject);
 		}

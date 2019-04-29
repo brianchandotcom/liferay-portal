@@ -102,8 +102,11 @@ public class MBSubscriptionSender
 	protected void populateNotificationEventJSONObject(
 		JSONObject notificationEventJSONObject) {
 
-		notificationEventJSONObject.put("anonymous", _anonymous);
-		notificationEventJSONObject.put("fullName", _fullName);
+		notificationEventJSONObject.put(
+			"anonymous", _anonymous
+		).put(
+			"fullName", _fullName
+		);
 
 		super.populateNotificationEventJSONObject(notificationEventJSONObject);
 	}

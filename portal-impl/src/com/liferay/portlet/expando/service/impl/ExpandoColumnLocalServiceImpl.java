@@ -411,8 +411,10 @@ public class ExpandoColumnLocalServiceImpl
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		extraDataJSONObject.put(
-			"companyId", stagedExpandoColumn.getCompanyId());
-		extraDataJSONObject.put("uuid", stagedExpandoColumn.getUuid());
+			"companyId", stagedExpandoColumn.getCompanyId()
+		).put(
+			"uuid", stagedExpandoColumn.getUuid()
+		);
 
 		try {
 			systemEventLocalService.addSystemEvent(

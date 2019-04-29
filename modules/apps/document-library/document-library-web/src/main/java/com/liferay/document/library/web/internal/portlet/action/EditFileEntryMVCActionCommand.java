@@ -165,9 +165,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("added", Boolean.TRUE);
-			jsonObject.put("fileName", fileName);
-			jsonObject.put("originalFileName", originalFileName);
+			jsonObject.put(
+				"added", Boolean.TRUE
+			).put(
+				"fileName", fileName
+			).put(
+				"originalFileName", originalFileName
+			);
 
 			jsonArray.put(jsonObject);
 		}
@@ -178,10 +182,15 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("added", Boolean.FALSE);
-			jsonObject.put("errorMessage", errorMessage);
-			jsonObject.put("fileName", fileName);
-			jsonObject.put("originalFileName", fileName);
+			jsonObject.put(
+				"added", Boolean.FALSE
+			).put(
+				"errorMessage", errorMessage
+			).put(
+				"fileName", fileName
+			).put(
+				"originalFileName", fileName
+			);
 
 			jsonArray.put(jsonObject);
 		}
@@ -427,8 +436,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			String errorMessage = themeDisplay.translate(
 				"an-unexpected-error-occurred-while-deleting-the-file");
 
-			jsonObject.put("deleted", Boolean.FALSE);
-			jsonObject.put("errorMessage", errorMessage);
+			jsonObject.put(
+				"deleted", Boolean.FALSE
+			).put(
+				"errorMessage", errorMessage
+			);
 		}
 
 		JSONPortletResponseUtil.writeJSON(

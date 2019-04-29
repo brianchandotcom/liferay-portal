@@ -103,8 +103,11 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 				_fragmentEntryProcessorRegistry.
 					getDefaultEditableValuesJSONObject(html);
 
-			editableValueJSONObject.put("instanceId", instanceId);
-			editableValueJSONObject.put("portletId", portletId);
+			editableValueJSONObject.put(
+				"instanceId", instanceId
+			).put(
+				"portletId", portletId
+			);
 
 			FragmentEntryLink fragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
@@ -124,10 +127,10 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 				_fragmentRendererController.render(
 					defaultFragmentRendererContext,
 					_portal.getHttpServletRequest(actionRequest),
-					_portal.getHttpServletResponse(actionResponse)));
-
-			jsonObject.put(
-				"editableValues", fragmentEntryLink.getEditableValues());
+					_portal.getHttpServletResponse(actionResponse))
+			).put(
+				"editableValues", fragmentEntryLink.getEditableValues()
+			);
 
 			if (SessionErrors.contains(
 					actionRequest, "fragmentEntryInvalidContent")) {
@@ -137,11 +140,11 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 
 			jsonObject.put(
 				"fragmentEntryLinkId",
-				fragmentEntryLink.getFragmentEntryLinkId());
-
-			jsonObject.put(
+				fragmentEntryLink.getFragmentEntryLinkId()
+			).put(
 				"name",
-				_portal.getPortletTitle(portletId, themeDisplay.getLocale()));
+				_portal.getPortletTitle(portletId, themeDisplay.getLocale())
+			);
 
 			SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
 		}

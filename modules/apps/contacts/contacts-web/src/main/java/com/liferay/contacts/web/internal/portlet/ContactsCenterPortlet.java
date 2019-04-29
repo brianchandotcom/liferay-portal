@@ -316,10 +316,12 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			try {
 				JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
 
-				userJSONObject.put("success", Boolean.TRUE);
 				userJSONObject.put(
+					"success", Boolean.TRUE
+				).put(
 					"user",
-					getUserJSONObject(resourceResponse, themeDisplay, userId));
+					getUserJSONObject(resourceResponse, themeDisplay, userId)
+				);
 
 				jsonArray.put(userJSONObject);
 			}
@@ -526,9 +528,11 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			JSONObject contactsJSONObject = getContactsJSONObject(
 				actionRequest, actionResponse);
 
-			jsonObject.put("contactList", contactsJSONObject);
-
-			jsonObject.put("success", Boolean.TRUE);
+			jsonObject.put(
+				"contactList", contactsJSONObject
+			).put(
+				"success", Boolean.TRUE
+			);
 		}
 		catch (Exception e) {
 			if (e instanceof ContactNameException.MustHaveValidFullName) {
@@ -589,9 +593,11 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-			jsonObject.put("redirect", redirect);
-
-			jsonObject.put("success", Boolean.TRUE);
+			jsonObject.put(
+				"redirect", redirect
+			).put(
+				"success", Boolean.TRUE
+			);
 		}
 		catch (Exception e) {
 			String message = "your-request-failed-to-complete";
@@ -656,9 +662,11 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				message = "please-enter-a-valid-url";
 			}
 
-			jsonObject.put("message", translate(actionRequest, message));
-
-			jsonObject.put("success", Boolean.FALSE);
+			jsonObject.put(
+				"message", translate(actionRequest, message)
+			).put(
+				"success", Boolean.FALSE
+			);
 		}
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
@@ -765,10 +773,11 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		for (long userId : userIds) {
 			JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
 
-			userJSONObject.put("success", Boolean.TRUE);
 			userJSONObject.put(
-				"user",
-				getUserJSONObject(actionResponse, themeDisplay, userId));
+				"success", Boolean.TRUE
+			).put(
+				"user", getUserJSONObject(actionResponse, themeDisplay, userId)
+			);
 
 			jsonArray.put(userJSONObject);
 		}
@@ -800,10 +809,15 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		JSONObject optionsJSONObject = JSONFactoryUtil.createJSONObject();
 
-		optionsJSONObject.put("end", end);
-		optionsJSONObject.put("filterBy", filterBy);
-		optionsJSONObject.put("keywords", keywords);
-		optionsJSONObject.put("start", start);
+		optionsJSONObject.put(
+			"end", end
+		).put(
+			"filterBy", filterBy
+		).put(
+			"keywords", keywords
+		).put(
+			"start", start
+		);
 
 		jsonObject.put("options", optionsJSONObject);
 
@@ -985,8 +999,10 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		jsonObject.put(
 			"portraitURL",
-			themeDisplay.getPathImage() + "/user_male_portrait?img_id=0");
-		jsonObject.put("redirect", redirect);
+			themeDisplay.getPathImage() + "/user_male_portrait?img_id=0"
+		).put(
+			"redirect", redirect
+		);
 
 		LiferayPortletResponse liferayPortletResponse =
 			portal.getLiferayPortletResponse(portletResponse);
@@ -1113,9 +1129,10 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				JSONFactoryUtil.createJSONObject();
 
 			notificationEventJSONObject.put(
-				"classPK", socialRequest.getRequestId());
-			notificationEventJSONObject.put(
-				"userId", socialRequest.getUserId());
+				"classPK", socialRequest.getRequestId()
+			).put(
+				"userId", socialRequest.getUserId()
+			);
 
 			userNotificationEventLocalService.sendUserNotificationEvents(
 				socialRequest.getReceiverUserId(),

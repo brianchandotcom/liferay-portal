@@ -75,25 +75,30 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		sb.append(getAllowedContentTable());
 		sb.append(" span[*](*){*}; ");
 
-		jsonObject.put("allowedContent", sb.toString());
-
-		jsonObject.put("enterMode", 2);
-		jsonObject.put("extraPlugins", getExtraPluginsLists());
+		jsonObject.put(
+			"allowedContent", sb.toString()
+		).put(
+			"enterMode", 2
+		).put(
+			"extraPlugins", getExtraPluginsLists()
+		);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, "_EDITOR_NAME_selectItem",
 			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
 
 		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
-
-		jsonObject.put("removePlugins", getRemovePluginsLists());
-		jsonObject.put(
+			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString()
+		).put(
+			"filebrowserImageBrowseUrl", itemSelectorURL.toString()
+		).put(
+			"removePlugins", getRemovePluginsLists()
+		).put(
 			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-		jsonObject.put(
-			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
+			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+		).put(
+			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale())
+		);
 	}
 
 	protected String getAllowedContentLists() {
@@ -209,12 +214,17 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 
 		JSONObject toolbarJSONObject = JSONFactoryUtil.createJSONObject();
 
-		toolbarJSONObject.put("buttons", toJSONArray("['image', 'hline']"));
-		toolbarJSONObject.put("tabIndex", 1);
+		toolbarJSONObject.put(
+			"buttons", toJSONArray("['image', 'hline']")
+		).put(
+			"tabIndex", 1
+		);
 
-		jsonObject.put("add", toolbarJSONObject);
-
-		jsonObject.put("styles", getToolbarsStylesJSONObject(locale));
+		jsonObject.put(
+			"add", toolbarJSONObject
+		).put(
+			"styles", getToolbarsStylesJSONObject(locale)
+		);
 
 		return jsonObject;
 	}
@@ -223,8 +233,10 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			"selections", getToolbarsStylesSelectionsJSONArray(locale));
-		jsonObject.put("tabIndex", 1);
+			"selections", getToolbarsStylesSelectionsJSONArray(locale)
+		).put(
+			"tabIndex", 1
+		);
 
 		return jsonObject;
 	}
@@ -238,9 +250,13 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("buttons", toJSONArray("['linkEditBrowse']"));
-		jsonObject.put("name", "link");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
+		jsonObject.put(
+			"buttons", toJSONArray("['linkEditBrowse']")
+		).put(
+			"name", "link"
+		).put(
+			"test", "AlloyEditor.SelectionTest.link"
+		);
 
 		return jsonObject;
 	}

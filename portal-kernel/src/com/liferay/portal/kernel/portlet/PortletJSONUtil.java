@@ -233,8 +233,11 @@ public class PortletJSONUtil {
 				StringUtil.merge(markupHeadElements, StringPool.BLANK));
 		}
 
-		jsonObject.put("portletHTML", portletHTML);
-		jsonObject.put("refresh", !portlet.isAjaxable());
+		jsonObject.put(
+			"portletHTML", portletHTML
+		).put(
+			"refresh", !portlet.isAjaxable()
+		);
 	}
 
 	public static void writeFooterPaths(

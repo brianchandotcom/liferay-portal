@@ -47,9 +47,13 @@ public class BlogsTextEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put("allowedContent", "p");
-		jsonObject.put("disallowedContent", "br");
-		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
+		jsonObject.put(
+			"allowedContent", "p"
+		).put(
+			"disallowedContent", "br"
+		).put(
+			"toolbars", JSONFactoryUtil.createJSONObject()
+		);
 	}
 
 }

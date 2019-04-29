@@ -67,15 +67,18 @@ public class CKEditorCreoleConfigContributor
 			}
 		}
 
-		jsonObject.put("decodeLinks", Boolean.TRUE);
-		jsonObject.put("disableObjectResizing", Boolean.TRUE);
 		jsonObject.put(
-			"extraPlugins",
-			"a11yhelpbtn,creole,itemselector,lfrpopup,wikilink");
-		jsonObject.put(
+			"decodeLinks", Boolean.TRUE
+		).put(
+			"disableObjectResizing", Boolean.TRUE
+		).put(
+			"extraPlugins", "a11yhelpbtn,creole,itemselector,lfrpopup,wikilink"
+		).put(
 			"filebrowserWindowFeatures",
-			"title=" + LanguageUtil.get(themeDisplay.getLocale(), "browse"));
-		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
+			"title=" + LanguageUtil.get(themeDisplay.getLocale(), "browse")
+		).put(
+			"format_tags", "p;h1;h2;h3;h4;h5;h6;pre"
+		);
 
 		StringBundler sb = new StringBundler(4);
 
@@ -84,17 +87,18 @@ public class CKEditorCreoleConfigContributor
 		sb.append("newpage,pagebreak,preview,print,save,showblocks,smiley,");
 		sb.append("stylescombo,templates,video");
 
-		jsonObject.put("removePlugins", sb.toString());
-
 		jsonObject.put(
+			"removePlugins", sb.toString()
+		).put(
 			"toolbar_creole",
-			getToolbarsCreoleJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			getToolbarsCreoleJSONArray(inputEditorTaglibAttributes)
+		).put(
 			"toolbar_phone",
-			getToolbarsPhoneJSONArray(inputEditorTaglibAttributes));
-		jsonObject.put(
+			getToolbarsPhoneJSONArray(inputEditorTaglibAttributes)
+		).put(
 			"toolbar_tablet",
-			getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
+			getToolbarsTabletJSONArray(inputEditorTaglibAttributes)
+		);
 	}
 
 	protected JSONArray getToolbarsCreoleJSONArray(

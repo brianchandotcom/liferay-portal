@@ -181,9 +181,11 @@ public class UpgradeDDMFormInstanceSettingsTest {
 		JSONArray availableLanguagesJSONArray = getAvailableLanguagesJSONArray(
 			"en_US");
 
-		object.put("availableLanguageIdss", availableLanguagesJSONArray);
-
-		object.put("defaultLanguageId", "en_US");
+		object.put(
+			"availableLanguageIdss", availableLanguagesJSONArray
+		).put(
+			"defaultLanguageId", "en_US"
+		);
 
 		JSONArray fieldValues = createFieldValues(hasSetting);
 
@@ -203,9 +205,13 @@ public class UpgradeDDMFormInstanceSettingsTest {
 	protected JSONObject getFieldValueJSONObject(String name, String value) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("instanceId", RandomTestUtil.randomString());
-		jsonObject.put("name", name);
-		jsonObject.put("value", value);
+		jsonObject.put(
+			"instanceId", RandomTestUtil.randomString()
+		).put(
+			"name", name
+		).put(
+			"value", value
+		);
 
 		return jsonObject;
 	}

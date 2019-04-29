@@ -300,8 +300,11 @@ public class EditAssetListDisplayContext {
 				continue;
 			}
 
-			ruleJSONObject.put("queryValues", queryValues);
-			ruleJSONObject.put("type", queryName);
+			ruleJSONObject.put(
+				"queryValues", queryValues
+			).put(
+				"type", queryName
+			);
 
 			rulesJSONArray.put(ruleJSONObject);
 		}
@@ -309,8 +312,11 @@ public class EditAssetListDisplayContext {
 		if (rulesJSONArray.length() == 0) {
 			JSONObject defaultRule = JSONFactoryUtil.createJSONObject();
 
-			defaultRule.put("queryContains", true);
-			defaultRule.put("type", "assetTags");
+			defaultRule.put(
+				"queryContains", true
+			).put(
+				"type", "assetTags"
+			);
 
 			rulesJSONArray.put(defaultRule);
 		}

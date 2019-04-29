@@ -763,8 +763,11 @@ public class UpgradeContentTargetingTest {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("attributeName", expandoColumn.getName());
-		jsonObject.put("value", expandoValue);
+		jsonObject.put(
+			"attributeName", expandoColumn.getName()
+		).put(
+			"value", expandoValue
+		);
 
 		return jsonObject.toString();
 	}
@@ -780,17 +783,20 @@ public class UpgradeContentTargetingTest {
 
 		jsonObject.put(
 			"startDate",
-			dateFormat.format(Date.from(startZonedDateTime.toInstant())));
-
-		jsonObject.put("startDateTimeZoneId", timeZoneId);
-		jsonObject.put("type", type);
+			dateFormat.format(Date.from(startZonedDateTime.toInstant()))
+		).put(
+			"startDateTimeZoneId", timeZoneId
+		).put(
+			"type", type
+		);
 
 		if (type.equals("between")) {
 			jsonObject.put(
 				"endDate",
-				dateFormat.format(Date.from(endZonedDateTime.toInstant())));
-
-			jsonObject.put("endDateTimeZoneId", timeZoneId);
+				dateFormat.format(Date.from(endZonedDateTime.toInstant()))
+			).put(
+				"endDateTimeZoneId", timeZoneId
+			);
 		}
 
 		return jsonObject.toString();

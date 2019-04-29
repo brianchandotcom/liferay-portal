@@ -407,10 +407,15 @@ public class AuthenticatedSessionManagerImpl
 				jsonObject.put("clusterNodeId", clusterNode.getClusterNodeId());
 			}
 
-			jsonObject.put("command", "signOut");
-			jsonObject.put("companyId", companyId);
-			jsonObject.put("sessionId", userTracker.getSessionId());
-			jsonObject.put("userId", userId);
+			jsonObject.put(
+				"command", "signOut"
+			).put(
+				"companyId", companyId
+			).put(
+				"sessionId", userTracker.getSessionId()
+			).put(
+				"userId", userId
+			);
 
 			MessageBusUtil.sendMessage(
 				DestinationNames.LIVE_USERS, jsonObject.toString());

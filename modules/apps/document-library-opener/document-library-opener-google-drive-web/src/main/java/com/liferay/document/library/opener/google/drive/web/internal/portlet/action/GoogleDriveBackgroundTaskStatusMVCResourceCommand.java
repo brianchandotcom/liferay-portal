@@ -101,8 +101,11 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("complete", complete);
-		jsonObject.put("error", error);
+		jsonObject.put(
+			"complete", complete
+		).put(
+			"error", error
+		);
 
 		if (complete && (dlOpenerFileEntryReference != null) &&
 			Validator.isNotNull(dlOpenerFileEntryReference.getReferenceKey())) {

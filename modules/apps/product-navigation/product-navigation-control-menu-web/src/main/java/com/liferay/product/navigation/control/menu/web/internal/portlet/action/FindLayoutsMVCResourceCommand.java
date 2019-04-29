@@ -72,8 +72,11 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 		response.setContentType(ContentTypes.APPLICATION_JSON);
 
 		if (Validator.isNull(keywords)) {
-			jsonObject.put("layouts", JSONFactoryUtil.createJSONArray());
-			jsonObject.put("totalCount", 0);
+			jsonObject.put(
+				"layouts", JSONFactoryUtil.createJSONArray()
+			).put(
+				"totalCount", 0
+			);
 
 			ServletResponseUtil.write(response, jsonObject.toString());
 
@@ -115,9 +118,11 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			layoutJSONObject.put("name", sb.toString());
 			layoutJSONObject.put(
-				"url", _portal.getLayoutFullURL(layout, themeDisplay));
+				"name", sb.toString()
+			).put(
+				"url", _portal.getLayoutFullURL(layout, themeDisplay)
+			);
 
 			jsonArray.put(layoutJSONObject);
 		}

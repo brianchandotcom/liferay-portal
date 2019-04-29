@@ -113,8 +113,10 @@ public class KBAttachmentEditorConfigContributor
 				resourcePrimKey, themeDisplay, requestBackedPortletURLFactory));
 
 		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString()
+		).put(
+			"filebrowserImageBrowseUrl", itemSelectorURL.toString()
+		);
 	}
 
 	@Reference(unbind = "-")

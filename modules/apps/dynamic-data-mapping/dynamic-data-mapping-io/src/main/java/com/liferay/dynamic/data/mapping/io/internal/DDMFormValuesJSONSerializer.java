@@ -207,8 +207,11 @@ public class DDMFormValuesJSONSerializer implements DDMFormValuesSerializer {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("instanceId", ddmFormFieldValue.getInstanceId());
-		jsonObject.put("name", ddmFormFieldValue.getName());
+		jsonObject.put(
+			"instanceId", ddmFormFieldValue.getInstanceId()
+		).put(
+			"name", ddmFormFieldValue.getName()
+		);
 
 		addNestedFieldValues(
 			jsonObject, ddmFormFieldsMap,

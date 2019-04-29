@@ -82,10 +82,15 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("cssPath", "index.css");
-		jsonObject.put("htmlPath", "index.html");
-		jsonObject.put("jsPath", "index.js");
-		jsonObject.put("name", getName());
+		jsonObject.put(
+			"cssPath", "index.css"
+		).put(
+			"htmlPath", "index.html"
+		).put(
+			"jsPath", "index.js"
+		).put(
+			"name", getName()
+		);
 
 		FileEntry previewFileEntry = _getPreviewFileEntry();
 

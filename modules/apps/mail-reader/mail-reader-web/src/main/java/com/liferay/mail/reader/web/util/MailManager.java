@@ -370,41 +370,67 @@ public class MailManager {
 
 		JSONObject gmailAccountJSONObject = JSONFactoryUtil.createJSONObject();
 
-		gmailAccountJSONObject.put("address", "@gmail.com");
 		gmailAccountJSONObject.put(
+			"address", "@gmail.com"
+		).put(
 			"descriptionLanguageKey",
-			"please-enable-imap-in-you-gmail-settings-for-mail-to-work");
-		gmailAccountJSONObject.put("folderPrefix", "");
-		gmailAccountJSONObject.put("hideSettings", true);
-		gmailAccountJSONObject.put("incomingHostName", "imap.gmail.com");
-		gmailAccountJSONObject.put("incomingPort", 993);
-		gmailAccountJSONObject.put("incomingSecure", true);
-		gmailAccountJSONObject.put("outgoingHostName", "smtp.gmail.com");
-		gmailAccountJSONObject.put("outgoingPort", 465);
-		gmailAccountJSONObject.put("outgoingSecure", true);
-		gmailAccountJSONObject.put("protocol", "imap");
-		gmailAccountJSONObject.put("titleLanguageKey", "gmail-account");
-		gmailAccountJSONObject.put("useLocalPartAsLogin", true);
+			"please-enable-imap-in-you-gmail-settings-for-mail-to-work"
+		).put(
+			"folderPrefix", ""
+		).put(
+			"hideSettings", true
+		).put(
+			"incomingHostName", "imap.gmail.com"
+		).put(
+			"incomingPort", 993
+		).put(
+			"incomingSecure", true
+		).put(
+			"outgoingHostName", "smtp.gmail.com"
+		).put(
+			"outgoingPort", 465
+		).put(
+			"outgoingSecure", true
+		).put(
+			"protocol", "imap"
+		).put(
+			"titleLanguageKey", "gmail-account"
+		).put(
+			"useLocalPartAsLogin", true
+		);
 
 		jsonArray.put(gmailAccountJSONObject);
 
 		JSONObject customMailAccontJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		customMailAccontJSONObject.put("address", "");
-		customMailAccontJSONObject.put("descriptionLanguageKey", "");
-		customMailAccontJSONObject.put("folderPrefix", "");
-		customMailAccontJSONObject.put("hideSettings", false);
-		customMailAccontJSONObject.put("incomingHostName", "");
-		customMailAccontJSONObject.put("incomingPort", 110);
-		customMailAccontJSONObject.put("incomingSecure", false);
-		customMailAccontJSONObject.put("outgoingHostName", "");
-		customMailAccontJSONObject.put("outgoingPort", 25);
-		customMailAccontJSONObject.put("outgoingSecure", false);
-		customMailAccontJSONObject.put("protocol", "imap");
 		customMailAccontJSONObject.put(
-			"titleLanguageKey", "custom-mail-account");
-		customMailAccontJSONObject.put("useLocalPartAsLogin", false);
+			"address", ""
+		).put(
+			"descriptionLanguageKey", ""
+		).put(
+			"folderPrefix", ""
+		).put(
+			"hideSettings", false
+		).put(
+			"incomingHostName", ""
+		).put(
+			"incomingPort", 110
+		).put(
+			"incomingSecure", false
+		).put(
+			"outgoingHostName", ""
+		).put(
+			"outgoingPort", 25
+		).put(
+			"outgoingSecure", false
+		).put(
+			"protocol", "imap"
+		).put(
+			"titleLanguageKey", "custom-mail-account"
+		).put(
+			"useLocalPartAsLogin", false
+		);
 
 		jsonArray.put(customMailAccontJSONObject);
 
@@ -851,9 +877,11 @@ public class MailManager {
 		ResourceBundle resourceBundle = _portletConfig.getResourceBundle(
 			_user.getLocale());
 
-		jsonObject.put("message", LanguageUtil.get(resourceBundle, message));
-
-		jsonObject.put("status", status);
+		jsonObject.put(
+			"message", LanguageUtil.get(resourceBundle, message)
+		).put(
+			"status", status
+		);
 
 		if (Validator.isNotNull(value)) {
 			jsonObject.put("value", value);

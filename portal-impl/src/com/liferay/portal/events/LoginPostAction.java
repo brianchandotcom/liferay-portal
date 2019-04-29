@@ -81,11 +81,17 @@ public class LoginPostAction extends Action {
 						"clusterNodeId", clusterNode.getClusterNodeId());
 				}
 
-				jsonObject.put("command", "signIn");
-				jsonObject.put("companyId", companyId);
-				jsonObject.put("remoteAddr", request.getRemoteAddr());
-				jsonObject.put("remoteHost", request.getRemoteHost());
-				jsonObject.put("sessionId", session.getId());
+				jsonObject.put(
+					"command", "signIn"
+				).put(
+					"companyId", companyId
+				).put(
+					"remoteAddr", request.getRemoteAddr()
+				).put(
+					"remoteHost", request.getRemoteHost()
+				).put(
+					"sessionId", session.getId()
+				);
 
 				String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
 

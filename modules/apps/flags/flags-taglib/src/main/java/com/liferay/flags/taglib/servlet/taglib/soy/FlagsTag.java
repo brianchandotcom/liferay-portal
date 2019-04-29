@@ -180,13 +180,17 @@ public class FlagsTag extends ComponentRendererTag {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		dataJSONObject.put(namespace + "className", context.get("className"));
-		dataJSONObject.put(namespace + "classPK", context.get("classPK"));
 		dataJSONObject.put(
-			namespace + "contentTitle", context.get("contentTitle"));
-		dataJSONObject.put(namespace + "contentURL", _getCurrentURL());
-		dataJSONObject.put(
-			namespace + "reportedUserId", context.get("reportedUserId"));
+			namespace + "className", context.get("className")
+		).put(
+			namespace + "classPK", context.get("classPK")
+		).put(
+			namespace + "contentTitle", context.get("contentTitle")
+		).put(
+			namespace + "contentURL", _getCurrentURL()
+		).put(
+			namespace + "reportedUserId", context.get("reportedUserId")
+		);
 
 		return dataJSONObject;
 	}

@@ -67,12 +67,12 @@ public class CalculateReadingTimeMVCResourceCommand
 			readingTimeDuration -> {
 				jsonObject.put(
 					"readingTimeInSeconds",
-					(float)readingTimeDuration.getSeconds());
-
-				jsonObject.put(
+					(float)readingTimeDuration.getSeconds()
+				).put(
 					"readingTimeMessage",
 					_readingTimeMessageProvider.provide(
-						readingTimeDuration, resourceRequest.getLocale()));
+						readingTimeDuration, resourceRequest.getLocale())
+				);
 			});
 
 		JSONPortletResponseUtil.writeJSON(

@@ -89,9 +89,13 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 
 		JSONObject fieldValueJSONObject = _jsonFactory.createJSONObject();
 
-		fieldValueJSONObject.put("instanceId", StringUtil.randomString(8));
-		fieldValueJSONObject.put("name", "timeout");
-		fieldValueJSONObject.put("value", "1000");
+		fieldValueJSONObject.put(
+			"instanceId", StringUtil.randomString(8)
+		).put(
+			"name", "timeout"
+		).put(
+			"value", "1000"
+		);
 
 		fieldValuesJSONArray.put(fieldValueJSONObject);
 	}

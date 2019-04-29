@@ -145,17 +145,23 @@ public class ServerManagerServlet extends HttpServlet {
 
 		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject();
 
-		responseJSONObject.put(JSONKeys.ERROR, StringPool.BLANK);
-		responseJSONObject.put(JSONKeys.OUTPUT, StringPool.BLANK);
-		responseJSONObject.put(JSONKeys.STATUS, 0);
+		responseJSONObject.put(
+			JSONKeys.ERROR, StringPool.BLANK
+		).put(
+			JSONKeys.OUTPUT, StringPool.BLANK
+		).put(
+			JSONKeys.STATUS, 0
+		);
 
 		try {
 			execute(request, responseJSONObject, request.getPathInfo());
 		}
 		catch (Exception e) {
 			responseJSONObject.put(
-				JSONKeys.ERROR, StackTraceUtil.getStackTrace(e));
-			responseJSONObject.put(JSONKeys.STATUS, 1);
+				JSONKeys.ERROR, StackTraceUtil.getStackTrace(e)
+			).put(
+				JSONKeys.STATUS, 1
+			);
 		}
 
 		String format = ParamUtil.getString(request, "format");

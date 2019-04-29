@@ -1508,10 +1508,13 @@ public class FileSystemImporter extends BaseImporter {
 		JSONObject portletPreferencesJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		portletPreferencesJSONObject.put("articleId", journalArticleId);
-		portletPreferencesJSONObject.put("groupId", groupId);
 		portletPreferencesJSONObject.put(
-			"portletSetupPortletDecoratorId", "borderless");
+			"articleId", journalArticleId
+		).put(
+			"groupId", groupId
+		).put(
+			"portletSetupPortletDecoratorId", "borderless"
+		);
 
 		portletJSONObject.put(
 			"portletPreferences", portletPreferencesJSONObject);

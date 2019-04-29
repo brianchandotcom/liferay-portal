@@ -181,8 +181,11 @@ public class SetOptionsFunctionTest extends PowerMockito {
 	private JSONObject _createJSONObject(String label, String value) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("label", label);
-		jsonObject.put("value", value);
+		jsonObject.put(
+			"label", label
+		).put(
+			"value", value
+		);
 
 		return jsonObject;
 	}

@@ -85,8 +85,11 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 	protected Field createField() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("latitude", 9.8765);
-		jsonObject.put("longitude", 1.2345);
+		jsonObject.put(
+			"latitude", 9.8765
+		).put(
+			"longitude", 1.2345
+		);
 
 		return new Field("field", jsonObject.toString());
 	}

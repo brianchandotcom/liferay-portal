@@ -122,9 +122,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			sb.append(alias);
 			sb.append(">");
 
-			jsonObject.put("content", sb.toString());
-
-			jsonObject.put("name", "lfr-widget-" + alias);
+			jsonObject.put(
+				"content", sb.toString()
+			).put(
+				"name", "lfr-widget-" + alias
+			);
 
 			jsonArray.put(jsonObject);
 		}

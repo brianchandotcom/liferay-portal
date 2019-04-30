@@ -176,14 +176,12 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		Alert.viewRequiredField();
+		Alert.viewSuccessMessage();
 
-		if (isSet(webContentContent)) {
-			AssertTextEquals(
-				key_editor = "content",
-				locator1 = "AlloyEditor#EDITOR",
-				value1 = "${webContentContent}");
-		}
+		AssertTextEquals.assertPartialText(
+			key_webContentTitle = "Untitled",
+			locator1 = "WC#ENTRY_LIST_TITLE",
+			value1 = "Untitled");
 	}
 
 	macro addPGViaAP {
@@ -842,7 +840,12 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		Alert.viewRequiredField();
+		Alert.viewSuccessMessage();
+
+		AssertTextEquals.assertPartialText(
+			key_webContentTitle = "Untitled",
+			locator1 = "WC#ENTRY_LIST_TITLE",
+			value1 = "Untitled");
 	}
 
 	macro editPGViaWCD {

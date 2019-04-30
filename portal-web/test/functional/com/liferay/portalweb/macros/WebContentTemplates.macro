@@ -120,7 +120,7 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewRequiredField();
+		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
 		SelectFrame(value1 = "relative=top");
 	}

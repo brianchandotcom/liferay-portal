@@ -1,6 +1,10 @@
 @import "mixins";
 
 .portlet-asset-publisher {
+	.addbutton-timeline-item {
+		position: relative;
+	}
+
 	.asset-full-content {
 		img {
 			max-width: 100%;
@@ -23,6 +27,27 @@
 
 	.metadata-author {
 		font-size: 0.875rem;
+	}
+
+	.timeline-increment-icon.add-condition:before {
+		background-color: #869CAD;
+		bottom: 37px;
+		content: '';
+		display: block;
+		left: 20px;
+		position: absolute;
+		top: -10px;
+		width: 2px;
+	}
+
+	.timeline-increment-icon.add-condition {
+		.form-builder-timeline-add-item {
+			border-radius: 100%;
+			color: #FFF;
+			margin-left: 10px;
+			margin-top: -72px;
+			padding: 0;
+		}
 	}
 
 	.timeline-item {
@@ -127,31 +152,6 @@
 
 		.timeline-increment {
 			z-index: 0;
-		}
-	}
-
-	.addbutton-timeline-item {
-		position: relative;
-	}
-
-	.timeline-increment-icon.add-condition:before {
-		background-color: #869CAD;
-		bottom: 37px;
-		content: '';
-		display: block;
-		left: 20px;
-		position: absolute;
-		top: -10px;
-		width: 2px;
-	}
-
-	.timeline-increment-icon.add-condition {
-		.form-builder-timeline-add-item {
-			border-radius: 100%;
-			color: #FFF;
-			margin-left: 10px;
-			margin-top: -72px;
-			padding: 0;
 		}
 	}
 }

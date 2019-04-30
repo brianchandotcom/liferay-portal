@@ -10,6 +10,7 @@ import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLinkContent.soy';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
+import FragmentEditableBackgroundImage from './FragmentEditableBackgroundImage.es';
 
 /**
  * Creates a Fragment Entry Link Content component.
@@ -141,7 +142,31 @@ class FragmentEntryLinkContent extends Component {
 	_createEditables() {
 		this._destroyEditables();
 
-		this._editables = Array.from(this.refs.content.querySelectorAll('lfr-editable')).map(
+		const backgroundImageEditables = Array.from(this.refs.content.querySelectorAll('[data-lfr-background-image-id]')).map(
+			element => {
+				const editableId = element.dataset.lfrBackgroundImageId;
+				const editableValues = (
+					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
+					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableId]
+				) ? this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableId] :
+					{
+						defaultValue: ''
+					};
+
+				return new FragmentEditableBackgroundImage(
+					{
+						editableId,
+						editableValues,
+						element: element,
+						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						showMapping: this.showMapping,
+						store: this.store
+					}
+				);
+			}
+		);
+
+		const editableFields = Array.from(this.refs.content.querySelectorAll('lfr-editable')).map(
 			editable => {
 				const editableValues = (
 					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
@@ -176,6 +201,8 @@ class FragmentEntryLinkContent extends Component {
 				);
 			}
 		);
+
+		this._editables = [...backgroundImageEditables, ...editableFields];
 	}
 
 	/**

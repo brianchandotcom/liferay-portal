@@ -92,7 +92,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								_getURL(assetEntryUsage, 0, request));
+								_getURL(assetEntryUsage, request));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle, "view-in-page"));
@@ -122,10 +122,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 							add(
 								dropdownItem -> {
 									dropdownItem.setHref(
-										_getURL(
-											assetEntryUsage,
-											assetEntryUsage.getAssetEntryId(),
-											request));
+										_getURL(assetEntryUsage, request));
 									dropdownItem.setLabel(label);
 								});
 						}
@@ -139,8 +136,7 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	}
 
 	private String _getURL(
-			AssetEntryUsage assetEntryUsage, long previewAssetEntryId,
-			HttpServletRequest request)
+			AssetEntryUsage assetEntryUsage, HttpServletRequest request)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -156,21 +152,18 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 
 			layoutURL = _portal.getLayoutFriendlyURL(layout, themeDisplay);
 
-			if (previewAssetEntryId > 0) {
-				layoutURL = _http.setParameter(
-					layoutURL, "previewAssetEntryId",
-					String.valueOf(previewAssetEntryId));
-			}
+			layoutURL = _http.setParameter(
+				layoutURL, "previewAssetEntryId",
+				String.valueOf(assetEntryUsage.getAssetEntryId()));
 		}
 		else {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				request, assetEntryUsage.getContainerKey(),
 				assetEntryUsage.getPlid(), PortletRequest.RENDER_PHASE);
 
-			if (previewAssetEntryId > 0) {
-				portletURL.setParameter(
-					"previewAssetEntryId", String.valueOf(previewAssetEntryId));
-			}
+			portletURL.setParameter(
+				"previewAssetEntryId",
+				String.valueOf(assetEntryUsage.getAssetEntryId()));
 
 			layoutURL = portletURL.toString();
 		}

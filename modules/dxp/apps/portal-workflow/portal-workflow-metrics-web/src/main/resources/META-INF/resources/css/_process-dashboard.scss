@@ -40,7 +40,7 @@ $c: ".workflow-process-dashboard";
 
 		.footer {
 			color: #6B6C7E;
-			pointer-events: none;
+			min-height: 1.3rem;
 
 			.highlight-hover {
 				color: #0B5FFF;
@@ -52,7 +52,6 @@ $c: ".workflow-process-dashboard";
 		}
 
 		&.disabled {
-			cursor: not-allowed;
 			pointer-events: none;
 
 			.header {

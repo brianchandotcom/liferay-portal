@@ -231,7 +231,7 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Sharing",
-			configurationName = "Virtual Instance Sharing",
+			configurationName = "Sharing",
 			configurationScope = "Virtual Instance Scope");
 
 		FormFields.disableCheckbox(fieldName = "enabled");

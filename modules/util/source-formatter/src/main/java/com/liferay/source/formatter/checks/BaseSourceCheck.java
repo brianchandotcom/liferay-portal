@@ -783,16 +783,13 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		try {
 			return new URL(
 				StringBundler.concat(
-					_GIT_LIFERAY_PORTAL_URL, portalBranchName, StringPool.SLASH,
-					fileName));
+					SourceFormatterUtil.GIT_LIFERAY_PORTAL_URL,
+					portalBranchName, StringPool.SLASH, fileName));
 		}
 		catch (Exception e) {
 			return null;
 		}
 	}
-
-	private static final String _GIT_LIFERAY_PORTAL_URL =
-		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
 	private String _baseDirName;
 	private final Map<String, BNDSettings> _bndSettingsMap =

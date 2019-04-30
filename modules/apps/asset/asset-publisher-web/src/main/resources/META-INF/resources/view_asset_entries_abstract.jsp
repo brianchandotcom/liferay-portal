@@ -44,7 +44,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 		}
 	}
 
-	if ((assetRenderer == null) || (!assetRenderer.isDisplayable() && Validator.isNull(previewAssetEntryId))) {
+	if ((assetRenderer == null) || (!assetRenderer.isDisplayable() && (previewAssetEntryId <= 0))) {
 		continue;
 	}
 

@@ -84,21 +84,17 @@ public class ContactLocalServiceTest {
 		Contact contact = _contactLocalService.createContact(
 			_counterLocalService.increment());
 
-		Date date = new Date(System.currentTimeMillis() + 100000);
-
-		contact.setBirthday(date);
+		contact.setBirthday(new Date(System.currentTimeMillis() + 100000));
 
 		_contactLocalService.addContact(contact);
 	}
 
 	@Test(expected = SystemException.class)
 	public void testDefaultUpdateContactWithFutureBirthday() {
-		Date date = new Date(System.currentTimeMillis() + 100000);
-
 		Contact contact = _contactLocalService.createContact(
 			_counterLocalService.increment());
 
-		contact.setBirthday(date);
+		contact.setBirthday(new Date(System.currentTimeMillis() + 100000));
 
 		_contactLocalService.updateContact(contact);
 	}

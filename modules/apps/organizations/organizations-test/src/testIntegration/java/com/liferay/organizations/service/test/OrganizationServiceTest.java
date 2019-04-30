@@ -65,7 +65,6 @@ public class OrganizationServiceTest {
 			_organizationService.getGtOrganizations(
 				0, TestPropsValues.getCompanyId(), parentOrganizationId, size);
 
-		Assert.assertFalse(organizations.isEmpty());
 		Assert.assertEquals(
 			organizations.toString(), size, organizations.size());
 
@@ -76,7 +75,6 @@ public class OrganizationServiceTest {
 			lastOrganization.getOrganizationId(),
 			TestPropsValues.getCompanyId(), parentOrganizationId, size);
 
-		Assert.assertFalse(organizations.isEmpty());
 		Assert.assertEquals(
 			organizations.toString(), size, organizations.size());
 

@@ -65,10 +65,10 @@ exports[`Should render component 1`] = `
       }
     >
       <SummaryCard
+        getTitle={[Function]}
         iconColor="success"
         iconName="check-circle"
         processId={12345}
-        title="On Time"
         total={false}
         totalValue={55}
         value={31}
@@ -342,10 +342,10 @@ exports[`Should render component with disabled state 1`] = `
       }
     >
       <SummaryCard
+        getTitle={[Function]}
         iconColor="success"
         iconName="check-circle"
         processId={12345}
-        title="On Time"
         total={false}
         totalValue={55}
       >

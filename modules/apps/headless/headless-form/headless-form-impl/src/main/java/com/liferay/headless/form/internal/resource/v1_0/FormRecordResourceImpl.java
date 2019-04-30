@@ -261,8 +261,14 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 			values -> {
 				try {
 					for (DDMFormFieldValue ddmFormFieldValue : values) {
+						long fileEntryId = _getFileEntryId(ddmFormFieldValue);
+
+						if (fileEntryId == 0) {
+							return;
+						}
+
 						FileEntry fileEntry = _dlAppService.getFileEntry(
-							_getFileEntryId(ddmFormFieldValue));
+							fileEntryId);
 
 						JSONObject jsonObject =
 							JSONFactoryUtil.createJSONObject();

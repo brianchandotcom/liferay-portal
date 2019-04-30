@@ -803,7 +803,9 @@ definition {
 
 		var key_dmDocumentTitle = "DM Document Title";
 
-		AssertElementNotPresent(locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_DOCUMENT_OPTIONS");
+		Click(locator1 = "DocumentsAndMediaShare#SHARED_ASSETS_DOCUMENT_OPTIONS");
+
+		MenuItem.viewNotPresent(menuItem = "Share");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

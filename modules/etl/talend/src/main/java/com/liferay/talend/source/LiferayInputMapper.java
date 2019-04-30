@@ -107,7 +107,7 @@ public class LiferayInputMapper implements Serializable {
 
 		JsonObject responseJsonObject =
 			_connectionService.getResponseJsonObject(
-				inputDataSet.getGenericDataStore(), resourceURI.toString());
+				inputDataSet.getGenericDataStore(), resourceURI);
 
 		JsonNode responseJsonNode = JsonUtils.toJsonNode(responseJsonObject);
 

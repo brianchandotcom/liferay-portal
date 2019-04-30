@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.i18n;
+package com.liferay.portal.servlet.filters.i18n.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Locale;
@@ -35,6 +37,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -43,6 +46,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Manuel de la Peña
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 public class I18nFilterTest {
 
 	@ClassRule

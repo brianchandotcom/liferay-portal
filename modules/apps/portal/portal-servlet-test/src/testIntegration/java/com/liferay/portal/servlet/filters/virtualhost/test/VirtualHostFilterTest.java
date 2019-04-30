@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.virtualhost;
+package com.liferay.portal.servlet.filters.virtualhost.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.servlet.filters.virtualhost.VirtualHostFilter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalImpl;
 
@@ -30,6 +32,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockFilterConfig;
@@ -39,6 +42,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Zsolt Oláh
  */
+@RunWith(Arquillian.class)
 public class VirtualHostFilterTest {
 
 	@ClassRule

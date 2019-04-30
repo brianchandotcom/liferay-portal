@@ -55,7 +55,7 @@ class ProcessItemsCard extends React.Component {
 
 	render() {
 		const { error, loading, process } = this.state;
-		const { panelDescription, panelTitle, processId } = this.props;
+		const { completed, panelDescription, panelTitle, processId } = this.props;
 
 		const errorRender = Component =>
 			(error && (
@@ -93,6 +93,7 @@ class ProcessItemsCard extends React.Component {
 								{PANELS.map((panel, index) => (
 									<SummaryCard
 										{...panel}
+										completed={completed}
 										key={index}
 										processId={processId}
 										total={panel.addressedToField === panel.totalField}

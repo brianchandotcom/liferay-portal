@@ -49,9 +49,17 @@ class SummaryCard extends React.Component {
 	}
 
 	render() {
+		const {
+			completed,
+			getTitle,
+			iconColor,
+			iconName,
+			processId,
+			total,
+			value
+		} = this.props;
 		const { defaultDelta } = this.context;
 		const { hovered } = this.state;
-		const { iconColor, iconName, processId, title, total, value } = this.props;
 
 		const dashboardItemsPath = `/instances/${processId}/${defaultDelta}/1`;
 
@@ -66,6 +74,8 @@ class SummaryCard extends React.Component {
 				{(hovered && HoveredComponent) || Component}
 			</span>
 		);
+
+		const title = getTitle(completed);
 
 		return (
 			<ChildLink

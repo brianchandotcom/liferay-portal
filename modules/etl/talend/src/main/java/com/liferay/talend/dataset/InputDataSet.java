@@ -99,7 +99,9 @@ public class InputDataSet implements Serializable {
 	@DefaultValue("\"\"")
 	@Option
 	@Required
-	@Suggestable(parameters = "_genericDataStore", value = "fetchEndpoints")
+	@Suggestable(
+		parameters = "_genericDataStore", value = "fetchInputEndpoints"
+	)
 	@Validable("validateEndpoint")
 	protected String endpoint;
 

@@ -50,8 +50,8 @@ public class UIActionService {
 		return _dataStoreChecker.checkGenericDataStore(genericDataStore);
 	}
 
-	@Suggestions(family = "Liferay", value = "fetchEndpoints")
-	public SuggestionValues fetchEndpoints(
+	@Suggestions(family = "Liferay", value = "fetchInputEndpoints")
+	public SuggestionValues fetchInputEndpoints(
 		@Option("genericDataStore") final GenericDataStore genericDataStore) {
 
 		InputDataSet inputDataSet = new InputDataSet();

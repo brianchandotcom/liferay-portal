@@ -17,8 +17,13 @@ package com.liferay.fragment.contributor;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -90,6 +95,8 @@ public abstract class BaseFragmentCollectionContributor
 
 				FragmentEntry fragmentEntry = _getFragmentEntry(path);
 
+				_updateFragmentEntryLinks(fragmentEntry);
+
 				List<FragmentEntry> fragmentEntryList =
 					_fragmentEntries.getOrDefault(
 						fragmentEntry.getType(), new ArrayList<>());
@@ -106,6 +113,9 @@ public abstract class BaseFragmentCollectionContributor
 			}
 		}
 	}
+
+	@Reference
+	protected FragmentEntryLinkLocalService fragmentEntryLinkLocalService;
 
 	@Reference
 	protected FragmentEntryLocalService fragmentEntryLocalService;
@@ -192,6 +202,29 @@ public abstract class BaseFragmentCollectionContributor
 			resourceClass.getResourceAsStream(path));
 
 		return JSONFactoryUtil.createJSONObject(structure);
+	}
+
+	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			fragmentEntryLinkLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"rendererKey", fragmentEntry.getFragmentEntryKey())));
+		actionableDynamicQuery.setPerformActionMethod(
+			(FragmentEntryLink fragmentEntryLink) -> {
+				fragmentEntryLink.setCss(fragmentEntry.getCss());
+				fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+				fragmentEntryLink.setJs(fragmentEntry.getJs());
+
+				fragmentEntryLinkLocalService.updateFragmentEntryLink(
+					fragmentEntryLink);
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

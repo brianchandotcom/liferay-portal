@@ -14,8 +14,13 @@
 
 package com.liferay.sharing.web.internal.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
@@ -96,6 +101,22 @@ public class SharingSitesFormNavigatorEntry
 	}
 
 	@Override
+	public boolean isVisible(User user, Group group) {
+		try {
+			SharingConfiguration companySharingConfiguration =
+				_sharingConfigurationFactory.getCompanySharingConfiguration(
+					_companyLocalService.getCompany(group.getCompanyId()));
+
+			return companySharingConfiguration.isEnabled();
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			return false;
+		}
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.sharing.web)", unbind = "-"
 	)
@@ -107,6 +128,12 @@ public class SharingSitesFormNavigatorEntry
 	protected String getJspPath() {
 		return "/sites_admin/sharing.jsp";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SharingSitesFormNavigatorEntry.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")
 	private ResourceBundleLoader _resourceBundleLoader;

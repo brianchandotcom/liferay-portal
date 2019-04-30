@@ -254,11 +254,11 @@ public class RoleLocalServiceTest {
 			companyId
 		).stream();
 
-		expectedRolesStream = expectedRolesStream.filter(
-			role -> !excludedRoleNames.contains(role.getName()));
-		expectedRolesStream = expectedRolesStream.filter(
-			role -> role.getType() != RoleConstants.TYPE_SITE);
-		expectedRolesStream = expectedRolesStream.filter(
+		List<Role> expectedRoles = expectedRolesStream.filter(
+			role -> !excludedRoleNames.contains(role.getName())
+		).filter(
+			role -> role.getType() != RoleConstants.TYPE_SITE
+		).filter(
 			role -> {
 				if (role.getType() != RoleConstants.TYPE_PROVIDER) {
 					return true;
@@ -275,10 +275,10 @@ public class RoleLocalServiceTest {
 				}
 
 				return team.getGroupId() == groupId;
-			});
-
-		List<Role> expectedRoles = expectedRolesStream.collect(
-			Collectors.toList());
+			}
+		).collect(
+			Collectors.toList()
+		);
 
 		Assert.assertEquals(expectedRoles.size(), count);
 

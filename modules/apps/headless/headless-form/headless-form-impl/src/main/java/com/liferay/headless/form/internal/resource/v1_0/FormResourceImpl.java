@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
-import com.liferay.headless.form.dto.v1_0.MediaForm;
 import com.liferay.headless.form.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.form.internal.dto.v1_0.util.FormDocumentUtil;
 import com.liferay.headless.form.internal.dto.v1_0.util.StructureUtil;
@@ -35,8 +34,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Optional;
-
-import javax.validation.constraints.NotNull;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,8 +70,8 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 	}
 
 	@Override
-	public FormDocument postFormUploadFile(
-			@NotNull Long formId, MultipartBody multipartBody)
+	public FormDocument postFormFormDocument(
+			Long formId, MultipartBody multipartBody)
 		throws Exception {
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
@@ -82,11 +79,11 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceService.getFormInstance(formId);
 
-		MediaForm mediaForm = multipartBody.getValueAsInstance(
-			"mediaForm", MediaForm.class);
+		FormDocument formDocument = multipartBody.getValueAsInstance(
+			"formDocument", FormDocument.class);
 
 		long folderId = Optional.ofNullable(
-			mediaForm.getFolderId()
+			formDocument.getFolderId()
 		).orElse(
 			0L
 		);
@@ -96,7 +93,7 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 			_dlAppService.addFileEntry(
 				ddmFormInstance.getGroupId(), folderId,
 				binaryFile.getFileName(), binaryFile.getContentType(),
-				mediaForm.getTitle(), mediaForm.getDescription(), null,
+				formDocument.getTitle(), formDocument.getDescription(), null,
 				binaryFile.getInputStream(), binaryFile.getSize(),
 				new ServiceContext()));
 	}

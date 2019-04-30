@@ -353,6 +353,24 @@ paths:
                                 type: array
                     description: ""
             tags: ["Task"]
+    "/processes/{processId}/title":
+        get:
+            operationId: getProcessTitle
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                    description: ""
+            tags: ["Process"]
     "/slas/{slaId}":
         delete:
             operationId: deleteSLA

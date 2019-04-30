@@ -319,7 +319,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		test.setDescription("Execute tests using Poshi Runner.");
 		test.setGroup("verification");
 		test.setScanForTestClasses(false);
-		test.setTestClassesDirs(project.files(_getExpandedPoshiRunnerDir(project)));
+		test.setTestClassesDirs(
+			project.files(_getExpandedPoshiRunnerDir(project)));
 
 		TestLoggingContainer testLoggingContainer = test.getTestLogging();
 

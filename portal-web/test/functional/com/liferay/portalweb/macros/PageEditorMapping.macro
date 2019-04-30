@@ -5,29 +5,6 @@ definition {
 		Button.viewNotPresent(button = "Select");
 	}
 
-	macro mapEditableTextToAsset {
-		PageEditor.gotoTab(tabName = "Mapping");
-
-		MouseOver.mouseOverNotVisible(
-			key_fragmentName = "${fragmentName}",
-			key_id = "${id}",
-			locator1 = "Fragment#EDITABLE_FIELD");
-
-		Click(
-			key_fragmentName = "${fragmentName}",
-			key_id = "${id}",
-			locator1 = "Fragment#EDITABLE_FIELD");
-
-		Button.clickMap();
-
-		AssertClick(
-			key_itemName = "${itemName}",
-			locator1 = "PageEditor#LIST_GROUP_ITEM",
-			value1 = "${itemName}");
-
-		PageEditor.waitForAutoSave();
-	}
-
 	macro mapEditableTextToField {
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
@@ -49,34 +26,6 @@ definition {
 			value1 = "${field}");
 
 		PageEditor.waitForAutoSave();
-	}
-
-	macro selectAssetType {
-		PageEditor.gotoTab(tabName = "Mapping");
-
-		Button.clickSelect();
-
-		if (contains("${assetType}", "{assetType}")) {
-			var assetType = "Web Content Article";
-
-			if (contains("${subType}", "{subType}")) {
-				var subType = "Basic Web Content";
-			}
-		}
-
-		Select(
-			key_fieldLabel = "Asset Type",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${assetType}");
-
-		Select(
-			key_fieldLabel = "Subtype",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${subType}");
-
-		Button.clickSave();
-
-		Button.viewPresent(button = "Saved");
 	}
 
 	macro selectContentType {

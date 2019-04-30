@@ -593,29 +593,33 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Multiple Editables");
 
-		PageEditorMapping.selectAssetType(
-			assetType = "Web Content Article",
+		PageEditorMapping.selectContentType(
+			contentType = "Web Content Article",
 			subType = "WC Structure Name");
 
-		PageEditorMapping.mapEditableTextToAsset(
+		PageEditorMapping.mapEditableTextToField(
+			field = "Title",
 			fragmentName = "Multiple Editables",
 			id = "test1",
-			itemName = "Title");
+			source = "WC Structure Name (Default)");
 
-		PageEditorMapping.mapEditableTextToAsset(
+		PageEditorMapping.mapEditableTextToField(
+			field = "Content",
 			fragmentName = "Multiple Editables",
 			id = "test2",
-			itemName = "Content");
+			source = "WC Structure Name (Default)");
 
-		PageEditorMapping.mapEditableTextToAsset(
+		PageEditorMapping.mapEditableTextToField(
+			field = "Tags",
 			fragmentName = "Multiple Editables",
 			id = "test3",
-			itemName = "Tags");
+			source = "WC Structure Name (Default)");
 
-		PageEditorMapping.mapEditableTextToAsset(
+		PageEditorMapping.mapEditableTextToField(
+			field = "Publish Date",
 			fragmentName = "Multiple Editables",
 			id = "test4",
-			itemName = "Publish Date");
+			source = "WC Structure Name (Default)");
 
 		Button.clickPublish();
 

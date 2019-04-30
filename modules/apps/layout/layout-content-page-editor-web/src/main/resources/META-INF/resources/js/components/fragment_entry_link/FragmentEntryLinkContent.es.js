@@ -4,13 +4,12 @@ import {Config} from 'metal-state';
 import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../utils/constants';
 import FragmentEditableField from './FragmentEditableField.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLinkContent.soy';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-
-const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
 
 /**
  * Creates a Fragment Entry Link Content component.

@@ -358,7 +358,7 @@ public abstract class BaseProcessResourceTestCase {
 	public void testGetProcess() throws Exception {
 		Process postProcess = testGetProcess_addProcess();
 
-		Process getProcess = invokeGetProcess(postProcess.getId());
+		Process getProcess = invokeGetProcess(postProcess.getId(), null);
 
 		assertEquals(postProcess, getProcess);
 		assertValid(getProcess);

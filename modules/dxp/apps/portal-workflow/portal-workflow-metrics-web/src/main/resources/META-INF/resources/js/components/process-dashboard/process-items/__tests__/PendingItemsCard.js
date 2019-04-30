@@ -6,11 +6,11 @@ import { MockRouter as Router } from '../../../../test/mock/MockRouter';
 
 test('Should render component', () => {
 	const data = {
+		getTitle: () => 'Single Approver',
 		id: 35315,
 		instanceCount: 30,
 		onTimeInstanceCount: 20,
-		overdueInstanceCount: 10,
-		title: 'Single Approver'
+		overdueInstanceCount: 10
 	};
 
 	const component = mount(

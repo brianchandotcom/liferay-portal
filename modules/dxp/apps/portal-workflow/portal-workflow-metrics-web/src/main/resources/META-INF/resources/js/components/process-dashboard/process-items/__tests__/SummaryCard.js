@@ -4,10 +4,10 @@ import SummaryCard from '../SummaryCard';
 
 test('Should format percentage', () => {
 	const props = {
+		getTitle: () => 'Overdue',
 		iconColor: 'danger',
 		iconName: 'exclamation-circle',
 		processId: 12345,
-		title: 'Overdue',
 		total: false,
 		totalValue: 858000,
 		value: 156403
@@ -26,10 +26,10 @@ test('Should format percentage', () => {
 
 test('Should format value for values with more than 4 digits', () => {
 	const props = {
+		getTitle: () => 'Overdue',
 		iconColor: 'danger',
 		iconName: 'exclamation-circle',
 		processId: 12345,
-		title: 'Overdue',
 		total: false,
 		totalValue: 858000,
 		value: 156403
@@ -48,8 +48,8 @@ test('Should format value for values with more than 4 digits', () => {
 
 test('Should not format percentage for total item', () => {
 	const props = {
+		getTitle: () => 'Total',
 		processId: 12345,
-		title: 'Total',
 		total: true,
 		totalValue: 858000,
 		value: 858000
@@ -68,10 +68,10 @@ test('Should not format percentage for total item', () => {
 
 test('Should not format value for values with 4 or less digits', () => {
 	const props = {
+		getTitle: () => 'Overdue',
 		iconColor: 'danger',
 		iconName: 'exclamation-circle',
 		processId: 12345,
-		title: 'Overdue',
 		total: false,
 		totalValue: 3500,
 		value: 3000
@@ -90,10 +90,10 @@ test('Should not format value for values with 4 or less digits', () => {
 
 test('Should render component', () => {
 	const props = {
+		getTitle: () => 'On Time',
 		iconColor: 'success',
 		iconName: 'check-circle',
 		processId: 12345,
-		title: 'On Time',
 		total: false,
 		totalValue: 55,
 		value: 31
@@ -110,10 +110,10 @@ test('Should render component', () => {
 
 test('Should render component with disabled state', () => {
 	const props = {
+		getTitle: () => 'On Time',
 		iconColor: 'success',
 		iconName: 'check-circle',
 		processId: 12345,
-		title: 'On Time',
 		total: false,
 		totalValue: 55,
 		value: undefined
@@ -130,10 +130,10 @@ test('Should render component with disabled state', () => {
 
 test('Should test mouse over', () => {
 	const props = {
+		getTitle: () => 'On Time',
 		iconColor: 'success',
 		iconName: 'check-circle',
 		processId: 12345,
-		title: 'On Time',
 		total: false,
 		totalValue: 55,
 		value: 31

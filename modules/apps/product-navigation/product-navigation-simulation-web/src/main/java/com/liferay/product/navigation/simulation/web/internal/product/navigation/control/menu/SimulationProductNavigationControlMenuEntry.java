@@ -211,15 +211,15 @@ public class SimulationProductNavigationControlMenuEntry
 
 			MessageTag messageTag = new MessageTag();
 
-			MessageTag messageTag2 = new MessageTag();
-
 			messageTag.setKey("simulation");
-
-			messageTag2.setKey("simulation-panel");
 
 			values.put("sidebarMessage", messageTag.doTagAsString(pageContext));
 
-			values.put("simulationPanel", messageTag2.doTagAsString(pageContext));
+			messageTag = new MessageTag();
+
+			messageTag.setKey("simulation-panel");
+
+			values.put("simulationPanel", messageTag.doTagAsString(pageContext));
 
 			IconTag iconTag = new IconTag();
 

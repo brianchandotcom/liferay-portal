@@ -39,16 +39,15 @@ public class LayoutStagingBackgroundTaskDisplay
 	public LayoutStagingBackgroundTaskDisplay(BackgroundTask backgroundTask) {
 		super(backgroundTask);
 
-		try {
-			Map<String, Serializable> taskContextMap =
-				backgroundTask.getTaskContextMap();
+		Map<String, Serializable> contextMap =
+			backgroundTask.getTaskContextMap();
 
-			ExportImportConfiguration exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
-					getExportImportConfiguration(
-						MapUtil.getLong(
-							taskContextMap, "exportImportConfigurationId"));
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				fetchExportImportConfiguration(
+					MapUtil.getLong(contextMap, "exportImportConfigurationId"));
 
+		if (exportImportConfiguration != null) {
 			if ((exportImportConfiguration.getType() !=
 					ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_LOCAL) &&
@@ -59,16 +58,12 @@ public class LayoutStagingBackgroundTaskDisplay
 				return;
 			}
 
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-
-			sourceGroup = GroupLocalServiceUtil.getGroup(sourceGroupId);
+			contextMap = exportImportConfiguration.getSettingsMap();
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+
+		long sourceGroupId = MapUtil.getLong(contextMap, "sourceGroupId");
+
+		sourceGroup = GroupLocalServiceUtil.fetchGroup(sourceGroupId);
 	}
 
 	@Override

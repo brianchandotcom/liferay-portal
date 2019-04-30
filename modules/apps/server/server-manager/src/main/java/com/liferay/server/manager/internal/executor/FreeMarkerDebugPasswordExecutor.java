@@ -43,8 +43,10 @@ public class FreeMarkerDebugPasswordExecutor extends BaseExecutor {
 
 		if (freeMarkerDebugPassword == null) {
 			responseJSONObject.put(
-				JSONKeys.ERROR, "FreeMarker debugger is not enabled");
-			responseJSONObject.put(JSONKeys.STATUS, 1);
+				JSONKeys.ERROR, "FreeMarker debugger is not enabled"
+			).put(
+				JSONKeys.STATUS, 1
+			);
 		}
 		else {
 			responseJSONObject.put(JSONKeys.OUTPUT, freeMarkerDebugPassword);

@@ -40,6 +40,8 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 <c:if test="<%= hasControlMenuEntries %>">
 	<div class="control-menu control-menu-level-1 hidden-print" data-qa-id="controlMenu" id="<portlet:namespace />ControlMenu">
 		<div class="container-fluid container-fluid-max-xl">
+			<h1 class="sr-only"><liferay-ui:message key="admin-header" /></h1>
+
 			<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
 				<%

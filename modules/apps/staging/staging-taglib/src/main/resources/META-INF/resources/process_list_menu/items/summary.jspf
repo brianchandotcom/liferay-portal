@@ -15,15 +15,23 @@
 --%>
 
 <%
-long exportImportConfigurationId = MapUtil.getLong(backgroundTask.getTaskContextMap(), "exportImportConfigurationId");
+String processCmd = null;
 
-ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+Map<String, Serializable> contextMap = backgroundTask.getTaskContextMap();
 
-Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
+long exportImportConfigurationId = MapUtil.getLong(contextMap, "exportImportConfigurationId");
 
-Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
+if (exportImportConfigurationId > 0) {
+	ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 
-String processCmd = MapUtil.getString(parameterMap, "cmd");
+	contextMap = exportImportConfiguration.getSettingsMap();
+}
+
+Map<String, String[]> parameterMap = (Map<String, String[]>)contextMap.get("parameterMap");
+
+if (parameterMap != null) {
+	processCmd = MapUtil.getString(parameterMap, "cmd");
+}
 %>
 
 <c:if test="<%= backgroundTask.isCompleted() && Validator.isNotNull(processCmd) %>">

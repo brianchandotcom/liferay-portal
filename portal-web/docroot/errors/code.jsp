@@ -22,25 +22,18 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page isErrorPage="true" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 
-<%@ page import="com.liferay.petra.string.CharPool" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
+<%@ page import="com.liferay.portal.internal.errors.DynamicIncludeKeyUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.model.LayoutSet" %><%@
 page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
-page import="com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
-
-<%@ page import="java.util.Comparator" %><%@
-page import="java.util.Set" %><%@
-page import="java.util.TreeSet" %>
 
 <%
 
@@ -63,7 +56,7 @@ if (_log.isWarnEnabled()) {
 	_log.warn("{code=\"" + code + "\", msg=\"" + msg + "\", uri=" + uri + "}", exception);
 }
 
-String dynamicIncludeKey = _getDynamicIncludeKey(request.getHeader("Accept"));
+String dynamicIncludeKey = DynamicIncludeKeyUtil.getDynamicIncludeKey(request.getHeader("Accept"));
 String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 %>
 
@@ -138,122 +131,4 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("portal_web.docroot.errors.code_jsp");
-
-private static String _extractWeight(String mediaRange) {
-	int weightPos = mediaRange.indexOf(";q=");
-
-	if (weightPos < 0) {
-		weightPos = mediaRange.indexOf(";Q=");
-	}
-
-	if (weightPos < 0) {
-		return null;
-	}
-
-	int endPos = mediaRange.indexOf(CharPool.SEMICOLON, weightPos + 1);
-	if (endPos < 0) {
-		endPos = mediaRange.length();
-	}
-
-	return mediaRange.substring(weightPos, endPos);
-}
-
-private static String _getDynamicIncludeKey(String accept) {
-	Comparator<String> mediaRangesComparator =
-		Comparator.<String>comparingDouble(
-			mediaRange -> {
-				String weightString = _extractWeight(mediaRange);
-				if (weightString != null) {
-					return GetterUtil.getDouble(weightString.substring(3), 1);
-				}
-
-				return 1;
-			}
-		).reversed().thenComparing(
-			mediaRange -> {
-				int pos = mediaRange.indexOf(CharPool.SEMICOLON);
-				if (pos > 0) {
-					mediaRange = mediaRange.substring(0, pos);
-				}
-
-				pos = mediaRange.indexOf(CharPool.SLASH);
-				if (pos > 0) {
-					mediaRange = mediaRange.substring(0, pos);
-				}
-
-				return mediaRange.trim();
-			}
-		).thenComparing(
-			mediaRange -> {
-				int pos = mediaRange.indexOf(CharPool.SEMICOLON);
-				if (pos > 0) {
-					mediaRange = mediaRange.substring(0, pos);
-				}
-
-				pos = mediaRange.indexOf(CharPool.SLASH);
-				if (pos > 0) {
-					mediaRange = mediaRange.substring(pos);
-				}
-
-				return mediaRange.trim();
-			}
-		).thenComparing(
-			mediaRange -> {
-				mediaRange = _removeWeight(mediaRange);
-
-				int pos = mediaRange.indexOf(CharPool.SEMICOLON);
-				if (pos > 0) {
-					mediaRange = mediaRange.substring(pos);
-				}
-
-				return mediaRange.trim();
-			}
-		);
-
-	Set<String> mediaRangesSet = new TreeSet<>(mediaRangesComparator);
-
-	if (Validator.isBlank(accept)) {
-		return null;
-	}
-	else if (!accept.contains(StringPool.COMMA)) {
-		mediaRangesSet.add(accept);
-	}
-	else {
-		String[] mediaRanges = accept.split(StringPool.COMMA);
-
-		for (int i = 0; i < mediaRanges.length; i++) {
-			String mediaRange = mediaRanges[i];
-
-			if (_extractWeight(mediaRange) == null) {
-				mediaRange += ";q=" + (mediaRanges.length - i);
-			}
-
-			mediaRangesSet.add(mediaRange);
-		}
-	}
-
-	String dynamicIncludeKeyPrefix = "/errors/code.jsp#";
-
-	for (String mediaType : mediaRangesSet) {
-		mediaType = _removeWeight(mediaType);
-
-		String dynamicIncludeKey = dynamicIncludeKeyPrefix + mediaType.trim();
-
-		if (DynamicIncludeUtil.hasDynamicInclude(dynamicIncludeKey)) {
-			return dynamicIncludeKey;
-		}
-	}
-
-	return null;
-}
-
-private static String _removeWeight(String mediaRange) {
-	String weightString = _extractWeight(mediaRange);
-
-	if (weightString != null) {
-		return StringUtil.removeSubstring(mediaRange, weightString);
-	}
-
-	return mediaRange;
-}
 %>

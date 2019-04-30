@@ -97,6 +97,13 @@ public interface FragmentEntryLinkLocalService
 		throws PortalException;
 
 	public FragmentEntryLink addFragmentEntryLink(
+			long userId, long groupId, long originalFragmentEntryLinkId,
+			long fragmentEntryId, long classNameId, long classPK, String css,
+			String html, String js, String editableValues, String namespace,
+			int position, String rendererKey, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FragmentEntryLink addFragmentEntryLink(
 			long userId, long groupId, long fragmentEntryId, long classNameId,
 			long classPK, String css, String html, String js,
 			String editableValues, int position, ServiceContext serviceContext)
@@ -381,6 +388,14 @@ public interface FragmentEntryLinkLocalService
 			long originalFragmentEntryLinkId, long fragmentEntryId,
 			long classNameId, long classPK, String css, String html, String js,
 			String editableValues, int position, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FragmentEntryLink updateFragmentEntryLink(
+			long userId, long fragmentEntryLinkId,
+			long originalFragmentEntryLinkId, long fragmentEntryId,
+			long classNameId, long classPK, String css, String html, String js,
+			String editableValues, String namespace, int position,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentEntryLink updateFragmentEntryLink(

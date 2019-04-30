@@ -334,9 +334,7 @@ public class I18nServletTest extends I18nServlet {
 		return LocaleUtil.getDefault();
 	}
 
-	private Locale _getFirstLocale(Group group, String language)
-		throws Exception {
-
+	private Locale _getFirstLocale(Group group, String language) {
 		if (group != null) {
 			return _language.getLocale(group.getGroupId(), language);
 		}

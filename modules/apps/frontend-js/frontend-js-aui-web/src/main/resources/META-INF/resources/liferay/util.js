@@ -1159,16 +1159,20 @@
 					Util._submitLocked = true;
 				}
 
-				var actionURL = new A.Url(action);
+				var searchParamsIndex = action.indexOf('?');
 
-				var authToken = actionURL.getParameter('p_auth') || '';
+				var searchParams = new URLSearchParams(
+					action.substring(searchParamsIndex)
+				);
+
+				var authToken = searchParams.get('p_auth') || '';
 
 				form.append('<input name="p_auth" type="hidden" value="' + authToken + '" />');
 
 				if (authToken) {
-					actionURL.removeParameter('p_auth');
+					searchParams.delete('p_auth');
 
-					action = actionURL.toString();
+					action = action.substring(0, searchParamsIndex + 1) + searchParams.toString();
 				}
 
 				form.attr('action', action);

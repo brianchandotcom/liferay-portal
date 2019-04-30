@@ -24,6 +24,8 @@ definition {
 			key_itemName = "${itemName}",
 			locator1 = "PageEditor#LIST_GROUP_ITEM",
 			value1 = "${itemName}");
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro mapEditableTextToField {
@@ -45,6 +47,8 @@ definition {
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${field}");
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro selectAssetType {
@@ -71,6 +75,8 @@ definition {
 			value1 = "${subType}");
 
 		Button.clickSave();
+
+		Button.viewPresent(button = "Saved");
 	}
 
 	macro selectContentType {
@@ -87,5 +93,9 @@ definition {
 			value1 = "${subType}");
 
 		Button.clickSave();
+
+		Button.viewPresent(button = "Saved");
+
+		PageEditor.waitForAutoSave();
 	}
 }

@@ -9,6 +9,8 @@ definition {
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",
 			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro addWidget {
@@ -73,6 +75,8 @@ definition {
 		SelectFrameTop();
 
 		Click(locator1 = "Button#ADD");
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro editFragmentText {
@@ -89,7 +93,7 @@ definition {
 			locator1 = "Fragment#EDITABLE_FIELD_CK_EDITOR",
 			value1 = "${text}");
 
-		Pause(locator1 = "3000");
+		PageEditor.waitForAutoSave();
 	}
 
 	macro expandFragmentCollection {
@@ -127,6 +131,8 @@ definition {
 		AssertElementNotPresent(
 			key_fragmentName = "${fragmentName}",
 			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro removeSection {
@@ -137,6 +143,8 @@ definition {
 		Click(
 			key_position = "${position}",
 			locator1 = "PageEditor#SECTION_HEADER_DELETE_BUTTON");
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro viewAutoSaveMessage {
@@ -174,5 +182,13 @@ definition {
 			key_fragmentName = "${fragmentName}",
 			key_position = "${position}",
 			locator1 = "Fragment#FRAGMENT_HEADER_POSITION");
+	}
+
+	macro waitForAutoSave {
+		Pause(locator1 = "1000");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PageEditor#AUTOSAVE_MESSAGE",
+			value1 = "Draft saved at");
 	}
 }

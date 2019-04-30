@@ -193,6 +193,7 @@ body {
 
 .product-menu {
 	a.list-group-heading, button.list-group-heading, .list-group-heading[data-toggle="collapse"] {
+		border-color: transparent;
 		color: $product-menu-list-group-heading-color;
 	}
 

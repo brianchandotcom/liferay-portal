@@ -185,9 +185,12 @@ public class DisplayPageActionDropdownItemsProvider {
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			_layoutPageTemplateEntry.getPlid());
 
+		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
 		return dropdownItem -> {
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				layout, _themeDisplay);
+				draftLayout, _themeDisplay);
 
 			layoutFullURL = HttpUtil.setParameter(
 				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());

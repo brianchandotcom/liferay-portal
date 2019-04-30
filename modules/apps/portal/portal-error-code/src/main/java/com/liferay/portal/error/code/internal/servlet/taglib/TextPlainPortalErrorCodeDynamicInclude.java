@@ -29,17 +29,17 @@ public class TextPlainPortalErrorCodeDynamicInclude
 
 	@Override
 	protected void writeDetailedMessage(
-		String message, String requestURI, int statusCode, Throwable throwable,
+		String message, int statusCode, String requestURI, Throwable throwable,
 		PrintWriter printWriter) {
 
 		printWriter.print("Message: ");
 		printWriter.println(message);
 
-		printWriter.print("Request URI: ");
-		printWriter.println(requestURI);
-
 		printWriter.print("Status Code: ");
 		printWriter.println(String.valueOf(statusCode));
+
+		printWriter.print("Request URI: ");
+		printWriter.println(requestURI);
 
 		if (throwable != null) {
 			printWriter.print("Throwable: ");
@@ -50,7 +50,7 @@ public class TextPlainPortalErrorCodeDynamicInclude
 
 	@Override
 	protected void writeMessage(
-		int statusCode, String message, PrintWriter printWriter) {
+		String message, int statusCode, PrintWriter printWriter) {
 
 		printWriter.print("Message: ");
 		printWriter.println(message);

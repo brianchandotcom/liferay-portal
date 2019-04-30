@@ -37,14 +37,16 @@ public class ApplicationJsonPortalErrorCodeDynamicInclude
 
 	@Override
 	protected void writeDetailedMessage(
-		String message, String requestURI, int statusCode, Throwable throwable,
+		String message, int statusCode, String requestURI, Throwable throwable,
 		PrintWriter printWriter) {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put("message", message);
-		jsonObject.put("requestURI", requestURI);
+
 		jsonObject.put("statusCode", statusCode);
+
+		jsonObject.put("requestURI", requestURI);
 
 		if (throwable != null) {
 			try {
@@ -71,7 +73,7 @@ public class ApplicationJsonPortalErrorCodeDynamicInclude
 
 	@Override
 	protected void writeMessage(
-		int statusCode, String message, PrintWriter printWriter) {
+		String message, int statusCode, PrintWriter printWriter) {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 

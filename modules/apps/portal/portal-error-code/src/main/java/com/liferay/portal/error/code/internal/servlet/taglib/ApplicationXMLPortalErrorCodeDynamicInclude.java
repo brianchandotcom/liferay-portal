@@ -37,7 +37,7 @@ public class ApplicationXMLPortalErrorCodeDynamicInclude
 
 	@Override
 	protected void writeDetailedMessage(
-		String message, String requestURI, int statusCode, Throwable throwable,
+		String message, int statusCode, String requestURI, Throwable throwable,
 		PrintWriter printWriter) {
 
 		Document document = _saxReader.createDocument(StringPool.UTF8);
@@ -48,13 +48,13 @@ public class ApplicationXMLPortalErrorCodeDynamicInclude
 
 		messageElement.addText(message);
 
-		Element requestURIElement = errorElement.addElement("requestURI");
-
-		requestURIElement.addText(requestURI);
-
 		Element statusCodeElement = errorElement.addElement("statusCode");
 
 		statusCodeElement.addText(String.valueOf(statusCode));
+
+		Element requestURIElement = errorElement.addElement("requestURI");
+
+		requestURIElement.addText(requestURI);
 
 		if (throwable != null) {
 			Element throwableElement = errorElement.addElement("throwable");
@@ -71,7 +71,7 @@ public class ApplicationXMLPortalErrorCodeDynamicInclude
 
 	@Override
 	protected void writeMessage(
-		int statusCode, String message, PrintWriter printWriter) {
+		String message, int statusCode, PrintWriter printWriter) {
 
 		Document document = _saxReader.createDocument(StringPool.UTF8);
 

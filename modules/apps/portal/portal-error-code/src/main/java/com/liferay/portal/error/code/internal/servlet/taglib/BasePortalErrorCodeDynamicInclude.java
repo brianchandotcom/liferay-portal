@@ -61,10 +61,10 @@ public abstract class BasePortalErrorCodeDynamicInclude
 				JavaConstants.JAVAX_SERVLET_ERROR_REQUEST_URI);
 
 			writeDetailedMessage(
-				message, requestURI, statusCode, throwable, printWriter);
+				message, statusCode, requestURI, throwable, printWriter);
 		}
 		else {
-			writeMessage(statusCode, message, printWriter);
+			writeMessage(message, statusCode, printWriter);
 		}
 	}
 
@@ -86,11 +86,11 @@ public abstract class BasePortalErrorCodeDynamicInclude
 	}
 
 	protected abstract void writeDetailedMessage(
-		String message, String requestURI, int statusCode, Throwable throwable,
+		String message, int statusCode, String requestURI, Throwable throwable,
 		PrintWriter printWriter);
 
 	protected abstract void writeMessage(
-		int statusCode, String message, PrintWriter printWriter);
+		String message, int statusCode, PrintWriter printWriter);
 
 	private static final String _CHARSET = "; charset=UTF-8";
 

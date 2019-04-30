@@ -1,1 +1,0 @@
-undefinedVariable * 10;

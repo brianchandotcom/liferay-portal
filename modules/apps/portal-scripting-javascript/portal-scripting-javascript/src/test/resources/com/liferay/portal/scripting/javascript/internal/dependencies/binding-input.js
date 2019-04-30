@@ -1,1 +1,0 @@
-var simple = "Using a $variable passed through the binding mechanism.";

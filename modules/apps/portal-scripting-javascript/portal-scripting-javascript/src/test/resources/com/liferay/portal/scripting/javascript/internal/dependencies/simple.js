@@ -1,1 +1,0 @@
-var simple = "This is a simple test.";

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.counter.service;
+package com.liferay.counter.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.portal.cache.key.SimpleCacheKeyGenerator;
@@ -53,10 +54,12 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.Description;
+import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
+@RunWith(Arquillian.class)
 public class CounterLocalServiceTest {
 
 	@ClassRule

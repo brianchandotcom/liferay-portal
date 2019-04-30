@@ -17,6 +17,7 @@ package com.liferay.portal.servlet.filters.virtualhost.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.struts.LastPath;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -25,6 +26,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.virtualhost.VirtualHostFilter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalImpl;
+
+import javax.servlet.FilterChain;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -124,7 +129,13 @@ public class VirtualHostFilterTest {
 
 		_virtualHostFilter.init(_mockFilterConfig);
 
-		_virtualHostFilter.processFilter(request, response, filterChain);
+		ReflectionTestUtil.invoke(
+			_virtualHostFilter, "processFilter",
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class,
+				FilterChain.class
+			},
+			request, response, filterChain);
 
 		LastPath lastPath = (LastPath)request.getAttribute(WebKeys.LAST_PATH);
 

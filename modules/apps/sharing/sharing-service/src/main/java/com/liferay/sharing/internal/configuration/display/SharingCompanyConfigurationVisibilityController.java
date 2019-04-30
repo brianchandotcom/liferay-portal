@@ -39,10 +39,10 @@ public class SharingCompanyConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		SharingConfiguration sharingSystemConfiguration =
+		SharingConfiguration systemSharingConfiguration =
 			_sharingConfigurationFactory.getSystemSharingConfiguration();
 
-		return sharingSystemConfiguration.isEnabled();
+		return systemSharingConfiguration.isEnabled();
 	}
 
 	@Reference

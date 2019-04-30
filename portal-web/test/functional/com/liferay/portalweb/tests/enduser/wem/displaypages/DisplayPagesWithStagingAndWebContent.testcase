@@ -194,7 +194,7 @@ definition {
 	@description = "This tests one of the workarounds of LPS-86373."
 	@priority = "5"
 	test PublishDisplayPageMarkedAsDefault {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Mark the display page as default") {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
@@ -274,7 +274,7 @@ definition {
 	@description = "Edits to display pages should not reflect in the live site until published."
 	@priority = "5"
 	test PublishEditedDisplayPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Mark the display page as default") {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");

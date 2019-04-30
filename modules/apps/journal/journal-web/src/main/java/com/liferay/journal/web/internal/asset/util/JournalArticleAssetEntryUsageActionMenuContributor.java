@@ -15,6 +15,7 @@
 package com.liferay.journal.web.internal.asset.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.util.AssetEntryUsageActionMenuContributor;
@@ -92,7 +93,10 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								_getURL(assetEntryUsage, request));
+								_getURL(
+									assetEntryUsage,
+									AssetRendererFactory.TYPE_LATEST_APPROVED,
+									request));
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									resourceBundle, "view-in-page"));
@@ -122,7 +126,10 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 							add(
 								dropdownItem -> {
 									dropdownItem.setHref(
-										_getURL(assetEntryUsage, request));
+										_getURL(
+											assetEntryUsage,
+											AssetRendererFactory.TYPE_LATEST,
+											request));
 									dropdownItem.setLabel(label);
 								});
 						}
@@ -136,7 +143,8 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	}
 
 	private String _getURL(
-			AssetEntryUsage assetEntryUsage, HttpServletRequest request)
+			AssetEntryUsage assetEntryUsage, int previewAssetEntryType,
+			HttpServletRequest request)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -155,6 +163,9 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 			layoutURL = _http.setParameter(
 				layoutURL, "previewAssetEntryId",
 				String.valueOf(assetEntryUsage.getAssetEntryId()));
+			layoutURL = _http.setParameter(
+				layoutURL, "previewAssetEntryType",
+				String.valueOf(previewAssetEntryType));
 		}
 		else {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -164,6 +175,8 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 			portletURL.setParameter(
 				"previewAssetEntryId",
 				String.valueOf(assetEntryUsage.getAssetEntryId()));
+			portletURL.setParameter(
+				"previewAssetEntryType", String.valueOf(previewAssetEntryType));
 
 			layoutURL = portletURL.toString();
 		}

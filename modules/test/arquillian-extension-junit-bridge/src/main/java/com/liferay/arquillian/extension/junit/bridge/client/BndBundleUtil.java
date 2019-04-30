@@ -17,7 +17,6 @@ package com.liferay.arquillian.extension.junit.bridge.client;
 import aQute.bnd.build.Project;
 import aQute.bnd.build.ProjectBuilder;
 import aQute.bnd.build.Workspace;
-import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 
 import com.liferay.arquillian.extension.junit.bridge.constants.Headers;
@@ -35,10 +34,14 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
+import java.util.regex.Pattern;
 
 /**
  * @author Shuyang Zhou
@@ -56,13 +59,19 @@ public class BndBundleUtil {
 			Project project = new Project(workspace, buildDir);
 			ProjectBuilder projectBuilder = _createProjectBuilder(
 				project, filteredMethodNamesMap, hostAddress, port, passCode);
-			Jar jar = projectBuilder.build();
-			Analyzer analyzer = new Analyzer()) {
+			Jar jar = projectBuilder.build()) {
 
-			analyzer.setProperties(project.getProperties());
-			analyzer.setJar(jar);
+			Manifest manifest = jar.getManifest();
 
-			jar.setManifest(analyzer.calcManifest());
+			Attributes attributes = manifest.getMainAttributes();
+
+			attributes.putValue(
+				"Import-Package",
+				StringUtil.merge(
+					Arrays.asList(
+						_versionPattern.split(
+							attributes.getValue("Import-Package"))),
+					","));
 
 			Path path = Files.createTempFile(null, ".jar");
 
@@ -178,5 +187,8 @@ public class BndBundleUtil {
 
 		return classPathFiles;
 	}
+
+	private static final Pattern _versionPattern = Pattern.compile(
+		";version=\"[\\[\\]\\(\\)0-9.,]*\",");
 
 }

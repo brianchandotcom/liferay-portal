@@ -16,6 +16,7 @@ package com.liferay.segments.internal.odata.entity;
 
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.DoubleEntityField;
@@ -42,6 +43,7 @@ public class ContextEntityModel implements EntityModel {
 
 	public ContextEntityModel(List<EntityField> customEntityFields) {
 		_entityFieldsMap = Stream.of(
+			new ComplexEntityField("customContext", customEntityFields),
 			new BooleanEntityField(
 				Context.SIGNED_IN, locale -> Context.SIGNED_IN),
 			new CollectionEntityField(

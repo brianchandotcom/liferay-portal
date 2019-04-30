@@ -11,9 +11,10 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="ecj" org="org.eclipse.jdt.core.compiler" rev="3.7.2" />
-		<dependency name="tomcat-embed-core" org="org.apache.tomcat.embed" rev="7.0.42" />
-		<dependency name="tomcat-embed-jasper" org="org.apache.tomcat.embed" rev="7.0.42" />
-		<dependency name="tomcat-embed-logging-juli" org="org.apache.tomcat.embed" rev="7.0.42" />
+		<dependency name="ecj" org="org.eclipse.jdt" rev="3.16.0" />
+		<dependency name="tomcat-annotations-api" org="org.apache.tomcat" rev="9.0.19" />
+		<dependency name="tomcat-embed-core" org="org.apache.tomcat.embed" rev="9.0.19" />
+		<dependency name="tomcat-embed-el" org="org.apache.tomcat.embed" rev="9.0.19" />
+		<dependency name="tomcat-embed-jasper" org="org.apache.tomcat.embed" rev="9.0.19" />
 	</dependencies>
 </ivy-module>

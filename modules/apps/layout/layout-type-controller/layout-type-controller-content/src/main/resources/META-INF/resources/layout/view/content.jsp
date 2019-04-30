@@ -20,6 +20,7 @@
 String ppid = ParamUtil.getString(request, "p_p_id");
 
 long previewAssetEntryId = ParamUtil.getLong(request, "previewAssetEntryId");
+int previewAssetEntryType = ParamUtil.getInteger(request, "previewAssetEntryType");
 %>
 
 <liferay-ui:success key="layoutPublished" message="the-page-was-published-succesfully" />
@@ -139,6 +140,7 @@ long previewAssetEntryId = ParamUtil.getLong(request, "previewAssetEntryId");
 														defaultFragmentRendererContext.setLocale(locale);
 														defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.VIEW);
 														defaultFragmentRendererContext.setPreviewClassPK(previewAssetEntryId);
+														defaultFragmentRendererContext.setPreviewType(previewAssetEntryType);
 														defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
 													%>
 
@@ -193,6 +195,7 @@ long previewAssetEntryId = ParamUtil.getLong(request, "previewAssetEntryId");
 											defaultFragmentRendererContext.setLocale(locale);
 											defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.VIEW);
 											defaultFragmentRendererContext.setPreviewClassPK(previewAssetEntryId);
+											defaultFragmentRendererContext.setPreviewType(previewAssetEntryType);
 											defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
 									%>
 

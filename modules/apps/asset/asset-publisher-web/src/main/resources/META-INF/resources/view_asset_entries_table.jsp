@@ -18,6 +18,7 @@
 
 <%
 long previewAssetEntryId = ParamUtil.getLong(request, "previewAssetEntryId");
+int previewAssetEntryType = ParamUtil.getInteger(request, "previewAssetEntryType");
 
 AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view.jsp-assetEntryResult");
 
@@ -78,7 +79,7 @@ if (stageableGroup.isLayout()) {
 
 						try {
 							if (previewAssetEntryId == assetEntry.getEntryId()) {
-								assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
+								assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), previewAssetEntryType);
 							}
 							else {
 								assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());

@@ -997,9 +997,13 @@ public class JournalContentDisplayContext {
 			return null;
 		}
 
+		int previewAssetEntryType = ParamUtil.getInteger(
+			_portletRequest, "previewAssetEntryType",
+			AssetRendererFactory.TYPE_LATEST_APPROVED);
+
 		try {
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
+				assetEntry.getClassPK(), previewAssetEntryType);
 
 			return (JournalArticle)assetRenderer.getAssetObject();
 		}

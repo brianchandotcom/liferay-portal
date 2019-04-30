@@ -20,7 +20,9 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Stream;
 
@@ -123,6 +125,58 @@ public abstract class BaseJSONParser<T> {
 		).toArray(
 			size -> createDTOArray(size)
 		);
+	}
+
+	public Map<String, Object> parseToMap(String json) {
+		if (json == null) {
+			throw new IllegalArgumentException("JSON is null");
+		}
+
+		_init(json);
+
+		_assertStartsWithAndEndsWith("{", "}");
+
+		Map<String, Object> map = new HashMap<>();
+
+		_setCaptureStart();
+
+		_readNextChar();
+
+		_readWhileLastCharIsWhiteSpace();
+
+		_readNextChar();
+
+		if (_isLastChar('}')) {
+			return map;
+		}
+
+		do {
+			_readWhileLastCharIsWhiteSpace();
+
+			String key = _readValueAsString();
+
+			_readWhileLastCharIsWhiteSpace();
+
+			if (!_ifLastCharMatchesThenRead(':')) {
+				throw new IllegalArgumentException("Expected ':'");
+			}
+
+			_readWhileLastCharIsWhiteSpace();
+
+			map.put(key, _readValue());
+
+			_readWhileLastCharIsWhiteSpace();
+		}
+		while (_ifLastCharMatchesThenRead(','));
+
+		_readWhileLastCharIsWhiteSpace();
+
+		if (!_ifLastCharMatchesThenRead('}')) {
+			throw new IllegalArgumentException(
+				"Expected either ',' or '}', but found '" + _lastChar + "'");
+		}
+
+		return map;
 	}
 
 	protected abstract T createDTO();

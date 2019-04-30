@@ -54,7 +54,7 @@ public class PoshiCommandsOrderCheck extends BaseFileCheck {
 			commands.add(matcher.group());
 		}
 
-		if (commands.isEmpty() || (commands.size() < 2)) {
+		if (commands.size() < 2) {
 			return content;
 		}
 

@@ -572,8 +572,10 @@ public class BatchBuild extends BaseBuild {
 
 			AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
 
-			tableRowElements.add(
-				downstreamAxisBuild.getJenkinsReportTableRowElement());
+			tableRowElements.addAll(
+				downstreamAxisBuild.getJenkinsReportTableRowElements(
+					downstreamAxisBuild.getResult(),
+					downstreamAxisBuild.getStatus()));
 		}
 
 		return tableRowElements;

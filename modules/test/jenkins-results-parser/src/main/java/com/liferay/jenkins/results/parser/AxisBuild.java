@@ -445,13 +445,6 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	protected List<Element> getJenkinsReportTableRowElements(
-		String result, String status) {
-
-		return getJenkinsReportStopWatchRecordElements();
-	}
-
-	@Override
 	protected String getStopPropertiesTempMapURL() {
 		if (fromArchive) {
 			return getBuildURL() + "/stop-properties.json";

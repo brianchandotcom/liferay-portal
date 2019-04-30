@@ -151,7 +151,7 @@ public class LiferayService {
 		return getPageableEndpoints(openAPISpecJsonObject);
 	}
 
-	public List<String> getUpdateableEndpoints(OutputDataSet outputDataSet) {
+	public List<String> getUpdatableEndpoints(OutputDataSet outputDataSet) {
 		OutputDataStore outputDataStore = outputDataSet.getOutputDataStore();
 
 		JsonObject openAPISpecJsonObject = _getOpenAPISpecJsonObject(

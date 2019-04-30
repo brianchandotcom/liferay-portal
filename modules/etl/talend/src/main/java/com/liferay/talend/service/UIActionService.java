@@ -71,7 +71,7 @@ public class UIActionService {
 		outputDataSet.setOutputDataStore(outputDataStore);
 
 		return _toSuggestionValues(
-			_liferayService.getUpdateableEndpoints(outputDataSet));
+			_liferayService.getUpdatableEndpoints(outputDataSet));
 	}
 
 	@DiscoverSchema(family = "Liferay", value = "guessInputSchema")

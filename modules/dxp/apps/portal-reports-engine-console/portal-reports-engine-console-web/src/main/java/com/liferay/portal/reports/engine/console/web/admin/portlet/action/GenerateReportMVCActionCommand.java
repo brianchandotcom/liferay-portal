@@ -17,6 +17,7 @@ package com.liferay.portal.reports.engine.console.web.admin.portlet.action;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -95,10 +96,8 @@ public class GenerateReportMVCActionCommand extends BaseMVCActionCommand {
 
 			String key = definitionReportParameterJSONObject.getString("key");
 
-			JSONObject entryReportParameterJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			entryReportParameterJSONObject.put("key", key);
+			JSONObject entryReportParameterJSONObject = JSONUtil.put(
+				"key", key);
 
 			String value = ParamUtil.getString(
 				actionRequest, "parameterValue" + key);

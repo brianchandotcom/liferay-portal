@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.cal.RecurrenceSerializer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -131,10 +132,8 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 
 			String key = definitionReportParameterJSONObject.getString("key");
 
-			JSONObject entryReportParameterJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			entryReportParameterJSONObject.put("key", key);
+			JSONObject entryReportParameterJSONObject = JSONUtil.put(
+				"key", key);
 
 			String value = StringPool.BLANK;
 

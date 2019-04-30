@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -112,14 +113,8 @@ public class SharepointExtRepository implements ExtRepository {
 			String url = _sharepointURLHelper.getAddFolderURL(
 				extRepositoryParentFolderKey);
 
-			JSONObject bodyJSONObject = JSONFactoryUtil.createJSONObject();
-
-			JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			metadataJSONObject.put("type", "SP.Folder");
-
-			bodyJSONObject.put(
-				"__metadata", metadataJSONObject
+			JSONObject bodyJSONObject = JSONUtil.put(
+				"__metadata", JSONUtil.put("type", "SP.Folder")
 			).put(
 				"ServerRelativeUrl", name
 			);

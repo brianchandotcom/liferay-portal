@@ -17,6 +17,7 @@ package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -166,8 +167,6 @@ public class SamlSloContext implements Serializable {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (SamlSloRequestInfo samlSloRequestInfo :
@@ -176,13 +175,11 @@ public class SamlSloContext implements Serializable {
 			jsonArray.put(samlSloRequestInfo.toJSONObject());
 		}
 
-		jsonObject.put(
+		return JSONUtil.put(
 			"samlSloRequestInfos", jsonArray
 		).put(
 			"userId", getUserId()
 		);
-
-		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SamlSloContext.class);

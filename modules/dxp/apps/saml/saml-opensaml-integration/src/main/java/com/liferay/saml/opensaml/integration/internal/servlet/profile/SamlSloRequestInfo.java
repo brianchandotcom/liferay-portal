@@ -14,8 +14,8 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 
 import java.io.Serializable;
@@ -93,9 +93,7 @@ public class SamlSloRequestInfo implements Serializable {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("entityId", getEntityId());
+		JSONObject jsonObject = JSONUtil.put("entityId", getEntityId());
 
 		if (_initiateTime != null) {
 			jsonObject.put("initiateTime", _initiateTime.toDate());

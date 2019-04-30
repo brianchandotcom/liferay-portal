@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -351,9 +352,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"name", role.getName()
 			).put(
 				"roleId", role.getRoleId()
@@ -384,14 +383,11 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Object supportedScriptLanguage : sortedSupportedScriptLanguages) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 			String scriptLanguage = supportedScriptLanguage.toString();
 
-			jsonObject.put(
-				"scriptLanguage", StringUtil.toLowerCase(scriptLanguage));
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"scriptLanguage", StringUtil.toLowerCase(scriptLanguage)));
 		}
 
 		writeJSON(resourceRequest, resourceResponse, jsonArray);
@@ -437,9 +433,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"emailAddress", user.getEmailAddress()
 			).put(
 				"fullName", user.getFullName()

@@ -8,7 +8,7 @@ import {COMPATIBLE_TYPES} from '../../../utils/constants';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
-import {updateEditableValueAction} from '../../../actions/updateEditableValue.es';
+import {updateEditableValuesAction} from '../../../actions/updateEditableValue.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarMappingPanel.soy';
 
@@ -128,7 +128,17 @@ class FloatingToolbarMappingPanel extends PortletBase {
 			) {
 				this._selectedSourceTypeId = SOURCE_TYPE_IDS.structure;
 			}
+		}
+	}
 
+	/**
+	 * @param {{editableValues: object}} newItem
+	 * @param {{editableValues: object}} [oldItem]
+	 * @inheritdoc
+	 * @review
+	 */
+	syncItem(newItem, oldItem) {
+		if (!oldItem || newItem.editableValues !== oldItem.editableValues) {
 			this._loadFields();
 		}
 	}
@@ -139,10 +149,30 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_clearEditableValues() {
-		this._updateEditableValues('classNameId', '');
-		this._updateEditableValues('classPK', '');
-		this._updateEditableValues('fieldId', '');
-		this._updateEditableValues('mappedField', '');
+		this.store.dispatch(
+			updateEditableValuesAction(
+				this.item.fragmentEntryLinkId,
+				this.item.editableId,
+				[
+					{
+						content: '',
+						editableValueId: 'classNameId'
+					},
+					{
+						content: '',
+						editableValueId: 'classPK'
+					},
+					{
+						content: '',
+						editableValueId: 'fieldId'
+					},
+					{
+						content: '',
+						editableValueId: 'mappedField'
+					}
+				]
+			)
+		);
 	}
 
 	/**
@@ -222,10 +252,32 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		const fieldId = event.delegateTarget.value;
 
 		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.content) {
-			this._updateEditableValues('fieldId', fieldId);
+			this.store.dispatch(
+				updateEditableValuesAction(
+					this.item.fragmentEntryLinkId,
+					this.item.editableId,
+					[
+						{
+							content: fieldId,
+							editableValueId: 'fieldId'
+						}
+					]
+				)
+			);
 		}
 		else if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure) {
-			this._updateEditableValues('mappedField', fieldId);
+			this.store.dispatch(
+				updateEditableValuesAction(
+					this.item.fragmentEntryLinkId,
+					this.item.editableId,
+					[
+						{
+							content: fieldId,
+							editableValueId: 'mappedField'
+						}
+					]
+				)
+			);
 		}
 	}
 
@@ -239,7 +291,6 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		this._selectedSourceTypeId = event.delegateTarget.value;
 
 		this._clearEditableValues();
-		this._loadFields();
 	}
 
 	/**
@@ -304,29 +355,24 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_selectAssetEntry(assetEntry) {
-		this._updateEditableValues('classNameId', assetEntry.classNameId);
-		this._updateEditableValues('classPK', assetEntry.classPK);
-		this._updateEditableValues('fieldId', '');
-
-		this.store.done(
-			() => {
-				this._loadFields();
-			}
-		);
-	}
-
-	/**
-	 * Dispatches action to update editable value
-	 * @param {!string} key
-	 * @param {!string} value
-	 */
-	_updateEditableValues(key, value) {
 		this.store.dispatch(
-			updateEditableValueAction(
+			updateEditableValuesAction(
 				this.item.fragmentEntryLinkId,
 				this.item.editableId,
-				key,
-				value
+				[
+					{
+						content: assetEntry.classNameId,
+						editableValueId: 'classNameId'
+					},
+					{
+						content: assetEntry.classPK,
+						editableValueId: 'classPK'
+					},
+					{
+						content: '',
+						editableValueId: 'fieldId'
+					}
+				]
 			)
 		);
 	}

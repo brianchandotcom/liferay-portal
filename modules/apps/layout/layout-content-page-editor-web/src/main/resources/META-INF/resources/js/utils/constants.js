@@ -64,6 +64,11 @@ export const COMPATIBLE_TYPES = {
 };
 
 /**
+ * Default language id key
+ */
+export const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
+
+/**
  * Available editable field config keys
  */
 export const EDITABLE_FIELD_CONFIG_KEYS = {

@@ -58,7 +58,7 @@ public class GetDocumentRequestExecutorImpl
 		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
 		documentFieldsTranslator.translate(
-			getResponse.getFields(), documentBuilder);
+			documentBuilder, getResponse.getSourceAsMap());
 
 		getDocumentResponse.setDocument(documentBuilder.build());
 

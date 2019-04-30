@@ -59,6 +59,18 @@ public class DocumentFieldsTranslator {
 	}
 
 	public void translate(
+		DocumentBuilder documentBuilder,
+		Map<String, Object> documentSourceMap) {
+
+		if (MapUtil.isEmpty(documentSourceMap)) {
+			return;
+		}
+
+		documentSourceMap.forEach(
+			(name, value) -> translate(name, value, documentBuilder));
+	}
+
+	public void translate(
 		Map<String, DocumentField> documentFieldsMap,
 		DocumentBuilder documentBuilder) {
 
@@ -83,6 +95,18 @@ public class DocumentFieldsTranslator {
 
 		documentBuilder.setValues(
 			documentField.getName(), documentField.getValues());
+	}
+
+	protected void translate(
+		String name, Object value, DocumentBuilder documentBuilder) {
+
+		if (name.endsWith(_GEOPOINT_SUFFIX)) {
+			documentBuilder.setGeoLocationPoint(
+				name, _geoBuilders.geoLocationPoint((String)value));
+		}
+		else {
+			documentBuilder.setValue(name, value);
+		}
 	}
 
 	protected boolean translateGeoLocationPoint(

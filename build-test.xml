@@ -1401,6 +1401,12 @@ war.path=${app.server.portal.dir}/</echo>
 							value="liferay.home=${test.app.server.parent.dir}"
 						/>
 
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+							token="web.server.http.port=8080"
+							value="web.server.http.port=${test.app.server.leading.port.number}080"
+						/>
+
 						<math
 							datatype="int"
 							operand1="${app.server.bundle.index}"

@@ -94,7 +94,10 @@ public class JSONUtilCheck extends BaseCheck {
 				nextSiblingDetailAST, variableName, "put");
 
 			if (lineNumber != -1) {
-				log(lineNumber, _MSG_USE_JSON_UTIL_PUT);
+				log(
+					lineNumber, _MSG_USE_JSON_UTIL_PUT, methodName,
+					fullIdent.getLineNo(), variableName + ".put", lineNumber,
+					"JSONUtil.put");
 			}
 
 			if (_containsVariableName(nextSiblingDetailAST, variableName)) {

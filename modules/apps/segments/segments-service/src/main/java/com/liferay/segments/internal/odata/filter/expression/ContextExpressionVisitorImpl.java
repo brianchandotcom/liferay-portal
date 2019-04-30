@@ -18,10 +18,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.CollectionPropertyExpression;
+import com.liferay.portal.odata.filter.expression.ComplexPropertyExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
@@ -31,6 +33,7 @@ import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
+import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 import com.liferay.segments.context.Context;
 
@@ -106,6 +109,27 @@ public class ContextExpressionVisitorImpl implements ExpressionVisitor<Object> {
 					lambdaFunctionExpression.getVariableName(),
 					collectionEntityField),
 				collectionEntityField));
+	}
+
+	@Override
+	public Object visitComplexPropertyExpression(
+		ComplexPropertyExpression complexPropertyExpression) {
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		ComplexEntityField complexEntityField =
+			(ComplexEntityField)entityFieldsMap.get(
+				complexPropertyExpression.getName());
+
+		PropertyExpression propertyExpression =
+			complexPropertyExpression.getPropertyExpression();
+
+		Map<String, EntityField> complexEntityFieldEntityFieldsMap =
+			complexEntityField.getEntityFieldsMap();
+
+		return complexEntityFieldEntityFieldsMap.get(
+			propertyExpression.getName());
 	}
 
 	@Override

@@ -202,12 +202,12 @@ public class I18nFilterTest {
 		session.setAttribute(WebKeys.LOCALE, sessionLocale);
 
 		if (userLocale != null) {
-			User user = UserTestUtil.addUser(
+			_user = UserTestUtil.addUser(
 				null, userLocale, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				new long[] {_group.getGroupId()});
 
-			_mockHttpServletRequest.setAttribute(WebKeys.USER, user);
+			_mockHttpServletRequest.setAttribute(WebKeys.USER, _user);
 		}
 
 		if (cookieLocale != null) {
@@ -238,5 +238,8 @@ public class I18nFilterTest {
 
 	private MockHttpServletRequest _mockHttpServletRequest;
 	private MockHttpServletResponse _mockHttpServletResponse;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

@@ -33,7 +33,11 @@ public class ElseStatement2 {
 
 		String extension = fileName;
 
-		return extension;
+		if (extension != null) {
+			return extension;
+		}
+
+		return null;
 	}
 
 }

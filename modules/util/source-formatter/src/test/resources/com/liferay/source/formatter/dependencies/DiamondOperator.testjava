@@ -34,7 +34,11 @@ public class DiamondOperator {
 		Set<Class<? extends Annotation>> annotationClasses =
 			new HashSet<Class<? extends Annotation>>();
 
-		return annotationClasses;
+		if (annotationClasses != null) {
+			return annotationClasses;
+		}
+
+		return null;
 	}
 
 	public List<String> getList() {
@@ -55,7 +59,11 @@ public class DiamondOperator {
 	public Map<String, Object> getObjectMap() {
 		Map<String, Object> objectMap = new HashMap<String, Object>();
 
-		return objectMap;
+		if (objectMap != null) {
+			return objectMap;
+		}
+
+		return null;
 	}
 
 	private final List<String> _list = new ArrayList<String>();

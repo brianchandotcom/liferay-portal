@@ -120,17 +120,19 @@ public class CombineLines extends SuperClass {
 		String stringWithAFairlyMediumLongName =
 			StringPool.GREATER_THAN_OR_EQUAL;
 
-		return stringWithAFairlyMediumLongName;
+		if (stringWithAFairlyMediumLongName != null) {
+			return stringWithAFairlyMediumLongName;
+		}
+
+		return null;
 	}
 
 	public Set<String> method5() {
-		Set<String> numbers = SetUtil.fromArray(
+		return SetUtil.fromArray(
 			new String[] {
 				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
 				"Nine", "Ten"
 			});
-
-		return numbers;
 	}
 
 	public String method6(String s) {

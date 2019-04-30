@@ -144,7 +144,7 @@ public class JournalContentDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_article = _getArticleByPreviewAssetId();
+		_article = _getArticleByPreviewAssetEntryId();
 
 		if ((_article != null) &&
 			JournalArticlePermission.contains(
@@ -794,7 +794,7 @@ public class JournalContentDisplayContext {
 			return _preview;
 		}
 
-		JournalArticle article = _getArticleByPreviewAssetId();
+		JournalArticle article = _getArticleByPreviewAssetEntryId();
 
 		if (article == null) {
 			_preview = false;
@@ -975,7 +975,7 @@ public class JournalContentDisplayContext {
 		}
 	}
 
-	private JournalArticle _getArticleByPreviewAssetId() {
+	private JournalArticle _getArticleByPreviewAssetEntryId() {
 		long previewAssetEntryId = ParamUtil.getLong(
 			_portletRequest, "previewAssetEntryId");
 

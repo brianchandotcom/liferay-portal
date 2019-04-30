@@ -68,13 +68,11 @@ class AssetTagsSelector extends Component {
 									this.tagNames = this._getTagNames();
 
 									addedItems.forEach(
-										item =>
-										this._notifyItemsChanged('itemAdded', this.addCallback, item)
+										item => this._notifyItemsChanged('itemAdded', this.addCallback, item)
 									);
 
 									removedItems.forEach(
-										item =>
-										this._notifyItemsChanged('itemRemoved', this.removeCallback, item)
+										item => this._notifyItemsChanged('itemRemoved', this.removeCallback, item)
 									);
 								}
 							}.bind(this)

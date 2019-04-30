@@ -147,6 +147,11 @@ AUI.add(
 								action = null;
 							}
 						}
+						else if (action === 'checkin') {
+							window[instance.NS + 'showVersionDetailsDialog'](url);
+
+							action = null;
+						}
 
 						if (action) {
 							instance._processAction(action, url);

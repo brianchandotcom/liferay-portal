@@ -44,6 +44,11 @@
 		}
 	}
 
+	.preview-asset-entry {
+		border: 1px solid #0B5FFF;
+		border-radius: 0;
+	}
+
 	@media only screen and (min-width: 768px) {
 		.portlet .portlet-header .visible-interaction {
 			display: block;

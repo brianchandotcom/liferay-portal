@@ -101,7 +101,7 @@ if (stageableGroup.isLayout()) {
 						request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 					%>
 
-						<tr>
+						<tr class="<%= (previewAssetEntryId == assetEntry.getEntryId()) ? "table-active" : StringPool.BLANK %>">
 							<td class="table-cell-expand table-title">
 								<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 

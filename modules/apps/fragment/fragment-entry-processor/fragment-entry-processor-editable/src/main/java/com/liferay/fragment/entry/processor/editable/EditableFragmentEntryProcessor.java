@@ -292,7 +292,17 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Element bodyElement = document.body();
 
-		return bodyElement.html();
+		if (!_assetEntriesFieldValues.containsKey(previewClassPK)) {
+			return bodyElement.html();
+		}
+
+		Element previewElement = new Element("div");
+
+		previewElement.attr("style", "border: 1px solid #0B5FFF");
+
+		bodyElement = previewElement.html(bodyElement.html());
+
+		return bodyElement.outerHtml();
 	}
 
 	@Reference(

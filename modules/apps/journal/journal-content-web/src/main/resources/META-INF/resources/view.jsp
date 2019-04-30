@@ -142,35 +142,37 @@ if (journalContentDisplayContext.isShowArticle()) {
 						</c:choose>
 					</c:when>
 					<c:when test="<%= articleDisplay != null %>">
-						<div class="text-right user-tool-asset-addon-entries">
-							<liferay-asset:asset-addon-entry-display
-								assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
+						<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>">
+							<div class="text-right user-tool-asset-addon-entries">
+								<liferay-asset:asset-addon-entry-display
+									assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
+								/>
+							</div>
+
+							<liferay-journal:journal-article-display
+								articleDisplay="<%= articleDisplay %>"
 							/>
+
+							<c:if test="<%= articleDisplay.isPaginate() %>">
+
+								<%
+								PortletURL portletURL = renderResponse.createRenderURL();
+								%>
+
+								<liferay-ui:page-iterator
+									cur="<%= articleDisplay.getCurrentPage() %>"
+									curParam='<%= "page" %>'
+									delta="<%= 1 %>"
+									id="articleDisplayPages"
+									maxPages="<%= 25 %>"
+									portletURL="<%= portletURL %>"
+									total="<%= articleDisplay.getNumberOfPages() %>"
+									type="article"
+								/>
+
+								<br />
+							</c:if>
 						</div>
-
-						<liferay-journal:journal-article-display
-							articleDisplay="<%= articleDisplay %>"
-						/>
-
-						<c:if test="<%= articleDisplay.isPaginate() %>">
-
-							<%
-							PortletURL portletURL = renderResponse.createRenderURL();
-							%>
-
-							<liferay-ui:page-iterator
-								cur="<%= articleDisplay.getCurrentPage() %>"
-								curParam='<%= "page" %>'
-								delta="<%= 1 %>"
-								id="articleDisplayPages"
-								maxPages="<%= 25 %>"
-								portletURL="<%= portletURL %>"
-								total="<%= articleDisplay.getNumberOfPages() %>"
-								type="article"
-							/>
-
-							<br />
-						</c:if>
 					</c:when>
 				</c:choose>
 			</c:when>

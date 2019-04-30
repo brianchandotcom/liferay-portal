@@ -62,7 +62,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 	%>
 
-		<li class="list-group-item list-group-item-flex">
+		<li class="list-group-item list-group-item-flex <%= (previewAssetEntryId == assetEntry.getEntryId()) ? "active" : StringPool.BLANK %>">
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 				<div class="autofit-col">
 					<span class="inline-item">

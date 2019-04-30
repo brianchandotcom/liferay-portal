@@ -51,9 +51,8 @@ public class RoleServiceTest extends BasePermissionTestCase {
 	public void testSearch() throws Exception {
 		List<Role> roles = _roleService.search(
 			group.getCompanyId(), StringPool.BLANK,
-			new Integer[] {RoleConstants.TYPE_REGULAR},
-			new LinkedHashMap<String, Object>(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+			new Integer[] {RoleConstants.TYPE_REGULAR}, new LinkedHashMap<>(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertTrue(
 			"Role not found with permissions", roles.contains(_role));
@@ -62,9 +61,8 @@ public class RoleServiceTest extends BasePermissionTestCase {
 
 		roles = _roleService.search(
 			group.getCompanyId(), StringPool.BLANK,
-			new Integer[] {RoleConstants.TYPE_REGULAR},
-			new LinkedHashMap<String, Object>(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+			new Integer[] {RoleConstants.TYPE_REGULAR}, new LinkedHashMap<>(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertFalse(
 			"Role found without permissions", roles.contains(_role));
@@ -74,15 +72,13 @@ public class RoleServiceTest extends BasePermissionTestCase {
 	public void testSearchCount() throws Exception {
 		int initialCount = _roleService.searchCount(
 			group.getCompanyId(), StringPool.BLANK,
-			new Integer[] {RoleConstants.TYPE_REGULAR},
-			new LinkedHashMap<String, Object>());
+			new Integer[] {RoleConstants.TYPE_REGULAR}, new LinkedHashMap<>());
 
 		removePortletModelViewPermission();
 
 		int count = _roleService.searchCount(
 			group.getCompanyId(), StringPool.BLANK,
-			new Integer[] {RoleConstants.TYPE_REGULAR},
-			new LinkedHashMap<String, Object>());
+			new Integer[] {RoleConstants.TYPE_REGULAR}, new LinkedHashMap<>());
 
 		Assert.assertEquals(initialCount - 1, count);
 	}

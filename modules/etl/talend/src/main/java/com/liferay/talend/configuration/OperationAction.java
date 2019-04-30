@@ -16,9 +16,20 @@ package com.liferay.talend.configuration;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public enum OperationAction {
 
-	DELETE, INSERT, UPDATE
+	DELETE("delete"), INSERT("post"), UPDATE("patch");
+
+	public String getHttpMethod() {
+		return _httpMethod;
+	}
+
+	private OperationAction(String httpMethod) {
+		_httpMethod = httpMethod;
+	}
+
+	private final String _httpMethod;
 
 }

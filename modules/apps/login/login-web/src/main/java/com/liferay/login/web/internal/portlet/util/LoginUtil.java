@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -163,14 +162,6 @@ public class LoginUtil {
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 
 		return portletURL;
-	}
-
-	public static void sendPassword(ActionRequest actionRequest)
-		throws Exception {
-
-		String toAddress = ParamUtil.getString(actionRequest, "emailAddress");
-
-		sendPassword(actionRequest, null, null, toAddress, null, null);
 	}
 
 	public static void sendPassword(

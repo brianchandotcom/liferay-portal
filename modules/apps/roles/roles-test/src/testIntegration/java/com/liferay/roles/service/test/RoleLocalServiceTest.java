@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -61,6 +62,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -81,7 +83,14 @@ public class RoleLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		_indexer = _indexerRegistry.getIndexer(Organization.class.getName());
+
 		_indexerRegistry.unregister(Organization.class.getName());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_indexerRegistry.register(_indexer);
 	}
 
 	@Test(expected = RoleNameException.class)
@@ -488,6 +497,8 @@ public class RoleLocalServiceTest {
 			Assert.assertFalse(teamRoleMap.containsKey(team));
 		}
 	}
+
+	private static Indexer<Organization> _indexer;
 
 	@Inject
 	private static IndexerRegistry _indexerRegistry;

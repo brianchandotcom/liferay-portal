@@ -57,8 +57,8 @@ const debouncedUpdateEditableValues = debouncedAlert(
  * @param {string} fragmentEntryLinkId
  * @param {string} editableId
  * @param {string} editableValueId
- * @param {string} editableValue
- * @param {string} [editableValueSegmentsExperienceId='']
+ * @param {string} editableValueContent
+ * @param {string} [segmentsExperienceId='']
  * @return {function}
  * @review
  */
@@ -66,15 +66,42 @@ function updateEditableValueAction(
 	fragmentEntryLinkId,
 	editableId,
 	editableValueId,
-	editableValue,
+	editableValueContent,
+	segmentsExperienceId = ''
+) {
+	return updateEditableValuesAction(
+		fragmentEntryLinkId,
+		editableId,
+		[
+			{
+				content: editableValueContent,
+				editableValueId
+			}
+		],
+		segmentsExperienceId
+	);
+}
+
+/**
+ * @param {string} fragmentEntryLinkId
+ * @param {string} editableId
+ * @param {Array<{editableValueId: string, content: string}>} editableValues
+ * @param {string} [editableValueSegmentsExperienceId='']
+ * @return {function}
+ * @review
+ */
+function updateEditableValuesAction(
+	fragmentEntryLinkId,
+	editableId,
+	editableValues,
 	editableValueSegmentsExperienceId = ''
 ) {
 	return function(dispatch, getState) {
 		const state = getState();
 
-		const {editableValues} = state.fragmentEntryLinks[
-			fragmentEntryLinkId
-		];
+		const previousEditableValues = state
+			.fragmentEntryLinks[fragmentEntryLinkId]
+			.editableValues;
 
 		const keysTreeArray = editableValueSegmentsExperienceId ? [
 			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -85,34 +112,43 @@ function updateEditableValueAction(
 			editableId
 		];
 
-		let nextEditableValues = setIn(
-			editableValues,
-			[...keysTreeArray, editableValueId],
-			editableValue
-		);
+		let nextEditableValues = previousEditableValues;
 
-		if (editableValueId === 'mappedField') {
-			nextEditableValues = updateIn(
-				nextEditableValues,
-				keysTreeArray,
-				editableValue => {
-					const nextEditableValue = Object.assign({}, editableValue);
+		editableValues.forEach(
+			editableValue => {
+				nextEditableValues = setIn(
+					nextEditableValues,
+					[...keysTreeArray, editableValue.editableValueId],
+					editableValue.content
+				);
 
-					[
-						'config',
-						state.defaultSegmentsEntryId,
-						...Object.keys(state.availableLanguages),
-						...Object.keys(state.availableSegmentsEntries)
-					].forEach(
-						key => {
-							delete nextEditableValue[key];
+				if (editableValue.editableValueId === 'mappedField') {
+					nextEditableValues = updateIn(
+						nextEditableValues,
+						keysTreeArray,
+						previousEditableValue => {
+							const nextEditableValue = Object.assign(
+								{},
+								previousEditableValue
+							);
+
+							[
+								'config',
+								state.defaultSegmentsEntryId,
+								...Object.keys(state.availableLanguages),
+								...Object.keys(state.availableSegmentsEntries)
+							].forEach(
+								key => {
+									delete nextEditableValue[key];
+								}
+							);
+
+							return nextEditableValue;
 						}
 					);
-
-					return nextEditableValue;
 				}
-			);
-		}
+			}
+		);
 
 		dispatch(
 			updateEditableValueLoadingAction(
@@ -124,7 +160,7 @@ function updateEditableValueAction(
 		debouncedUpdateEditableValues(
 			dispatch,
 			fragmentEntryLinkId,
-			editableValues,
+			previousEditableValues,
 			nextEditableValues
 		);
 	};
@@ -178,5 +214,6 @@ function updateEditableValueSuccessAction(date = new Date()) {
 
 export {
 	updateEditableValueAction,
+	updateEditableValuesAction,
 	updateEditableValueSuccessAction
 };

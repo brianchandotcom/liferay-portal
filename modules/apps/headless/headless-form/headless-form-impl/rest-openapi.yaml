@@ -126,14 +126,14 @@ components:
                     description: https://www.schema.org/FormFieldValue
                     items:
                         properties:
-                            documentId:
-                                format: int64
-                                type: integer
-                                writeOnly: true
                             formDocument:
                                 allOf:
                                     - $ref: "#/components/schemas/FormDocument"
                                 readOnly: true
+                            formDocumentId:
+                                format: int64
+                                type: integer
+                                writeOnly: true
                             id:
                                 format: int64
                                 type: integer

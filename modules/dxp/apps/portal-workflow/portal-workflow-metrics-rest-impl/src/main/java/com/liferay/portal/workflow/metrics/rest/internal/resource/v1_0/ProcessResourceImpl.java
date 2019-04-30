@@ -257,6 +257,9 @@ public class ProcessResourceImpl
 				_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
 		}
 
+		booleanQuery.addMustNotQueryClauses(
+			_queries.term("status", WorkfowMetricsSLAStatus.EXPIRED));
+
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", false),

@@ -182,7 +182,8 @@ public class TaskResourceImpl
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
+			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
+			_queries.term("status", WorkfowMetricsSLAStatus.EXPIRED));
 
 		TermsQuery termsQuery = _queries.terms("taskName");
 

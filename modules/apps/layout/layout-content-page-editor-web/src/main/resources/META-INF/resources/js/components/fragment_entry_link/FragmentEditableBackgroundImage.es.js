@@ -2,6 +2,7 @@ import {Config} from 'metal-state';
 import Component from 'metal-component';
 import {Store} from '../../store/store.es';
 
+import {DEFAULT_LANGUAGE_ID_KEY} from '../../utils/constants';
 import FragmentEditableFieldTooltip from './FragmentEditableFieldTooltip.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 
@@ -37,7 +38,7 @@ class FragmentEditableBackgroundImage extends Component {
 
 		return buttons;
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 * @review
@@ -45,6 +46,7 @@ class FragmentEditableBackgroundImage extends Component {
 	created() {
 		this._handleClick = this._handleClick.bind(this);
 		this._handleOutsideTooltipClick = this._handleOutsideTooltipClick.bind(this);
+		this._handleSelectBackgroundImage = this._handleSelectBackgroundImage.bind(this);
 		this._handleTooltipButtonClick = this._handleTooltipButtonClick.bind(this);
 
 		this.element.addEventListener('click', this._handleClick);
@@ -103,6 +105,26 @@ class FragmentEditableBackgroundImage extends Component {
 	}
 
 	/**
+	 * @param {string} backgroundImageURL
+	 * @private
+	 * @review
+	 */
+	_handleSelectBackgroundImage(backgroundImageURL) {
+		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
+		const segmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId);
+
+		this.store.dispatch(
+			updateEditableValueAction(
+				this.fragmentEntryLinkId,
+				this.editableId,
+				this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+				backgroundImageURL,
+				segmentsExperienceId || defaultSegmentsExperienceId
+			)
+		);
+	}
+
+	/**
 	 * Handles click events for tooltip buttons.
 	 * @param {object} event The tooltip button click.
 	 */
@@ -121,6 +143,40 @@ class FragmentEditableBackgroundImage extends Component {
  * @type {!Object}
  */
 FragmentEditableBackgroundImage.STATE = {
+
+	/**
+	 * FragmentEntryLink id
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableBackgroundImage
+	 * @review
+	 * @type {!string}
+	 */
+	fragmentEntryLinkId: Config
+		.string()
+		.required(),
+
+	/**
+	 * Editable ID
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableBackgroundImage
+	 * @review
+	 * @type {!string}
+	 */
+	editableId: Config
+		.string()
+		.required(),
+
+	/**
+	 * Editable values that should be used instead of the default ones inside
+	 * editable fields.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableBackgroundImage
+	 * @type {!Object}
+	 */
+	editableValues: Config.object().required(),
 
 	/**
 	 * If <code>true</code>, the mapping is activated.

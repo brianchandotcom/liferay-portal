@@ -9,7 +9,7 @@ import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.e
 import './FragmentEditableFieldTooltip.es';
 
 import {CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_CONFIG_ATTRIBUTES} from '../../actions/actions.es';
-import {EDITABLE_FIELD_CONFIG_KEYS, FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {DEFAULT_LANGUAGE_ID_KEY, EDITABLE_FIELD_CONFIG_KEYS, FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../../actions/saveChanges.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {getItemPath, itemIsInPath} from '../../utils/FragmentsEditorGetUtils.es';
@@ -20,8 +20,6 @@ import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
-
-const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
 
 /**
  * FragmentEditableField

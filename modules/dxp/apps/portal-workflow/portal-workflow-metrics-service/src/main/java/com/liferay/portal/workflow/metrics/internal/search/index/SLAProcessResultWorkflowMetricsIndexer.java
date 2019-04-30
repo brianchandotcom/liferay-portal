@@ -26,12 +26,14 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.sql.Timestamp;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -113,57 +115,19 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	}
 
 	public void expireDocuments(long companyId, long instanceId) {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
-		searchSearchRequest.setIndexNames(getIndexName());
-		searchSearchRequest.setQuery(
+		_updateDocuments(
+			document -> new DocumentImpl() {
+				{
+					addKeyword(
+						"status", WorkfowMetricsSLAStatus.EXPIRED.toString());
+					addKeyword(Field.UID, document.getString(Field.UID));
+				}
+			},
 			booleanQuery.addMustQueryClauses(
 				queries.term("companyId", companyId),
 				queries.term("instanceId", instanceId)));
-		searchSearchRequest.setSelectedFieldNames(Field.UID);
-
-		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
-			searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
-		if (searchHits.getTotalHits() == 0) {
-			return;
-		}
-
-		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
-
-		bulkDocumentRequest.setRefresh(true);
-
-		Stream.of(
-			searchHits.getSearchHits()
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).map(
-			document -> new UpdateDocumentRequest(
-				getIndexName(), document.getString(Field.UID),
-				new DocumentImpl() {
-					{
-						addKeyword(
-							"status",
-							WorkfowMetricsSLAStatus.EXPIRED.toString());
-						addKeyword(Field.UID, document.getString(Field.UID));
-					}
-				}) {
-
-				{
-					setType(getIndexType());
-				}
-			}
-		).forEach(
-			bulkDocumentRequest::addBulkableDocumentRequest
-		);
-
-		searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
 	@Override
@@ -184,13 +148,27 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	protected Queries queries;
 
 	private void _deleteDocuments(BooleanQuery booleanQuery) {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames(getIndexName());
-		searchSearchRequest.setQuery(
+		_updateDocuments(
+			document -> new DocumentImpl() {
+				{
+					addKeyword("deleted", true);
+					addKeyword(Field.UID, document.getString(Field.UID));
+				}
+			},
 			booleanQuery.addMustNotQueryClauses(
 				queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
 				queries.term("status", WorkfowMetricsSLAStatus.STOPPED)));
+	}
+
+	private void _updateDocuments(
+		Function<com.liferay.portal.search.document.Document, Document>
+			transformDocumentFunction,
+		Query query) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(getIndexName());
+		searchSearchRequest.setQuery(query);
 		searchSearchRequest.setSelectedFieldNames(Field.UID);
 
 		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
@@ -213,12 +191,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		).map(
 			document -> new UpdateDocumentRequest(
 				getIndexName(), document.getString(Field.UID),
-				new DocumentImpl() {
-					{
-						addKeyword("deleted", true);
-						addKeyword(Field.UID, document.getString(Field.UID));
-					}
-				}) {
+				transformDocumentFunction.apply(document)) {
 
 				{
 					setType(getIndexType());

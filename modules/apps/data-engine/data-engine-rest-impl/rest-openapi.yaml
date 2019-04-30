@@ -379,12 +379,10 @@ paths:
                       type: integer
                 - in: query
                   name: page
-                  required: true
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
-                  required: true
                   schema:
                       type: integer
             responses:
@@ -446,12 +444,10 @@ paths:
                       type: string
                 - in: query
                   name: page
-                  required: true
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
-                  required: true
                   schema:
                       type: integer
             responses:
@@ -697,12 +693,10 @@ paths:
                       type: integer
                 - in: query
                   name: page
-                  required: true
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
-                  required: true
                   schema:
                       type: integer
             responses:
@@ -875,12 +869,10 @@ paths:
                       type: string
                 - in: query
                   name: page
-                  required: true
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
-                  required: true
                   schema:
                       type: integer
             responses:
@@ -938,12 +930,10 @@ paths:
                       type: integer
                 - in: query
                   name: page
-                  required: true
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
-                  required: true
                   schema:
                       type: integer
             responses:
@@ -1035,12 +1025,10 @@ paths:
                       type: string
                 - in: query
                   name: page
-                  required: true
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
-                  required: true
                   schema:
                       type: integer
             responses:

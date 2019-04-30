@@ -40,6 +40,8 @@ public interface ProcessResource {
 	public Process getProcess(Long processId, Boolean completed)
 		throws Exception;
 
+	public String getProcessTitle(Long processId) throws Exception;
+
 	public void setContextCompany(Company contextCompany);
 
 }

@@ -97,6 +97,29 @@ public class ProcessResource {
 		}
 	}
 
+	public String getProcessTitle(Long processId) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/title",
+			processId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
+		return content;
+	}
+
 	private static final Logger _logger = Logger.getLogger(
 		ProcessResource.class.getName());
 

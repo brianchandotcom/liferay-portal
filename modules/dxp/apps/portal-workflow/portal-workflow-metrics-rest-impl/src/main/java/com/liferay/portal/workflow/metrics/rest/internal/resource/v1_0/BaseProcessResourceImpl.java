@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -94,6 +95,20 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 		throws Exception {
 
 		return new Process();
+	}
+
+	@Override
+	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
+	@Path("/processes/{processId}/title")
+	@Produces("text/plain")
+	@Tags(value = {@Tag(name = "Process")})
+	public String getProcessTitle(
+			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
+				processId)
+		throws Exception {
+
+		return StringPool.BLANK;
 	}
 
 	public void setContextCompany(Company contextCompany) {

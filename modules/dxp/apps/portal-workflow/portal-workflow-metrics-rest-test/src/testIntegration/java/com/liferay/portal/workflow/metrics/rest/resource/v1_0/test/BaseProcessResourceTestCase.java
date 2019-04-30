@@ -413,6 +413,43 @@ public abstract class BaseProcessResourceTestCase {
 		return options.getResponse();
 	}
 
+	@Test
+	public void testGetProcessTitle() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected String invokeGetProcessTitle(Long processId) throws Exception {
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/processes/{processId}/title", processId);
+
+		options.setLocation(location);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		return string;
+	}
+
+	protected Http.Response invokeGetProcessTitleResponse(Long processId)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		String location =
+			_resourceURL + _toPath("/processes/{processId}/title", processId);
+
+		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
 	protected void assertResponseCode(
 		int expectedResponseCode, Http.Response actualResponse) {
 

@@ -160,6 +160,17 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public String getProcessTitle(@GraphQLName("processId") Long processId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> processResource.getProcessTitle(processId));
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Collection<SLA> getProcessSLAsPage(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("status") Integer status,

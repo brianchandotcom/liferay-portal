@@ -4,6 +4,7 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.segments.constants,\
 	com.liferay.segments.context,\
+	com.liferay.segments.context.contributor,\
 	com.liferay.segments.criteria,\
 	com.liferay.segments.criteria.contributor,\
 	com.liferay.segments.exception,\

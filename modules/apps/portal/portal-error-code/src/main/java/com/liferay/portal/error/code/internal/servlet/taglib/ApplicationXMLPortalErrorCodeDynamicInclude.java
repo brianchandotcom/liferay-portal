@@ -16,7 +16,6 @@ package com.liferay.portal.error.code.internal.servlet.taglib;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
@@ -24,9 +23,6 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,17 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ApplicationXMLPortalErrorCodeDynamicInclude
 	extends BasePortalErrorCodeDynamicInclude {
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_mimeType = MapUtil.getString(
-			properties, "mime.type", "application/xml");
-	}
-
-	@Override
-	protected String getMimeType() {
-		return _mimeType;
-	}
 
 	@Override
 	protected void writeDetailedMessage(
@@ -102,8 +87,6 @@ public class ApplicationXMLPortalErrorCodeDynamicInclude
 
 		printWriter.print(document.asXML());
 	}
-
-	private String _mimeType;
 
 	@Reference
 	private SAXReader _saxReader;

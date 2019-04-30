@@ -45,19 +45,26 @@ public class TextHtmlPortalErrorCodeJSPDynamicInclude
 			String key)
 		throws IOException {
 
-		response.setContentType(_mimeType + _CHARSET);
+		response.setContentType(_contentType);
 
 		super.include(request, response, key);
 	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/errors/code.jsp#" + _mimeType);
+		dynamicIncludeRegistry.register(_key);
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_mimeType = MapUtil.getString(properties, "mime.type", "text/html");
+		String mimeType = MapUtil.getString(properties, "mime.type", null);
+
+		if (mimeType == null) {
+			throw new IllegalArgumentException("mime.type is null");
+		}
+
+		_contentType = mimeType.concat(_CHARSET);
+		_key = "/errors/code.jsp#".concat(mimeType);
 	}
 
 	@Override
@@ -84,6 +91,7 @@ public class TextHtmlPortalErrorCodeJSPDynamicInclude
 	private static final Log _log = LogFactoryUtil.getLog(
 		TextHtmlPortalErrorCodeJSPDynamicInclude.class);
 
-	private String _mimeType;
+	private String _contentType;
+	private String _key;
 
 }

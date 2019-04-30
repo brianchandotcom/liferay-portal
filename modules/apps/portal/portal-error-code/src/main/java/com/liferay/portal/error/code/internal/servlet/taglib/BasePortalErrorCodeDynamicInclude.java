@@ -18,13 +18,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Activate;
 
 /**
  * @author Carlos Sierra Andrés
@@ -38,9 +43,7 @@ public abstract class BasePortalErrorCodeDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		String mimeType = getMimeType();
-
-		httpServletResponse.setContentType(mimeType + _CHARSET);
+		httpServletResponse.setContentType(_contentType);
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
@@ -73,10 +76,20 @@ public abstract class BasePortalErrorCodeDynamicInclude
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/errors/code.jsp#" + getMimeType());
+		dynamicIncludeRegistry.register(_key);
 	}
 
-	protected abstract String getMimeType();
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		String mimeType = MapUtil.getString(properties, "mime.type", null);
+
+		if (mimeType == null) {
+			throw new IllegalArgumentException("mime.type is null");
+		}
+
+		_contentType = mimeType.concat(_CHARSET);
+		_key = "/errors/code.jsp#".concat(mimeType);
+	}
 
 	protected abstract void writeDetailedMessage(
 		String message, String requestURI, int statusCode, Throwable throwable,
@@ -89,5 +102,8 @@ public abstract class BasePortalErrorCodeDynamicInclude
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePortalErrorCodeDynamicInclude.class);
+
+	private String _contentType;
+	private String _key;
 
 }

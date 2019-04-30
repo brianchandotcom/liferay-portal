@@ -20,13 +20,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.PrintWriter;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,17 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ApplicationJsonPortalErrorCodeDynamicInclude
 	extends BasePortalErrorCodeDynamicInclude {
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_mimeType = MapUtil.getString(
-			properties, "mime.type", "application/json");
-	}
-
-	@Override
-	protected String getMimeType() {
-		return _mimeType;
-	}
 
 	@Override
 	protected void writeDetailedMessage(
@@ -101,7 +86,5 @@ public class ApplicationJsonPortalErrorCodeDynamicInclude
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	private String _mimeType;
 
 }

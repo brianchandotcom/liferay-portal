@@ -719,20 +719,26 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					${schemaName} get${schemaName} = invoke${javaMethodSignature.methodName?cap_first}(
 
-					<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 						<#if !javaMethodParameter?is_first>
 							,
 						</#if>
 
-						post${schemaName}.
+						<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+							Pagination.of(1, 2)
+						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+							post${schemaName}.
 
-						<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-							getId
+							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+								getId
+							<#else>
+								get${javaMethodParameter.parameterName?cap_first}
+							</#if>
+
+							()
 						<#else>
-							get${javaMethodParameter.parameterName?cap_first}
+							null
 						</#if>
-
-						()
 					</#list>
 
 					);

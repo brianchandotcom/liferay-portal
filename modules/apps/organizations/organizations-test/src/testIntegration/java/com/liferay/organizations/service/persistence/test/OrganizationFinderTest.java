@@ -70,27 +70,29 @@ public class OrganizationFinderTest {
 
 	@Test
 	public void testCountByKeywordsWithDifferentParameterOrder() {
-		LinkedHashMap<String, Object> params1 = new LinkedHashMap<>();
-
-		params1.put("usersOrgs", _user.getUserId());
-		params1.put("groupOrganization", _group.getGroupId());
-
 		int count1 = _organizationFinder.countO_ByKeywords(
 			_user.getCompanyId(),
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-			StringPool.NOT_EQUAL, null, null, null, null, params1);
+			StringPool.NOT_EQUAL, null, null, null, null,
+			new LinkedHashMap<String, Object>() {
+				{
+					put("usersOrgs", _user.getUserId());
+					put("groupOrganization", _group.getGroupId());
+				}
+			});
 
 		Assert.assertEquals(1, count1);
-
-		LinkedHashMap<String, Object> params2 = new LinkedHashMap<>();
-
-		params2.put("groupOrganization", _group.getGroupId());
-		params2.put("usersOrgs", _user.getUserId());
 
 		int count2 = _organizationFinder.countO_ByKeywords(
 			_user.getCompanyId(),
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-			StringPool.NOT_EQUAL, null, null, null, null, params2);
+			StringPool.NOT_EQUAL, null, null, null, null,
+			new LinkedHashMap<String, Object>() {
+				{
+					put("groupOrganization", _group.getGroupId());
+					put("usersOrgs", _user.getUserId());
+				}
+			});
 
 		Assert.assertEquals(count1, count2);
 	}

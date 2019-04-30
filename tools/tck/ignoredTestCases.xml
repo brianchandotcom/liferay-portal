@@ -77,4 +77,36 @@
 	<!-- https://issues.liferay.com/browse/LPS-93469 -->
 
 	<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_getRenderParameters"></entry>
+
+	<!-- https://issues.liferay.com/browse/LRQA-48594 -->
+
+	<entry key="TestModule1_PortletCanBeRendered"></entry>
+	<entry key="TestModule1_GetDefaultNamespaceTest"></entry>
+	<entry key="TestModule1_GetInitParameterNamesTest"></entry>
+	<entry key="TestModule1_GetSupportedLocalesTest"></entry>
+	<entry key="TestModule1_PortletConfigTest"></entry>
+	<entry key="TestModule2_CanCreateRenderURL"></entry>
+	<entry key="TestModule2_CanGetPortletSession"></entry>
+	<entry key="TestModule2_CanSetAttributeInPortletSession"></entry>
+	<entry key="TestModule2_PublicRenderParameterCanBeSetThroughUrl"></entry>
+	<entry key="TestModule2_RenderURLWithParameterCanBeClicked"></entry>
+	<entry key="TestModule3_PublicRenderParameterTestDifferentIdentifier"></entry>
+	<entry key="TestModule3_PublicRenderParameterTestDifferentPortletApplications"></entry>
+	<entry key="TestModule3_PublicRenderParameterTestDifferentQName"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_addListener2"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_addListener4"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_cdi3"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_complete3"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_complete5"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_dispatch1"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_dispatch2"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_dispatch3"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_dispatch5"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_dispatch8"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_dispatchA"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_getDispatcherType3"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_getDispatcherType4"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_onStartAsync"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_start2"></entry>
+	<entry key="V3ResourceAsyncTests_SPEC_21_Async_start4"></entry>
 </properties>

@@ -87,17 +87,15 @@ public class RoleFinderTest {
 
 		Map<String, List<String>> actionIdsLists = new HashMap<>();
 
-		List<ResourcePermission> resourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				companyId, name, scope, primKey);
-
 		List<ResourceAction> resourceActions =
 			_resourceActionLocalService.getResourceActions(name);
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			long roleId = resourcePermission.getRoleId();
+		for (ResourcePermission resourcePermission :
+				_resourcePermissionLocalService.getResourcePermissions(
+					companyId, name, scope, primKey)) {
 
-			Role role = _roleLocalService.getRole(roleId);
+			Role role = _roleLocalService.getRole(
+				resourcePermission.getRoleId());
 
 			long actionIds = resourcePermission.getActionIds();
 
@@ -119,25 +117,15 @@ public class RoleFinderTest {
 
 	@Test
 	public void testFindByC_N_S_P_A() {
-		boolean exists = false;
-
 		List<Role> roles = _roleFinder.findByC_N_S_P_A(
 			_resourcePermission.getCompanyId(), _resourcePermission.getName(),
 			_resourcePermission.getScope(), _resourcePermission.getPrimKey(),
 			_arbitraryResourceAction.getActionId());
 
-		for (Role role : roles) {
-			if (role.getRoleId() == _arbitraryRole.getRoleId()) {
-				exists = true;
-
-				break;
-			}
-		}
-
 		Assert.assertTrue(
 			"The method findByC_N_S_P_A should have returned the role " +
 				_arbitraryRole.getRoleId(),
-			exists);
+			roles.contains(_arbitraryRole));
 	}
 
 	private static ResourceAction _arbitraryResourceAction;

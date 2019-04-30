@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -188,8 +187,6 @@ public class RoleLocalServiceTest {
 
 		Organization organization = (Organization)objects[0];
 
-		long companyId = organization.getCompanyId();
-
 		long groupId = organization.getGroupId();
 
 		Group group = _groupLocalService.getGroup(groupId);
@@ -197,11 +194,11 @@ public class RoleLocalServiceTest {
 		List<Role> actualRoles = _roleLocalService.getGroupRelatedRoles(
 			groupId);
 
-		List<Role> allRoles = _roleLocalService.getRoles(companyId);
-
 		List<Role> expectedRoles = new ArrayList<>();
 
-		for (Role role : allRoles) {
+		for (Role role :
+				_roleLocalService.getRoles(organization.getCompanyId())) {
+
 			int type = role.getType();
 
 			if ((type == RoleConstants.TYPE_REGULAR) ||
@@ -355,10 +352,8 @@ public class RoleLocalServiceTest {
 
 		Assert.assertNotNull(role);
 
-		long[] excludedRoleIds = {role.getRoleId()};
-
 		List<Role> roles = _roleLocalService.getTeamRoles(
-			organization.getGroupId(), excludedRoleIds);
+			organization.getGroupId(), new long[] {role.getRoleId()});
 
 		Assert.assertNotNull(roles);
 		Assert.assertTrue(roles.toString(), roles.isEmpty());
@@ -375,12 +370,10 @@ public class RoleLocalServiceTest {
 		Object[] organizationAndTeam2 = getOrganizationAndTeam();
 
 		Organization organization = (Organization)organizationAndTeam1[0];
-		Team team = (Team)organizationAndTeam2[1];
 
-		Map<Team, Role> teamRoleMap = _roleLocalService.getTeamRoleMap(
-			organization.getGroupId());
-
-		testGetTeamRoleMap(teamRoleMap, team, false);
+		testGetTeamRoleMap(
+			_roleLocalService.getTeamRoleMap(organization.getGroupId()),
+			(Team)organizationAndTeam2[1], false);
 	}
 
 	@Test
@@ -388,12 +381,10 @@ public class RoleLocalServiceTest {
 		Object[] organizationAndTeam = getOrganizationAndTeam();
 
 		Organization organization = (Organization)organizationAndTeam[0];
-		Team team = (Team)organizationAndTeam[1];
 
-		Map<Team, Role> teamRoleMap = _roleLocalService.getTeamRoleMap(
-			organization.getGroupId());
-
-		testGetTeamRoleMap(teamRoleMap, team, true);
+		testGetTeamRoleMap(
+			_roleLocalService.getTeamRoleMap(organization.getGroupId()),
+			(Team)organizationAndTeam[1], true);
 	}
 
 	@Test
@@ -401,17 +392,14 @@ public class RoleLocalServiceTest {
 		Object[] organizationAndTeam = getOrganizationAndTeam();
 
 		Organization organization = (Organization)organizationAndTeam[0];
-		Team team = (Team)organizationAndTeam[1];
-
-		Layout layout = LayoutTestUtil.addLayout(organization.getGroupId());
 
 		Group group = GroupTestUtil.addGroup(
-			TestPropsValues.getUserId(), organization.getGroupId(), layout);
+			TestPropsValues.getUserId(), organization.getGroupId(),
+			LayoutTestUtil.addLayout(organization.getGroupId()));
 
-		Map<Team, Role> teamRoleMap = _roleLocalService.getTeamRoleMap(
-			group.getGroupId());
-
-		testGetTeamRoleMap(teamRoleMap, team, true);
+		testGetTeamRoleMap(
+			_roleLocalService.getTeamRoleMap(group.getGroupId()),
+			(Team)organizationAndTeam[1], true);
 	}
 
 	@Test

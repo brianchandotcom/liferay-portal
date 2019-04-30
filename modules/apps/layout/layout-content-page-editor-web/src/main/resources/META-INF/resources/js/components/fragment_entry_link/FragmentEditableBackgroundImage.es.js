@@ -3,8 +3,11 @@ import Component from 'metal-component';
 import {Store} from '../../store/store.es';
 
 import {DEFAULT_LANGUAGE_ID_KEY} from '../../utils/constants';
+import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
 import FragmentEditableFieldTooltip from './FragmentEditableFieldTooltip.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
+import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 
 /**
  * FragmentEditableBackgroundImage
@@ -59,6 +62,22 @@ class FragmentEditableBackgroundImage extends Component {
 	disposed() {
 		this.element.removeEventListener('click', this._handleClick);
 		this._disposeTooltip();
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	syncEditableValues() {
+		this._renderBackgroundImage();
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	syncDefaultLanguageId() {
+		this._renderBackgroundImage();
 	}
 
 	/**
@@ -135,6 +154,25 @@ class FragmentEditableBackgroundImage extends Component {
 			this.portletNamespace
 		);
 	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+	_renderBackgroundImage() {
+		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
+		const segmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId);
+
+		const segmentedValue = this.editableValues[segmentsExperienceId] ||
+			this.editableValues[defaultSegmentsExperienceId] ||
+			this.editableValues;
+
+		const translatedValue = segmentedValue[this.languageId] ||
+			segmentedValue[this.defaultLanguageId];
+
+		EditableBackgroundImageProcessor.render(this.element, translatedValue);
+	}
+
 }
 
 /**

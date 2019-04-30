@@ -29,26 +29,24 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eduardo García
  */
-@Component(immediate = true, service = {})
+@Component(immediate = true, service = ContextRegistrar.class)
 public class ContextRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceRegistration = _register(_bundleContext);
+		register(new ContextEntityModel(new ArrayList<>()));
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_unregister(_serviceRegistration);
+		unregister();
 	}
 
-	private ServiceRegistration<EntityModel> _register(
-		BundleContext bundleContext) {
-
-		return bundleContext.registerService(
-			EntityModel.class, new ContextEntityModel(new ArrayList<>()),
+	public void register(ContextEntityModel contextEntityModel) {
+		_serviceRegistration = _bundleContext.registerService(
+			EntityModel.class, contextEntityModel,
 			new HashMapDictionary<String, Object>() {
 				{
 					put("entity.model.name", ContextEntityModel.NAME);
@@ -56,10 +54,8 @@ public class ContextRegistrar {
 			});
 	}
 
-	private void _unregister(
-		ServiceRegistration<EntityModel> serviceRegistration) {
-
-		serviceRegistration.unregister();
+	public void unregister() {
+		_serviceRegistration.unregister();
 	}
 
 	private BundleContext _bundleContext;

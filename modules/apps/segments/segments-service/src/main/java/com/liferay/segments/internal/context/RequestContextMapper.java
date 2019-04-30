@@ -14,34 +14,57 @@
 
 package com.liferay.segments.internal.context;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil;
 import com.liferay.portal.kernel.mobile.device.Dimensions;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.odata.entity.BooleanEntityField;
+import com.liferay.portal.odata.entity.DateTimeEntityField;
+import com.liferay.portal.odata.entity.DoubleEntityField;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.IntegerEntityField;
+import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.segments.context.Context;
+import com.liferay.segments.context.contributor.RequestContextContributor;
+import com.liferay.segments.internal.odata.entity.ContextEntityModel;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Eduardo García
@@ -114,7 +137,36 @@ public class RequestContextMapper {
 
 		context.put(Context.USER_AGENT, userAgent);
 
+		for (RequestContextContributor requestContextContributor :
+				_requestContextContributorServiceTrackerMap.values()) {
+
+			requestContextContributor.contribute(context, request);
+		}
+
 		return context;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_requestContextContributorServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, RequestContextContributor.class,
+				"request.context.contributor.key",
+				new RequestContextContributorServiceTrackerCustomizer(
+					bundleContext));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations.values()) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
+
+		_requestContextContributorServiceTrackerMap.close();
 	}
 
 	private String[] _getCookies(HttpServletRequest request) {
@@ -137,6 +189,124 @@ public class RequestContextMapper {
 	private BrowserSniffer _browserSniffer;
 
 	@Reference
+	private ContextRegistrar _contextRegistrar;
+
+	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerMap<String, RequestContextContributor>
+		_requestContextContributorServiceTrackerMap;
+	private final Map
+		<ServiceReference<RequestContextContributor>,
+		 ServiceRegistration<EntityModel>> _serviceRegistrations =
+			new ConcurrentHashMap<>();
+
+	private class RequestContextContributorServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<RequestContextContributor, RequestContextContributor> {
+
+		public RequestContextContributorServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
+		}
+
+		@Override
+		public RequestContextContributor addingService(
+			ServiceReference<RequestContextContributor> serviceReference) {
+
+			String requestContextContributorKey = GetterUtil.getString(
+				serviceReference.getProperty(
+					"request.context.contributor.key"));
+			String requestContextContributorType = GetterUtil.getString(
+				serviceReference.getProperty(
+					"request.context.contributor.type"));
+
+			List<EntityField> customEntityFields = _addCustomEntityField(
+				requestContextContributorKey, requestContextContributorType);
+
+			_contextRegistrar.unregister();
+
+			_contextRegistrar.register(
+				new ContextEntityModel(customEntityFields));
+
+			return _bundleContext.getService(serviceReference);
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<RequestContextContributor> serviceReference,
+			RequestContextContributor requestContextContributor) {
+
+			removedService(serviceReference, requestContextContributor);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<RequestContextContributor> serviceReference,
+			RequestContextContributor requestContextContributor) {
+
+			String requestContextContributorKey = GetterUtil.getString(
+				serviceReference.getProperty(
+					"request.context.contributor.key"));
+
+			List<EntityField> customEntityFields = _removeCustomEntityField(
+				requestContextContributorKey);
+
+			_contextRegistrar.unregister();
+
+			_contextRegistrar.register(
+				new ContextEntityModel(customEntityFields));
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private List<EntityField> _addCustomEntityField(
+			String contextFieldKey, String contextFieldType) {
+
+			EntityField entityField = null;
+
+			if (contextFieldType.equals("boolean")) {
+				entityField = new BooleanEntityField(
+					contextFieldKey, locale -> contextFieldKey);
+			}
+			else if (contextFieldType.equals("date")) {
+				entityField = new DateTimeEntityField(
+					contextFieldKey,
+					locale -> Field.getSortableFieldName(contextFieldKey),
+					locale -> contextFieldKey);
+			}
+			else if (contextFieldType.equals("double")) {
+				entityField = new DoubleEntityField(
+					contextFieldKey, locale -> contextFieldKey);
+			}
+			else if (contextFieldType.equals("integer")) {
+				entityField = new IntegerEntityField(
+					contextFieldKey, locale -> contextFieldKey);
+			}
+			else {
+				entityField = new StringEntityField(
+					contextFieldKey, locale -> contextFieldKey);
+			}
+
+			_customEntityFields.put(contextFieldKey, entityField);
+
+			return new ArrayList(_customEntityFields.values());
+		}
+
+		private List<EntityField> _removeCustomEntityField(
+			String requestContextContributorKey) {
+
+			_customEntityFields.remove(requestContextContributorKey);
+
+			return new ArrayList(_customEntityFields.values());
+		}
+
+		private final BundleContext _bundleContext;
+		private Map<String, EntityField> _customEntityFields = new HashMap();
+
+	}
 
 }

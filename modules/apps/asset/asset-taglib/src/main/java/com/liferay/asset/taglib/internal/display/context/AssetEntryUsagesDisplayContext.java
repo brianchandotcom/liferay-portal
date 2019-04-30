@@ -374,7 +374,7 @@ public class AssetEntryUsagesDisplayContext {
 			return false;
 		}
 
-		if (layoutPageTemplateEntry.getType() !=
+		if (layoutPageTemplateEntry.getType() ==
 				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) {
 
 			return false;

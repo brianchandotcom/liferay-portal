@@ -62,35 +62,35 @@ public class PoshiCommandsOrderCheck extends BaseFileCheck {
 
 		Collections.sort(commands, new CommandComparator());
 
-		if (!oldCommands.equals(commands)) {
-			StringBundler sb = new StringBundler();
-
-			try (UnsyncBufferedReader unsyncBufferedReader =
-					new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-				int lineNumber = 0;
-
-				String line = null;
-
-				while ((line = unsyncBufferedReader.readLine()) != null) {
-					lineNumber++;
-
-					if (lineNumber == commandStartLineNumber) {
-						break;
-					}
-
-					sb.append(line);
-					sb.append("\n");
-				}
-
-				sb.append(ListUtil.toString(commands, StringPool.BLANK, "\n"));
-				sb.append("}");
-			}
-
-			return sb.toString();
+		if (oldCommands.equals(commands)) {
+			return content;
 		}
 
-		return content;
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			int lineNumber = 0;
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineNumber++;
+
+				if (lineNumber == commandStartLineNumber) {
+					break;
+				}
+
+				sb.append(line);
+				sb.append("\n");
+			}
+
+			sb.append(ListUtil.toString(commands, StringPool.BLANK, "\n"));
+			sb.append("}");
+		}
+
+		return sb.toString();
 	}
 
 	private static final Pattern _commandNamePattern = Pattern.compile(

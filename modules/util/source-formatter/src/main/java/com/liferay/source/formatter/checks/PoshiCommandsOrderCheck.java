@@ -19,12 +19,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,26 +97,21 @@ public class PoshiCommandsOrderCheck extends BaseFileCheck {
 		"(?<=\n)([\t ]*@.+?=.+?\n)*[\t ]*(function|macro|test)( +).+\n" +
 			"(.*\n)*?\t\\}\n(?=\\s*(@|function|macro|test|\\s*\\}$))");
 
-	private class CommandComparator implements Comparator<String> {
+	private class CommandComparator extends NaturalOrderStringComparator {
 
 		@Override
 		public int compare(String s1, String s2) {
-			String name1 = StringPool.BLANK;
-			String name2 = StringPool.BLANK;
+			return super.compare(_getCommandName(s1), _getCommandName(s2));
+		}
 
-			Matcher matcher = _commandNamePattern.matcher(s1);
-
-			if (matcher.find()) {
-				name1 = matcher.group();
-			}
-
-			matcher = _commandNamePattern.matcher(s2);
+		private String _getCommandName(String s) {
+			Matcher matcher = _commandNamePattern.matcher(s);
 
 			if (matcher.find()) {
-				name2 = matcher.group();
+				return matcher.group();
 			}
 
-			return name1.compareTo(name2);
+			return StringPool.BLANK;
 		}
 
 		private final Pattern _commandNamePattern = Pattern.compile(

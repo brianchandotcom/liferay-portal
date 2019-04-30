@@ -70,126 +70,107 @@ public class I18nFilterTest {
 	public void testEnglishUserEnglishSessionPathWithEnglishCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, LocaleUtil.US, LocaleUtil.US, LocaleUtil.US);
-
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertNull(
+			getPrependI18nLanguageId(
+				3, LocaleUtil.US, LocaleUtil.US, LocaleUtil.US));
 	}
 
 	@Test
 	public void testEnglishUserEnglishSessionPathWithSpanishCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, LocaleUtil.US, LocaleUtil.US, LocaleUtil.SPAIN);
-
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertNull(
+			getPrependI18nLanguageId(
+				3, LocaleUtil.US, LocaleUtil.US, LocaleUtil.SPAIN));
 	}
 
 	@Test
 	public void testEnglishUserEnglishSessionWithoutCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, LocaleUtil.US, LocaleUtil.US, null);
-
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertNull(
+			getPrependI18nLanguageId(3, LocaleUtil.US, LocaleUtil.US, null));
 	}
 
 	@Test
 	public void testEnglishUserSpanishSessionPathWithEnglishCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.US);
-
 		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			getPrependI18nLanguageId(
+				3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.US));
 	}
 
 	@Test
 	public void testEnglishUserSpanishSessionWithoutCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, LocaleUtil.US, LocaleUtil.SPAIN, null);
-
 		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			getPrependI18nLanguageId(3, LocaleUtil.US, LocaleUtil.SPAIN, null));
 	}
 
 	@Test
 	public void testEnglishUserSpanishSessionWithSpanishCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.SPAIN);
-
 		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			getPrependI18nLanguageId(
+				3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.SPAIN));
 	}
 
 	@Test
 	public void testGuestEnglishSessionPathWithEnglishCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, null, LocaleUtil.US, LocaleUtil.US);
-
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertNull(
+			getPrependI18nLanguageId(3, null, LocaleUtil.US, LocaleUtil.US));
 	}
 
 	@Test
 	public void testGuestEnglishSessionPathWithSpanishCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, null, LocaleUtil.US, LocaleUtil.SPAIN);
-
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertNull(
+			getPrependI18nLanguageId(3, null, LocaleUtil.US, LocaleUtil.SPAIN));
 	}
 
 	@Test
 	public void testGuestEnglishSessionWithoutCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, null, LocaleUtil.US, null);
-
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertNull(
+			getPrependI18nLanguageId(3, null, LocaleUtil.US, null));
 	}
 
 	@Test
 	public void testGuestSpanishSessionPathWithEnglishCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, null, LocaleUtil.SPAIN, LocaleUtil.US);
-
 		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			getPrependI18nLanguageId(3, null, LocaleUtil.SPAIN, LocaleUtil.US));
 	}
 
 	@Test
 	public void testGuestSpanishSessionWithoutCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, null, LocaleUtil.SPAIN, null);
-
 		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			getPrependI18nLanguageId(3, null, LocaleUtil.SPAIN, null));
 	}
 
 	@Test
 	public void testGuestSpanishSessionWithSpanishCookieAlgorithm3()
 		throws Exception {
 
-		String prependI18nLanguageId = getPrependI18nLanguageId(
-			3, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN);
-
 		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			getPrependI18nLanguageId(
+				3, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN));
 	}
 
 	protected String getPrependI18nLanguageId(

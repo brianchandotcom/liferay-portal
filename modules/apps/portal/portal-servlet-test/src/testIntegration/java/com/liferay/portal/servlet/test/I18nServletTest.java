@@ -161,60 +161,46 @@ public class I18nServletTest extends I18nServlet {
 		mockHttpServletRequest.setServletPath(
 			StringPool.SLASH + LocaleUtil.CANADA_FRENCH.toLanguageTag());
 
-		I18nServlet.I18nData actualI18nData = getI18nData(
-			mockHttpServletRequest);
-
-		I18nServlet.I18nData expectedI18nData = getI18nData(
-			LocaleUtil.CANADA_FRENCH);
-
-		Assert.assertEquals(expectedI18nData, actualI18nData);
+		Assert.assertEquals(
+			getI18nData(LocaleUtil.CANADA_FRENCH),
+			getI18nData(mockHttpServletRequest));
 	}
 
 	@Test
 	public void testI18nNotUseDefaultExistentLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
 
-		Locale expectedLocale = LocaleUtil.getDefault();
-
-		testGetI18nData(expectedLocale, getI18nData(expectedLocale));
+		testGetI18nData(
+			LocaleUtil.getDefault(), getI18nData(LocaleUtil.getDefault()));
 	}
 
 	@Test
 	public void testI18nNotUseDefaultNondefaultLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
 
-		Locale expectedLocale = LocaleUtil.SPAIN;
-
-		testGetI18nData(expectedLocale, getI18nData(expectedLocale));
+		testGetI18nData(LocaleUtil.SPAIN, getI18nData(LocaleUtil.SPAIN));
 	}
 
 	@Test
 	public void testI18nNotUseDefaultNonexistentLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
 
-		Locale expectedLocale = LocaleUtil.CHINA;
-
-		testGetI18nData(expectedLocale, null);
+		testGetI18nData(LocaleUtil.CHINA, null);
 	}
 
 	@Test
 	public void testI18nUseDefault() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = true;
 
-		Locale expectedLocale = LocaleUtil.getDefault();
-
-		testGetI18nData(expectedLocale, getI18nData(expectedLocale));
+		testGetI18nData(
+			LocaleUtil.getDefault(), getI18nData(LocaleUtil.getDefault()));
 	}
 
 	@Test
 	public void testI18nUseDefaultNonexistentLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = true;
 
-		Locale invalidLocale = LocaleUtil.CHINA;
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		testGetI18nData(invalidLocale, getI18nData(defaultLocale));
+		testGetI18nData(LocaleUtil.CHINA, getI18nData(LocaleUtil.getDefault()));
 	}
 
 	@Test
@@ -249,26 +235,19 @@ public class I18nServletTest extends I18nServlet {
 		mockHttpServletRequest.setServletPath(
 			StringPool.SLASH + LocaleUtil.toLanguageId(locale));
 
-		I18nServlet.I18nData actualI18nData = getI18nData(
-			mockHttpServletRequest);
-
-		Assert.assertEquals(expectedI18nData, actualI18nData);
+		Assert.assertEquals(
+			expectedI18nData, getI18nData(mockHttpServletRequest));
 	}
 
 	protected void testIsDefaultLocale(
 			Group group, Locale expectedDefaultLocale)
 		throws Exception {
 
-		Locale actualDefaultLocale = _getDefaultLocale(group);
-
-		Assert.assertEquals(expectedDefaultLocale, actualDefaultLocale);
+		Assert.assertEquals(expectedDefaultLocale, _getDefaultLocale(group));
 	}
 
 	protected void testIsDefaultOrFirstI18nData(Group group, Locale locale)
 		throws Exception {
-
-		I18nServlet.I18nData languageOnlyPath = _getI18nData(
-			group, locale.getLanguage());
 
 		String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -277,20 +256,18 @@ public class I18nServletTest extends I18nServlet {
 
 		Assert.assertEquals(languageAndLocalePath.getLanguageId(), languageId);
 
-		Assert.assertEquals(languageOnlyPath, languageAndLocalePath);
+		Assert.assertEquals(
+			_getI18nData(group, locale.getLanguage()), languageAndLocalePath);
 	}
 
 	protected void testIsFirstLocale(Group group, Locale expectedFirstLocale)
 		throws Exception {
 
-		Locale actualDefaultLocale = _getDefaultLocale(group);
+		Assert.assertEquals(
+			expectedFirstLocale,
+			_getFirstLocale(group, expectedFirstLocale.getLanguage()));
 
-		Locale actualFirstLocale = _getFirstLocale(
-			group, expectedFirstLocale.getLanguage());
-
-		Assert.assertEquals(expectedFirstLocale, actualFirstLocale);
-
-		Assert.assertNotEquals(expectedFirstLocale, actualDefaultLocale);
+		Assert.assertNotEquals(expectedFirstLocale, _getDefaultLocale(group));
 	}
 
 	protected void testIsNotDefaultOrFirstI18nData(

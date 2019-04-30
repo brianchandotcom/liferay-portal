@@ -100,11 +100,11 @@ public class VirtualHostFilterTest {
 
 		_mockHttpServletRequest.setRequestURI(_PATH_CONTEXT + _LAST_PATH);
 
-		String lastPath = getLastPath(
-			_mockHttpServletRequest, _mockHttpServletResponse,
-			_mockFilterChain);
-
-		Assert.assertEquals(_LAST_PATH, lastPath);
+		Assert.assertEquals(
+			_LAST_PATH,
+			getLastPath(
+				_mockHttpServletRequest, _mockHttpServletResponse,
+				_mockFilterChain));
 	}
 
 	@Test
@@ -114,11 +114,11 @@ public class VirtualHostFilterTest {
 
 		_mockHttpServletRequest.setRequestURI(_LAST_PATH);
 
-		String lastPath = getLastPath(
-			_mockHttpServletRequest, _mockHttpServletResponse,
-			_mockFilterChain);
-
-		Assert.assertEquals(_LAST_PATH, lastPath);
+		Assert.assertEquals(
+			_LAST_PATH,
+			getLastPath(
+				_mockHttpServletRequest, _mockHttpServletResponse,
+				_mockFilterChain));
 	}
 
 	@Test
@@ -128,11 +128,11 @@ public class VirtualHostFilterTest {
 
 		_mockHttpServletRequest.setRequestURI(_LAST_PATH);
 
-		String lastPath = getLastPath(
-			_mockHttpServletRequest, _mockHttpServletResponse,
-			_mockFilterChain);
-
-		Assert.assertEquals(_LAST_PATH, lastPath);
+		Assert.assertEquals(
+			_LAST_PATH,
+			getLastPath(
+				_mockHttpServletRequest, _mockHttpServletResponse,
+				_mockFilterChain));
 	}
 
 	protected String getLastPath(

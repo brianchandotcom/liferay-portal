@@ -1,32 +1,22 @@
-import {closest, contains} from 'metal-dom';
+import {closest} from 'metal-dom';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../utils/constants';
-import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
+import FragmentEditableField from './FragmentEditableField.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
-import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
-import FragmentEditableField from './FragmentEditableField.es';
-import FragmentStyleEditor from './FragmentStyleEditor.es';
 import templates from './FragmentEntryLinkContent.soy';
+import {getConnectedComponent} from '../../store/ConnectedComponent.es';
+
+const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
 
 /**
  * Creates a Fragment Entry Link Content component.
  * @review
  */
 class FragmentEntryLinkContent extends Component {
-
-	/**
-	 * @inheritDoc
-	 */
-	created() {
-		this._handleOpenStyleTooltip = this._handleOpenStyleTooltip.bind(this);
-		this._handleStyleChanged = this._handleStyleChanged.bind(this);
-	}
 
 	/**
 	 * @inheritDoc
@@ -147,56 +137,6 @@ class FragmentEntryLinkContent extends Component {
 	}
 
 	/**
-	 * Create instances of a Fragment Style Editor for each element styled with
-	 * a background image.
-	 */
-	_createBackgroundImageStyleEditors() {
-		if (this._backgroundImageStyleEditors) {
-			this._backgroundImageStyleEditors.forEach(
-				styleEditor => styleEditor.dispose()
-			);
-		}
-
-		this._backgroundImageStyleEditors = this._styles
-			.filter(
-				style => style.css && style.css.backgroundImage
-			)
-			.map(
-				style => style.nodes.map(
-					node => new FragmentStyleEditor(
-						{
-							cssText: style.cssText,
-							editorsOptions: {
-								imageSelectorURL: this.imageSelectorURL
-							},
-							fragmentEntryLinkId: this.fragmentEntryLinkId,
-							node,
-							portletNamespace: this.portletNamespace,
-							selectorText: style.selectorText,
-							showMapping: this.showMapping,
-							store: this.store,
-							type: 'backgroundImage'
-						}
-					)
-				)
-			)
-			.reduce(
-				(styleEditorsA, styleEditorsB) => [
-					...styleEditorsA,
-					...styleEditorsB
-				],
-				[]
-			);
-
-		this._backgroundImageStyleEditors.forEach(
-			styleEditor => {
-				styleEditor.on('openTooltip', this._handleOpenStyleTooltip);
-				styleEditor.on('styleChanged', this._handleStyleChanged);
-			}
-		);
-	}
-
-	/**
 	 * Creates instances of a fragment editable field for each editable.
 	 */
 	_createEditables() {
@@ -239,33 +179,6 @@ class FragmentEntryLinkContent extends Component {
 		);
 	}
 
-	_createStyles() {
-		const elements = [];
-
-		for (let styleIndex = 0; styleIndex < document.styleSheets.length; styleIndex += 1) {
-			const cssStyle = document.styleSheets[styleIndex];
-
-			if (contains(this.refs.content, cssStyle.ownerNode) && cssStyle.rules) {
-				for (let ruleIndex = 0; ruleIndex < cssStyle.rules.length; ruleIndex += 1) {
-					const cssRule = cssStyle.rules[ruleIndex];
-
-					elements.push(
-						{
-							css: cssRule.style,
-							cssText: cssRule.cssText,
-							nodes: Array.from(
-								this.refs.content.querySelectorAll(cssRule.selectorText)
-							),
-							selectorText: cssRule.selectorText
-						}
-					);
-				}
-			}
-		}
-
-		this._styles = elements;
-	}
-
 	/**
 	 * Destroys existing fragment editable field instances.
 	 */
@@ -295,37 +208,6 @@ class FragmentEntryLinkContent extends Component {
 	}
 
 	/**
-	 * Callback executed when a tooltip is opened.
-	 */
-	_handleOpenStyleTooltip() {
-		if (!this._backgroundImageStyleEditors) {
-			return;
-		}
-
-		this._backgroundImageStyleEditors.forEach(
-			styleEditor => styleEditor.disposeStyleTooltip()
-		);
-	}
-
-	/**
-	 * @param {Object} event
-	 */
-	_handleStyleChanged(event) {
-		const editableValueSegmentsExperienceId = prefixSegmentsExperienceId(this.segmentsExperienceId) ||
-			prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
-
-		this.store.dispatch(
-			updateEditableValueAction(
-				this.fragmentEntryLinkId,
-				event.name,
-				this.languageId,
-				event.value,
-				editableValueSegmentsExperienceId
-			)
-		);
-	}
-
-	/**
 	 * Parses and renders the fragment entry link content with AUI.
 	 * @param {string} content
 	 * @private
@@ -339,11 +221,7 @@ class FragmentEntryLinkContent extends Component {
 					contentNode.plug(A.Plugin.ParseContent);
 					contentNode.setContent(content);
 
-					this._createStyles();
-
 					this._createEditables();
-
-					this._createBackgroundImageStyleEditors();
 
 					this._update(
 						{

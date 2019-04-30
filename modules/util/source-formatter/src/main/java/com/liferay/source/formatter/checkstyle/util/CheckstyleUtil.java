@@ -151,6 +151,11 @@ public class CheckstyleUtil {
 			"com.liferay.source.formatter.checkstyle.checks." +
 				"PlusStatementCheck");
 		configuration = _addAttribute(
+			configuration, "portalBranchName",
+			SourceFormatterUtil.getPropertyValue(
+				SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, propertiesMap),
+			"com.liferay.source.formatter.checkstyle.checks.ChainingCheck");
+		configuration = _addAttribute(
 			configuration, "runOutsidePortalExcludes",
 			SourceFormatterUtil.getPropertyValue(
 				"run.outside.portal.excludes", propertiesMap),

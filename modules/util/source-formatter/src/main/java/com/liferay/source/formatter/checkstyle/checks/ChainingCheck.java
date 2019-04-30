@@ -38,6 +38,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.io.File;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -81,6 +83,10 @@ public class ChainingCheck extends BaseCheck {
 
 	public void setBaseDirName(String baseDirName) {
 		_baseDirName = baseDirName;
+	}
+
+	public void setPortalBranchName(String portalBranchName) {
+		_portalBranchName = portalBranchName;
 	}
 
 	public void setRequiredChainingClassFileNames(
@@ -499,6 +505,36 @@ public class ChainingCheck extends BaseCheck {
 		return identDetailASTList;
 	}
 
+	private JavaClass _getJavaClass(String requiredChainingClassFileName) {
+		File file = SourceFormatterUtil.getFile(
+			_baseDirName, requiredChainingClassFileName,
+			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		try {
+			if (file != null) {
+				return JavaClassParser.parseJavaClass(
+					requiredChainingClassFileName, FileUtil.read(file));
+			}
+
+			if (_portalBranchName == null) {
+				return null;
+			}
+
+			URL url = new URL(
+				StringBundler.concat(
+					SourceFormatterUtil.GIT_LIFERAY_PORTAL_URL,
+					_portalBranchName, StringPool.SLASH,
+					requiredChainingClassFileName));
+
+			return JavaClassParser.parseJavaClass(
+				requiredChainingClassFileName,
+				StringUtil.read(url.openStream()));
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
 	private DetailAST _getOuterMethodCallDetailAST(DetailAST detailAST) {
 		while (true) {
 			if ((detailAST.getType() != TokenTypes.DOT) &&
@@ -565,21 +601,9 @@ public class ChainingCheck extends BaseCheck {
 		for (String requiredChainingClassFileName :
 				_requiredChainingClassFileNames) {
 
-			File file = SourceFormatterUtil.getFile(
-				_baseDirName, requiredChainingClassFileName,
-				ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+			JavaClass javaClass = _getJavaClass(requiredChainingClassFileName);
 
-			if (file == null) {
-				continue;
-			}
-
-			JavaClass javaClass = null;
-
-			try {
-				javaClass = JavaClassParser.parseJavaClass(
-					requiredChainingClassFileName, FileUtil.read(file));
-			}
-			catch (Exception e) {
+			if (javaClass == null) {
 				continue;
 			}
 
@@ -829,6 +853,7 @@ public class ChainingCheck extends BaseCheck {
 	private String[] _allowedMockitoMethodNames = new String[0];
 	private String[] _allowedVariableTypeNames = new String[0];
 	private String _baseDirName;
+	private String _portalBranchName;
 	private String[] _requiredChainingClassFileNames = new String[0];
 	private Map<String, List<String>> _requiredChainingMethodNamesMap;
 

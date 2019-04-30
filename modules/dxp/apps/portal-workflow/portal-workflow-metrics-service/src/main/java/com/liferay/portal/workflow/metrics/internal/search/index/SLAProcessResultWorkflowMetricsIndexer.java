@@ -112,6 +112,60 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				queries.term("slaDefinitionId", slaDefinitionId)));
 	}
 
+	public void expireDocuments(long companyId, long instanceId) {
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		searchSearchRequest.setIndexNames(getIndexName());
+		searchSearchRequest.setQuery(
+			booleanQuery.addMustQueryClauses(
+				queries.term("companyId", companyId),
+				queries.term("instanceId", instanceId)));
+		searchSearchRequest.setSelectedFieldNames(Field.UID);
+
+		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
+			searchSearchRequest);
+
+		SearchHits searchHits = searchSearchResponse.getSearchHits();
+
+		if (searchHits.getTotalHits() == 0) {
+			return;
+		}
+
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		bulkDocumentRequest.setRefresh(true);
+
+		Stream.of(
+			searchHits.getSearchHits()
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).map(
+			document -> new UpdateDocumentRequest(
+				getIndexName(), document.getString(Field.UID),
+				new DocumentImpl() {
+					{
+						addKeyword(
+							"status",
+							WorkfowMetricsSLAStatus.EXPIRED.toString());
+						addKeyword(Field.UID, document.getString(Field.UID));
+					}
+				}) {
+
+				{
+					setType(getIndexType());
+				}
+			}
+		).forEach(
+			bulkDocumentRequest::addBulkableDocumentRequest
+		);
+
+		searchEngineAdapter.execute(bulkDocumentRequest);
+	}
+
 	@Override
 	protected String getIndexName() {
 		return "workflow-metrics-sla-process-results";

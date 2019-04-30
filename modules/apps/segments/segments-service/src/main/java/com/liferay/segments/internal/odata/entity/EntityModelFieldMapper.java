@@ -118,31 +118,36 @@ public class EntityModelFieldMapper {
 		return fields;
 	}
 
+	protected Field getField(
+		String fieldName, String fieldType, PortletRequest portletRequest,
+		ResourceBundle resourceBundle,
+		Optional<SegmentsFieldCustomizer> segmentsFieldCustomizerOptional) {
+
+		if (segmentsFieldCustomizerOptional.isPresent()) {
+			SegmentsFieldCustomizer segmentsFieldCustomizer =
+				segmentsFieldCustomizerOptional.get();
+
+			return new Field(
+				fieldName,
+				segmentsFieldCustomizer.getLabel(
+					fieldName, resourceBundle.getLocale()),
+				fieldType,
+				segmentsFieldCustomizer.getOptions(resourceBundle.getLocale()),
+				segmentsFieldCustomizer.getSelectEntity(portletRequest));
+		}
+
+		String fieldLabel = LanguageUtil.get(
+			resourceBundle, "field." + CamelCaseUtil.fromCamelCase(fieldName));
+
+		return new Field(fieldName, fieldLabel, fieldType);
+	}
+
 	protected List<Field> getFields(
 		EntityModel entityModel, EntityField entityField,
 		PortletRequest portletRequest) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			_portal.getLocale(portletRequest), getClass());
-
-		Optional<SegmentsFieldCustomizer> segmentsFieldCustomizerOptional =
-			_segmentsFieldCustomizerRegistry.getSegmentFieldCustomizerOptional(
-				entityModel.getName(), entityField.getName());
-
-		if (segmentsFieldCustomizerOptional.isPresent()) {
-			SegmentsFieldCustomizer segmentsFieldCustomizer =
-				segmentsFieldCustomizerOptional.get();
-
-			return Collections.singletonList(
-				new Field(
-					entityField.getName(),
-					segmentsFieldCustomizer.getLabel(
-						entityField.getName(), resourceBundle.getLocale()),
-					getType(entityField.getType()),
-					segmentsFieldCustomizer.getOptions(
-						resourceBundle.getLocale()),
-					segmentsFieldCustomizer.getSelectEntity(portletRequest)));
-		}
 
 		EntityField.Type entityFieldType = entityField.getType();
 
@@ -151,18 +156,25 @@ public class EntityModelFieldMapper {
 				((ComplexEntityField)entityField).getEntityFieldsMap();
 
 			return _getComplexFields(
-				entityField.getName(), entityFieldsMap, resourceBundle);
+				entityModel.getName(), entityField.getName(), entityFieldsMap,
+				portletRequest, resourceBundle);
 		}
 
-		if (entityFieldType == EntityField.Type.ID) {
+		Optional<SegmentsFieldCustomizer> segmentsFieldCustomizerOptional =
+			_segmentsFieldCustomizerRegistry.getSegmentFieldCustomizerOptional(
+				entityModel.getName(), entityField.getName());
+
+		if ((entityFieldType == EntityField.Type.ID) &&
+			!segmentsFieldCustomizerOptional.isPresent()) {
+
 			return Collections.emptyList();
 		}
 
 		return Collections.singletonList(
-			new Field(
-				entityField.getName(),
-				_getEntityFieldLabel(entityField, resourceBundle),
-				getType(entityFieldType)));
+			getField(
+				entityField.getName(), getType(entityField.getType()),
+				portletRequest, resourceBundle,
+				segmentsFieldCustomizerOptional));
 	}
 
 	protected String getType(EntityField.Type entityFieldType) {
@@ -192,14 +204,39 @@ public class EntityModelFieldMapper {
 	}
 
 	private List<Field> _getComplexFields(
-		String name, Map<String, EntityField> entityFieldsMap,
+		String entityModelName, String complexEntityFieldName,
+		Map<String, EntityField> entityFieldsMap, PortletRequest portletRequest,
 		ResourceBundle resourceBundle) {
 
-		if (!name.equals("customField")) {
-			return Collections.emptyList();
+		if (complexEntityFieldName.equals("customField")) {
+			return _getCustomFields(entityFieldsMap, resourceBundle);
 		}
 
 		List<Field> complexFields = new ArrayList<>();
+
+		entityFieldsMap.forEach(
+			(entityFieldName, entityField) -> {
+				Optional<SegmentsFieldCustomizer>
+					segmentsFieldCustomizerOptional =
+						_segmentsFieldCustomizerRegistry.
+							getSegmentFieldCustomizerOptional(
+								entityModelName, entityField.getName());
+
+				complexFields.add(
+					getField(
+						"customContext/" + entityField.getName(),
+						getType(entityField.getType()), portletRequest,
+						resourceBundle, segmentsFieldCustomizerOptional));
+			});
+
+		return complexFields;
+	}
+
+	private List<Field> _getCustomFields(
+		Map<String, EntityField> entityFieldsMap,
+		ResourceBundle resourceBundle) {
+
+		List<Field> customFields = new ArrayList<>();
 
 		entityFieldsMap.forEach(
 			(entityFieldName, entityField) -> {
@@ -214,21 +251,13 @@ public class EntityModelFieldMapper {
 
 				String type = getType(entityField.getType());
 
-				complexFields.add(
+				customFields.add(
 					new Field(
 						"customField/" + entityFieldName, label, type,
 						_getExpandoColumnFieldOptions(expandoColumn), null));
 			});
 
-		return complexFields;
-	}
-
-	private String _getEntityFieldLabel(
-		EntityField entityField, ResourceBundle resourceBundle) {
-
-		return LanguageUtil.get(
-			resourceBundle,
-			"field." + CamelCaseUtil.fromCamelCase(entityField.getName()));
+		return customFields;
 	}
 
 	private List<Field.Option> _getExpandoColumnFieldOptions(

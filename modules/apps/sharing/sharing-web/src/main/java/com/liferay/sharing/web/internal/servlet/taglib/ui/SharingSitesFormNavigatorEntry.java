@@ -24,21 +24,14 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
-import com.liferay.sharing.web.internal.constants.SharingWebKeys;
-
-import java.io.IOException;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,32 +65,6 @@ public class SharingSitesFormNavigatorEntry
 			_resourceBundleLoader.loadResourceBundle(locale);
 
 		return LanguageUtil.get(resourceBundle, getKey());
-	}
-
-	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SharingConfiguration companySharingConfiguration =
-			_sharingConfigurationFactory.getCompanySharingConfiguration(
-				themeDisplay.getCompany());
-
-		request.setAttribute(
-			SharingWebKeys.COMPANY_SHARING_CONFIGURATION,
-			companySharingConfiguration);
-
-		Group liveGroup = (Group)request.getAttribute("site.liveGroup");
-
-		request.setAttribute(
-			SharingWebKeys.GROUP_SHARING_CONFIGURATION,
-			_sharingConfigurationFactory.getGroupSharingConfiguration(
-				liveGroup));
-
-		super.include(request, response);
 	}
 
 	@Override

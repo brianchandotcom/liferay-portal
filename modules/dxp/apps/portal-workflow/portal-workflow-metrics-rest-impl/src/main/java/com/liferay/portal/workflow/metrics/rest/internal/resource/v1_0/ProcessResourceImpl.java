@@ -154,6 +154,26 @@ public class ProcessResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	@Override
+	public String getProcessTitle(Long processId) throws Exception {
+		return Stream.of(
+			_getProcessesSearchSearchResponse(null, null, processId, null)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).findFirst(
+		).map(
+			document -> document.getString(_getTitleFieldName())
+		).orElse(
+			StringPool.BLANK
+		);
+	}
+
 	private BooleanQuery _createBooleanQuery(boolean completed) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 

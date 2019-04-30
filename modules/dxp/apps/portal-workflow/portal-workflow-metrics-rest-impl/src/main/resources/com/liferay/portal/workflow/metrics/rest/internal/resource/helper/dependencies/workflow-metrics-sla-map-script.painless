@@ -1,6 +1,7 @@
+def elapsedTime = doc.elapsedTime.value;
 def instanceId = doc.instanceId.value;
 def onTime = doc.onTime.value;
 
-if (!doc.onTime.empty) {
+if (elapsedTime != 0 && !doc.onTime.empty) {
 	state.map.merge(instanceId, onTime, (onTime1, onTime2) -> onTime1 && onTime2);
 }

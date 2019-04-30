@@ -1,5 +1,5 @@
 dependencies {
 	testIntegrationCompile project(":private:apps:sharepoint-rest:sharepoint-rest-oauth2-api");
 
-	testIntegrationCompiletestIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

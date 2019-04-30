@@ -52,15 +52,13 @@ class SegmentEdit extends Component {
 
 	static defaultProps = {
 		contributors: [],
-		initialMembersCount: 0,
 		initialSegmentActive: true,
 		portletNamespace: ''
 	};
 
 	state = {
 		changesUnsaved: false,
-		editing: this.props.showInEditMode,
-		membersCount: this.props.initialMembersCount
+		editing: this.props.showInEditMode
 	};
 
 	_handleQueryChange = () => {
@@ -108,9 +106,9 @@ class SegmentEdit extends Component {
 	);
 
 	_renderContributors = () => {
-		const {contributors, formId, previewMembersURL, propertyGroups, requestMembersCountURL, values} = this.props;
+		const {contributors, formId, initialMembersCount, previewMembersURL, propertyGroups, requestMembersCountURL, values} = this.props;
 
-		const {editing, membersCount} = this.state;
+		const {editing} = this.state;
 
 		const emptyContributors = this._isQueryEmpty();
 
@@ -121,7 +119,7 @@ class SegmentEdit extends Component {
 					emptyContributors={emptyContributors}
 					formId={formId}
 					initialContributors={contributors}
-					membersCount={membersCount}
+					membersCount={initialMembersCount}
 					onQueryChange={this._handleQueryChange}
 					previewMembersURL={previewMembersURL}
 					propertyGroups={propertyGroups}

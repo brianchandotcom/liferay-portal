@@ -85,7 +85,8 @@ class ContributorBuilder extends React.Component {
 	};
 
 	static defaultProps = {
-		onQueryChange: () => { }
+		onQueryChange: () => { },
+		membersCount: 0
 	};
 
 	constructor(props) {
@@ -124,7 +125,7 @@ class ContributorBuilder extends React.Component {
 			conjunctionName: CONJUNCTIONS.AND,
 			contributors,
 			editingId: propertyKey,
-			membersCount: this.props.membersCount,
+			membersCount: props.membersCount,
 			membersCountLoading: false
 		};
 
@@ -217,16 +218,6 @@ class ContributorBuilder extends React.Component {
 				id: 'segment-members-dialog',
 				title: sub(Liferay.Language.get('x-members'), [this.props.values.name]),
 				uri: url
-			}
-		);
-	}
-
-	_handleSelectorChange = event => {
-		const newPropertyKey = event.target.value;
-
-		this.setState(
-			{
-				newPropertyKey
 			}
 		);
 	}

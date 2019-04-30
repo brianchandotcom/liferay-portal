@@ -405,9 +405,7 @@ class CriteriaRow extends Component {
 							)}
 
 							<span className="criterion-string">
-								<b key="property">
-									{propertyLabel}
-								</b>
+								<b>{propertyLabel}</b>
 							</span>
 
 							<ClaySelect

@@ -1,5 +1,4 @@
 import CriteriaGroup from './CriteriaGroup.es';
-import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {
@@ -264,12 +263,8 @@ class CriteriaBuilder extends Component {
 			supportedPropertyTypes
 		} = this.props;
 
-		const criteriaBuilderClassNames = getCN(
-			'criteria-builder-root'
-		);
-
 		return (
-			<div className={criteriaBuilderClassNames}>
+			<div className="criteria-builder-root">
 				<h4 className="sheet-subtitle">
 					{sub(
 						Liferay.Language.get('x-with-property-x'),

@@ -93,7 +93,7 @@ public class OrganizationImplTest {
 	}
 
 	@Test
-	public void testGetDescendants() throws Exception {
+	public void testGetDescendants() {
 		List<Organization> organizations1 = _organization1.getDescendants();
 
 		Assert.assertEquals(

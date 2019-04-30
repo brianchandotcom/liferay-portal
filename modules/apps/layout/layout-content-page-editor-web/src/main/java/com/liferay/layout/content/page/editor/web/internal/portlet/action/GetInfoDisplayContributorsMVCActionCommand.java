@@ -63,7 +63,9 @@ public class GetInfoDisplayContributorsMVCActionCommand
 
 			JSONObject jsonObject = JSONUtil.put(
 				"id",
-				_portal.getClassNameId(infoDisplayContributor.getClassName())
+				String.valueOf(
+					_portal.getClassNameId(
+						infoDisplayContributor.getClassName()))
 			).put(
 				"label",
 				infoDisplayContributor.getLabel(themeDisplay.getLocale())

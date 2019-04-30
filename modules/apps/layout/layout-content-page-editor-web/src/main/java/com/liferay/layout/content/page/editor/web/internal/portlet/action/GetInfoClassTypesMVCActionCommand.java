@@ -73,7 +73,7 @@ public class GetInfoClassTypesMVCActionCommand extends BaseMVCActionCommand {
 
 			for (ClassType classType : classTypes) {
 				JSONObject jsonObject = JSONUtil.put(
-					"id", classType.getClassTypeId()
+					"id", String.valueOf(classType.getClassTypeId())
 				).put(
 					"label", classType.getName()
 				);

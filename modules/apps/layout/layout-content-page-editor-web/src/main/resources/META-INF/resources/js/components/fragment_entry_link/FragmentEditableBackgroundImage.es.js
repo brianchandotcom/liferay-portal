@@ -45,6 +45,7 @@ class FragmentEditableBackgroundImage extends Component {
 	created() {
 		this._handleClick = this._handleClick.bind(this);
 		this._handleOutsideTooltipClick = this._handleOutsideTooltipClick.bind(this);
+		this._handleTooltipButtonClick = this._handleTooltipButtonClick.bind(this);
 
 		this.element.addEventListener('click', this._handleClick);
 	}
@@ -88,6 +89,7 @@ class FragmentEditableBackgroundImage extends Component {
 				}
 			);
 
+			this._tooltip.on('buttonClick', this._handleTooltipButtonClick);
 			this._tooltip.on('outsideTooltipClick', this._handleOutsideTooltipClick);
 		}
 	}
@@ -100,6 +102,17 @@ class FragmentEditableBackgroundImage extends Component {
 		this._disposeTooltip();
 	}
 
+	/**
+	 * Handles click events for tooltip buttons.
+	 * @param {object} event The tooltip button click.
+	 */
+	_handleTooltipButtonClick(event) {
+		EditableBackgroundImageProcessor.init(
+			this._handleSelectBackgroundImage,
+			this.imageSelectorURL,
+			this.portletNamespace
+		);
+	}
 }
 
 /**

@@ -11685,18 +11685,6 @@ metal-dom@2.16.8, metal-dom@^2.0.0, metal-dom@^2.16.0, metal-dom@^2.16.6, metal-
     metal "^2.16.8"
     metal-events "^2.16.8"
 
-metal-drag-drop@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/metal-drag-drop/-/metal-drag-drop-3.3.0.tgz#5934c992e5780fcb8e18ba4ccfcc4f9bedf8a4ec"
-  integrity sha512-pCVYCdppXChyFCFQpIdQOHqsF5YSz79GwdQPLSIXNsU0Rd452Bd4a8YaftuRj3cnsV2x1A6L7T18CqEZvxyNgA==
-  dependencies:
-    bootstrap "^3.3.6"
-    metal "^2.16.7"
-    metal-dom "^2.16.7"
-    metal-events "^2.16.7"
-    metal-position "^2.1.2"
-    metal-state "^2.16.7"
-
 metal-drag-drop@3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/metal-drag-drop/-/metal-drag-drop-3.3.1.tgz#95f44395eefd095e422305753e60007e79f03ba6"

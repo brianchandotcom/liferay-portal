@@ -71,8 +71,10 @@ public class UserGroupRoleModelListener
 			Group group = userGroupRole.getGroup();
 
 			additionalInfoJSONObject.put(
-				"scopeClassName", group.getClassName());
-			additionalInfoJSONObject.put("scopeClassPK", group.getClassPK());
+				"scopeClassName", group.getClassName()
+			).put(
+				"scopeClassPK", group.getClassPK()
+			);
 
 			_auditRouter.route(auditMessage);
 		}

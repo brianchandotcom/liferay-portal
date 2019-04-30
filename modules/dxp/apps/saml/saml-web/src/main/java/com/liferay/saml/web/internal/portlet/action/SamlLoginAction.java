@@ -150,11 +150,12 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 				JSONFactoryUtil.createJSONObject();
 
 			samlIdpConnectionJSONObject.put(
-				"enabled", samlSpIdpConnection.getEnabled());
-			samlIdpConnectionJSONObject.put(
-				"entityId", samlSpIdpConnection.getSamlIdpEntityId());
-			samlIdpConnectionJSONObject.put(
-				"name", samlSpIdpConnection.getName());
+				"enabled", samlSpIdpConnection.getEnabled()
+			).put(
+				"entityId", samlSpIdpConnection.getSamlIdpEntityId()
+			).put(
+				"name", samlSpIdpConnection.getName()
+			);
 
 			jsonArray.put(samlIdpConnectionJSONObject);
 		}

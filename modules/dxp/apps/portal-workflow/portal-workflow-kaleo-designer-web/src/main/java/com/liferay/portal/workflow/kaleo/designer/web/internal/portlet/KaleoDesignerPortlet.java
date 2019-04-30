@@ -302,13 +302,17 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				}
 			}
 
-			jsonObject.put("content", kaleoDefinitionVersion.getContent());
-			jsonObject.put("draftVersion", kaleoDefinitionVersion.getVersion());
-			jsonObject.put("name", kaleoDefinitionVersion.getName());
 			jsonObject.put(
+				"content", kaleoDefinitionVersion.getContent()
+			).put(
+				"draftVersion", kaleoDefinitionVersion.getVersion()
+			).put(
+				"name", kaleoDefinitionVersion.getName()
+			).put(
 				"title",
 				LocalizationUtil.getLocalizationMap(
-					kaleoDefinitionVersion.getTitle()));
+					kaleoDefinitionVersion.getTitle())
+			);
 		}
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
@@ -349,8 +353,11 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("name", role.getName());
-			jsonObject.put("roleId", role.getRoleId());
+			jsonObject.put(
+				"name", role.getName()
+			).put(
+				"roleId", role.getRoleId()
+			);
 
 			jsonArray.put(jsonObject);
 		}
@@ -432,10 +439,15 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("emailAddress", user.getEmailAddress());
-			jsonObject.put("fullName", user.getFullName());
-			jsonObject.put("screenName", user.getScreenName());
-			jsonObject.put("userId", user.getUserId());
+			jsonObject.put(
+				"emailAddress", user.getEmailAddress()
+			).put(
+				"fullName", user.getFullName()
+			).put(
+				"screenName", user.getScreenName()
+			).put(
+				"userId", user.getUserId()
+			);
 
 			jsonArray.put(jsonObject);
 		}

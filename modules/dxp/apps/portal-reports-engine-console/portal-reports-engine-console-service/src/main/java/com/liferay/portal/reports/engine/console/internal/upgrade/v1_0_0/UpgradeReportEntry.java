@@ -64,9 +64,10 @@ public class UpgradeReportEntry extends UpgradeProcess {
 				JSONFactoryUtil.createJSONObject();
 
 			reportParameterJSONObject.put(
-				"key", keyValuePair.split(StringPool.EQUAL)[0]);
-			reportParameterJSONObject.put(
-				"value", keyValuePair.split(StringPool.EQUAL)[1]);
+				"key", keyValuePair.split(StringPool.EQUAL)[0]
+			).put(
+				"value", keyValuePair.split(StringPool.EQUAL)[1]
+			);
 
 			reportParametersJSONArray.put(reportParameterJSONObject);
 		}

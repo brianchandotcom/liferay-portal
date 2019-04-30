@@ -88,8 +88,11 @@ public class ImpersonationAction extends Action {
 				JSONObject additionalInfoJSONObject =
 					_jsonFactory.createJSONObject();
 
-				additionalInfoJSONObject.put("userId", user.getUserId());
-				additionalInfoJSONObject.put("userName", user.getFullName());
+				additionalInfoJSONObject.put(
+					"userId", user.getUserId()
+				).put(
+					"userName", user.getFullName()
+				);
 
 				AuditMessage auditMessage = new AuditMessage(
 					EventTypes.IMPERSONATE, themeDisplay.getCompanyId(),

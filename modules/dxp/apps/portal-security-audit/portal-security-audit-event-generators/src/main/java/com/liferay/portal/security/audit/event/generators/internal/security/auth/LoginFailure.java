@@ -121,8 +121,10 @@ public class LoginFailure implements AuthFailure {
 		JSONObject additionalInfoJSONObject = _jsonFactory.createJSONObject();
 
 		additionalInfoJSONObject.put(
-			"headers", _jsonFactory.serialize(headerMap));
-		additionalInfoJSONObject.put("reason", reason);
+			"headers", _jsonFactory.serialize(headerMap)
+		).put(
+			"reason", reason
+		);
 
 		return new AuditMessage(
 			EventTypes.LOGIN_FAILURE, user.getCompanyId(), user.getUserId(),

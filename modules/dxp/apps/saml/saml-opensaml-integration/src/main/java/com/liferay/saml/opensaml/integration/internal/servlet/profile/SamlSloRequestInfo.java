@@ -101,9 +101,13 @@ public class SamlSloRequestInfo implements Serializable {
 			jsonObject.put("initiateTime", _initiateTime.toDate());
 		}
 
-		jsonObject.put("name", getName());
-		jsonObject.put("status", getStatus());
-		jsonObject.put("statusCode", getStatusCode());
+		jsonObject.put(
+			"name", getName()
+		).put(
+			"status", getStatus()
+		).put(
+			"statusCode", getStatusCode()
+		);
 
 		return jsonObject;
 	}

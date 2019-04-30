@@ -118,9 +118,11 @@ public class SharepointExtRepository implements ExtRepository {
 
 			metadataJSONObject.put("type", "SP.Folder");
 
-			bodyJSONObject.put("__metadata", metadataJSONObject);
-
-			bodyJSONObject.put("ServerRelativeUrl", name);
+			bodyJSONObject.put(
+				"__metadata", metadataJSONObject
+			).put(
+				"ServerRelativeUrl", name
+			);
 
 			JSONObject jsonObject = _post(url, bodyJSONObject);
 

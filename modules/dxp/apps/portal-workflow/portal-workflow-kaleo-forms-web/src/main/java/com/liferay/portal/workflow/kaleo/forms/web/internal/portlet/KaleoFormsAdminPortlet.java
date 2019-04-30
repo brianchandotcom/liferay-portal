@@ -921,12 +921,16 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 				_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
 					serviceContext.getCompanyId(), name, version);
 
-			jsonObject.put("content", kaleoDefinitionVersion.getContent());
-			jsonObject.put("name", kaleoDefinitionVersion.getName());
 			jsonObject.put(
+				"content", kaleoDefinitionVersion.getContent()
+			).put(
+				"name", kaleoDefinitionVersion.getName()
+			).put(
 				"title",
-				kaleoDefinitionVersion.getTitle(themeDisplay.getLocale()));
-			jsonObject.put("version", kaleoDefinitionVersion.getVersion());
+				kaleoDefinitionVersion.getTitle(themeDisplay.getLocale())
+			).put(
+				"version", kaleoDefinitionVersion.getVersion()
+			);
 		}
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);

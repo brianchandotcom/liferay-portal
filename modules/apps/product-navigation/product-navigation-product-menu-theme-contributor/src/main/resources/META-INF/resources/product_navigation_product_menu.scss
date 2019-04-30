@@ -85,25 +85,6 @@ body {
 }
 
 .product-menu {
-	.collapse-icon {
-		&:before {
-			right: 25px;
-		}
-	}
-}
-
-.product-menu {
-	.lfr-icon-menu .btn-default {
-		background-color: transparent;
-
-		&:active {
-			box-shadow: none;
-			color: $product-menu-nav-link-color;
-		}
-	}
-}
-
-.product-menu {
 	a {
 		color: $product-menu-nav-link-color;
 
@@ -132,46 +113,6 @@ body {
 
 		> .active, .nav > .active {
 			border-left-color: $product-menu-nav-link-active-color;
-		}
-	}
-
-	.nav-equal-height-heading {
-		&:focus, &:hover {
-			background-color: transparent;
-		}
-
-		.collapse-icon {
-			&:after, &.collapsed:after {
-				background-color: $product-menu-collapse-icon-bg;
-				height: 12px;
-			}
-
-			&:before {
-				color: $product-menu-nav-link-color;
-				content: $product-menu-nav-equal-height-heading-open-collapse-icon;
-				font-size: 15px;
-				left: -8px;
-			}
-
-			&.collapsed:before {
-				content: $product-menu-nav-equal-height-heading-closed-collapse-icon;
-			}
-		}
-	}
-
-	.nav-nested-margins > li .nav > li {
-		border-left: 2px solid $product-menu-nav-link-color;
-
-		.nav > li {
-			border-left: 1px dotted $product-menu-nav-link-color;
-
-			&.active {
-				border-left: 1px solid $product-menu-nav-link-active-color;
-
-				> a {
-					color: $product-menu-nav-link-active-color;
-				}
-			}
 		}
 	}
 }

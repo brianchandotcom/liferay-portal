@@ -3,7 +3,7 @@ import Component from 'metal-component';
 import {Store} from '../../store/store.es';
 
 import FragmentEditableFieldTooltip from './FragmentEditableFieldTooltip.es';
-import {init} from '../fragment_processors/EditableBackgroundImageProcessor.es'
+import getConnectedComponent from '../../store/ConnectedComponent.es';
 
 /**
  * FragmentEditableBackgroundImage
@@ -129,5 +129,17 @@ FragmentEditableBackgroundImage.STATE = {
 
 };
 
-export {FragmentEditableBackgroundImage};
-export default FragmentEditableBackgroundImage;
+const ConnectedFragmentEditableBackgroundImage = getConnectedComponent(
+	FragmentEditableBackgroundImage,
+	[
+		'defaultLanguageId',
+		'defaultSegmentsExperienceId',
+		'imageSelectorURL',
+		'languageId',
+		'portletNamespace',
+		'segmentsExperienceId'
+	]
+);
+
+export {ConnectedFragmentEditableBackgroundImage, FragmentEditableBackgroundImage};
+export default ConnectedFragmentEditableBackgroundImage;

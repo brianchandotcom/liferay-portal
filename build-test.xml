@@ -476,7 +476,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<propertyregex
 				input="${test.batch.name}"
 				property="java.jdk.bundle.version"
-				regexp="-jdk([0-9]+)(_(adopt|open|oracle|redhat|zulu))?"
+				regexp="-jdk([0-9]+)(_(open|oracle|redhat|zulu))?"
 				select="\1"
 			/>
 

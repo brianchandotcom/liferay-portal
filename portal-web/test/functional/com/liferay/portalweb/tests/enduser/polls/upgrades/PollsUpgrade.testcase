@@ -21,6 +21,15 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewPollsArchive625 {
+		property data.archive.type = "data-archive-polls";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.2.5";
+
+		Upgrade.viewPolls();
+	}
+
+	@priority = "5"
 	test ViewPollsArchive621015 {
 		property data.archive.type = "data-archive-polls";
 		property portal.version = "6.2.10.15";
@@ -32,15 +41,6 @@ definition {
 	test ViewPollsArchive621021 {
 		property data.archive.type = "data-archive-polls";
 		property portal.version = "6.2.10.21";
-
-		Upgrade.viewPolls();
-	}
-
-	@priority = "5"
-	test ViewPollsArchive625 {
-		property data.archive.type = "data-archive-polls";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "6.2.5";
 
 		Upgrade.viewPolls();
 	}

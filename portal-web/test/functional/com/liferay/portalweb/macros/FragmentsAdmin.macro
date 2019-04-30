@@ -48,10 +48,6 @@ definition {
 		Button.clickSave();
 	}
 
-	macro deleteEntry {
-		LexiconCard.delete(card = "${entry}");
-	}
-
 	@summary = "Type HTML into the fragment HTML editor using the auto complete feature."
 	macro autocompleteFragmentHTML {
 
@@ -68,6 +64,10 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
 			value1 = "${fragmentHTML}");
+	}
+
+	macro deleteEntry {
+		LexiconCard.delete(card = "${entry}");
 	}
 
 	macro exportCollection {

@@ -460,6 +460,37 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-67191."
+	@priority = "5"
+	test ViewNavigationMenuPropertiesSidebar {
+		task ("Add a navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
+		}
+
+		task ("Navigate to the navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
+		}
+
+		task ("Add a URL item") {
+			NavigationMenusAdmin.addItem(
+				item = "URL",
+				url = "https://www.liferay.com/",
+				urlName = "Liferay");
+		}
+
+		task ("Assert the URL item was added") {
+			NavigationMenusAdmin.viewItem(itemName = "Liferay");
+		}
+
+		task ("Click on the URL item to open up the item side bar") {
+			NavigationMenusAdmin.openItemSidebar(itemName = "Liferay");
+		}
+	}
+
 	@description = "This is a test for LPS-85566. A navigation menu page item will be prepopulated with existing translations for a page."
 	@priority = "5"
 	test ViewPageItemPrepopulatedWithTranslation {
@@ -508,37 +539,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "TextInput#NAME",
 				value1 = "Nombre de la página de prueba");
-		}
-	}
-
-	@description = "This is a use case for LPS-67191."
-	@priority = "5"
-	test ViewNavigationMenuPropertiesSidebar {
-		task ("Add a navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
-		}
-
-		task ("Navigate to the navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
-		}
-
-		task ("Add a URL item") {
-			NavigationMenusAdmin.addItem(
-				item = "URL",
-				url = "https://www.liferay.com/",
-				urlName = "Liferay");
-		}
-
-		task ("Assert the URL item was added") {
-			NavigationMenusAdmin.viewItem(itemName = "Liferay");
-		}
-
-		task ("Click on the URL item to open up the item side bar") {
-			NavigationMenusAdmin.openItemSidebar(itemName = "Liferay");
 		}
 	}
 

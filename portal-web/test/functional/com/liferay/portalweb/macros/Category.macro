@@ -179,6 +179,14 @@ definition {
 		AssertTextNotPresent(value1 = "${categoryName}");
 	}
 
+	macro deleteCategoryNoPermissionCP {
+		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
+
+		LexiconEntry.selectEntry(key_rowEntry = "${rowEntry}");
+
+		AssertElementPresent(locator1 = "Icon#DELETE_NOT_FOCUSABLE");
+	}
+
 	macro deleteCategoryProperty2CP {
 		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
 
@@ -195,14 +203,6 @@ definition {
 		AssertElementPresent(locator1 = "CategoriesEditCategory#PROPERTIES_UNDO_MESSAGE");
 
 		PortletEntry.save();
-	}
-
-	macro deleteCategoryNoPermissionCP {
-		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
-
-		LexiconEntry.selectEntry(key_rowEntry = "${rowEntry}");
-
-		AssertElementPresent(locator1 = "Icon#DELETE_NOT_FOCUSABLE");
 	}
 
 	macro editCP {

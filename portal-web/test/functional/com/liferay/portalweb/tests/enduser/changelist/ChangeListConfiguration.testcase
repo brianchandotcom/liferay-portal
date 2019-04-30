@@ -36,24 +36,22 @@ definition {
 		Alert.viewWarningSpecific(warningMessage = "Staging is enabled for at least one site in the current virtual instance. Staging and change lists cannot be used together.");
 	}
 
-	@description = "Enable and Disable Change List"
-	@priority = "5"
-	test EnableDisableChangeList {
+	@description = "Check Supported Content Types"
+	@priority = "4"
+	test CheckSupportedContentTypes {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
 			portlet = "Settings");
 
-		ChangeList.enableChangeList();
+		for (var changeListContentType : list "Web Content") {
+			var key_changeListContentType = "${changeListContentType}";
 
-		ProductMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Settings");
+			AssertHTMLSourceTextPresent(
+				locator1 = "ChangeListSettings#SUPPORTED_CONTENT_TYPES",
+				value1 = "${changeListContentType}");
+		}
 
-		ChangeList.disableChangeList();
-
-		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
 	}
 
 	@description = "Enable Change List and go to Overview"
@@ -88,21 +86,23 @@ definition {
 		AssertElementNotPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 	}
 
-	@description = "Check Supported Content Types"
-	@priority = "4"
-	test CheckSupportedContentTypes {
+	@description = "Enable and Disable Change List"
+	@priority = "5"
+	test EnableDisableChangeList {
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
 			portlet = "Settings");
 
-		for (var changeListContentType : list "Web Content") {
-			var key_changeListContentType = "${changeListContentType}";
+		ChangeList.enableChangeList();
 
-			AssertHTMLSourceTextPresent(
-				locator1 = "ChangeListSettings#SUPPORTED_CONTENT_TYPES",
-				value1 = "${changeListContentType}");
-		}
+		ProductMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Control Panel",
+			portlet = "Settings");
 
+		ChangeList.disableChangeList();
+
+		AssertElementPresent(locator1 = "ChangeListSettings#DISABLED_SAVE_AND_GO_TO_OVERVIEW_BUTTON");
 	}
 }

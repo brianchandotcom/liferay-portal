@@ -901,46 +901,6 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
-	@description = "LPS-49666 - SAML Single Logout should support HTTP-POST binding."
-	@priority = "4"
-	test ViewSingleLogoutHTTPPostBindingInConsole {
-		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutHTTPPostBindingInConsole";
-
-		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
-
-		SAML.configureLiferaySAMLAsSP(
-			samlEntityID = "samlsp",
-			spURL = "http://www.able.com:9080/");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Server Administration");
-
-		ServerAdministration.addCategoryLogLevels(
-			categoryName = "com.liferay.saml.opensaml.integration",
-			categoryPriority = "DEBUG");
-
-		User.logoutPG();
-
-		User.viewLoggedOutPG();
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		SAML.executeIdPInitiatedSSO(
-			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
-			password = "test",
-			rememberMeChecked = "true",
-			spURL = "http://www.able.com:9080/",
-			userEmailAddress = "test@liferay.com");
-
-		User.logoutPG(specificURL = "http://www.able.com:9080");
-
-		User.viewLoggedOutPG();
-
-		AssertConsoleTextPresent(value1 = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST");
-	}
-
 	@priority = "4"
 	test ViewSingleLogoutAndForceAuthWithMultipleSPs {
 		property app.server.bundles.size = "2";
@@ -1046,6 +1006,46 @@ definition {
 		Navigator.gotoLoginPage();
 
 		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
+	}
+
+	@description = "LPS-49666 - SAML Single Logout should support HTTP-POST binding."
+	@priority = "4"
+	test ViewSingleLogoutHTTPPostBindingInConsole {
+		property test.name.skip.portal.instance = "SAML#ViewSingleLogoutHTTPPostBindingInConsole";
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+
+		SAML.configureLiferaySAMLAsSP(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080/");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryName = "com.liferay.saml.opensaml.integration",
+			categoryPriority = "DEBUG");
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		SAML.executeIdPInitiatedSSO(
+			idpInitiatedSSOURL = "${portalURL}/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080",
+			password = "test",
+			rememberMeChecked = "true",
+			spURL = "http://www.able.com:9080/",
+			userEmailAddress = "test@liferay.com");
+
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+
+		AssertConsoleTextPresent(value1 = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST");
 	}
 
 	@description = "Sign into portal by executing a SP initiated SSO login. This is done by clicking on the 'Sign In' link in the dockbar on the SP. After the SP is logged in, and if both instances has the same user and email address, the IdP will also be logged in."

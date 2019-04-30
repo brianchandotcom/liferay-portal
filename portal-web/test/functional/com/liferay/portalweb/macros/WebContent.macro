@@ -1599,16 +1599,6 @@ definition {
 		}
 	}
 
-	macro viewNoEditWCViaAP {
-		AssertElementPresent(
-			key_assetTitle = "${assetTitle}",
-			locator1 = "APAsset#ASSET_TITLE");
-
-		AssertElementNotPresent(
-			key_assetTitle = "${assetTitle}",
-			locator1 = "AP#ASSET_ELLIPSIS_ICON");
-	}
-
 	macro viewNoEditWCCP {
 		var key_webContentTitle = "${webContentTitle}";
 
@@ -1619,6 +1609,16 @@ definition {
 		AssertElementNotPresent(
 			key_menuItem = "Edit",
 			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
+	macro viewNoEditWCViaAP {
+		AssertElementPresent(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "APAsset#ASSET_TITLE");
+
+		AssertElementNotPresent(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "AP#ASSET_ELLIPSIS_ICON");
 	}
 
 	macro viewNoEditWCViaWCD {

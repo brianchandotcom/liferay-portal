@@ -203,28 +203,6 @@ definition {
 		}
 	}
 
-	macro addCPWithTextFieldCustomField {
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Basic Article");
-
-		AssertElementPresent(
-			key_editor = "title",
-			locator1 = "AlloyEditor#EDITOR");
-
-		AlloyEditor.addTitleAndContent(
-			content = "${kbArticleContent}",
-			title = "${kbArticleTitle}");
-
-		Panel.expandPanel(panel = "Custom Fields");
-
-		Type(
-			locator1 = "TextInput#CUSTOM_FIELD",
-			value1 = "${customFieldText}");
-
-		PortletEntry.publish();
-	}
-
 	macro addCPWithInvalidAttachmentSize {
 		LexiconEntry.gotoAdd();
 
@@ -269,6 +247,28 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_ENTER_A_VALID_TITLE",
 			value1 = "Please enter a valid title.");
+	}
+
+	macro addCPWithTextFieldCustomField {
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Basic Article");
+
+		AssertElementPresent(
+			key_editor = "title",
+			locator1 = "AlloyEditor#EDITOR");
+
+		AlloyEditor.addTitleAndContent(
+			content = "${kbArticleContent}",
+			title = "${kbArticleTitle}");
+
+		Panel.expandPanel(panel = "Custom Fields");
+
+		Type(
+			locator1 = "TextInput#CUSTOM_FIELD",
+			value1 = "${customFieldText}");
+
+		PortletEntry.publish();
 	}
 
 	macro addPGViaAP {

@@ -367,19 +367,6 @@ definition {
 		Page.tearDownCP();
 	}
 
-	macro togglePageTemplateInheritChanges {
-		if ("${toggleValue}" == "enable") {
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Inherit Changes",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-		else if ("${toggleValue}" == "disable") {
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Inherit Changes",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-	}
-
 	macro toggleHiddenFromNavigationMenuWidget {
 		if ("${toggleValue}" == "enable") {
 			Check.checkToggleSwitch(
@@ -393,6 +380,19 @@ definition {
 		}
 		else {
 			fail("Failed. Please set ${toggleValue} to enable or disable.");
+		}
+	}
+
+	macro togglePageTemplateInheritChanges {
+		if ("${toggleValue}" == "enable") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Inherit Changes",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${toggleValue}" == "disable") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Inherit Changes",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 	}
 

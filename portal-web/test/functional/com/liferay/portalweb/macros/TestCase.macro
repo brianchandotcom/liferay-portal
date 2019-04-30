@@ -1,5 +1,24 @@
 definition {
 
+	macro enableMetal{
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Forms",
+			configurationName = "Forms",
+			configurationScope = "Site Scope");
+
+		SystemSettings.saveConfiguration();
+
+		SystemSettings.resetConfiguration();
+
+		Click(locator1 = "Checkbox#ENABLE_EXPERIMENTAL_INTERFACE");
+
+		SystemSettings.saveConfiguration();
+
+	}
+
 	macro getDownloadedTempFileName {
 		var tempDir = PropsUtil.get("output.dir.name");
 
@@ -63,24 +82,5 @@ definition {
 		if (("${testPortalInstance}" == "true") && (!(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}")))) {
 			SignIn.signInPortalInstanceSetUp();
 		}
-	}
-
-	macro enableMetal{
-
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Forms",
-			configurationName = "Forms",
-			configurationScope = "Site Scope");
-
-		SystemSettings.saveConfiguration();
-
-		SystemSettings.resetConfiguration();
-
-		Click(locator1 = "Checkbox#ENABLE_EXPERIMENTAL_INTERFACE");
-
-		SystemSettings.saveConfiguration();
-
 	}
 }

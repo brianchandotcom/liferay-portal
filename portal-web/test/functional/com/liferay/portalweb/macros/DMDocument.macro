@@ -1261,6 +1261,10 @@ definition {
 		AssertElementNotPresent(locator1 = "HOME_MENULIST_ADD_REPOSITORY");
 	}
 
+	macro viewCardTitle {
+		LexiconCard.viewCardTitle(card = "${dmDocumentTitle}");
+	}
+
 	macro viewCategories {
 		Panel.expandPanel(panel = "Categorization");
 
@@ -1938,9 +1942,5 @@ definition {
 				locator1 = "DocumentsAndMedia#TAG",
 				value1 = "${tagName}");
 		}
-	}
-
-	macro viewCardTitle {
-		LexiconCard.viewCardTitle(card = "${dmDocumentTitle}");
 	}
 }

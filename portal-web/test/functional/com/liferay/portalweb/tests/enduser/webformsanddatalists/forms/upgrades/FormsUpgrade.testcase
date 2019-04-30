@@ -21,6 +21,40 @@ definition {
 	}
 
 	@priority = "5"
+	test AddFormAfterUpgrade625 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "6.2.5";
+
+		Upgrade.addForm();
+	}
+
+	@priority = "5"
+	test AddFormAfterUpgrade704 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
+
+		Upgrade.addForm();
+	}
+
+	@priority = "5"
+	test AddFormAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.1.10";
+
+		Upgrade.addForm();
+	}
+
+	@priority = "5"
+	test AddFormAfterUpgrade70106 {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.0.10.6";
+
+		Upgrade.addForm();
+	}
+
+	@priority = "5"
 	test AddFormAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "6.2.10.15";
@@ -37,52 +71,18 @@ definition {
 	}
 
 	@priority = "5"
-	test AddFormAfterUpgrade625 {
-		property data.archive.type = "data-archive-portal";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "6.2.5";
-
-		Upgrade.addForm();
-	}
-
-	@priority = "5"
-	test AddFormAfterUpgrade70106 {
-		property data.archive.type = "data-archive-portal";
-		property portal.version = "7.0.10.6";
-
-		Upgrade.addForm();
-	}
-
-	@priority = "5"
-	test AddFormAfterUpgrade7110 {
-		property data.archive.type = "data-archive-portal";
-		property portal.version = "7.1.10";
-
-		Upgrade.addForm();
-	}
-
-	@priority = "5"
-	test AddFormAfterUpgrade704 {
-		property data.archive.type = "data-archive-portal";
+	test ViewAndDeleteFormEntryAfterUpgrade704 {
+		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
 
-		Upgrade.addForm();
+		Upgrade.viewAndDeleteFormEntry();
 	}
 
 	@priority = "5"
 	test ViewAndDeleteFormEntryAfterUpgrade70106 {
 		property data.archive.type = "data-archive-form-entry";
 		property portal.version = "7.0.10.6";
-
-		Upgrade.viewAndDeleteFormEntry();
-	}
-
-	@priority = "5"
-	test ViewAndDeleteFormEntryAfterUpgrade704 {
-		property data.archive.type = "data-archive-form-entry";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.0.4";
 
 		Upgrade.viewAndDeleteFormEntry();
 	}

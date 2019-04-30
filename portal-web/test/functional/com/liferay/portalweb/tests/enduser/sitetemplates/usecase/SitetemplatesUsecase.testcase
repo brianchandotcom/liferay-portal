@@ -416,96 +416,6 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@description = "This is a use case for LPS-86487."
-	@priority = "4"
-	test SiteTemplatePageLinkInWebContentRedirectCorrectly {
-		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
-		SiteTemplates.addCP(siteTemplateName = "Template Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
-		SiteTemplates.addSitePageViaSiteTemplateCP(
-			pageName = "Page1 Name",
-			siteTemplateName = "Template Site");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
-		SiteTemplates.addSitePageViaSiteTemplateCP(
-			pageName = "Page2 Name",
-			siteTemplateName = "Template Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Page2 Name",
-			siteName = "${siteName}",
-			siteTemplateName = "Template Site");
-
-		var page2URL = Navigator.getCurrentURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "${page2URL}",
-			webContentTitle = "Web Content Title");
-
-		AlloyEditor.addEntryExternalURL(entryExternalURL = "${page2URL}");
-
-		PortletEntry.publish();
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addCP(
-			siteName = "Site Name",
-			siteType = "Template");
-
-		Navigator.gotoSitePage(
-			pageName = "Page1 Name",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
-
-		WebContentDisplayPortlet.selectWebContent(
-			portletName = "Web Content Display",
-			webContentTitle = "Web Content Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Page1 Name",
-			siteName = "Site Name");
-
-		Click(locator1 = "WCD#WEB_CONTENT_LINK");
-
-		Pause(locator1 = "5000");
-
-		AssertLocation(value1 = "${portalURL}/web/site-name/page2-name");
-	}
-
 	@priority = "3"
 	test SitesTemplateResourceInheritance {
 		property portal.release = "false";
@@ -601,6 +511,96 @@ definition {
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
+	}
+
+	@description = "This is a use case for LPS-86487."
+	@priority = "4"
+	test SiteTemplatePageLinkInWebContentRedirectCorrectly {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates");
+
+		SiteTemplates.addCP(siteTemplateName = "Template Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates");
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "Page1 Name",
+			siteTemplateName = "Template Site");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates");
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			pageName = "Page2 Name",
+			siteTemplateName = "Template Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates");
+
+		SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			pageName = "Page2 Name",
+			siteName = "${siteName}",
+			siteTemplateName = "Template Site");
+
+		var page2URL = Navigator.getCurrentURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "${page2URL}",
+			webContentTitle = "Web Content Title");
+
+		AlloyEditor.addEntryExternalURL(entryExternalURL = "${page2URL}");
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addCP(
+			siteName = "Site Name",
+			siteType = "Template");
+
+		Navigator.gotoSitePage(
+			pageName = "Page1 Name",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(
+			portletName = "Web Content Display",
+			webContentTitle = "Web Content Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Page1 Name",
+			siteName = "Site Name");
+
+		Click(locator1 = "WCD#WEB_CONTENT_LINK");
+
+		Pause(locator1 = "5000");
+
+		AssertLocation(value1 = "${portalURL}/web/site-name/page2-name");
 	}
 
 	@description = "This is a use case for LPS-74081."

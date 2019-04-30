@@ -15,18 +15,18 @@ definition {
 			locator1 = "LexiconCard#CARD");
 	}
 
+	macro clickCardTitle {
+		Click(
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD_TITLE");
+	}
+
 	macro clickCardWithConfirmation {
 		ClickNoError(
 			key_card = "${card}",
 			locator1 = "LexiconCard#CARD");
 
 		Confirm();
-	}
-
-	macro clickCardTitle {
-		Click(
-			key_card = "${card}",
-			locator1 = "LexiconCard#CARD_TITLE");
 	}
 
 	macro clickEllipsisItem {

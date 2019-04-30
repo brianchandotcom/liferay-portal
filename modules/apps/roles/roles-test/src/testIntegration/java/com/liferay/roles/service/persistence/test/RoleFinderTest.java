@@ -73,7 +73,7 @@ public class RoleFinderTest {
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() {
 		_resourcePermissionLocalService.deleteResourcePermission(
 			_resourcePermission);
 	}
@@ -118,7 +118,7 @@ public class RoleFinderTest {
 	}
 
 	@Test
-	public void testFindByC_N_S_P_A() throws Exception {
+	public void testFindByC_N_S_P_A() {
 		boolean exists = false;
 
 		List<Role> roles = _roleFinder.findByC_N_S_P_A(

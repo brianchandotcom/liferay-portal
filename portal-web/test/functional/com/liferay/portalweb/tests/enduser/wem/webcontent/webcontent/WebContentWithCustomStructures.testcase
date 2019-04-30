@@ -1444,10 +1444,6 @@ definition {
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		Navigator.gotoNavItem(navItem = "Templates");
-
-		WebContentTemplates.addNullCP();
-
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();

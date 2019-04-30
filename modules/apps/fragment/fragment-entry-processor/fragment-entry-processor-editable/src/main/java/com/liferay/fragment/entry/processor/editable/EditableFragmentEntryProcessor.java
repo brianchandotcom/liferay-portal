@@ -150,7 +150,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkCSS(
 			FragmentEntryLink fragmentEntryLink, String css, String mode,
-			Locale locale, long[] segmentsExperienceIds, long previewClassPK)
+			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
+			int previewType)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -191,7 +192,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 					value = _getMappedValue(
 						editableElementParser, editableValueJSONObject, mode,
-						locale, previewClassPK);
+						locale, previewClassPK, previewType);
 				}
 
 				if (Validator.isNull(value)) {
@@ -211,7 +212,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html, String mode,
-			Locale locale, long[] segmentsExperienceIds, long previewClassPK)
+			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
+			int previewType)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -254,14 +256,14 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				JSONObject mappedValueConfigJSONObject =
 					_getMappedValueConfigJSONObject(
 						editableElementParser, editableValueJSONObject, mode,
-						locale, previewClassPK);
+						locale, previewClassPK, previewType);
 
 				configJSONObject = JSONUtil.merge(
 					configJSONObject, mappedValueConfigJSONObject);
 
 				value = _getMappedValue(
 					editableElementParser, editableValueJSONObject, mode,
-					locale, previewClassPK);
+					locale, previewClassPK, previewType);
 			}
 
 			if (Validator.isNull(value)) {
@@ -381,7 +383,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private String _getMappedValue(
 			EditableElementParser editableElementParser, JSONObject jsonObject,
-			String mode, Locale locale, long previewClassPK)
+			String mode, Locale locale, long previewClassPK, int previewType)
 		throws PortalException {
 
 		String value = jsonObject.getString("mappedField");
@@ -391,7 +393,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				editableElementParser.getFieldTemplate(), "field_name", value);
 		}
 
-		Object fieldValue = _getValue(jsonObject, mode, locale, previewClassPK);
+		Object fieldValue = _getValue(
+			jsonObject, mode, locale, previewClassPK, previewType);
 
 		if (fieldValue == null) {
 			return StringPool.BLANK;
@@ -402,7 +405,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private JSONObject _getMappedValueConfigJSONObject(
 			EditableElementParser editableElementParser, JSONObject jsonObject,
-			String mode, Locale locale, long previewClassPK)
+			String mode, Locale locale, long previewClassPK, int previewType)
 		throws PortalException {
 
 		String value = jsonObject.getString("mappedField");
@@ -412,7 +415,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				value, locale, null);
 		}
 
-		Object fieldValue = _getValue(jsonObject, mode, locale, previewClassPK);
+		Object fieldValue = _getValue(
+			jsonObject, mode, locale, previewClassPK, previewType);
 
 		if (fieldValue == null) {
 			return JSONFactoryUtil.createJSONObject();
@@ -490,7 +494,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private Object _getValue(
 			JSONObject jsonObject, String mode, Locale locale,
-			long previewClassPK)
+			long previewClassPK, int previewType)
 		throws PortalException {
 
 		if (!_isMapped(jsonObject, mode)) {
@@ -532,7 +536,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		int versionType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 
 		if (previewClassPK == assetEntry.getEntryId()) {
-			versionType = AssetRendererFactory.TYPE_LATEST;
+			versionType = previewType;
 		}
 
 		fieldsValues = infoDisplayContributor.getInfoDisplayFieldsValues(

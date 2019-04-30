@@ -38,6 +38,8 @@ public interface FragmentRendererContext {
 
 	public long getPreviewClassPK();
 
+	public int getPreviewType();
+
 	public long[] getSegmentsExperienceIds();
 
 }

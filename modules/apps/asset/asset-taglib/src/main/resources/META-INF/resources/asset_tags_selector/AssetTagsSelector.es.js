@@ -45,13 +45,36 @@ class AssetTagsSelector extends Component {
 								const selectedItems = event.newVal;
 
 								if (selectedItems) {
-									this.selectedItems = selectedItems.items.split(',').map(
-										item => {
-											return {
-												label: item,
-												value: item
-											};
-										}
+									const newValues = selectedItems.items.split(',');
+									const oldItems = this.selectedItems.slice();
+									const oldValues = oldItems.map(item => item.value);
+									const valueMapper = item => {
+										return {
+											label: item,
+											value: item
+										};
+									};
+
+									const addedItems = newValues
+										.filter(value => !oldValues.includes(value))
+										.map(valueMapper);
+
+									const removedItems = oldValues
+										.filter(value => !newValues.includes(value))
+										.map(valueMapper);
+
+									this.selectedItems = newValues.map(valueMapper);
+
+									this.tagNames = this._getTagNames();
+
+									addedItems.forEach(
+										item =>
+										this._notifyItemsChanged('itemAdded', this.addCallback, item)
+									);
+
+									removedItems.forEach(
+										item =>
+										this._notifyItemsChanged('itemRemoved', this.removeCallback, item)
 									);
 								}
 							}.bind(this)
@@ -107,17 +130,7 @@ class AssetTagsSelector extends Component {
 				this.selectedItems = this.selectedItems.concat(item);
 				this.tagNames = this._getTagNames();
 
-				if (this.addCallback) {
-					window[this.addCallback](item);
-				}
-
-				this.emit(
-					'itemAdded',
-					{
-						item: item,
-						selectedItems: this.selectedItems
-					}
-				);
+				this._notifyItemsChanged('itemAdded', this.addCallback, item);
 			}
 		}
 	}
@@ -136,17 +149,7 @@ class AssetTagsSelector extends Component {
 		this.selectedItems = event.data.selectedItems;
 		this.tagNames = this._getTagNames();
 
-		if (this.addCallback) {
-			window[this.addCallback](event.data.item);
-		}
-
-		this.emit(
-			'itemAdded',
-			{
-				item: event.data.item,
-				selectedItems: this.selectedItems
-			}
-		);
+		this._notifyItemsChanged('itemAdded', this.addCallback, event.data.item);
 	}
 
 	/**
@@ -159,17 +162,7 @@ class AssetTagsSelector extends Component {
 		this.selectedItems = event.data.selectedItems;
 		this.tagNames = this._getTagNames();
 
-		if (this.removeCallback) {
-			window[this.removeCallback](event.data.item);
-		}
-
-		this.emit(
-			'itemRemoved',
-			{
-				item: event.data.item,
-				selectedItems: this.selectedItems
-			}
-		);
+		this._notifyItemsChanged('itemRemoved', this.removeCallback, event.data.item);
 	}
 
 	/**
@@ -195,6 +188,28 @@ class AssetTagsSelector extends Component {
 						tags.map(tag => tag.value)
 					)
 				);
+			}
+		);
+	}
+
+	/**
+	 * Notifies changed items
+	 *
+	 * @param {!string} eventName
+	 * @param {!Function} callback
+	 * @param {!object} item
+	 * @private
+	 */
+	_notifyItemsChanged(eventName, callback, item) {
+		if (callback) {
+			window[callback](item);
+		}
+
+		this.emit(
+			eventName,
+			{
+				item,
+				selectedItems: this.selectedItems
 			}
 		);
 	}

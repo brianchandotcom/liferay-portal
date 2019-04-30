@@ -191,7 +191,11 @@ public class LiferayService {
 		Map<String, String> pathResponseEntities = _mapKeysToPatternEvaluations(
 			method, openAPISpecJsonObject.getJsonObject("paths"));
 
-		return new ArrayList<>(pathResponseEntities.keySet());
+		List<String> endpoints = new ArrayList<>(pathResponseEntities.keySet());
+
+		Collections.sort(endpoints);
+
+		return endpoints;
 	}
 
 	protected List<String> getPageableEndpoints(

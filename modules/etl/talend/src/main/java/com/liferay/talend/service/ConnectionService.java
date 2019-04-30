@@ -22,8 +22,8 @@ import com.liferay.talend.http.client.LiferayHttpClient;
 import com.liferay.talend.http.client.exception.ConnectionException;
 import com.liferay.talend.http.client.exception.MalformedURLException;
 import com.liferay.talend.http.client.exception.OAuth2Exception;
-import com.liferay.talend.util.StringUtils;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.Base64;
@@ -80,14 +80,42 @@ public class ConnectionService {
 		return jsonObjectResponse.body();
 	}
 
-	public String getResponseRawString(InputDataSet inputDataSet)
+	public JsonObject getResponseJsonObject(
+			GenericDataStore genericDataStore, URI uri)
 		throws ConnectionException {
 
-		return getResponseRawString(inputDataSet, null);
+		String authorizationHeader = _getAuthorizationHeader(genericDataStore);
+
+		_liferayHttpClient.base(uri.toASCIIString());
+
+		Response<JsonObject> jsonObjectResponse =
+			_liferayHttpClient.getJsonObjectResponse(
+				authorizationHeader, "application/json", "");
+
+		_validateResponse(jsonObjectResponse);
+
+		return jsonObjectResponse.body();
 	}
 
 	public String getResponseRawString(
-			InputDataSet inputDataSet, String endpoint)
+			GenericDataStore genericDataStore, String endpoint)
+		throws ConnectionException {
+
+		String authorizationHeader = _getAuthorizationHeader(genericDataStore);
+
+		URL serverURL = getServerURL(genericDataStore);
+
+		_liferayHttpClient.base(serverURL.toString());
+
+		Response<String> response = _liferayHttpClient.getRawStringResponse(
+			authorizationHeader, "*/*", endpoint);
+
+		_validateResponse(response);
+
+		return response.body();
+	}
+
+	public String getResponseRawString(InputDataSet inputDataSet, URI uri)
 		throws ConnectionException {
 
 		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
@@ -96,19 +124,10 @@ public class ConnectionService {
 
 		URL serverURL = getServerURL(genericDataStore);
 
-		if (StringUtils.isNull(endpoint)) {
-			endpoint = inputDataSet.getEndpoint();
-		}
-
-		_liferayHttpClient.base(serverURL.toString());
-
-		if (endpoint.startsWith("http://") || endpoint.startsWith("https://")) {
-			_liferayHttpClient.base(endpoint);
-			endpoint = "";
-		}
+		_liferayHttpClient.base(uri.toASCIIString());
 
 		Response<String> response = _liferayHttpClient.getRawStringResponse(
-			authorizationHeader, "*/*", endpoint);
+			authorizationHeader, "*/*", "");
 
 		_validateResponse(response);
 

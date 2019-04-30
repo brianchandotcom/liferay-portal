@@ -150,7 +150,7 @@ public class LiferayInputEmitter implements Serializable {
 
 		JsonObject responseJsonObject =
 			_connectionService.getResponseJsonObject(
-				inputDataSet.getGenericDataStore(), resourceURI.toString());
+				inputDataSet.getGenericDataStore(), resourceURI);
 
 		final JsonNode responseJsonNode = JsonUtils.toJsonNode(
 			responseJsonObject);

@@ -118,10 +118,10 @@ public class TemplateResourceExternalizationTest {
 	public void testDDMTemplateResourceExternalization() throws Exception {
 		final long templateId = 100;
 
-		Class<?> clazz = getClass();
+		Class<?> clazz = DDMTemplate.class;
 
 		DDMTemplate ddmTemplate = (DDMTemplate)ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(), new Class<?>[] {DDMTemplate.class},
+			clazz.getClassLoader(), new Class<?>[] {clazz},
 			(proxy, method, arguments) -> {
 				if ("getTemplateId".equals(method.getName())) {
 					return templateId;

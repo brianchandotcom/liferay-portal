@@ -137,6 +137,21 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
+	public void updateDocument(Document document) {
+		super.updateDocument(document);
+
+		if (GetterUtil.getBoolean(document.get("completed"))) {
+			_slaProcessResultWorkflowMetricsIndexer.expireDocuments(
+				GetterUtil.getLong(document.get("companyId")),
+				GetterUtil.getLong(document.get("instanceId")));
+
+			_slaTaskResultWorkflowMetricsIndexer.expireDocuments(
+				GetterUtil.getLong(document.get("companyId")),
+				GetterUtil.getLong(document.get("instanceId")));
+		}
+	}
+
+	@Override
 	protected String getIndexName() {
 		return "workflow-metrics-instances";
 	}

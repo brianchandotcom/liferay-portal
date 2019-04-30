@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
@@ -105,6 +106,21 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
+	public void updateDocument(Document document) {
+		super.updateDocument(document);
+
+		if (GetterUtil.getBoolean(document.get("completed"))) {
+			_slaProcessResultWorkflowMetricsIndexer.expireDocuments(
+				GetterUtil.getLong(document.get("companyId")),
+				GetterUtil.getLong(document.get("instanceId")));
+
+			_slaTaskResultWorkflowMetricsIndexer.expireDocuments(
+				GetterUtil.getLong(document.get("companyId")),
+				GetterUtil.getLong(document.get("instanceId")));
+		}
+	}
+
+	@Override
 	protected String getIndexName() {
 		return "workflow-metrics-tokens";
 	}
@@ -129,5 +145,13 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	@Reference
 	private KaleoTaskInstanceTokenLocalService
 		_kaleoTaskInstanceTokenLocalService;
+
+	@Reference
+	private SLAProcessResultWorkflowMetricsIndexer
+		_slaProcessResultWorkflowMetricsIndexer;
+
+	@Reference
+	private SLATaskResultWorkflowMetricsIndexer
+		_slaTaskResultWorkflowMetricsIndexer;
 
 }

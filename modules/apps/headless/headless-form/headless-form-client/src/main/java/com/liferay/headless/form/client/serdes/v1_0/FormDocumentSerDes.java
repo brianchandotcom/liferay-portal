@@ -69,6 +69,20 @@ public class FormDocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (formDocument.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(formDocument.getDescription()));
+
+			sb.append("\"");
+		}
+
 		if (formDocument.getEncodingFormat() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -95,6 +109,16 @@ public class FormDocumentSerDes {
 			sb.append(_escape(formDocument.getFileExtension()));
 
 			sb.append("\"");
+		}
+
+		if (formDocument.getFolderId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"folderId\": ");
+
+			sb.append(formDocument.getFolderId());
 		}
 
 		if (formDocument.getId() != null) {
@@ -167,6 +191,14 @@ public class FormDocumentSerDes {
 			map.put("contentUrl", String.valueOf(formDocument.getContentUrl()));
 		}
 
+		if (formDocument.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description", String.valueOf(formDocument.getDescription()));
+		}
+
 		if (formDocument.getEncodingFormat() == null) {
 			map.put("encodingFormat", null);
 		}
@@ -183,6 +215,13 @@ public class FormDocumentSerDes {
 			map.put(
 				"fileExtension",
 				String.valueOf(formDocument.getFileExtension()));
+		}
+
+		if (formDocument.getFolderId() == null) {
+			map.put("folderId", null);
+		}
+		else {
+			map.put("folderId", String.valueOf(formDocument.getFolderId()));
 		}
 
 		if (formDocument.getId() == null) {
@@ -275,6 +314,11 @@ public class FormDocumentSerDes {
 					formDocument.setContentUrl((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					formDocument.setDescription((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
 				if (jsonParserFieldValue != null) {
 					formDocument.setEncodingFormat(
@@ -284,6 +328,12 @@ public class FormDocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
 				if (jsonParserFieldValue != null) {
 					formDocument.setFileExtension((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "folderId")) {
+				if (jsonParserFieldValue != null) {
+					formDocument.setFolderId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

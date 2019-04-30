@@ -37,7 +37,10 @@ import javax.annotation.Generated;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -69,6 +72,24 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 	}
 
 	@Override
+	@Consumes({"application/json", "application/xml"})
+	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "formRecordId")}
+	)
+	@Path("/form-records/{formRecordId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "FormRecord")})
+	public FormRecord putFormRecord(
+			@NotNull @Parameter(hidden = true) @PathParam("formRecordId") Long
+				formRecordId,
+			FormRecord formRecord)
+		throws Exception {
+
+		return new FormRecord();
+	}
+
+	@Override
 	@GET
 	@Parameters(
 		value = {
@@ -86,6 +107,21 @@ public abstract class BaseFormRecordResourceImpl implements FormRecordResource {
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
+	@Path("/forms/{formId}/form-records")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "FormRecord")})
+	public FormRecord postFormFormRecord(
+			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId,
+			FormRecord formRecord)
+		throws Exception {
+
+		return new FormRecord();
 	}
 
 	@Override

@@ -28,27 +28,6 @@ import javax.annotation.Generated;
 @Generated("")
 public class FieldValue {
 
-	public Long getDocumentId() {
-		return documentId;
-	}
-
-	public void setDocumentId(Long documentId) {
-		this.documentId = documentId;
-	}
-
-	public void setDocumentId(
-		UnsafeSupplier<Long, Exception> documentIdUnsafeSupplier) {
-
-		try {
-			documentId = documentIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long documentId;
-
 	public FormDocument getFormDocument() {
 		return formDocument;
 	}
@@ -69,6 +48,27 @@ public class FieldValue {
 	}
 
 	protected FormDocument formDocument;
+
+	public Long getFormDocumentId() {
+		return formDocumentId;
+	}
+
+	public void setFormDocumentId(Long formDocumentId) {
+		this.formDocumentId = formDocumentId;
+	}
+
+	public void setFormDocumentId(
+		UnsafeSupplier<Long, Exception> formDocumentIdUnsafeSupplier) {
+
+		try {
+			formDocumentId = formDocumentIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long formDocumentId;
 
 	public Long getId() {
 		return id;

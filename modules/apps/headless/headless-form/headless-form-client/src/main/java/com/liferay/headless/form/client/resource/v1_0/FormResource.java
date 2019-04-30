@@ -104,7 +104,8 @@ public class FormResource {
 	}
 
 	public com.liferay.headless.form.client.dto.v1_0.FormDocument
-			postFormUploadFile(Long formId, Form form, Map<String, File> files)
+			postFormFormDocument(
+				Long formId, Form form, Map<String, File> files)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -118,7 +119,7 @@ public class FormResource {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 		httpInvoker.path(
-			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}/upload-file",
+			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-document",
 			formId);
 
 		httpInvoker.userNameAndPassword("test@liferay.com:test");

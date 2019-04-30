@@ -46,34 +46,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FieldValue {
 
 	@Schema
-	public Long getDocumentId() {
-		return documentId;
-	}
-
-	public void setDocumentId(Long documentId) {
-		this.documentId = documentId;
-	}
-
-	@JsonIgnore
-	public void setDocumentId(
-		UnsafeSupplier<Long, Exception> documentIdUnsafeSupplier) {
-
-		try {
-			documentId = documentIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long documentId;
-
-	@Schema
 	public FormDocument getFormDocument() {
 		return formDocument;
 	}
@@ -102,6 +74,34 @@ public class FieldValue {
 	protected FormDocument formDocument;
 
 	@Schema
+	public Long getFormDocumentId() {
+		return formDocumentId;
+	}
+
+	public void setFormDocumentId(Long formDocumentId) {
+		this.formDocumentId = formDocumentId;
+	}
+
+	@JsonIgnore
+	public void setFormDocumentId(
+		UnsafeSupplier<Long, Exception> formDocumentIdUnsafeSupplier) {
+
+		try {
+			formDocumentId = formDocumentIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected Long formDocumentId;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -124,7 +124,7 @@ public class FieldValue {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@Schema
@@ -208,16 +208,6 @@ public class FieldValue {
 
 		sb.append("{");
 
-		if (documentId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"documentId\": ");
-
-			sb.append(documentId);
-		}
-
 		if (formDocument != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -226,6 +216,16 @@ public class FieldValue {
 			sb.append("\"formDocument\": ");
 
 			sb.append(String.valueOf(formDocument));
+		}
+
+		if (formDocumentId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"formDocumentId\": ");
+
+			sb.append(formDocumentId);
 		}
 
 		if (id != null) {

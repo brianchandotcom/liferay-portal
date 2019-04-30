@@ -27,6 +27,7 @@ import com.liferay.headless.form.client.pagination.Page;
 import com.liferay.headless.form.client.serdes.v1_0.FormRecordSerDes;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -230,6 +232,88 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
+	public void testPutFormRecord() throws Exception {
+		FormRecord postFormRecord = testPutFormRecord_addFormRecord();
+
+		FormRecord randomFormRecord = randomFormRecord();
+
+		FormRecord putFormRecord = invokePutFormRecord(
+			postFormRecord.getId(), randomFormRecord);
+
+		assertEquals(randomFormRecord, putFormRecord);
+		assertValid(putFormRecord);
+
+		FormRecord getFormRecord = invokeGetFormRecord(putFormRecord.getId());
+
+		assertEquals(randomFormRecord, getFormRecord);
+		assertValid(getFormRecord);
+	}
+
+	protected FormRecord testPutFormRecord_addFormRecord() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected FormRecord invokePutFormRecord(
+			Long formRecordId, FormRecord formRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			FormRecordSerDes.toJSON(formRecord), ContentTypes.APPLICATION_JSON,
+			StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath("/form-records/{formRecordId}", formRecordId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return FormRecordSerDes.toDTO(string);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePutFormRecordResponse(
+			Long formRecordId, FormRecord formRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			FormRecordSerDes.toJSON(formRecord), ContentTypes.APPLICATION_JSON,
+			StringPool.UTF8);
+
+		String location =
+			_resourceURL +
+				_toPath("/form-records/{formRecordId}", formRecordId);
+
+		options.setLocation(location);
+
+		options.setPut(true);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
 	public void testGetFormFormRecordsPage() throws Exception {
 		Long formId = testGetFormFormRecordsPage_getFormId();
 		Long irrelevantFormId =
@@ -311,8 +395,7 @@ public abstract class BaseFormRecordResourceTestCase {
 			Long formId, FormRecord formRecord)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return invokePostFormFormRecord(formId, formRecord);
 	}
 
 	protected Long testGetFormFormRecordsPage_getFormId() throws Exception {
@@ -366,6 +449,82 @@ public abstract class BaseFormRecordResourceTestCase {
 			location, "pageSize", pagination.getPageSize());
 
 		options.setLocation(location);
+
+		HttpUtil.URLtoByteArray(options);
+
+		return options.getResponse();
+	}
+
+	@Test
+	public void testPostFormFormRecord() throws Exception {
+		FormRecord randomFormRecord = randomFormRecord();
+
+		FormRecord postFormRecord = testPostFormFormRecord_addFormRecord(
+			randomFormRecord);
+
+		assertEquals(randomFormRecord, postFormRecord);
+		assertValid(postFormRecord);
+	}
+
+	protected FormRecord testPostFormFormRecord_addFormRecord(
+			FormRecord formRecord)
+		throws Exception {
+
+		return invokePostFormFormRecord(
+			testGetFormFormRecordsPage_getFormId(), formRecord);
+	}
+
+	protected FormRecord invokePostFormFormRecord(
+			Long formId, FormRecord formRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			FormRecordSerDes.toJSON(formRecord), ContentTypes.APPLICATION_JSON,
+			StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/forms/{formId}/form-records", formId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
+
+		String string = HttpUtil.URLtoString(options);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("HTTP response: " + string);
+		}
+
+		try {
+			return FormRecordSerDes.toDTO(string);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to process HTTP response: " + string, e);
+			}
+
+			throw e;
+		}
+	}
+
+	protected Http.Response invokePostFormFormRecordResponse(
+			Long formId, FormRecord formRecord)
+		throws Exception {
+
+		Http.Options options = _createHttpOptions();
+
+		options.setBody(
+			FormRecordSerDes.toJSON(formRecord), ContentTypes.APPLICATION_JSON,
+			StringPool.UTF8);
+
+		String location =
+			_resourceURL + _toPath("/forms/{formId}/form-records", formId);
+
+		options.setLocation(location);
+
+		options.setPost(true);
 
 		HttpUtil.URLtoByteArray(options);
 

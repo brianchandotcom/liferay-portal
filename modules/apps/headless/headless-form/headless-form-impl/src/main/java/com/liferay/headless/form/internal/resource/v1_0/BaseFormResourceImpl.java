@@ -88,10 +88,10 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	@Consumes("multipart/form-data")
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "formId")})
-	@Path("/forms/{formId}/upload-file")
+	@Path("/forms/{formId}/form-document")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Form")})
-	public FormDocument postFormUploadFile(
+	public FormDocument postFormFormDocument(
 			@NotNull @Parameter(hidden = true) @PathParam("formId") Long formId,
 			MultipartBody multipartBody)
 		throws Exception {

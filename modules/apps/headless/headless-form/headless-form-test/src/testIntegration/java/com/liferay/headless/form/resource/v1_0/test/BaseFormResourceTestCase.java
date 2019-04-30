@@ -303,11 +303,11 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	@Test
-	public void testPostFormUploadFile() throws Exception {
+	public void testPostFormFormDocument() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected FormDocument invokePostFormUploadFile(
+	protected FormDocument invokePostFormFormDocument(
 			Long formId, MultipartBody multipartBody)
 		throws Exception {
 
@@ -323,7 +323,7 @@ public abstract class BaseFormResourceTestCase {
 			"UTF-8");
 
 		String location =
-			_resourceURL + _toPath("/forms/{formId}/upload-file", formId);
+			_resourceURL + _toPath("/forms/{formId}/form-document", formId);
 
 		options.setLocation(location);
 
@@ -348,14 +348,14 @@ public abstract class BaseFormResourceTestCase {
 		}
 	}
 
-	protected Http.Response invokePostFormUploadFileResponse(
+	protected Http.Response invokePostFormFormDocumentResponse(
 			Long formId, MultipartBody multipartBody)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
 
 		String location =
-			_resourceURL + _toPath("/forms/{formId}/upload-file", formId);
+			_resourceURL + _toPath("/forms/{formId}/form-document", formId);
 
 		options.setLocation(location);
 

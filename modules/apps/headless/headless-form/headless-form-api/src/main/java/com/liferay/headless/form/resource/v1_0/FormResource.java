@@ -39,7 +39,7 @@ public interface FormResource {
 	public Form postFormEvaluateContext(Long formId, Form form)
 		throws Exception;
 
-	public FormDocument postFormUploadFile(
+	public FormDocument postFormFormDocument(
 			Long formId, MultipartBody multipartBody)
 		throws Exception;
 

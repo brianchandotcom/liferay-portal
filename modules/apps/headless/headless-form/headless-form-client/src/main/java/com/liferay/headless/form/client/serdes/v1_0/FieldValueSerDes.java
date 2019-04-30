@@ -53,16 +53,6 @@ public class FieldValueSerDes {
 
 		sb.append("{");
 
-		if (fieldValue.getDocumentId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"documentId\": ");
-
-			sb.append(fieldValue.getDocumentId());
-		}
-
 		if (fieldValue.getFormDocument() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -71,6 +61,16 @@ public class FieldValueSerDes {
 			sb.append("\"formDocument\": ");
 
 			sb.append(String.valueOf(fieldValue.getFormDocument()));
+		}
+
+		if (fieldValue.getFormDocumentId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"formDocumentId\": ");
+
+			sb.append(fieldValue.getFormDocumentId());
 		}
 
 		if (fieldValue.getId() != null) {
@@ -129,19 +129,21 @@ public class FieldValueSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		if (fieldValue.getDocumentId() == null) {
-			map.put("documentId", null);
-		}
-		else {
-			map.put("documentId", String.valueOf(fieldValue.getDocumentId()));
-		}
-
 		if (fieldValue.getFormDocument() == null) {
 			map.put("formDocument", null);
 		}
 		else {
 			map.put(
 				"formDocument", String.valueOf(fieldValue.getFormDocument()));
+		}
+
+		if (fieldValue.getFormDocumentId() == null) {
+			map.put("formDocumentId", null);
+		}
+		else {
+			map.put(
+				"formDocumentId",
+				String.valueOf(fieldValue.getFormDocumentId()));
 		}
 
 		if (fieldValue.getId() == null) {
@@ -221,16 +223,16 @@ public class FieldValueSerDes {
 			FieldValue fieldValue, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "documentId")) {
-				if (jsonParserFieldValue != null) {
-					fieldValue.setDocumentId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "formDocument")) {
+			if (Objects.equals(jsonParserFieldName, "formDocument")) {
 				if (jsonParserFieldValue != null) {
 					fieldValue.setFormDocument(
 						FormDocumentSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "formDocumentId")) {
+				if (jsonParserFieldValue != null) {
+					fieldValue.setFormDocumentId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

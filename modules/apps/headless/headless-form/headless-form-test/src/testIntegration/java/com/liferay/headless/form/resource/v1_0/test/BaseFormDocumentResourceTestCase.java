@@ -357,6 +357,14 @@ public abstract class BaseFormDocumentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (formDocument.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (formDocument.getEncodingFormat() == null) {
 					valid = false;
@@ -367,6 +375,14 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 			if (Objects.equals("fileExtension", additionalAssertFieldName)) {
 				if (formDocument.getFileExtension() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("folderId", additionalAssertFieldName)) {
+				if (formDocument.getFolderId() == null) {
 					valid = false;
 				}
 
@@ -445,6 +461,17 @@ public abstract class BaseFormDocumentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getDescription(),
+						formDocument2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						formDocument1.getEncodingFormat(),
@@ -460,6 +487,17 @@ public abstract class BaseFormDocumentResourceTestCase {
 				if (!Objects.deepEquals(
 						formDocument1.getFileExtension(),
 						formDocument2.getFileExtension())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("folderId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						formDocument1.getFolderId(),
+						formDocument2.getFolderId())) {
 
 					return false;
 				}
@@ -559,6 +597,14 @@ public abstract class BaseFormDocumentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description")) {
+			sb.append("'");
+			sb.append(String.valueOf(formDocument.getDescription()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("encodingFormat")) {
 			sb.append("'");
 			sb.append(String.valueOf(formDocument.getEncodingFormat()));
@@ -573,6 +619,11 @@ public abstract class BaseFormDocumentResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("folderId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("id")) {
@@ -606,8 +657,10 @@ public abstract class BaseFormDocumentResourceTestCase {
 		return new FormDocument() {
 			{
 				contentUrl = RandomTestUtil.randomString();
+				description = RandomTestUtil.randomString();
 				encodingFormat = RandomTestUtil.randomString();
 				fileExtension = RandomTestUtil.randomString();
+				folderId = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				siteId = testGroup.getGroupId();
 				sizeInBytes = RandomTestUtil.randomLong();

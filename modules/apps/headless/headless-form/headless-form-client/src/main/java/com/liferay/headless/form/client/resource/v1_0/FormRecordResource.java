@@ -64,6 +64,43 @@ public class FormRecordResource {
 		}
 	}
 
+	public FormRecord putFormRecord(Long formRecordId, FormRecord formRecord)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			FormRecordSerDes.toJSON(formRecord), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-form/v1.0/form-records/{formRecordId}",
+			formRecordId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
+		try {
+			return FormRecordSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
+	}
+
 	public Page<FormRecord> getFormFormRecordsPage(
 			Long formId, Pagination pagination)
 		throws Exception {
@@ -92,6 +129,43 @@ public class FormRecordResource {
 		_logger.fine("HTTP response status: " + httpResponse.getStatus());
 
 		return Page.of(content, FormRecordSerDes::toDTO);
+	}
+
+	public FormRecord postFormFormRecord(Long formId, FormRecord formRecord)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			FormRecordSerDes.toJSON(formRecord), "application/json");
+
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+		httpInvoker.path(
+			"http://localhost:8080/o/headless-form/v1.0/forms/{formId}/form-records",
+			formId);
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		String content = httpResponse.getContent();
+
+		_logger.fine("HTTP response content: " + content);
+
+		_logger.fine("HTTP response message: " + httpResponse.getMessage());
+		_logger.fine("HTTP response status: " + httpResponse.getStatus());
+
+		try {
+			return FormRecordSerDes.toDTO(content);
+		}
+		catch (Exception e) {
+			_logger.log(
+				Level.WARNING, "Unable to process HTTP response: " + content,
+				e);
+
+			throw e;
+		}
 	}
 
 	public FormRecord getFormFormRecordByLatestDraft(Long formId)

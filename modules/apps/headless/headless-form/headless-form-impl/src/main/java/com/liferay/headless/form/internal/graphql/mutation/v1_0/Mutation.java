@@ -17,9 +17,8 @@ package com.liferay.headless.form.internal.graphql.mutation.v1_0;
 import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
-import com.liferay.headless.form.dto.v1_0.FormRecordForm;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
-import com.liferay.headless.form.resource.v1_0.FormRecordFormResource;
+import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -58,12 +57,12 @@ public class Mutation {
 			formDocumentResourceComponentServiceObjects;
 	}
 
-	public static void setFormRecordFormResourceComponentServiceObjects(
-		ComponentServiceObjects<FormRecordFormResource>
-			formRecordFormResourceComponentServiceObjects) {
+	public static void setFormRecordResourceComponentServiceObjects(
+		ComponentServiceObjects<FormRecordResource>
+			formRecordResourceComponentServiceObjects) {
 
-		_formRecordFormResourceComponentServiceObjects =
-			formRecordFormResourceComponentServiceObjects;
+		_formRecordResourceComponentServiceObjects =
+			formRecordResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -80,8 +79,8 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
-	@GraphQLName("postFormUploadFileFormIdMultipartBody")
-	public FormDocument postFormUploadFile(
+	@GraphQLName("postFormFormDocumentFormIdMultipartBody")
+	public FormDocument postFormFormDocument(
 			@GraphQLName("formId") Long formId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
@@ -89,7 +88,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_formResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			formResource -> formResource.postFormUploadFile(
+			formResource -> formResource.postFormFormDocument(
 				formId, multipartBody));
 	}
 
@@ -108,28 +107,28 @@ public class Mutation {
 	@GraphQLInvokeDetached
 	public FormRecord putFormRecord(
 			@GraphQLName("formRecordId") Long formRecordId,
-			@GraphQLName("formRecordForm") FormRecordForm formRecordForm)
+			@GraphQLName("formRecord") FormRecord formRecord)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_formRecordFormResourceComponentServiceObjects,
+			_formRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			formRecordFormResource -> formRecordFormResource.putFormRecord(
-				formRecordId, formRecordForm));
+			formRecordResource -> formRecordResource.putFormRecord(
+				formRecordId, formRecord));
 	}
 
 	@GraphQLField
 	@GraphQLInvokeDetached
 	public FormRecord postFormFormRecord(
 			@GraphQLName("formId") Long formId,
-			@GraphQLName("formRecordForm") FormRecordForm formRecordForm)
+			@GraphQLName("formRecord") FormRecord formRecord)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_formRecordFormResourceComponentServiceObjects,
+			_formRecordResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			formRecordFormResource -> formRecordFormResource.postFormFormRecord(
-				formId, formRecordForm));
+			formRecordResource -> formRecordResource.postFormFormRecord(
+				formId, formRecord));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -187,11 +186,10 @@ public class Mutation {
 				CompanyThreadLocal.getCompanyId()));
 	}
 
-	private void _populateResourceContext(
-			FormRecordFormResource formRecordFormResource)
+	private void _populateResourceContext(FormRecordResource formRecordResource)
 		throws Exception {
 
-		formRecordFormResource.setContextCompany(
+		formRecordResource.setContextCompany(
 			CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId()));
 	}
@@ -200,7 +198,7 @@ public class Mutation {
 		_formResourceComponentServiceObjects;
 	private static ComponentServiceObjects<FormDocumentResource>
 		_formDocumentResourceComponentServiceObjects;
-	private static ComponentServiceObjects<FormRecordFormResource>
-		_formRecordFormResourceComponentServiceObjects;
+	private static ComponentServiceObjects<FormRecordResource>
+		_formRecordResourceComponentServiceObjects;
 
 }

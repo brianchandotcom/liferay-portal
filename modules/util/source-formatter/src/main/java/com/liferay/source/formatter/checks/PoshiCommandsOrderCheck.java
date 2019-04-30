@@ -93,8 +93,6 @@ public class PoshiCommandsOrderCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
-	private static final Pattern _commandNamePattern = Pattern.compile(
-		"^[\t ]*(function|macro|test)( +).+(\n|\\Z)", Pattern.MULTILINE);
 	private static final Pattern _commandPattern = Pattern.compile(
 		"(?<=\n)([\t ]*@.+?=.+?\n)*[\t ]*(function|macro|test)( +).+\n" +
 			"(.*\n)*?\t\\}\n(?=\\s*(@|function|macro|test|\\s*\\}$))");
@@ -120,6 +118,9 @@ public class PoshiCommandsOrderCheck extends BaseFileCheck {
 
 			return name1.compareTo(name2);
 		}
+
+		private final Pattern _commandNamePattern = Pattern.compile(
+			"^[\t ]*(function|macro|test)( +).+(\n|\\Z)", Pattern.MULTILINE);
 
 	}
 

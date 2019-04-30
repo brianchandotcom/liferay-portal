@@ -47,6 +47,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			getIndexName(), document);
 
+		indexDocumentRequest.setRefresh(true);
 		indexDocumentRequest.setType(getIndexType());
 
 		searchEngineAdapter.execute(indexDocumentRequest);
@@ -152,6 +153,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			getIndexName(), document.getUID(), document);
 
+		updateDocumentRequest.setRefresh(true);
 		updateDocumentRequest.setType(getIndexType());
 
 		searchEngineAdapter.execute(updateDocumentRequest);

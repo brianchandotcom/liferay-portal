@@ -15,15 +15,15 @@
 package com.liferay.portal.internal.errors;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Shuyang Zhou
@@ -31,94 +31,56 @@ import java.util.TreeSet;
 public class DynamicIncludeKeyUtil {
 
 	public static String getDynamicIncludeKey(String accept) {
-		Comparator<String> mediaRangesComparator =
-			Comparator.<String>comparingDouble(
-				mediaRange -> {
-					String weightString = _extractWeight(mediaRange);
+		List<String> mediaRangeStrings = StringUtil.split(accept);
 
-					if (weightString != null) {
-						return GetterUtil.getDouble(
-							weightString.substring(3), 1);
+		List<Map.Entry<String, Double>> mediaRanges = new ArrayList<>(
+			mediaRangeStrings.size());
+
+		for (int i = 0; i < mediaRangeStrings.size(); i++) {
+			double weight = mediaRangeStrings.size() - i;
+
+			String mediaRangeString = mediaRangeStrings.get(i);
+
+			mediaRangeString = mediaRangeString.trim();
+
+			int index = mediaRangeString.indexOf(CharPool.SEMICOLON);
+
+			if ((index != -1) &&
+				(mediaRangeString.charAt(index + 2) == CharPool.EQUAL)) {
+
+				char c = mediaRangeString.charAt(index + 1);
+
+				if ((c == CharPool.LOWER_CASE_Q) ||
+					(c == CharPool.UPPER_CASE_Q)) {
+
+					int start = index + 3;
+
+					int end = mediaRangeString.indexOf(
+						CharPool.SEMICOLON, start);
+
+					if (end == -1) {
+						end = mediaRangeString.length();
 					}
 
-					return 1;
-				}
-			).reversed(
-			).thenComparing(
-				mediaRange -> {
-					int pos = mediaRange.indexOf(CharPool.SEMICOLON);
-
-					if (pos > 0) {
-						mediaRange = mediaRange.substring(0, pos);
-					}
-
-					pos = mediaRange.indexOf(CharPool.SLASH);
-
-					if (pos > 0) {
-						mediaRange = mediaRange.substring(0, pos);
-					}
-
-					return mediaRange.trim();
-				}
-			).thenComparing(
-				mediaRange -> {
-					int pos = mediaRange.indexOf(CharPool.SEMICOLON);
-
-					if (pos > 0) {
-						mediaRange = mediaRange.substring(0, pos);
-					}
-
-					pos = mediaRange.indexOf(CharPool.SLASH);
-
-					if (pos > 0) {
-						mediaRange = mediaRange.substring(pos);
-					}
-
-					return mediaRange.trim();
-				}
-			).thenComparing(
-				mediaRange -> {
-					mediaRange = _removeWeight(mediaRange);
-
-					int pos = mediaRange.indexOf(CharPool.SEMICOLON);
-
-					if (pos > 0) {
-						mediaRange = mediaRange.substring(pos);
-					}
-
-					return mediaRange.trim();
-				}
-			);
-
-		Set<String> mediaRangesSet = new TreeSet<>(mediaRangesComparator);
-
-		if (Validator.isBlank(accept)) {
-			return null;
-		}
-		else if (!accept.contains(StringPool.COMMA)) {
-			mediaRangesSet.add(accept);
-		}
-		else {
-			String[] mediaRanges = accept.split(StringPool.COMMA);
-
-			for (int i = 0; i < mediaRanges.length; i++) {
-				String mediaRange = mediaRanges[i];
-
-				if (_extractWeight(mediaRange) == null) {
-					mediaRange += ";q=" + (mediaRanges.length - i);
+					weight = GetterUtil.getDouble(
+						mediaRangeString.substring(start, end), 1);
 				}
 
-				mediaRangesSet.add(mediaRange);
+				mediaRangeString = mediaRangeString.substring(0, index);
+
+				mediaRangeString = mediaRangeString.trim();
 			}
+
+			mediaRanges.add(
+				new AbstractMap.SimpleImmutableEntry<>(
+					mediaRangeString, weight));
 		}
 
-		String dynamicIncludeKeyPrefix = "/errors/code.jsp#";
+		mediaRanges.sort(_comparator);
 
-		for (String mediaType : mediaRangesSet) {
-			mediaType = _removeWeight(mediaType);
-
+		for (Map.Entry<String, Double> mediaRange : mediaRanges) {
 			String dynamicIncludeKey =
-				dynamicIncludeKeyPrefix + mediaType.trim();
+				_DYNAMIC_INCLUDE_KEY_PREFIX + mediaRange.getKey();
 
 			if (DynamicIncludeUtil.hasDynamicInclude(dynamicIncludeKey)) {
 				return dynamicIncludeKey;
@@ -128,34 +90,11 @@ public class DynamicIncludeKeyUtil {
 		return null;
 	}
 
-	private static String _extractWeight(String mediaRange) {
-		int weightPos = mediaRange.indexOf(";q=");
+	private static final String _DYNAMIC_INCLUDE_KEY_PREFIX =
+		"/errors/code.jsp#";
 
-		if (weightPos < 0) {
-			weightPos = mediaRange.indexOf(";Q=");
-		}
-
-		if (weightPos < 0) {
-			return null;
-		}
-
-		int endPos = mediaRange.indexOf(CharPool.SEMICOLON, weightPos + 1);
-
-		if (endPos < 0) {
-			endPos = mediaRange.length();
-		}
-
-		return mediaRange.substring(weightPos, endPos);
-	}
-
-	private static String _removeWeight(String mediaRange) {
-		String weightString = _extractWeight(mediaRange);
-
-		if (weightString != null) {
-			return StringUtil.removeSubstring(mediaRange, weightString);
-		}
-
-		return mediaRange;
-	}
+	private static final Comparator<Map.Entry<String, Double>> _comparator =
+		(entry1, entry2) -> Double.compare(
+			entry2.getValue(), entry1.getValue());
 
 }

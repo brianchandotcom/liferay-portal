@@ -122,8 +122,6 @@ public class ConnectionService {
 
 		String authorizationHeader = _getAuthorizationHeader(genericDataStore);
 
-		URL serverURL = getServerURL(genericDataStore);
-
 		_liferayHttpClient.base(uri.toASCIIString());
 
 		Response<String> response = _liferayHttpClient.getRawStringResponse(

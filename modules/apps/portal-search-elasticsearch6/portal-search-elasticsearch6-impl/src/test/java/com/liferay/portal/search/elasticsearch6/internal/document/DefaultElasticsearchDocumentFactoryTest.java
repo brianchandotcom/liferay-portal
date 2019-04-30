@@ -15,16 +15,22 @@
 package com.liferay.portal.search.elasticsearch6.internal.document;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
+import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.function.Consumer;
 
 import org.elasticsearch.common.Strings;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -47,6 +53,156 @@ public class DefaultElasticsearchDocumentFactoryTest {
 	@After
 	public void tearDown() throws Exception {
 		_documentFixture.tearDown();
+	}
+
+	@Test
+	public void testArrayOfArrays() throws IOException {
+		assertDocument(
+			xContentBuilder -> xContentBuilder.startArray(
+				"alpha"
+			).startArray(
+			).value(
+				"one"
+			).value(
+				"two"
+			).value(
+				"three"
+			).endArray(
+			).startArray(
+			).value(
+				"four"
+			).value(
+				"five"
+			).value(
+				"six"
+			).endArray(
+			).endArray(),
+			documentBuilder -> documentBuilder.setValues(
+				"alpha",
+				Arrays.asList(
+					Arrays.asList("one", "two", "three"),
+					Arrays.asList("four", "five", "six"))));
+	}
+
+	@Test
+	public void testArrayOfObjects() throws IOException {
+		assertDocument(
+			xContentBuilder -> xContentBuilder.field(
+				"group", "fans"
+			).field(
+				"user",
+				Arrays.asList(
+					new HashMap<String, Object>() {
+						{
+							put("first", "John");
+							put("last", "Smith");
+						}
+					},
+					new HashMap<String, Object>() {
+						{
+							put("first", "Alice");
+							put("last", "White");
+						}
+					})
+			),
+			documentBuilder -> documentBuilder.setString(
+				"group", "fans"
+			).setValue(
+				"user",
+				Arrays.asList(
+					new HashMap<String, Object>() {
+						{
+							put("first", "John");
+							put("last", "Smith");
+						}
+					},
+					new HashMap<String, Object>() {
+						{
+							put("first", "Alice");
+							put("last", "White");
+						}
+					})
+			));
+	}
+
+	@Test
+	public void testInnerObject() throws IOException {
+		assertDocument(
+			xContentBuilder -> xContentBuilder.startObject(
+				"alpha"
+			).field(
+				"position", "1"
+			).endObject(),
+			documentBuilder -> documentBuilder.setValue(
+				"alpha", Collections.singletonMap("position", "1")));
+	}
+
+	@Test
+	public void testMultipleInnerObjects() throws IOException {
+		assertDocument(
+			xContentBuilder -> xContentBuilder.field(
+				"region", "US"
+			).field(
+				"manager",
+				new HashMap() {
+					{
+						put("age", 30);
+						put(
+							"name",
+							new HashMap() {
+								{
+									put("first", "John");
+									put("last", "Smith");
+								}
+							});
+					}
+				}
+			),
+			documentBuilder -> documentBuilder.setString(
+				"region", "US"
+			).setValue(
+				"manager",
+				new HashMap() {
+					{
+						put("age", 30);
+						put(
+							"name",
+							new HashMap() {
+								{
+									put("first", "John");
+									put("last", "Smith");
+								}
+							});
+					}
+				}
+			));
+	}
+
+	@Test
+	public void testMultipleValuesSetStrings() throws IOException {
+		assertDocument(
+			xContentBuilder -> xContentBuilder.array(
+				"alpha", new String[] {"one", "two", "three"}),
+			documentBuilder -> documentBuilder.setStrings(
+				"alpha", "one", "two", "three"));
+	}
+
+	@Test
+	public void testMultipleValuesSetValue() throws IOException {
+		assertDocument(
+			xContentBuilder -> xContentBuilder.array(
+				"alpha", new String[] {"one", "two", "three"}),
+			documentBuilder -> documentBuilder.setValue(
+				"alpha", Arrays.asList("one", "two", "three")));
+	}
+
+	@Test
+	public void testMultipleValuesSetValues() throws IOException {
+		assertDocument(
+			xContentBuilder -> xContentBuilder.array(
+				"alpha", new String[] {"one", "two", "three"}),
+			documentBuilder -> documentBuilder.setValues(
+				"alpha", Arrays.asList("one", "two", "three")));
 	}
 
 	@Test
@@ -92,6 +248,12 @@ public class DefaultElasticsearchDocumentFactoryTest {
 		assertDocumentSameAsLegacy(StringPool.NULL, "{\"field\":\"null\"}");
 	}
 
+	public interface XContentBuilderConsumer {
+
+		public void accept(XContentBuilder xContentBuilder) throws IOException;
+
+	}
+
 	protected void assertDocument(
 		String expected, DocumentBuilder documentBuilder) {
 
@@ -107,9 +269,25 @@ public class DefaultElasticsearchDocumentFactoryTest {
 			json, builder().setStrings(_FIELD, new String[] {value}));
 	}
 
+	protected void assertDocument(
+		XContentBuilderConsumer expectedXContentBuilderConsumer,
+		Consumer<DocumentBuilder> actualDocumentBuilderConsumer) {
+
+		XContentBuilder expectedXContentBuilder = createXContentBuilder(
+			expectedXContentBuilderConsumer);
+
+		XContentBuilder actualXContentBuilder =
+			_elasticsearchDocumentFactory.getElasticsearchDocument(
+				buildDocument(actualDocumentBuilderConsumer));
+
+		Assert.assertEquals(
+			Strings.toString(expectedXContentBuilder),
+			Strings.toString(actualXContentBuilder));
+	}
+
 	@SuppressWarnings("deprecation")
 	protected void assertDocumentLegacy(String value, String json) {
-		Document document = new DocumentImpl();
+		com.liferay.portal.kernel.search.Document document = new DocumentImpl();
 
 		document.addText(_FIELD, new String[] {value});
 
@@ -123,8 +301,35 @@ public class DefaultElasticsearchDocumentFactoryTest {
 		assertDocumentLegacy(value, json);
 	}
 
-	protected DocumentBuilderImpl builder() {
+	protected Document buildDocument(
+		Consumer<DocumentBuilder> documentBuilderConsumer) {
+
+		DocumentBuilder documentBuilder = builder();
+
+		documentBuilderConsumer.accept(documentBuilder);
+
+		return documentBuilder.build();
+	}
+
+	protected DocumentBuilder builder() {
 		return new DocumentBuilderImpl();
+	}
+
+	protected XContentBuilder createXContentBuilder(
+		XContentBuilderConsumer xContentBuilderConsumer) {
+
+		try {
+			XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
+
+			xContentBuilder.startObject();
+
+			xContentBuilderConsumer.accept(xContentBuilder);
+
+			return xContentBuilder.endObject();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private static final String _FIELD = "field";

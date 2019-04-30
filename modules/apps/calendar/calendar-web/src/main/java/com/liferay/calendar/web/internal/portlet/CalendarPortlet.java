@@ -648,8 +648,6 @@ public class CalendarPortlet extends MVCPortlet {
 				themeDisplay, calendarBooking, timeZone);
 		}
 		catch (PortalException pe) {
-			jsonObject = JSONFactoryUtil.createJSONObject();
-
 			String errorMessage = "";
 
 			if (pe instanceof AssetCategoryException) {
@@ -658,7 +656,7 @@ public class CalendarPortlet extends MVCPortlet {
 				errorMessage = getErrorMessageForException(ace, themeDisplay);
 			}
 
-			jsonObject.put("exception", errorMessage);
+			jsonObject = JSONUtil.put("exception", errorMessage);
 		}
 
 		hideDefaultSuccessMessage(actionRequest);

@@ -61,33 +61,15 @@ public class ConnectionService {
 		return serverURL;
 	}
 
-	public JsonObject getResponseJsonObject(InputDataSet inputDataSet)
-		throws ConnectionException {
-
-		return getResponseJsonObject(inputDataSet, null);
-	}
-
 	public JsonObject getResponseJsonObject(
-			InputDataSet inputDataSet, String endpoint)
+			GenericDataStore genericDataStore, String endpoint)
 		throws ConnectionException {
-
-		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
 
 		String authorizationHeader = _getAuthorizationHeader(genericDataStore);
 
 		URL serverURL = getServerURL(genericDataStore);
 
-		if (StringUtils.isNull(endpoint)) {
-			endpoint = inputDataSet.getEndpoint();
-		}
-
 		_liferayHttpClient.base(serverURL.toString());
-
-		if (endpoint.startsWith("http://") || endpoint.startsWith("https://")) {
-			_liferayHttpClient.base(endpoint);
-
-			endpoint = "";
-		}
 
 		Response<JsonObject> jsonObjectResponse =
 			_liferayHttpClient.getJsonObjectResponse(

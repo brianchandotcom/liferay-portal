@@ -100,7 +100,7 @@ public class LiferayService {
 		String endpoint = inputDataSet.getEndpoint();
 
 		JsonObject openAPISpecJsonObject = _getOpenAPISpecJsonObject(
-			inputDataSet);
+			inputDataSet.getGenericDataStore());
 
 		Map<String, String> pathResponseEntities = _mapKeysToPatternEvaluations(
 			_GET_METHOD_RESPONSE_REGEX,
@@ -137,7 +137,7 @@ public class LiferayService {
 
 	public List<String> getPageableEndpoints(InputDataSet inputDataSet) {
 		JsonObject openAPISpecJsonObject = _getOpenAPISpecJsonObject(
-			inputDataSet);
+			inputDataSet.getGenericDataStore());
 
 		if (openAPISpecJsonObject == null) {
 			return Collections.emptyList();
@@ -243,8 +243,8 @@ public class LiferayService {
 		return pageableEndpoints;
 	}
 
-	private JsonObject _getOpenAPISpecJsonObject(InputDataSet inputDataSet) {
-		GenericDataStore genericDataStore = inputDataSet.getGenericDataStore();
+	private JsonObject _getOpenAPISpecJsonObject(
+		GenericDataStore genericDataStore) {
 
 		URL openAPISpecURL = genericDataStore.getOpenAPISpecURL();
 
@@ -252,7 +252,8 @@ public class LiferayService {
 
 		String endpoint = extractEndpointPathSegment(openAPISpecURL);
 
-		return _connectionService.getResponseJsonObject(inputDataSet, endpoint);
+		return _connectionService.getResponseJsonObject(
+			genericDataStore, endpoint);
 	}
 
 	/**

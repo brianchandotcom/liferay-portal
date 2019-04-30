@@ -522,7 +522,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		jar.dependsOn(buildWSDDTask);
 
-		jar.deleteAllActions();
+		jar.setActions(Arrays.asList());
 
 		jar.doLast(
 			new Action<Task>() {

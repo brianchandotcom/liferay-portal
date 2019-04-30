@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -447,7 +448,7 @@ public class NodePlugin implements Plugin<Project> {
 				rootProject, taskName, nodeExtension);
 		}
 
-		downloadNodeTask.deleteAllActions();
+		downloadNodeTask.setActions(Arrays.asList());
 		downloadNodeTask.dependsOn(rootDownloadNodeTask);
 	}
 

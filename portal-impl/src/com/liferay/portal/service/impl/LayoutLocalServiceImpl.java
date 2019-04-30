@@ -847,16 +847,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout = delete(layout);
 
-		// User preferences for customizable pages
-
-		_removeUserPreferences(layout);
-
 		// Layout set
 
 		if (updateLayoutSet) {
 			layoutSetLocalService.updatePageCount(
 				layout.getGroupId(), layout.isPrivateLayout());
 		}
+
+		// User portal preferences for customizable pages
+
+		_removeUserPortalPreferences(layout);
 
 		// System event
 
@@ -3589,21 +3589,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return true;
 	}
 
-	private void _removeUserPreferences(Layout layout) {
-		ClassLoader classLoader = getClass().getClassLoader();
-
+	private void _removeUserPortalPreferences(Layout layout) {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PortalPreferences.class, classLoader);
-
-		String namespacePlid = CustomizedPages.namespacePlid(layout.getPlid());
+			PortalPreferences.class, getClassLoader());
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
 				"ownerType", ResourceConstants.SCOPE_INDIVIDUAL));
-
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.like(
-				"preferences", "%" + namespacePlid + "%"));
+				"preferences",
+				"%" + CustomizedPages.namespacePlid(layout.getPlid()) + "%"));
 
 		List<PortalPreferences> portalPreferenceses =
 			portalPreferencesLocalService.dynamicQuery(dynamicQuery);
@@ -3612,7 +3608,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			PortalPreferencesImpl portalPreferencesImpl =
 				new PortalPreferencesImpl(portalPreferences, false);
 
-			portalPreferencesImpl.resetValues(namespacePlid);
+			portalPreferencesImpl.resetValues(
+				CustomizedPages.namespacePlid(layout.getPlid()));
 		}
 	}
 

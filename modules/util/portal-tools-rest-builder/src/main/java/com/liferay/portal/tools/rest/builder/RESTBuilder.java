@@ -262,6 +262,8 @@ public class RESTBuilder {
 
 		String s = _fixOpenAPIPathParameters(FileUtil.read(file));
 
+		s = _fixOpenAPIPaginationParameters(s);
+
 		if (_configYAML.isForcePredictableOperationId()) {
 			s = _fixOpenAPIOperationIds(freeMarkerTool, s);
 		}
@@ -1010,6 +1012,66 @@ public class RESTBuilder {
 				sb.append(s.substring(z + 1));
 
 				s = sb.toString();
+			}
+		}
+
+		return s;
+	}
+
+	private String _fixOpenAPIPaginationParameters(String s) {
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
+
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
+			String path = entry.getKey();
+
+			int x = s.indexOf(StringUtil.quote(path, '"') + ":");
+
+			if (x == -1) {
+				x = s.indexOf(path + ":");
+			}
+
+			for (Operation operation : _getOperations(entry.getValue())) {
+				int y = s.indexOf(
+					OpenAPIParserUtil.getHTTPMethod(operation) + ":", x);
+
+				for (Parameter parameter : operation.getParameters()) {
+					String in = parameter.getIn();
+
+					if (!in.equals("query")) {
+						continue;
+					}
+
+					String parameterName = parameter.getName();
+
+					if (!parameterName.equals("page") &&
+						!parameterName.equals("pageSize")) {
+
+						continue;
+					}
+
+					Schema schema = parameter.getSchema();
+
+					String type = schema.getType();
+
+					if ((type == null) || !type.equals("integer")) {
+						continue;
+					}
+
+					if (!parameter.isRequired()) {
+						continue;
+					}
+
+					int z = s.indexOf(" " + parameterName + "\n", y);
+
+					z = s.indexOf(" required:", z);
+
+					int index = s.indexOf("\n", z);
+					int lastIndex = s.lastIndexOf("\n", z);
+
+					s = s.substring(0, lastIndex) + s.substring(index);
+				}
 			}
 		}
 

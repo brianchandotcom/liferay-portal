@@ -34,6 +34,7 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 	creationMenu="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= oAuth2ApplicationsCount == 0 %>"
 	filterDropdownItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= oAuth2ApplicationsCount %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchContainerId="oAuth2ApplicationsSearchContainer"
 	selectable="<%= true %>"

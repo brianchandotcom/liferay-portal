@@ -136,6 +136,7 @@ components:
                                 writeOnly: true
                             id:
                                 format: int64
+                                readOnly: true
                                 type: integer
                             name:
                                 type: string
@@ -396,10 +397,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/FormRecordForm"
+                            $ref: "#/components/schemas/FormRecord"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/FormRecordForm"
+                            $ref: "#/components/schemas/FormRecord"
             responses:
                 200:
                     content:
@@ -410,7 +411,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/FormRecord"
                     description: ""
-            tags: ["FormRecordForm"]
+            tags: ["FormRecord"]
     "/form-structures/{formStructureId}":
         get:
             operationId: getFormStructure
@@ -504,8 +505,8 @@ paths:
                                 file:
                                     format: binary
                                     type: string
-                                mediaForm:
-                                    $ref: "#/components/schemas/MediaForm"
+                                formDocument:
+                                    $ref: "#/components/schemas/FormDocument"
                             type: object
             responses:
                 200:
@@ -568,10 +569,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/FormRecordForm"
+                            $ref: "#/components/schemas/FormRecord"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/FormRecordForm"
+                            $ref: "#/components/schemas/FormRecord"
             responses:
                 200:
                     content:
@@ -582,7 +583,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/FormRecord"
                     description: ""
-            tags: ["FormRecordForm"]
+            tags: ["FormRecord"]
     "/forms/{formId}/form-records/by-latest-draft":
         get:
             operationId: getFormFormRecordByLatestDraft

@@ -486,6 +486,38 @@ paths:
                                 $ref: "#/components/schemas/Form"
                     description: ""
             tags: ["Form"]
+    "/forms/{formId}/form-document":
+        post:
+            operationId: postFormFormDocument
+            parameters:
+                - in: path
+                  name: formId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                mediaForm:
+                                    $ref: "#/components/schemas/MediaForm"
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/FormDocument"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/FormDocument"
+                    description: ""
+            tags: ["Form"]
     "/forms/{formId}/form-records":
         get:
             operationId: getFormFormRecordsPage
@@ -572,38 +604,6 @@ paths:
                                 $ref: "#/components/schemas/FormRecord"
                     description: ""
             tags: ["FormRecord"]
-    "/forms/{formId}/upload-file":
-        post:
-            operationId: postFormUploadFile
-            parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    multipart/form-data:
-                        schema:
-                            properties:
-                                file:
-                                    format: binary
-                                    type: string
-                                mediaForm:
-                                    $ref: "#/components/schemas/MediaForm"
-                            type: object
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/FormDocument"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/FormDocument"
-                    description: ""
-            tags: ["Form"]
     "/sites/{siteId}/form-structures":
         get:
             operationId: getSiteFormStructuresPage

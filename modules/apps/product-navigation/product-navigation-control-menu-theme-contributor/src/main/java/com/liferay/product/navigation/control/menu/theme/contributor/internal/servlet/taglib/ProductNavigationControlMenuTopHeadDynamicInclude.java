@@ -15,7 +15,9 @@
 package com.liferay.product.navigation.control.menu.theme.contributor.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
@@ -44,6 +46,13 @@ public class ProductNavigationControlMenuTopHeadDynamicInclude
 			HttpServletRequest request, HttpServletResponse response,
 			String key)
 		throws IOException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isSignedIn()) {
+			return;
+		}
 
 		PrintWriter printWriter = response.getWriter();
 

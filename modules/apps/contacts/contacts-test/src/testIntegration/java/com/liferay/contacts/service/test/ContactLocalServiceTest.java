@@ -80,7 +80,7 @@ public class ContactLocalServiceTest {
 	}
 
 	@Test(expected = SystemException.class)
-	public void testDefaultAddContactWithFutureBirthday() throws Exception {
+	public void testDefaultAddContactWithFutureBirthday() {
 		Contact contact = _contactLocalService.createContact(
 			_counterLocalService.increment());
 
@@ -92,7 +92,7 @@ public class ContactLocalServiceTest {
 	}
 
 	@Test(expected = SystemException.class)
-	public void testDefaultUpdateContactWithFutureBirthday() throws Exception {
+	public void testDefaultUpdateContactWithFutureBirthday() {
 		Date date = new Date(System.currentTimeMillis() + 100000);
 
 		Contact contact = _contactLocalService.createContact(

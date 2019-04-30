@@ -53,7 +53,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Juan González
  */
 @RunWith(Arquillian.class)
-public class I18nServletTest {
+public class I18nServletTest extends I18nServlet {
 
 	@ClassRule
 	@Rule
@@ -161,7 +161,7 @@ public class I18nServletTest {
 		mockHttpServletRequest.setServletPath(
 			StringPool.SLASH + LocaleUtil.CANADA_FRENCH.toLanguageTag());
 
-		I18nServlet.I18nData actualI18nData = _i18nServlet.getI18nData(
+		I18nServlet.I18nData actualI18nData = getI18nData(
 			mockHttpServletRequest);
 
 		I18nServlet.I18nData expectedI18nData = getI18nData(
@@ -238,12 +238,6 @@ public class I18nServletTest {
 		testIsNotDefaultOrFirstI18nData(_group, LocaleUtil.US, LocaleUtil.UK);
 	}
 
-	protected I18nServlet.I18nData getI18nData(Locale locale)
-		throws PortalException {
-
-		return _i18nServlet.getI18nData(locale);
-	}
-
 	protected void testGetI18nData(
 			Locale locale, I18nServlet.I18nData expectedI18nData)
 		throws Exception {
@@ -255,7 +249,7 @@ public class I18nServletTest {
 		mockHttpServletRequest.setServletPath(
 			StringPool.SLASH + LocaleUtil.toLanguageId(locale));
 
-		I18nServlet.I18nData actualI18nData = _i18nServlet.getI18nData(
+		I18nServlet.I18nData actualI18nData = getI18nData(
 			mockHttpServletRequest);
 
 		Assert.assertEquals(expectedI18nData, actualI18nData);
@@ -367,7 +361,7 @@ public class I18nServletTest {
 
 		mockHttpServletRequest.setServletPath(StringPool.SLASH + path);
 
-		return _i18nServlet.getI18nData(mockHttpServletRequest);
+		return getI18nData(mockHttpServletRequest);
 	}
 
 	private static Set<Locale> _availableLocales;
@@ -378,7 +372,6 @@ public class I18nServletTest {
 
 	private static String[] _localesEnabled;
 
-	private final I18nServlet _i18nServlet = new I18nServlet();
 	private boolean _originalLocaleUseDefaultIfNotAvailable;
 
 }

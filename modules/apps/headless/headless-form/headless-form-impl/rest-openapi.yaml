@@ -76,19 +76,29 @@ components:
             properties:
                 contentUrl:
                     format: uri
+                    readOnly: true
+                    type: string
+                description:
                     type: string
                 encodingFormat:
+                    readOnly: true
                     type: string
                 fileExtension:
+                    readOnly: true
                     type: string
+                folderId:
+                    format: int64
+                    type: integer
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
                 siteId:
                     format: int64
                     type: integer
                 sizeInBytes:
                     format: int64
+                    readOnly: true
                     type: integer
                 title:
                     type: string
@@ -100,12 +110,15 @@ components:
                     $ref: "#/components/schemas/Creator"
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
                     format: date-time
+                    readOnly: true
                     type: string
                 datePublished:
                     format: date-time
+                    readOnly: true
                     type: string
                 draft:
                     type: boolean
@@ -140,15 +153,9 @@ components:
                     writeOnly: true
                 id:
                     format: int64
+                    readOnly: true
                     type: integer
             type: object
-        FormRecordForm:
-            description: https://www.schema.org/FormRecordForm
-            properties:
-                draft:
-                    type: boolean
-                fieldValues:
-                    type: string
         FormStructure:
             description: https://www.schema.org/FormStructure
             properties:
@@ -309,18 +316,6 @@ components:
                             type: integer
                     type: object
             type: object
-        MediaForm:
-            description: https://www.schema.org/MediaForm
-            properties:
-                description:
-                    type: string
-                folderId:
-                    format: int64
-                    type: integer
-                name:
-                    type: string
-                title:
-                    type: string
 info:
     description: ""
     title: "Headless Form"

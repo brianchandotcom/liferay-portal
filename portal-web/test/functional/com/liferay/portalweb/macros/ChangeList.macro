@@ -46,6 +46,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro gotoDelete {
+		Click.waitForMenuToggleJSClick(
+			key_rowEntry = "${rowEntry}",
+			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
+	}
+
 	macro publishChangeList {
 		Click(locator1 = "Button#PUBLISH");
 

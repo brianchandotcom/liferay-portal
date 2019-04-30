@@ -11,9 +11,6 @@ dependencies {
 deployDependencies {
 	from (configurations.compileOnly) {
 		include "org.apache.aries.jax.rs.jackson-*.jar"
-		include "jackson-annotations-*.jar"
-		include "jackson-core-*.jar"
-		include "jackson-databind-*.jar"
 		include "jackson-jaxb-*.jar"
 		include "jackson-jaxrs-base-*.jar"
 		include "jackson-jaxrs-json-provider-*.jar"

@@ -81,7 +81,6 @@ public class IndividualJSONObjectMapperTest {
 
 		Assert.assertEquals(
 			"335470356976861111", dataSourceIndividualPK.getDataSourceId());
-
 		Assert.assertEquals(
 			"LIFERAY", dataSourceIndividualPK.getDataSourceType());
 

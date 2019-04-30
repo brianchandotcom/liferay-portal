@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Iván Zaera
@@ -119,8 +120,9 @@ public class FileEntryDisplayContextHelper {
 	public boolean isCancelCheckoutDocumentActionAvailable()
 		throws PortalException {
 
-		if (isCheckinActionAvailable() ||
-			(isCheckedOut() && hasOverrideCheckoutPermission())) {
+		if ((isCheckinActionAvailable() ||
+			 (isCheckedOut() && hasOverrideCheckoutPermission())) &&
+			_hasPreviousVersions()) {
 
 			return true;
 		}
@@ -223,6 +225,18 @@ public class FileEntryDisplayContextHelper {
 
 	public boolean isUpdatable() throws PortalException {
 		if (hasUpdatePermission() && !isCheckedOutByOther()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasPreviousVersions() {
+		if (_fileEntry == null) {
+			return false;
+		}
+
+		if (_fileEntry.getFileVersionsCount(WorkflowConstants.STATUS_ANY) > 1) {
 			return true;
 		}
 

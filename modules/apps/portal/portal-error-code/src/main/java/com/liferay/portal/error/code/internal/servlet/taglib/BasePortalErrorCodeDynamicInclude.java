@@ -45,31 +45,25 @@ public abstract class BasePortalErrorCodeDynamicInclude
 
 		httpServletResponse.setContentType(_contentType);
 
+		String message = (String)httpServletRequest.getAttribute(
+			JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE);
+
+		int statusCode = (Integer)httpServletRequest.getAttribute(
+			RequestDispatcher.ERROR_STATUS_CODE);
+
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		if (_log.isDebugEnabled()) {
-			String message = (String)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE);
-
 			Throwable throwable = (Throwable)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_SERVLET_ERROR_EXCEPTION);
 
 			String requestURI = (String)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_SERVLET_ERROR_REQUEST_URI);
 
-			int statusCode = (Integer)httpServletRequest.getAttribute(
-				RequestDispatcher.ERROR_STATUS_CODE);
-
 			writeDetailedMessage(
 				message, requestURI, statusCode, throwable, printWriter);
 		}
 		else {
-			String message = (String)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE);
-
-			int statusCode = (Integer)httpServletRequest.getAttribute(
-				RequestDispatcher.ERROR_STATUS_CODE);
-
 			writeMessage(statusCode, message, printWriter);
 		}
 	}

@@ -38,8 +38,6 @@ task wrapper(type: Wrapper)
 task wrapperSubrepo(type: Wrapper)
 
 FileTree libDependenciesFileTree = fileTree(dir: "../lib", include: "*/dependencies.properties")
-File nodeModulesCacheDir = new File(rootDir, "node_modules_cache")
-File userNodeModulesCacheDir = new File(System.getProperty("user.home"), ".liferay/node-modules-cache/" + Integer.toHexString(rootDir.canonicalPath.hashCode()))
 
 Map<File, Properties> libDependenciesMap = libDependenciesFileTree.collectEntries {
 	Properties properties = GUtil.loadProperties(it)
@@ -93,9 +91,6 @@ repositories {
 }
 
 setUpYarn {
-	File userNodeModulesCacheYarnLockFile = new File(userNodeModulesCacheDir, "yarn.lock")
-	File yarnLockFile = new File(rootDir, "yarn.lock")
-
 	args "install"
 	args "--frozen-lockfile"
 
@@ -104,29 +99,15 @@ setUpYarn {
 	doFirst {
 		String registry = project.findProperty("nodejs.npm.ci.registry")
 
-		if (yarnLockFile.exists() && registry) {
-			logger.lifecycle "Using registry {}", registry
+		if (registry) {
+			File yarnLockFile = new File(rootDir, "yarn.lock")
 
-			yarnLockFile.text = yarnLockFile.text.replaceAll("https://registry.yarnpkg.com", registry)
+			if (yarnLockFile.exists()) {
+				logger.lifecycle "Using registry {}", registry
+
+				yarnLockFile.text = yarnLockFile.text.replaceAll("https://registry.yarnpkg.com", registry)
+			}
 		}
-
-		if (userNodeModulesCacheYarnLockFile.exists() && yarnLockFile.exists() && (userNodeModulesCacheYarnLockFile.text == yarnLockFile.text)) {
-			logger.lifecycle "Restoring node_modules_cache from {}", userNodeModulesCacheDir
-
-			FileUtil.syncDir(project, userNodeModulesCacheDir, nodeModulesCacheDir, true)
-
-			logger.lifecycle "Running Yarn install in offline mode"
-
-			args "--offline"
-		}
-	}
-
-	doLast {
-		logger.lifecycle "Caching node_modules_cache in {}", userNodeModulesCacheDir
-
-		FileUtil.syncDir(project, nodeModulesCacheDir, userNodeModulesCacheDir, true)
-
-		userNodeModulesCacheYarnLockFile.text = yarnLockFile.text
 	}
 }
 

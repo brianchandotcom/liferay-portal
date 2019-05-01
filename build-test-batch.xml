@@ -1282,6 +1282,8 @@ app.server.type=@{app.server.type}]]></echo>
 					<lstopwatch action="start" name="run.batch.test.action" />
 
 					<test-action />
+
+					<lstopwatch action="total" name="run.batch.test.test.action" />
 				</try>
 
 				<finally>

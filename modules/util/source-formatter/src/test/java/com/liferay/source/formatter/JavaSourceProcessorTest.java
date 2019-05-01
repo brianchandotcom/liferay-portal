@@ -110,7 +110,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("FormatImports.testjava");
 	}
 
-	@Test
 	public void testFormatJSONObject() throws Exception {
 		test("FormatJSONObject.testjava");
 	}

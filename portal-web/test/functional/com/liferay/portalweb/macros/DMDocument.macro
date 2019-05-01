@@ -640,6 +640,8 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "${dmDocumentTitle}");
 
+		DMDocument.expandInfo();
+
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Button#DOWNLOAD",
 			value1 = "Download");

@@ -230,7 +230,7 @@
 </tr>
 <tr>
 	<td>DOWNLOAD</td>
-	<td>//a[contains(@class,'btn') and contains(.,'Download')] | //button[contains(.,'Download')]</td>
+	<td>//a[2][contains(@class,'btn') and contains(.,'Download')] | //button[contains(.,'Download')]</td>
 	<td></td>
 </tr>
 <tr>

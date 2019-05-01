@@ -195,6 +195,8 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 	<macrodef name="prepare-elasticsearch">
 		<sequential>
+			<lstopwatch action="start" name="prepare.elasticsearch" />
+
 			<chmod
 				file="${elasticsearch.dir}/bin/**"
 				perm="a+x"
@@ -278,6 +280,8 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					</then>
 				</elseif>
 			</if>
+
+			<lstopwatch action="total" name="prepare.elasticsearch" />
 		</sequential>
 	</macrodef>
 
@@ -524,6 +528,8 @@ xpack.monitoring.collection.enabled: true</echo>
 	</target>
 
 	<target name="start-elasticsearch">
+		<lstopwatch action="start" name="start.elasticsearch" />
+
 		<unzip-elasticsearch />
 
 		<prepare-elasticsearch />
@@ -574,11 +580,15 @@ xpack.monitoring.collection.enabled: true</echo>
 				<configure-portal-x-pack-security-truststore />
 
 				<antcall target="start-kibana" />
+
+				<lstopwatch action="total" name="start.elasticsearch" />
 			</then>
 			<else>
 				<waitfor maxwait="20" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
 					<http url="http://localhost:9200/" />
 				</waitfor>
+
+				<lstopwatch action="total" name="start.elasticsearch" />
 
 				<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
 			</else>
@@ -587,6 +597,8 @@ xpack.monitoring.collection.enabled: true</echo>
 
 	<target name="start-elasticsearch-node">
 		<sequential>
+			<lstopwatch action="start" name="start.elasticsearch.node" />
+
 			<var name="elasticsearch.node.number" value="0" />
 
 			<get-java-jdk-home />
@@ -638,10 +650,14 @@ xpack.monitoring.collection.enabled: true</echo>
 					</elseif>
 				</if>
 			</antelope:repeat>
+
+			<lstopwatch action="total" name="start.elasticsearch.node" />
 		</sequential>
 	</target>
 
 	<target name="start-kibana">
+		<lstopwatch action="start" name="start.kibana" />
+
 		<unzip-kibana />
 
 		<chmod
@@ -690,6 +706,8 @@ xpack.monitoring.collection.enabled: true</echo>
 				</then>
 			</elseif>
 		</if>
+
+		<lstopwatch action="total" name="start.kibana" />
 	</target>
 
 	<target name="stop-elasticsearch">

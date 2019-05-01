@@ -289,6 +289,8 @@ schema=schema.xml</echo>
 	</target>
 
 	<target name="start-solr">
+		<lstopwatch action="start" name="start.solr" />
+
 		<unzip-solr />
 
 		<prepare-solr-configurations />
@@ -323,9 +325,13 @@ schema=schema.xml</echo>
 				<create-solr-core />
 			</else>
 		</if>
+
+		<lstopwatch action="total" name="start.solr" />
 	</target>
 
 	<target name="start-solr-core">
+		<lstopwatch action="start" name="start.solr.core" />
+
 		<if>
 			<os family="unix" />
 			<then>
@@ -356,10 +362,14 @@ schema=schema.xml</echo>
 			<socket port="8983" server="localhost" />
 		</waitfor>
 
+		<lstopwatch action="total" name="start.solr.core" />
+
 		<fail if="solr.server.not.started" message="Solr server failed to initialize." />
 	</target>
 
 	<target name="start-solr-solrcloud">
+		<lstopwatch action="start" name="start.solr.solrcloud" />
+
 		<prepare-solr-solrcloud-configurations />
 
 		<prepare-solr-solrcloud-example />
@@ -367,6 +377,8 @@ schema=schema.xml</echo>
 		<configure-liferay-solr-solrcloud-osgi-configs />
 
 		<start-solr-solrcloud-example />
+
+		<lstopwatch action="total" name="start.solr.solrcloud" />
 	</target>
 
 	<target name="stop-solr-core">

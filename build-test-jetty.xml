@@ -4,10 +4,16 @@
 	<import file="build-test.xml" />
 
 	<target name="run-jetty">
+		<lstopwatch action="start" name="run.jetty" />
+
 		<antcall target="run-simple-server" />
+
+		<lstopwatch action="total" name="run.jetty" />
 	</target>
 
 	<target name="run-selenium-jetty">
+		<lstopwatch action="start" name="run.selenium.jetty" />
+
 		<app-server-properties-update>
 			app.server.type=jetty
 		</app-server-properties-update>
@@ -76,5 +82,7 @@
 		<antcall inheritAll="false" target="run-jetty">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
+
+		<lstopwatch action="total" name="run.selenium.jetty" />
 	</target>
 </project>

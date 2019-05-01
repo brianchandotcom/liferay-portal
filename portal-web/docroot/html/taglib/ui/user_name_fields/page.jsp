@@ -30,7 +30,7 @@
 
 </aui:select>
 
-<aui:script require="users-admin-web@4.0.0/js/UserNameFields.es as UserNameFields">
+<aui:script require="users-admin-web@5.0.0/js/UserNameFields.es as UserNameFields">
 	var component = Liferay.component(
 		'<portlet:namespace />UserNameFields',
 		new UserNameFields.default(

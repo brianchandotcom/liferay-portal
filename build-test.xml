@@ -2506,9 +2506,17 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
-				<matches pattern="https?://" string="${test.build.bundle.wildfly.zip.url}" />
+				<or>
+					<and>
+						<equals arg1="${test.build.bundle.wildfly}" arg2="true" />
+						<matches pattern="https?://" string="${test.build.portal.war.url}" />
+					</and>
+					<matches pattern="https?://" string="${test.build.bundle.wildfly.zip.url}" />
+				</or>
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
+						<param name="app.server.lib.global.dir" value="${app.server.wildfly.lib.global.dir}" />
+						<param name="app.server.portal.dir" value="${app.server.wildfly.portal.dir}" />
 						<param name="app.server.type" value="wildfly" />
 						<param name="test.app.server.bin.dir" value="${app.server.wildfly.bin.dir}" />
 						<param name="test.build.bundle.zip.url" value="${test.build.bundle.wildfly.zip.url}" />

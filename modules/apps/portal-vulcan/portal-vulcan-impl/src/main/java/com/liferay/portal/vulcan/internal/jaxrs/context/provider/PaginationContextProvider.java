@@ -35,12 +35,8 @@ public class PaginationContextProvider implements ContextProvider<Pagination> {
 		HttpServletRequest httpServletRequest =
 			ContextProviderUtil.getHttpServletRequest(message);
 
-		int page = ParamUtil.getInteger(httpServletRequest, "page");
-		int pageSize = ParamUtil.getInteger(httpServletRequest, "pageSize");
-
-		if ((page == 0) && (pageSize == 0)) {
-			return null;
-		}
+		int page = ParamUtil.getInteger(httpServletRequest, "page", 1);
+		int pageSize = ParamUtil.getInteger(httpServletRequest, "pageSize", 20);
 
 		return Pagination.of(page, pageSize);
 	}

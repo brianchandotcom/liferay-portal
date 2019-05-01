@@ -20,7 +20,7 @@
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 %>
 
-<aui:form action="<%= organizationScreenNavigationDisplayContext.getEditOrganizationActionURL() %>" cssClass="portlet-users-admin-edit-organization" data-senna-off="true" method="post" name="fm">
+<aui:form action="<%= organizationScreenNavigationDisplayContext.getEditOrganizationActionURL() %>" cssClass="portlet-users-admin-edit-organization" method="post" name="fm">
 	<div class="sheet sheet-lg">
 		<c:if test="<%= organizationScreenNavigationDisplayContext.isShowTitle() %>">
 			<div class="sheet-header">

@@ -74,7 +74,7 @@ body {
 
 		&:focus {
 			background-color: #1B2228;
-			box-shadow: none;
+			box-shadow: $product-menu-focus-box-shadow;
 			color: #FFF;
 
 			@include placeholder {
@@ -87,9 +87,27 @@ body {
 .product-menu {
 	a {
 		color: $product-menu-nav-link-color;
+		outline: 0;
+		position: relative;
 
 		&:hover {
 			color: $product-menu-nav-link-color;
+		}
+
+		&:focus:before {
+			box-shadow: $product-menu-focus-box-shadow;
+		}
+
+		&:before {
+			border-radius: 4px;
+			bottom: -2px;
+			content: '';
+			display: block;
+			left: -2px;
+			position: absolute;
+			right: -2px;
+			top: -2px;
+			transition: box-shadow 0.15s ease-in-out;
 		}
 	}
 
@@ -145,10 +163,16 @@ body {
 
 	.list-group-heading.goto-link {
 		color: $product-menu-nav-link-color;
+		display: inline-flex;
 		font-size: 0.8rem;
+		max-width: 100%;
 
 		&:hover {
 			text-decoration: underline;
+		}
+
+		&:before {
+			right: 4px;
 		}
 	}
 
@@ -179,16 +203,13 @@ body {
 		@include word-wrap(normal);
 
 		&.active {
-			background-color: $product-menu-list-group-heading-active-bg;
+			&, &:hover, &:focus {
+				background-color: $product-menu-list-group-heading-active-bg;
+			}
 
 			+ div {
 				background-color: $product-menu-list-group-heading-active-bg;
 			}
-		}
-
-		&:after {
-			background-color: $product-menu-list-group-heading-border;
-			height: $product-menu-list-group-heading-border-width;
 		}
 
 		&:focus, &:hover {
@@ -197,6 +218,18 @@ body {
 
 		&.collapsed {
 			font-weight: 400;
+		}
+
+		&:before {
+			bottom: 4px;
+			left: 12px;
+			right: 8px;
+			top: 4px;
+		}
+
+		&:after {
+			background-color: $product-menu-list-group-heading-border;
+			height: $product-menu-list-group-heading-border-width;
 		}
 	}
 
@@ -226,6 +259,11 @@ body {
 	.nav > li > a {
 		&:focus, &:hover {
 			background-color: transparent;
+		}
+
+		&:before {
+			left: 0;
+			right: 0;
 		}
 	}
 }
@@ -282,6 +320,17 @@ body {
 				padding-left: 24px - $product-menu-panel-title-active-border-left-width;
 			}
 
+			&:hover {
+				text-decoration: none;
+			}
+
+			&:before {
+				bottom: 4px;
+				left: 8px;
+				right: 8px;
+				top: 4px;
+			}
+
 			.category-name, .user-name, .site-name {
 				color: $product-menu-panel-title-color;
 			}
@@ -298,6 +347,10 @@ body {
 			border-bottom-width: 0;
 			padding: 0;
 		}
+	}
+
+	.panel-header-link {
+		box-shadow: none;
 	}
 }
 

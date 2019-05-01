@@ -81,14 +81,54 @@ body.open-admin-panel, body.sidenav-transition {
 	}
 
 	.display-style-bar {
-		padding: 8px 16px;
+		padding: 4px 16px;
 
 		.display-style {
-			padding: 8px;
+			align-items: center;
+			display: inline-flex;
+			height: 32px;
+			justify-content: center;
+			margin-left: 8px;
+			width: 32px;
 
 			&.active {
 				color: #869CAD;
 			}
 		}
+
+		.dropdown-toggle {
+			align-items: center;
+			display: inline-flex;
+			height: 32px;
+			padding-left: 4px;
+			padding-right: 4px;
+			text-decoration: none;
+
+			.icon-sort {
+				margin-left: 8px;
+			}
+		}
+	}
+
+	.add-content-button {
+		.nav > li {
+			padding: 4px 16px;
+		}
+
+		.dropdown-toggle {
+			align-items: center;
+			display: inline-flex;
+			height: 32px;
+			line-height: 1;
+			padding: 0 4px;
+
+			.icon-caret-down {
+				margin-left: 8px;
+			}
+		}
+	}
+
+	.nav > li > a:before {
+		right: 0;
 	}
 }

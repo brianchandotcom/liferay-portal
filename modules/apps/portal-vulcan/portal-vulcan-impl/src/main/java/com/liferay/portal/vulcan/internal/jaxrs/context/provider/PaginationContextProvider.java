@@ -14,7 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,10 +36,16 @@ public class PaginationContextProvider implements ContextProvider<Pagination> {
 		HttpServletRequest httpServletRequest =
 			ContextProviderUtil.getHttpServletRequest(message);
 
-		int page = ParamUtil.getInteger(httpServletRequest, "page", 1);
-		int pageSize = ParamUtil.getInteger(httpServletRequest, "pageSize", 20);
+		String page = httpServletRequest.getParameter("page");
+		String pageSize = httpServletRequest.getParameter("pageSize");
 
-		return Pagination.of(page, pageSize);
+		if (StringUtil.equals(page, "0") || StringUtil.equals(pageSize, "0")) {
+			return null;
+		}
+
+		return Pagination.of(
+			GetterUtil.getInteger(page, 1),
+			GetterUtil.getInteger(pageSize, 20));
 	}
 
 }

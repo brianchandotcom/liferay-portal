@@ -94,8 +94,16 @@ public class Page<T> {
 
 	private Page(Collection<T> items, Pagination pagination, long totalCount) {
 		_items = items;
-		_page = pagination.getPage();
-		_pageSize = pagination.getPageSize();
+
+		if (pagination == null) {
+			_page = 0;
+			_pageSize = 0;
+		}
+		else {
+			_page = pagination.getPage();
+			_pageSize = pagination.getPageSize();
+		}
+
 		_totalCount = totalCount;
 	}
 

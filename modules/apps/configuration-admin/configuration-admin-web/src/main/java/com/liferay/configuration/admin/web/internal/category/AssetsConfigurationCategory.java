@@ -43,6 +43,6 @@ public class AssetsConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_KEY = "assets";
 
-	private static final String _CATEGORY_SECTION = "content";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

@@ -43,6 +43,6 @@ public class SharingConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_KEY = "sharing";
 
-	private static final String _CATEGORY_SECTION = "content";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

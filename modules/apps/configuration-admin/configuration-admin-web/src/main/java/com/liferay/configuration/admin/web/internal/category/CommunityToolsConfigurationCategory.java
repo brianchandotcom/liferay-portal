@@ -44,6 +44,6 @@ public class CommunityToolsConfigurationCategory
 
 	private static final String _CATEGORY_KEY = "community-tools";
 
-	private static final String _CATEGORY_SECTION = "social";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

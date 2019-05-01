@@ -43,6 +43,6 @@ public class WorkflowConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_KEY = "workflow";
 
-	private static final String _CATEGORY_SECTION = "content";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

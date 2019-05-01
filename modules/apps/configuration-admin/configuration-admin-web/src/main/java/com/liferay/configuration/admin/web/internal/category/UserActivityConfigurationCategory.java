@@ -44,6 +44,6 @@ public class UserActivityConfigurationCategory
 
 	private static final String _CATEGORY_KEY = "user-activity";
 
-	private static final String _CATEGORY_SECTION = "social";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

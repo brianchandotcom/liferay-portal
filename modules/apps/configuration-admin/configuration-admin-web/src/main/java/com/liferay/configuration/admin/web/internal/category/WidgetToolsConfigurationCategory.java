@@ -36,6 +36,6 @@ public class WidgetToolsConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_KEY = "widget-tools";
 
-	private static final String _CATEGORY_SECTION = "content";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

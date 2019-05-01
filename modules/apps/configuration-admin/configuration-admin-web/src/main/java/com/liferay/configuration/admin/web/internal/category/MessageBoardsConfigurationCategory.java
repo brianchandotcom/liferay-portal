@@ -44,6 +44,6 @@ public class MessageBoardsConfigurationCategory
 
 	private static final String _CATEGORY_KEY = "message-boards";
 
-	private static final String _CATEGORY_SECTION = "social";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

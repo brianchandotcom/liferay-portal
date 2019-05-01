@@ -43,6 +43,6 @@ public class WebContentConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_KEY = "web-content";
 
-	private static final String _CATEGORY_SECTION = "content";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

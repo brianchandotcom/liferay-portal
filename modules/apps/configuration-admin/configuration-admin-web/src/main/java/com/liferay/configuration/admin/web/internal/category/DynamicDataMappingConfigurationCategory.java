@@ -44,6 +44,6 @@ public class DynamicDataMappingConfigurationCategory
 
 	private static final String _CATEGORY_KEY = "dynamic-data-mapping";
 
-	private static final String _CATEGORY_SECTION = "content";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

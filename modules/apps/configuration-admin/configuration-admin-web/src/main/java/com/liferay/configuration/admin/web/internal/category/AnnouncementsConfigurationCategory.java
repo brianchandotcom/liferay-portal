@@ -44,6 +44,6 @@ public class AnnouncementsConfigurationCategory
 
 	private static final String _CATEGORY_KEY = "announcements";
 
-	private static final String _CATEGORY_SECTION = "content";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

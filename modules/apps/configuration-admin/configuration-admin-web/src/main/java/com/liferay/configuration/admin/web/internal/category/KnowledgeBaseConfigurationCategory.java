@@ -44,6 +44,6 @@ public class KnowledgeBaseConfigurationCategory
 
 	private static final String _CATEGORY_KEY = "knowledge-base";
 
-	private static final String _CATEGORY_SECTION = "content";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

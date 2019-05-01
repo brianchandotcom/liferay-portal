@@ -44,6 +44,6 @@ public class SocialNetworksConfigurationCategory
 
 	private static final String _CATEGORY_KEY = "social-networks";
 
-	private static final String _CATEGORY_SECTION = "social";
+	private static final String _CATEGORY_SECTION = "content-and-data";
 
 }

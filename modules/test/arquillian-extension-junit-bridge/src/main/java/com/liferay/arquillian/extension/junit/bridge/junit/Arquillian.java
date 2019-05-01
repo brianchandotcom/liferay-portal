@@ -16,11 +16,12 @@ package com.liferay.arquillian.extension.junit.bridge.junit;
 
 import com.liferay.arquillian.extension.junit.bridge.client.ClientState;
 
-import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +34,6 @@ import org.junit.runner.manipulation.Filterable;
 import org.junit.runner.manipulation.NoTestsRemainException;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
-import org.junit.runners.model.FrameworkField;
-import org.junit.runners.model.FrameworkMethod;
-import org.junit.runners.model.TestClass;
 
 /**
  * @author Shuyang Zhou
@@ -45,35 +43,28 @@ public class Arquillian extends Runner implements Filterable {
 	public Arquillian(Class<?> clazz) {
 		_clazz = clazz;
 
-		_filteredSortedTestClass = new FilteredSortedTestClass(_clazz, null);
+		_testMethods = _scanTestMethods(clazz);
 	}
 
 	@Override
 	public void filter(Filter filter) throws NoTestsRemainException {
-		_filteredSortedTestClass = new FilteredSortedTestClass(_clazz, filter);
+		_filter(_clazz, _testMethods, filter);
 
-		List<FrameworkMethod> frameworkMethods =
-			_filteredSortedTestClass.getAnnotatedMethods(Test.class);
-
-		if (frameworkMethods.isEmpty()) {
+		if (_testMethods.isEmpty()) {
 			throw new NoTestsRemainException();
 		}
 
 		_clientState.filterTestClasses(
 			_clazz,
 			testClass -> {
-				FilteredSortedTestClass filteredSortedTestClass =
-					new FilteredSortedTestClass(testClass, filter);
+				List<Method> testMethods = _scanTestMethods(testClass);
 
-				List<FrameworkMethod> curFrameworkMethods =
-					filteredSortedTestClass.getAnnotatedMethods(Test.class);
+				List<String> filteredMethodNames = _filter(
+					testClass, testMethods, filter);
 
-				if (curFrameworkMethods.isEmpty()) {
+				if (testMethods.isEmpty()) {
 					return true;
 				}
-
-				List<String> filteredMethodNames =
-					filteredSortedTestClass._filteredMethodNames;
 
 				if (!filteredMethodNames.isEmpty()) {
 					if (_filteredMethodNamesMap == null) {
@@ -95,16 +86,12 @@ public class Arquillian extends Runner implements Filterable {
 
 	@Override
 	public void run(RunNotifier runNotifier) {
-		List<FrameworkMethod> frameworkMethods = new ArrayList<>(
-			_filteredSortedTestClass.getAnnotatedMethods(Test.class));
-
-		frameworkMethods.removeIf(
-			frameworkMethod -> {
-				if (frameworkMethod.getAnnotation(Ignore.class) != null) {
+		_testMethods.removeIf(
+			method -> {
+				if (method.getAnnotation(Ignore.class) != null) {
 					runNotifier.fireTestIgnored(
 						Description.createTestDescription(
-							_clazz, frameworkMethod.getName(),
-							frameworkMethod.getAnnotations()));
+							_clazz, method.getName(), method.getAnnotations()));
 
 					return true;
 				}
@@ -112,7 +99,7 @@ public class Arquillian extends Runner implements Filterable {
 				return false;
 			});
 
-		if (frameworkMethods.isEmpty()) {
+		if (_testMethods.isEmpty()) {
 			_clientState.removeTestClass(_clazz);
 
 			return;
@@ -141,54 +128,52 @@ public class Arquillian extends Runner implements Filterable {
 		}
 	}
 
+	private static List<String> _filter(
+		Class<?> clazz, List<Method> testMethods, Filter filter) {
+
+		List<String> filteredMethodNames = new ArrayList<>();
+
+		Iterator<Method> iterator = testMethods.iterator();
+
+		while (iterator.hasNext()) {
+			Method method = iterator.next();
+
+			String methodName = method.getName();
+
+			if (!filter.shouldRun(
+					Description.createTestDescription(clazz, methodName))) {
+
+				filteredMethodNames.add(methodName);
+
+				iterator.remove();
+			}
+		}
+
+		return filteredMethodNames;
+	}
+
+	private static List<Method> _scanTestMethods(Class<?> clazz) {
+		List<Method> testMethods = new ArrayList<>();
+
+		while (clazz != Object.class) {
+			for (Method method : clazz.getDeclaredMethods()) {
+				if (method.getAnnotation(Test.class) != null) {
+					testMethods.add(method);
+				}
+			}
+
+			clazz = clazz.getSuperclass();
+		}
+
+		testMethods.sort(Comparator.comparing(Method::getName));
+
+		return testMethods;
+	}
+
 	private static final ClientState _clientState = new ClientState();
 
 	private final Class<?> _clazz;
 	private Map<String, List<String>> _filteredMethodNamesMap;
-	private FilteredSortedTestClass _filteredSortedTestClass;
-
-	private class FilteredSortedTestClass extends TestClass {
-
-		@Override
-		protected void scanAnnotatedMembers(
-			Map<Class<? extends Annotation>, List<FrameworkMethod>>
-				frameworkMethodsMap,
-			Map<Class<? extends Annotation>, List<FrameworkField>>
-				frameworkFieldsMap) {
-
-			super.scanAnnotatedMembers(frameworkMethodsMap, frameworkFieldsMap);
-
-			_testFrameworkMethods = frameworkMethodsMap.get(Test.class);
-
-			_testFrameworkMethods.sort(
-				Comparator.comparing(FrameworkMethod::getName));
-		}
-
-		private FilteredSortedTestClass(Class<?> clazz, Filter filter) {
-			super(clazz);
-
-			if (filter != null) {
-				_testFrameworkMethods.removeIf(
-					frameworkMethod -> {
-						String methodName = frameworkMethod.getName();
-
-						if (filter.shouldRun(
-								Description.createTestDescription(
-									clazz, methodName))) {
-
-							return false;
-						}
-
-						_filteredMethodNames.add(methodName);
-
-						return true;
-					});
-			}
-		}
-
-		private final List<String> _filteredMethodNames = new ArrayList<>();
-		private List<FrameworkMethod> _testFrameworkMethods;
-
-	}
+	private final List<Method> _testMethods;
 
 }

@@ -97,6 +97,19 @@ setUpYarn {
 	scriptFile = new File(projectDir, "yarn-1.13.0.js")
 
 	doFirst {
+		String buildBinariesCacheDir = project.findProperty("build.binaries.cache.dir")
+
+		if (buildBinariesCacheDir) {
+			File cacheDir = new File(rootDir.parentFile, buildBinariesCacheDir)
+
+			if (cacheDir.exists()) {
+				copy {
+					from new File(cacheDir, ".yarn/offline-cache")
+					into new File(rootDir, "node_modules_cache")
+				}
+			}
+		}
+
 		String registry = project.findProperty("nodejs.npm.ci.registry")
 
 		if (registry) {

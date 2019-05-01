@@ -5,7 +5,7 @@ dependencies {
 }
 
 jar {
-	deleteAllActions()
+	setActions([])
 
 	dependsOn jarPatched
 }

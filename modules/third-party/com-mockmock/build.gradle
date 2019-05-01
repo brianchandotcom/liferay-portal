@@ -27,7 +27,8 @@ downloadSrc {
 }
 
 jar {
-	deleteAllActions()
+	setActions([])
+
 	dependsOn jarMvn
 }
 

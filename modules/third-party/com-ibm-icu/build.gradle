@@ -11,7 +11,7 @@ dependencies {
 }
 
 jar {
-	deleteAllActions()
+	setActions([])
 
 	doLast {
 		Set<File> jarFiles = configurations.compile.files {

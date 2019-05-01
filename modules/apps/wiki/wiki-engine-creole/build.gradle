@@ -39,9 +39,9 @@ dependencies {
 }
 
 generateGrammarSource {
-	File grammarFile = file("src/main/antlr/${parserDirName}/Creole10.g")
+	setActions([])
 
-	deleteAllActions()
+	File grammarFile = file("src/main/antlr/${parserDirName}/Creole10.g")
 
 	dependsOn cleanGenerateGrammarSource
 

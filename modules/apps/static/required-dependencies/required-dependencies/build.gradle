@@ -55,7 +55,7 @@ dependencies {
 }
 
 deploy {
-	deleteAllActions()
+	setActions([])
 
 	dependsOn = []
 	finalizedBy deployTestLibs

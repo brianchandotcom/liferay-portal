@@ -38,9 +38,9 @@ dependencies {
 }
 
 generateGrammarSource {
-	File grammarFile = file("src/main/antlr/${parserDirName}/DDMExpression.g4")
+	setActions([])
 
-	deleteAllActions()
+	File grammarFile = file("src/main/antlr/${parserDirName}/DDMExpression.g4")
 
 	dependsOn cleanGenerateGrammarSource
 

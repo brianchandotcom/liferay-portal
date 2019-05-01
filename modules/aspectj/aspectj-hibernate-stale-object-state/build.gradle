@@ -1,5 +1,5 @@
 compileJava {
-	deleteAllActions()
+	setActions([])
 
 	doLast {
 		ant.taskdef classpath: configurations.ajc.asPath, resource: "org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties"

@@ -40,9 +40,9 @@ dependencies {
 }
 
 generateGrammarSource {
-	File grammarFile = file("src/main/antlr/${parserDirName}/LDAPFilter.g")
+	setActions([])
 
-	deleteAllActions()
+	File grammarFile = file("src/main/antlr/${parserDirName}/LDAPFilter.g")
 
 	dependsOn cleanGenerateGrammarSource
 

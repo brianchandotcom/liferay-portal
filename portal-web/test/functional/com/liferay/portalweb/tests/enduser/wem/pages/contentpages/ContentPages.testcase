@@ -235,6 +235,8 @@ definition {
 	@description = "This is a test for LPS-78726. Discarding a draft will revert a content page back to its most recent published version."
 	@priority = "5"
 	test DiscardContentPageDraft {
+		property portal.acceptance = "true";
+
 		task ("Add a content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

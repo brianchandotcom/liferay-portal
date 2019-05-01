@@ -47,7 +47,7 @@ public class Page<T> {
 	}
 
 	public long getLastPage() {
-		if (_totalCount == 0) {
+		if ((_pageSize == 0) || (_totalCount == 0)) {
 			return 1;
 		}
 

@@ -24,7 +24,6 @@ import javax.xml.ws.Service;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,7 +39,7 @@ public class JaxWsApiHandlerRegistrationTest {
 
 	@Test
 	public void testHandlerIsRegistered() throws Exception {
-		URL url = new URL(_url, "/o/soap-test/greeterApi?wsdl");
+		URL url = new URL("http://localhost:8080/o/soap-test/greeterApi?wsdl");
 
 		QName qName = new QName(
 			"http://service.internal.test.extender.soap.remote.portal." +
@@ -55,8 +54,5 @@ public class JaxWsApiHandlerRegistrationTest {
 
 		Assert.assertTrue(greeting.endsWith("was handled."));
 	}
-
-	@ArquillianResource
-	private URL _url;
 
 }

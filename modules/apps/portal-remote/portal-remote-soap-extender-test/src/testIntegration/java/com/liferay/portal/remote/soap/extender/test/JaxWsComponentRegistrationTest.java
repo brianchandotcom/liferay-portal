@@ -24,7 +24,6 @@ import javax.xml.ws.Service;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,7 +39,7 @@ public class JaxWsComponentRegistrationTest {
 
 	@Test
 	public void testIsRegistered() throws Exception {
-		URL url = new URL(_url, "/o/soap-test/greeter?wsdl");
+		URL url = new URL("http://localhost:8080/o/soap-test/greeter?wsdl");
 
 		QName qName = new QName(
 			"http://service.internal.test.extender.soap.remote.portal." +
@@ -53,8 +52,5 @@ public class JaxWsComponentRegistrationTest {
 
 		Assert.assertEquals("Greetings.", greeter.greet());
 	}
-
-	@ArquillianResource
-	private URL _url;
 
 }

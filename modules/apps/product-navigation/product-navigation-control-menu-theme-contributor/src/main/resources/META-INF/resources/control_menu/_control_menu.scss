@@ -74,6 +74,16 @@
 	display: inline-block;
 }
 
+a.control-menu-icon {
+	border-radius: 4px;
+	transition: box-shadow 0.15s ease-in-out;
+
+	&:focus {
+		box-shadow: $control-menu-focus-box-shadow;
+		outline: 0;
+	}
+}
+
 .control-menu-level-1 {
 	background-color: $control-menu-level-1-bg;
 	color: $control-menu-level-1-color;

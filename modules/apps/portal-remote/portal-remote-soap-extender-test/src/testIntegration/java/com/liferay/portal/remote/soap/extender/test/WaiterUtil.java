@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.soap.extender.test.internal.util;
+package com.liferay.portal.remote.soap.extender.test;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 

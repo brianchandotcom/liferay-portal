@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.remote.soap.extender.test.internal.service;
-
-import javax.jws.WebService;
+package com.liferay.portal.remote.soap.extender.test;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@WebService
-public interface Greeter {
+public class GreeterImpl implements Greeter {
 
-	public String greet();
+	@Override
+	public String greet() {
+		return "Greetings.";
+	}
 
 }

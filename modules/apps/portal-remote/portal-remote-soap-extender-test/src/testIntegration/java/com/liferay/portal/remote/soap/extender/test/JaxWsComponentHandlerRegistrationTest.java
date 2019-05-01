@@ -14,45 +14,40 @@
 
 package com.liferay.portal.remote.soap.extender.test;
 
-import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
-import com.liferay.portal.remote.soap.extender.test.internal.service.Greeter;
-
-import java.net.URL;
-
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
-
-import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.junit.Arquillian;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleActivator;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@BndFile("bnd-component-handler.bnd")
-@RunAsClient
 @RunWith(Arquillian.class)
-public class JaxWsComponentHandlerRegistrationTest {
+public class JaxWsComponentHandlerRegistrationTest extends BaseJaxWsTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testHandlerIsRegistered() throws Exception {
-		URL url = new URL("http://localhost:8080/o/soap-test/greeter?wsdl");
-
-		QName qName = new QName(
-			"http://service.internal.test.extender.soap.remote.portal." +
-				"liferay.com/",
-			"GreeterImplService");
-
-		Service service = Service.create(url, qName);
-
-		Greeter greeter = service.getPort(Greeter.class);
-
-		String greeting = greeter.greet();
+		String greeting = getGreeting(
+			"http://localhost:8080/o/soap-test/greeter?wsdl");
 
 		Assert.assertTrue(greeting.endsWith("was handled."));
+	}
+
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new HandlerBundleActivator();
 	}
 
 }

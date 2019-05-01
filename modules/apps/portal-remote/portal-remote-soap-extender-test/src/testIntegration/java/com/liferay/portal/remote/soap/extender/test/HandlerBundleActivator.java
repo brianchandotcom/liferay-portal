@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.soap.extender.test.internal.activator.handler;
-
-import com.liferay.portal.remote.soap.extender.test.internal.activator.configuration.GreeterBundleActivator;
-import com.liferay.portal.remote.soap.extender.test.internal.handler.SampleHandler;
+package com.liferay.portal.remote.soap.extender.test;
 
 import java.util.Dictionary;
 import java.util.Hashtable;

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.remote.soap.extender.test.internal.activator;
+package com.liferay.portal.remote.soap.extender.test;
 
-import com.liferay.portal.remote.soap.extender.test.internal.activator.configuration.ConfigurationAdminBundleActivator;
-import com.liferay.portal.remote.soap.extender.test.internal.service.GreeterImpl;
-import com.liferay.portal.remote.soap.extender.test.internal.util.WaiterUtil;
+import java.util.List;
 
+import javax.xml.ws.Binding;
 import javax.xml.ws.Endpoint;
+import javax.xml.ws.handler.Handler;
 import javax.xml.ws.spi.Provider;
 
 import org.osgi.framework.BundleActivator;
@@ -28,7 +28,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 /**
  * @author Carlos Sierra Andrés
  */
-public class JaxWsApiBundleActivator implements BundleActivator {
+public class JaxWsApiHandlerBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
@@ -46,27 +46,38 @@ public class JaxWsApiBundleActivator implements BundleActivator {
 
 		try {
 			_endpoint = Endpoint.publish("/greeterApi", new GreeterImpl());
+
+			Binding binding = _endpoint.getBinding();
+
+			@SuppressWarnings("rawtypes")
+			List<Handler> handlers = binding.getHandlerChain();
+
+			Handler<?> handler = new SampleHandler();
+
+			handlers.add(handler);
+
+			binding.setHandlerChain(handlers);
 		}
 		catch (Exception e) {
 			cleanUp(bundleContext);
-
-			throw e;
 		}
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
+	public void stop(BundleContext bundleContext) {
 		cleanUp(bundleContext);
 	}
 
-	protected void cleanUp(BundleContext bundleContext) throws Exception {
+	protected void cleanUp(BundleContext bundleContext) {
 		try {
-			_endpoint.stop();
+			_configurationAdminBundleActivator.stop(bundleContext);
 		}
 		catch (Exception e) {
 		}
 
-		_configurationAdminBundleActivator.stop(bundleContext);
+		if (_endpoint != null) {
+			_endpoint.stop();
+		}
 	}
 
 	private ConfigurationAdminBundleActivator

@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.remote.soap.extender.test.internal.activator.configuration;
+package com.liferay.portal.remote.soap.extender.test;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.remote.soap.extender.test.internal.service.Greeter;
-import com.liferay.portal.remote.soap.extender.test.internal.service.GreeterImpl;
 
 import java.util.Dictionary;
 import java.util.Hashtable;

@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.remote.soap.extender.test.internal.activator.configuration;
+package com.liferay.portal.remote.soap.extender.test;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.remote.soap.extender.test.internal.util.WaiterUtil;
 
 import java.util.Dictionary;
 import java.util.Hashtable;

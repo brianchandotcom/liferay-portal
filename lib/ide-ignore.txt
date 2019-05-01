@@ -1,4 +1,3 @@
-lib/development/biz.aQute.bnd.jar
 tmp/lib-pre/com.liferay.petra.concurrent.jar
 tmp/lib-pre/com.liferay.petra.content.jar
 tmp/lib-pre/com.liferay.petra.encryptor.jar

@@ -241,6 +241,16 @@ definition {
 			ContentPages.addPage(pageName = "Test Content Page Name");
 		}
 
+		task ("Assert the Discard Draft and Publish buttons start off disabled") {
+			AssertVisible(
+				key_text = "Discard Draft",
+				locator1 = "Button#ANY_DISABLED");
+
+			AssertVisible(
+				key_text = "Publish",
+				locator1 = "Button#ANY_DISABLED");
+		}
+
 		task ("Add a Title fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -259,7 +269,23 @@ definition {
 				locator1 = "Fragment#FRAGMENT");
 		}
 
-		task ("Assert the Discard Draft and Publish buttons are still enabled") {
+		task ("Assert the Discard Draft and Publish buttons are now disabled") {
+			AssertVisible(
+				key_text = "Discard Draft",
+				locator1 = "Button#ANY_DISABLED");
+
+			AssertVisible(
+				key_text = "Publish",
+				locator1 = "Button#ANY_DISABLED");
+		}
+
+		task ("Add a Title fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Title");
+		}
+
+		task ("Assert the Discard Draft and Publish buttons are now enabled") {
 			AssertVisible(
 				key_text = "Discard Draft",
 				locator1 = "Button#ANY_ENABLED");
@@ -267,12 +293,6 @@ definition {
 			AssertVisible(
 				key_text = "Publish",
 				locator1 = "Button#ANY_ENABLED");
-		}
-
-		task ("Add a Title fragment to the content page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Title");
 		}
 
 		task ("Publish the content page") {

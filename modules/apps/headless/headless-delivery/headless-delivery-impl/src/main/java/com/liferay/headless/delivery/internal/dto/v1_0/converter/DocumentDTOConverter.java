@@ -105,7 +105,7 @@ public class DocumentDTOConverter implements DTOConverter {
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
 					DLFileEntry.class.getName(), fileEntry.getFileEntryId(),
-					_dtoConverterRegistry, dtoConverterContext.getLocale());
+					dtoConverterContext.getLocale());
 				sizeInBytes = fileEntry.getSize();
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
@@ -204,9 +204,6 @@ public class DocumentDTOConverter implements DTOConverter {
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private Portal _portal;

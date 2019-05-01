@@ -76,7 +76,7 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
 					mbMessage.getModelClassName(), mbMessage.getMessageId(),
-					_dtoConverterRegistry, dtoConverterContext.getLocale());
+					dtoConverterContext.getLocale());
 				numberOfMessageBoardAttachments =
 					mbMessage.getAttachmentsFileEntriesCount();
 				numberOfMessageBoardMessages =
@@ -108,9 +108,6 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

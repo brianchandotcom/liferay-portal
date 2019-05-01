@@ -22,7 +22,6 @@ import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
-import com.liferay.headless.delivery.internal.dto.v1_0.converter.DTOConverterRegistry;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
@@ -347,7 +346,6 @@ public class MessageBoardThreadResourceImpl
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
 					mbMessage.getModelClassName(), mbMessage.getMessageId(),
-					_dtoConverterRegistry,
 					contextAcceptLanguage.getPreferredLocale());
 				showAsQuestion = mbThread.isQuestion();
 				siteId = mbThread.getGroupId();
@@ -440,9 +438,6 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private MBCategoryService _mbCategoryService;

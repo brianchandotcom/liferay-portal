@@ -154,7 +154,7 @@ public class ContentSetElementResourceImpl
 	}
 
 	private ContentSetElement _toContentSetElement(AssetEntry assetEntry) {
-		DTOConverter dtoConverter = _dtoConverterRegistry.getDTOConverter(
+		DTOConverter dtoConverter = DTOConverterRegistry.getDTOConverter(
 			assetEntry.getClassName());
 
 		return new ContentSetElement() {
@@ -188,9 +188,6 @@ public class ContentSetElementResourceImpl
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Context
 	private HttpHeaders _httpHeaders;

@@ -136,7 +136,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
 					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey(), _dtoConverterRegistry,
+					journalArticle.getResourcePrimKey(),
 					dtoConverterContext.getLocale());
 				renderedContents = _toRenderedContents(
 					ddmStructure, journalArticle,
@@ -423,9 +423,6 @@ public class StructuredContentDTOConverter implements DTOConverter {
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

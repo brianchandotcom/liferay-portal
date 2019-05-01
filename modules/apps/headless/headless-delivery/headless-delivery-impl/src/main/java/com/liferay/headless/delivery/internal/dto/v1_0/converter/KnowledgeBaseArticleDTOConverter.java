@@ -104,7 +104,7 @@ public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
 					kbArticle.getModelClassName(),
-					kbArticle.getResourcePrimKey(), _dtoConverterRegistry,
+					kbArticle.getResourcePrimKey(),
 					dtoConverterContext.getLocale());
 				siteId = kbArticle.getGroupId();
 				taxonomyCategories = TransformUtil.transformToArray(
@@ -140,9 +140,6 @@ public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private KBArticleService _kbArticleService;

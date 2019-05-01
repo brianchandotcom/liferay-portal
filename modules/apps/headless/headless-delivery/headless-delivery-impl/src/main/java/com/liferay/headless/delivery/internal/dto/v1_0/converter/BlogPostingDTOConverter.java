@@ -93,7 +93,7 @@ public class BlogPostingDTOConverter implements DTOConverter {
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
 					blogsEntry.getModelClassName(), blogsEntry.getEntryId(),
-					_dtoConverterRegistry, dtoConverterContext.getLocale());
+					dtoConverterContext.getLocale());
 				siteId = blogsEntry.getGroupId();
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
@@ -152,9 +152,6 @@ public class BlogPostingDTOConverter implements DTOConverter {
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private Portal _portal;

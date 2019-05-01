@@ -32,8 +32,7 @@ public class RelatedContentUtil {
 	public static RelatedContent[] toRelatedContents(
 			AssetEntryLocalService assetEntryLocalService,
 			AssetLinkLocalService assetLinkLocalService, String className,
-			long classPK, DTOConverterRegistry dtoConverterRegistry,
-			Locale locale)
+			long classPK, Locale locale)
 		throws Exception {
 
 		AssetEntry assetEntry = assetEntryLocalService.getEntry(
@@ -43,13 +42,12 @@ public class RelatedContentUtil {
 			assetLinkLocalService.getDirectLinks(assetEntry.getEntryId()),
 			assetLink -> _toRelatedContent(
 				assetEntryLocalService.getEntry(assetLink.getEntryId2()),
-				dtoConverterRegistry, locale),
+				locale),
 			RelatedContent.class);
 	}
 
 	private static RelatedContent _toRelatedContent(
-		AssetEntry assetEntry, DTOConverterRegistry dtoConverterRegistry,
-		Locale locale) {
+		AssetEntry assetEntry, Locale locale) {
 
 		if (assetEntry == null) {
 			return null;
@@ -63,7 +61,7 @@ public class RelatedContentUtil {
 				setContentType(
 					() -> {
 						DTOConverter dtoConverter =
-							dtoConverterRegistry.getDTOConverter(
+							DTOConverterRegistry.getDTOConverter(
 								assetEntry.getClassName());
 
 						if (dtoConverter == null) {

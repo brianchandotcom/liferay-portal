@@ -168,9 +168,6 @@ public class OpenAPIParserUtil {
 				javaDataType = javaDataTypeMap.get(
 					getReferenceName(items.getReference()));
 			}
-			else if (Objects.equals(items.getType(), "object")) {
-				javaDataType = Object.class.getName();
-			}
 
 			return getArrayClassName(javaDataType);
 		}
@@ -342,6 +339,9 @@ public class OpenAPIParserUtil {
 				put(
 					new AbstractMap.SimpleImmutableEntry<>("number", "double"),
 					Double.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("object", null),
+					Object.class.getName());
 				put(
 					new AbstractMap.SimpleImmutableEntry<>("string", null),
 					String.class.getName());

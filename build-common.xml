@@ -1840,6 +1840,8 @@ rerun your task.
 		<attribute default="" name="junit.jvm.override.version" />
 
 		<sequential>
+			<lstopwatch action="start" name="test.cmd" />
+
 			<if>
 				<isset property="test.dir" />
 				<then>
@@ -1895,6 +1897,8 @@ rerun your task.
 					</junit-cmd>
 				</then>
 			</if>
+
+			<lstopwatch action="total" name="test.cmd" />
 		</sequential>
 	</macrodef>
 
@@ -2426,6 +2430,8 @@ rerun your task.
 	</target>
 
 	<target depends="compile,compile-test" name="test-class-group">
+		<lstopwatch action="start" name="test.class.group" />
+
 		<if>
 			<not>
 				<isset property="test.class.group.index" />
@@ -2492,6 +2498,8 @@ rerun your task.
 				/>
 			</then>
 		</if>
+
+		<lstopwatch action="total" name="test.class.group" />
 	</target>
 
 	<target depends="compile" name="test-integration">

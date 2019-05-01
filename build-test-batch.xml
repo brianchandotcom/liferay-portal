@@ -985,16 +985,27 @@ app.server.type=@{app.server.type}]]></echo>
 		<element name="test-tear-down" optional="true" />
 
 		<sequential>
+			<lstopwatch action="start" name="run.batch.test" />
+
 			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+
+			<lstopwatch action="start" name="run.batch.test.setup" />
 
 			<test-set-up />
 
+			<lstopwatch action="total" name="run.batch.test.setup" />
+
 			<trycatch property="job.failure.message">
 				<try>
+					<lstopwatch action="start" name="run.batch.test.action" />
+
 					<test-action />
+
 				</try>
 
 				<finally>
+					<lstopwatch action="total" name="run.batch.test.action" />
+
 					<property name="job.failure.message" value="" />
 
 					<echo>${job.failure.message}</echo>
@@ -1003,7 +1014,11 @@ app.server.type=@{app.server.type}]]></echo>
 
 					<merge-test-results />
 
+					<lstopwatch action="start" name="run.batch.test.tear.down" />
+
 					<test-tear-down />
+
+					<lstopwatch action="total" name="run.batch.test.tear.down" />
 
 					<print-gc-logs
 						tomcat.gc.log="@{tomcat.gc.log}"
@@ -1011,6 +1026,8 @@ app.server.type=@{app.server.type}]]></echo>
 					/>
 				</finally>
 			</trycatch>
+
+			<lstopwatch action="total" name="run.batch.test" />
 		</sequential>
 	</macrodef>
 

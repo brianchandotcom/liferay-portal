@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.rest.internal.field.type.v1_0.util;
 
-import com.liferay.data.engine.rest.dto.v1_0.CustomProperty;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.DataFieldOption;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -22,8 +21,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,116 +30,84 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
  * @author Marcela Cunha
  */
 public class CustomPropertyUtil {
 
-	public static CustomProperty[] add(
-		CustomProperty[] customProperties, String key, Object value) {
-
-		CustomProperty customProperty = new CustomProperty();
-
-		customProperty.setKey(key);
-		customProperty.setValue(value);
+	public static Map<String, Object> add(
+		Map<String, Object> customProperties, String key, Object value) {
 
 		if (customProperties == null) {
-			customProperties = new CustomProperty[] {customProperty};
-
-			return customProperties;
+			customProperties = new HashMap<>();
 		}
 
-		return ArrayUtil.append(customProperties, customProperty);
+		customProperties.put(key, value);
+
+		return customProperties;
 	}
 
 	public static Boolean getBoolean(
-		CustomProperty[] customProperties, String key, boolean defaultValue) {
+		Map<String, Object> customProperties, String key,
+		boolean defaultValue) {
 
-		if (ArrayUtil.isEmpty(customProperties)) {
+		if (MapUtil.isEmpty(customProperties)) {
 			return defaultValue;
 		}
 
-		for (CustomProperty customProperty : customProperties) {
-			if (StringUtils.equals(key, customProperty.getKey())) {
-				return GetterUtil.getBoolean(customProperty.getValue());
-			}
-		}
-
-		return defaultValue;
+		return GetterUtil.getBoolean(customProperties.get(key), defaultValue);
 	}
 
 	public static List<DataFieldOption> getDataFieldOptions(
-		CustomProperty[] customProperties, String key) {
+		Map<String, Object> customProperties, String key) {
 
-		if (ArrayUtil.isEmpty(customProperties)) {
+		if (MapUtil.isEmpty(customProperties)) {
 			return Collections.emptyList();
 		}
 
-		for (CustomProperty customProperty : customProperties) {
-			if (StringUtils.equals(key, customProperty.getKey())) {
-				return (List<DataFieldOption>)customProperty.getValue();
-			}
-		}
-
-		return Collections.emptyList();
+		return (List<DataFieldOption>)GetterUtil.getObject(
+			customProperties.get(key), Collections.emptyList());
 	}
 
-	public static Long getLong(CustomProperty[] customProperties, String key) {
-		if (ArrayUtil.isEmpty(customProperties)) {
+	public static Long getLong(
+		Map<String, Object> customProperties, String key) {
+
+		if (MapUtil.isEmpty(customProperties)) {
 			return Long.valueOf(0);
 		}
 
-		for (CustomProperty customProperty : customProperties) {
-			if (StringUtils.equals(key, customProperty.getKey())) {
-				return GetterUtil.getLong(customProperty.getValue());
-			}
-		}
-
-		return Long.valueOf(0);
+		return GetterUtil.getLong(customProperties.get(key), Long.valueOf(0));
 	}
 
 	public static <K, V> Map<K, V> getMap(
-		CustomProperty[] customProperties, String key) {
+		Map<String, Object> customProperties, String key) {
 
-		if (ArrayUtil.isEmpty(customProperties)) {
+		if (MapUtil.isEmpty(customProperties)) {
 			return Collections.emptyMap();
 		}
 
-		for (CustomProperty customProperty : customProperties) {
-			if (StringUtils.equals(key, customProperty.getKey())) {
-				return (Map<K, V>)customProperty.getValue();
-			}
-		}
-
-		return Collections.emptyMap();
+		return (Map<K, V>)GetterUtil.getObject(
+			customProperties.get(key), Collections.emptyMap());
 	}
 
 	public static String getString(
-		CustomProperty[] customProperties, String key) {
+		Map<String, Object> customProperties, String key) {
 
 		return getString(customProperties, key, StringPool.BLANK);
 	}
 
 	public static String getString(
-		CustomProperty[] customProperties, String key, String defaultValue) {
+		Map<String, Object> customProperties, String key, String defaultValue) {
 
-		if (ArrayUtil.isEmpty(customProperties)) {
+		if (MapUtil.isEmpty(customProperties)) {
 			return defaultValue;
 		}
 
-		for (CustomProperty customProperty : customProperties) {
-			if (StringUtils.equals(key, customProperty.getKey())) {
-				return GetterUtil.getString(customProperty.getValue());
-			}
-		}
-
-		return defaultValue;
+		return GetterUtil.getString(customProperties.get(key), defaultValue);
 	}
 
 	public static List<String> getValues(
-		CustomProperty[] customProperties, String key) {
+		Map<String, Object> customProperties, String key) {
 
 		String json = getString(customProperties, key, "[]");
 

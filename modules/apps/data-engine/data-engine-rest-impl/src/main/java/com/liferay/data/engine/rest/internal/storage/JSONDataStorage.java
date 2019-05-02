@@ -54,7 +54,7 @@ public class JSONDataStorage implements DataStorage {
 	}
 
 	@Override
-	public Map<String, ?> get(long dataDefinitionId, long dataStorageId)
+	public Map<String, Object> get(long dataDefinitionId, long dataStorageId)
 		throws Exception {
 
 		DDMContent ddmContent = _ddmContentLocalService.getContent(
@@ -68,7 +68,7 @@ public class JSONDataStorage implements DataStorage {
 
 	@Override
 	public long save(
-			long dataRecordCollectionId, Map<String, ?> dataRecordValues,
+			long dataRecordCollectionId, Map<String, Object> dataRecordValues,
 			long siteId)
 		throws Exception {
 

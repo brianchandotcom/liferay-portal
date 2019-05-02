@@ -34,7 +34,7 @@ import java.util.stream.StreamSupport;
  */
 public class DataRecordValuesUtil {
 
-	public static Map<String, ?> toDataRecordValues(
+	public static Map<String, Object> toDataRecordValues(
 			DataDefinition dataDefinition, String json)
 		throws Exception {
 

@@ -106,7 +106,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Value Operators<br>
 	 * enum values<br>
-	 * <i>native declaration : ./sass/values.h:31</i>
+	 * <i>native declaration : ./sass/values.h:33</i>
 	 */
 	public enum Sass_OP implements IntValuedEnum<Sass_OP > {
 		/** logical connectives */
@@ -148,6 +148,29 @@ public class LiferaysassLibrary {
 			return Collections.singleton(this).iterator();
 		}
 		public static IntValuedEnum<Sass_OP > fromValue(int value) {
+			return FlagSet.fromValue(value, values());
+		}
+	};
+	/**
+	 * Type of function calls<br>
+	 * enum values<br>
+	 * <i>native declaration : ./sass/functions.h:38</i>
+	 */
+	public enum Sass_Callee_Type implements IntValuedEnum<Sass_Callee_Type > {
+		SASS_CALLEE_MIXIN(0),
+		SASS_CALLEE_FUNCTION(1),
+		SASS_CALLEE_C_FUNCTION(2);
+		Sass_Callee_Type(long value) {
+			this.value = value;
+		}
+		public final long value;
+		public long value() {
+			return this.value;
+		}
+		public Iterator<Sass_Callee_Type > iterator() {
+			return Collections.singleton(this).iterator();
+		}
+		public static IntValuedEnum<Sass_Callee_Type > fromValue(int value) {
 			return FlagSet.fromValue(value, values());
 		}
 	};
@@ -253,21 +276,9 @@ public class LiferaysassLibrary {
 	@Ptr 
 	protected native static long sassStringUnquote(@Ptr long str);
 	/**
-	 * Resolve a file via the given include paths in the include char* array<br>
-	 * Original signature : <code>char* sass_resolve_file(const char*, const char*[])</code><br>
-	 * <i>native declaration : ./sass/base.h:59</i>
-	 */
-	@Name("sass_resolve_file") 
-	public static Pointer<Byte > sassResolveFile(Pointer<Byte > path, Pointer<Pointer<Byte > > incs) {
-		return (Pointer)Pointer.pointerToAddress(sassResolveFile(Pointer.getPeer(path), Pointer.getPeer(incs)), Byte.class);
-	}
-	@Name("sass_resolve_file") 
-	@Ptr 
-	protected native static long sassResolveFile(@Ptr long path, @Ptr long incs);
-	/**
-	 * Get compiled libsass version<br>
+	 * Hardcoded version 3.4 for time being<br>
 	 * Original signature : <code>char* libsass_version()</code><br>
-	 * <i>native declaration : ./sass/base.h:62</i>
+	 * <i>native declaration : ./sass/base.h:60</i>
 	 */
 	@Name("libsass_version") 
 	public static Pointer<Byte > libsassVersion() {
@@ -279,7 +290,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Get compiled libsass language<br>
 	 * Original signature : <code>char* libsass_language_version()</code><br>
-	 * <i>native declaration : ./sass/base.h:65</i>
+	 * <i>native declaration : ./sass/base.h:63</i>
 	 */
 	@Name("libsass_language_version") 
 	public static Pointer<Byte > libsassLanguageVersion() {
@@ -289,9 +300,167 @@ public class LiferaysassLibrary {
 	@Ptr 
 	protected native static long libsassLanguageVersion$2();
 	/**
+	 * Creator functions for all value types<br>
+	 * Original signature : <code>Sass_Value* sass_make_null()</code><br>
+	 * <i>native declaration : ./sass/values.h:41</i>
+	 */
+	@Name("sass_make_null") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeNull() {
+		return (Pointer)Pointer.pointerToAddress(sassMakeNull$2(), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_make_null") 
+	@Ptr 
+	protected native static long sassMakeNull$2();
+	/**
+	 * Original signature : <code>Sass_Value* sass_make_boolean(bool)</code><br>
+	 * <i>native declaration : ./sass/values.h:42</i>
+	 */
+	@Name("sass_make_boolean") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeBoolean(boolean val) {
+		return (Pointer)Pointer.pointerToAddress(sassMakeBoolean$2(val), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_make_boolean") 
+	@Ptr 
+	protected native static long sassMakeBoolean$2(boolean val);
+	/**
+	 * Original signature : <code>Sass_Value* sass_make_string(const char*)</code><br>
+	 * <i>native declaration : ./sass/values.h:43</i>
+	 */
+	@Name("sass_make_string") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeString(Pointer<Byte > val) {
+		return (Pointer)Pointer.pointerToAddress(sassMakeString(Pointer.getPeer(val)), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_make_string") 
+	@Ptr 
+	protected native static long sassMakeString(@Ptr long val);
+	/**
+	 * Original signature : <code>Sass_Value* sass_make_qstring(const char*)</code><br>
+	 * <i>native declaration : ./sass/values.h:44</i>
+	 */
+	@Name("sass_make_qstring") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeQstring(Pointer<Byte > val) {
+		return (Pointer)Pointer.pointerToAddress(sassMakeQstring(Pointer.getPeer(val)), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_make_qstring") 
+	@Ptr 
+	protected native static long sassMakeQstring(@Ptr long val);
+	/**
+	 * Original signature : <code>Sass_Value* sass_make_number(double, const char*)</code><br>
+	 * <i>native declaration : ./sass/values.h:45</i>
+	 */
+	@Name("sass_make_number") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeNumber(double val, Pointer<Byte > unit) {
+		return (Pointer)Pointer.pointerToAddress(sassMakeNumber(val, Pointer.getPeer(unit)), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_make_number") 
+	@Ptr 
+	protected native static long sassMakeNumber(double val, @Ptr long unit);
+	/**
+	 * Original signature : <code>Sass_Value* sass_make_color(double, double, double, double)</code><br>
+	 * <i>native declaration : ./sass/values.h:46</i>
+	 */
+	@Name("sass_make_color") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeColor(double r, double g, double b, double a) {
+		return (Pointer)Pointer.pointerToAddress(sassMakeColor$2(r, g, b, a), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_make_color") 
+	@Ptr 
+	protected native static long sassMakeColor$2(double r, double g, double b, double a);
+	/**
+	 * Original signature : <code>Sass_Value* sass_make_list(size_t, Sass_Separator, bool)</code><br>
+	 * <i>native declaration : ./sass/values.h:47</i>
+	 */
+	@Name("sass_make_list") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeList(@Ptr long len, IntValuedEnum<LiferaysassLibrary.Sass_Separator > sep, boolean is_bracketed) {
+		return (Pointer)Pointer.pointerToAddress(sassMakeList(len, (int)sep.value(), is_bracketed), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_make_list") 
+	@Ptr 
+	protected native static long sassMakeList(@Ptr long len, int sep, boolean is_bracketed);
+	/**
+	 * Original signature : <code>Sass_Value* sass_make_map(size_t)</code><br>
+	 * <i>native declaration : ./sass/values.h:48</i>
+	 */
+	@Name("sass_make_map") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeMap(@Ptr long len) {
+		return (Pointer)Pointer.pointerToAddress(sassMakeMap$2(len), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_make_map") 
+	@Ptr 
+	protected native static long sassMakeMap$2(@Ptr long len);
+	/**
+	 * Original signature : <code>Sass_Value* sass_make_error(const char*)</code><br>
+	 * <i>native declaration : ./sass/values.h:49</i>
+	 */
+	@Name("sass_make_error") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeError(Pointer<Byte > msg) {
+		return (Pointer)Pointer.pointerToAddress(sassMakeError(Pointer.getPeer(msg)), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_make_error") 
+	@Ptr 
+	protected native static long sassMakeError(@Ptr long msg);
+	/**
+	 * Original signature : <code>Sass_Value* sass_make_warning(const char*)</code><br>
+	 * <i>native declaration : ./sass/values.h:50</i>
+	 */
+	@Name("sass_make_warning") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeWarning(Pointer<Byte > msg) {
+		return (Pointer)Pointer.pointerToAddress(sassMakeWarning(Pointer.getPeer(msg)), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_make_warning") 
+	@Ptr 
+	protected native static long sassMakeWarning(@Ptr long msg);
+	/**
+	 * Means we will delete recursively for lists and maps<br>
+	 * Original signature : <code>void sass_delete_value(Sass_Value*)</code><br>
+	 * <i>native declaration : ./sass/values.h:55</i>
+	 */
+	@Name("sass_delete_value") 
+	public static void sassDeleteValue(Pointer<LiferaysassLibrary.Sass_Value > val) {
+		sassDeleteValue(Pointer.getPeer(val));
+	}
+	@Name("sass_delete_value") 
+	protected native static void sassDeleteValue(@Ptr long val);
+	/**
+	 * Make a deep cloned copy of the given sass value<br>
+	 * Original signature : <code>Sass_Value* sass_clone_value(Sass_Value*)</code><br>
+	 * <i>native declaration : ./sass/values.h:58</i>
+	 */
+	@Name("sass_clone_value") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassCloneValue(Pointer<LiferaysassLibrary.Sass_Value > val) {
+		return (Pointer)Pointer.pointerToAddress(sassCloneValue(Pointer.getPeer(val)), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_clone_value") 
+	@Ptr 
+	protected native static long sassCloneValue(@Ptr long val);
+	/**
+	 * Execute an operation for two Sass_Values and return the result as a Sass_Value too<br>
+	 * Original signature : <code>Sass_Value* sass_value_op(Sass_OP, Sass_Value*, Sass_Value*)</code><br>
+	 * <i>native declaration : ./sass/values.h:61</i>
+	 */
+	@Name("sass_value_op") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassValueOp(IntValuedEnum<LiferaysassLibrary.Sass_OP > op, Pointer<LiferaysassLibrary.Sass_Value > a, Pointer<LiferaysassLibrary.Sass_Value > b) {
+		return (Pointer)Pointer.pointerToAddress(sassValueOp((int)op.value(), Pointer.getPeer(a), Pointer.getPeer(b)), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_value_op") 
+	@Ptr 
+	protected native static long sassValueOp(int op, @Ptr long a, @Ptr long b);
+	/**
+	 * Stringify a Sass_Values and also return the result as a Sass_Value (of type STRING)<br>
+	 * Original signature : <code>Sass_Value* sass_value_stringify(Sass_Value*, bool, int)</code><br>
+	 * <i>native declaration : ./sass/values.h:64</i>
+	 */
+	@Name("sass_value_stringify") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassValueStringify(Pointer<LiferaysassLibrary.Sass_Value > a, boolean compressed, int precision) {
+		return (Pointer)Pointer.pointerToAddress(sassValueStringify(Pointer.getPeer(a), compressed, precision), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_value_stringify") 
+	@Ptr 
+	protected native static long sassValueStringify(@Ptr long a, boolean compressed, int precision);
+	/**
 	 * Check is needed before accessing specific values!<br>
 	 * Original signature : <code>Sass_Tag sass_value_get_tag(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:40</i>
+	 * <i>native declaration : ./sass/values.h:68</i>
 	 */
 	@Name("sass_value_get_tag") 
 	public static IntValuedEnum<LiferaysassLibrary.Sass_Tag > sassValueGetTag(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -302,7 +471,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Can also be used before accessing properties!<br>
 	 * Original signature : <code>bool sass_value_is_null(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:44</i>
+	 * <i>native declaration : ./sass/values.h:72</i>
 	 */
 	@Name("sass_value_is_null") 
 	public static boolean sassValueIsNull(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -312,7 +481,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassValueIsNull(@Ptr long v);
 	/**
 	 * Original signature : <code>bool sass_value_is_number(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:45</i>
+	 * <i>native declaration : ./sass/values.h:73</i>
 	 */
 	@Name("sass_value_is_number") 
 	public static boolean sassValueIsNumber(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -322,7 +491,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassValueIsNumber(@Ptr long v);
 	/**
 	 * Original signature : <code>bool sass_value_is_string(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:46</i>
+	 * <i>native declaration : ./sass/values.h:74</i>
 	 */
 	@Name("sass_value_is_string") 
 	public static boolean sassValueIsString(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -332,7 +501,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassValueIsString(@Ptr long v);
 	/**
 	 * Original signature : <code>bool sass_value_is_boolean(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:47</i>
+	 * <i>native declaration : ./sass/values.h:75</i>
 	 */
 	@Name("sass_value_is_boolean") 
 	public static boolean sassValueIsBoolean(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -342,7 +511,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassValueIsBoolean(@Ptr long v);
 	/**
 	 * Original signature : <code>bool sass_value_is_color(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:48</i>
+	 * <i>native declaration : ./sass/values.h:76</i>
 	 */
 	@Name("sass_value_is_color") 
 	public static boolean sassValueIsColor(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -352,7 +521,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassValueIsColor(@Ptr long v);
 	/**
 	 * Original signature : <code>bool sass_value_is_list(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:49</i>
+	 * <i>native declaration : ./sass/values.h:77</i>
 	 */
 	@Name("sass_value_is_list") 
 	public static boolean sassValueIsList(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -362,7 +531,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassValueIsList(@Ptr long v);
 	/**
 	 * Original signature : <code>bool sass_value_is_map(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:50</i>
+	 * <i>native declaration : ./sass/values.h:78</i>
 	 */
 	@Name("sass_value_is_map") 
 	public static boolean sassValueIsMap(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -372,7 +541,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassValueIsMap(@Ptr long v);
 	/**
 	 * Original signature : <code>bool sass_value_is_error(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:51</i>
+	 * <i>native declaration : ./sass/values.h:79</i>
 	 */
 	@Name("sass_value_is_error") 
 	public static boolean sassValueIsError(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -382,7 +551,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassValueIsError(@Ptr long v);
 	/**
 	 * Original signature : <code>bool sass_value_is_warning(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:52</i>
+	 * <i>native declaration : ./sass/values.h:80</i>
 	 */
 	@Name("sass_value_is_warning") 
 	public static boolean sassValueIsWarning(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -393,7 +562,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters and setters for Sass_Number<br>
 	 * Original signature : <code>double sass_number_get_value(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:55</i>
+	 * <i>native declaration : ./sass/values.h:83</i>
 	 */
 	@Name("sass_number_get_value") 
 	public static double sassNumberGetValue(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -403,7 +572,7 @@ public class LiferaysassLibrary {
 	protected native static double sassNumberGetValue(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_number_set_value(Sass_Value*, double)</code><br>
-	 * <i>native declaration : ./sass/values.h:56</i>
+	 * <i>native declaration : ./sass/values.h:84</i>
 	 */
 	@Name("sass_number_set_value") 
 	public static void sassNumberSetValue(Pointer<LiferaysassLibrary.Sass_Value > v, double value) {
@@ -413,7 +582,7 @@ public class LiferaysassLibrary {
 	protected native static void sassNumberSetValue(@Ptr long v, double value);
 	/**
 	 * Original signature : <code>char* sass_number_get_unit(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:57</i>
+	 * <i>native declaration : ./sass/values.h:85</i>
 	 */
 	@Name("sass_number_get_unit") 
 	public static Pointer<Byte > sassNumberGetUnit(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -424,7 +593,7 @@ public class LiferaysassLibrary {
 	protected native static long sassNumberGetUnit(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_number_set_unit(Sass_Value*, char*)</code><br>
-	 * <i>native declaration : ./sass/values.h:58</i>
+	 * <i>native declaration : ./sass/values.h:86</i>
 	 */
 	@Name("sass_number_set_unit") 
 	public static void sassNumberSetUnit(Pointer<LiferaysassLibrary.Sass_Value > v, Pointer<Byte > unit) {
@@ -435,7 +604,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters and setters for Sass_String<br>
 	 * Original signature : <code>char* sass_string_get_value(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:61</i>
+	 * <i>native declaration : ./sass/values.h:89</i>
 	 */
 	@Name("sass_string_get_value") 
 	public static Pointer<Byte > sassStringGetValue(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -446,7 +615,7 @@ public class LiferaysassLibrary {
 	protected native static long sassStringGetValue(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_string_set_value(Sass_Value*, char*)</code><br>
-	 * <i>native declaration : ./sass/values.h:62</i>
+	 * <i>native declaration : ./sass/values.h:90</i>
 	 */
 	@Name("sass_string_set_value") 
 	public static void sassStringSetValue(Pointer<LiferaysassLibrary.Sass_Value > v, Pointer<Byte > value) {
@@ -456,7 +625,7 @@ public class LiferaysassLibrary {
 	protected native static void sassStringSetValue(@Ptr long v, @Ptr long value);
 	/**
 	 * Original signature : <code>bool sass_string_is_quoted(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:63</i>
+	 * <i>native declaration : ./sass/values.h:91</i>
 	 */
 	@Name("sass_string_is_quoted") 
 	public static boolean sassStringIsQuoted(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -466,7 +635,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassStringIsQuoted(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_string_set_quoted(Sass_Value*, bool)</code><br>
-	 * <i>native declaration : ./sass/values.h:64</i>
+	 * <i>native declaration : ./sass/values.h:92</i>
 	 */
 	@Name("sass_string_set_quoted") 
 	public static void sassStringSetQuoted(Pointer<LiferaysassLibrary.Sass_Value > v, boolean quoted) {
@@ -477,7 +646,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters and setters for Sass_Boolean<br>
 	 * Original signature : <code>bool sass_boolean_get_value(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:67</i>
+	 * <i>native declaration : ./sass/values.h:95</i>
 	 */
 	@Name("sass_boolean_get_value") 
 	public static boolean sassBooleanGetValue(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -487,7 +656,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassBooleanGetValue(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_boolean_set_value(Sass_Value*, bool)</code><br>
-	 * <i>native declaration : ./sass/values.h:68</i>
+	 * <i>native declaration : ./sass/values.h:96</i>
 	 */
 	@Name("sass_boolean_set_value") 
 	public static void sassBooleanSetValue(Pointer<LiferaysassLibrary.Sass_Value > v, boolean value) {
@@ -498,7 +667,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters and setters for Sass_Color<br>
 	 * Original signature : <code>double sass_color_get_r(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:71</i>
+	 * <i>native declaration : ./sass/values.h:99</i>
 	 */
 	@Name("sass_color_get_r") 
 	public static double sassColorGetR(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -508,7 +677,7 @@ public class LiferaysassLibrary {
 	protected native static double sassColorGetR(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_color_set_r(Sass_Value*, double)</code><br>
-	 * <i>native declaration : ./sass/values.h:72</i>
+	 * <i>native declaration : ./sass/values.h:100</i>
 	 */
 	@Name("sass_color_set_r") 
 	public static void sassColorSetR(Pointer<LiferaysassLibrary.Sass_Value > v, double r) {
@@ -518,7 +687,7 @@ public class LiferaysassLibrary {
 	protected native static void sassColorSetR(@Ptr long v, double r);
 	/**
 	 * Original signature : <code>double sass_color_get_g(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:73</i>
+	 * <i>native declaration : ./sass/values.h:101</i>
 	 */
 	@Name("sass_color_get_g") 
 	public static double sassColorGetG(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -528,7 +697,7 @@ public class LiferaysassLibrary {
 	protected native static double sassColorGetG(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_color_set_g(Sass_Value*, double)</code><br>
-	 * <i>native declaration : ./sass/values.h:74</i>
+	 * <i>native declaration : ./sass/values.h:102</i>
 	 */
 	@Name("sass_color_set_g") 
 	public static void sassColorSetG(Pointer<LiferaysassLibrary.Sass_Value > v, double g) {
@@ -538,7 +707,7 @@ public class LiferaysassLibrary {
 	protected native static void sassColorSetG(@Ptr long v, double g);
 	/**
 	 * Original signature : <code>double sass_color_get_b(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:75</i>
+	 * <i>native declaration : ./sass/values.h:103</i>
 	 */
 	@Name("sass_color_get_b") 
 	public static double sassColorGetB(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -548,7 +717,7 @@ public class LiferaysassLibrary {
 	protected native static double sassColorGetB(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_color_set_b(Sass_Value*, double)</code><br>
-	 * <i>native declaration : ./sass/values.h:76</i>
+	 * <i>native declaration : ./sass/values.h:104</i>
 	 */
 	@Name("sass_color_set_b") 
 	public static void sassColorSetB(Pointer<LiferaysassLibrary.Sass_Value > v, double b) {
@@ -558,7 +727,7 @@ public class LiferaysassLibrary {
 	protected native static void sassColorSetB(@Ptr long v, double b);
 	/**
 	 * Original signature : <code>double sass_color_get_a(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:77</i>
+	 * <i>native declaration : ./sass/values.h:105</i>
 	 */
 	@Name("sass_color_get_a") 
 	public static double sassColorGetA(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -568,7 +737,7 @@ public class LiferaysassLibrary {
 	protected native static double sassColorGetA(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_color_set_a(Sass_Value*, double)</code><br>
-	 * <i>native declaration : ./sass/values.h:78</i>
+	 * <i>native declaration : ./sass/values.h:106</i>
 	 */
 	@Name("sass_color_set_a") 
 	public static void sassColorSetA(Pointer<LiferaysassLibrary.Sass_Value > v, double a) {
@@ -579,7 +748,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getter for the number of items in list<br>
 	 * Original signature : <code>size_t sass_list_get_length(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:81</i>
+	 * <i>native declaration : ./sass/values.h:109</i>
 	 */
 	@Name("sass_list_get_length") 
 	@Ptr 
@@ -592,7 +761,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters and setters for Sass_List<br>
 	 * Original signature : <code>Sass_Separator sass_list_get_separator(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:83</i>
+	 * <i>native declaration : ./sass/values.h:111</i>
 	 */
 	@Name("sass_list_get_separator") 
 	public static IntValuedEnum<LiferaysassLibrary.Sass_Separator > sassListGetSeparator(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -602,7 +771,7 @@ public class LiferaysassLibrary {
 	protected native static int sassListGetSeparator(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_list_set_separator(Sass_Value*, Sass_Separator)</code><br>
-	 * <i>native declaration : ./sass/values.h:84</i>
+	 * <i>native declaration : ./sass/values.h:112</i>
 	 */
 	@Name("sass_list_set_separator") 
 	public static void sassListSetSeparator(Pointer<LiferaysassLibrary.Sass_Value > v, IntValuedEnum<LiferaysassLibrary.Sass_Separator > value) {
@@ -611,9 +780,29 @@ public class LiferaysassLibrary {
 	@Name("sass_list_set_separator") 
 	protected native static void sassListSetSeparator(@Ptr long v, int value);
 	/**
+	 * Original signature : <code>bool sass_list_get_is_bracketed(Sass_Value*)</code><br>
+	 * <i>native declaration : ./sass/values.h:113</i>
+	 */
+	@Name("sass_list_get_is_bracketed") 
+	public static boolean sassListGetIsBracketed(Pointer<LiferaysassLibrary.Sass_Value > v) {
+		return sassListGetIsBracketed(Pointer.getPeer(v));
+	}
+	@Name("sass_list_get_is_bracketed") 
+	protected native static boolean sassListGetIsBracketed(@Ptr long v);
+	/**
+	 * Original signature : <code>void sass_list_set_is_bracketed(Sass_Value*, bool)</code><br>
+	 * <i>native declaration : ./sass/values.h:114</i>
+	 */
+	@Name("sass_list_set_is_bracketed") 
+	public static void sassListSetIsBracketed(Pointer<LiferaysassLibrary.Sass_Value > v, boolean value) {
+		sassListSetIsBracketed(Pointer.getPeer(v), value);
+	}
+	@Name("sass_list_set_is_bracketed") 
+	protected native static void sassListSetIsBracketed(@Ptr long v, boolean value);
+	/**
 	 * Getters and setters for Sass_List values<br>
 	 * Original signature : <code>Sass_Value* sass_list_get_value(Sass_Value*, size_t)</code><br>
-	 * <i>native declaration : ./sass/values.h:86</i>
+	 * <i>native declaration : ./sass/values.h:116</i>
 	 */
 	@Name("sass_list_get_value") 
 	public static Pointer<LiferaysassLibrary.Sass_Value > sassListGetValue(Pointer<LiferaysassLibrary.Sass_Value > v, @Ptr long i) {
@@ -624,7 +813,7 @@ public class LiferaysassLibrary {
 	protected native static long sassListGetValue(@Ptr long v, @Ptr long i);
 	/**
 	 * Original signature : <code>void sass_list_set_value(Sass_Value*, size_t, Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:87</i>
+	 * <i>native declaration : ./sass/values.h:117</i>
 	 */
 	@Name("sass_list_set_value") 
 	public static void sassListSetValue(Pointer<LiferaysassLibrary.Sass_Value > v, @Ptr long i, Pointer<LiferaysassLibrary.Sass_Value > value) {
@@ -635,7 +824,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getter for the number of items in map<br>
 	 * Original signature : <code>size_t sass_map_get_length(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:90</i>
+	 * <i>native declaration : ./sass/values.h:120</i>
 	 */
 	@Name("sass_map_get_length") 
 	@Ptr 
@@ -648,7 +837,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters and setters for Sass_Map keys and values<br>
 	 * Original signature : <code>Sass_Value* sass_map_get_key(Sass_Value*, size_t)</code><br>
-	 * <i>native declaration : ./sass/values.h:92</i>
+	 * <i>native declaration : ./sass/values.h:122</i>
 	 */
 	@Name("sass_map_get_key") 
 	public static Pointer<LiferaysassLibrary.Sass_Value > sassMapGetKey(Pointer<LiferaysassLibrary.Sass_Value > v, @Ptr long i) {
@@ -659,7 +848,7 @@ public class LiferaysassLibrary {
 	protected native static long sassMapGetKey(@Ptr long v, @Ptr long i);
 	/**
 	 * Original signature : <code>void sass_map_set_key(Sass_Value*, size_t, Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:93</i>
+	 * <i>native declaration : ./sass/values.h:123</i>
 	 */
 	@Name("sass_map_set_key") 
 	public static void sassMapSetKey(Pointer<LiferaysassLibrary.Sass_Value > v, @Ptr long i, Pointer<LiferaysassLibrary.Sass_Value > Sass_ValuePtr1) {
@@ -669,7 +858,7 @@ public class LiferaysassLibrary {
 	protected native static void sassMapSetKey(@Ptr long v, @Ptr long i, @Ptr long Sass_ValuePtr1);
 	/**
 	 * Original signature : <code>Sass_Value* sass_map_get_value(Sass_Value*, size_t)</code><br>
-	 * <i>native declaration : ./sass/values.h:94</i>
+	 * <i>native declaration : ./sass/values.h:124</i>
 	 */
 	@Name("sass_map_get_value") 
 	public static Pointer<LiferaysassLibrary.Sass_Value > sassMapGetValue(Pointer<LiferaysassLibrary.Sass_Value > v, @Ptr long i) {
@@ -680,7 +869,7 @@ public class LiferaysassLibrary {
 	protected native static long sassMapGetValue(@Ptr long v, @Ptr long i);
 	/**
 	 * Original signature : <code>void sass_map_set_value(Sass_Value*, size_t, Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:95</i>
+	 * <i>native declaration : ./sass/values.h:125</i>
 	 */
 	@Name("sass_map_set_value") 
 	public static void sassMapSetValue(Pointer<LiferaysassLibrary.Sass_Value > v, @Ptr long i, Pointer<LiferaysassLibrary.Sass_Value > Sass_ValuePtr1) {
@@ -691,7 +880,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters and setters for Sass_Error<br>
 	 * Original signature : <code>char* sass_error_get_message(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:98</i>
+	 * <i>native declaration : ./sass/values.h:128</i>
 	 */
 	@Name("sass_error_get_message") 
 	public static Pointer<Byte > sassErrorGetMessage(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -702,7 +891,7 @@ public class LiferaysassLibrary {
 	protected native static long sassErrorGetMessage(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_error_set_message(Sass_Value*, char*)</code><br>
-	 * <i>native declaration : ./sass/values.h:99</i>
+	 * <i>native declaration : ./sass/values.h:129</i>
 	 */
 	@Name("sass_error_set_message") 
 	public static void sassErrorSetMessage(Pointer<LiferaysassLibrary.Sass_Value > v, Pointer<Byte > msg) {
@@ -713,7 +902,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters and setters for Sass_Warning<br>
 	 * Original signature : <code>char* sass_warning_get_message(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:102</i>
+	 * <i>native declaration : ./sass/values.h:132</i>
 	 */
 	@Name("sass_warning_get_message") 
 	public static Pointer<Byte > sassWarningGetMessage(Pointer<LiferaysassLibrary.Sass_Value > v) {
@@ -724,7 +913,7 @@ public class LiferaysassLibrary {
 	protected native static long sassWarningGetMessage(@Ptr long v);
 	/**
 	 * Original signature : <code>void sass_warning_set_message(Sass_Value*, char*)</code><br>
-	 * <i>native declaration : ./sass/values.h:103</i>
+	 * <i>native declaration : ./sass/values.h:133</i>
 	 */
 	@Name("sass_warning_set_message") 
 	public static void sassWarningSetMessage(Pointer<LiferaysassLibrary.Sass_Value > v, Pointer<Byte > msg) {
@@ -733,167 +922,9 @@ public class LiferaysassLibrary {
 	@Name("sass_warning_set_message") 
 	protected native static void sassWarningSetMessage(@Ptr long v, @Ptr long msg);
 	/**
-	 * Creator functions for all value types<br>
-	 * Original signature : <code>Sass_Value* sass_make_null()</code><br>
-	 * <i>native declaration : ./sass/values.h:106</i>
-	 */
-	@Name("sass_make_null") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeNull() {
-		return (Pointer)Pointer.pointerToAddress(sassMakeNull$2(), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_make_null") 
-	@Ptr 
-	protected native static long sassMakeNull$2();
-	/**
-	 * Original signature : <code>Sass_Value* sass_make_boolean(bool)</code><br>
-	 * <i>native declaration : ./sass/values.h:107</i>
-	 */
-	@Name("sass_make_boolean") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeBoolean(boolean val) {
-		return (Pointer)Pointer.pointerToAddress(sassMakeBoolean$2(val), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_make_boolean") 
-	@Ptr 
-	protected native static long sassMakeBoolean$2(boolean val);
-	/**
-	 * Original signature : <code>Sass_Value* sass_make_string(const char*)</code><br>
-	 * <i>native declaration : ./sass/values.h:108</i>
-	 */
-	@Name("sass_make_string") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeString(Pointer<Byte > val) {
-		return (Pointer)Pointer.pointerToAddress(sassMakeString(Pointer.getPeer(val)), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_make_string") 
-	@Ptr 
-	protected native static long sassMakeString(@Ptr long val);
-	/**
-	 * Original signature : <code>Sass_Value* sass_make_qstring(const char*)</code><br>
-	 * <i>native declaration : ./sass/values.h:109</i>
-	 */
-	@Name("sass_make_qstring") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeQstring(Pointer<Byte > val) {
-		return (Pointer)Pointer.pointerToAddress(sassMakeQstring(Pointer.getPeer(val)), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_make_qstring") 
-	@Ptr 
-	protected native static long sassMakeQstring(@Ptr long val);
-	/**
-	 * Original signature : <code>Sass_Value* sass_make_number(double, const char*)</code><br>
-	 * <i>native declaration : ./sass/values.h:110</i>
-	 */
-	@Name("sass_make_number") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeNumber(double val, Pointer<Byte > unit) {
-		return (Pointer)Pointer.pointerToAddress(sassMakeNumber(val, Pointer.getPeer(unit)), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_make_number") 
-	@Ptr 
-	protected native static long sassMakeNumber(double val, @Ptr long unit);
-	/**
-	 * Original signature : <code>Sass_Value* sass_make_color(double, double, double, double)</code><br>
-	 * <i>native declaration : ./sass/values.h:111</i>
-	 */
-	@Name("sass_make_color") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeColor(double r, double g, double b, double a) {
-		return (Pointer)Pointer.pointerToAddress(sassMakeColor$2(r, g, b, a), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_make_color") 
-	@Ptr 
-	protected native static long sassMakeColor$2(double r, double g, double b, double a);
-	/**
-	 * Original signature : <code>Sass_Value* sass_make_list(size_t, Sass_Separator)</code><br>
-	 * <i>native declaration : ./sass/values.h:112</i>
-	 */
-	@Name("sass_make_list") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeList(@Ptr long len, IntValuedEnum<LiferaysassLibrary.Sass_Separator > sep) {
-		return (Pointer)Pointer.pointerToAddress(sassMakeList(len, (int)sep.value()), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_make_list") 
-	@Ptr 
-	protected native static long sassMakeList(@Ptr long len, int sep);
-	/**
-	 * Original signature : <code>Sass_Value* sass_make_map(size_t)</code><br>
-	 * <i>native declaration : ./sass/values.h:113</i>
-	 */
-	@Name("sass_make_map") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeMap(@Ptr long len) {
-		return (Pointer)Pointer.pointerToAddress(sassMakeMap$2(len), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_make_map") 
-	@Ptr 
-	protected native static long sassMakeMap$2(@Ptr long len);
-	/**
-	 * Original signature : <code>Sass_Value* sass_make_error(const char*)</code><br>
-	 * <i>native declaration : ./sass/values.h:114</i>
-	 */
-	@Name("sass_make_error") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeError(Pointer<Byte > msg) {
-		return (Pointer)Pointer.pointerToAddress(sassMakeError(Pointer.getPeer(msg)), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_make_error") 
-	@Ptr 
-	protected native static long sassMakeError(@Ptr long msg);
-	/**
-	 * Original signature : <code>Sass_Value* sass_make_warning(const char*)</code><br>
-	 * <i>native declaration : ./sass/values.h:115</i>
-	 */
-	@Name("sass_make_warning") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassMakeWarning(Pointer<Byte > msg) {
-		return (Pointer)Pointer.pointerToAddress(sassMakeWarning(Pointer.getPeer(msg)), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_make_warning") 
-	@Ptr 
-	protected native static long sassMakeWarning(@Ptr long msg);
-	/**
-	 * Means we will delete recursively for lists and maps<br>
-	 * Original signature : <code>void sass_delete_value(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:120</i>
-	 */
-	@Name("sass_delete_value") 
-	public static void sassDeleteValue(Pointer<LiferaysassLibrary.Sass_Value > val) {
-		sassDeleteValue(Pointer.getPeer(val));
-	}
-	@Name("sass_delete_value") 
-	protected native static void sassDeleteValue(@Ptr long val);
-	/**
-	 * Make a deep cloned copy of the given sass value<br>
-	 * Original signature : <code>Sass_Value* sass_clone_value(Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:123</i>
-	 */
-	@Name("sass_clone_value") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassCloneValue(Pointer<LiferaysassLibrary.Sass_Value > val) {
-		return (Pointer)Pointer.pointerToAddress(sassCloneValue(Pointer.getPeer(val)), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_clone_value") 
-	@Ptr 
-	protected native static long sassCloneValue(@Ptr long val);
-	/**
-	 * Stringify a Sass_Values and also return the result as a Sass_Value (of type STRING)<br>
-	 * Original signature : <code>Sass_Value* sass_value_stringify(Sass_Value*, bool, int)</code><br>
-	 * <i>native declaration : ./sass/values.h:126</i>
-	 */
-	@Name("sass_value_stringify") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassValueStringify(Pointer<LiferaysassLibrary.Sass_Value > a, boolean compressed, int precision) {
-		return (Pointer)Pointer.pointerToAddress(sassValueStringify(Pointer.getPeer(a), compressed, precision), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_value_stringify") 
-	@Ptr 
-	protected native static long sassValueStringify(@Ptr long a, boolean compressed, int precision);
-	/**
-	 * Execute an operation for two Sass_Values and return the result as a Sass_Value too<br>
-	 * Original signature : <code>Sass_Value* sass_value_op(Sass_OP, Sass_Value*, Sass_Value*)</code><br>
-	 * <i>native declaration : ./sass/values.h:129</i>
-	 */
-	@Name("sass_value_op") 
-	public static Pointer<LiferaysassLibrary.Sass_Value > sassValueOp(IntValuedEnum<LiferaysassLibrary.Sass_OP > op, Pointer<LiferaysassLibrary.Sass_Value > a, Pointer<LiferaysassLibrary.Sass_Value > b) {
-		return (Pointer)Pointer.pointerToAddress(sassValueOp((int)op.value(), Pointer.getPeer(a), Pointer.getPeer(b)), LiferaysassLibrary.Sass_Value.class);
-	}
-	@Name("sass_value_op") 
-	@Ptr 
-	protected native static long sassValueOp(int op, @Ptr long a, @Ptr long b);
-	/**
 	 * Creator for sass custom importer return argument list<br>
 	 * Original signature : <code>Sass_Importer_List sass_make_importer_list(size_t)</code><br>
-	 * <i>native declaration : ./sass/functions.h:33</i>
+	 * <i>native declaration : ./sass/functions.h:45</i>
 	 */
 	@Name("sass_make_importer_list") 
 	public static Pointer<Pointer<LiferaysassLibrary.Sass_Importer > > sassMakeImporterList(@Ptr long length) {
@@ -904,7 +935,7 @@ public class LiferaysassLibrary {
 	protected native static long sassMakeImporterList$2(@Ptr long length);
 	/**
 	 * Original signature : <code>Sass_Importer_Entry sass_importer_get_list_entry(Sass_Importer_List, size_t)</code><br>
-	 * <i>native declaration : ./sass/functions.h:34</i>
+	 * <i>native declaration : ./sass/functions.h:46</i>
 	 */
 	@Name("sass_importer_get_list_entry") 
 	public static LiferaysassLibrary.Sass_Importer_Entry sassImporterGetListEntry(Pointer<Pointer<LiferaysassLibrary.Sass_Importer > > list, @Ptr long idx) {
@@ -915,7 +946,7 @@ public class LiferaysassLibrary {
 	protected native static long sassImporterGetListEntry(@Ptr long list, @Ptr long idx);
 	/**
 	 * Original signature : <code>void sass_importer_set_list_entry(Sass_Importer_List, size_t, Sass_Importer_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:35</i>
+	 * <i>native declaration : ./sass/functions.h:47</i>
 	 */
 	@Name("sass_importer_set_list_entry") 
 	public static void sassImporterSetListEntry(Pointer<Pointer<LiferaysassLibrary.Sass_Importer > > list, @Ptr long idx, LiferaysassLibrary.Sass_Importer_Entry entry) {
@@ -924,9 +955,19 @@ public class LiferaysassLibrary {
 	@Name("sass_importer_set_list_entry") 
 	protected native static void sassImporterSetListEntry(@Ptr long list, @Ptr long idx, @Ptr long entry);
 	/**
+	 * Original signature : <code>void sass_delete_importer_list(Sass_Importer_List)</code><br>
+	 * <i>native declaration : ./sass/functions.h:48</i>
+	 */
+	@Name("sass_delete_importer_list") 
+	public static void sassDeleteImporterList(Pointer<Pointer<LiferaysassLibrary.Sass_Importer > > list) {
+		sassDeleteImporterList(Pointer.getPeer(list));
+	}
+	@Name("sass_delete_importer_list") 
+	protected native static void sassDeleteImporterList(@Ptr long list);
+	/**
 	 * The pointer is mostly used to store the callback into the actual binding<br>
 	 * Original signature : <code>Sass_Importer_Entry sass_make_importer(Sass_Importer_Fn, double, void*)</code><br>
-	 * <i>native declaration : ./sass/functions.h:40</i>
+	 * <i>native declaration : ./sass/functions.h:53</i>
 	 */
 	@Name("sass_make_importer") 
 	public static LiferaysassLibrary.Sass_Importer_Entry sassMakeImporter(Pointer<LiferaysassLibrary.Sass_Importer_Fn > importer, double priority, Pointer<? > cookie) {
@@ -938,7 +979,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters for import function descriptors<br>
 	 * Original signature : <code>Sass_Importer_Fn sass_importer_get_function(Sass_Importer_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:43</i>
+	 * <i>native declaration : ./sass/functions.h:56</i>
 	 */
 	@Name("sass_importer_get_function") 
 	public static Pointer<LiferaysassLibrary.Sass_Importer_Fn > sassImporterGetFunction(LiferaysassLibrary.Sass_Importer_Entry cb) {
@@ -949,7 +990,7 @@ public class LiferaysassLibrary {
 	protected native static long sassImporterGetFunction(@Ptr long cb);
 	/**
 	 * Original signature : <code>double sass_importer_get_priority(Sass_Importer_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:44</i>
+	 * <i>native declaration : ./sass/functions.h:57</i>
 	 */
 	@Name("sass_importer_get_priority") 
 	public static double sassImporterGetPriority(LiferaysassLibrary.Sass_Importer_Entry cb) {
@@ -959,7 +1000,7 @@ public class LiferaysassLibrary {
 	protected native static double sassImporterGetPriority(@Ptr long cb);
 	/**
 	 * Original signature : <code>void* sass_importer_get_cookie(Sass_Importer_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:45</i>
+	 * <i>native declaration : ./sass/functions.h:58</i>
 	 */
 	@Name("sass_importer_get_cookie") 
 	public static Pointer<? > sassImporterGetCookie(LiferaysassLibrary.Sass_Importer_Entry cb) {
@@ -971,7 +1012,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Deallocator for associated memory<br>
 	 * Original signature : <code>void sass_delete_importer(Sass_Importer_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:48</i>
+	 * <i>native declaration : ./sass/functions.h:61</i>
 	 */
 	@Name("sass_delete_importer") 
 	public static void sassDeleteImporter(LiferaysassLibrary.Sass_Importer_Entry cb) {
@@ -982,7 +1023,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Creator for sass custom importer return argument list<br>
 	 * Original signature : <code>Sass_Import_List sass_make_import_list(size_t)</code><br>
-	 * <i>native declaration : ./sass/functions.h:51</i>
+	 * <i>native declaration : ./sass/functions.h:64</i>
 	 */
 	@Name("sass_make_import_list") 
 	public static Pointer<Pointer<LiferaysassLibrary.Sass_Import > > sassMakeImportList(@Ptr long length) {
@@ -994,7 +1035,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Creator for a single import entry returned by the custom importer inside the list<br>
 	 * Original signature : <code>Sass_Import_Entry sass_make_import_entry(const char*, char*, char*)</code><br>
-	 * <i>native declaration : ./sass/functions.h:53</i>
+	 * <i>native declaration : ./sass/functions.h:66</i>
 	 */
 	@Name("sass_make_import_entry") 
 	public static LiferaysassLibrary.Sass_Import_Entry sassMakeImportEntry(Pointer<Byte > path, Pointer<Byte > source, Pointer<Byte > srcmap) {
@@ -1005,7 +1046,7 @@ public class LiferaysassLibrary {
 	protected native static long sassMakeImportEntry(@Ptr long path, @Ptr long source, @Ptr long srcmap);
 	/**
 	 * Original signature : <code>Sass_Import_Entry sass_make_import(const char*, const char*, char*, char*)</code><br>
-	 * <i>native declaration : ./sass/functions.h:54</i>
+	 * <i>native declaration : ./sass/functions.h:67</i>
 	 */
 	@Name("sass_make_import") 
 	public static LiferaysassLibrary.Sass_Import_Entry sassMakeImport(Pointer<Byte > imp_path, Pointer<Byte > abs_base, Pointer<Byte > source, Pointer<Byte > srcmap) {
@@ -1017,7 +1058,7 @@ public class LiferaysassLibrary {
 	/**
 	 * set error message to abort import and to print out a message (path from existing object is used in output)<br>
 	 * Original signature : <code>Sass_Import_Entry sass_import_set_error(Sass_Import_Entry, const char*, size_t, size_t)</code><br>
-	 * <i>native declaration : ./sass/functions.h:56</i>
+	 * <i>native declaration : ./sass/functions.h:69</i>
 	 */
 	@Name("sass_import_set_error") 
 	public static LiferaysassLibrary.Sass_Import_Entry sassImportSetError(LiferaysassLibrary.Sass_Import_Entry import$, Pointer<Byte > message, @Ptr long line, @Ptr long col) {
@@ -1029,7 +1070,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Since we are dealing with pointers they should have a guaranteed and fixed size<br>
 	 * Original signature : <code>void sass_import_set_list_entry(Sass_Import_List, size_t, Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:60</i>
+	 * <i>native declaration : ./sass/functions.h:73</i>
 	 */
 	@Name("sass_import_set_list_entry") 
 	public static void sassImportSetListEntry(Pointer<Pointer<LiferaysassLibrary.Sass_Import > > list, @Ptr long idx, LiferaysassLibrary.Sass_Import_Entry entry) {
@@ -1039,7 +1080,7 @@ public class LiferaysassLibrary {
 	protected native static void sassImportSetListEntry(@Ptr long list, @Ptr long idx, @Ptr long entry);
 	/**
 	 * Original signature : <code>Sass_Import_Entry sass_import_get_list_entry(Sass_Import_List, size_t)</code><br>
-	 * <i>native declaration : ./sass/functions.h:61</i>
+	 * <i>native declaration : ./sass/functions.h:74</i>
 	 */
 	@Name("sass_import_get_list_entry") 
 	public static LiferaysassLibrary.Sass_Import_Entry sassImportGetListEntry(Pointer<Pointer<LiferaysassLibrary.Sass_Import > > list, @Ptr long idx) {
@@ -1049,9 +1090,141 @@ public class LiferaysassLibrary {
 	@Ptr 
 	protected native static long sassImportGetListEntry(@Ptr long list, @Ptr long idx);
 	/**
+	 * Getters for callee entry<br>
+	 * Original signature : <code>char* sass_callee_get_name(Sass_Callee_Entry)</code><br>
+	 * <i>native declaration : ./sass/functions.h:77</i>
+	 */
+	@Name("sass_callee_get_name") 
+	public static Pointer<Byte > sassCalleeGetName(LiferaysassLibrary.Sass_Callee_Entry Sass_Callee_Entry1) {
+		return (Pointer)Pointer.pointerToAddress(sassCalleeGetName(Pointer.getPeer(Sass_Callee_Entry1)), Byte.class);
+	}
+	@Name("sass_callee_get_name") 
+	@Ptr 
+	protected native static long sassCalleeGetName(@Ptr long Sass_Callee_Entry1);
+	/**
+	 * Original signature : <code>char* sass_callee_get_path(Sass_Callee_Entry)</code><br>
+	 * <i>native declaration : ./sass/functions.h:78</i>
+	 */
+	@Name("sass_callee_get_path") 
+	public static Pointer<Byte > sassCalleeGetPath(LiferaysassLibrary.Sass_Callee_Entry Sass_Callee_Entry1) {
+		return (Pointer)Pointer.pointerToAddress(sassCalleeGetPath(Pointer.getPeer(Sass_Callee_Entry1)), Byte.class);
+	}
+	@Name("sass_callee_get_path") 
+	@Ptr 
+	protected native static long sassCalleeGetPath(@Ptr long Sass_Callee_Entry1);
+	/**
+	 * Original signature : <code>size_t sass_callee_get_line(Sass_Callee_Entry)</code><br>
+	 * <i>native declaration : ./sass/functions.h:79</i>
+	 */
+	@Name("sass_callee_get_line") 
+	@Ptr 
+	public static long sassCalleeGetLine(LiferaysassLibrary.Sass_Callee_Entry Sass_Callee_Entry1) {
+		return sassCalleeGetLine(Pointer.getPeer(Sass_Callee_Entry1));
+	}
+	@Name("sass_callee_get_line") 
+	@Ptr 
+	protected native static long sassCalleeGetLine(@Ptr long Sass_Callee_Entry1);
+	/**
+	 * Original signature : <code>size_t sass_callee_get_column(Sass_Callee_Entry)</code><br>
+	 * <i>native declaration : ./sass/functions.h:80</i>
+	 */
+	@Name("sass_callee_get_column") 
+	@Ptr 
+	public static long sassCalleeGetColumn(LiferaysassLibrary.Sass_Callee_Entry Sass_Callee_Entry1) {
+		return sassCalleeGetColumn(Pointer.getPeer(Sass_Callee_Entry1));
+	}
+	@Name("sass_callee_get_column") 
+	@Ptr 
+	protected native static long sassCalleeGetColumn(@Ptr long Sass_Callee_Entry1);
+	/**
+	 * Original signature : <code>Sass_Callee_Type sass_callee_get_type(Sass_Callee_Entry)</code><br>
+	 * <i>native declaration : ./sass/functions.h:81</i>
+	 */
+	@Name("sass_callee_get_type") 
+	public static IntValuedEnum<LiferaysassLibrary.Sass_Callee_Type > sassCalleeGetType(LiferaysassLibrary.Sass_Callee_Entry Sass_Callee_Entry1) {
+		return FlagSet.fromValue(sassCalleeGetType(Pointer.getPeer(Sass_Callee_Entry1)), LiferaysassLibrary.Sass_Callee_Type.class);
+	}
+	@Name("sass_callee_get_type") 
+	protected native static int sassCalleeGetType(@Ptr long Sass_Callee_Entry1);
+	/**
+	 * Original signature : <code>Sass_Env_Frame sass_callee_get_env(Sass_Callee_Entry)</code><br>
+	 * <i>native declaration : ./sass/functions.h:82</i>
+	 */
+	@Name("sass_callee_get_env") 
+	public static LiferaysassLibrary.Sass_Env_Frame sassCalleeGetEnv(LiferaysassLibrary.Sass_Callee_Entry Sass_Callee_Entry1) {
+		return new LiferaysassLibrary.Sass_Env_Frame(sassCalleeGetEnv(Pointer.getPeer(Sass_Callee_Entry1)));
+	}
+	@Name("sass_callee_get_env") 
+	@Ptr 
+	protected native static long sassCalleeGetEnv(@Ptr long Sass_Callee_Entry1);
+	/**
+	 * Getters and Setters for environments (lexical, local and global)<br>
+	 * Original signature : <code>Sass_Value* sass_env_get_lexical(Sass_Env_Frame, const char*)</code><br>
+	 * <i>native declaration : ./sass/functions.h:85</i>
+	 */
+	@Name("sass_env_get_lexical") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassEnvGetLexical(LiferaysassLibrary.Sass_Env_Frame Sass_Env_Frame1, Pointer<Byte > charPtr1) {
+		return (Pointer)Pointer.pointerToAddress(sassEnvGetLexical(Pointer.getPeer(Sass_Env_Frame1), Pointer.getPeer(charPtr1)), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_env_get_lexical") 
+	@Ptr 
+	protected native static long sassEnvGetLexical(@Ptr long Sass_Env_Frame1, @Ptr long charPtr1);
+	/**
+	 * Original signature : <code>void sass_env_set_lexical(Sass_Env_Frame, const char*, Sass_Value*)</code><br>
+	 * <i>native declaration : ./sass/functions.h:86</i>
+	 */
+	@Name("sass_env_set_lexical") 
+	public static void sassEnvSetLexical(LiferaysassLibrary.Sass_Env_Frame Sass_Env_Frame1, Pointer<Byte > charPtr1, Pointer<LiferaysassLibrary.Sass_Value > Sass_ValuePtr1) {
+		sassEnvSetLexical(Pointer.getPeer(Sass_Env_Frame1), Pointer.getPeer(charPtr1), Pointer.getPeer(Sass_ValuePtr1));
+	}
+	@Name("sass_env_set_lexical") 
+	protected native static void sassEnvSetLexical(@Ptr long Sass_Env_Frame1, @Ptr long charPtr1, @Ptr long Sass_ValuePtr1);
+	/**
+	 * Original signature : <code>Sass_Value* sass_env_get_local(Sass_Env_Frame, const char*)</code><br>
+	 * <i>native declaration : ./sass/functions.h:87</i>
+	 */
+	@Name("sass_env_get_local") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassEnvGetLocal(LiferaysassLibrary.Sass_Env_Frame Sass_Env_Frame1, Pointer<Byte > charPtr1) {
+		return (Pointer)Pointer.pointerToAddress(sassEnvGetLocal(Pointer.getPeer(Sass_Env_Frame1), Pointer.getPeer(charPtr1)), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_env_get_local") 
+	@Ptr 
+	protected native static long sassEnvGetLocal(@Ptr long Sass_Env_Frame1, @Ptr long charPtr1);
+	/**
+	 * Original signature : <code>void sass_env_set_local(Sass_Env_Frame, const char*, Sass_Value*)</code><br>
+	 * <i>native declaration : ./sass/functions.h:88</i>
+	 */
+	@Name("sass_env_set_local") 
+	public static void sassEnvSetLocal(LiferaysassLibrary.Sass_Env_Frame Sass_Env_Frame1, Pointer<Byte > charPtr1, Pointer<LiferaysassLibrary.Sass_Value > Sass_ValuePtr1) {
+		sassEnvSetLocal(Pointer.getPeer(Sass_Env_Frame1), Pointer.getPeer(charPtr1), Pointer.getPeer(Sass_ValuePtr1));
+	}
+	@Name("sass_env_set_local") 
+	protected native static void sassEnvSetLocal(@Ptr long Sass_Env_Frame1, @Ptr long charPtr1, @Ptr long Sass_ValuePtr1);
+	/**
+	 * Original signature : <code>Sass_Value* sass_env_get_global(Sass_Env_Frame, const char*)</code><br>
+	 * <i>native declaration : ./sass/functions.h:89</i>
+	 */
+	@Name("sass_env_get_global") 
+	public static Pointer<LiferaysassLibrary.Sass_Value > sassEnvGetGlobal(LiferaysassLibrary.Sass_Env_Frame Sass_Env_Frame1, Pointer<Byte > charPtr1) {
+		return (Pointer)Pointer.pointerToAddress(sassEnvGetGlobal(Pointer.getPeer(Sass_Env_Frame1), Pointer.getPeer(charPtr1)), LiferaysassLibrary.Sass_Value.class);
+	}
+	@Name("sass_env_get_global") 
+	@Ptr 
+	protected native static long sassEnvGetGlobal(@Ptr long Sass_Env_Frame1, @Ptr long charPtr1);
+	/**
+	 * Original signature : <code>void sass_env_set_global(Sass_Env_Frame, const char*, Sass_Value*)</code><br>
+	 * <i>native declaration : ./sass/functions.h:90</i>
+	 */
+	@Name("sass_env_set_global") 
+	public static void sassEnvSetGlobal(LiferaysassLibrary.Sass_Env_Frame Sass_Env_Frame1, Pointer<Byte > charPtr1, Pointer<LiferaysassLibrary.Sass_Value > Sass_ValuePtr1) {
+		sassEnvSetGlobal(Pointer.getPeer(Sass_Env_Frame1), Pointer.getPeer(charPtr1), Pointer.getPeer(Sass_ValuePtr1));
+	}
+	@Name("sass_env_set_global") 
+	protected native static void sassEnvSetGlobal(@Ptr long Sass_Env_Frame1, @Ptr long charPtr1, @Ptr long Sass_ValuePtr1);
+	/**
 	 * Getters for import entry<br>
 	 * Original signature : <code>char* sass_import_get_imp_path(Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:64</i>
+	 * <i>native declaration : ./sass/functions.h:93</i>
 	 */
 	@Name("sass_import_get_imp_path") 
 	public static Pointer<Byte > sassImportGetImpPath(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1) {
@@ -1062,7 +1235,7 @@ public class LiferaysassLibrary {
 	protected native static long sassImportGetImpPath(@Ptr long Sass_Import_Entry1);
 	/**
 	 * Original signature : <code>char* sass_import_get_abs_path(Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:65</i>
+	 * <i>native declaration : ./sass/functions.h:94</i>
 	 */
 	@Name("sass_import_get_abs_path") 
 	public static Pointer<Byte > sassImportGetAbsPath(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1) {
@@ -1073,7 +1246,7 @@ public class LiferaysassLibrary {
 	protected native static long sassImportGetAbsPath(@Ptr long Sass_Import_Entry1);
 	/**
 	 * Original signature : <code>char* sass_import_get_source(Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:66</i>
+	 * <i>native declaration : ./sass/functions.h:95</i>
 	 */
 	@Name("sass_import_get_source") 
 	public static Pointer<Byte > sassImportGetSource(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1) {
@@ -1084,7 +1257,7 @@ public class LiferaysassLibrary {
 	protected native static long sassImportGetSource(@Ptr long Sass_Import_Entry1);
 	/**
 	 * Original signature : <code>char* sass_import_get_srcmap(Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:67</i>
+	 * <i>native declaration : ./sass/functions.h:96</i>
 	 */
 	@Name("sass_import_get_srcmap") 
 	public static Pointer<Byte > sassImportGetSrcmap(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1) {
@@ -1096,7 +1269,7 @@ public class LiferaysassLibrary {
 	/**
 	 * The property on our struct will be reset to NULL<br>
 	 * Original signature : <code>char* sass_import_take_source(Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:70</i>
+	 * <i>native declaration : ./sass/functions.h:99</i>
 	 */
 	@Name("sass_import_take_source") 
 	public static Pointer<Byte > sassImportTakeSource(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1) {
@@ -1107,7 +1280,7 @@ public class LiferaysassLibrary {
 	protected native static long sassImportTakeSource(@Ptr long Sass_Import_Entry1);
 	/**
 	 * Original signature : <code>char* sass_import_take_srcmap(Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:71</i>
+	 * <i>native declaration : ./sass/functions.h:100</i>
 	 */
 	@Name("sass_import_take_srcmap") 
 	public static Pointer<Byte > sassImportTakeSrcmap(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1) {
@@ -1119,7 +1292,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters from import error entry<br>
 	 * Original signature : <code>size_t sass_import_get_error_line(Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:73</i>
+	 * <i>native declaration : ./sass/functions.h:102</i>
 	 */
 	@Name("sass_import_get_error_line") 
 	@Ptr 
@@ -1131,7 +1304,7 @@ public class LiferaysassLibrary {
 	protected native static long sassImportGetErrorLine(@Ptr long Sass_Import_Entry1);
 	/**
 	 * Original signature : <code>size_t sass_import_get_error_column(Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:74</i>
+	 * <i>native declaration : ./sass/functions.h:103</i>
 	 */
 	@Name("sass_import_get_error_column") 
 	@Ptr 
@@ -1143,7 +1316,7 @@ public class LiferaysassLibrary {
 	protected native static long sassImportGetErrorColumn(@Ptr long Sass_Import_Entry1);
 	/**
 	 * Original signature : <code>char* sass_import_get_error_message(Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:75</i>
+	 * <i>native declaration : ./sass/functions.h:104</i>
 	 */
 	@Name("sass_import_get_error_message") 
 	public static Pointer<Byte > sassImportGetErrorMessage(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1) {
@@ -1155,7 +1328,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Deallocator for associated memory (incl. entries)<br>
 	 * Original signature : <code>void sass_delete_import_list(Sass_Import_List)</code><br>
-	 * <i>native declaration : ./sass/functions.h:78</i>
+	 * <i>native declaration : ./sass/functions.h:107</i>
 	 */
 	@Name("sass_delete_import_list") 
 	public static void sassDeleteImportList(Pointer<Pointer<LiferaysassLibrary.Sass_Import > > Sass_Import_List1) {
@@ -1166,7 +1339,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Just in case we have some stray import structs<br>
 	 * Original signature : <code>void sass_delete_import(Sass_Import_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:80</i>
+	 * <i>native declaration : ./sass/functions.h:109</i>
 	 */
 	@Name("sass_delete_import") 
 	public static void sassDeleteImport(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1) {
@@ -1177,7 +1350,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Creators for sass function list and function descriptors<br>
 	 * Original signature : <code>Sass_Function_List sass_make_function_list(size_t)</code><br>
-	 * <i>native declaration : ./sass/functions.h:85</i>
+	 * <i>native declaration : ./sass/functions.h:114</i>
 	 */
 	@Name("sass_make_function_list") 
 	public static Pointer<Pointer<LiferaysassLibrary.Sass_Function > > sassMakeFunctionList(@Ptr long length) {
@@ -1188,7 +1361,7 @@ public class LiferaysassLibrary {
 	protected native static long sassMakeFunctionList$2(@Ptr long length);
 	/**
 	 * Original signature : <code>Sass_Function_Entry sass_make_function(const char*, Sass_Function_Fn, void*)</code><br>
-	 * <i>native declaration : ./sass/functions.h:86</i>
+	 * <i>native declaration : ./sass/functions.h:115</i>
 	 */
 	@Name("sass_make_function") 
 	public static LiferaysassLibrary.Sass_Function_Entry sassMakeFunction(Pointer<Byte > signature, Pointer<LiferaysassLibrary.Sass_Function_Fn > cb, Pointer<? > cookie) {
@@ -1198,9 +1371,29 @@ public class LiferaysassLibrary {
 	@Ptr 
 	protected native static long sassMakeFunction(@Ptr long signature, @Ptr long cb, @Ptr long cookie);
 	/**
+	 * Original signature : <code>void sass_delete_function(Sass_Function_Entry)</code><br>
+	 * <i>native declaration : ./sass/functions.h:116</i>
+	 */
+	@Name("sass_delete_function") 
+	public static void sassDeleteFunction(LiferaysassLibrary.Sass_Function_Entry entry) {
+		sassDeleteFunction(Pointer.getPeer(entry));
+	}
+	@Name("sass_delete_function") 
+	protected native static void sassDeleteFunction(@Ptr long entry);
+	/**
+	 * Original signature : <code>void sass_delete_function_list(Sass_Function_List)</code><br>
+	 * <i>native declaration : ./sass/functions.h:117</i>
+	 */
+	@Name("sass_delete_function_list") 
+	public static void sassDeleteFunctionList(Pointer<Pointer<LiferaysassLibrary.Sass_Function > > list) {
+		sassDeleteFunctionList(Pointer.getPeer(list));
+	}
+	@Name("sass_delete_function_list") 
+	protected native static void sassDeleteFunctionList(@Ptr long list);
+	/**
 	 * Setters and getters for callbacks on function lists<br>
 	 * Original signature : <code>Sass_Function_Entry sass_function_get_list_entry(Sass_Function_List, size_t)</code><br>
-	 * <i>native declaration : ./sass/functions.h:89</i>
+	 * <i>native declaration : ./sass/functions.h:120</i>
 	 */
 	@Name("sass_function_get_list_entry") 
 	public static LiferaysassLibrary.Sass_Function_Entry sassFunctionGetListEntry(Pointer<Pointer<LiferaysassLibrary.Sass_Function > > list, @Ptr long pos) {
@@ -1211,7 +1404,7 @@ public class LiferaysassLibrary {
 	protected native static long sassFunctionGetListEntry(@Ptr long list, @Ptr long pos);
 	/**
 	 * Original signature : <code>void sass_function_set_list_entry(Sass_Function_List, size_t, Sass_Function_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:90</i>
+	 * <i>native declaration : ./sass/functions.h:121</i>
 	 */
 	@Name("sass_function_set_list_entry") 
 	public static void sassFunctionSetListEntry(Pointer<Pointer<LiferaysassLibrary.Sass_Function > > list, @Ptr long pos, LiferaysassLibrary.Sass_Function_Entry cb) {
@@ -1222,7 +1415,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters for custom function descriptors<br>
 	 * Original signature : <code>char* sass_function_get_signature(Sass_Function_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:93</i>
+	 * <i>native declaration : ./sass/functions.h:124</i>
 	 */
 	@Name("sass_function_get_signature") 
 	public static Pointer<Byte > sassFunctionGetSignature(LiferaysassLibrary.Sass_Function_Entry cb) {
@@ -1233,7 +1426,7 @@ public class LiferaysassLibrary {
 	protected native static long sassFunctionGetSignature(@Ptr long cb);
 	/**
 	 * Original signature : <code>Sass_Function_Fn sass_function_get_function(Sass_Function_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:94</i>
+	 * <i>native declaration : ./sass/functions.h:125</i>
 	 */
 	@Name("sass_function_get_function") 
 	public static Pointer<LiferaysassLibrary.Sass_Function_Fn > sassFunctionGetFunction(LiferaysassLibrary.Sass_Function_Entry cb) {
@@ -1244,7 +1437,7 @@ public class LiferaysassLibrary {
 	protected native static long sassFunctionGetFunction(@Ptr long cb);
 	/**
 	 * Original signature : <code>void* sass_function_get_cookie(Sass_Function_Entry)</code><br>
-	 * <i>native declaration : ./sass/functions.h:95</i>
+	 * <i>native declaration : ./sass/functions.h:126</i>
 	 */
 	@Name("sass_function_get_cookie") 
 	public static Pointer<? > sassFunctionGetCookie(LiferaysassLibrary.Sass_Function_Entry cb) {
@@ -1365,9 +1558,19 @@ public class LiferaysassLibrary {
 	@Name("sass_delete_compiler") 
 	protected native static void sassDeleteCompiler(@Ptr long compiler);
 	/**
+	 * Original signature : <code>void sass_delete_options(Sass_Options*)</code><br>
+	 * <i>native declaration : sass/context.h:52</i>
+	 */
+	@Name("sass_delete_options") 
+	public static void sassDeleteOptions(Pointer<LiferaysassLibrary.Sass_Options > options) {
+		sassDeleteOptions(Pointer.getPeer(options));
+	}
+	@Name("sass_delete_options") 
+	protected native static void sassDeleteOptions(@Ptr long options);
+	/**
 	 * Release all memory allocated and also ourself<br>
 	 * Original signature : <code>void sass_delete_file_context(Sass_File_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:54</i>
+	 * <i>native declaration : sass/context.h:55</i>
 	 */
 	@Name("sass_delete_file_context") 
 	public static void sassDeleteFileContext(Pointer<LiferaysassLibrary.Sass_File_Context > ctx) {
@@ -1377,7 +1580,7 @@ public class LiferaysassLibrary {
 	protected native static void sassDeleteFileContext(@Ptr long ctx);
 	/**
 	 * Original signature : <code>void sass_delete_data_context(Sass_Data_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:55</i>
+	 * <i>native declaration : sass/context.h:56</i>
 	 */
 	@Name("sass_delete_data_context") 
 	public static void sassDeleteDataContext(Pointer<LiferaysassLibrary.Sass_Data_Context > ctx) {
@@ -1388,7 +1591,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters for context from specific implementation<br>
 	 * Original signature : <code>Sass_Context* sass_file_context_get_context(Sass_File_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:58</i>
+	 * <i>native declaration : sass/context.h:59</i>
 	 */
 	@Name("sass_file_context_get_context") 
 	public static Pointer<LiferaysassLibrary.Sass_Context > sassFileContextGetContext(Pointer<LiferaysassLibrary.Sass_File_Context > file_ctx) {
@@ -1399,7 +1602,7 @@ public class LiferaysassLibrary {
 	protected native static long sassFileContextGetContext(@Ptr long file_ctx);
 	/**
 	 * Original signature : <code>Sass_Context* sass_data_context_get_context(Sass_Data_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:59</i>
+	 * <i>native declaration : sass/context.h:60</i>
 	 */
 	@Name("sass_data_context_get_context") 
 	public static Pointer<LiferaysassLibrary.Sass_Context > sassDataContextGetContext(Pointer<LiferaysassLibrary.Sass_Data_Context > data_ctx) {
@@ -1411,7 +1614,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters for Context_Options from Sass_Context<br>
 	 * Original signature : <code>Sass_Options* sass_context_get_options(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:62</i>
+	 * <i>native declaration : sass/context.h:63</i>
 	 */
 	@Name("sass_context_get_options") 
 	public static Pointer<LiferaysassLibrary.Sass_Options > sassContextGetOptions(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1422,7 +1625,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextGetOptions(@Ptr long ctx);
 	/**
 	 * Original signature : <code>Sass_Options* sass_file_context_get_options(Sass_File_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:63</i>
+	 * <i>native declaration : sass/context.h:64</i>
 	 */
 	@Name("sass_file_context_get_options") 
 	public static Pointer<LiferaysassLibrary.Sass_Options > sassFileContextGetOptions(Pointer<LiferaysassLibrary.Sass_File_Context > file_ctx) {
@@ -1433,7 +1636,7 @@ public class LiferaysassLibrary {
 	protected native static long sassFileContextGetOptions(@Ptr long file_ctx);
 	/**
 	 * Original signature : <code>Sass_Options* sass_data_context_get_options(Sass_Data_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:64</i>
+	 * <i>native declaration : sass/context.h:65</i>
 	 */
 	@Name("sass_data_context_get_options") 
 	public static Pointer<LiferaysassLibrary.Sass_Options > sassDataContextGetOptions(Pointer<LiferaysassLibrary.Sass_Data_Context > data_ctx) {
@@ -1444,7 +1647,7 @@ public class LiferaysassLibrary {
 	protected native static long sassDataContextGetOptions(@Ptr long data_ctx);
 	/**
 	 * Original signature : <code>void sass_file_context_set_options(Sass_File_Context*, Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:65</i>
+	 * <i>native declaration : sass/context.h:66</i>
 	 */
 	@Name("sass_file_context_set_options") 
 	public static void sassFileContextSetOptions(Pointer<LiferaysassLibrary.Sass_File_Context > file_ctx, Pointer<LiferaysassLibrary.Sass_Options > opt) {
@@ -1454,7 +1657,7 @@ public class LiferaysassLibrary {
 	protected native static void sassFileContextSetOptions(@Ptr long file_ctx, @Ptr long opt);
 	/**
 	 * Original signature : <code>void sass_data_context_set_options(Sass_Data_Context*, Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:66</i>
+	 * <i>native declaration : sass/context.h:67</i>
 	 */
 	@Name("sass_data_context_set_options") 
 	public static void sassDataContextSetOptions(Pointer<LiferaysassLibrary.Sass_Data_Context > data_ctx, Pointer<LiferaysassLibrary.Sass_Options > opt) {
@@ -1465,7 +1668,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters for Context_Option values<br>
 	 * Original signature : <code>int sass_option_get_precision(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:70</i>
+	 * <i>native declaration : sass/context.h:71</i>
 	 */
 	@Name("sass_option_get_precision") 
 	public static int sassOptionGetPrecision(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1475,7 +1678,7 @@ public class LiferaysassLibrary {
 	protected native static int sassOptionGetPrecision(@Ptr long options);
 	/**
 	 * Original signature : <code>Sass_Output_Style sass_option_get_output_style(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:71</i>
+	 * <i>native declaration : sass/context.h:72</i>
 	 */
 	@Name("sass_option_get_output_style") 
 	public static IntValuedEnum<LiferaysassLibrary.Sass_Output_Style > sassOptionGetOutputStyle(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1485,7 +1688,7 @@ public class LiferaysassLibrary {
 	protected native static int sassOptionGetOutputStyle(@Ptr long options);
 	/**
 	 * Original signature : <code>bool sass_option_get_source_comments(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:72</i>
+	 * <i>native declaration : sass/context.h:73</i>
 	 */
 	@Name("sass_option_get_source_comments") 
 	public static boolean sassOptionGetSourceComments(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1495,7 +1698,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassOptionGetSourceComments(@Ptr long options);
 	/**
 	 * Original signature : <code>bool sass_option_get_source_map_embed(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:73</i>
+	 * <i>native declaration : sass/context.h:74</i>
 	 */
 	@Name("sass_option_get_source_map_embed") 
 	public static boolean sassOptionGetSourceMapEmbed(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1505,7 +1708,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassOptionGetSourceMapEmbed(@Ptr long options);
 	/**
 	 * Original signature : <code>bool sass_option_get_source_map_contents(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:74</i>
+	 * <i>native declaration : sass/context.h:75</i>
 	 */
 	@Name("sass_option_get_source_map_contents") 
 	public static boolean sassOptionGetSourceMapContents(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1514,8 +1717,18 @@ public class LiferaysassLibrary {
 	@Name("sass_option_get_source_map_contents") 
 	protected native static boolean sassOptionGetSourceMapContents(@Ptr long options);
 	/**
+	 * Original signature : <code>bool sass_option_get_source_map_file_urls(Sass_Options*)</code><br>
+	 * <i>native declaration : sass/context.h:76</i>
+	 */
+	@Name("sass_option_get_source_map_file_urls") 
+	public static boolean sassOptionGetSourceMapFileUrls(Pointer<LiferaysassLibrary.Sass_Options > options) {
+		return sassOptionGetSourceMapFileUrls(Pointer.getPeer(options));
+	}
+	@Name("sass_option_get_source_map_file_urls") 
+	protected native static boolean sassOptionGetSourceMapFileUrls(@Ptr long options);
+	/**
 	 * Original signature : <code>bool sass_option_get_omit_source_map_url(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:75</i>
+	 * <i>native declaration : sass/context.h:77</i>
 	 */
 	@Name("sass_option_get_omit_source_map_url") 
 	public static boolean sassOptionGetOmitSourceMapUrl(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1525,7 +1738,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassOptionGetOmitSourceMapUrl(@Ptr long options);
 	/**
 	 * Original signature : <code>bool sass_option_get_is_indented_syntax_src(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:76</i>
+	 * <i>native declaration : sass/context.h:78</i>
 	 */
 	@Name("sass_option_get_is_indented_syntax_src") 
 	public static boolean sassOptionGetIsIndentedSyntaxSrc(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1535,7 +1748,7 @@ public class LiferaysassLibrary {
 	protected native static boolean sassOptionGetIsIndentedSyntaxSrc(@Ptr long options);
 	/**
 	 * Original signature : <code>char* sass_option_get_indent(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:77</i>
+	 * <i>native declaration : sass/context.h:79</i>
 	 */
 	@Name("sass_option_get_indent") 
 	public static Pointer<Byte > sassOptionGetIndent(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1546,7 +1759,7 @@ public class LiferaysassLibrary {
 	protected native static long sassOptionGetIndent(@Ptr long options);
 	/**
 	 * Original signature : <code>char* sass_option_get_linefeed(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:78</i>
+	 * <i>native declaration : sass/context.h:80</i>
 	 */
 	@Name("sass_option_get_linefeed") 
 	public static Pointer<Byte > sassOptionGetLinefeed(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1557,7 +1770,7 @@ public class LiferaysassLibrary {
 	protected native static long sassOptionGetLinefeed(@Ptr long options);
 	/**
 	 * Original signature : <code>char* sass_option_get_input_path(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:79</i>
+	 * <i>native declaration : sass/context.h:81</i>
 	 */
 	@Name("sass_option_get_input_path") 
 	public static Pointer<Byte > sassOptionGetInputPath(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1568,7 +1781,7 @@ public class LiferaysassLibrary {
 	protected native static long sassOptionGetInputPath(@Ptr long options);
 	/**
 	 * Original signature : <code>char* sass_option_get_output_path(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:80</i>
+	 * <i>native declaration : sass/context.h:82</i>
 	 */
 	@Name("sass_option_get_output_path") 
 	public static Pointer<Byte > sassOptionGetOutputPath(Pointer<LiferaysassLibrary.Sass_Options > options) {
@@ -1577,28 +1790,6 @@ public class LiferaysassLibrary {
 	@Name("sass_option_get_output_path") 
 	@Ptr 
 	protected native static long sassOptionGetOutputPath(@Ptr long options);
-	/**
-	 * Original signature : <code>char* sass_option_get_plugin_path(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:81</i>
-	 */
-	@Name("sass_option_get_plugin_path") 
-	public static Pointer<Byte > sassOptionGetPluginPath(Pointer<LiferaysassLibrary.Sass_Options > options) {
-		return (Pointer)Pointer.pointerToAddress(sassOptionGetPluginPath(Pointer.getPeer(options)), Byte.class);
-	}
-	@Name("sass_option_get_plugin_path") 
-	@Ptr 
-	protected native static long sassOptionGetPluginPath(@Ptr long options);
-	/**
-	 * Original signature : <code>char* sass_option_get_include_path(Sass_Options*)</code><br>
-	 * <i>native declaration : sass/context.h:82</i>
-	 */
-	@Name("sass_option_get_include_path") 
-	public static Pointer<Byte > sassOptionGetIncludePath(Pointer<LiferaysassLibrary.Sass_Options > options) {
-		return (Pointer)Pointer.pointerToAddress(sassOptionGetIncludePath(Pointer.getPeer(options)), Byte.class);
-	}
-	@Name("sass_option_get_include_path") 
-	@Ptr 
-	protected native static long sassOptionGetIncludePath(@Ptr long options);
 	/**
 	 * Original signature : <code>char* sass_option_get_source_map_file(Sass_Options*)</code><br>
 	 * <i>native declaration : sass/context.h:83</i>
@@ -1706,8 +1897,18 @@ public class LiferaysassLibrary {
 	@Name("sass_option_set_source_map_contents") 
 	protected native static void sassOptionSetSourceMapContents(@Ptr long options, boolean source_map_contents);
 	/**
-	 * Original signature : <code>void sass_option_set_omit_source_map_url(Sass_Options*, bool)</code><br>
+	 * Original signature : <code>void sass_option_set_source_map_file_urls(Sass_Options*, bool)</code><br>
 	 * <i>native declaration : sass/context.h:95</i>
+	 */
+	@Name("sass_option_set_source_map_file_urls") 
+	public static void sassOptionSetSourceMapFileUrls(Pointer<LiferaysassLibrary.Sass_Options > options, boolean source_map_file_urls) {
+		sassOptionSetSourceMapFileUrls(Pointer.getPeer(options), source_map_file_urls);
+	}
+	@Name("sass_option_set_source_map_file_urls") 
+	protected native static void sassOptionSetSourceMapFileUrls(@Ptr long options, boolean source_map_file_urls);
+	/**
+	 * Original signature : <code>void sass_option_set_omit_source_map_url(Sass_Options*, bool)</code><br>
+	 * <i>native declaration : sass/context.h:96</i>
 	 */
 	@Name("sass_option_set_omit_source_map_url") 
 	public static void sassOptionSetOmitSourceMapUrl(Pointer<LiferaysassLibrary.Sass_Options > options, boolean omit_source_map_url) {
@@ -1717,7 +1918,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetOmitSourceMapUrl(@Ptr long options, boolean omit_source_map_url);
 	/**
 	 * Original signature : <code>void sass_option_set_is_indented_syntax_src(Sass_Options*, bool)</code><br>
-	 * <i>native declaration : sass/context.h:96</i>
+	 * <i>native declaration : sass/context.h:97</i>
 	 */
 	@Name("sass_option_set_is_indented_syntax_src") 
 	public static void sassOptionSetIsIndentedSyntaxSrc(Pointer<LiferaysassLibrary.Sass_Options > options, boolean is_indented_syntax_src) {
@@ -1727,7 +1928,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetIsIndentedSyntaxSrc(@Ptr long options, boolean is_indented_syntax_src);
 	/**
 	 * Original signature : <code>void sass_option_set_indent(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass/context.h:97</i>
+	 * <i>native declaration : sass/context.h:98</i>
 	 */
 	@Name("sass_option_set_indent") 
 	public static void sassOptionSetIndent(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Byte > indent) {
@@ -1737,7 +1938,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetIndent(@Ptr long options, @Ptr long indent);
 	/**
 	 * Original signature : <code>void sass_option_set_linefeed(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass/context.h:98</i>
+	 * <i>native declaration : sass/context.h:99</i>
 	 */
 	@Name("sass_option_set_linefeed") 
 	public static void sassOptionSetLinefeed(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Byte > linefeed) {
@@ -1747,7 +1948,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetLinefeed(@Ptr long options, @Ptr long linefeed);
 	/**
 	 * Original signature : <code>void sass_option_set_input_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass/context.h:99</i>
+	 * <i>native declaration : sass/context.h:100</i>
 	 */
 	@Name("sass_option_set_input_path") 
 	public static void sassOptionSetInputPath(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Byte > input_path) {
@@ -1757,7 +1958,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetInputPath(@Ptr long options, @Ptr long input_path);
 	/**
 	 * Original signature : <code>void sass_option_set_output_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass/context.h:100</i>
+	 * <i>native declaration : sass/context.h:101</i>
 	 */
 	@Name("sass_option_set_output_path") 
 	public static void sassOptionSetOutputPath(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Byte > output_path) {
@@ -1767,7 +1968,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetOutputPath(@Ptr long options, @Ptr long output_path);
 	/**
 	 * Original signature : <code>void sass_option_set_plugin_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass/context.h:101</i>
+	 * <i>native declaration : sass/context.h:102</i>
 	 */
 	@Name("sass_option_set_plugin_path") 
 	public static void sassOptionSetPluginPath(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Byte > plugin_path) {
@@ -1777,7 +1978,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetPluginPath(@Ptr long options, @Ptr long plugin_path);
 	/**
 	 * Original signature : <code>void sass_option_set_include_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass/context.h:102</i>
+	 * <i>native declaration : sass/context.h:103</i>
 	 */
 	@Name("sass_option_set_include_path") 
 	public static void sassOptionSetIncludePath(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Byte > include_path) {
@@ -1787,7 +1988,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetIncludePath(@Ptr long options, @Ptr long include_path);
 	/**
 	 * Original signature : <code>void sass_option_set_source_map_file(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass/context.h:103</i>
+	 * <i>native declaration : sass/context.h:104</i>
 	 */
 	@Name("sass_option_set_source_map_file") 
 	public static void sassOptionSetSourceMapFile(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Byte > source_map_file) {
@@ -1797,7 +1998,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetSourceMapFile(@Ptr long options, @Ptr long source_map_file);
 	/**
 	 * Original signature : <code>void sass_option_set_source_map_root(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass/context.h:104</i>
+	 * <i>native declaration : sass/context.h:105</i>
 	 */
 	@Name("sass_option_set_source_map_root") 
 	public static void sassOptionSetSourceMapRoot(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Byte > source_map_root) {
@@ -1807,7 +2008,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetSourceMapRoot(@Ptr long options, @Ptr long source_map_root);
 	/**
 	 * Original signature : <code>void sass_option_set_c_headers(Sass_Options*, Sass_Importer_List)</code><br>
-	 * <i>native declaration : sass/context.h:105</i>
+	 * <i>native declaration : sass/context.h:106</i>
 	 */
 	@Name("sass_option_set_c_headers") 
 	public static void sassOptionSetCHeaders(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Pointer<LiferaysassLibrary.Sass_Importer > > c_headers) {
@@ -1817,7 +2018,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetCHeaders(@Ptr long options, @Ptr long c_headers);
 	/**
 	 * Original signature : <code>void sass_option_set_c_importers(Sass_Options*, Sass_Importer_List)</code><br>
-	 * <i>native declaration : sass/context.h:106</i>
+	 * <i>native declaration : sass/context.h:107</i>
 	 */
 	@Name("sass_option_set_c_importers") 
 	public static void sassOptionSetCImporters(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Pointer<LiferaysassLibrary.Sass_Importer > > c_importers) {
@@ -1827,7 +2028,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionSetCImporters(@Ptr long options, @Ptr long c_importers);
 	/**
 	 * Original signature : <code>void sass_option_set_c_functions(Sass_Options*, Sass_Function_List)</code><br>
-	 * <i>native declaration : sass/context.h:107</i>
+	 * <i>native declaration : sass/context.h:108</i>
 	 */
 	@Name("sass_option_set_c_functions") 
 	public static void sassOptionSetCFunctions(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Pointer<LiferaysassLibrary.Sass_Function > > c_functions) {
@@ -1838,7 +2039,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters for Sass_Context values<br>
 	 * Original signature : <code>char* sass_context_get_output_string(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:111</i>
+	 * <i>native declaration : sass/context.h:112</i>
 	 */
 	@Name("sass_context_get_output_string") 
 	public static Pointer<Byte > sassContextGetOutputString(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1849,7 +2050,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextGetOutputString(@Ptr long ctx);
 	/**
 	 * Original signature : <code>int sass_context_get_error_status(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:112</i>
+	 * <i>native declaration : sass/context.h:113</i>
 	 */
 	@Name("sass_context_get_error_status") 
 	public static int sassContextGetErrorStatus(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1859,7 +2060,7 @@ public class LiferaysassLibrary {
 	protected native static int sassContextGetErrorStatus(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_get_error_json(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:113</i>
+	 * <i>native declaration : sass/context.h:114</i>
 	 */
 	@Name("sass_context_get_error_json") 
 	public static Pointer<Byte > sassContextGetErrorJson(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1870,7 +2071,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextGetErrorJson(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_get_error_text(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:114</i>
+	 * <i>native declaration : sass/context.h:115</i>
 	 */
 	@Name("sass_context_get_error_text") 
 	public static Pointer<Byte > sassContextGetErrorText(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1881,7 +2082,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextGetErrorText(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_get_error_message(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:115</i>
+	 * <i>native declaration : sass/context.h:116</i>
 	 */
 	@Name("sass_context_get_error_message") 
 	public static Pointer<Byte > sassContextGetErrorMessage(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1892,7 +2093,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextGetErrorMessage(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_get_error_file(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:116</i>
+	 * <i>native declaration : sass/context.h:117</i>
 	 */
 	@Name("sass_context_get_error_file") 
 	public static Pointer<Byte > sassContextGetErrorFile(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1903,7 +2104,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextGetErrorFile(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_get_error_src(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:117</i>
+	 * <i>native declaration : sass/context.h:118</i>
 	 */
 	@Name("sass_context_get_error_src") 
 	public static Pointer<Byte > sassContextGetErrorSrc(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1914,7 +2115,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextGetErrorSrc(@Ptr long ctx);
 	/**
 	 * Original signature : <code>size_t sass_context_get_error_line(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:118</i>
+	 * <i>native declaration : sass/context.h:119</i>
 	 */
 	@Name("sass_context_get_error_line") 
 	@Ptr 
@@ -1926,7 +2127,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextGetErrorLine(@Ptr long ctx);
 	/**
 	 * Original signature : <code>size_t sass_context_get_error_column(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:119</i>
+	 * <i>native declaration : sass/context.h:120</i>
 	 */
 	@Name("sass_context_get_error_column") 
 	@Ptr 
@@ -1938,7 +2139,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextGetErrorColumn(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_get_source_map_string(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:120</i>
+	 * <i>native declaration : sass/context.h:121</i>
 	 */
 	@Name("sass_context_get_source_map_string") 
 	public static Pointer<Byte > sassContextGetSourceMapString(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1949,7 +2150,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextGetSourceMapString(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char** sass_context_get_included_files(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:121</i>
+	 * <i>native declaration : sass/context.h:122</i>
 	 */
 	@Name("sass_context_get_included_files") 
 	public static Pointer<Pointer<Byte > > sassContextGetIncludedFiles(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1959,9 +2160,33 @@ public class LiferaysassLibrary {
 	@Ptr 
 	protected native static long sassContextGetIncludedFiles(@Ptr long ctx);
 	/**
+	 * Getters for options include path array<br>
+	 * Original signature : <code>size_t sass_option_get_include_path_size(Sass_Options*)</code><br>
+	 * <i>native declaration : sass/context.h:125</i>
+	 */
+	@Name("sass_option_get_include_path_size") 
+	@Ptr 
+	public static long sassOptionGetIncludePathSize(Pointer<LiferaysassLibrary.Sass_Options > options) {
+		return sassOptionGetIncludePathSize(Pointer.getPeer(options));
+	}
+	@Name("sass_option_get_include_path_size") 
+	@Ptr 
+	protected native static long sassOptionGetIncludePathSize(@Ptr long options);
+	/**
+	 * Original signature : <code>char* sass_option_get_include_path(Sass_Options*, size_t)</code><br>
+	 * <i>native declaration : sass/context.h:126</i>
+	 */
+	@Name("sass_option_get_include_path") 
+	public static Pointer<Byte > sassOptionGetIncludePath(Pointer<LiferaysassLibrary.Sass_Options > options, @Ptr long i) {
+		return (Pointer)Pointer.pointerToAddress(sassOptionGetIncludePath(Pointer.getPeer(options), i), Byte.class);
+	}
+	@Name("sass_option_get_include_path") 
+	@Ptr 
+	protected native static long sassOptionGetIncludePath(@Ptr long options, @Ptr long i);
+	/**
 	 * Calculate the size of the stored null terminated array<br>
 	 * Original signature : <code>size_t sass_context_get_included_files_size(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:124</i>
+	 * <i>native declaration : sass/context.h:129</i>
 	 */
 	@Name("sass_context_get_included_files_size") 
 	@Ptr 
@@ -1974,7 +2199,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Take ownership of memory (value on context is set to 0)<br>
 	 * Original signature : <code>char* sass_context_take_error_json(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:127</i>
+	 * <i>native declaration : sass/context.h:132</i>
 	 */
 	@Name("sass_context_take_error_json") 
 	public static Pointer<Byte > sassContextTakeErrorJson(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1985,7 +2210,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextTakeErrorJson(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_take_error_text(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:128</i>
+	 * <i>native declaration : sass/context.h:133</i>
 	 */
 	@Name("sass_context_take_error_text") 
 	public static Pointer<Byte > sassContextTakeErrorText(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -1996,7 +2221,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextTakeErrorText(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_take_error_message(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:129</i>
+	 * <i>native declaration : sass/context.h:134</i>
 	 */
 	@Name("sass_context_take_error_message") 
 	public static Pointer<Byte > sassContextTakeErrorMessage(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -2007,7 +2232,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextTakeErrorMessage(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_take_error_file(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:130</i>
+	 * <i>native declaration : sass/context.h:135</i>
 	 */
 	@Name("sass_context_take_error_file") 
 	public static Pointer<Byte > sassContextTakeErrorFile(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -2018,7 +2243,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextTakeErrorFile(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_take_output_string(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:131</i>
+	 * <i>native declaration : sass/context.h:136</i>
 	 */
 	@Name("sass_context_take_output_string") 
 	public static Pointer<Byte > sassContextTakeOutputString(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -2029,7 +2254,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextTakeOutputString(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char* sass_context_take_source_map_string(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:132</i>
+	 * <i>native declaration : sass/context.h:137</i>
 	 */
 	@Name("sass_context_take_source_map_string") 
 	public static Pointer<Byte > sassContextTakeSourceMapString(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -2040,7 +2265,7 @@ public class LiferaysassLibrary {
 	protected native static long sassContextTakeSourceMapString(@Ptr long ctx);
 	/**
 	 * Original signature : <code>char** sass_context_take_included_files(Sass_Context*)</code><br>
-	 * <i>native declaration : sass/context.h:133</i>
+	 * <i>native declaration : sass/context.h:138</i>
 	 */
 	@Name("sass_context_take_included_files") 
 	public static Pointer<Pointer<Byte > > sassContextTakeIncludedFiles(Pointer<LiferaysassLibrary.Sass_Context > ctx) {
@@ -2052,7 +2277,7 @@ public class LiferaysassLibrary {
 	/**
 	 * Getters for Sass_Compiler options<br>
 	 * Original signature : <code>Sass_Compiler_State sass_compiler_get_state(Sass_Compiler*)</code><br>
-	 * <i>native declaration : sass/context.h:136</i>
+	 * <i>native declaration : sass/context.h:141</i>
 	 */
 	@Name("sass_compiler_get_state") 
 	public static IntValuedEnum<LiferaysassLibrary.Sass_Compiler_State > sassCompilerGetState(Pointer<LiferaysassLibrary.Sass_Compiler > compiler) {
@@ -2062,7 +2287,7 @@ public class LiferaysassLibrary {
 	protected native static int sassCompilerGetState(@Ptr long compiler);
 	/**
 	 * Original signature : <code>Sass_Context* sass_compiler_get_context(Sass_Compiler*)</code><br>
-	 * <i>native declaration : sass/context.h:137</i>
+	 * <i>native declaration : sass/context.h:142</i>
 	 */
 	@Name("sass_compiler_get_context") 
 	public static Pointer<LiferaysassLibrary.Sass_Context > sassCompilerGetContext(Pointer<LiferaysassLibrary.Sass_Compiler > compiler) {
@@ -2073,7 +2298,7 @@ public class LiferaysassLibrary {
 	protected native static long sassCompilerGetContext(@Ptr long compiler);
 	/**
 	 * Original signature : <code>Sass_Options* sass_compiler_get_options(Sass_Compiler*)</code><br>
-	 * <i>native declaration : sass/context.h:138</i>
+	 * <i>native declaration : sass/context.h:143</i>
 	 */
 	@Name("sass_compiler_get_options") 
 	public static Pointer<LiferaysassLibrary.Sass_Options > sassCompilerGetOptions(Pointer<LiferaysassLibrary.Sass_Compiler > compiler) {
@@ -2084,7 +2309,7 @@ public class LiferaysassLibrary {
 	protected native static long sassCompilerGetOptions(@Ptr long compiler);
 	/**
 	 * Original signature : <code>size_t sass_compiler_get_import_stack_size(Sass_Compiler*)</code><br>
-	 * <i>native declaration : sass/context.h:139</i>
+	 * <i>native declaration : sass/context.h:144</i>
 	 */
 	@Name("sass_compiler_get_import_stack_size") 
 	@Ptr 
@@ -2096,7 +2321,7 @@ public class LiferaysassLibrary {
 	protected native static long sassCompilerGetImportStackSize(@Ptr long compiler);
 	/**
 	 * Original signature : <code>Sass_Import_Entry sass_compiler_get_last_import(Sass_Compiler*)</code><br>
-	 * <i>native declaration : sass/context.h:140</i>
+	 * <i>native declaration : sass/context.h:145</i>
 	 */
 	@Name("sass_compiler_get_last_import") 
 	public static LiferaysassLibrary.Sass_Import_Entry sassCompilerGetLastImport(Pointer<LiferaysassLibrary.Sass_Compiler > compiler) {
@@ -2107,7 +2332,7 @@ public class LiferaysassLibrary {
 	protected native static long sassCompilerGetLastImport(@Ptr long compiler);
 	/**
 	 * Original signature : <code>Sass_Import_Entry sass_compiler_get_import_entry(Sass_Compiler*, size_t)</code><br>
-	 * <i>native declaration : sass/context.h:141</i>
+	 * <i>native declaration : sass/context.h:146</i>
 	 */
 	@Name("sass_compiler_get_import_entry") 
 	public static LiferaysassLibrary.Sass_Import_Entry sassCompilerGetImportEntry(Pointer<LiferaysassLibrary.Sass_Compiler > compiler, @Ptr long idx) {
@@ -2117,9 +2342,43 @@ public class LiferaysassLibrary {
 	@Ptr 
 	protected native static long sassCompilerGetImportEntry(@Ptr long compiler, @Ptr long idx);
 	/**
+	 * Original signature : <code>size_t sass_compiler_get_callee_stack_size(Sass_Compiler*)</code><br>
+	 * <i>native declaration : sass/context.h:147</i>
+	 */
+	@Name("sass_compiler_get_callee_stack_size") 
+	@Ptr 
+	public static long sassCompilerGetCalleeStackSize(Pointer<LiferaysassLibrary.Sass_Compiler > compiler) {
+		return sassCompilerGetCalleeStackSize(Pointer.getPeer(compiler));
+	}
+	@Name("sass_compiler_get_callee_stack_size") 
+	@Ptr 
+	protected native static long sassCompilerGetCalleeStackSize(@Ptr long compiler);
+	/**
+	 * Original signature : <code>Sass_Callee_Entry sass_compiler_get_last_callee(Sass_Compiler*)</code><br>
+	 * <i>native declaration : sass/context.h:148</i>
+	 */
+	@Name("sass_compiler_get_last_callee") 
+	public static LiferaysassLibrary.Sass_Callee_Entry sassCompilerGetLastCallee(Pointer<LiferaysassLibrary.Sass_Compiler > compiler) {
+		return new LiferaysassLibrary.Sass_Callee_Entry(sassCompilerGetLastCallee(Pointer.getPeer(compiler)));
+	}
+	@Name("sass_compiler_get_last_callee") 
+	@Ptr 
+	protected native static long sassCompilerGetLastCallee(@Ptr long compiler);
+	/**
+	 * Original signature : <code>Sass_Callee_Entry sass_compiler_get_callee_entry(Sass_Compiler*, size_t)</code><br>
+	 * <i>native declaration : sass/context.h:149</i>
+	 */
+	@Name("sass_compiler_get_callee_entry") 
+	public static LiferaysassLibrary.Sass_Callee_Entry sassCompilerGetCalleeEntry(Pointer<LiferaysassLibrary.Sass_Compiler > compiler, @Ptr long idx) {
+		return new LiferaysassLibrary.Sass_Callee_Entry(sassCompilerGetCalleeEntry(Pointer.getPeer(compiler), idx));
+	}
+	@Name("sass_compiler_get_callee_entry") 
+	@Ptr 
+	protected native static long sassCompilerGetCalleeEntry(@Ptr long compiler, @Ptr long idx);
+	/**
 	 * Push function for paths (no manipulation support for now)<br>
 	 * Original signature : <code>void sass_option_push_plugin_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass/context.h:144</i>
+	 * <i>native declaration : sass/context.h:152</i>
 	 */
 	@Name("sass_option_push_plugin_path") 
 	public static void sassOptionPushPluginPath(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Byte > path) {
@@ -2129,7 +2388,7 @@ public class LiferaysassLibrary {
 	protected native static void sassOptionPushPluginPath(@Ptr long options, @Ptr long path);
 	/**
 	 * Original signature : <code>void sass_option_push_include_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass/context.h:145</i>
+	 * <i>native declaration : sass/context.h:153</i>
 	 */
 	@Name("sass_option_push_include_path") 
 	public static void sassOptionPushIncludePath(Pointer<LiferaysassLibrary.Sass_Options > options, Pointer<Byte > path) {
@@ -2137,6 +2396,60 @@ public class LiferaysassLibrary {
 	}
 	@Name("sass_option_push_include_path") 
 	protected native static void sassOptionPushIncludePath(@Ptr long options, @Ptr long path);
+	/**
+	 * find_file looks for the exact file name while find_include does a regular sass include<br>
+	 * Original signature : <code>char* sass_find_file(const char*, Sass_Options*)</code><br>
+	 * <i>native declaration : sass/context.h:157</i>
+	 */
+	@Name("sass_find_file") 
+	public static Pointer<Byte > sassFindFile(Pointer<Byte > path, Pointer<LiferaysassLibrary.Sass_Options > opt) {
+		return (Pointer)Pointer.pointerToAddress(sassFindFile(Pointer.getPeer(path), Pointer.getPeer(opt)), Byte.class);
+	}
+	@Name("sass_find_file") 
+	@Ptr 
+	protected native static long sassFindFile(@Ptr long path, @Ptr long opt);
+	/**
+	 * Original signature : <code>char* sass_find_include(const char*, Sass_Options*)</code><br>
+	 * <i>native declaration : sass/context.h:158</i>
+	 */
+	@Name("sass_find_include") 
+	public static Pointer<Byte > sassFindInclude(Pointer<Byte > path, Pointer<LiferaysassLibrary.Sass_Options > opt) {
+		return (Pointer)Pointer.pointerToAddress(sassFindInclude(Pointer.getPeer(path), Pointer.getPeer(opt)), Byte.class);
+	}
+	@Name("sass_find_include") 
+	@Ptr 
+	protected native static long sassFindInclude(@Ptr long path, @Ptr long opt);
+	/**
+	 * find_file looks for the exact file name while find_include does a regular sass include<br>
+	 * Original signature : <code>char* sass_compiler_find_file(const char*, Sass_Compiler*)</code><br>
+	 * <i>native declaration : sass/context.h:162</i>
+	 */
+	@Name("sass_compiler_find_file") 
+	public static Pointer<Byte > sassCompilerFindFile(Pointer<Byte > path, Pointer<LiferaysassLibrary.Sass_Compiler > compiler) {
+		return (Pointer)Pointer.pointerToAddress(sassCompilerFindFile(Pointer.getPeer(path), Pointer.getPeer(compiler)), Byte.class);
+	}
+	@Name("sass_compiler_find_file") 
+	@Ptr 
+	protected native static long sassCompilerFindFile(@Ptr long path, @Ptr long compiler);
+	/**
+	 * Original signature : <code>char* sass_compiler_find_include(const char*, Sass_Compiler*)</code><br>
+	 * <i>native declaration : sass/context.h:163</i>
+	 */
+	@Name("sass_compiler_find_include") 
+	public static Pointer<Byte > sassCompilerFindInclude(Pointer<Byte > path, Pointer<LiferaysassLibrary.Sass_Compiler > compiler) {
+		return (Pointer)Pointer.pointerToAddress(sassCompilerFindInclude(Pointer.getPeer(path), Pointer.getPeer(compiler)), Byte.class);
+	}
+	@Name("sass_compiler_find_include") 
+	@Ptr 
+	protected native static long sassCompilerFindInclude(@Ptr long path, @Ptr long compiler);
+	public static class Sass_Callee_Entry extends TypedPointer {
+		public Sass_Callee_Entry(long address) {
+			super(address);
+		}
+		public Sass_Callee_Entry(Pointer address) {
+			super(address);
+		}
+	};
 	public static class Sass_Function_Entry extends TypedPointer {
 		public Sass_Function_Entry(long address) {
 			super(address);
@@ -2160,6 +2473,22 @@ public class LiferaysassLibrary {
 		public Sass_Import_Entry(Pointer address) {
 			super(address);
 		}
+	};
+	public static class Sass_Env_Frame extends TypedPointer {
+		public Sass_Env_Frame(long address) {
+			super(address);
+		}
+		public Sass_Env_Frame(Pointer address) {
+			super(address);
+		}
+	};
+	/** Undefined type */
+	public static interface Sass_Env {
+		
+	};
+	/** Undefined type */
+	public static interface Sass_Callee {
+		
 	};
 	/** Undefined type */
 	public static interface Sass_Import {

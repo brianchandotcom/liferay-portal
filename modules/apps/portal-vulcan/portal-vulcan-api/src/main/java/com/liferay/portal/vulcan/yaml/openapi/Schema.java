@@ -57,6 +57,7 @@ public class Schema {
 	 * @deprecated As of Mueller (7.2.x)
 	 */
 	@Deprecated
+	@Transient
 	public String getExample() {
 		return _example;
 	}

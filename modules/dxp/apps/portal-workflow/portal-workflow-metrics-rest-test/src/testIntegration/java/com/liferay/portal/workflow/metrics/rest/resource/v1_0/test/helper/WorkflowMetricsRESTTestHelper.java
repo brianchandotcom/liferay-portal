@@ -26,6 +26,7 @@ import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
@@ -376,7 +377,7 @@ public class WorkflowMetricsRESTTestHelper {
 		_searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
-	public Document getSingleApproverDocument() throws Exception {
+	public Document getSingleApproverDocument(long companyId) throws Exception {
 		return IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,
 			() -> {
@@ -384,8 +385,13 @@ public class WorkflowMetricsRESTTestHelper {
 					new SearchSearchRequest();
 
 				searchSearchRequest.setIndexNames("workflow-metrics-processes");
+
+				BooleanQuery booleanQuery = _queries.booleanQuery();
+
 				searchSearchRequest.setQuery(
-					_queries.term("name", "Single Approver"));
+					booleanQuery.addMustQueryClauses(
+						_queries.term("companyId", companyId),
+						_queries.term("name", "Single Approver")));
 
 				SearchSearchResponse searchSearchResponse =
 					_searchEngineAdapter.execute(searchSearchRequest);

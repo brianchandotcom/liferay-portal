@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
@@ -42,22 +42,25 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
 			_queries, _searchEngineAdapter);
-
-		_singleApproverDocument =
-			_workflowMetricsRESTTestHelper.getSingleApproverDocument();
-
-		_workflowMetricsRESTTestHelper.deleteProcess(_singleApproverDocument);
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_workflowMetricsRESTTestHelper.addProcess(_singleApproverDocument);
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_singleApproverDocument =
+			_workflowMetricsRESTTestHelper.getSingleApproverDocument(
+				testGroup.getCompanyId());
+
+		_workflowMetricsRESTTestHelper.deleteProcess(_singleApproverDocument);
 	}
 
 	@After
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
+
+		_workflowMetricsRESTTestHelper.addProcess(_singleApproverDocument);
 
 		for (Process process : _processes) {
 			_workflowMetricsRESTTestHelper.deleteProcess(

@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.DataFieldOptionUtil;
 import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -55,16 +55,16 @@ public class RadioFieldType extends BaseFieldType {
 		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
 
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "inline",
 				jsonObject.getBoolean("inline")));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "options",
 				DataFieldOptionUtil.toDataFieldOptions(
 					jsonObject.getJSONObject("options"))));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "predefinedValue",
 				LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("predefinedValue"))));
@@ -78,16 +78,16 @@ public class RadioFieldType extends BaseFieldType {
 
 		return jsonObject.put(
 			"inline",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "inline", false)
 		).put(
 			"options",
 			DataFieldOptionUtil.toJSONObject(
-				CustomPropertyUtil.getDataFieldOptions(
+				CustomPropertiesUtil.getDataFieldOptions(
 					dataDefinitionField.getCustomProperties(), "options"))
 		).put(
 			"predefinedValue",
-			CustomPropertyUtil.getMap(
+			CustomPropertiesUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "predefinedValue")
 		);
 	}
@@ -96,25 +96,25 @@ public class RadioFieldType extends BaseFieldType {
 	protected void addContext(Map<String, Object> context) {
 		context.put(
 			"inline",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "inline", false));
 		context.put(
 			"options",
 			DataFieldOptionUtil.toDataFieldOptions(
-				CustomPropertyUtil.getDataFieldOptions(
+				CustomPropertiesUtil.getDataFieldOptions(
 					dataDefinitionField.getCustomProperties(), "options"),
 				LanguageUtil.getLanguageId(httpServletRequest)));
 		context.put(
 			"predefinedValue",
 			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getMap(
+				CustomPropertiesUtil.getMap(
 					dataDefinitionField.getCustomProperties(),
 					"predefinedValue")));
 		context.put(
 			"value",
 			_getValue(
-				CustomPropertyUtil.getString(
+				CustomPropertiesUtil.getString(
 					dataDefinitionField.getCustomProperties(), "value", "[]")));
 	}
 

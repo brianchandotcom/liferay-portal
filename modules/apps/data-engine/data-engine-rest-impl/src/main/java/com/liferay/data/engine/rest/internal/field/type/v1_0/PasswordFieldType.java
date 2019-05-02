@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.template.soy.data.SoyDataFactory;
@@ -48,12 +48,12 @@ public class PasswordFieldType extends BaseFieldType {
 		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
 
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "placeholder",
 				LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("placeholder"))));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "tooltip",
 				LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("tooltip"))));
@@ -68,12 +68,12 @@ public class PasswordFieldType extends BaseFieldType {
 		return jsonObject.put(
 			"placeholder",
 			LocalizationUtil.toJSONObject(
-				CustomPropertyUtil.getMap(
+				CustomPropertiesUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder"))
 		).put(
 			"tooltip",
 			LocalizationUtil.toJSONObject(
-				CustomPropertyUtil.getMap(
+				CustomPropertiesUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "tooltip"))
 		);
 	}
@@ -84,13 +84,13 @@ public class PasswordFieldType extends BaseFieldType {
 			"placeholder",
 			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getMap(
+				CustomPropertiesUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 		context.put(
 			"tooltip",
 			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getMap(
+				CustomPropertiesUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "tooltip")));
 	}
 

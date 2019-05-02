@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -56,21 +56,21 @@ public class NumericFieldType extends BaseFieldType {
 		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
 
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "dataType",
 				jsonObject.getString("dataType")));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "placeholder",
 				LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("placeholder"))));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "predefinedValue",
 				LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("predefinedValue"))));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "tooltip",
 				LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("tooltip"))));
@@ -84,19 +84,19 @@ public class NumericFieldType extends BaseFieldType {
 
 		jsonObject.put(
 			"dataType",
-			CustomPropertyUtil.getString(
+			CustomPropertiesUtil.getString(
 				dataDefinitionField.getCustomProperties(), "dataType")
 		).put(
 			"placeholder",
-			CustomPropertyUtil.getMap(
+			CustomPropertiesUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "placeholder")
 		).put(
 			"predefinedValue",
-			CustomPropertyUtil.getMap(
+			CustomPropertiesUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "predefinedValue")
 		).put(
 			"tooltip",
-			CustomPropertyUtil.getMap(
+			CustomPropertiesUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "tooltip")
 		);
 
@@ -107,21 +107,21 @@ public class NumericFieldType extends BaseFieldType {
 	protected void addContext(Map<String, Object> context) {
 		context.put(
 			"dataType",
-			CustomPropertyUtil.getString(
+			CustomPropertiesUtil.getString(
 				dataDefinitionField.getCustomProperties(), "dataType",
 				"decimal"));
 		context.put(
 			"placeholder",
 			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getMap(
+				CustomPropertiesUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 		context.put(
 			"predefinedValue",
 			_format(
 				LocalizationUtil.getLocalizedValue(
 					httpServletRequest.getLocale(),
-					CustomPropertyUtil.getMap(
+					CustomPropertiesUtil.getMap(
 						dataDefinitionField.getCustomProperties(),
 						"predefinedValue"))));
 		context.put("symbols", _getSymbols());
@@ -129,12 +129,12 @@ public class NumericFieldType extends BaseFieldType {
 			"tooltip",
 			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getMap(
+				CustomPropertiesUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "tooltip")));
 		context.put(
 			"value",
 			_format(
-				CustomPropertyUtil.getString(
+				CustomPropertiesUtil.getString(
 					dataDefinitionField.getCustomProperties(), "value")));
 	}
 

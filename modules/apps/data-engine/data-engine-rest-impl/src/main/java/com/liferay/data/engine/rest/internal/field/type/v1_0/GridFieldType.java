@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.DataFieldOptionUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,12 +50,12 @@ public class GridFieldType extends BaseFieldType {
 		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
 
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "columns",
 				DataFieldOptionUtil.toDataFieldOptions(
 					jsonObject.getJSONObject("columns"))));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "rows",
 				DataFieldOptionUtil.toDataFieldOptions(
 					jsonObject.getJSONObject("rows"))));
@@ -70,12 +70,12 @@ public class GridFieldType extends BaseFieldType {
 		return jsonObject.put(
 			"columns",
 			DataFieldOptionUtil.toJSONObject(
-				CustomPropertyUtil.getDataFieldOptions(
+				CustomPropertiesUtil.getDataFieldOptions(
 					dataDefinitionField.getCustomProperties(), "columns"))
 		).put(
 			"rows",
 			DataFieldOptionUtil.toJSONObject(
-				CustomPropertyUtil.getDataFieldOptions(
+				CustomPropertiesUtil.getDataFieldOptions(
 					dataDefinitionField.getCustomProperties(), "rows"))
 		);
 	}
@@ -85,19 +85,19 @@ public class GridFieldType extends BaseFieldType {
 		context.put(
 			"columns",
 			DataFieldOptionUtil.toDataFieldOptions(
-				CustomPropertyUtil.getDataFieldOptions(
+				CustomPropertiesUtil.getDataFieldOptions(
 					dataDefinitionField.getCustomProperties(), "columns"),
 				LanguageUtil.getLanguageId(httpServletRequest)));
 		context.put(
 			"rows",
 			DataFieldOptionUtil.toDataFieldOptions(
-				CustomPropertyUtil.getDataFieldOptions(
+				CustomPropertiesUtil.getDataFieldOptions(
 					dataDefinitionField.getCustomProperties(), "rows"),
 				LanguageUtil.getLanguageId(httpServletRequest)));
 		context.put(
 			"value",
 			JSONFactoryUtil.looseDeserialize(
-				CustomPropertyUtil.getString(
+				CustomPropertiesUtil.getString(
 					dataDefinitionField.getCustomProperties(), "value", "{}")));
 	}
 

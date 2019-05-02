@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * @author Marcela Cunha
  */
-public class CustomPropertyUtil {
+public class CustomPropertiesUtil {
 
 	public static Map<String, Object> add(
 		Map<String, Object> customProperties, String key, Object value) {

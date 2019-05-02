@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -66,16 +66,16 @@ public abstract class BaseFieldType implements FieldType {
 		context.put("name", dataDefinitionField.getName());
 		context.put(
 			"readOnly",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "readOnly", false));
 		context.put("repeatable", dataDefinitionField.getRepeatable());
 		context.put(
 			"required",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "required", false));
 		context.put(
 			"showLabel",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "showLabel", true));
 		context.put(
 			"tip",
@@ -84,7 +84,7 @@ public abstract class BaseFieldType implements FieldType {
 		context.put("type", dataDefinitionField.getFieldType());
 		context.put(
 			"visible",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "visible", true));
 
 		addContext(context);
@@ -106,7 +106,7 @@ public abstract class BaseFieldType implements FieldType {
 
 		return new DataDefinitionField() {
 			{
-				customProperties = CustomPropertyUtil.add(
+				customProperties = CustomPropertiesUtil.add(
 					customProperties, "showLabel",
 					jsonObject.getBoolean("showLabel"));
 				fieldType = jsonObject.getString("type");
@@ -157,7 +157,7 @@ public abstract class BaseFieldType implements FieldType {
 			"repeatable", dataDefinitionField.getRepeatable()
 		).put(
 			"showLabel",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "showLabel", true)
 		).put(
 			"tip", LocalizationUtil.toJSONObject(dataDefinitionField.getTip())

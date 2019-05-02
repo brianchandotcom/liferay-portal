@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.DataFieldOptionUtil;
 import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,16 +50,16 @@ public class TextFieldType extends BaseFieldType {
 		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
 
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(),
 				"autocompleteEnabled",
 				jsonObject.getBoolean("autocompleteEnabled")));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "displayStyle",
 				jsonObject.getString("displayStyle")));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "options",
 				DataFieldOptionUtil.toDataFieldOptions(
 					jsonObject.getJSONObject("options"))));
@@ -82,37 +82,37 @@ public class TextFieldType extends BaseFieldType {
 
 		return jsonObject.put(
 			"autocompleteEnabled",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(),
 				"autocompleteEnabled", false)
 		).put(
 			"displayStyle",
-			CustomPropertyUtil.getString(
+			CustomPropertiesUtil.getString(
 				dataDefinitionField.getCustomProperties(), "displayStyle")
 		).put(
 			"inline",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "inline", false)
 		).put(
 			"options",
 			DataFieldOptionUtil.toJSONObject(
-				CustomPropertyUtil.getDataFieldOptions(
+				CustomPropertiesUtil.getDataFieldOptions(
 					dataDefinitionField.getCustomProperties(), "options"))
 		).put(
 			"showAsSwitcher",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
 				true)
 		).put(
 			"placeholder",
-			CustomPropertyUtil.getMap(
+			CustomPropertiesUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "placeholder")
 		).put(
 			"predefinedValue",
 			LocalizationUtil.toJSONObject(dataDefinitionField.getDefaultValue())
 		).put(
 			"tooltip",
-			CustomPropertyUtil.getMap(
+			CustomPropertiesUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "tooltip")
 		);
 	}
@@ -121,24 +121,24 @@ public class TextFieldType extends BaseFieldType {
 	protected void addContext(Map<String, Object> context) {
 		context.put(
 			"autocompleteEnabled",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(),
 				"autocompleteEnabled", false));
 		context.put(
 			"inline",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "inline", false));
 		context.put(
 			"options",
 			DataFieldOptionUtil.toDataFieldOptions(
-				CustomPropertyUtil.getDataFieldOptions(
+				CustomPropertiesUtil.getDataFieldOptions(
 					dataDefinitionField.getCustomProperties(), "options"),
 				LanguageUtil.getLanguageId(httpServletRequest)));
 		context.put(
 			"placeholder",
 			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getMap(
+				CustomPropertiesUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 		context.put(
 			"predefinedValue",
@@ -147,18 +147,18 @@ public class TextFieldType extends BaseFieldType {
 				dataDefinitionField.getDefaultValue()));
 		context.put(
 			"showAsSwitcher",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
 				false));
 		context.put(
 			"tooltip",
 			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getMap(
+				CustomPropertiesUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "tooltip")));
 		context.put(
 			"value",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "value", false));
 	}
 

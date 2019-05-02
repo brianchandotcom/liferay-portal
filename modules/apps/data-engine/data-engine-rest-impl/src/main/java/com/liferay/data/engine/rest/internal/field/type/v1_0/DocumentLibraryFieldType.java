@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -74,22 +74,23 @@ public class DocumentLibraryFieldType extends BaseFieldType {
 		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
 
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "groupId",
 				jsonObject.getLong("groupId")));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(),
 				"itemSelectorAuthToken",
 				jsonObject.getString("itemSelectorAuthToken")));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "lexiconIconsPath",
 				jsonObject.getString("lexiconIconsPath")));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "strings",
-				CustomPropertyUtil.toMap(jsonObject.getJSONObject("strings"))));
+				CustomPropertiesUtil.toMap(
+					jsonObject.getJSONObject("strings"))));
 
 		return dataDefinitionField;
 	}
@@ -100,21 +101,21 @@ public class DocumentLibraryFieldType extends BaseFieldType {
 
 		return jsonObject.put(
 			"groupId",
-			CustomPropertyUtil.getLong(
+			CustomPropertiesUtil.getLong(
 				dataDefinitionField.getCustomProperties(), "groupId")
 		).put(
 			"itemSelectorAuthToken",
-			CustomPropertyUtil.getString(
+			CustomPropertiesUtil.getString(
 				dataDefinitionField.getCustomProperties(),
 				"itemSelectorAuthToken")
 		).put(
 			"lexiconIconsPath",
-			CustomPropertyUtil.getString(
+			CustomPropertiesUtil.getString(
 				dataDefinitionField.getCustomProperties(), "lexiconIconsPath")
 		).put(
 			"strings",
-			CustomPropertyUtil.toJSONObject(
-				CustomPropertyUtil.getMap(
+			CustomPropertiesUtil.toJSONObject(
+				CustomPropertiesUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "strings"))
 		);
 	}
@@ -122,11 +123,11 @@ public class DocumentLibraryFieldType extends BaseFieldType {
 	@Override
 	protected void addContext(Map<String, Object> context) {
 		if (!StringUtils.isEmpty(
-				CustomPropertyUtil.getString(
+				CustomPropertiesUtil.getString(
 					dataDefinitionField.getCustomProperties(), "value"))) {
 
 			JSONObject valueJSONObject = _toJSONObject(
-				CustomPropertyUtil.getString(
+				CustomPropertiesUtil.getString(
 					dataDefinitionField.getCustomProperties(), "value"));
 
 			if ((valueJSONObject != null) && (valueJSONObject.length() > 0)) {
@@ -139,7 +140,7 @@ public class DocumentLibraryFieldType extends BaseFieldType {
 
 		context.put(
 			"groupId",
-			CustomPropertyUtil.getLong(
+			CustomPropertiesUtil.getLong(
 				dataDefinitionField.getCustomProperties(), "groupId"));
 		context.put("itemSelectorAuthToken", _getItemSelectorAuthToken());
 		context.put("lexiconIconsPath", _getLexiconIconsPath());
@@ -147,7 +148,7 @@ public class DocumentLibraryFieldType extends BaseFieldType {
 		context.put(
 			"value",
 			JSONFactoryUtil.looseDeserialize(
-				CustomPropertyUtil.getString(
+				CustomPropertiesUtil.getString(
 					dataDefinitionField.getCustomProperties(), "value", "{}")));
 	}
 

@@ -510,6 +510,9 @@ public class ExpandoColumnLocalServiceImpl
 		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
 			value.setFloatArray((float[])defaultData);
 		}
+		else if (type == ExpandoColumnConstants.GEOLOCATION) {
+			value.setGeolocationJSONObject((JSONObject)defaultData);
+		}
 		else if (type == ExpandoColumnConstants.INTEGER) {
 			value.setInteger((Integer)defaultData);
 		}

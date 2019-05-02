@@ -14,96 +14,89 @@
 
 package com.liferay.portal.configuration.extender.internal.test;
 
-import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
-import com.liferay.petra.io.DummyOutputStream;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.extender.internal.ConfiguratorExtension;
-import com.liferay.portal.configuration.extender.internal.NamedConfigurationContent;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.IOException;
-import java.io.PrintStream;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.apache.felix.utils.log.Logger;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@BndFile("test-bnd.bnd")
 @RunWith(Arquillian.class)
 public class ConfiguratorExtensionTest {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
 	@Before
-	public void setUp() throws InvalidSyntaxException, IOException {
-		_serviceReference = _bundleContext.getServiceReference(
-			ConfigurationAdmin.class);
+	public void setUp() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ConfiguratorExtensionTest.class);
 
-		_configurationAdmin = _bundleContext.getService(_serviceReference);
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		for (Bundle curBundle : bundleContext.getBundles()) {
+			if ("com.liferay.portal.configuration.extender".equals(
+					curBundle.getSymbolicName())) {
 
-		if (configurations != null) {
-			for (Configuration configuration : configurations) {
-				configuration.delete();
+				_bundle = curBundle;
+
+				break;
 			}
 		}
-
-		configurations = _configurationAdmin.listConfigurations(null);
-
-		Assert.assertNull(configurations);
 	}
 
 	@After
-	public void tearDown() {
-		_bundleContext.ungetService(_serviceReference);
+	public void tearDown() throws Exception {
+		_deleteConfigurations("(service.pid=test.pid)");
+		_deleteConfigurations("(service.pid=test.pid2)");
+		_deleteConfigurations("(service.factoryPid=test.factory.pid)");
 	}
 
 	@Test
 	public void testExceptionInSupplierDoesNotStopExtension() throws Exception {
-		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
-			_configurationAdmin, new Logger(_bundleContext), "aBundle",
-			Arrays.asList(
-				new NamedConfigurationContent(
-					null, "test.pid",
-					() -> {
-						throw new RuntimeException("This should be handled");
-					}),
-				new NamedConfigurationContent(
-					null, "test.pid",
-					() -> new TestProperties<>("key", "value"))));
-
-		PrintStream printStream = System.err;
-
-		System.setErr(new PrintStream(new DummyOutputStream()));
-
-		try {
-			configuratorExtension.start();
-		}
-		finally {
-			System.setErr(printStream);
-		}
+		_startExtension(
+			"aBundle",
+			_createNamedConfigurationContent(
+				null, "test.pid",
+				() -> {
+					throw new RuntimeException("This should be handled");
+				}),
+			_createNamedConfigurationContent(
+				null, "test.pid", () -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.pid=test.pid)");
 
 		Assert.assertEquals(
 			Arrays.toString(configurations), 1, configurations.length);
@@ -113,12 +106,12 @@ public class ConfiguratorExtensionTest {
 	public void testFactoryConfiguration() throws Exception {
 		_startExtension(
 			"aBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
 				() -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.factoryPid=test.factory.pid)");
 
 		Assert.assertEquals(
 			Arrays.toString(configurations), 1, configurations.length);
@@ -134,12 +127,12 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
 				() -> new TestProperties<>("key", "value2")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.factoryPid=test.factory.pid)");
 
 		Assert.assertEquals(
 			Arrays.toString(configurations), 2, configurations.length);
@@ -157,15 +150,15 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
 				() -> new TestProperties<>("key", "value")),
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				"test.factory.pid", "default2",
 				() -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.factoryPid=test.factory.pid)");
 
 		Assert.assertEquals(
 			Arrays.toString(configurations), 2, configurations.length);
@@ -177,15 +170,15 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
 				() -> new TestProperties<>("key", "value")),
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
 				() -> new TestProperties<>("key", "value2")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.factoryPid=test.factory.pid)");
 
 		Assert.assertEquals(
 			Arrays.toString(configurations), 1, configurations.length);
@@ -202,18 +195,18 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
 				() -> new TestProperties<>("key", "value")));
 
 		_startExtension(
 			"otherBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				"test.factory.pid", "default",
 				() -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.factoryPid=test.factory.pid)");
 
 		Assert.assertEquals(
 			Arrays.toString(configurations), 2, configurations.length);
@@ -223,11 +216,11 @@ public class ConfiguratorExtensionTest {
 	public void testSingleConfiguration() throws Exception {
 		_startExtension(
 			"aBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.pid=test.pid)");
 
 		Assert.assertEquals(
 			Arrays.toString(configurations), 1, configurations.length);
@@ -244,11 +237,11 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value2")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.pid=test.pid)");
 
 		Assert.assertEquals(
 			Arrays.toString(configurations), 1, configurations.length);
@@ -265,13 +258,13 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value")),
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value2")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.pid=test.pid)");
 
 		Assert.assertEquals(
 			Arrays.toString(configurations), 1, configurations.length);
@@ -288,16 +281,16 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value")));
 
 		_startExtension(
 			"otherBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value2")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.pid=test.pid)");
 
 		Assert.assertEquals(
 			Arrays.toString(configurations), 1, configurations.length);
@@ -312,35 +305,87 @@ public class ConfiguratorExtensionTest {
 	public void testSingleConfigurationWithMultipleContents() throws Exception {
 		_startExtension(
 			"aBundle",
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				null, "test.pid", () -> new TestProperties<>("key", "value")),
-			new NamedConfigurationContent(
+			_createNamedConfigurationContent(
 				null, "test.pid2", () -> new TestProperties<>("key", "value")));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+			"(service.pid=test.pid)");
 
 		Assert.assertEquals(
-			Arrays.toString(configurations), 2, configurations.length);
+			Arrays.toString(configurations), 1, configurations.length);
+
+		configurations = _configurationAdmin.listConfigurations(
+			"(service.pid=test.pid2)");
+
+		Assert.assertEquals(
+			Arrays.toString(configurations), 1, configurations.length);
+	}
+
+	private Object _createNamedConfigurationContent(
+			String factoryPid, String pid,
+			UnsafeSupplier<Dictionary<?, ?>, IOException> propertySupplier)
+		throws Exception {
+
+		Class<?> clazz = _bundle.loadClass(
+			"com.liferay.portal.configuration.extender.internal." +
+				"NamedConfigurationContent");
+
+		Constructor<?> constructor = clazz.getDeclaredConstructor(
+			String.class, String.class, UnsafeSupplier.class);
+
+		return constructor.newInstance(factoryPid, pid, propertySupplier);
+	}
+
+	private void _deleteConfigurations(String filter) throws Exception {
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filter);
+
+		if (configurations != null) {
+			for (Configuration configuration : configurations) {
+				configuration.delete();
+			}
+		}
 	}
 
 	private void _startExtension(
-			String namespace,
-			NamedConfigurationContent... namedConfigurationContents)
+			String namespace, Object... namedConfigurationContents)
 		throws Exception {
 
-		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
-			_configurationAdmin, new Logger(_bundleContext), namespace,
+		Class<?> clazz = _bundle.loadClass(
+			"com.liferay.portal.configuration.extender.internal." +
+				"ConfiguratorExtension");
+
+		Constructor<?> constructor = clazz.getConstructor(
+			ConfigurationAdmin.class, Logger.class, String.class,
+			Collection.class);
+
+		Object configuratorExtension = constructor.newInstance(
+			_configurationAdmin, new DummyLogger(), namespace,
 			Arrays.asList(namedConfigurationContents));
 
-		configuratorExtension.start();
+		Method method = clazz.getMethod("start");
+
+		method.invoke(configuratorExtension);
 	}
 
-	@ArquillianResource
-	private BundleContext _bundleContext;
+	@Inject
+	private static ConfigurationAdmin _configurationAdmin;
 
-	private ConfigurationAdmin _configurationAdmin;
-	private ServiceReference<ConfigurationAdmin> _serviceReference;
+	private Bundle _bundle;
+
+	private static class DummyLogger extends Logger {
+
+		@Override
+		public void log(int level, String message, Throwable exception) {
+		}
+
+		private DummyLogger() {
+			super(null);
+		}
+
+	}
 
 	private static class TestProperties<K, V> extends Hashtable<K, V> {
 

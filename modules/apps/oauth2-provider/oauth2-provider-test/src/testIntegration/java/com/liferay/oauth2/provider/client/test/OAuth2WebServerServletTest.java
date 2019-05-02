@@ -31,9 +31,15 @@ import java.util.Collections;
 import java.util.Dictionary;
 
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.ext.RuntimeDelegate;
+
+import org.apache.cxf.jaxrs.client.spec.ClientBuilderImpl;
+import org.apache.cxf.jaxrs.impl.RuntimeDelegateImpl;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -154,9 +160,15 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 	}
 
 	private WebTarget _getRootWebTarget(String path) {
-		Client client = getClient();
+		ClientBuilder clientBuilder = new ClientBuilderImpl();
 
-		return client.target("http://localhost:8080" + path);
+		Client client = clientBuilder.build();
+
+		RuntimeDelegate runtimeDelegate = new RuntimeDelegateImpl();
+
+		UriBuilder uriBuilder = runtimeDelegate.createUriBuilder();
+
+		return client.target(uriBuilder.uri("http://localhost:8080" + path));
 	}
 
 	private static final String _TEST_FILE_CONTENT = "Test File Content";

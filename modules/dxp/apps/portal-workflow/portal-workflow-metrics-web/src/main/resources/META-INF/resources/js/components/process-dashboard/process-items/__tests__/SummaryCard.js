@@ -24,7 +24,7 @@ test('Should format percentage', () => {
 	expect(instance.formattedPercentage).toEqual('18.23%');
 });
 
-test('Should format value for values with more than 4 digits', () => {
+test('Should format value for values with more than 3 digits', () => {
 	const props = {
 		getTitle: () => 'Overdue',
 		iconColor: 'danger',
@@ -66,7 +66,7 @@ test('Should not format percentage for total item', () => {
 	expect(instance.formattedPercentage).toEqual(null);
 });
 
-test('Should not format value for values with 4 or less digits', () => {
+test('Should not format value for values with 3 or less digits', () => {
 	const props = {
 		getTitle: () => 'Overdue',
 		iconColor: 'danger',
@@ -74,7 +74,7 @@ test('Should not format value for values with 4 or less digits', () => {
 		processId: 12345,
 		total: false,
 		totalValue: 3500,
-		value: 3000
+		value: 310
 	};
 
 	const component = mount(
@@ -85,7 +85,7 @@ test('Should not format value for values with 4 or less digits', () => {
 
 	const instance = component.find(SummaryCard).instance();
 
-	expect(instance.formattedValue).toEqual('3,000');
+	expect(instance.formattedValue).toEqual('310');
 });
 
 test('Should render component', () => {

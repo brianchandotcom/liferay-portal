@@ -14,8 +14,8 @@
 
 package com.liferay.data.engine.rest.internal.field.type.v1_0.util;
 
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.DataFieldOption;
+import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -48,7 +48,7 @@ public class DataFieldOptionUtil {
 			String key = keys.next();
 
 			Map<String, Object> localizationMap =
-				LocalizedValueUtil.toLocalizedValues(
+				LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject(key));
 
 			DataFieldOption dataFieldOption = new DataFieldOption(

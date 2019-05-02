@@ -19,9 +19,9 @@ import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.constants.DataDefinitionConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
+import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
@@ -188,8 +188,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				PrincipalThreadLocal.getUserId(), siteId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				_getClassNameId(), null,
-				LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
-				LocalizedValueUtil.toLocaleStringMap(
+				LocalizationUtil.toLocaleStringMap(dataDefinition.getName()),
+				LocalizationUtil.toLocaleStringMap(
 					dataDefinition.getDescription()),
 				DataDefinitionUtil.toJSON(dataDefinition),
 				dataDefinition.getStorageType(), serviceContext));
@@ -245,8 +245,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			_ddmStructureLocalService.updateStructure(
 				PrincipalThreadLocal.getUserId(), dataDefinitionId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-				LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
-				LocalizedValueUtil.toLocaleStringMap(
+				LocalizationUtil.toLocaleStringMap(dataDefinition.getName()),
+				LocalizationUtil.toLocaleStringMap(
 					dataDefinition.getDescription()),
 				DataDefinitionUtil.toJSON(dataDefinition),
 				new ServiceContext()));

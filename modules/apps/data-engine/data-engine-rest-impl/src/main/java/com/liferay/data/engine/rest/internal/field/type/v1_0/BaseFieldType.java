@@ -15,8 +15,8 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -59,7 +59,7 @@ public abstract class BaseFieldType implements FieldType {
 		context.put("indexable", dataDefinitionField.getIndexable());
 		context.put(
 			"label",
-			LocalizedValueUtil.getLocalizedValue(
+			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
 				dataDefinitionField.getLabel()));
 		context.put("localizable", dataDefinitionField.getLocalizable());
@@ -79,7 +79,7 @@ public abstract class BaseFieldType implements FieldType {
 				dataDefinitionField.getCustomProperties(), "showLabel", true));
 		context.put(
 			"tip",
-			LocalizedValueUtil.getLocalizedValue(
+			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(), dataDefinitionField.getTip()));
 		context.put("type", dataDefinitionField.getFieldType());
 		context.put(
@@ -111,7 +111,7 @@ public abstract class BaseFieldType implements FieldType {
 					jsonObject.getBoolean("showLabel"));
 				fieldType = jsonObject.getString("type");
 				indexable = jsonObject.getBoolean("indexable", true);
-				label = LocalizedValueUtil.toLocalizedValues(
+				label = LocalizationUtil.toLocalizedValues(
 					Optional.ofNullable(
 						jsonObject.getJSONObject("label")
 					).orElse(
@@ -120,7 +120,7 @@ public abstract class BaseFieldType implements FieldType {
 				localizable = jsonObject.getBoolean("localizable", false);
 				name = jsonObject.getString("name");
 				repeatable = jsonObject.getBoolean("repeatable", false);
-				tip = LocalizedValueUtil.toLocalizedValues(
+				tip = LocalizationUtil.toLocalizedValues(
 					Optional.ofNullable(
 						jsonObject.getJSONObject("tip")
 					).orElse(
@@ -148,7 +148,7 @@ public abstract class BaseFieldType implements FieldType {
 			"indexable", dataDefinitionField.getIndexable()
 		).put(
 			"label",
-			LocalizedValueUtil.toJSONObject(dataDefinitionField.getLabel())
+			LocalizationUtil.toJSONObject(dataDefinitionField.getLabel())
 		).put(
 			"localizable", dataDefinitionField.getLocalizable()
 		).put(
@@ -160,7 +160,7 @@ public abstract class BaseFieldType implements FieldType {
 			CustomPropertyUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "showLabel", true)
 		).put(
-			"tip", LocalizedValueUtil.toJSONObject(dataDefinitionField.getTip())
+			"tip", LocalizationUtil.toJSONObject(dataDefinitionField.getTip())
 		).put(
 			"type", type
 		);

@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollection;
+import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 
 /**
@@ -28,10 +29,10 @@ public class DataRecordCollectionUtil {
 		return new DataRecordCollection() {
 			{
 				dataDefinitionId = ddlRecordSet.getDDMStructureId();
-				description = LocalizedValueUtil.toStringObjectMap(
+				description = LocalizationUtil.toStringObjectMap(
 					ddlRecordSet.getDescriptionMap());
 				id = ddlRecordSet.getRecordSetId();
-				name = LocalizedValueUtil.toStringObjectMap(
+				name = LocalizationUtil.toStringObjectMap(
 					ddlRecordSet.getNameMap());
 			}
 		};

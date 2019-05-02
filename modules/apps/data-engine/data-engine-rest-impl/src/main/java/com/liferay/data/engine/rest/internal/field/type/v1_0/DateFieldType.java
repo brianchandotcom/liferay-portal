@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
+import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.template.soy.data.SoyDataFactory;
 
@@ -47,7 +47,7 @@ public class DateFieldType extends BaseFieldType {
 		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
 
 		dataDefinitionField.setDefaultValue(
-			LocalizedValueUtil.toLocalizedValues(
+			LocalizationUtil.toLocalizedValues(
 				jsonObject.getJSONObject("predefinedValue")));
 
 		return dataDefinitionField;
@@ -59,7 +59,7 @@ public class DateFieldType extends BaseFieldType {
 
 		return jsonObject.put(
 			"predefinedValue",
-			LocalizedValueUtil.toJSONObject(
+			LocalizationUtil.toJSONObject(
 				dataDefinitionField.getDefaultValue()));
 	}
 
@@ -67,7 +67,7 @@ public class DateFieldType extends BaseFieldType {
 	protected void addContext(Map<String, Object> context) {
 		context.put(
 			"predefinedValue",
-			LocalizedValueUtil.getLocalizedValue(
+			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
 				dataDefinitionField.getDefaultValue()));
 	}

@@ -51,10 +51,6 @@ public class Schema {
 		return _enumValues;
 	}
 
-	public String getExample() {
-		return _example;
-	}
-
 	public String getFormat() {
 		return _format;
 	}
@@ -111,10 +107,6 @@ public class Schema {
 		_enumValues = enumValues;
 	}
 
-	public void setExample(String example) {
-		_example = example;
-	}
-
 	public void setFormat(String format) {
 		_format = format;
 	}
@@ -158,7 +150,6 @@ public class Schema {
 	private List<Schema> _anyOfSchemas;
 	private String _description;
 	private List<String> _enumValues;
-	private String _example;
 	private String _format;
 	private Items _items;
 	private List<Schema> _oneOfSchemas;

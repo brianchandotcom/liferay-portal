@@ -91,17 +91,17 @@ public class DataRecordCollectionResourceTest
 	@Override
 	protected DataRecordCollection
 			testGetSiteDataRecordCollectionsPage_addDataRecordCollection(
-				Long siteId, DataRecordCollection dataRecordCollection)
+				Long groupId, DataRecordCollection dataRecordCollection)
 		throws Exception {
 
-		long dataDefinitionId = _ddmStructure.getStructureId();
+		long structureId = _ddmStructure.getStructureId();
 
-		if (siteId == _irrelevantDDMStructure.getGroupId()) {
-			dataDefinitionId = _irrelevantDDMStructure.getStructureId();
+		if (groupId == _irrelevantDDMStructure.getGroupId()) {
+			structureId = _irrelevantDDMStructure.getStructureId();
 		}
 
 		return invokePostDataDefinitionDataRecordCollection(
-			dataDefinitionId, randomDataRecordCollection());
+			structureId, randomDataRecordCollection());
 	}
 
 	@Override

@@ -88,15 +88,15 @@ public class NumericFieldType extends BaseFieldType {
 				dataDefinitionField.getCustomProperties(), "dataType")
 		).put(
 			"placeholder",
-			CustomPropertyUtil.getLocalizedValue(
+			CustomPropertyUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "placeholder")
 		).put(
 			"predefinedValue",
-			CustomPropertyUtil.getLocalizedValue(
+			CustomPropertyUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "predefinedValue")
 		).put(
 			"tooltip",
-			CustomPropertyUtil.getLocalizedValue(
+			CustomPropertyUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "tooltip")
 		);
 
@@ -114,14 +114,14 @@ public class NumericFieldType extends BaseFieldType {
 			"placeholder",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 		context.put(
 			"predefinedValue",
 			_format(
 				LocalizedValueUtil.getLocalizedValue(
 					httpServletRequest.getLocale(),
-					CustomPropertyUtil.getLocalizedValue(
+					CustomPropertyUtil.getMap(
 						dataDefinitionField.getCustomProperties(),
 						"predefinedValue"))));
 		context.put("symbols", _getSymbols());
@@ -129,7 +129,7 @@ public class NumericFieldType extends BaseFieldType {
 			"tooltip",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "tooltip")));
 		context.put(
 			"value",

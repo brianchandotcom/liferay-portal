@@ -89,7 +89,7 @@ public class SelectFieldType extends BaseFieldType {
 					dataDefinitionField.getCustomProperties(), "options"))
 		).put(
 			"predefinedValue",
-			CustomPropertyUtil.getLocalizedValue(
+			CustomPropertyUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "predefinedValue")
 		);
 	}
@@ -114,7 +114,7 @@ public class SelectFieldType extends BaseFieldType {
 			"predefinedValue",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(),
 					"predefinedValue")));
 		context.put("strings", _getLanguageTerms());

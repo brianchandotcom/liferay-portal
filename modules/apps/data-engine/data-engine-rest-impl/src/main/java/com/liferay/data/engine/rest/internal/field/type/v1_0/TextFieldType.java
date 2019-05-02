@@ -105,7 +105,7 @@ public class TextFieldType extends BaseFieldType {
 				true)
 		).put(
 			"placeholder",
-			CustomPropertyUtil.getLocalizedValue(
+			CustomPropertyUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "placeholder")
 		).put(
 			"predefinedValue",
@@ -113,7 +113,7 @@ public class TextFieldType extends BaseFieldType {
 				dataDefinitionField.getDefaultValue())
 		).put(
 			"tooltip",
-			CustomPropertyUtil.getLocalizedValue(
+			CustomPropertyUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "tooltip")
 		);
 	}
@@ -139,7 +139,7 @@ public class TextFieldType extends BaseFieldType {
 			"placeholder",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 		context.put(
 			"predefinedValue",
@@ -155,7 +155,7 @@ public class TextFieldType extends BaseFieldType {
 			"tooltip",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "tooltip")));
 		context.put(
 			"value",

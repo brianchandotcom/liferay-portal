@@ -63,7 +63,7 @@ public class ParagraphFieldType extends BaseFieldType {
 		return jsonObject.put(
 			"text",
 			LocalizedValueUtil.toJSONObject(
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "text")));
 	}
 
@@ -73,7 +73,7 @@ public class ParagraphFieldType extends BaseFieldType {
 			"text",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "text")));
 	}
 

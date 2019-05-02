@@ -46,10 +46,10 @@ public class DataDefinitionUtil {
 					DataDefinitionRule.class);
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
-				description = LocalizedValueUtil.toLocalizedValues(
+				description = LocalizedValueUtil.toStringObjectMap(
 					ddmStructure.getDescriptionMap());
 				id = ddmStructure.getStructureId();
-				name = LocalizedValueUtil.toLocalizedValues(
+				name = LocalizedValueUtil.toStringObjectMap(
 					ddmStructure.getNameMap());
 				siteId = ddmStructure.getGroupId();
 				storageType = ddmStructure.getStorageType();

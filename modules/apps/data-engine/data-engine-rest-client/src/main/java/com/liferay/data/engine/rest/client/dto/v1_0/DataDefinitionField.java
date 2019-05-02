@@ -29,16 +29,16 @@ import javax.annotation.Generated;
 @Generated("")
 public class DataDefinitionField {
 
-	public CustomProperty[] getCustomProperties() {
+	public Map<String, Object> getCustomProperties() {
 		return customProperties;
 	}
 
-	public void setCustomProperties(CustomProperty[] customProperties) {
+	public void setCustomProperties(Map<String, Object> customProperties) {
 		this.customProperties = customProperties;
 	}
 
 	public void setCustomProperties(
-		UnsafeSupplier<CustomProperty[], Exception>
+		UnsafeSupplier<Map<String, Object>, Exception>
 			customPropertiesUnsafeSupplier) {
 
 		try {
@@ -49,7 +49,7 @@ public class DataDefinitionField {
 		}
 	}
 
-	protected CustomProperty[] customProperties;
+	protected Map<String, Object> customProperties;
 
 	public Map<String, Object> getDefaultValue() {
 		return defaultValue;

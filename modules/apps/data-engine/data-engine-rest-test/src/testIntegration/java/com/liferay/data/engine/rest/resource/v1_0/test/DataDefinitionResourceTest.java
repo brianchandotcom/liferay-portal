@@ -17,13 +17,14 @@ package com.liferay.data.engine.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionPermission;
-import com.liferay.data.engine.rest.client.dto.v1_0.LocalizedValue;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+
+import java.util.HashMap;
 
 import org.junit.runner.RunWith;
 
@@ -80,12 +81,9 @@ public class DataDefinitionResourceTest
 	protected DataDefinition randomDataDefinition() {
 		return new DataDefinition() {
 			{
-				name = new LocalizedValue[] {
-					new LocalizedValue() {
-						{
-							key = "en_US";
-							value = RandomTestUtil.randomString();
-						}
+				name = new HashMap<String, Object>() {
+					{
+						put("en_US", RandomTestUtil.randomString());
 					}
 				};
 				siteId = testGroup.getGroupId();

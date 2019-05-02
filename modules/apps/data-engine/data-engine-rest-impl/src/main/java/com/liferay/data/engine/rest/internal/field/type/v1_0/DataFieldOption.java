@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class DataFieldOption {
 
-	public DataFieldOption(Map<String, String> labels, String value) {
+	public DataFieldOption(Map<String, Object> labels, String value) {
 		_labels = labels;
 		_value = value;
 	}
@@ -39,7 +39,7 @@ public class DataFieldOption {
 		return MapUtil.getString(_labels, languageId);
 	}
 
-	public Map<String, String> getLabels() {
+	public Map<String, Object> getLabels() {
 		return Collections.unmodifiableMap(_labels);
 	}
 
@@ -47,7 +47,7 @@ public class DataFieldOption {
 		return _value;
 	}
 
-	private Map<String, String> _labels = new HashMap<>();
+	private Map<String, Object> _labels = new HashMap<>();
 	private final String _value;
 
 }

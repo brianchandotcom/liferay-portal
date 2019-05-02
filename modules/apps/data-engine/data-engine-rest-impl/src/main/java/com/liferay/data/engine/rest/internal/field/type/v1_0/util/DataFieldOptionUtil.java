@@ -47,8 +47,8 @@ public class DataFieldOptionUtil {
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			Map<String, String> localizationMap =
-				LocalizedValueUtil.toLocalizationMap(
+			Map<String, Object> localizationMap =
+				LocalizedValueUtil.toLocalizedValues(
 					jsonObject.getJSONObject(key));
 
 			DataFieldOption dataFieldOption = new DataFieldOption(
@@ -91,9 +91,9 @@ public class DataFieldOptionUtil {
 		for (DataFieldOption dataFieldOption : dataFieldOptions) {
 			JSONObject labelJSONObject = JSONFactoryUtil.createJSONObject();
 
-			Map<String, String> labels = dataFieldOption.getLabels();
+			Map<String, Object> labels = dataFieldOption.getLabels();
 
-			for (Map.Entry<String, String> entry : labels.entrySet()) {
+			for (Map.Entry<String, Object> entry : labels.entrySet()) {
 				labelJSONObject.put(entry.getKey(), entry.getValue());
 			}
 

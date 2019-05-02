@@ -87,7 +87,7 @@ public class RadioFieldType extends BaseFieldType {
 					dataDefinitionField.getCustomProperties(), "options"))
 		).put(
 			"predefinedValue",
-			CustomPropertyUtil.getLocalizedValue(
+			CustomPropertyUtil.getMap(
 				dataDefinitionField.getCustomProperties(), "predefinedValue")
 		);
 	}
@@ -108,7 +108,7 @@ public class RadioFieldType extends BaseFieldType {
 			"predefinedValue",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(),
 					"predefinedValue")));
 		context.put(

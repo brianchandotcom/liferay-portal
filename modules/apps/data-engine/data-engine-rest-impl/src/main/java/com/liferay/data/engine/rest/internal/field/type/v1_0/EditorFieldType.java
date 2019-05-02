@@ -63,7 +63,7 @@ public class EditorFieldType extends BaseFieldType {
 		return jsonObject.put(
 			"placeholder",
 			LocalizedValueUtil.toJSONObject(
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 	}
 
@@ -73,7 +73,7 @@ public class EditorFieldType extends BaseFieldType {
 			"placeholder",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 	}
 

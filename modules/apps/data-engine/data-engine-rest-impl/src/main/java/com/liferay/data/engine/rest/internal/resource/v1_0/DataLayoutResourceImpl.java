@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -118,7 +118,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception {
 
-		if (ArrayUtil.isEmpty(dataLayout.getName())) {
+		if (MapUtil.isEmpty(dataLayout.getName())) {
 			throw new Exception("Name is required");
 		}
 
@@ -220,7 +220,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
 		throws Exception {
 
-		if (ArrayUtil.isEmpty(dataLayout.getName())) {
+		if (MapUtil.isEmpty(dataLayout.getName())) {
 			throw new Exception("Name is required");
 		}
 

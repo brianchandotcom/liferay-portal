@@ -78,12 +78,12 @@ public class KeyValueFieldType extends BaseFieldType {
 		).put(
 			"placeholder",
 			LocalizedValueUtil.toJSONObject(
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder"))
 		).put(
 			"tooltip",
 			LocalizedValueUtil.toJSONObject(
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "tooltip"))
 		);
 	}
@@ -98,14 +98,14 @@ public class KeyValueFieldType extends BaseFieldType {
 			"placeholder",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 		context.put("strings", _getStrings());
 		context.put(
 			"tooltip",
 			LocalizedValueUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
-				CustomPropertyUtil.getLocalizedValue(
+				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "tooltip")));
 	}
 

@@ -14,21 +14,16 @@
 
 package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 
-import com.liferay.data.engine.rest.dto.v1_0.LocalizedValue;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Jeyvison Nascimento
@@ -36,103 +31,72 @@ import org.apache.commons.lang.StringUtils;
 public class LocalizedValueUtil {
 
 	public static Object getLocalizedValue(
-		Locale locale, LocalizedValue[] localizedValues) {
+		Locale locale, Map<String, Object> localizedValues) {
 
-		for (LocalizedValue localizedValue : localizedValues) {
-			if (StringUtils.equals(
-					LocaleUtil.toLanguageId(locale), localizedValue.getKey())) {
-
-				return localizedValue.getValue();
-			}
+		if (MapUtil.isEmpty(localizedValues)) {
+			return null;
 		}
 
-		return null;
+		return localizedValues.get(LocaleUtil.toLanguageId(locale));
 	}
 
-	public static JSONObject toJSONObject(LocalizedValue[] localizedValues)
-		throws Exception {
-
+	public static JSONObject toJSONObject(Map<String, Object> localizedValues) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (ArrayUtil.isEmpty(localizedValues)) {
+		if (MapUtil.isEmpty(localizedValues)) {
 			return jsonObject;
 		}
 
-		for (LocalizedValue localizedValue : localizedValues) {
-			jsonObject.put(localizedValue.getKey(), localizedValue.getValue());
+		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
+			jsonObject.put(entry.getKey(), entry.getValue());
 		}
 
 		return jsonObject;
 	}
 
-	public static Map<String, String> toLocalizationMap(JSONObject jsonObject) {
-		Map<String, String> localizationMap = new HashMap<>();
-
-		Iterator<String> keys = jsonObject.keys();
-
-		while (keys.hasNext()) {
-			String key = keys.next();
-
-			localizationMap.put(key, jsonObject.getString(key));
-		}
-
-		return localizationMap;
-	}
-
 	public static Map<Locale, String> toLocalizationMap(
-		LocalizedValue[] localizedValues) {
+		Map<String, Object> localizedValues) {
 
-		if (ArrayUtil.isEmpty(localizedValues)) {
+		if (MapUtil.isEmpty(localizedValues)) {
 			return Collections.emptyMap();
 		}
 
 		Map<Locale, String> localizationMap = new HashMap<>();
 
-		for (LocalizedValue localizedValue : localizedValues) {
+		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
 			localizationMap.put(
-				LocaleUtil.fromLanguageId(localizedValue.getKey()),
-				(String)localizedValue.getValue());
+				LocaleUtil.fromLanguageId(entry.getKey()),
+				(String)entry.getValue());
 		}
 
 		return localizationMap;
 	}
 
-	public static LocalizedValue[] toLocalizedValues(JSONObject jsonObject) {
-		List<LocalizedValue> localizedValues = new ArrayList<>();
+	public static Map<String, Object> toLocalizedValues(JSONObject jsonObject) {
+		Map<String, Object> localizedValues = new HashMap<>();
 
 		Iterator<String> keys = jsonObject.keys();
 
 		while (keys.hasNext()) {
-			LocalizedValue localizedValue = new LocalizedValue();
-
 			String key = keys.next();
 
-			localizedValue.setKey(key);
-			localizedValue.setValue(jsonObject.getString(key));
-
-			localizedValues.add(localizedValue);
+			localizedValues.put(key, jsonObject.get(key));
 		}
 
-		return localizedValues.toArray(
-			new LocalizedValue[localizedValues.size()]);
+		return localizedValues;
 	}
 
-	public static LocalizedValue[] toLocalizedValues(
+	public static Map<String, Object> toLocalizedValues(
 		Map<Locale, String> localizationMap) {
 
-		List<LocalizedValue> localizedValues = new ArrayList<>();
+		Map<String, Object> localizedValues = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : localizationMap.entrySet()) {
-			LocalizedValue localizedValue = new LocalizedValue();
-
-			localizedValue.setKey(String.valueOf(entry.getKey()));
-			localizedValue.setValue(entry.getValue());
-
-			localizedValues.add(localizedValue);
+			localizedValues.put(
+				String.valueOf(entry.getKey()), entry.getValue());
 		}
 
-		return localizedValues.toArray(
-			new LocalizedValue[localizationMap.size()]);
+		return localizedValues;
 	}
 
 }

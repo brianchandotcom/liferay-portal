@@ -26,37 +26,44 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class FormatJSONObject {
 
-	public JSONObject getRandomJSONObject() {
-		JSONObject randomJSONObject = JSONFactoryUtil.createJSONObject();
-
-		randomJSONObject.put(
-			"helloworldhelloworldhelloworldhelloworldhelloworldhelloworld",
-			StringUtil.lowerCase("HelloWorldHelloWorld"));
-		randomJSONObject.put("world", "World");
-		randomJSONObject.put("hello-world", "Hello-World");
-		randomJSONObject.put(
-			"hello",
-			StringUtil.replace(
-				"Hello World Hello World Hello World", "Hello", "World"));
-
-		return randomJSONObject;
-	}
-
-	public JSONObject getUserJSONObject(User user) {
+	public JSONObject getJSONObject(User user) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("reminderQueryAnswer", user.getReminderQueryAnswer());
+		if (user != null) {
+			jsonObject.put(
+				"reminderQueryAnswer", user.getReminderQueryAnswer()
+			).put(
+				"fullName",
+				StringBundler.concat(
+					user.getFirstName(), StringPool.SPACE, user.getMiddleName(),
+					StringPool.SPACE, user.getLastName())
+			).put(
+				"displayEmailAddress", user.getDisplayEmailAddress()
+			).put(
+				"digest", user.getDigest()
+			).put(
+				"emailAddress", user.getEmailAddress()
+			).put(
+				"comments", user.getComments()
+			).put(
+				"reminderQueryQuestion", user.getReminderQueryQuestion()
+			);
+
+			return jsonObject;
+		}
+
 		jsonObject.put(
-			"fullName",
-			StringBundler.concat(
-				user.getFirstName(), StringPool.SPACE, user.getMiddleName(),
-				StringPool.SPACE, user.getLastName()));
-		jsonObject.put("displayEmailAddress", user.getDisplayEmailAddress());
-		jsonObject.put("digest", user.getDigest());
-		jsonObject.put("emailAddress", user.getEmailAddress());
-		jsonObject.put("comments", user.getComments());
-		jsonObject.put(
-			"reminderQueryQuestion", user.getReminderQueryQuestion());
+			"helloworldhelloworldhelloworldhelloworldhelloworldhelloworld",
+			StringUtil.lowerCase("HelloWorldHelloWorld")
+		).put(
+			"world", "World"
+		).put(
+			"hello-world", "Hello-World"
+		).put(
+			"hello",
+			StringUtil.replace(
+				"Hello World Hello World Hello World", "Hello", "World")
+		);
 
 		return jsonObject;
 	}

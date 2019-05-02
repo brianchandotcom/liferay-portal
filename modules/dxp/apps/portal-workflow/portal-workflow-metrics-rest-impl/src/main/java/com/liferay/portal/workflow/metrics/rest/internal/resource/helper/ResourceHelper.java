@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.helper;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,6 +25,11 @@ import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregation;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
+import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.script.Script;
@@ -33,6 +39,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.io.IOException;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -106,6 +115,38 @@ public class ResourceHelper {
 		}
 	}
 
+	public String getLatestProcessVersion(long companyId, long processId) {
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames("workflow-metrics-processes");
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		searchSearchRequest.setQuery(
+			booleanQuery.addMustQueryClauses(
+				_queries.term("companyId", companyId),
+				_queries.term("processId", processId)));
+
+		searchSearchRequest.setSelectedFieldNames("version");
+
+		return Stream.of(
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::parallelStream
+		).map(
+			SearchHit::getDocument
+		).findFirst(
+		).map(
+			document -> document.getString("version")
+		).orElse(
+			StringPool.BLANK
+		);
+	}
+
 	public long getOnTimeInstanceCount(Bucket bucket) {
 		FilterAggregationResult filterAggregationResult =
 			(FilterAggregationResult)bucket.getChildAggregationResult("onTime");
@@ -155,6 +196,9 @@ public class ResourceHelper {
 
 	@Reference
 	private Scripts _scripts;
+
+	@Reference
+	private SearchRequestExecutor _searchRequestExecutor;
 
 	private Script _workflowMetricsSlaCombineScript;
 	private Script _workflowMetricsSlaInitScript;

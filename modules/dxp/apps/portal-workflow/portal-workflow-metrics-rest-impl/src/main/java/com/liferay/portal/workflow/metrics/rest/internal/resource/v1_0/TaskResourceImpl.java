@@ -29,8 +29,6 @@ import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResul
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.hits.SearchHit;
-import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
@@ -83,7 +81,8 @@ public class TaskResourceImpl
 	public Page<Task> getProcessTasksPage(
 		Long processId, Pagination pagination, Sort[] sorts) {
 
-		String latestProcessVersion = _getLatestProcessVersion(processId);
+		String latestProcessVersion = _resourceHelper.getLatestProcessVersion(
+			contextCompany.getCompanyId(), processId);
 
 		if (pagination == null) {
 			Map<String, Long> instanceCountMap = _getInstanceCountMap(
@@ -271,38 +270,6 @@ public class TaskResourceImpl
 			(map, bucket) -> map.put(
 				bucket.getKey(), _getInstanceCount(bucket)),
 			Map::putAll);
-	}
-
-	private String _getLatestProcessVersion(long processId) {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames("workflow-metrics-processes");
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		searchSearchRequest.setQuery(
-			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", contextCompany.getCompanyId()),
-				_queries.term("processId", processId)));
-
-		searchSearchRequest.setSelectedFieldNames("version");
-
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::parallelStream
-		).map(
-			SearchHit::getDocument
-		).findFirst(
-		).map(
-			document -> document.getString("version")
-		).orElse(
-			StringPool.BLANK
-		);
 	}
 
 	private TermsAggregationResult _getSLATermsAggregationResult(

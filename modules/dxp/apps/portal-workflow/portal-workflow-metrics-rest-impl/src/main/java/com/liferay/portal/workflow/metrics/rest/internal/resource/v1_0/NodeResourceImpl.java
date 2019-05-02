@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.document.Document;
@@ -27,6 +26,7 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
+import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 
 import java.util.List;
@@ -59,7 +59,10 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 				_queries.term("companyId", contextCompany.getCompanyId()),
 				_queries.term("deleted", false),
 				_queries.term("processId", processId),
-				_queries.term("version", _getLatestProcessVersion(processId))));
+				_queries.term(
+					"version",
+					_resourceHelper.getLatestProcessVersion(
+						contextCompany.getCompanyId(), processId))));
 
 		searchSearchRequest.setSize(10000);
 
@@ -81,38 +84,6 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 			));
 	}
 
-	private String _getLatestProcessVersion(long processId) {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames("workflow-metrics-processes");
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		searchSearchRequest.setQuery(
-			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", contextCompany.getCompanyId()),
-				_queries.term("processId", processId)));
-
-		searchSearchRequest.setSelectedFieldNames("version");
-
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::parallelStream
-		).map(
-			SearchHit::getDocument
-		).findFirst(
-		).map(
-			document -> document.getString("version")
-		).orElse(
-			StringPool.BLANK
-		);
-	}
-
 	private Node _toNode(Document document) {
 		return new Node() {
 			{
@@ -129,6 +100,9 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 
 	@Reference
 	private Queries _queries;
+
+	@Reference
+	private ResourceHelper _resourceHelper;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

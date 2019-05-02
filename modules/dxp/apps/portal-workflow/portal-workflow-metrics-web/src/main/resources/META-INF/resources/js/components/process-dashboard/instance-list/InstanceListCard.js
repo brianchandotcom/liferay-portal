@@ -64,9 +64,7 @@ class InstanceListCard extends React.Component {
 
 		return this.requestData(`/processes/${processId}/title`)
 			.then(data => {
-				this.context.setTitle(
-					`${data}: ${Liferay.Language.get('all-items')}`
-				);
+				this.context.setTitle(`${data}: ${Liferay.Language.get('all-items')}`);
 			})
 			.catch(this.handleRequestError);
 	}

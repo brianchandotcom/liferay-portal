@@ -46,17 +46,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DataDefinitionField {
 
 	@Schema
-	public CustomProperty[] getCustomProperties() {
+	public Map<String, Object> getCustomProperties() {
 		return customProperties;
 	}
 
-	public void setCustomProperties(CustomProperty[] customProperties) {
+	public void setCustomProperties(Map<String, Object> customProperties) {
 		this.customProperties = customProperties;
 	}
 
 	@JsonIgnore
 	public void setCustomProperties(
-		UnsafeSupplier<CustomProperty[], Exception>
+		UnsafeSupplier<Map<String, Object>, Exception>
 			customPropertiesUnsafeSupplier) {
 
 		try {
@@ -72,7 +72,7 @@ public class DataDefinitionField {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected CustomProperty[] customProperties;
+	protected Map<String, Object> customProperties;
 
 	@Schema
 	public Map<String, Object> getDefaultValue() {
@@ -357,17 +357,7 @@ public class DataDefinitionField {
 
 			sb.append("\"customProperties\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < customProperties.length; i++) {
-				sb.append(String.valueOf(customProperties[i]));
-
-				if ((i + 1) < customProperties.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(customProperties));
 		}
 
 		if (defaultValue != null) {

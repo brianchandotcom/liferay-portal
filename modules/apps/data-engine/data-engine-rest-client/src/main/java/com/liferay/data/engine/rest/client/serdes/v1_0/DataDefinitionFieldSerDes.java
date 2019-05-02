@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.rest.client.serdes.v1_0;
 
-import com.liferay.data.engine.rest.client.dto.v1_0.CustomProperty;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
@@ -23,7 +22,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -64,23 +62,7 @@ public class DataDefinitionFieldSerDes {
 
 			sb.append("\"customProperties\": ");
 
-			sb.append("[");
-
-			for (int i = 0;
-				 i < dataDefinitionField.getCustomProperties().length; i++) {
-
-				sb.append(
-					String.valueOf(
-						dataDefinitionField.getCustomProperties()[i]));
-
-				if ((i + 1) <
-						dataDefinitionField.getCustomProperties().length) {
-
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(dataDefinitionField.getCustomProperties()));
 		}
 
 		if (dataDefinitionField.getDefaultValue() != null) {
@@ -343,13 +325,8 @@ public class DataDefinitionFieldSerDes {
 			if (Objects.equals(jsonParserFieldName, "customProperties")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinitionField.setCustomProperties(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> CustomPropertySerDes.toDTO((String)object)
-						).toArray(
-							size -> new CustomProperty[size]
-						));
+						DataDefinitionFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "defaultValue")) {

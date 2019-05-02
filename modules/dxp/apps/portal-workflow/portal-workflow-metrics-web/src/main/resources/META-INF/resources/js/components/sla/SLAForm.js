@@ -4,6 +4,7 @@ import {
 	DURATION,
 	HOURS,
 	NAME,
+	PAUSE_NODE_KEYS,
 	START_NODE_KEYS,
 	STOP_NODE_KEYS
 } from './Constants';
@@ -48,28 +49,7 @@ class SLAForm extends React.Component {
 	}
 
 	componentWillMount() {
-		const { id, processId } = this.props;
-		const promises = [];
-
-		slaStore.reset();
-
-		if (processId) {
-			promises.push(nodeStore.fetchNodes(processId));
-		}
-
-		if (id) {
-			promises.push(slaStore.fetchData(id));
-		}
-		else {
-			this.context.setTitle(Liferay.Language.get('new-sla'));
-		}
-
-		Promise.all(promises).then(() => {
-			this.setState({
-				loading: false
-			});
-			this.context.setTitle(slaStore.getState().name);
-		});
+		this.loadData();
 	}
 
 	@autobind
@@ -85,6 +65,7 @@ class SLAForm extends React.Component {
 
 	@autobind
 	handlePauseNodesChange(nodeKeys) {
+		const { errors } = this.state;
 		const { startNodeKeys, stopNodeKeys } = slaStore.getState();
 
 		const pauseNodeKeys = nodeStore
@@ -92,7 +73,8 @@ class SLAForm extends React.Component {
 			.filter(({ compositeId }) => nodeKeys.includes(`${compositeId}`));
 
 		slaStore.setState({ pauseNodeKeys: { nodeKeys: pauseNodeKeys } });
-		this.setState({});
+		errors[PAUSE_NODE_KEYS] = '';
+		this.setState({ errors });
 	}
 
 	@autobind
@@ -182,16 +164,50 @@ class SLAForm extends React.Component {
 	}
 
 	loadData() {
-		const { id } = this.props;
+		const { id, processId } = this.props;
 
-		this.setState({ loading: true });
+		slaStore.reset();
 
-		return slaStore
-			.fetchData(id)
-			.then(({ name }) => {
-				this.context.setTitle(name);
-			})
-			.catch(openErrorToast);
+		return nodeStore.fetchNodes(processId).then(() => {
+			const callback = () => {
+				const { errors } = this.state;
+				const errorText = Liferay.Language.get(
+					'selected-option-is-no-longer-available-please-choose-another-option'
+				);
+				const {
+					pauseNodeKeys,
+					startNodeKeys,
+					stopNodeKeys
+				} = slaStore.getState();
+
+				if (startNodeKeys.status === 2 && !pauseNodeKeys.nodeKeys.length) {
+					errors[START_NODE_KEYS] = errorText;
+				}
+
+				if (stopNodeKeys.status === 2 && !pauseNodeKeys.nodeKeys.length) {
+					errors[STOP_NODE_KEYS] = errorText;
+				}
+
+				this.setState({
+					errors,
+					loading: false
+				});
+				this.context.setTitle(slaStore.getState().name);
+			};
+
+			if (id) {
+				return slaStore.fetchData(id).then(() => {
+					callback();
+
+					return true;
+				});
+			}
+
+			this.context.setTitle(Liferay.Language.get('new-sla'));
+			callback();
+
+			return true;
+		});
 	}
 
 	@autobind
@@ -199,8 +215,9 @@ class SLAForm extends React.Component {
 		const { errors } = this.state;
 		const { days, hours } = slaStore.getState();
 
-		errors[ALERT_MESSAGE] = errors[HOURS] = '';
+		errors[ALERT_MESSAGE] = '';
 		errors[DURATION] = validateDuration(days, hours);
+		errors[HOURS] = '';
 
 		this.setState({ errors });
 	}
@@ -250,6 +267,7 @@ class SLAForm extends React.Component {
 			name,
 			pauseNodeKeys: { nodeKeys: pauseNodeKeys },
 			startNodeKeys: { nodeKeys: startNodeKeys },
+			status,
 			stopNodeKeys: { nodeKeys: stopNodeKeys }
 		} = slaStore.getState();
 		const daysMask = createNumberMask({
@@ -293,6 +311,32 @@ class SLAForm extends React.Component {
 						</div>
 					</div>
 				)}
+
+				{status === 2 && (
+					<div className="alert-container">
+						<div className="alert alert-danger alert-dismissible" role="alert">
+							<span className="alert-indicator">
+								<Icon iconName="exclamation-full" />
+							</span>
+
+							<strong className="lead">{Liferay.Language.get('error')}</strong>
+
+							{Liferay.Language.get(
+								'the-time-frame-options-changed-in-the-workflow-definition'
+							)}
+
+							<button
+								aria-label="Close"
+								className="close"
+								data-dismiss="alert"
+								type="button"
+							>
+								<Icon iconName="times" />
+							</button>
+						</div>
+					</div>
+				)}
+
 				<form className="sheet sheet-lg" role="form">
 					<div className="sheet-header">
 						<h2 className="sheet-title">

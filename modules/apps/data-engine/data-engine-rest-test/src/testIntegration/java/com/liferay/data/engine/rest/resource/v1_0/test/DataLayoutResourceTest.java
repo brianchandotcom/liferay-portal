@@ -16,10 +16,11 @@ package com.liferay.data.engine.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataLayout;
-import com.liferay.data.engine.rest.client.dto.v1_0.LocalizedValue;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+
+import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -53,12 +54,10 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				defaultLanguageId = "en_US";
 				id = RandomTestUtil.randomLong();
-				name = new LocalizedValue[] {
-					new LocalizedValue() {
-						{
-							key = "en_US";
-							value = RandomTestUtil.randomString();
-						}
+
+				name = new HashMap<String, Object>() {
+					{
+						put("en_US", RandomTestUtil.randomString());
 					}
 				};
 			}

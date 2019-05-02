@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="PersistenceCallCheck" files="/modules/apps/roles/roles-test/src/testIntegration/java/com/liferay/roles/service/persistence/test/RoleFinderTest\.java" />
+	</checkstyle>
+</suppressions>

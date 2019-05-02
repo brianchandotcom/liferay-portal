@@ -80,6 +80,90 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 		return false;
 	}
 
+	private String _sortChainedMethodCall(
+		String content, String methodName, String... variableTypeRegexStrings) {
+
+		if (!content.contains("." + methodName + "(")) {
+			return content;
+		}
+
+		Pattern pattern = Pattern.compile("\t(\\w+)\\." + methodName + "\\(");
+
+		Matcher matcher = pattern.matcher(content);
+
+		PutOrSetParameterNameComparator putOrSetParameterNameComparator =
+			new PutOrSetParameterNameComparator();
+
+		while (matcher.find()) {
+			if (!_isAllowedVariableType(
+					content, matcher.group(1), variableTypeRegexStrings)) {
+
+				continue;
+			}
+
+			String previousParameters = null;
+			String previousPutOrSetParameterName = null;
+
+			int x = matcher.end() - 1;
+
+			while (true) {
+				String parameters = null;
+
+				int y = x;
+
+				while (true) {
+					y = content.indexOf(")", y + 1);
+
+					if (y == -1) {
+						return content;
+					}
+
+					if (getLevel(content.substring(x, y + 1)) == 0) {
+						parameters = content.substring(x + 1, y);
+
+						break;
+					}
+				}
+
+				List<String> parametersList = JavaSourceUtil.splitParameters(
+					parameters);
+
+				String putOrSetParameterName = parametersList.get(0);
+
+				if ((previousPutOrSetParameterName != null) &&
+					(putOrSetParameterNameComparator.compare(
+						previousPutOrSetParameterName, putOrSetParameterName) >
+							0)) {
+
+					String codeBlock = content.substring(
+						matcher.start(), y + 1);
+
+					String newCodeBlock = StringUtil.replaceFirst(
+						codeBlock, previousParameters, parameters);
+
+					newCodeBlock = StringUtil.replaceLast(
+						newCodeBlock, parameters, previousParameters);
+
+					return StringUtil.replaceFirst(
+						content, codeBlock, newCodeBlock, matcher.start());
+				}
+
+				String s = StringUtil.trim(content.substring(y + 1));
+
+				if (!s.startsWith("." + methodName + "(")) {
+					break;
+				}
+
+				previousParameters = parameters;
+				previousPutOrSetParameterName = putOrSetParameterName;
+
+				x = content.indexOf("(", y + 1);
+			}
+		}
+
+		return content;
+	}
+
 	private String _sortMethodCall(
 		String content, String methodName, String... variableTypeRegexStrings) {
 
@@ -146,12 +230,14 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortMethodCalls(String content) {
+		content = _sortChainedMethodCall(content, "put", "JSONObject");
+
 		content = _sortMethodCall(
 			content, "add", "ConcurrentSkipListSet(<.*>|\\(\\))",
 			"HashSet(<.*>|\\(\\))", "TreeSet(<.*>|\\(\\))");
 		content = _sortMethodCall(
 			content, "put", "ConcurrentHashMap(<.*>|\\(\\))",
-			"HashMap(<.*>|\\(\\))", "JSONObject", "SortedMap(<.*>|\\(\\))",
+			"HashMap(<.*>|\\(\\))", "SortedMap(<.*>|\\(\\))",
 			"TreeMap(<.*>|\\(\\))");
 		content = _sortMethodCall(content, "setAttribute");
 

@@ -854,12 +854,12 @@ public class DDMImpl implements DDM {
 			}
 
 			jsonObject.put(
-				"localizationMap", localizationMapJSONObject
-			).put(
 				"fields",
 				getDDMFormFieldsJSONArray(
 					ddmFormField.getNestedDDMFormFields(), availableLocales,
 					defaultLocale)
+			).put(
+				"localizationMap", localizationMapJSONObject
 			);
 
 			ddmFormFieldsJSONArray.put(jsonObject);

@@ -634,9 +634,9 @@ public class LayoutsAdminDisplayContext {
 				"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
 			layoutJSONObject.put(
-				"url", portletURL.toString()
-			).put(
 				"title", layout.getName(_themeDisplay.getLocale())
+			).put(
+				"url", portletURL.toString()
 			);
 
 			layoutsJSONArray.put(layoutJSONObject);

@@ -65,17 +65,45 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that users receive a notification in portal when a document is shared to them."
+	@description = "This test asserts that users get the proper notification based on sharing permissions granted to him."
 	@priority = "4"
 	test AssertNotifications {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title 1");
 
-		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title 1");
 
 		DMDocument.sharePG(
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "DM Document Title 2");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title 2");
+
+		DMDocument.sharePG(
+			sharingPermissions = "Update",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.odt",
+			dmDocumentTitle = "DM Document Title 3");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title 3");
+
+		DMDocument.sharePG(
+			sharingPermissions = "Comment",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
@@ -85,13 +113,27 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Notifications.viewBadgeCount(notificationCount = "1");
+		Notifications.viewBadgeCount(notificationCount = "3");
 
 		Notifications.gotoNotifications();
 
 		Notifications.viewNewSharedDocument(
 			assetSharingPermission = "viewing",
-			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitle = "DM Document Title 1",
+			ownerName = "Test Test");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedDocument(
+			assetSharingPermission = "updating",
+			dmDocumentTitle = "DM Document Title 2",
+			ownerName = "Test Test");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedDocument(
+			assetSharingPermission = "commenting",
+			dmDocumentTitle = "DM Document Title 3",
 			ownerName = "Test Test");
 	}
 

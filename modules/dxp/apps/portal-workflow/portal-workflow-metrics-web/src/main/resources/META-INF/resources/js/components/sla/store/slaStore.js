@@ -4,28 +4,43 @@ import {
 	getDurationValues
 } from '../../../shared/util/duration';
 import client from '../../../shared/rest/fetch';
+import nodeStore from './nodeStore';
 
 class SLAStore {
-	constructor(client) {
+	constructor(client, nodeStore) {
 		this.client = client;
+		this.nodeStore = nodeStore;
 		this.state = {};
 		this.reset();
 	}
 
 	fetchData(slaId) {
-		return this.client.get(`/slas/${slaId}`).then(result => {
-			const {
-				description = '',
-				duration,
-				name,
-				pauseNodeKeys,
-				startNodeKeys,
-				stopNodeKeys
-			} = result.data;
+		return this.client.get(`/slas/${slaId}`).then(({ data }) => {
+			const { description = '', duration, name, status } = data;
 
 			const { days, hours, minutes } = getDurationValues(duration);
 
 			const formattedHours = formatHours(hours, minutes);
+			const nodeKeys = this.nodeStore.getState().nodes.map(({ id }) => `${id}`);
+
+			const addNodeKeys = node => {
+				if (node.nodeKeys) {
+					node.nodeKeys = node.nodeKeys.filter(({ id }) =>
+						nodeKeys.includes(id)
+					);
+				}
+				else {
+					node.nodeKeys = [];
+				}
+
+				return node;
+			};
+
+			const [pauseNodeKeys, startNodeKeys, stopNodeKeys] = [
+				data.pauseNodeKeys,
+				data.startNodeKeys,
+				data.stopNodeKeys
+			].map(addNodeKeys);
 
 			pauseNodeKeys.nodeKeys = pauseNodeKeys.nodeKeys || [];
 			startNodeKeys.nodeKeys = startNodeKeys.nodeKeys || [];
@@ -38,6 +53,7 @@ class SLAStore {
 				name,
 				pauseNodeKeys,
 				startNodeKeys,
+				status,
 				stopNodeKeys
 			});
 
@@ -64,6 +80,7 @@ class SLAStore {
 				nodeKeys: [],
 				status: 0
 			},
+			status: 0,
 			stopNodeKeys: {
 				nodeKeys: [],
 				status: 0
@@ -125,5 +142,5 @@ class SLAStore {
 	}
 }
 
-export default new SLAStore(client);
+export default new SLAStore(client, nodeStore);
 export { SLAStore };

@@ -26,6 +26,8 @@ import com.liferay.expando.kernel.service.ExpandoColumnService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -111,14 +113,21 @@ public class ExpandoPortlet extends MVCPortlet {
 			type = _getNumberType(dataType, precisionType, type);
 		}
 
-		String name = ParamUtil.getString(actionRequest, "name");
-
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
 
-		expandoBridge.addAttribute(name, type);
+		Serializable defaultValue = null;
 
-		Serializable defaultValue = getDefaultValue(actionRequest, type);
+		if (type == ExpandoColumnConstants.GEOLOCATION) {
+			defaultValue = _getGeolocationJSONOBject(actionRequest);
+		}
+		else {
+			defaultValue = getDefaultValue(actionRequest, type);
+		}
+
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		expandoBridge.addAttribute(name, type);
 
 		expandoBridge.setAttributeDefault(name, defaultValue);
 
@@ -162,7 +171,14 @@ public class ExpandoPortlet extends MVCPortlet {
 
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
-		Serializable defaultValue = getDefaultValue(actionRequest, type);
+		Serializable defaultValue = null;
+
+		if (type == ExpandoColumnConstants.GEOLOCATION) {
+			defaultValue = _getGeolocationJSONOBject(actionRequest);
+		}
+		else {
+			defaultValue = getDefaultValue(actionRequest, type);
+		}
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
@@ -395,6 +411,20 @@ public class ExpandoPortlet extends MVCPortlet {
 		}
 
 		expandoBridge.setAttributeProperties(name, properties);
+	}
+
+	private JSONObject _getGeolocationJSONOBject(ActionRequest actionRequest) {
+		JSONObject geolocationJSONOBject = JSONFactoryUtil.createJSONObject();
+
+		Double latitude = ParamUtil.getDouble(actionRequest, "latitudeValue");
+		Double longitude = ParamUtil.getDouble(actionRequest, "longitudeValue");
+
+		if ((latitude != null) && (longitude != null)) {
+			geolocationJSONOBject.put("latitude", latitude);
+			geolocationJSONOBject.put("longitude", longitude);
+		}
+
+		return geolocationJSONOBject;
 	}
 
 	private int _getNumberType(

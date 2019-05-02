@@ -25,7 +25,6 @@ import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -315,9 +314,6 @@ public class TaskResourceImpl
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"taskName", "taskName");
 
-		CardinalityAggregation cardinalityAggregation =
-			_aggregations.cardinality("instanceCount", "instanceId");
-
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _resourceHelper.createMustNotBooleanQuery());
 
@@ -331,8 +327,7 @@ public class TaskResourceImpl
 			_resourceHelper.createOverdueScriptedMetricAggregation());
 
 		termsAggregation.addChildrenAggregations(
-			cardinalityAggregation, onTimeFilterAggregation,
-			overdueFilterAggregation);
+			onTimeFilterAggregation, overdueFilterAggregation);
 
 		if ((fieldSort != null) &&
 			!_isOrderByInstanceCount(fieldSort.getField())) {
@@ -442,14 +437,6 @@ public class TaskResourceImpl
 	}
 
 	private void _populateTaskWithSLAMetrics(Bucket bucket, Task task) {
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)bucket.getChildAggregationResult(
-				"instanceCount");
-
-		if (cardinalityAggregationResult.getValue() <= 1) {
-			return;
-		}
-
 		_setOnTimeInstanceCount(bucket, task);
 		_setOverdueInstanceCount(bucket, task);
 	}

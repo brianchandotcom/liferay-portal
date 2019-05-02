@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -26,7 +27,6 @@ import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
@@ -414,9 +414,6 @@ public class ProcessResourceImpl
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"processId", "processId");
 
-		CardinalityAggregation cardinalityAggregation =
-			_aggregations.cardinality("instanceCount", "instanceId");
-
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _resourceHelper.createMustNotBooleanQuery());
 
@@ -430,8 +427,7 @@ public class ProcessResourceImpl
 			_resourceHelper.createOverdueScriptedMetricAggregation());
 
 		termsAggregation.addChildrenAggregations(
-			cardinalityAggregation, onTimeFilterAggregation,
-			overdueFilterAggregation);
+			onTimeFilterAggregation, overdueFilterAggregation);
 
 		if ((fieldSort != null) &&
 			!_isOrderByInstanceCount(fieldSort.getField()) &&
@@ -476,14 +472,6 @@ public class ProcessResourceImpl
 	private void _populateProcessWithSLAMetrics(
 		Bucket bucket, Process process) {
 
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)bucket.getChildAggregationResult(
-				"instanceCount");
-
-		if (cardinalityAggregationResult.getValue() <= 1) {
-			return;
-		}
-
 		_setOnTimeInstanceCount(bucket, process);
 		_setOverdueInstanceCount(bucket, process);
 	}
@@ -519,15 +507,10 @@ public class ProcessResourceImpl
 	}
 
 	private void _setUntrackedInstanceCount(Process process) {
-		if ((process.getOnTimeInstanceCount() == null) ||
-			(process.getOverdueInstanceCount() == null)) {
-
-			return;
-		}
-
 		process.setUntrackedInstanceCount(
-			process.getInstanceCount() - process.getOnTimeInstanceCount() -
-				process.getOverdueInstanceCount());
+			process.getInstanceCount() -
+				GetterUtil.getLong(process.getOnTimeInstanceCount()) -
+					GetterUtil.getLong(process.getOverdueInstanceCount()));
 	}
 
 	private FieldSort _toFieldSort(Sort[] sorts) {

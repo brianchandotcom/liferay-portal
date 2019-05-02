@@ -103,9 +103,14 @@ setUpYarn {
 			File cacheDir = new File(rootDir.parentFile, buildBinariesCacheDir)
 
 			if (cacheDir.exists()) {
+				File fromDir = new File(cacheDir, ".yarn/offline-cache")
+				File intoDir = new File(rootDir, "node_modules_cache")
+
+				logger.lifecycle "Copying {} into {}", fromDir, intoDir
+
 				copy {
-					from new File(cacheDir, ".yarn/offline-cache")
-					into new File(rootDir, "node_modules_cache")
+					from fromDir
+					into intoDir
 				}
 			}
 		}

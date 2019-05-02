@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -75,9 +75,13 @@ public class RatingsEntryStagedModelDataHandler
 	public List<RatingsEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return Arrays.asList(
+		List<RatingsEntry> ratingsEntries = new ArrayList<>();
+
+		ratingsEntries.add(
 			_ratingsEntryLocalService.fetchRatingsEntryByUuidAndCompanyId(
 				uuid, companyId));
+
+		return ratingsEntries;
 	}
 
 	@Override

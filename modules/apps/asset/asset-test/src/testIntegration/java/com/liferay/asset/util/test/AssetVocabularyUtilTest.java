@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -111,10 +110,13 @@ public class AssetVocabularyUtilTest {
 	public void testGetUnambiguousVocabularyTitleWithoutAmbiguity()
 		throws Exception {
 
+		List<AssetVocabulary> vocabularies = new ArrayList<>();
+
+		vocabularies.add(_companyVocabulary);
+
 		String unambiguousCompanyVocabularyTitle =
 			_companyVocabulary.getUnambiguousTitle(
-				Arrays.asList(_companyVocabulary), _group.getGroupId(),
-				_LOCALE);
+				vocabularies, _group.getGroupId(), _LOCALE);
 
 		Assert.assertEquals(_TITLE, unambiguousCompanyVocabularyTitle);
 	}

@@ -50,7 +50,6 @@ import com.liferay.wiki.web.internal.asset.model.WikiPageAssetRenderer;
 import com.liferay.wiki.web.internal.util.WikiPageAttachmentsUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -156,7 +155,11 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException {
 
-		return Arrays.asList(getParentContainerModel(classPK));
+		List<ContainerModel> containerModels = new ArrayList<>();
+
+		containerModels.add(getParentContainerModel(classPK));
+
+		return containerModels;
 	}
 
 	@Override

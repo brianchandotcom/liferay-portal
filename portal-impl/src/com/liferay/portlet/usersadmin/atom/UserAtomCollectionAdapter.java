@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +46,11 @@ public class UserAtomCollectionAdapter extends BaseAtomCollectionAdapter<User> {
 
 	@Override
 	public List<String> getEntryAuthors(User user) {
-		return Arrays.asList(user.getFullName());
+		List<String> authors = new ArrayList<>();
+
+		authors.add(user.getFullName());
+
+		return authors;
 	}
 
 	@Override

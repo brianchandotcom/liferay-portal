@@ -67,7 +67,6 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -640,9 +639,12 @@ public class JournalArticleServiceTest {
 	protected int countArticlesByKeyword(String keyword, int status)
 		throws Exception {
 
+		List<Long> folderIds = new ArrayList<>(1);
+
+		folderIds.add(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
 		return JournalArticleLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), _group.getGroupId(),
-			Arrays.asList(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
+			TestPropsValues.getCompanyId(), _group.getGroupId(), folderIds,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, null,
 			null, keyword, "", "", null, null, status, null, true);
 	}
@@ -692,9 +694,12 @@ public class JournalArticleServiceTest {
 			String keyword, int status)
 		throws Exception {
 
+		List<Long> folderIds = new ArrayList<>(1);
+
+		folderIds.add(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
 		return JournalArticleLocalServiceUtil.search(
-			TestPropsValues.getCompanyId(), _group.getGroupId(),
-			Arrays.asList(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
+			TestPropsValues.getCompanyId(), _group.getGroupId(), folderIds,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, null,
 			null, keyword, "", "", null, null, status, null, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);

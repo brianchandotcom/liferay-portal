@@ -78,7 +78,6 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -1139,7 +1138,11 @@ public class AssetPublisherExportImportTest
 	protected void testExportImportAssetEntries(Group scopeGroup)
 		throws Exception {
 
-		testExportImportAssetEntries(Arrays.asList(scopeGroup));
+		List<Group> groups = new ArrayList<>();
+
+		groups.add(scopeGroup);
+
+		testExportImportAssetEntries(groups);
 	}
 
 	protected void testExportImportAssetEntries(List<Group> scopeGroups)

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -62,7 +61,11 @@ public class JournalArticleAtomCollectionProvider
 
 	@Override
 	public List<String> getEntryAuthors(JournalArticle journalArticle) {
-		return Arrays.asList(journalArticle.getUserName());
+		List<String> authors = new ArrayList<>(1);
+
+		authors.add(journalArticle.getUserName());
+
+		return authors;
 	}
 
 	@Override

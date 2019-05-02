@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,9 +64,13 @@ public class EmailAddressStagedModelDataHandler
 	public List<EmailAddress> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return Arrays.asList(
+		List<EmailAddress> emailAddresses = new ArrayList<>();
+
+		emailAddresses.add(
 			_emailAddressLocalService.fetchEmailAddressByUuidAndCompanyId(
 				uuid, companyId));
+
+		return emailAddresses;
 	}
 
 	@Override

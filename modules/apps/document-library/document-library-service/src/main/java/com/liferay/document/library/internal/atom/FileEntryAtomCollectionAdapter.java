@@ -38,7 +38,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -62,7 +62,11 @@ public class FileEntryAtomCollectionAdapter
 
 	@Override
 	public List<String> getEntryAuthors(FileEntry fileEntry) {
-		return Arrays.asList(fileEntry.getUserName());
+		List<String> authors = new ArrayList<>();
+
+		authors.add(fileEntry.getUserName());
+
+		return authors;
 	}
 
 	@Override

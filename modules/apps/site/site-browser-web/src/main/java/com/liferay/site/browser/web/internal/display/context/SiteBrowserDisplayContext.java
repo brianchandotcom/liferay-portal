@@ -46,7 +46,6 @@ import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -489,7 +488,11 @@ public class SiteBrowserDisplayContext {
 		if (type.equals("child-sites")) {
 			Group parentGroup = GroupLocalServiceUtil.getGroup(groupId);
 
-			_groupParams.put("groupsTree", Arrays.asList(parentGroup));
+			List<Group> parentGroups = new ArrayList<>();
+
+			parentGroups.add(parentGroup);
+
+			_groupParams.put("groupsTree", parentGroups);
 		}
 		else if (filterManageableGroups) {
 			User user = themeDisplay.getUser();

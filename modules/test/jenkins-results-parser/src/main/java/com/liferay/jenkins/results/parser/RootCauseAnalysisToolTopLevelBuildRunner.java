@@ -203,7 +203,11 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 			LocalGitCommit localGitCommit = localGitCommits.get(0);
 
-			return Arrays.asList(localGitCommit.getSHA());
+			List<String> portalBranchSHAList = new ArrayList<>();
+
+			portalBranchSHAList.add(localGitCommit.getSHA());
+
+			return portalBranchSHAList;
 		}
 
 		Matcher matcher = _compareURLPattern.matcher(portalBranchSHAs);

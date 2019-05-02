@@ -110,7 +110,11 @@ public class WhipTaskExtension {
 	}
 
 	protected Iterable<Object> getAsJvmArgs() {
-		return Arrays.asList(getWhipAgent());
+		List<Object> jvmArgs = new ArrayList<>(1);
+
+		jvmArgs.add(getWhipAgent());
+
+		return jvmArgs;
 	}
 
 	protected Map<String, Object> getAsSystemProperties() {

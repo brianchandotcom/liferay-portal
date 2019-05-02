@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -91,9 +90,13 @@ public class OrganizationStagedModelDataHandler
 	public List<Organization> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return Arrays.asList(
+		List<Organization> organizations = new ArrayList<>();
+
+		organizations.add(
 			_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
 				uuid, companyId));
+
+		return organizations;
 	}
 
 	@Override

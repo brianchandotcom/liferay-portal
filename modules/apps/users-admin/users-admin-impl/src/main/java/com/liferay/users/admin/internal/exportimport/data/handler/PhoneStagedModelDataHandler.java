@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,8 +65,12 @@ public class PhoneStagedModelDataHandler
 	public List<Phone> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return Arrays.asList(
+		List<Phone> phones = new ArrayList<>();
+
+		phones.add(
 			_phoneLocalService.fetchPhoneByUuidAndCompanyId(uuid, companyId));
+
+		return phones;
 	}
 
 	@Override

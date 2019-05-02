@@ -67,8 +67,9 @@ import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.internal.WikiAttachmentsHelper;
 import com.liferay.wiki.web.internal.upload.TempAttachmentWikiUploadFileEntryHandler;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -135,7 +136,12 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			Map<String, Object> data = new HashMap<>();
 
 			data.put(Constants.CMD, Constants.REMOVE);
-			data.put("trashedModels", Arrays.asList(trashedModel));
+
+			List<TrashedModel> trashedModels = new ArrayList<>();
+
+			trashedModels.add(trashedModel);
+
+			data.put("trashedModels", trashedModels);
 
 			addDeleteSuccessData(actionRequest, data);
 		}

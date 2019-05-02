@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -82,8 +82,12 @@ public class RoleStagedModelDataHandler
 	public List<Role> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return Arrays.asList(
+		List<Role> roles = new ArrayList<>();
+
+		roles.add(
 			_roleLocalService.fetchRoleByUuidAndCompanyId(uuid, companyId));
+
+		return roles;
 	}
 
 	@Override

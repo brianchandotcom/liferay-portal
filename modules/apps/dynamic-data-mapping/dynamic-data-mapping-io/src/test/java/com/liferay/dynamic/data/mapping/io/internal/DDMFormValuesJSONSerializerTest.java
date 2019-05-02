@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -235,7 +234,12 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected List<DDMFormFieldValue> createSeparatorNestedDDMFormFieldValues(
 		int index, String instanceId) {
 
-		return Arrays.asList(createTextBoxDDMFormFieldValue(index, instanceId));
+		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
+
+		ddmFormFieldValues.add(
+			createTextBoxDDMFormFieldValue(index, instanceId));
+
+		return ddmFormFieldValues;
 	}
 
 	protected DDMFormFieldValue createTextBoxDDMFormFieldValue(

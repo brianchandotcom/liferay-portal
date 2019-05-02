@@ -47,7 +47,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -349,8 +348,12 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public int getFileEntriesCount(long groupId, long folderId, int status) {
+		List<Long> folderIds = new ArrayList<>();
+
+		folderIds.add(folderId);
+
 		return dlFileEntryFinder.filterCountByG_F(
-			groupId, Arrays.asList(folderId), new QueryDefinition<>(status));
+			groupId, folderIds, new QueryDefinition<>(status));
 	}
 
 	@Override
@@ -373,9 +376,12 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public int getFileEntriesCount(
 		long groupId, long folderId, String[] mimeTypes, int status) {
 
+		List<Long> folderIds = new ArrayList<>();
+
+		folderIds.add(folderId);
+
 		return dlFileEntryFinder.filterCountByG_U_F_M(
-			groupId, 0, Arrays.asList(folderId), mimeTypes,
-			new QueryDefinition<>(status));
+			groupId, 0, folderIds, mimeTypes, new QueryDefinition<>(status));
 	}
 
 	@Override

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -91,9 +90,13 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 	protected List<Resource> getFolders(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		return Arrays.asList(
+		List<Resource> resources = new ArrayList<>();
+
+		resources.add(
 			_ddmWebDAV.toResource(
 				webDAVRequest, DDMWebDAV.TYPE_TEMPLATES, getRootPath(), true));
+
+		return resources;
 	}
 
 	protected List<Resource> getTemplates(WebDAVRequest webDAVRequest)

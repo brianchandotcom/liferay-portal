@@ -62,7 +62,6 @@ import com.liferay.trash.kernel.util.comparator.EntryUserNameComparator;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -165,8 +164,11 @@ public class TrashImpl implements Trash {
 	public void addTrashSessionMessages(
 		ActionRequest actionRequest, TrashedModel trashedModel, String cmd) {
 
-		addTrashSessionMessages(
-			actionRequest, Arrays.asList(trashedModel), cmd);
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		trashedModels.add(trashedModel);
+
+		addTrashSessionMessages(actionRequest, trashedModels, cmd);
 	}
 
 	@Override

@@ -17,7 +17,7 @@ package com.liferay.item.selector.web.internal;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorView;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +36,12 @@ public class FlickrItemSelectorCriterionHandler
 		getItemSelectorViews(
 			FlickrItemSelectorCriterion flickrItemSelectorCriterion) {
 
-		return Arrays.asList(new FlickrItemSelectorView());
+		List<ItemSelectorView<FlickrItemSelectorCriterion>> itemSelectorViews =
+			new ArrayList<>();
+
+		itemSelectorViews.add(new FlickrItemSelectorView());
+
+		return itemSelectorViews;
 	}
 
 }

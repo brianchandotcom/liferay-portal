@@ -34,7 +34,7 @@ import com.sun.syndication.feed.synd.SyndEnclosure;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -157,7 +157,11 @@ public class RSSFeedEntry {
 			return _syndEntry.getContents();
 		}
 
-		return Arrays.asList(syndContent);
+		List<SyndContent> syndContents = new ArrayList<>();
+
+		syndContents.add(syndContent);
+
+		return syndContents;
 	}
 
 	private String _sanitize(String value, String baseURL) {

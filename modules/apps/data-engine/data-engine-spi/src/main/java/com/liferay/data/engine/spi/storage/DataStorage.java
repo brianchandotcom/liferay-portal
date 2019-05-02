@@ -26,11 +26,11 @@ public interface DataStorage {
 
 	public long delete(long dataStorageId) throws Exception;
 
-	public Map<String, ?> get(long dataDefinitionId, long dataStorageId)
+	public Map<String, Object> get(long dataDefinitionId, long dataStorageId)
 		throws Exception;
 
 	public long save(
-			long dataRecordCollectionId, Map<String, ?> dataRecordValues,
+			long dataRecordCollectionId, Map<String, Object> dataRecordValues,
 			long siteId)
 		throws Exception;
 

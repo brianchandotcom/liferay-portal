@@ -114,6 +114,7 @@ definition {
 	@priority = "4"
 	test GoogleSSOSmoke {
 		property dummy.socket.proxy.disabled = "true";
+		property osgi.app.includes = "portal-security-sso-google";
 		property test.name.skip.portal.instance = "Login#GoogleSSOSmoke";
 		var googlePropertiesSet = MathUtil.randomNumber("3");
 		var googleClientID = PropsUtil.get("google.client.id.${googlePropertiesSet}");
@@ -222,6 +223,7 @@ definition {
 	@priority = "4"
 	test OpenIDSmoke {
 		property dummy.socket.proxy.disabled = "true";
+		property osgi.app.includes = "portal-security-sso-openid";
 		property osgi.module.configuration.file.names = "com.liferay.captcha.configuration.CaptchaConfiguration.config";
 		property osgi.module.configurations = "createAccountCaptchaEnabled=&quot;false&quot;";
 		property test.name.skip.portal.instance = "Login#OpenIDSmoke";
@@ -357,6 +359,8 @@ definition {
 
 	@priority = "3"
 	test ViewInstanceSettingsAuthentication {
+		property osgi.app.includes = "portal-security-sso-google,portal-security-sso-ntlm,portal-security-sso-openid";
+
 		User.firstLoginPG();
 
 		PortalSettings.viewAuthenticationGeneralCP();

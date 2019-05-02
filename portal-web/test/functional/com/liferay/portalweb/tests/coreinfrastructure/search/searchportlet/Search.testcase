@@ -928,6 +928,7 @@ definition {
 
 	@priority = "5"
 	test SearchDocumentsAndMediaDocument {
+		property environment.acceptance = "true";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();

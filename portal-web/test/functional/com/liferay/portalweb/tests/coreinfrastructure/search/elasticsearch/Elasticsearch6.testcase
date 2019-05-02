@@ -56,7 +56,6 @@ definition {
 
 	@priority = "5"
 	test ElasticsearchRemoteClusterSmokeTest {
-		property environment.acceptance = "false";
 		property portal.acceptance = "true";
 		property remote.elasticsearch.cluster.size = "2";
 		property remote.elasticsearch.enabled = "true";

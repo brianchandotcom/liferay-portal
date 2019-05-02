@@ -28,7 +28,7 @@ definition {
 	test ImportLDAPUserWithBlankPassword {
 		property apacheds.blank.user.password.enabled = "true";
 		property apacheds.enabled = "true";
-		property environment.acceptance = "false";
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LDAP#ImportLDAPUserWithBlankPassword";
 

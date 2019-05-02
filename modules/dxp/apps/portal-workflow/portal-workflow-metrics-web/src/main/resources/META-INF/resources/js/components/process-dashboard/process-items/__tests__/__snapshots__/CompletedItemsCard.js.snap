@@ -78,7 +78,7 @@ exports[`Should render component 1`] = `
       >
         <ProcessItemsCard
           completed={true}
-          panelDescription="Completed workflow items are counted and categorized by their SLA status."
+          panelDescription="completed-items-description"
           panelTitle="Completed Items"
           processId="35315"
         >
@@ -103,7 +103,7 @@ exports[`Should render component 1`] = `
                           Completed Items
                         </span>
                         <Tooltip
-                          message="Completed workflow items are counted and categorized by their SLA status."
+                          message="completed-items-description"
                           position="right"
                           width="288"
                         >
@@ -239,7 +239,7 @@ exports[`Should render component with failure state 1`] = `
       >
         <ProcessItemsCard
           completed={true}
-          panelDescription="Completed workflow items are counted and categorized by their SLA status."
+          panelDescription="completed-items-description"
           panelTitle="Completed Items"
           processId="35315"
         >
@@ -264,7 +264,7 @@ exports[`Should render component with failure state 1`] = `
                           Completed Items
                         </span>
                         <Tooltip
-                          message="Completed workflow items are counted and categorized by their SLA status."
+                          message="completed-items-description"
                           position="right"
                           width="288"
                         >

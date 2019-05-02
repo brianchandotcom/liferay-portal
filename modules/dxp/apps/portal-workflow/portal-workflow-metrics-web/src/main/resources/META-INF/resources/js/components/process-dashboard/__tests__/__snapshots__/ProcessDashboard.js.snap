@@ -1345,3 +1345,368 @@ exports[`Should render dashboard route children 1`] = `
   </MemoryRouter>
 </MockRouter>
 `;
+
+exports[`Should render with blocked SLA 1`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+  initialPath="/dashboard/35315/completed"
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/dashboard/35315/completed",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/dashboard/35315/completed",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/dashboard/35315/completed",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <ProcessDashboard
+        processId="123"
+      >
+        <div
+          className="workflow-process-dashboard"
+        >
+          <withRouter(Tabs)
+            tabs={
+              Array [
+                Object {
+                  "key": "pending",
+                  "name": "pending",
+                  "params": Object {
+                    "page": 1,
+                    "pageSize": 20,
+                    "processId": "123",
+                    "sort": "overdueInstanceCount%3Aasc",
+                  },
+                  "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                  "query": undefined,
+                },
+                Object {
+                  "key": "completed",
+                  "name": "completed",
+                  "params": Object {
+                    "processId": "123",
+                  },
+                  "path": "/dashboard/:processId/completed",
+                  "query": undefined,
+                },
+              ]
+            }
+          >
+            <Route>
+              <Tabs
+                history={
+                  Object {
+                    "action": "POP",
+                    "block": [Function],
+                    "canGo": [Function],
+                    "createHref": [Function],
+                    "entries": Array [
+                      Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/dashboard/35315/completed",
+                        "search": "?backPath=%2F",
+                      },
+                    ],
+                    "go": [Function],
+                    "goBack": [Function],
+                    "goForward": [Function],
+                    "index": 0,
+                    "length": 1,
+                    "listen": [Function],
+                    "location": Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/dashboard/35315/completed",
+                      "search": "?backPath=%2F",
+                    },
+                    "push": [Function],
+                    "replace": [Function],
+                  }
+                }
+                location={
+                  Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/dashboard/35315/completed",
+                    "search": "?backPath=%2F",
+                  }
+                }
+                match={
+                  Object {
+                    "isExact": false,
+                    "params": Object {},
+                    "path": "/",
+                    "url": "/",
+                  }
+                }
+                tabs={
+                  Array [
+                    Object {
+                      "key": "pending",
+                      "name": "pending",
+                      "params": Object {
+                        "page": 1,
+                        "pageSize": 20,
+                        "processId": "123",
+                        "sort": "overdueInstanceCount%3Aasc",
+                      },
+                      "path": "/dashboard/:processId/pending/:pageSize/:page/:sort",
+                      "query": undefined,
+                    },
+                    Object {
+                      "key": "completed",
+                      "name": "completed",
+                      "params": Object {
+                        "processId": "123",
+                      },
+                      "path": "/dashboard/:processId/completed",
+                      "query": undefined,
+                    },
+                  ]
+                }
+              >
+                <nav
+                  className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+                >
+                  <div
+                    className="container-fluid container-fluid-max-xl"
+                  >
+                    <button
+                      aria-expanded={false}
+                      aria-label="toggle-navigation"
+                      className="collapsed navbar-toggler navbar-toggler-link"
+                      onClick={[Function]}
+                    >
+                      completed
+                      <Icon
+                        iconName="caret-bottom"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-caret-bottom"
+                          focusable="false"
+                          role="presentation"
+                        >
+                          <use
+                            href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom"
+                          />
+                        </svg>
+                      </Icon>
+                    </button>
+                    <div
+                      className="collapse navbar-collapse "
+                    >
+                      <div
+                        className="container-fluid container-fluid-max-xl"
+                      >
+                        <ul
+                          className="navbar-nav"
+                        >
+                          <li
+                            className="nav-item"
+                            key="0"
+                            onClick={[Function]}
+                          >
+                            <TabItem
+                              active={false}
+                              key="pending"
+                              name="pending"
+                              params={
+                                Object {
+                                  "page": 1,
+                                  "pageSize": 20,
+                                  "processId": "123",
+                                  "sort": "overdueInstanceCount%3Aasc",
+                                }
+                              }
+                              path="/dashboard/:processId/pending/:pageSize/:page/:sort"
+                              query="?backPath=%2F"
+                            >
+                              <Link
+                                aria-label=""
+                                className=" nav-link"
+                                replace={false}
+                                to={
+                                  Object {
+                                    "pathname": "/dashboard/123/pending/20/1/overdueInstanceCount%253Aasc",
+                                    "search": "?backPath=%2F",
+                                  }
+                                }
+                              >
+                                <a
+                                  aria-label=""
+                                  className=" nav-link"
+                                  href="/dashboard/123/pending/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                  onClick={[Function]}
+                                >
+                                  <span
+                                    className="navbar-text-truncate"
+                                  >
+                                    pending
+                                  </span>
+                                </a>
+                              </Link>
+                            </TabItem>
+                          </li>
+                          <li
+                            className="nav-item"
+                            key="1"
+                            onClick={[Function]}
+                          >
+                            <TabItem
+                              active={true}
+                              key="completed"
+                              name="completed"
+                              params={
+                                Object {
+                                  "processId": "123",
+                                }
+                              }
+                              path="/dashboard/:processId/completed"
+                              query="?backPath=%2F"
+                            >
+                              <Link
+                                aria-label="current-page"
+                                className="active nav-link"
+                                replace={false}
+                                to={
+                                  Object {
+                                    "pathname": "/dashboard/123/completed",
+                                    "search": "?backPath=%2F",
+                                  }
+                                }
+                              >
+                                <a
+                                  aria-label="current-page"
+                                  className="active nav-link"
+                                  href="/dashboard/123/completed?backPath=%2F"
+                                  onClick={[Function]}
+                                >
+                                  <span
+                                    className="navbar-text-truncate"
+                                  >
+                                    completed
+                                  </span>
+                                </a>
+                              </Link>
+                            </TabItem>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+              </Tabs>
+            </Route>
+          </withRouter(Tabs)>
+          <HashRouter>
+            <Router
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "createHref": [Function],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "",
+                    "state": undefined,
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+            >
+              <Switch />
+            </Router>
+          </HashRouter>
+        </div>
+      </ProcessDashboard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;

@@ -33,11 +33,31 @@ exports[`Should render component 1`] = `
           className="table-cell-expand table-head-title"
           style={
             Object {
+              "width": "15%",
+            }
+          }
+        >
+          Status
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
               "width": "25%",
             }
           }
         >
           Duration
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "25%",
+            }
+          }
+        >
+          last-modified
         </th>
         <th />
       </tr>
@@ -50,6 +70,7 @@ exports[`Should render component 1`] = `
           <div
             className="table-list-title"
           >
+             
             <a
               href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
               onClick={[Function]}
@@ -60,6 +81,14 @@ exports[`Should render component 1`] = `
         </td>
         <td>
           Total time to complete the request.
+        </td>
+        <td
+          className=""
+        >
+          Running
+        </td>
+        <td>
+          
         </td>
         <td>
           
@@ -119,6 +148,7 @@ exports[`Should render component 1`] = `
           <div
             className="table-list-title"
           >
+             
             <a
               href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
               onClick={[Function]}
@@ -129,6 +159,14 @@ exports[`Should render component 1`] = `
         </td>
         <td>
           Total time to complete the request.
+        </td>
+        <td
+          className=""
+        >
+          Running
+        </td>
+        <td>
+          
         </td>
         <td>
           
@@ -188,6 +226,7 @@ exports[`Should render component 1`] = `
           <div
             className="table-list-title"
           >
+             
             <a
               href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
               onClick={[Function]}
@@ -198,6 +237,14 @@ exports[`Should render component 1`] = `
         </td>
         <td>
           Total time to complete the request.
+        </td>
+        <td
+          className=""
+        >
+          Running
+        </td>
+        <td>
+          
         </td>
         <td>
           

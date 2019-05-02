@@ -1184,12 +1184,8 @@ public class SharingEntryLocalServiceTest {
 			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
 			null, serviceContext);
 
-		List<SharingEntryAction> sharingEntryActions = new ArrayList<>();
-
-		sharingEntryActions.add(null);
-
 		_sharingEntryLocalService.updateSharingEntry(
-			sharingEntry.getSharingEntryId(), sharingEntryActions, true, null,
+			sharingEntry.getSharingEntryId(), Arrays.asList(null), true, null,
 			serviceContext);
 	}
 

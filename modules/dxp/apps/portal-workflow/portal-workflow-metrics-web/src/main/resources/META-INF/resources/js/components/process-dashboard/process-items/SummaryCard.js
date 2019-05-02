@@ -28,14 +28,7 @@ class SummaryCard extends React.Component {
 	}
 
 	get formattedValue() {
-		const { value } = this.props;
-		const formatThreshold = 9999;
-
-		if (value > formatThreshold) {
-			return formatNumber(value, '0[,0][.]0a');
-		}
-
-		return formatNumber(value, '0[,]0');
+		return formatNumber(this.props.value, '0[,0][.]0a');
 	}
 
 	@autobind

@@ -18,14 +18,15 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -61,7 +62,7 @@ public class OrganizationServiceTest {
 		int size = 5;
 
 		List<Organization> organizations =
-			OrganizationServiceUtil.getGtOrganizations(
+			_organizationService.getGtOrganizations(
 				0, TestPropsValues.getCompanyId(), parentOrganizationId, size);
 
 		Assert.assertFalse(organizations.isEmpty());
@@ -71,7 +72,7 @@ public class OrganizationServiceTest {
 		Organization lastOrganization = organizations.get(
 			organizations.size() - 1);
 
-		organizations = OrganizationServiceUtil.getGtOrganizations(
+		organizations = _organizationService.getGtOrganizations(
 			lastOrganization.getOrganizationId(),
 			TestPropsValues.getCompanyId(), parentOrganizationId, size);
 
@@ -99,7 +100,7 @@ public class OrganizationServiceTest {
 			OrganizationTestUtil.addOrganization();
 
 		List<Organization> allOrganizations = new ArrayList<>(
-			OrganizationLocalServiceUtil.getOrganizations(
+			_organizationLocalService.getOrganizations(
 				TestPropsValues.getCompanyId(),
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID));
 
@@ -156,11 +157,10 @@ public class OrganizationServiceTest {
 		}
 		finally {
 			for (Organization childOrganization : allChildOrganizations) {
-				OrganizationLocalServiceUtil.deleteOrganization(
-					childOrganization);
+				_organizationLocalService.deleteOrganization(childOrganization);
 			}
 
-			OrganizationLocalServiceUtil.deleteOrganization(parentOrganziation);
+			_organizationLocalService.deleteOrganization(parentOrganziation);
 		}
 	}
 
@@ -170,7 +170,7 @@ public class OrganizationServiceTest {
 		throws Exception {
 
 		List<Organization> actualOrganizations =
-			OrganizationServiceUtil.getOrganizations(
+			_organizationService.getOrganizations(
 				TestPropsValues.getCompanyId(), parentOrganizationId,
 				nameSearch, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -183,12 +183,18 @@ public class OrganizationServiceTest {
 
 		Assert.assertEquals(
 			expectedOrganizations.size(),
-			OrganizationServiceUtil.getOrganizationsCount(
+			_organizationService.getOrganizationsCount(
 				TestPropsValues.getCompanyId(), parentOrganizationId,
 				nameSearch));
 	}
 
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
+
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();
+
+	@Inject
+	private OrganizationService _organizationService;
 
 }

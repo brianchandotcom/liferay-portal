@@ -20,14 +20,15 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.OrganizationFinderUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
@@ -58,12 +59,12 @@ public class OrganizationFinderTest {
 		_organization = OrganizationTestUtil.addOrganization();
 		_user = UserTestUtil.addUser();
 
-		GroupLocalServiceUtil.addUserGroup(_user.getUserId(), _group);
+		_groupLocalService.addUserGroup(_user.getUserId(), _group);
 
-		OrganizationLocalServiceUtil.addGroupOrganization(
+		_organizationLocalService.addGroupOrganization(
 			_group.getGroupId(), _organization);
 
-		OrganizationLocalServiceUtil.addUserOrganization(
+		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), _organization);
 	}
 
@@ -74,7 +75,7 @@ public class OrganizationFinderTest {
 		params1.put("usersOrgs", _user.getUserId());
 		params1.put("groupOrganization", _group.getGroupId());
 
-		int count1 = OrganizationFinderUtil.countO_ByKeywords(
+		int count1 = _organizationFinder.countO_ByKeywords(
 			_user.getCompanyId(),
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 			StringPool.NOT_EQUAL, null, null, null, null, params1);
@@ -86,7 +87,7 @@ public class OrganizationFinderTest {
 		params2.put("groupOrganization", _group.getGroupId());
 		params2.put("usersOrgs", _user.getUserId());
 
-		int count2 = OrganizationFinderUtil.countO_ByKeywords(
+		int count2 = _organizationFinder.countO_ByKeywords(
 			_user.getCompanyId(),
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 			StringPool.NOT_EQUAL, null, null, null, null, params2);
@@ -97,10 +98,19 @@ public class OrganizationFinderTest {
 	@DeleteAfterTestRun
 	private static Group _group;
 
+	@Inject
+	private static GroupLocalService _groupLocalService;
+
 	@DeleteAfterTestRun
 	private static Organization _organization;
 
+	@Inject
+	private static OrganizationLocalService _organizationLocalService;
+
 	@DeleteAfterTestRun
 	private static User _user;
+
+	@Inject
+	private OrganizationFinder _organizationFinder;
 
 }

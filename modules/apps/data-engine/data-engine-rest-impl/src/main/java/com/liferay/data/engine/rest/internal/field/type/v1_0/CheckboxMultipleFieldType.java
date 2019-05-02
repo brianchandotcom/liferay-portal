@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.DataFieldOptionUtil;
 import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,16 +50,16 @@ public class CheckboxMultipleFieldType extends BaseFieldType {
 		DataDefinitionField dataDefinitionField = super.deserialize(jsonObject);
 
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "inline",
 				jsonObject.getBoolean("inline")));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "options",
 				DataFieldOptionUtil.toDataFieldOptions(
 					jsonObject.getJSONObject("options"))));
 		dataDefinitionField.setCustomProperties(
-			CustomPropertyUtil.add(
+			CustomPropertiesUtil.add(
 				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
 				jsonObject.getBoolean("showAsSwitcher")));
 		dataDefinitionField.setDefaultValue(
@@ -75,19 +75,19 @@ public class CheckboxMultipleFieldType extends BaseFieldType {
 
 		return jsonObject.put(
 			"inline",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "inline", false)
 		).put(
 			"options",
 			DataFieldOptionUtil.toJSONObject(
-				CustomPropertyUtil.getDataFieldOptions(
+				CustomPropertiesUtil.getDataFieldOptions(
 					dataDefinitionField.getCustomProperties(), "options"))
 		).put(
 			"predefinedValue",
 			LocalizationUtil.toJSONObject(dataDefinitionField.getDefaultValue())
 		).put(
 			"showAsSwitcher",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
 				false)
 		);
@@ -97,12 +97,12 @@ public class CheckboxMultipleFieldType extends BaseFieldType {
 	protected void addContext(Map<String, Object> context) {
 		context.put(
 			"inline",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "inline", false));
 		context.put(
 			"options",
 			DataFieldOptionUtil.toDataFieldOptions(
-				CustomPropertyUtil.getDataFieldOptions(
+				CustomPropertiesUtil.getDataFieldOptions(
 					dataDefinitionField.getCustomProperties(), "options"),
 				LanguageUtil.getLanguageId(httpServletRequest)));
 		context.put(
@@ -112,12 +112,12 @@ public class CheckboxMultipleFieldType extends BaseFieldType {
 				dataDefinitionField.getDefaultValue()));
 		context.put(
 			"showAsSwitcher",
-			CustomPropertyUtil.getBoolean(
+			CustomPropertiesUtil.getBoolean(
 				dataDefinitionField.getCustomProperties(), "showAsSwitcher",
 				false));
 		context.put(
 			"value",
-			CustomPropertyUtil.getValues(
+			CustomPropertiesUtil.getValues(
 				dataDefinitionField.getCustomProperties(), "value"));
 	}
 

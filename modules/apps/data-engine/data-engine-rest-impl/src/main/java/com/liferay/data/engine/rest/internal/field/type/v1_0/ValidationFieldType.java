@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -56,7 +56,7 @@ public class ValidationFieldType extends BaseFieldType {
 
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				CustomPropertyUtil.getString(
+				CustomPropertiesUtil.getString(
 					dataDefinitionField.getCustomProperties(), "value"));
 
 			value.put("errorMessage", jsonObject.getString("errorMessage"));

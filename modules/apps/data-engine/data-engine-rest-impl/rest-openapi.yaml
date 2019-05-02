@@ -203,7 +203,8 @@ components:
                     format: int64
                     type: integer
                 dataRecordValues:
-                    additionalProperties: true
+                    additionalProperties:
+                        type: object
                     type: object
                 id:
                     format: int64

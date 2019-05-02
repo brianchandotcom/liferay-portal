@@ -65,7 +65,7 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that users receive a notification in portal when a document is shared to them. This test also asserts that users do not lose previous notifications even after the document is no longer shared."
+	@description = "This test ensures that users receive a notification in portal when a document is shared to them."
 	@priority = "4"
 	test AssertNotifications {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
@@ -78,36 +78,6 @@ definition {
 		DMDocument.sharePG(
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Notifications.viewBadgeCount(notificationCount = "1");
-
-		Notifications.gotoNotifications();
-
-		Notifications.viewNewSharedDocument(
-			assetSharingPermission = "viewing",
-			dmDocumentTitle = "DM Document Title",
-			ownerName = "Test Test");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentUploader = "Test Test");
-
-		DMDocumentSharing.removeCollaborator(collaboratorList = "userfn");
 
 		User.logoutPG();
 

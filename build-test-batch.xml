@@ -390,6 +390,8 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<sequential>
 			<beanshell>
 				<![CDATA[
+					import org.apache.commons.io.FileUtils;
+
 					import org.apache.commons.lang.StringUtils;
 
 					String projectDir = project.getProperty("project.dir");
@@ -446,30 +448,44 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					}
 
 					public List getTestUtilModules() {
-						List testUtilModuleBuildGradleFiles = findFiles(new File(projectDir, "modules/apps"), ".+test-util/build.gradle");
+						List appBnds = findFiles(new File(projectDir, "modules/apps"), ".+/app.bnd");
 
 						File privateAppsDirectory = new File(projectDir, "modules/private/apps");
 
 						if (privateAppsDirectory.exists()) {
-							testUtilModuleBuildGradleFiles.addAll(findFiles(privateAppsDirectory, ".+test-util/build.gradle"));
+							appBnds.addAll(findFiles(privateAppsDirectory, ".+/app.bnd"));
+						}
+
+						List releasedAppDirs = new ArrayList();
+
+						for (File appBnd : appBnds) {
+							String fileContent = FileUtils.readFileToString(appBnd);
+
+							if (fileContent.contains("Liferay-Releng-Bundle: true")) {
+								releasedAppDirs.add(appBnd.getParentFile());
+							}
 						}
 
 						List testUtilModules = new ArrayList();
 
-						for (File testUtilModuleBuildGradleFile : testUtilModuleBuildGradleFiles) {
-							String testUtilModule = testUtilModuleBuildGradleFile.getParent();
+						for (File releasedAppDir : releasedAppDirs) {
+							List testUtilModuleBuildGradleFiles = findFiles(releasedAppDir, ".+test-util/build.gradle");
 
-							File skipTestIntegrationCheckFile = new File(testUtilModule, ".lfrbuild-ci-skip-test-integration-check");
+							for (File testUtilModuleBuildGradleFile : testUtilModuleBuildGradleFiles) {
+								String testUtilModule = testUtilModuleBuildGradleFile.getParent();
 
-							if (skipTestIntegrationCheckFile.exists()) {
-								System.out.println("Ignoring " + testUtilModule.replace(projectDir + "/", ""));
+								File skipTestIntegrationCheckFile = new File(testUtilModule, ".lfrbuild-ci-skip-test-integration-check");
 
-								continue;
+								if (skipTestIntegrationCheckFile.exists()) {
+									System.out.println("Ignoring " + testUtilModule.replace(projectDir + "/", ""));
+
+									continue;
+								}
+
+								testUtilModule = testUtilModule.replace(projectDir + "/", "");
+
+								testUtilModules.add(testUtilModule);
 							}
-
-							testUtilModule = testUtilModule.replace(projectDir + "/", "");
-
-							testUtilModules.add(testUtilModule);
 						}
 
 						return testUtilModules;

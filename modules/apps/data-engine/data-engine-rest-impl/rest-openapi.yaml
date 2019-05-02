@@ -24,16 +24,16 @@ components:
                     format: date-time
                     type: string
                 description:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
                 id:
                     format: int64
                     type: integer
                 name:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
                 siteId:
                     format: int64
                     type: integer
@@ -50,9 +50,9 @@ components:
                         $ref: '#/components/schemas/CustomProperty'
                     type: array
                 defaultValue:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
                 fieldType:
                     type: string
                 id:
@@ -61,9 +61,9 @@ components:
                 indexable:
                     type: boolean
                 label:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
                 localizable:
                     type: boolean
                 name:
@@ -71,9 +71,9 @@ components:
                 repeatable:
                     type: boolean
                 tip:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
             type: object
         DataDefinitionPermission:
             properties:
@@ -134,16 +134,16 @@ components:
                 defaultLanguageId:
                     type: string
                 description:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
                 id:
                     format: int64
                     type: integer
                 name:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
                 paginationMode:
                     type: string
                 userId:
@@ -168,13 +168,13 @@ components:
                     type:
                         array
                 description:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
                 title:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
             type: object
         DataLayoutPermission:
             properties:
@@ -221,16 +221,16 @@ components:
                     format: int64
                     type: integer
                 description:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
                 id:
                     format: int64
                     type: integer
                 name:
-                    items:
-                        $ref: '#/components/schemas/LocalizedValue'
-                    type: array
+                    additionalProperties:
+                        type: object
+                    type: object
             type: object
         DataRecordCollectionPermission:
             properties:
@@ -260,13 +260,6 @@ components:
                 viewDataRecord:
                     type: boolean
             type: object
-        LocalizedValue:
-            description: https://www.schema.org/LocalizedValue
-            properties:
-                key:
-                    type: string
-                value:
-                    type: object
 info:
     description: ""
     title: ""

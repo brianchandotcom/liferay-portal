@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 
 <suppressions>
-	<checkstyle>
-		<suppress checks="ArraysAsListCheck" files="modules/util/portal-tools-service-builder/src/main/java/com/liferay/portal/tools/service/builder/Entity\.java" />
-		<suppress checks="ArraysAsListCheck" files="modules/util/portal-tools-service-builder/src/main/java/com/liferay/portal/tools/service/builder/ServiceBuilder\.java" />
-	</checkstyle>
 	<source-check>
 		<suppress checks="JavaDeprecatedJavadocCheck" files="modules/util/.*" />
 		<suppress checks="JavaVariableTypeCheck" files="modules/util/css-builder/src/main/java/com/liferay/css/builder/maven/BuildCSSMojo\.java" />

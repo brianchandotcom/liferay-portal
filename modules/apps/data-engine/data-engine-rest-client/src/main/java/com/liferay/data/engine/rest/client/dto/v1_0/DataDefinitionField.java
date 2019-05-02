@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 import com.liferay.data.engine.rest.client.serdes.v1_0.DataDefinitionFieldSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -50,16 +51,16 @@ public class DataDefinitionField {
 
 	protected CustomProperty[] customProperties;
 
-	public LocalizedValue[] getDefaultValue() {
+	public Map<String, Object> getDefaultValue() {
 		return defaultValue;
 	}
 
-	public void setDefaultValue(LocalizedValue[] defaultValue) {
+	public void setDefaultValue(Map<String, Object> defaultValue) {
 		this.defaultValue = defaultValue;
 	}
 
 	public void setDefaultValue(
-		UnsafeSupplier<LocalizedValue[], Exception>
+		UnsafeSupplier<Map<String, Object>, Exception>
 			defaultValueUnsafeSupplier) {
 
 		try {
@@ -70,7 +71,7 @@ public class DataDefinitionField {
 		}
 	}
 
-	protected LocalizedValue[] defaultValue;
+	protected Map<String, Object> defaultValue;
 
 	public String getFieldType() {
 		return fieldType;
@@ -133,16 +134,16 @@ public class DataDefinitionField {
 
 	protected Boolean indexable;
 
-	public LocalizedValue[] getLabel() {
+	public Map<String, Object> getLabel() {
 		return label;
 	}
 
-	public void setLabel(LocalizedValue[] label) {
+	public void setLabel(Map<String, Object> label) {
 		this.label = label;
 	}
 
 	public void setLabel(
-		UnsafeSupplier<LocalizedValue[], Exception> labelUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Object>, Exception> labelUnsafeSupplier) {
 
 		try {
 			label = labelUnsafeSupplier.get();
@@ -152,7 +153,7 @@ public class DataDefinitionField {
 		}
 	}
 
-	protected LocalizedValue[] label;
+	protected Map<String, Object> label;
 
 	public Boolean getLocalizable() {
 		return localizable;
@@ -215,16 +216,16 @@ public class DataDefinitionField {
 
 	protected Boolean repeatable;
 
-	public LocalizedValue[] getTip() {
+	public Map<String, Object> getTip() {
 		return tip;
 	}
 
-	public void setTip(LocalizedValue[] tip) {
+	public void setTip(Map<String, Object> tip) {
 		this.tip = tip;
 	}
 
 	public void setTip(
-		UnsafeSupplier<LocalizedValue[], Exception> tipUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Object>, Exception> tipUnsafeSupplier) {
 
 		try {
 			tip = tipUnsafeSupplier.get();
@@ -234,7 +235,7 @@ public class DataDefinitionField {
 		}
 	}
 
-	protected LocalizedValue[] tip;
+	protected Map<String, Object> tip;
 
 	@Override
 	public boolean equals(Object object) {

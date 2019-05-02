@@ -17,7 +17,6 @@ package com.liferay.data.engine.rest.client.serdes.v1_0;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataDefinitionRule;
-import com.liferay.data.engine.rest.client.dto.v1_0.LocalizedValue;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -151,17 +150,7 @@ public class DataDefinitionSerDes {
 
 			sb.append("\"description\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataDefinition.getDescription().length; i++) {
-				sb.append(String.valueOf(dataDefinition.getDescription()[i]));
-
-				if ((i + 1) < dataDefinition.getDescription().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(dataDefinition.getDescription()));
 		}
 
 		if (dataDefinition.getId() != null) {
@@ -181,17 +170,7 @@ public class DataDefinitionSerDes {
 
 			sb.append("\"name\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataDefinition.getName().length; i++) {
-				sb.append(String.valueOf(dataDefinition.getName()[i]));
-
-				if ((i + 1) < dataDefinition.getName().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(dataDefinition.getName()));
 		}
 
 		if (dataDefinition.getSiteId() != null) {
@@ -419,13 +398,8 @@ public class DataDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinition.setDescription(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						DataDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -437,13 +411,8 @@ public class DataDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					dataDefinition.setName(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						DataDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

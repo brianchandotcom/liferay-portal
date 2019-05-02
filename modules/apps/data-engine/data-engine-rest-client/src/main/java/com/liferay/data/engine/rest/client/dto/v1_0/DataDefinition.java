@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 import com.liferay.data.engine.rest.client.serdes.v1_0.DataDefinitionSerDes;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -119,16 +120,17 @@ public class DataDefinition {
 
 	protected Date dateModified;
 
-	public LocalizedValue[] getDescription() {
+	public Map<String, Object> getDescription() {
 		return description;
 	}
 
-	public void setDescription(LocalizedValue[] description) {
+	public void setDescription(Map<String, Object> description) {
 		this.description = description;
 	}
 
 	public void setDescription(
-		UnsafeSupplier<LocalizedValue[], Exception> descriptionUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Object>, Exception>
+			descriptionUnsafeSupplier) {
 
 		try {
 			description = descriptionUnsafeSupplier.get();
@@ -138,7 +140,7 @@ public class DataDefinition {
 		}
 	}
 
-	protected LocalizedValue[] description;
+	protected Map<String, Object> description;
 
 	public Long getId() {
 		return id;
@@ -159,16 +161,16 @@ public class DataDefinition {
 
 	protected Long id;
 
-	public LocalizedValue[] getName() {
+	public Map<String, Object> getName() {
 		return name;
 	}
 
-	public void setName(LocalizedValue[] name) {
+	public void setName(Map<String, Object> name) {
 		this.name = name;
 	}
 
 	public void setName(
-		UnsafeSupplier<LocalizedValue[], Exception> nameUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Object>, Exception> nameUnsafeSupplier) {
 
 		try {
 			name = nameUnsafeSupplier.get();
@@ -178,7 +180,7 @@ public class DataDefinition {
 		}
 	}
 
-	protected LocalizedValue[] name;
+	protected Map<String, Object> name;
 
 	public Long getSiteId() {
 		return siteId;

@@ -75,17 +75,18 @@ public class DataLayoutPage {
 	protected DataLayoutRow[] dataLayoutRows;
 
 	@Schema
-	public LocalizedValue[] getDescription() {
+	public Map<String, Object> getDescription() {
 		return description;
 	}
 
-	public void setDescription(LocalizedValue[] description) {
+	public void setDescription(Map<String, Object> description) {
 		this.description = description;
 	}
 
 	@JsonIgnore
 	public void setDescription(
-		UnsafeSupplier<LocalizedValue[], Exception> descriptionUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Object>, Exception>
+			descriptionUnsafeSupplier) {
 
 		try {
 			description = descriptionUnsafeSupplier.get();
@@ -100,20 +101,20 @@ public class DataLayoutPage {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] description;
+	protected Map<String, Object> description;
 
 	@Schema
-	public LocalizedValue[] getTitle() {
+	public Map<String, Object> getTitle() {
 		return title;
 	}
 
-	public void setTitle(LocalizedValue[] title) {
+	public void setTitle(Map<String, Object> title) {
 		this.title = title;
 	}
 
 	@JsonIgnore
 	public void setTitle(
-		UnsafeSupplier<LocalizedValue[], Exception> titleUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Object>, Exception> titleUnsafeSupplier) {
 
 		try {
 			title = titleUnsafeSupplier.get();
@@ -128,7 +129,7 @@ public class DataLayoutPage {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LocalizedValue[] title;
+	protected Map<String, Object> title;
 
 	@Override
 	public boolean equals(Object object) {
@@ -184,17 +185,7 @@ public class DataLayoutPage {
 
 			sb.append("\"description\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < description.length; i++) {
-				sb.append(String.valueOf(description[i]));
-
-				if ((i + 1) < description.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(description));
 		}
 
 		if (title != null) {
@@ -204,17 +195,7 @@ public class DataLayoutPage {
 
 			sb.append("\"title\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < title.length; i++) {
-				sb.append(String.valueOf(title[i]));
-
-				if ((i + 1) < title.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(title));
 		}
 
 		sb.append("}");

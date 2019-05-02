@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.client.serdes.v1_0;
 
 import com.liferay.data.engine.rest.client.dto.v1_0.DataLayout;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataLayoutPage;
-import com.liferay.data.engine.rest.client.dto.v1_0.LocalizedValue;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -143,17 +142,7 @@ public class DataLayoutSerDes {
 
 			sb.append("\"description\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataLayout.getDescription().length; i++) {
-				sb.append(String.valueOf(dataLayout.getDescription()[i]));
-
-				if ((i + 1) < dataLayout.getDescription().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(dataLayout.getDescription()));
 		}
 
 		if (dataLayout.getId() != null) {
@@ -173,17 +162,7 @@ public class DataLayoutSerDes {
 
 			sb.append("\"name\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataLayout.getName().length; i++) {
-				sb.append(String.valueOf(dataLayout.getName()[i]));
-
-				if ((i + 1) < dataLayout.getName().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(dataLayout.getName()));
 		}
 
 		if (dataLayout.getPaginationMode() != null) {
@@ -398,13 +377,7 @@ public class DataLayoutSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					dataLayout.setDescription(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						DataLayoutSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -416,13 +389,7 @@ public class DataLayoutSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					dataLayout.setName(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						DataLayoutSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "paginationMode")) {

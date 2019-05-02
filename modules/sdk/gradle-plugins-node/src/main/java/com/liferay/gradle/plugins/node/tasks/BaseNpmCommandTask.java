@@ -115,8 +115,7 @@ public abstract class BaseNpmCommandTask
 	public File getSourceDigestFile() {
 		Project project = getProject();
 
-		String pathname =
-			"npm/" + getNpmCommand() + "/" + getName() + "/.digest";
+		String pathname = "npm/" + getName() + "/.digest";
 
 		return new File(project.getBuildDir(), pathname);
 	}

@@ -420,8 +420,11 @@ public class ExpandoPortlet extends MVCPortlet {
 		Double longitude = ParamUtil.getDouble(actionRequest, "longitudeValue");
 
 		if ((latitude != null) && (longitude != null)) {
-			geolocationJSONOBject.put("latitude", latitude);
-			geolocationJSONOBject.put("longitude", longitude);
+			geolocationJSONOBject.put(
+				"latitude", latitude
+			).put(
+				"longitude", longitude
+			);
 		}
 
 		return geolocationJSONOBject;

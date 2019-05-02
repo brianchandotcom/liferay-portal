@@ -15,7 +15,6 @@
 package com.liferay.data.engine.rest.client.serdes.v1_0;
 
 import com.liferay.data.engine.rest.client.dto.v1_0.DataRecordCollection;
-import com.liferay.data.engine.rest.client.dto.v1_0.LocalizedValue;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.util.HashMap;
@@ -23,7 +22,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -74,20 +72,7 @@ public class DataRecordCollectionSerDes {
 
 			sb.append("\"description\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataRecordCollection.getDescription().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(dataRecordCollection.getDescription()[i]));
-
-				if ((i + 1) < dataRecordCollection.getDescription().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(dataRecordCollection.getDescription()));
 		}
 
 		if (dataRecordCollection.getId() != null) {
@@ -107,17 +92,7 @@ public class DataRecordCollectionSerDes {
 
 			sb.append("\"name\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataRecordCollection.getName().length; i++) {
-				sb.append(String.valueOf(dataRecordCollection.getName()[i]));
-
-				if ((i + 1) < dataRecordCollection.getName().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(_toJSON(dataRecordCollection.getName()));
 		}
 
 		sb.append("}");
@@ -238,13 +213,8 @@ public class DataRecordCollectionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					dataRecordCollection.setDescription(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						DataRecordCollectionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -256,13 +226,8 @@ public class DataRecordCollectionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					dataRecordCollection.setName(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> LocalizedValueSerDes.toDTO((String)object)
-						).toArray(
-							size -> new LocalizedValue[size]
-						));
+						DataRecordCollectionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

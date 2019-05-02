@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.client.dto.v1_0;
 import com.liferay.data.engine.rest.client.function.UnsafeSupplier;
 import com.liferay.data.engine.rest.client.serdes.v1_0.DataLayoutPageSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -50,16 +51,17 @@ public class DataLayoutPage {
 
 	protected DataLayoutRow[] dataLayoutRows;
 
-	public LocalizedValue[] getDescription() {
+	public Map<String, Object> getDescription() {
 		return description;
 	}
 
-	public void setDescription(LocalizedValue[] description) {
+	public void setDescription(Map<String, Object> description) {
 		this.description = description;
 	}
 
 	public void setDescription(
-		UnsafeSupplier<LocalizedValue[], Exception> descriptionUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Object>, Exception>
+			descriptionUnsafeSupplier) {
 
 		try {
 			description = descriptionUnsafeSupplier.get();
@@ -69,18 +71,18 @@ public class DataLayoutPage {
 		}
 	}
 
-	protected LocalizedValue[] description;
+	protected Map<String, Object> description;
 
-	public LocalizedValue[] getTitle() {
+	public Map<String, Object> getTitle() {
 		return title;
 	}
 
-	public void setTitle(LocalizedValue[] title) {
+	public void setTitle(Map<String, Object> title) {
 		this.title = title;
 	}
 
 	public void setTitle(
-		UnsafeSupplier<LocalizedValue[], Exception> titleUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Object>, Exception> titleUnsafeSupplier) {
 
 		try {
 			title = titleUnsafeSupplier.get();
@@ -90,7 +92,7 @@ public class DataLayoutPage {
 		}
 	}
 
-	protected LocalizedValue[] title;
+	protected Map<String, Object> title;
 
 	@Override
 	public boolean equals(Object object) {

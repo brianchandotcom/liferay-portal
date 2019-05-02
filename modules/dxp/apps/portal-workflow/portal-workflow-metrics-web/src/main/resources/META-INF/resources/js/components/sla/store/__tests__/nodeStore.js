@@ -39,8 +39,19 @@ test('Should test fetch', () => {
 		totalCount: 4
 	};
 
-	const pauseNodeKeys = [];
-	const startNodeKeys = [];
+	const pauseNodeKeys = [
+		{
+			executionType: 'leave',
+			id: 26121
+		}
+	];
+	const startNodeKeys = [
+		{
+			executionType: 'enter',
+			id: 21125,
+			type: 'TASK'
+		}
+	];
 	const stopNodeKeys = [
 		{
 			executionType: 'leave',
@@ -58,7 +69,7 @@ test('Should test fetch', () => {
 			26625
 		]);
 
-		nodeStore.getPauseNodes('teste:', startNodeKeys, stopNodeKeys);
+		nodeStore.getPauseNodes(startNodeKeys, stopNodeKeys);
 
 		expect(
 			nodeStore

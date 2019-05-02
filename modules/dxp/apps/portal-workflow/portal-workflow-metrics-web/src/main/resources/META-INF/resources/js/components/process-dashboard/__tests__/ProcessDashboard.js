@@ -59,3 +59,17 @@ test('Should render dashboard route children', () => {
 
 	expect(component).toMatchSnapshot();
 });
+
+test('Should render with blocked SLA', () => {
+	const component = mount(
+		<Router client={fetchFailure()} initialPath="/dashboard/35315/completed">
+			<ProcessDashboard processId="123" />
+		</Router>
+	);
+
+	const instance = component.find(ProcessDashboard).instance();
+
+	instance.setState({ blockedSLACount: 1 }, () => {
+		expect(component).toMatchSnapshot();
+	});
+});

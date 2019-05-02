@@ -50,10 +50,6 @@ test('Should render toast with SLA saved message', () => {
 
 	const instance = component.find(SLAListCard).instance();
 
-	instance.context = {
-		setStatus: () => {},
-		status: 'sla-saved'
-	};
 	instance.showStatusMessage();
 
 	expect(component).toMatchSnapshot();
@@ -70,10 +66,6 @@ test('Should render toast with SLA updated message', () => {
 
 	const instance = component.find(SLAListCard).instance();
 
-	instance.context = {
-		setStatus: () => {},
-		status: 'sla-updated'
-	};
 	instance.showStatusMessage();
 
 	expect(component).toMatchSnapshot();

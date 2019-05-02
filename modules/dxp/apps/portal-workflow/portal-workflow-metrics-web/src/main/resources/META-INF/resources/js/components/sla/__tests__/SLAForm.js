@@ -1,5 +1,6 @@
 import fetch from '../../../test/mock/fetch';
 import fetchFailure from '../../../test/mock/fetchFailure';
+import nodeStore from '../store/nodeStore';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { MockRouter as Router } from '../../../test/mock/MockRouter';
@@ -376,4 +377,58 @@ test('Should redirect to SLA list', () => {
 			expect(component).toMatchSnapshot();
 		}
 	);
+});
+
+test('Should redirect to SLA list with blocked nodes', () => {
+	const slaData = {
+		days: 4,
+		description: 'Total time to complete the request.',
+		hours: '10:50',
+		id: 1234,
+		name: 'Total resolution time',
+		pauseNodeKeys: {
+			nodeKeys: []
+		},
+		processId: '123',
+		startNodeKeys: {
+			nodeKeys: [],
+			status: 2
+		},
+		stopNodeKeys: {
+			nodeKeys: [],
+			status: 2
+		}
+	};
+
+	const slaFormData = {
+		duration: 1553879089,
+		name: 'Total resolution time'
+	};
+
+	nodeStore.client = fetch({ data: { items: [] } });
+	slaStore.client = fetch(slaData);
+	slaStore.setState(slaData);
+
+	const component = mount(
+		<Router client={fetch(slaFormData)}>
+			<SLAForm client={fetch(slaFormData)} id="123" processId="123" />
+		</Router>
+	);
+
+	const instance = component.find(SLAForm).instance();
+
+	nodeStore.client = fetch({ data: { items: [] } });
+	slaStore.client = fetch(slaData);
+	slaStore.setState(slaData);
+
+	instance.loadData().then(() => {
+		instance.setState(
+			{
+				redirectToSlaList: true
+			},
+			() => {
+				expect(component).toMatchSnapshot();
+			}
+		);
+	});
 });

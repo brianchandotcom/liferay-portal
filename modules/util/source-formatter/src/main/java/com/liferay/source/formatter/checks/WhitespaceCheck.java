@@ -264,6 +264,10 @@ public class WhitespaceCheck extends BaseFileCheck {
 		return false;
 	}
 
+	protected boolean isAllowTrailingSpaces(String line) {
+		return false;
+	}
+
 	protected String trimLine(String fileName, String line) {
 		String trimmedLine = StringUtil.trim(line);
 
@@ -271,8 +275,9 @@ public class WhitespaceCheck extends BaseFileCheck {
 			return StringPool.BLANK;
 		}
 
-		if (!_allowTrailingDoubleSpace ||
-			!line.endsWith(StringPool.DOUBLE_SPACE)) {
+		if (!isAllowTrailingSpaces(line) &&
+			(!_allowTrailingDoubleSpace ||
+			 !line.endsWith(StringPool.DOUBLE_SPACE))) {
 
 			line = StringUtil.trimTrailing(line);
 		}

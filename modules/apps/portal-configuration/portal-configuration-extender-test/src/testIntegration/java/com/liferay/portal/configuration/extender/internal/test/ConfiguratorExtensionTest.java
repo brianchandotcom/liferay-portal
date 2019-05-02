@@ -65,15 +65,19 @@ public class ConfiguratorExtensionTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		for (Bundle curBundle : bundleContext.getBundles()) {
-			if ("com.liferay.portal.configuration.extender".equals(
-					curBundle.getSymbolicName())) {
+		String symbolicName = "com.liferay.portal.configuration.extender";
 
+		for (Bundle curBundle : bundleContext.getBundles()) {
+			if (symbolicName.equals(curBundle.getSymbolicName())) {
 				_bundle = curBundle;
 
 				break;
 			}
 		}
+
+		Assert.assertNotNull(
+			"Unable to find bundle with symbolic name: " + symbolicName,
+			_bundle);
 	}
 
 	@After

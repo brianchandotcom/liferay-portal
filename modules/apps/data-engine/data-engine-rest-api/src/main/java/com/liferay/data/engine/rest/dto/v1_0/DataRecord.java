@@ -74,17 +74,17 @@ public class DataRecord {
 	protected Long dataRecordCollectionId;
 
 	@Schema
-	public Map<String, ?> getDataRecordValues() {
+	public Map<String, Object> getDataRecordValues() {
 		return dataRecordValues;
 	}
 
-	public void setDataRecordValues(Map<String, ?> dataRecordValues) {
+	public void setDataRecordValues(Map<String, Object> dataRecordValues) {
 		this.dataRecordValues = dataRecordValues;
 	}
 
 	@JsonIgnore
 	public void setDataRecordValues(
-		UnsafeSupplier<Map<String, ?>, Exception>
+		UnsafeSupplier<Map<String, Object>, Exception>
 			dataRecordValuesUnsafeSupplier) {
 
 		try {
@@ -100,7 +100,7 @@ public class DataRecord {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, ?> dataRecordValues;
+	protected Map<String, Object> dataRecordValues;
 
 	@Schema
 	public Long getId() {

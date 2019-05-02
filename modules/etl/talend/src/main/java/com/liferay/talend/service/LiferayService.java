@@ -234,7 +234,9 @@ public class LiferayService {
 			return jsonValue.toString();
 		}
 
-		return ((JsonString)jsonValue).getString();
+		JsonString jsonString = (JsonString)jsonValue;
+
+		return jsonString.getString();
 	}
 
 	private List<String> _filterPageableEndpoints(

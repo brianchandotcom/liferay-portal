@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.internal.dto.v1_0.util;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRule;
+import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -46,10 +47,10 @@ public class DataDefinitionUtil {
 					DataDefinitionRule.class);
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
-				description = LocalizedValueUtil.toStringObjectMap(
+				description = LocalizationUtil.toStringObjectMap(
 					ddmStructure.getDescriptionMap());
 				id = ddmStructure.getStructureId();
-				name = LocalizedValueUtil.toStringObjectMap(
+				name = LocalizationUtil.toStringObjectMap(
 					ddmStructure.getNameMap());
 				siteId = ddmStructure.getGroupId();
 				storageType = ddmStructure.getStorageType();
@@ -81,7 +82,7 @@ public class DataDefinitionUtil {
 		return new DataDefinitionField() {
 			{
 				if (jsonObject.has("predefinedValue")) {
-					defaultValue = LocalizedValueUtil.toLocalizedValues(
+					defaultValue = LocalizationUtil.toLocalizedValues(
 						jsonObject.getJSONObject("predefinedValue"));
 				}
 
@@ -97,7 +98,7 @@ public class DataDefinitionUtil {
 					throw new Exception("Label is required");
 				}
 
-				label = LocalizedValueUtil.toLocalizedValues(
+				label = LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("label"));
 
 				localizable = jsonObject.getBoolean("localizable", false);
@@ -114,7 +115,7 @@ public class DataDefinitionUtil {
 					throw new Exception("Tip is required");
 				}
 
-				tip = LocalizedValueUtil.toLocalizedValues(
+				tip = LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("tip"));
 			}
 		};
@@ -159,7 +160,7 @@ public class DataDefinitionUtil {
 			"indexable", dataDefinitionField.getIndexable()
 		).put(
 			"label",
-			LocalizedValueUtil.toJSONObject(dataDefinitionField.getLabel())
+			LocalizationUtil.toJSONObject(dataDefinitionField.getLabel())
 		).put(
 			"localizable", dataDefinitionField.getLocalizable()
 		).put(
@@ -167,7 +168,7 @@ public class DataDefinitionUtil {
 		).put(
 			"repeatable", dataDefinitionField.getRepeatable()
 		).put(
-			"tip", LocalizedValueUtil.toJSONObject(dataDefinitionField.getTip())
+			"tip", LocalizationUtil.toJSONObject(dataDefinitionField.getTip())
 		).put(
 			"type", type
 		);

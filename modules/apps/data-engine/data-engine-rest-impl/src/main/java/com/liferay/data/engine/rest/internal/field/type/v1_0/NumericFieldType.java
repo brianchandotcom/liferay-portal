@@ -15,8 +15,8 @@
 package com.liferay.data.engine.rest.internal.field.type.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertyUtil;
+import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -62,17 +62,17 @@ public class NumericFieldType extends BaseFieldType {
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "placeholder",
-				LocalizedValueUtil.toLocalizedValues(
+				LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("placeholder"))));
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "predefinedValue",
-				LocalizedValueUtil.toLocalizedValues(
+				LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("predefinedValue"))));
 		dataDefinitionField.setCustomProperties(
 			CustomPropertyUtil.add(
 				dataDefinitionField.getCustomProperties(), "tooltip",
-				LocalizedValueUtil.toLocalizedValues(
+				LocalizationUtil.toLocalizedValues(
 					jsonObject.getJSONObject("tooltip"))));
 
 		return dataDefinitionField;
@@ -112,14 +112,14 @@ public class NumericFieldType extends BaseFieldType {
 				"decimal"));
 		context.put(
 			"placeholder",
-			LocalizedValueUtil.getLocalizedValue(
+			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
 				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "placeholder")));
 		context.put(
 			"predefinedValue",
 			_format(
-				LocalizedValueUtil.getLocalizedValue(
+				LocalizationUtil.getLocalizedValue(
 					httpServletRequest.getLocale(),
 					CustomPropertyUtil.getMap(
 						dataDefinitionField.getCustomProperties(),
@@ -127,7 +127,7 @@ public class NumericFieldType extends BaseFieldType {
 		context.put("symbols", _getSymbols());
 		context.put(
 			"tooltip",
-			LocalizedValueUtil.getLocalizedValue(
+			LocalizationUtil.getLocalizedValue(
 				httpServletRequest.getLocale(),
 				CustomPropertyUtil.getMap(
 					dataDefinitionField.getCustomProperties(), "tooltip")));

@@ -19,9 +19,9 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.constants.DataRecordCollectionConstants;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataRecordCollectionUtil;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
+import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataRecordCollectionResource;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
@@ -169,9 +169,9 @@ public class DataRecordCollectionResourceImpl
 			_ddlRecordSetLocalService.addRecordSet(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
 				dataDefinitionId, null,
-				LocalizedValueUtil.toLocaleStringMap(
+				LocalizationUtil.toLocaleStringMap(
 					dataRecordCollection.getName()),
-				LocalizedValueUtil.toLocaleStringMap(
+				LocalizationUtil.toLocaleStringMap(
 					dataRecordCollection.getDescription()),
 				0, DDLRecordSetConstants.SCOPE_DATA_ENGINE, serviceContext));
 
@@ -291,9 +291,9 @@ public class DataRecordCollectionResourceImpl
 		return DataRecordCollectionUtil.toDataRecordCollection(
 			_ddlRecordSetLocalService.updateRecordSet(
 				dataRecordCollectionId, ddlRecordSet.getDDMStructureId(),
-				LocalizedValueUtil.toLocaleStringMap(
+				LocalizationUtil.toLocaleStringMap(
 					dataRecordCollection.getName()),
-				LocalizedValueUtil.toLocaleStringMap(
+				LocalizationUtil.toLocaleStringMap(
 					dataRecordCollection.getDescription()),
 				0, serviceContext));
 	}

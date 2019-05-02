@@ -22,13 +22,13 @@ import com.liferay.data.engine.rest.dto.v1_0.DataLayoutPage;
 import com.liferay.data.engine.rest.dto.v1_0.DataLayoutRow;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v1_0.util.DataLayoutUtil;
-import com.liferay.data.engine.rest.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.CaptchaFieldType;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.CheckboxFieldType;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.CheckboxMultipleFieldType;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.DateFieldType;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.EditorFieldType;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.FieldType;
+import com.liferay.data.engine.rest.internal.util.v1_0.LocalizationUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
@@ -155,7 +155,7 @@ public class DataLayoutRenderer {
 			dataLayoutPageContext.put(
 				"description",
 				GetterUtil.getString(
-					LocalizedValueUtil.getLocalizedValue(
+					LocalizationUtil.getLocalizedValue(
 						httpServletRequest.getLocale(),
 						dataLayoutPage.getDescription())));
 
@@ -168,7 +168,7 @@ public class DataLayoutRenderer {
 			dataLayoutPageContext.put(
 				"title",
 				GetterUtil.getString(
-					LocalizedValueUtil.getLocalizedValue(
+					LocalizationUtil.getLocalizedValue(
 						httpServletRequest.getLocale(),
 						dataLayoutPage.getTitle())));
 

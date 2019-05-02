@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.dto.v1_0.util;
+package com.liferay.data.engine.rest.internal.util.v1_0;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * @author Jeyvison Nascimento
  */
-public class LocalizedValueUtil {
+public class LocalizationUtil {
 
 	public static Object getLocalizedValue(
 		Locale locale, Map<String, Object> localizedValues) {

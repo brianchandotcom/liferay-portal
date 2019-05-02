@@ -20,12 +20,13 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.RoleFinderUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
@@ -56,13 +57,13 @@ public class RoleFinderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		List<Role> roles = RoleLocalServiceUtil.getRoles(
+		List<Role> roles = _roleLocalService.getRoles(
 			RoleConstants.TYPE_REGULAR, StringPool.BLANK);
 
 		_arbitraryRole = roles.get(0);
 
 		List<ResourceAction> resourceActions =
-			ResourceActionLocalServiceUtil.getResourceActions(0, 1);
+			_resourceActionLocalService.getResourceActions(0, 1);
 
 		_arbitraryResourceAction = resourceActions.get(0);
 
@@ -73,7 +74,7 @@ public class RoleFinderTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		ResourcePermissionLocalServiceUtil.deleteResourcePermission(
+		_resourcePermissionLocalService.deleteResourcePermission(
 			_resourcePermission);
 	}
 
@@ -87,16 +88,16 @@ public class RoleFinderTest {
 		Map<String, List<String>> actionIdsLists = new HashMap<>();
 
 		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.getResourcePermissions(
+			_resourcePermissionLocalService.getResourcePermissions(
 				companyId, name, scope, primKey);
 
 		List<ResourceAction> resourceActions =
-			ResourceActionLocalServiceUtil.getResourceActions(name);
+			_resourceActionLocalService.getResourceActions(name);
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			long roleId = resourcePermission.getRoleId();
 
-			Role role = RoleLocalServiceUtil.getRole(roleId);
+			Role role = _roleLocalService.getRole(roleId);
 
 			long actionIds = resourcePermission.getActionIds();
 
@@ -113,14 +114,14 @@ public class RoleFinderTest {
 
 		Assert.assertEquals(
 			actionIdsLists,
-			RoleFinderUtil.findByC_N_S_P(companyId, name, scope, primKey));
+			_roleFinder.findByC_N_S_P(companyId, name, scope, primKey));
 	}
 
 	@Test
 	public void testFindByC_N_S_P_A() throws Exception {
 		boolean exists = false;
 
-		List<Role> roles = RoleFinderUtil.findByC_N_S_P_A(
+		List<Role> roles = _roleFinder.findByC_N_S_P_A(
 			_resourcePermission.getCompanyId(), _resourcePermission.getName(),
 			_resourcePermission.getScope(), _resourcePermission.getPrimKey(),
 			_arbitraryResourceAction.getActionId());
@@ -141,6 +142,20 @@ public class RoleFinderTest {
 
 	private static ResourceAction _arbitraryResourceAction;
 	private static Role _arbitraryRole;
+
+	@Inject
+	private static ResourceActionLocalService _resourceActionLocalService;
+
 	private static ResourcePermission _resourcePermission;
+
+	@Inject
+	private static ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+
+	@Inject
+	private static RoleLocalService _roleLocalService;
+
+	@Inject
+	private RoleFinder _roleFinder;
 
 }

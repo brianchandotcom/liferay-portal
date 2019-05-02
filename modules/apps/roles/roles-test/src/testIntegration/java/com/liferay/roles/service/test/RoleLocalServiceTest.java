@@ -27,15 +27,15 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.TeamLocalService;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
@@ -80,7 +81,7 @@ public class RoleLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		IndexerRegistryUtil.unregister(Organization.class.getName());
+		_indexerRegistry.unregister(Organization.class.getName());
 	}
 
 	@Test(expected = RoleNameException.class)
@@ -101,11 +102,11 @@ public class RoleLocalServiceTest {
 		typeSettingsProperties.setProperty(
 			"defaultSiteRoleIds", String.valueOf(_role.getRoleId()));
 
-		GroupLocalServiceUtil.updateGroup(_group);
+		_groupLocalService.updateGroup(_group);
 
-		RoleLocalServiceUtil.deleteRole(_role);
+		_roleLocalService.deleteRole(_role);
 
-		_group = GroupLocalServiceUtil.getGroup(_group.getGroupId());
+		_group = _groupLocalService.getGroup(_group.getGroupId());
 
 		typeSettingsProperties = _group.getTypeSettingsProperties();
 
@@ -122,14 +123,14 @@ public class RoleLocalServiceTest {
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
 		_user = UserTestUtil.addUser();
 
-		OrganizationLocalServiceUtil.addUserOrganization(
+		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), _organization);
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+		_userGroupRoleLocalService.addUserGroupRoles(
 			_user.getUserId(), _organization.getGroupId(),
 			new long[] {_role.getRoleId()});
 
 		Assert.assertEquals(
-			1, RoleLocalServiceUtil.getAssigneesTotal(_role.getRoleId()));
+			1, _roleLocalService.getAssigneesTotal(_role.getRoleId()));
 	}
 
 	@Test
@@ -140,13 +141,13 @@ public class RoleLocalServiceTest {
 		_user = UserTestUtil.addUser();
 		_userGroup = UserGroupTestUtil.addUserGroup();
 
-		RoleLocalServiceUtil.addUserRole(_user.getUserId(), _role);
-		RoleLocalServiceUtil.addGroupRole(_group.getGroupId(), _role);
-		RoleLocalServiceUtil.addGroupRole(_organization.getGroupId(), _role);
-		RoleLocalServiceUtil.addGroupRole(_userGroup.getGroupId(), _role);
+		_roleLocalService.addUserRole(_user.getUserId(), _role);
+		_roleLocalService.addGroupRole(_group.getGroupId(), _role);
+		_roleLocalService.addGroupRole(_organization.getGroupId(), _role);
+		_roleLocalService.addGroupRole(_userGroup.getGroupId(), _role);
 
 		Assert.assertEquals(
-			4, RoleLocalServiceUtil.getAssigneesTotal(_role.getRoleId()));
+			4, _roleLocalService.getAssigneesTotal(_role.getRoleId()));
 	}
 
 	@Test
@@ -156,19 +157,19 @@ public class RoleLocalServiceTest {
 		_user = UserTestUtil.addUser();
 		_userGroup = UserGroupTestUtil.addUserGroup();
 
-		GroupLocalServiceUtil.addUserGroup(_user.getUserId(), _group);
-		GroupLocalServiceUtil.addUserGroupGroup(
+		_groupLocalService.addUserGroup(_user.getUserId(), _group);
+		_groupLocalService.addUserGroupGroup(
 			_userGroup.getUserGroupId(), _group);
 
 		long[] roleIds = {_role.getRoleId()};
 
-		UserGroupGroupRoleLocalServiceUtil.addUserGroupGroupRoles(
+		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(
 			_userGroup.getGroupId(), _group.getGroupId(), roleIds);
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+		_userGroupRoleLocalService.addUserGroupRoles(
 			_user.getUserId(), _group.getGroupId(), roleIds);
 
 		Assert.assertEquals(
-			2, RoleLocalServiceUtil.getAssigneesTotal(_role.getRoleId()));
+			2, _roleLocalService.getAssigneesTotal(_role.getRoleId()));
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
@@ -182,12 +183,12 @@ public class RoleLocalServiceTest {
 
 		long groupId = organization.getGroupId();
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(groupId);
 
-		List<Role> actualRoles = RoleLocalServiceUtil.getGroupRelatedRoles(
+		List<Role> actualRoles = _roleLocalService.getGroupRelatedRoles(
 			groupId);
 
-		List<Role> allRoles = RoleLocalServiceUtil.getRoles(companyId);
+		List<Role> allRoles = _roleLocalService.getRoles(companyId);
 
 		List<Role> expectedRoles = new ArrayList<>();
 
@@ -204,7 +205,7 @@ public class RoleLocalServiceTest {
 				expectedRoles.add(role);
 			}
 			else if ((type == RoleConstants.TYPE_PROVIDER) && role.isTeam()) {
-				Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
+				Team team = _teamLocalService.getTeam(role.getClassPK());
 
 				if (team.getGroupId() == groupId) {
 					expectedRoles.add(role);
@@ -236,14 +237,14 @@ public class RoleLocalServiceTest {
 		excludedRoleNames.add(RoleConstants.ADMINISTRATOR);
 		excludedRoleNames.add(RoleConstants.GUEST);
 
-		int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
+		int count = _roleLocalService.getGroupRolesAndTeamRolesCount(
 			companyId, null, excludedRoleNames, roleTypes, 0, groupId);
 
-		List<Role> actualRoles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+		List<Role> actualRoles = _roleLocalService.getGroupRolesAndTeamRoles(
 			companyId, null, excludedRoleNames, roleTypes, 0, groupId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Stream<Role> expectedRolesStream = RoleLocalServiceUtil.getRoles(
+		Stream<Role> expectedRolesStream = _roleLocalService.getRoles(
 			companyId
 		).stream();
 
@@ -261,7 +262,7 @@ public class RoleLocalServiceTest {
 					return false;
 				}
 
-				Team team = TeamLocalServiceUtil.fetchTeam(role.getClassPK());
+				Team team = _teamLocalService.fetchTeam(role.getClassPK());
 
 				if (team == null) {
 					return false;
@@ -304,12 +305,12 @@ public class RoleLocalServiceTest {
 
 		String keyword = RoleConstants.GUEST;
 
-		int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
+		int count = _roleLocalService.getGroupRolesAndTeamRolesCount(
 			companyId, keyword, excludedRoleNames, roleTypes, 0, groupId);
 
 		Assert.assertEquals(0, count);
 
-		List<Role> roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+		List<Role> roles = _roleLocalService.getGroupRolesAndTeamRoles(
 			companyId, keyword, excludedRoleNames, roleTypes, 0, groupId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -317,12 +318,12 @@ public class RoleLocalServiceTest {
 
 		keyword = team.getName();
 
-		count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
+		count = _roleLocalService.getGroupRolesAndTeamRolesCount(
 			companyId, keyword, excludedRoleNames, roleTypes, 0, groupId);
 
 		Assert.assertEquals(1, count);
 
-		roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+		roles = _roleLocalService.getGroupRolesAndTeamRoles(
 			companyId, keyword, excludedRoleNames, roleTypes, 0, groupId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -338,7 +339,7 @@ public class RoleLocalServiceTest {
 		Organization organization = (Organization)organizationAndTeam[0];
 		Team team = (Team)organizationAndTeam[1];
 
-		Map<Team, Role> teamRoleMap = RoleLocalServiceUtil.getTeamRoleMap(
+		Map<Team, Role> teamRoleMap = _roleLocalService.getTeamRoleMap(
 			organization.getGroupId());
 
 		Role role = teamRoleMap.get(team);
@@ -347,7 +348,7 @@ public class RoleLocalServiceTest {
 
 		long[] excludedRoleIds = {role.getRoleId()};
 
-		List<Role> roles = RoleLocalServiceUtil.getTeamRoles(
+		List<Role> roles = _roleLocalService.getTeamRoles(
 			organization.getGroupId(), excludedRoleIds);
 
 		Assert.assertNotNull(roles);
@@ -356,7 +357,7 @@ public class RoleLocalServiceTest {
 
 	@Test(expected = NoSuchGroupException.class)
 	public void testGetTeamRoleMapWithInvalidGroupId() throws Exception {
-		RoleLocalServiceUtil.getTeamRoleMap(0L);
+		_roleLocalService.getTeamRoleMap(0L);
 	}
 
 	@Test
@@ -367,7 +368,7 @@ public class RoleLocalServiceTest {
 		Organization organization = (Organization)organizationAndTeam1[0];
 		Team team = (Team)organizationAndTeam2[1];
 
-		Map<Team, Role> teamRoleMap = RoleLocalServiceUtil.getTeamRoleMap(
+		Map<Team, Role> teamRoleMap = _roleLocalService.getTeamRoleMap(
 			organization.getGroupId());
 
 		testGetTeamRoleMap(teamRoleMap, team, false);
@@ -380,7 +381,7 @@ public class RoleLocalServiceTest {
 		Organization organization = (Organization)organizationAndTeam[0];
 		Team team = (Team)organizationAndTeam[1];
 
-		Map<Team, Role> teamRoleMap = RoleLocalServiceUtil.getTeamRoleMap(
+		Map<Team, Role> teamRoleMap = _roleLocalService.getTeamRoleMap(
 			organization.getGroupId());
 
 		testGetTeamRoleMap(teamRoleMap, team, true);
@@ -398,7 +399,7 @@ public class RoleLocalServiceTest {
 		Group group = GroupTestUtil.addGroup(
 			TestPropsValues.getUserId(), organization.getGroupId(), layout);
 
-		Map<Team, Role> teamRoleMap = RoleLocalServiceUtil.getTeamRoleMap(
+		Map<Team, Role> teamRoleMap = _roleLocalService.getTeamRoleMap(
 			group.getGroupId());
 
 		testGetTeamRoleMap(teamRoleMap, team, true);
@@ -410,19 +411,19 @@ public class RoleLocalServiceTest {
 
 		_user = UserTestUtil.addUser();
 
-		Team team = TeamLocalServiceUtil.addTeam(
+		Team team = _teamLocalService.addTeam(
 			_user.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new ServiceContext());
 
-		List<Role> roles = RoleLocalServiceUtil.getUserTeamRoles(
+		List<Role> roles = _roleLocalService.getUserTeamRoles(
 			_user.getUserId(), _group.getGroupId());
 
 		Assert.assertEquals(roles.toString(), 0, roles.size());
 
-		TeamLocalServiceUtil.addUserTeam(_user.getUserId(), team.getTeamId());
+		_teamLocalService.addUserTeam(_user.getUserId(), team.getTeamId());
 
-		roles = RoleLocalServiceUtil.getUserTeamRoles(
+		roles = _roleLocalService.getUserTeamRoles(
 			_user.getUserId(), _group.getGroupId());
 
 		Role teamRole = team.getRole();
@@ -430,26 +431,25 @@ public class RoleLocalServiceTest {
 		Assert.assertEquals(roles.toString(), 1, roles.size());
 		Assert.assertEquals(teamRole, roles.get(0));
 
-		TeamLocalServiceUtil.deleteUserTeam(
-			_user.getUserId(), team.getTeamId());
+		_teamLocalService.deleteUserTeam(_user.getUserId(), team.getTeamId());
 
 		_userGroup = UserGroupTestUtil.addUserGroup(_group.getGroupId());
 
-		UserLocalServiceUtil.addUserGroupUser(
+		_userLocalService.addUserGroupUser(
 			_userGroup.getUserGroupId(), _user.getUserId());
 
-		TeamLocalServiceUtil.addUserGroupTeam(
+		_teamLocalService.addUserGroupTeam(
 			_userGroup.getUserGroupId(), team.getTeamId());
 
-		roles = RoleLocalServiceUtil.getUserTeamRoles(
+		roles = _roleLocalService.getUserTeamRoles(
 			_user.getUserId(), _group.getGroupId());
 
 		Assert.assertEquals(roles.toString(), 1, roles.size());
 		Assert.assertEquals(teamRole, roles.get(0));
 
-		TeamLocalServiceUtil.addUserTeam(_user.getUserId(), team.getTeamId());
+		_teamLocalService.addUserTeam(_user.getUserId(), team.getTeamId());
 
-		roles = RoleLocalServiceUtil.getUserTeamRoles(
+		roles = _roleLocalService.getUserTeamRoles(
 			_user.getUserId(), _group.getGroupId());
 
 		Assert.assertEquals(roles.toString(), 1, roles.size());
@@ -459,12 +459,12 @@ public class RoleLocalServiceTest {
 	protected Object[] getOrganizationAndTeam() throws Exception {
 		User user = TestPropsValues.getUser();
 
-		_organization = OrganizationLocalServiceUtil.addOrganization(
+		_organization = _organizationLocalService.addOrganization(
 			user.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(), false);
 
-		Team team = TeamLocalServiceUtil.addTeam(
+		Team team = _teamLocalService.addTeam(
 			user.getUserId(), _organization.getGroupId(),
 			RandomTestUtil.randomString(), null, new ServiceContext());
 
@@ -489,19 +489,43 @@ public class RoleLocalServiceTest {
 		}
 	}
 
+	@Inject
+	private static IndexerRegistry _indexerRegistry;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@DeleteAfterTestRun
 	private Organization _organization;
 
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
+
 	@DeleteAfterTestRun
 	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private TeamLocalService _teamLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;
 
 	@DeleteAfterTestRun
 	private UserGroup _userGroup;
+
+	@Inject
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

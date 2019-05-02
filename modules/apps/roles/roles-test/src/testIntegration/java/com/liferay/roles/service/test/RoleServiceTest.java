@@ -19,11 +19,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.service.RoleServiceUtil;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.LinkedHashMap;
@@ -48,7 +49,7 @@ public class RoleServiceTest extends BasePermissionTestCase {
 
 	@Test
 	public void testSearch() throws Exception {
-		List<Role> roles = RoleServiceUtil.search(
+		List<Role> roles = _roleService.search(
 			group.getCompanyId(), StringPool.BLANK,
 			new Integer[] {RoleConstants.TYPE_REGULAR},
 			new LinkedHashMap<String, Object>(), QueryUtil.ALL_POS,
@@ -59,7 +60,7 @@ public class RoleServiceTest extends BasePermissionTestCase {
 
 		removePortletModelViewPermission();
 
-		roles = RoleServiceUtil.search(
+		roles = _roleService.search(
 			group.getCompanyId(), StringPool.BLANK,
 			new Integer[] {RoleConstants.TYPE_REGULAR},
 			new LinkedHashMap<String, Object>(), QueryUtil.ALL_POS,
@@ -71,14 +72,14 @@ public class RoleServiceTest extends BasePermissionTestCase {
 
 	@Test
 	public void testSearchCount() throws Exception {
-		int initialCount = RoleServiceUtil.searchCount(
+		int initialCount = _roleService.searchCount(
 			group.getCompanyId(), StringPool.BLANK,
 			new Integer[] {RoleConstants.TYPE_REGULAR},
 			new LinkedHashMap<String, Object>());
 
 		removePortletModelViewPermission();
 
-		int count = RoleServiceUtil.searchCount(
+		int count = _roleService.searchCount(
 			group.getCompanyId(), StringPool.BLANK,
 			new Integer[] {RoleConstants.TYPE_REGULAR},
 			new LinkedHashMap<String, Object>());
@@ -108,5 +109,8 @@ public class RoleServiceTest extends BasePermissionTestCase {
 
 	@DeleteAfterTestRun
 	private Role _role;
+
+	@Inject
+	private RoleService _roleService;
 
 }

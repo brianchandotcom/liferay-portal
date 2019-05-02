@@ -157,7 +157,6 @@ public class CustomPropertyUtil {
 	}
 
 	public static JSONObject toJSONObject(Map<String, String> values) {
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (values.isEmpty()) {

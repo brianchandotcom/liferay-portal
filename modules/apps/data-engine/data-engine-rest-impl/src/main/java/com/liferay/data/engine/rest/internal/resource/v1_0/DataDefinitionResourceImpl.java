@@ -188,8 +188,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				PrincipalThreadLocal.getUserId(), siteId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 				_getClassNameId(), null,
-				LocalizedValueUtil.toLocalizationMap(dataDefinition.getName()),
-				LocalizedValueUtil.toLocalizationMap(
+				LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
+				LocalizedValueUtil.toLocaleStringMap(
 					dataDefinition.getDescription()),
 				DataDefinitionUtil.toJSON(dataDefinition),
 				dataDefinition.getStorageType(), serviceContext));
@@ -245,8 +245,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			_ddmStructureLocalService.updateStructure(
 				PrincipalThreadLocal.getUserId(), dataDefinitionId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-				LocalizedValueUtil.toLocalizationMap(dataDefinition.getName()),
-				LocalizedValueUtil.toLocalizationMap(
+				LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
+				LocalizedValueUtil.toLocaleStringMap(
 					dataDefinition.getDescription()),
 				DataDefinitionUtil.toJSON(dataDefinition),
 				new ServiceContext()));

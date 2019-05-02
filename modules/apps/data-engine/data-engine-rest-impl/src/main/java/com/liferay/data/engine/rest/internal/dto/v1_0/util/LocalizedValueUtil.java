@@ -54,22 +54,22 @@ public class LocalizedValueUtil {
 		return jsonObject;
 	}
 
-	public static Map<Locale, String> toLocalizationMap(
+	public static Map<Locale, String> toLocaleStringMap(
 		Map<String, Object> localizedValues) {
 
 		if (MapUtil.isEmpty(localizedValues)) {
 			return Collections.emptyMap();
 		}
 
-		Map<Locale, String> localizationMap = new HashMap<>();
+		Map<Locale, String> localeStringMap = new HashMap<>();
 
 		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
-			localizationMap.put(
+			localeStringMap.put(
 				LocaleUtil.fromLanguageId(entry.getKey()),
 				(String)entry.getValue());
 		}
 
-		return localizationMap;
+		return localeStringMap;
 	}
 
 	public static Map<String, Object> toLocalizedValues(JSONObject jsonObject) {
@@ -86,17 +86,17 @@ public class LocalizedValueUtil {
 		return localizedValues;
 	}
 
-	public static Map<String, Object> toLocalizedValues(
-		Map<Locale, String> localizationMap) {
+	public static Map<String, Object> toStringObjectMap(
+		Map<Locale, String> localizedValues) {
 
-		Map<String, Object> localizedValues = new HashMap<>();
+		Map<String, Object> stringObjectMap = new HashMap<>();
 
-		for (Map.Entry<Locale, String> entry : localizationMap.entrySet()) {
-			localizedValues.put(
+		for (Map.Entry<Locale, String> entry : localizedValues.entrySet()) {
+			stringObjectMap.put(
 				String.valueOf(entry.getKey()), entry.getValue());
 		}
 
-		return localizedValues;
+		return stringObjectMap;
 	}
 
 }

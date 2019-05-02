@@ -232,6 +232,67 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-91000. User can edit number of columns a section has as well as padding options."
+	@priority = "5"
+	test ChangeLayoutSectionColumnCount {
+		property portal.acceptance = "false";
+
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a 2 column layout") {
+			PageEditor.addLayoutSection(columnCount = "2");
+		}
+
+		task ("Assert the layout has exacty 2 columns") {
+			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'col-6')][1]");
+			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'col-6')][2]");
+			AssertElementNotPresent(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'col-6')][3]");
+		}
+
+		task ("Assert the layout by default has vertical padding x1") {
+			AssertVisible(locator1 = "//section[contains(@class,'py-3')]");
+		}
+
+		task ("Assert the layout by default has horizontal padding x1") {
+			AssertVisible(locator1 = "//section[contains(@class,'px-3')]");
+		}
+
+		task ("Assert the layout by default has space between columns") {
+			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'row')][not(contains(@class,'no-gutters'))]");
+		}
+
+		task ("Edit the layout's spacing properties") {
+			PageEditor.editLayoutSectionSpacing(
+				numberOfColumns = "3",
+				paddingH = "x10",
+				paddingV = "x4",
+				spaceBetweenColumns = "false");
+		}
+
+		task ("Assert the layout now has exacty 2 columns") {
+			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'col-4')][1]");
+			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'col-4')][2]");
+			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'col-4')][3]");
+			AssertElementNotPresent(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'col-4')][4]");
+		}
+
+		task ("Assert the layout now has vertical padding x4") {
+			AssertVisible(locator1 = "//section[contains(@class,'py-5')]");
+		}
+
+		task ("Assert the layout now has horizontal padding x10") {
+			AssertVisible(locator1 = "//section[contains(@class,'px-8')]");
+		}
+
+		task ("Assert the layout now has no space between columns") {
+			AssertVisible(locator1 = "//section[contains(@class,'fragment-entry-link')]//div[contains(@class,'row')][contains(@class,'no-gutters')]");
+		}
+	}
+
 	@description = "This is a test for LPS-78726. Discarding a draft will revert a content page back to its most recent published version."
 	@priority = "5"
 	test DiscardContentPageDraft {

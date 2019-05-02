@@ -13,6 +13,21 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	macro addLayoutSection {
+		PageEditor.gotoTab(tabName = "Section Builder");
+
+		PageEditor.expandFragmentCollection(collectionName = "Layouts");
+
+		DragAndDrop(
+			locator1 = "PageEditor#SECTION_BUILDER_LAYOUTS_${columnCount}_COLUMN",
+			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+			value1 = "");
+
+		AssertVisible(
+			key_position = "1",
+			locator1 = "PageEditor#SECTION");
+	}
+
 	macro addWidget {
 		PageEditor.gotoTab(tabName = "Widgets");
 
@@ -92,6 +107,58 @@ definition {
 			key_id = "${id}",
 			locator1 = "Fragment#EDITABLE_FIELD_CK_EDITOR",
 			value1 = "${text}");
+
+		PageEditor.waitForAutoSave();
+	}
+
+	macro editLayoutSectionSpacing {
+		Click(
+			key_position = "1",
+			locator1 = "PageEditor#SECTION");
+
+		Click(
+			key_button = "Spacing",
+			locator1 = "PageEditor#SECTION_PROPERTIES_BUTTON");
+
+		if (isSet(numberOfColumns)) {
+			Select(
+				key_fieldLabel = "Number of Columns",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${numberOfColumns}");
+		}
+
+		if (isSet(container)) {
+			Select(
+				key_fieldLabel = "Container",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${container}");
+		}
+
+		if (isSet(paddingV)) {
+			Select(
+				key_fieldLabel = "Padding V",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${paddingV}");
+		}
+
+		if (isSet(paddingH)) {
+			Select(
+				key_fieldLabel = "Padding H",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${paddingH}");
+		}
+
+		if ("${spaceBetweenColumns}" == "true") {
+			Check.checkToggleSwitch(
+				checkboxName = "Space Between Columns",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if ("${spaceBetweenColumns}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Space Between Columns",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
 
 		PageEditor.waitForAutoSave();
 	}

@@ -19,6 +19,9 @@ import com.liferay.registry.util.StringPlus;
 import com.liferay.registry.util.UnmodifiableCaseInsensitiveMapDictionary;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -522,8 +525,20 @@ public class BasicRegistryImpl implements Registry {
 
 	private static class BasicFilter implements Filter {
 
+		public static <T> T throwException(Throwable throwable) {
+			return BasicFilter.<T, RuntimeException>_throwException(throwable);
+		}
+
 		public BasicFilter(String filterString) {
-			_filter = new aQute.lib.filter.Filter(filterString);
+			try {
+				_filter = _filterConstructor.newInstance(filterString);
+			}
+			catch (InvocationTargetException ite) {
+				throwException(ite.getCause());
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
 		}
 
 		@Override
@@ -531,7 +546,15 @@ public class BasicRegistryImpl implements Registry {
 			Dictionary<String, Object> dictionary =
 				new UnmodifiableCaseInsensitiveMapDictionary<>(properties);
 
-			return _filter.match(dictionary);
+			try {
+				return (boolean)_matchMethod.invoke(_filter, dictionary);
+			}
+			catch (InvocationTargetException ite) {
+				return throwException(ite.getCause());
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
 		}
 
 		@Override
@@ -543,7 +566,15 @@ public class BasicRegistryImpl implements Registry {
 				new UnmodifiableCaseInsensitiveMapDictionary<>(
 					basicServiceReference._properties);
 
-			return _filter.match(dictionary);
+			try {
+				return (boolean)_matchMethod.invoke(_filter, dictionary);
+			}
+			catch (InvocationTargetException ite) {
+				return throwException(ite.getCause());
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new RuntimeException(roe);
+			}
 		}
 
 		@Override
@@ -556,7 +587,31 @@ public class BasicRegistryImpl implements Registry {
 			return _filter.toString();
 		}
 
-		private aQute.lib.filter.Filter _filter;
+		@SuppressWarnings("unchecked")
+		private static <T, E extends Throwable> T _throwException(
+				Throwable throwable)
+			throws E {
+
+			throw (E)throwable;
+		}
+
+		private static final Constructor<?> _filterConstructor;
+		private static final Method _matchMethod;
+
+		static {
+			try {
+				Class<?> filterClass = Class.forName("aQute.lib.filter.Filter");
+
+				_filterConstructor = filterClass.getConstructor(String.class);
+
+				_matchMethod = filterClass.getMethod("match", Dictionary.class);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new ExceptionInInitializerError(roe);
+			}
+		}
+
+		private Object _filter;
 
 	}
 

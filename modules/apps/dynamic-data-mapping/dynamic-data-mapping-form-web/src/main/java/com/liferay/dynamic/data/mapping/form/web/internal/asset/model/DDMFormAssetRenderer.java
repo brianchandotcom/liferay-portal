@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServi
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -143,7 +144,9 @@ public class DDMFormAssetRenderer
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _formInstance.getName(locale);
+		return LanguageUtil.format(
+			locale, "new-entry-for-form-x", _formInstance.getName(locale),
+			false);
 	}
 
 	@Override

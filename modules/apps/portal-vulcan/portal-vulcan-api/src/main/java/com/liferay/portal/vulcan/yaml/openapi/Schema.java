@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.yaml.openapi;
 
+import java.beans.Transient;
+
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +53,10 @@ public class Schema {
 		return _enumValues;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	public String getExample() {
 		return _example;
 	}
@@ -111,6 +117,11 @@ public class Schema {
 		_enumValues = enumValues;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Transient
 	public void setExample(String example) {
 		_example = example;
 	}

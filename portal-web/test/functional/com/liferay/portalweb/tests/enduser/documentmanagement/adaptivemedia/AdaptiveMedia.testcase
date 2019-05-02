@@ -392,10 +392,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
 
-		AdaptiveMedia.addImageResolution(
-			imageName = "Small Image Variant",
-			maxHeight = "100",
-			maxWidth = "100");
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Small Image Variant");
+
+		Type(
+			locator1 = "TextInput#MAX_WIDTH",
+			value1 = "100");
+
+		Type(
+			locator1 = "TextInput#MAX_HEIGHT",
+			value1 = "100");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
 
 		AdaptiveMedia.viewImageResolutionTableEntry(
 			imageName = "Small Image Variant",

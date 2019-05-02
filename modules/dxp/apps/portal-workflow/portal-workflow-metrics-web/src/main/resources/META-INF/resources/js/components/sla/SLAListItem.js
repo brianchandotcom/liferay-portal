@@ -14,20 +14,57 @@ class SLAListItem extends React.Component {
 	}
 
 	render() {
-		const { description, duration, id, name, processId } = this.props;
+		const {
+			dateModified,
+			description,
+			duration,
+			id,
+			name,
+			processId,
+			status
+		} = this.props;
+
+		const blocked = status === 2;
 		const durationString = formatDuration(duration);
+
+		const blockedStatusClass = blocked ? 'text-danger' : '';
+
+		const statusText = blocked
+			? Liferay.Language.get('blocked')
+			: Liferay.Language.get('running');
+
+		let dateModifiedText = '';
+
+		if (dateModified) {
+			const date = new Date(dateModified);
+			const month = date.toLocaleString(
+				Liferay.ThemeDisplay.getBCP47LanguageId(),
+				{ month: 'short' }
+			);
+
+			const dayOfMonth = `${date.getDate()}`.padStart(2, '0');
+
+			dateModifiedText = `${month} ${dayOfMonth}`;
+		}
 
 		return (
 			<tr>
 				<td className="table-cell-expand">
 					<div className="table-list-title">
+						{blocked && (
+							<Icon elementClasses="text-danger" iconName="exclamation-full" />
+						)}{' '}
 						<ChildLink to={`/sla/edit/${processId}/${id}`}>{name}</ChildLink>
 					</div>
 				</td>
 
 				<td>{description}</td>
 
+				<td className={blockedStatusClass}>{statusText}</td>
+
 				<td>{durationString}</td>
+
+				<td>{dateModifiedText}</td>
 
 				<td>
 					<div className="dropdown dropdown-action">

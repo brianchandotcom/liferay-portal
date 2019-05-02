@@ -16,6 +16,7 @@ class SLAListCard extends React.Component {
 
 		this.requestOriginType = null;
 		this.state = {
+			blockedSLACount: 0,
 			items: [],
 			itemToRemove: null,
 			showConfirmDialog: false,
@@ -29,6 +30,10 @@ class SLAListCard extends React.Component {
 			showConfirmDialog: (id, callback) =>
 				this.setConfirmDialogVisibility(id, true, callback)
 		};
+	}
+
+	componentDidMount() {
+		this.loadBlockedSLA();
 	}
 
 	componentWillMount() {
@@ -53,6 +58,19 @@ class SLAListCard extends React.Component {
 				totalCount
 			})
 		);
+	}
+
+	loadBlockedSLA() {
+		const { client } = this.context;
+		const { processId } = this.props;
+
+		client
+			.get(`/processes/${processId}/slas?page=1&pageSize=1&status=2`)
+			.then(({ data: { totalCount: blockedSLACount } }) => {
+				this.setState({
+					blockedSLACount
+				});
+			});
 	}
 
 	removeItem(id) {
@@ -120,6 +138,7 @@ class SLAListCard extends React.Component {
 	render() {
 		const { requestOriginType } = this;
 		const {
+			blockedSLACount = 0,
 			items = [],
 			itemToRemove,
 			showConfirmDialog,
@@ -127,7 +146,6 @@ class SLAListCard extends React.Component {
 			totalCount
 		} = this.state;
 		const { page, pageSize, processId } = this.props;
-
 		const emptyMessageText = Liferay.Language.get(
 			'sla-allows-to-define-and-measure-process-performance'
 		);
@@ -157,10 +175,33 @@ class SLAListCard extends React.Component {
 				{showConfirmDialog && <SLAConfirmDialog itemToRemove={itemToRemove} />}
 
 				<div className="container-fluid-1280 lfr-search-container-wrapper">
+					{!!blockedSLACount && (
+						<div className="alert alert-danger alert-dismissible" role="alert">
+							<span className="alert-indicator">
+								<Icon iconName="exclamation-full" />
+							</span>
+
+							<strong className="lead">{Liferay.Language.get('error')}</strong>
+
+							{Liferay.Language.get(
+								'fix-blocked-slas-to-resume-accurate-reporting'
+							)}
+
+							<button
+								aria-label="Close"
+								className="close"
+								data-dismiss="alert"
+								type="button"
+							>
+								<Icon iconName="times" />
+							</button>
+						</div>
+					)}
+
 					{showSLAsUpdatingAlert && (
 						<div className="alert alert-dismissible alert-info" role="alert">
 							<span className="alert-indicator">
-								<Icon iconName="reload" />
+								<Icon iconName="exclamation-full" />
 							</span>
 
 							<strong className="lead">{Liferay.Language.get('info')}</strong>

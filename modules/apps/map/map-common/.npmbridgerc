@@ -1,0 +1,15 @@
+{
+	"map-common": {
+		"dest-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "bridge/map-common/$1"
+		},
+		"file-globs": "**/*.es.js,**/*.soy.js",
+		"input": "classes/META-INF/resources",
+		"output": "classes/META-INF/resources/bridge/map-common",
+		"src-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "map-common/$1"
+		}
+	}
+}

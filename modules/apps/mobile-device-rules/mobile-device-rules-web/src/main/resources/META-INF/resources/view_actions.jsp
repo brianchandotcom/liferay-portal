@@ -177,18 +177,18 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 </aui:form>
 
 <script>
-(function() {
-	var deleteActionsButton = document.getElementById('<portlet:namespace />deleteActions');
+	(function() {
+		var deleteActionsButton = document.getElementById('<portlet:namespace />deleteActions');
 
-	if (deleteActionsButton) {
-		deleteActionsButton.addEventListener(
-			'click',
-			function() {
-				if (confirm('<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-this") %>')) {
-					submitForm(document.<portlet:namespace />fm);
+		if (deleteActionsButton) {
+			deleteActionsButton.addEventListener(
+				'click',
+				function() {
+					if (confirm('<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-this") %>')) {
+						submitForm(document.<portlet:namespace />fm);
+					}
 				}
-			}
-		);
-	}
-})();
+			);
+		}
+	})();
 </script>

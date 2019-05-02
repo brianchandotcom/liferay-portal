@@ -250,18 +250,18 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 </aui:form>
 
 <script>
-(function() {
-	var deleteSelectedDeviceFamiliesButton = document.getElementById('<portlet:namespace />deleteSelectedDeviceFamilies');
+	(function() {
+		var deleteSelectedDeviceFamiliesButton = document.getElementById('<portlet:namespace />deleteSelectedDeviceFamilies');
 
-	if (deleteSelectedDeviceFamiliesButton) {
-		deleteSelectedDeviceFamiliesButton.addEventListener(
-			'click',
-			function() {
-				if (confirm('<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-this") %>')) {
-					submitForm(document.<portlet:namespace />fm);
+		if (deleteSelectedDeviceFamiliesButton) {
+			deleteSelectedDeviceFamiliesButton.addEventListener(
+				'click',
+				function() {
+					if (confirm('<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-this") %>')) {
+						submitForm(document.<portlet:namespace />fm);
+					}
 				}
-			}
-		);
-	}
-})();
+			);
+		}
+	})();
 </script>

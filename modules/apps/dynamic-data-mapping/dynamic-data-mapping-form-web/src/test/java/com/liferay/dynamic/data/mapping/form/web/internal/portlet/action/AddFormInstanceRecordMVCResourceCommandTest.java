@@ -36,7 +36,7 @@ import com.liferay.portal.util.PropsImpl;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Locale;
+import java.util.Arrays;
 import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
@@ -122,7 +122,7 @@ public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 
 		DDMFormValues ddmFormValues1 =
 			DDMFormValuesTestUtil.createDDMFormValues(
-				ddmForm, SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL}),
+				ddmForm, SetUtil.fromList(Arrays.asList(LocaleUtil.BRAZIL)),
 				LocaleUtil.BRAZIL);
 
 		ddmFormValues1.addDDMFormFieldValue(ddmFormFieldValue1);

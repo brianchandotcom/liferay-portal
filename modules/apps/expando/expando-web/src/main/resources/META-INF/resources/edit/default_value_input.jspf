@@ -113,7 +113,7 @@
 		}
 		%>
 
-		<div class="custom-form-group-autofit form-group-autofit">
+		<div class="form-group-autofit">
 			<div class="form-group-item">
 				<aui:input label="default-latitude" name="latitude" type="text" value="<%= defaultLatitude %>" />
 			</div>

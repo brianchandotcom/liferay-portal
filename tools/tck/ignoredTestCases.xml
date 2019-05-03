@@ -78,7 +78,7 @@
 
 	<entry key="V3RenderStateTests_SPEC2_12_MutableRenderState_getRenderParameters"></entry>
 
-	<!-- https://issues.liferay.com/browse/LRQA-48594 -->
+	<!-- https://issues.liferay.com/browse/LPS-95035 -->
 
 	<entry key="TestModule1_PortletCanBeRendered"></entry>
 	<entry key="TestModule1_GetDefaultNamespaceTest"></entry>
@@ -93,6 +93,9 @@
 	<entry key="TestModule3_PublicRenderParameterTestDifferentIdentifier"></entry>
 	<entry key="TestModule3_PublicRenderParameterTestDifferentPortletApplications"></entry>
 	<entry key="TestModule3_PublicRenderParameterTestDifferentQName"></entry>
+
+	<!-- https://issues.liferay.com/browse/LPS-94825 -->
+
 	<entry key="V3ResourceAsyncTests_SPEC_21_Async_addListener2"></entry>
 	<entry key="V3ResourceAsyncTests_SPEC_21_Async_addListener4"></entry>
 	<entry key="V3ResourceAsyncTests_SPEC_21_Async_cdi3"></entry>

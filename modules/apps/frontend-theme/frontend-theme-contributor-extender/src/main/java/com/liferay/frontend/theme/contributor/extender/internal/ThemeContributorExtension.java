@@ -19,15 +19,13 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
-import java.util.Hashtable;
 
 import javax.servlet.ServletContext;
-
-import org.apache.felix.utils.extender.Extension;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -40,7 +38,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Carlos Sierra Andrés
  * @author Michael Bradford
  */
-public class ThemeContributorExtension implements Extension {
+public class ThemeContributorExtension {
 
 	public ThemeContributorExtension(
 		Bundle bundle, BundleWebResourcesImpl bundleWebResources, int weight) {
@@ -50,22 +48,19 @@ public class ThemeContributorExtension implements Extension {
 		_weight = weight;
 	}
 
-	@Override
-	public void destroy() throws Exception {
+	public void destroy() {
 		_serviceTracker.close();
 	}
 
-	@Override
-	public void start() throws Exception {
-		final BundleContext bundleContext = _bundle.getBundleContext();
+	public void start() {
+		BundleContext bundleContext = _bundle.getBundleContext();
 
 		String filter = StringBundler.concat(
 			"(&(objectClass=", ServletContext.class.getName(),
 			")(osgi.web.symbolicname=", _bundle.getSymbolicName(), "))");
 
-		final Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("service.ranking", _weight);
+		Dictionary<String, Object> properties = MapUtil.singletonDictionary(
+			"service.ranking", _weight);
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, filter,

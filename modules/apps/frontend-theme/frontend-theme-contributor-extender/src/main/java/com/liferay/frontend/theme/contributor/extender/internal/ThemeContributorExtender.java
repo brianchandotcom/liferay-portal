@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.theme.contributor.extender.internal;
 
-import com.liferay.osgi.felix.util.AbstractExtender;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -30,44 +28,29 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.apache.felix.utils.extender.Extension;
-import org.apache.felix.utils.log.Logger;
-
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Michael Bradford
  */
 @Component(immediate = true, service = {})
-public class ThemeContributorExtender extends AbstractExtender {
-
-	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
-		_logger = new Logger(bundleContext);
-
-		start(bundleContext);
-	}
-
-	@Deactivate
-	protected void deactivate(BundleContext bundleContext) throws Exception {
-		stop(bundleContext);
-	}
+public class ThemeContributorExtender
+	implements BundleTrackerCustomizer<ThemeContributorExtension> {
 
 	@Override
-	protected void debug(Bundle bundle, String s) {
-		_logger.log(
-			Logger.LOG_DEBUG, StringBundler.concat("[", bundle, "] ", s));
-	}
+	public ThemeContributorExtension addingBundle(
+		Bundle bundle, BundleEvent bundleEvent) {
 
-	@Override
-	protected Extension doCreateExtension(Bundle bundle) throws Exception {
 		String type = _getProperty(
 			bundle, "Liferay-Theme-Contributor-Type", "themeContributorType");
 
@@ -86,19 +69,40 @@ public class ThemeContributorExtender extends AbstractExtender {
 				bundle, "Liferay-Theme-Contributor-Weight",
 				"themeContributorWeight"));
 
-		return new ThemeContributorExtension(
-			bundle, bundleWebResources, themeContributorWeight);
+		ThemeContributorExtension themeContributorExtension =
+			new ThemeContributorExtension(
+				bundle, bundleWebResources, themeContributorWeight);
+
+		themeContributorExtension.start();
+
+		return themeContributorExtension;
 	}
 
 	@Override
-	protected void error(String s, Throwable t) {
-		_logger.log(Logger.LOG_ERROR, s, t);
+	public void modifiedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		ThemeContributorExtension themeContributorExtension) {
 	}
 
 	@Override
-	protected void warn(Bundle bundle, String s, Throwable t) {
-		_logger.log(
-			Logger.LOG_WARNING, StringBundler.concat("[", bundle, "] ", s), t);
+	public void removedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		ThemeContributorExtension themeContributorExtension) {
+
+		themeContributorExtension.destroy();
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleTracker.close();
 	}
 
 	private String _getProperty(
@@ -180,6 +184,6 @@ public class ThemeContributorExtender extends AbstractExtender {
 		return new BundleWebResourcesImpl(cssResourcePaths, jsResourcePaths);
 	}
 
-	private Logger _logger;
+	private BundleTracker<?> _bundleTracker;
 
 }

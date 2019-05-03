@@ -1,3 +1,0 @@
-archiveFormat=ZIP
-extension=.jar
-implementingClassName=com.liferay.shrinkwrap.osgi.impl.BndProjectBuilderImpl

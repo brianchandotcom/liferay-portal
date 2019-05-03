@@ -22,6 +22,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -58,6 +60,7 @@ public class UpgradeAssetDisplayLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_upgradeAssetDisplayPages();
 		_upgradeSchema();
 	}
 
@@ -98,6 +101,24 @@ public class UpgradeAssetDisplayLayout extends UpgradeProcess {
 			layoutPageTemplateEntry);
 
 		return layout.getPlid();
+	}
+
+	private void _upgradeAssetDisplayPages() throws Exception {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"type", LayoutConstants.TYPE_ASSET_DISPLAY)));
+		actionableDynamicQuery.setPerformActionMethod(
+			(Layout layout) -> {
+				layout.setSystem(true);
+
+				_layoutLocalService.updateLayout(layout);
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private void _upgradeSchema() throws Exception {

@@ -245,6 +245,18 @@ definition {
 				key_position = "1",
 				locator1 = "Fragment#FRAGMENT_IMAGE");
 		}
+
+		task ("Navigate to the content page's 'Edit Mode'") {
+			ContentPages.clickPencil();
+		}
+
+		task ("Assert the Image fragment's image has persisted") {
+			AssertVisible(
+				key_fragmentClass = "image",
+				key_image = "Document_1.png",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
+		}
 	}
 
 	@description = "This is a test for LPS-95042. Liferay should come out of the box with fragments."

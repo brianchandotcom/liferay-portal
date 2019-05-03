@@ -116,18 +116,11 @@ public class ExpandoPortlet extends MVCPortlet {
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
 
-		Serializable defaultValue = null;
-
-		if (type == ExpandoColumnConstants.GEOLOCATION) {
-			defaultValue = _getGeolocationJSONOBject(actionRequest);
-		}
-		else {
-			defaultValue = getDefaultValue(actionRequest, type);
-		}
-
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		expandoBridge.addAttribute(name, type);
+
+		Serializable defaultValue = getDefaultValue(actionRequest, type);
 
 		expandoBridge.setAttributeDefault(name, defaultValue);
 
@@ -171,14 +164,7 @@ public class ExpandoPortlet extends MVCPortlet {
 
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
-		Serializable defaultValue = null;
-
-		if (type == ExpandoColumnConstants.GEOLOCATION) {
-			defaultValue = _getGeolocationJSONOBject(actionRequest);
-		}
-		else {
-			defaultValue = getDefaultValue(actionRequest, type);
-		}
+		Serializable defaultValue = getDefaultValue(actionRequest, type);
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
@@ -220,17 +206,16 @@ public class ExpandoPortlet extends MVCPortlet {
 			ActionRequest actionRequest, int type)
 		throws Exception {
 
-		Serializable defaultValue = null;
+		if (type == ExpandoColumnConstants.GEOLOCATION) {
+			return _getGeolocationJSONOBject(actionRequest);
+		}
 
 		if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
-			defaultValue = (Serializable)LocalizationUtil.getLocalizationMap(
+			return (Serializable)LocalizationUtil.getLocalizationMap(
 				actionRequest, "defaultValueLocalized");
 		}
-		else {
-			defaultValue = getValue(actionRequest, "defaultValue", type);
-		}
 
-		return defaultValue;
+		return getValue(actionRequest, "defaultValue", type);
 	}
 
 	protected Serializable getValue(

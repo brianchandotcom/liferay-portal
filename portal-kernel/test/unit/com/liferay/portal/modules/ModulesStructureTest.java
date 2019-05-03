@@ -1277,8 +1277,7 @@ public class ModulesStructureTest {
 		boolean mainConfigurationsAllowed = false;
 
 		if (hasSrcMainDir ||
-			(!hasSrcMainDir && !hasSrcTestDir && !hasSrcTestIntegrationDir) ||
-			content.contains("copyLibs {\n\tenabled = true")) {
+			(!hasSrcMainDir && !hasSrcTestDir && !hasSrcTestIntegrationDir)) {
 
 			mainConfigurationsAllowed = true;
 		}

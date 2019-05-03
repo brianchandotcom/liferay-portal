@@ -89,9 +89,15 @@ public class OpenNLPDocumentAssetAutoTagProvider
 			return Collections.emptySet();
 		}
 
+		String mimeType = fileEntry.getMimeType();
+
+		if (mimeType.startsWith("image/")) {
+			return Collections.emptySet();
+		}
+
 		return _openNLPDocumentAssetAutoTagger.getTagNames(
 			fileEntry.getCompanyId(), _getFileEntryContent(fileEntry),
-			fileEntry.getMimeType());
+			mimeType);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

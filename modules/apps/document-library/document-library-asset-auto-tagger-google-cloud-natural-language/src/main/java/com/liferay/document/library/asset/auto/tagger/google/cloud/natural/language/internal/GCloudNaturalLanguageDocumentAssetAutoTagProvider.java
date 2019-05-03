@@ -69,9 +69,15 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 				return Collections.emptySet();
 			}
 
+			String mimeType = fileEntry.getMimeType();
+
+			if (mimeType.startsWith("image/")) {
+				return Collections.emptySet();
+			}
+
 			return _gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
 				fileEntry.getCompanyId(), _getFileEntryContent(fileEntry),
-				fileEntry.getMimeType());
+				mimeType);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

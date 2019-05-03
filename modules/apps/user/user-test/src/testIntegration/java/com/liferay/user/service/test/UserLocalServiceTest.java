@@ -71,14 +71,14 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testGetGroupUsers() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
 		_addUsers(20);
 
-		_userLocalService.addGroupUsers(group.getGroupId(), _users);
+		_userLocalService.addGroupUsers(_group.getGroupId(), _users);
 
 		List<User> allGroupUsers = _userLocalService.getGroupUsers(
-			group.getGroupId());
+			_group.getGroupId());
 
 		Assert.assertEquals(
 			allGroupUsers.toString(), _users.size() + 1, allGroupUsers.size());
@@ -88,7 +88,7 @@ public class UserLocalServiceTest {
 		int delta = 5;
 
 		List<User> partialGroupUsers = _userLocalService.getGroupUsers(
-			group.getGroupId(), WorkflowConstants.STATUS_APPROVED, start,
+			_group.getGroupId(), WorkflowConstants.STATUS_APPROVED, start,
 			start + delta, null);
 
 		Assert.assertEquals(
@@ -225,15 +225,15 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testGetOrganizationUsers() throws Exception {
-		Organization organization = OrganizationTestUtil.addOrganization();
+		_organization = OrganizationTestUtil.addOrganization();
 
 		_addUsers(20);
 
 		_userLocalService.addOrganizationUsers(
-			organization.getOrganizationId(), _users);
+			_organization.getOrganizationId(), _users);
 
 		List<User> organizationUsers = _userLocalService.getOrganizationUsers(
-			organization.getOrganizationId());
+			_organization.getOrganizationId());
 
 		Assert.assertEquals(
 			organizationUsers.toString(), _users.size(),
@@ -244,8 +244,8 @@ public class UserLocalServiceTest {
 		int delta = 5;
 
 		organizationUsers = _userLocalService.getOrganizationUsers(
-			organization.getOrganizationId(), WorkflowConstants.STATUS_APPROVED,
-			start, start + delta, null);
+			_organization.getOrganizationId(),
+			WorkflowConstants.STATUS_APPROVED, start, start + delta, null);
 
 		Assert.assertEquals(
 			organizationUsers.toString(), delta, organizationUsers.size());
@@ -255,6 +255,8 @@ public class UserLocalServiceTest {
 	@Test
 	public void testGetUserGroupUsers() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroups.add(userGroup);
 
 		_addUsers(20);
 
@@ -299,8 +301,14 @@ public class UserLocalServiceTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
+	@DeleteAfterTestRun
+	private Group _group;
+
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@DeleteAfterTestRun
+	private Organization _organization;
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();

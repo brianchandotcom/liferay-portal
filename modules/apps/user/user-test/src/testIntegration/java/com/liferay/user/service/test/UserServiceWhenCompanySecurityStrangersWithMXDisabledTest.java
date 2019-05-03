@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -76,7 +77,7 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 		try {
 			PrincipalThreadLocal.setName(0);
 
-			UserTestUtil.addUser(true);
+			_user = UserTestUtil.addUser(true);
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);
@@ -88,15 +89,15 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 		String name = PrincipalThreadLocal.getName();
 
 		try {
-			User user = UserTestUtil.addUser(false);
+			_user = UserTestUtil.addUser(false);
 
-			PrincipalThreadLocal.setName(user.getUserId());
+			PrincipalThreadLocal.setName(_user.getUserId());
 
 			String emailAddress =
 				"UserServiceTest." + RandomTestUtil.nextLong() + "@liferay.com";
 
 			_userService.updateEmailAddress(
-				user.getUserId(), user.getPassword(), emailAddress,
+				_user.getUserId(), _user.getPassword(), emailAddress,
 				emailAddress, new ServiceContext());
 		}
 		finally {
@@ -108,21 +109,22 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 	public void testShouldNotUpdateUser() throws Exception {
 		String name = PrincipalThreadLocal.getName();
 
-		User user = UserTestUtil.addUser(false);
+		_user = UserTestUtil.addUser(false);
 
 		try {
-			PrincipalThreadLocal.setName(user.getUserId());
+			PrincipalThreadLocal.setName(_user.getUserId());
 
-			UserTestUtil.updateUser(user);
+			UserTestUtil.updateUser(_user);
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);
-
-			_userLocalService.deleteUser(user);
 		}
 	}
 
 	private static String _companySecurityStrangersWithMX;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -59,7 +60,7 @@ public class UserServiceWhenUpdatingUserTest {
 
 	@Test
 	public void testShouldNotRemoveChildGroupAssociation() throws Exception {
-		User user = UserTestUtil.addUser(true);
+		_user = UserTestUtil.addUser(true);
 
 		List<Group> groups = new ArrayList<>();
 
@@ -69,18 +70,24 @@ public class UserServiceWhenUpdatingUserTest {
 
 		Group childGroup = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
-		childGroup.setMembershipRestriction(
-			GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS);
-
-		_groupLocalService.updateGroup(childGroup);
-
 		groups.add(childGroup);
 
-		_groupLocalService.addUserGroups(user.getUserId(), groups);
+		try {
+			childGroup.setMembershipRestriction(
+				GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS);
 
-		user = _updateUser(user);
+			_groupLocalService.updateGroup(childGroup);
 
-		Assert.assertEquals(groups, user.getGroups());
+			_groupLocalService.addUserGroups(_user.getUserId(), groups);
+
+			_user = _updateUser(_user);
+
+			Assert.assertEquals(groups, _user.getGroups());
+		}
+		finally {
+			_groupLocalService.deleteGroup(childGroup);
+			_groupLocalService.deleteGroup(parentGroup);
+		}
 	}
 
 	private User _updateUser(User user) throws Exception {
@@ -119,6 +126,9 @@ public class UserServiceWhenUpdatingUserTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 	@Inject
 	private UserService _userService;

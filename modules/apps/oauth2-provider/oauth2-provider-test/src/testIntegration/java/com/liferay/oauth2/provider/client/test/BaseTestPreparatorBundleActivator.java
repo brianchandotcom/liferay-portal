@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.client.test;
 
+import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandler;
@@ -590,6 +591,18 @@ public abstract class BaseTestPreparatorBundleActivator
 		finally {
 			serviceRegistration.unregister();
 		}
+	}
+
+	protected void updateOAuth2ProviderConfiguration(
+		Dictionary<String, Object> properties) {
+
+		executeAndWaitForReadiness(
+			() -> {
+				Runnable runnable = updateOrCreateConfiguration(
+					OAuth2ProviderConfiguration.class.getName(), properties);
+
+				autoCloseables.add(() -> executeAndWaitForReadiness(runnable));
+			});
 	}
 
 	protected Runnable updateOrCreateConfiguration(

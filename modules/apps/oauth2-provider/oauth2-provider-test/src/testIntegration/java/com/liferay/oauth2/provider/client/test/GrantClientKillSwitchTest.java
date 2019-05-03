@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -59,22 +60,9 @@ public class GrantClientKillSwitchTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			executeAndWaitForReadiness(
-				() -> {
-					Dictionary<String, Object> properties =
-						new HashMapDictionary<>();
-
-					properties.put(
-						"oauth2.allow.client.credentials.grant", false);
-
-					Runnable runnable = updateOrCreateConfiguration(
-						"com.liferay.oauth2.provider.configuration." +
-							"OAuth2ProviderConfiguration",
-						properties);
-
-					autoCloseables.add(
-						() -> executeAndWaitForReadiness(runnable));
-				});
+			updateOAuth2ProviderConfiguration(
+				MapUtil.singletonDictionary(
+					"oauth2.allow.client.credentials.grant", false));
 
 			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 

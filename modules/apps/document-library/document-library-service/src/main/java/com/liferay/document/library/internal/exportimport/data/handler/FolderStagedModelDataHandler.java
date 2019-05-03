@@ -324,8 +324,8 @@ public class FolderStagedModelDataHandler
 			return;
 		}
 
-		TrashCapability trashCapability = folder.getRepositoryCapability(
-			TrashCapability.class);
+		TrashCapability trashCapability =
+			existingFolder.getRepositoryCapability(TrashCapability.class);
 
 		if (!trashCapability.isInTrash(existingFolder)) {
 			return;

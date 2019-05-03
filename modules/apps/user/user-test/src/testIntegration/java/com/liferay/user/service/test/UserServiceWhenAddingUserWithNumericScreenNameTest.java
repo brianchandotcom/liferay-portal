@@ -29,7 +29,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -48,12 +47,6 @@ public class UserServiceWhenAddingUserWithNumericScreenNameTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@After
-	public void tearDown() {
-		PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
-	}
 
 	@Test
 	public void testShouldAddUser() throws Exception {
@@ -79,9 +72,15 @@ public class UserServiceWhenAddingUserWithNumericScreenNameTest {
 
 	@Test(expected = UserScreenNameException.MustNotBeNumeric.class)
 	public void testShouldThrowException() throws Exception {
-		PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = false;
+		try {
+			PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = false;
 
-		UserTestUtil.addUser(String.valueOf(RandomTestUtil.nextLong()));
+			UserTestUtil.addUser(String.valueOf(RandomTestUtil.nextLong()));
+		}
+		finally {
+			PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
+		}
 	}
 
 	@DeleteAfterTestRun

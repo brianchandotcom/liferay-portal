@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
@@ -93,6 +94,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.Event;
 import javax.portlet.MimeResponse;
@@ -326,6 +328,16 @@ public class PortletContainerImpl implements PortletContainer {
 			serializedValue, portletClassLoader);
 
 		return new EventImpl(event.getName(), event.getQName(), value);
+	}
+
+	private boolean _isPublishedContentPage(Layout layout) {
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
+			(layout.getClassNameId() == 0)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _preparePortlet(HttpServletRequest request, Portlet portlet)
@@ -880,13 +892,14 @@ public class PortletContainerImpl implements PortletContainer {
 
 				Layout layout = themeDisplay.getLayout();
 
-				if (!layout.isTypeControlPanel() &&
-					!LayoutPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(), layout,
-						ActionKeys.UPDATE) &&
-					!PortletPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(), layout,
-						portlet.getPortletId(), ActionKeys.CONFIGURATION)) {
+				if (_isPublishedContentPage(layout) ||
+					(!layout.isTypeControlPanel() &&
+					 !LayoutPermissionUtil.contains(
+						 themeDisplay.getPermissionChecker(), layout,
+						 ActionKeys.UPDATE) &&
+					 !PortletPermissionUtil.contains(
+						 themeDisplay.getPermissionChecker(), layout,
+						 portlet.getPortletId(), ActionKeys.CONFIGURATION))) {
 
 					bufferCacheServletResponse.setCharBuffer(null);
 

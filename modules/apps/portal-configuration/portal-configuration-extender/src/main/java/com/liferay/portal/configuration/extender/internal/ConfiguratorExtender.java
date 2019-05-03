@@ -14,9 +14,7 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
-import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 
@@ -31,44 +29,31 @@ import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
-import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Carlos Sierra Andrés
  * @author Miguel Pastor
  */
 @Component(immediate = true, service = {})
-public class ConfiguratorExtender extends AbstractExtender {
-
-	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
-		_logger = new Logger(bundleContext);
-
-		start(bundleContext);
-	}
-
-	@Deactivate
-	protected void deactivate(BundleContext bundleContext) throws Exception {
-		stop(bundleContext);
-	}
+public class ConfiguratorExtender
+	implements BundleTrackerCustomizer<ConfiguratorExtension> {
 
 	@Override
-	protected void debug(Bundle bundle, String s) {
-		_logger.log(
-			Logger.LOG_DEBUG, StringBundler.concat("[", bundle, "] ", s));
-	}
+	public ConfiguratorExtension addingBundle(
+		Bundle bundle, BundleEvent bundleEvent) {
 
-	@Override
-	protected Extension doCreateExtension(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
@@ -94,27 +79,40 @@ public class ConfiguratorExtender extends AbstractExtender {
 			return null;
 		}
 
-		return new ConfiguratorExtension(
+		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
 			_configurationAdmin, new Logger(bundle.getBundleContext()),
 			bundle.getSymbolicName(), namedConfigurationContents);
+
+		configuratorExtension.start();
+
+		return configuratorExtension;
 	}
 
 	@Override
-	protected void error(String s, Throwable throwable) {
-		_logger.log(Logger.LOG_ERROR, s, throwable);
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin) {
-
-		_configurationAdmin = configurationAdmin;
+	public void modifiedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		ConfiguratorExtension configuratorExtension) {
 	}
 
 	@Override
-	protected void warn(Bundle bundle, String s, Throwable throwable) {
-		_logger.log(
-			Logger.LOG_WARNING, StringBundler.concat("[", bundle, "] ", s));
+	public void removedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		ConfiguratorExtension configuratorExtension) {
+
+		configuratorExtension.destroy();
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleTracker.close();
 	}
 
 	private void _addNamedConfigurations(
@@ -168,7 +166,9 @@ public class ConfiguratorExtender extends AbstractExtender {
 		}
 	}
 
+	private BundleTracker<?> _bundleTracker;
+
+	@Reference
 	private ConfigurationAdmin _configurationAdmin;
-	private Logger _logger;
 
 }

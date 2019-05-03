@@ -279,8 +279,13 @@ function updateRow(store, updateAction, payload) {
 	store
 		.dispatch(enableSavingChangesStatusAction())
 		.dispatch(
-			updateAction,
-			payload
+			Object.assign(
+				{},
+				payload,
+				{
+					type: updateAction
+				}
+			)
 		)
 		.dispatch(
 			{

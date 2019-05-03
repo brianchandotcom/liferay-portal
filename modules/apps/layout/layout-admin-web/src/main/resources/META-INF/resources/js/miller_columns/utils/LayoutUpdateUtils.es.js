@@ -1,7 +1,6 @@
 import {DROP_TARGET_ITEM_TYPES} from './LayoutDragDrop.es';
 import {
 	getColumnActiveItem,
-	getHomeItem,
 	getItem,
 	getItemColumn,
 	getItemColumnIndex

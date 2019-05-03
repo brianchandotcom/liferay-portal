@@ -23,7 +23,7 @@ const validateName = name => {
 };
 
 const validateNodeKeys = nodeKeys => {
-	if (!nodeKeys || nodeKeys.length === 0) {
+	if (!nodeKeys || !nodeKeys.length) {
 		return Liferay.Language.get('at-least-one-parameter-is-required');
 	}
 };

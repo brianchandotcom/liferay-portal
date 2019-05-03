@@ -198,6 +198,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-95042. Liferay should come out of the box with fragments."
+	@priority = "5"
+	test AddContentPageWithOOTBFragment {
+		property portal.acceptance = "true";
+
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Title fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Sections",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		}
+
+		task ("Assert the Banner Center fragment is on the page") {
+			AssertVisible(locator1 = "//section//div[contains(@class,'banner')]");
+		}
+	}
+
 	@description = "Users can only edit content pages in edit mode."
 	@priority = "5"
 	test CannotEditInViewMode {

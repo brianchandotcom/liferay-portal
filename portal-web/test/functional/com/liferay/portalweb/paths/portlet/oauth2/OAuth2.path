@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>ADMIN_INPUT_FORM_CHECKBOX</td>
-	<td>//label[normalize-space()='${key_checkboxName}']/input[@type='checkbox']</td>
+	<td>//label[text()[normalize-space()='${key_checkboxName}']]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

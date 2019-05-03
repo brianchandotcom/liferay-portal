@@ -32,7 +32,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,13 +48,9 @@ public class UserPermissionTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_user = UserTestUtil.addUser();
-	}
-
 	@Test
 	public void testContainsViewActionId() throws Exception {
+		_user = UserTestUtil.addUser();
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		RoleTestUtil.addResourcePermission(

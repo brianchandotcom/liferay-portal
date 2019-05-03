@@ -891,8 +891,11 @@ public class ClusterSchedulerEngine
 					if (oldTrigger == null) {
 						if (_log.isInfoEnabled()) {
 							_log.info(
-								"Unable to schedule memory clustered job " +
-									schedulerResponse);
+								StringBundler.concat(
+									"Skip scheduling memory clustered job ",
+									schedulerResponse,
+									" cause the trigger is null, it may have ",
+									"been unscheduled or finished."));
 						}
 
 						continue;

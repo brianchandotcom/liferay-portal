@@ -886,7 +886,9 @@ public class ClusterSchedulerEngine
 					SchedulerResponse schedulerResponse =
 						memoryClusteredJob.getKey();
 
-					if (schedulerResponse.getTrigger() == null) {
+					Trigger oldTrigger = schedulerResponse.getTrigger();
+
+					if (oldTrigger == null) {
 						if (_log.isInfoEnabled()) {
 							_log.info(
 								"Unable to scedule memory clustered job " +
@@ -895,8 +897,6 @@ public class ClusterSchedulerEngine
 
 						continue;
 					}
-
-					Trigger oldTrigger = schedulerResponse.getTrigger();
 
 					Date startDate = oldTrigger.getFireDateAfter(new Date());
 

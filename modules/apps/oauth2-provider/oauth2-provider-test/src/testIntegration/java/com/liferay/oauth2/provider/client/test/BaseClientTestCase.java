@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.DigesterImpl;
-import com.liferay.portal.util.HttpImpl;
 
 import java.lang.reflect.Field;
 
@@ -87,14 +85,6 @@ public abstract class BaseClientTestCase {
 		_restrictedHeaderSet = new HashSet<>(_originalRestrictedHeaderSet);
 
 		_originalRestrictedHeaderSet.clear();
-
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(new HttpImpl());
-
-		DigesterUtil digesterUtil = new DigesterUtil();
-
-		digesterUtil.setDigester(new DigesterImpl());
 	}
 
 	@AfterClass
@@ -106,24 +96,16 @@ public abstract class BaseClientTestCase {
 	public void setUp() throws Exception {
 		_bundleActivator = getBundleActivator();
 
-		if (_bundleActivator != null) {
-			Bundle bundle = FrameworkUtil.getBundle(BaseClientTestCase.class);
+		Bundle bundle = FrameworkUtil.getBundle(BaseClientTestCase.class);
 
-			BundleContext bundleContext = bundle.getBundleContext();
+		_bundleContext = bundle.getBundleContext();
 
-			_bundleActivator.start(bundleContext);
-		}
+		_bundleActivator.start(_bundleContext);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		if (_bundleActivator != null) {
-			Bundle bundle = FrameworkUtil.getBundle(BaseClientTestCase.class);
-
-			BundleContext bundleContext = bundle.getBundleContext();
-
-			_bundleActivator.stop(bundleContext);
-		}
+		_bundleActivator.stop(_bundleContext);
 	}
 
 	protected Invocation.Builder authorize(
@@ -641,5 +623,6 @@ public abstract class BaseClientTestCase {
 	private static Set<String> _restrictedHeaderSet;
 
 	private BundleActivator _bundleActivator;
+	private BundleContext _bundleContext;
 
 }

@@ -466,6 +466,8 @@ function updateEditableValueReducer(state, action) {
 					Liferay.ThemeDisplay.getBCP47LanguageId()
 				)
 			);
+
+			nextState = setIn(nextState, editablesPath, action.editableValues);
 		}
 		else if (action.type === UPDATE_EDITABLE_VALUE_ERROR) {
 			nextState = setIn(nextState, ['savingChanges'], false);

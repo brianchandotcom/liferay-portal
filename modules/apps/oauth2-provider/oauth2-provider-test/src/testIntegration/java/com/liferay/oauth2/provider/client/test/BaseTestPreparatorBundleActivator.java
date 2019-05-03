@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.test.internal.activator;
+package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;

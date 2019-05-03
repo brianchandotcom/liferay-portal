@@ -1,4 +1,9 @@
 /**
+ * @type {string}
+ */
+export const BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor';
+
+/**
  * Available values for buttonType config key
  */
 export const BUTTON_TYPES = [

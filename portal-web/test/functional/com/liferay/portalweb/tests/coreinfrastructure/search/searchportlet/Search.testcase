@@ -228,9 +228,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-90078."
-	@priority = "3"
+	@priority = "4"
 	test ModifyPaginationPortalProperties {
-		property custom.properties = "search.container.page.default.delta=10";
+		property custom.properties = "search.container.page.default.delta=2";
 		property portal.acceptance = "true";
 		property environment.acceptance = "true";
 
@@ -244,14 +244,16 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
-			value1 = "10");
+			value1 = "2");
 
 		IFrame.closeFrame();
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Guest",
-			title = "WC Title");
+		for (var count : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Guest",
+				title = "WC Title ${count}");
+		}
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
@@ -263,7 +265,14 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
-			value1 = "10");
+			value1 = "2");
+
+		IFrame.closeFrame();
+
+		SearchResultPortlet.paginateAndViewSearchResults(
+			searchAssetTitle = "WC Title 3",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
 	}
 
 	@priority = "4"

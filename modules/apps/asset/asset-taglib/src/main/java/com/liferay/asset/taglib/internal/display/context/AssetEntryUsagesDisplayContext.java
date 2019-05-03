@@ -346,6 +346,10 @@ public class AssetEntryUsagesDisplayContext {
 	}
 
 	public boolean isShowPreview(AssetEntryUsage assetEntryUsage) {
+		if (assetEntryUsage.getType() == AssetEntryUsageConstants.TYPE_LAYOUT) {
+			return true;
+		}
+
 		if (assetEntryUsage.getType() ==
 				AssetEntryUsageConstants.TYPE_DISPLAY_PAGE_TEMPLATE) {
 

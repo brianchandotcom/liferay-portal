@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Digester;
@@ -25,8 +26,6 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.lang.reflect.Field;
 
 import java.net.URI;
 
@@ -71,16 +70,9 @@ public abstract class BaseClientTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		ClassLoader classLoader = BaseClientTestCase.class.getClassLoader();
-
-		Class<?> clazz = classLoader.loadClass(
-			"sun.net.www.protocol.http.HttpURLConnection");
-
-		Field field = clazz.getDeclaredField("restrictedHeaderSet");
-
-		field.setAccessible(true);
-
-		_originalRestrictedHeaderSet = (Set<String>)field.get(null);
+		_originalRestrictedHeaderSet = ReflectionTestUtil.getFieldValue(
+			Class.forName("sun.net.www.protocol.http.HttpURLConnection"),
+			"restrictedHeaderSet");
 
 		_restrictedHeaderSet = new HashSet<>(_originalRestrictedHeaderSet);
 

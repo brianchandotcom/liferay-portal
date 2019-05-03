@@ -112,7 +112,9 @@ public class CTJournalArticleServiceWrapper
 				Collectors.toList()
 			);
 
-			query.add(RestrictionsFactoryUtil.in("id", classPKs));
+			if (!classPKs.isEmpty()) {
+				query.add(RestrictionsFactoryUtil.in("id", classPKs));
+			}
 		}
 
 		return query;

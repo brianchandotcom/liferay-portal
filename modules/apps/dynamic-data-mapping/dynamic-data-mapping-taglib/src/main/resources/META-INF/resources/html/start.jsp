@@ -23,9 +23,7 @@
 			<%
 			List<String> languageIds = new ArrayList<String>();
 
-			Locale defaultLocale = defaultEditLocale;
-
-			String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+			String defaultLanguageId = LocaleUtil.toLanguageId(defaultEditLocale);
 
 			languageIds.add(defaultLanguageId);
 
@@ -125,7 +123,7 @@
 
 			var ddmFormDefinition = <%= DDMUtil.getDDMFormJSONString(ddmForm) %>;
 
-			ddmFormDefinition.defaultLanguageId = '<%= defaultLanguageId %>';
+			ddmFormDefinition.defaultLanguageId = '<%= LocaleUtil.toLanguageId(defaultLocale) %>';
 
 			var liferayDDMForm = Liferay.component(
 				'<portlet:namespace /><%= HtmlUtil.escapeJS(fieldsNamespace) %>ddmForm',

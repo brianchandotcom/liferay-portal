@@ -401,8 +401,8 @@ public class ExpandoPortlet extends MVCPortlet {
 	private JSONObject _getGeolocationJSONOBject(ActionRequest actionRequest) {
 		JSONObject geolocationJSONOBject = JSONFactoryUtil.createJSONObject();
 
-		Double latitude = ParamUtil.getDouble(actionRequest, "latitudeValue");
-		Double longitude = ParamUtil.getDouble(actionRequest, "longitudeValue");
+		Double latitude = ParamUtil.getDouble(actionRequest, "latitude");
+		Double longitude = ParamUtil.getDouble(actionRequest, "longitude");
 
 		if ((latitude != null) && (longitude != null)) {
 			geolocationJSONOBject.put(

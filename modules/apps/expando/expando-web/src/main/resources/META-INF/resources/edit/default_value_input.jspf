@@ -102,22 +102,21 @@
 	<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_GEOLOCATION) %>">
 
 		<%
-		JSONObject defaultJSONValue = null;
-		String latitudeDefaultValue = null;
-		String longitudeDefaultValue = null;
+		String latitudeDefaultValue = StringPool.BLANK;
+		String longitudeDefaultValue = StringPool.BLANK;
 
 		if ((defaultValue != null) && (expandoColumn != null)) {
-			defaultJSONValue = (JSONObject)expandoBridge.getAttributeDefault(expandoColumn.getName());
+			JSONObject defaultJSONValue = (JSONObject)expandoBridge.getAttributeDefault(expandoColumn.getName());
 
-			latitudeDefaultValue = (defaultJSONValue.get("latitude")).toString();
-			longitudeDefaultValue = (defaultJSONValue.get("longitude")).toString();
+			latitudeDefaultValue = defaultJSONValue.getString("latitude");
+			longitudeDefaultValue = defaultJSONValue.getString("longitude");
 		}
 		%>
 
 		<div class="custom-form-group-autofit form-group-autofit">
-			<aui:input label="default-latitude" name="latitudeValue" type="text" value="<%= (defaultValue != null) ? latitudeDefaultValue : StringPool.BLANK %>" />
+			<aui:input label="default-latitude" name="latitudeValue" type="text" value="<%= latitudeDefaultValue %>" />
 
-			<aui:input label="default-longitude" name="longitudeValue" type="text" value="<%= (defaultValue != null) ? longitudeDefaultValue : StringPool.BLANK %>" />
+			<aui:input label="default-longitude" name="longitudeValue" type="text" value="<%= longitudeDefaultValue %>" />
 		</div>
 	</c:when>
 	<c:otherwise>

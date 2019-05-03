@@ -114,9 +114,13 @@
 		%>
 
 		<div class="custom-form-group-autofit form-group-autofit">
-			<aui:input label="default-latitude" name="latitudeValue" type="text" value="<%= latitudeDefaultValue %>" />
+			<div class="form-group-item">
+				<aui:input label="default-latitude" name="latitudeValue" type="text" value="<%= latitudeDefaultValue %>" />
+			</div>
 
-			<aui:input label="default-longitude" name="longitudeValue" type="text" value="<%= longitudeDefaultValue %>" />
+			<div class="form-group-item">
+				<aui:input label="default-longitude" name="longitudeValue" type="text" value="<%= longitudeDefaultValue %>" />
+			</div>
 		</div>
 	</c:when>
 	<c:otherwise>

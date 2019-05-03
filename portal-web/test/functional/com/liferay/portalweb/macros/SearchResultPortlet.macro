@@ -1,4 +1,21 @@
 definition {
+	macro paginateAndViewSearchResults {
+		var key_searchAssetTitle = "${searchAssetTitle}";
+		var key_searchAssetType = "${searchAssetType}";
+		var searchAssetTitle = "${searchAssetTitle}";
+		var searchAssetType = "${searchAssetType}";
+		var searchTerm = "${searchTerm}";
+
+		while (IsElementNotPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC")) {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "${searchAssetTitle}",
+			searchAssetType = "${searchAssetType}",
+			searchTerm = "${searchTerm}");
+	}
+
 	macro viewMultipleSearchResults {
 		if (!(contains("${resultsList}", "/"))) {
 			fail("You must pass in a list with title and type separated by '/'.");

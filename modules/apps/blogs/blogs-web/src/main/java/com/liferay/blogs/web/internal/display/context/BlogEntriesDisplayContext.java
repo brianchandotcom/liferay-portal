@@ -318,6 +318,8 @@ public class BlogEntriesDisplayContext {
 				this::_toBlogsEntryOptional
 			).filter(
 				Optional::isPresent
+			).map(
+				Optional::get
 			).collect(
 				Collectors.toList()
 			);

@@ -1,7 +1,3 @@
-copyLibs {
-	enabled = true
-}
-
 dependencies {
 	testIntegrationCompile project(":apps:asset:asset-entry-rel-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

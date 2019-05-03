@@ -16,7 +16,6 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -65,8 +64,7 @@ public class UpdatePortletTitleAction extends JSONAction {
 		String title = ParamUtil.getString(request, "title");
 
 		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portletId);
+			themeDisplay.getStrictLayoutPortletSetup(layout, portletId);
 
 		portletSetup.setValue("portletSetupTitle_" + languageId, title);
 		portletSetup.setValue("portletSetupUseCustomTitle", "true");

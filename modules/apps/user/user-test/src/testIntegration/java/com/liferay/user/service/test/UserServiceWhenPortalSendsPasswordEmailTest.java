@@ -62,6 +62,15 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_adminEmailPasswordResetSubject = PropsUtil.get(
+			PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
+		_adminEmailPasswordResetBody = PropsUtil.get(
+			PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY);
+		_adminEmailPasswordSentSubject = PropsUtil.get(
+			PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT);
+		_adminEmailPasswordSentBody = PropsUtil.get(
+			PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY);
+
 		PropsUtil.set(
 			PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT,
 			"com/liferay/user/service/test/dependencies" +
@@ -102,6 +111,19 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 
 	@AfterClass
 	public static void tearDownClass() {
+		PropsUtil.set(
+			PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT,
+			_adminEmailPasswordResetSubject);
+		PropsUtil.set(
+			PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY,
+			_adminEmailPasswordResetBody);
+		PropsUtil.set(
+			PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT,
+			_adminEmailPasswordSentSubject);
+		PropsUtil.set(
+			PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY,
+			_adminEmailPasswordSentBody);
+
 		_localizationUtil.setLocalization(_localization);
 	}
 
@@ -313,6 +335,10 @@ public class UserServiceWhenPortalSendsPasswordEmailTest {
 		portletPreferences.store();
 	}
 
+	private static String _adminEmailPasswordResetBody;
+	private static String _adminEmailPasswordResetSubject;
+	private static String _adminEmailPasswordSentBody;
+	private static String _adminEmailPasswordSentSubject;
 	private static Localization _localization;
 
 	@Inject

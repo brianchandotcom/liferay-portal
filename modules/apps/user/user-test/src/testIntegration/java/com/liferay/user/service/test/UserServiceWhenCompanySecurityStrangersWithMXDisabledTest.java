@@ -30,6 +30,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,15 +52,28 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() {
+		_companySecurityStrangersWithMX = PropsUtil.get(
+			PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX);
+
+		PropsUtil.set(
+			PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
+			Boolean.FALSE.toString());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		PropsUtil.set(
+			PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
+			_companySecurityStrangersWithMX);
+	}
+
 	@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 	public void testShouldNotAddUser() throws Exception {
 		String name = PrincipalThreadLocal.getName();
 
 		try {
-			PropsUtil.set(
-				PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
-				Boolean.FALSE.toString());
-
 			PrincipalThreadLocal.setName(0);
 
 			UserTestUtil.addUser(true);
@@ -73,10 +88,6 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 		String name = PrincipalThreadLocal.getName();
 
 		try {
-			PropsUtil.set(
-				PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
-				Boolean.FALSE.toString());
-
 			User user = UserTestUtil.addUser(false);
 
 			PrincipalThreadLocal.setName(user.getUserId());
@@ -100,10 +111,6 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 		User user = UserTestUtil.addUser(false);
 
 		try {
-			PropsUtil.set(
-				PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
-				Boolean.FALSE.toString());
-
 			PrincipalThreadLocal.setName(user.getUserId());
 
 			UserTestUtil.updateUser(user);
@@ -114,6 +121,8 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 			_userLocalService.deleteUser(user);
 		}
 	}
+
+	private static String _companySecurityStrangersWithMX;
 
 	@Inject
 	private UserLocalService _userLocalService;

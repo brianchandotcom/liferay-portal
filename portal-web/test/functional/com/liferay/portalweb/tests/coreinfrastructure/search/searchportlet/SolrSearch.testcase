@@ -500,18 +500,10 @@ definition {
 
 	@priority = "4"
 	test SearchDeletedWebContent {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC Content",
-			webContentTitle = "WC Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -541,18 +533,10 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name 1");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "Apple");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "Apple");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -953,16 +937,15 @@ definition {
 	}
 
 	test SearchUsingCustomFacet {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WebContent Title 1");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(webContentTitle = "WebContent Title 1");
-
-		PortletEntry.publish();
 
 		WebContent.viewVersion(
 			version = "1.0",
@@ -1040,20 +1023,15 @@ definition {
 
 	@priority = "4"
 	test SearchWebContent {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 

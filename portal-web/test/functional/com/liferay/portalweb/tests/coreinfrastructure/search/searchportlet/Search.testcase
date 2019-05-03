@@ -228,9 +228,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-90078."
-	@priority = "3"
+	@priority = "4"
 	test ModifyPaginationPortalProperties {
-		property custom.properties = "search.container.page.default.delta=10";
+		property custom.properties = "search.container.page.default.delta=2";
+		property portal.acceptance = "true";
+		property environment.acceptance = "true";
 
 		Portlet.addPG(portletName = "Search Results");
 
@@ -242,14 +244,16 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
-			value1 = "10");
+			value1 = "2");
 
 		IFrame.closeFrame();
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Guest",
-			title = "WC Title");
+		for (var count : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Guest",
+				title = "WC Title ${count}");
+		}
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
@@ -261,7 +265,14 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
-			value1 = "10");
+			value1 = "2");
+
+		IFrame.closeFrame();
+
+		SearchResultPortlet.paginateAndViewSearchResults(
+			searchAssetTitle = "WC Title 3",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
 	}
 
 	@priority = "4"
@@ -724,18 +735,10 @@ definition {
 
 	@priority = "4"
 	test SearchDeletedWebContent {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC Content",
-			webContentTitle = "WC Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -765,18 +768,10 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name 1");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "Apple");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "Apple");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -1185,16 +1180,15 @@ definition {
 	test SearchUsingCustomFacet {
 		property portal.acceptance = "true";
 
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WebContent Title 1");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(webContentTitle = "WebContent Title 1");
-
-		PortletEntry.publish();
 
 		WebContent.viewVersion(
 			version = "1.0",
@@ -1272,20 +1266,15 @@ definition {
 
 	@priority = "4"
 	test SearchWebContent {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 

@@ -231,6 +231,8 @@ definition {
 	@priority = "3"
 	test ModifyPaginationPortalProperties {
 		property custom.properties = "search.container.page.default.delta=10";
+		property portal.acceptance = "true";
+		property environment.acceptance = "true";
 
 		Portlet.addPG(portletName = "Search Results");
 

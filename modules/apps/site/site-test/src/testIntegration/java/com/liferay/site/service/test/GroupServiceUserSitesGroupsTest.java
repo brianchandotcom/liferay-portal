@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.service.persistence.test;
+package com.liferay.site.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

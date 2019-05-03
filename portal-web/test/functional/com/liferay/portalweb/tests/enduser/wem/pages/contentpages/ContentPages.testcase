@@ -314,7 +314,7 @@ definition {
 	@description = "This is a test for LPS-91000 and LPS-95002. User can edit number of columns a section has as well as padding options."
 	@priority = "5"
 	test ChangeLayoutSectionProperties {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add a content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");

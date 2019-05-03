@@ -899,6 +899,15 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		if ((role.getType() == RoleConstants.TYPE_SITE) ||
 			(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
 
+			String roleName = role.getName();
+
+			if (roleName.equals(RoleConstants.SITE_MEMBER)) {
+				long[] userGroupUserIds = _userLocalService.getGroupUserIds(
+					kaleoTaskInstanceToken.getGroupId());
+
+				return ArrayUtil.contains(userGroupUserIds, userId);
+			}
+
 			List<UserGroupRole> userGroupRoles =
 				_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
 					kaleoTaskInstanceToken.getGroupId(), assigneeClassPK);
@@ -963,6 +972,17 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 		if ((role.getType() == RoleConstants.TYPE_SITE) ||
 			(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
+
+			String roleName = role.getName();
+
+			if (roleName.equals(RoleConstants.SITE_MEMBER)) {
+				List<User> userGroupUsers = _userLocalService.getGroupUsers(
+					kaleoTaskInstanceToken.getGroupId());
+
+				users.addAll(userGroupUsers);
+
+				return;
+			}
 
 			List<UserGroupRole> userGroupRoles =
 				_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(

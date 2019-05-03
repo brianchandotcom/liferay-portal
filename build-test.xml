@@ -1246,7 +1246,9 @@ war.path=${app.server.portal.dir}/</echo>
 		<attribute name="task" />
 
 		<sequential>
-			<update-gradle-properties />
+			<propertyfile file="${project.dir}/.gradle/gradle.properties">
+				<entry key="sdk.dir" value="${sdk.dir}" />
+			</propertyfile>
 
 			<if>
 				<contains string="${env.CI_TEST_SUITE}" substring="poshi" />

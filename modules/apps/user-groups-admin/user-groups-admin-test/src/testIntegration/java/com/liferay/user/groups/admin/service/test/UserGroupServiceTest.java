@@ -63,7 +63,6 @@ public class UserGroupServiceTest {
 		List<UserGroup> userGroups = _userGroupService.getGtUserGroups(
 			0, TestPropsValues.getCompanyId(), parentUserGroupId, size);
 
-		Assert.assertFalse(userGroups.isEmpty());
 		Assert.assertEquals(userGroups.toString(), size, userGroups.size());
 
 		UserGroup lastUserGroup = userGroups.get(userGroups.size() - 1);
@@ -72,7 +71,6 @@ public class UserGroupServiceTest {
 			lastUserGroup.getUserGroupId(), TestPropsValues.getCompanyId(),
 			parentUserGroupId, size);
 
-		Assert.assertFalse(userGroups.isEmpty());
 		Assert.assertEquals(userGroups.toString(), size, userGroups.size());
 
 		long previousUserGroupId = 0;

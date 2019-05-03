@@ -161,7 +161,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 							<portlet:param name="entryUuid" value="<%= uuid %>" />
 						</portlet:resourceURL>
 
-						<aui:script require='<%= npmResolvedPackageName + "/adaptive_media/js/AdaptiveMediaProgress.es as AdaptiveMediaProgress"%>'>
+						<aui:script require='<%= npmResolvedPackageName + "/adaptive_media/js/AdaptiveMediaProgress.es as AdaptiveMediaProgress" %>'>
 									var component = Liferay.component(
 								'<portlet:namespace />AdaptRemaining<%= uuid %>',
 								new AdaptiveMediaProgress.default(

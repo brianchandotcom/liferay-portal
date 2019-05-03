@@ -23,13 +23,16 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -54,6 +57,18 @@ public class AopServiceManager {
 			new TransactionExecutorServiceTrackerCustomizer());
 
 		_transactionExecutorServiceTracker.open(true);
+
+		_bundleTracker = new BundleTracker<Object>(
+			bundleContext, Bundle.ACTIVE, null) {
+
+			@Override
+			public void removedBundle(
+				Bundle bundle, BundleEvent bundleEvent, Object object) {
+
+				_aopDependencyResolvers.remove(bundle.getBundleId());
+			}
+
+		};
 	}
 
 	@Deactivate
@@ -61,6 +76,8 @@ public class AopServiceManager {
 		_aopServiceServiceTracker.close();
 
 		_transactionExecutorServiceTracker.close();
+
+		_bundleTracker.close();
 	}
 
 	private final Map<Object, AopServiceResolver> _aopDependencyResolvers =
@@ -68,6 +85,7 @@ public class AopServiceManager {
 	private ServiceTracker<AopService, AopServiceRegistrar>
 		_aopServiceServiceTracker;
 	private BundleContext _bundleContext;
+	private BundleTracker<?> _bundleTracker;
 
 	@Reference(target = "(original.bean=true)")
 	private TransactionExecutor _portalTransactionExecutor;
@@ -147,10 +165,6 @@ public class AopServiceManager {
 					(bundleId, aopServiceResolver) -> {
 						aopServiceResolver.removeAopServiceRegistrar(
 							aopServiceRegistrar);
-
-						if (aopServiceResolver.isEmpty()) {
-							return null;
-						}
 
 						return aopServiceResolver;
 					});
@@ -245,10 +259,6 @@ public class AopServiceManager {
 				(bundleId, aopServiceResolver) -> {
 					aopServiceResolver.removeTransactionExecutorHolder(
 						transactionExecutorHolder);
-
-					if (aopServiceResolver.isEmpty()) {
-						return null;
-					}
 
 					return aopServiceResolver;
 				});

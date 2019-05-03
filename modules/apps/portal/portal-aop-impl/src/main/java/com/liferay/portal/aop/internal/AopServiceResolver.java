@@ -76,16 +76,6 @@ public class AopServiceResolver {
 		}
 	}
 
-	public boolean isEmpty() {
-		if (_aopServiceRegistrars.isEmpty() &&
-			_transactionExecutorHolders.isEmpty()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public void removeAopServiceRegistrar(
 		AopServiceRegistrar aopServiceRegistrar) {
 

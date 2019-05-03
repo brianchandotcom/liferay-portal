@@ -17,12 +17,9 @@ package com.liferay.portal.spring.extender.internal.configuration;
 import aQute.bnd.version.Version;
 import aQute.bnd.version.VersionRange;
 
-import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
@@ -33,41 +30,30 @@ import java.util.Dictionary;
 
 import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
-import org.apache.felix.utils.extender.Extension;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Preston Crary
  */
 @Component(immediate = true, service = {})
-public class ServiceConfigurationExtender extends AbstractExtender {
-
-	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
-		start(bundleContext);
-	}
-
-	@Deactivate
-	protected void deactivate(BundleContext bundleContext) throws Exception {
-		stop(bundleContext);
-	}
+public class ServiceConfigurationExtender
+	implements BundleTrackerCustomizer
+		<ServiceConfigurationExtender.ServiceConfigurationExtension> {
 
 	@Override
-	protected void debug(Bundle bundle, String s) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(s);
-		}
-	}
+	public ServiceConfigurationExtension addingBundle(
+		Bundle bundle, BundleEvent bundleEvent) {
 
-	@Override
-	protected Extension doCreateExtension(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
@@ -96,42 +82,35 @@ public class ServiceConfigurationExtender extends AbstractExtender {
 				bundle, classLoader, portletConfiguration, serviceConfiguration,
 				_resourceActions, _serviceComponentLocalService);
 
-		return new ServiceConfigurationExtension(
-			bundle, requireSchemaVersion, serviceConfigurationInitializer);
+		ServiceConfigurationExtension serviceConfigurationExtension =
+			new ServiceConfigurationExtension(
+				bundle, requireSchemaVersion, serviceConfigurationInitializer);
+
+		serviceConfigurationExtension.start();
+
+		return serviceConfigurationExtension;
 	}
 
 	@Override
-	protected void error(String s, Throwable throwable) {
-		_log.error(s, throwable);
+	public void modifiedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		ServiceConfigurationExtension serviceConfigurationExtension) {
 	}
 
 	@Override
-	protected void warn(Bundle bundle, String s, Throwable throwable) {
-		if (_log.isWarnEnabled()) {
-			_log.warn(s, throwable);
-		}
+	public void removedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		ServiceConfigurationExtension serviceConfigurationExtension) {
+
+		serviceConfigurationExtension.destroy();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ServiceConfigurationExtender.class);
+	public static class ServiceConfigurationExtension {
 
-	@Reference(target = ModuleServiceLifecycle.DATABASE_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference
-	private ResourceActions _resourceActions;
-
-	@Reference
-	private ServiceComponentLocalService _serviceComponentLocalService;
-
-	private static class ServiceConfigurationExtension implements Extension {
-
-		@Override
 		public void destroy() {
 			_dependencyManager.remove(_component);
 		}
 
-		@Override
 		public void start() {
 			_dependencyManager.add(_component);
 		}
@@ -208,5 +187,29 @@ public class ServiceConfigurationExtender extends AbstractExtender {
 		private final DependencyManager _dependencyManager;
 
 	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleTracker.close();
+	}
+
+	private BundleTracker<?> _bundleTracker;
+
+	@Reference(target = ModuleServiceLifecycle.DATABASE_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
+	private ResourceActions _resourceActions;
+
+	@Reference
+	private ServiceComponentLocalService _serviceComponentLocalService;
 
 }

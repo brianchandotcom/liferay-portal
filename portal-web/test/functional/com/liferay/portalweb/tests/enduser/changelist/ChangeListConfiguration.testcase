@@ -21,12 +21,14 @@ definition {
 	@description = "Change list cannot be enabled when staging is turned on"
 	@priority = "5"
 	test CannotEnableChangeListWhenStagingIsTurnedOn {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
 			portlet = "Staging");
 
-		Staging.activateStagingCP(siteName = "Liferay");
+		Staging.activateStagingCP(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Change Lists",

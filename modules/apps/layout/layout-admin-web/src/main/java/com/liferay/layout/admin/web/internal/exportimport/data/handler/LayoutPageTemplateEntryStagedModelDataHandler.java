@@ -174,7 +174,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		}
 		else {
 			existingLayoutPageTemplateEntry = fetchExistingTemplate(
-				uuid, groupId, name, preloaded);
+				uuid, groupId, 0L, name, preloaded);
 		}
 
 		if (existingLayoutPageTemplateEntry == null) {
@@ -305,7 +305,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			LayoutPageTemplateEntry existingLayoutPageTemplateEntry =
 				fetchExistingTemplate(
 					layoutPageTemplateEntry.getUuid(),
-					portletDataContext.getScopeGroupId(),
+					portletDataContext.getScopeGroupId(), plid,
 					layoutPageTemplateEntry.getName(), preloaded);
 
 			if (existingLayoutPageTemplateEntry == null) {
@@ -338,7 +338,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 	}
 
 	protected LayoutPageTemplateEntry fetchExistingTemplate(
-		String uuid, long groupId, String name, boolean preloaded) {
+		String uuid, long groupId, long plid, String name, boolean preloaded) {
 
 		LayoutPageTemplateEntry existingTemplate = null;
 
@@ -347,7 +347,13 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 				_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 					uuid, groupId);
 		}
-		else {
+		else if (plid > 0) {
+			existingTemplate =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(plid);
+		}
+
+		if ((existingTemplate == null) && preloaded) {
 			existingTemplate =
 				_layoutPageTemplateEntryLocalService.
 					fetchLayoutPageTemplateEntry(groupId, name);

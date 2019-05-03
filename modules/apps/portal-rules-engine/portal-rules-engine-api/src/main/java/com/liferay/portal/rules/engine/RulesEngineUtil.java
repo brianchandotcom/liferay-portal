@@ -19,6 +19,7 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -86,6 +87,7 @@ public class RulesEngineUtil {
 	}
 
 	private static final ServiceTracker<RulesEngine, RulesEngine>
-		_serviceTracker = ServiceTrackerFactory.open(RulesEngine.class);
+		_serviceTracker = ServiceTrackerFactory.open(
+			FrameworkUtil.getBundle(RulesEngineUtil.class), RulesEngine.class);
 
 }

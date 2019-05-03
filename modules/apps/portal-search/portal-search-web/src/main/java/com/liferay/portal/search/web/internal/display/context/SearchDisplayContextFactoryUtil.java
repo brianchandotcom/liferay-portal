@@ -20,6 +20,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -42,6 +43,7 @@ public class SearchDisplayContextFactoryUtil {
 	private static final ServiceTracker
 		<SearchDisplayContextFactory, SearchDisplayContextFactory>
 			_serviceTracker = ServiceTrackerFactory.open(
+				FrameworkUtil.getBundle(SearchDisplayContextFactoryUtil.class),
 				SearchDisplayContextFactory.class);
 
 }

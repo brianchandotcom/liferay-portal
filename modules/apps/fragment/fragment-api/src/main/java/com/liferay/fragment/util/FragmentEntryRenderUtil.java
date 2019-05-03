@@ -34,6 +34,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -165,13 +166,17 @@ public class FragmentEntryRenderUtil {
 	private static final ServiceTracker
 		<FragmentRendererController, FragmentRendererController>
 			_fragmentRendererControllerServiceTracker =
-				ServiceTrackerFactory.open(FragmentRendererController.class);
+				ServiceTrackerFactory.open(
+					FrameworkUtil.getBundle(FragmentEntryRenderUtil.class),
+					FragmentRendererController.class);
 	private static final ServiceTracker<PortletRegistry, PortletRegistry>
 		_portletRegistryServiceTracler = ServiceTrackerFactory.open(
+			FrameworkUtil.getBundle(FragmentEntryRenderUtil.class),
 			PortletRegistry.class);
 	private static final ServiceTracker
 		<FragmentEntryProcessorRegistry, FragmentEntryProcessorRegistry>
 			_serviceTracker = ServiceTrackerFactory.open(
+				FrameworkUtil.getBundle(FragmentEntryRenderUtil.class),
 				FragmentEntryProcessorRegistry.class);
 
 }

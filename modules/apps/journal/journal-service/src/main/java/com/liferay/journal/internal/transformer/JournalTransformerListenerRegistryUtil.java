@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.templateparser.TransformerListener;
 
 import java.util.List;
 
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -44,6 +45,8 @@ public class JournalTransformerListenerRegistryUtil {
 
 	private static final ServiceTracker<?, JournalTransformerListenerRegistry>
 		_serviceTracker = ServiceTrackerFactory.open(
+			FrameworkUtil.getBundle(
+				JournalTransformerListenerRegistryUtil.class),
 			JournalTransformerListenerRegistry.class);
 
 }

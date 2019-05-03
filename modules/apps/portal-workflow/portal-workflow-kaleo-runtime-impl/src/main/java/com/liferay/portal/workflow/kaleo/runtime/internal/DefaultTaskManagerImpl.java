@@ -53,6 +53,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
@@ -428,7 +429,9 @@ public class DefaultTaskManagerImpl
 
 	private static final ServiceTracker
 		<FormDefinitionRetriever, FormDefinitionRetriever> _serviceTracker =
-			ServiceTrackerFactory.open(FormDefinitionRetriever.class);
+			ServiceTrackerFactory.open(
+				FrameworkUtil.getBundle(DefaultTaskManagerImpl.class),
+				FormDefinitionRetriever.class);
 
 	@Reference
 	private KaleoActionExecutor _kaleoActionExecutor;

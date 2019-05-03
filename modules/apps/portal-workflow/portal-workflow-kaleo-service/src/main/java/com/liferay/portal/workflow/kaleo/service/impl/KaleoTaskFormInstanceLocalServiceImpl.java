@@ -31,6 +31,7 @@ import com.liferay.portal.workflow.kaleo.service.base.KaleoTaskFormInstanceLocal
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -158,6 +159,9 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 		KaleoTaskFormInstanceLocalServiceImpl.class);
 
 	private static final ServiceTracker<FormValueProcessor, FormValueProcessor>
-		_serviceTracker = ServiceTrackerFactory.open(FormValueProcessor.class);
+		_serviceTracker = ServiceTrackerFactory.open(
+			FrameworkUtil.getBundle(
+				KaleoTaskFormInstanceLocalServiceImpl.class),
+			FormValueProcessor.class);
 
 }

@@ -70,6 +70,10 @@ public class ServiceTrackerFactory {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no replacement
+	 */
+	@Deprecated
 	public static <T> ServiceTracker<T, T> create(Class<T> clazz) {
 		return create(
 			FrameworkUtil.getBundle(ServiceTrackerFactory.class), clazz);
@@ -118,6 +122,10 @@ public class ServiceTrackerFactory {
 		return serviceTracker;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no replacement
+	 */
+	@Deprecated
 	public static <T> ServiceTracker<T, T> open(Class<T> clazz) {
 		ServiceTracker<T, T> serviceTracker = create(clazz);
 

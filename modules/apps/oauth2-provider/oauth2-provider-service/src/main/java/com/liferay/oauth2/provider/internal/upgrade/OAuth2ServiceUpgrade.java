@@ -62,6 +62,7 @@ public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 			getDropColumnsUpgradeProcess(
 				OAuth2ApplicationScopeAliasesTable.class, "scopeAliases",
 				"scopeAliasesHash"));
+
 		registry.register(
 			"2.0.0", "3.0.0",
 			getAddColumnsUpgradeProcess(

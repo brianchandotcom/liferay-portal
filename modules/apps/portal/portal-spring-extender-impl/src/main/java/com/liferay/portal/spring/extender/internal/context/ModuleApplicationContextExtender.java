@@ -14,7 +14,6 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
-import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -42,41 +41,30 @@ import javax.sql.DataSource;
 
 import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
-import org.apache.felix.utils.extender.Extension;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Miguel Pastor
  */
 @Component(immediate = true, service = {})
-public class ModuleApplicationContextExtender extends AbstractExtender {
-
-	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
-		start(bundleContext);
-	}
-
-	@Deactivate
-	protected void deactivate(BundleContext bundleContext) throws Exception {
-		stop(bundleContext);
-	}
+public class ModuleApplicationContextExtender
+	implements BundleTrackerCustomizer
+		<ModuleApplicationContextExtender.ModuleApplicationContextExtension> {
 
 	@Override
-	protected void debug(Bundle bundle, String s) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(s);
-		}
-	}
+	public ModuleApplicationContextExtension addingBundle(
+		Bundle bundle, BundleEvent bundleEvent) {
 
-	@Override
-	protected Extension doCreateExtension(Bundle bundle) throws Exception {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
@@ -84,50 +72,37 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			return null;
 		}
 
-		return new ModuleApplicationContextExtension(bundle);
-	}
+		try {
+			ModuleApplicationContextExtension
+				moduleApplicationContextExtension =
+					new ModuleApplicationContextExtension(bundle);
 
-	@Override
-	protected void error(String s, Throwable throwable) {
-		_log.error(s, throwable);
-	}
+			moduleApplicationContextExtension.start();
 
-	@Reference(
-		target = "(&(bean.id=liferayDataSource)(original.bean=true))",
-		unbind = "-"
-	)
-	protected void setDataSource(DataSource dataSource) {
-	}
-
-	@Reference(target = "(original.bean=true)", unbind = "-")
-	protected void setInfrastructureUtil(
-		InfrastructureUtil infrastructureUtil) {
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(target = "(original.bean=true)", unbind = "-")
-	protected void setSaxReaderUtil(SAXReaderUtil saxReaderUtil) {
-	}
-
-	@Override
-	protected void warn(Bundle bundle, String s, Throwable throwable) {
-		if (_log.isWarnEnabled()) {
-			_log.warn(s, throwable);
+			return moduleApplicationContextExtension;
 		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ModuleApplicationContextExtender.class);
+	@Override
+	public void modifiedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		ModuleApplicationContextExtension moduleApplicationContextExtension) {
+	}
 
-	@Reference
-	private ConfigurableApplicationContextConfigurator
-		_configurableApplicationContextConfigurator;
+	@Override
+	public void removedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		ModuleApplicationContextExtension moduleApplicationContextExtension) {
 
-	private class ModuleApplicationContextExtension implements Extension {
+		moduleApplicationContextExtension.destroy();
+	}
+
+	public class ModuleApplicationContextExtension {
 
 		public ModuleApplicationContextExtension(Bundle bundle) {
 			_bundle = bundle;
@@ -136,19 +111,17 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				bundle.getBundleContext());
 		}
 
-		@Override
-		public void destroy() throws Exception {
+		public void destroy() {
 			if (_component != null) {
 				_dependencyManager.remove(_component);
 			}
 		}
 
-		@Override
 		public void start() throws Exception {
 			_component = _dependencyManager.createComponent();
 
 			BundleContext bundleContext =
-				ModuleApplicationContextExtender.this.getBundleContext();
+				ModuleApplicationContextExtender.this._bundleContext;
 
 			Bundle bundle = bundleContext.getBundle();
 
@@ -268,5 +241,42 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		private final DependencyManager _dependencyManager;
 
 	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleTracker.close();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ModuleApplicationContextExtender.class);
+
+	private BundleContext _bundleContext;
+	private BundleTracker<?> _bundleTracker;
+
+	@Reference
+	private ConfigurableApplicationContextConfigurator
+		_configurableApplicationContextConfigurator;
+
+	@Reference(target = "(&(bean.id=liferayDataSource)(original.bean=true))")
+	private DataSource _dataSource;
+
+	@Reference(target = "(original.bean=true)")
+	private InfrastructureUtil _infrastructureUtil;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference(target = "(original.bean=true)")
+	private SAXReaderUtil _saxReaderUtil;
 
 }

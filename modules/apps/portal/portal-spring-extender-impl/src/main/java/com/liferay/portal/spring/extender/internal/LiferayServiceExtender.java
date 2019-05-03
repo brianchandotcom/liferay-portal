@@ -14,7 +14,6 @@
 
 package com.liferay.portal.spring.extender.internal;
 
-import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
@@ -37,17 +36,18 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.felix.utils.extender.Extension;
-
 import org.hibernate.engine.SessionFactoryImplementor;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -56,27 +56,14 @@ import org.springframework.transaction.PlatformTransactionManager;
  * @author Preston Crary
  */
 @Component(immediate = true, service = {})
-public class LiferayServiceExtender extends AbstractExtender {
-
-	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
-		start(bundleContext);
-	}
-
-	@Deactivate
-	protected void deactivate(BundleContext bundleContext) throws Exception {
-		stop(bundleContext);
-	}
+public class LiferayServiceExtender
+	implements BundleTrackerCustomizer
+		<LiferayServiceExtender.LiferayServiceExtension> {
 
 	@Override
-	protected void debug(Bundle bundle, String s) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(s);
-		}
-	}
+	public LiferayServiceExtension addingBundle(
+		Bundle bundle, BundleEvent bundleEvent) {
 
-	@Override
-	protected Extension doCreateExtension(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
@@ -86,27 +73,37 @@ public class LiferayServiceExtender extends AbstractExtender {
 			return null;
 		}
 
-		return new LiferayServiceExtension(bundle);
-	}
+		try {
+			LiferayServiceExtension liferayServiceExtension =
+				new LiferayServiceExtension(bundle);
 
-	@Override
-	protected void error(String s, Throwable throwable) {
-		_log.error(s, throwable);
-	}
+			liferayServiceExtension.start();
 
-	@Override
-	protected void warn(Bundle bundle, String s, Throwable throwable) {
-		if (_log.isWarnEnabled()) {
-			_log.warn(s, throwable);
+			return liferayServiceExtension;
 		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LiferayServiceExtender.class);
+	@Override
+	public void modifiedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		LiferayServiceExtension liferayServiceExtension) {
+	}
 
-	private class LiferayServiceExtension implements Extension {
+	@Override
+	public void removedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		LiferayServiceExtension liferayServiceExtension) {
 
-		@Override
+		liferayServiceExtension.destroy();
+	}
+
+	public class LiferayServiceExtension {
+
 		public void destroy() {
 			for (ServiceRegistration<?> serviceRegistration :
 					_serviceRegistrations) {
@@ -117,7 +114,6 @@ public class LiferayServiceExtender extends AbstractExtender {
 			_sessionFactoryImplementor.close();
 		}
 
-		@Override
 		public void start() throws Exception {
 			BundleWiring extendeeBundleWiring = _extendeeBundle.adapt(
 				BundleWiring.class);
@@ -139,7 +135,7 @@ public class LiferayServiceExtender extends AbstractExtender {
 						_extendeeBundle.getSymbolicName())));
 
 			BundleContext extenderBundleContext =
-				LiferayServiceExtender.this.getBundleContext();
+				LiferayServiceExtender.this._bundleContext;
 
 			Bundle extenderBundle = extenderBundleContext.getBundle();
 
@@ -217,5 +213,26 @@ public class LiferayServiceExtender extends AbstractExtender {
 		private SessionFactoryImplementor _sessionFactoryImplementor;
 
 	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleTracker.close();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayServiceExtender.class);
+
+	private BundleContext _bundleContext;
+	private BundleTracker<?> _bundleTracker;
 
 }

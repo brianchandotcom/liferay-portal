@@ -70,9 +70,6 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			String[] stopNodeKeys, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
-		Date now = new Date();
-
 		String latestProcessVersion = _getLatestProcessVersion(
 			serviceContext.getCompanyId(), processId);
 
@@ -88,10 +85,17 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			serviceContext.getScopeGroupId());
 		workflowMetricsSLADefinition.setCompanyId(
 			serviceContext.getCompanyId());
+
+		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+
 		workflowMetricsSLADefinition.setUserId(user.getUserId());
 		workflowMetricsSLADefinition.setUserName(user.getFullName());
+
+		Date now = new Date();
+
 		workflowMetricsSLADefinition.setCreateDate(now);
 		workflowMetricsSLADefinition.setModifiedDate(now);
+
 		workflowMetricsSLADefinition.setName(name);
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);

@@ -1445,6 +1445,86 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	test ViewCreatedSearchPageAsSiteMemberAndGuest {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Search Page");
+
+		User.openUsersAdmin();
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		User.openUsersAdmin();
+
+		Site.assignUserSitesCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
+
+		Navigator.gotoSitePage(
+			pageName = "Search Page",
+			siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContent.addArticleCP(
+			webContentContent = "WC Content",
+			webContentTitle = "WC Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Search Page",
+			siteName = "Site Name");
+
+		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results");
+
+		SearchPortlets.searchWidget(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Search Page",
+			siteName = "Site Name");
+
+		SearchPortlets.searchWidget(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Search Page",
+			siteName = "Site Name");
+
+		SearchPortlets.searchWidget(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+	}
+
 	@description = "This is a use case for LPS-74299."
 	@priority = "3"
 	test ViewFacetPersistence {
@@ -1916,6 +1996,82 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article",
 			searchTerm = "organic");
+	}
+
+	test ViewSearchGlobalTemplateAsSiteMemberAndGuest {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		User.openUsersAdmin();
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		User.openUsersAdmin();
+
+		Site.assignUserSitesCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		SitePages.addPublicPage(
+			pageName = "Search Global Template Page",
+			pageTemplateName = "Search");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContent.addArticleCP(
+			webContentContent = "WC Content",
+			webContentTitle = "WC Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Search Global Template Page",
+			siteName = "Site Name");
+
+		SearchPortlets.searchWidget(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Search Global Template Page",
+			siteName = "Site Name");
+
+		SearchPortlets.searchWidget(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Search Global Template Page",
+			siteName = "Site Name");
+
+		SearchPortlets.searchWidget(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
 	}
 
 	@priority = "5"

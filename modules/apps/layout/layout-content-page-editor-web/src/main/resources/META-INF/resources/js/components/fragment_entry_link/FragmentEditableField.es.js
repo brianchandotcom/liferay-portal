@@ -399,17 +399,16 @@ class FragmentEditableField extends PortletBase {
 				.dispatch(updateLastSaveDateAction())
 				.dispatch(disableSavingChangesStatusAction());
 		}
-		else {
-			this.store.dispatch(
-				updateEditableValueAction(
-					this.fragmentEntryLinkId,
-					this.editableId,
-					this.languageId || DEFAULT_LANGUAGE_ID_KEY,
-					newValue,
-					editableValueSegmentsExperienceId
-				)
-			);
-		}
+
+		this.store.dispatch(
+			updateEditableValueAction(
+				this.fragmentEntryLinkId,
+				this.editableId,
+				this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+				newValue,
+				editableValueSegmentsExperienceId
+			)
+		);
 	}
 
 	/**

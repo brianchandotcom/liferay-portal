@@ -57,7 +57,7 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		LanguagePortlet.viewLanguageCurrent(locale = "en-us");
+		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
 
 		LanguagePortlet.viewLanguagesAbsent(missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland");
 
@@ -87,7 +87,7 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		LanguagePortlet.viewLanguageCurrent(locale = "en-us");
+		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
@@ -146,7 +146,7 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		LanguagePortlet.viewLanguageCurrent(locale = "en-us");
+		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
 
 		LanguagePortlet.viewLanguagesAbsent(missingLocales = "magyar-Magyarország,日本語-日本,português-Brasil,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland,Deutsch-Deutschland,español-España");
 
@@ -184,7 +184,7 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		LanguagePortlet.viewLanguageCurrent(locale = "en-us");
+		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
 
 		LanguagePortlet.viewLanguagesAbsent(missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland");
 

@@ -1363,6 +1363,10 @@ public class JournalPortlet extends MVCPortlet {
 		portletURL.setParameter("articleId", article.getArticleId());
 		portletURL.setParameter(
 			"version", String.valueOf(article.getVersion()));
+		portletURL.setParameter(
+			"languageId",
+			ParamUtil.getString(
+				actionRequest, "languageId", article.getDefaultLanguageId()));
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();

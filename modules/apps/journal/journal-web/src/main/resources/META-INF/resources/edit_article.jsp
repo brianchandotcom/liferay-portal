@@ -52,6 +52,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<aui:input name="changeDDMStructure" type="hidden" />
 	<aui:input name="ddmStructureId" type="hidden" />
 	<aui:input name="ddmTemplateId" type="hidden" />
+	<aui:input name="languageId" type="hidden" value="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">

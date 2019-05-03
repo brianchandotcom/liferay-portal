@@ -107,7 +107,7 @@ public class JournalEditArticleDisplayContext {
 	public Map<String, Object> getChangeDefaultLanguageSoyContext() {
 		Map<String, Object> context = new HashMap<>();
 
-		context.put("defaultLanguage", getDefaultLanguageId());
+		context.put("defaultLanguage", getDefaultArticleLanguageId());
 
 		LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<>();
 
@@ -308,7 +308,7 @@ public class JournalEditArticleDisplayContext {
 		return _ddmTemplateKey;
 	}
 
-	public String getDefaultLanguageId() {
+	public String getDefaultArticleLanguageId() {
 		Locale siteDefaultLocale = null;
 
 		try {
@@ -326,6 +326,16 @@ public class JournalEditArticleDisplayContext {
 
 		return LocalizationUtil.getDefaultLanguageId(
 			_article.getContent(), siteDefaultLocale);
+	}
+
+	public String getDefaultLanguageId() {
+		String languageId = ParamUtil.getString(_request, "languageId");
+
+		if (Validator.isNotNull(languageId)) {
+			return languageId;
+		}
+
+		return getDefaultArticleLanguageId();
 	}
 
 	public String getEditArticleURL() {

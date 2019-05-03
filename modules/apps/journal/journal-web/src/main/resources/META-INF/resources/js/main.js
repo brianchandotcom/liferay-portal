@@ -109,6 +109,8 @@ AUI.add(
 							instance._updateLocalizableInput('descriptionMapAsXML', defaultLanguageId, selectedLanguageId);
 
 							instance._updateLocalizableInput('titleMapAsXML', defaultLanguageId, selectedLanguageId);
+
+							instance._updateLanguageIdInput(selectedLanguageId);
 						}
 					},
 
@@ -145,6 +147,16 @@ AUI.add(
 						}
 
 						submitForm(form);
+					},
+
+					_updateLanguageIdInput: function(selectedLanguageId) {
+						var instance = this;
+
+						var form = instance._getPrincipalForm();
+
+						var languageIdInput = instance._getByName(form, 'languageId');
+
+						languageIdInput.val(selectedLanguageId);
 					},
 
 					_updateLocalizableInput: function(componentId, defaultLanguageId, selectedLanguageId) {

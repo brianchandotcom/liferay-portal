@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
@@ -31,6 +33,8 @@ import java.util.Dictionary;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+
+import org.apache.log4j.Level;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -53,11 +57,16 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 
 	@Test
 	public void test() throws Exception {
-		testNoScopeAnnotation("/annotated-impl/no-scope");
-		testRequiresScopeAnnotation("/annotated-impl");
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
 
-		testNoScopeAnnotation("/annotated-interface/no-scope");
-		testRequiresScopeAnnotation("/annotated-interface");
+			testNoScopeAnnotation("/annotated-impl/no-scope");
+			testRequiresScopeAnnotation("/annotated-impl");
+
+			testNoScopeAnnotation("/annotated-interface/no-scope");
+			testRequiresScopeAnnotation("/annotated-interface");
+		}
 	}
 
 	public static class AnnotatedApplicationTestPreparatorBundleActivator

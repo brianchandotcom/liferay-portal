@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
@@ -30,6 +32,8 @@ import java.util.Dictionary;
 
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+
+import org.apache.log4j.Level;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -74,19 +78,24 @@ public class AnnotationsAndHttpPrefixApplicationClientTest
 
 		builder = authorize(webTarget.request(), tokenString);
 
-		Assert.assertEquals(
-			403,
-			builder.get(
-			).getStatus());
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
 
-		webTarget = getWebTarget("/annotated");
+			Assert.assertEquals(
+				403,
+				builder.get(
+				).getStatus());
 
-		builder = authorize(webTarget.request(), tokenString);
+			webTarget = getWebTarget("/annotated");
 
-		Assert.assertEquals(
-			403,
-			builder.get(
-			).getStatus());
+			builder = authorize(webTarget.request(), tokenString);
+
+			Assert.assertEquals(
+				403,
+				builder.get(
+				).getStatus());
+		}
 	}
 
 	public static class AnnotationsAndHttpPrefixTestPreparatorBundleActivator

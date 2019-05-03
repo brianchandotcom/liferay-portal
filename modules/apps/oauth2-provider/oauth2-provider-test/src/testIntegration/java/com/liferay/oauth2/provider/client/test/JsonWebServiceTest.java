@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
@@ -31,6 +33,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+
+import org.apache.log4j.Level;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -62,11 +66,16 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 
 		formData.putSingle("virtualHost", "testcompany.xyz");
 
-		Assert.assertEquals(
-			403,
-			invocationBuilder.post(
-				Entity.form(formData)
-			).getStatus());
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+
+			Assert.assertEquals(
+				403,
+				invocationBuilder.post(
+					Entity.form(formData)
+				).getStatus());
+		}
 
 		String tokenString = getToken(
 			"oauthTestApplicationRO", null,
@@ -93,9 +102,14 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 		formData.putSingle("name", "'aName'");
 		formData.putSingle("regionCode", "'aRegionCode'");
 
-		response = invocationBuilder.post(Entity.form(formData));
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
 
-		Assert.assertEquals(403, response.getStatus());
+			response = invocationBuilder.post(Entity.form(formData));
+
+			Assert.assertEquals(403, response.getStatus());
+		}
 
 		invocationBuilder = authorize(
 			webTarget.request(),

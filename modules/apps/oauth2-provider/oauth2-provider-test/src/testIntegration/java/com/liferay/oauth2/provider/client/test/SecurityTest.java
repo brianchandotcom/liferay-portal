@@ -14,12 +14,15 @@
 
 package com.liferay.oauth2.provider.client.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.net.URI;
 
@@ -28,28 +31,25 @@ import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.Archive;
-
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleActivator;
 
 /**
  * @author Stian Sigvartsen
  */
-@RunAsClient
 @RunWith(Arquillian.class)
 public class SecurityTest extends BaseClientTestCase {
 
-	@Deployment
-	public static Archive<?> getArchive() throws Exception {
-		return OAuth2ProviderTestUtil.getArchive(
-			SecurityTestPreparatorBundleActivator.class);
-	}
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	/**
 	 * OAUTH2-99
@@ -204,6 +204,11 @@ public class SecurityTest extends BaseClientTestCase {
 				Collections.singletonList("http://redirecturi:8080"));
 		}
 
+	}
+
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new SecurityTestPreparatorBundleActivator();
 	}
 
 	protected String parseStateString(Response response) {

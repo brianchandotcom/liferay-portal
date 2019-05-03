@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.client.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.oauth2.provider.constants.GrantType;
@@ -22,9 +23,11 @@ import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBun
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,29 +44,25 @@ import javax.ws.rs.ext.RuntimeDelegate;
 import org.apache.cxf.jaxrs.client.spec.ClientBuilderImpl;
 import org.apache.cxf.jaxrs.impl.RuntimeDelegateImpl;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.Archive;
-
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.BundleActivator;
 import org.osgi.framework.ServiceReference;
 
 /**
  * @author Víctor Galán
  */
-@RunAsClient
 @RunWith(Arquillian.class)
 public class OAuth2WebServerServletTest extends BaseClientTestCase {
 
-	@Deployment
-	public static Archive<?> getArchive() throws Exception {
-		return OAuth2ProviderTestUtil.getArchive(
-			OAuth2WebServerServletTestPreparator.class);
-	}
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void test() throws Exception {
@@ -157,6 +156,11 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 				Arrays.asList("GET", "everything.read.documents.download"));
 		}
 
+	}
+
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new OAuth2WebServerServletTestPreparator();
 	}
 
 	private WebTarget _getRootWebTarget(String path) {

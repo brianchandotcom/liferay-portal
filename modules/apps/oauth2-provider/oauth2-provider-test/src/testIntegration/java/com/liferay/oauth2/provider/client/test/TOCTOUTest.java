@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.client.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
@@ -22,9 +23,11 @@ import com.liferay.oauth2.provider.test.internal.TestRunnablePostHandlingApplica
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -35,29 +38,25 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.Archive;
-
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.BundleActivator;
 import org.osgi.framework.ServiceReference;
 
 /**
  * @author Stian Sigvartsen
  */
-@RunAsClient
 @RunWith(Arquillian.class)
 public class TOCTOUTest extends BaseClientTestCase {
 
-	@Deployment
-	public static Archive<?> getDeployment() throws Exception {
-		return OAuth2ProviderTestUtil.getArchive(
-			SecurityTestPreparatorBundleActivator.class);
-	}
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	/**
 	 * OAUTH2-101 / OAUTH2-102
@@ -245,6 +244,11 @@ public class TOCTOUTest extends BaseClientTestCase {
 			updateOAuth2ApplicationScopeAliases(oAuth2Application);
 		}
 
+	}
+
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new SecurityTestPreparatorBundleActivator();
 	}
 
 }

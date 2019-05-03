@@ -252,9 +252,7 @@ public abstract class BaseClientTestCase {
 		return webTarget.path("authorize");
 	}
 
-	protected BundleActivator getBundleActivator() {
-		return null;
-	}
+	protected abstract BundleActivator getBundleActivator();
 
 	protected Response getClientCredentialsResponse(
 		String clientId, Invocation.Builder invocationBuilder) {

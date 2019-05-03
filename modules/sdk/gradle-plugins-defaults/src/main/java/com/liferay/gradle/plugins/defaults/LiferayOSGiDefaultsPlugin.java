@@ -1987,7 +1987,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		TaskInputs taskInputs = jsDocTask.getInputs();
 
-		if (FileUtil.hasFiles(taskInputs.getFiles(), _jsdocSpec)) {
+		FileCollection fileCollection = taskInputs.getFiles();
+
+		FileTree fileTree = fileCollection.getAsFileTree();
+
+		fileCollection = fileTree.filter(_jsdocSpec);
+
+		if (!fileCollection.isEmpty()) {
 			artifactHandler.add(
 				Dependency.ARCHIVES_CONFIGURATION, jarJSDocTask);
 		}

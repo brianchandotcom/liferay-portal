@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Dictionary;
 
-import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.InvalidSyntaxException;
@@ -33,7 +32,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ConfiguratorExtension implements Extension {
+public class ConfiguratorExtension {
 
 	public ConfiguratorExtension(
 		ConfigurationAdmin configurationAdmin, Logger logger,
@@ -46,20 +45,18 @@ public class ConfiguratorExtension implements Extension {
 		_configurationContents = namedConfigurationContents;
 	}
 
-	@Override
 	public void destroy() {
 	}
 
-	@Override
-	public void start() throws Exception {
+	public void start() {
 		for (NamedConfigurationContent namedConfigurationContent :
 				_configurationContents) {
 
 			try {
 				_process(namedConfigurationContent);
 			}
-			catch (IOException ioe) {
-				_logger.log(Logger.LOG_WARNING, ioe.getMessage(), ioe);
+			catch (Exception e) {
+				_logger.log(Logger.LOG_WARNING, e.getMessage(), e);
 			}
 		}
 	}

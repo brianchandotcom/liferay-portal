@@ -115,18 +115,13 @@ public class AopServiceManager {
 				serviceReference, aopService, aopInterfaces);
 
 			if (aopServiceRegistrar.isLiferayService()) {
-				_aopDependencyResolvers.compute(
-					serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
-					(bundleId, aopServiceResolver) -> {
-						if (aopServiceResolver == null) {
-							aopServiceResolver = new AopServiceResolver();
-						}
+				AopServiceResolver aopServiceResolver =
+					_aopDependencyResolvers.computeIfAbsent(
+						serviceReference.getProperty(
+							Constants.SERVICE_BUNDLEID),
+						bundleId -> new AopServiceResolver());
 
-						aopServiceResolver.addAopServiceRegistrar(
-							aopServiceRegistrar);
-
-						return aopServiceResolver;
-					});
+				aopServiceResolver.addAopServiceRegistrar(aopServiceRegistrar);
 			}
 			else {
 				aopServiceRegistrar.register(_portalTransactionExecutor);
@@ -141,13 +136,14 @@ public class AopServiceManager {
 			AopServiceRegistrar aopServiceRegistrar) {
 
 			if (aopServiceRegistrar.isLiferayService()) {
-				_aopDependencyResolvers.compute(
-					serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
-					(bundleId, aopServiceResolver) -> {
-						aopServiceRegistrar.updateProperties();
+				AopServiceResolver aopServiceResolver =
+					_aopDependencyResolvers.get(
+						serviceReference.getProperty(
+							Constants.SERVICE_BUNDLEID));
 
-						return aopServiceResolver;
-					});
+				synchronized (aopServiceResolver) {
+					aopServiceRegistrar.updateProperties();
+				}
 			}
 			else {
 				aopServiceRegistrar.updateProperties();
@@ -160,18 +156,18 @@ public class AopServiceManager {
 			AopServiceRegistrar aopServiceRegistrar) {
 
 			if (aopServiceRegistrar.isLiferayService()) {
-				_aopDependencyResolvers.computeIfPresent(
-					serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
-					(bundleId, aopServiceResolver) -> {
-						aopServiceResolver.removeAopServiceRegistrar(
-							aopServiceRegistrar);
+				AopServiceResolver aopServiceResolver =
+					_aopDependencyResolvers.get(
+						serviceReference.getProperty(
+							Constants.SERVICE_BUNDLEID));
 
-						return aopServiceResolver;
-					});
+				if (aopServiceResolver != null) {
+					aopServiceResolver.removeAopServiceRegistrar(
+						aopServiceRegistrar);
+				}
 			}
-			else {
-				aopServiceRegistrar.unregister();
-			}
+
+			aopServiceRegistrar.unregister();
 
 			_bundleContext.ungetService(serviceReference);
 		}
@@ -227,18 +223,13 @@ public class AopServiceManager {
 				new TransactionExecutorHolder(
 					serviceReference, transactionExecutor);
 
-			_aopDependencyResolvers.compute(
-				serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
-				(bundleId, aopServiceResolver) -> {
-					if (aopServiceResolver == null) {
-						aopServiceResolver = new AopServiceResolver();
-					}
+			AopServiceResolver aopServiceResolver =
+				_aopDependencyResolvers.computeIfAbsent(
+					serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
+					bundleId -> new AopServiceResolver());
 
-					aopServiceResolver.addTransactionExecutorHolder(
-						transactionExecutorHolder);
-
-					return aopServiceResolver;
-				});
+			aopServiceResolver.addTransactionExecutorHolder(
+				transactionExecutorHolder);
 
 			return transactionExecutorHolder;
 		}
@@ -254,14 +245,13 @@ public class AopServiceManager {
 			ServiceReference<TransactionExecutor> serviceReference,
 			TransactionExecutorHolder transactionExecutorHolder) {
 
-			_aopDependencyResolvers.computeIfPresent(
-				serviceReference.getProperty(Constants.SERVICE_BUNDLEID),
-				(bundleId, aopServiceResolver) -> {
-					aopServiceResolver.removeTransactionExecutorHolder(
-						transactionExecutorHolder);
+			AopServiceResolver aopServiceResolver = _aopDependencyResolvers.get(
+				serviceReference.getProperty(Constants.SERVICE_BUNDLEID));
 
-					return aopServiceResolver;
-				});
+			if (aopServiceResolver != null) {
+				aopServiceResolver.removeTransactionExecutorHolder(
+					transactionExecutorHolder);
+			}
 
 			_bundleContext.ungetService(serviceReference);
 		}

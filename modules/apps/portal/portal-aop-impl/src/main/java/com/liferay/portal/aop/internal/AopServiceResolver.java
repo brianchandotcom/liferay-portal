@@ -14,19 +14,19 @@
 
 package com.liferay.portal.aop.internal;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Preston Crary
  */
 public class AopServiceResolver {
 
-	public void addAopServiceRegistrar(
+	public synchronized void addAopServiceRegistrar(
 		AopServiceRegistrar aopServiceRegistrar) {
 
 		_aopServiceRegistrars.add(aopServiceRegistrar);
@@ -40,7 +40,7 @@ public class AopServiceResolver {
 		}
 	}
 
-	public void addTransactionExecutorHolder(
+	public synchronized void addTransactionExecutorHolder(
 		TransactionExecutorHolder transactionExecutorHolder) {
 
 		int index = Collections.binarySearch(
@@ -59,32 +59,23 @@ public class AopServiceResolver {
 			return;
 		}
 
-		AopServiceRegistrar[] aopServiceRegistrars =
-			_aopServiceRegistrars.toArray(
-				new AopServiceRegistrar[_aopServiceRegistrars.size()]);
-
-		for (AopServiceRegistrar aopServiceRegistrar : aopServiceRegistrars) {
+		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
 			aopServiceRegistrar.unregister();
 		}
 
-		aopServiceRegistrars = _aopServiceRegistrars.toArray(
-			new AopServiceRegistrar[_aopServiceRegistrars.size()]);
-
-		for (AopServiceRegistrar aopServiceRegistrar : aopServiceRegistrars) {
+		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
 			aopServiceRegistrar.register(
 				transactionExecutorHolder.getTransactionExecutor());
 		}
 	}
 
-	public void removeAopServiceRegistrar(
+	public synchronized void removeAopServiceRegistrar(
 		AopServiceRegistrar aopServiceRegistrar) {
 
 		_aopServiceRegistrars.remove(aopServiceRegistrar);
-
-		aopServiceRegistrar.unregister();
 	}
 
-	public void removeTransactionExecutorHolder(
+	public synchronized void removeTransactionExecutorHolder(
 		TransactionExecutorHolder transactionExecutorHolder) {
 
 		int index = _transactionExecutorHolders.indexOf(
@@ -100,11 +91,7 @@ public class AopServiceResolver {
 			return;
 		}
 
-		AopServiceRegistrar[] aopServiceRegistrars =
-			_aopServiceRegistrars.toArray(
-				new AopServiceRegistrar[_aopServiceRegistrars.size()]);
-
-		for (AopServiceRegistrar aopServiceRegistrar : aopServiceRegistrars) {
+		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
 			aopServiceRegistrar.unregister();
 		}
 
@@ -115,18 +102,15 @@ public class AopServiceResolver {
 		TransactionExecutorHolder topRankingTransactionExecutorHolder =
 			_transactionExecutorHolders.get(0);
 
-		aopServiceRegistrars = _aopServiceRegistrars.toArray(
-			new AopServiceRegistrar[_aopServiceRegistrars.size()]);
-
-		for (AopServiceRegistrar aopServiceRegistrar : aopServiceRegistrars) {
+		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
 			aopServiceRegistrar.register(
 				topRankingTransactionExecutorHolder.getTransactionExecutor());
 		}
 	}
 
 	private final Set<AopServiceRegistrar> _aopServiceRegistrars =
-		new HashSet<>();
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private final List<TransactionExecutorHolder> _transactionExecutorHolders =
-		new ArrayList<>(1);
+		new CopyOnWriteArrayList<>();
 
 }

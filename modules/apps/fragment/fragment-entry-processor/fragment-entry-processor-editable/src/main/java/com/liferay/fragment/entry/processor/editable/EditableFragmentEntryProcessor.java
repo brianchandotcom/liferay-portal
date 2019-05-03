@@ -367,7 +367,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		value = jsonObject.getString(
-			LanguageUtil.getLanguageId(LocaleUtil.getMostRelevantLocale()));
+			LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
 
 		if (Validator.isNull(value)) {
 			value = jsonObject.getString("defaultValue");
@@ -457,7 +457,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		value = segmentsExperienceJSONObject.getString(
-			LanguageUtil.getLanguageId(LocaleUtil.getMostRelevantLocale()));
+			LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
 
 		if (Validator.isNotNull(value)) {
 			return value;

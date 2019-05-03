@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `644c86603b1b`.*
+*This document has been reviewed through commit `2a13ff2d257a`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -540,26 +540,26 @@ navigation tabs in widget pages was part of a UI clean up process.
 
 ---------------------------------------
 
-### Remove Hong Kong and Macau from the list of countries
+### Removed Hong Kong and Macau from the List of Countries
 - **Date:** 2019-Apr-26
 - **JIRA Ticket:** [LPS-82203](https://issues.liferay.com/browse/LPS-82203)
 
 #### What changed?
 
-Hong Kong and Macau are removed from the list of countries and listed as regions
-of China as Xianggang (region code: CN-91) and Aomen (region code: CN-92)
-respectively.
+Hong Kong and Macau have been removed from the list of countries and listed as
+regions of China as Xianggang (region code: CN-91) and Aomen (region code:
+CN-92), respectively.
 
 #### Who is affected?
 
-This affects anyone who use Hong Kong and Macau in the addresses.
+This affects anyone who used Hong Kong or Macau in their addresses.
 
 #### How should I update my code?
 
-No code changes are necessary. However, if you have hardcoded the countryId of
-Hong Kong and Macau in your code, they should be updated to China's countryId.
+No code changes are necessary. However, if you have hardcoded the `countryId` of
+Hong Kong and Macau in your code, they should be updated to China's `countryId`.
 References to Hong Kong and Macau should be done with their corresponding
-regionId.
+`regionId`.
 
 #### Why was this change made?
 

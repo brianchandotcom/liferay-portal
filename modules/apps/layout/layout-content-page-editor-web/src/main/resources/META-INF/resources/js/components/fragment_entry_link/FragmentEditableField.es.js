@@ -8,7 +8,7 @@ import '../floating_toolbar/mapping/FloatingToolbarMappingPanel.es';
 import '../floating_toolbar/text_properties/FloatingToolbarTextPropertiesPanel.es';
 import './FragmentEditableFieldTooltip.es';
 
-import {DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_CONFIG_ATTRIBUTES, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
+import {CLEAR_FRAGMENT_EDITOR, DISABLE_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, OPEN_ASSET_TYPE_DIALOG, UPDATE_CONFIG_ATTRIBUTES, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
 import {EDITABLE_FIELD_CONFIG_KEYS, FLOATING_TOOLBAR_BUTTONS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../../actions/saveChanges.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
@@ -188,6 +188,8 @@ class FragmentEditableField extends PortletBase {
 		}
 
 		if (this._getItemId() === this.fragmentEditorClear) {
+			this._clearEditor();
+
 			this._handleEditableDestroyed();
 		}
 		else if (this._getItemId() === this.fragmentEditorEnabled) {
@@ -228,6 +230,22 @@ class FragmentEditableField extends PortletBase {
 	 */
 	syncGetAssetFieldValueURL() {
 		this._updateMappedFieldValue();
+	}
+
+	/**
+	 * Clears the corresponding editor
+	 * @private
+	 * @review
+	 */
+	_clearEditor() {
+		this._handleEditableChanged('');
+
+		this.store.dispatch(
+			{
+				itemId: '',
+				type: CLEAR_FRAGMENT_EDITOR
+			}
+		);
 	}
 
 	/**

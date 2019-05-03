@@ -14,13 +14,7 @@
 
 package com.liferay.portal.search.web.internal.portlet.shared.task;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.util.SearchArrayUtil;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 
@@ -29,7 +23,6 @@ import java.util.Optional;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,7 +44,7 @@ public class PortletSharedRequestHelperImpl
 
 	@Override
 	public String getCompleteURL(RenderRequest renderRequest) {
-		return getCompleteOriginalURL(
+		return SearchHttpUtil.getCompleteOriginalURL(
 			portal.getHttpServletRequest(renderRequest));
 	}
 
@@ -93,73 +86,6 @@ public class PortletSharedRequestHelperImpl
 		return (T)httpServletRequest.getAttribute(name);
 	}
 
-	protected String getCompleteOriginalURL(HttpServletRequest request) {
-		boolean forwarded = false;
-
-		if (request.getAttribute(
-				JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI) != null) {
-
-			forwarded = true;
-		}
-
-		String requestURL = null;
-		String queryString = null;
-
-		if (forwarded) {
-			requestURL = portal.getAbsoluteURL(
-				request,
-				(String)request.getAttribute(
-					JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI));
-
-			queryString = (String)request.getAttribute(
-				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
-		}
-		else {
-			requestURL = String.valueOf(request.getRequestURL());
-
-			queryString = request.getQueryString();
-		}
-
-		StringBuffer sb = new StringBuffer();
-
-		sb.append(requestURL);
-
-		if (queryString != null) {
-			sb.append(StringPool.QUESTION);
-			sb.append(queryString);
-		}
-
-		String proxyPath = portal.getPathProxy();
-
-		if (Validator.isNotNull(proxyPath)) {
-			int x =
-				sb.indexOf(Http.PROTOCOL_DELIMITER) +
-					Http.PROTOCOL_DELIMITER.length();
-
-			int y = sb.indexOf(StringPool.SLASH, x);
-
-			sb.insert(y, proxyPath);
-		}
-
-		String completeURL = sb.toString();
-
-		if (request.isRequestedSessionIdFromURL()) {
-			HttpSession session = request.getSession();
-
-			String sessionId = session.getId();
-
-			completeURL = portal.getURLWithSessionId(completeURL, sessionId);
-		}
-
-		if (_log.isWarnEnabled()) {
-			if (completeURL.contains("?&")) {
-				_log.warn("Invalid url " + completeURL);
-			}
-		}
-
-		return completeURL;
-	}
-
 	protected HttpServletRequest getSharedRequest(RenderRequest renderRequest) {
 		return portal.getOriginalServletRequest(
 			portal.getHttpServletRequest(renderRequest));
@@ -167,8 +93,5 @@ public class PortletSharedRequestHelperImpl
 
 	@Reference
 	protected Portal portal;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletSharedRequestHelperImpl.class);
 
 }

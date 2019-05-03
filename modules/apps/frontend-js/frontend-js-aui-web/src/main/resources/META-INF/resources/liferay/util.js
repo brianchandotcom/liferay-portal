@@ -1161,9 +1161,15 @@
 
 				var searchParamsIndex = action.indexOf('?');
 
-				var searchParams = new URLSearchParams(
-					action.substring(searchParamsIndex)
-				);
+				if (searchParamsIndex === -1) {
+					var baseURL = action;
+					var queryString = '';
+				} else {
+					var baseURL = action.slice(0, searchParamsIndex);
+					var queryString = action.slice(searchParamsIndex + 1);
+				}
+
+				var searchParams = new URLSearchParams(queryString);
 
 				var authToken = searchParams.get('p_auth') || '';
 
@@ -1172,7 +1178,7 @@
 				if (authToken) {
 					searchParams.delete('p_auth');
 
-					action = action.substring(0, searchParamsIndex + 1) + searchParams.toString();
+					action = baseURL + '?' + searchParams.toString();
 				}
 
 				form.attr('action', action);

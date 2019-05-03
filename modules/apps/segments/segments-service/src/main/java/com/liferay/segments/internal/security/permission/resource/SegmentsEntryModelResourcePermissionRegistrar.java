@@ -14,11 +14,14 @@
 
 package com.liferay.segments.internal.security.permission.resource;
 
+import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.segments.constants.SegmentsConstants;
+import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
@@ -49,8 +52,10 @@ public class SegmentsEntryModelResourcePermissionRegistrar {
 				SegmentsEntry.class, SegmentsEntry::getSegmentsEntryId,
 				_segmentsEntryLocalService::getSegmentsEntry,
 				_portletResourcePermission,
-				(modelResourcePermission, consumer) -> {
-				}),
+				(modelResourcePermission, consumer) -> consumer.accept(
+					new StagedModelPermissionLogic<>(
+						_stagingPermission, SegmentsPortletKeys.SEGMENTS,
+						SegmentsEntry::getSegmentsEntryId))),
 			properties);
 	}
 
@@ -68,5 +73,8 @@ public class SegmentsEntryModelResourcePermissionRegistrar {
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
+
+	@Reference
+	private StagingPermission _stagingPermission;
 
 }

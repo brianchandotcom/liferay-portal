@@ -748,7 +748,7 @@ public class JournalPortlet extends MVCPortlet {
 		String content = _journalConverter.getContent(ddmStructure, fields);
 
 		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
-			_isEmpty(titleMap)) {
+			!_hasDefaultLocale(titleMap, content)) {
 
 			Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
 				LocalizationUtil.getDefaultLanguageId(content));
@@ -1556,15 +1556,16 @@ public class JournalPortlet extends MVCPortlet {
 			portletResource, articleId, true);
 	}
 
-	private boolean _isEmpty(Map<Locale, String> map) {
+	private boolean _hasDefaultLocale(Map<Locale, String> map, String content) {
 		if (MapUtil.isEmpty(map)) {
-			return true;
+			return false;
 		}
 
-		for (String value : map.values()) {
-			if (Validator.isNotNull(value)) {
-				return false;
-			}
+		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
+			LocalizationUtil.getDefaultLanguageId(content));
+
+		if (Validator.isNull(map.get(articleDefaultLocale))) {
+			return false;
 		}
 
 		return true;

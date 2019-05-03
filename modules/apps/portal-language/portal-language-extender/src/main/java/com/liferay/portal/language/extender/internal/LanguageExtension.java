@@ -16,6 +16,8 @@ package com.liferay.portal.language.extender.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
@@ -35,9 +37,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-import org.apache.felix.utils.extender.Extension;
-import org.apache.felix.utils.log.Logger;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -52,20 +51,18 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Carlos Sierra Andrés
  */
-public class LanguageExtension implements Extension {
+public class LanguageExtension {
 
 	public LanguageExtension(
 		BundleContext bundleContext, Bundle bundle,
-		List<BundleCapability> bundleCapabilities, Logger logger) {
+		List<BundleCapability> bundleCapabilities) {
 
 		_bundleContext = bundleContext;
 		_bundle = bundle;
 		_bundleCapabilities = bundleCapabilities;
-		_logger = logger;
 	}
 
-	@Override
-	public void destroy() throws Exception {
+	public void destroy() {
 		for (Runnable closingRunnable : _closingRunnables) {
 			closingRunnable.run();
 		}
@@ -77,8 +74,7 @@ public class LanguageExtension implements Extension {
 		}
 	}
 
-	@Override
-	public void start() throws Exception {
+	public void start() {
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
 		for (BundleCapability bundleCapability : _bundleCapabilities) {
@@ -135,9 +131,8 @@ public class LanguageExtension implements Extension {
 			if (resourceBundleLoader != null) {
 				registerResourceBundleLoader(attributes, resourceBundleLoader);
 			}
-			else {
-				_logger.log(
-					Logger.LOG_WARNING,
+			else if (_log.isWarnEnabled()) {
+				_log.warn(
 					StringBundler.concat(
 						"Unable to handle ", bundleCapability, " in ",
 						_bundle.getSymbolicName()));
@@ -220,11 +215,13 @@ public class LanguageExtension implements Extension {
 				ResourceBundleLoader.class, resourceBundleLoader, attributes));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LanguageExtension.class);
+
 	private final Bundle _bundle;
 	private final List<BundleCapability> _bundleCapabilities;
 	private final BundleContext _bundleContext;
 	private final List<Runnable> _closingRunnables = new ArrayList<>();
-	private final Logger _logger;
 	private final Collection<ServiceRegistration<ResourceBundleLoader>>
 		_serviceRegistrations = new ArrayList<>();
 

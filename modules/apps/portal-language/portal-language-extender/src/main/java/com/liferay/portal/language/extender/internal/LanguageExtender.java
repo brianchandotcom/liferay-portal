@@ -14,50 +14,33 @@
 
 package com.liferay.portal.language.extender.internal;
 
-import com.liferay.osgi.felix.util.AbstractExtender;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.language.LanguageResources;
 
 import java.util.List;
 
-import org.apache.felix.utils.extender.Extension;
-import org.apache.felix.utils.log.Logger;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Carlos Sierra Andrés
  */
 @Component(immediate = true, service = {})
-public class LanguageExtender extends AbstractExtender {
-
-	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
-		_logger = new Logger(bundleContext);
-
-		start(bundleContext);
-	}
-
-	@Deactivate
-	protected void deactivate(BundleContext bundleContext) throws Exception {
-		stop(bundleContext);
-	}
+public class LanguageExtender
+	implements BundleTrackerCustomizer<LanguageExtension> {
 
 	@Override
-	protected void debug(Bundle bundle, String s) {
-		_logger.log(
-			Logger.LOG_DEBUG, StringBundler.concat("[", bundle, "] ", s));
-	}
+	public LanguageExtension addingBundle(
+		Bundle bundle, BundleEvent bundleEvent) {
 
-	@Override
-	protected Extension doCreateExtension(Bundle bundle) throws Exception {
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 		List<BundleCapability> bundleCapabilities =
@@ -67,24 +50,47 @@ public class LanguageExtender extends AbstractExtender {
 			return null;
 		}
 
-		return new LanguageExtension(
-			getBundleContext(), bundle, bundleCapabilities, _logger);
+		LanguageExtension languageExtension = new LanguageExtension(
+			_bundleContext, bundle, bundleCapabilities);
+
+		languageExtension.start();
+
+		return languageExtension;
 	}
 
 	@Override
-	protected void error(String s, Throwable throwable) {
-		_logger.log(Logger.LOG_ERROR, s, throwable);
+	public void modifiedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		LanguageExtension languageExtension) {
 	}
 
 	@Override
-	protected void warn(Bundle bundle, String s, Throwable throwable) {
-		_logger.log(
-			Logger.LOG_WARNING, StringBundler.concat("[", bundle, "] ", s));
+	public void removedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		LanguageExtension languageExtension) {
+
+		languageExtension.destroy();
 	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleTracker.close();
+	}
+
+	private BundleContext _bundleContext;
+	private BundleTracker<?> _bundleTracker;
 
 	@Reference
 	private LanguageResources _languageResources;
-
-	private Logger _logger;
 
 }

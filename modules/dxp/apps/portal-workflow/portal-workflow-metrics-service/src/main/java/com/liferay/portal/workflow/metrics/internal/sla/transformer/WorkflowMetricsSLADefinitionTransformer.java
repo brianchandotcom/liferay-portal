@@ -128,7 +128,8 @@ public class WorkflowMetricsSLADefinitionTransformer {
 		TermsAggregation versionTermsAggregation = _aggregations.terms(
 			"version", "version");
 
-		TopHitsAggregation topHitsAggregation = _aggregations.topHits("topHits");
+		TopHitsAggregation topHitsAggregation = _aggregations.topHits(
+			"topHits");
 
 		topHitsAggregation.setSize(2);
 

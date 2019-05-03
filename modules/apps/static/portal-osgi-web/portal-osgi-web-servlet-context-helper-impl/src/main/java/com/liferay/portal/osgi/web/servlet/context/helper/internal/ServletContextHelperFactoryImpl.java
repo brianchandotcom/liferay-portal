@@ -24,8 +24,6 @@ import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.felix.utils.log.Logger;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -49,7 +47,6 @@ public class ServletContextHelperFactoryImpl
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {
 
-		_logger = new Logger(bundleContext);
 		_saxParserFactory.setNamespaceAware(false);
 		_saxParserFactory.setValidating(false);
 		_saxParserFactory.setXIncludeAware(false);
@@ -71,7 +68,7 @@ public class ServletContextHelperFactoryImpl
 		_serviceRegistration = bundleContext.registerService(
 			ServletContextHelperRegistration.class.getName(),
 			new ServletContextHelperRegistrationServiceFactory(
-				_jspServletFactory, _saxParserFactory, _logger, properties),
+				_jspServletFactory, _saxParserFactory, properties),
 			null);
 	}
 
@@ -97,8 +94,6 @@ public class ServletContextHelperFactoryImpl
 
 	@Reference
 	private JSPServletFactory _jspServletFactory;
-
-	private Logger _logger;
 
 	@Reference
 	private SAXParserFactory _saxParserFactory;

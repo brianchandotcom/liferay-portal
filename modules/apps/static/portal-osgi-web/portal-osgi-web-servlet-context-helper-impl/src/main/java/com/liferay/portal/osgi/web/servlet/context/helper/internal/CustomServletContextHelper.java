@@ -18,6 +18,8 @@ import com.liferay.osgi.util.BundleUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,8 +41,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.felix.utils.log.Logger;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.context.ServletContextHelper;
@@ -52,14 +52,13 @@ public class CustomServletContextHelper
 	extends ServletContextHelper implements ServletContextListener {
 
 	public CustomServletContextHelper(
-		Bundle bundle, Logger logger,
+		Bundle bundle,
 		List<WebResourceCollectionDefinition>
 			webResourceCollectionDefinitions) {
 
 		super(bundle);
 
 		_bundle = bundle;
-		_logger = logger;
 		_webResourceCollectionDefinitions = webResourceCollectionDefinitions;
 
 		Class<?> clazz = getClass();
@@ -122,8 +121,7 @@ public class CustomServletContextHelper
 				}
 			}
 			catch (IOException ioe) {
-				_logger.log(
-					Logger.LOG_ERROR,
+				_log.error(
 					StringBundler.concat(
 						"Unable to get resource name ", name, " on bundle ",
 						_bundle),
@@ -294,8 +292,10 @@ public class CustomServletContextHelper
 		return false;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CustomServletContextHelper.class);
+
 	private final Bundle _bundle;
-	private final Logger _logger;
 	private ServletContext _servletContext;
 	private final String _string;
 	private final List<WebResourceCollectionDefinition>

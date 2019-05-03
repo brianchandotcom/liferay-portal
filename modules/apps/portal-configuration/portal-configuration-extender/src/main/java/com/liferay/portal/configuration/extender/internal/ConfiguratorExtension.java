@@ -16,14 +16,14 @@ package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.IOException;
 
 import java.util.Collection;
 import java.util.Dictionary;
-
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
@@ -35,12 +35,10 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfiguratorExtension {
 
 	public ConfiguratorExtension(
-		ConfigurationAdmin configurationAdmin, Logger logger,
-		String bundleSymbolicName,
+		ConfigurationAdmin configurationAdmin, String bundleSymbolicName,
 		Collection<NamedConfigurationContent> namedConfigurationContents) {
 
 		_configurationAdmin = configurationAdmin;
-		_logger = logger;
 		_bundleSymbolicName = bundleSymbolicName;
 		_configurationContents = namedConfigurationContents;
 	}
@@ -56,7 +54,7 @@ public class ConfiguratorExtension {
 				_process(namedConfigurationContent);
 			}
 			catch (Exception e) {
-				_logger.log(Logger.LOG_WARNING, e.getMessage(), e);
+				_log.error(e, e);
 			}
 		}
 	}
@@ -101,12 +99,13 @@ public class ConfiguratorExtension {
 			properties = namedConfigurationContent.getProperties();
 		}
 		catch (Throwable t) {
-			_logger.log(
-				Logger.LOG_WARNING,
-				StringBundler.concat(
-					"Supplier from description ", namedConfigurationContent,
-					" threw an exception: "),
-				t);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Supplier from description ", namedConfigurationContent,
+						" threw an exception: "),
+					t);
+			}
 
 			return;
 		}
@@ -118,9 +117,11 @@ public class ConfiguratorExtension {
 		configuration.update(properties);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConfiguratorExtension.class);
+
 	private final String _bundleSymbolicName;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final Collection<NamedConfigurationContent> _configurationContents;
-	private final Logger _logger;
 
 }

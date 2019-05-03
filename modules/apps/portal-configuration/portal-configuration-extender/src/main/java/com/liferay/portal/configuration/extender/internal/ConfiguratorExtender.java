@@ -29,7 +29,6 @@ import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -80,8 +79,8 @@ public class ConfiguratorExtender
 		}
 
 		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
-			_configurationAdmin, new Logger(bundle.getBundleContext()),
-			bundle.getSymbolicName(), namedConfigurationContents);
+			_configurationAdmin, bundle.getSymbolicName(),
+			namedConfigurationContents);
 
 		configuratorExtension.start();
 

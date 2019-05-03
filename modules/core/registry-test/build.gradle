@@ -2,7 +2,6 @@ dependencies {
 	compileOnly project(":core:registry-api")
 
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	testIntegrationCompile project(":core:osgi-felix-util")
 	testIntegrationCompile project(":core:osgi-service-tracker-collections")
 	testIntegrationCompile project(":core:registry-impl")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

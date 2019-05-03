@@ -16,6 +16,8 @@ package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -58,8 +60,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.felix.utils.log.Logger;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
 
@@ -77,12 +77,11 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 	public WebXMLDefinitionLoader(
 		Bundle bundle, JSPServletFactory jspServletFactory,
-		SAXParserFactory saxParserFactory, Logger logger) {
+		SAXParserFactory saxParserFactory) {
 
 		_bundle = bundle;
 		_jspServletFactory = jspServletFactory;
 		_saxParserFactory = saxParserFactory;
-		_logger = logger;
 
 		_webXMLDefinition = new WebXMLDefinition();
 	}
@@ -335,11 +334,12 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		else if (qName.equals("role-name") ||
 				 qName.equals("transport-guarantee")) {
 
-			_logger.log(
-				Logger.LOG_WARNING,
-				StringBundler.concat(
-					qName, " from web.xml in bundle ", _bundle,
-					" is not supported"));
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						qName, " from web.xml in bundle ", _bundle,
+						" is not supported"));
+			}
 		}
 		else if (qName.equals("servlet")) {
 			_webXMLDefinition.setServletDefinition(
@@ -449,7 +449,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 	@Override
 	public void error(SAXParseException e) {
-		_logger.log(Logger.LOG_ERROR, _bundle + ": " + e.getMessage(), e);
+		_log.error(_bundle + ": " + e.getMessage(), e);
 	}
 
 	public WebXMLDefinition loadWebXML() throws Exception {
@@ -471,8 +471,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 				WebXMLDefinitionLoader webXMLDefinitionLoader =
 					new WebXMLDefinitionLoader(
-						_bundle, _jspServletFactory, _saxParserFactory,
-						_logger);
+						_bundle, _jspServletFactory, _saxParserFactory);
 
 				webXMLDefinitions.add(
 					webXMLDefinitionLoader.loadWebXMLDefinition(url));
@@ -966,7 +965,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			clazz = bundle.loadClass(className);
 		}
 		catch (Throwable t) {
-			_logger.log(Logger.LOG_DEBUG, t.getMessage());
+			if (_log.isDebugEnabled()) {
+				_log.debug(t.getMessage());
+			}
 
 			return;
 		}
@@ -980,16 +981,18 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			// See http://bugs.java.com/view_bug.do?bug_id=7183985 and LPS-69679
 
-			StringBundler sb = new StringBundler(6);
+			if (_log.isDebugEnabled()) {
+				StringBundler sb = new StringBundler(6);
 
-			sb.append("Unexpected error retrieving the annotation ");
-			sb.append(WebServlet.class);
-			sb.append("from class ");
-			sb.append(clazz);
-			sb.append(" because a some dependency may not be present in the ");
-			sb.append("classpath");
+				sb.append("Unexpected error retrieving the annotation ");
+				sb.append(WebServlet.class);
+				sb.append("from class ");
+				sb.append(clazz);
+				sb.append(" because a some dependency may not be present in ");
+				sb.append("the classpath");
 
-			_logger.log(Logger.LOG_DEBUG, sb.toString(), e);
+				_log.debug(sb.toString(), e);
+			}
 
 			return;
 		}
@@ -1086,8 +1089,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			return filterClass.newInstance();
 		}
 		catch (Exception e) {
-			_logger.log(
-				Logger.LOG_ERROR,
+			_log.error(
 				StringBundler.concat(
 					"Bundle ", _bundle, " is unable to load filter ",
 					filterClassName));
@@ -1106,8 +1108,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			return eventListenerClass.newInstance();
 		}
 		catch (Exception e) {
-			_logger.log(
-				Logger.LOG_ERROR,
+			_log.error(
 				StringBundler.concat(
 					"Bundle ", _bundle, " is unable to load listener ",
 					listenerClassName));
@@ -1126,8 +1127,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			return servletClass.newInstance();
 		}
 		catch (Exception e) {
-			_logger.log(
-				Logger.LOG_ERROR,
+			_log.error(
 				_bundle + " unable to load servlet " + servletClassName, e);
 
 			return null;
@@ -1172,6 +1172,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		"taglib-uri", "url-pattern", "web-resource-name"
 	};
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebXMLDefinitionLoader.class);
+
 	private List<String> _absoluteOrderingNames;
 	private boolean _after;
 	private String _afterName;
@@ -1183,7 +1186,6 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	private JSPConfig _jspConfig;
 	private final JSPServletFactory _jspServletFactory;
 	private ListenerDefinition _listenerDefinition;
-	private final Logger _logger;
 	private String _name;
 	private Order _order;
 	private boolean _othersAbsoluteOrderingSet;

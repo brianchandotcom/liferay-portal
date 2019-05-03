@@ -15,6 +15,8 @@
 package com.liferay.frontend.js.bundle.config.extender.internal;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,8 +40,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -75,8 +75,6 @@ public class JSBundleConfigServlet extends HttpServlet {
 	protected void activate(
 			ComponentContext componentContext, Map<String, Object> properties)
 		throws Exception {
-
-		_logger = new Logger(componentContext.getBundleContext());
 
 		_componentContext = componentContext;
 	}
@@ -122,7 +120,7 @@ public class JSBundleConfigServlet extends HttpServlet {
 					printWriter.println("}");
 				}
 				catch (Exception e) {
-					_logger.log(Logger.LOG_ERROR, "Unable to open resource", e);
+					_log.error("Unable to open resource", e);
 				}
 			}
 
@@ -158,9 +156,11 @@ public class JSBundleConfigServlet extends HttpServlet {
 		printWriter.close();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		JSBundleConfigServlet.class);
+
 	private ComponentContext _componentContext;
 	private JSBundleConfigTracker _jsBundleConfigTracker;
-	private Logger _logger;
 
 	@Reference
 	private Portal _portal;

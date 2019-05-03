@@ -16,6 +16,9 @@ package com.liferay.portal.osgi.web.wab.extender.internal.event;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.osgi.web.wab.extender.internal.WabUtil;
@@ -23,8 +26,6 @@ import com.liferay.portal.osgi.web.wab.extender.internal.WabUtil;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
-
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -62,8 +63,6 @@ public class EventUtil
 		if (_enabled) {
 			_bundleContext = bundleContext;
 
-			_logger = new Logger(bundleContext);
-
 			_webExtenderBundle = _bundleContext.getBundle();
 
 			_eventAdminServiceTracker = ServiceTrackerFactory.open(
@@ -72,7 +71,6 @@ public class EventUtil
 		else {
 			_bundleContext = null;
 			_eventAdminServiceTracker = null;
-			_logger = null;
 			_webExtenderBundle = null;
 		}
 	}
@@ -155,21 +153,22 @@ public class EventUtil
 
 				properties.put("collision.bundles", collidedBundleIds);
 
-				StringBuilder sb = new StringBuilder(7);
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(10);
 
-				sb.append("Newly added bundle: \"");
-				sb.append(bundle.getSymbolicName());
-				sb.append("\" has the same Web-ContextPath as the following ");
-				sb.append("bundles: ");
-				sb.append(collidedBundleNames);
-				sb.append(
-					". This can lead to unexpected behavior when multiple ");
-				sb.append("bundles provide the same context path. See ");
-				sb.append("https://osgi.org/specification/osgi.cmpn");
-				sb.append("/7.0.0/service.http.whiteboard.html");
-				sb.append("#service.http.whiteboard.servletcontext");
+					sb.append("Newly added bundle: \"");
+					sb.append(bundle.getSymbolicName());
+					sb.append("\" has the same Web-ContextPath as the ");
+					sb.append("following bundles: ");
+					sb.append(collidedBundleNames);
+					sb.append(". This can lead to unexpected behavior when ");
+					sb.append("multiple bundles provide the same context ");
+					sb.append("path. See https://osgi.org/specification/osgi.");
+					sb.append("cmpn/7.0.0/service.http.whiteboard.html");
+					sb.append("#service.http.whiteboard.servletcontext");
 
-				_logger.log(Logger.LOG_WARNING, sb.toString());
+					_log.warn(sb.toString());
+				}
 			}
 		}
 
@@ -223,6 +222,8 @@ public class EventUtil
 
 	private static final boolean[] _VALID_CHARS = new boolean[128];
 
+	private static final Log _log = LogFactoryUtil.getLog(EventUtil.class);
+
 	static {
 		for (int i = CharPool.NUMBER_0; i <= CharPool.NUMBER_9; i++) {
 			_VALID_CHARS[i] = true;
@@ -242,7 +243,6 @@ public class EventUtil
 	private EventAdmin _eventAdmin;
 	private final ServiceTracker<EventAdmin, EventAdmin>
 		_eventAdminServiceTracker;
-	private final Logger _logger;
 	private final Bundle _webExtenderBundle;
 
 }

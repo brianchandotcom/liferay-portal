@@ -1,3 +1,21 @@
 Bundle-Name: Liferay Portal Remote SOAP Extender Test
 Bundle-SymbolicName: com.liferay.portal.remote.soap.extender.test
 Bundle-Version: 4.0.0
+Import-Package:\
+	!com.sun.*,\
+	\
+	!org.apache.aries.*,\
+	!org.apache.neethi.*,\
+	\
+	!org.jvnet.fastinfoset.*,\
+	!org.jvnet.staxex.*,\
+	\
+	!org.osgi.service.blueprint.*,\
+	\
+	*
+-includeresource:\
+	lib/cxf-rt-frontend-jaxws.jar;lib:=true,\
+	lib/cxf-rt-frontend-simple.jar;lib:=true,\
+	lib/cxf-rt-ws-policy.jar;lib:=true,\
+	lib/jaxb-api.jar;lib:=true,\
+	lib/jaxb-impl.jar;lib:=true

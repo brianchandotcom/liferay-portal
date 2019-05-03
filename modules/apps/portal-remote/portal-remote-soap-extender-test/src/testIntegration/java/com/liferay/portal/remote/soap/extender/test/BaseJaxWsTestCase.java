@@ -14,16 +14,7 @@
 
 package com.liferay.portal.remote.soap.extender.test;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-
 import java.net.URL;
-import java.net.URLClassLoader;
-
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
-
-import java.util.concurrent.Callable;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
@@ -57,50 +48,20 @@ public abstract class BaseJaxWsTestCase {
 		_bundleActivator.stop(_bundleContext);
 	}
 
-	public static class GreetingCallable implements Callable<String> {
-
-		public GreetingCallable(String spec) {
-			_spec = spec;
-		}
-
-		@Override
-		public String call() throws Exception {
-			URL url = new URL(_spec);
-
-			QName qName = new QName(
-				"http://test.extender.soap.remote.portal.liferay.com/",
-				"GreeterImplService");
-
-			Service service = Service.create(url, qName);
-
-			Greeter greeter = service.getPort(Greeter.class);
-
-			return greeter.greet();
-		}
-
-		private final String _spec;
-
-	}
-
 	protected abstract BundleActivator getBundleActivator();
 
 	protected String getGreeting(String spec) throws Exception {
-		ProtectionDomain protectionDomain =
-			GreetingCallable.class.getProtectionDomain();
+		URL url = new URL(spec);
 
-		CodeSource codeSource = protectionDomain.getCodeSource();
+		QName qName = new QName(
+			"http://test.extender.soap.remote.portal.liferay.com/",
+			"GreeterImplService");
 
-		URLClassLoader urlClassLoader = new URLClassLoader(
-			new URL[] {codeSource.getLocation()}, null);
+		Service service = Service.create(url, qName);
 
-		Class<?> clazz = urlClassLoader.loadClass(
-			GreetingCallable.class.getName());
+		Greeter greeter = service.getPort(Greeter.class);
 
-		Constructor<?> constructor = clazz.getConstructor(String.class);
-
-		Method method = clazz.getMethod("call");
-
-		return (String)method.invoke(constructor.newInstance(spec));
+		return greeter.greet();
 	}
 
 	private BundleActivator _bundleActivator;

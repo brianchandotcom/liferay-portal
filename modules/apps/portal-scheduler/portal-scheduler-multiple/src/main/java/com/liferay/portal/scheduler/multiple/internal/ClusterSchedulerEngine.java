@@ -891,7 +891,7 @@ public class ClusterSchedulerEngine
 					if (oldTrigger == null) {
 						if (_log.isInfoEnabled()) {
 							_log.info(
-								"Unable to scedule memory clustered job " +
+								"Unable to schedule memory clustered job " +
 									schedulerResponse);
 						}
 

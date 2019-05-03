@@ -235,51 +235,6 @@ function removeItem(itemPlid, layoutColumns) {
 }
 
 /**
- * Set the first page as Home page
- * @param {!Array} layoutColumns
- * @param {string} currentHomeItemPlid
- * @return {object|null}
- * @review
- */
-function setHomePage(layoutColumns) {
-	let nextLayoutColumns = layoutColumns;
-
-	const firstItem = nextLayoutColumns[1][0];
-
-	if (!firstItem.homePage) {
-		nextLayoutColumns = setIn(nextLayoutColumns, [1, 0, 'homePage'], true);
-
-		const currentHomeItem = getHomeItem(layoutColumns);
-
-		if (currentHomeItem) {
-			const currentHomeItemColumn = getItemColumn(
-				nextLayoutColumns,
-				currentHomeItem.plid
-			);
-			const currentHomeItemColumnIndex = getItemColumnIndex(
-				nextLayoutColumns,
-				currentHomeItem.plid
-			);
-			const currentHomeItemIndex = currentHomeItemColumn.indexOf(
-				currentHomeItem
-			);
-
-			nextLayoutColumns = setIn(
-				nextLayoutColumns,
-				[
-					currentHomeItemColumnIndex,
-					currentHomeItemIndex,
-					'homePage'
-				],
-				false
-			);
-		}
-	}
-
-	return nextLayoutColumns;
-}
-
-/**
  * Set the item with the given plid as the active item of its column
  * and returns a new layoutColumns
  * @param {object} layoutColumns
@@ -328,6 +283,5 @@ export {
 	deleteEmptyColumns,
 	moveItemInside,
 	removeItem,
-	setActiveItem,
-	setHomePage
+	setActiveItem
 };

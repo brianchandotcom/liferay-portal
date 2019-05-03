@@ -602,18 +602,10 @@ public class LayoutsAdminDisplayContext {
 				layoutJSONObject.put("draft", false);
 			}
 
-			layoutJSONObject.put(
-				"homePage",
-				_getHomePagePlid(privateLayout) == layout.getPlid());
-
 			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 				getSelGroup(), layout.isPrivateLayout(), layout.getLayoutId());
 
-			layoutJSONObject.put(
-				"hasChild", childLayoutsCount > 0
-			).put(
-				"homePageTitle", _getHomePageTitle(privateLayout)
-			);
+			layoutJSONObject.put("hasChild", childLayoutsCount > 0);
 
 			LayoutType layoutType = layout.getLayoutType();
 
@@ -720,20 +712,6 @@ public class LayoutsAdminDisplayContext {
 
 	public Long getLiveGroupId() {
 		return _groupDisplayContextHelper.getLiveGroupId();
-	}
-
-	public String getMarkAsHomePageLayoutURL(Layout layout) {
-		PortletURL markAsHomePageLayoutURL =
-			_liferayPortletResponse.createActionURL();
-
-		markAsHomePageLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout/mark_as_home_page_layout");
-		markAsHomePageLayoutURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		markAsHomePageLayoutURL.setParameter(
-			"selPlid", String.valueOf(layout.getPlid()));
-
-		return markAsHomePageLayoutURL.toString();
 	}
 
 	public String getMoveLayoutColumnItemURL() {
@@ -1320,23 +1298,6 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	public boolean isShowMarkAsHomePageLayout(Layout layout)
-		throws PortalException {
-
-		if (!isShowConfigureAction(layout)) {
-			return false;
-		}
-
-		if ((layout.getParentLayoutId() !=
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) ||
-			(_getHomePagePlid(isPrivateLayout()) == layout.getPlid())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	public boolean isShowOrphanPortletsAction(Layout layout)
 		throws PortalException {
 
@@ -1420,11 +1381,6 @@ public class LayoutsAdminDisplayContext {
 
 		if (isShowConfigureAction(layout)) {
 			jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
-		}
-
-		if (isShowMarkAsHomePageLayout(layout)) {
-			jsonObject.put(
-				"markAsHomePageLayoutURL", getMarkAsHomePageLayoutURL(layout));
 		}
 
 		if (isShowOrphanPortletsAction(layout)) {
@@ -1566,30 +1522,6 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return jsonObject;
-	}
-
-	private long _getHomePagePlid(boolean privateLayout) {
-		if (_homePagePlid != null) {
-			return _homePagePlid;
-		}
-
-		_homePagePlid = LayoutLocalServiceUtil.getDefaultPlid(
-			getSelGroupId(), privateLayout);
-
-		return _homePagePlid;
-	}
-
-	private String _getHomePageTitle(boolean privateLayout) {
-		if (_homePageTitle != null) {
-			return _homePageTitle;
-		}
-
-		Layout defaultLayout = LayoutLocalServiceUtil.fetchDefaultLayout(
-			getSelGroupId(), privateLayout);
-
-		_homePageTitle = defaultLayout.getName(_themeDisplay.getLocale());
-
-		return _homePageTitle;
 	}
 
 	private JSONArray _getLayoutColumnsJSONArray() throws Exception {
@@ -1753,8 +1685,6 @@ public class LayoutsAdminDisplayContext {
 	private String _displayStyle;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
-	private Long _homePagePlid;
-	private String _homePageTitle;
 	private String _keywords;
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;

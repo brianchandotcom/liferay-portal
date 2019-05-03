@@ -17,28 +17,6 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	{
 
 		/**
-		 * Handle mark as home page layout click in order to set a layout as home page.
-		 * @param {Event} event
-		 * @private
-		 */
-		handleClick: event => {
-			const confirmMessage = Liferay.Util.sub(
-				Liferay.Language.get('do-you-want-to-replace-x-for-x-as-the-home-page'),
-				event.data.item.layoutColumnItem.homePageTitle,
-				event.data.item.layoutColumnItem.title
-			);
-
-			if (!confirm(confirmMessage)) {
-				event.preventDefault();
-			}
-		},
-		label: Liferay.Language.get('mark-as-home-page'),
-		name: 'markAsHomePageLayoutURL'
-	},
-
-	{
-
-		/**
 		 * Handle copy layout click in order to show simple input modal.
 		 * @param {Event} event
 		 * @param {LayoutColumn} layoutColumn

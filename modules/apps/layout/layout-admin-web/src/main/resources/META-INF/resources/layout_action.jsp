@@ -59,13 +59,6 @@ Layout curLayout = (Layout)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= layoutsAdminDisplayContext.isShowMarkAsHomePageLayout(curLayout) %>">
-		<liferay-ui:icon
-			message="mark-as-home-page"
-			url="<%= layoutsAdminDisplayContext.getMarkAsHomePageLayoutURL(curLayout) %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= layoutsAdminDisplayContext.isShowCopyLayoutAction(curLayout) %>">
 		<liferay-ui:icon
 			cssClass="copy-layout-action-option"

@@ -14,8 +14,7 @@ import {
 	clearFollowingColumns,
 	clearPath,
 	deleteEmptyColumns,
-	setActiveItem,
-	setHomePage
+	setActiveItem
 } from './utils/LayoutUpdateUtils.es';
 import {
 	columnIsItemChild,
@@ -314,8 +313,6 @@ class Layout extends Component {
 					priority = dropData.priority;
 				}
 			}
-
-			layoutColumns = setHomePage(layoutColumns);
 
 			this._moveLayoutColumnItemOnServer(
 				parentPlid,
@@ -844,8 +841,6 @@ Layout.STATE = {
 					active: Config.bool().required(),
 					checked: Config.bool().required(),
 					hasChild: Config.bool().required(),
-					homePage: Config.bool().required(),
-					homePageTitle: Config.string().required(),
 					parentable: Config.bool().required(),
 					plid: Config.string().required(),
 					title: Config.string().required(),

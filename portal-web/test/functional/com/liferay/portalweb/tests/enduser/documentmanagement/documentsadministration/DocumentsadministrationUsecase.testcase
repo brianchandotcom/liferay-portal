@@ -996,6 +996,7 @@ definition {
 	@priority = "3"
 	test ImportDocumentWithDBStore {
 		property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";
+		property test.assert.warning.exceptions = "false";
 
 		Navigator.openURL();
 

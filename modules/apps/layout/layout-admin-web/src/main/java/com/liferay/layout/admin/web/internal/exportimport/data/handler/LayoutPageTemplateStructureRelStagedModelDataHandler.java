@@ -22,6 +22,10 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -59,8 +63,10 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 			portletDataContext.getExportDataElement(
 				layoutPageTemplateStructureRel);
 
-		if (layoutPageTemplateStructureRel.getSegmentsExperienceId() !=
-				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) {
+		if ((layoutPageTemplateStructureRel.getSegmentsExperienceId() !=
+				SegmentsConstants.SEGMENTS_EXPERIENCE_ID_DEFAULT) &&
+			_isPublishedLayoutPageTemplateStructureRel(
+				layoutPageTemplateStructureRel)) {
 
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -146,6 +152,43 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	private boolean _isPublishedLayoutPageTemplateStructureRel(
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layoutPageTemplateStructureRel.
+						getLayoutPageTemplateStructureId());
+
+		if (layoutPageTemplateStructure == null) {
+			return false;
+		}
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateStructure.getClassPK());
+
+		if ((layout != null) &&
+			(layout.getClassNameId() == _classNameLocalService.getClassNameId(
+				Layout.class)) &&
+			(layout.getClassPK() != 0)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

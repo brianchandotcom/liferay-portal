@@ -8,7 +8,7 @@ import {COMPATIBLE_TYPES} from '../../../utils/constants';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
-import {updateEditableValuesAction} from '../../../actions/updateEditableValue.es';
+//import {updateEditableValuesAction} from '../../../actions/updateEditableValue.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarMappingPanel.soy';
 
@@ -149,7 +149,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_clearEditableValues() {
-		this.store.dispatch(
+/*		this.store.dispatch(
 			updateEditableValuesAction(
 				this.item.fragmentEntryLinkId,
 				this.item.editableId,
@@ -172,7 +172,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 					}
 				]
 			)
-		);
+		);*/
 	}
 
 	/**
@@ -251,7 +251,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_handleFieldOptionChange(event) {
 		const fieldId = event.delegateTarget.value;
 
-		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.content) {
+/*		if (this._selectedSourceTypeId === SOURCE_TYPE_IDS.content) {
 			this.store.dispatch(
 				updateEditableValuesAction(
 					this.item.fragmentEntryLinkId,
@@ -278,7 +278,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 					]
 				)
 			);
-		}
+		}*/
 	}
 
 	/**
@@ -355,7 +355,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_selectAssetEntry(assetEntry) {
-		this.store.dispatch(
+/*		this.store.dispatch(
 			updateEditableValuesAction(
 				this.item.fragmentEntryLinkId,
 				this.item.editableId,
@@ -374,7 +374,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 					}
 				]
 			)
-		);
+		);*/
 	}
 }
 

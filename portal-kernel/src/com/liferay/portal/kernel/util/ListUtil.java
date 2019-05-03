@@ -400,6 +400,10 @@ public class ListUtil {
 		return list;
 	}
 
+	public static <E> List<E> toList(E value) {
+		return new ArrayList<>(Arrays.asList(value));
+	}
+
 	public static <E> List<E> toList(E[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<>();

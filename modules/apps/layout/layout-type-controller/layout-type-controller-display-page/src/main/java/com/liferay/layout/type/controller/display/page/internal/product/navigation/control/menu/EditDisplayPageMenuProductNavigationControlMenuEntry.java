@@ -109,6 +109,10 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 			(InfoDisplayObjectProvider)request.getAttribute(
 				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
 
+		if (infoDisplayObjectProvider == null) {
+			return false;
+		}
+
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(

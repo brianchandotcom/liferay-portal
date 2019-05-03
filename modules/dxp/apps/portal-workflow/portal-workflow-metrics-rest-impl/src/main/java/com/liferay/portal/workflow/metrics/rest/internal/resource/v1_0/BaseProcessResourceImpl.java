@@ -90,7 +90,7 @@ public abstract class BaseProcessResourceImpl implements ProcessResource {
 	public Process getProcess(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
-			@NotNull @Parameter(hidden = true) @QueryParam("completed") Boolean
+			@Parameter(hidden = true) @QueryParam("completed") Boolean
 				completed)
 		throws Exception {
 

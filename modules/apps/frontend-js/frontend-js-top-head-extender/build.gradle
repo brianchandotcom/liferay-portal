@@ -6,6 +6,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly project(":apps:portal-url-builder:portal-url-builder-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
-	compileOnly project(":core:osgi-felix-util")
 	compileOnly project(":core:petra:petra-string")
 }

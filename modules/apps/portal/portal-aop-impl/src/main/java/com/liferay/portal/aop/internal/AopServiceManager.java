@@ -69,6 +69,8 @@ public class AopServiceManager {
 			}
 
 		};
+
+		_bundleTracker.open();
 	}
 
 	@Deactivate

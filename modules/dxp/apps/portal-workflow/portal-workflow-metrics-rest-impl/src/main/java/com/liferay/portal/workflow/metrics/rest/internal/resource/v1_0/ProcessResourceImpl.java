@@ -103,7 +103,7 @@ public class ProcessResourceImpl
 
 				TermsAggregationResult slaTermsAggregationResult =
 					_getSLATermsAggregationResult(
-						completed, null, null,
+						GetterUtil.getBoolean(completed), null, null,
 						Collections.singleton(processId));
 
 				_populateProcessWithSLAMetrics(
@@ -113,7 +113,7 @@ public class ProcessResourceImpl
 
 				TermsAggregationResult instanceTermsAggregationResult =
 					_getInstanceTermsAggregationResult(
-						completed, null, null,
+						GetterUtil.getBoolean(completed), null, null,
 						Collections.singleton(processId));
 
 				_setInstanceCount(

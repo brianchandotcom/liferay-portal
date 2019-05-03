@@ -171,7 +171,6 @@ paths:
                       type: integer
                 - in: query
                   name: completed
-                  required: true
                   schema:
                       type: boolean
             responses:

@@ -42,7 +42,7 @@ else {
 		</ul>
 	</c:if>
 
-	<h4><%= HtmlUtil.escape(fileEntry.getTitle()) %></h4>
+	<h4><%= HtmlUtil.escape(fileVersion.getTitle()) %></h4>
 
 	<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 		<clay:label
@@ -278,7 +278,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 						<liferay-ui:message key="description" />
 					</dt>
 					<dd class="sidebar-dd">
-						<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(fileEntry.getDescription())) %>
+						<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(fileVersion.getDescription())) %>
 					</dd>
 				</c:if>
 

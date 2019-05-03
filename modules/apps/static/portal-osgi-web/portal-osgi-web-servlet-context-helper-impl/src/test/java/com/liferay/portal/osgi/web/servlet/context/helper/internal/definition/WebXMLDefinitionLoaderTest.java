@@ -38,8 +38,6 @@ import javax.servlet.ServletContextListener;
 
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.felix.utils.log.Logger;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -142,7 +140,7 @@ public class WebXMLDefinitionLoaderTest {
 
 		WebXMLDefinitionLoader webXMLDefinitionLoader =
 			new WebXMLDefinitionLoader(
-				bundle, null, SAXParserFactory.newInstance(), new Logger(null));
+				bundle, null, SAXParserFactory.newInstance());
 
 		WebXMLDefinition webXMLDefinition =
 			webXMLDefinitionLoader.loadWebXMLDefinition(
@@ -403,8 +401,7 @@ public class WebXMLDefinitionLoaderTest {
 
 		WebXMLDefinitionLoader webXMLDefinitionLoader =
 			new WebXMLDefinitionLoader(
-				testBundle, null, SAXParserFactory.newInstance(),
-				new Logger(null));
+				testBundle, null, SAXParserFactory.newInstance());
 
 		return webXMLDefinitionLoader.loadWebXMLDefinition(testBundle.getURL());
 	}

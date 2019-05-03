@@ -21,8 +21,6 @@ import java.util.Map;
 
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.felix.utils.log.Logger;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
@@ -35,11 +33,10 @@ public class ServletContextHelperRegistrationServiceFactory
 
 	public ServletContextHelperRegistrationServiceFactory(
 		JSPServletFactory jspServletFactory, SAXParserFactory saxParserFactory,
-		Logger logger, Map<String, Object> properties) {
+		Map<String, Object> properties) {
 
 		_jspServletFactory = jspServletFactory;
 		_saxParserFactory = saxParserFactory;
-		_logger = logger;
 		_properties = properties;
 	}
 
@@ -49,8 +46,7 @@ public class ServletContextHelperRegistrationServiceFactory
 		ServiceRegistration<ServletContextHelperRegistration> registration) {
 
 		return new ServletContextHelperRegistrationImpl(
-			bundle, _jspServletFactory, _saxParserFactory, _logger,
-			_properties);
+			bundle, _jspServletFactory, _saxParserFactory, _properties);
 	}
 
 	@Override
@@ -63,7 +59,6 @@ public class ServletContextHelperRegistrationServiceFactory
 	}
 
 	private final JSPServletFactory _jspServletFactory;
-	private final Logger _logger;
 	private final Map<String, Object> _properties;
 	private final SAXParserFactory _saxParserFactory;
 

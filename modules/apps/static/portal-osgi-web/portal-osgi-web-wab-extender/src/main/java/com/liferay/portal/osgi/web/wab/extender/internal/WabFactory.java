@@ -15,6 +15,8 @@
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
 import com.liferay.portal.osgi.web.servlet.JSPTaglibHelper;
@@ -26,8 +28,6 @@ import com.liferay.portal.profile.PortalProfile;
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -94,8 +94,7 @@ public class WabFactory
 					TimeUnit.MILLISECONDS);
 			}
 			catch (InterruptedException ie) {
-				_logger.log(
-					Logger.LOG_ERROR,
+				_log.error(
 					String.format(
 						"The wait for bundle {0}/{1} to start before " +
 							"destroying was interrupted",
@@ -130,7 +129,6 @@ public class WabFactory
 		BundleContext bundleContext = componentContext.getBundleContext();
 
 		_eventUtil = new EventUtil(bundleContext);
-		_logger = new Logger(bundleContext);
 
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
@@ -140,7 +138,7 @@ public class WabFactory
 
 		_webBundleDeployer = new WebBundleDeployer(
 			bundleContext, _jspServletFactory, _jspTaglibHelper, properties,
-			_eventUtil, _logger);
+			_eventUtil);
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
@@ -156,12 +154,12 @@ public class WabFactory
 
 		_eventUtil = null;
 
-		_logger = null;
-
 		_webBundleDeployer.close();
 
 		_webBundleDeployer = null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(WabFactory.class);
 
 	private BundleTracker<?> _bundleTracker;
 	private EventUtil _eventUtil;
@@ -171,8 +169,6 @@ public class WabFactory
 
 	@Reference
 	private JSPTaglibHelper _jspTaglibHelper;
-
-	private Logger _logger;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

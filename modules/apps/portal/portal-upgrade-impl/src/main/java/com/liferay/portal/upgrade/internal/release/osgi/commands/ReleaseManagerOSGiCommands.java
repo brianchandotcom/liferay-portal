@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -45,7 +47,6 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.felix.service.command.Descriptor;
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -140,8 +141,7 @@ public class ReleaseManagerOSGiCommands {
 			_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
 		}
 		catch (Throwable t) {
-			_logger.log(
-				Logger.LOG_ERROR,
+			_log.error(
 				"Failed upgrade process for module ".concat(bundleSymbolicName),
 				t);
 		}
@@ -241,8 +241,6 @@ public class ReleaseManagerOSGiCommands {
 	protected void activate(
 		final BundleContext bundleContext, Map<String, Object> properties) {
 
-		_logger = new Logger(bundleContext);
-
 		DB db = DBManagerUtil.getDB();
 
 		ServiceTrackerMapListener<String, UpgradeInfo, List<UpgradeInfo>>
@@ -318,8 +316,7 @@ public class ReleaseManagerOSGiCommands {
 					upgradableBundleSymbolicName, upgradeInfos);
 			}
 			catch (Throwable t) {
-				_logger.log(
-					Logger.LOG_ERROR,
+				_log.error(
 					"Failed upgrade process for module ".concat(
 						upgradableBundleSymbolicName),
 					t);
@@ -381,7 +378,8 @@ public class ReleaseManagerOSGiCommands {
 		_releaseLocalService = releaseLocalService;
 	}
 
-	private static Logger _logger;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ReleaseManagerOSGiCommands.class);
 
 	private boolean _activated;
 	private ReleaseLocalService _releaseLocalService;
@@ -414,10 +412,11 @@ public class ReleaseManagerOSGiCommands {
 				serviceReference);
 
 			if (upgradeStep == null) {
-				_logger.log(
-					Logger.LOG_WARNING,
-					"Skipping service " + serviceReference +
-						" because it does not implement UpgradeStep");
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Skipping service " + serviceReference +
+							" because it does not implement UpgradeStep");
+				}
 
 				return null;
 			}
@@ -438,10 +437,11 @@ public class ReleaseManagerOSGiCommands {
 						properties.getProperty("build.number"));
 				}
 				catch (Exception e) {
-					_logger.log(
-						Logger.LOG_DEBUG,
-						"Unable to read service.properties for " +
-							serviceReference);
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to read service.properties for " +
+								serviceReference);
+					}
 				}
 			}
 			else {

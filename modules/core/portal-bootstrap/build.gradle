@@ -94,7 +94,6 @@ dependencies {
 	compileOnly project(":apps:petra:petra-mail")
 	compileOnly project(":apps:petra:petra-xml")
 	compileOnly project(":core:jaxws-osgi-bridge")
-	compileOnly project(":core:osgi-felix-util")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-executor")

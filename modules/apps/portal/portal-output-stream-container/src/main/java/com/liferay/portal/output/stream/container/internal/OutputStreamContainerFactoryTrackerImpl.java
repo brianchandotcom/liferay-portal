@@ -16,6 +16,8 @@ package com.liferay.portal.output.stream.container.internal;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
@@ -104,9 +106,9 @@ public class OutputStreamContainerFactoryTrackerImpl
 	public void runWithSwappedLog(
 		Runnable runnable, String outputStreamName, OutputStream outputStream) {
 
-		_logger.log(
-			org.apache.felix.utils.log.Logger.LOG_INFO,
-			"Using " + outputStreamName + " as output");
+		if (_log.isInfoEnabled()) {
+			_log.info("Using " + outputStreamName + " as output");
+		}
 
 		Writer writer = _writerThreadLocal.get();
 
@@ -125,9 +127,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 				outputStreamWriter.flush();
 			}
 			catch (IOException ioe) {
-				_logger.log(
-					org.apache.felix.utils.log.Logger.LOG_ERROR,
-					ioe.getLocalizedMessage());
+				_log.error(ioe.getLocalizedMessage());
 			}
 		}
 	}
@@ -157,8 +157,6 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_logger = new org.apache.felix.utils.log.Logger(bundleContext);
-
 		Logger rootLogger = Logger.getRootLogger();
 
 		_writerAppender = new WriterAppender(
@@ -193,10 +191,12 @@ public class OutputStreamContainerFactoryTrackerImpl
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		OutputStreamContainerFactoryTrackerImpl.class);
+
 	private final OutputStreamContainerFactory
 		_consoleOutputStreamContainerFactory =
 			new ConsoleOutputStreamContainerFactory();
-	private org.apache.felix.utils.log.Logger _logger;
 	private ServiceTrackerMap<String, OutputStreamContainerFactory>
 		_outputStreamContainerFactories;
 

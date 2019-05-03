@@ -396,7 +396,6 @@ Provide-Capability:\
 	@lib/biz.aQute.bndlib.jar!/aQute/bnd/header/*,\
 	@lib/biz.aQute.bndlib.jar!/aQute/bnd/osgi/*,\
 	@lib/biz.aQute.bndlib.jar!/aQute/bnd/version/*,\
-	@lib/com.liferay.osgi.felix.util.jar,\
 	@lib/com.liferay.osgi.service.tracker.collections.jar,\
 	@lib/com.liferay.petra.concurrent.jar,\
 	@lib/com.liferay.petra.content.jar,\

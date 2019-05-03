@@ -6,7 +6,6 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	testIntegrationCompile project(":apps:portal:portal-upgrade-api")
 	testIntegrationCompile project(":apps:static:osgi:osgi-util")
-	testIntegrationCompile project(":core:osgi-felix-util")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

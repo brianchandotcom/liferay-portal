@@ -66,7 +66,6 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 import javax.servlet.jsp.JspFactory;
 
-import org.apache.felix.utils.log.Logger;
 import org.apache.jasper.runtime.JspFactoryImpl;
 import org.apache.jasper.runtime.TagHandlerPool;
 
@@ -180,8 +179,6 @@ public class JspServlet extends HttpServlet {
 		bundles.add(_jspBundle);
 
 		bundles.add(_utilTaglibBundle);
-
-		_logger = new Logger(_bundle.getBundleContext());
 
 		collectTaglibProviderBundles(bundles);
 
@@ -419,7 +416,6 @@ public class JspServlet extends HttpServlet {
 	private JspBundleClassloader _jspBundleClassloader;
 	private final HttpServlet _jspServlet =
 		new org.apache.jasper.servlet.JspServlet();
-	private Logger _logger;
 	private boolean _logVerbosityLevelDebug;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();

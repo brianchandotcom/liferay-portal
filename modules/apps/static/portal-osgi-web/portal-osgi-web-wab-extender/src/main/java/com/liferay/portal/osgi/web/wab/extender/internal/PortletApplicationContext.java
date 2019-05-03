@@ -16,6 +16,8 @@ package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -29,8 +31,6 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 
 import java.util.List;
-
-import org.apache.felix.utils.log.Logger;
 
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
@@ -50,9 +50,7 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
  */
 public class PortletApplicationContext extends XmlWebApplicationContext {
 
-	public PortletApplicationContext(Logger logger) {
-		_logger = logger;
-
+	public PortletApplicationContext() {
 		ClassLoader beanClassLoader =
 			AggregateClassLoader.getAggregateClassLoader(
 				new ClassLoader[] {
@@ -130,15 +128,18 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 				Throwable cause = e.getCause();
 
 				if (cause instanceof FileNotFoundException) {
-					_logger.log(Logger.LOG_DEBUG, cause.getMessage());
+					if (_log.isDebugEnabled()) {
+						_log.debug(cause.getMessage());
+					}
 				}
 				else {
-					_logger.log(Logger.LOG_ERROR, cause.getMessage(), cause);
+					_log.error(cause, cause);
 				}
 			}
 		}
 	}
 
-	private final Logger _logger;
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletApplicationContext.class);
 
 }

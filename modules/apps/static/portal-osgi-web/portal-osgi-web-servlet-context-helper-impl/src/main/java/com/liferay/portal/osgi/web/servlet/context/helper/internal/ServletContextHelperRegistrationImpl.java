@@ -36,8 +36,6 @@ import javax.servlet.ServletContextListener;
 
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.felix.utils.log.Logger;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -53,12 +51,10 @@ public class ServletContextHelperRegistrationImpl
 
 	public ServletContextHelperRegistrationImpl(
 		Bundle bundle, JSPServletFactory jspServletFactory,
-		SAXParserFactory saxParserFactory, Logger logger,
-		Map<String, Object> properties) {
+		SAXParserFactory saxParserFactory, Map<String, Object> properties) {
 
 		_bundle = bundle;
 		_jspServletFactory = jspServletFactory;
-		_logger = logger;
 		_properties = properties;
 
 		String contextPath = getContextPath();
@@ -72,7 +68,7 @@ public class ServletContextHelperRegistrationImpl
 
 			WebXMLDefinitionLoader webXMLDefinitionLoader =
 				new WebXMLDefinitionLoader(
-					_bundle, _jspServletFactory, saxParserFactory, _logger);
+					_bundle, _jspServletFactory, saxParserFactory);
 
 			WebXMLDefinition webXMLDefinition = null;
 
@@ -96,8 +92,7 @@ public class ServletContextHelperRegistrationImpl
 		_bundleContext = _bundle.getBundleContext();
 
 		_customServletContextHelper = new CustomServletContextHelper(
-			_bundle, _logger,
-			_webXMLDefinition.getWebResourceCollectionDefinitions());
+			_bundle, _webXMLDefinition.getWebResourceCollectionDefinitions());
 
 		_servletContextHelperServiceRegistration = createServletContextHelper(
 			contextPath);
@@ -414,7 +409,6 @@ public class ServletContextHelperRegistrationImpl
 	private final ServiceRegistration<?> _defaultServletServiceRegistration;
 	private final JSPServletFactory _jspServletFactory;
 	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
-	private final Logger _logger;
 	private final ServiceRegistration<Servlet>
 		_portletServletServiceRegistration;
 	private final Map<String, Object> _properties;

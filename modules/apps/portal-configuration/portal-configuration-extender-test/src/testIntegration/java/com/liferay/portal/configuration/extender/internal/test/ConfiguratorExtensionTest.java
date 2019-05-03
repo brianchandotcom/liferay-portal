@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -31,7 +33,7 @@ import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import org.apache.felix.utils.log.Logger;
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -357,39 +359,32 @@ public class ConfiguratorExtensionTest {
 			String namespace, Object... namedConfigurationContents)
 		throws Exception {
 
-		Class<?> clazz = _bundle.loadClass(
+		String name =
 			"com.liferay.portal.configuration.extender.internal." +
-				"ConfiguratorExtension");
+				"ConfiguratorExtension";
+
+		Class<?> clazz = _bundle.loadClass(name);
 
 		Constructor<?> constructor = clazz.getConstructor(
-			ConfigurationAdmin.class, Logger.class, String.class,
-			Collection.class);
+			ConfigurationAdmin.class, String.class, Collection.class);
 
 		Object configuratorExtension = constructor.newInstance(
-			_configurationAdmin, new DummyLogger(), namespace,
+			_configurationAdmin, namespace,
 			Arrays.asList(namedConfigurationContents));
 
 		Method method = clazz.getMethod("start");
 
-		method.invoke(configuratorExtension);
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(name, Level.ERROR)) {
+
+			method.invoke(configuratorExtension);
+		}
 	}
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
 	private Bundle _bundle;
-
-	private static class DummyLogger extends Logger {
-
-		@Override
-		public void log(int level, String message, Throwable exception) {
-		}
-
-		private DummyLogger() {
-			super(null);
-		}
-
-	}
 
 	private static class TestProperties<K, V> extends Hashtable<K, V> {
 

@@ -33,8 +33,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.apache.felix.utils.log.Logger;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -47,18 +45,15 @@ import org.osgi.framework.wiring.BundleRevision;
 public class WebBundleDeployer {
 
 	public WebBundleDeployer(
-			BundleContext bundleContext, JSPServletFactory jspServletFactory,
-			JSPTaglibHelper jspTaglibHelper,
-			Dictionary<String, Object> properties, EventUtil eventUtil,
-			Logger logger)
-		throws Exception {
+		BundleContext bundleContext, JSPServletFactory jspServletFactory,
+		JSPTaglibHelper jspTaglibHelper, Dictionary<String, Object> properties,
+		EventUtil eventUtil) {
 
 		_bundleContext = bundleContext;
 		_jspServletFactory = jspServletFactory;
 		_jspTaglibHelper = jspTaglibHelper;
 		_properties = properties;
 		_eventUtil = eventUtil;
-		_logger = logger;
 	}
 
 	public void close() {
@@ -170,7 +165,7 @@ public class WebBundleDeployer {
 	private void _initWabBundle(Bundle bundle) {
 		try {
 			WabBundleProcessor newWabBundleProcessor = new WabBundleProcessor(
-				bundle, _jspServletFactory, _jspTaglibHelper, _logger);
+				bundle, _jspServletFactory, _jspTaglibHelper);
 
 			WabBundleProcessor oldWabBundleProcessor =
 				_wabBundleProcessors.putIfAbsent(bundle, newWabBundleProcessor);
@@ -192,7 +187,6 @@ public class WebBundleDeployer {
 	private final EventUtil _eventUtil;
 	private final JSPServletFactory _jspServletFactory;
 	private final JSPTaglibHelper _jspTaglibHelper;
-	private final Logger _logger;
 	private final Dictionary<String, Object> _properties;
 	private final ConcurrentMap<Bundle, WabBundleProcessor>
 		_wabBundleProcessors = new ConcurrentHashMap<>();

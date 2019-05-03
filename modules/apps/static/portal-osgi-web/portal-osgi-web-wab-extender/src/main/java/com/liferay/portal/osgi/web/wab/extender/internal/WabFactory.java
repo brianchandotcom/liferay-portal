@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
-import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
@@ -28,11 +27,11 @@ import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -40,6 +39,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Miguel Pastor
@@ -50,103 +51,43 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = {}
 )
-public class WabFactory extends AbstractExtender {
-
-	@Activate
-	public void activate(ComponentContext componentContext) {
-		BundleContext bundleContext = componentContext.getBundleContext();
-
-		_eventUtil = new EventUtil(bundleContext);
-		_logger = new Logger(bundleContext);
-
-		Dictionary<String, Object> properties =
-			componentContext.getProperties();
-
-		_wabExtenderConfiguration = ConfigurableUtil.createConfigurable(
-			WabExtenderConfiguration.class, properties);
-
-		try {
-			_webBundleDeployer = new WebBundleDeployer(
-				bundleContext, _jspServletFactory, _jspTaglibHelper, properties,
-				_eventUtil, _logger);
-
-			start(bundleContext);
-		}
-		catch (Exception e) {
-			_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
-		}
-	}
-
-	@Deactivate
-	public void deactivate(BundleContext bundleContext) throws Exception {
-		stop(bundleContext);
-
-		_eventUtil.close();
-
-		_eventUtil = null;
-
-		_logger = null;
-
-		_webBundleDeployer.close();
-
-		_webBundleDeployer = null;
-	}
+public class WabFactory
+	implements BundleTrackerCustomizer<WabFactory.WABExtension> {
 
 	@Override
-	protected void debug(Bundle bundle, String message) {
-		_logger.log(Logger.LOG_DEBUG, "[" + bundle + "] " + message);
-	}
-
-	@Override
-	protected Extension doCreateExtension(Bundle bundle) throws Exception {
+	public WABExtension addingBundle(Bundle bundle, BundleEvent bundleEvent) {
 		String contextPath = WabUtil.getWebContextPath(bundle);
 
 		if (contextPath == null) {
 			return null;
 		}
 
-		return new WABExtension(bundle);
+		WABExtension wabExtension = new WABExtension(bundle);
+
+		wabExtension.start();
+
+		return wabExtension;
 	}
 
 	@Override
-	protected void error(String message, Throwable t) {
-		_logger.log(Logger.LOG_ERROR, message, t);
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	public void modifiedBundle(
+		Bundle bundle, BundleEvent bundleEvent, WABExtension wabExtension) {
 	}
 
 	@Override
-	protected void warn(Bundle bundle, String message, Throwable t) {
-		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + message, t);
+	public void removedBundle(
+		Bundle bundle, BundleEvent bundleEvent, WABExtension wabExtension) {
+
+		wabExtension.destroy();
 	}
 
-	private EventUtil _eventUtil;
-
-	@Reference
-	private JSPServletFactory _jspServletFactory;
-
-	@Reference
-	private JSPTaglibHelper _jspTaglibHelper;
-
-	private Logger _logger;
-
-	@Reference
-	private ServletContextHelperFactory _servletContextHelperFactory;
-
-	private WabExtenderConfiguration _wabExtenderConfiguration;
-	private WebBundleDeployer _webBundleDeployer;
-
-	private class WABExtension implements Extension {
+	public class WABExtension {
 
 		public WABExtension(Bundle bundle) {
 			_bundle = bundle;
 		}
 
-		@Override
-		public void destroy() throws Exception {
+		public void destroy() {
 			try {
 				_started.await(
 					_wabExtenderConfiguration.stopTimeout(),
@@ -169,8 +110,7 @@ public class WabFactory extends AbstractExtender {
 			_webBundleDeployer.doStop(_bundle);
 		}
 
-		@Override
-		public void start() throws Exception {
+		public void start() {
 			try {
 				_serviceRegistration = _webBundleDeployer.doStart(_bundle);
 			}
@@ -184,5 +124,63 @@ public class WabFactory extends AbstractExtender {
 		private final CountDownLatch _started = new CountDownLatch(1);
 
 	}
+
+	@Activate
+	protected void activate(ComponentContext componentContext) {
+		BundleContext bundleContext = componentContext.getBundleContext();
+
+		_eventUtil = new EventUtil(bundleContext);
+		_logger = new Logger(bundleContext);
+
+		Dictionary<String, Object> properties =
+			componentContext.getProperties();
+
+		_wabExtenderConfiguration = ConfigurableUtil.createConfigurable(
+			WabExtenderConfiguration.class, properties);
+
+		_webBundleDeployer = new WebBundleDeployer(
+			bundleContext, _jspServletFactory, _jspTaglibHelper, properties,
+			_eventUtil, _logger);
+
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleTracker.close();
+
+		_eventUtil.close();
+
+		_eventUtil = null;
+
+		_logger = null;
+
+		_webBundleDeployer.close();
+
+		_webBundleDeployer = null;
+	}
+
+	private BundleTracker<?> _bundleTracker;
+	private EventUtil _eventUtil;
+
+	@Reference
+	private JSPServletFactory _jspServletFactory;
+
+	@Reference
+	private JSPTaglibHelper _jspTaglibHelper;
+
+	private Logger _logger;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
+	private ServletContextHelperFactory _servletContextHelperFactory;
+
+	private WabExtenderConfiguration _wabExtenderConfiguration;
+	private WebBundleDeployer _webBundleDeployer;
 
 }

@@ -31,7 +31,7 @@ public interface RequestContextContributor {
 	 * Contributes additional information to the context.
 	 *
 	 * @param  context the context
-	 * @param  request the current request
+	 * @param  httpServletRequest the current request
 	 * @review
 	 */
 	public void contribute(

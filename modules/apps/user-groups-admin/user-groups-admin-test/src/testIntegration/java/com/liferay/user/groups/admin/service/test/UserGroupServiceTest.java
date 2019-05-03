@@ -17,14 +17,15 @@ package com.liferay.user.groups.admin.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserGroupServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -59,7 +60,7 @@ public class UserGroupServiceTest {
 		long parentUserGroupId = 0;
 		int size = 5;
 
-		List<UserGroup> userGroups = UserGroupServiceUtil.getGtUserGroups(
+		List<UserGroup> userGroups = _userGroupService.getGtUserGroups(
 			0, TestPropsValues.getCompanyId(), parentUserGroupId, size);
 
 		Assert.assertFalse(userGroups.isEmpty());
@@ -67,7 +68,7 @@ public class UserGroupServiceTest {
 
 		UserGroup lastUserGroup = userGroups.get(userGroups.size() - 1);
 
-		userGroups = UserGroupServiceUtil.getGtUserGroups(
+		userGroups = _userGroupService.getGtUserGroups(
 			lastUserGroup.getUserGroupId(), TestPropsValues.getCompanyId(),
 			parentUserGroupId, size);
 
@@ -91,7 +92,7 @@ public class UserGroupServiceTest {
 		List<UserGroup> allUserGroups = new ArrayList<>();
 
 		allUserGroups.addAll(
-			UserGroupLocalServiceUtil.getUserGroups(
+			_userGroupLocalService.getUserGroups(
 				TestPropsValues.getCompanyId()));
 
 		List<UserGroup> likeNameUserGroups = new ArrayList<>();
@@ -103,7 +104,7 @@ public class UserGroupServiceTest {
 
 			userGroup.setName(name + i);
 
-			userGroup = UserGroupLocalServiceUtil.updateUserGroup(userGroup);
+			userGroup = _userGroupLocalService.updateUserGroup(userGroup);
 
 			allUserGroups.add(userGroup);
 			likeNameUserGroups.add(userGroup);
@@ -134,7 +135,7 @@ public class UserGroupServiceTest {
 			List<UserGroup> expectedUserGroups, String nameSearch)
 		throws Exception {
 
-		List<UserGroup> actualUserGroups = UserGroupServiceUtil.getUserGroups(
+		List<UserGroup> actualUserGroups = _userGroupService.getUserGroups(
 			TestPropsValues.getCompanyId(), nameSearch, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
@@ -147,11 +148,17 @@ public class UserGroupServiceTest {
 
 		Assert.assertEquals(
 			expectedUserGroups.size(),
-			UserGroupServiceUtil.getUserGroupsCount(
+			_userGroupService.getUserGroupsCount(
 				TestPropsValues.getCompanyId(), nameSearch));
 	}
 
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
+
 	@DeleteAfterTestRun
 	private final List<UserGroup> _userGroups = new ArrayList<>();
+
+	@Inject
+	private UserGroupService _userGroupService;
 
 }

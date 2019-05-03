@@ -14,8 +14,6 @@
 
 package com.liferay.portal.remote.http.tunnel.extender.internal;
 
-import com.liferay.osgi.felix.util.AbstractExtender;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,11 +30,9 @@ import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
-import org.apache.felix.utils.extender.Extension;
-import org.apache.felix.utils.log.Logger;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -45,6 +41,8 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Miguel Pastor
@@ -54,33 +52,14 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = {}
 )
-public class HttpTunnelExtender extends AbstractExtender {
-
-	@Activate
-	protected void activate(
-			BundleContext bundleContext, Map<String, Object> properties)
-		throws Exception {
-
-		_httpTunnelExtenderConfiguration = ConfigurableUtil.createConfigurable(
-			HttpTunnelExtenderConfiguration.class, properties);
-		_logger = new Logger(bundleContext);
-
-		start(bundleContext);
-	}
-
-	@Deactivate
-	protected void deactivate(BundleContext bundleContext) throws Exception {
-		stop(bundleContext);
-	}
+public class HttpTunnelExtender
+	implements BundleTrackerCustomizer
+		<HttpTunnelExtender.TunnelServletExtension> {
 
 	@Override
-	protected void debug(Bundle bundle, String s) {
-		_logger.log(
-			Logger.LOG_DEBUG, StringBundler.concat("[", bundle, "] ", s));
-	}
+	public TunnelServletExtension addingBundle(
+		Bundle bundle, BundleEvent bundleEvent) {
 
-	@Override
-	protected Extension doCreateExtension(Bundle bundle) throws Exception {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
@@ -88,65 +67,35 @@ public class HttpTunnelExtender extends AbstractExtender {
 			return null;
 		}
 
-		return new TunnelServletExtension(bundle);
+		TunnelServletExtension tunnelServletExtension =
+			new TunnelServletExtension(bundle);
+
+		tunnelServletExtension.start();
+
+		return tunnelServletExtension;
 	}
 
 	@Override
-	protected void error(String s, Throwable t) {
-		_logger.log(Logger.LOG_ERROR, s, t);
-	}
-
-	@Modified
-	protected void modified(
-			BundleContext bundleContext, Map<String, Object> properties)
-		throws Exception {
-
-		deactivate(bundleContext);
-
-		activate(bundleContext, properties);
+	public void modifiedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		TunnelServletExtension tunnelServletExtension) {
 	}
 
 	@Override
-	protected void warn(Bundle bundle, String s, Throwable t) {
-		_logger.log(
-			Logger.LOG_WARNING, StringBundler.concat("[", bundle, "] ", s), t);
+	public void removedBundle(
+		Bundle bundle, BundleEvent bundleEvent,
+		TunnelServletExtension tunnelServletExtension) {
+
+		tunnelServletExtension.destroy();
 	}
 
-	private HttpTunnelExtenderConfiguration _httpTunnelExtenderConfiguration;
-	private Logger _logger;
-
-	private final class ServiceRegistrations {
-
-		public ServiceRegistrations(
-			ServiceRegistration<Filter> authVerifierFilterServiceRegistration,
-			ServiceRegistration<ServletContextHelper>
-				servletContextHelperServiceRegistration,
-			ServiceRegistration<Servlet> tunneServletServiceRegistration) {
-
-			_authVerifierFilterServiceRegistration =
-				authVerifierFilterServiceRegistration;
-			_servletContextHelperServiceRegistration =
-				servletContextHelperServiceRegistration;
-			_tunnelServletServiceRegistration = tunneServletServiceRegistration;
-		}
-
-		private final ServiceRegistration<Filter>
-			_authVerifierFilterServiceRegistration;
-		private final ServiceRegistration<ServletContextHelper>
-			_servletContextHelperServiceRegistration;
-		private final ServiceRegistration<Servlet>
-			_tunnelServletServiceRegistration;
-
-	}
-
-	private class TunnelServletExtension implements Extension {
+	public class TunnelServletExtension {
 
 		public TunnelServletExtension(Bundle bundle) {
 			_bundle = bundle;
 		}
 
-		@Override
-		public void destroy() throws Exception {
+		public void destroy() {
 			ServiceRegistration<Filter> authVerifierFilterServiceRegistration =
 				_serviceRegistrations._authVerifierFilterServiceRegistration;
 
@@ -165,8 +114,7 @@ public class HttpTunnelExtender extends AbstractExtender {
 			tunnelServletServiceRegistration.unregister();
 		}
 
-		@Override
-		public void start() throws Exception {
+		public void start() {
 			BundleContext bundleContext = _bundle.getBundleContext();
 
 			Dictionary<String, Object> properties = new Hashtable<>();
@@ -244,6 +192,60 @@ public class HttpTunnelExtender extends AbstractExtender {
 
 		private final Bundle _bundle;
 		private ServiceRegistrations _serviceRegistrations;
+
+	}
+
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_httpTunnelExtenderConfiguration = ConfigurableUtil.createConfigurable(
+			HttpTunnelExtenderConfiguration.class, properties);
+
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_bundleTracker.close();
+	}
+
+	@Modified
+	protected void modified(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		deactivate();
+
+		activate(bundleContext, properties);
+	}
+
+	private BundleTracker<?> _bundleTracker;
+	private HttpTunnelExtenderConfiguration _httpTunnelExtenderConfiguration;
+
+	private final class ServiceRegistrations {
+
+		public ServiceRegistrations(
+			ServiceRegistration<Filter> authVerifierFilterServiceRegistration,
+			ServiceRegistration<ServletContextHelper>
+				servletContextHelperServiceRegistration,
+			ServiceRegistration<Servlet> tunneServletServiceRegistration) {
+
+			_authVerifierFilterServiceRegistration =
+				authVerifierFilterServiceRegistration;
+			_servletContextHelperServiceRegistration =
+				servletContextHelperServiceRegistration;
+			_tunnelServletServiceRegistration = tunneServletServiceRegistration;
+		}
+
+		private final ServiceRegistration<Filter>
+			_authVerifierFilterServiceRegistration;
+		private final ServiceRegistration<ServletContextHelper>
+			_servletContextHelperServiceRegistration;
+		private final ServiceRegistration<Servlet>
+			_tunnelServletServiceRegistration;
 
 	}
 

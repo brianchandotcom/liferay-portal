@@ -22,6 +22,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -35,6 +36,8 @@ public class RESTBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.applyPlugin(project, JavaPlugin.class);
+
 		Configuration restBuilderConfiguration = _addConfigurationRESTBuilder(
 			project);
 

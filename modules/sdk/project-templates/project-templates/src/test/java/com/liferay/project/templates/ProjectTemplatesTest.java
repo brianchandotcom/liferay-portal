@@ -354,38 +354,6 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateContentDTDVersionSpringMVCPortlet70()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo-bar", "--liferayVersion", "7.0");
-
-		_testContains(
-			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
-			"liferay-display_7_0_0.dtd");
-
-		_testContains(
-			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
-			"liferay-portlet-app_7_0_0.dtd");
-	}
-
-	@Test
-	public void testBuildTemplateContentDTDVersionSpringMVCPortlet71()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo-bar", "--liferayVersion", "7.1");
-
-		_testContains(
-			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
-			"liferay-display_7_1_0.dtd");
-
-		_testContains(
-			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
-			"liferay-portlet-app_7_1_0.dtd");
-	}
-
-	@Test
 	public void testBuildTemplateContentDTDVersionWarHook70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-hook", "foo-bar", "--liferayVersion", "7.0");
@@ -2783,143 +2751,6 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateSpringMVCPortlet70() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo", "--liferayVersion", "7.0");
-
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0\"");
-
-		_testContains(
-			gradleProjectDir,
-			"src/main/java/foo/portlet/FooPortletViewController.java",
-			"public class FooPortletViewController {");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"spring-mvc-portlet", "foo", "com.test", "-DclassName=Foo",
-			"-Dpackage=foo", "-DliferayVersion=7.0");
-
-		_buildProjects(gradleProjectDir, mavenProjectDir);
-
-		if (_isBuildProjects()) {
-			_testSpringMVCOutputs(gradleProjectDir);
-		}
-	}
-
-	@Test
-	public void testBuildTemplateSpringMVCPortlet71() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo", "--liferayVersion", "7.1");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"spring-mvc-portlet", "foo", "com.test", "-DclassName=Foo",
-			"-Dpackage=foo", "-DliferayVersion=7.1");
-
-		_buildProjects(gradleProjectDir, mavenProjectDir);
-
-		if (_isBuildProjects()) {
-			_testSpringMVCOutputs(gradleProjectDir);
-		}
-	}
-
-	@Test
-	public void testBuildTemplateSpringMVCPortletInWorkspace()
-		throws Exception {
-
-		_testBuildTemplateProjectWarInWorkspace(
-			"spring-mvc-portlet", "foo", "foo");
-	}
-
-	@Test
-	public void testBuildTemplateSpringMvcPortletWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "spring-mvc-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test
-	public void testBuildTemplateSpringMVCPortletWithPackage()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo", "--package-name", "com.liferay.test");
-
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
-
-		_testContains(
-			gradleProjectDir,
-			"src/main/java/com/liferay/test/portlet" +
-				"/FooPortletViewController.java",
-			"public class FooPortletViewController {");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"spring-mvc-portlet", "foo", "com.test", "-DclassName=Foo",
-			"-Dpackage=com.liferay.test");
-
-		_buildProjects(gradleProjectDir, mavenProjectDir);
-	}
-
-	@Test
-	public void testBuildTemplateSpringMVCPortletWithPortletName()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "portlet");
-
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
-
-		_testContains(
-			gradleProjectDir,
-			"src/main/java/portlet/portlet/PortletPortletViewController.java",
-			"public class PortletPortletViewController {");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"spring-mvc-portlet", "portlet", "com.test", "-DclassName=Portlet",
-			"-Dpackage=portlet");
-
-		_buildProjects(gradleProjectDir, mavenProjectDir);
-	}
-
-	@Test
-	public void testBuildTemplateSpringMVCPortletWithPortletSuffix()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "portlet-portlet");
-
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
-
-		_testContains(
-			gradleProjectDir,
-			"src/main/java/portlet/portlet/portlet" +
-				"/PortletPortletViewController.java",
-			"public class PortletPortletViewController {");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"spring-mvc-portlet", "portlet-portlet", "com.test",
-			"-DclassName=Portlet", "-Dpackage=portlet.portlet");
-
-		_buildProjects(gradleProjectDir, mavenProjectDir);
-	}
-
-	@Test
 	public void testBuildTemplateTemplateContextContributor70()
 		throws Exception {
 
@@ -4668,38 +4499,6 @@ public class ProjectTemplatesTest {
 		_testContainsJarEntry(mavenJarFile, "package.json");
 	}
 
-	private static void _testSpringMVCOutputs(File gradleProjectDir)
-		throws Exception {
-
-		ZipFile zipFile = null;
-
-		File gradleWarFile = new File(gradleProjectDir, "build/libs/foo.war");
-
-		try {
-			zipFile = new ZipFile(gradleWarFile);
-
-			_testExists(zipFile, "css/main.css");
-			_testExists(zipFile, "css/main_rtl.css");
-
-			_testExists(zipFile, "WEB-INF/lib/commons-logging-1.2.jar");
-
-			for (String jarName : _SPRING_MVC_JAR_NAMES) {
-				_testExists(
-					zipFile,
-					"WEB-INF/lib/spring-" + jarName + "-" +
-						_SPRING_MVC_VERSION + ".jar");
-			}
-
-			_testExists(
-				zipFile,
-				"WEB-INF/lib/com.liferay.portletmvc4spring.framework-" +
-					_PORTLETMVC4SPRING_VERSION + ".jar");
-		}
-		finally {
-			ZipFile.closeQuietly(zipFile);
-		}
-	}
-
 	private static File _testStartsWith(
 			File dir, String fileName, String prefix)
 		throws IOException {
@@ -5625,16 +5424,8 @@ public class ProjectTemplatesTest {
 
 	private static final String _OUTPUT_FILENAME_GLOB_REGEX = "*.{jar,war}";
 
-	private static final String _PORTLETMVC4SPRING_VERSION = "5.1.0";
-
 	private static final String _REPOSITORY_CDN_URL =
 		"https://repository-cdn.liferay.com/nexus/content/groups/public";
-
-	private static final String[] _SPRING_MVC_JAR_NAMES = {
-		"aop", "beans", "context", "core", "expression", "web", "webmvc"
-	};
-
-	private static final String _SPRING_MVC_VERSION = "5.1.5.RELEASE";
 
 	private static final boolean _TEST_DEBUG_BUNDLE_DIFFS = Boolean.getBoolean(
 		"test.debug.bundle.diffs");

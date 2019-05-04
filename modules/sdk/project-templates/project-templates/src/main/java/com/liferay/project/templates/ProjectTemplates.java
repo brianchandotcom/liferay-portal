@@ -367,7 +367,6 @@ public class ProjectTemplates {
 				  template.equals("npm-angular-portlet") ||
 				  template.equals("npm-react-portlet") ||
 				  template.equals("npm-vuejs-portlet") ||
-				  template.equals("spring-mvc-portlet") ||
 				  template.equals("portlet")) &&
 				 (className.length() > 7) && className.endsWith("Portlet")) {
 
@@ -406,7 +405,7 @@ public class ProjectTemplates {
 		name = name.replace('-', '.');
 		name = name.replace(' ', '.');
 
-		return name.toLowerCase();
+		return StringUtil.toLowerCase(name);
 	}
 
 	private static final Set<PosixFilePermission> _wrapperPosixFilePermissions =

@@ -14,6 +14,7 @@
 
 package com.liferay.project.templates.internal.util;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,6 +71,47 @@ public class StringUtil {
 		}
 
 		sb.append(s.substring(x));
+
+		return sb.toString();
+	}
+
+	public static String toLowerCase(String s) {
+		return toLowerCase(s, null);
+	}
+
+	public static String toLowerCase(String s, Locale locale) {
+		if (s == null) {
+			return null;
+		}
+
+		StringBuilder sb = null;
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (c > 127) {
+
+				// Found non-ascii char, fallback to the slow unicode detection
+
+				if (locale == null) {
+					return s.toLowerCase();
+				}
+
+				return s.toLowerCase(locale);
+			}
+
+			if ((c >= 'A') && (c <= 'Z')) {
+				if (sb == null) {
+					sb = new StringBuilder(s);
+				}
+
+				sb.setCharAt(i, (char)(c + 32));
+			}
+		}
+
+		if (sb == null) {
+			return s;
+		}
 
 		return sb.toString();
 	}

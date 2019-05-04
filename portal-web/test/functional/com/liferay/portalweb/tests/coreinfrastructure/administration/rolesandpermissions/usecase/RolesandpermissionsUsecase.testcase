@@ -420,9 +420,6 @@ definition {
 
 	@priority = "4"
 	test RolesOrganizationSearch {
-		property osgi.module.configuration.file.names = "com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config";
-		property osgi.module.configurations = "classicSearchPortletInFrontPage=&quot;true&quot;";
-
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -539,6 +536,15 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
+		SitePages.addPublicPage(
+			pageName = "Search Page",
+			pageTemplateName = "Search");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
 		SitePages.addPublicPage(pageName = "Documents and Media Page");
 
 		Navigator.gotoSitePage(
@@ -568,12 +574,12 @@ definition {
 			roleList = "Guest,Owner,Site Member,Organization User");
 
 		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
+			pageName = "Search Page",
 			siteName = "Organization Name");
 
-		ClassicSearch.search(searchTerm = "Test Document");
+		SearchPortlets.searchWidget(searchTerm = "Test Document");
 
-		ClassicSearch.viewSearchResultPG(
+		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Document",
 			searchAssetType = "Document");
 
@@ -602,12 +608,13 @@ definition {
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no documents or media files in this folder.");
 
-		ClassicSearch.search(searchTerm = "Test Document");
+		Navigator.gotoSitePage(
+			pageName = "Search Page",
+			siteName = "Organization Name");
 
-		ClassicSearch.viewSearchNoPG(
-			searchAssetTitle = "Test Document",
-			searchNoResults = "true",
-			searchTerm = "Test Document");
+		SearchPortlets.searchWidget(searchTerm = "Test Document");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "Test Document");
 
 		User.logoutPG();
 
@@ -623,9 +630,13 @@ definition {
 			dmDocumentDescription = "This is a test document.",
 			dmDocumentTitle = "Test Document");
 
-		ClassicSearch.search(searchTerm = "Test Document");
+		Navigator.gotoSitePage(
+			pageName = "Search Page",
+			siteName = "Organization Name");
 
-		ClassicSearch.viewSearchResultPG(
+		SearchPortlets.searchWidget(searchTerm = "Test Document");
+
+		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Document",
 			searchAssetType = "Document");
 

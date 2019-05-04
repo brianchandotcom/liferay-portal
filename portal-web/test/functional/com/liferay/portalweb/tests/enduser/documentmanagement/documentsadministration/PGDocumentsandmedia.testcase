@@ -1503,8 +1503,6 @@ definition {
 
 	@priority = "5"
 	test ViewSearchResultsForChildObjectRespectsParentFolderPermissions {
-		property osgi.module.configuration.file.names = "com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config";
-		property osgi.module.configurations = "classicSearchPortletInFrontPage=&quot;true&quot;";
 		property test.name.skip.portal.instance = "PGDocumentsandmedia#ViewSearchResultsForChildObjectRespectsParentFolderPermissions";
 		property testray.component.names = "Training";
 
@@ -1710,13 +1708,7 @@ definition {
 
 		SitePages.addPublicPage(
 			pageName = "Search Page",
-			sitePageType = "Widget Page");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Search Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+			pageTemplateName = "Search");
 
 		Navigator.gotoSitePage(
 			pageName = "Search Page",
@@ -1730,12 +1722,8 @@ definition {
 			pageName = "Search Page",
 			siteName = "Site Name 1");
 
-		ClassicSearch.search(searchTerm = "DM Document Title");
+		SearchPortlets.searchWidget(searchTerm = "DM Document Title");
 
-		ClassicSearch.viewSearchNoPG(
-			searchAssetTitle = "DM Document Title",
-			searchAssetType = "Document",
-			searchNoResults = "true",
-			searchTerm = "DM Document Title");
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "DM Document Title");
 	}
 }

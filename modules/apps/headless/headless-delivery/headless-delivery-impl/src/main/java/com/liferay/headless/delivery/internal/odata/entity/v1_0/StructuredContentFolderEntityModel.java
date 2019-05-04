@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -44,7 +45,9 @@ public class StructuredContentFolderEntityModel implements EntityModel {
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.TITLE))
+				"name",
+				locale -> "localized_title_".concat(
+					LocaleUtil.toLanguageId(locale)))
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

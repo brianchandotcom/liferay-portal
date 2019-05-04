@@ -836,8 +836,6 @@ public class LayoutImportController implements ImportController {
 			// portlet permissions. The import of the portlet data assumes that
 			// portlet preferences already exist.
 
-			setPortletScope(portletDataContext, portletElement);
-
 			long portletPreferencesGroupId = portletDataContext.getGroupId();
 
 			Element portletDataElement = portletElement.element("portlet-data");
@@ -990,14 +988,6 @@ public class LayoutImportController implements ImportController {
 			new StagedModelType(Layout.class));
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
 			new StagedModelType(StagedAssetLink.class));
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void setPortletScope(
-		PortletDataContext portletDataContext, Element portletElement) {
 	}
 
 	protected void validateFile(

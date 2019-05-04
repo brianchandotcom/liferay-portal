@@ -16,15 +16,11 @@ package com.liferay.exportimport.lifecycle;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.exportimport.internal.lar.ExportImportProcessCallbackUtil;
 import com.liferay.exportimport.kernel.lifecycle.BaseProcessExportImportLifecycleListener;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * @author     Daniel Kocsis
@@ -43,36 +39,16 @@ public class ExportImportProcessCallbackLifecycleListener
 	@Override
 	protected void onProcessFailed(List<Serializable> attributes)
 		throws Exception {
-
-		ExportImportProcessCallbackUtil.popCallbackList();
 	}
 
 	@Override
 	protected void onProcessStarted(List<Serializable> attributes)
 		throws Exception {
-
-		ExportImportProcessCallbackUtil.pushCallbackList();
 	}
 
 	@Override
 	protected void onProcessSucceeded(List<Serializable> attributes)
 		throws Exception {
-
-		List<Callable<?>> callables =
-			ExportImportProcessCallbackUtil.popCallbackList();
-
-		for (Callable<?> callable : callables) {
-			try {
-				callable.call();
-			}
-			catch (Exception e) {
-				_log.error(
-					"Unable to execute export import process callback", e);
-			}
-		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ExportImportProcessCallbackLifecycleListener.class);
 
 }

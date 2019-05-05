@@ -450,7 +450,7 @@ definition {
 			locator1 = "DocumentsAndMediaShare#EMAIL_VIEW_DOCUMENT_BUTTON",
 			value1 = "View Document");
 
-		SelectWindow(locator1 = "title=- Liferay");
+		SelectWindow(locator1 = "title=- ${siteName}");
 
 		DMDocumentSharing.viewDocumentViaSharedAssets(
 			assetSharingPermission = "View",

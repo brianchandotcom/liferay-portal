@@ -735,6 +735,8 @@ definition {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "PGDocumentsandmedia#EditAndDeleteGoogleDoc";
 
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Documents and Media",
 			configurationName = "Google Drive",
@@ -759,7 +761,7 @@ definition {
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.3"),
 			userPassword = PropsUtil.get("email.password.3"),
-			windowTitle = "Documents and Media Page - Liferay");
+			windowTitle = "Documents and Media Page - ${siteName}");
 
 		GoogleDrive.selectDocument(googleDocName = "taco.jpg");
 
@@ -1047,6 +1049,8 @@ definition {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "PGDocumentsandmedia#MoveGoogleDocToFolder";
 
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Documents and Media",
 			configurationName = "Google Drive",
@@ -1071,7 +1075,7 @@ definition {
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.3"),
 			userPassword = PropsUtil.get("email.password.3"),
-			windowTitle = "Documents and Media Page - Liferay");
+			windowTitle = "Documents and Media Page - ${siteName}");
 
 		GoogleDrive.selectDocument(googleDocName = "taco.jpg");
 

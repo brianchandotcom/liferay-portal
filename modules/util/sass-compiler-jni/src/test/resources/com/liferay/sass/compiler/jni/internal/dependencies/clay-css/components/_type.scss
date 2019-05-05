@@ -1,0 +1,105 @@
+body {
+	-moz-osx-font-smoothing: $body-moz-osx-font-smoothing;
+	-ms-overflow-style: scrollbar;
+	-webkit-font-smoothing: $body-webkit-font-smoothing;
+	text-align: $body-text-align;
+
+	@include clay-scale-component {
+		font-size: $font-size-base-mobile;
+	}
+}
+
+a {
+	@if ($link-cursor != pointer) {
+		cursor: $link-cursor;
+	}
+}
+
+// Headings
+
+h1,
+.h1 {
+	@include clay-scale-component {
+		font-size: $h1-font-size-mobile;
+	}
+}
+
+h2,
+.h2 {
+	@include clay-scale-component {
+		font-size: $h2-font-size-mobile;
+	}
+}
+
+h3,
+.h3 {
+	@include clay-scale-component {
+		font-size: $h3-font-size-mobile;
+	}
+}
+
+h4,
+.h4 {
+	@include clay-scale-component {
+		font-size: $h4-font-size-mobile;
+	}
+}
+
+h5,
+.h5 {
+	@include clay-scale-component {
+		font-size: $h5-font-size-mobile;
+	}
+}
+
+h6,
+.h6 {
+	@include clay-scale-component {
+		font-size: $h6-font-size-mobile;
+	}
+}
+
+b {
+	font-weight: $b-font-weight;
+}
+
+strong {
+	font-weight: $strong-font-weight;
+}
+
+// Reference Mark
+
+.reference-mark {
+	display: inline-block;
+	font-size: $reference-mark-font-size;
+	position: relative;
+	vertical-align: $reference-mark-vertical-align;
+}
+
+// Marked Text
+
+mark,
+.mark {
+	@include clay-highlight-text($mark-bg, $mark-color);
+}
+
+// Text Truncate
+
+.text-truncate {
+	display: block;
+}
+
+.text-truncate-inline {
+	display: inline-flex;
+	max-width: 100%;
+
+	.text-truncate {
+		display: inline-block;
+		max-width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: bottom;
+		white-space: nowrap;
+		word-wrap: normal;
+	}
+}

@@ -18,48 +18,61 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.model.impl.PortletImpl;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleClassTestRule;
-import com.liferay.portlet.bundle.friendlyurlmappertrackerimpl.TestFriendlyURLMapper;
 import com.liferay.portlet.internal.FriendlyURLMapperTrackerImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
+
+import java.util.HashMap;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Philip Jones
+ * @author Leon Chi
  */
 public class FriendlyURLMapperTrackerImplTest {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			new SyntheticBundleClassTestRule(
-				"bundle.friendlyurlmappertrackerimpl"));
-
 	@Test
 	public void testGetFriendlyURLMapper() throws Exception {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
+		Registry registry = RegistryUtil.getRegistry();
+
 		Portlet portlet = new PortletImpl();
 
 		portlet.setPortletClass(MVCPortlet.class.getName());
-		portlet.setPortletId("FriendlyURLMapperTrackerImplTest");
+		portlet.setPortletId(_PORTLET_NAME);
 
 		FriendlyURLMapperTracker friendlyURLMapperTracker =
 			new FriendlyURLMapperTrackerImpl(portlet);
 
-		FriendlyURLMapper friendlyURLMapper =
-			friendlyURLMapperTracker.getFriendlyURLMapper();
+		FriendlyURLMapper friendlyURLMapper = ProxyFactory.newDummyInstance(
+			FriendlyURLMapper.class);
 
-		Class<?> clazz = friendlyURLMapper.getClass();
+		ServiceRegistration<FriendlyURLMapper> serviceRegistration =
+			registry.registerService(
+				FriendlyURLMapper.class, friendlyURLMapper,
+				new HashMap<String, Object>() {
+					{
+						put("javax.portlet.name", _PORTLET_NAME);
+					}
+				});
 
-		Assert.assertEquals(
-			TestFriendlyURLMapper.class.getName(), clazz.getName());
+		try {
+			Assert.assertSame(
+				friendlyURLMapper,
+				friendlyURLMapperTracker.getFriendlyURLMapper());
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
+
+	private static final String _PORTLET_NAME =
+		"FriendlyURLMapperTrackerImplTest";
 
 }

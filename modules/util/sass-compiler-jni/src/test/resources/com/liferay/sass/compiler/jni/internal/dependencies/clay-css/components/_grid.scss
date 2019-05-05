@@ -1,0 +1,58 @@
+@if ($enable-grid-classes) {
+	.container-fluid-max {
+		@each $breakpoint, $max-width in $container-max-widths {
+			$infix: '-#{$breakpoint}';
+
+			&#{$infix} {
+				max-width: $max-width;
+			}
+		}
+	}
+
+	.container-no-gutters {
+		@include clay-container-no-gutters;
+
+		@each $breakpoint in map-keys($grid-breakpoints) {
+			$next: breakpoint-next($breakpoint, $grid-breakpoints);
+			$infix: breakpoint-infix($next, $grid-breakpoints);
+
+			@if not ($infix == '') { // .container-no-gutters-sm-down, md-down, lg-down, xl-down
+				&#{$infix}-down {
+					@include media-breakpoint-down($breakpoint) {
+						@include clay-container-no-gutters;
+					}
+				}
+			}
+		}
+	}
+
+	%clay-custom-grid-wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		list-style: none;
+		margin-bottom: 0;
+		padding-left: 0;
+
+		.container &,
+		.container-fluid & {
+			margin-left: -($grid-gutter-width / 2);
+			margin-right: -($grid-gutter-width / 2);
+		}
+	}
+
+	.container-form-lg {
+		@include clay-container($container-form-lg);
+
+		.menubar-vertical-expand-lg {
+			$container-form-lg-breakpoint-down: clay-breakpoint-prev(map-get($container-form-lg, breakpoint-up));
+
+			@include media-breakpoint-down($container-form-lg-breakpoint-down) {
+				margin-top: -(map-get($container-form-lg, padding-top-mobile));
+			}
+		}
+	}
+
+	.container-view {
+		@include clay-container($container-view);
+	}
+}

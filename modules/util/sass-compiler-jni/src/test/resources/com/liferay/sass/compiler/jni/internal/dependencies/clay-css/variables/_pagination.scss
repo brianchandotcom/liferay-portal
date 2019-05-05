@@ -1,0 +1,59 @@
+$pagination-font-size: null !default;
+
+$pagination-item-height: 2.375rem !default; // 38px
+$pagination-item-margin-x: null !default;
+$pagination-item-margin-y: null !default;
+
+$pagination-link-border-radius: 0 !default;
+$pagination-link-cursor: null !default;
+$pagination-link-transition: none !default;
+
+$pagination-link-first-border-radius: $border-radius 0 0 $border-radius !default;
+$pagination-link-last-border-radius: 0 $border-radius $border-radius 0 !default;
+
+$pagination-margin-bottom: 0.5rem !default;
+
+$pagination-margin-top-mobile: 0.5rem !default;
+
+$pagination-disabled-cursor: $disabled-cursor !default;
+$pagination-disabled-opacity: 1 !default;
+$pagination-disabled-pointer-events: auto !default;
+
+$pagination-dropdown-menu-spacer-y: null !default;
+
+$pagination-items-per-page-bg: null !default;
+$pagination-items-per-page-border-color: $pagination-border-color !default;
+$pagination-items-per-page-border-radius: $border-radius !default;
+$pagination-items-per-page-color: $pagination-color !default;
+$pagination-items-per-page-font-size: $pagination-font-size !default;
+$pagination-items-per-page-transition: $pagination-link-transition !default;
+
+$pagination-items-per-page-hover-bg: $pagination-hover-bg !default;
+$pagination-items-per-page-hover-border-color: $pagination-hover-border-color !default;
+$pagination-items-per-page-hover-color: $pagination-hover-color !default;
+
+$pagination-items-per-page-focus-box-shadow: $pagination-focus-box-shadow !default;
+$pagination-items-per-page-focus-outline: 0 !default;
+
+$pagination-items-per-page-lexicon-icon-margin-left: 0.125rem !default; // 2px
+$pagination-items-per-page-lexicon-icon-margin-top: 0.125rem !default; // 2px
+
+$pagination-results-color: null !default;
+
+// Sizes
+
+$pagination-font-size-sm: $font-size-sm !default;
+$pagination-item-height-sm: 1.9375rem !default; // 31px
+$pagination-line-height-sm: 1 !default;
+$pagination-link-border-radius-sm: null !default;
+
+$pagination-items-per-page-lexicon-icon-margin-left-sm: null !default;
+$pagination-items-per-page-lexicon-icon-margin-top-sm: null !default;
+
+$pagination-font-size-lg: $font-size-lg !default;
+$pagination-item-height-lg: 3.5rem !default; // 56px
+$pagination-line-height-lg: 1 !default;
+$pagination-link-border-radius-lg: null !default;
+
+$pagination-items-per-page-lexicon-icon-margin-left-lg: null !default;
+$pagination-items-per-page-lexicon-icon-margin-top-lg: null !default;

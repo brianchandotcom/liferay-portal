@@ -1,0 +1,119 @@
+.sidebar {
+	height: 100%;
+	overflow: auto;
+
+	-webkit-overflow-scrolling: touch;
+
+	.container-fluid {
+		padding-left: $sidebar-padding-left;
+		padding-right: $sidebar-padding-right;
+	}
+}
+
+// Sidebar Header / Footer
+
+.sidebar-header,
+.sidebar-footer {
+	padding-bottom: $sidebar-padding-bottom;
+	padding-left: $sidebar-padding-left;
+	padding-right: $sidebar-padding-right;
+	padding-top: $sidebar-padding-top;
+}
+
+.sidebar-header {
+	.component-title {
+		@include clay-text-typography($sidebar-header-component-title);
+	}
+
+	.component-subtitle {
+		@include clay-text-typography($sidebar-header-component-subtitle);
+	}
+}
+
+// Sidebar Body
+
+.sidebar-body {
+	overflow: auto;
+
+	-webkit-overflow-scrolling: touch;
+
+	padding-bottom: $sidebar-padding-bottom;
+	padding-left: $sidebar-padding-left;
+	padding-right: $sidebar-padding-right;
+	padding-top: $sidebar-padding-top;
+
+	> .sidebar-section {
+		margin-bottom: 2rem;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+// Sidebar Section
+
+.sidebar-section {
+	position: relative;
+	word-wrap: break-word;
+}
+
+// Sidebar List Group
+
+.sidebar-list-group {
+	display: flex;
+	flex-direction: column;
+	font-size: $sidebar-list-group-font-size;
+	margin-bottom: 0;
+	padding-left: 0;
+
+	@extend %#{$sidebar-list-group-type} !optional;
+
+	.autofit-col {
+		padding-bottom: $sidebar-list-group-autofit-col-padding-y;
+		padding-left: $sidebar-list-group-autofit-col-padding-x;
+		padding-right: $sidebar-list-group-autofit-col-padding-x;
+		padding-top: $sidebar-list-group-autofit-col-padding-y;
+
+		.list-group-title:only-child {
+			height: map-get($sidebar-list-group-sticker-size, size);
+		}
+	}
+
+	.list-group-item {
+		background-color: $sidebar-list-group-bg;
+		border-color: $sidebar-list-group-border-color;
+		padding: $sidebar-list-group-item-padding;
+	}
+
+	.sticker {
+		@include clay-sticker-size($sidebar-list-group-sticker-size);
+	}
+}
+
+// Sidebar Panel
+
+.sidebar-panel {
+	margin-bottom: $sidebar-panel-margin-bottom;
+	position: relative;
+}
+
+// Sidebar Definition List (dl dt dd)
+
+.sidebar-dt {
+	@include clay-text-typography($sidebar-dt);
+}
+
+.sidebar-dd {
+	@include clay-text-typography($sidebar-dd);
+}
+
+// Sidebar Variants
+
+.sidebar-light {
+	@include clay-sidebar-variant($sidebar-light);
+}
+
+.sidebar-light .component-navigation-bar {
+	@include clay-navbar-variant($sidebar-light-navigation-bar);
+}

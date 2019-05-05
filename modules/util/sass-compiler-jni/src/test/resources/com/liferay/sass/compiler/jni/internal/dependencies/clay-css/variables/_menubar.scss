@@ -1,0 +1,37 @@
+// Menubar Vertical MD
+
+$menubar-vertical-expand-md: () !default;
+$menubar-vertical-expand-md: map-merge((
+	margin-bottom-mobile: 1.5rem,
+	margin-left-mobile: -($grid-gutter-width / 2),
+	margin-right-mobile: -($grid-gutter-width / 2),
+	collapse-z-index-mobile: $zindex-navbar-collapse-absolute - 1
+), $menubar-vertical-expand-md);
+
+$menubar-vertical-transparent-md: () !default;
+$menubar-vertical-transparent-md: map-merge((
+	link-color: $gray-600,
+	link-hover-color: darken($gray-600, 15),
+	link-active-color: $gray-900,
+	bg-mobile: $gray-100,
+), $menubar-vertical-transparent-md);
+
+// Menubar Vertical LG
+
+$menubar-vertical-expand-lg: () !default;
+$menubar-vertical-expand-lg: map-merge((
+	breakpoint-up: lg,
+	margin-bottom-mobile: 1.5rem,
+	margin-left-mobile: -($grid-gutter-width / 2),
+	margin-right-mobile: -($grid-gutter-width / 2),
+	collapse-z-index-mobile: $zindex-navbar-collapse-absolute - 1
+), $menubar-vertical-expand-lg);
+
+$menubar-vertical-transparent-lg: () !default;
+$menubar-vertical-transparent-lg: map-merge((
+	breakpoint-up: lg,
+	link-color: $gray-600,
+	link-hover-color: darken($gray-600, 15),
+	link-active-color: $gray-900,
+	bg-mobile: $gray-100,
+), $menubar-vertical-transparent-lg);

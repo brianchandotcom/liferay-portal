@@ -450,12 +450,6 @@ function updateEditableValueReducer(state, action) {
 		action.type === UPDATE_EDITABLE_VALUE_LOADING ||
 		action.type === UPDATE_EDITABLE_VALUE_SUCCESS) {
 
-		const editablesPath = [
-			'fragmentEntryLinks',
-			action.fragmentEntryLinkId,
-			'editableValues'
-		];
-
 		if (action.type === UPDATE_EDITABLE_VALUE_SUCCESS) {
 			nextState = setIn(nextState, ['savingChanges'], false);
 
@@ -466,16 +460,22 @@ function updateEditableValueReducer(state, action) {
 					Liferay.ThemeDisplay.getBCP47LanguageId()
 				)
 			);
+		}
+		else {
+			const editablesPath = [
+				'fragmentEntryLinks',
+				action.fragmentEntryLinkId,
+				'editableValues'
+			];
 
-			nextState = setIn(nextState, editablesPath, action.editableValues);
-		}
-		else if (action.type === UPDATE_EDITABLE_VALUE_ERROR) {
-			nextState = setIn(nextState, ['savingChanges'], false);
-			nextState = setIn(nextState, editablesPath, action.editableValues);
-		}
-		else if (action.type === UPDATE_EDITABLE_VALUE_LOADING) {
-			nextState = setIn(nextState, ['savingChanges'], true);
-			nextState = setIn(nextState, editablesPath, action.editableValues);
+			if (action.type === UPDATE_EDITABLE_VALUE_ERROR) {
+				nextState = setIn(nextState, ['savingChanges'], false);
+				nextState = setIn(nextState, editablesPath, action.editableValues);
+			}
+			else if (action.type === UPDATE_EDITABLE_VALUE_LOADING) {
+				nextState = setIn(nextState, ['savingChanges'], true);
+				nextState = setIn(nextState, editablesPath, action.editableValues);
+			}
 		}
 	}
 

@@ -8,4 +8,11 @@ indicators.forEach(indicator => indicator.dataset.target = '#' + carouselId);
 carouselControls.forEach(control => control.href = '#' + carouselId);
 
 slide.classList.add('carousel');
-$(slide).carousel({ ride: 'carousel' });
+
+if (document.querySelector(".has-edit-mode-menu")) {
+	$(slide).carousel('pause');
+	$('.carousel').off('keydown.bs.carousel');
+}
+else {
+	$(slide).carousel({ ride: 'carousel' });
+}

@@ -166,7 +166,8 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 			PermissionThreadLocal.getPermissionChecker();
 
 		if ((permissionChecker == null) ||
-			!_indexerPermissionPostFilter.isPermissionAware()) {
+			!_indexerPermissionPostFilter.isPermissionAware() ||
+			_modelSearchSettings.isSearchResultPermissionFilterSuppressed()) {
 
 			return doSearch(searchContext);
 		}

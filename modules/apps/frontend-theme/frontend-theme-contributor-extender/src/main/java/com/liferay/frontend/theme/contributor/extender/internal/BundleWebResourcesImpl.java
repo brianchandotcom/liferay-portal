@@ -24,9 +24,10 @@ import java.util.Collection;
 public class BundleWebResourcesImpl implements BundleWebResources {
 
 	public BundleWebResourcesImpl(
-		Collection<String> cssResourcePaths,
+		String servletContextPath, Collection<String> cssResourcePaths,
 		Collection<String> jsResourcePaths) {
 
+		_servletContextPath = servletContextPath;
 		_cssResourcePaths = cssResourcePaths;
 		_jsResourcePaths = jsResourcePaths;
 	}
@@ -46,12 +47,8 @@ public class BundleWebResourcesImpl implements BundleWebResources {
 		return _servletContextPath;
 	}
 
-	public void setServletContextPath(String servletContextPath) {
-		_servletContextPath = servletContextPath;
-	}
-
 	private final Collection<String> _cssResourcePaths;
 	private final Collection<String> _jsResourcePaths;
-	private String _servletContextPath;
+	private final String _servletContextPath;
 
 }

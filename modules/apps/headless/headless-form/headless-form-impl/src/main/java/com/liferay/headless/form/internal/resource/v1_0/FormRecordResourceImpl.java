@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
+import com.liferay.headless.form.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.form.internal.dto.v1_0.util.FormRecordUtil;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -127,7 +128,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceService.getFormInstance(formId);
 
-		DDMFormValues ddmFormValues = FormRecordUtil.createDDMFormValues(
+		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
 			ddmFormInstance, formRecord.getFieldValues(),
 			contextAcceptLanguage.getPreferredLocale());
 
@@ -153,7 +154,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstanceRecord.getFormInstance();
 
-		DDMFormValues ddmFormValues = FormRecordUtil.createDDMFormValues(
+		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
 			ddmFormInstance, formRecord.getFieldValues(),
 			contextAcceptLanguage.getPreferredLocale());
 

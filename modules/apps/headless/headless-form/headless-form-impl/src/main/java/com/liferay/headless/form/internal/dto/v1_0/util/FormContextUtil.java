@@ -44,7 +44,7 @@ public class FormContextUtil {
 			FieldValue[] fieldValues, Locale locale)
 		throws Exception {
 
-		DDMFormValues ddmFormValues = FormRecordUtil.createDDMFormValues(
+		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
 			ddmFormInstance, fieldValues, locale);
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();

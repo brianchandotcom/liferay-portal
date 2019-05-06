@@ -70,9 +70,6 @@ public class TopHeadExtender
 			return null;
 		}
 
-		int liferayTopHeadWeight = GetterUtil.getInteger(
-			headers.get("Liferay-Top-Head-Weight"));
-
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		String filterString = StringBundler.concat(
@@ -80,7 +77,8 @@ public class TopHeadExtender
 			")(osgi.web.symbolicname=", bundle.getSymbolicName(), "))");
 
 		Dictionary<String, Object> properties = MapUtil.singletonDictionary(
-			"service.ranking", liferayTopHeadWeight);
+			"service.ranking",
+			GetterUtil.getInteger(headers.get("Liferay-Top-Head-Weight")));
 
 		return ServiceTrackerFactory.open(
 			bundleContext, filterString,

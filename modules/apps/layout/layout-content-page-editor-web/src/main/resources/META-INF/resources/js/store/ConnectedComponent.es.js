@@ -70,7 +70,9 @@ const getConnectedComponent = (Component, properties) => {
 				ConnectedComponent.STATE[property] = INITIAL_STATE[property].internal();
 			}
 			catch (e) {
-				throw new Error(`${property} is not available fro ${Component.name}`);
+				throw new Error(
+					`${property} is not available from ${Component.name}`
+				);
 			}
 		}
 	);

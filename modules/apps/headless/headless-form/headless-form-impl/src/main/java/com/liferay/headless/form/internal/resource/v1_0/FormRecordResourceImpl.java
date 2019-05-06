@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -237,7 +236,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 		Value value = ddmFormFieldValue.getValue();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			value.getString(LocaleThreadLocal.getDefaultLocale()));
+			value.getString(contextAcceptLanguage.getPreferredLocale()));
 
 		long fileEntryId = jsonObject.getLong("fileEntryId");
 

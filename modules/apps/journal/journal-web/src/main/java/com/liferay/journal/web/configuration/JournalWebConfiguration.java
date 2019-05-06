@@ -83,8 +83,8 @@ public interface JournalWebConfiguration {
 	public boolean journalBrowseByStructuresSortedByName();
 
 	@Meta.AD(
-		deflt = "ftl", name = "template-language-types",
-		required = false
+		deflt = "ftl", description = "template-language-types-help",
+		name = "template-language-types", required = false
 	)
 	public String[] journalDDMTemplateLanguageTypes();
 

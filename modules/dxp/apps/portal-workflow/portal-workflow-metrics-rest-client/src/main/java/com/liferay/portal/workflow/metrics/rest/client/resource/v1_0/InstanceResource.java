@@ -32,7 +32,8 @@ import javax.annotation.Generated;
 public class InstanceResource {
 
 	public Page<Instance> getProcessInstancesPage(
-			Long processId, Pagination pagination)
+			Long processId, String[] slaStatuses, String[] statuses,
+			String[] taskKeys, Pagination pagination)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

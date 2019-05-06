@@ -51,9 +51,42 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Instance")
 public class Instance {
 
-	public static enum Status {
+	public static enum SlaStatus {
 
 		ON_TIME("OnTime"), OVERDUE("Overdue"), UNTRACKED("Untracked");
+
+		@JsonCreator
+		public static SlaStatus create(String value) {
+			for (SlaStatus slaStatus : values()) {
+				if (Objects.equals(slaStatus.getValue(), value)) {
+					return slaStatus;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private SlaStatus(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum Status {
+
+		COMPLETED("Completed"), PENDING("Pending");
 
 		@JsonCreator
 		public static Status create(String value) {
@@ -193,6 +226,43 @@ public class Instance {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
+
+	@Schema
+	public SlaStatus getSlaStatus() {
+		return slaStatus;
+	}
+
+	@JsonIgnore
+	public String getSlaStatusAsString() {
+		if (slaStatus == null) {
+			return null;
+		}
+
+		return slaStatus.toString();
+	}
+
+	public void setSlaStatus(SlaStatus slaStatus) {
+		this.slaStatus = slaStatus;
+	}
+
+	@JsonIgnore
+	public void setSlaStatus(
+		UnsafeSupplier<SlaStatus, Exception> slaStatusUnsafeSupplier) {
+
+		try {
+			slaStatus = slaStatusUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SlaStatus slaStatus;
 
 	@Schema
 	public Status getStatus() {
@@ -367,6 +437,20 @@ public class Instance {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		if (slaStatus != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"slaStatus\": ");
+
+			sb.append("\"");
+
+			sb.append(slaStatus);
+
+			sb.append("\"");
 		}
 
 		if (status != null) {

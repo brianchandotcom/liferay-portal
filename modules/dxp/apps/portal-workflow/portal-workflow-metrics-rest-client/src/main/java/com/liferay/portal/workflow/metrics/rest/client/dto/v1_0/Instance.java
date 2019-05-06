@@ -29,9 +29,40 @@ import javax.annotation.Generated;
 @Generated("")
 public class Instance {
 
-	public static enum Status {
+	public static enum SlaStatus {
 
 		ON_TIME("OnTime"), OVERDUE("Overdue"), UNTRACKED("Untracked");
+
+		public static SlaStatus create(String value) {
+			for (SlaStatus slaStatus : values()) {
+				if (Objects.equals(slaStatus.getValue(), value)) {
+					return slaStatus;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private SlaStatus(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum Status {
+
+		COMPLETED("Completed"), PENDING("Pending");
 
 		public static Status create(String value) {
 			for (Status status : values()) {
@@ -141,6 +172,35 @@ public class Instance {
 	}
 
 	protected Long id;
+
+	public SlaStatus getSlaStatus() {
+		return slaStatus;
+	}
+
+	public String getSlaStatusAsString() {
+		if (slaStatus == null) {
+			return null;
+		}
+
+		return slaStatus.toString();
+	}
+
+	public void setSlaStatus(SlaStatus slaStatus) {
+		this.slaStatus = slaStatus;
+	}
+
+	public void setSlaStatus(
+		UnsafeSupplier<SlaStatus, Exception> slaStatusUnsafeSupplier) {
+
+		try {
+			slaStatus = slaStatusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SlaStatus slaStatus;
 
 	public Status getStatus() {
 		return status;

@@ -112,6 +112,20 @@ public class InstanceSerDes {
 			sb.append(instance.getId());
 		}
 
+		if (instance.getSlaStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"slaStatus\": ");
+
+			sb.append("\"");
+
+			sb.append(instance.getSlaStatus());
+
+			sb.append("\"");
+		}
+
 		if (instance.getStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -210,6 +224,13 @@ public class InstanceSerDes {
 			map.put("id", String.valueOf(instance.getId()));
 		}
 
+		if (instance.getSlaStatus() == null) {
+			map.put("slaStatus", null);
+		}
+		else {
+			map.put("slaStatus", String.valueOf(instance.getSlaStatus()));
+		}
+
 		if (instance.getStatus() == null) {
 			map.put("status", null);
 		}
@@ -305,6 +326,13 @@ public class InstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					instance.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "slaStatus")) {
+				if (jsonParserFieldValue != null) {
+					instance.setSlaStatus(
+						Instance.SlaStatus.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

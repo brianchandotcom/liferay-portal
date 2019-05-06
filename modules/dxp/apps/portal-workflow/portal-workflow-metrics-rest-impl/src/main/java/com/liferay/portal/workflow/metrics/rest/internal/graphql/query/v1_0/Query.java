@@ -93,6 +93,9 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Instance> getProcessInstancesPage(
 			@GraphQLName("processId") Long processId,
+			@GraphQLName("slaStatuses") String[] slaStatuses,
+			@GraphQLName("statuses") String[] statuses,
+			@GraphQLName("taskKeys") String[] taskKeys,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -102,7 +105,8 @@ public class Query {
 			this::_populateResourceContext,
 			instanceResource -> {
 				Page paginationPage = instanceResource.getProcessInstancesPage(
-					processId, Pagination.of(pageSize, page));
+					processId, slaStatuses, statuses, taskKeys,
+					Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});

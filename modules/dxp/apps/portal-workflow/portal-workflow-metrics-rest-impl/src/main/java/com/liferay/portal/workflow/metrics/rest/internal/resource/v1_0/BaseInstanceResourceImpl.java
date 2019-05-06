@@ -41,6 +41,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -57,6 +58,9 @@ public abstract class BaseInstanceResourceImpl implements InstanceResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.QUERY, name = "slaStatuses"),
+			@Parameter(in = ParameterIn.QUERY, name = "statuses"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskKeys"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -67,6 +71,10 @@ public abstract class BaseInstanceResourceImpl implements InstanceResource {
 	public Page<Instance> getProcessInstancesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
+			@Parameter(hidden = true) @QueryParam("slaStatuses") String[]
+				slaStatuses,
+			@Parameter(hidden = true) @QueryParam("statuses") String[] statuses,
+			@Parameter(hidden = true) @QueryParam("taskKeys") String[] taskKeys,
 			@Context Pagination pagination)
 		throws Exception {
 

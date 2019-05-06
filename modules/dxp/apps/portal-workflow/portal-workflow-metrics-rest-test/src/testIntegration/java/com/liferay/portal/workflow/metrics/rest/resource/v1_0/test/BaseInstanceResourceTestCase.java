@@ -182,7 +182,7 @@ public abstract class BaseInstanceResourceTestCase {
 					irrelevantProcessId, randomIrrelevantInstance());
 
 			Page<Instance> page = invokeGetProcessInstancesPage(
-				irrelevantProcessId, Pagination.of(1, 2));
+				irrelevantProcessId, null, null, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -199,7 +199,7 @@ public abstract class BaseInstanceResourceTestCase {
 			processId, randomInstance());
 
 		Page<Instance> page = invokeGetProcessInstancesPage(
-			processId, Pagination.of(1, 2));
+			processId, null, null, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -223,14 +223,14 @@ public abstract class BaseInstanceResourceTestCase {
 			processId, randomInstance());
 
 		Page<Instance> page1 = invokeGetProcessInstancesPage(
-			processId, Pagination.of(1, 2));
+			processId, null, null, null, Pagination.of(1, 2));
 
 		List<Instance> instances1 = (List<Instance>)page1.getItems();
 
 		Assert.assertEquals(instances1.toString(), 2, instances1.size());
 
 		Page<Instance> page2 = invokeGetProcessInstancesPage(
-			processId, Pagination.of(2, 2));
+			processId, null, null, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -268,7 +268,8 @@ public abstract class BaseInstanceResourceTestCase {
 	}
 
 	protected Page<Instance> invokeGetProcessInstancesPage(
-			Long processId, Pagination pagination)
+			Long processId, String[] slaStatuses, String[] statuses,
+			String[] taskKeys, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -294,7 +295,8 @@ public abstract class BaseInstanceResourceTestCase {
 	}
 
 	protected Http.Response invokeGetProcessInstancesPageResponse(
-			Long processId, Pagination pagination)
+			Long processId, String[] slaStatuses, String[] statuses,
+			String[] taskKeys, Pagination pagination)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
@@ -386,6 +388,14 @@ public abstract class BaseInstanceResourceTestCase {
 
 			if (Objects.equals("assetType", additionalAssertFieldName)) {
 				if (instance.getAssetType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("slaStatus", additionalAssertFieldName)) {
+				if (instance.getSlaStatus() == null) {
 					valid = false;
 				}
 
@@ -486,6 +496,16 @@ public abstract class BaseInstanceResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(instance1.getId(), instance2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("slaStatus", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getSlaStatus(), instance2.getSlaStatus())) {
+
 					return false;
 				}
 
@@ -623,6 +643,11 @@ public abstract class BaseInstanceResourceTestCase {
 		}
 
 		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("slaStatus")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

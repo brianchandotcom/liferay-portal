@@ -99,13 +99,10 @@ public class ThemeContributorExtender
 	}
 
 	private BundleWebResourcesImpl _scanForResources(Bundle bundle) {
-		final List<String> cssResourcePaths = new ArrayList<>();
-		final List<String> jsResourcePaths = new ArrayList<>();
+		List<String> cssResourcePaths = new ArrayList<>();
 
 		Enumeration<URL> cssEntries = bundle.findEntries(
 			"/META-INF/resources", "*.css", true);
-		Enumeration<URL> jsEntries = bundle.findEntries(
-			"/META-INF/resources", "*.js", true);
 
 		if (cssEntries != null) {
 			while (cssEntries.hasMoreElements()) {
@@ -113,7 +110,7 @@ public class ThemeContributorExtender
 
 				String path = url.getFile();
 
-				path = path.replace("/META-INF/resources", "");
+				path = path.substring("/META-INF/resources".length());
 
 				int index = path.lastIndexOf('/');
 
@@ -125,13 +122,19 @@ public class ThemeContributorExtender
 			}
 		}
 
+		List<String> jsResourcePaths = new ArrayList<>();
+
+		Enumeration<URL> jsEntries = bundle.findEntries(
+			"/META-INF/resources", "*.js", true);
+
 		if (jsEntries != null) {
 			while (jsEntries.hasMoreElements()) {
 				URL url = jsEntries.nextElement();
 
 				String path = url.getFile();
 
-				jsResourcePaths.add(path.replace("/META-INF/resources", ""));
+				jsResourcePaths.add(
+					path.substring("/META-INF/resources".length()));
 			}
 		}
 

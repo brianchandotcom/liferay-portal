@@ -23,8 +23,6 @@
 			<%
 			String defaultLanguageId = LocaleUtil.toLanguageId(defaultEditLocale);
 
-			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(groupId);
-
 			String normalizedDefaultLanguageId = StringUtil.replace(defaultLanguageId, '_', '-');
 			%>
 
@@ -46,6 +44,8 @@
 						LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<String>();
 
 						uniqueLanguageIds.add(defaultLanguageId);
+
+						Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(groupId);
 
 						for (Locale availableLocale : availableLocales) {
 							String curLanguageId = LocaleUtil.toLanguageId(availableLocale);

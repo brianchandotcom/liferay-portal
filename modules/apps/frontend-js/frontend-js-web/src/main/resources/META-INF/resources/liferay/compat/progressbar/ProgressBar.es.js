@@ -72,7 +72,7 @@ ProgressBar.STATE = {
 	/**
 	 * An optional label to be rendered inside the progress bar. Can be either
 	 * a string (with raw text or html) or an incremental dom function.
-	 * @type {function()|string?}
+	 * @type {(function|string)}
 	 */
 
 	label: {

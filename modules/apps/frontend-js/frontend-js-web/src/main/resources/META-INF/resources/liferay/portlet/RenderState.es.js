@@ -64,7 +64,7 @@ class RenderState {
 	 * @memberof RenderState
 	 * @param {String} name The name of the parameter to retreive.
 	 * @param {?String} defaultValue  The default value of the parameter in case it is undefined.
-	 * @return
+	 * @return {String} The value of the parameter
 	 * @review
 	 */
 

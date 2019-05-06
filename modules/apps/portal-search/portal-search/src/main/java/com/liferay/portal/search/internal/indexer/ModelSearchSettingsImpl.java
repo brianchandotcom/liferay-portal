@@ -61,6 +61,10 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 		return _commitImmediately;
 	}
 
+	public boolean isSearchResultPermissionFilterSuppressed() {
+		return _searchResultPermissionFilterSuppressed;
+	}
+
 	@Override
 	public boolean isSelectAllLocales() {
 		return _selectAllLocales;
@@ -96,6 +100,13 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 		_searchEngineId = searchEngineId;
 	}
 
+	public void setSearchResultPermissionFilterSuppressed(
+		boolean searchResultPermissionFilterSuppressed) {
+
+		_searchResultPermissionFilterSuppressed =
+			searchResultPermissionFilterSuppressed;
+	}
+
 	public void setSelectAllLocales(boolean selectAllLocales) {
 		_selectAllLocales = selectAllLocales;
 	}
@@ -110,6 +121,7 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	private String[] _defaultSelectedLocalizedFieldNames;
 	private String[] _searchClassNames;
 	private String _searchEngineId = SearchEngineHelper.SYSTEM_ENGINE_ID;
+	private boolean _searchResultPermissionFilterSuppressed;
 	private boolean _selectAllLocales;
 	private boolean _stagingAware = true;
 

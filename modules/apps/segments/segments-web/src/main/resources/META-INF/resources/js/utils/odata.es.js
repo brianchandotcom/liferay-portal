@@ -1,3 +1,4 @@
+import {filter as oDataFilterFn} from '../libs/odata-parser';
 import {
 	CONJUNCTIONS,
 	FUNCTIONAL_OPERATORS,
@@ -7,7 +8,6 @@ import {
 	RELATIONAL_OPERATORS
 } from './constants.es';
 import {generateGroupId} from './utils.es';
-import {filter as oDataFilterFn} from '../libs/odata-parser';
 
 const OPERATORS = {
 	...FUNCTIONAL_OPERATORS,

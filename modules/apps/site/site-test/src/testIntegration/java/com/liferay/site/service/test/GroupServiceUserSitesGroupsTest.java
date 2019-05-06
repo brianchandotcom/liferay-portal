@@ -20,15 +20,16 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -59,11 +60,10 @@ public class GroupServiceUserSitesGroupsTest {
 	public void testCompanyGroup() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
-		Group group = GroupLocalServiceUtil.getCompanyGroup(
-			_user.getCompanyId());
+		Group group = _groupLocalService.getCompanyGroup(_user.getCompanyId());
 
 		Assert.assertTrue(
 			groups + " does not contain " + group, groups.contains(group));
@@ -75,7 +75,7 @@ public class GroupServiceUserSitesGroupsTest {
 
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.USER);
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
 		Assert.assertTrue(
@@ -92,9 +92,9 @@ public class GroupServiceUserSitesGroupsTest {
 
 		_group.setActive(false);
 
-		GroupLocalServiceUtil.updateGroup(_group);
+		_groupLocalService.updateGroup(_group);
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
 		Assert.assertFalse(
@@ -109,20 +109,20 @@ public class GroupServiceUserSitesGroupsTest {
 
 		_organizations.addFirst(organization);
 
-		UserLocalServiceUtil.addOrganizationUsers(
+		_userLocalService.addOrganizationUsers(
 			organization.getOrganizationId(), new long[] {_user.getUserId()});
 
 		Group group = organization.getGroup();
 
 		LayoutTestUtil.addLayout(group);
 
-		group = GroupLocalServiceUtil.getGroup(group.getGroupId());
+		group = _groupLocalService.getGroup(group.getGroupId());
 
 		group.setActive(false);
 
-		GroupLocalServiceUtil.updateGroup(group);
+		_groupLocalService.updateGroup(group);
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
 		Assert.assertFalse(
@@ -146,11 +146,11 @@ public class GroupServiceUserSitesGroupsTest {
 
 		_organizations.addFirst(organization);
 
-		UserLocalServiceUtil.addOrganizationUsers(
+		_userLocalService.addOrganizationUsers(
 			organization.getOrganizationId(), new long[] {_user.getUserId()});
 
 		try {
-			List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+			List<Group> groups = _groupService.getUserSitesGroups(
 				_user.getUserId(), null, QueryUtil.ALL_POS);
 
 			Group organizationGroup = organization.getGroup();
@@ -163,7 +163,7 @@ public class GroupServiceUserSitesGroupsTest {
 				groups.contains(organizationGroup));
 		}
 		finally {
-			UserLocalServiceUtil.unsetOrganizationUsers(
+			_userLocalService.unsetOrganizationUsers(
 				organization.getOrganizationId(),
 				new long[] {_user.getUserId()});
 		}
@@ -177,13 +177,13 @@ public class GroupServiceUserSitesGroupsTest {
 
 		_organizations.addFirst(organization);
 
-		UserLocalServiceUtil.addGroupUser(organization.getGroupId(), _user);
+		_userLocalService.addGroupUser(organization.getGroupId(), _user);
 
 		Group organizationGroup = organization.getGroup();
 
 		LayoutTestUtil.addLayout(organizationGroup);
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
 		Assert.assertTrue(
@@ -199,14 +199,14 @@ public class GroupServiceUserSitesGroupsTest {
 
 		_organizations.addFirst(organization);
 
-		UserLocalServiceUtil.addOrganizationUser(
+		_userLocalService.addOrganizationUser(
 			organization.getOrganizationId(), _user);
 
 		Group organizationGroup = organization.getGroup();
 
 		LayoutTestUtil.addLayout(organizationGroup);
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
 		Assert.assertTrue(
@@ -222,9 +222,9 @@ public class GroupServiceUserSitesGroupsTest {
 
 		_organizations.addFirst(organization);
 
-		UserLocalServiceUtil.addGroupUser(organization.getGroupId(), _user);
+		_userLocalService.addGroupUser(organization.getGroupId(), _user);
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
 		Group organizationGroup = organization.getGroup();
@@ -242,9 +242,9 @@ public class GroupServiceUserSitesGroupsTest {
 
 		_organizations.addFirst(organization);
 
-		UserLocalServiceUtil.addGroupUser(organization.getGroupId(), _user);
+		_userLocalService.addGroupUser(organization.getGroupId(), _user);
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
 		Group organizationGroup = organization.getGroup();
@@ -258,7 +258,7 @@ public class GroupServiceUserSitesGroupsTest {
 	public void testUserPersonalSite() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
 		Group userGroup = _user.getGroup();
@@ -276,7 +276,7 @@ public class GroupServiceUserSitesGroupsTest {
 
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.USER);
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
 
 		Assert.assertTrue(
@@ -286,10 +286,19 @@ public class GroupServiceUserSitesGroupsTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private GroupService _groupService;
+
 	@DeleteAfterTestRun
 	private final LinkedList<Organization> _organizations = new LinkedList<>();
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

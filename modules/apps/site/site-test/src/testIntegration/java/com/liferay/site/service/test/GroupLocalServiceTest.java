@@ -16,10 +16,11 @@ package com.liferay.site.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class GroupLocalServiceTest {
 
 	@Test
 	public void testGetStagedSites() {
-		List<Group> groups = GroupLocalServiceUtil.getStagedSites();
+		List<Group> groups = _groupLocalService.getStagedSites();
 
 		Assert.assertTrue(groups.toString(), groups.isEmpty());
 	}
@@ -95,6 +96,9 @@ public class GroupLocalServiceTest {
 	private Group _group2;
 	private Group _group3;
 	private Group _group4;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@DeleteAfterTestRun
 	private final List<Group> _groups = new ArrayList<>();

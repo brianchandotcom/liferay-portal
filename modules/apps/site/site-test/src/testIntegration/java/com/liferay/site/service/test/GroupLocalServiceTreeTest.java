@@ -18,11 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.TreeModel;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.test.BaseLocalServiceTreeTestCase;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.ClassRule;
@@ -56,24 +57,27 @@ public class GroupLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 
 		group.setTreePath(null);
 
-		return GroupLocalServiceUtil.updateGroup(group);
+		return _groupLocalService.updateGroup(group);
 	}
 
 	@Override
 	protected void deleteTreeModel(TreeModel treeModel) throws Exception {
 		Group group = (Group)treeModel;
 
-		GroupLocalServiceUtil.deleteGroup(group);
+		_groupLocalService.deleteGroup(group);
 	}
 
 	@Override
 	protected TreeModel getTreeModel(long primaryKey) throws Exception {
-		return GroupLocalServiceUtil.getGroup(primaryKey);
+		return _groupLocalService.getGroup(primaryKey);
 	}
 
 	@Override
 	protected void rebuildTree() throws Exception {
-		GroupLocalServiceUtil.rebuildTree(TestPropsValues.getCompanyId());
+		_groupLocalService.rebuildTree(TestPropsValues.getCompanyId());
 	}
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 }

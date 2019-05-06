@@ -122,6 +122,8 @@ String navigation = ParamUtil.getString(request, "navigation");
 						<aui:input name="newFolderId" type="hidden" />
 						<aui:input name="selectAll" type="hidden" value="<%= false %>" />
 						<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
+						<aui:input name="changeLog" type="hidden" />
+						<aui:input name="versionIncrease" type="hidden" />
 
 						<liferay-ui:error exception="<%= AuthenticationRepositoryException.class %>" message="you-cannot-access-the-repository-because-you-are-not-allowed-to-or-it-is-unavailable" />
 						<liferay-ui:error exception="<%= FileEntryLockException.MustOwnLock.class %>" message="you-can-only-checkin-documents-you-have-checked-out-yourself" />

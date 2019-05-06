@@ -96,10 +96,7 @@ JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new 
 
 <aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-tooltip,autocomplete-base,autocomplete-filters,event-mouseenter,event-outside,liferay-util-window,resize,transition">
 	var ACPlugin = A.Plugin.AceAutoComplete;
-	var AObject = A.Object;
 	var Util = Liferay.Util;
-
-	var STR_EMPTY = '';
 
 	var STR_HEIGHT = 'height';
 
@@ -243,7 +240,7 @@ JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new 
 			var cursorPos;
 			var processed;
 
-			AObject.each(
+			A.Object.each(
 				fragments,
 				function(item, index) {
 					if (processed) {
@@ -425,7 +422,7 @@ JournalEditDDMTemplateDisplayContext journalEditDDMTemplateDisplayContext = new 
 			}
 			<c:if test="<%= journalEditDDMTemplateDisplayContext.getDDMTemplate() == null %>">
 				else {
-					editorContentElement.val(STR_EMPTY);
+					editorContentElement.val('');
 				}
 			</c:if>
 

@@ -1,7 +1,7 @@
 dependencies {
 	compileInclude group: "antlr", name: "antlr", version: "2.7.5"
 	compileInclude group: "com.lowagie", name: "itext", version: "2.1.7"
-	compileInclude group: "commons-collections", name: "commons-collections", version: "2.1.1"
+	compileInclude group: "commons-collections", name: "commons-collections", version: "3.2.2"
 	compileInclude group: "commons-digester", name: "commons-digester", version: "2.1"
 	compileInclude group: "jfree", name: "jcommon", version: "1.0.15"
 	compileInclude group: "jfree", name: "jfreechart", version: "1.0.12"

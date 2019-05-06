@@ -5451,6 +5451,12 @@ according to Liferay defaults.
 - [LPS-89457]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.68.
 
+## 5.5.180 - 2019-01-23
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.69.
+
 ## 5.5.291 - 2019-04-18
 
 ### Changed

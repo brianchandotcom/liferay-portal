@@ -16,8 +16,10 @@ function getWebContentPayload(webContent) {
 	};
 
 	if (dataset.analyticsAssetTitle) {
-		payload = {...payload,
-			title: dataset.analyticsAssetTitle};
+		payload = {
+			...payload,
+			title: dataset.analyticsAssetTitle
+		};
 	}
 
 	return payload;
@@ -72,24 +74,30 @@ function trackWebContentClicked(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackWebContentViewed(analytics) {
-	const stopTrackingOnReady = onReady(() => {
-		Array.prototype.slice
-			.call(
+	const stopTrackingOnReady = onReady(
+		() => {
+			Array.prototype.slice.call(
 				document.querySelectorAll(
 					'[data-analytics-asset-type="web-content"]'
 				)
-			)
-			.filter(element => isTrackableWebContent(element))
-			.forEach(element => {
-				let payload = getWebContentPayload(element);
-				const numberOfWords = getNumberOfWords(element);
+			).filter(
+				element => isTrackableWebContent(element)
+			).forEach(
+				element => {
+					const numberOfWords = getNumberOfWords(element);
 
-				payload = {numberOfWords,
-					...payload};
+					let payload = getWebContentPayload(element);
 
-				analytics.send('webContentViewed', applicationId, payload);
-			});
-	});
+					payload = {
+						...payload,
+						numberOfWords
+					};
+
+					analytics.send('webContentViewed', applicationId, payload);
+				}
+			);
+		}
+	);
 	return () => stopTrackingOnReady();
 }
 

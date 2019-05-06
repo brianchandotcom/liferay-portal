@@ -8,19 +8,23 @@ function getClosestAssetElement(element, assetType) {
 }
 
 function closest(element, selector) {
+	let closest = null;
+
 	if (element.closest) {
-		return element.closest(selector);
+		closest = element.closest(selector);
 	}
 	if (!document.documentElement.contains(element)) {
-		return null;
+		closest = null;
 	}
 	do {
 		if (element.matches(selector)) {
-			return element;
+			closest = element;
 		}
+
 		element = element.parentElement || element.parentNode;
 	} while (element !== null && element.nodeType === 1);
-	return null;
+
+	return closest;
 }
 
 /**

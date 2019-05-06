@@ -1,4 +1,5 @@
 import debounce from 'metal-debounce';
+import {DEBOUNCE} from '../utils/constants';
 import {getClosestAssetElement, getNumberOfWords} from '../utils/assets';
 import {onReady} from '../utils/events.js';
 import {ScrollTracker} from '../utils/scroll';
@@ -18,8 +19,10 @@ function getBlogPayload(blog) {
 	};
 
 	if (dataset.analyticsAssetTitle) {
-		payload = {...payload,
-			title: dataset.analyticsAssetTitle};
+		payload = {
+			...payload,
+			title: dataset.analyticsAssetTitle
+		};
 	}
 
 	return payload;
@@ -42,17 +45,29 @@ function trackBlogsScroll(analytics, blogElements) {
 	const scrollSessionId = new Date().toISOString();
 	const scrollTracker = new ScrollTracker();
 
-	const onScroll = debounce(() => {
-		blogElements.forEach(element => {
-			scrollTracker.onDepthReached(depth => {
-				analytics.send('blogDepthReached', applicationId, {
-					...getBlogPayload(element),
-					depth,
-					sessionId: scrollSessionId
-				});
-			}, element);
-		});
-	}, 1500);
+	const onScroll = debounce(
+		() => {
+			blogElements.forEach(
+				element => {
+					scrollTracker.onDepthReached(
+						depth => {
+							analytics.send(
+								'blogDepthReached',
+								applicationId,
+								{
+									...getBlogPayload(element),
+									depth,
+									sessionId: scrollSessionId
+								}
+							);
+						},
+						element
+					);
+				}
+			);
+		},
+		DEBOUNCE
+	);
 
 	document.addEventListener('scroll', onScroll);
 
@@ -67,24 +82,30 @@ function trackBlogsScroll(analytics, blogElements) {
  */
 function trackBlogViewed(analytics) {
 	const blogElements = [];
-	const stopTrackingOnReady = onReady(() => {
-		Array.prototype.slice
-			.call(
+	const stopTrackingOnReady = onReady(
+		() => {
+			Array.prototype.slice.call(
 				document.querySelectorAll('[data-analytics-asset-type="blog"]')
-			)
-			.filter(element => isTrackableBlog(element))
-			.forEach(element => {
-				let payload = getBlogPayload(element);
-				const numberOfWords = getNumberOfWords(element);
+			).filter(
+				element => isTrackableBlog(element)
+			).forEach(
+				element => {
+					const numberOfWords = getNumberOfWords(element);
 
-				payload = {numberOfWords,
-					...payload};
+					let payload = getBlogPayload(element);
 
-				blogElements.push(element);
+					payload = {
+						numberOfWords,
+						...payload
+					};
 
-				analytics.send('blogViewed', applicationId, payload);
-			});
-	});
+					blogElements.push(element);
+
+					analytics.send('blogViewed', applicationId, payload);
+				}
+			);
+		}
+	);
 	const stopTrackingBlogsScroll = trackBlogsScroll(analytics, blogElements);
 	return () => {
 		stopTrackingBlogsScroll();

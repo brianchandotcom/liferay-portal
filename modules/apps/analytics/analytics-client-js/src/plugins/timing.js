@@ -6,6 +6,7 @@ const applicationId = 'Page';
  */
 function onload(analytics) {
 	const perfData = window.performance.timing;
+
 	const pageLoadTime = perfData.loadEventStart - perfData.navigationStart;
 
 	const props = {

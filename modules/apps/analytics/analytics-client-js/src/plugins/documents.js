@@ -17,8 +17,10 @@ function getDocumentPayload(documentElement) {
 	};
 
 	if (dataset.analyticsAssetTitle) {
-		payload = {...payload,
-			title: dataset.analyticsAssetTitle};
+		payload = {
+			...payload,
+			title: dataset.analyticsAssetTitle
+		};
 	}
 
 	return payload;
@@ -65,20 +67,23 @@ function trackDocumentDownloaded(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackDocumentPreviewed(analytics) {
-	const stopTrackingOnReady = onReady(() => {
-		Array.prototype.slice
-			.call(
+	const stopTrackingOnReady = onReady(
+		() => {
+			Array.prototype.slice.call(
 				document.querySelectorAll(
 					'[data-analytics-asset-action="preview"]'
 				)
-			)
-			.filter(element => isTrackableDocument(element))
-			.forEach(element => {
-				const payload = getDocumentPayload(element);
+			).filter(
+				element => isTrackableDocument(element)
+			).forEach(
+				element => {
+					const payload = getDocumentPayload(element);
 
-				analytics.send('documentPreviewed', applicationId, payload);
-			});
-	});
+					analytics.send('documentPreviewed', applicationId, payload);
+				}
+			);
+		}
+	);
 	return () => stopTrackingOnReady();
 }
 

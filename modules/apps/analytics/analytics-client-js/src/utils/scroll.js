@@ -21,17 +21,26 @@ function getDocumentHeight() {
 }
 
 function getDimensions(element) {
+	const height = getDocumentHeight();
+	const top = getCurrentScrollPosition();
+
+	let positions = {
+		height,
+		top
+	};
+
 	if (element) {
 		const boundingClientRect = element.getBoundingClientRect();
 		const {bottom, height, top} = boundingClientRect;
-		return {bottom,
+
+		positions = {
+			bottom,
 			height,
-			top};
+			top
+		};
 	}
-	const height = getDocumentHeight();
-	const top = getCurrentScrollPosition();
-	return {height,
-		top};
+
+	return positions;
 }
 
 class ScrollTracker {
@@ -48,6 +57,7 @@ class ScrollTracker {
 	getDepthValue(element) {
 		const {bottom, height, top} = getDimensions(element);
 		const visibleArea = window.innerHeight;
+
 		let depthValue = (visibleArea - top) / height;
 
 		if (top <= 0 && bottom >= 0) {
@@ -69,6 +79,7 @@ class ScrollTracker {
 	 */
 	getDepth(element) {
 		const value = this.getDepthValue(element);
+
 		const depth = Math.round(value * 100);
 
 		return Math.min(Math.max(depth, 0), 100);

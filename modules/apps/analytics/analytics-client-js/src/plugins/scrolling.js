@@ -1,4 +1,5 @@
 import debounce from 'metal-debounce';
+import {DEBOUNCE} from '../utils/constants';
 import {ScrollTracker} from '../utils/scroll';
 
 const applicationId = 'Page';
@@ -10,11 +11,16 @@ const applicationId = 'Page';
 function scrolling(analytics) {
 	let scrollTracker = new ScrollTracker();
 
-	const onScroll = debounce(() => {
-		scrollTracker.onDepthReached(depth => {
-			analytics.send('pageDepthReached', applicationId, {depth});
-		});
-	}, 1500);
+	const onScroll = debounce(
+		() => {
+			scrollTracker.onDepthReached(
+				depth => {
+					analytics.send('pageDepthReached', applicationId, {depth});
+				}
+			);
+		},
+		DEBOUNCE
+	);
 
 	document.addEventListener('scroll', onScroll);
 

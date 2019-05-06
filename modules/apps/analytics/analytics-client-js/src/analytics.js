@@ -4,7 +4,6 @@ import middlewares from './middlewares/defaults';
 // Gateway
 
 import Client from './client';
-
 import defaultPlugins from './plugins/defaults';
 import hash from './utils/hash';
 import uuidv1 from 'uuid/v1';
@@ -12,21 +11,26 @@ import uuidv1 from 'uuid/v1';
 // Constants
 
 const ENV = window || global;
+
 const FLUSH_INTERVAL = 2000;
+
 const REQUEST_TIMEOUT = 5000;
 
 // Local Storage keys
 
-const STORAGE_KEY_EVENTS = 'ac_client_batch';
 const STORAGE_KEY_CONTEXTS = 'ac_client_context';
-const STORAGE_KEY_USER_ID = 'ac_client_user_id';
+
+const STORAGE_KEY_EVENTS = 'ac_client_batch';
+
 const STORAGE_KEY_IDENTITY_HASH = 'ac_client_identity';
+
+const STORAGE_KEY_USER_ID = 'ac_client_user_id';
 
 // Creates LocalStorage wrapper
 
 const storage = new Storage(new LocalStorageMechanism());
 
-let instance = null;
+let instance;
 
 /**
  * Analytics class that is desined to collect events that are captured
@@ -65,9 +69,7 @@ class Analytics {
 
 		// Initializes default plugins
 
-		instance._pluginDisposers = defaultPlugins.map(plugin =>
-			plugin(instance)
-		);
+		instance._pluginDisposers = defaultPlugins.map(plugin => plugin(instance));
 
 		// Starts flush loop
 
@@ -97,23 +99,20 @@ class Analytics {
 	}
 
 	_isNewUserIdRequired() {
+		const identityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
 		const storedUserId = storage.get(STORAGE_KEY_USER_ID);
 
-		if (!storedUserId) {
-			return true;
-		}
-
-		const identityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
+		let newUserIdRequired = false;
 
 		// During logout or session expiration, identiy object becomes undefined
 		// because the client object is being instatiated on every page navigation,
 		// in such cases, we force a new user ID token.
 
-		if (identityHash && !this.config.identity) {
-			return true;
+		if (!storedUserId || (identityHash && !this.config.identity)) {
+			newUserIdRequired = true;
 		}
 
-		return false;
+		return newUserIdRequired;
 	}
 
 	/**
@@ -200,12 +199,14 @@ class Analytics {
 	_getUserId() {
 		const newUserIdRequired = this._isNewUserIdRequired();
 
+		let userId = Promise.resolve(storage.get(STORAGE_KEY_USER_ID));
+
 		if (newUserIdRequired) {
-			return Promise.resolve(this._generateUserId());
+			userId = Promise.resolve(this._generateUserId());
 		}
 
-		return Promise.resolve(storage.get(STORAGE_KEY_USER_ID));
-}
+		return userId;
+	}
 
 	/**
 	 * Sends the identity information and user id to the Identity Service.
@@ -222,8 +223,10 @@ class Analytics {
 			userId
 		};
 
-		const storedIdentityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
 		const newIdentityHash = hash(bodyData);
+		const storedIdentityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
+
+		let identyHash = Promise.resolve(storedIdentityHash);
 
 		if (newIdentityHash !== storedIdentityHash) {
 			instance._persist(STORAGE_KEY_IDENTITY_HASH, newIdentityHash);
@@ -242,12 +245,12 @@ class Analytics {
 				mode: 'cors'
 			};
 
-			return fetch(this.identityEndpoint, request).then(
+			identyHash = fetch(this.identityEndpoint, request).then(
 				() => newIdentityHash
 			);
 		}
 
-		return Promise.resolve(storedIdentityHash);
+		return identyHash;
 	}
 
 	/**
@@ -262,24 +265,24 @@ class Analytics {
 		if (!this.isFlushInProgress && this.events.length) {
 			this.isFlushInProgress = true;
 
-			const eventKeys = this.events.map(event =>
-				this._getEventKey(event)
-			);
+			const eventKeys = this.events
+				.map(event => this._getEventKey(event));
 
-			result = Promise.race([
-				this._getUserId().then(userId => instance._sendData(userId)),
-				this._timeout(REQUEST_TIMEOUT)
-			])
-				.then(() => {
+			result = Promise.race(
+				[
+					this._getUserId().then(userId => instance._sendData(userId)),
+					this._timeout(REQUEST_TIMEOUT)
+				]
+			).then(
+				() => {
 					const events = this.events.filter(
 						event =>
 							eventKeys.indexOf(this._getEventKey(event)) > -1
 					);
 
 					this.reset(events);
-				})
-				.catch(console.error)
-				.then(() => (this.isFlushInProgress = false));
+				}
+			).catch().then(() => (this.isFlushInProgress = false));
 		}
 		else {
 			result = Promise.resolve();
@@ -322,13 +325,17 @@ class Analytics {
 	 */
 	reset(events) {
 		if (events) {
-			this.events = this.events.filter(event => {
-				const eventKey = this._getEventKey(event);
+			this.events = this.events.filter(
+				event => {
+					const eventKey = this._getEventKey(event);
 
-				return !events.find(evt => {
-					return this._getEventKey(evt) === eventKey;
-				});
-			});
+					return !events.find(
+						evt => {
+							return this._getEventKey(evt) === eventKey;
+						}
+					);
+				}
+			);
 		}
 		else {
 			this.events.length = 0;
@@ -389,9 +396,7 @@ class Analytics {
 	setIdentity(identity) {
 		this.config.identity = identity;
 
-		return this._getUserId().then(userId =>
-			this._sendIdentity(identity, userId)
-		);
+		return this._getUserId().then(userId => this._sendIdentity(identity, userId));
 	}
 
 	/**
@@ -408,13 +413,13 @@ class Analytics {
 	 * );
 	 */
 	static create(config = {}) {
-		const instance = new Analytics(config);
+		const self = new Analytics(config);
 
-		ENV.Analytics = instance;
+		ENV.Analytics = self;
 		ENV.Analytics.create = Analytics.create;
 		ENV.Analytics.dispose = Analytics.dispose;
 
-		return instance;
+		return self;
 	}
 
 	/**
@@ -423,10 +428,10 @@ class Analytics {
 	 * Analytics.dispose();
 	 */
 	static dispose() {
-		const instance = ENV.Analytics;
+		const self = ENV.Analytics;
 
-		if (instance) {
-			instance.disposeInternal();
+		if (self) {
+			self.disposeInternal();
 		}
 	}
 }

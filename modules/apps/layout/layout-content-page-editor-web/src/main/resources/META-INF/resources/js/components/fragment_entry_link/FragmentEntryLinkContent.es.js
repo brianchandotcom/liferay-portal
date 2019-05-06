@@ -98,10 +98,10 @@ class FragmentEntryLinkContent extends Component {
 				this._editables.forEach(
 					editable => {
 						const editableValues = (
-							newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
-							newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId]
+							newEditableValues[editable.processor] &&
+							newEditableValues[editable.processor][editable.editableId]
 						) ?
-							newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId] :
+							newEditableValues[editable.processor][editable.editableId] :
 							{
 								defaultValue: editable.content
 							};
@@ -159,6 +159,7 @@ class FragmentEntryLinkContent extends Component {
 						editableValues,
 						element: element,
 						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 						showMapping: this.showMapping,
 						store: this.store
 					}
@@ -187,6 +188,7 @@ class FragmentEntryLinkContent extends Component {
 						editableValues,
 						element: editable,
 						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						processor: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 
 						processorsOptions: {
 							defaultEditorConfiguration,

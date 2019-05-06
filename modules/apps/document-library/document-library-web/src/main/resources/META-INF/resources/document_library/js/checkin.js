@@ -2,7 +2,8 @@ AUI.add(
 	'document-library-checkin',
 	function(A) {
 		var DocumentLibraryCheckin = {
-			showDialog: function(contentId, namespace, callback) {
+			showDialog: function(namespace, callback) {
+				var contentId = namespace + 'versionDetails';
 				var versionDetailsDialog = Liferay.Util.Window.getWindow(
 					{
 						dialog: {

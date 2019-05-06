@@ -3,7 +3,6 @@ Liferay.provide(
 	'${namespace}showVersionDetailsDialog',
 	function(saveURL) {
 		Liferay.Portlet.DocumentLibraryCheckin.showDialog(
-			'${namespace}versionDetails',
 			'${namespace}',
 			function(versionIncrease, changeLog) {
 				var portletURL = saveURL;

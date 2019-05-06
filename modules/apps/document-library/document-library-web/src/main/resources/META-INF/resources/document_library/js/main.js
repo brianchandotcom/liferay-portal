@@ -151,7 +151,6 @@ AUI.add(
 						}
 						else if (action === 'checkin') {
 							Liferay.DocumentLibraryCheckin.showDialog(
-								namespace + 'versionDetails',
 								namespace,
 								function(versionIncrease, changeLog) {
 									var form = instance.get('form').node;

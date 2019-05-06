@@ -640,7 +640,6 @@ if (portletTitleBasedNavigation) {
 		'<portlet:namespace />showVersionDetailsDialog',
 		function(form) {
 			Liferay.Portlet.DocumentLibraryCheckin.showDialog(
-				'<portlet:namespace />versionDetails',
 				'<portlet:namespace />',
 				function(versionIncrease, changeLog) {
 					Liferay.Util.postForm(

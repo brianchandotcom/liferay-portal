@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 
 import java.util.HashMap;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -34,6 +35,12 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
+
+	@Test
+	public void testDeleteDataDefinitionWithInvalidId() throws Exception {
+		assertResponseCode(
+			404, invokeGetDataDefinitionResponse(RandomTestUtil.randomLong()));
+	}
 
 	@Override
 	public void testPostDataDefinitionDataDefinitionPermission()

@@ -14,34 +14,47 @@
 
 package com.liferay.frontend.theme.contributor.extender.internal;
 
+import com.liferay.frontend.theme.contributor.extender.BundleWebResources;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael Bradford
  */
 @Component(immediate = true, service = {})
 public class ThemeContributorExtender
-	implements BundleTrackerCustomizer<ThemeContributorExtension> {
+	implements BundleTrackerCustomizer<ServiceTracker<?, ?>> {
 
 	@Override
-	public ThemeContributorExtension addingBundle(
+	public ServiceTracker<?, ?> addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
 		Dictionary<String, String> headers = bundle.getHeaders(
@@ -62,27 +75,84 @@ public class ThemeContributorExtender
 		int themeContributorWeight = GetterUtil.getInteger(
 			headers.get("Liferay-Theme-Contributor-Weight"));
 
-		ThemeContributorExtension themeContributorExtension =
-			new ThemeContributorExtension(
-				bundle, bundleWebResources, themeContributorWeight);
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		themeContributorExtension.start();
+		String filter = StringBundler.concat(
+			"(&(objectClass=", ServletContext.class.getName(),
+			")(osgi.web.symbolicname=", bundle.getSymbolicName(), "))");
 
-		return themeContributorExtension;
+		Dictionary<String, Object> properties = MapUtil.singletonDictionary(
+			"service.ranking", themeContributorWeight);
+
+		return ServiceTrackerFactory.open(
+			bundleContext, filter,
+			new ServiceTrackerCustomizer
+				<ServletContext, Collection<ServiceRegistration<?>>>() {
+
+				@Override
+				public Collection<ServiceRegistration<?>> addingService(
+					ServiceReference<ServletContext> serviceReference) {
+
+					Collection<ServiceRegistration<?>> serviceRegistrations =
+						new ArrayList<>();
+
+					ServletContext servletContext = bundleContext.getService(
+						serviceReference);
+
+					serviceRegistrations.add(
+						bundleContext.registerService(
+							PortalWebResources.class.getName(),
+							new ThemeContributorPortalWebResources(
+								bundle, servletContext),
+							null));
+
+					String contextPath = servletContext.getContextPath();
+
+					bundleWebResources.setServletContextPath(contextPath);
+
+					serviceRegistrations.add(
+						bundleContext.registerService(
+							BundleWebResources.class, bundleWebResources,
+							properties));
+
+					return serviceRegistrations;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<ServletContext> serviceReference,
+					Collection<ServiceRegistration<?>> service) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ServletContext> serviceReference,
+					Collection<ServiceRegistration<?>> serviceRegistrations) {
+
+					for (ServiceRegistration<?> serviceRegistration :
+							serviceRegistrations) {
+
+						serviceRegistration.unregister();
+					}
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
 	}
 
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		ThemeContributorExtension themeContributorExtension) {
+		ServiceTracker<?, ?> serviceTracker) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		ThemeContributorExtension themeContributorExtension) {
+		ServiceTracker<?, ?> serviceTracker) {
 
-		themeContributorExtension.destroy();
+		serviceTracker.close();
 	}
 
 	@Activate
@@ -146,5 +216,40 @@ public class ThemeContributorExtender
 	}
 
 	private BundleTracker<?> _bundleTracker;
+
+	private static class ThemeContributorPortalWebResources
+		implements PortalWebResources {
+
+		@Override
+		public String getContextPath() {
+			return _servletContext.getContextPath();
+		}
+
+		@Override
+		public long getLastModified() {
+			return _bundle.getLastModified();
+		}
+
+		@Override
+		public String getResourceType() {
+			return PortalWebResourceConstants.RESOURCE_TYPE_THEME_CONTRIBUTOR;
+		}
+
+		@Override
+		public ServletContext getServletContext() {
+			return _servletContext;
+		}
+
+		private ThemeContributorPortalWebResources(
+			Bundle bundle, ServletContext servletContext) {
+
+			_bundle = bundle;
+			_servletContext = servletContext;
+		}
+
+		private final Bundle _bundle;
+		private final ServletContext _servletContext;
+
+	}
 
 }

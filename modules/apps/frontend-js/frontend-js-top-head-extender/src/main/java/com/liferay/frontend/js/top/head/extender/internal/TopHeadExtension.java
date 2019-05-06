@@ -19,8 +19,6 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Dictionary;
 
 import javax.servlet.ServletContext;
@@ -62,14 +60,11 @@ public class TopHeadExtension {
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, filterString,
 			new ServiceTrackerCustomizer
-				<ServletContext, Collection<ServiceRegistration<?>>>() {
+				<ServletContext, ServiceRegistration<?>>() {
 
 				@Override
-				public Collection<ServiceRegistration<?>> addingService(
+				public ServiceRegistration<?> addingService(
 					ServiceReference<ServletContext> serviceReference) {
-
-					Collection<ServiceRegistration<?>> serviceRegistrations =
-						new ArrayList<>();
 
 					ServletContext servletContext = bundleContext.getService(
 						serviceReference);
@@ -77,20 +72,17 @@ public class TopHeadExtension {
 					_topHeadResourcesImpl.setServletContextPath(
 						servletContext.getContextPath());
 
-					serviceRegistrations.add(
-						bundleContext.registerService(
-							TopHeadResources.class, _topHeadResourcesImpl,
-							properties));
-
-					return serviceRegistrations;
+					return bundleContext.registerService(
+						TopHeadResources.class, _topHeadResourcesImpl,
+						properties);
 				}
 
 				@Override
 				public void modifiedService(
 					ServiceReference<ServletContext> serviceReference,
-					Collection<ServiceRegistration<?>> service) {
+					ServiceRegistration<?> serviceRegistration) {
 
-					removedService(serviceReference, service);
+					removedService(serviceReference, serviceRegistration);
 
 					addingService(serviceReference);
 				}
@@ -98,13 +90,9 @@ public class TopHeadExtension {
 				@Override
 				public void removedService(
 					ServiceReference<ServletContext> serviceReference,
-					Collection<ServiceRegistration<?>> serviceRegistrations) {
+					ServiceRegistration<?> serviceRegistration) {
 
-					for (ServiceRegistration<?> serviceRegistration :
-							serviceRegistrations) {
-
-						serviceRegistration.unregister();
-					}
+					serviceRegistration.unregister();
 
 					bundleContext.ungetService(serviceReference);
 				}
@@ -113,7 +101,7 @@ public class TopHeadExtension {
 	}
 
 	private final Bundle _bundle;
-	private ServiceTracker<ServletContext, Collection<ServiceRegistration<?>>>
+	private ServiceTracker<ServletContext, ServiceRegistration<?>>
 		_serviceTracker;
 	private final TopHeadResourcesImpl _topHeadResourcesImpl;
 	private final int _weight;

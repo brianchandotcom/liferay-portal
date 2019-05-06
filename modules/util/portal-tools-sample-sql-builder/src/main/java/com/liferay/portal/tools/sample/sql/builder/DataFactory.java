@@ -2171,7 +2171,7 @@ public class DataFactory {
 		long plid = _counter.get();
 
 		layoutModel.setPlid(plid);
-		layoutModel.setHeadId(-plid);
+		layoutModel.setHeadId(plid);
 
 		layoutModel.setGroupId(groupId);
 		layoutModel.setCompanyId(_companyId);
@@ -3497,7 +3497,7 @@ public class DataFactory {
 		long layoutSetId = _counter.get();
 
 		layoutSetModel.setLayoutSetId(layoutSetId);
-		layoutSetModel.setHeadId(-layoutSetId);
+		layoutSetModel.setHeadId(layoutSetId);
 
 		layoutSetModel.setGroupId(groupId);
 		layoutSetModel.setCompanyId(_companyId);

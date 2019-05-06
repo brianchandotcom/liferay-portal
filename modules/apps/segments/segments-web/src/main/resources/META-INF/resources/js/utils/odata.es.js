@@ -7,13 +7,12 @@ import {
 	RELATIONAL_OPERATORS
 } from './constants.es';
 import {generateGroupId} from './utils.es';
+import {filter as oDataFilterFn} from '../libs/odata-parser';
 
 const OPERATORS = {
 	...FUNCTIONAL_OPERATORS,
 	...RELATIONAL_OPERATORS
 };
-
-const oDataFilterFn = require('../libs/odata-parser').filter;
 
 const EXPRESSION_TYPES = {
 	AND: 'AndExpression',

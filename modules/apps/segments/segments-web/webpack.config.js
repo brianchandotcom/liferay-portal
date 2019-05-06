@@ -5,7 +5,6 @@ module.exports = {
 	mode: 'production',
 	output: {
 		filename: 'odata-parser.js',
-		library: 'oDataFilterFn',
 		libraryTarget: 'commonjs',
 		path: path.resolve('./classes/META-INF/resources/js/libs')
 	}

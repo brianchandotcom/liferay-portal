@@ -15,7 +15,6 @@
 package com.liferay.frontend.js.top.head.extender.internal;
 
 import com.liferay.frontend.js.top.head.extender.TopHeadResources;
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,6 +31,8 @@ import javax.servlet.ServletContext;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -70,16 +71,25 @@ public class TopHeadExtender
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		String filterString = StringBundler.concat(
-			"(&(objectClass=", ServletContext.class.getName(),
-			")(osgi.web.symbolicname=", bundle.getSymbolicName(), "))");
+		Filter filter = null;
+
+		try {
+			filter = bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", ServletContext.class.getName(),
+					")(osgi.web.symbolicname=", bundle.getSymbolicName(),
+					"))"));
+		}
+		catch (InvalidSyntaxException ise) {
+			throw new RuntimeException(ise);
+		}
 
 		Dictionary<String, Object> properties = MapUtil.singletonDictionary(
 			"service.ranking",
 			GetterUtil.getInteger(headers.get("Liferay-Top-Head-Weight")));
 
-		return ServiceTrackerFactory.open(
-			bundleContext, filterString,
+		ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(
+			bundleContext, filter,
 			new ServiceTrackerCustomizer
 				<ServletContext, ServiceRegistration<TopHeadResources>>() {
 
@@ -116,6 +126,10 @@ public class TopHeadExtender
 				}
 
 			});
+
+		serviceTracker.open();
+
+		return serviceTracker;
 	}
 
 	@Override

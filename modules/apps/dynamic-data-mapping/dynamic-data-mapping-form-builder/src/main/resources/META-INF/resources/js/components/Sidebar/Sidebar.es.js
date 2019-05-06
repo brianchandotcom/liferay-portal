@@ -746,7 +746,7 @@ class Sidebar extends Component {
 						const {multiple, visible} = newField;
 
 						for (const prop in newField) {
-							if (previousField.hasOwnProperty(prop)) {
+							if (previousField.hasOwnProperty(prop) && !this._keepNewFieldDataSourceTypeProperties(prop)) {
 								newField[prop] = previousField[prop];
 							}
 						}
@@ -763,6 +763,10 @@ class Sidebar extends Component {
 				}
 			)
 		};
+	}
+
+	_keepNewFieldDataSourceTypeProperties(prop) {
+		return (prop == 'options') || (prop == 'label') || (prop == 'value') || prop == ('showLabel');
 	}
 
 	_openValueFn() {

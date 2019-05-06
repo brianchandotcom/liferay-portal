@@ -15,7 +15,6 @@
 package com.liferay.frontend.theme.contributor.extender.internal;
 
 import com.liferay.frontend.theme.contributor.extender.BundleWebResources;
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
@@ -36,6 +35,8 @@ import javax.servlet.ServletContext;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -77,14 +78,23 @@ public class ThemeContributorExtender
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		String filter = StringBundler.concat(
-			"(&(objectClass=", ServletContext.class.getName(),
-			")(osgi.web.symbolicname=", bundle.getSymbolicName(), "))");
+		Filter filter = null;
+
+		try {
+			filter = bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", ServletContext.class.getName(),
+					")(osgi.web.symbolicname=", bundle.getSymbolicName(),
+					"))"));
+		}
+		catch (InvalidSyntaxException ise) {
+			throw new RuntimeException(ise);
+		}
 
 		Dictionary<String, Object> properties = MapUtil.singletonDictionary(
 			"service.ranking", themeContributorWeight);
 
-		return ServiceTrackerFactory.open(
+		ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(
 			bundleContext, filter,
 			new ServiceTrackerCustomizer
 				<ServletContext, Collection<ServiceRegistration<?>>>() {
@@ -139,6 +149,10 @@ public class ThemeContributorExtender
 				}
 
 			});
+
+		serviceTracker.open();
+
+		return serviceTracker;
 	}
 
 	@Override

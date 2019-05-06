@@ -14,8 +14,12 @@
 
 package com.liferay.frontend.js.top.head.extender.internal;
 
+import com.liferay.frontend.js.top.head.extender.TopHeadResources;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
@@ -23,25 +27,33 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Iván Zaera Avellón
  */
 @Component(immediate = true, service = {})
 public class TopHeadExtender
-	implements BundleTrackerCustomizer<TopHeadExtension> {
+	implements BundleTrackerCustomizer
+		<ServiceTracker
+			<ServletContext, ServiceRegistration<TopHeadResources>>> {
 
 	@Override
-	public TopHeadExtension addingBundle(
-		Bundle bundle, BundleEvent bundleEvent) {
+	public ServiceTracker<ServletContext, ServiceRegistration<TopHeadResources>>
+		addingBundle(Bundle bundle, BundleEvent bundleEvent) {
 
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
@@ -84,26 +96,68 @@ public class TopHeadExtender
 		int liferayTopHeadWeight = GetterUtil.getInteger(
 			headers.get("Liferay-Top-Head-Weight"));
 
-		TopHeadExtension topHeadExtension = new TopHeadExtension(
-			bundle, topHeadResourcesImpl, liferayTopHeadWeight);
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		topHeadExtension.start();
+		String filterString = StringBundler.concat(
+			"(&(objectClass=", ServletContext.class.getName(),
+			")(osgi.web.symbolicname=", bundle.getSymbolicName(), "))");
 
-		return topHeadExtension;
+		Dictionary<String, Object> properties = MapUtil.singletonDictionary(
+			"service.ranking", liferayTopHeadWeight);
+
+		return ServiceTrackerFactory.open(
+			bundleContext, filterString,
+			new ServiceTrackerCustomizer
+				<ServletContext, ServiceRegistration<TopHeadResources>>() {
+
+				@Override
+				public ServiceRegistration<TopHeadResources> addingService(
+					ServiceReference<ServletContext> serviceReference) {
+
+					ServletContext servletContext = bundleContext.getService(
+						serviceReference);
+
+					topHeadResourcesImpl.setServletContextPath(
+						servletContext.getContextPath());
+
+					return bundleContext.registerService(
+						TopHeadResources.class, topHeadResourcesImpl,
+						properties);
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<ServletContext> serviceReference,
+					ServiceRegistration<TopHeadResources> serviceRegistration) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ServletContext> serviceReference,
+					ServiceRegistration<TopHeadResources> serviceRegistration) {
+
+					serviceRegistration.unregister();
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
 	}
 
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		TopHeadExtension topHeadExtension) {
+		ServiceTracker<ServletContext, ServiceRegistration<TopHeadResources>>
+			serviceTracker) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		TopHeadExtension topHeadExtension) {
+		ServiceTracker<ServletContext, ServiceRegistration<TopHeadResources>>
+			serviceTracker) {
 
-		topHeadExtension.destroy();
+		serviceTracker.close();
 	}
 
 	@Activate
@@ -119,6 +173,8 @@ public class TopHeadExtender
 		_bundleTracker.close();
 	}
 
-	private BundleTracker<TopHeadExtension> _bundleTracker;
+	private BundleTracker
+		<ServiceTracker<ServletContext, ServiceRegistration<TopHeadResources>>>
+			_bundleTracker;
 
 }

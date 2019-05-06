@@ -124,17 +124,18 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 				_infoDisplayObjectProvider.getClassNameId(),
 				_infoDisplayObjectProvider.getClassPK());
 
-		if ((assetDisplayPageEntry == null) ||
-			(assetDisplayPageEntry.getType() ==
-				AssetDisplayPageConstants.TYPE_NONE)) {
+		if (assetDisplayPageEntry != null) {
+			if (assetDisplayPageEntry.getType() ==
+					AssetDisplayPageConstants.TYPE_NONE) {
 
-			return 0;
-		}
+				return 0;
+			}
 
-		if (assetDisplayPageEntry.getType() ==
-				AssetDisplayPageConstants.TYPE_SPECIFIC) {
+			if (assetDisplayPageEntry.getType() ==
+					AssetDisplayPageConstants.TYPE_SPECIFIC) {
 
-			return assetDisplayPageEntry.getLayoutPageTemplateEntryId();
+				return assetDisplayPageEntry.getLayoutPageTemplateEntryId();
+			}
 		}
 
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =

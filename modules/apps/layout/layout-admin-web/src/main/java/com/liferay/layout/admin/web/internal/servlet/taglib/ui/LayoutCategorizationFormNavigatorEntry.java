@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Objects;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,7 +64,16 @@ public class LayoutCategorizationFormNavigatorEntry
 			return false;
 		}
 
-		return super.isVisible(user, layout);
+		Layout draftLayout = layoutLocalService.fetchLayout(
+			portal.getClassNameId(Layout.class), layout.getPlid());
+
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
+			(draftLayout == null)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

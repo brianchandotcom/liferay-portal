@@ -16,10 +16,13 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
 
@@ -53,7 +56,18 @@ public class LayoutSEOFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 			return false;
 		}
 
-		return super.isVisible(user, layout);
+		Layout draftLayout = layoutLocalService.fetchLayout(
+			portal.getClassNameId(Layout.class), layout.getPlid());
+
+		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) ||
+			 Objects.equals(
+				 layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) &&
+			(draftLayout == null)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

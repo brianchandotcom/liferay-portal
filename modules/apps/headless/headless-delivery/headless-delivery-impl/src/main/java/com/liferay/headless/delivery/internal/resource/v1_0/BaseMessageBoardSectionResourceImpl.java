@@ -123,6 +123,11 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		MessageBoardSection existingMessageBoardSection =
 			getMessageBoardSection(messageBoardSectionId);
 
+		if (messageBoardSection.getCustomFields() != null) {
+			existingMessageBoardSection.setCustomFields(
+				messageBoardSection.getCustomFields());
+		}
+
 		if (messageBoardSection.getDateCreated() != null) {
 			existingMessageBoardSection.setDateCreated(
 				messageBoardSection.getDateCreated());

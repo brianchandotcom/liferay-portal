@@ -1184,6 +1184,14 @@ public abstract class BaseBlogPostingResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (blogPosting.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("datePublished", additionalAssertFieldName)) {
 				if (blogPosting.getDatePublished() == null) {
 					valid = false;
@@ -1367,6 +1375,17 @@ public abstract class BaseBlogPostingResourceTestCase {
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						blogPosting1.getCreator(), blogPosting2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						blogPosting1.getCustomFields(),
+						blogPosting2.getCustomFields())) {
 
 					return false;
 				}
@@ -1616,6 +1635,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

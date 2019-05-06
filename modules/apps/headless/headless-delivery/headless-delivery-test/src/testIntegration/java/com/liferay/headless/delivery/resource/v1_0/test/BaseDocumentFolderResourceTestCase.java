@@ -1433,6 +1433,14 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (documentFolder.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (documentFolder.getDescription() == null) {
 					valid = false;
@@ -1526,6 +1534,17 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						documentFolder1.getCreator(),
 						documentFolder2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						documentFolder1.getCustomFields(),
+						documentFolder2.getCustomFields())) {
 
 					return false;
 				}
@@ -1678,6 +1697,11 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

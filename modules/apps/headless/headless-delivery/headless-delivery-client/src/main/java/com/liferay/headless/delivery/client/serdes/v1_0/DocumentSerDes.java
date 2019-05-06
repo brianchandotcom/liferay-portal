@@ -117,6 +117,16 @@ public class DocumentSerDes {
 			sb.append(String.valueOf(document.getCreator()));
 		}
 
+		if (document.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append(_toJSON(document.getCustomFields()));
+		}
+
 		if (document.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -393,6 +403,13 @@ public class DocumentSerDes {
 			map.put("creator", String.valueOf(document.getCreator()));
 		}
 
+		if (document.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put("customFields", String.valueOf(document.getCustomFields()));
+		}
+
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(document.getDateCreated()));
@@ -587,6 +604,12 @@ public class DocumentSerDes {
 				if (jsonParserFieldValue != null) {
 					document.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					document.setCustomFields(
+						DocumentSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

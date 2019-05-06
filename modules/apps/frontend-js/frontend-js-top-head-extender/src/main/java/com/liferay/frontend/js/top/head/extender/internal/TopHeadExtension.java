@@ -81,10 +81,6 @@ public class TopHeadExtension {
 				public void modifiedService(
 					ServiceReference<ServletContext> serviceReference,
 					ServiceRegistration<?> serviceRegistration) {
-
-					removedService(serviceReference, serviceRegistration);
-
-					addingService(serviceReference);
 				}
 
 				@Override

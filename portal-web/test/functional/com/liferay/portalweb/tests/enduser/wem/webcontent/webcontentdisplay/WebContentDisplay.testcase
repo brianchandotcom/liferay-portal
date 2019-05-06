@@ -1099,6 +1099,7 @@ definition {
 			siteName = "Test Site Name");
 
 		WebContent.addPGViaWCD(
+			templateName = "Basic Web Content",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 

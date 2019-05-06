@@ -215,6 +215,12 @@ definition {
 			webContentContent = "${webContentContent}",
 			webContentTitle = "${webContentTitle}");
 
+		if (isSet(templateName)) {
+			WebContent.selectTemplateCP(
+				structureName = "Basic Web Content",
+				templateName = "${templateName}");
+		}
+
 		Button.clickPublish();
 	}
 

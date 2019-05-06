@@ -185,7 +185,7 @@ function _removeLayoutDataItem(state, segmentsExperienceId) {
  * @param {string} state.classPK
  * @param {string} state.defaultLanguageId
  * @param {string} state.defaultSegmentsExperienceId
- * @param {[]} state.layoutData
+ * @param {Array} state.layoutData
  * @param {Array<{segmentsExperienceId: string}>} state.layoutDataList
  * @param {object} action
  * @param {string} action.segmentsEntryId
@@ -288,8 +288,8 @@ function createSegmentsExperienceReducer(state, action) {
  * @param {object} state
  * @param {Array} state.availableSegmentsExperiences
  * @param {string} state.defaultSegmentsExperienceId
- * @param {{structure: []}} state.layoutData
- * @param {[]} state.layoutDataList
+ * @param {{structure: Array}} state.layoutData
+ * @param {array} state.layoutDataList
  * @param {string} state.segmentsExperienceId
  * @param {object} action
  * @param {string} action.segmentsExperienceId

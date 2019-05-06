@@ -135,7 +135,7 @@ class Store extends State {
 	 * Dispatch an action to the store. Each action is identified by a given
 	 * actionType, and can contain an optional payload with any kind of
 	 * information.
-	 * @param {{type: string}|((dispatch: function, getState: function) => Promise|void)} action
+	 * @param {{type: string}|function(function, function): Promise|void} action
 	 * @return {Store}
 	 * @review
 	 */

@@ -24,7 +24,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
 
 	/**
 	 * @param {!string} subtypeLabel
-	 * @return {{id: string, label: string}[]} Source types
+	 * @return {Array<{id: string, label: string}>} Source types
 	 * @private
 	 * @static
 	 * @review

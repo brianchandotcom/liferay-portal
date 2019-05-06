@@ -150,7 +150,7 @@ function getItemMoveDirection(keycode) {
  * @param {string|null} itemId
  * @param {string|null} itemType
  * @param {object[]} structure
- * @return {{itemId: string, itemType}[]}
+ * @return {Array<{itemId: string, itemType}>}
  */
 function getItemPath(itemId, itemType, structure) {
 	let itemPath = [];
@@ -298,7 +298,7 @@ function getWidget(widgets, portletId) {
 
 /**
  * Get widget path from the widgets tree by portletId
- * @param {Array<{categories: [], portlets: []}>} widgets
+ * @param {Array<{categories: Array, portlets: Array}>} widgets
  * @param {string} portletId
  * @param {string[]} [_path=['widgets']]
  * @return {object}

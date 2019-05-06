@@ -226,7 +226,7 @@ function setIn(object, keyPath, value) {
  * Updater receives the previous value or defaultValue and returns a new value.
  * @param {Array|Object} object Original object that will be copied
  * @param {Array<string>} keyPath Array of strings used for reaching the deep property
- * @param {(value: *) => *} updater Update function
+ * @param {function} updater Update function
  * @param {*} [defaultValue] Default value to be sent to updater function if
  *  there is no existing value
  * @return {Object}

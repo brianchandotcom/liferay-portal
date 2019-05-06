@@ -101,7 +101,7 @@ function _getLanguageKeys(availableLanguages) {
  * }
  *
  * @param {string[]} languageIds The set of languageIds to check
- * @param {{editableValues: object}[]} editableValues The current editable values state
+ * @param {Array<{editableValues: object}>} editableValues The current editable values state
  * @private
  * @return {object} A translation status object
  * @review

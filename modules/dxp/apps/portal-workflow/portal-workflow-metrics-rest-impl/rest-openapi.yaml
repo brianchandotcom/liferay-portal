@@ -21,8 +21,11 @@ components:
                 id:
                     format: int64
                     type: integer
-                status:
+                slaStatus:
                     enum: [OnTime, Overdue, Untracked]
+                    type: string
+                status:
+                    enum: [Completed, Pending]
                     type: string
                 taskNames:
                     items:
@@ -225,6 +228,26 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: slaStatuses
+                  schema:
+                      items:
+                          enum: [OnTime, Overdue, Untracked]
+                          type: string
+                      type: array
+                - in: query
+                  name: statuses
+                  schema:
+                      items:
+                          enum: [Completed, Pending]
+                          type: string
+                      type: array
+                - in: query
+                  name: taskKeys
+                  schema:
+                      items:
+                          type: string
+                      type: array
             responses:
                 200:
                     content:

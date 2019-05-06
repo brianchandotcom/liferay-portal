@@ -100,10 +100,6 @@ public class ThemeContributorExtension {
 				public void modifiedService(
 					ServiceReference<ServletContext> serviceReference,
 					Collection<ServiceRegistration<?>> service) {
-
-					removedService(serviceReference, service);
-
-					addingService(serviceReference);
 				}
 
 				@Override

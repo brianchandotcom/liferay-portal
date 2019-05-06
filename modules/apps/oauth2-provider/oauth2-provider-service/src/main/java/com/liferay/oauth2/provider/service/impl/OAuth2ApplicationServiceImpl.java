@@ -16,8 +16,10 @@ package com.liferay.oauth2.provider.service.impl;
 
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
+import com.liferay.oauth2.provider.exception.OAuth2ApplicationClientCredentialUserIdException;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.base.OAuth2ApplicationServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -60,10 +62,16 @@ public class OAuth2ApplicationServiceImpl
 
 		User user = getUser();
 
-		if (clientCredentialUserId != user.getUserId()) {
-			ModelResourcePermissionHelper.check(
+		if ((clientCredentialUserId != user.getUserId()) &&
+			!ModelResourcePermissionHelper.contains(
 				_userModelResourcePermission, getPermissionChecker(), 0,
-				clientCredentialUserId, ActionKeys.IMPERSONATE);
+				clientCredentialUserId, ActionKeys.IMPERSONATE)) {
+
+			throw new OAuth2ApplicationClientCredentialUserIdException(
+				StringBundler.concat(
+					"User ", user.getUserId(),
+					" is not allowed to impersonate user ",
+					clientCredentialUserId, " via client credentials grant"));
 		}
 
 		return oAuth2ApplicationLocalService.addOAuth2Application(
@@ -210,10 +218,17 @@ public class OAuth2ApplicationServiceImpl
 
 			User user = getUser();
 
-			if (clientCredentialUserId != user.getUserId()) {
-				ModelResourcePermissionHelper.check(
+			if ((clientCredentialUserId != user.getUserId()) &&
+				!ModelResourcePermissionHelper.contains(
 					_userModelResourcePermission, getPermissionChecker(), 0,
-					clientCredentialUserId, ActionKeys.IMPERSONATE);
+					clientCredentialUserId, ActionKeys.IMPERSONATE)) {
+
+				throw new OAuth2ApplicationClientCredentialUserIdException(
+					StringBundler.concat(
+						"User ", user.getUserId(),
+						" is not allowed to impersonate user ",
+						clientCredentialUserId,
+						" via client credentials grant"));
 			}
 		}
 

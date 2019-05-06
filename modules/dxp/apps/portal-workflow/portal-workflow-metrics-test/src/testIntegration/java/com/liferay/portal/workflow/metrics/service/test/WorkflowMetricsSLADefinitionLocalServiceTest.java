@@ -68,7 +68,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testAddSLADefinition() throws Exception {
+	public void testAddSLADefinition1() throws Exception {
 		_workflowMetricsSLADefinition.add(
 			WorkflowMetricsSLADefinitionLocalServiceUtil.
 				addWorkflowMetricsSLADefinition(
@@ -76,6 +76,18 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 					_kaleoDefinition.getPrimaryKey(), new String[0],
 					new String[] {_getInitialNodeId()},
 					new String[] {_getTerminalNodeId()},
+					ServiceContextTestUtil.getServiceContext()));
+	}
+
+	@Test
+	public void testAddSLADefinition2() throws Exception {
+		_workflowMetricsSLADefinition.add(
+			WorkflowMetricsSLADefinitionLocalServiceUtil.
+				addWorkflowMetricsSLADefinition(
+					"Abc", StringPool.BLANK, 1,
+					_kaleoDefinition.getPrimaryKey(), new String[0],
+					new String[] {_getInitialNodeId() + ":enter"},
+					new String[] {_getTerminalNodeId() + ":leave"},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 
@@ -121,6 +133,18 @@ public class WorkflowMetricsSLADefinitionLocalServiceTest {
 					_kaleoDefinition.getPrimaryKey(), new String[0],
 					new String[] {_getInitialNodeId()},
 					new String[] {_getTerminalNodeId()},
+					ServiceContextTestUtil.getServiceContext()));
+	}
+
+	@Test(expected = WorkflowMetricsSLADefinitionDurationException.class)
+	public void testAddSLADefinitionDuration3() throws Exception {
+		_workflowMetricsSLADefinition.add(
+			WorkflowMetricsSLADefinitionLocalServiceUtil.
+				addWorkflowMetricsSLADefinition(
+					"Abc", StringPool.BLANK, -1,
+					_kaleoDefinition.getPrimaryKey(), new String[0],
+					new String[] {_getInitialNodeId() + ":enter"},
+					new String[] {_getTerminalNodeId() + ":leave"},
 					ServiceContextTestUtil.getServiceContext()));
 	}
 

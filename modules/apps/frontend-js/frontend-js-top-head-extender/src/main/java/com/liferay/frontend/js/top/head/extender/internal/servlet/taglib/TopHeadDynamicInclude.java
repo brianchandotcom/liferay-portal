@@ -107,6 +107,8 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_rebuild();
 	}
 
 	@Reference(
@@ -172,7 +174,9 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	}
 
 	private synchronized void _rebuild() {
-		if ((_portal == null) || (_portalWebResources == null)) {
+		if ((_portal == null) || (_portalWebResources == null) ||
+			(_bundleContext == null)) {
+
 			return;
 		}
 

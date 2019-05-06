@@ -24,9 +24,10 @@ import java.util.Collection;
 public class TopHeadResourcesImpl implements TopHeadResources {
 
 	public TopHeadResourcesImpl(
-		Collection<String> jsResourcePaths,
+		String servletContextPath, Collection<String> jsResourcePaths,
 		Collection<String> authenticatedJsResourcePaths) {
 
+		_servletContextPath = servletContextPath;
 		_jsResourcePaths = jsResourcePaths;
 		_authenticatedJsResourcePaths = authenticatedJsResourcePaths;
 	}
@@ -46,12 +47,8 @@ public class TopHeadResourcesImpl implements TopHeadResources {
 		return _servletContextPath;
 	}
 
-	public void setServletContextPath(String servletContextPath) {
-		_servletContextPath = servletContextPath;
-	}
-
 	private final Collection<String> _authenticatedJsResourcePaths;
 	private final Collection<String> _jsResourcePaths;
-	private String _servletContextPath;
+	private final String _servletContextPath;
 
 }

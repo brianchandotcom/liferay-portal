@@ -81,7 +81,7 @@ public class ThemeContributorExtension {
 						bundleContext.registerService(
 							PortalWebResources.class.getName(),
 							new ThemeContributorPortalWebResources(
-								servletContext),
+								_bundle, servletContext),
 							null));
 
 					String contextPath = servletContext.getContextPath();
@@ -125,7 +125,7 @@ public class ThemeContributorExtension {
 		_serviceTracker;
 	private final int _weight;
 
-	private class ThemeContributorPortalWebResources
+	private static class ThemeContributorPortalWebResources
 		implements PortalWebResources {
 
 		@Override
@@ -149,11 +149,13 @@ public class ThemeContributorExtension {
 		}
 
 		private ThemeContributorPortalWebResources(
-			ServletContext servletContext) {
+			Bundle bundle, ServletContext servletContext) {
 
+			_bundle = bundle;
 			_servletContext = servletContext;
 		}
 
+		private final Bundle _bundle;
 		private final ServletContext _servletContext;
 
 	}

@@ -40,6 +40,7 @@ import com.liferay.portal.template.TemplateContextHelper;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -126,6 +127,18 @@ public class JournalEditDDMTemplateDisplayContext {
 		_ddmTemplateId = ParamUtil.getLong(_request, "ddmTemplateId");
 
 		return _ddmTemplateId;
+	}
+
+	public String getEditorMode() {
+		if (Objects.equals(getLanguage(), "ftl")) {
+			return "ftl";
+		}
+
+		if (Objects.equals(getLanguage(), "xsl")) {
+			return "xml";
+		}
+
+		return "velocity";
 	}
 
 	public long getGroupId() {

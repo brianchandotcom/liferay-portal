@@ -324,10 +324,6 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 		}
 	}
 
-	<%
-	String langType = ParamUtil.getString(request, "langType");
-	%>
-
 	var editorContentElement = A.one('#<portlet:namespace />scriptContent');
 
 	var editorNode = A.one('#<portlet:namespace />richEditor');
@@ -339,7 +335,7 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 				{
 					boundingBox: editorNode,
 					height: 400,
-					mode: '<%= EditorModeUtil.getEditorMode(langType) %>',
+					mode: '<%= journalEditDDMTemplateDisplayContext.getEditorMode() %>',
 					width: '100%'
 				}
 			).render();

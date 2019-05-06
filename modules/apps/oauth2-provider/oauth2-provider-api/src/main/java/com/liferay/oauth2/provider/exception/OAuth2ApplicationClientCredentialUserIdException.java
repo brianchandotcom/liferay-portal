@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class InvalidClientCredentialUserIdException extends PortalException {
+public class OAuth2ApplicationClientCredentialUserIdException extends PortalException {
 
-	public InvalidClientCredentialUserIdException() {
+	public OAuth2ApplicationClientCredentialUserIdException() {
 	}
 
-	public InvalidClientCredentialUserIdException(String msg) {
+	public OAuth2ApplicationClientCredentialUserIdException(String msg) {
 		super(msg);
 	}
 
-	public InvalidClientCredentialUserIdException(String msg, Throwable cause) {
+	public OAuth2ApplicationClientCredentialUserIdException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public InvalidClientCredentialUserIdException(Throwable cause) {
+	public OAuth2ApplicationClientCredentialUserIdException(Throwable cause) {
 		super(cause);
 	}
 

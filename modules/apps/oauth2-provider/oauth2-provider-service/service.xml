@@ -170,7 +170,7 @@
 	<exceptions>
 		<exception>DuplicateOAuth2ApplicationClientId</exception>
 		<exception>DuplicateOAuth2ScopeGrant</exception>
-		<exception>InvalidClientCredentialUserId</exception>
+		<exception>OAuth2ApplicationClientCredentialUserId</exception>
 		<exception>OAuth2ApplicationClientGrantType</exception>
 		<exception>OAuth2ApplicationHomePageURL</exception>
 		<exception>OAuth2ApplicationHomePageURLScheme</exception>

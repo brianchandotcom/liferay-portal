@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.service.impl;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -405,7 +406,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		return Stream.of(
 			nodeKeys
 		).map(
-			nodeKey -> StringUtil.split(nodeKey)
+			nodeKey -> StringUtil.split(nodeKey, CharPool.COLON)
 		).map(
 			nodeKeyParts -> nodeKeyParts[0]
 		).collect(

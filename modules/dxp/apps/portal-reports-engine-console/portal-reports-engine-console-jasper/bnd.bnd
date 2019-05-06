@@ -89,6 +89,9 @@ Import-Package:\
 	\
 	!org.osgi.service.prefs.*,\
 	\
+	!org.slf4j,\
+	!org.slf4j.*,\
+	\
 	!org.w3c.dom.svg.*,\
 	\
 	!schemasMicrosoftComOfficePowerpoint,\

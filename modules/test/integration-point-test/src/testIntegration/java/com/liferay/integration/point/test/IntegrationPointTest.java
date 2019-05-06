@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.auth.AuthToken;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.ArrayList;
@@ -68,11 +69,7 @@ public class IntegrationPointTest {
 
 		_serviceRegistration = _bundleContext.registerService(
 			AuthToken.class, authToken,
-			new HashMapDictionary<String, Object>() {
-				{
-					put("service.ranking", Integer.MAX_VALUE);
-				}
-			});
+			MapUtil.singletonDictionary("service.ranking", Integer.MAX_VALUE));
 
 		Assert.assertSame(
 			authToken,
@@ -104,11 +101,7 @@ public class IntegrationPointTest {
 
 		_serviceRegistration = _bundleContext.registerService(
 			PhoneNumberFormat.class, phoneNumberFormat,
-			new HashMapDictionary<String, Object>() {
-				{
-					put("service.ranking", Integer.MAX_VALUE);
-				}
-			});
+			MapUtil.singletonDictionary("service.ranking", Integer.MAX_VALUE));
 
 		Assert.assertSame(
 			phoneNumberFormat, PhoneNumberFormatUtil.getPhoneNumberFormat());

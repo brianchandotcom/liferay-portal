@@ -2,7 +2,7 @@ AUI.add(
 	'document-library-checkin',
 	function(A) {
 		var DocumentLibraryCheckin = {
-			showDialog: function(contentId, title, saveButton, cancelLabel) {
+			showDialog: function(contentId, namespace, callback) {
 				var versionDetailsDialog = Liferay.Util.Window.getWindow(
 					{
 						dialog: {
@@ -12,7 +12,7 @@ AUI.add(
 							'toolbars.footer': [
 								{
 									cssClass: 'btn-link',
-									label: cancelLabel,
+									label: Liferay.Language.get('cancel'),
 									on: {
 										click: function() {
 											Liferay.Util.getWindow(contentId + 'Dialog').destroy();
@@ -21,9 +21,25 @@ AUI.add(
 								},
 								{
 									cssClass: 'btn-primary',
-									label: saveButton.label,
+									label: Liferay.Language.get('save'),
 									on: {
-										click: saveButton.callback
+										click: function() {
+											var versionIncrease = false;
+											var versionIncreaseElement = document.querySelector('input[name=\'' + namespace + 'versionDetailsVersionIncrease\']:checked');
+
+											if (versionIncreaseElement) {
+												versionIncrease = versionIncreaseElement.value;
+											}
+
+											var changeLog = '';
+											var changeLogElement = document.getElementById(namespace + 'versionDetailsChangeLog');
+
+											if (changeLogElement) {
+												changeLog = changeLogElement.value;
+											}
+
+											callback(versionIncrease, changeLog);
+										}
 									}
 								}
 							],
@@ -33,7 +49,7 @@ AUI.add(
 							bodyCssClass: 'dialog-with-footer'
 						},
 						id: contentId + 'Dialog',
-						title: title
+						title: Liferay.Language.get('describe-your-changes')
 					}
 				);
 
@@ -41,10 +57,10 @@ AUI.add(
 			}
 		};
 
-		Liferay.Portlet.DocumentLibrary.Checkin = DocumentLibraryCheckin;
+		Liferay.DocumentLibraryCheckin = DocumentLibraryCheckin;
 	},
 	'',
 	{
-		requires: ['liferay-document-library', 'liferay-util-window']
+		requires: ['liferay-util-window']
 	}
 );

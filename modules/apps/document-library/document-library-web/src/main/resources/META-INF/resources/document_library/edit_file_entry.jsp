@@ -639,35 +639,21 @@ if (portletTitleBasedNavigation) {
 		window,
 		'<portlet:namespace />showVersionDetailsDialog',
 		function(form) {
-			Liferay.Portlet.DocumentLibrary.Checkin.showDialog(
+			Liferay.Portlet.DocumentLibraryCheckin.showDialog(
 				'<portlet:namespace />versionDetails',
-				'<%= UnicodeLanguageUtil.get(request, "describe-your-changes") %>',
-				{
-					label: '<liferay-ui:message key="save" />',
-					callback: function(event) {
-						var data = {'updateVersionDetails': true};
-
-						var versionIncreaseNode = document.querySelector('input[name="<portlet:namespace />versionDetailsVersionIncrease"]:checked');
-
-						if (versionIncreaseNode) {
-							data.versionIncrease = versionIncreaseNode.value;
-						}
-
-						var changeLogElement = document.getElementById('<portlet:namespace />versionDetailsChangeLog');
-
-						if (changeLogElement) {
-							data.changeLog = changeLogElement.value;
-						}
-
-						Liferay.Util.postForm(
-							form,
-							{
-								data: data
+				'<portlet:namespace />',
+				function(versionIncrease, changeLog) {
+					Liferay.Util.postForm(
+						form,
+						{
+							data: {
+								changeLog: changeLog,
+								updateVersionDetails: true,
+								versionIncrease: versionIncrease
 							}
-						);
-					}
-				},
-				'<liferay-ui:message key="cancel" />'
+						}
+					);
+				}
 			);
 		},
 		['document-library-checkin']

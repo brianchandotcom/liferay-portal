@@ -193,14 +193,6 @@ public class UIItemsBuilder {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
-		template.put(
-			"dialogCancelButtonLabel",
-			LanguageUtil.get(_resourceBundle, "cancel"));
-		template.put(
-			"dialogSaveButtonLabel", LanguageUtil.get(_resourceBundle, "save"));
-		template.put(
-			"dialogTitle",
-			UnicodeLanguageUtil.get(_resourceBundle, "describe-your-changes"));
 		template.put("namespace", getNamespace());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -936,17 +928,7 @@ public class UIItemsBuilder {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
-		template.put(
-			"dialogCancelButtonLabel",
-			LanguageUtil.get(_resourceBundle, "cancel"));
-		template.put(
-			"dialogSaveButtonLabel", LanguageUtil.get(_resourceBundle, "save"));
-		template.put(
-			"dialogTitle",
-			UnicodeLanguageUtil.get(_resourceBundle, "describe-your-changes"));
 		template.put("namespace", getNamespace());
-		template.put(
-			"randomNamespace", _request.getAttribute("randomNamespace"));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

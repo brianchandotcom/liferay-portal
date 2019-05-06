@@ -71,6 +71,67 @@ components:
                     type: integer
                     writeOnly: true
             type: object
+        FormContext:
+            description: https://www.schema.org/FormContext
+            properties:
+                fieldValues:
+                    description: https://www.schema.org/FormFieldValue
+                    items:
+                        properties:
+                            name:
+                                type: string
+                            value:
+                                type: string
+                        type: object
+                    type: array
+                formPageContexts:
+                    description: https://www.schema.org/FormPageContext
+                    items:
+                        properties:
+                            enabled:
+                                type: boolean
+                            formFieldContexts:
+                                description: https://www.schema.org/FormFieldContext
+                                items:
+                                    properties:
+                                        evaluable:
+                                            type: boolean
+                                        name:
+                                            type: string
+                                        options:
+                                            description: https://www.schema.org/FormFieldOption
+                                            items:
+                                                properties:
+                                                    label:
+                                                        type: string
+                                                    value:
+                                                        type: string
+                                                type: object
+                                            type: array
+                                        readOnly:
+                                            type: boolean
+                                        required:
+                                            type: boolean
+                                        valid:
+                                            type: boolean
+                                        value:
+                                            type: string
+                                        valueChanged:
+                                            type: boolean
+                                        visible:
+                                            type: boolean
+                                    type: object
+                                type: array
+                            showRequiredFieldsWarning:
+                                type: boolean
+                        type: object
+                    type: array
+                readOnly:
+                    type: boolean
+                showRequiredFieldsWarning:
+                    type: boolean
+                showSubmitButton:
+                    type: boolean
         FormDocument:
             description: https://www.schema.org/FormDocument
             properties:
@@ -472,19 +533,19 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Form"
+                            $ref: "#/components/schemas/FormContext"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/Form"
+                            $ref: "#/components/schemas/FormContext"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Form"
+                                $ref: "#/components/schemas/FormContext"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/Form"
+                                $ref: "#/components/schemas/FormContext"
                     description: ""
             tags: ["Form"]
     "/forms/{formId}/form-document":

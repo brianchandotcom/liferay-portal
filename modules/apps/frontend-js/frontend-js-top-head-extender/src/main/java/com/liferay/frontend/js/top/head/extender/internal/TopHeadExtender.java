@@ -70,29 +70,6 @@ public class TopHeadExtender
 			return null;
 		}
 
-		List<String> jsResourcePaths = null;
-
-		if (Validator.isNull(liferayJsResourcesTopHead)) {
-			jsResourcePaths = Collections.emptyList();
-		}
-		else {
-			jsResourcePaths = Arrays.asList(
-				liferayJsResourcesTopHead.split(StringPool.COMMA));
-		}
-
-		List<String> authenticatedJsResourcePaths = null;
-
-		if (Validator.isNull(liferayJsResourcesTopHeadAuthenticated)) {
-			authenticatedJsResourcePaths = Collections.emptyList();
-		}
-		else {
-			authenticatedJsResourcePaths = Arrays.asList(
-				liferayJsResourcesTopHeadAuthenticated.split(StringPool.COMMA));
-		}
-
-		TopHeadResourcesImpl topHeadResourcesImpl = new TopHeadResourcesImpl(
-			jsResourcePaths, authenticatedJsResourcePaths);
-
 		int liferayTopHeadWeight = GetterUtil.getInteger(
 			headers.get("Liferay-Top-Head-Weight"));
 
@@ -117,11 +94,12 @@ public class TopHeadExtender
 					ServletContext servletContext = bundleContext.getService(
 						serviceReference);
 
-					topHeadResourcesImpl.setServletContextPath(
-						servletContext.getContextPath());
-
 					return bundleContext.registerService(
-						TopHeadResources.class, topHeadResourcesImpl,
+						TopHeadResources.class,
+						_createTopHeadResources(
+							servletContext.getContextPath(),
+							liferayJsResourcesTopHead,
+							liferayJsResourcesTopHeadAuthenticated),
 						properties);
 				}
 
@@ -171,6 +149,34 @@ public class TopHeadExtender
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
+	}
+
+	private static TopHeadResources _createTopHeadResources(
+		String servletContextPath, String liferayJsResourcesTopHead,
+		String liferayJsResourcesTopHeadAuthenticated) {
+
+		List<String> jsResourcePaths = null;
+
+		if (Validator.isNull(liferayJsResourcesTopHead)) {
+			jsResourcePaths = Collections.emptyList();
+		}
+		else {
+			jsResourcePaths = Arrays.asList(
+				liferayJsResourcesTopHead.split(StringPool.COMMA));
+		}
+
+		List<String> authenticatedJsResourcePaths = null;
+
+		if (Validator.isNull(liferayJsResourcesTopHeadAuthenticated)) {
+			authenticatedJsResourcePaths = Collections.emptyList();
+		}
+		else {
+			authenticatedJsResourcePaths = Arrays.asList(
+				liferayJsResourcesTopHeadAuthenticated.split(StringPool.COMMA));
+		}
+
+		return new TopHeadResourcesImpl(
+			servletContextPath, jsResourcePaths, authenticatedJsResourcePaths);
 	}
 
 	private BundleTracker

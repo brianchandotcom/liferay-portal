@@ -91,8 +91,8 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		ddmFormRenderingContext.setHttpServletRequest(_httpServletRequest);
 		ddmFormRenderingContext.setGroupId(ddmFormInstance.getGroupId());
+		ddmFormRenderingContext.setHttpServletRequest(_httpServletRequest);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 

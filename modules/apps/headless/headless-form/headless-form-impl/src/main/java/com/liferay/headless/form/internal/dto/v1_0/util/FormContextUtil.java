@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.headless.form.dto.v1_0.FieldContext;
 import com.liferay.headless.form.dto.v1_0.FieldValue;
 import com.liferay.headless.form.dto.v1_0.FormContext;
@@ -44,13 +43,12 @@ public class FormContextUtil {
 			FieldValue[] fieldValues, Locale locale)
 		throws Exception {
 
-		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
-			ddmFormInstance, fieldValues, locale);
+		ddmFormRenderingContext.setDDMFormValues(
+			DDMFormValuesUtil.toDDMFormValues(
+				ddmFormInstance, fieldValues, locale));
+		ddmFormRenderingContext.setLocale(locale);
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
-
-		ddmFormRenderingContext.setLocale(locale);
-		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 
 		Map<String, Object> formContext = ddmFormTemplateContextFactory.create(
 			ddmStructure.getDDMForm(), ddmStructure.getDDMFormLayout(),

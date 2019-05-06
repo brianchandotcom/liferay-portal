@@ -70,7 +70,7 @@ public class InitialUpgradeExtender
 		}
 
 		InitialUpgradeExtension initialUpgradeExtension =
-			new InitialUpgradeExtension(bundle);
+			new InitialUpgradeExtension(_bundleContext, bundle);
 
 		initialUpgradeExtension.start();
 
@@ -91,7 +91,7 @@ public class InitialUpgradeExtender
 		initialUpgradeExtension.destroy();
 	}
 
-	public class InitialUpgradeExtension {
+	public static class InitialUpgradeExtension {
 
 		public void destroy() {
 			_serviceRegistration.unregister();
@@ -99,17 +99,13 @@ public class InitialUpgradeExtender
 
 		public void start() {
 			_serviceRegistration = _processInitialUpgrade(
-				InitialUpgradeExtender.this._bundleContext);
+				_bundleContext, _bundle);
 		}
 
-		private InitialUpgradeExtension(Bundle bundle) {
-			_bundle = bundle;
-		}
+		private static ServiceRegistration<UpgradeStep> _processInitialUpgrade(
+			BundleContext bundleContext, Bundle bundle) {
 
-		private ServiceRegistration<UpgradeStep> _processInitialUpgrade(
-			BundleContext bundleContext) {
-
-			Dictionary<String, String> headers = _bundle.getHeaders(
+			Dictionary<String, String> headers = bundle.getHeaders(
 				StringPool.BLANK);
 
 			String upgradeToSchemaVersion = GetterUtil.getString(
@@ -118,7 +114,7 @@ public class InitialUpgradeExtender
 
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 			ClassLoader classLoader = bundleWiring.getClassLoader();
 
@@ -136,16 +132,24 @@ public class InitialUpgradeExtender
 			properties.put("upgrade.initial.database.creation", "true");
 
 			properties.put(
-				"upgrade.bundle.symbolic.name", _bundle.getSymbolicName());
+				"upgrade.bundle.symbolic.name", bundle.getSymbolicName());
 			properties.put("upgrade.db.type", "any");
 			properties.put("upgrade.from.schema.version", "0.0.0");
 			properties.put("upgrade.to.schema.version", upgradeToSchemaVersion);
 
 			return bundleContext.registerService(
-				UpgradeStep.class, new InitialUpgradeStep(_bundle), properties);
+				UpgradeStep.class, new InitialUpgradeStep(bundle), properties);
+		}
+
+		private InitialUpgradeExtension(
+			BundleContext bundleContext, Bundle bundle) {
+
+			_bundleContext = bundleContext;
+			_bundle = bundle;
 		}
 
 		private final Bundle _bundle;
+		private final BundleContext _bundleContext;
 		private ServiceRegistration<UpgradeStep> _serviceRegistration;
 
 	}

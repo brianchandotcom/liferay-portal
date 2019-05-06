@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,21 +82,8 @@ public class IntegrationPointTest {
 
 	@Test
 	public void testServiceTrackerCustomizerIntegrationPoint() {
-		XStreamConverter xStreamConverter =
-			(XStreamConverter)ProxyUtil.newProxyInstance(
-				XStreamConverter.class.getClassLoader(),
-				new Class<?>[] {XStreamConverter.class},
-				(proxy, method, args) -> {
-					if ("equals".equals(method.getName())) {
-						return proxy == args[0];
-					}
-
-					if ("hashCode".equals(method.getName())) {
-						return hashCode();
-					}
-
-					return null;
-				});
+		XStreamConverter xStreamConverter = ProxyFactory.newDummyInstance(
+			XStreamConverter.class);
 
 		_serviceRegistration = _bundleContext.registerService(
 			XStreamConverter.class, xStreamConverter,

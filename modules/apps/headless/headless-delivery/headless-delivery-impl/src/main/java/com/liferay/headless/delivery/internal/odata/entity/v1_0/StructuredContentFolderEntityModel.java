@@ -46,8 +46,8 @@ public class StructuredContentFolderEntityModel implements EntityModel {
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
 				"name",
-				locale -> "localized_title_".concat(
-					LocaleUtil.toLanguageId(locale)))
+				locale -> Field.getSortableFieldName(
+					"localized_title_".concat(LocaleUtil.toLanguageId(locale))))
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

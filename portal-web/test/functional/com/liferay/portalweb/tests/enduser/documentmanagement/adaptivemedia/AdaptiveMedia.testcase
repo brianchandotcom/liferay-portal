@@ -17,7 +17,7 @@ definition {
 
 	@priority = "5"
 	test AddAMIWithHighDensityResolution {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

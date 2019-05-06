@@ -58,7 +58,7 @@
 			</label>
 
 			<button
-				class="btn btn-sm btn-outline-light mr-2 text-left truncate-text"
+				class="btn btn-sm btn-secondary mr-2 text-left truncate-text"
 				data-onclick="{$_handleDropdownButtonClick}"
 				data-onblur="{$_handleDropdownBlur}"
 				type="button"
@@ -73,11 +73,11 @@
 				data-onblur="{$_handleDropdownBlur}"
 				tabindex="-1"
 			>
-				<div class="align-items-start d-flex justify-content-between">
-					<h5>{msg desc=""}select-experience{/msg}</h5>
+				<div class="align-items-end d-flex justify-content-between">
+					<h3 class="mb-0">{msg desc=""}select-experience{/msg}</h3>
 
 					{if $availableSegmentsEntries and length($availableSegmentsEntries) > 0}
-						<button class="btn btn-secondary btn-sm text-dark" data-onclick="{$_openCreateModal}" ref="newExperienceBtn" type="button" >
+						<button class="btn btn-secondary btn-sm" data-onclick="{$_openCreateModal}" ref="newExperienceBtn" type="button" >
 							{msg desc=""}new-experience{/msg}
 						</button>
 					{/if}
@@ -100,7 +100,7 @@
 					{/call}
 				{/if}
 
-				<ul class="list-unstyled mt-3">
+				<ul class="list-unstyled mt-4">
 					{let $notDefaultExperienceLength: (length($availableSegmentsExperiences) - 2) /}
 
 					{foreach $experience in $availableSegmentsExperiences}

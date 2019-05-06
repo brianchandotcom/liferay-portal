@@ -94,7 +94,7 @@ public class IntegrationPointTest {
 
 		Assert.assertTrue(
 			"Mock XStreamConverter not found in " + xStreamConverters,
-			xStreamConverters.contains(xStreamConverter));
+			xStreamConverters.removeIf(item -> xStreamConverter == item));
 	}
 
 	@Test

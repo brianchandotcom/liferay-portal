@@ -223,7 +223,6 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 							StringUtil.split(
 								workflowMetricsSLADefinition.
 									getPauseNodeKeys()));
-
 						status = WorkflowConstants.STATUS_APPROVED;
 					}
 				};
@@ -234,20 +233,17 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 							StringUtil.split(
 								workflowMetricsSLADefinition.
 									getStartNodeKeys()));
-
 						status = _toStatus(
 							workflowMetricsSLADefinition.getStartNodeKeys());
 					}
 				};
 				status = workflowMetricsSLADefinition.getStatus();
-
 				stopNodeKeys = new StopNodeKeys() {
 					{
 						nodeKeys = _toNodeKeys(
 							StringUtil.split(
 								workflowMetricsSLADefinition.
 									getStopNodeKeys()));
-
 						status = _toStatus(
 							workflowMetricsSLADefinition.getStopNodeKeys());
 					}

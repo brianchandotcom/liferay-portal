@@ -60,10 +60,10 @@ public class TopHeadExtension {
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, filterString,
 			new ServiceTrackerCustomizer
-				<ServletContext, ServiceRegistration<?>>() {
+				<ServletContext, ServiceRegistration<TopHeadResources>>() {
 
 				@Override
-				public ServiceRegistration<?> addingService(
+				public ServiceRegistration<TopHeadResources> addingService(
 					ServiceReference<ServletContext> serviceReference) {
 
 					ServletContext servletContext = bundleContext.getService(
@@ -80,13 +80,13 @@ public class TopHeadExtension {
 				@Override
 				public void modifiedService(
 					ServiceReference<ServletContext> serviceReference,
-					ServiceRegistration<?> serviceRegistration) {
+					ServiceRegistration<TopHeadResources> serviceRegistration) {
 				}
 
 				@Override
 				public void removedService(
 					ServiceReference<ServletContext> serviceReference,
-					ServiceRegistration<?> serviceRegistration) {
+					ServiceRegistration<TopHeadResources> serviceRegistration) {
 
 					serviceRegistration.unregister();
 
@@ -97,8 +97,8 @@ public class TopHeadExtension {
 	}
 
 	private final Bundle _bundle;
-	private ServiceTracker<ServletContext, ServiceRegistration<?>>
-		_serviceTracker;
+	private ServiceTracker
+		<ServletContext, ServiceRegistration<TopHeadResources>> _serviceTracker;
 	private final TopHeadResourcesImpl _topHeadResourcesImpl;
 	private final int _weight;
 

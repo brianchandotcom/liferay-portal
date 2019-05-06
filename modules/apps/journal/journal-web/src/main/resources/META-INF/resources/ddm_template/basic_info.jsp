@@ -26,6 +26,21 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
+<%
+StringBundler sb = new StringBundler(6);
+
+sb.append(LanguageUtil.get(request, journalEditDDMTemplateDisplayContext.getLanguage() + "[stands-for]"));
+sb.append(StringPool.SPACE);
+sb.append(StringPool.OPEN_PARENTHESIS);
+sb.append(StringPool.PERIOD);
+sb.append(journalEditDDMTemplateDisplayContext.getLanguage());
+sb.append(StringPool.CLOSE_PARENTHESIS);
+%>
+
+<p class="article-structure">
+	<b><liferay-ui:message key="language" /></b>: <%= sb.toString() %>
+</p>
+
 <aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" wrapperCssClass='<%= ((ddmTemplate == null) || (ddmTemplate.getClassPK() == 0)) ? "mb-2" : StringPool.BLANK %>' />
 
 <c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">

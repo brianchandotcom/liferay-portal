@@ -393,7 +393,7 @@ public class JavadocFormatter {
 		for (JavaConstructor javaConstructor : javaConstructors) {
 			lineNumber = _getJavaModelLineNumber(javaConstructor, content);
 
-			if (commentsMap.containsKey(lineNumber)) {
+			if ((lineNumber == -1) || commentsMap.containsKey(lineNumber)) {
 				continue;
 			}
 
@@ -423,7 +423,7 @@ public class JavadocFormatter {
 		for (JavaMethod javaMethod : javaMethods) {
 			lineNumber = _getJavaModelLineNumber(javaMethod, content);
 
-			if (commentsMap.containsKey(lineNumber)) {
+			if ((lineNumber == -1) || commentsMap.containsKey(lineNumber)) {
 				continue;
 			}
 
@@ -453,7 +453,7 @@ public class JavadocFormatter {
 		for (JavaField javaField : javaFields) {
 			lineNumber = _getJavaModelLineNumber(javaField, content);
 
-			if (commentsMap.containsKey(lineNumber)) {
+			if ((lineNumber == -1) || commentsMap.containsKey(lineNumber)) {
 				continue;
 			}
 
@@ -1801,7 +1801,9 @@ public class JavadocFormatter {
 		for (int i = javaModel.getLineNumber(); i > 0; i--) {
 			String line = StringUtil.trim(lines[i - 1]);
 
-			if (line.startsWith(modifier + StringPool.SPACE)) {
+			if (line.equals(modifier) ||
+				line.startsWith(modifier + StringPool.SPACE)) {
+
 				return _getAdjustedLineNumber(i, javaModel);
 			}
 		}

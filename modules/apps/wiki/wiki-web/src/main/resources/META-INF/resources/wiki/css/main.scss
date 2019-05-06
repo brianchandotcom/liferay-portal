@@ -20,6 +20,8 @@
 	}
 
 	.wiki-body, .wiki-page-editor {
+		word-wrap: break-word;
+
 		img {
 			max-width: 100%;
 		}

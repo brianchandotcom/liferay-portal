@@ -189,6 +189,10 @@ public class JournalDDMTemplateDisplayContext {
 		return _orderByType;
 	}
 
+	public String[] getTemplateLanguageTypes() {
+		return _journalWebConfiguration.journalDDMTemplateLanguageTypes();
+	}
+
 	public boolean isSearch() {
 		if (Validator.isNotNull(_getKeywords())) {
 			return true;

@@ -62,7 +62,7 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 			}
 
 			boolean checkCSRFToken = GetterUtil.getBoolean(
-				properties.get("checkCSRFToken"), true);
+				properties.get("check.csrf.token"), true);
 
 			if (checkCSRFToken) {
 				HttpServletRequest originalServletRequest =

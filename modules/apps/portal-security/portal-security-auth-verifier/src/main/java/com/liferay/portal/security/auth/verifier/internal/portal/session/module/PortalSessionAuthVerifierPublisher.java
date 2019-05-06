@@ -43,10 +43,10 @@ public class PortalSessionAuthVerifierPublisher
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		if (!properties.containsKey("checkCSRFToken")) {
+		if (!properties.containsKey("check.csrf.token")) {
 			properties = new HashMap<>(properties);
 
-			properties.put("checkCSRFToken", false);
+			properties.put("check.csrf.token", false);
 		}
 
 		super.activate(bundleContext, properties);
@@ -69,6 +69,15 @@ public class PortalSessionAuthVerifierPublisher
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		super.modified(bundleContext, properties);
+	}
+
+	@Override
+	protected String translateKey(String authVerifierPropertyName, String key) {
+		if (key.equals("hostsAllowed")) {
+			key = "check.csrf.token";
+		}
+
+		return super.translateKey(authVerifierPropertyName, key);
 	}
 
 	private final AuthVerifier _authVerifier = new PortalSessionAuthVerifier();

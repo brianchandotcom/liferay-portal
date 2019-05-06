@@ -603,6 +603,17 @@ FragmentEditableField.STATE = {
 		.required(),
 
 	/**
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {!string}
+	 */
+	processor: Config
+		.string()
+		.required(),
+
+	/**
 	 * Set of options that are sent to the processors.
 	 * @default undefined
 	 * @instance

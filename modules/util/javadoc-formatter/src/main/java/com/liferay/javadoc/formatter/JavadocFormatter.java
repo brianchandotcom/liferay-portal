@@ -1777,7 +1777,9 @@ public class JavadocFormatter {
 				for (int i = javaModel.getLineNumber(); i < lines.length; i++) {
 					String line = lines[i - 1];
 
-					if (line.matches(
+					if (!StringUtil.startsWith(
+							StringUtil.trim(line), CharPool.STAR) &&
+						line.matches(
 							".*\\W" + javaField.getName() + "(\\W.*)?")) {
 
 						return _getAdjustedLineNumber(i, javaModel);

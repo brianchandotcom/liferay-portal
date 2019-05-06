@@ -207,7 +207,7 @@ definition {
 
 		/*
 
-		Workaround for OAUTH2-243
+		Workaround for OAUTH2-272
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT",
@@ -215,14 +215,13 @@ definition {
 			key_tableName = "OAuth Application"
 		);
 
+		*/
+
 		OAuth2.viewScopes(
 			applicationName = "OAuth Application",
 			checkedGlobalScope = "Everything",
-			resourceCheckedList = "example-scope-1,example-scope-2,everything.read,everything.write,everything.read.userprofile",
-			resourcePanels = "Portal Services,Sample QA app"
-		);
-
-		*/
+			resourceCheckedList = "example-scope-1,example-scope-2,everything.read.userprofile,everything.read.documents.download",
+			resourcePanels = "Portal Services,Sample QA app");
 
 		OAuth2.editScopes(
 			applicationName = "OAuth Application",

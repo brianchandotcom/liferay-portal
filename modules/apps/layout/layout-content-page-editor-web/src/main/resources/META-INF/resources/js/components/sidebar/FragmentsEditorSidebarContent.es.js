@@ -45,6 +45,16 @@ class FragmentsEditorSidebarContent extends Component {
 	}
 
 	/**
+	 * Opens look and feel configuration window
+	 * @param {!MouseEvent} event
+	 * @private
+	 * @review
+	 */
+	_handleLookAndFeeldButtonClick(event) {
+		Liferay.Util.navigate(this.lookAndFeelURL);
+	}
+
+	/**
 	 * Updates active panel
 	 * @param {!MouseEvent} event
 	 * @private
@@ -90,6 +100,7 @@ class FragmentsEditorSidebarContent extends Component {
 const ConnectedFragmentsEditorSidebarContent = getConnectedComponent(
 	FragmentsEditorSidebarContent,
 	[
+		'lookAndFeelURL',
 		'selectedSidebarPanelId',
 		'sidebarPanels',
 		'spritemap'

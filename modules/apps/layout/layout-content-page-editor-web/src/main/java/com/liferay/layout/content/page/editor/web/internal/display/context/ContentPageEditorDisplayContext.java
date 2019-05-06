@@ -40,6 +40,7 @@ import com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -108,6 +109,7 @@ import java.util.stream.Stream;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -183,12 +185,35 @@ public class ContentPageEditorDisplayContext {
 		);
 
 		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
+			PortletURL lookAndFeelURL = PortalUtil.getControlPanelPortletURL(
+				request, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.RENDER_PHASE);
+
+			lookAndFeelURL.setParameter(
+				"mvcRenderCommandName", "/layout/edit_layout");
+
+			Layout layout = themeDisplay.getLayout();
+
+			lookAndFeelURL.setParameter(
+				"redirect", themeDisplay.getURLCurrent());
+			lookAndFeelURL.setParameter(
+				"backURL", themeDisplay.getURLCurrent());
+
+			lookAndFeelURL.setParameter(
+				"groupId", String.valueOf(layout.getGroupId()));
+			lookAndFeelURL.setParameter(
+				"selPlid", String.valueOf(layout.getPlid()));
+			lookAndFeelURL.setParameter(
+				"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
 			soyContext.put(
 				"discardDraftRedirectURL", themeDisplay.getURLCurrent()
 			).put(
 				"discardDraftURL",
 				getFragmentEntryActionURL(
 					"/content_layout/discard_draft_layout")
+			).put(
+				"lookAndFeelURL", lookAndFeelURL.toString()
 			);
 		}
 

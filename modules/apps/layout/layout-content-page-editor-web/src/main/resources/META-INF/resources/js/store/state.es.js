@@ -503,6 +503,16 @@ const INITIAL_STATE = {
 		),
 
 	/**
+	 * Current layout look&feel url
+	 * @default undefined
+	 * @review
+	 * @type {string}
+	 */
+	lookAndFeelURL: Config
+		.string()
+		.value(''),
+
+	/**
 	 * @default []
 	 * @review
 	 * @type {object[]}

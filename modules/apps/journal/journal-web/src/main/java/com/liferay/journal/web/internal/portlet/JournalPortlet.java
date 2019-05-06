@@ -74,6 +74,7 @@ import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.asset.model.JournalArticleAssetRenderer;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
+import com.liferay.journal.web.internal.util.JournalDDMTemplateUtil;
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.journal.web.util.JournalUtil;
 import com.liferay.petra.string.StringBundler;
@@ -479,6 +480,9 @@ public class JournalPortlet extends MVCPortlet {
 		if (Objects.equals(path, "/edit_ddm_template.jsp")) {
 			renderRequest.setAttribute(
 				DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
+			renderRequest.setAttribute(
+				JournalDDMTemplateUtil.class.getName(),
+				_journalDDMTemplateUtil);
 		}
 
 		renderRequest.setAttribute(
@@ -1598,6 +1602,9 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Reference
 	private JournalConverter _journalConverter;
+
+	@Reference
+	private JournalDDMTemplateUtil _journalDDMTemplateUtil;
 
 	@Reference
 	private JournalFeedService _journalFeedService;

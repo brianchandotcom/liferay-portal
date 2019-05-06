@@ -32,12 +32,15 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(service = JournalDDMTemplateUtil.class)
 public class JournalDDMTemplateUtil {
 
-	public static String getDataContent(
+	public String getDataContent(
 		TemplateVariableDefinition templateVariableDefinition,
 		String language) {
 
@@ -94,7 +97,7 @@ public class JournalDDMTemplateUtil {
 		return dataContent;
 	}
 
-	public static String getPaletteItemTitle(
+	public String getPaletteItemTitle(
 		HttpServletRequest request, ResourceBundle resourceBundle,
 		TemplateVariableDefinition templateVariableDefinition) {
 
@@ -148,7 +151,7 @@ public class JournalDDMTemplateUtil {
 		return sb.toString();
 	}
 
-	private static String _getAccessor(String accessor, String language) {
+	private String _getAccessor(String accessor, String language) {
 		if (StringUtil.equalsIgnoreCase(
 				language, TemplateConstants.LANG_TYPE_VM)) {
 
@@ -174,7 +177,7 @@ public class JournalDDMTemplateUtil {
 		return accessor;
 	}
 
-	private static String _getListCode(
+	private String _getListCode(
 		String variableName, String itemName, String accessor,
 		String language) {
 
@@ -216,7 +219,7 @@ public class JournalDDMTemplateUtil {
 		return StringPool.BLANK;
 	}
 
-	private static String _getPaletteItemTitle(
+	private String _getPaletteItemTitle(
 		HttpServletRequest request, String label, Class<?> clazz) {
 
 		if (clazz == null) {
@@ -256,7 +259,7 @@ public class JournalDDMTemplateUtil {
 		return sb.toString();
 	}
 
-	private static String _getVariableAssignmentCode(
+	private String _getVariableAssignmentCode(
 		String variableName, String variableValue, String language) {
 
 		if (StringUtil.equalsIgnoreCase(
@@ -284,7 +287,7 @@ public class JournalDDMTemplateUtil {
 		return variableName;
 	}
 
-	private static String _getVariableReferenceCode(
+	private String _getVariableReferenceCode(
 		String variableName, String accessor, String language) {
 
 		String methodInvocation = StringPool.BLANK;

@@ -1072,6 +1072,7 @@ public class JavadocFormatter {
 	private void _format(String fileName) throws Exception {
 		if (fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("Mojo.java") ||
+			fileName.endsWith("package-info.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
 			fileName.endsWith("WebProxyPortlet.java")) {
 

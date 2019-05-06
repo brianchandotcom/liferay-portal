@@ -46,7 +46,7 @@ public class LanguageExtender
 		List<BundleCapability> bundleCapabilities =
 			bundleWiring.getCapabilities("liferay.resource.bundle");
 
-		if (bundleCapabilities == null) {
+		if ((bundleCapabilities == null) || bundleCapabilities.isEmpty()) {
 			return null;
 		}
 

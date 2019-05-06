@@ -240,6 +240,20 @@ definition {
 			applicationName = "OAuth Application",
 			resourcePanels = "Portal Services,Sample QA app",
 			uncheckedGlobalScope = "Everything");
+
+		OAuth2.editScopes(
+			applicationName = "OAuth Application",
+			checkGlobalScopesViaModal = "Everything",
+			modalLinkScope = "example-scope-1",
+			resourcePanels = "Sample QA app");
+
+		OAuth2.viewScopes(
+			applicationName = "OAuth Application",
+			checkedGlobalScope = "Everything",
+			checkedGlobalScopesViaModal = "Everything",
+			modalLinkScope = "example-scope-1",
+			resourceCheckedList = "example-scope-1,example-scope-2,everything.read.userprofile,everything.read.documents.download",
+			resourcePanels = "Portal Services,Sample QA app");
 	}
 
 	test ViewAndRevokeGrantedAuthorizations {

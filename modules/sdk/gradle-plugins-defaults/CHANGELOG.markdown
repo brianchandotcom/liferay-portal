@@ -5457,6 +5457,14 @@ according to Liferay defaults.
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.69.
 
+## 5.5.181 - 2019-01-24
+
+### Changed
+- [LPS-89369]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.70.
+- [LPS-89369]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.19.
+
 ## 5.5.291 - 2019-04-18
 
 ### Changed
@@ -6011,6 +6019,7 @@ according to Liferay defaults.
 [LPS-89126]: https://issues.liferay.com/browse/LPS-89126
 [LPS-89135]: https://issues.liferay.com/browse/LPS-89135
 [LPS-89228]: https://issues.liferay.com/browse/LPS-89228
+[LPS-89369]: https://issues.liferay.com/browse/LPS-89369
 [LPS-89388]: https://issues.liferay.com/browse/LPS-89388
 [LPS-89415]: https://issues.liferay.com/browse/LPS-89415
 [LPS-89457]: https://issues.liferay.com/browse/LPS-89457

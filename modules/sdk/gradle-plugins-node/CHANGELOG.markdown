@@ -313,6 +313,14 @@ digest, all files ending with the `js` extension in the classes directory will
 be copied before the `processResources` task runs and then copied back to
 preserve changes made by the `npmRun` task.
 
+## 4.6.5 - 2019-01-24
+
+### Added
+- [LPS-89369]: The `npmRun` task should fail when there are Soy compile errors.
+
+### Changed
+- [LPS-89436]: Add Soy files as inputs for tasks of type `NpmRunTask`.
+
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -347,3 +355,5 @@ preserve changes made by the `npmRun` task.
 [LPS-87479]: https://issues.liferay.com/browse/LPS-87479
 [LPS-88909]: https://issues.liferay.com/browse/LPS-88909
 [LPS-89126]: https://issues.liferay.com/browse/LPS-89126
+[LPS-89369]: https://issues.liferay.com/browse/LPS-89369
+[LPS-89436]: https://issues.liferay.com/browse/LPS-89436

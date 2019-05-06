@@ -33,13 +33,18 @@ class SegmentsExperienceSelectorModal extends Component {
 		event.preventDefault();
 		const nameInput = this.refs.experienceModal.refs.experienceName;
 		const segmentIdInput = this.refs.experienceModal.refs.experienceSegmentId;
-		if (this.experienceForm && this.experienceForm.onExperienceSubmit && nameInput.value) {
+		const validName = nameInput.value && nameInput.value.replace(/ /g, '');
+		if (
+			this.experienceForm &&
+			this.experienceForm.onExperienceSubmit &&
+			validName
+		) {
 			this.experienceForm.onExperienceSubmit(
 				nameInput.value,
 				segmentIdInput.value
 			);
 		}
-		else if (!nameInput.value) {
+		else if (!validName) {
 			this.setState(
 				{
 					_requiredNameError: true

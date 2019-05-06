@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Security Auth Test
+Bundle-SymbolicName: com.liferay.portal.security.auth.test
+Bundle-Version: 1.0.0

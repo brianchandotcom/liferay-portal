@@ -23,7 +23,10 @@ String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventNa
 
 User selUser = PortalUtil.getSelectedUser(request);
 
+long organizationId = 0;
 long uniqueOrganizationId = 0;
+
+Organization selectedOrganization = null;
 
 List<Organization> organizations = null;
 
@@ -43,11 +46,24 @@ if (step == 1) {
 	}
 }
 
+if (step == 2) {
+	organizationId = ParamUtil.getLong(request, "organizationId", uniqueOrganizationId);
+
+	selectedOrganization = OrganizationServiceUtil.getOrganization(organizationId);
+}
+
 SelectRoleManagementToolbarDisplayContext SelectRoleManagementToolbarDisplayContext = new SelectRoleManagementToolbarDisplayContext(request, renderRequest, renderResponse, eventName);
 
 PortletURL portletURL = SelectRoleManagementToolbarDisplayContext.getPortletURL();
 
-SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.getRoleSearchContainer(filterManageableRoles);
+SearchContainer roleSearchContainer = null;
+
+if (selectedOrganization == null) {
+	roleSearchContainer = SelectRoleManagementToolbarDisplayContext.getRoleSearchContainer(filterManageableRoles);
+}
+else {
+	roleSearchContainer = SelectRoleManagementToolbarDisplayContext.getRoleSearchContainer(filterManageableRoles, selectedOrganization.getGroupId());
+}
 %>
 
 <clay:management-toolbar
@@ -168,20 +184,13 @@ SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.
 			</aui:script>
 		</c:when>
 		<c:when test="<%= step == 2 %>">
-
-			<%
-			long organizationId = ParamUtil.getLong(request, "organizationId", uniqueOrganizationId);
-			%>
-
 			<aui:input name="step" type="hidden" value="2" />
 			<aui:input name="organizationId" type="hidden" value="<%= String.valueOf(organizationId) %>" />
 
 			<%
-			Organization organization = OrganizationServiceUtil.getOrganization(organizationId);
-
 			portletURL.setParameter("step", "1");
 
-			String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(request, "organizations") + "</a> &raquo; " + HtmlUtil.escape(organization.getName());
+			String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(request, "organizations") + "</a> &raquo; " + HtmlUtil.escape(selectedOrganization.getName());
 			%>
 
 			<div class="breadcrumbs">
@@ -214,15 +223,15 @@ SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text>
-						<c:if test="<%= Validator.isNull(p_u_i_d) || OrganizationMembershipPolicyUtil.isRoleAllowed((selUser != null) ? selUser.getUserId() : 0, organization.getOrganizationId(), role.getRoleId()) %>">
+						<c:if test="<%= Validator.isNull(p_u_i_d) || OrganizationMembershipPolicyUtil.isRoleAllowed((selUser != null) ? selUser.getUserId() : 0, selectedOrganization.getOrganizationId(), role.getRoleId()) %>">
 
 							<%
 							Map<String, Object> data = new HashMap<String, Object>();
 
 							data.put("entityid", role.getRoleId());
 							data.put("entityname", role.getTitle(locale));
-							data.put("groupdescriptivename", organization.getGroup().getDescriptiveName(locale));
-							data.put("groupid", organization.getGroupId());
+							data.put("groupdescriptivename", selectedOrganization.getGroup().getDescriptiveName(locale));
+							data.put("groupid", selectedOrganization.getGroupId());
 							data.put("iconcssclass", RolesAdminUtil.getIconCssClass(role));
 							data.put("searchcontainername", "organizationRoles");
 
@@ -231,7 +240,7 @@ SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.
 							List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId());
 
 							for (UserGroupRole userGroupRole : userGroupRoles) {
-								if ((organization.getGroupId() == userGroupRole.getGroupId()) && (userGroupRole.getRoleId() == role.getRoleId())) {
+								if ((selectedOrganization.getGroupId() == userGroupRole.getGroupId()) && (userGroupRole.getRoleId() == role.getRoleId())) {
 									disabled = true;
 
 									break;

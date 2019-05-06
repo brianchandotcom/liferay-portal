@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -126,7 +127,7 @@ public class JournalDDMTemplateUtil {
 
 			sb.append(LanguageUtil.get(request, "variable"));
 			sb.append(StringPool.COLON);
-			sb.append("&nbsp;");
+			sb.append(StringPool.NBSP);
 			sb.append(HtmlUtil.escape(templateVariableDefinition.getName()));
 		}
 
@@ -148,7 +149,9 @@ public class JournalDDMTemplateUtil {
 	}
 
 	private static String _getAccessor(String accessor, String language) {
-		if (StringUtil.equalsIgnoreCase(language, "vm")) {
+		if (StringUtil.equalsIgnoreCase(
+				language, TemplateConstants.LANG_TYPE_VM)) {
+
 			if (!accessor.contains(StringPool.OPEN_PARENTHESIS)) {
 				return accessor;
 			}
@@ -175,7 +178,9 @@ public class JournalDDMTemplateUtil {
 		String variableName, String itemName, String accessor,
 		String language) {
 
-		if (StringUtil.equalsIgnoreCase(language, "ftl")) {
+		if (StringUtil.equalsIgnoreCase(
+				language, TemplateConstants.LANG_TYPE_FTL)) {
+
 			StringBundler sb = new StringBundler(9);
 
 			sb.append("<#if ");
@@ -190,7 +195,9 @@ public class JournalDDMTemplateUtil {
 
 			return sb.toString();
 		}
-		else if (StringUtil.equalsIgnoreCase(language, "vm")) {
+		else if (StringUtil.equalsIgnoreCase(
+					language, TemplateConstants.LANG_TYPE_VM)) {
+
 			StringBundler sb = new StringBundler(9);
 
 			sb.append("#if (!$");
@@ -223,7 +230,7 @@ public class JournalDDMTemplateUtil {
 		sb.append("<br />");
 		sb.append(LanguageUtil.get(request, label));
 		sb.append(StringPool.COLON);
-		sb.append("&nbsp;");
+		sb.append(StringPool.NBSP);
 
 		String javadocURL = null;
 
@@ -252,11 +259,15 @@ public class JournalDDMTemplateUtil {
 	private static String _getVariableAssignmentCode(
 		String variableName, String variableValue, String language) {
 
-		if (StringUtil.equalsIgnoreCase(language, "ftl")) {
+		if (StringUtil.equalsIgnoreCase(
+				language, TemplateConstants.LANG_TYPE_FTL)) {
+
 			return StringBundler.concat(
 				"<#assign ", variableName, " = ", variableValue, ">");
 		}
-		else if (StringUtil.equalsIgnoreCase(language, "vm")) {
+		else if (StringUtil.equalsIgnoreCase(
+					language, TemplateConstants.LANG_TYPE_VM)) {
+
 			if (!variableValue.startsWith(StringPool.DOUBLE_QUOTE) &&
 				!variableValue.startsWith(StringPool.OPEN_BRACKET) &&
 				!variableValue.startsWith(StringPool.OPEN_CURLY_BRACE) &&
@@ -283,12 +294,16 @@ public class JournalDDMTemplateUtil {
 				StringPool.PERIOD + _getAccessor(accessor, language);
 		}
 
-		if (StringUtil.equalsIgnoreCase(language, "ftl")) {
+		if (StringUtil.equalsIgnoreCase(
+				language, TemplateConstants.LANG_TYPE_FTL)) {
+
 			return StringBundler.concat(
 				"${", variableName, methodInvocation, "}");
 		}
-		else if (StringUtil.equalsIgnoreCase(language, "vm")) {
-			return "$" + variableName + methodInvocation;
+		else if (StringUtil.equalsIgnoreCase(
+					language, TemplateConstants.LANG_TYPE_VM)) {
+
+			return StringPool.DOLLAR + variableName + methodInvocation;
 		}
 
 		return variableName;

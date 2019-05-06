@@ -62,7 +62,7 @@ definition {
 			siteName = "Site Name");
 
 		Page.viewSiteNameTranslationsPG(
-			locale = "en-us",
+			locale = "en-US",
 			siteName = "Site Name",
 			textIcon = "English-United States");
 

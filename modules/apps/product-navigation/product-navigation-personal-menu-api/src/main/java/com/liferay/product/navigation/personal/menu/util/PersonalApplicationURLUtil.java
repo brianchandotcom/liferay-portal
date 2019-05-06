@@ -74,11 +74,15 @@ public class PersonalApplicationURLUtil {
 			personalMenuConfiguration.personalApplicationsLookAndFeel();
 
 		if (personalApplicationsLookAndFeel.equals("current-site")) {
-			user = UserLocalServiceUtil.getDefaultUser(
-				themeDisplay.getCompanyId());
-
 			group = GroupLocalServiceUtil.getGroup(
 				PortalUtil.getScopeGroupId(httpServletRequest));
+
+			if (group.isStagingGroup()) {
+				group = group.getLiveGroup();
+			}
+
+			user = UserLocalServiceUtil.getDefaultUser(
+				themeDisplay.getCompanyId());
 
 			Layout currentLayout = themeDisplay.getLayout();
 

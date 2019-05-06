@@ -87,7 +87,7 @@ definition {
 		}
 
 		if ((isSet(checkGlobalScopesViaModal)) || (isSet(resourceCheckList)) || (isSet(resourceUncheckList)) || (isSet(uncheckAllResourceScopes))) {
-			if (IsElementPresent.isVisible(locator1 = "NavUnderline#NAV_UNDERLINE_LINK", key_navUnderline = "Resource scopes")) {
+			if (IsElementPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK", key_navUnderline = "Global scopes")) {
 				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 			}
 
@@ -454,7 +454,7 @@ definition {
 		}
 
 		if ((isSet(allResourceScopesUnchecked)) || (isSet(checkedGlobalScopesViaModal)) || (isSet(resourceCheckedList)) || (isSet(resourceUncheckedList))) {
-			if (IsElementPresent.isVisible(locator1 = "NavUnderline#NAV_UNDERLINE_LINK", key_navUnderline = "Resource scopes")) {
+			if (IsElementPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK", key_navUnderline = "Global scopes")) {
 				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 			}
 

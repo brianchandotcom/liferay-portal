@@ -17,6 +17,7 @@ package com.liferay.fragment.internal.processor;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -119,6 +120,24 @@ public class FragmentEntryProcessorRegistryImpl
 		}
 
 		return css;
+	}
+
+	@Override
+	public String processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		String html = fragmentEntryLink.getHtml();
+
+		for (FragmentEntryProcessor fragmentEntryProcessor :
+				_serviceTrackerList) {
+
+			html = fragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, html, fragmentEntryProcessorContext);
+		}
+
+		return html;
 	}
 
 	@Override

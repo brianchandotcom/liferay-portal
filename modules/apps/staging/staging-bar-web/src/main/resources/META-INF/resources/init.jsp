@@ -79,7 +79,8 @@ page import="com.liferay.staging.bar.web.internal.display.context.LayoutSetBranc
 page import="com.liferay.staging.constants.StagingProcessesWebKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletMode" %><%@
 page import="javax.portlet.PortletRequest" %><%@

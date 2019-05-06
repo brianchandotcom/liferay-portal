@@ -20,13 +20,16 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.staging.bar.web.internal.product.navigation.control.menu.StagingProductNavigationControlMenuEntry;
 
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,10 +62,19 @@ public class StagingBarTemplateContextContributor
 
 				StringBuilder sb = new StringBuilder();
 
-				sb.append(
-					GetterUtil.getString(contextObjects.get("bodyCssClass")));
-				sb.append(StringPool.SPACE);
-				sb.append("has-staging-bar");
+				Layout layout = themeDisplay.getLayout();
+
+				if (!layout.isSystem() || layout.isTypeControlPanel() ||
+					!Objects.equals(
+						layout.getFriendlyURL(),
+						PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
+
+					sb.append(
+						GetterUtil.getString(
+							contextObjects.get("bodyCssClass")));
+					sb.append(StringPool.SPACE);
+					sb.append("has-staging-bar");
+				}
 
 				Group group = themeDisplay.getScopeGroup();
 

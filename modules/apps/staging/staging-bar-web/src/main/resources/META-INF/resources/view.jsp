@@ -175,87 +175,89 @@ if (liveLayout != null) {
 				</c:otherwise>
 			</c:choose>
 
-			<li class="control-menu-nav-item staging-bar">
-				<div class="control-menu-level-2">
-					<div class="container-fluid container-fluid-max-xl">
-						<div class="control-menu-level-2-heading visible-xs">
-							<liferay-ui:message key="staging-options" />
+			<c:if test="<%= !liveLayout.isSystem() || liveLayout.isTypeControlPanel() || !Objects.equals(liveLayout.getFriendlyURL(), PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL) %>">
+				<li class="control-menu-nav-item staging-bar">
+					<div class="control-menu-level-2">
+						<div class="container-fluid container-fluid-max-xl">
+							<div class="control-menu-level-2-heading visible-xs">
+								<liferay-ui:message key="staging-options" />
 
-							<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" id="closeStagingOptions" type="button">
-								<aui:icon image="times" markupView="lexicon" />
-							</button>
+								<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" id="closeStagingOptions" type="button">
+									<aui:icon image="times" markupView="lexicon" />
+								</button>
+							</div>
+
+							<ul class="control-menu-level-2-nav control-menu-nav staging-bar-level-2-nav">
+								<c:choose>
+									<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
+										<c:if test="<%= stagingGroup != null %>">
+											<liferay-ui:error exception="<%= AuthException.class %>">
+												<liferay-ui:message arguments="<%= user.getScreenName() %>" key="an-error-occurred-while-authenticating-user-x-on-the-remote-server" />
+											</liferay-ui:error>
+
+											<liferay-ui:error exception="<%= Exception.class %>" message="an-unexpected-error-occurred" />
+
+											<c:choose>
+												<c:when test="<%= branchingEnabled %>">
+													<li class="control-menu-nav-item staging-bar-level-2-nav-item">
+														<div class="staging-bar-flex-column">
+															<liferay-util:include page="/view_layout_set_branch_details.jsp" servletContext="<%= application %>" />
+														</div>
+
+														<div class="staging-bar-flex-column">
+															<c:if test="<%= !layoutRevision.isIncomplete() %>">
+																<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
+															</c:if>
+														</div>
+													</li>
+													<li class="control-menu-nav-item staging-bar-level-2-nav-item" id="<portlet:namespace />layoutRevisionStatus">
+														<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+
+														<liferay-util:include page="/view_layout_revision_status.jsp" servletContext="<%= application %>" />
+													</li>
+													<li class="control-menu-nav-item nav-item-flex-end staging-bar-level-2-nav-item staging-layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
+														<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+
+														<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
+													</li>
+												</c:when>
+												<c:otherwise>
+													<liferay-staging:menu
+														cssClass="publish-link"
+														onlyActions="<%= true %>"
+													/>
+
+													<li>
+														<c:choose>
+															<c:when test="<%= liveLayout == null %>">
+																<span class="last-publication-branch">
+																	<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>" %>' key="page-x-has-not-been-published-to-live-yet" translateArguments="<%= false %>" />
+																</span>
+															</c:when>
+															<c:otherwise>
+																<liferay-util:include page="/last_publication_date_message.jsp" servletContext="<%= application %>" />
+															</c:otherwise>
+														</c:choose>
+													</li>
+												</c:otherwise>
+											</c:choose>
+										</c:if>
+									</c:when>
+									<c:otherwise>
+										<li class="control-menu-nav-item staging-message">
+											<div class="alert alert-warning hide warning-content" id="<portlet:namespace />warningMessage">
+												<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
+											</div>
+
+											<liferay-util:include page="/last_publication_date_message.jsp" servletContext="<%= application %>" />
+										</li>
+									</c:otherwise>
+								</c:choose>
+							</ul>
 						</div>
-
-						<ul class="control-menu-level-2-nav control-menu-nav staging-bar-level-2-nav">
-							<c:choose>
-								<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
-									<c:if test="<%= stagingGroup != null %>">
-										<liferay-ui:error exception="<%= AuthException.class %>">
-											<liferay-ui:message arguments="<%= user.getScreenName() %>" key="an-error-occurred-while-authenticating-user-x-on-the-remote-server" />
-										</liferay-ui:error>
-
-										<liferay-ui:error exception="<%= Exception.class %>" message="an-unexpected-error-occurred" />
-
-										<c:choose>
-											<c:when test="<%= branchingEnabled %>">
-												<li class="control-menu-nav-item staging-bar-level-2-nav-item">
-													<div class="staging-bar-flex-column">
-														<liferay-util:include page="/view_layout_set_branch_details.jsp" servletContext="<%= application %>" />
-													</div>
-
-													<div class="staging-bar-flex-column">
-														<c:if test="<%= !layoutRevision.isIncomplete() %>">
-															<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
-														</c:if>
-													</div>
-												</li>
-												<li class="control-menu-nav-item staging-bar-level-2-nav-item" id="<portlet:namespace />layoutRevisionStatus">
-													<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
-
-													<liferay-util:include page="/view_layout_revision_status.jsp" servletContext="<%= application %>" />
-												</li>
-												<li class="control-menu-nav-item nav-item-flex-end staging-bar-level-2-nav-item staging-layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
-													<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
-
-													<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
-												</li>
-											</c:when>
-											<c:otherwise>
-												<liferay-staging:menu
-													cssClass="publish-link"
-													onlyActions="<%= true %>"
-												/>
-
-												<li>
-													<c:choose>
-														<c:when test="<%= liveLayout == null %>">
-															<span class="last-publication-branch">
-																<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>" %>' key="page-x-has-not-been-published-to-live-yet" translateArguments="<%= false %>" />
-															</span>
-														</c:when>
-														<c:otherwise>
-															<liferay-util:include page="/last_publication_date_message.jsp" servletContext="<%= application %>" />
-														</c:otherwise>
-													</c:choose>
-												</li>
-											</c:otherwise>
-										</c:choose>
-									</c:if>
-								</c:when>
-								<c:otherwise>
-									<li class="control-menu-nav-item staging-message">
-										<div class="alert alert-warning hide warning-content" id="<portlet:namespace />warningMessage">
-											<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
-										</div>
-
-										<liferay-util:include page="/last_publication_date_message.jsp" servletContext="<%= application %>" />
-									</li>
-								</c:otherwise>
-							</c:choose>
-						</ul>
 					</div>
-				</div>
-			</li>
+				</li>
+			</c:if>
 		</ul>
 	</c:if>
 

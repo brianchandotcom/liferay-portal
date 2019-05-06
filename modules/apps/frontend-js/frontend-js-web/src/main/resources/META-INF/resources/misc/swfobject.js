@@ -6,13 +6,13 @@
  *
  */
 if (typeof deconcept == 'undefined') {
-var deconcept = {};
+	var deconcept = {};
 }
 if (typeof deconcept.util == 'undefined') {
-deconcept.util = {};
+	deconcept.util = {};
 }
 if (typeof deconcept.SWFObjectUtil == 'undefined') {
-deconcept.SWFObjectUtil = {};
+	deconcept.SWFObjectUtil = {};
 }
 deconcept.SWFObject = function(swf, id, w, h, ver, c, quality, xiRedirectUrl, redirectUrl, detectKey) {
 	if (!document.getElementById) {
@@ -229,20 +229,20 @@ deconcept.PlayerVersion = function(arrVersion) {
 };
 deconcept.PlayerVersion.prototype.versionIsValid = function(fv) {
 	if (this.major < fv.major) {
-return false;
-}
+		return false;
+	}
 	if (this.major > fv.major) {
-return true;
-}
+		return true;
+	}
 	if (this.minor < fv.minor) {
-return false;
-}
+		return false;
+	}
 	if (this.minor > fv.minor) {
-return true;
-}
+		return true;
+	}
 	if (this.rev < fv.rev) {
-return false;
-}
+		return false;
+	}
 	return true;
 };
 

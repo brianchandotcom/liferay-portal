@@ -70,8 +70,8 @@ function startBar(bn) {
 		}
 	}
 	else {
-t.style.left = (parseInt(t.style.left) + t.h + 1) + 'px';
-}
+		t.style.left = (parseInt(t.style.left) + t.h + 1) + 'px';
+	}
 }
 
 function togglePause() {

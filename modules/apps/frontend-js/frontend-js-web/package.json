@@ -39,8 +39,7 @@
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
-		"babel-loader": "^8.0.5",
-		"webpack-merge": "^4.1.2"
+		"babel-loader": "^8.0.5"
 	},
 	"jest": {
 		"globals": {

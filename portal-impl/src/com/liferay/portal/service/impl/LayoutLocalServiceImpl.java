@@ -655,10 +655,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	/**
 	 * Anonymize user information of the specific layout
 	 *
-	 * @param 	layout the layout that need to anonymized
-	 * @param 	userId the primary key of the owner user
-	 * @param 	anonymousUser the anonymized user information
-	 * @return	the anonymized layout
+	 * @param layout the layout that need to anonymized
+	 * @param userId the primary key of the owner user
+	 * @param anonymousUser the anonymized user information
 	 */
 	@Override
 	public void anonymizeLayout(Layout layout, long userId, User anonymousUser)
@@ -1073,10 +1072,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	/**
 	 * Returns the layout matching the UUID, group, and privacy.
 	 *
-	 * @param uuid the layout's UUID
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 * @param  uuid the layout's UUID
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @return the matching layout, or <code>null</code> if a matching layout
+	 *         could not be found
 	 */
 	@Override
 	public Layout fetchLayoutByUuidAndGroupId(
@@ -1310,9 +1310,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	/**
 	 * Returns the layout matching the UUID, group, and privacy.
 	 *
-	 * @param uuid the layout's UUID
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
+	 * @param  uuid the layout's UUID
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
 	 * @return the matching layout
 	 * @throws PortalException if a matching layout could not be found
 	 */
@@ -1327,7 +1327,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * 			   #getLayoutChildLayouts(List)}
+	 *             #getLayoutChildLayouts(List)}
 	 */
 	@Deprecated
 	@Override
@@ -1765,8 +1765,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	/**
 	 * Returns all the layouts matching the UUID and company.
 	 *
-	 * @param uuid the UUID of the layouts
-	 * @param companyId the primary key of the company
+	 * @param  uuid the UUID of the layouts
+	 * @param  companyId the primary key of the company
 	 * @return the matching layouts, or an empty list if no matches were found
 	 */
 	@Override
@@ -1779,12 +1779,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	/**
 	 * Returns a range of layouts matching the UUID and company.
 	 *
-	 * @param uuid the UUID of the layouts
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching layouts, or an empty list if no matches were found
+	 * @param  uuid the UUID of the layouts
+	 * @param  companyId the primary key of the company
+	 * @param  start the lower bound of the range of layouts
+	 * @param  end the upper bound of the range of layouts (not inclusive)
+	 * @param  orderByComparator the comparator to order the results by
+	 *         (optionally <code>null</code>)
+	 * @return the range of matching layouts, or an empty list if no matches
+	 *         were found
 	 */
 	@Override
 	public List<Layout> getLayoutsByUuidAndCompanyId(
@@ -2849,8 +2851,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutId the layout ID of the layout
-	 * @param  parentLayoutId the layout ID to be assigned to the parent
-	 *         layout
+	 * @param  parentLayoutId the layout ID to be assigned to the parent layout
 	 * @return the matching layout
 	 * @throws PortalException if a portal exception occurred
 	 */

@@ -52,10 +52,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Raymond Augé
- * @author Zsigmond Rab
- * @author Hugo Huijser
- * @author Marco Leo
+ * @author     Raymond Augé
+ * @author     Zsigmond Rab
+ * @author     Hugo Huijser
+ * @author     Marco Leo
  * @deprecated As of Judson (7.1.x), since 7.1.0
  */
 @Deprecated

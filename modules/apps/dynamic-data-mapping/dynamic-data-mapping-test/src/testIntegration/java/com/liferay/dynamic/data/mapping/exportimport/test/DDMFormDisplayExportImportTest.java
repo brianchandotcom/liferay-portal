@@ -48,8 +48,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * 	@author Pedro Queiroz
- *  @author Tamas Molnar
+ * @author Pedro Queiroz
+ * @author Tamas Molnar
  */
 @RunWith(Arquillian.class)
 @Sync

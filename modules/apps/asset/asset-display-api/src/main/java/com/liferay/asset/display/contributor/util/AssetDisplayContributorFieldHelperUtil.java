@@ -26,7 +26,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 /**
- * @author Jürgen Kappler
+ * @author     Jürgen Kappler
  * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.asset.info.display.contributor.util.AssetInfoDisplayContributorFieldUtil}
  */

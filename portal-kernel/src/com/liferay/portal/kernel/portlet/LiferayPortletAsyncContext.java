@@ -20,7 +20,7 @@ import javax.servlet.AsyncContext;
 import javax.servlet.AsyncListener;
 
 /**
- * @author Dante Wang
+ * @author     Dante Wang
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated

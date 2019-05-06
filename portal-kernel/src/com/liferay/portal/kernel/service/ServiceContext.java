@@ -392,7 +392,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * context is being passed as a parameter to a method which manipulates the
 	 * resource.
 	 *
-	 * @return the specific group permissions
+	 * @return     the specific group permissions
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
@@ -434,7 +434,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * context is being passed as a parameter to a method which manipulates the
 	 * resource.
 	 *
-	 * @return the specific guest permissions
+	 * @return     the specific guest permissions
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
@@ -1329,7 +1329,8 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * this service context is being passed as a parameter to a method which
 	 * manipulates the resource.
 	 *
-	 * @param groupPermissions the permissions (optionally <code>null</code>)
+	 * @param      groupPermissions the permissions (optionally
+	 *             <code>null</code>)
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
@@ -1347,8 +1348,8 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * this service context is being passed as a parameter to a method which
 	 * manipulates the resource.
 	 *
-	 * @param guestPermissions the guest permissions (optionally
-	 *        <code>null</code>)
+	 * @param      guestPermissions the guest permissions (optionally
+	 *             <code>null</code>)
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated

@@ -1565,8 +1565,8 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #process(
-	 *            Supplier, Locale, String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #process(Supplier,
+	 *             Locale, String)}
 	 */
 	@Deprecated
 	@Override

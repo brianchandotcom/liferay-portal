@@ -118,14 +118,14 @@ public interface CTManager {
 	public Optional<CTCollection> getActiveCTCollectionOptional(long userId);
 
 	/**
-	 * Returns change tracking collections associated with
-	 * the given company, optionally including production or active change lists.
+	 * Returns change tracking collections associated with the given company,
+	 * optionally including production or active change lists.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  includeProduction whether to return the production change list
 	 * @param  includeActive whether to return the active change lists
-	 * @param  queryDefinition the settings regarding
-	 *         pagination, order and filter
+	 * @param  queryDefinition the settings regarding pagination, order and
+	 *         filter
 	 * @return the change tracking collections
 	 */
 	public List<CTCollection> getCTCollections(

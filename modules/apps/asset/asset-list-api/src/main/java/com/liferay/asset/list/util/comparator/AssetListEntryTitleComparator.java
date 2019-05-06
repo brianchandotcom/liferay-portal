@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author  Kyle Miho
+ * @author Kyle Miho
  */
 public class AssetListEntryTitleComparator
 	extends OrderByComparator<AssetListEntry> {

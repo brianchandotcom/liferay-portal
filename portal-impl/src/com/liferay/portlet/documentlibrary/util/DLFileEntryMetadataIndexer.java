@@ -34,9 +34,9 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Marcellus Tavares
+ * @author     Marcellus Tavares
  * @deprecated As of Judson (7.1.x), replaced by {@link
- * com.liferay.document.library.internal.dynamic.data.mapping.util.DLFileEntryMetadataDDMStructureIndexer}
+ *             com.liferay.document.library.internal.dynamic.data.mapping.util.DLFileEntryMetadataDDMStructureIndexer}
  */
 @Deprecated
 public class DLFileEntryMetadataIndexer

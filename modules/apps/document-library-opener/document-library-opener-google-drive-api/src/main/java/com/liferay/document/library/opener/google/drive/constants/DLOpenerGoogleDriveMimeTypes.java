@@ -34,6 +34,7 @@ public class DLOpenerGoogleDriveMimeTypes {
 
 	/**
 	 * The MIME type for Rich Text files.
+	 *
 	 * @review
 	 */
 	public static final String APPLICATION_RTF = "application/rtf";

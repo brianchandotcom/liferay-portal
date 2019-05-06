@@ -40,7 +40,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Hugo Huijser
+ * @author     Hugo Huijser
  * @deprecated As of Judson (7.1.x), since 7.1.0
  */
 @Deprecated

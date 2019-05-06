@@ -26,10 +26,9 @@ import java.util.Objects;
 import javax.servlet.ServletContext;
 
 /**
- * @author Raymond Augé
- *
+ * @author     Raymond Augé
  * @deprecated As of Judson (7.1.x), replaced by {@link
- * 	           com.liferay.portal.model.impl.ThemeImpl}
+ *             com.liferay.portal.model.impl.ThemeImpl}
  */
 @Deprecated
 public class ThemeHelper {

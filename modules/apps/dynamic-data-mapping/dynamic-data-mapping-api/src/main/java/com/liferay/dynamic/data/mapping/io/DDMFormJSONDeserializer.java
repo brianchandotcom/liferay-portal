@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Marcellus Tavares
+ * @author     Marcellus Tavares
  * @deprecated As of Judson (7.1.x), replaced by {@link DDMFormDeserializer}
  */
 @Deprecated

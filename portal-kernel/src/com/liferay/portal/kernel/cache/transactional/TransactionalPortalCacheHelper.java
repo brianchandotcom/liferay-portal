@@ -193,8 +193,8 @@ public class TransactionalPortalCacheHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * 			#put(PortalCache, Serializable, Object, int, boolean)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #put(PortalCache,
+	 *             Serializable, Object, int, boolean)}
 	 */
 	@Deprecated
 	public static <K extends Serializable, V> void put(
@@ -230,7 +230,7 @@ public class TransactionalPortalCacheHelper {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * 			#removeAll(PortalCache, boolean)}
+	 *             #removeAll(PortalCache, boolean)}
 	 */
 	@Deprecated
 	public static <K extends Serializable, V> void removeAll(

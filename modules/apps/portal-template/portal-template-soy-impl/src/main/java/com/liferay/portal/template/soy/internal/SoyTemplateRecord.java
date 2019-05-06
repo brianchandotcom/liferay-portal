@@ -58,14 +58,14 @@ import org.apache.commons.lang3.ClassUtils;
  * sub-elements to Soy types as late as possible.
  *
  * @author Raymond Augé
- * @see SoyContextImpl
+ * @see    SoyContextImpl
  */
 public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 	/**
 	 * Create a record with initial values.
 	 *
-	 * @param map initial values
+	 * @param  map initial values
 	 * @review
 	 */
 	public SoyTemplateRecord(Map<String, Object> map) {

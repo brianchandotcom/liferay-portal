@@ -303,7 +303,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #JournalArticleDDMStructureIndexer}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #JournalArticleDDMStructureIndexer}
 	 */
 	@Deprecated
 	public void reindexDDMStructures(List<Long> ddmStructureIds)

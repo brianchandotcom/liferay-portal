@@ -237,10 +237,10 @@ public class LiferayInputEmitter implements Serializable {
 	}
 
 	/**
-	 * Returns an UriBuilder with pre-added JaxRS Application Base
-	 * e.g: http://localhost:8080/o/headless-commerce-admin-catalog/
+	 * Returns an UriBuilder with pre-added JaxRS Application Base e.g:
+	 * http://localhost:8080/o/headless-commerce-admin-catalog/
 	 *
-	 * @param inputDataSet
+	 * @param  inputDataSet
 	 * @return UriBuilder
 	 */
 	private UriBuilder _getResourceUriBuilder(InputDataSet inputDataSet) {

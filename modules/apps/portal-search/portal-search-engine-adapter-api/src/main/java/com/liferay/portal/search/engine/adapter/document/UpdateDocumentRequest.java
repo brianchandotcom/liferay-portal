@@ -30,7 +30,8 @@ public class UpdateDocumentRequest
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by
-	 * UpdateDocumentRequest.UpdateDocumentRequest(String, String, Document)
+	 *             UpdateDocumentRequest.UpdateDocumentRequest(String, String,
+	 *             Document)
 	 */
 	@Deprecated
 	public UpdateDocumentRequest(

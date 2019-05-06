@@ -64,7 +64,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Pavel Savinov
+ * @author     Pavel Savinov
  * @deprecated As of Judson (7.1.x), since 7.1.0
  */
 @Deprecated

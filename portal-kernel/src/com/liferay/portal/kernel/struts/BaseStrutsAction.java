@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Mika Koivisto
+ * @author     Mika Koivisto
  * @deprecated As of Judson (7.1.x), replaced by {@link StrutsAction}
  */
 @Deprecated

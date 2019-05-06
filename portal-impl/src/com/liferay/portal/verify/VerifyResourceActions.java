@@ -24,8 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
- * @author Michael Bowerman
- *
+ * @author     Michael Bowerman
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

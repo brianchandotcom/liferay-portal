@@ -19,8 +19,8 @@ import com.liferay.segments.context.Context;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Provides an interface for extending the {@link Context} with information
- * from the request.
+ * Provides an interface for extending the {@link Context} with information from
+ * the request.
  *
  * @author Eduardo García
  * @review

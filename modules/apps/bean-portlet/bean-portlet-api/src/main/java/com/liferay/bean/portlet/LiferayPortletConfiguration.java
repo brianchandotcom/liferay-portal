@@ -33,7 +33,7 @@ public @interface LiferayPortletConfiguration {
 	 * The portlet name that the portlet configuration is associated with.
 	 *
 	 * @return The portlet name that the portlet configuration is associated
-	 * with.
+	 *         with.
 	 */
 	public String portletName();
 

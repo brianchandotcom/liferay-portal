@@ -64,6 +64,7 @@ public interface SegmentsCriteriaContributor {
 
 	/**
 	 * Returns the entity model associated to the contributor.
+	 *
 	 * @return
 	 * @review
 	 */

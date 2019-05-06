@@ -17,10 +17,16 @@ package com.liferay.asset.list.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the AssetListEntrySegmentsEntryRel service. Represents a row in the &quot;AssetListEntrySegmentsEntryRel&quot; database table, with each column mapped to a property of this class.
+ * The extended model implementation for the AssetListEntrySegmentsEntryRel
+ * service. Represents a row in the &quot;AssetListEntrySegmentsEntryRel&quot;
+ * database table, with each column mapped to a property of this class.
  *
  * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel</code> interface.
+ * Helper methods and all application logic should be put in this class.
+ * Whenever methods are added, rerun ServiceBuilder to copy their definitions
+ * into the
+ * <code>com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel</code>
+ * interface.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -32,7 +38,10 @@ public class AssetListEntrySegmentsEntryRelImpl
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. All methods that expect a asset list entry segments entry rel model instance should use the {@link com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel} interface instead.
+	 * Never reference this class directly. All methods that expect a asset list
+	 * entry segments entry rel model instance should use the {@link
+	 * com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel} interface
+	 * instead.
 	 */
 	public AssetListEntrySegmentsEntryRelImpl() {
 	}

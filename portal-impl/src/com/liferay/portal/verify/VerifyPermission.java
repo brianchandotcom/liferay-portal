@@ -20,11 +20,10 @@ import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import java.util.List;
 
 /**
- * @author Tobias Kaefer
- * @author Douglas Wong
- * @author Matthew Kong
- * @author Raymond Augé
- *
+ * @author     Tobias Kaefer
+ * @author     Douglas Wong
+ * @author     Matthew Kong
+ * @author     Raymond Augé
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

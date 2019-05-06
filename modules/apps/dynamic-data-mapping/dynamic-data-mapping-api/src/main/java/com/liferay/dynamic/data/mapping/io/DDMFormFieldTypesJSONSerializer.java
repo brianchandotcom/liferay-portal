@@ -22,8 +22,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.util.List;
 
 /**
- * @author Bruno Basto
- * @deprecated As of Judson (7.1.x), replaced by {@link DDMFormFieldTypesSerializer}
+ * @author     Bruno Basto
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             DDMFormFieldTypesSerializer}
  */
 @Deprecated
 @ProviderType

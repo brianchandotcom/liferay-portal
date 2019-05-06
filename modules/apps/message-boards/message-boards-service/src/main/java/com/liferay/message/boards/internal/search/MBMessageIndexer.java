@@ -72,10 +72,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Harry Mark
- * @author Bruno Farache
- * @author Raymond Augé
+ * @author     Brian Wing Shun Chan
+ * @author     Harry Mark
+ * @author     Bruno Farache
+ * @author     Raymond Augé
  * @deprecated As of Judson (7.1.x), since 7.1.0
  */
 @Deprecated

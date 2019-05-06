@@ -22,7 +22,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Leonardo Barros
+ * @author     Leonardo Barros
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated

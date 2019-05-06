@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author André de Oliveira
+ * @author     André de Oliveira
  * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.portal.search.test.util.FieldValuesAssert}
  */

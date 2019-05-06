@@ -45,8 +45,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Máté Thurzó
- * @author Akos Thurzo
+ * @author     Máté Thurzó
+ * @author     Akos Thurzo
  * @deprecated As of Judson (7.1.x), since 7.1.0
  */
 @Deprecated

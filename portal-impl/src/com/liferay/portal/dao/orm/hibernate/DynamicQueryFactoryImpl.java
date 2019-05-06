@@ -28,8 +28,8 @@ import org.hibernate.criterion.DetachedCriteria;
 public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #forClass(Class, ClassLoader)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #forClass(Class,
+	 *             ClassLoader)}
 	 */
 	@Deprecated
 	@Override
@@ -47,8 +47,8 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #forClass(Class, String, ClassLoader)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #forClass(Class,
+	 *             String, ClassLoader)}
 	 */
 	@Deprecated
 	@Override

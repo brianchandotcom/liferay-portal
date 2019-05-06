@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Shuyang Zhou
- * @author Brian Wing Shun Chan
+ * @author     Shuyang Zhou
+ * @author     Brian Wing Shun Chan
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated

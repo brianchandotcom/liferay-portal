@@ -15,10 +15,10 @@
 package com.liferay.portal.template.soy.util;
 
 /**
- * This interface can be implemented by any specialized class that is capable
- * of returning a low level value for the Soy template system. Such low level
- * value will be passed to Soy engine verbatim, without any smart/additional
- * type conversion.
+ * This interface can be implemented by any specialized class that is capable of
+ * returning a low level value for the Soy template system. Such low level value
+ * will be passed to Soy engine verbatim, without any smart/additional type
+ * conversion.
  *
  * @author Leonardo Barros
  * @review

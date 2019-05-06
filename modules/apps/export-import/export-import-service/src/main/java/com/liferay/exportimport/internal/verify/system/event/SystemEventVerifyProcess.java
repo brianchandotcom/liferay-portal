@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Akos Thurzo
- *
+ * @author     Akos Thurzo
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(

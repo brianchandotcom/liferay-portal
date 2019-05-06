@@ -15,10 +15,10 @@
 package com.liferay.portal.template.soy.util;
 
 /**
- * @author Shuyang Zhou
- * @deprecated As of Judson (7.1.x), use
- * 		{@link com.liferay.portal.template.soy.data.SoyHTMLData} to wrap HTML
- * 		values
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson (7.1.x), use {@link
+ *             com.liferay.portal.template.soy.data.SoyHTMLData} to wrap HTML
+ *             values
  * @review
  */
 @Deprecated

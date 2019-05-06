@@ -26,8 +26,8 @@ import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
 
 /**
- * @author Shuyang Zhou
- * @author Alexander Chow
+ * @author     Shuyang Zhou
+ * @author     Alexander Chow
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated

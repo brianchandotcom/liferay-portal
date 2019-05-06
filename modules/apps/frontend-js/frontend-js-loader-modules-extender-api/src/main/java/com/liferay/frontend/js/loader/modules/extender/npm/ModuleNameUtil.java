@@ -90,9 +90,11 @@ public class ModuleNameUtil {
 
 	/**
 	 * Resolve dependency path based on current module's path.
-	 * @param moduleName the module's name
-	 * @param dependency the dependency's name
-	 * @return the full path of the dependency if it is local, the given dependency otherwise
+	 *
+	 * @param  moduleName the module's name
+	 * @param  dependency the dependency's name
+	 * @return the full path of the dependency if it is local, the given
+	 *         dependency otherwise
 	 * @review
 	 */
 	public static String getDependencyPath(

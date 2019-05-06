@@ -41,7 +41,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Eduardo García
+ * @author     Eduardo García
  * @deprecated As of Judson (7.1.x), since 7.1.0
  */
 @Deprecated

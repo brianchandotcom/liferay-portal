@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.template;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

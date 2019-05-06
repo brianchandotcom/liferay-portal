@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 
 /**
- * @author Zoltan Csaszi
+ * @author     Zoltan Csaszi
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated

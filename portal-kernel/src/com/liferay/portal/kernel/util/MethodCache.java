@@ -17,9 +17,8 @@ package com.liferay.portal.kernel.util;
 import java.lang.reflect.Method;
 
 /**
- * @author Michael C. Han
- * @author Shuyang Zhou
- *
+ * @author     Michael C. Han
+ * @author     Shuyang Zhou
  * @deprecated As of Judson (7.1.x), replaced by {@link MethodKey}
  */
 @Deprecated

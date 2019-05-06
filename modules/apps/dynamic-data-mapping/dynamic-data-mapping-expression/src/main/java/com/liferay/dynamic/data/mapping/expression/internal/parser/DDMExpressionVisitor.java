@@ -109,8 +109,8 @@ public interface DDMExpressionVisitor<T> extends ParseTreeVisitor<T> {
 	T visitArray(@NotNull DDMExpressionParser.ArrayContext ctx);
 
 	/**
-	 * Visit a parse tree produced by the {@code ToLogicalAndExpression}
-	 * labeled alternative in {@link DDMExpressionParser#logicalOrExpression}.
+	 * Visit a parse tree produced by the {@code ToLogicalAndExpression} labeled
+	 * alternative in {@link DDMExpressionParser#logicalOrExpression}.
 	 *
 	 * @param  ctx the parse tree
 	 * @return the visitor result
@@ -237,8 +237,8 @@ public interface DDMExpressionVisitor<T> extends ParseTreeVisitor<T> {
 	T visitToAdditionOrSubtractionEpression(@NotNull DDMExpressionParser.ToAdditionOrSubtractionEpressionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by the {@code ToStringArray}
-	 * labeled alternative in {@link DDMExpressionParser#stringArray}.
+	 * Visit a parse tree produced by the {@code ToStringArray} labeled
+	 * alternative in {@link DDMExpressionParser#stringArray}.
 	 *
 	 * @param  ctx the parse tree
 	 * @return the visitor result
@@ -265,8 +265,8 @@ public interface DDMExpressionVisitor<T> extends ParseTreeVisitor<T> {
 	T visitNumericVariable(@NotNull DDMExpressionParser.NumericVariableContext ctx);
 
 	/**
-	 * Visit a parse tree produced by the {@code ToFloatingPointArray}
-	 * labeled alternative in {@link DDMExpressionParser#floatingPointArray}.
+	 * Visit a parse tree produced by the {@code ToFloatingPointArray} labeled
+	 * alternative in {@link DDMExpressionParser#floatingPointArray}.
 	 *
 	 * @param  ctx the parse tree
 	 * @return the visitor result
@@ -274,8 +274,9 @@ public interface DDMExpressionVisitor<T> extends ParseTreeVisitor<T> {
 	T visitToFloatingPointArray(@NotNull DDMExpressionParser.ToFloatingPointArrayContext ctx);
 
 	/**
-	 * Visit a parse tree produced by the {@code SubtractionExpression}
-	 * labeled alternative in {@link DDMExpressionParser#additionOrSubtractionExpression}.
+	 * Visit a parse tree produced by the {@code SubtractionExpression} labeled
+	 * alternative in {@link
+	 * DDMExpressionParser#additionOrSubtractionExpression}.
 	 *
 	 * @param  ctx the parse tree
 	 * @return the visitor result
@@ -374,7 +375,8 @@ public interface DDMExpressionVisitor<T> extends ParseTreeVisitor<T> {
 	T visitLessThanOrEqualsExpression(@NotNull DDMExpressionParser.LessThanOrEqualsExpressionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link DDMExpressionParser#functionParameter}.
+	 * Visit a parse tree produced by {@link
+	 * DDMExpressionParser#functionParameter}.
 	 *
 	 * @param  ctx the parse tree
 	 * @return the visitor result
@@ -392,8 +394,8 @@ public interface DDMExpressionVisitor<T> extends ParseTreeVisitor<T> {
 	T visitMultiplicationExpression(@NotNull DDMExpressionParser.MultiplicationExpressionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by the {@code ToIntegerArray}
-	 * labeled alternative in {@link DDMExpressionParser#integerArray}.
+	 * Visit a parse tree produced by the {@code ToIntegerArray} labeled
+	 * alternative in {@link DDMExpressionParser#integerArray}.
 	 *
 	 * @param  ctx the parse tree
 	 * @return the visitor result
@@ -401,8 +403,8 @@ public interface DDMExpressionVisitor<T> extends ParseTreeVisitor<T> {
 	T visitToIntegerArray(@NotNull DDMExpressionParser.ToIntegerArrayContext ctx);
 
 	/**
-	 * Visit a parse tree produced by the {@code EqualsExpression}
-	 * labeled alternative in {@link DDMExpressionParser#equalityExpression}.
+	 * Visit a parse tree produced by the {@code EqualsExpression} labeled
+	 * alternative in {@link DDMExpressionParser#equalityExpression}.
 	 *
 	 * @param  ctx the parse tree
 	 * @return the visitor result

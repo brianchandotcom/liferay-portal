@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.service.configuration.configurator;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 
 /**
- * @author Miguel Pastor
+ * @author     Miguel Pastor
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated

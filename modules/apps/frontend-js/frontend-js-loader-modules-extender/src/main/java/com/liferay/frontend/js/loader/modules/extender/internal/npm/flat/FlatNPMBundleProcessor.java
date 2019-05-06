@@ -124,8 +124,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	/**
 	 * Get the arguments passed to the AMD define() call.
 	 *
-	 * @param url URL of module file
-	 * @return the arguments or null if not found or read failed
+	 * @param  url URL of module file
+	 * @return the arguments or <code>null</code> if not found or read failed
 	 * @review
 	 */
 	private String _getDefineArgs(URL url) {

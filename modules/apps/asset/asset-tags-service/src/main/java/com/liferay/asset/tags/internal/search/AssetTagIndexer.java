@@ -39,7 +39,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Pavel Savinov
+ * @author     Pavel Savinov
  * @deprecated As of Judson (7.1.x), since 7.1.0
  */
 @Deprecated

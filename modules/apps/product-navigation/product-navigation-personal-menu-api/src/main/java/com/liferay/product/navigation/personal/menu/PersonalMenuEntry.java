@@ -32,8 +32,8 @@ import javax.servlet.http.HttpServletRequest;
  * <p>
  * Implementations must be registered in the OSGi Registry. The order of the
  * user personal menu entry is determined by the
- * <code>product.navigation.personal.menu.entry.order</code> property value.
- * The section where the entry goes in the menu is determined by the
+ * <code>product.navigation.personal.menu.entry.order</code> property value. The
+ * section where the entry goes in the menu is determined by the
  * <code>product.navigation.personal.menu.group</code> property value.
  * </p>
  *
@@ -45,10 +45,9 @@ public interface PersonalMenuEntry {
 	/**
 	 * Returns the icon name to display in the entry.
 	 *
-	 *
+	 * @param  portletRequest
 	 * @return the icon name to display in the entry.
 	 * @review
-	 * @param portletRequest
 	 */
 	public default String getIcon(PortletRequest portletRequest) {
 		return StringPool.BLANK;
@@ -92,9 +91,8 @@ public interface PersonalMenuEntry {
 	}
 
 	/**
-	 * Returns <code>true</code> if the entry should be displayed in the
-	 * user personal menu.
-	 *
+	 * Returns <code>true</code> if the entry should be displayed in the user
+	 * personal menu.
 	 *
 	 * @param  portletRequest the portlet request
 	 * @param  permissionChecker the permission checker

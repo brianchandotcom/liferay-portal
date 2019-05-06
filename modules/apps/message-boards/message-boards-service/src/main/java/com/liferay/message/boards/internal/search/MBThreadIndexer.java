@@ -52,7 +52,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
  * @deprecated As of Judson (7.1.x), since 7.1.0
  */
 @Deprecated

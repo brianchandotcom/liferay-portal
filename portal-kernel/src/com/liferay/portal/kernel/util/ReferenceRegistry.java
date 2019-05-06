@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.util;
 import java.lang.reflect.Field;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

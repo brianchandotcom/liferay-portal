@@ -17,9 +17,8 @@ package com.liferay.portal.convert.documentlibrary;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
+ * @author     Iván Zaera
  * @deprecated As of Judson (7.1.x), with no direct replacement
- *
- * @author Iván Zaera
  */
 @Deprecated
 public interface DLStoreConverter {

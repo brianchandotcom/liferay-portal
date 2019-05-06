@@ -33,7 +33,8 @@ import java.util.stream.Stream;
  * as given by the template user, without any transformation to Soy internal
  * types. This is so that values put into this maps are immutables.
  *
- * It can, of course, contain {@link com.liferay.portal.template.soy.util.SoyRawData}
+ * It can, of course, contain {@link
+ * com.liferay.portal.template.soy.util.SoyRawData}
  * values as they are part of the public API and are types known to the user.
  *
  * In order to make use of a {@link SoyContext} in the template engine, it is
@@ -41,7 +42,7 @@ import java.util.stream.Stream;
  * that really knows how to coerce userland values into soyland values.
  *
  * @author Matthew Tambara
- * @see SoyTemplateRecord
+ * @see    SoyTemplateRecord
  * @review
  */
 public class SoyContextImpl implements SoyContext {
@@ -57,8 +58,8 @@ public class SoyContextImpl implements SoyContext {
 	/**
 	 * Create a context with initial values.
 	 *
-	 * @param context initial context values
-	 * @param restrictedVariables list of restricted (read-only) variables
+	 * @param  context initial context values
+	 * @param  restrictedVariables list of restricted (read-only) variables
 	 * @review
 	 */
 	public SoyContextImpl(

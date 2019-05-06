@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author Marcellus Tavares
+ * @author     Marcellus Tavares
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated

@@ -30,7 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface InlinePermissionConfiguration {
 
 	/**
-	 * Set this to true to enable inline SQL permission checks.
+	 * Set this to <code>true</code> to enable inline SQL permission checks.
 	 */
 	@Meta.AD(deflt = "true", name = "sql-check-enabled", required = false)
 	public boolean sqlCheckEnabled();

@@ -25,7 +25,7 @@ public interface DDMFormEvaluator {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * DDMFormEvaluator#evaluate(DDMFormEvaluatorEvaluateRequest)}
+	 *             DDMFormEvaluator#evaluate(DDMFormEvaluatorEvaluateRequest)}
 	 */
 	@Deprecated
 	public DDMFormEvaluationResult evaluate(

@@ -36,7 +36,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated

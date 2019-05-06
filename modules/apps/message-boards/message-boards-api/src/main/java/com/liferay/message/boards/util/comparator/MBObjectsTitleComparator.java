@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of Mueller (7.2.x), replaced by {@link MBObjectsComparator}
  * @review
  */

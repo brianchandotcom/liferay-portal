@@ -46,7 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Antonio Pol
+ * @author     Antonio Pol
  * @deprecated As of Mueller (7.2.x)
  */
 @Deprecated

@@ -20,9 +20,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Marcellus Tavares
+ * @author     Marcellus Tavares
  * @deprecated As of Judson (7.1.x), replaced by {@link
- * DDMFormInstanceRecordWriterTracker}
+ *             DDMFormInstanceRecordWriterTracker}
  */
 @Deprecated
 @ProviderType

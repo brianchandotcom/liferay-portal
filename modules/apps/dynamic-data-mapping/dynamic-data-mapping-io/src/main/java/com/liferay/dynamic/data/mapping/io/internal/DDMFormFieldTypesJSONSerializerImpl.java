@@ -27,8 +27,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Bruno Basto
- * @deprecated As of Judson (7.1.x), replaced by {@link com.liferay.dynamic.data.mapping.io.internal.DDMFormFieldTypesJSONSerializer}
+ * @author     Bruno Basto
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.dynamic.data.mapping.io.internal.DDMFormFieldTypesJSONSerializer}
  */
 @Component(immediate = true, service = DDMFormFieldTypesJSONSerializer.class)
 @Deprecated

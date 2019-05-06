@@ -55,7 +55,8 @@ public interface AMImageConfiguration {
 	 * indicates that all images will generate adaptive media images. A value of
 	 * 0 indicates that no adaptive media images will be generated.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link DLFileEntryConfiguration#previewableProcessorMaxSize()}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             DLFileEntryConfiguration#previewableProcessorMaxSize()}
 	 */
 	@Deprecated
 	@Meta.AD(

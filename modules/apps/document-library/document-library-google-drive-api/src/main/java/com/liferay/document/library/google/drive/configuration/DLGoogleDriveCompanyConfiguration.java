@@ -67,9 +67,8 @@ public interface DLGoogleDriveCompanyConfiguration {
 	public String clientSecret();
 
 	/**
-	 * Returns the API Key of the Google Drive Picker API
-	 * If <code>null</code> or empty, the Google Drive Shortcut integration
-	 * disables itself.
+	 * Returns the API Key of the Google Drive Picker API If <code>null</code>
+	 * or empty, the Google Drive Shortcut integration disables itself.
 	 *
 	 * @return the api key
 	 */

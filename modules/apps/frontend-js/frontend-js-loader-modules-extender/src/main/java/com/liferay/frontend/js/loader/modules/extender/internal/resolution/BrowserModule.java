@@ -59,10 +59,10 @@ public interface BrowserModule {
 	 * The dependencies map will be something similar to:
 	 *
 	 * {
-	 *     "is-object": "is-object@1.1.0"
+	 * "is-object": "is-object@1.1.0"
 	 * }
 	 *
-	 * @return a map or null
+	 * @return a map or <code>null</code>
 	 */
 	public Map<String, String> getDependenciesMap();
 

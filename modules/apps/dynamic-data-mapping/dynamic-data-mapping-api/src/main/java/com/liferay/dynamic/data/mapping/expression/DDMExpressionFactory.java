@@ -24,7 +24,8 @@ public interface DDMExpressionFactory {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 *             DDMExpressionFactory#createExpression(
+	 *             CreateExpressionRequest)}
 	 */
 	@Deprecated
 	public default DDMExpression<Boolean> createBooleanDDMExpression(
@@ -41,7 +42,8 @@ public interface DDMExpressionFactory {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 *             DDMExpressionFactory#createExpression(
+	 *             CreateExpressionRequest)}
 	 */
 	@Deprecated
 	public default DDMExpression<Double> createDoubleDDMExpression(
@@ -62,7 +64,8 @@ public interface DDMExpressionFactory {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 *             DDMExpressionFactory#createExpression(
+	 *             CreateExpressionRequest)}
 	 */
 	@Deprecated
 	public default DDMExpression<Float> createFloatDDMExpression(
@@ -79,7 +82,8 @@ public interface DDMExpressionFactory {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 *             DDMExpressionFactory#createExpression(
+	 *             CreateExpressionRequest)}
 	 */
 	@Deprecated
 	public default DDMExpression<Integer> createIntegerDDMExpression(
@@ -96,7 +100,8 @@ public interface DDMExpressionFactory {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 *             DDMExpressionFactory#createExpression(
+	 *             CreateExpressionRequest)}
 	 */
 	@Deprecated
 	public default DDMExpression<Long> createLongDDMExpression(
@@ -113,7 +118,8 @@ public interface DDMExpressionFactory {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 *             DDMExpressionFactory#createExpression(
+	 *             CreateExpressionRequest)}
 	 */
 	@Deprecated
 	public default DDMExpression<Number> createNumberDDMExpression(
@@ -130,7 +136,8 @@ public interface DDMExpressionFactory {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * DDMExpressionFactory#createExpression(CreateExpressionRequest)}
+	 *             DDMExpressionFactory#createExpression(
+	 *             CreateExpressionRequest)}
 	 */
 	@Deprecated
 	public default DDMExpression<String> createStringDDMExpression(

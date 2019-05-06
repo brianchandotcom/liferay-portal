@@ -17,7 +17,7 @@ package com.liferay.asset.display.contributor;
 import java.util.List;
 
 /**
- * @author Lance Ji
+ * @author     Lance Ji
  * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.info.display.contributor.InfoDisplayContributorFieldTracker}
  */

@@ -21,14 +21,12 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Drew Brokke
- *
- * Contributes a menu item to be displayed in the auto-generated of a particular
- * configuration. Implementations must be registered as a ConfigurationMenuItem
- * service, and must have the property "configuration.pid" whose value matches
- * the id of the corresponding configuration interface (usually the fully
- * qualified class name).
- *
+ * @author Drew Brokke  Contributes a menu item to be displayed in the
+ *         auto-generated of a particular configuration. Implementations must be
+ *         registered as a ConfigurationMenuItem service, and must have the
+ *         property "configuration.pid" whose value matches the ID of the
+ *         corresponding configuration interface (usually the fully qualified
+ *         class name).
  * @review
  */
 public interface ConfigurationMenuItem {

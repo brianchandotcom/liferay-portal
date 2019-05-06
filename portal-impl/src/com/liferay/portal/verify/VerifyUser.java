@@ -27,8 +27,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.GroupImpl;
 
 /**
- * @author Brian Wing Shun Chan
- *
+ * @author     Brian Wing Shun Chan
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

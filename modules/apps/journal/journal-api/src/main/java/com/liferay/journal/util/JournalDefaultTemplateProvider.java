@@ -33,8 +33,7 @@ public interface JournalDefaultTemplateProvider {
 	/**
 	 * Default template script.
 	 *
-	 * @param ddmStructureId ID of the DDM structure to provide a template for.
-	 *
+	 * @param  ddmStructureId ID of the DDM structure to provide a template for.
 	 * @return Default template script text.
 	 */
 	public String getScript(long ddmStructureId) throws Exception;
@@ -43,7 +42,7 @@ public interface JournalDefaultTemplateProvider {
 	 * Defines if default template is cacheable.
 	 *
 	 * @return <code>true</code> if default template is cacheable,
-	 * <code>false</code> otherwise.
+	 *         <code>false</code> otherwise.
 	 */
 	public boolean isCacheable();
 

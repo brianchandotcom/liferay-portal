@@ -165,7 +165,7 @@ public class ThemeUtil {
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #include(ServletContext, HttpServletRequest,
-	 * 					HttpServletResponse, String, Theme, boolean)}
+	 *             HttpServletResponse, String, Theme, boolean)}
 	 */
 	@Deprecated
 	protected static String doDispatch(

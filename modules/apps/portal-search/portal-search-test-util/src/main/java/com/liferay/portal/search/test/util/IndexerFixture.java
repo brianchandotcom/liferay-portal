@@ -34,7 +34,6 @@ import java.util.stream.Stream;
 
 /**
  * @author Lucas Marques de Paula
- * @autor Adam Brandizzi
  */
 public class IndexerFixture<T> {
 

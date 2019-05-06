@@ -30,7 +30,7 @@ public class IndexDocumentRequest
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by
-	 * IndexDocumentRequest.IndexDocumentRequest(String, Document)
+	 *             IndexDocumentRequest.IndexDocumentRequest(String, Document)
 	 */
 	@Deprecated
 	public IndexDocumentRequest(
@@ -45,7 +45,8 @@ public class IndexDocumentRequest
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by
-	 * IndexDocumentRequest.IndexDocumentRequest(String, String, Document)
+	 *             IndexDocumentRequest.IndexDocumentRequest(String, String,
+	 *             Document)
 	 */
 	@Deprecated
 	public IndexDocumentRequest(

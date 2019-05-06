@@ -25,7 +25,7 @@ import org.osgi.framework.FrameworkUtil;
  * need to reference any OSGi service or component.
  *
  * @author Iván Zaera Avellón
- * @see NPMResolver
+ * @see    NPMResolver
  * @review
  */
 public class NPMResolverUtil {

@@ -213,10 +213,10 @@ public class DDLRecordSetLocalServiceImpl
 	/**
 	 * Adds the model resources with the permissions to the record set.
 	 *
-	 * @param  recordSet the record set
-	 * @param  groupPermissions whether to add group permissions
-	 * @param  guestPermissions whether to add guest permissions
-	 * @throws PortalException if a portal exception occurred
+	 * @param      recordSet the record set
+	 * @param      groupPermissions whether to add group permissions
+	 * @param      guestPermissions whether to add guest permissions
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #addRecordSetResources(DDLRecordSet, ModelPermissions)}
 	 */
@@ -415,7 +415,8 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	/**
-	 * Returns the number of all the record sets belonging the group and associated with the DDMStructure.
+	 * Returns the number of all the record sets belonging the group and
+	 * associated with the DDMStructure.
 	 *
 	 * @param  groupId the primary key of the record set's group
 	 * @return the number of record sets belonging to the group

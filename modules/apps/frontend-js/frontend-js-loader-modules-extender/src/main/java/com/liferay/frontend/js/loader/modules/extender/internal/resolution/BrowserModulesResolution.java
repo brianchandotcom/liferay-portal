@@ -26,6 +26,7 @@ import java.util.Set;
 
 /**
  * Object to hold the results of a resolution of a list of modules.
+ *
  * @author Rodolfo Roza Miranda
  * @review
  */

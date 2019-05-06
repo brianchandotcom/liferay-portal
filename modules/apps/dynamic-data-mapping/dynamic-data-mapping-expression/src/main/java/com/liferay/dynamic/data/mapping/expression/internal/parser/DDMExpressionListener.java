@@ -163,8 +163,8 @@ public interface DDMExpressionListener extends ParseTreeListener {
 	void exitArray(@NotNull DDMExpressionParser.ArrayContext ctx);
 
 	/**
-	 * Enter a parse tree produced by the {@code ToLogicalAndExpression}
-	 * labeled alternative in {@link DDMExpressionParser#logicalOrExpression}.
+	 * Enter a parse tree produced by the {@code ToLogicalAndExpression} labeled
+	 * alternative in {@link DDMExpressionParser#logicalOrExpression}.
 	 *
 	 * @param ctx the parse tree
 	 */
@@ -377,15 +377,15 @@ public interface DDMExpressionListener extends ParseTreeListener {
 	void exitToAdditionOrSubtractionEpression(@NotNull DDMExpressionParser.ToAdditionOrSubtractionEpressionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by the {@code ToStringArray}
-	 * labeled alternative in {@link DDMExpressionParser#stringArray}.
+	 * Enter a parse tree produced by the {@code ToStringArray} labeled
+	 * alternative in {@link DDMExpressionParser#stringArray}.
 	 *
 	 * @param ctx the parse tree
 	 */
 	void enterToStringArray(@NotNull DDMExpressionParser.ToStringArrayContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ToStringArray}
-	 * labeled alternative in {@link DDMExpressionParser#stringArray}.
+	 * Exit a parse tree produced by the {@code ToStringArray} labeled
+	 * alternative in {@link DDMExpressionParser#stringArray}.
 	 *
 	 * @param ctx the parse tree
 	 */
@@ -424,23 +424,24 @@ public interface DDMExpressionListener extends ParseTreeListener {
 	void exitNumericVariable(@NotNull DDMExpressionParser.NumericVariableContext ctx);
 
 	/**
-	 * Enter a parse tree produced by the {@code ToFloatingPointArray}
-	 * labeled alternative in {@link DDMExpressionParser#floatingPointArray}.
+	 * Enter a parse tree produced by the {@code ToFloatingPointArray} labeled
+	 * alternative in {@link DDMExpressionParser#floatingPointArray}.
 	 *
 	 * @param ctx the parse tree
 	 */
 	void enterToFloatingPointArray(@NotNull DDMExpressionParser.ToFloatingPointArrayContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ToFloatingPointArray}
-	 * labeled alternative in {@link DDMExpressionParser#floatingPointArray}.
+	 * Exit a parse tree produced by the {@code ToFloatingPointArray} labeled
+	 * alternative in {@link DDMExpressionParser#floatingPointArray}.
 	 *
 	 * @param ctx the parse tree
 	 */
 	void exitToFloatingPointArray(@NotNull DDMExpressionParser.ToFloatingPointArrayContext ctx);
 
 	/**
-	 * Enter a parse tree produced by the {@code SubtractionExpression}
-	 * labeled alternative in {@link DDMExpressionParser#additionOrSubtractionExpression}.
+	 * Enter a parse tree produced by the {@code SubtractionExpression} labeled
+	 * alternative in {@link
+	 * DDMExpressionParser#additionOrSubtractionExpression}.
 	 *
 	 * @param ctx the parse tree
 	 */
@@ -607,13 +608,15 @@ public interface DDMExpressionListener extends ParseTreeListener {
 	void exitLessThanOrEqualsExpression(@NotNull DDMExpressionParser.LessThanOrEqualsExpressionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link DDMExpressionParser#functionParameter}.
+	 * Enter a parse tree produced by {@link
+	 * DDMExpressionParser#functionParameter}.
 	 *
 	 * @param ctx the parse tree
 	 */
 	void enterFunctionParameter(@NotNull DDMExpressionParser.FunctionParameterContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link DDMExpressionParser#functionParameter}.
+	 * Exit a parse tree produced by {@link
+	 * DDMExpressionParser#functionParameter}.
 	 *
 	 * @param ctx the parse tree
 	 */
@@ -637,23 +640,23 @@ public interface DDMExpressionListener extends ParseTreeListener {
 	void exitMultiplicationExpression(@NotNull DDMExpressionParser.MultiplicationExpressionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by the {@code ToIntegerArray}
-	 * labeled alternative in {@link DDMExpressionParser#integerArray}.
+	 * Enter a parse tree produced by the {@code ToIntegerArray} labeled
+	 * alternative in {@link DDMExpressionParser#integerArray}.
 	 *
 	 * @param ctx the parse tree
 	 */
 	void enterToIntegerArray(@NotNull DDMExpressionParser.ToIntegerArrayContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ToIntegerArray}
-	 * labeled alternative in {@link DDMExpressionParser#integerArray}.
+	 * Exit a parse tree produced by the {@code ToIntegerArray} labeled
+	 * alternative in {@link DDMExpressionParser#integerArray}.
 	 *
 	 * @param ctx the parse tree
 	 */
 	void exitToIntegerArray(@NotNull DDMExpressionParser.ToIntegerArrayContext ctx);
 
 	/**
-	 * Enter a parse tree produced by the {@code EqualsExpression}
-	 * labeled alternative in {@link DDMExpressionParser#equalityExpression}.
+	 * Enter a parse tree produced by the {@code EqualsExpression} labeled
+	 * alternative in {@link DDMExpressionParser#equalityExpression}.
 	 *
 	 * @param ctx the parse tree
 	 */

@@ -37,8 +37,8 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
- * @author     Zsolt Berentey
- * @author     Shuyang Zhou
+ * @author Zsolt Berentey
+ * @author Shuyang Zhou
  */
 public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 

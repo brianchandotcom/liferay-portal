@@ -24,8 +24,8 @@ import javax.servlet.ServletContext;
 
 /**
  * @author     Máté Thurzó
+ * @see        com.liferay.product.navigation.personal.menu.PersonalMenuEntry
  * @deprecated As of Mueller (7.2.x), with no direct replacement
- * @see com.liferay.product.navigation.personal.menu.PersonalMenuEntry
  */
 @Deprecated
 public class SignOutPanelCategory extends BaseJSPPanelCategory {

@@ -15,8 +15,7 @@
 package com.liferay.portal.verify;
 
 /**
- * @author Alexander Chow
- *
+ * @author     Alexander Chow
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Deprecated

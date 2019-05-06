@@ -15,7 +15,7 @@
 package com.liferay.layout.admin.constants;
 
 /**
- * @author Pavel Savinov
+ * @author     Pavel Savinov
  * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.layout.constants.LayoutConstants}
  */

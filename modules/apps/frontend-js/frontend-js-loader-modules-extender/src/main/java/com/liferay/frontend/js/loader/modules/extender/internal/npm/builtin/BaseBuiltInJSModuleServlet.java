@@ -75,7 +75,7 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 	 * must be implemented by subclasses to lookup the requested resource.
 	 *
 	 * @param  pathInfo the request's pathInfo
-	 * @return the {@link String} content of the resource or null
+	 * @return the {@link String} content of the resource or <code>null</code>
 	 */
 	protected abstract ResourceDescriptor getResourceDescriptor(
 		String pathInfo);

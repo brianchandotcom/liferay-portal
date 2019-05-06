@@ -107,7 +107,7 @@ public class ResourceRequestImpl
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 * 	           javax.portlet.RenderState#getRenderParameters()}
+	 *             javax.portlet.RenderState#getRenderParameters()}
 	 */
 	@Deprecated
 	@Override

@@ -53,7 +53,8 @@ public interface ConfigurationProvider<T> {
 	public void registerConfiguration(Configuration configuration);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #unregisterConfiguration(String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #unregisterConfiguration(String)}
 	 */
 	@Deprecated
 	public default void unregisterConfiguration(Configuration configuration) {

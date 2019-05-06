@@ -32,11 +32,12 @@ public interface SoyContext extends Map<String, Object> {
 
 	/**
 	 * Put an HTML parameter in the SoyContext container. This is the same as
-	 * calling {@link SoyContext#put(Object, Object)} with a
-	 * {@link com.liferay.portal.template.soy.data.SoyHTMLData} value.
-	 * @param key
-	 * @param value
-	 * @see com.liferay.portal.template.soy.data.SoyHTMLData
+	 * calling {@link SoyContext#put(Object, Object)} with a {@link
+	 * com.liferay.portal.template.soy.data.SoyHTMLData} value.
+	 *
+	 * @param  key
+	 * @param  value
+	 * @see    com.liferay.portal.template.soy.data.SoyHTMLData
 	 * @review
 	 */
 	public SoyContext putHTML(String key, String value);

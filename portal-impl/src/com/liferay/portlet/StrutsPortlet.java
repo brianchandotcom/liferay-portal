@@ -30,8 +30,8 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Raymond Augé*
+ * @author     Brian Wing Shun Chan
+ * @author     Raymond Augé*
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated

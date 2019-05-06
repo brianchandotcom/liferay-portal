@@ -87,7 +87,7 @@ public class UserPortraitTag extends IncludeTag {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replace by {@link
-	 * #getUserPortraitHTML(String, String, User, ThemeDisplay)}
+	 *             #getUserPortraitHTML(String, String, User, ThemeDisplay)}
 	 */
 	@Deprecated
 	public static String getUserPortraitHTML(

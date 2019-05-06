@@ -341,8 +341,8 @@ public class LanguageUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #process(
-	 *            Supplier, Locale, String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #process(Supplier,
+	 *             Locale, String)}
 	 */
 	@Deprecated
 	public static String process(

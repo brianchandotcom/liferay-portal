@@ -77,7 +77,9 @@ public class LiferayWorkflowCapability
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #checkInFileEntry(long, FileEntry, DLVersionNumberIncrease, ServiceContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #checkInFileEntry(long, FileEntry, DLVersionNumberIncrease,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -128,7 +130,9 @@ public class LiferayWorkflowCapability
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateFileEntry(long, FileEntry, DLVersionNumberIncrease, ServiceContext)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #updateFileEntry(long, FileEntry, DLVersionNumberIncrease,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

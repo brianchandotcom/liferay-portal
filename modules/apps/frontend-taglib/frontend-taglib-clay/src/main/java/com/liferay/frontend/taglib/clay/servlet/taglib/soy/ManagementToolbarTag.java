@@ -165,7 +165,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #setDefaultEventHandler(String)}
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #setDefaultEventHandler(String)}
 	 */
 	@Deprecated
 	public void setActionHandler(String actionHandler) {

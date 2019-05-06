@@ -44,7 +44,7 @@ public class JSConfigGeneratorModule {
 	}
 
 	/**
-	 * Returns the id of the module.
+	 * Returns the ID of the module.
 	 *
 	 * For example: 'my-package@1.0.0/path/to/module'
 	 *

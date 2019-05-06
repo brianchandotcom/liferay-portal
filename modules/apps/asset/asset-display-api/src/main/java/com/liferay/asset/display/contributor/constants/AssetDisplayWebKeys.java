@@ -15,7 +15,7 @@
 package com.liferay.asset.display.contributor.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
  * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.info.constants.InfoDisplayWebKeys}
  */

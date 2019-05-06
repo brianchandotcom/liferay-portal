@@ -34,6 +34,7 @@ public interface OpenNLPDocumentAssetAutoTaggerCompanyConfiguration {
 
 	/**
 	 * Sets the confidence threshold for the returned tags.
+	 *
 	 * @review
 	 */
 	@Meta.AD(
@@ -44,6 +45,7 @@ public interface OpenNLPDocumentAssetAutoTaggerCompanyConfiguration {
 
 	/**
 	 * Enables auto tagging of documents using a pre-trained opennlp model.
+	 *
 	 * @review
 	 */
 	@Meta.AD(deflt = "false", name = "enabled", required = false)

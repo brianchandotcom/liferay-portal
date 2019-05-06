@@ -15,8 +15,9 @@
 package com.liferay.users.admin.constants;
 
 /**
- * @author Pei-Jung Lan
- * @deprecated As of Mueller (7.2.x), replaced by {@link UserScreenNavigationEntryConstants}
+ * @author     Pei-Jung Lan
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             UserScreenNavigationEntryConstants}
  */
 @Deprecated
 public class UserFormConstants {

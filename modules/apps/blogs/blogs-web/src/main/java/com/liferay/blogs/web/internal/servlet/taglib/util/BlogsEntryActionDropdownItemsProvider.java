@@ -102,7 +102,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	/**
-	 * @see com.liferay.exportimport.changeset.taglib.internal.display.context.ChangesetTaglibDisplayContext#isShowPublishMenuItem(Group, String)
+	 * @see com.liferay.exportimport.changeset.taglib.internal.display.context.ChangesetTaglibDisplayContext#isShowPublishMenuItem(
+	 *      Group, String)
 	 */
 	private static boolean _isShowPublishMenuItem(
 		Group group, String portletId) {
@@ -126,7 +127,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 	}
 
 	/**
-	 * @see com.liferay.exportimport.changeset.taglib.internal.display.context.ChangesetTaglibDisplayContext#isShowPublishMenuItem(Group, String, String, String)
+	 * @see com.liferay.exportimport.changeset.taglib.internal.display.context.ChangesetTaglibDisplayContext#isShowPublishMenuItem(
+	 *      Group, String, String, String)
 	 */
 	private static boolean _isShowPublishMenuItem(
 		Group group, String portletId, String className, String uuid) {

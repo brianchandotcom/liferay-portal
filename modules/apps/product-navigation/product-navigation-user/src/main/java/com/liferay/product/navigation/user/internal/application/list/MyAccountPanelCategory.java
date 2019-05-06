@@ -29,8 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author     Adolfo Pérez
+ * @see        com.liferay.product.navigation.personal.menu.PersonalMenuEntry
  * @deprecated As of Mueller (7.2.x), with no direct replacement
- * @see com.liferay.product.navigation.personal.menu.PersonalMenuEntry
  */
 @Deprecated
 public class MyAccountPanelCategory extends BaseJSPPanelCategory {

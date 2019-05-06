@@ -56,10 +56,9 @@ import org.osgi.service.component.annotations.Reference;
 import org.springframework.context.ApplicationContext;
 
 /**
- * @author Raymond Augé
- * @author Douglas Wong
- * @author Alexander Chow
- *
+ * @author     Raymond Augé
+ * @author     Douglas Wong
+ * @author     Alexander Chow
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(

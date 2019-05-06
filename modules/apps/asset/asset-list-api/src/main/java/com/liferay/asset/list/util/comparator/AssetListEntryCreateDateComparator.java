@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author  Kyle Miho
+ * @author Kyle Miho
  */
 public class AssetListEntryCreateDateComparator
 	extends OrderByComparator<AssetListEntry> {

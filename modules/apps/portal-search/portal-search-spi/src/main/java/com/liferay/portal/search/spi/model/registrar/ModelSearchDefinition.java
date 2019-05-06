@@ -41,6 +41,9 @@ public interface ModelSearchDefinition {
 	public void setModelVisibilityContributor(
 		ModelVisibilityContributor modelVisibilityContributor);
 
+	public void setSearchResultPermissionFilterSuppressed(
+		boolean searchResultPermissionFilterSuppressed);
+
 	public void setSelectAllLocales(boolean selectAllLocales);
 
 }

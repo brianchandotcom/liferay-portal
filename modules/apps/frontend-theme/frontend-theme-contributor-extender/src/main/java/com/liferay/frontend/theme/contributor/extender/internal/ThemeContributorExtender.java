@@ -17,19 +17,12 @@ package com.liferay.frontend.theme.contributor.extender.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
-
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -51,8 +44,10 @@ public class ThemeContributorExtender
 	public ThemeContributorExtension addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
-		String type = _getProperty(
-			bundle, "Liferay-Theme-Contributor-Type", "themeContributorType");
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		String type = headers.get("Liferay-Theme-Contributor-Type");
 
 		if (type == null) {
 			return null;
@@ -65,9 +60,7 @@ public class ThemeContributorExtender
 		}
 
 		int themeContributorWeight = GetterUtil.getInteger(
-			_getProperty(
-				bundle, "Liferay-Theme-Contributor-Weight",
-				"themeContributorWeight"));
+			headers.get("Liferay-Theme-Contributor-Weight"));
 
 		ThemeContributorExtension themeContributorExtension =
 			new ThemeContributorExtension(
@@ -103,41 +96,6 @@ public class ThemeContributorExtender
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
-	}
-
-	private String _getProperty(
-		Bundle bundle, String headerName, String jsonName) {
-
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		String type = headers.get(headerName);
-
-		if (type == null) {
-			URL entryURL = bundle.getEntry("/package.json");
-
-			if (entryURL != null) {
-				try (Reader reader = new InputStreamReader(
-						entryURL.openStream())) {
-
-					JSONTokener jsonTokener = new JSONTokener(reader);
-
-					JSONObject packageJSONObject = new JSONObject(jsonTokener);
-
-					JSONObject liferayThemeJSONObject =
-						packageJSONObject.optJSONObject("liferayTheme");
-
-					if (liferayThemeJSONObject != null) {
-						type = liferayThemeJSONObject.getString(jsonName);
-					}
-				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
-				}
-			}
-		}
-
-		return type;
 	}
 
 	private BundleWebResourcesImpl _scanForResources(Bundle bundle) {

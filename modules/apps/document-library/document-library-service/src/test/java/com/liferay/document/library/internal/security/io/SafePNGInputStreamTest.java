@@ -119,7 +119,7 @@ public class SafePNGInputStreamTest {
 		0, 0, 0, 4, 43, 84, 88, 116, 0, 0, 0, 0, 0, 0, 0, 0
 	};
 
-	private static final byte[] _NOT_PNG_CONTENT_BYTES = "text".getBytes();
+	private static final byte[] _NOT_PNG_CONTENT_BYTES = "012345".getBytes();
 
 	private static final byte[] _PNG_SIGNATURE = {
 		-119, 80, 78, 71, 13, 10, 26, 10

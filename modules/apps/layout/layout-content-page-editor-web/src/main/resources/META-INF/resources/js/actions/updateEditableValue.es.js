@@ -67,7 +67,8 @@ function updateEditableValueAction(
 	editableId,
 	editableValueId,
 	editableValueContent,
-	segmentsExperienceId = ''
+	segmentsExperienceId = '',
+	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 ) {
 	return updateEditableValuesAction(
 		fragmentEntryLinkId,
@@ -78,7 +79,8 @@ function updateEditableValueAction(
 				editableValueId
 			}
 		],
-		segmentsExperienceId
+		segmentsExperienceId,
+		processor
 	);
 }
 
@@ -94,7 +96,8 @@ function updateEditableValuesAction(
 	fragmentEntryLinkId,
 	editableId,
 	editableValues,
-	editableValueSegmentsExperienceId = ''
+	editableValueSegmentsExperienceId = '',
+	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 ) {
 	return function(dispatch, getState) {
 		const state = getState();
@@ -104,11 +107,11 @@ function updateEditableValuesAction(
 			.editableValues;
 
 		const keysTreeArray = editableValueSegmentsExperienceId ? [
-			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			processor,
 			editableId,
 			editableValueSegmentsExperienceId
 		] : [
-			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			processor,
 			editableId
 		];
 

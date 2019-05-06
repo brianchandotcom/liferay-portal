@@ -47,13 +47,11 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true, service = {})
 public class TopHeadExtender
-	implements BundleTrackerCustomizer
-		<ServiceTracker
-			<ServletContext, ServiceRegistration<TopHeadResources>>> {
+	implements BundleTrackerCustomizer<ServiceTracker<?, ?>> {
 
 	@Override
-	public ServiceTracker<ServletContext, ServiceRegistration<TopHeadResources>>
-		addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+	public ServiceTracker<?, ?> addingBundle(
+		Bundle bundle, BundleEvent bundleEvent) {
 
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
@@ -123,15 +121,13 @@ public class TopHeadExtender
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		ServiceTracker<ServletContext, ServiceRegistration<TopHeadResources>>
-			serviceTracker) {
+		ServiceTracker<?, ?> serviceTracker) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		ServiceTracker<ServletContext, ServiceRegistration<TopHeadResources>>
-			serviceTracker) {
+		ServiceTracker<?, ?> serviceTracker) {
 
 		serviceTracker.close();
 	}
@@ -177,8 +173,6 @@ public class TopHeadExtender
 			servletContextPath, jsResourcePaths, authenticatedJsResourcePaths);
 	}
 
-	private BundleTracker
-		<ServiceTracker<ServletContext, ServiceRegistration<TopHeadResources>>>
-			_bundleTracker;
+	private BundleTracker<ServiceTracker<?, ?>> _bundleTracker;
 
 }

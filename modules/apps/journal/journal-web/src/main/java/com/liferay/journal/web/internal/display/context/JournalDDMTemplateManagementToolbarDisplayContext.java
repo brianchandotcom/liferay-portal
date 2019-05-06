@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.petra.string.StringPool;
@@ -177,8 +178,10 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (stagingGroupHelper.isLocalLiveGroup(group) ||
-			stagingGroupHelper.isRemoteLiveGroup(group)) {
+		if ((stagingGroupHelper.isLocalLiveGroup(group) ||
+			 stagingGroupHelper.isRemoteLiveGroup(group)) &&
+			stagingGroupHelper.isStagedPortlet(
+				group, JournalPortletKeys.JOURNAL)) {
 
 			return false;
 		}

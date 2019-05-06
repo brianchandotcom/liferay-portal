@@ -12,6 +12,8 @@ $productMenuWidth: 320px;
 
 .portlet-journal {
 	.article-content-content {
+		word-wrap: break-word;
+
 		img, .cke_widget_image {
 			max-width: 100%;
 

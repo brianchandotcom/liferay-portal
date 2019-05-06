@@ -55,11 +55,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(immediate = true, service = {})
 public class InitialUpgradeExtender
-	implements BundleTrackerCustomizer
-		<InitialUpgradeExtender.InitialUpgradeExtension> {
+	implements BundleTrackerCustomizer<ServiceRegistration<?>> {
 
 	@Override
-	public InitialUpgradeExtension addingBundle(
+	public ServiceRegistration<?> addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
 		Dictionary<String, String> headers = bundle.getHeaders(
@@ -69,89 +68,21 @@ public class InitialUpgradeExtender
 			return null;
 		}
 
-		InitialUpgradeExtension initialUpgradeExtension =
-			new InitialUpgradeExtension(_bundleContext, bundle);
-
-		initialUpgradeExtension.start();
-
-		return initialUpgradeExtension;
+		return _processInitialUpgrade(_bundleContext, bundle);
 	}
 
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		InitialUpgradeExtension initialUpgradeExtension) {
+		ServiceRegistration<?> serviceRegistration) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		InitialUpgradeExtension initialUpgradeExtension) {
+		ServiceRegistration<?> serviceRegistration) {
 
-		initialUpgradeExtension.destroy();
-	}
-
-	public static class InitialUpgradeExtension {
-
-		public void destroy() {
-			_serviceRegistration.unregister();
-		}
-
-		public void start() {
-			_serviceRegistration = _processInitialUpgrade(
-				_bundleContext, _bundle);
-		}
-
-		private static ServiceRegistration<UpgradeStep> _processInitialUpgrade(
-			BundleContext bundleContext, Bundle bundle) {
-
-			Dictionary<String, String> headers = bundle.getHeaders(
-				StringPool.BLANK);
-
-			String upgradeToSchemaVersion = GetterUtil.getString(
-				headers.get("Liferay-Require-SchemaVersion"),
-				headers.get("Bundle-Version"));
-
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			ClassLoader classLoader = bundleWiring.getClassLoader();
-
-			Configuration configuration = ConfigurationUtil.getConfiguration(
-				classLoader, "service");
-
-			if (configuration != null) {
-				String buildNumber = configuration.get("build.number");
-
-				if (buildNumber != null) {
-					properties.put("build.number", buildNumber);
-				}
-			}
-
-			properties.put("upgrade.initial.database.creation", "true");
-
-			properties.put(
-				"upgrade.bundle.symbolic.name", bundle.getSymbolicName());
-			properties.put("upgrade.db.type", "any");
-			properties.put("upgrade.from.schema.version", "0.0.0");
-			properties.put("upgrade.to.schema.version", upgradeToSchemaVersion);
-
-			return bundleContext.registerService(
-				UpgradeStep.class, new InitialUpgradeStep(bundle), properties);
-		}
-
-		private InitialUpgradeExtension(
-			BundleContext bundleContext, Bundle bundle) {
-
-			_bundleContext = bundleContext;
-			_bundle = bundle;
-		}
-
-		private final Bundle _bundle;
-		private final BundleContext _bundleContext;
-		private ServiceRegistration<UpgradeStep> _serviceRegistration;
-
+		serviceRegistration.unregister();
 	}
 
 	@Activate
@@ -167,6 +98,45 @@ public class InitialUpgradeExtender
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
+	}
+
+	private static ServiceRegistration<UpgradeStep> _processInitialUpgrade(
+		BundleContext bundleContext, Bundle bundle) {
+
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		String upgradeToSchemaVersion = GetterUtil.getString(
+			headers.get("Liferay-Require-SchemaVersion"),
+			headers.get("Bundle-Version"));
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		ClassLoader classLoader = bundleWiring.getClassLoader();
+
+		Configuration configuration = ConfigurationUtil.getConfiguration(
+			classLoader, "service");
+
+		if (configuration != null) {
+			String buildNumber = configuration.get("build.number");
+
+			if (buildNumber != null) {
+				properties.put("build.number", buildNumber);
+			}
+		}
+
+		properties.put("upgrade.initial.database.creation", "true");
+
+		properties.put(
+			"upgrade.bundle.symbolic.name", bundle.getSymbolicName());
+		properties.put("upgrade.db.type", "any");
+		properties.put("upgrade.from.schema.version", "0.0.0");
+		properties.put("upgrade.to.schema.version", upgradeToSchemaVersion);
+
+		return bundleContext.registerService(
+			UpgradeStep.class, new InitialUpgradeStep(bundle), properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

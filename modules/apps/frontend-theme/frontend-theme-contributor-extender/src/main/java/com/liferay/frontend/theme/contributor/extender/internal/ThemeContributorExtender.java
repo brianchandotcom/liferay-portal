@@ -34,16 +34,12 @@ import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
-import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.BundleTracker;
-import org.osgi.util.tracker.BundleTrackerCustomizer;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -52,11 +48,14 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true, service = {})
 public class ThemeContributorExtender
-	implements BundleTrackerCustomizer<ServiceTracker<?, ?>> {
+	implements ServiceTrackerCustomizer
+		<ServletContext, Collection<ServiceRegistration<?>>> {
 
 	@Override
-	public ServiceTracker<?, ?> addingBundle(
-		Bundle bundle, BundleEvent bundleEvent) {
+	public Collection<ServiceRegistration<?>> addingService(
+		ServiceReference<ServletContext> serviceReference) {
+
+		Bundle bundle = serviceReference.getBundle();
 
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
@@ -76,110 +75,70 @@ public class ThemeContributorExtender
 		int themeContributorWeight = GetterUtil.getInteger(
 			headers.get("Liferay-Theme-Contributor-Weight"));
 
-		BundleContext bundleContext = bundle.getBundleContext();
+		Collection<ServiceRegistration<?>> serviceRegistrations =
+			new ArrayList<>();
 
-		Filter filter = null;
+		ServletContext servletContext = _bundleContext.getService(
+			serviceReference);
 
-		try {
-			filter = bundleContext.createFilter(
-				StringBundler.concat(
-					"(&(objectClass=", ServletContext.class.getName(),
-					")(osgi.web.symbolicname=", bundle.getSymbolicName(),
-					"))"));
-		}
-		catch (InvalidSyntaxException ise) {
-			throw new RuntimeException(ise);
-		}
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				PortalWebResources.class.getName(),
+				new ThemeContributorPortalWebResources(bundle, servletContext),
+				null));
 
-		Dictionary<String, Object> properties = MapUtil.singletonDictionary(
-			"service.ranking", themeContributorWeight);
+		String contextPath = servletContext.getContextPath();
 
-		ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(
-			bundleContext, filter,
-			new ServiceTrackerCustomizer
-				<ServletContext, Collection<ServiceRegistration<?>>>() {
+		bundleWebResources.setServletContextPath(contextPath);
 
-				@Override
-				public Collection<ServiceRegistration<?>> addingService(
-					ServiceReference<ServletContext> serviceReference) {
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				BundleWebResources.class, bundleWebResources,
+				MapUtil.singletonDictionary(
+					"service.ranking", themeContributorWeight)));
 
-					Collection<ServiceRegistration<?>> serviceRegistrations =
-						new ArrayList<>();
-
-					ServletContext servletContext = bundleContext.getService(
-						serviceReference);
-
-					serviceRegistrations.add(
-						bundleContext.registerService(
-							PortalWebResources.class.getName(),
-							new ThemeContributorPortalWebResources(
-								bundle, servletContext),
-							null));
-
-					String contextPath = servletContext.getContextPath();
-
-					bundleWebResources.setServletContextPath(contextPath);
-
-					serviceRegistrations.add(
-						bundleContext.registerService(
-							BundleWebResources.class, bundleWebResources,
-							properties));
-
-					return serviceRegistrations;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<ServletContext> serviceReference,
-					Collection<ServiceRegistration<?>> service) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<ServletContext> serviceReference,
-					Collection<ServiceRegistration<?>> serviceRegistrations) {
-
-					for (ServiceRegistration<?> serviceRegistration :
-							serviceRegistrations) {
-
-						serviceRegistration.unregister();
-					}
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
-
-		serviceTracker.open();
-
-		return serviceTracker;
+		return serviceRegistrations;
 	}
 
 	@Override
-	public void modifiedBundle(
-		Bundle bundle, BundleEvent bundleEvent,
-		ServiceTracker<?, ?> serviceTracker) {
+	public void modifiedService(
+		ServiceReference<ServletContext> serviceReference,
+		Collection<ServiceRegistration<?>> service) {
 	}
 
 	@Override
-	public void removedBundle(
-		Bundle bundle, BundleEvent bundleEvent,
-		ServiceTracker<?, ?> serviceTracker) {
+	public void removedService(
+		ServiceReference<ServletContext> serviceReference,
+		Collection<ServiceRegistration<?>> serviceRegistrations) {
 
-		serviceTracker.close();
+		for (ServiceRegistration<?> serviceRegistration :
+				serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_bundleContext.ungetService(serviceReference);
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
 
-		_bundleTracker.open();
+		_bundleContext = bundleContext;
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", ServletContext.class.getName(),
+					")(osgi.web.symbolicname=*))")),
+			this);
+
+		_serviceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_bundleTracker.close();
+		_serviceTracker.close();
 	}
 
 	private BundleWebResourcesImpl _scanForResources(Bundle bundle) {
@@ -229,7 +188,9 @@ public class ThemeContributorExtender
 		return new BundleWebResourcesImpl(cssResourcePaths, jsResourcePaths);
 	}
 
-	private BundleTracker<?> _bundleTracker;
+	private BundleContext _bundleContext;
+	private ServiceTracker<ServletContext, Collection<ServiceRegistration<?>>>
+		_serviceTracker;
 
 	private static class ThemeContributorPortalWebResources
 		implements PortalWebResources {

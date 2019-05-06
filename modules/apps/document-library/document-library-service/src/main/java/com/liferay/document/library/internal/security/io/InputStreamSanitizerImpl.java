@@ -16,9 +16,10 @@ package com.liferay.document.library.internal.security.io;
 
 import com.liferay.document.library.internal.util.InputStreamUtil;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
-import org.osgi.service.component.annotations.Component;
 
 import java.io.InputStream;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez

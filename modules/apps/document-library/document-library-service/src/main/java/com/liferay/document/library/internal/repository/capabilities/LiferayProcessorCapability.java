@@ -15,19 +15,25 @@
 package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileEntryWrapper;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.FileVersionWrapper;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.repository.liferayrepository.LiferayProcessorLocalRepositoryWrapper;
 import com.liferay.portal.repository.liferayrepository.LiferayProcessorRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
+
+import java.io.InputStream;
 
 /**
  * @author Adolfo Pérez
@@ -38,10 +44,12 @@ public class LiferayProcessorCapability
 
 	public LiferayProcessorCapability(
 		ResourceGenerationStrategy resourceGenerationStrategy,
-		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService) {
+		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService,
+		InputStreamSanitizer inputStreamSanitizer) {
 
 		_resourceGenerationStrategy = resourceGenerationStrategy;
 		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
+		_inputStreamSanitizer = inputStreamSanitizer;
 	}
 
 	@Override
@@ -102,14 +110,98 @@ public class LiferayProcessorCapability
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				DLProcessorRegistryUtil.trigger(fileEntry, fileVersion, true);
+				DLProcessorRegistryUtil.trigger(
+					_wrap(fileEntry), _wrap(fileVersion), true);
 
 				return null;
 			});
 	}
 
+	private FileEntry _wrap(FileEntry fileEntry) {
+		if (fileEntry == null) {
+			return null;
+		}
+
+		return new SafeFileEntry(fileEntry);
+	}
+
+	private FileVersion _wrap(FileVersion fileVersion) {
+		if (fileVersion == null) {
+			return null;
+		}
+
+		return new SafeFileVersion(fileVersion);
+	}
+
 	private final DLFileVersionPreviewLocalService
 		_dlFileVersionPreviewLocalService;
+	private final InputStreamSanitizer _inputStreamSanitizer;
 	private final ResourceGenerationStrategy _resourceGenerationStrategy;
+
+	private class SafeFileEntry extends FileEntryWrapper {
+
+		public SafeFileEntry(FileEntry fileEntry) {
+			super(fileEntry);
+		}
+
+		@Override
+		public InputStream getContentStream() throws PortalException {
+			return _inputStreamSanitizer.sanitize(super.getContentStream());
+		}
+
+		@Override
+		public InputStream getContentStream(String version)
+			throws PortalException {
+
+			return _inputStreamSanitizer.sanitize(
+				super.getContentStream(version));
+		}
+
+		@Override
+		public FileVersion getFileVersion() throws PortalException {
+			return new SafeFileVersion(super.getFileVersion());
+		}
+
+		@Override
+		public FileVersion getFileVersion(String version)
+			throws PortalException {
+
+			return new SafeFileVersion(super.getFileVersion(version));
+		}
+
+		@Override
+		public FileVersion getLatestFileVersion() throws PortalException {
+			return new SafeFileVersion(super.getLatestFileVersion());
+		}
+
+		@Override
+		public FileVersion getLatestFileVersion(boolean trusted)
+			throws PortalException {
+
+			return new SafeFileVersion(super.getLatestFileVersion(trusted));
+		}
+
+	}
+
+	private class SafeFileVersion extends FileVersionWrapper {
+
+		public SafeFileVersion(FileVersion fileVersion) {
+			super(fileVersion);
+		}
+
+		@Override
+		public InputStream getContentStream(boolean incrementCounter)
+			throws PortalException {
+
+			return _inputStreamSanitizer.sanitize(
+				super.getContentStream(incrementCounter));
+		}
+
+		@Override
+		public FileEntry getFileEntry() throws PortalException {
+			return new SafeFileEntry(super.getFileEntry());
+		}
+
+	}
 
 }

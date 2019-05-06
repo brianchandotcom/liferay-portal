@@ -639,7 +639,7 @@ if (portletTitleBasedNavigation) {
 		window,
 		'<portlet:namespace />showVersionDetailsDialog',
 		function(form) {
-			Liferay.Portlet.DocumentLibraryCheckin.showDialog(
+			Liferay.DocumentLibraryCheckin.showDialog(
 				'<portlet:namespace />',
 				function(versionIncrease, changeLog) {
 					Liferay.Util.postForm(

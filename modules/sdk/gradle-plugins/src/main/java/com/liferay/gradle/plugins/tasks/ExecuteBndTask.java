@@ -28,9 +28,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.JarBuilder;
-
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
@@ -40,7 +38,6 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.internal.Factory;
 
 /**
  * @author Andrea Di Giorgi
@@ -54,62 +51,51 @@ public class ExecuteBndTask extends DefaultTask {
 	}
 
 	@TaskAction
-	public void executeBnd() {
+	public void executeBnd() throws Exception {
 		Logger logger = getLogger();
 		Properties properties = getProperties();
 
 		long clockStart = System.currentTimeMillis();
 
-		BundleExtension bundleExtension = GradleUtil.getExtension(
-			getProject(), BundleExtension.class);
+		try (JarBuilder jarBuilder = new JarBuilder()) {
+			jarBuilder.withBase(getBaseDir());
+			jarBuilder.withClasspath(_toArray(getClasspath()));
+			jarBuilder.withFailOnError(isFailOnError());
+			jarBuilder.withName(
+				properties.getProperty(Constants.BUNDLE_SYMBOLICNAME));
+			jarBuilder.withProperties(properties);
+			jarBuilder.withResources(_toArray(getResourceDirs()));
+			jarBuilder.withSourcepath(getSourceDirs());
+			jarBuilder.withVersion(
+				properties.getProperty(Constants.BUNDLE_VERSION));
 
-		Factory<JarBuilder> jarBuilderFactory =
-			bundleExtension.getJarBuilderFactory();
+			File outputFile = getOutputFile();
 
-		JarBuilder jarBuilder = jarBuilderFactory.create();
+			if (isWriteManifest()) {
+				File outputDir = outputFile.getParentFile();
 
-		jarBuilder.withBase(getBaseDir());
-		jarBuilder.withClasspath(_toArray(getClasspath()));
-		jarBuilder.withFailOnError(isFailOnError());
-		jarBuilder.withName(
-			properties.getProperty(Constants.BUNDLE_SYMBOLICNAME));
-		jarBuilder.withProperties(properties);
-		jarBuilder.withResources(_toArray(getResourceDirs()));
-		jarBuilder.withSourcepath(getSourceDirs());
-		jarBuilder.withVersion(
-			properties.getProperty(Constants.BUNDLE_VERSION));
+				outputDir.mkdirs();
 
-		if (logger.isInfoEnabled()) {
-			jarBuilder.withTrace(true);
-		}
-		else {
-			jarBuilder.withTrace(true);
-		}
+				try (OutputStream outputStream =
+						new FileOutputStream(outputFile)) {
 
-		File outputFile = getOutputFile();
-
-		if (isWriteManifest()) {
-			File outputDir = outputFile.getParentFile();
-
-			outputDir.mkdirs();
-
-			try (OutputStream outputStream = new FileOutputStream(outputFile)) {
-				jarBuilder.writeManifestTo(outputStream);
+					jarBuilder.writeManifestTo(outputStream);
+				}
+				catch (IOException ioe) {
+					throw new UncheckedIOException(ioe);
+				}
 			}
-			catch (IOException ioe) {
-				throw new UncheckedIOException(ioe);
+			else {
+				jarBuilder.writeJarTo(outputFile);
 			}
-		}
-		else {
-			jarBuilder.writeJarTo(outputFile);
-		}
 
-		if (logger.isLifecycleEnabled()) {
-			long clockStop = System.currentTimeMillis();
+			if (logger.isLifecycleEnabled()) {
+				long clockStop = System.currentTimeMillis();
 
-			logger.lifecycle(
-				"Building the {} file took {} seconds.", outputFile.getName(),
-				(clockStop - clockStart) / 1000);
+				logger.lifecycle(
+					"Building the {} file took {} seconds.",
+					outputFile.getName(), (clockStop - clockStart) / 1000);
+			}
 		}
 	}
 

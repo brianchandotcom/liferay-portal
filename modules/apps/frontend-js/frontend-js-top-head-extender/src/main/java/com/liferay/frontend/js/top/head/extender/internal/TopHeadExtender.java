@@ -21,25 +21,23 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
-import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.BundleTracker;
-import org.osgi.util.tracker.BundleTrackerCustomizer;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -48,14 +46,77 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true, service = {})
 public class TopHeadExtender
-	implements BundleTrackerCustomizer<ServiceTracker<?, ?>> {
+	implements ServiceTrackerCustomizer
+		<ServletContext, ServiceRegistration<TopHeadResources>> {
 
 	@Override
-	public ServiceTracker<?, ?> addingBundle(
-		Bundle bundle, BundleEvent bundleEvent) {
+	public ServiceRegistration<TopHeadResources> addingService(
+		ServiceReference<ServletContext> serviceReference) {
+
+		Bundle bundle = serviceReference.getBundle();
 
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
+
+		Map.Entry<List<String>, List<String>> entry = _scanTopHeadResources(
+			headers);
+
+		if (entry == null) {
+			return null;
+		}
+
+		ServletContext servletContext = _bundleContext.getService(
+			serviceReference);
+
+		return _bundleContext.registerService(
+			TopHeadResources.class,
+			new TopHeadResourcesImpl(
+				servletContext.getContextPath(), entry.getKey(),
+				entry.getValue()),
+			MapUtil.singletonDictionary(
+				"service.ranking",
+				GetterUtil.getInteger(headers.get("Liferay-Top-Head-Weight"))));
+	}
+
+	@Override
+	public void modifiedService(
+		ServiceReference<ServletContext> serviceReference,
+		ServiceRegistration<TopHeadResources> serviceRegistration) {
+	}
+
+	@Override
+	public void removedService(
+		ServiceReference<ServletContext> serviceReference,
+		ServiceRegistration<TopHeadResources> serviceRegistration) {
+
+		serviceRegistration.unregister();
+
+		_bundleContext.ungetService(serviceReference);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		_bundleContext = bundleContext;
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", ServletContext.class.getName(),
+					")(osgi.web.symbolicname=*))")),
+			this);
+
+		_serviceTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
+	}
+
+	private static Map.Entry<List<String>, List<String>> _scanTopHeadResources(
+		Dictionary<String, String> headers) {
 
 		String liferayJsResourcesTopHead = headers.get(
 			"Liferay-JS-Resources-Top-Head");
@@ -68,100 +129,6 @@ public class TopHeadExtender
 
 			return null;
 		}
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		Filter filter = null;
-
-		try {
-			filter = bundleContext.createFilter(
-				StringBundler.concat(
-					"(&(objectClass=", ServletContext.class.getName(),
-					")(osgi.web.symbolicname=", bundle.getSymbolicName(),
-					"))"));
-		}
-		catch (InvalidSyntaxException ise) {
-			throw new RuntimeException(ise);
-		}
-
-		Dictionary<String, Object> properties = MapUtil.singletonDictionary(
-			"service.ranking",
-			GetterUtil.getInteger(headers.get("Liferay-Top-Head-Weight")));
-
-		ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(
-			bundleContext, filter,
-			new ServiceTrackerCustomizer
-				<ServletContext, ServiceRegistration<TopHeadResources>>() {
-
-				@Override
-				public ServiceRegistration<TopHeadResources> addingService(
-					ServiceReference<ServletContext> serviceReference) {
-
-					ServletContext servletContext = bundleContext.getService(
-						serviceReference);
-
-					return bundleContext.registerService(
-						TopHeadResources.class,
-						_createTopHeadResources(
-							servletContext.getContextPath(),
-							liferayJsResourcesTopHead,
-							liferayJsResourcesTopHeadAuthenticated),
-						properties);
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<ServletContext> serviceReference,
-					ServiceRegistration<TopHeadResources> serviceRegistration) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<ServletContext> serviceReference,
-					ServiceRegistration<TopHeadResources> serviceRegistration) {
-
-					serviceRegistration.unregister();
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
-
-		serviceTracker.open();
-
-		return serviceTracker;
-	}
-
-	@Override
-	public void modifiedBundle(
-		Bundle bundle, BundleEvent bundleEvent,
-		ServiceTracker<?, ?> serviceTracker) {
-	}
-
-	@Override
-	public void removedBundle(
-		Bundle bundle, BundleEvent bundleEvent,
-		ServiceTracker<?, ?> serviceTracker) {
-
-		serviceTracker.close();
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
-
-		_bundleTracker.open();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_bundleTracker.close();
-	}
-
-	private static TopHeadResources _createTopHeadResources(
-		String servletContextPath, String liferayJsResourcesTopHead,
-		String liferayJsResourcesTopHeadAuthenticated) {
 
 		List<String> jsResourcePaths = null;
 
@@ -183,10 +150,12 @@ public class TopHeadExtender
 				liferayJsResourcesTopHeadAuthenticated.split(StringPool.COMMA));
 		}
 
-		return new TopHeadResourcesImpl(
-			servletContextPath, jsResourcePaths, authenticatedJsResourcePaths);
+		return new AbstractMap.SimpleImmutableEntry<>(
+			jsResourcePaths, authenticatedJsResourcePaths);
 	}
 
-	private BundleTracker<ServiceTracker<?, ?>> _bundleTracker;
+	private BundleContext _bundleContext;
+	private ServiceTracker
+		<ServletContext, ServiceRegistration<TopHeadResources>> _serviceTracker;
 
 }

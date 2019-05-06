@@ -7,7 +7,7 @@ import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updat
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {openImageSelector} from '../../../utils/FragmentsEditorDialogUtils';
 import templates from './FloatingToolbarBackgroundImagePanel.soy';
-import {UPDATE_ROW_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {UPDATE_ROW_CONFIG} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarBackgroundImagePanel
@@ -54,11 +54,6 @@ class FloatingToolbarBackgroundImagePanel extends Component {
 					},
 					rowId: this.itemId,
 					type: UPDATE_ROW_CONFIG
-				}
-			)
-			.dispatch(
-				{
-					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
 			.dispatch(updateLastSaveDateAction())

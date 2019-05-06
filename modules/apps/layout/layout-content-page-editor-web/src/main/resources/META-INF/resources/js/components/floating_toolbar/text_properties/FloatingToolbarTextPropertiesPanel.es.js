@@ -7,7 +7,7 @@ import {EDITABLE_FIELD_CONFIG_KEYS, TEXT_ALIGNMENT_OPTIONS, TEXT_STYLES} from '.
 import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarTextPropertiesPanel.soy';
-import {UPDATE_CONFIG_ATTRIBUTES, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {UPDATE_CONFIG_ATTRIBUTES} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarTextPropertiesPanel
@@ -29,11 +29,6 @@ class FloatingToolbarTextPropertiesPanel extends Component {
 					editableId: this.item.editableId,
 					fragmentEntryLinkId: this.item.fragmentEntryLinkId,
 					type: UPDATE_CONFIG_ATTRIBUTES
-				}
-			)
-			.dispatch(
-				{
-					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
 			.dispatch(updateLastSaveDateAction())

@@ -13,7 +13,6 @@ export const UPDATE_SAVING_CHANGES_STATUS = 'updateSavingChangesStatus';
 
 export const CHANGE_LANGUAGE_ID = 'languageId';
 export const SELECT_SEGMENTS_EXPERIENCE = 'selectSegmentsExperience';
-export const UPDATE_TRANSLATION_STATUS = 'updateTranslationStatus';
 
 export const CREATE_SEGMENTS_EXPERIENCE = 'createSegmentsExperience';
 export const DELETE_SEGMENTS_EXPERIENCE = 'DELETE_SEGMENTS_EXPERIENCE';

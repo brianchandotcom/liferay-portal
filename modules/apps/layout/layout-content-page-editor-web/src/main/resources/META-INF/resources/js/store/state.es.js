@@ -768,37 +768,6 @@ const INITIAL_STATE = {
 		.value([]),
 
 	/**
-	 * Translation status
-	 * @default {languageValues: [], translationKeys: []}
-	 * @review
-	 * @type {{languageValues: object[], translationKeys: string[]}}
-	 */
-	translationStatus: Config
-		.shapeOf(
-			{
-				languageValues: Config.arrayOf(
-					Config.shapeOf(
-						{
-							languageId: Config.string(),
-							values: Config.arrayOf(
-								Config.string()
-							)
-						}
-					)
-				),
-				translationKeys: Config.arrayOf(
-					Config.string()
-				)
-			}
-		)
-		.value(
-			{
-				languageValues: [],
-				translationKeys: []
-			}
-		),
-
-	/**
 	 * URL for updating layout data.
 	 * @default ''
 	 * @review

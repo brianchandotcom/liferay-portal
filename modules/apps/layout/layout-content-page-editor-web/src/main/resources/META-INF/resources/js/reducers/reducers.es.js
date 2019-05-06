@@ -5,7 +5,7 @@ import {addRowReducer, moveRowReducer, removeRowReducer, updateRowColumnsNumberR
 import {createSegmentsExperienceReducer, deleteSegmentsExperienceReducer, editSegmentsExperienceReducer, selectSegmentsExperienceReducer, updateSegmentsExperiencePriorityReducer} from './segmentsExperiences.es';
 import {updateSelectedSidebarPanelId} from './sidebar.es';
 import {hideMappingDialogReducer, hideMappingTypeDialogReducer, openAssetTypeDialogReducer, openMappingFieldsDialogReducer, selectMappeableTypeReducer} from './dialogs.es';
-import {languageIdReducer, translationStatusReducer} from './translations.es';
+import {languageIdReducer} from './translations.es';
 import {saveChangesReducer} from './changes.es';
 import {updateActiveItemReducer, updateDropTargetReducer, updateHoveredItemReducer} from './placeholders.es';
 
@@ -37,7 +37,6 @@ const reducers = [
 	deleteSegmentsExperienceReducer,
 	editSegmentsExperienceReducer,
 	updateSegmentsExperiencePriorityReducer,
-	translationStatusReducer,
 	updateActiveItemReducer,
 	updateDropTargetReducer,
 	updateEditableValueReducer,

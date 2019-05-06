@@ -8,7 +8,7 @@ import {CONFIG_KEYS} from '../../../utils/rowConstants';
 import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarBackgroundColorPanel.soy';
-import {UPDATE_ROW_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {UPDATE_ROW_CONFIG} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarBackgroundColorPanel
@@ -56,11 +56,6 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 					config,
 					rowId: this.itemId,
 					type: UPDATE_ROW_CONFIG
-				}
-			)
-			.dispatch(
-				{
-					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
 			.dispatch(updateLastSaveDateAction())

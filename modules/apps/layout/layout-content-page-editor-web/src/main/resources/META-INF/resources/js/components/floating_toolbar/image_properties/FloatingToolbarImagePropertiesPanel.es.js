@@ -6,7 +6,7 @@ import {EDITABLE_FIELD_CONFIG_KEYS, TARGET_TYPES} from '../../../utils/constants
 import {disableSavingChangesStatusAction, enableSavingChangesStatusAction, updateLastSaveDateAction} from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarImagePropertiesPanel.soy';
-import {CLEAR_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, UPDATE_CONFIG_ATTRIBUTES, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {CLEAR_FRAGMENT_EDITOR, ENABLE_FRAGMENT_EDITOR, UPDATE_CONFIG_ATTRIBUTES} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarImagePropertiesPanel
@@ -28,11 +28,6 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 					editableId: this.item.editableId,
 					fragmentEntryLinkId: this.item.fragmentEntryLinkId,
 					type: UPDATE_CONFIG_ATTRIBUTES
-				}
-			)
-			.dispatch(
-				{
-					type: UPDATE_TRANSLATION_STATUS
 				}
 			)
 			.dispatch(updateLastSaveDateAction())

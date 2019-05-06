@@ -5,29 +5,13 @@ import './TranslationStatus.es';
 import './SegmentsExperienceSelector.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentsEditorToolbar.soy';
-import {TOGGLE_SIDEBAR, UPDATE_TRANSLATION_STATUS} from '../../actions/actions.es';
+import {TOGGLE_SIDEBAR} from '../../actions/actions.es';
 
 /**
  * FragmentsEditorToolbar
  * @review
  */
 class FragmentsEditorToolbar extends Component {
-
-	/**
-	 * @inheritDoc
-	 */
-	created() {
-		this.once(
-			'storeChanged',
-			() => {
-				this.store.dispatch(
-					{
-						type: UPDATE_TRANSLATION_STATUS
-					}
-				);
-			}
-		);
-	}
 
 	/**
 	 * Handles discard draft form submit action.

@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.node;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.plugins.node.internal.util.StringUtil;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
@@ -574,7 +575,9 @@ public class NodePlugin implements Plugin<Project> {
 	private void _configureTaskExecuteNpmArgs(
 		ExecuteNpmTask executeNpmTask, NodeExtension nodeExtension) {
 
-		executeNpmTask.args(nodeExtension.getNpmArgs());
+		if (!NodePluginUtil.isYarnScriptFile(executeNpmTask.getScriptFile())) {
+			executeNpmTask.args(nodeExtension.getNpmArgs());
+		}
 	}
 
 	private void _configureTaskNpmInstall(

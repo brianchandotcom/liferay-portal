@@ -229,7 +229,7 @@ const updateRowColumnsReducer = (state, action) => new Promise(
 );
 
 /**
- * @param {!object} state
+ * @param {object} state
  * @param {object} action
  * @param {number} action.numberOfColumns
  * @param {string} action.rowId

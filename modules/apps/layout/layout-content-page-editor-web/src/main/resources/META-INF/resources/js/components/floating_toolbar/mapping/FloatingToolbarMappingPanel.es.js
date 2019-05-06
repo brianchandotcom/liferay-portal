@@ -23,7 +23,7 @@ const SOURCE_TYPE_IDS = {
 class FloatingToolbarMappingPanel extends PortletBase {
 
 	/**
-	 * @param {!string} subtypeLabel
+	 * @param {string} subtypeLabel
 	 * @return {Array<{id: string, label: string}>} Source types
 	 * @private
 	 * @static
@@ -382,7 +382,7 @@ class FloatingToolbarMappingPanel extends PortletBase {
  * State definition.
  * @review
  * @static
- * @type {!Object}
+ * @type {object}
  */
 FloatingToolbarMappingPanel.STATE = {
 
@@ -390,7 +390,7 @@ FloatingToolbarMappingPanel.STATE = {
 	 * @default undefined
 	 * @memberof FloatingToolbarMappingPanel
 	 * @review
-	 * @type {!object}
+	 * @type {object}
 	 */
 	item: Config
 		.required(),
@@ -399,7 +399,7 @@ FloatingToolbarMappingPanel.STATE = {
 	 * @default undefined
 	 * @memberof FloatingToolbarMappingPanel
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
 	itemId: Config
 		.string()
@@ -421,7 +421,7 @@ FloatingToolbarMappingPanel.STATE = {
 	 * @default undefined
 	 * @memberof FloatingToolbarMappingPanel
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
 	_selectedSourceTypeId: Config
 		.oneOf(Object.values(SOURCE_TYPE_IDS))

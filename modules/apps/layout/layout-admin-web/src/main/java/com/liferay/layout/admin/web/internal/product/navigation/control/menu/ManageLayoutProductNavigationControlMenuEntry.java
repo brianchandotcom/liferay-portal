@@ -19,6 +19,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
@@ -86,6 +87,10 @@ public class ManageLayoutProductNavigationControlMenuEntry
 				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
+
+		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
+			layout = _layoutLocalService.fetchLayout(layout.getClassPK());
+		}
 
 		Map<String, String> values = new HashMap<>();
 
@@ -186,6 +191,9 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

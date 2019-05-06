@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -112,9 +113,7 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (ArrayUtil.isEmpty(
-				_journalDDMTemplateDisplayContext.getTemplateLanguageTypes())) {
-
+		if (ArrayUtil.isEmpty(_getTemplateLanguageTypes())) {
 			return null;
 		}
 
@@ -124,8 +123,7 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 		return new CreationMenu() {
 			{
 				for (String templateLanguageType :
-						_journalDDMTemplateDisplayContext.
-							getTemplateLanguageTypes()) {
+						_getTemplateLanguageTypes()) {
 
 					StringBundler sb = new StringBundler(6);
 
@@ -183,9 +181,7 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		if (ArrayUtil.isEmpty(
-				_journalDDMTemplateDisplayContext.getTemplateLanguageTypes())) {
-
+		if (ArrayUtil.isEmpty(_getTemplateLanguageTypes())) {
 			return false;
 		}
 
@@ -237,6 +233,18 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"modified-date", "id"};
+	}
+
+	private String[] _getTemplateLanguageTypes() {
+		String[] allowedTemplateLanguageTypes = {
+			TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM,
+			TemplateConstants.LANG_TYPE_XSL
+		};
+
+		return ArrayUtil.filter(
+			_journalDDMTemplateDisplayContext.getTemplateLanguageTypes(),
+			templateLanguageType -> ArrayUtil.contains(
+				allowedTemplateLanguageTypes, templateLanguageType));
 	}
 
 	private final JournalDDMTemplateDisplayContext

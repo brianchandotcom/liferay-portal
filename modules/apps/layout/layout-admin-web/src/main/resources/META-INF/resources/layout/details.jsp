@@ -87,11 +87,9 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 <c:choose>
 	<c:when test="<%= !group.isLayoutPrototype() %>">
-		<c:if test="<%= (!Objects.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) && !Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT)) || layoutsAdminDisplayContext.isDraft() %>">
-			<aui:input name="name" />
-		</c:if>
-
 		<c:if test="<%= !layoutsAdminDisplayContext.isDraft() %>">
+			<aui:input name="name" />
+
 			<div class="form-group">
 				<aui:input helpMessage="hidden-from-navigation-menu-widget-help-message" label="hidden-from-navigation-menu-widget" name="hidden" type="toggle-switch" value="<%= selLayout.isHidden() %>" />
 			</div>

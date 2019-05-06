@@ -39,6 +39,14 @@ public interface FragmentEntryProcessorRegistry {
 	public JSONObject getDefaultEditableValuesJSONObject(String html);
 
 	public default String processFragmentEntryLinkCSS(
+			FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		return fragmentEntryLink.getCss();
+	}
+
+	public default String processFragmentEntryLinkCSS(
 			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
 			long[] segmentsExperienceIds)
 		throws PortalException {
@@ -71,6 +79,19 @@ public interface FragmentEntryProcessorRegistry {
 
 		return processFragmentEntryLinkHTML(
 			fragmentEntryLink, FragmentEntryLinkConstants.EDIT);
+	}
+
+	public default String processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		return processFragmentEntryLinkHTML(
+			fragmentEntryLink, fragmentEntryProcessorContext.getMode(),
+			fragmentEntryProcessorContext.getLocale(),
+			fragmentEntryProcessorContext.getSegmentsExperienceIds(),
+			fragmentEntryProcessorContext.getPreviewClassPK(),
+			fragmentEntryProcessorContext.getPreviewType());
 	}
 
 	public default String processFragmentEntryLinkHTML(

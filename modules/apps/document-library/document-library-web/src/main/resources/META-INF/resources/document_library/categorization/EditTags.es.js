@@ -301,8 +301,9 @@ EditTags.STATE = {
 	folderId: Config.string(),
 
 	/**
-	 * [groupIds description]
-	 * @type {[type]}
+	 * Group Ids.
+	 *
+	 * @type {List<String>}
 	 */
 	groupIds: Config.array().required(),
 

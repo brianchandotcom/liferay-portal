@@ -143,6 +143,18 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
 
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		if (draftLayout != null) {
+			layout = _layoutService.updateLayout(
+				groupId, privateLayout, draftLayout.getLayoutId(),
+				draftLayout.getParentLayoutId(), nameMap, titleMap,
+				descriptionMap, keywordsMap, robotsMap, type,
+				draftLayout.isHidden(), draftLayout.getFriendlyURLMap(),
+				!deleteLogo, iconBytes, serviceContext);
+		}
+
 		themeDisplay.clearLayoutFriendlyURL(layout);
 
 		UnicodeProperties layoutTypeSettingsProperties =

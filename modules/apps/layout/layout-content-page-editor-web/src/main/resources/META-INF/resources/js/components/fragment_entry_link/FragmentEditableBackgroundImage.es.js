@@ -2,7 +2,7 @@ import {Config} from 'metal-state';
 import Component from 'metal-component';
 import {Store} from '../../store/store.es';
 
-import {DEFAULT_LANGUAGE_ID_KEY} from '../../utils/constants';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR, DEFAULT_LANGUAGE_ID_KEY} from '../../utils/constants';
 import EditableBackgroundImageProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
 import FragmentEditableFieldTooltip from './FragmentEditableFieldTooltip.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
@@ -138,7 +138,8 @@ class FragmentEditableBackgroundImage extends Component {
 				this.editableId,
 				this.languageId || DEFAULT_LANGUAGE_ID_KEY,
 				backgroundImageURL,
-				segmentsExperienceId || defaultSegmentsExperienceId
+				segmentsExperienceId || defaultSegmentsExperienceId,
+				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
 			)
 		);
 	}

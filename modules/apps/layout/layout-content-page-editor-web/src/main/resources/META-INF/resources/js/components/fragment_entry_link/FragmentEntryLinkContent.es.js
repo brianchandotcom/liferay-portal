@@ -4,7 +4,7 @@ import {Config} from 'metal-state';
 import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../utils/constants';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR, EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../utils/constants';
 import FragmentEditableField from './FragmentEditableField.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
@@ -146,9 +146,9 @@ class FragmentEntryLinkContent extends Component {
 			element => {
 				const editableId = element.dataset.lfrBackgroundImageId;
 				const editableValues = (
-					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
-					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableId]
-				) ? this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editableId] :
+					this.editableValues[BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR] &&
+					this.editableValues[BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR][editableId]
+				) ? this.editableValues[BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR][editableId] :
 					{
 						defaultValue: ''
 					};

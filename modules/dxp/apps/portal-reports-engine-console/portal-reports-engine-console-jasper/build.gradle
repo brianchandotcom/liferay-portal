@@ -13,7 +13,7 @@ dependencies {
 	compileInclude group: "org.apache.poi", name: "poi", version: "3.7"
 	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "3.7"
 	compileInclude group: "org.apache.poi", name: "poi-ooxml-schemas", version: "3.7"
-	compileInclude group: "org.codehaus.groovy", name: "groovy-all", version: "2.0.1"
+	compileInclude group: "org.codehaus.groovy", name: "groovy-all", version: "2.4.16"
 	compileInclude group: "org.eclipse.jdt", name: "core", version: "3.1.1"
 	compileInclude group: "xalan", name: "xalan", version: "2.7.2"
 

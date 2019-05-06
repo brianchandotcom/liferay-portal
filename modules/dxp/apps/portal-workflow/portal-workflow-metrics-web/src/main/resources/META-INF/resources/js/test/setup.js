@@ -36,6 +36,7 @@ window.Liferay = {
 		extend: () => {}
 	},
 	ThemeDisplay: {
+		getBCP47LanguageId: () => 'en-US',
 		getLanguageId: () => 'en_US',
 		getPathThemeImages: () => 'http://localhost:8080/o/admin-theme/images',
 		getUserId: () => '123',

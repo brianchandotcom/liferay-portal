@@ -68,7 +68,8 @@
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts lint",
 		"format": "liferay-npm-scripts format",
-		"test": "liferay-npm-scripts test"
+		"test": "liferay-npm-scripts test",
+		"watch": "liferay-npm-scripts webpack --watch"
 	},
 	"version": "4.0.0"
 }

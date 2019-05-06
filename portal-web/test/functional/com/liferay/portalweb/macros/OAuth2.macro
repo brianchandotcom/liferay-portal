@@ -86,13 +86,28 @@ definition {
 			}
 		}
 
-		if ((isSet(resourceCheckList)) || (isSet(resourceUncheckList)) || (isSet(uncheckAllResourceScopes))) {
+		if ((isSet(checkGlobalScopesViaModal)) || (isSet(resourceCheckList)) || (isSet(resourceUncheckList)) || (isSet(uncheckAllResourceScopes))) {
 			if (IsElementPresent.isVisible(locator1 = "NavUnderline#NAV_UNDERLINE_LINK", key_navUnderline = "Resource scopes")) {
 				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 			}
 
 			for (var resourcePanel : list "${resourcePanels}") {
 				OAuth2.expandResourcePanel(resourcePanel = "${resourcePanel}");
+			}
+
+			if (isSet(checkGlobalScopesViaModal)) {
+				AssertClick.assertPartialTextClickAt(
+					key_scopeName = "${modalLinkScope}",
+					locator1 = "OAuth2#ADMIN_MODAL_GLOBAL_SCOPE_LINK",
+					value1 = "assigned via a global scope");
+
+				for (var scopeName : list "${checkGlobalScopesViaModal}") {
+					Check(
+						key_scopeName = "${scopeName}",
+						locator1 = "OAuth2#ADMIN_MODAL_GLOBAL_SCOPE_CHECKBOX");
+				}
+
+				Click(locator1 = "Button#CLOSE_IFRAME");
 			}
 
 			if (isSet(resourceCheckList)) {
@@ -422,7 +437,23 @@ definition {
 			key_navItem = "Scopes",
 			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
-		if ((isSet(allResourceScopesUnchecked)) || (isSet(resourceCheckedList)) || (isSet(resourceUncheckedList))) {
+		if ((isSet(checkedGlobalScope)) || (isSet(uncheckedGlobalScope))) {
+			Navigator.gotoNavUnderline(navUnderline = "Global scopes");
+
+			if (isSet(checkedGlobalScope)) {
+				AssertChecked(
+					key_scopeName = "${checkedGlobalScope}",
+					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX");
+			}
+
+			if (isSet(uncheckedGlobalScope)) {
+				AssertNotChecked(
+					key_scopeName = "${uncheckedGlobalScope}",
+					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX");
+			}
+		}
+
+		if ((isSet(allResourceScopesUnchecked)) || (isSet(checkedGlobalScopesViaModal)) || (isSet(resourceCheckedList)) || (isSet(resourceUncheckedList))) {
 			if (IsElementPresent.isVisible(locator1 = "NavUnderline#NAV_UNDERLINE_LINK", key_navUnderline = "Resource scopes")) {
 				Navigator.gotoNavUnderline(navUnderline = "Resource scopes");
 			}
@@ -452,21 +483,20 @@ definition {
 					key_matchCount = "1",
 					locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED");
 			}
-		}
 
-		if ((isSet(checkedGlobalScope)) || (isSet(uncheckedGlobalScope))) {
-			Navigator.gotoNavUnderline(navUnderline = "Global scopes");
+			if (isSet(checkedGlobalScopesViaModal)) {
+				AssertClick.assertPartialTextClickAt(
+					key_scopeName = "${modalLinkScope}",
+					locator1 = "OAuth2#ADMIN_MODAL_GLOBAL_SCOPE_LINK",
+					value1 = "assigned via a global scope");
 
-			if (isSet(checkedGlobalScope)) {
-				AssertChecked(
-					key_scopeName = "${checkedGlobalScope}",
-					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX");
-			}
+				for (var scopeName : list "${checkedGlobalScopesViaModal}") {
+					AssertChecked(
+						key_scopeName = "${scopeName}",
+						locator1 = "OAuth2#ADMIN_MODAL_GLOBAL_SCOPE_CHECKBOX");
+				}
 
-			if (isSet(uncheckedGlobalScope)) {
-				AssertNotChecked(
-					key_scopeName = "${uncheckedGlobalScope}",
-					locator1 = "OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX");
+				Click(locator1 = "Button#CLOSE_IFRAME");
 			}
 		}
 

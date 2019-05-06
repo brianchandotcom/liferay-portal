@@ -184,11 +184,13 @@ public class WorkflowMetricsSLADefinitionTransformer {
 			WorkflowMetricsSLADefinition workflowMetricsSLADefinition)
 		throws PortalException {
 
+		String currentProcessVersion =
+			workflowMetricsSLADefinition.getProcessVersion();
+
 		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
 
 		Map<String, String> nodeIdMap = _getNodeIdMap(
-			workflowMetricsSLADefinition.getProcessVersion(),
-			latestProcessVersion);
+			currentProcessVersion, latestProcessVersion);
 
 		workflowMetricsSLADefinition.setPauseNodeKeys(
 			StringUtil.merge(

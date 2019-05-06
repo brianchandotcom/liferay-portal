@@ -16,8 +16,15 @@ package com.liferay.headless.form.internal.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.headless.form.dto.v1_0.FieldValue;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
@@ -34,11 +41,79 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Victor Oliveira
  */
 public class FormRecordUtil {
+
+	public static DDMFormValues createDDMFormValues(
+			DDMFormInstance ddmFormInstance, FieldValue[] fieldValues,
+			Locale locale)
+		throws Exception {
+
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addAvailableLocale(locale);
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		ddmFormValues.setDDMFormFieldValues(
+			TransformUtil.transformToList(
+				fieldValues,
+				fieldValue -> toDDMFormFieldValue(
+					ddmFormFieldsMap, fieldValue, locale)));
+
+		ddmFormValues.setDefaultLocale(locale);
+
+		return ddmFormValues;
+	}
+
+	public static DDMFormFieldValue toDDMFormFieldValue(
+		Map<String, DDMFormField> ddmFormFieldsMap, FieldValue fieldValue,
+		Locale locale) {
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName(fieldValue.getName());
+
+		Value value = _VALUE;
+
+		DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldValue.getName());
+
+		if (ddmFormField != null) {
+			value = Optional.ofNullable(
+				fieldValue.getValue()
+			).map(
+				Object::toString
+			).map(
+				stringValue -> {
+					if (ddmFormField.isLocalizable()) {
+						return new LocalizedValue() {
+							{
+								addString(locale, stringValue);
+							}
+						};
+					}
+
+					return _VALUE;
+				}
+			).orElse(
+				_VALUE
+			);
+		}
+
+		ddmFormFieldValue.setValue(value);
+
+		return ddmFormFieldValue;
+	}
 
 	public static FormRecord toFormRecord(
 			DDMFormInstanceRecord ddmFormInstanceRecord,
@@ -114,6 +189,8 @@ public class FormRecordUtil {
 
 		return FormDocumentUtil.toFormDocument(dlurlHelper, fileEntry);
 	}
+
+	private static final Value _VALUE = new UnlocalizedValue((String)null);
 
 	private static final Log _log = LogFactoryUtil.getLog(FormRecordUtil.class);
 

@@ -5465,6 +5465,12 @@ according to Liferay defaults.
 - [LPS-89369]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.19.
 
+## 5.5.182 - 2019-01-24
+
+### Changed
+- [LPS-89415]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.71.
+
 ## 5.5.291 - 2019-04-18
 
 ### Changed

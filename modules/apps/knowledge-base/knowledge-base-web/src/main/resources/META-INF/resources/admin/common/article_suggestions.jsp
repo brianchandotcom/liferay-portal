@@ -60,7 +60,7 @@ if (ratingsType == null) {
 			<portlet:param name="redirect" value="<%= viewKBArticleURL.toString() %>" />
 		</liferay-portlet:actionURL>
 
-		<aui:form action='<%= updateKBCommentURL + "#kbSuggestions" %>' method="post" name="suggestionFm">
+		<aui:form action="<%= updateKBCommentURL %>" method="post" name="suggestionFm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 			<aui:input name="classNameId" type="hidden" value="<%= PortalUtil.getClassNameId(KBArticle.class) %>" />
 			<aui:input name="classPK" type="hidden" value="<%= kbArticle.getResourcePrimKey() %>" />

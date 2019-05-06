@@ -40,6 +40,7 @@ import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus
 
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -115,6 +116,42 @@ public class ResourceHelper {
 		}
 	}
 
+	public ScriptedMetricAggregation
+		creatInstanceCountScriptedMetricAggregation(
+			List<String> slaStatuses, List<String> statuses,
+			List<String> taskNames) {
+
+		ScriptedMetricAggregation scriptedMetricAggregation =
+			_aggregations.scriptedMetric("instanceCount");
+
+		scriptedMetricAggregation.setCombineScript(
+			_workflowMetricsInstanceCountCombineScript);
+		scriptedMetricAggregation.setInitScript(
+			_workflowMetricsInstanceCountInitScript);
+		scriptedMetricAggregation.setMapScript(
+			_workflowMetricsInstanceCountMapScript);
+		scriptedMetricAggregation.setParameters(
+			new HashMap<String, Object>() {
+				{
+					if (!slaStatuses.isEmpty()) {
+						put("slaStatuses", slaStatuses);
+					}
+
+					if (!statuses.isEmpty()) {
+						put("statuses", statuses);
+					}
+
+					if (!taskNames.isEmpty()) {
+						put("taskNames", taskNames);
+					}
+				}
+			});
+		scriptedMetricAggregation.setReduceScript(
+			_workflowMetricsInstanceCountReduceScript);
+
+		return scriptedMetricAggregation;
+	}
+
 	public String getLatestProcessVersion(long companyId, long processId) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -174,6 +211,16 @@ public class ResourceHelper {
 
 	@Activate
 	protected void activate() {
+		_workflowMetricsInstanceCountCombineScript = createScript(
+			getClass(),
+			"workflow-metrics-instance-count-combine-script.painless");
+		_workflowMetricsInstanceCountInitScript = createScript(
+			getClass(), "workflow-metrics-instance-count-init-script.painless");
+		_workflowMetricsInstanceCountMapScript = createScript(
+			getClass(), "workflow-metrics-instance-count-map-script.painless");
+		_workflowMetricsInstanceCountReduceScript = createScript(
+			getClass(),
+			"workflow-metrics-instance-count-reduce-script.painless");
 		_workflowMetricsSlaCombineScript = createScript(
 			getClass(), "workflow-metrics-sla-combine-script.painless");
 		_workflowMetricsSlaInitScript = createScript(
@@ -200,6 +247,10 @@ public class ResourceHelper {
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
 
+	private Script _workflowMetricsInstanceCountCombineScript;
+	private Script _workflowMetricsInstanceCountInitScript;
+	private Script _workflowMetricsInstanceCountMapScript;
+	private Script _workflowMetricsInstanceCountReduceScript;
 	private Script _workflowMetricsSlaCombineScript;
 	private Script _workflowMetricsSlaInitScript;
 	private Script _workflowMetricsSlaMapScript;

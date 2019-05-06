@@ -6,7 +6,8 @@ for (state in states) {
 	}
 
 	for (entry in state.entrySet()) {
-		map.merge(entry.key, entry.value, (onTime1, onTime2) -> onTime1 && onTime2);
+		map.merge(
+			entry.key, entry.value, (onTime1, onTime2) -> onTime1 && onTime2);
 	}
 }
 

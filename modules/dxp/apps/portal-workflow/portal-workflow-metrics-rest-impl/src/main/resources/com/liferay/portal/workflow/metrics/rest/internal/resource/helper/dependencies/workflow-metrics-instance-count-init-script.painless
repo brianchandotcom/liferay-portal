@@ -1,0 +1,6 @@
+state.slaStatuses = params.slaStatuses;
+state.slaStatusMap = new HashMap();
+state.statuses = params.statuses;
+state.statusInstanceIds = new HashSet();
+state.taskNameInstanceIds = new HashSet();
+state.taskNames = params.taskNames;

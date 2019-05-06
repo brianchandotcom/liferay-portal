@@ -23,12 +23,12 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.form.client.dto.v1_0.Form;
+import com.liferay.headless.form.client.dto.v1_0.FormContext;
 import com.liferay.headless.form.client.dto.v1_0.FormDocument;
 import com.liferay.headless.form.client.pagination.Page;
 import com.liferay.headless.form.client.serdes.v1_0.FormSerDes;
 import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -231,29 +230,14 @@ public abstract class BaseFormResourceTestCase {
 
 	@Test
 	public void testPostFormEvaluateContext() throws Exception {
-		Form randomForm = randomForm();
-
-		Form postForm = testPostFormEvaluateContext_addForm(randomForm);
-
-		assertEquals(randomForm, postForm);
-		assertValid(postForm);
+		Assert.assertTrue(true);
 	}
 
-	protected Form testPostFormEvaluateContext_addForm(Form form)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Form invokePostFormEvaluateContext(Long formId, Form form)
+	protected FormContext invokePostFormEvaluateContext(
+			Long formId, FormContext formContext)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			FormSerDes.toJSON(form), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
 
 		String location =
 			_resourceURL + _toPath("/forms/{formId}/evaluate-context", formId);
@@ -269,7 +253,8 @@ public abstract class BaseFormResourceTestCase {
 		}
 
 		try {
-			return FormSerDes.toDTO(string);
+			return com.liferay.headless.form.client.serdes.v1_0.
+				FormContextSerDes.toDTO(string);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -281,14 +266,10 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	protected Http.Response invokePostFormEvaluateContextResponse(
-			Long formId, Form form)
+			Long formId, FormContext formContext)
 		throws Exception {
 
 		Http.Options options = _createHttpOptions();
-
-		options.setBody(
-			FormSerDes.toJSON(form), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
 
 		String location =
 			_resourceURL + _toPath("/forms/{formId}/evaluate-context", formId);

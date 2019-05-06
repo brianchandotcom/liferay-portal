@@ -15,6 +15,7 @@
 package com.liferay.headless.form.resource.v1_0;
 
 import com.liferay.headless.form.dto.v1_0.Form;
+import com.liferay.headless.form.dto.v1_0.FormContext;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -36,7 +37,8 @@ public interface FormResource {
 
 	public Form getForm(Long formId) throws Exception;
 
-	public Form postFormEvaluateContext(Long formId, Form form)
+	public FormContext postFormEvaluateContext(
+			Long formId, FormContext formContext)
 		throws Exception;
 
 	public FormDocument postFormFormDocument(

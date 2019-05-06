@@ -15,7 +15,11 @@
 package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 
 import java.io.IOException;
@@ -33,6 +37,8 @@ import org.apache.felix.cm.file.ConfigurationHandler;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -46,13 +52,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Miguel Pastor
  */
 @Component(immediate = true, service = {})
-public class ConfiguratorExtender
-	implements BundleTrackerCustomizer<ConfiguratorExtension> {
+public class ConfiguratorExtender implements BundleTrackerCustomizer<Bundle> {
 
 	@Override
-	public ConfiguratorExtension addingBundle(
-		Bundle bundle, BundleEvent bundleEvent) {
-
+	public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
@@ -78,27 +81,30 @@ public class ConfiguratorExtender
 			return null;
 		}
 
-		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
-			_configurationAdmin, bundle.getSymbolicName(),
-			namedConfigurationContents);
+		String symbolicName = bundle.getSymbolicName();
 
-		configuratorExtension.start();
+		for (NamedConfigurationContent namedConfigurationContent :
+				namedConfigurationContents) {
 
-		return configuratorExtension;
+			try {
+				_process(namedConfigurationContent, symbolicName);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		return bundle;
 	}
 
 	@Override
 	public void modifiedBundle(
-		Bundle bundle, BundleEvent bundleEvent,
-		ConfiguratorExtension configuratorExtension) {
+		Bundle bundle, BundleEvent bundleEvent, Bundle trackedBundle) {
 	}
 
 	@Override
 	public void removedBundle(
-		Bundle bundle, BundleEvent bundleEvent,
-		ConfiguratorExtension configuratorExtension) {
-
-		configuratorExtension.destroy();
+		Bundle bundle, BundleEvent bundleEvent, Bundle trackedBundle) {
 	}
 
 	@Activate
@@ -164,6 +170,69 @@ public class ConfiguratorExtender
 					}));
 		}
 	}
+
+	private void _process(
+			NamedConfigurationContent namedConfigurationContent,
+			String symbolicName)
+		throws InvalidSyntaxException, IOException {
+
+		Configuration configuration = null;
+		String configuratorURL = null;
+
+		if (namedConfigurationContent.getFactoryPid() == null) {
+			String pid = namedConfigurationContent.getPid();
+
+			if (ArrayUtil.isNotEmpty(
+					_configurationAdmin.listConfigurations(
+						"(service.pid=" + pid + ")"))) {
+
+				return;
+			}
+
+			configuration = _configurationAdmin.getConfiguration(
+				pid, StringPool.QUESTION);
+		}
+		else {
+			configuratorURL =
+				symbolicName + "#" + namedConfigurationContent.getPid();
+
+			if (ArrayUtil.isNotEmpty(
+					_configurationAdmin.listConfigurations(
+						"(configurator.url=" + configuratorURL + ")"))) {
+
+				return;
+			}
+
+			configuration = _configurationAdmin.createFactoryConfiguration(
+				namedConfigurationContent.getFactoryPid(), StringPool.QUESTION);
+		}
+
+		Dictionary<String, Object> properties = null;
+
+		try {
+			properties = namedConfigurationContent.getProperties();
+		}
+		catch (Throwable t) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Supplier from description ", namedConfigurationContent,
+						" threw an exception: "),
+					t);
+			}
+
+			return;
+		}
+
+		if (configuratorURL != null) {
+			properties.put("configurator.url", configuratorURL);
+		}
+
+		configuration.update(properties);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConfiguratorExtender.class);
 
 	private BundleTracker<?> _bundleTracker;
 

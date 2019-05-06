@@ -116,6 +116,8 @@ AUI.add(
 
 						var action = event.data.item.data.action;
 
+						var namespace = instance.NS;
+
 						var url = instance.get('editEntryUrl');
 
 						if (action === 'editTags') {
@@ -148,8 +150,18 @@ AUI.add(
 							}
 						}
 						else if (action === 'checkin') {
-							window[instance.NS + 'showVersionDetailsDialog'](url);
+							Liferay.DocumentLibraryCheckin.showDialog(
+								namespace + 'versionDetails',
+								namespace,
+								function(versionIncrease, changeLog) {
+									var form = instance.get('form').node;
 
+									form.get(namespace + 'changeLog').val(changeLog);
+									form.get(namespace + 'versionIncrease').val(versionIncrease);
+
+									instance._processAction('checkin', url);
+								}
+							);
 							action = null;
 						}
 
@@ -440,6 +452,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['document-library-upload', 'liferay-item-selector-dialog', 'liferay-message', 'liferay-portlet-base']
+		requires: ['document-library-checkin', 'document-library-upload', 'liferay-item-selector-dialog', 'liferay-message', 'liferay-portlet-base']
 	}
 );

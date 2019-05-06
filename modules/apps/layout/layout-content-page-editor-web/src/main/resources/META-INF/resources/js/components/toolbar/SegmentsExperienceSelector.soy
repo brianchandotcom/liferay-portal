@@ -114,7 +114,7 @@
 						{/let}
 
 						<li class="{$experienceClasses}" key="{$experience.segmentsExperienceId}">
-							<span class="p-2 w-100">
+							<span class="overflow-hidden p-2 w-100">
 								<button
 									class="title p-1 w-100 btn btn-unstyled d-flex justify-content-between align-items-baseline text-dark"
 									data-onclick="{$_handleSegmentsExperienceClick}"
@@ -124,7 +124,7 @@
 									type="button"
 								>
 									<span class="d-flex flex-column flex-grow-1 truncate-text">
-										<strong>{$experience.name}</strong>
+										<strong class="truncate-text">{$experience.name}</strong>
 
 										<span class="audience d-block truncate-text">
 											<span class="text-secondary">

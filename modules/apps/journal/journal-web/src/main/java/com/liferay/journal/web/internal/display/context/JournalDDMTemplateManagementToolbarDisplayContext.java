@@ -16,7 +16,6 @@ package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -121,19 +120,7 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 						dropdownItem.setHref(
 							liferayPortletResponse.createRenderURL(), "mvcPath",
 							"/edit_ddm_template.jsp", "redirect",
-							themeDisplay.getURLCurrent(), "groupId",
-							String.valueOf(themeDisplay.getScopeGroupId()),
-							"classNameId",
-							String.valueOf(
-								PortalUtil.getClassNameId(DDMStructure.class)),
-							"classPK",
-							String.valueOf(
-								_journalDDMTemplateDisplayContext.getClassPK()),
-							"resourceClassNameId",
-							String.valueOf(
-								PortalUtil.getClassNameId(
-									JournalArticle.class)),
-							"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+							themeDisplay.getURLCurrent());
 						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 					});
 			}

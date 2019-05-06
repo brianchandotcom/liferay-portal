@@ -5,7 +5,9 @@
 		position: relative;
 	}
 
-	.asset-full-content {
+	.asset-content, .asset-full-content {
+		word-wrap: break-word;
+
 		img {
 			max-width: 100%;
 		}

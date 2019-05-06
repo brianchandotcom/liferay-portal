@@ -119,6 +119,6 @@ public class TopHeadExtender
 		_bundleTracker.close();
 	}
 
-	private BundleTracker<?> _bundleTracker;
+	private BundleTracker<TopHeadExtension> _bundleTracker;
 
 }

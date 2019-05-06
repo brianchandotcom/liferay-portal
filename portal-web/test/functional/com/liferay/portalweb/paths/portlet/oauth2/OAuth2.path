@@ -65,6 +65,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADMIN_MODAL_GLOBAL_SCOPE_CHECKBOX</td>
+	<td>//div[contains(@id,'OAuth2AdminPortlet_modalBody')]//div[normalize-space()='${key_scopeName}']//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_MODAL_GLOBAL_SCOPE_LINK</td>
+	<td>//li[contains(.,'${key_scopeName}')]//a[@data-slave]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_RESOURCE_PANEL_COLLAPSED</td>
 	<td>//div[contains(@class,'panel')]//a[contains(.,'${key_panel}')][contains(@class,'collapsed')]</td>
 	<td></td>

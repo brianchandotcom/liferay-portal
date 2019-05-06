@@ -82,6 +82,13 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 						DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
 				}
 
+				if (ddmStructure == null) {
+					ddmStructure = DDMStructureManagerUtil.fetchStructure(
+						dlFileEntryType.getGroupId(),
+						_portal.getClassNameId(DLFileEntryMetadata.class),
+						dlFileEntryType.getFileEntryTypeKey());
+				}
+
 				renderRequest.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
 					ddmStructure);

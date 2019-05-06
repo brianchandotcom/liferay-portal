@@ -112,7 +112,7 @@ function moveItem(store, moveItemAction, moveItemPayload) {
  * @param {number} direction
  * @param {number} rowIndex
  * @param {{}} store
- * @param {array} structure
+ * @param {Array} structure
  * @review
  */
 function moveRow(direction, rowIndex, store, structure) {

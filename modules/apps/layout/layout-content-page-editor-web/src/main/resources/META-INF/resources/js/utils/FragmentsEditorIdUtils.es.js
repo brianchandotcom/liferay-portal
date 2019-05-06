@@ -3,7 +3,7 @@ import {setIn} from './FragmentsEditorUpdateUtils.es';
 /**
  * Adds encoded id to an object and creating a copy of the original one
  * @param {!object} obj Original object
- * @param {!array} ids Array with id fields to be encoded
+ * @param {!Array} ids Array with id fields to be encoded
  * @private
  */
 function _addEncodedId(obj, ids) {

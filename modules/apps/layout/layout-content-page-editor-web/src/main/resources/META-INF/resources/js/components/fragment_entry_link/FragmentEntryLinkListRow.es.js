@@ -380,7 +380,7 @@ class FragmentEntryLinkListRow extends Component {
 
 	/**
 	 * Updates row columns.
-	 * @param {array} columns The row columns to update.
+	 * @param {Array} columns The row columns to update.
 	 * @private
 	 */
 	_updateRowColumns(columns) {
@@ -446,7 +446,7 @@ FragmentEntryLinkListRow.STATE = {
 	 * @default null
 	 * @instance
 	 * @memberOf FragmentEntryLinkListRow
-	 * @type {array}
+	 * @type {Array}
 	 */
 	_resizeRowColumns: Config.internal().array().value(null),
 

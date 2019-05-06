@@ -36,7 +36,7 @@ function comparePriority(obj1, obj2) {
 /**
  * Searchs for a segment based on its Id
  * and returns its label
- * @param {array} segments
+ * @param {Array} segments
  * @param {string} segmentsEntryId
  * @returns {string|undefined}
  * @review

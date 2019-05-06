@@ -285,7 +285,7 @@ const INITIAL_STATE = {
 	 * List of layoutData related to segmentsExperiences
 	 * @default ''
 	 * @review
-	 * @type {!array}
+	 * @type {!Array}
 	 */
 	layoutDataList: Config
 		.arrayOf(

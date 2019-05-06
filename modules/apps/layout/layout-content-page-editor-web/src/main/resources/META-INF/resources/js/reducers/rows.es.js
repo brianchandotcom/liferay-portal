@@ -172,7 +172,7 @@ function removeRowReducer(state, action) {
 /**
  * @param {object} state
  * @param {object} action
- * @param {array} action.columns
+ * @param {Array} action.columns
  * @param {string} action.rowId
  * @param {string} action.type
  * @return {object}

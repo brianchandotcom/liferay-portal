@@ -38,7 +38,7 @@ FloatingToolbarColorPicker.STATE = {
 	 * @instance
 	 * @memberof FloatingToolbarColorPicker
 	 * @review
-	 * @type {array}
+	 * @type {Array}
 	 */
 	colors: Config.array().required(),
 

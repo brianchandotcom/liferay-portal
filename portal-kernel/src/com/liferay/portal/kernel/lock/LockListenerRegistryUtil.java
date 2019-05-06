@@ -79,7 +79,7 @@ public class LockListenerRegistryUtil {
 
 			registry.ungetService(serviceReference);
 
-			_lockListeners.remove(lockListener);
+			_lockListeners.remove(lockListener.getClassName());
 		}
 
 	}

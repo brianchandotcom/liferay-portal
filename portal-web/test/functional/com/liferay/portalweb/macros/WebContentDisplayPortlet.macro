@@ -81,8 +81,6 @@ definition {
 
 		SelectFrameTop();
 
-		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
-
 		Type.clickAtType(
 			locator1 = "TextInput#NAME",
 			value1 = "Template Edit");

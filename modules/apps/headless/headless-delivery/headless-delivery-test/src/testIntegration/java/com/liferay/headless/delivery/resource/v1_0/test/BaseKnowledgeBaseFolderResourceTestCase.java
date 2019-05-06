@@ -1098,6 +1098,14 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (knowledgeBaseFolder.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (knowledgeBaseFolder.getDescription() == null) {
 					valid = false;
@@ -1223,6 +1231,17 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						knowledgeBaseFolder1.getCreator(),
 						knowledgeBaseFolder2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						knowledgeBaseFolder1.getCustomFields(),
+						knowledgeBaseFolder2.getCustomFields())) {
 
 					return false;
 				}
@@ -1408,6 +1427,11 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

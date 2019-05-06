@@ -53,8 +53,7 @@ public interface LiferayPortletURL
 	 * @param      name the name of the URL parameter
 	 * @return     the first value of the URL parameter
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             javax.portlet.PortletParameters#getValue(String)}  Returns
-	 *             the first value of the URL parameter.
+	 *             javax.portlet.PortletParameters#getValue(String)}
 	 */
 	@Deprecated
 	public String getParameter(String name);
@@ -261,7 +260,7 @@ public interface LiferayPortletURL
 	 *             with the new value.
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             javax.portlet.MutablePortletParameters#setValue(String,
-	 *             String)}  Sets the URL parameter to the value.
+	 *             String)}  Sets the URL parameter to the value
 	 */
 	@Deprecated
 	public void setParameter(String name, String value, boolean append);
@@ -275,7 +274,7 @@ public interface LiferayPortletURL
 	 *             with the new values.
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             javax.portlet.MutablePortletParameters#setValues(String,
-	 *             String...)}  Sets the URL parameter the values.
+	 *             String...)}  Sets the URL parameter the values
 	 */
 	@Deprecated
 	public void setParameter(String name, String[] values, boolean append);

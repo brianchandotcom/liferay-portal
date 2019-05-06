@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.util.MapUtil;
 
 import java.net.URL;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -66,9 +68,10 @@ public class ThemeContributorExtender
 			return null;
 		}
 
-		BundleWebResourcesImpl bundleWebResources = _scanForResources(bundle);
+		Map.Entry<List<String>, List<String>> entry = _scanBundleWebResources(
+			bundle);
 
-		if (bundleWebResources == null) {
+		if (entry == null) {
 			return null;
 		}
 
@@ -87,13 +90,12 @@ public class ThemeContributorExtender
 				new ThemeContributorPortalWebResources(bundle, servletContext),
 				null));
 
-		String contextPath = servletContext.getContextPath();
-
-		bundleWebResources.setServletContextPath(contextPath);
-
 		serviceRegistrations.add(
 			_bundleContext.registerService(
-				BundleWebResources.class, bundleWebResources,
+				BundleWebResources.class,
+				new BundleWebResourcesImpl(
+					servletContext.getContextPath(), entry.getKey(),
+					entry.getValue()),
 				MapUtil.singletonDictionary(
 					"service.ranking", themeContributorWeight)));
 
@@ -141,7 +143,9 @@ public class ThemeContributorExtender
 		_serviceTracker.close();
 	}
 
-	private BundleWebResourcesImpl _scanForResources(Bundle bundle) {
+	private static Map.Entry<List<String>, List<String>>
+		_scanBundleWebResources(Bundle bundle) {
+
 		List<String> cssResourcePaths = new ArrayList<>();
 
 		Enumeration<URL> cssEntries = bundle.findEntries(
@@ -185,7 +189,8 @@ public class ThemeContributorExtender
 			return null;
 		}
 
-		return new BundleWebResourcesImpl(cssResourcePaths, jsResourcePaths);
+		return new AbstractMap.SimpleImmutableEntry<>(
+			cssResourcePaths, jsResourcePaths);
 	}
 
 	private BundleContext _bundleContext;

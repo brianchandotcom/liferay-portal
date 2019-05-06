@@ -48,8 +48,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -78,12 +76,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		for (Map.Entry<String, EditableElementParser> editableElementParser :
 				_editableElementParsers.entrySet()) {
-
-			EditableElementParser parser = editableElementParser.getValue();
-
-			if (parser.isCss()) {
-				continue;
-			}
 
 			StringBundler sb = new StringBundler(
 				2 + (5 * _REQUIRED_ATTRIBUTE_NAMES.length));
@@ -145,68 +137,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return defaultEditableValuesJSONObject;
-	}
-
-	@Override
-	public String processFragmentEntryLinkCSS(
-			FragmentEntryLink fragmentEntryLink, String css, String mode,
-			Locale locale, long[] segmentsExperienceIds, long previewClassPK,
-			int previewType)
-		throws PortalException {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
-
-		Class<?> clazz = getClass();
-
-		JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
-			clazz.getName());
-
-		Map<String, Map<String, String>> stylesheet = _getStylesheet(css);
-
-		for (Map.Entry<String, Map<String, String>> selector :
-				stylesheet.entrySet()) {
-
-			Map<String, String> properties = selector.getValue();
-
-			for (Map.Entry<String, String> property : properties.entrySet()) {
-				String id = StringUtil.trim(
-					StringUtil.add(
-						selector.getKey(), property.getKey(),
-						StringPool.SPACE));
-
-				if ((editableValuesJSONObject == null) ||
-					!editableValuesJSONObject.has(id)) {
-
-					continue;
-				}
-
-				JSONObject editableValueJSONObject =
-					editableValuesJSONObject.getJSONObject(id);
-
-				String value = StringPool.BLANK;
-
-				if (_isMapped(editableValueJSONObject, mode)) {
-					EditableElementParser editableElementParser =
-						_editableElementParsers.get(property);
-
-					value = _getMappedValue(
-						editableElementParser, editableValueJSONObject, mode,
-						locale, previewClassPK, previewType);
-				}
-
-				if (Validator.isNull(value)) {
-					value = _getEditableValue(
-						editableValueJSONObject, locale, segmentsExperienceIds);
-				}
-
-				if (Validator.isNotNull(value)) {
-					properties.put(property.getKey(), value);
-				}
-			}
-		}
-
-		return _toCSSString(stylesheet);
 	}
 
 	@Override
@@ -466,42 +396,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return StringPool.BLANK;
 	}
 
-	private Map<String, Map<String, String>> _getStylesheet(String css) {
-		Map<String, Map<String, String>> stylesheet = new HashMap<>();
-
-		Matcher selectorMatcher = _cssSelectorPattern.matcher(css);
-
-		if (css.contains(_CSS_MEDIA_QUERY)) {
-			stylesheet.putAll(_parseMediaQueries(css));
-		}
-
-		while (selectorMatcher.find()) {
-			String selector = StringUtil.trim(selectorMatcher.group(1));
-
-			if (selector.startsWith(_CSS_MEDIA_QUERY)) {
-				continue;
-			}
-
-			String cssText = selectorMatcher.group(2);
-
-			Matcher propertiesMatcher = _cssPropertyPattern.matcher(cssText);
-
-			Map<String, String> properties = stylesheet.getOrDefault(
-				selector, new HashMap<>());
-
-			while (propertiesMatcher.find()) {
-				String property = StringUtil.trim(propertiesMatcher.group(1));
-				String value = propertiesMatcher.group(2);
-
-				properties.put(property, value);
-			}
-
-			stylesheet.put(selector, properties);
-		}
-
-		return stylesheet;
-	}
-
 	private Object _getValue(
 			JSONObject jsonObject, String mode, Locale locale,
 			long previewClassPK, int previewType)
@@ -586,64 +480,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return false;
-	}
-
-	private Map<String, Map<String, String>> _parseMediaQueries(String css) {
-		Matcher mediaQueryMatcher = _cssMediaQueryPattern.matcher(css);
-
-		Map<String, Map<String, String>> mediaQueryStylesheet = new HashMap<>();
-
-		while (mediaQueryMatcher.find()) {
-			String mediaQuery = mediaQueryMatcher.group(1);
-
-			String mediaQueryContent = mediaQueryMatcher.group(2);
-
-			Map<String, Map<String, String>> mediaQueryContentMap =
-				_getStylesheet(mediaQueryContent);
-
-			mediaQueryContentMap.forEach(
-				(selector, properties) -> mediaQueryStylesheet.put(
-					mediaQuery + StringPool.OPEN_CURLY_BRACE + selector,
-					properties));
-		}
-
-		return mediaQueryStylesheet;
-	}
-
-	private String _toCSSString(Map<String, Map<String, String>> stylesheet) {
-		StringBundler sb = new StringBundler(stylesheet.size() * 7);
-
-		for (Map.Entry<String, Map<String, String>> selector :
-				stylesheet.entrySet()) {
-
-			Map<String, String> properties = selector.getValue();
-
-			StringBundler propertiesSB = new StringBundler(
-				properties.size() * 4);
-
-			for (Map.Entry<String, String> property : properties.entrySet()) {
-				propertiesSB.append(property.getKey());
-				propertiesSB.append(StringPool.COLON);
-				propertiesSB.append(property.getValue());
-				propertiesSB.append(StringPool.SEMICOLON);
-			}
-
-			if (sb.length() > 0) {
-				sb.append(StringPool.SPACE);
-			}
-
-			sb.append(selector.getKey());
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_CURLY_BRACE);
-			sb.append(propertiesSB.toString());
-			sb.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (StringUtil.startsWith(selector.getKey(), _CSS_MEDIA_QUERY)) {
-				sb.append(StringPool.CLOSE_CURLY_BRACE);
-			}
-		}
-
-		return sb.toString();
 	}
 
 	private void _validateAttribute(Element element, String attributeName)
@@ -744,19 +580,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				"you-must-define-a-valid-type-for-each-editable-element"));
 	}
 
-	private static final String _CSS_MEDIA_QUERY = "@media";
-
 	private static final String _EDITABLE_VALUES_SEGMENTS_EXPERIENCE_ID_PREFIX =
 		"segments-experience-id-";
 
 	private static final String[] _REQUIRED_ATTRIBUTE_NAMES = {"id", "type"};
-
-	private static final Pattern _cssMediaQueryPattern = Pattern.compile(
-		"(@media[^{]+)\\{([\\s\\S]+?\\})\\s*\\}");
-	private static final Pattern _cssPropertyPattern = Pattern.compile(
-		"([^:]+)\\s*:(\\s*(url\\([^\\)]+\\))|([^;]+));");
-	private static final Pattern _cssSelectorPattern = Pattern.compile(
-		"([^\\{]+)\\s*\\{([^\\}]+)\\}");
 
 	private Map<Long, Map<String, Object>> _assetEntriesFieldValues;
 

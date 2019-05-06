@@ -63,6 +63,8 @@
 	}
 
 	.entry-body, .widget-mode-detail .widget-mode-detail-text, .widget-mode-simple-entry .widget-content {
+		word-wrap: break-word;
+
 		img, .cke_widget_embedurl, .cke_widget_image, .embed-responsive {
 			&[style*="float: left;"], &[style*="float:left;"] {
 				margin-right: 24px;

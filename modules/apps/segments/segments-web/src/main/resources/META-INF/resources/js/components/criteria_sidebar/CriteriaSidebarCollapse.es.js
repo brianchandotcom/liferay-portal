@@ -9,7 +9,7 @@ import {PROPERTY_TYPES} from '../../utils/constants.es';
 /**
  * Returns a default value for a property provided.
  * @param {Object} property
- * @returns
+ * @returns {string}
  */
 function getDefaultValue(property) {
 	const {options, type} = property;

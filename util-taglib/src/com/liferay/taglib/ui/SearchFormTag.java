@@ -21,9 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of Mueller (7.2.x), since 7.2, unused
  */
-@Deprecated
 public class SearchFormTag<R> extends IncludeTag {
 
 	public SearchContainer<?> getSearchContainer() {

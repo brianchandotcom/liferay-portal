@@ -66,7 +66,7 @@ class FilterResultsBar extends React.Component {
 					<span className="component-label label label-dismissible tbar-label">
 						<span className="label-item label-item-expand">
 							<div className="label-section">
-								{`${filter.name}: `}
+								<span className="font-weight-normal">{`${filter.name}: `}</span>
 
 								<strong>{item.name}</strong>
 							</div>

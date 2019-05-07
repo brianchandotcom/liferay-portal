@@ -8,4 +8,7 @@
 		<suppress checks="StaticVariableNameCheck" files="modules/test/jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/LoadBalancerUtil\.java" />
 		<suppress checks="UnusedMethodCheck" files="modules/test/arquillian-extension-junit-bridge/src/main/java/com/liferay/arquillian/extension/junit/bridge/client/BndBundleUtil\.java" />s
 	</checkstyle>
+	<source-check>
+		<suppress checks="BNDIncludeResourceCheck" files="modules/test/external-data-source-test/bnd.bnd" />
+	</source-check>
 </suppressions>

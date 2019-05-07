@@ -6,17 +6,18 @@
 {template .render}
 	{@param? availableLanguages: ?}
 	{@param? defaultLanguageId: string}
+	{@param? fragmentEntryLinks: ?}
 	{@param? languageId: string}
 	{@param? spritemap: string}
 	{@param? translationStatus: [
 		languageValues: list<[
 			languageId: string,
-			values: list<string>
+			values: list<?>
 		]>,
-		translationKeys: list<string>
+		translationKeys: list<?>
 	]}
 
-	<div class="dropdown lfr-icon-menu">
+	<div class="dropdown lfr-icon-menu" data-fragment-entry-links="{$fragmentEntryLinks}">
 		<button
 			class="btn btn-outline-light fragments-editor-toolbar__translation-status-button"
 			data-toggle="dropdown"

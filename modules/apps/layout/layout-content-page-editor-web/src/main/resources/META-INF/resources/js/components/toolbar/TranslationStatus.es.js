@@ -1,9 +1,11 @@
 import Component from 'metal-component';
-import {object} from 'metal';
 import Soy from 'metal-soy';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {CHANGE_LANGUAGE_ID} from '../../actions/actions.es';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../utils/constants';
+import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './TranslationStatus.soy';
 
 /**
@@ -12,30 +14,82 @@ import templates from './TranslationStatus.soy';
 class TranslationStatus extends Component {
 
 	/**
+	 * @param {object} editableValue
+	 * @param {string} languageId
+	 * @param {string} segmentExperienceId
+	 * @return {boolean}
+	 */
+	static _editableValueIsTranslated(
+		editableValue,
+		languageId,
+		segmentExperienceId
+	) {
+		return (
+			editableValue[languageId] ||
+			(
+				segmentExperienceId in editableValue &&
+				editableValue[segmentExperienceId][languageId]
+			)
+		);
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		const translationStatus = state.translationStatus || {};
+		let nextState = state;
 
-		const languageValues = translationStatus.languageValues || [];
-		const sortedLanguageValues = languageValues.sort(
-			(languageA, languageB) => (languageB.values.length - languageA.values.length)
+		const editableValues = Object.values(
+			state.fragmentEntryLinks
+		).filter(
+			fragmentEntryLink => fragmentEntryLink.editableValues
+		).map(
+			fragmentEntryLink => Object.values(
+				fragmentEntryLink.editableValues[
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+				]
+			)
+		).reduce(
+			(editableValuesA, editableValuesB) => [
+				...editableValuesA,
+				...editableValuesB
+			],
+			[]
 		);
 
-		return object.mixin(
-			{},
-			state,
+		nextState = setIn(
+			nextState,
+			['translationStatus'],
 			{
-				translationStatus: object.mixin(
-					{},
-					translationStatus,
-					{
-						languageValues: sortedLanguageValues
-					}
-				)
+				languageValues: Object.keys(state.availableLanguages).map(
+					languageId => ({
+						languageId,
+						values: editableValues.filter(
+							editableValue =>
+								TranslationStatus._editableValueIsTranslated(
+									editableValue,
+									languageId,
+									prefixSegmentsExperienceId(
+										state.segmentsExperienceId ||
+											state.defaultSegmentsExperienceId
+									)
+								)
+						)
+					})
+				),
+
+				translationKeys: editableValues
 			}
 		);
+
+		nextState.translationStatus.languageValues.sort(
+			(languageValueA, languageValueB) => (
+				languageValueB.values.length - languageValueA.values.length
+			)
+		);
+
+		return nextState;
 	}
 
 	/**
@@ -63,9 +117,11 @@ const ConnectedTranslationStatus = getConnectedComponent(
 	[
 		'availableLanguages',
 		'defaultLanguageId',
+		'defaultSegmentsExperienceId',
+		'fragmentEntryLinks',
 		'languageId',
-		'spritemap',
-		'translationStatus'
+		'segmentsExperienceId',
+		'spritemap'
 	]
 );
 

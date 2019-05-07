@@ -273,6 +273,7 @@
 		<check name="JavaProviderTypeAnnotationCheck" />
 		<check name="JavaReleaseInfoCheck" />
 		<check name="JavaServiceObjectCheck" />
+		<check name="JavaServiceTrackerFactoryCheck" />
 		<check name="JavaServiceUtilCheck" />
 		<check name="JavaStringBundlerInitialCapacityCheck" />
 		<check name="JavaSwitchCheck" />

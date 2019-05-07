@@ -47,7 +47,8 @@ public interface ProductNavigationControlMenuEntry {
 	 * Returns the data to be injected as the <code>data</code> attribute of the
 	 * <code>liferay-ui:icon</code> tag instance for the Control Menu entry.
 	 *
-	 * @param  httpServletRequest the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu
+	 *         entry
 	 * @return the <code>data</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
@@ -59,7 +60,8 @@ public interface ProductNavigationControlMenuEntry {
 	 * of the <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 * entry.
 	 *
-	 * @param  httpServletRequest the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu
+	 *         entry
 	 * @return the <code>icon</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
@@ -71,7 +73,8 @@ public interface ProductNavigationControlMenuEntry {
 	 * <code>iconCssClass</code> attribute of the <code>liferay-ui:icon</code>
 	 * tag instance for the Control Menu entry.
 	 *
-	 * @param  httpServletRequest the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu
+	 *         entry
 	 * @return the <code>iconCssClass</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
@@ -100,7 +103,8 @@ public interface ProductNavigationControlMenuEntry {
 	 * <code>linkCssClass</code> attribute of the <code>liferay-ui:icon</code>
 	 * tag instance for the Control Menu entry.
 	 *
-	 * @param  httpServletRequest the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu
+	 *         entry
 	 * @return the <code>linkCssClass</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
@@ -112,7 +116,8 @@ public interface ProductNavigationControlMenuEntry {
 	 * <code>markupView</code> attribute of the <code>liferay-ui:icon</code> tag
 	 * instance for the Control Menu entry.
 	 *
-	 * @param  httpServletRequest the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu
+	 *         entry
 	 * @return the <code>markupView</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
@@ -123,7 +128,8 @@ public interface ProductNavigationControlMenuEntry {
 	 * Returns the URL to be injected as the <code>url</code> attribute of the
 	 * <code>liferay-ui:icon</code> tag instance for the Control Menu entry.
 	 *
-	 * @param  httpServletRequest the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu
+	 *         entry
 	 * @return the <code>url</code> attribute of the
 	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
 	 *         entry
@@ -134,8 +140,10 @@ public interface ProductNavigationControlMenuEntry {
 	 * Returns <code>true</code> if the Control Menu entry body's HTML should be
 	 * rendered.
 	 *
-	 * @param  httpServletRequest the request that renders the Control Menu entry
-	 * @param  httpServletResponse the response that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu
+	 *         entry
+	 * @param  httpServletResponse the response that renders the Control Menu
+	 *         entry
 	 * @return <code>true</code> if the Control Menu entry body's HTML should be
 	 *         rendered; <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
@@ -149,8 +157,10 @@ public interface ProductNavigationControlMenuEntry {
 	 * Returns <code>true</code> if the Control Menu entry icon's HTML should be
 	 * rendered.
 	 *
-	 * @param  httpServletRequest the request that renders the Control Menu entry
-	 * @param  httpServletResponse the response that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu
+	 *         entry
+	 * @param  httpServletResponse the response that renders the Control Menu
+	 *         entry
 	 * @return <code>true</code> if the Control Menu entry icon's HTML should be
 	 *         rendered; <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
@@ -164,7 +174,8 @@ public interface ProductNavigationControlMenuEntry {
 	 * Returns <code>true</code> if the Control Menu entry should be displayed
 	 * in the request's context.
 	 *
-	 * @param  httpServletRequest the request that renders the Control Menu entry
+	 * @param  httpServletRequest the request that renders the Control Menu
+	 *         entry
 	 * @return <code>true</code> if the Control Menu entry should be displayed
 	 *         in the request's context; <code>false</code> otherwise
 	 * @throws PortalException if a portal exception occurred

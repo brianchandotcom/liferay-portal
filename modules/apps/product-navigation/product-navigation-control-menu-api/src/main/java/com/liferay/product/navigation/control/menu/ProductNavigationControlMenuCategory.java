@@ -49,7 +49,8 @@ public interface ProductNavigationControlMenuCategory {
 	 * Returns <code>true</code> if the Control Menu category should be
 	 * displayed in the request's context.
 	 *
-	 * @param  httpServletRequest the request that renders the Control Menu category
+	 * @param  httpServletRequest the request that renders the Control Menu
+	 *         category
 	 * @return <code>true</code> if the Control Menu category should be
 	 *         displayed in the request's context; <code>false</code> otherwise
 	 * @throws PortalException if a portal exception occurred

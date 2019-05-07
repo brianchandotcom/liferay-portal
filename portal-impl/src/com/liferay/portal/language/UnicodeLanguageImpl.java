@@ -45,7 +45,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * index based substitution.
 	 * </p>
 	 *
-	 * @param  httpServletRequest the request used to determine the current locale
+	 * @param  httpServletRequest the request used to determine the current
+	 *         locale
 	 * @param  pattern the key to look up in the current locale's resource file.
 	 *         The key follows the standard Java resource specification.
 	 * @param  argument the single argument to be substituted into the pattern
@@ -74,7 +75,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * index based substitution.
 	 * </p>
 	 *
-	 * @param  httpServletRequest the request used to determine the current locale
+	 * @param  httpServletRequest the request used to determine the current
+	 *         locale
 	 * @param  pattern the key to look up in the current locale's resource file.
 	 *         The key follows the standard Java resource specification.
 	 * @param  argument the single argument to be substituted into the pattern
@@ -105,7 +107,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
-	 * @param  httpServletRequest the request used to determine the current locale
+	 * @param  httpServletRequest the request used to determine the current
+	 *         locale
 	 * @param  pattern the key to look up in the current locale's resource file.
 	 *         The key follows the standard Java resource specification.
 	 * @param  arguments the arguments to be substituted into the pattern and
@@ -134,7 +137,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
-	 * @param  httpServletRequest the request used to determine the current locale
+	 * @param  httpServletRequest the request used to determine the current
+	 *         locale
 	 * @param  pattern the key to look up in the current locale's resource file.
 	 *         The key follows the standard Java resource specification.
 	 * @param  arguments the arguments to be substituted into the pattern
@@ -164,7 +168,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * index based substitution.
 	 * </p>
 	 *
-	 * @param  httpServletRequest the request used to determine the current locale
+	 * @param  httpServletRequest the request used to determine the current
+	 *         locale
 	 * @param  pattern the key to look up in the current locale's resource file.
 	 *         The key follows the standard Java resource specification.
 	 * @param  argument the single argument to be substituted into the pattern
@@ -193,7 +198,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * index based substitution.
 	 * </p>
 	 *
-	 * @param  httpServletRequest the request used to determine the current locale
+	 * @param  httpServletRequest the request used to determine the current
+	 *         locale
 	 * @param  pattern the key to look up in the current locale's resource file.
 	 *         The key follows the standard Java resource specification.
 	 * @param  argument the single argument to be substituted into the pattern
@@ -224,7 +230,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
-	 * @param  httpServletRequest the request used to determine the current locale
+	 * @param  httpServletRequest the request used to determine the current
+	 *         locale
 	 * @param  pattern the key to look up in the current locale's resource file.
 	 *         The key follows the standard Java resource specification.
 	 * @param  arguments the arguments to be substituted into the pattern and
@@ -253,7 +260,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
-	 * @param  httpServletRequest the request used to determine the current locale
+	 * @param  httpServletRequest the request used to determine the current
+	 *         locale
 	 * @param  pattern the key to look up in the current locale's resource file.
 	 *         The key follows the standard Java resource specification.
 	 * @param  arguments the arguments to be substituted into the pattern
@@ -499,8 +507,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * or from the portal's resource bundle if the portlet configuration is
 	 * unavailable.
 	 *
-	 * @param  httpServletRequest the request used to determine the key's context and
-	 *         locale
+	 * @param  httpServletRequest the request used to determine the key's
+	 *         context and locale
 	 * @param  key the translation key
 	 * @return the key's translation in unicode, or the unicode key if the
 	 *         translation is unavailable
@@ -516,8 +524,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * or from the portal's resource bundle if the portlet configuration is
 	 * unavailable.
 	 *
-	 * @param  httpServletRequest the request used to determine the key's context and
-	 *         locale
+	 * @param  httpServletRequest the request used to determine the key's
+	 *         context and locale
 	 * @param  key the translation key
 	 * @param  defaultValue the value to return if there is no matching
 	 *         translation
@@ -617,7 +625,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param  httpServletRequest the request used to determine the current locale
+	 * @param  httpServletRequest the request used to determine the current
+	 *         locale
 	 * @param  milliseconds the time interval in milliseconds to describe
 	 * @return an exact localized description in unicode of the time interval in
 	 *         the largest unit possible
@@ -654,7 +663,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param  httpServletRequest the request used to determine the current locale
+	 * @param  httpServletRequest the request used to determine the current
+	 *         locale
 	 * @param  milliseconds the time interval in milliseconds to describe
 	 * @return an exact localized description in unicode of the time interval in
 	 *         the largest unit possible

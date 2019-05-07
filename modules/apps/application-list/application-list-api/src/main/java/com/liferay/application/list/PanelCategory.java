@@ -55,8 +55,10 @@ public interface PanelCategory extends PanelEntry {
 	/**
 	 * Returns <code>true</code> if the category body renders successfully.
 	 *
-	 * @param  httpServletRequest the servlet request used in the rendering process
-	 * @param  httpServletResponse the servlet response used in the rendering process
+	 * @param  httpServletRequest the servlet request used in the rendering
+	 *         process
+	 * @param  httpServletResponse the servlet response used in the rendering
+	 *         process
 	 * @return <code>true</code> if the category body renders successfully;
 	 *         <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
@@ -69,8 +71,10 @@ public interface PanelCategory extends PanelEntry {
 	/**
 	 * Returns <code>true</code> if the category header renders successfully.
 	 *
-	 * @param  httpServletRequest the servlet request used in the rendering process
-	 * @param  httpServletResponse the servlet response used in the rendering process
+	 * @param  httpServletRequest the servlet request used in the rendering
+	 *         process
+	 * @param  httpServletResponse the servlet response used in the rendering
+	 *         process
 	 * @return <code>true</code> if the category header renders successfully;
 	 *         <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred

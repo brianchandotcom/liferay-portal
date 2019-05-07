@@ -1728,8 +1728,8 @@ public class ServicePreAction extends Action {
 	 * Returns <code>true</code> if the request URI's path starts with the
 	 * portal's default login path <code>c/portal/login</code>.
 	 *
-	 * @param  httpServletRequest the servlet request for the page, which can be a result
-	 *         of a redirect
+	 * @param  httpServletRequest the servlet request for the page, which can be
+	 *         a result of a redirect
 	 * @return <code>true</code> if the request is a login request;
 	 *         <code>false</code> otherwise
 	 */

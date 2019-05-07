@@ -38,12 +38,12 @@
 					<span>{msg desc=""}layouts{/msg}</span>
 					<span class="collapse-icon-closed">
 						<svg class="lexicon-icon lexicon-icon-angle-right">
-							<use xlink:href="{$spritemap}#angle-right"></use>
+							<use xlink:href="{$spritemap ?: ''}#angle-right"></use>
 						</svg>
 					</span>
 					<span class="collapse-icon-open">
 						<svg class="lexicon-icon lexicon-icon-angle-down">
-							<use xlink:href="{$spritemap}#angle-down"></use>
+							<use xlink:href="{$spritemap ?: ''}#angle-down"></use>
 						</svg>
 					</span>
 				</a>
@@ -80,12 +80,12 @@
 							<span>{$fragmentCollection.name}</span>
 							<span class="collapse-icon-closed">
 								<svg class="lexicon-icon lexicon-icon-angle-right">
-									<use xlink:href="{$spritemap}#angle-right"></use>
+									<use xlink:href="{$spritemap ?: ''}#angle-right"></use>
 								</svg>
 							</span>
 							<span class="collapse-icon-open">
 								<svg class="lexicon-icon lexicon-icon-angle-down">
-									<use xlink:href="{$spritemap}#angle-down"></use>
+									<use xlink:href="{$spritemap ?: ''}#angle-down"></use>
 								</svg>
 							</span>
 						</a>

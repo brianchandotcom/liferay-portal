@@ -41,7 +41,7 @@
 							<div class="input-group-inset-item input-group-inset-item-after">
 								<button class="btn btn-unstyled" type="button">
 									<svg class="lexicon-icon">
-										<use xlink:href="{$spritemap}#search"></use>
+										<use xlink:href="{$spritemap ?: ''}#search"></use>
 									</svg>
 								</button>
 							</div>
@@ -107,12 +107,12 @@
 				<span>{$category.title}</span>
 				<span class="collapse-icon-closed">
 					<svg class="lexicon-icon lexicon-icon-angle-right">
-						<use xlink:href="{$spritemap}#angle-right"></use>
+						<use xlink:href="{$spritemap ?: ''}#angle-right"></use>
 					</svg>
 				</span>
 				<span class="collapse-icon-open">
 					<svg class="lexicon-icon lexicon-icon-angle-down">
-						<use xlink:href="{$spritemap}#angle-down"></use>
+						<use xlink:href="{$spritemap ?: ''}#angle-down"></use>
 					</svg>
 				</span>
 			</a>
@@ -166,7 +166,7 @@
 									<div class="fragments-editor__drag-handler"></div>
 
 									<svg class="lexicon-icon lexicon-icon-angle-down">
-										<use xlink:href="{$spritemap}#{if $portlet.instanceable}grid{else}live{/if}"></use>
+										<use xlink:href="{$spritemap ?: ''}#{if $portlet.instanceable}grid{else}live{/if}"></use>
 									</svg>
 
 									<span class="taglib-icon-label">{$portlet.title}</span>

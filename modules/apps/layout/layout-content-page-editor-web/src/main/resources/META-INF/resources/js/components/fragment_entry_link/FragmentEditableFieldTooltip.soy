@@ -30,7 +30,7 @@
 						type="button"
 					>
 						<svg class="lexicon-icon lexicon-icon-{$button.icon}">
-							<use xlink:href="{$spritemap}#{$button.icon}"></use>
+							<use xlink:href="{$spritemap ?: ''}#{$button.icon}"></use>
 						</svg>
 					</button>
 				{/foreach}

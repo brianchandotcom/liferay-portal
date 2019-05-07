@@ -36,7 +36,7 @@
 			{/if}
 		</button>
 
-		{if $availableLanguages and $defaultLanguageId and $languageId and $spritemap and $translationStatus}
+		{if $availableLanguages and $defaultLanguageId and $languageId and $translationStatus}
 			<div class="dropdown-menu dropdown-menu-indicator-end fragments-editor-toolbar__translation-status-list">
 				{call .translationStatusItem}
 					{param isCurrent: $defaultLanguageId == $languageId /}
@@ -44,7 +44,7 @@
 					{param languageIcon: $availableLanguages[$defaultLanguageId].languageIcon /}
 					{param languageId: $defaultLanguageId /}
 					{param languageLabel: $availableLanguages[$defaultLanguageId].languageLabel /}
-					{param spritemap: $spritemap /}
+					{param spritemap: $spritemap ?: '' /}
 				{/call}
 
 				{foreach $languageTranslationStatus in $translationStatus.languageValues}
@@ -55,7 +55,7 @@
 							{param languageIcon: $availableLanguages[$languageTranslationStatus.languageId].languageIcon /}
 							{param languageId: $languageTranslationStatus.languageId /}
 							{param languageLabel: $availableLanguages[$languageTranslationStatus.languageId].languageLabel /}
-							{param spritemap: $spritemap /}
+							{param spritemap: $spritemap ?: '' /}
 							{param translatedValues: length($languageTranslationStatus.values) /}
 							{param translationKeys: length($translationStatus.translationKeys) /}
 						{/call}

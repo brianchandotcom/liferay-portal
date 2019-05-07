@@ -168,6 +168,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	}
 
 	<#assign
+		enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
 		generateToMultipartBodyMethod = false
 		javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
@@ -1102,7 +1103,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 
 				if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
-					if (${schemaVarName}.get${propertyName?cap_first}() == null) {
+					<#assign curName = propertyName?cap_first />
+
+					<#if enumSchemas?keys?seq_contains(properties[propertyName])>
+						<#assign curName = properties[propertyName] />
+					</#if>
+
+					if (${schemaVarName}.get${curName}() == null) {
 						valid = false;
 					}
 
@@ -1152,7 +1159,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 
 				if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
-					if (!Objects.deepEquals(${schemaVarName}1.get${propertyName?cap_first}(), ${schemaVarName}2.get${propertyName?cap_first}())) {
+					<#assign curName = propertyName?cap_first />
+
+					<#if enumSchemas?keys?seq_contains(properties[propertyName])>
+						<#assign curName = properties[propertyName] />
+					</#if>
+
+					if (!Objects.deepEquals(${schemaVarName}1.get${curName}(), ${schemaVarName}2.get${curName}())) {
 						return false;
 					}
 

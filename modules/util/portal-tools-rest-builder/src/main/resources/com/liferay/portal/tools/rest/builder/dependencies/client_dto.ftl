@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public class ${schemaName} {
-	<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(schema) />
+	<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema) />
 
 	<#list enumSchemas?keys as enumName>
 		public static enum ${enumName} {
@@ -31,9 +31,9 @@ public class ${schemaName} {
 			</#list>;
 
 			public static ${enumName} create(String value) {
-				for (${enumName} ${enumName?uncap_first} : values()) {
-					if (Objects.equals(${enumName?uncap_first}.getValue(), value)) {
-						return ${enumName?uncap_first};
+				for (${enumName} ${freeMarkerTool.getSchemaVarName(enumName)} : values()) {
+					if (Objects.equals(${freeMarkerTool.getSchemaVarName(enumName)}.getValue(), value)) {
+						return ${freeMarkerTool.getSchemaVarName(enumName)};
 					}
 				}
 
@@ -61,17 +61,20 @@ public class ${schemaName} {
 	<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
 
 	<#list properties?keys as propertyName>
-		<#assign
-			propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema)
-			propertyType = properties[propertyName]
-		/>
+		<#assign curName = propertyName?cap_first />
 
-		public ${propertyType} get${propertyName?cap_first}() {
+		<#if enumSchemas?keys?seq_contains(properties[propertyName])>
+			<#assign curName = properties[propertyName] />
+		</#if>
+
+		<#assign propertyType = properties[propertyName] />
+
+		public ${propertyType} get${curName}() {
 			return ${propertyName};
 		}
 
 		<#if enumSchemas?keys?seq_contains(propertyType)>
-			public String get${propertyName?cap_first}AsString() {
+			public String get${curName}AsString() {
 				if (${propertyName} == null) {
 					return null;
 				}
@@ -80,7 +83,7 @@ public class ${schemaName} {
 			}
 		</#if>
 
-		public void set${propertyName?cap_first}(${propertyType} ${propertyName}) {
+		public void set${curName}(${propertyType} ${propertyName}) {
 			this.${propertyName} = ${propertyName};
 		}
 

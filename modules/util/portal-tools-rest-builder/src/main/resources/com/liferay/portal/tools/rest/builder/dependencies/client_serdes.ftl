@@ -51,7 +51,7 @@ public class ${schemaName}SerDes {
 		sb.append("{");
 
 		<#assign
-			enumSchemas = freeMarkerTool.getDTOEnumSchemas(schema)
+			enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
 			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
 		/>
 
@@ -66,14 +66,20 @@ public class ${schemaName}SerDes {
 		</#list>
 
 		<#list properties?keys as propertyName>
-			<#assign propertyType = properties[propertyName] />
+			<#assign curName = propertyName?cap_first />
 
-			if (${schemaVarName}.get${propertyName?cap_first}() != null) {
+			<#if enumSchemas?keys?seq_contains(properties[propertyName])>
+				<#assign curName = properties[propertyName] />
+			</#if>
+
+			if (${schemaVarName}.get${curName}() != null) {
 				if (sb.length() > 1) {
 					sb.append(", ");
 				}
 
 				sb.append("\"${propertyName}\": ");
+
+				<#assign propertyType = properties[propertyName] />
 
 				<#if allSchemas[propertyType]??>
 					sb.append(String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
@@ -90,7 +96,7 @@ public class ${schemaName}SerDes {
 								<#elseif stringUtil.equals(propertyType, "Object[]") || stringUtil.equals(propertyType, "String[]")>
 									sb.append(_escape(${schemaVarName}.get${propertyName?cap_first}()[i]));
 								<#else>
-									sb.append(${schemaVarName}.get${propertyName?cap_first}()[i]);
+									sb.append(${schemaVarName}.get${curName}()[i]);
 								</#if>
 
 								sb.append("\"");
@@ -117,7 +123,7 @@ public class ${schemaName}SerDes {
 							<#elseif stringUtil.equals(propertyType, "Object") || stringUtil.equals(propertyType, "String")>
 								sb.append(_escape(${schemaVarName}.get${propertyName?cap_first}()));
 							<#else>
-								sb.append(${schemaVarName}.get${propertyName?cap_first}());
+								sb.append(${schemaVarName}.get${curName}());
 							</#if>
 
 							sb.append("\"");
@@ -150,6 +156,7 @@ public class ${schemaName}SerDes {
 		Map<String, String> map = new HashMap<>();
 
 		<#assign
+			enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
 			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
 		/>
 
@@ -166,7 +173,14 @@ public class ${schemaName}SerDes {
 		<#list properties?keys as propertyName>
 			<#assign propertyType = properties[propertyName] />
 
-			<#if allSchemas[propertyType]??>
+			<#if enumSchemas?keys?seq_contains(propertyType)>
+				if (${schemaVarName}.get${propertyType}() == null) {
+					map.put("${propertyName}", null);
+				}
+				else {
+					map.put("${propertyName}", String.valueOf(${schemaVarName}.get${propertyType}()));
+				}
+			<#elseif allSchemas[propertyType]??>
 				if (${schemaVarName}.get${propertyName?cap_first}() == null) {
 					map.put("${propertyName}", null);
 				}
@@ -244,7 +258,13 @@ public class ${schemaName}SerDes {
 
 				if (Objects.equals(jsonParserFieldName, "${propertyName}")) {
 					if (jsonParserFieldValue != null) {
-						${schemaVarName}.set${propertyName?cap_first}(
+						<#assign curName = propertyName?cap_first />
+
+						<#if enumSchemas?keys?seq_contains(properties[propertyName])>
+							<#assign curName = properties[propertyName] />
+						</#if>
+
+						${schemaVarName}.set${curName}(
 
 						<#assign propertyType = properties[propertyName] />
 

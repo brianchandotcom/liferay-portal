@@ -81,7 +81,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 </#if>
 @XmlRootElement(name = "${schemaName}")
 public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoParentClassName}</#if> {
-	<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(schema) />
+	<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema) />
 
 	<#list enumSchemas?keys as enumName>
 		public static enum ${enumName} {
@@ -96,9 +96,9 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 			@JsonCreator
 			public static ${enumName} create(String value) {
-				for (${enumName} ${enumName?uncap_first} : values()) {
-					if (Objects.equals(${enumName?uncap_first}.getValue(), value)) {
-						return ${enumName?uncap_first};
+				for (${enumName} ${freeMarkerTool.getSchemaVarName(enumName)} : values()) {
+					if (Objects.equals(${freeMarkerTool.getSchemaVarName(enumName)}.getValue(), value)) {
+						return ${freeMarkerTool.getSchemaVarName(enumName)};
 					}
 				}
 
@@ -145,13 +145,20 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				example = "${propertySchema.example}"
 			</#if>
 		)
-		public ${propertyType} get${propertyName?cap_first}() {
+
+		<#assign curName = propertyName?cap_first />
+
+		<#if enumSchemas?keys?seq_contains(propertyType)>
+			<#assign curName = propertyType />
+		</#if>
+
+		public ${propertyType} get${curName}() {
 			return ${propertyName};
 		}
 
 		<#if enumSchemas?keys?seq_contains(propertyType)>
 			@JsonIgnore
-			public String get${propertyName?cap_first}AsString() {
+			public String get${curName}AsString() {
 				if (${propertyName} == null) {
 					return null;
 				}
@@ -160,7 +167,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			}
 		</#if>
 
-		public void set${propertyName?cap_first}(${propertyType} ${propertyName}) {
+		public void set${curName}(${propertyType} ${propertyName}) {
 			this.${propertyName} = ${propertyName};
 		}
 
@@ -225,7 +232,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		sb.append("{");
 
 		<#assign
-			enumSchemas = freeMarkerTool.getDTOEnumSchemas(schema)
+			enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
 			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
 		/>
 

@@ -39,7 +39,7 @@ public class DataDefinitionResourceTest
 	@Test
 	public void testDeleteDataDefinitionWithInvalidId() throws Exception {
 		assertResponseCode(
-			404, invokeGetDataDefinitionResponse(RandomTestUtil.randomLong()));
+			404, invokeGetDataDefinitionResponse(Long.valueOf(1)));
 	}
 
 	@Override

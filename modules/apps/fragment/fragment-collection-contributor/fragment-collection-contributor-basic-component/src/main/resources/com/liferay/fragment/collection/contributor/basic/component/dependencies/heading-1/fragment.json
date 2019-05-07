@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Heading 1",
-	"thumbnail": "heading.png",
+	"thumbnail": "h1.png",
 	"type": "component"
 }

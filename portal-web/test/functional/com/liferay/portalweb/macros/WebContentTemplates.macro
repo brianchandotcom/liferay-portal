@@ -60,41 +60,6 @@ definition {
 		}
 	}
 
-	@summary = "Helper function to select template language 'templateLanguage' to read the template in"
-	macro _inputTemplateLanguage {
-		if ("${templateLanguage}" == "vm") {
-			Select(
-				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
-				value1 = "Velocity (.vm)");
-		}
-		else if ("${templateLanguage}" == "xsl") {
-			Select(
-				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
-				value1 = "Extensible Stylesheet Language (.xsl)");
-		}
-		else {
-			Select(
-				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
-				value1 = "FreeMarker (.ftl)");
-		}
-
-		if ("${templateLanguage}" == "vm") {
-			AssertSelectedLabel(
-				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
-				value1 = "Velocity (.vm)");
-		}
-		else if ("${templateLanguage}" == "xsl") {
-			AssertSelectedLabel(
-				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
-				value1 = "Extensible Stylesheet Language (.xsl)");
-		}
-		else {
-			AssertSelectedLabel(
-				locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT",
-				value1 = "FreeMarker (.ftl)");
-		}
-	}
-
 	@summary = "Click on the add button to add a template named '${templateName}' for structure '${structureName}', input most basic fields and then save the template"
 	macro addCP {
 		LexiconEntry.gotoAdd();
@@ -180,8 +145,6 @@ definition {
 		}
 
 		WebContentTemplates._inputDescription(templateDescription = "${templateDescription}");
-
-		WebContentTemplates._inputTemplateLanguage(templateLanguage = "${templateLanguage}");
 
 		if (isSet(imageSourceURL)) {
 			WebContent.addFeaturedImageFromURL(imageSourceURL = "${imageSourceURL}");

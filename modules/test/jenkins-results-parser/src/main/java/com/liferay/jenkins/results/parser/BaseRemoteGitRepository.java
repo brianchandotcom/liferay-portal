@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -58,6 +59,15 @@ public abstract class BaseRemoteGitRepository
 
 	@Override
 	public String getRemoteURL() {
+		List<String> gitHubCacheHostnames =
+			GitHubDevSyncUtil.getGitHubCacheHostnames();
+
+		if (gitHubCacheHostnames.contains("slave-" + getHostname())) {
+			return JenkinsResultsParserUtil.combine(
+				"root@", getHostname(), ":/opt/dev/projects/github/",
+				getName());
+		}
+
 		return JenkinsResultsParserUtil.combine(
 			"git@", getHostname(), ":", getUsername(), "/", getName());
 	}

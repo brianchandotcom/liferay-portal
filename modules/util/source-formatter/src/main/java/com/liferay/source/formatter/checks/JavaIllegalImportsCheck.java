@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -164,22 +163,6 @@ public class JavaIllegalImportsCheck extends BaseFileCheck {
 				fileName,
 				"Use PortletResponseUtil.sendFile instead of " +
 					"ServletResponseUtil.sendFile, see LPS-65229");
-		}
-
-		// LPS-69494
-
-		if (!fileName.endsWith("AbstractExtender.java") &&
-			content.contains(
-				"org.apache.felix.utils.extender.AbstractExtender")) {
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("Use com.liferay.osgi.felix.util.AbstractExtender ");
-			sb.append("instead of ");
-			sb.append("org.apache.felix.utils.extender.AbstractExtender, see ");
-			sb.append("LPS-69494");
-
-			addMessage(fileName, sb.toString());
 		}
 
 		// LPS-70963

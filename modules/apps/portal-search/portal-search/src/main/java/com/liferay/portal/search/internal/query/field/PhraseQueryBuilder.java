@@ -49,6 +49,10 @@ public class PhraseQueryBuilder {
 			matchQuery.setBoost(_boost);
 		}
 
+		if (_prefix && (_maxExpansions != null)) {
+			matchQuery.setMaxExpansions(_maxExpansions);
+		}
+
 		if (_slop != null) {
 			matchQuery.setSlop(_slop);
 		}
@@ -58,6 +62,10 @@ public class PhraseQueryBuilder {
 
 	public void setBoost(float boost) {
 		_boost = boost;
+	}
+
+	public void setMaxExpansions(int maxExpansions) {
+		_maxExpansions = maxExpansions;
 	}
 
 	public void setPrefix(boolean prefix) {
@@ -73,6 +81,7 @@ public class PhraseQueryBuilder {
 	}
 
 	private Float _boost;
+	private Integer _maxExpansions;
 	private boolean _prefix;
 	private final Queries _queries;
 	private Integer _slop;

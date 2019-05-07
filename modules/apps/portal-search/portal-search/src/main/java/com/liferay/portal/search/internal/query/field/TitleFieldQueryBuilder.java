@@ -14,8 +14,9 @@
 
 package com.liferay.portal.search.internal.query.field;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
+import com.liferay.portal.search.configuration.TitleFieldQueryBuilderConfiguration;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.field.FieldQueryBuilder;
@@ -32,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rodrigo Paulino
  */
 @Component(
-	property = "exact.match.boost=2.0", service = TitleFieldQueryBuilder.class
+	configurationPid = "com.liferay.portal.search.configuration.TitleFieldQueryBuilderConfiguration",
+	service = TitleFieldQueryBuilder.class
 )
 public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 
@@ -43,6 +45,7 @@ public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 
 		fullTextQueryBuilder.setAutocomplete(true);
 		fullTextQueryBuilder.setExactMatchBoost(_exactMatchBoost);
+		fullTextQueryBuilder.setMaxExpansions(_maxExpansions);
 
 		return fullTextQueryBuilder.build(field, keywords);
 	}
@@ -50,8 +53,13 @@ public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_exactMatchBoost = GetterUtil.getFloat(
-			properties.get("exact.match.boost"), _exactMatchBoost);
+		TitleFieldQueryBuilderConfiguration titleFieldQueryConfiguration =
+			ConfigurableUtil.createConfigurable(
+				TitleFieldQueryBuilderConfiguration.class, properties);
+
+		_exactMatchBoost = titleFieldQueryConfiguration.exactMatchBoost();
+
+		_maxExpansions = titleFieldQueryConfiguration.maxExpansions();
 	}
 
 	@Reference
@@ -61,5 +69,6 @@ public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 	protected Queries queries;
 
 	private volatile float _exactMatchBoost = 2.0F;
+	private volatile int _maxExpansions = 300;
 
 }

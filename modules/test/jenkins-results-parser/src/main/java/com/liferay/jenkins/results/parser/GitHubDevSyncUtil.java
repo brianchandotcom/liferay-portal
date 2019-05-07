@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -790,8 +791,10 @@ public class GitHubDevSyncUtil {
 		return cachedRemoteGitBranches;
 	}
 
-	protected static List<String> getGitHubDevRemoteURLs(
-		GitWorkingDirectory gitWorkingDirectory) {
+	protected static List<String> getGitHubCacheHostnames() {
+		if (_gitHubCacheHostnames != null) {
+			return _gitHubCacheHostnames;
+		}
 
 		Properties buildProperties;
 
@@ -807,13 +810,30 @@ public class GitHubDevSyncUtil {
 
 		String[] gitCacheHostnames = gitCacheHostnamesPropertyValue.split(",");
 
-		List<String> gitHubDevRemoteURLs = new ArrayList<>(
-			gitCacheHostnames.length);
+		_gitHubCacheHostnames = Arrays.asList(gitCacheHostnames);
 
-		for (String gitCacheHostname : gitCacheHostnames) {
+		return _gitHubCacheHostnames;
+	}
+
+	protected static List<String> getGitHubDevRemoteURLs(
+		GitWorkingDirectory gitWorkingDirectory) {
+
+		List<String> gitHubDevRemoteURLs = new ArrayList<>();
+
+		for (String gitHubCacheHostname : getGitHubCacheHostnames()) {
+			if (gitHubCacheHostname.startsWith("slave-")) {
+				gitHubDevRemoteURLs.add(
+					JenkinsResultsParserUtil.combine(
+						"root@", gitHubCacheHostname.substring(6),
+						":/opt/dev/projects/github/",
+						gitWorkingDirectory.getGitRepositoryName()));
+
+				continue;
+			}
+
 			gitHubDevRemoteURLs.add(
 				JenkinsResultsParserUtil.combine(
-					"git@", gitCacheHostname, ":",
+					"git@", gitHubCacheHostname, ":",
 					gitWorkingDirectory.getGitRepositoryUsername(), "/",
 					gitWorkingDirectory.getGitRepositoryName(), ".git"));
 		}
@@ -1323,6 +1343,8 @@ public class GitHubDevSyncUtil {
 
 		return validatedGitHubDevRemoteURLs;
 	}
+
+	protected static List<String> _gitHubCacheHostnames;
 
 	private static LocalGitBranch _createCachedLocalGitBranch(
 		LocalGitRepository localGitRepository, String receiverUsername,
